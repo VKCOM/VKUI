@@ -26,6 +26,7 @@ runs:
       run: |
         perl -pi -e "s/v${{ inputs.prev_version }}/v${{ inputs.next_version }}/" packages/vkui/docker-compose.yml
         perl -pi -e "s/v${{ inputs.prev_version }}/v${{ inputs.next_version }}/" .github/workflows/reusable_workflow_test_e2e.yml
+        perl -pi -e "s/v${{ inputs.prev_version }}/v${{ inputs.next_version }}/" .github/workflows/update_screens.yml
       shell: bash
 
     - name: Set Git credentials
@@ -36,7 +37,7 @@ runs:
 
     - name: Commit changes
       run: |
-        git add packages/vkui/docker-compose.yml .github/workflows/reusable_workflow_test_e2e.yml
+        git add packages/vkui/docker-compose.yml .github/workflows/reusable_workflow_test_e2e.yml .github/workflows/update_screens.yml
         git diff-index --quiet HEAD || git commit -m 'bump(playwright-deps): Docker container image from ${{ inputs.prev_version }} to ${{ inputs.next_version }}'
       shell: bash
 
