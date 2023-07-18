@@ -8,7 +8,7 @@ const PlaygroundRenderer = ({ name, preview, previewProps, tabBody, exampleIndex
     layout = true, // Обвесы в виде SplitLayout, SplitCol, etc
     iframe = true, // Рендерить пример в айфреме
     adaptivity: _adaptivity, // Продвинутые контролеры настроек адаптивности
-    webviewType = false, // Контролер настроек webviewType
+    showCustomPanelHeaderAfterProps = false, // Контролер настроек связанных с пользовательским слотом `after` у `PanelHeader`
     integration,
     containerStyle,
     config,
@@ -25,7 +25,10 @@ const PlaygroundRenderer = ({ name, preview, previewProps, tabBody, exampleIndex
       <SectionSubheading href={`#/${name}?id=example${exampleIndex}`}>
         Пример реализации
       </SectionSubheading>
-      <Settings adaptivity={adaptivity} webviewType={webviewType} />
+      <Settings
+        adaptivity={adaptivity}
+        showCustomPanelHeaderAfterProps={showCustomPanelHeaderAfterProps}
+      />
       <div className="Playground__preview" {...wrapperProps} data-preview={name}>
         {cloneElement(preview, {
           ...preview.props,

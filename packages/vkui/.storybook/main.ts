@@ -26,6 +26,7 @@ const config: StorybookConfig = {
     '@project-tools/storybook-addon-cartesian',
     './addons/appearance',
     './addons/pointer',
+    './addons/customPanelHeaderAfter',
     'storybook-addon-swc',
   ],
   framework: {

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { AppearanceType } from '@vkontakte/vk-bridge';
 import { usePlatform } from '../../hooks/usePlatform';
+import type { AppearanceType } from '../../lib/appearance';
 import { TokensClassProvider } from '../../lib/tokensClassProvider';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 

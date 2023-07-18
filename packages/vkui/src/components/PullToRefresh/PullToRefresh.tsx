@@ -36,6 +36,24 @@ function cancelEvent(event: any) {
 export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
   /**
    * Будет вызвана для обновления контента (прим.: функция должна быть мемоизированным коллбэком)
+   *
+   * > ⚠️ В **v6** необходимо будет самостоятельно вызывать функцию `runTapticImpactOccurred()`
+   * > из `@vkontakte/vk-bridge-react` (см. https://github.com/VKCOM/VKUI/issues/5049).
+   * >
+   * > В рамках **v5** вы уже можете вызывать `runTapticImpactOccurred()` на обработчике `onRefresh()`,
+   * > но в обратчике стоит возвращать результат выполнения этой функции, чтобы исключить двойной
+   * > вызов `runTapticImpactOccurred()`.
+   * >
+   * > ```jsx
+   * > const onRefresh = React.useCallback(() => {
+   * >  // ...
+   * >  return runTapticImpactOccurred();
+   * > }, []);
+   * >
+   * > // <PullToRefresh onRefresh={onRefresh} />
+   * > ```
+   * >
+   * > Соответственно, в v6 ничего возвращать уже не потребуется.
    */
   onRefresh: AnyFunction;
   /**
@@ -139,8 +157,11 @@ export const PullToRefresh = ({
         platform === Platform.IOS ? prevSpinnerY : initParams.refreshing,
       );
 
-      onRefresh();
-      runTapticImpactOccurred('light');
+      const runTapticImpactOccurredCalled = onRefresh();
+      // TODO [>=6]: удалить блок кода (#5049)
+      if (!runTapticImpactOccurredCalled) {
+        runTapticImpactOccurred('light');
+      }
     }
   }, [refreshing, onRefresh, setWaitFetchingTimeout, platform, initParams.refreshing]);
 

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { IconSettingsProvider } from '@vkontakte/icons';
-import { Insets } from '@vkontakte/vk-bridge';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAppearance } from '../../hooks/useAppearance';
@@ -10,9 +9,19 @@ import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { warnOnce } from '../../lib/warnOnce';
 import { AppRootContext } from './AppRootContext';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
 import styles from './AppRoot.module.css';
+
+const warn = warnOnce('AppRoot');
+
+export type SafeAreaInsets = {
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+};
 
 const vkuiSizeXClassNames = {
   none: 'vkui--sizeX-none',
@@ -29,6 +38,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   mode?: 'partial' | 'embedded' | 'full';
   window?: Window;
   scroll?: 'global' | 'contain';
+  safeAreaInsets?: SafeAreaInsets;
   /**
    * Кастомный root-элемент портала
    */
@@ -47,16 +57,25 @@ export const AppRoot = ({
   portalRoot: portalRootProp = null,
   disablePortal,
   className,
+  safeAreaInsets,
   ...props
 }: AppRootProps) => {
   const isKeyboardInputActive = useKeyboardInputTracker();
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null);
   const { document } = useDOM();
-  const insets = useInsets();
+  const deprecatedInsets = useInsets(!safeAreaInsets);
+  const insets = safeAreaInsets ? safeAreaInsets : deprecatedInsets;
   const appearance = useAppearance();
 
   const { hasPointer, sizeX = 'none' } = useAdaptivity();
+
+  if (process.env.NODE_ENVIRONMENT === 'development') {
+    if (!safeAreaInsets) {
+      // TODO [>=6]: удалить warn
+      warn("[@vkontakte/vk-bridge's deprecated] Если вы используете VK Bridge, то используйте хук `useInsets()` из @vkontakte/vk-bridge-react и результат передайте в параметр `safeAreaInsets` (см. https://github.com/VKCOM/VKUI/issues/5049)"); // prettier-ignore
+    }
+  }
 
   // setup portal
   useIsomorphicLayoutEffect(() => {
@@ -115,7 +134,7 @@ export const AppRoot = ({
 
     const parent = rootRef.current.parentElement;
 
-    let key: keyof Insets;
+    let key: keyof SafeAreaInsets;
     for (key in insets) {
       if (insets.hasOwnProperty(key) && typeof insets[key] === 'number') {
         const inset = insets[key];
@@ -126,7 +145,7 @@ export const AppRoot = ({
     }
 
     return () => {
-      let key: keyof Insets;
+      let key: keyof SafeAreaInsets;
       for (key in insets) {
         if (insets.hasOwnProperty(key)) {
           parent.style.removeProperty(INSET_CUSTOM_PROPERTY_PREFIX + key);

@@ -60,6 +60,10 @@ function autoDetectAppearance(
   return () => matchMediaListRemoveListener(mediaQuery, check);
 }
 
+/**
+ * TODO [>=6]: удалить хук (#5049)
+ * @deprecated
+ */
 export const useAutoDetectAppearance = (
   appearanceProp?: AppearanceType,
   onDetectAppearanceByBridge?: () => void,

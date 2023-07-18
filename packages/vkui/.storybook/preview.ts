@@ -5,7 +5,7 @@ import '../src/styles/adaptivity.module.css';
 
 import { Preview } from '@storybook/react';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
-import { Platform, Appearance, WebviewType } from '../src';
+import { Platform, Appearance } from '../src';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
 
 interface CustomViewPortItem {
@@ -66,15 +66,9 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
-    webviewType: {
-      name: 'WebviewType',
-      defaultValue: WebviewType.INTERNAL,
-      toolbar: {
-        icon: 'component',
-        items: [WebviewType.INTERNAL, WebviewType.VKAPPS],
-        title: 'WebviewType',
-        dynamicTitle: true,
-      },
+    hasCustomPanelHeaderAfter: {
+      description: 'Hide "after" prop of PanelHeader for custom floating "after" element',
+      defaultValue: false,
     },
   },
   argTypes: {
