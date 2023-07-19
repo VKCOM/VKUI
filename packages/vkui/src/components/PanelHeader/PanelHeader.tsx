@@ -65,9 +65,16 @@ const PanelHeaderIn = ({
   const { Component = 'span', ...restProps } = typographyProps;
   const { hasCustomPanelHeaderAfter, customPanelHeaderAfterMinWidth } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
-  const showAfterSlot = !hasCustomPanelHeaderAfter || isInsideModal;
   const platform = usePlatform();
 
+  const afterSlotProps =
+    !hasCustomPanelHeaderAfter || isInsideModal
+      ? {
+          children: after,
+        }
+      : {
+          style: { minWidth: customPanelHeaderAfterMinWidth },
+        };
   let typographyNode: React.ReactNode;
 
   // TODO [>=6]: Удалить условие
@@ -101,10 +108,8 @@ const PanelHeaderIn = ({
         <div className={styles['PanelHeader__content']}>{typographyNode}</div>
         <div
           className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}
-          style={showAfterSlot ? { minWidth: customPanelHeaderAfterMinWidth } : undefined}
-        >
-          {showAfterSlot ? after : null}
-        </div>
+          {...afterSlotProps}
+        />
       </TooltipContainer>
       {separator && platform === Platform.VKCOM && (
         <Separator className={styles['PanelHeader__separator']} wide />
