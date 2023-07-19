@@ -45,7 +45,7 @@ export interface ConfigProviderContextInterface {
   webviewType?: WebviewType.INTERNAL | WebviewType.VKAPPS;
   /**
    * При `true` слот `after` у `PanelHeader` игнорируется под размещение пользовательского
-   * "плавающего" элемента (такие элементы пользователи обычно используют в webview).
+   * "плавающего" элемента (например, панель управления webview).
    *
    * > Note: Правило не распространяется на `PanelHeader` внутри модальных окон, предоставляемых
    * > библиотекой.
@@ -55,7 +55,7 @@ export interface ConfigProviderContextInterface {
   hasCustomPanelHeaderAfter: boolean;
   /**
    * Задаёт необходимый минимальную ширину слота `after` в `PanelHeader` под пользовательский
-   * "плавающий" элемент.
+   * "плавающий" элемент (например, ширина панели управления webview).
    *
    * Учитывается только при `hasCustomPanelHeaderAfter={true}` (см. документацию `hasCustomPanelHeaderAfter`).
    *

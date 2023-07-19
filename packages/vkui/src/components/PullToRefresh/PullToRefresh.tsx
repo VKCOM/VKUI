@@ -40,9 +40,10 @@ export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
    * > ⚠️ В **v6** необходимо будет самостоятельно вызывать функцию `runTapticImpactOccurred()`
    * > из `@vkontakte/vk-bridge-react` (см. https://github.com/VKCOM/VKUI/issues/5049).
    * >
-   * > В рамках **v5** вы уже можете вызывать `runTapticImpactOccurred()` на обработчике `onRefresh()`,
-   * > но в обратчике стоит возвращать результат выполнения этой функции, чтобы исключить двойной
-   * > вызов `runTapticImpactOccurred()`.
+   * > В рамках **v5** вы уже можете вызывать `runTapticImpactOccurred()` в обработчике `onRefresh()`,
+   * > но с одним условием – необходимо возвращать результат выполнения функции `runTapticImpactOccurred()`,
+   * > чтобы исключить его двойной вызов. Результат функции это `boolean`, если вернётся `true`, то
+   * > для нас это будет отвечать, что вызывать `runTapticImpactOccurred()` со стороны **VKUI** не нужно.
    * >
    * > ```jsx
    * > const onRefresh = React.useCallback(() => {
@@ -53,7 +54,7 @@ export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
    * > // <PullToRefresh onRefresh={onRefresh} />
    * > ```
    * >
-   * > Соответственно, в v6 ничего возвращать уже не потребуется.
+   * > Соответственно, в **v6** ничего возвращать уже не потребуется.
    */
   onRefresh: AnyFunction;
   /**
