@@ -112,6 +112,7 @@ export const Search = ({
         value && styles['Search--has-value'],
         after && styles['Search--has-after'],
         icon && styles['Search--has-icon'],
+        inputProps.disabled && styles['Search--disabled'],
         className,
       )}
       style={style}
