@@ -1,4 +1,4 @@
-.Tooltip {
+.TooltipBase {
   position: absolute;
   left: 0;
   top: 0;
@@ -7,7 +7,7 @@
   white-space: normal;
 }
 
-.Tooltip__content {
+.TooltipBase__content {
   background-color: var(--vkui--color_background_modal);
   box-shadow: var(--vkui--elevation3);
   padding: 9px 12px 10px;
@@ -16,42 +16,42 @@
   max-width: 220px;
 }
 
-.Tooltip__arrow {
+.TooltipBase__arrow {
   color: var(--vkui--color_background_modal);
 }
 
-.Tooltip--appearance-accent .Tooltip__content {
+.TooltipBase--appearance-accent .TooltipBase__content {
   background-color: var(--vkui--color_background_accent_tint);
   color: var(--vkui--color_text_contrast);
 }
 
-.Tooltip--appearance-accent .Tooltip__arrow {
+.TooltipBase--appearance-accent .TooltipBase__arrow {
   color: var(--vkui--color_background_accent_tint);
 }
 
-.Tooltip--appearance-white .Tooltip__content {
+.TooltipBase--appearance-white .TooltipBase__content {
   background-color: var(--vkui--color_background_contrast);
   color: var(--vkui--color_text_primary_invariably);
 }
 
-.Tooltip--appearance-white .Tooltip__arrow {
+.TooltipBase--appearance-white .TooltipBase__arrow {
   color: var(--vkui--color_background_contrast);
 }
 
-.Tooltip--appearance-black .Tooltip__content {
+.TooltipBase--appearance-black .TooltipBase__content {
   background-color: var(--vkui--color_background_contrast_inverse);
   color: var(--vkui--color_text_contrast);
 }
 
-.Tooltip--appearance-black .Tooltip__arrow {
+.TooltipBase--appearance-black .TooltipBase__arrow {
   color: var(--vkui--color_background_contrast_inverse);
 }
 
-.Tooltip--appearance-inversion .Tooltip__content {
+.TooltipBase--appearance-inversion .TooltipBase__content {
   background-color: var(--vkui--color_background_modal_inverse);
   color: var(--vkui--color_text_contrast_themed);
 }
 
-.Tooltip--appearance-inversion .Tooltip__arrow {
+.TooltipBase--appearance-inversion .TooltipBase__arrow {
   color: var(--vkui--color_background_modal_inverse);
 }

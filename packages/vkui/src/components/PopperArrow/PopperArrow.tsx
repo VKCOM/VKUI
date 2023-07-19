@@ -5,7 +5,7 @@ import type { HasRootRef } from '../../types';
 import { DefaultIcon } from './DefaultIcon';
 import styles from './PopperArrow.module.css';
 
-type Coords = {
+export type Coords = {
   x?: number;
   y?: number;
 };
