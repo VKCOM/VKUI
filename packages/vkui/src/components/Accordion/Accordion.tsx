@@ -1,23 +1,62 @@
 import * as React from 'react';
-import { HasRootRef } from '../../types';
-import { RootComponent } from '../RootComponent/RootComponent';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { HasChildren } from '../../types';
+import { AccordionContent } from './AccordionContent';
+import { AccordionContext } from './AccordionContext';
 import { AccordionSummary } from './AccordionSummary';
-import styles from './Accordion.module.css';
 
-export type AccordionProps = React.DetailsHTMLAttributes<HTMLDetailsElement> &
-  HasRootRef<HTMLDetailsElement>;
+function useAccordionId(id: AccordionProps['id']) {
+  const generatedId = React.useId();
+  const labelId = id ?? `Accordion${generatedId}`;
+  const contentId = `AccordionContent${id ?? generatedId}`;
 
-/**
- * Компонент, позволяет отображать несколько разделов контента в ограниченном
- * пространстве и сворачивать или разворачивать их пользователем.
- *
- * Обертка над details.
- *
- * @since 5.3.0
- * @see https://vkcom.github.io/VKUI/#/Accordion
- */
-export const Accordion = (props: AccordionProps) => (
-  <RootComponent Component="details" baseClassName={styles['Accordion']} {...props} />
-);
+  return { labelId, contentId };
+}
+
+export interface AccordionProps extends HasChildren {
+  id?: string;
+  /**
+   * Управляет раскрытием и скрытием контента.
+   */
+  expanded?: boolean;
+  /**
+   * Значение по умолчанию.
+   */
+  defaultExpanded?: boolean;
+  /**
+   * Функция изменения
+   */
+  onChange?(e: boolean): void;
+  disabled?: boolean;
+}
+
+export const Accordion = ({
+  id,
+  expanded: expandedProp,
+  defaultExpanded = false,
+  onChange: onChangeProp,
+  children,
+  ...restProps
+}: AccordionProps) => {
+  const { labelId, contentId } = useAccordionId(id);
+
+  const [expanded, onChange] = useCustomEnsuredControl({
+    value: expandedProp,
+    defaultValue: defaultExpanded,
+    onChange: onChangeProp,
+    disabled: restProps.disabled,
+  });
+
+  const context = useObjectMemo({
+    labelId,
+    contentId,
+    expanded: expanded || false,
+    onChange,
+  });
+
+  return <AccordionContext.Provider value={context}>{children}</AccordionContext.Provider>;
+};
 
 Accordion.Summary = AccordionSummary;
+Accordion.Content = AccordionContent;
