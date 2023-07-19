@@ -44,10 +44,8 @@ export const SliderThumb = ({
       }),
       flipMiddleware(),
       shiftMiddleware({ padding: 8 }),
-
       arrowMiddleware({
         element: arrowRef,
-        padding: 14,
       }),
     ];
   }, [arrowRef]);
@@ -66,25 +64,25 @@ export const SliderThumb = ({
     middleware: memoizedMiddlewares,
   });
 
-  React.useEffect(
-    function udpateTooltipPositionOnValueChange() {
-      if (focusVisible && withTooltip && inputProps && inputProps.value !== 'undefined') {
-        updateTooltipPosition();
-      }
-    },
-    [inputProps, updateTooltipPosition, focusVisible, withTooltip],
-  );
-
-  const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
   const {
     value: isHovered,
     setTrue: setHoveredTrue,
     setFalse: setHoveredFalse,
   } = useBooleanState(false);
 
-  const shouldShowTooltip = Boolean(
-    withTooltip && (focusVisible || isHovered) && inputProps && inputProps.value !== 'undefined',
+  const shouldShowTooltip = withTooltip && (focusVisible || isHovered);
+
+  const inputValue = inputProps && inputProps.value;
+  React.useEffect(
+    function udpateTooltipPositionOnValueChange() {
+      if (shouldShowTooltip && inputValue !== 'undefined') {
+        updateTooltipPosition();
+      }
+    },
+    [inputValue, updateTooltipPosition, shouldShowTooltip],
   );
+
+  const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
 
   return (
     <Touch
@@ -120,7 +118,7 @@ export const SliderThumb = ({
           arrowCoords={arrowCoords}
           arrowPlacement={resolvedPlacement}
           getArrowRef={setArrowRef}
-          text={inputProps && inputProps.value}
+          text={inputValue}
         />
       )}
     </Touch>
