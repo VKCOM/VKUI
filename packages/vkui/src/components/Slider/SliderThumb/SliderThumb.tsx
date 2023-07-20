@@ -62,7 +62,6 @@ export const SliderThumb = ({
     update: updateTooltipPosition,
   } = useFloating({
     placement: 'top',
-    open: focusVisible,
     middleware: memoizedMiddlewares,
   });
 
