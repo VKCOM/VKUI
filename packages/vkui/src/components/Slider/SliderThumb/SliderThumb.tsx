@@ -71,11 +71,10 @@ export const SliderThumb = ({
     setTrue: setHoveredTrue,
     setFalse: setHoveredFalse,
   } = useBooleanState(false);
-  const {
-    value: isActive,
-    setTrue: setIsActiveTrue,
-    setFalse: setIsActiveFalse,
-  } = useBooleanState(false);
+
+  const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
+
+  const isActive = useActiveState(handleRootRef);
 
   const shouldShowTooltip = withTooltip && (focusVisible || isHovered || isActive);
 
@@ -88,30 +87,6 @@ export const SliderThumb = ({
     },
     [inputValue, updateTooltipPosition, shouldShowTooltip],
   );
-
-  const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
-
-  const listenerParams = { capture: false, passive: false };
-  const isTouchEnabled = touchEnabled();
-  const listeners = [
-    useEventListener(isTouchEnabled ? 'touchstart' : 'mousedown', setIsActiveTrue, listenerParams),
-    useEventListener(isTouchEnabled ? 'touchend' : 'mouseup', setIsActiveFalse, listenerParams),
-    useEventListener(
-      isTouchEnabled ? 'touchcancel' : 'mouseleave',
-      setIsActiveFalse,
-      listenerParams,
-    ),
-  ];
-
-  useIsomorphicLayoutEffect(() => {
-    const el = handleRootRef.current;
-    if (el) {
-      listeners.forEach((l) => l.add(el));
-    }
-    return () => {
-      listeners.forEach((l) => l.remove());
-    };
-  }, [listeners]);
 
   return (
     <React.Fragment>
@@ -139,7 +114,9 @@ export const SliderThumb = ({
           onFocus={onFocus}
         />
         <FocusVisible visible={focusVisible} mode="outside" />
-        {true && <span aria-hidden className={styles['SliderThumb__stateLayer']} />}
+        {(isHovered || isActive) && (
+          <span aria-hidden className={styles['SliderThumb__stateLayer']} />
+        )}
       </span>
       {shouldShowTooltip && (
         <TooltipBase
@@ -159,3 +136,33 @@ export const SliderThumb = ({
     </React.Fragment>
   );
 };
+
+function useActiveState(ref: React.MutableRefObject<HTMLSpanElement | null>) {
+  const {
+    value: isActive,
+    setTrue: setIsActiveTrue,
+    setFalse: setIsActiveFalse,
+  } = useBooleanState(false);
+
+  const isTouchEnabled = touchEnabled();
+  const activStateListeners = [
+    useEventListener(isTouchEnabled ? 'touchstart' : 'mousedown', setIsActiveTrue),
+    useEventListener(isTouchEnabled ? 'touchend' : 'mouseup', setIsActiveFalse),
+    useEventListener(isTouchEnabled ? 'touchcancel' : 'mouseleave', setIsActiveFalse),
+  ];
+
+  useIsomorphicLayoutEffect(
+    function subscribeActiveStateListeners() {
+      const el = ref.current;
+      if (el) {
+        activStateListeners.forEach((l) => l.add(el));
+      }
+      return () => {
+        activStateListeners.forEach((l) => l.remove());
+      };
+    },
+    [activStateListeners],
+  );
+
+  return isActive;
+}
