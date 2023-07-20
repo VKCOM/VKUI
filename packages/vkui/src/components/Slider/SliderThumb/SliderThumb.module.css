@@ -15,6 +15,10 @@
   z-index: 2;
 }
 
+.SliderThumb:active {
+  opacity: 0.7;
+}
+
 /**
  * Задаём ширину и высоту родителя, чтобы скринридер правильно выделял элемент (скопировано с MUI).
  */
@@ -29,4 +33,27 @@
   clip: rect(0, 0, 0, 0);
   overflow: hidden;
   white-space: nowrap;
+}
+
+/**
+ * hover & active state
+ */
+.SliderThumb__stateLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  transition: background-color 0.15s ease-out;
+}
+
+.SliderThumb--hover > .SliderThumb__stateLayer {
+  background-color: var(--vkui--color_transparent--hover);
+}
+
+.SliderThumb--active > .SliderThumb__stateLayer {
+  background-color: var(--vkui--color_transparent--active);
 }

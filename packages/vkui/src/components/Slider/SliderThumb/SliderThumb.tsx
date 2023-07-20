@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useBooleanState } from '../../../hooks/useBooleanState';
+import { useEventListener } from '../../../hooks/useEventListener';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import {
@@ -11,8 +12,10 @@ import {
   shiftMiddleware,
   useFloating,
 } from '../../../lib/floating';
+import { touchEnabled } from '../../../lib/touch';
+import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import type { HasDataAttribute, HasRootRef } from '../../../types';
-import { Tappable } from '../../Tappable/Tappable';
+import { FocusVisible } from '../../FocusVisible/FocusVisible';
 import { TooltipBase } from '../../TooltipBase/TooltipBase';
 import styles from './SliderThumb.module.css';
 
@@ -88,37 +91,56 @@ export const SliderThumb = ({
 
   const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
 
+  const listenerParams = { capture: false, passive: false };
+  const isTouchEnabled = touchEnabled();
+  const listeners = [
+    useEventListener(isTouchEnabled ? 'touchstart' : 'mousedown', setIsActiveTrue, listenerParams),
+    useEventListener(isTouchEnabled ? 'touchend' : 'mouseup', setIsActiveFalse, listenerParams),
+    useEventListener(
+      isTouchEnabled ? 'touchcancel' : 'mouseleave',
+      setIsActiveFalse,
+      listenerParams,
+    ),
+  ];
+
+  useIsomorphicLayoutEffect(() => {
+    const el = handleRootRef.current;
+    if (el) {
+      listeners.forEach((l) => l.add(el));
+    }
+    return () => {
+      listeners.forEach((l) => l.remove());
+    };
+  }, [listeners]);
+
   return (
     <React.Fragment>
-      <Tappable
-        Component="span"
-        hovered={isHovered}
-        focused={focusVisible}
-        isActive={isActive}
-        getRootRef={handleRootRef}
-        onEnter={setHoveredTrue}
-        onLeave={setHoveredFalse}
-        activeMode="background"
-        onStart={setIsActiveTrue}
-        onEnd={setIsActiveFalse}
-        onBlur={onBlur}
-        onFocus={onFocus}
+      <span
+        {...restProps}
+        ref={handleRootRef}
+        onMouseEnter={setHoveredTrue}
+        onMouseLeave={() => {
+          setHoveredFalse();
+        }}
         className={classNames(
           styles['SliderThumb'],
           focusVisible && styles['SliderThumb--focused'],
           isActive && styles['SliderThumb--active'],
+          isHovered && styles['SliderThumb--hover'],
           className,
         )}
-        {...restProps}
       >
         <input
           {...inputProps}
-          tabIndex={-1}
           type="range"
           className={styles['SliderThumb__nativeInput']}
           aria-orientation="horizontal"
+          onBlur={onBlur}
+          onFocus={onFocus}
         />
-      </Tappable>
+        <FocusVisible visible={focusVisible} mode="outside" />
+        {true && <span aria-hidden className={styles['SliderThumb__stateLayer']} />}
+      </span>
       {shouldShowTooltip && (
         <TooltipBase
           appearance="neutral"
