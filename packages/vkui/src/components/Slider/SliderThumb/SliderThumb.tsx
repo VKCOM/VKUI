@@ -14,7 +14,6 @@ import {
 import type { HasDataAttribute, HasRootRef } from '../../../types';
 import { FocusVisible } from '../../FocusVisible/FocusVisible';
 import { TooltipBase } from '../../TooltipBase/TooltipBase';
-import { Touch } from '../../Touch/Touch';
 import styles from './SliderThumb.module.css';
 
 interface SliderThumbProps extends HasRootRef<HTMLSpanElement>, HasDataAttribute {
@@ -85,11 +84,10 @@ export const SliderThumb = ({
   const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
 
   return (
-    <Touch
-      onEnter={setHoveredTrue}
-      onLeave={setHoveredFalse}
-      Component="span"
-      getRootRef={handleRootRef}
+    <span
+      ref={handleRootRef}
+      onMouseEnter={setHoveredTrue}
+      onMouseLeave={setHoveredFalse}
       className={classNames(
         styles['SliderThumb'],
         focusVisible && styles['SliderThumb--focused'],
@@ -121,6 +119,6 @@ export const SliderThumb = ({
           text={inputValue}
         />
       )}
-    </Touch>
+    </span>
   );
 };
