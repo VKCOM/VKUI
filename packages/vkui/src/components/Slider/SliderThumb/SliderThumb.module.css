@@ -10,7 +10,8 @@
   user-select: none;
 }
 
-.SliderThumb--focused {
+.SliderThumb--focused,
+.SliderThumb--active {
   z-index: 2;
 }
 

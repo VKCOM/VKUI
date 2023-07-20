@@ -12,7 +12,7 @@ import {
   useFloating,
 } from '../../../lib/floating';
 import type { HasDataAttribute, HasRootRef } from '../../../types';
-import { FocusVisible } from '../../FocusVisible/FocusVisible';
+import { Tappable } from '../../Tappable/Tappable';
 import { TooltipBase } from '../../TooltipBase/TooltipBase';
 import styles from './SliderThumb.module.css';
 
@@ -68,8 +68,13 @@ export const SliderThumb = ({
     setTrue: setHoveredTrue,
     setFalse: setHoveredFalse,
   } = useBooleanState(false);
+  const {
+    value: isActive,
+    setTrue: setIsActiveTrue,
+    setFalse: setIsActiveFalse,
+  } = useBooleanState(false);
 
-  const shouldShowTooltip = withTooltip && (focusVisible || isHovered);
+  const shouldShowTooltip = withTooltip && (focusVisible || isHovered || isActive);
 
   const inputValue = inputProps && inputProps.value;
   React.useEffect(
@@ -84,26 +89,36 @@ export const SliderThumb = ({
   const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
 
   return (
-    <span
-      ref={handleRootRef}
-      onMouseEnter={setHoveredTrue}
-      onMouseLeave={setHoveredFalse}
-      className={classNames(
-        styles['SliderThumb'],
-        focusVisible && styles['SliderThumb--focused'],
-        className,
-      )}
-      {...restProps}
-    >
-      <input
-        {...inputProps}
-        type="range"
-        className={styles['SliderThumb__nativeInput']}
-        aria-orientation="horizontal"
+    <React.Fragment>
+      <Tappable
+        Component="span"
+        hovered={isHovered}
+        focused={focusVisible}
+        isActive={isActive}
+        getRootRef={handleRootRef}
+        onEnter={setHoveredTrue}
+        onLeave={setHoveredFalse}
+        activeMode="background"
+        onStart={setIsActiveTrue}
+        onEnd={setIsActiveFalse}
         onBlur={onBlur}
         onFocus={onFocus}
-      />
-      <FocusVisible visible={focusVisible} mode="outside" />
+        className={classNames(
+          styles['SliderThumb'],
+          focusVisible && styles['SliderThumb--focused'],
+          isActive && styles['SliderThumb--active'],
+          className,
+        )}
+        {...restProps}
+      >
+        <input
+          {...inputProps}
+          tabIndex={-1}
+          type="range"
+          className={styles['SliderThumb__nativeInput']}
+          aria-orientation="horizontal"
+        />
+      </Tappable>
       {shouldShowTooltip && (
         <TooltipBase
           appearance="neutral"
@@ -119,6 +134,6 @@ export const SliderThumb = ({
           text={inputValue}
         />
       )}
-    </span>
+    </React.Fragment>
   );
 };
