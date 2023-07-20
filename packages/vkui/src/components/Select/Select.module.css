@@ -16,7 +16,7 @@
   height: 100%;
   opacity: 0;
   z-index: var(--vkui_internal--z_index_form_field_side);
-  font-size: 16px;
+  font-size: var(--vkui--font_paragraph--font_size--regular);
   font-family: inherit;
 }
 

@@ -27,21 +27,4 @@
   height: 100%;
   width: 100%;
   border-radius: inherit;
-  font-size: var(--vkui--font_text--font_size--regular);
-  line-height: var(--vkui--font_text--line_height--regular);
-  font-weight: var(--vkui--font_weight_accent2);
-}
-
-.SegmentedControlOption__content--sizeY-compact.SegmentedControlOption__content {
-  font-size: var(--vkui--font_footnote--font_size--regular);
-  line-height: var(--vkui--font_footnote--line_height--regular);
-  font-weight: var(--vkui--font_weight_accent3);
-}
-
-@media (--sizeY-compact) {
-  .SegmentedControlOption__content--sizeY-none.SegmentedControlOption__content {
-    font-size: var(--vkui--font_footnote--font_size--regular);
-    line-height: var(--vkui--font_footnote--line_height--regular);
-    font-weight: var(--vkui--font_weight_accent3);
-  }
 }
