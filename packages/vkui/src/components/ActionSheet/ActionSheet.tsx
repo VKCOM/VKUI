@@ -9,6 +9,7 @@ import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
+import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
 import { ActionSheetDropdown } from './ActionSheetDropdown';
 import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
 import { SharedDropdownProps } from './types';
@@ -24,9 +25,9 @@ export interface ActionSheetProps
    */
   onClose: VoidFunction;
   /**
-   * Только iOS.
+   * Только мобильный iOS.
    */
-  iosCloseItem: React.ReactNode;
+  iosCloseItem?: React.ReactNode;
 }
 
 /**
@@ -115,7 +116,9 @@ export const ActionSheet = ({
           </header>
         )}
         {children}
-        {platform === Platform.IOS && !isDesktop && iosCloseItem}
+        {platform === Platform.IOS &&
+          !isDesktop &&
+          (iosCloseItem ?? <ActionSheetDefaultIosCloseItem />)}
       </DropdownComponent>
     </ActionSheetContext.Provider>
   );

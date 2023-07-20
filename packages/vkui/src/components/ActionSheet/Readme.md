@@ -8,8 +8,7 @@ ActionSheet – имитация [нативного компонента](https
 > **Важно**
 >
 > - Нужно обязательно передать `onClose` для обработки закрытия `ActionSheet` изнутри.
-> - Согласно гайдлайнам Apple, в `ActionSheet` должен быть элемент для закрытия, для этого предусмотрен атрибут `iosCloseItem`.
->   В коде примера ниже можно посмотреть, как добавить такой элемент.
+> - Согласно гайдлайнам Apple, в `ActionSheet` должен быть элемент для закрытия, для этого предусмотрен атрибут `iosCloseItem`. По умолчанию будет использоваться `ActionSheetDefaultIosCloseItem`.
 >   Для Android версии он не нужен.
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
@@ -26,11 +25,7 @@ const baseTopTargetRef = React.useRef();
 
 const openBase = () =>
   setPopout(
-    <ActionSheet
-      onClose={onClose}
-      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
-      toggleRef={baseTargetRef}
-    >
+    <ActionSheet onClose={onClose} toggleRef={baseTargetRef}>
       <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
       <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
       <ActionSheetItem autoClose>Выключить комментирование</ActionSheetItem>
@@ -43,11 +38,7 @@ const openBase = () =>
 
 const openIcons = () =>
   setPopout(
-    <ActionSheet
-      onClose={onClose}
-      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
-      toggleRef={iconsTargetRef}
-    >
+    <ActionSheet onClose={onClose} toggleRef={iconsTargetRef}>
       <ActionSheetItem
         autoClose
         before={
@@ -104,11 +95,7 @@ const openIcons = () =>
 
 const openSubtitle = () =>
   setPopout(
-    <ActionSheet
-      onClose={onClose}
-      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
-      toggleRef={subtitleTargetRef}
-    >
+    <ActionSheet onClose={onClose} toggleRef={subtitleTargetRef}>
       <ActionSheetItem
         before={
           <AdaptiveIconRenderer
@@ -148,11 +135,7 @@ const openSubtitle = () =>
 
 const openSelectable = () =>
   setPopout(
-    <ActionSheet
-      onClose={onClose}
-      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
-      toggleRef={selectableTargetRef}
-    >
+    <ActionSheet onClose={onClose} toggleRef={selectableTargetRef}>
       <ActionSheetItem
         onChange={onChange}
         checked={filter === 'best'}
@@ -210,7 +193,6 @@ const openTitle = () =>
   setPopout(
     <ActionSheet
       onClose={onClose}
-      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
       header="Вы действительно хотите удалить это видео из Ваших видео?"
       toggleRef={titleTargetRef}
     >
@@ -222,11 +204,7 @@ const openTitle = () =>
 
 const openBaseTop = () =>
   setPopout(
-    <ActionSheet
-      onClose={onClose}
-      iosCloseItem={<ActionSheetDefaultIosCloseItem />}
-      toggleRef={baseTopTargetRef}
-    >
+    <ActionSheet onClose={onClose} toggleRef={baseTopTargetRef}>
       <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
       <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
       <ActionSheetItem autoClose>Выключить комментирование</ActionSheetItem>

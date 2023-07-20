@@ -16,13 +16,13 @@ describe('ActionSheet', () => {
   const ActionSheetDesktop = (props: Partial<ActionSheetProps>) => (
     <ConfigProvider platform={Platform.VKCOM}>
       <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-        <ActionSheet toggleRef={toggle} onClose={jest.fn()} {...props} iosCloseItem={null} />
+        <ActionSheet toggleRef={toggle} onClose={jest.fn()} {...props} />
       </AdaptivityProvider>
     </ConfigProvider>
   );
   const ActionSheetMobile = (props: Partial<ActionSheetProps>) => (
     <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer={false}>
-      <ActionSheet toggleRef={toggle} onClose={jest.fn()} {...props} iosCloseItem={null} />
+      <ActionSheet toggleRef={toggle} onClose={jest.fn()} {...props} />
     </AdaptivityProvider>
   );
 

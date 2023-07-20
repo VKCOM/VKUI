@@ -17,7 +17,6 @@ import { Placeholder } from '../Placeholder/Placeholder';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { ActionSheet, ActionSheetProps } from './ActionSheet';
-import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
 
 const story: Meta<ActionSheetProps> = {
   title: 'Popouts/ActionSheet',
@@ -38,12 +37,7 @@ export const Base: Story = {
     const baseToggleRef = React.useRef(null);
     const [visible, setVisible] = React.useState(true);
     const popout = visible ? (
-      <ActionSheet
-        {...args}
-        onClose={() => setVisible(false)}
-        iosCloseItem={<ActionSheetDefaultIosCloseItem />}
-        toggleRef={baseToggleRef}
-      >
+      <ActionSheet {...args} onClose={() => setVisible(false)} toggleRef={baseToggleRef}>
         {items.map(({ children, ...rest }, index) => (
           <ActionSheetItem autoClose key={index} {...rest}>
             {children}
