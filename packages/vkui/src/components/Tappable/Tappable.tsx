@@ -70,6 +70,14 @@ export interface TappableProps
    */
   hovered?: boolean;
   /**
+   * Позволяет управлять focused-состоянием извне
+   */
+  focused?: boolean;
+  /**
+   * Позволяет управлять active-состоянием извне
+   */
+  isActive?: boolean;
+  /**
    * Указывает, должен ли компонент реагировать на active-состояние
    */
   hasActive?: boolean;
@@ -195,6 +203,8 @@ export const Tappable = ({
   onLeave,
   className,
   hovered: hoveredProp,
+  focused,
+  isActive: isActiveProp,
   ...props
 }: TappableProps) => {
   Component = Component || ((props.href ? 'a' : 'div') as React.ElementType);
@@ -202,7 +212,8 @@ export const Tappable = ({
   const { onHoverChange } = React.useContext(TappableContext);
   const insideTouchRoot = React.useContext(TouchRootContext);
   const platform = usePlatform();
-  const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const { focusVisible: _focused, onBlur, onFocus } = useFocusVisible();
+  const focusVisible = focused || _focused;
   const { sizeX = 'none' } = useAdaptivity();
   const hasPointerContext = useAdaptivityHasPointer();
   const hasHoverContext = useAdaptivityHasHover();
@@ -304,6 +315,8 @@ export const Tappable = ({
     stop(activeDuration >= 100 ? 0 : activeEffectDelay - activeDuration);
   }
 
+  const isActive = isActiveProp || active;
+
   const classes = classNames(
     className,
     styles['Tappable'],
@@ -313,7 +326,7 @@ export const Tappable = ({
     hasHover && styles['Tappable--hasHover'],
     hasActive && styles['Tappable--hasActive'],
     hasHover && hovered && !isPresetHoverMode && hoverMode,
-    hasActive && active && !isPresetActiveMode && activeMode,
+    hasActive && isActive && !isPresetActiveMode && activeMode,
     focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
     hasHover &&
       hovered &&
@@ -323,7 +336,7 @@ export const Tappable = ({
         opacity: styles['Tappable--hover-opacity'],
       }[hoverMode],
     hasActive &&
-      active &&
+      isActive &&
       isPresetActiveMode &&
       {
         background: styles['Tappable--active-background'],
