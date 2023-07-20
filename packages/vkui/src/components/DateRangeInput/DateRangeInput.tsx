@@ -15,6 +15,7 @@ import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
 import { Popper } from '../Popper/Popper';
+import { Text } from '../Typography/Text/Text';
 import styles from './DateRangeInput.module.css';
 import dateInputStyles from '../DateInput/DateInput.module.css';
 
@@ -261,7 +262,7 @@ export const DateRangeInput = ({
             : ''
         }
       />
-      <span className={dateInputStyles['DateInput__input']} onKeyDown={handleKeyDown}>
+      <Text className={dateInputStyles['DateInput__input']} onKeyDown={handleKeyDown}>
         <InputLike
           length={2}
           getRootRef={daysStartRef}
@@ -315,7 +316,7 @@ export const DateRangeInput = ({
           value={internalValue[5]}
           aria-label={changeEndYearAriaLabel}
         />
-      </span>
+      </Text>
       {open && !disableCalendar && (
         <Popper targetRef={rootRef} offsetDistance={8} placement={calendarPlacement}>
           <CalendarRange

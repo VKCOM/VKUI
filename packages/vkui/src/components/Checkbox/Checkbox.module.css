@@ -41,32 +41,6 @@
   flex-grow: 1;
   color: var(--vkui--color_text_primary);
   word-break: break-word;
-  font-weight: var(--vkui--font_weight_accent3);
-}
-
-.Checkbox--sizeY-regular:not(.Checkbox--vkcom) .Checkbox__content {
-  font-size: var(--vkui--font_headline1--font_size--regular);
-  line-height: var(--vkui--font_headline1--line_height--regular);
-}
-
-@media (--sizeY-regular) {
-  .Checkbox--sizeY-none:not(.Checkbox--vkcom) .Checkbox__content {
-    font-size: var(--vkui--font_headline1--font_size--regular);
-    line-height: var(--vkui--font_headline1--line_height--regular);
-  }
-}
-
-.Checkbox--vkcom .Checkbox__content,
-.Checkbox--sizeY-compact .Checkbox__content {
-  font-size: var(--vkui--font_text--font_size--compact);
-  line-height: var(--vkui--font_text--line_height--compact);
-}
-
-@media (--sizeY-compact) {
-  .Checkbox--sizeY-none .Checkbox__content {
-    font-size: var(--vkui--font_text--font_size--compact);
-    line-height: var(--vkui--font_text--line_height--compact);
-  }
 }
 
 .Checkbox__description {
