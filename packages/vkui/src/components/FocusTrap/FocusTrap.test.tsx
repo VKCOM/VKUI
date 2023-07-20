@@ -34,13 +34,7 @@ const ActionSheetTest = ({
   };
 
   const _actionSheet = (
-    <ActionSheet
-      data-testid="sheet"
-      toggleRef={toggleRef}
-      onClose={_onClose}
-      iosCloseItem={null}
-      {...props}
-    >
+    <ActionSheet data-testid="sheet" toggleRef={toggleRef} onClose={_onClose} {...props}>
       {children}
     </ActionSheet>
   );

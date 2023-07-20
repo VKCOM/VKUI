@@ -12,7 +12,6 @@ import { HasChildren } from '../../types';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AppRoot } from '../AppRoot/AppRoot';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
-import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
 
 const AppWrapper = ({ children, ...restProps }: HasChildren) => (
   <AppRoot mode="embedded" scroll="contain" {...restProps}>
@@ -31,7 +30,6 @@ const ActionSheetWrapper = (props: ActionSheetProps) => {
       </button>
       <ActionSheet
         {...props}
-        iosCloseItem={<ActionSheetDefaultIosCloseItem />}
         style={{
           // Перебиваем "absolute", чтобы не задавать фиксированную высоту для тестов под iOS и Android
           position: 'relative',
