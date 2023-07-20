@@ -7,6 +7,7 @@ import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
+import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Radio.module.css';
 
@@ -72,7 +73,7 @@ export const Radio = ({
         <RadioIcon className={styles['Radio__icon']} />
         <div className={styles['Radio__content']}>
           <div className={styles['Radio__title']}>
-            <span>{children}</span>
+            <Text>{children}</Text>
             <div className={styles['Radio__titleAfter']}>{titleAfter}</div>
           </div>
           {hasReactNode(description) && (
