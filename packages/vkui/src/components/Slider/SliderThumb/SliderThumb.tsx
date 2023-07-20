@@ -32,7 +32,7 @@ export const SliderThumb = ({
   withTooltip,
   ...restProps
 }: SliderThumbProps) => {
-  const { focusVisible, onBlur, onFocus } = useFocusVisible(false);
+  const { focusVisible, onBlur, onFocus } = useFocusVisible(true);
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
   const memoizedMiddlewares = React.useMemo(() => {
