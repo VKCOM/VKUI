@@ -38,16 +38,22 @@
 > дело.
 
 ```tsx
+import React from 'react';
+import ReactDOM from 'react-dom';
 import bridge from '@vkontakte/vk-bridge';
 import { useAppearance, useInsets, useAdaptivity } from '@vkontakte/vk-bridge-react';
 import { Platform, ConfigProvider, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
-import { getPlatformByQueryString } from './getPlatformByQueryString';
+import { getPlatformByQueryString } from './selectors/getPlatformByQueryString';
+import { transformBridgeAdaptivity } from './transformers/transformBridgeAdaptivity';
+import { App } from './App';
 
-const App = () => {
+// Init VK  Mini App
+bridge.send('VKWebAppInit');
+
+const Root = () => {
   const bridgeAppearance = useAppearance() || undefined; // вместо undefined можно задать значение по умолчанию
   const bridgeInsets = useInsets() || undefined; // вместо undefined можно задать значение по умолчанию
-  const bridgeAdaptivity = useAdaptivity();
-  const adaptivityProps = transformBridgeAdaptivity(bridgeAdaptivity);
+  const bridgeAdaptivityProps = transformBridgeAdaptivity(useAdaptivity());
 
   return (
     <ConfigProvider
@@ -56,17 +62,19 @@ const App = () => {
       isWebView={bridge.isWebView()}
       hasCustomPanelHeaderAfter={true}
     >
-      <AdaptivityProvider {...adaptivityProps}>
+      <AdaptivityProvider {...bridgeAdaptivityProps}>
         <AppRoot safeAreaInsets={bridgeInsets}>
-          <Users />
+          <App />
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
   );
 };
+
+ReactDOM.render(<Root />, document.getElementById('root'));
 ```
 
-Файл `./getPlatformByQueryString.ts`
+Файл `./selectors/getPlatformByQueryString.ts`
 
 ```tsx
 import type { PlatformType } from '@vkontakte/vkui';
@@ -95,6 +103,49 @@ export const getPlatformByQueryString = (queryString: string): PlatformType | un
     console.warn(e);
     return;
   }
+};
+```
+
+Файл `./transformers/transformBridgeAdaptivity.ts`
+
+```ts
+import {
+  type AdaptivityProps,
+  getViewWidthByViewportWidth,
+  getViewHeightByViewportHeight,
+  ViewWidth,
+  SizeType,
+} from '@vkontakte/vkui';
+import type { UseAdaptivity } from '@vkontakte/vk-bridge-react';
+
+/**
+ * Требуется конвертировать данные из VK Bridge в те, что принимает AdaptivityProvider из VKUI.
+ */
+export const transformBridgeAdaptivity = (bridgeAdaptivity: UseAdaptivity): AdaptivityProps => {
+  let viewWidth;
+  let viewHeight;
+  let sizeX;
+  let sizeY;
+
+  if (bridgeAdaptivity.type === 'adaptive') {
+    const { viewportWidth, viewportHeight } = bridgeAdaptivity;
+    viewWidth = getViewWidthByViewportWidth(viewportWidth);
+    viewHeight = getViewHeightByViewportHeight(viewportHeight);
+  } else if (
+    bridgeAdaptivity.type === 'force_mobile' ||
+    bridgeAdaptivity.type === 'force_mobile_compact'
+  ) {
+    viewWidth = ViewWidth.MOBILE;
+    sizeX = SizeType.COMPACT;
+
+    if (bridgeAdaptivity.type === 'force_mobile_compact') {
+      sizeY = SizeType.COMPACT;
+    } else {
+      sizeY = SizeType.REGULAR;
+    }
+  }
+
+  return { viewWidth, viewHeight, sizeX, sizeY };
 };
 ```
 
