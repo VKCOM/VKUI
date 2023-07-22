@@ -2,8 +2,6 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { useDOM } from '../../lib/dom';
 import {
   arrowMiddleware,
   autoPlacementMiddleware,
@@ -24,6 +22,7 @@ import { HasRootRef } from '../../types';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { tooltipContainerAttr } from './TooltipContainer';
+import styles from './Tooltip.module.css';
 
 /**
  * Перебиваем `ref`.
@@ -260,12 +259,6 @@ export const Tooltip = ({
     whileElementsMounted: autoUpdateFloatingElement,
   });
 
-  const { document } = useDOM();
-  useGlobalEventListener(document, 'click', isShown && onClose, {
-    capture: true,
-    passive: true,
-  });
-
   const childRef = isDOMTypeElement<React.HTMLAttributes<HTMLElement>, HTMLElement>(children)
     ? children.ref
     : React.isValidElement<HasRootRef<HTMLElement>>(children)
@@ -284,19 +277,22 @@ export const Tooltip = ({
       {isShown &&
         target != null &&
         ReactDOM.createPortal(
-          <TooltipBase
-            {...restProps}
-            getRootRef={refs.setFloating}
-            floatingStyle={convertFloatingDataToReactCSSProperties(
-              floatingPositionStrategy,
-              floatingDataX,
-              floatingDataY,
-            )}
-            withArrow={arrow}
-            arrowCoords={arrowCoords}
-            arrowPlacement={resolvedPlacement}
-            getArrowRef={setArrowRef}
-          />,
+          <>
+            <TooltipBase
+              {...restProps}
+              getRootRef={refs.setFloating}
+              floatingStyle={convertFloatingDataToReactCSSProperties(
+                floatingPositionStrategy,
+                floatingDataX,
+                floatingDataY,
+              )}
+              withArrow={arrow}
+              arrowCoords={arrowCoords}
+              arrowPlacement={resolvedPlacement}
+              getArrowRef={setArrowRef}
+            />
+            <div className={styles['Tooltip__overlay']} onClickCapture={onClose} />
+          </>,
           tooltipContainer,
         )}
     </React.Fragment>
