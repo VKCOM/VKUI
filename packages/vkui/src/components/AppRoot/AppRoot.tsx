@@ -73,7 +73,7 @@ export const AppRoot = ({
   if (process.env.NODE_ENVIRONMENT === 'development') {
     if (!safeAreaInsets) {
       // TODO [>=6]: удалить warn
-      warn("[@vkontakte/vk-bridge's deprecated] Если вы используете VK Bridge, то используйте хук `useInsets()` из @vkontakte/vk-bridge-react и результат передайте в параметр `safeAreaInsets` (см. https://github.com/VKCOM/VKUI/issues/5049)"); // prettier-ignore
+      warn("[@vkontakte/vk-bridge] Интеграция VKUI с @vkontakte/vk-bridge устарела и будет удалена в v6. Используйте хук `useInsets()` из @vkontakte/vk-bridge-react и результат передайте в параметр `safeAreaInsets` (см. https://github.com/VKCOM/VKUI/issues/5049)"); // prettier-ignore
     }
   }
 

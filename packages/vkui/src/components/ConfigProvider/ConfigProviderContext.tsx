@@ -35,7 +35,7 @@ export interface ConfigProviderContextInterface {
    *
    * > ⚠️ В **v6** свойство будет удалено (см. https://github.com/VKCOM/VKUI/issues/5049).
    * >
-   * > Используете вместо него новые свойства:
+   * > Используйте вместо него новые свойства:
    * >
    * > - `webviewType={WebviewType.INTERNAL}` -> `hasCustomPanelHeaderAfter={false}`.
    * > - `webviewType={WebviewType.VKAPPS}` -> `hasCustomPanelHeaderAfter={true}`. При необходимости передайте `customPanelHeaderAfterMinWidth={<value>}` (по умолчанию равен `90`).
