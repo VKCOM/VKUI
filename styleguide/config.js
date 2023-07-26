@@ -323,6 +323,19 @@ const baseConfig = {
       ],
     },
     {
+      name: 'Интеграции',
+      sectionDepth: 1,
+      expand: true,
+      sections: [
+        {
+          title: 'VK Mini Apps',
+          name: 'integrations-vk-mini-apps',
+          contentTitle: 'Интеграция с VK Mini Apps',
+          content: './pages/integrations_vk_mini_apps.md',
+        },
+      ],
+    },
+    {
       name: 'Прочее',
       expand: true,
       sectionDepth: 1,

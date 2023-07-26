@@ -25,10 +25,7 @@ export const AdaptivityProvider = ({
   // TODO [>=6]: удалить использование хука (#5049)
   /* eslint-disable @typescript-eslint/naming-convention */
   const LEGACY_isPerhapsPropsByBridgeTypeAdaptive =
-    viewWidth !== undefined &&
-    viewHeight !== undefined &&
-    sizeX !== undefined &&
-    sizeY !== undefined;
+    viewWidth !== undefined && viewHeight !== undefined;
   const LEGACY_isPerhapsPropsByBridgeTypeForceMobile =
     viewWidth !== undefined && sizeX !== undefined && sizeY !== undefined;
   const LEGACY_disableInternalUseBridgeAdaptivity =
