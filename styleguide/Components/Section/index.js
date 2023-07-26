@@ -15,6 +15,7 @@ const Section = ({ section, depth }) => {
     slug,
     filepath,
     content,
+    contentTitle,
     components,
     sections,
     description,
@@ -46,6 +47,7 @@ const Section = ({ section, depth }) => {
       slug={slug}
       filepath={filepath}
       content={contentJsx}
+      contentTitle={contentTitle}
       components={componentsJsx}
       sections={sectionsJsx}
       depth={depth}
