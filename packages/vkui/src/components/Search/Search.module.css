@@ -1,10 +1,13 @@
 .Search {
   display: flex;
   overflow: hidden;
-  padding: 8px var(--vkui--size_base_padding_horizontal--regular);
   -webkit-tap-highlight-color: transparent;
 
   --vkui_internal--search_height: var(--vkui--size_search_height--regular);
+}
+
+.Search--withPadding {
+  padding: 8px var(--vkui--size_base_padding_horizontal--regular);
 }
 
 /*

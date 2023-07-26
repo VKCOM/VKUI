@@ -29,6 +29,10 @@ export interface SearchProps
   defaultValue?: string;
   iconAriaLabel?: string;
   clearAriaLabel?: string;
+  /**
+   * Удаляет отступы у компонента
+   */
+  noPadding?: boolean;
 }
 
 /**
@@ -49,6 +53,7 @@ export const Search = ({
   value: valueProp,
   iconAriaLabel,
   clearAriaLabel = 'Очистить',
+  noPadding,
   ...inputProps
 }: SearchProps) => {
   const inputRef = useExternRef(getRef);
@@ -113,6 +118,7 @@ export const Search = ({
         after && styles['Search--has-after'],
         icon && styles['Search--has-icon'],
         inputProps.disabled && styles['Search--disabled'],
+        !noPadding && styles['Search--withPadding'],
         className,
       )}
       style={style}
