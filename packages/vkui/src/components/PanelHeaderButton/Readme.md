@@ -40,11 +40,3 @@ import { Icon28SettingsOutline, Icon28Notifications } from '@vkontakte/icons';
   }
 />;
 ```
-
-<!--TODO [>=6]: удалить информацию про VK Mini Apps-->
-
-**VK Mini Apps**
-
-Если вы разрабатываете приложение на платформе [VK Mini Apps](https://vk.com/vkappsdev), то вам
-будет недоступен слот `after`, т.к. на их месте отображаются нативные кнопки для управления
-приложением.
