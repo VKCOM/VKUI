@@ -16,6 +16,7 @@ const sizeYClassNames = {
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   mode?: 'primary' | 'outline' | 'tertiary';
+  appearance?: 'accent' | 'neutral';
   size?: 's' | 'm' | 'l';
   selected?: boolean;
   /**
@@ -56,6 +57,7 @@ const SubnavigationButtonTypography = ({
  */
 export const SubnavigationButton = ({
   mode = 'primary',
+  appearance = 'accent',
   size = 'm',
   selected,
   textLevel = '1',
@@ -85,6 +87,10 @@ export const SubnavigationButton = ({
           outline: styles['SubnavigationButton--mode-outline'],
           tertiary: styles['SubnavigationButton--mode-tertiary'],
         }[mode],
+        {
+          accent: styles['SubnavigationButton--appearance-accent'],
+          neutral: styles['SubnavigationButton--appearance-neutral'],
+        }[appearance],
         selected && styles['SubnavigationButton--selected'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         className,

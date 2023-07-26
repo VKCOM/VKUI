@@ -7,6 +7,7 @@
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const SubnavigationButtonExample = () => {
+  const [appearance, setAppearance] = useState('accent');
   const [textLevel, setTextLevel] = useState('2');
   const [sizeY, setSizeY] = useState('compact');
   const [size, setSize] = useState('m');
@@ -29,11 +30,12 @@ const SubnavigationButtonExample = () => {
             width: '100%',
           }}
         >
-          {['primary', 'tertiary', 'outline'].map((mode) => (
+          {['primary', 'outline', 'tertiary'].map((mode) => (
             <Div key={mode}>
               <SubnavigationButton
                 textLevel={textLevel}
                 mode={mode}
+                appearance={appearance}
                 size={size}
                 before={buttonBefore}
                 after={buttonAfter}
@@ -47,6 +49,16 @@ const SubnavigationButtonExample = () => {
         </div>
       </AdaptivityProvider>
       <div style={{ minWidth: 200 }}>
+        <FormItem top="appearance">
+          <Select
+            value={appearance}
+            onChange={(e) => setAppearance(e.target.value)}
+            options={[
+              { label: 'accent', value: 'accent' },
+              { label: 'neutral', value: 'neutral' },
+            ]}
+          />
+        </FormItem>
         <FormItem top="text level">
           <Select
             value={textLevel}
