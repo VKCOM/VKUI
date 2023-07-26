@@ -2,9 +2,9 @@ import React from 'react';
 import Components from '@rsg-components/Components';
 import { useStyleGuideContext } from '@rsg-components/Context';
 import Examples from '@rsg-components/Examples';
-import SectionRenderer from '@rsg-components/Section/SectionRenderer';
 import Sections from '@rsg-components/Sections';
 import PropTypes from 'prop-types';
+import SectionRenderer from './SectionRenderer';
 
 const Section = ({ section, depth }) => {
   const {
@@ -15,6 +15,7 @@ const Section = ({ section, depth }) => {
     slug,
     filepath,
     content,
+    contentTitle,
     components,
     sections,
     description,
@@ -46,6 +47,7 @@ const Section = ({ section, depth }) => {
       slug={slug}
       filepath={filepath}
       content={contentJsx}
+      contentTitle={contentTitle}
       components={componentsJsx}
       sections={sectionsJsx}
       depth={depth}

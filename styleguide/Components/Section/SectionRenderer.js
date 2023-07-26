@@ -4,8 +4,18 @@ import SectionHeading from '@rsg-components/SectionHeading';
 import PropTypes from 'prop-types';
 
 export const SectionRenderer = (allProps) => {
-  const { title, name, slug, content, components, sections, depth, description, pagePerSection } =
-    allProps;
+  const {
+    title,
+    name,
+    slug,
+    content,
+    contentTitle,
+    components,
+    sections,
+    depth,
+    description,
+    pagePerSection,
+  } = allProps;
 
   return (
     <section data-testid={`section-${slug}`}>
@@ -17,7 +27,7 @@ export const SectionRenderer = (allProps) => {
           pagePerSection={pagePerSection}
           slotProps={allProps}
         >
-          {title || name}
+          {contentTitle || title || name}
         </SectionHeading>
       )}
       {description && <Markdown text={description} />}
@@ -33,6 +43,7 @@ SectionRenderer.propTypes = {
   description: PropTypes.string,
   slug: PropTypes.string.isRequired,
   content: PropTypes.node,
+  contentTitle: PropTypes.string,
   components: PropTypes.node,
   sections: PropTypes.node,
   isolated: PropTypes.bool,
