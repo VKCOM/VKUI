@@ -36,7 +36,7 @@ export const AdaptivityProvider = ({
   if (process.env.NODE_ENVIRONMENT === 'development') {
     // TODO [>=6]: удалить warn
     if (!LEGACY_disableInternalUseBridgeAdaptivity) {
-      warn("[@vkontakte/vk-bridge's deprecated] Если вы используете VK Bridge, то используйте хук `useAdaptivity()` из @vkontakte/vk-bridge-react и результат передайте в компонент (см. https://github.com/VKCOM/VKUI/issues/5049)"); // prettier-ignore
+      warn("[@vkontakte/vk-bridge] Интеграция VKUI с @vkontakte/vk-bridge устарела и будет удалена в v6. Используйте хук `useAdaptivity()` из @vkontakte/vk-bridge-react и результат передайте в компонент (см. https://github.com/VKCOM/VKUI/issues/5049)"); // prettier-ignore
     }
   }
 

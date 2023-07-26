@@ -37,13 +37,19 @@ export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
   /**
    * Будет вызвана для обновления контента (прим.: функция должна быть мемоизированным коллбэком)
    *
-   * > ⚠️ В **v6** необходимо будет самостоятельно вызывать функцию `runTapticImpactOccurred()`
-   * > из `@vkontakte/vk-bridge-react` (см. https://github.com/VKCOM/VKUI/issues/5049).
+   * > ⚠️ **Для разработчиков VK Mini Apps**
    * >
-   * > В рамках **v5** вы уже можете вызывать `runTapticImpactOccurred()` в обработчике `onRefresh()`,
-   * > но с одним условием – необходимо возвращать результат выполнения функции `runTapticImpactOccurred()`,
-   * > чтобы исключить его двойной вызов. Результат функции это `boolean`, если вернётся `true`, то
-   * > для нас это будет отвечать, что вызывать `runTapticImpactOccurred()` со стороны **VKUI** не нужно.
+   * > Сейчас метод под конец выполнения вызывает `runTapticImpactOccurred()`.
+   * >
+   * > В **v6** нужно будет самостоятельно вызывать эту функцию в вашем обработчике `onRefresh()`.
+   * > (см. https://github.com/VKCOM/VKUI/issues/5049). Функцию можете импортировать её из
+   * > бибилиотеки `@vkontakte/vk-bridge-react`.
+   * >
+   * > Чтобы подготовить ваше мини-приложение к обновлению до **v6**, в рамках **v5** вы уже можете
+   * > вызывать `runTapticImpactOccurred()`, но с одним условием: вы должны вернуть результат
+   * > выполнения функции, чтобы исключить двойной вызов. Результат функции — `boolean`. Если
+   * > вернётся `true`, значит, вызывать `runTapticImpactOccurred()` снова со стороны **VKUI** —
+   * > не нужно.
    * >
    * > ```jsx
    * > const onRefresh = React.useCallback(() => {
