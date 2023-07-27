@@ -87,6 +87,11 @@ export interface TappableProps
   focusVisibleMode?: LiteralUnion<FocusVisibleMode, string>;
   onEnter?(outputEvent: MouseEvent): void;
   onLeave?(outputEvent: MouseEvent): void;
+  /**
+   * Задает border-radius элементу
+   * В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`
+   */
+  borderRadiusMode?: 'auto' | 'inherit';
 }
 
 interface Wave {
@@ -195,6 +200,7 @@ export const Tappable = ({
   onLeave,
   className,
   hovered: hoveredProp,
+  borderRadiusMode = 'auto',
   ...props
 }: TappableProps) => {
   Component = Component || ((props.href ? 'a' : 'div') as React.ElementType);
@@ -330,6 +336,7 @@ export const Tappable = ({
         opacity: styles['Tappable--active-opacity'],
       }[activeMode],
     focusVisible && styles['Tappable--focus-visible'],
+    borderRadiusMode === 'inherit' && styles['Tappable--borderRadiusInherit'],
   );
 
   const handlers: RootComponentProps = {

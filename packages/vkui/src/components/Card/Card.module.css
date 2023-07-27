@@ -17,7 +17,7 @@
   background: var(--vkui--color_background_modal);
 }
 
-.Card--mode-outline::after {
+.Card--withBorder::after {
   position: absolute;
   left: 0;
   top: 0;
