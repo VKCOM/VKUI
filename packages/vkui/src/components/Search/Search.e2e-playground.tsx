@@ -27,6 +27,9 @@ export const SearchPlayground = (props: ComponentPlaygroundProps) => {
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis ultrices purus id tempor',
           ],
         },
+        {
+          noPadding: [true],
+        },
       ]}
     >
       {(props: SearchProps) => <Search style={{ maxWidth: '320px' }} {...props} />}
