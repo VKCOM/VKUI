@@ -8,6 +8,7 @@
   cursor: pointer;
   font-size: inherit;
   font-family: inherit;
+  line-height: inherit;
   display: inline;
   border-radius: 0;
 }
