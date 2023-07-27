@@ -70,3 +70,31 @@ export const ButtonPlayground = (props: ComponentPlaygroundProps) => {
     </ComponentPlayground>
   );
 };
+
+export const ButtonWithConterPlayground = (props: ComponentPlaygroundProps) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          mode: ['primary', 'secondary', 'tertiary', 'outline', 'link'],
+          appearance: ['accent', 'positive', 'negative', 'neutral', 'overlay', 'accent-invariable'],
+          size: ['l'],
+          after: [<Counter key="counter">16</Counter>],
+        },
+      ]}
+    >
+      {(props: ButtonProps) => {
+        const ButtonElement = <Button {...props}>Кнопка</Button>;
+        if (props.appearance === 'overlay') {
+          return (
+            <div style={{ backgroundColor: 'var(--vkui--color_background_contrast_inverse)' }}>
+              {ButtonElement}
+            </div>
+          );
+        }
+        return ButtonElement;
+      }}
+    </ComponentPlayground>
+  );
+};
