@@ -28,6 +28,9 @@ export const NativeSelectPlayground = (props: ComponentPlaygroundProps) => {
         {
           status: ['error', 'valid'],
         },
+        {
+          selectType: ['plain', 'accent'],
+        },
       ]}
     >
       {(props: NativeSelectProps) => (
