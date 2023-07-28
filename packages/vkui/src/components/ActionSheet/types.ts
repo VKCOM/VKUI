@@ -19,6 +19,8 @@ export interface SharedDropdownProps extends FocusTrapProps {
   /**
    * Направление на десктопе
    *  @deprecated v5.7.0
+   *
+   * Используйте `placement` для позиционирования
    */
   popupDirection?: PopupDirection;
   /**
