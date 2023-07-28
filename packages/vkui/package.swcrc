@@ -21,7 +21,12 @@
 
     "experimental": {
       "plugins": [
-        ["@project-tools/swc-transform-css-modules", {}],
+        [
+          "swc-plugin-css-modules",
+          {
+            "generate_scoped_name": "vkui[local]"
+          }
+        ],
         [
           "swc-plugin-transform-remove-imports",
           {
