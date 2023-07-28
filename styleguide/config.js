@@ -3,10 +3,14 @@ const { argv } = require('yargs');
 const { VKUI_PACKAGE } = require('../shared');
 const { reactDocgenTypescript } = require('./propsParser.config');
 
+/**
+ * @type {import('react-styleguidist').StyleguidistConfig}
+ */
 const baseConfig = {
   title: 'VKUI styleguide',
   styleguideDir: path.join(__dirname, argv.dist || 'dist'),
   template: {
+    lang: 'ru',
     head: {
       links: [
         {
