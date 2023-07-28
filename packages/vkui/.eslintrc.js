@@ -117,7 +117,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/no-unknown-property': ['error'],
 
-    '@project-tools/vkui/no-object-expression-in-arguments': [
+    '@vkontakte/no-object-expression-in-arguments': [
       'error',
       {
         onlyForFunctionsWithNames: ['classNames'],
