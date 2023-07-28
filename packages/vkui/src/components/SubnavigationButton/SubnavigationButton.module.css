@@ -110,6 +110,15 @@
 }
 
 /**
+ * appearance
+ */
+
+.SubnavigationButton--appearance-neutral .SubnavigationButton__expandableIcon,
+.SubnavigationButton--appearance-neutral .SubnavigationButton__before {
+  color: var(--vkui--color_icon_primary);
+}
+
+/**
  * selected
  */
 
@@ -120,14 +129,19 @@
   border: 0;
 }
 
-.SubnavigationButton--selected.SubnavigationButton--mode-tertiary {
+.SubnavigationButton--selected.SubnavigationButton--mode-tertiary,
+.SubnavigationButton--selected.SubnavigationButton--appearance-neutral {
   background-color: var(--vkui--color_transparent--active);
   color: var(--vkui--color_text_primary);
 }
 
-.SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary)
+.SubnavigationButton--selected.SubnavigationButton--appearance-accent:not(
+    .SubnavigationButton--mode-tertiary
+  )
   .SubnavigationButton__before,
-.SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary)
+.SubnavigationButton--selected.SubnavigationButton--appearance-accent:not(
+    .SubnavigationButton--mode-tertiary
+  )
   .SubnavigationButton__expandableIcon {
   color: var(--vkui--color_icon_contrast_themed);
 }
@@ -142,9 +156,16 @@
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast_themed);
 }
 
-.SubnavigationButton--selected:not(.SubnavigationButton--mode-tertiary) {
+.SubnavigationButton--selected.SubnavigationButton--appearance-accent:not(
+    .SubnavigationButton--mode-tertiary
+  ) {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_content);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_accent_themed);
+}
+
+.SubnavigationButton--selected.SubnavigationButton--appearance-neutral {
+  --vkui_internal--counter_inherit_background: var(--vkui--color_background_content);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_text_primary);
 }
 
 :global(.vkuiInternalSubnavigationBar--mode-fixed) .SubnavigationButton {

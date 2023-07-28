@@ -9,6 +9,23 @@ import { Caption } from '../Typography/Caption/Caption';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './SubnavigationButton.module.css';
 
+const appearanceStyles = {
+  accent: styles['SubnavigationButton--appearance-accent'],
+  neutral: styles['SubnavigationButton--appearance-neutral'],
+};
+
+const modeStyles = {
+  primary: styles['SubnavigationButton--mode-primary'],
+  outline: styles['SubnavigationButton--mode-outline'],
+  tertiary: styles['SubnavigationButton--mode-tertiary'],
+};
+
+const sizeStyles = {
+  s: styles['SubnavigationButton--size-s'],
+  m: styles['SubnavigationButton--size-m'],
+  l: styles['SubnavigationButton--size-l'],
+};
+
 const sizeYClassNames = {
   none: styles['SubnavigationButton--sizeY-none'],
   [SizeType.COMPACT]: styles['SubnavigationButton--sizeY-compact'],
@@ -16,6 +33,7 @@ const sizeYClassNames = {
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   mode?: 'primary' | 'outline' | 'tertiary';
+  appearance?: 'accent' | 'neutral';
   size?: 's' | 'm' | 'l';
   selected?: boolean;
   /**
@@ -56,6 +74,7 @@ const SubnavigationButtonTypography = ({
  */
 export const SubnavigationButton = ({
   mode = 'primary',
+  appearance = 'accent',
   size = 'm',
   selected,
   textLevel = '1',
@@ -75,16 +94,9 @@ export const SubnavigationButton = ({
       focusVisibleMode="outside"
       className={classNames(
         styles['SubnavigationButton'],
-        {
-          s: styles['SubnavigationButton--size-s'],
-          m: styles['SubnavigationButton--size-m'],
-          l: styles['SubnavigationButton--size-l'],
-        }[size],
-        {
-          primary: styles['SubnavigationButton--mode-primary'],
-          outline: styles['SubnavigationButton--mode-outline'],
-          tertiary: styles['SubnavigationButton--mode-tertiary'],
-        }[mode],
+        sizeStyles[size],
+        modeStyles[mode],
+        appearanceStyles[appearance],
         selected && styles['SubnavigationButton--selected'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         className,
