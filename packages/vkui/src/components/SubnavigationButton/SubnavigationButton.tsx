@@ -3,10 +3,10 @@ import { Icon16Dropdown } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
-import { HasChildren, HasComponent } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { TypographyProps } from '../Typography/Typography';
 import styles from './SubnavigationButton.module.css';
 
 const appearanceStyles = {
@@ -51,12 +51,8 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   expandable?: boolean;
 }
 
-type SubnavigationButtonTypographyProps = Pick<
-  SubnavigationButtonProps,
-  'textLevel' | 'className'
-> &
-  HasComponent &
-  HasChildren;
+type SubnavigationButtonTypographyProps = TypographyProps &
+  Pick<SubnavigationButtonProps, 'textLevel'>;
 
 const SubnavigationButtonTypography = ({
   textLevel,
@@ -86,6 +82,7 @@ export const SubnavigationButton = ({
   ...restProps
 }: SubnavigationButtonProps) => {
   const { sizeY = 'none' } = useAdaptivity();
+  const weight = selected ? '2' : '3';
 
   return (
     <Tappable
@@ -106,6 +103,8 @@ export const SubnavigationButton = ({
         {before && <span className={styles['SubnavigationButton__before']}>{before}</span>}
         <SubnavigationButtonTypography
           textLevel={textLevel}
+          weight={weight}
+          selected={selected}
           className={styles['SubnavigationButton__label']}
           Component="span"
         >
