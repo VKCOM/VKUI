@@ -16,7 +16,10 @@ import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
 export interface ActionSheetProps
-  extends Pick<SharedDropdownProps, 'toggleRef' | 'popupDirection' | 'popupOffsetDistance'>,
+  extends Pick<
+      SharedDropdownProps,
+      'toggleRef' | 'popupDirection' | 'popupOffsetDistance' | 'placement'
+    >,
     React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   text?: React.ReactNode;
