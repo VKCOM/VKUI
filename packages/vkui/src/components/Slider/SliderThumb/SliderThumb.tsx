@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useBooleanState } from '../../../hooks/useBooleanState';
-import { useEventListener } from '../../../hooks/useEventListener';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import {
@@ -12,8 +11,6 @@ import {
   shiftMiddleware,
   useFloating,
 } from '../../../lib/floating';
-import { touchEnabled } from '../../../lib/touch';
-import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import type { HasDataAttribute, HasRootRef } from '../../../types';
 import { FocusVisible } from '../../FocusVisible/FocusVisible';
 import { TooltipBase } from '../../TooltipBase/TooltipBase';
@@ -35,7 +32,7 @@ export const SliderThumb = ({
   withTooltip,
   ...restProps
 }: SliderThumbProps) => {
-  const { focusVisible, onBlur, onFocus } = useFocusVisible(true);
+  const { focusVisible, onBlur, onFocus } = useFocusVisible(false);
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
   const memoizedMiddlewares = React.useMemo(() => {
@@ -73,9 +70,7 @@ export const SliderThumb = ({
 
   const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
 
-  const isActive = useActiveState(handleRootRef);
-
-  const shouldShowTooltip = withTooltip && (focusVisible || isHovered || isActive);
+  const shouldShowTooltip = withTooltip && (focusVisible || isHovered);
 
   const inputValue = inputProps && inputProps.value;
   React.useEffect(
@@ -93,14 +88,10 @@ export const SliderThumb = ({
         {...restProps}
         ref={handleRootRef}
         onMouseEnter={setHoveredTrue}
-        onMouseLeave={() => {
-          setHoveredFalse();
-        }}
+        onMouseLeave={setHoveredFalse}
         className={classNames(
           styles['SliderThumb'],
           focusVisible && styles['SliderThumb--focused'],
-          isActive && styles['SliderThumb--active'],
-          isHovered && styles['SliderThumb--hover'],
           className,
         )}
       >
@@ -113,9 +104,6 @@ export const SliderThumb = ({
           onFocus={onFocus}
         />
         <FocusVisible visible={focusVisible} mode="outside" />
-        {(isHovered || isActive) && (
-          <span aria-hidden className={styles['SliderThumb__stateLayer']} />
-        )}
       </span>
       {shouldShowTooltip && (
         <TooltipBase
@@ -135,33 +123,3 @@ export const SliderThumb = ({
     </React.Fragment>
   );
 };
-
-function useActiveState(ref: React.MutableRefObject<HTMLSpanElement | null>) {
-  const {
-    value: isActive,
-    setTrue: setIsActiveTrue,
-    setFalse: setIsActiveFalse,
-  } = useBooleanState(false);
-
-  const isTouchEnabled = touchEnabled();
-  const activStateListeners = [
-    useEventListener(isTouchEnabled ? 'touchstart' : 'mousedown', setIsActiveTrue),
-    useEventListener(isTouchEnabled ? 'touchend' : 'mouseup', setIsActiveFalse),
-    useEventListener(isTouchEnabled ? 'touchcancel' : 'mouseleave', setIsActiveFalse),
-  ];
-
-  useIsomorphicLayoutEffect(
-    function subscribeActiveStateListeners() {
-      const el = ref.current;
-      if (el) {
-        activStateListeners.forEach((l) => l.add(el));
-      }
-      return () => {
-        activStateListeners.forEach((l) => l.remove());
-      };
-    },
-    [activStateListeners],
-  );
-
-  return isActive;
-}

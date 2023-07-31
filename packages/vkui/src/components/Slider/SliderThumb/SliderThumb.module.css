@@ -30,26 +30,3 @@
   overflow: hidden;
   white-space: nowrap;
 }
-
-/**
- * hover & active state
- */
-.SliderThumb__stateLayer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-  overflow: hidden;
-  border-radius: inherit;
-  transition: background-color 0.15s ease-out;
-}
-
-.SliderThumb--hover > .SliderThumb__stateLayer {
-  background-color: var(--vkui--color_transparent--hover);
-}
-
-.SliderThumb--active > .SliderThumb__stateLayer {
-  background-color: var(--vkui--color_transparent--active);
-}
