@@ -4,6 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../lib/adaptivity';
+import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
@@ -99,6 +100,7 @@ const NativeSelect = ({
       before={before}
       after={icon}
       status={status}
+      mode={getFormFieldModeFromSelectType(selectType)}
     >
       <select
         {...restProps}
