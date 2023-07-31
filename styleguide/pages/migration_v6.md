@@ -2,7 +2,7 @@
 
 <br/><br/>
 
-## Удалили завязку на [VK Mini Apps](https://vk.com/miniapps)
+## Удалили интеграцию с [VK Mini Apps](https://vk.com/miniapps) и [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge)
 
 > **Note**
 >
