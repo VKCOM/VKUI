@@ -68,23 +68,6 @@ updates:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
 
-  # Cargo
-
-  - package-ecosystem: 'cargo'
-    directory: '/tools/swc-transform-css-modules'
-    schedule:
-      interval: 'weekly'
-    allow:
-      - dependency-type: 'indirect'
-    open-pull-requests-limit: 20
-    groups:
-      cargo:
-        patterns:
-          - '*'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
-
   # GitHub Actions
 
   - package-ecosystem: 'github-actions'

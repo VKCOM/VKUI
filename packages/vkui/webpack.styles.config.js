@@ -21,7 +21,14 @@ module.exports = {
         options: {
           jsc: {
             experimental: {
-              plugins: [['@project-tools/swc-transform-css-modules', {}]],
+              plugins: [
+                [
+                  'swc-plugin-css-modules',
+                  {
+                    generate_scoped_name: 'vkui[local]',
+                  },
+                ],
+              ],
             },
           },
         },

@@ -16,8 +16,6 @@ on:
   pull_request_target:
     types: [opened, synchronize, reopened, ready_for_review]
     paths-ignore:
-      - 'tools/swc-transform-css-modules/**'
-      - '!tools/swc-transform-css-modules/swc_transform_css_modules.wasm'
       - '.husky/**'
       - '.codesandbox/**'
       - '.github/**'
