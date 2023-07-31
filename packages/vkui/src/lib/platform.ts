@@ -15,7 +15,7 @@ export enum Platform {
  * Значение, которое передаётся в качестве query-параметра при открытии VK Mini Apps
  * @see {@link https://dev.vk.com/mini-apps/development/launch-params#vk_platform vk_platform}
  *
- * @deprecated
+ * @deprecated v5.8.0
  */
 function getPlatformByQueryString(queryString: string): Platform | undefined {
   const PLATFORM_ALIAS = { desktop_web: Platform.VKCOM };

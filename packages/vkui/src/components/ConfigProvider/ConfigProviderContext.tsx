@@ -6,7 +6,7 @@ import { platform, PlatformType } from '../../lib/platform';
 /**
  * TODO [>=6]: удалить enum (#5049).
  *
- * @deprecated
+ * @deprecated v5.8.0
  */
 export enum WebviewType {
   VKAPPS = 'vkapps',
@@ -40,7 +40,7 @@ export interface ConfigProviderContextInterface {
    * > - `webviewType={WebviewType.INTERNAL}` -> `hasCustomPanelHeaderAfter={false}`.
    * > - `webviewType={WebviewType.VKAPPS}` -> `hasCustomPanelHeaderAfter={true}`. При необходимости передайте `customPanelHeaderAfterMinWidth={<value>}` (по умолчанию равен `90`).
    *
-   * @deprecated
+   * @deprecated v5.8.0
    */
   webviewType?: WebviewType.INTERNAL | WebviewType.VKAPPS;
   /**
