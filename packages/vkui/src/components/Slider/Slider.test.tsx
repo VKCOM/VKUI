@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AppRootContext } from '../../components/AppRoot/AppRootContext';
 import { setRef } from '../../lib/utils';
 import { baselineComponent, mockRect } from '../../testing/utils';
 import type { TouchEvent } from '../Touch/Touch';
@@ -206,11 +205,7 @@ describe('Slider', () => {
 
   describe('with tooltip', () => {
     it('shows tooltip on hover/focus', () => {
-      const { rerender } = render(
-        <AppRootContext.Provider value={{ keyboardInput: false }}>
-          <Slider defaultValue={30} withTooltip />
-        </AppRootContext.Provider>,
-      );
+      render(<Slider defaultValue={30} withTooltip />);
       const slider = screen.getByRole('slider');
 
       expect(screen.queryByText('30')).not.toBeInTheDocument();
@@ -223,16 +218,7 @@ describe('Slider', () => {
       userEvent.unhover(slider);
       expect(screen.queryByText('30')).not.toBeInTheDocument();
 
-      // doesn't show tooltip on focus without keyboard
-      slider.focus();
-      expect(screen.queryByText('30')).not.toBeInTheDocument();
-
-      // shows tooltip on focus with keyboard
-      rerender(
-        <AppRootContext.Provider value={{ keyboardInput: true }}>
-          <Slider defaultValue={30} withTooltip />
-        </AppRootContext.Provider>,
-      );
+      // shows tooltip on focus
       slider.focus();
       expect(screen.queryByText('30')).toBeInTheDocument();
 
