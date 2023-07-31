@@ -62,10 +62,11 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
     if (props.webviewType) {
       webviewTypeRule =
         props.webviewType === WebviewType.INTERNAL
-          ? 'замените webviewType={WebviewType.INTERNAL} на hasCustomPanelHeaderAfterProp={false}'
-          : 'замените webviewType={WebviewType.VKAPPS} на hasCustomPanelHeaderAfterProp={true}';
+          ? '3. замените webviewType={WebviewType.INTERNAL} на hasCustomPanelHeaderAfterProp={false}'
+          : '3. замените webviewType={WebviewType.VKAPPS} на hasCustomPanelHeaderAfterProp={true}';
     }
     warn(`[@vkontakte/vk-bridge's deprecated] Если вы используете VK Bridge, то:
+
 1. используйте хук \`useAppearance()\` из @vkontakte/vk-bridge-react и результат передайте в параметр \`appearance\`;
 2. передайте \`bridge.isWebView()\` в параметр \`isWebView\`;
 ${webviewTypeRule}
