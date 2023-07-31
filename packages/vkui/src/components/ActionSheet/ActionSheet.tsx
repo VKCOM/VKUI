@@ -5,6 +5,7 @@ import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { Platform } from '../../lib/platform';
+import { warnOnce } from '../../lib/warnOnce';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -15,8 +16,13 @@ import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
 import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
+const warn = warnOnce('ActionSheet');
+
 export interface ActionSheetProps
-  extends Pick<SharedDropdownProps, 'toggleRef' | 'popupDirection' | 'popupOffsetDistance'>,
+  extends Pick<
+      SharedDropdownProps,
+      'toggleRef' | 'popupDirection' | 'popupOffsetDistance' | 'placement'
+    >,
     React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   text?: React.ReactNode;
@@ -40,8 +46,9 @@ export const ActionSheet = ({
   text,
   style,
   iosCloseItem,
-  popupDirection = 'bottom',
+  popupDirection,
   popupOffsetDistance,
+  placement,
   ...restProps
 }: ActionSheetProps) => {
   const platform = usePlatform();
@@ -91,8 +98,15 @@ export const ActionSheet = ({
 
   const DropdownComponent = isDesktop ? ActionSheetDropdownDesktop : ActionSheetDropdown;
 
+  if (process.env.NODE_ENV === 'development' && popupDirection) {
+    // TODO [>=6]: popupDirection
+    warn('Свойство "popupDirection" будет удалено в v6. Используйте свойство "placement"');
+  }
+
+  popupDirection = popupDirection !== undefined ? popupDirection : 'bottom';
+
   const dropdownProps = isDesktop
-    ? Object.assign(restProps, { popupOffsetDistance, popupDirection })
+    ? Object.assign(restProps, { popupOffsetDistance, popupDirection, placement })
     : restProps;
 
   const actionSheet = (

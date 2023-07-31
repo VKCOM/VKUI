@@ -204,7 +204,7 @@ const openTitle = () =>
 
 const openBaseTop = () =>
   setPopout(
-    <ActionSheet onClose={onClose} toggleRef={baseTopTargetRef}>
+    <ActionSheet onClose={onClose} toggleRef={baseTopTargetRef} placement="top-end">
       <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
       <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
       <ActionSheetItem autoClose>Выключить комментирование</ActionSheetItem>

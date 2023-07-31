@@ -28,6 +28,7 @@ export const ActionSheetDropdownDesktop = ({
   className,
   style,
   popupOffsetDistance = 0,
+  placement: placementProp,
   ...restProps
 }: SharedDropdownProps) => {
   const { document } = useDOM();
@@ -48,6 +49,8 @@ export const ActionSheetDropdownDesktop = ({
       (typeof popupDirection === 'function' && popupDirection(elementRef) === 'top'),
     [popupDirection, elementRef],
   );
+
+  const placement = placementProp ?? (isPopupDirectionTop ? 'top-end' : 'bottom-end');
 
   const bodyClickListener = useEventListener('click', (e: MouseEvent) => {
     const dropdownElement = elementRef?.current;
@@ -76,7 +79,7 @@ export const ActionSheetDropdownDesktop = ({
     <Popper
       targetRef={targetRef}
       offsetDistance={popupOffsetDistance}
-      placement={isPopupDirectionTop ? 'top-end' : 'bottom-end'}
+      placement={placement}
       className={classNames(
         styles['ActionSheet'],
         platform === Platform.IOS && styles['ActionSheet--ios'],

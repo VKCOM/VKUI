@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { PlacementWithAuto } from '../../lib/floating/types';
 import { FocusTrapProps } from '../FocusTrap/FocusTrap';
 
 export type PopupDirection =
@@ -17,8 +18,16 @@ export interface SharedDropdownProps extends FocusTrapProps {
   toggleRef?: ToggleRef; // TODO [>=6]: сделать обязательным
   /**
    * Направление на десктопе
+   *  @deprecated v5.7.0
+   *
+   * Используйте `placement` для позиционирования
    */
   popupDirection?: PopupDirection;
+  /**
+   * Позиционирование всплывающего окна для десктопа.
+   * Компонент выберет наилучшее расположение сам, но можно задать приоритетное направление с помощью этого свойства
+   */
+  placement?: PlacementWithAuto;
   /**
    * Отступ, где заданное кол-во единиц равняется пикселям
    * */

@@ -12,7 +12,7 @@ const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();
 
 export type ActionSheetDropdownProps = Omit<
   SharedDropdownProps,
-  'popupDirection' | 'popupOffsetDistance'
+  'popupDirection' | 'popupOffsetDistance' | 'placement'
 >;
 
 export const ActionSheetDropdown = ({
