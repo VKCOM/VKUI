@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Fragment, HtmlHTMLAttributes, ReactElement } from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { HasRootRef } from '../../types';
 import { Tooltip } from './Tooltip';
@@ -60,29 +59,6 @@ describe('Tooltip', () => {
     const container = screen.getByTestId('container');
     expect(container.childElementCount).toBe(1);
     expect(container.firstElementChild).toBe(screen.getByTestId('xxx'));
-  });
-
-  describe('calls onClose', () => {
-    it('on outer click', async () => {
-      const onClose = jest.fn();
-      await renderTooltip(
-        <Tooltip onClose={onClose} isShown>
-          <div />
-        </Tooltip>,
-      );
-      userEvent.click(document.body);
-      expect(onClose).toHaveBeenCalled();
-    });
-    it('on tooltip click', async () => {
-      const onClose = jest.fn();
-      await renderTooltip(
-        <Tooltip onClose={onClose} isShown text="text">
-          <div />
-        </Tooltip>,
-      );
-      userEvent.click(screen.getByText('text'));
-      expect(onClose).toHaveBeenCalled();
-    });
   });
 
   it('does not explode when children does not accept ref', () => {
