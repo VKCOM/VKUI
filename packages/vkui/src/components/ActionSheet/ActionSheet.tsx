@@ -5,6 +5,7 @@ import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { Platform } from '../../lib/platform';
+import { warnOnce } from '../../lib/warnOnce';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -14,6 +15,8 @@ import { ActionSheetDropdown } from './ActionSheetDropdown';
 import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
 import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
+
+const warn = warnOnce('ActionSheet');
 
 export interface ActionSheetProps
   extends Pick<
@@ -43,7 +46,7 @@ export const ActionSheet = ({
   text,
   style,
   iosCloseItem,
-  popupDirection = 'bottom',
+  popupDirection,
   popupOffsetDistance,
   placement,
   ...restProps
@@ -94,6 +97,13 @@ export const ActionSheet = ({
   const contextValue = useObjectMemo({ onItemClick, isDesktop });
 
   const DropdownComponent = isDesktop ? ActionSheetDropdownDesktop : ActionSheetDropdown;
+
+  if (process.env.NODE_ENV === 'development' && popupDirection) {
+    // TODO [>=6]: popupDirection
+    warn('Свойство "popupDirection" будет удалено в v6. Используйте свойство "placement"');
+  }
+
+  popupDirection = popupDirection !== undefined ? popupDirection : 'bottom';
 
   const dropdownProps = isDesktop
     ? Object.assign(restProps, { popupOffsetDistance, popupDirection, placement })
