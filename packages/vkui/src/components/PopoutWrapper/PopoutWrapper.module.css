@@ -55,6 +55,7 @@
   justify-content: center;
   width: 100%;
   pointer-events: none;
+  position: relative;
 }
 
 .PopoutWrapper__content > * {

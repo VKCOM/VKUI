@@ -186,7 +186,7 @@ export const Popover = ({
           }
           renderContent={({ className: wrapperClassName }) => (
             <FocusTrap
-              className={wrapperClassName}
+              className={classNames(styles['Popover__in'], wrapperClassName)}
               onClose={handleContentKeyDownEscape}
               restoreFocus={restoreFocus}
             >

@@ -16,6 +16,10 @@
   left: calc(-1 * var(--vkui_internal--popover_safe_zone_padding));
 }
 
+.Popover__in {
+  position: relative;
+}
+
 @keyframes vkui-popover-fadein {
   from {
     opacity: 0;
