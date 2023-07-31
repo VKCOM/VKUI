@@ -8,7 +8,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { VKUITouchEvent } from '../../lib/touch';
+import { touchEnabled, VKUITouchEvent } from '../../lib/touch';
 import { HasRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
@@ -102,8 +102,11 @@ export const Search = ({
     (e: TouchEvent) => {
       e.originalEvent.preventDefault();
       inputRef.current?.focus();
+      if (touchEnabled()) {
+        onCancel();
+      }
     },
-    [inputRef],
+    [inputRef, onCancel],
   );
 
   return (
