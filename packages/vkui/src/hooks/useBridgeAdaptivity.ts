@@ -44,7 +44,7 @@ function resolveAdaptivity(data: any): BridgeAdaptivity | null {
 
 /**
  * TODO [>=6]: удалить хук (#5049)
- * @deprecated
+ * @deprecated v5.8.0
  */
 export function useBridgeAdaptivity(disable = false): BridgeAdaptivity {
   const [bridgeAdaptivity, setBridgeAdaptivity] = React.useState<BridgeAdaptivity>(initialState);

@@ -43,7 +43,7 @@ function resolveInsets(e: BridgeEvent): Insets | null {
 
 /**
  * TODO [>=6]: удалить хук (#5049)
- * @deprecated
+ * @deprecated v5.8.0
  */
 export function useInsets(disabled = false): Insets {
   const [insets, setInsets] = React.useState<Insets>(initialState);

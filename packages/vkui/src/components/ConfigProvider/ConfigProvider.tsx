@@ -22,7 +22,7 @@ export interface ConfigProviderProps extends Partial<ConfigProviderContextInterf
    * > Используйте хук `useAppearance()` из библиотеки `@vkontakte/vk-bridge-react`, если вам нужно
    * > определять, что `appearance` был передан через VK Bridge.
    *
-   * @deprecated
+   * @deprecated v5.8.0
    */
   onDetectAppearanceByBridge?: () => void; // TODO [>=6]: удалить
   children: React.ReactNode;
