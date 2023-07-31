@@ -71,7 +71,7 @@ export const ButtonPlayground = (props: ComponentPlaygroundProps) => {
   );
 };
 
-export const ButtonWithConterPlayground = (props: ComponentPlaygroundProps) => {
+export const ButtonWithCounterPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
