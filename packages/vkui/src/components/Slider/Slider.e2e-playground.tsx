@@ -1,8 +1,5 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { Group } from '../../components/Group/Group';
-import { Panel } from '../../components/Panel/Panel';
-import { View } from '../../components/View/View';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
@@ -62,16 +59,14 @@ export const SliderPlaygroundForTooltipTest = ({
   return (
     <ConfigProvider appearance={appearance}>
       <AdaptivityProvider hasPointer>
-        <AppRoot>
-          <View activePanel="panel">
-            <Panel id="panel">
-              <Group>
-                <div style={{ padding: '50px 30px 30px', minWidth: '320px' }}>
-                  <Slider withTooltip {...restProps} />
-                </div>
-              </Group>
-            </Panel>
-          </View>
+        <AppRoot
+          style={{
+            padding: '80px 30px 30px',
+            width: '320px',
+            height: 'auto',
+          }}
+        >
+          <Slider withTooltip {...restProps} />
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
