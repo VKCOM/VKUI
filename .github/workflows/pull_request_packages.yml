@@ -1,19 +1,7 @@
 name: 'Pull Request / Packages'
 
-# > Про 'pull_request_target' и про риски его использования можно ознакомиться в статье по ссылке ниже
-# > https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
-#
-# При 'pull_request_target' свойство `github.ref` будет соответствовать `refs/head/master`, поэтому необходимо
-# вручную перебивать его на `github.event.pull_request.number` там, где это необходимо.
-#
-# Пример:
-# ```
-# - uses: actions/checkout@v3
-#   with:
-#     ref: refs/pull/${{ github.event.pull_request.number }}/merge
-# ```
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     paths-ignore:
       - '.husky/**'
