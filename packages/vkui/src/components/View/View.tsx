@@ -3,6 +3,7 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
 import { useTimeout } from '../../hooks/useTimeout';
+import { useViewTransitionState } from '../../hooks/useViewTransitionState';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { blurActiveElement, canUseDOM, useDOM } from '../../lib/dom';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
@@ -485,6 +486,18 @@ export const View = ({
     swipingBackTransitionEndHandler,
     waitTransitionFinish,
   ]);
+
+  const { transitionDirection, activeView, prevView } = useViewTransitionState();
+  console.log(
+    'View: ',
+    restProps.id,
+    '| transition: ',
+    transitionDirection,
+    '| active view: ',
+    activeView,
+    '| prev view: ',
+    prevView,
+  );
 
   return (
     <Touch
