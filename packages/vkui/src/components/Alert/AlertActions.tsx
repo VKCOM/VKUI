@@ -45,7 +45,7 @@ export const AlertActions = ({
       {actions.map((action, i) => (
         <React.Fragment key={i}>
           {renderAction({
-            action,
+            ...action,
             onClick: () => onItemClick(action),
           })}
         </React.Fragment>

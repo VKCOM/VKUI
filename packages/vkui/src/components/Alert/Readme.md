@@ -113,14 +113,9 @@ const Example = () => {
 ## renderAction
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
-const renderAction = ({ action, ...restProps }) => {
-  const { title, action: actionProp, autoClose, mode, ...restActionProps } = action;
-  const platform = usePlatform();
-
-  const buttonMode = action.mode === 'cancel' ? 'secondary' : 'primary';
-
+const renderAction = ({ title, action, autoClose, mode, ...restProps }) => {
   return (
-    <Button mode={buttonMode} size="m" {...restActionProps} {...restProps}>
+    <Button mode={mode === 'cancel' ? 'secondary' : 'primary'} size="m" {...restProps}>
       {title}
     </Button>
   );
@@ -141,7 +136,6 @@ const Example = () => {
             title: 'Лишить права',
             mode: 'destructive',
             autoClose: true,
-            action: () => addActionLogItem('Право на модерацию контента убрано.'),
           },
           {
             title: 'Отмена',
@@ -165,12 +159,16 @@ const Example = () => {
 
   return (
     <SplitLayout popout={popout}>
-      <Panel id="alert">
-        <PanelHeader>Alert</PanelHeader>
-        <Group>
-          <CellButton onClick={openAction}>Лишить права</CellButton>
-        </Group>
-      </Panel>
+      <SplitCol>
+        <View activePanel="alert">
+          <Panel id="alert">
+            <PanelHeader>Alert</PanelHeader>
+            <Group>
+              <CellButton onClick={openAction}>Лишить права</CellButton>
+            </Group>
+          </Panel>
+        </View>
+      </SplitCol>
     </SplitLayout>
   );
 };

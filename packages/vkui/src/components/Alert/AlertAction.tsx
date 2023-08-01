@@ -7,18 +7,15 @@ import { Tappable } from '../Tappable/Tappable';
 import { AlertActionInterface } from './Alert';
 import styles from './Alert.module.css';
 
-const AlertActionIos = ({ action, ...restProps }: AlertActionProps) => {
-  const { title, action: actionProp, autoClose, mode, ...restActionProps } = action;
-
+const AlertActionIos = ({ title, action, autoClose, mode, ...restProps }: AlertActionInterface) => {
   return (
     <Tappable
-      Component={restActionProps.href ? 'a' : 'button'}
+      Component={restProps.href ? 'a' : 'button'}
       className={classNames(
         styles['Alert__action'],
         mode === 'destructive' && styles['Alert__action--mode-destructive'],
         mode === 'cancel' && styles['Alert__action--mode-cancel'],
       )}
-      {...restActionProps}
       {...restProps}
     >
       {title}
@@ -26,14 +23,19 @@ const AlertActionIos = ({ action, ...restProps }: AlertActionProps) => {
   );
 };
 
-const AlertActionBase = ({ action, ...restProps }: AlertActionProps) => {
-  const { title, action: actionProp, autoClose, mode, ...restActionProps } = action;
+const AlertActionBase = ({
+  title,
+  action,
+  autoClose,
+  mode,
+  ...restProps
+}: AlertActionInterface) => {
   const platform = usePlatform();
 
   let buttonMode: ButtonProps['mode'] = 'tertiary';
 
   if (platform === Platform.VKCOM) {
-    buttonMode = action.mode === 'cancel' ? 'secondary' : 'primary';
+    buttonMode = mode === 'cancel' ? 'secondary' : 'primary';
   }
 
   return (
@@ -44,7 +46,6 @@ const AlertActionBase = ({ action, ...restProps }: AlertActionProps) => {
       )}
       mode={buttonMode}
       size="m"
-      {...restActionProps}
       {...restProps}
     >
       {title}
@@ -52,11 +53,7 @@ const AlertActionBase = ({ action, ...restProps }: AlertActionProps) => {
   );
 };
 
-export interface AlertActionProps {
-  action: AlertActionInterface;
-  onClick: VoidFunction;
-}
-export const AlertAction = (props: AlertActionProps) => {
+export const AlertAction = (props: AlertActionInterface) => {
   const platform = usePlatform();
 
   if (platform === Platform.IOS) {

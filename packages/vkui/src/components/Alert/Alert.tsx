@@ -12,13 +12,12 @@ import { ButtonProps } from '../Button/Button';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
-import { AlertActionProps } from './AlertAction';
 import { AlertActions } from './AlertActions';
 import { AlertHeader, AlertText } from './AlertTypography';
 import styles from './Alert.module.css';
 
 export interface AlertActionInterface
-  extends Pick<ButtonProps, 'Component'>,
+  extends Pick<ButtonProps, 'Component' | 'onClick'>,
     AnchorHTMLAttributesOnly {
   title: string;
   action?: VoidFunction;
@@ -30,7 +29,7 @@ export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
   actionsLayout?: 'vertical' | 'horizontal';
   actionsAlign?: AlignType;
   actions?: AlertActionInterface[];
-  renderAction?: (props: AlertActionProps) => React.ReactNode;
+  renderAction?: (props: AlertActionInterface) => React.ReactNode;
   header?: React.ReactNode;
   text?: React.ReactNode;
   onClose: VoidFunction;
