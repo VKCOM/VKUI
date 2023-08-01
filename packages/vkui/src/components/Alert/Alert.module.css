@@ -34,7 +34,7 @@
 
 .Alert__content {
   position: relative;
-  padding: 24px 24px 20px;
+  padding: 24px 24px 16px;
 }
 
 .Alert__action {
@@ -46,7 +46,7 @@
   display: flex;
   max-width: 100%;
   position: relative;
-  padding: 0 16px 16px;
+  padding: 0 12px 12px;
 }
 
 .Alert__header {
@@ -61,26 +61,14 @@
   justify-content: flex-end;
 }
 
-/* stylelint-disable @project-tools/stylelint-atomic */
-.Alert__actions--direction-horizontal > * {
-  margin-right: 8px;
-}
-
-.Alert__actions--direction-horizontal > *:last-child {
-  margin-right: 0;
-}
-
 .Alert__actions--direction-vertical {
   flex-direction: column;
   align-items: flex-end;
 }
 
-.Alert__actions--direction-vertical > * {
-  margin-bottom: 8px;
-}
-
-.Alert__actions--direction-vertical > *:last-child {
-  margin-bottom: 0;
+/* stylelint-disable @project-tools/stylelint-atomic */
+.Alert__actions > * {
+  margin: 4px;
 }
 /* stylelint-enable @project-tools/stylelint-atomic */
 
@@ -254,11 +242,11 @@
 }
 
 .Alert--vkcom .Alert__content {
-  padding: 24px;
+  padding-bottom: 20px;
 }
 
 .Alert--vkcom .Alert__actions {
-  padding: 0 24px 16px;
+  padding: 0 20px 12px;
 }
 
 .Alert--vkcom .Alert__button {
