@@ -67,8 +67,8 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
     }
     warn(`[@vkontakte/vk-bridge's deprecated] Если вы используете VK Bridge, то:
 
-1. используйте хук \`useAppearance()\` из @vkontakte/vk-bridge-react и результат передайте в параметр \`appearance\`;
-2. передайте \`bridge.isWebView()\` в параметр \`isWebView\`;
+1. используйте хук useAppearance() из @vkontakte/vk-bridge-react и результат передайте в параметр appearance;
+2. передайте bridge.isWebView() в параметр isWebView;
 ${webviewTypeRule}
 
 Подробности см. https://github.com/VKCOM/VKUI/issues/5049
