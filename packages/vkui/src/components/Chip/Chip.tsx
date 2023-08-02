@@ -62,24 +62,26 @@ export const Chip = ({
   const removeLabel = `${removeAriaLabel} ${getTitleFromChildren(children)}`;
 
   return (
-    <div
+    <Tappable
       className={classNames(
         styles['Chip'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        removable && styles['Chip--removable'],
         className,
       )}
-      role="option"
+      role="row"
       {...restProps}
+      Component="div"
+      hasHover={false}
+      hasActive={false}
     >
-      <div className={styles['Chip__in']} role="presentation">
+      <div className={styles['Chip__in']} role="gridcell">
         {hasReactNode(before) && <div className={styles['Chip__before']}>{before}</div>}
-        <Footnote className={styles['Chip__content']} title={title} aria-hidden>
-          {children}
-        </Footnote>
+        <Footnote className={styles['Chip__content']}>{children}</Footnote>
         {hasReactNode(after) && <div className={styles['Chip__after']}>{after}</div>}
+      </div>
 
-        {removable && (
+      {removable && (
+        <div className={styles['Chip__removable']} role="gridcell">
           <Tappable
             Component="button"
             className={styles['Chip__remove']}
@@ -88,10 +90,10 @@ export const Chip = ({
             hasActive={false}
             aria-label={removeLabel}
           >
-            <Icon16Cancel />
+            <Icon16Cancel aria-hidden />
           </Tappable>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </Tappable>
   );
 };
