@@ -10,7 +10,6 @@ const CustomPopout = ({ onClose }) => {
         style={{
           backgroundColor: 'var(--vkui--color_background_content)',
           borderRadius: 8,
-          position: 'relative',
           padding: '12px',
         }}
       >
