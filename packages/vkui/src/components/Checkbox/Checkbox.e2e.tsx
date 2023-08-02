@@ -11,29 +11,36 @@ test.describe('Checkbox', () => {
   test('sizes and description', async ({
     mount,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<CheckboxSizesAndDescriptionPlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 
-  test('simple', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  test('simple', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    expectA11yScanResults,
+    componentPlaygroundProps,
+  }) => {
     await mount(<CheckboxSimplePlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });
 
 test.describe(() => {
-  const testOptions = {
+  test.use({
     adaptivityProviderProps: { sizeY: SizeType.REGULAR },
-  };
-  test.use(testOptions);
+  });
+
   test('Checkbox', async ({
     mount,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<CheckboxPlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });

@@ -18,18 +18,20 @@ test.describe('HorizontalCellShowMore', () => {
   test('normal size', async ({
     mount,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<HorizontalCellShowMorePlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 
   test('small size', async ({
     mount,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<HorizontalCellShowMoreMobilePlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });

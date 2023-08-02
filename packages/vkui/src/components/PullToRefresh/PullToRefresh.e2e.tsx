@@ -12,6 +12,7 @@ test.describe('PullToRefresh', () => {
     page,
     mount,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<PullToRefreshPlayground {...componentPlaygroundProps} />);
@@ -19,13 +20,14 @@ test.describe('PullToRefresh', () => {
     await page.mouse.down();
     await page.mouse.move(100, 380, { steps: 10 });
 
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 
   test('renders spinner properly when parent has padding', async ({
     page,
     mount,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<PullToRefreshPlayground {...componentPlaygroundProps} paddingLeft="150px" />);
@@ -33,6 +35,6 @@ test.describe('PullToRefresh', () => {
     await page.mouse.down();
     await page.mouse.move(200, 380, { steps: 10 });
 
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });

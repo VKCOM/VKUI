@@ -12,9 +12,14 @@ test.describe('ModalCard', () => {
     },
     onlyForPlatforms: [Platform.IOS, Platform.ANDROID],
   });
-  test('mobile', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  test('mobile', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    expectA11yScanResults,
+    componentPlaygroundProps,
+  }) => {
     await mount(<ModalCardPlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });
 
@@ -26,9 +31,14 @@ test.describe('ModalCard', () => {
     },
     onlyForPlatforms: [Platform.IOS, Platform.ANDROID],
   });
-  test('tablet', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  test('tablet', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    expectA11yScanResults,
+    componentPlaygroundProps,
+  }) => {
     await mount(<ModalCardPlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });
 
@@ -39,9 +49,10 @@ test.describe(() => {
   test('ModalCard', async ({
     mount,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<ModalCardPlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });

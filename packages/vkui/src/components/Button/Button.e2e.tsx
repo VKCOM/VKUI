@@ -7,15 +7,25 @@ import {
   ButtonWithPaddingsPlayground,
 } from './Button.e2e-playground';
 
-test('Button', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+test('Button', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  expectA11yScanResults,
+  componentPlaygroundProps,
+}) => {
   await mount(<ButtonPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });
 
 test.describe('Button', () => {
-  test('counter', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+  test('counter', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    expectA11yScanResults,
+    componentPlaygroundProps,
+  }) => {
     await mount(<ButtonWithCounterPlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });
 

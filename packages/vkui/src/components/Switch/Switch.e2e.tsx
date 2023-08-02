@@ -3,9 +3,14 @@ import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
 import { SwitchFocusVisiblePlayground, SwitchPlayground } from './Switch.e2e-playground';
 
-test('Switch', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+test('Switch', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  expectA11yScanResults,
+  componentPlaygroundProps,
+}) => {
   await mount(<SwitchPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });
 
 test.describe('Switch', () => {
