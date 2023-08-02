@@ -12,24 +12,27 @@ import { ButtonProps } from '../Button/Button';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
+import { AlertActionProps } from './AlertAction';
 import { AlertActions } from './AlertActions';
 import { AlertHeader, AlertText } from './AlertTypography';
 import styles from './Alert.module.css';
 
+type AlertActionMode = 'cancel' | 'destructive' | 'default';
+
 export interface AlertActionInterface
-  extends Pick<ButtonProps, 'Component' | 'onClick'>,
+  extends Pick<ButtonProps, 'Component'>,
     AnchorHTMLAttributesOnly {
   title: string;
   action?: VoidFunction;
   autoClose?: boolean;
-  mode: 'cancel' | 'destructive' | 'default';
+  mode: AlertActionMode;
 }
 
 export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
   actionsLayout?: 'vertical' | 'horizontal';
   actionsAlign?: AlignType;
   actions?: AlertActionInterface[];
-  renderAction?: (props: AlertActionInterface) => React.ReactNode;
+  renderAction?: (props: AlertActionProps) => React.ReactNode;
   header?: React.ReactNode;
   text?: React.ReactNode;
   onClose: VoidFunction;

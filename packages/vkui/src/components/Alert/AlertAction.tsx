@@ -2,12 +2,20 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
+import { AnchorHTMLAttributesOnly } from '../../types';
 import { Button, ButtonProps } from '../Button/Button';
 import { Tappable } from '../Tappable/Tappable';
 import { AlertActionInterface } from './Alert';
 import styles from './Alert.module.css';
 
-const AlertActionIos = ({ title, action, autoClose, mode, ...restProps }: AlertActionInterface) => {
+export interface AlertActionProps
+  extends Pick<AlertActionInterface, 'Component' | 'mode'>,
+    AnchorHTMLAttributesOnly {
+  children: string;
+  onClick: React.MouseEventHandler<HTMLElement>;
+}
+
+const AlertActionIos = ({ mode, ...restProps }: AlertActionProps) => {
   return (
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
@@ -17,19 +25,11 @@ const AlertActionIos = ({ title, action, autoClose, mode, ...restProps }: AlertA
         mode === 'cancel' && styles['Alert__action--mode-cancel'],
       )}
       {...restProps}
-    >
-      {title}
-    </Tappable>
+    />
   );
 };
 
-const AlertActionBase = ({
-  title,
-  action,
-  autoClose,
-  mode,
-  ...restProps
-}: AlertActionInterface) => {
+const AlertActionBase = ({ mode, ...restProps }: AlertActionProps) => {
   const platform = usePlatform();
 
   let buttonMode: ButtonProps['mode'] = 'tertiary';
@@ -47,13 +47,11 @@ const AlertActionBase = ({
       mode={buttonMode}
       size="m"
       {...restProps}
-    >
-      {title}
-    </Button>
+    />
   );
 };
 
-export const AlertAction = (props: AlertActionInterface) => {
+export const AlertAction = (props: AlertActionProps) => {
   const platform = usePlatform();
 
   if (platform === Platform.IOS) {

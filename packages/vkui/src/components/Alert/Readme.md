@@ -113,12 +113,8 @@ const Example = () => {
 ## renderAction
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
-const renderAction = ({ title, action, autoClose, mode, ...restProps }) => {
-  return (
-    <Button mode={mode === 'cancel' ? 'secondary' : 'primary'} size="m" {...restProps}>
-      {title}
-    </Button>
-  );
+const renderAction = ({ mode, ...restProps }) => {
+  return <Button mode={mode === 'cancel' ? 'secondary' : 'primary'} size="m" {...restProps} />;
 };
 
 const Example = () => {

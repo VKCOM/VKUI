@@ -42,14 +42,20 @@ export const AlertActions = ({
         direction && directionStyles[direction],
       )}
     >
-      {actions.map((action, i) => (
-        <React.Fragment key={i}>
-          {renderAction({
-            ...action,
-            onClick: () => onItemClick(action),
-          })}
-        </React.Fragment>
-      ))}
+      {actions.map((action, i) => {
+        // Убираем
+        const { title: children, action: _, autoClose, ...restProps } = action;
+
+        return (
+          <React.Fragment key={i}>
+            {renderAction({
+              children,
+              onClick: () => onItemClick(action),
+              ...restProps,
+            })}
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 };
