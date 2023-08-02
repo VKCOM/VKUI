@@ -34,7 +34,7 @@
 
 .Alert__content {
   position: relative;
-  padding: 24px 24px 20px;
+  padding: 24px 24px 16px;
 }
 
 .Alert__action {
@@ -46,7 +46,7 @@
   display: flex;
   max-width: 100%;
   position: relative;
-  padding: 0 16px 16px;
+  padding: 0 12px 12px;
 }
 
 .Alert__header {
@@ -57,30 +57,34 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.Alert--h .Alert__actions {
+.Alert__actions--direction-horizontal {
   justify-content: flex-end;
 }
 
-.Alert--h .Alert__button {
-  margin-left: 8px;
-}
-
-.Alert--v .Alert__actions {
+.Alert__actions--direction-vertical {
   flex-direction: column;
   align-items: flex-end;
 }
 
-.Alert--v .Alert__button {
-  margin-top: 4px;
-  margin-bottom: 4px;
+/* stylelint-disable @project-tools/stylelint-atomic */
+.Alert__actions > * {
+  margin: 4px;
+}
+/* stylelint-enable @project-tools/stylelint-atomic */
+
+.Alert__actions--align-left {
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
-.Alert--v .Alert__button:first-child {
-  margin-top: 0;
+.Alert__actions--align-center {
+  justify-content: center;
+  align-items: center;
 }
 
-.Alert--v .Alert__button:last-child {
-  margin-bottom: 0;
+.Alert__actions--align-right {
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 /**
@@ -128,7 +132,7 @@
   padding: initial;
 }
 
-.Alert--ios.Alert--v .Alert__actions {
+.Alert--ios .Alert__actions--direction-vertical {
   flex-direction: column;
   align-items: initial;
 }
@@ -157,7 +161,7 @@
   background: var(--vkui--color_separator_primary_alpha);
 }
 
-.Alert--ios.Alert--h .Alert__action::after {
+.Alert--ios .Alert__actions--direction-horizontal .Alert__action::after {
   top: 0;
   right: 0;
   width: 1px;
@@ -165,25 +169,25 @@
   transform-origin: right center;
 }
 
-.Alert--ios.Alert--h .Alert__action:last-child::after {
+.Alert--ios .Alert__actions--direction-horizontal .Alert__action:last-child::after {
   content: none;
 }
 
-.Alert--ios.Alert--h .Alert__action {
+.Alert--ios .Alert__actions--direction-horizontal .Alert__action {
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 0;
 }
 
-.Alert--ios.Alert--h .Alert__action:first-child {
+.Alert--ios .Alert__actions--direction-horizontal .Alert__action:first-child {
   border-bottom-left-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
-.Alert--ios.Alert--h .Alert__action:last-child {
+.Alert--ios .Alert__actions--direction-horizontal .Alert__action:last-child {
   border-bottom-right-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
-.Alert--ios.Alert--v .Alert__action::after {
+.Alert--ios .Alert__actions--direction-vertical .Alert__action::after {
   left: 0;
   bottom: 0;
   width: 100%;
@@ -191,31 +195,31 @@
   transform-origin: center bottom;
 }
 
-.Alert--ios.Alert--v .Alert__action:last-child::after {
+.Alert--ios .Alert__actions--direction-vertical .Alert__action:last-child::after {
   content: none;
 }
 
-.Alert--ios.Alert--v .Alert__action:last-child {
+.Alert--ios .Alert__actions--direction-vertical .Alert__action:last-child {
   border-radius: 0 0 12px 12px;
 }
 
 @media (min-resolution: 2dppx) {
   .Alert--ios .Alert__content::after,
-  .Alert--ios.Alert--v .Alert__action::after {
+  .Alert--ios .Alert__actions--direction-vertical .Alert__action::after {
     transform: scaleY(0.5);
   }
 
-  .Alert--ios.Alert--h .Alert__action::after {
+  .Alert--ios .Alert__actions--direction-horizontal .Alert__action::after {
     transform: scaleX(0.5);
   }
 }
 @media (min-resolution: 3dppx) {
   .Alert--ios .Alert__content::after,
-  .Alert--ios.Alert--v .Alert__action::after {
+  .Alert--ios .Alert__actions--direction-vertical .Alert__action::after {
     transform: scaleY(0.33);
   }
 
-  .Alert--ios.Alert--h .Alert__action::after {
+  .Alert--ios .Alert__actions--direction-horizontal .Alert__action::after {
     transform: scaleX(0.33);
   }
 }
@@ -238,11 +242,11 @@
 }
 
 .Alert--vkcom .Alert__content {
-  padding: 24px;
+  padding-bottom: 20px;
 }
 
 .Alert--vkcom .Alert__actions {
-  padding: 0 24px 16px;
+  padding: 0 20px 12px;
 }
 
 .Alert--vkcom .Alert__button {

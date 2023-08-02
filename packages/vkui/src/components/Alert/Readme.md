@@ -109,3 +109,65 @@ const Example = () => {
 
 <Example />;
 ```
+
+## renderAction
+
+```jsx { "props": { "layout": false, "adaptivity": true } }
+const renderAction = ({ mode, ...restProps }) => {
+  return <Button mode={mode === 'cancel' ? 'secondary' : 'primary'} size="m" {...restProps} />;
+};
+
+const Example = () => {
+  const [popout, setPopout] = React.useState(null);
+
+  const closePopout = () => {
+    setPopout(null);
+  };
+
+  const openAction = () => {
+    setPopout(
+      <Alert
+        actions={[
+          {
+            title: 'Лишить права',
+            mode: 'destructive',
+            autoClose: true,
+          },
+          {
+            title: 'Отмена',
+            autoClose: true,
+            mode: 'cancel',
+          },
+        ]}
+        actionsAlign="left"
+        actionsLayout="horizontal"
+        renderAction={renderAction}
+        onClose={closePopout}
+        header="Подтвердите действие"
+        text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+      />,
+    );
+  };
+
+  React.useEffect(() => {
+    openAction();
+  }, []);
+
+  return (
+    <SplitLayout popout={popout}>
+      <SplitCol>
+        <View activePanel="alert">
+          <Panel id="alert">
+            <PanelHeader>Alert</PanelHeader>
+            <Group>
+              <CellButton onClick={openAction}>Лишить права</CellButton>
+            </Group>
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
+};
+
+<Example />;
+```
