@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useDOM } from '../../lib/dom';
@@ -10,9 +9,8 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { ScrollContext } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { ViewNavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { SplitColContext } from '../SplitCol/SplitColContext';
-import { RootContext } from './RootContext';
 import styles from './Root.module.css';
 
 export interface RootProps extends React.HTMLAttributes<HTMLDivElement>, NavIdProps {
@@ -116,12 +114,6 @@ export const Root = ({
     }
   };
 
-  const rootContextValue = useObjectMemo({
-    transitionDirection: getTransitionDirection(isBack),
-    activeView,
-    prevView: prevView || null,
-  });
-
   return (
     <div
       {...restProps}
@@ -132,54 +124,44 @@ export const Root = ({
         className,
       )}
     >
-      <RootContext.Provider value={rootContextValue}>
-        {views.map((view) => {
-          const viewId = getNavId(view.props, warn);
-          if (viewId !== activeView && !(transition && viewId === prevView)) {
-            return null;
-          }
-          const isTransitionTarget = transition && viewId === (isBack ? prevView : activeView);
-          const compensateScroll =
-            transition && (viewId === prevView || (isBack && viewId === activeView));
-          return (
-            <div
-              key={viewId}
-              ref={(e) => viewId && (viewNodes[viewId] = e)}
-              onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
-              className={classNames(
-                styles['Root__view'],
-                transition && viewId === prevView && isBack && styles['Root__view--hide-back'],
-                transition && viewId === prevView && !isBack && styles['Root__view--hide-forward'],
-                transition && viewId === activeView && isBack && styles['Root__view--show-back'],
-                transition &&
-                  viewId === activeView &&
-                  !isBack &&
-                  styles['Root__view--show-forward'],
-              )}
+      {views.map((view) => {
+        const viewId = getNavId(view.props, warn);
+        // console.log('viewId: ', viewId, 'prevView: ', prevView, 'activeView: ', activeView, "debug: ", transitionDirection);
+        if (viewId !== activeView && !(transition && viewId === prevView)) {
+          return null;
+        }
+        const isTransitionTarget = transition && viewId === (isBack ? prevView : activeView);
+        const compensateScroll =
+          transition && (viewId === prevView || (isBack && viewId === activeView));
+        return (
+          <div
+            key={viewId}
+            ref={(e) => viewId && (viewNodes[viewId] = e)}
+            onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
+            className={classNames(
+              styles['Root__view'],
+              transition && viewId === prevView && isBack && styles['Root__view--hide-back'],
+              transition && viewId === prevView && !isBack && styles['Root__view--hide-forward'],
+              transition && viewId === activeView && isBack && styles['Root__view--show-back'],
+              transition && viewId === activeView && !isBack && styles['Root__view--show-forward'],
+            )}
+          >
+            <ViewNavTransitionProvider
+              entering={transition && viewId === activeView}
+              isBack={isBack}
             >
-              <NavTransitionProvider entering={transition && viewId === activeView}>
-                <div
-                  className={styles['Root__scrollCompensation']}
-                  style={{
-                    marginTop: compensateScroll ? viewId && -(scrolls[viewId] ?? 0) : undefined,
-                  }}
-                >
-                  {view}
-                </div>
-              </NavTransitionProvider>
-            </div>
-          );
-        })}
-      </RootContext.Provider>
+              <div
+                className={styles['Root__scrollCompensation']}
+                style={{
+                  marginTop: compensateScroll ? viewId && -(scrolls[viewId] ?? 0) : undefined,
+                }}
+              >
+                {view}
+              </div>
+            </ViewNavTransitionProvider>
+          </div>
+        );
+      })}
     </div>
   );
 };
-
-type TransitionDirection = 'forward' | 'backward' | null;
-function getTransitionDirection(isBack?: boolean): TransitionDirection {
-  if (isBack === undefined) {
-    return null;
-  }
-
-  return isBack ? 'backward' : 'forward';
-}

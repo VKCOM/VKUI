@@ -19,7 +19,7 @@ import {
 } from '../../lib/floating';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
-import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
+import { useNavEntering } from '../NavTransitionContext/NavTransitionContext';
 import { TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { tooltipContainerAttr } from './TooltipContainer';
 import styles from './Tooltip.module.css';
@@ -148,7 +148,7 @@ export const Tooltip = ({
     () => target?.closest<HTMLDivElement>(`[${tooltipContainerAttr}]`),
     [target],
   );
-  const { entering } = useNavTransition();
+  const entering = useNavEntering();
   const isShown = isShownProp && tooltipContainer && !entering;
 
   const placement = placementProp || getDefaultPlacement(alignX, alignY);

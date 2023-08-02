@@ -3,7 +3,6 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
 import { useTimeout } from '../../hooks/useTimeout';
-import { useViewTransitionState } from '../../hooks/useViewTransitionState';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { blurActiveElement, canUseDOM, useDOM } from '../../lib/dom';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
@@ -13,7 +12,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { useScroll } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { PanelNavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { useSplitCol } from '../SplitCol/SplitColContext';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { swipeBackExcluded } from './utils';
@@ -171,7 +170,7 @@ export const View = ({
       setVisiblePanels([activePanelProp]);
       setActivePanel(activePanelProp);
       setAnimated(false);
-      setIsBack(undefined);
+      // setIsBack(undefined);
 
       afterTransition.current = () => {
         scroll?.scrollTo(0, isBackTransition ? scrolls.current[activePanelProp] : 0);
@@ -429,6 +428,9 @@ export const View = ({
         if (nextPanel !== null) {
           scroll?.scrollTo(0, scrolls.current[nextPanel]);
         }
+        // NOTE [!IMPORTANT] check this transition and the value of isBack that is passed to the Transition provider on
+        // end of swiping
+        // console.log(`Calls prevOnTransition with is Back (state value is ${isBackTransition})`);
         prevOnTransition &&
           prevOnTransition({
             isBack: true,
@@ -487,18 +489,6 @@ export const View = ({
     waitTransitionFinish,
   ]);
 
-  const { transitionDirection, activeView, prevView } = useViewTransitionState();
-  console.log(
-    'View: ',
-    restProps.id,
-    '| transition: ',
-    transitionDirection,
-    '| active view: ',
-    activeView,
-    '| prev view: ',
-    prevView,
-  );
-
   return (
     <Touch
       Component="section"
@@ -547,11 +537,12 @@ export const View = ({
                   marginTop: compensateScroll ? -(scrolls.current[panelId] ?? 0) : undefined,
                 }}
               >
-                <NavTransitionProvider
+                <PanelNavTransitionProvider
                   entering={panelId === nextPanel || panelId === swipeBackNextPanel}
+                  isBack={isBack}
                 >
                   {panel}
-                </NavTransitionProvider>
+                </PanelNavTransitionProvider>
               </div>
             </div>
           );

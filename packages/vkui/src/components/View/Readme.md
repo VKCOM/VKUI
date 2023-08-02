@@ -5,34 +5,75 @@
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
 ```jsx
-const [activePanel, setActivePanel] = useState('panel1');
+import {
+  useNavTransition,
+  useViewNavTransition,
+  usePanelNavTransition,
+} from '../NavTransitionContext/NavTransitionContext';
 
-<View activePanel={activePanel}>
-  <Panel id="panel1">
-    <PanelHeader>Panel 1</PanelHeader>
-    <Group>
-      <div style={{ height: 200 }} />
-      <CellButton onClick={() => setActivePanel('panel2')}>Go to panel 2</CellButton>
-      <div style={{ height: 600 }} />
-    </Group>
-  </Panel>
-  <Panel id="panel2">
-    <PanelHeader>Panel 2</PanelHeader>
-    <Group>
-      <div style={{ height: 200 }} />
-      <CellButton onClick={() => setActivePanel('panel3')}>Go to panel 3</CellButton>
-      <div style={{ height: 600 }} />
-    </Group>
-  </Panel>
-  <Panel id="panel3">
-    <PanelHeader>Panel 3</PanelHeader>
-    <Group>
-      <div style={{ height: 200 }} />
-      <CellButton onClick={() => setActivePanel('panel1')}>Back to panel 1</CellButton>
-      <div style={{ height: 600 }} />
-    </Group>
-  </Panel>
-</View>;
+const Page = ({ index }) => {
+  const transitionData = usePanelNavTransition();
+  const { transitionDirection, entering } = transitionData;
+  console.log(`Page ${index}: `, transitionData);
+
+  React.useEffect(() => {
+    if (transitionDirection === 'initial') {
+      console.log(`Page ${index}: view transition: ${transitionDirection} | initial`);
+    } else if (transitionDirection === 'forward') {
+      console.log(`Page ${index}: view transition: "${transitionDirection}" | forward | fetch`);
+    } else if (transitionDirection === 'backward') {
+      console.log(
+        `Page ${index}: view transition: "${transitionDirection}" | returned back, restore data`,
+      );
+    }
+  }, [transitionDirection, index]);
+
+  return <div>Page {index}</div>;
+};
+
+const Example = () => {
+  const [activePanel, setActivePanel] = useState('panel1');
+  const onTransition = React.useCallback((args) => {
+    console.log('onTransition call result: ', args);
+  }, []);
+
+  return (
+    <View activePanel={activePanel} onTransition={onTransition}>
+      <Panel id="panel1">
+        <PanelHeader>Panel 1</PanelHeader>
+        <Page index={1} />
+        <Group>
+          <div style={{ height: 200 }} />
+          <CellButton onClick={() => setActivePanel('panel3')}>Back to panel 3</CellButton>
+          <CellButton onClick={() => setActivePanel('panel2')}>Go to panel 2</CellButton>
+          <div style={{ height: 600 }} />
+        </Group>
+      </Panel>
+      <Panel id="panel2">
+        <PanelHeader>Panel 2</PanelHeader>
+        <Page index={2} />
+        <Group>
+          <div style={{ height: 200 }} />
+          <CellButton onClick={() => setActivePanel('panel1')}>Back to panel 1</CellButton>
+          <CellButton onClick={() => setActivePanel('panel3')}>Go to panel 3</CellButton>
+          <div style={{ height: 600 }} />
+        </Group>
+      </Panel>
+      <Panel id="panel3">
+        <PanelHeader>Panel 3</PanelHeader>
+        <Page index={3} />
+        <Group>
+          <div style={{ height: 200 }} />
+          <CellButton onClick={() => setActivePanel('panel2')}>Back to panel 2</CellButton>
+          <CellButton onClick={() => setActivePanel('panel1')}>Back to panel 1</CellButton>
+          <div style={{ height: 600 }} />
+        </Group>
+      </Panel>
+    </View>
+  );
+};
+
+<Example />;
 ```
 
 ### <a id="/View?id=iosswipeback"></a>[iOS Swipe Back](https://vkcom.github.io/VKUI/#/View?id=iosswipeback)
