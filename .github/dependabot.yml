@@ -8,6 +8,13 @@ updates:
       interval: 'weekly'
     allow:
       - dependency-type: 'direct'
+    ignore:
+      # Для разработки v5 фиксируем 17 версию.
+      - dependency-name: 'react*'
+        update-types: ['18.x']
+      # Для разработки v5 фиксируем 17 версию.
+      - dependency-name: '@types/react*'
+        update-types: ['18.x']
     groups:
       react:
         patterns:
