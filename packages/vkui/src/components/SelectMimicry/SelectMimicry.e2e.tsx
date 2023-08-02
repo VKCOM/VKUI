@@ -5,8 +5,9 @@ import { SelectMimicryPlayground } from './SelectMimicry.e2e-playground';
 test('SelectMimicry', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<SelectMimicryPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

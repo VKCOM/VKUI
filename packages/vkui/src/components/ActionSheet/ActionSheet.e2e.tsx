@@ -15,6 +15,7 @@ test.describe('ActionSheet', () => {
     mount,
     page,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<ActionSheetPlayground {...componentPlaygroundProps} />);
@@ -22,7 +23,7 @@ test.describe('ActionSheet', () => {
     const item = page.getByTestId('last-item-test-id');
     await item.hover();
 
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });
 
@@ -41,6 +42,7 @@ test.describe('ActionSheet', () => {
     mount,
     page,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<ActionSheetPlayground {...componentPlaygroundProps} />);
@@ -48,6 +50,6 @@ test.describe('ActionSheet', () => {
     const item = page.getByTestId('last-item-test-id');
     await item.hover();
 
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });

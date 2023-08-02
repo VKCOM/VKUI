@@ -5,8 +5,9 @@ import { NativeSelectPlayground } from './NativeSelect.e2e-playground';
 test('NativeSelect', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<NativeSelectPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

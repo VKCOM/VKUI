@@ -3,9 +3,14 @@ import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
 import { TextareaPlayground, TextareaStatePlayground } from './Textarea.e2e-playground';
 
-test('Textarea', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+test('Textarea', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  expectA11yScanResults,
+  componentPlaygroundProps,
+}) => {
   await mount(<TextareaPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });
 
 test.describe('Textarea', () => {
@@ -18,6 +23,7 @@ test.describe('Textarea', () => {
     mount,
     page,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<TextareaStatePlayground {...componentPlaygroundProps} />);
@@ -25,8 +31,7 @@ test.describe('Textarea', () => {
     await page.locator('#textarea').fill('1\n2\n3\n4\n5\n6\n7\n8');
 
     await page.locator('#textarea').blur(); // чтобы не флакала обводка
-
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 
     for (let i = 0; i < 12; i++) {
       await page.press('#textarea', 'Backspace');

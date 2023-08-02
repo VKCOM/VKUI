@@ -5,8 +5,9 @@ import { CalendarRangePlayground } from './CalendarRange.e2e-playground';
 test('CalendarRange', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<CalendarRangePlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

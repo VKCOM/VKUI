@@ -10,20 +10,32 @@ test.describe('Alert', () => {
   test.use({
     onlyForPlatforms: ['ios', 'android'],
   });
-  test('mobile', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+
+  test('mobile', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    expectA11yScanResults,
+    componentPlaygroundProps,
+  }) => {
     await mount(<AlertMobilePlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });
 
 test.describe('Alert', () => {
+  // В VKCOM версии возможно только горизонтальное расположение кнопок
   test.use({
     onlyForPlatforms: ['vkcom'],
   });
-  // В VKCOM версии возможно только горизонтальное расположение кнопок.
-  test('desktop', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+
+  test('desktop', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    expectA11yScanResults,
+    componentPlaygroundProps,
+  }) => {
     await mount(<AlertDesktopPlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });
 

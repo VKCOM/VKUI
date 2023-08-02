@@ -5,8 +5,9 @@ import { SegmentedControlPlayground } from './SegmentedControl.e2e-playground';
 test('SegmentedControl', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<SegmentedControlPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

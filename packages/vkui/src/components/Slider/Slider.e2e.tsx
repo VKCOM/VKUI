@@ -6,9 +6,14 @@ import {
   SliderPlaygroundForTooltipTest,
 } from './Slider.e2e-playground';
 
-test('Slider', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+test('Slider', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  expectA11yScanResults,
+  componentPlaygroundProps,
+}) => {
   await mount(<SliderPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });
 
 test.describe('Slider with Tooltip', () => {
