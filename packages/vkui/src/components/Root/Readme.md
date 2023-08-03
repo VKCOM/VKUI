@@ -4,179 +4,191 @@
 При смене значения свойства `activeView` происходит плавный переход от одной `View` к другой.
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
+Чтобы понять был это переход вперёд или назад можно воспользоваться хуком `useNavTransitionDirection()`. [Подробнее ниже](/#/Root?id=useNavTransitionDirection_example).
+
 ```jsx
-import {
-  useNavTransition,
-  useViewNavTransition,
-  usePanelNavTransition,
-  useNavTransitionDirection,
-} from '../NavTransitionContext/NavTransitionContext';
+const [activeView, setActiveView] = useState('view1');
+
+<Root activeView={activeView}>
+  <View activePanel="panel1.1" id="view1">
+    <Panel id="panel1.1">
+      <PanelHeader>View 1</PanelHeader>
+      <Group>
+        <div style={{ height: 200 }} />
+        <CellButton onClick={() => setActiveView('view2')}>Open View 2</CellButton>
+        <div style={{ height: 600 }} />
+      </Group>
+    </Panel>
+  </View>
+  <View activePanel="panel2.1" id="view2">
+    <Panel id="panel2.1">
+      <PanelHeader>View 2</PanelHeader>
+      <Group>
+        <div style={{ height: 200 }} />
+        <CellButton onClick={() => setActiveView('view1')}>Back to View 1</CellButton>
+        <div style={{ height: 600 }} />
+      </Group>
+    </Panel>
+  </View>
+</Root>;
+```
+
+<br />
+
+## <a id="/Root?id=useNavTransitionDirection_example" style="position: relative; top: -100px;"></a> Хук `useNavTransitionDirection()` для определения типа анимации перехода с которой была отрисована панель
+
+Хук `useNavTransitionDirection()` возвращает одно из трёх значений:
+
+- `initial` означает, что компонент был смонтирован без анимации перехода (тип перехода не определён);
+- `forwards` переход вперёд;
+- `backwards` переход назад.
+
+Значение известно ещё до завершения анимации.
+Для того, чтобы привязаться к моменту когда анимация закончилась можно воспользоваться хуком `useNavTransition()` и следить за изменением флага `entering` который имеет значение `true` во время анимации. В этом же хуке можно найти флаг `isBack` который тоже отражает тип перехода. `useNavTransitionDirection()` опирается на данные из `useNavTransition()`.
+Эти хуки также можно использовать для определения типа анимации перехода между панелями внутри одного `View`.
+
+В примере ниже мы имитируем загрузку данныx, показывая спиннер, если панель была отрисована с анимацией перехода вперед.
+Используем два `View` и по три `Panel` компонента в каждом, чтобы показать, что тип перехода можно узнать как при переходе между `View`, так и при переходе между `Panel`.
+
+```jsx
+import { useNavTransitionDirection } from '../NavTransitionContext/NavTransitionContext';
 import { usePrevious } from '../../hooks/usePrevious';
 
-const Page = ({ index, view = 'view2' }) => {
-  const { transitionDirection, entering, isBack: viewIsBack } = useViewNavTransition();
-
-  React.useEffect(() => {
-    if (transitionDirection === 'initial') {
-      // console.log(`View ${view}: view transition: ${transitionDirection} | initial`);
-    } else if (transitionDirection === 'forward') {
-      // console.log(`View ${view}: view transition: "${transitionDirection}" | forward | fetch`);
-    } else if (transitionDirection === 'backward') {
-      // console.log(
-      //   `View ${view}: view transition: "${transitionDirection}" | returned back, restore data`,
-      // );
-    }
-  }, [transitionDirection, index]);
-
-  const transitionData = usePanelNavTransition();
-  const { transitionDirection: panelTransitionDirection, isBack: panelIsBack } = transitionData;
+const Content = () => {
   const direction = useNavTransitionDirection();
+  const [spinner, setSpinner] = useState(null);
 
-  const [isMount, setIsMount] = React.useState(false);
-  React.useEffect(() => {
-    setIsMount(true);
-  }, []);
+  React.useEffect(
+    function simulateDataLoadingWhenMovingForwards() {
+      const loadData = () => {
+        setSpinner(<Spinner size="large" style={{ margin: '20px 0' }} />);
+        return setTimeout(() => setSpinner(null), 1000);
+      };
 
-  React.useEffect(() => {
-    if (isMount) {
-      return;
-    }
+      let timerId = null;
+      if (direction !== 'backwards') {
+        timerId = loadData();
+      }
 
-    const isBack = panelIsBack !== undefined ? panelIsBack : viewIsBack;
-    const transition = isBack === undefined ? 'initial' : Boolean(isBack) ? 'backward' : 'forward';
-    console.log(
-      `View ${view}, panel ${index}: ${direction}, panelIsBack: ${panelIsBack} | viewIsBack: ${viewIsBack}`,
-    );
-  }, [isMount, panelIsBack, viewIsBack, view, index, direction]);
+      return () => clearTimeout(timerId);
+    },
+    [direction],
+  );
 
-  React.useEffect(() => {
-    if (panelTransitionDirection === 'initial') {
-      // console.log(`Page ${index}: view transition: ${panelTransitionDirection} | initial`);
-    } else if (panelTransitionDirection === 'forward') {
-      // console.log(
-      //   `Page ${index}: view transition: "${panelTransitionDirection}" | forward | fetch`,
-      // );
-    } else if (panelTransitionDirection === 'backward') {
-      //console.log(
-      //  `Page ${index}: view transition: "${panelTransitionDirection}" | returned back, restore data`,
-      //);
-    }
-  }, [panelTransitionDirection, index]);
-
-  return <div>Page {index}</div>;
+  return (
+    <Div>
+      <Headline level="1" style={{ marginBottom: 16 }}>
+        Transition direction: {direction}
+      </Headline>
+      {spinner}
+    </Div>
+  );
 };
 
 const Example = () => {
   const [activeView, setActiveView] = useState('view1');
-  const onActiveView1 = React.useCallback(() => {
-    setActiveView('view1');
-  }, [setActiveView]);
-  const onActiveView2 = React.useCallback(() => {
-    setActiveView('view2');
-  }, [setActiveView]);
 
-  const [activePanelOfFirstView, setActivePanelOfFirstView] = useState('panel1.1');
-  const [activePanelOfSecondView, setActivePanelOfSecondView] = useState('panel2.1');
+  const [activePanel, setActivePanel] = useState(1);
+
+  const navigationButtons = (
+    <NavigationButtons
+      activePanel={activePanel}
+      activeView={activeView}
+      setActivePanel={setActivePanel}
+      setActiveView={setActiveView}
+    />
+  );
 
   return (
     <Root activeView={activeView}>
-      <View activePanel={activePanelOfFirstView} id="view1">
+      <View activePanel={`panel1.${activePanel}`} id="view1">
         <Panel id="panel1.1">
           <PanelHeader>Panel 1.1</PanelHeader>
-          <Page index={1.1} view="view1" />
-          <Group>
-            <div style={{ height: 200 }} />
-            <CellButton onClick={onActiveView2}>Back to View 1</CellButton>
-            <CellButton onClick={() => setActivePanelOfFirstView('panel1.3')}>
-              Back to panel 1.3
-            </CellButton>
-            <CellButton onClick={() => setActivePanelOfFirstView('panel1.2')}>
-              Go to panel 1.2
-            </CellButton>
-            <div style={{ height: 600 }} />
-          </Group>
+          {navigationButtons}
+          <Content />
         </Panel>
         <Panel id="panel1.2">
           <PanelHeader>Panel 1.2</PanelHeader>
-          <Page index={1.2} view="view1" />
-          <Group>
-            <div style={{ height: 200 }} />
-            <CellButton onClick={onActiveView2}>Back to View 1</CellButton>
-            <CellButton onClick={() => setActivePanelOfFirstView('panel1.1')}>
-              Back to panel 1.1
-            </CellButton>
-            <CellButton onClick={() => setActivePanelOfFirstView('panel1.3')}>
-              Go to panel 1.3
-            </CellButton>
-            <div style={{ height: 600 }} />
-          </Group>
+          {navigationButtons}
+          <Content />
         </Panel>
         <Panel id="panel1.3">
           <PanelHeader>Panel 1.3</PanelHeader>
-          <Page index={1.3} view={'view1'} />
-          <Group>
-            <div style={{ height: 200 }} />
-            <CellButton onClick={onActiveView2}>Back to View 2</CellButton>
-            <CellButton onClick={() => setActivePanelOfFirstView('panel1.2')}>
-              Back to panel 1.2
-            </CellButton>
-            <CellButton onClick={() => setActivePanelOfFirstView('panel1.1')}>
-              Go to panel 1.1
-            </CellButton>
-            <div style={{ height: 600 }} />
-          </Group>
+          {navigationButtons}
+          <Content />
         </Panel>
       </View>
-      <View activePanel={activePanelOfSecondView} id="view2">
+      <View activePanel={`panel2.${activePanel}`} id="view2">
         <Panel id="panel2.1">
           <PanelHeader>Panel 2.1</PanelHeader>
-          <Page index={2.1} />
-          <Group>
-            <div style={{ height: 200 }} />
-            <CellButton onClick={onActiveView1}>Back to View 1</CellButton>
-            <CellButton onClick={() => setActivePanelOfSecondView('panel2.3')}>
-              Back to panel 2.3
-            </CellButton>
-            <CellButton onClick={() => setActivePanelOfSecondView('panel2.2')}>
-              Go to panel 2.2
-            </CellButton>
-            <div style={{ height: 600 }} />
-          </Group>
+          {navigationButtons}
+          <Content />
         </Panel>
         <Panel id="panel2.2">
           <PanelHeader>Panel 2.2</PanelHeader>
-          <Page index={2.2} />
-          <Group>
-            <div style={{ height: 200 }} />
-            <CellButton onClick={onActiveView1}>Back to View 1</CellButton>
-            <CellButton onClick={() => setActivePanelOfSecondView('panel2.1')}>
-              Back to panel 2.1
-            </CellButton>
-            <CellButton onClick={() => setActivePanelOfSecondView('panel2.3')}>
-              Go to panel 2.3
-            </CellButton>
-            <div style={{ height: 600 }} />
-          </Group>
+          {navigationButtons}
+          <Content />
         </Panel>
         <Panel id="panel2.3">
           <PanelHeader>Panel 2.3</PanelHeader>
-          <Page index={2.3} />
-          <Group>
-            <div style={{ height: 200 }} />
-            <CellButton onClick={onActiveView1}>Back to View 1</CellButton>
-            <CellButton onClick={() => setActivePanelOfSecondView('panel2.2')}>
-              Back to panel 2.2
-            </CellButton>
-            <CellButton onClick={() => setActivePanelOfSecondView('panel2.1')}>
-              Go to panel 2.1
-            </CellButton>
-            <div style={{ height: 600 }} />
-          </Group>
+          {navigationButtons}
+          <Content />
         </Panel>
       </View>
     </Root>
   );
 };
+
+function NavigationButtons({ activePanel, activeView, setActiveView, setActivePanel }) {
+  return (
+    <>
+      <Spacing size={12} />
+      {activeView === 'view1' ? (
+        <CellButton onClick={() => setActiveView('view2')}>Go to View 2</CellButton>
+      ) : (
+        <CellButton onClick={() => setActiveView('view1')}>Back to View 1</CellButton>
+      )}
+      <Spacing size={24}>
+        <Separator />
+      </Spacing>
+      <Group>
+        {(() => {
+          const getCellButton = (viewNumber, panelNumber) => {
+            const goOrBack = activePanel <= panelNumber ? 'Go' : 'Back';
+            return (
+              <CellButton
+                disabled={activePanel === panelNumber}
+                onClick={() => setActivePanel(panelNumber)}
+              >
+                {goOrBack} to panel {viewNumber}.{panelNumber}
+              </CellButton>
+            );
+          };
+          return (
+            <>
+              {activeView === 'view1' ? (
+                <>
+                  {getCellButton(1, 1)}
+                  {getCellButton(1, 2)}
+                  {getCellButton(1, 3)}
+                </>
+              ) : (
+                <>
+                  {getCellButton(2, 1)}
+                  {getCellButton(2, 2)}
+                  {getCellButton(2, 3)}
+                </>
+              )}
+            </>
+          );
+        })()}
+      </Group>
+      <Spacing size={24}>
+        <Separator />
+      </Spacing>
+    </>
+  );
+}
 
 <Example />;
 ```

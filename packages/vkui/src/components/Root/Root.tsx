@@ -126,7 +126,6 @@ export const Root = ({
     >
       {views.map((view) => {
         const viewId = getNavId(view.props, warn);
-        // console.log('viewId: ', viewId, 'prevView: ', prevView, 'activeView: ', activeView, "debug: ", transitionDirection);
         if (viewId !== activeView && !(transition && viewId === prevView)) {
           return null;
         }
