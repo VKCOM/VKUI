@@ -6,7 +6,6 @@ const { makePostcssPlugins } = require('./scripts/postcss');
  * Конфигурация для css
  * @param {Object} config - Конфигурация.
  * @param {boolean | undefined} config.isCssModulesFile - Сборка module.css файлов.
- * @returns {import('postcss').Plugin[]}
  */
 function makeCssRuleUse({ isCssModulesFile = false } = {}) {
   return [
@@ -66,8 +65,7 @@ module.exports = {
         use: makeCssRuleUse(),
       },
       {
-        test: /\.css$/,
-        include: /\.module\.css$/,
+        test: /\.module\.css$/,
         use: makeCssRuleUse({ isCssModulesFile: true }),
       },
     ],

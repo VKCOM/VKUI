@@ -30,7 +30,6 @@ function makePostcssPlugins({
     // Обработка css импортов
     cssImport(),
 
-    // Реструктуризация токенов(группировка), для уменьшения размера бандла
     restructureVariable(
       VKUI_TOKENS_CSS.map((pathSegment) => path.join(rootDirectory, pathSegment)),
     ),

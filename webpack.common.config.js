@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
+const { makePostcssPlugins } = require('./packages/vkui/scripts/postcss');
 const { VKUI_PACKAGE } = require('./shared');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -70,6 +71,9 @@ if (sandbox) {
       },
       {
         loader: 'postcss-loader',
+        postcssOptions: {
+          plugins: makePostcssPlugins(),
+        },
       },
     ],
   });
