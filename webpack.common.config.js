@@ -35,7 +35,18 @@ const rules = [
   {
     test: /\.css$/,
     exclude: sandbox ? new RegExp(`${sandbox}|\\.module\\.css$`) : /\.module\.css$/,
-    use: [styleLoader, 'css-loader', 'postcss-loader'],
+    use: [
+      styleLoader,
+      'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          postcssOptions: {
+            plugins: makePostcssPlugins(),
+          },
+        },
+      },
+    ],
   },
   {
     test: /\.css$/,
@@ -52,6 +63,11 @@ const rules = [
       },
       {
         loader: 'postcss-loader',
+        options: {
+          postcssOptions: {
+            plugins: makePostcssPlugins(),
+          },
+        },
       },
     ],
   },
