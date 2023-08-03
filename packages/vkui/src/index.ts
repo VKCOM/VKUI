@@ -357,6 +357,7 @@ export { usePagination } from './hooks/usePagination';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
+export type { TransitionDirection } from './components/NavTransitionContext/NavTransitionContext';
 export { useModalRootContext } from './components/ModalRoot/useModalRootContext';
 
 /**

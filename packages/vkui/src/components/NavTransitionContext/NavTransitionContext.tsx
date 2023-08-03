@@ -9,10 +9,15 @@ const TransitionContext = React.createContext<TransitionContextProps>({
   entering: false,
   isBack: undefined,
 });
-export const useNavTransition = () => {
+
+export type TransitionDirection = undefined | 'forwards' | 'backwards';
+
+export const useNavTransition = (): TransitionContextProps & {
+  direction: TransitionDirection;
+} => {
   const context = React.useContext(TransitionContext);
   const transitionDirection =
-    context.isBack === undefined ? 'initial' : context.isBack ? 'backwards' : 'forwards';
+    context.isBack === undefined ? undefined : context.isBack ? 'backwards' : 'forwards';
   return {
     ...context,
     direction: transitionDirection,
