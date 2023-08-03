@@ -1,5 +1,31 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { makePostcssPlugins } = require('./scripts/postcss');
+
+/**
+ * Конфигурация для css
+ * @param {Object} config - Конфигурация.
+ * @param {boolean | undefined} config.isCssModulesFile - Сборка module.css файлов.
+ */
+function makeCssRuleUse({ isCssModulesFile = false } = {}) {
+  return [
+    MiniCssExtractPlugin.loader,
+    {
+      loader: 'css-loader',
+      options: {
+        modules: false,
+      },
+    },
+    {
+      loader: 'postcss-loader',
+      options: {
+        postcssOptions: {
+          plugins: makePostcssPlugins({ isVKUIPackageBuild: true, isCssModulesFile }),
+        },
+      },
+    },
+  ];
+}
 
 module.exports = {
   // CSS is optimized via postcss, we dont care about JS
@@ -35,16 +61,12 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              modules: false,
-            },
-          },
-          'postcss-loader',
-        ],
+        exclude: /\.module\.css$/,
+        use: makeCssRuleUse(),
+      },
+      {
+        test: /\.module\.css$/,
+        use: makeCssRuleUse({ isCssModulesFile: true }),
       },
     ],
   },

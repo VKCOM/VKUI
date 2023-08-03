@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
+const { makePostcssPlugins } = require('./packages/vkui/scripts/postcss');
 const { VKUI_PACKAGE } = require('./shared');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -34,7 +35,18 @@ const rules = [
   {
     test: /\.css$/,
     exclude: sandbox ? new RegExp(`${sandbox}|\\.module\\.css$`) : /\.module\.css$/,
-    use: [styleLoader, 'css-loader', 'postcss-loader'],
+    use: [
+      styleLoader,
+      'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          postcssOptions: {
+            plugins: makePostcssPlugins(),
+          },
+        },
+      },
+    ],
   },
   {
     test: /\.css$/,
@@ -51,6 +63,11 @@ const rules = [
       },
       {
         loader: 'postcss-loader',
+        options: {
+          postcssOptions: {
+            plugins: makePostcssPlugins(),
+          },
+        },
       },
     ],
   },
@@ -70,6 +87,11 @@ if (sandbox) {
       },
       {
         loader: 'postcss-loader',
+        options: {
+          postcssOptions: {
+            plugins: makePostcssPlugins(),
+          },
+        },
       },
     ],
   });
