@@ -71,8 +71,10 @@ if (sandbox) {
       },
       {
         loader: 'postcss-loader',
-        postcssOptions: {
-          plugins: makePostcssPlugins(),
+        options: {
+          postcssOptions: {
+            plugins: makePostcssPlugins(),
+          },
         },
       },
     ],
