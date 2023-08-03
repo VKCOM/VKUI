@@ -9,6 +9,7 @@ import {
   type VKUITestOptions,
 } from '@vkui-e2e/test';
 import dotenv from 'dotenv';
+import { makePostcssPlugins } from './scripts/postcss';
 import * as tsconfig from './tsconfig.json';
 
 // см. `.env`
@@ -78,6 +79,12 @@ export default defineConfig<VKUITestOptions>({
 
     ctViteConfig: {
       build: { commonjsOptions: { include: [/node_modules/, /\.js/] } },
+
+      css: {
+        postcss: {
+          plugins: makePostcssPlugins(),
+        },
+      },
 
       resolve: {
         alias: TS_CONFIG_ALIASES,

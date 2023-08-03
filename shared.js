@@ -17,7 +17,5 @@ module.exports = {
     './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
   ],
 
-  generateScopedName: (name) => {
-    return name.startsWith('vkui') || name === 'mount' ? name : `vkui${name}`;
-  },
+  generateScopedName: 'vkui[local]',
 };
