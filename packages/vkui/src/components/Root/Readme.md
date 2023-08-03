@@ -9,6 +9,7 @@ import {
   useNavTransition,
   useViewNavTransition,
   usePanelNavTransition,
+  useNavTransitionDirection,
 } from '../NavTransitionContext/NavTransitionContext';
 import { usePrevious } from '../../hooks/usePrevious';
 
@@ -29,6 +30,7 @@ const Page = ({ index, view = 'view2' }) => {
 
   const transitionData = usePanelNavTransition();
   const { transitionDirection: panelTransitionDirection, isBack: panelIsBack } = transitionData;
+  const direction = useNavTransitionDirection();
 
   const [isMount, setIsMount] = React.useState(false);
   React.useEffect(() => {
@@ -43,9 +45,9 @@ const Page = ({ index, view = 'view2' }) => {
     const isBack = panelIsBack !== undefined ? panelIsBack : viewIsBack;
     const transition = isBack === undefined ? 'initial' : Boolean(isBack) ? 'backward' : 'forward';
     console.log(
-      `View ${view}, panel ${index}: ${transition}, panelIsBack: ${panelIsBack} | viewIsBack: ${viewIsBack}`,
+      `View ${view}, panel ${index}: ${direction}, panelIsBack: ${panelIsBack} | viewIsBack: ${viewIsBack}`,
     );
-  }, [isMount, panelIsBack, viewIsBack, view, index]);
+  }, [isMount, panelIsBack, viewIsBack, view, index, direction]);
 
   React.useEffect(() => {
     if (panelTransitionDirection === 'initial') {

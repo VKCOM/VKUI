@@ -12,7 +12,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { useScroll } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { PanelNavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { useSplitCol } from '../SplitCol/SplitColContext';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { swipeBackExcluded } from './utils';
@@ -537,12 +537,12 @@ export const View = ({
                   marginTop: compensateScroll ? -(scrolls.current[panelId] ?? 0) : undefined,
                 }}
               >
-                <PanelNavTransitionProvider
+                <NavTransitionProvider
                   entering={panelId === nextPanel || panelId === swipeBackNextPanel}
                   isBack={isBack}
                 >
                   {panel}
-                </PanelNavTransitionProvider>
+                </NavTransitionProvider>
               </div>
             </div>
           );

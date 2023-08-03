@@ -9,7 +9,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { ScrollContext } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { ViewNavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './Root.module.css';
 
@@ -146,10 +146,7 @@ export const Root = ({
               transition && viewId === activeView && !isBack && styles['Root__view--show-forward'],
             )}
           >
-            <ViewNavTransitionProvider
-              entering={transition && viewId === activeView}
-              isBack={isBack}
-            >
+            <NavTransitionProvider entering={transition && viewId === activeView} isBack={isBack}>
               <div
                 className={styles['Root__scrollCompensation']}
                 style={{
@@ -158,7 +155,7 @@ export const Root = ({
               >
                 {view}
               </div>
-            </ViewNavTransitionProvider>
+            </NavTransitionProvider>
           </div>
         );
       })}

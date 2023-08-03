@@ -8,9 +8,16 @@ export interface TransitionContextProps {
 }
 const TransitionContext = React.createContext<TransitionContextProps>({
   entering: false,
-  isBack: false,
+  isBack: undefined,
 });
 export const useNavTransition = () => React.useContext(TransitionContext);
+
+export const useNavTransitionDirection = () => {
+  const context = React.useContext(TransitionContext);
+  const transitionDirection =
+    context.isBack === undefined ? 'initial' : Boolean(context.isBack) ? 'backward' : 'forward';
+  return transitionDirection;
+};
 
 export const NavTransitionProvider = ({
   children,
@@ -18,9 +25,10 @@ export const NavTransitionProvider = ({
   isBack,
 }: React.PropsWithChildren<TransitionContextProps>) => {
   const parentContext = useNavTransition();
+  const computedIsBack = isBack !== undefined ? isBack : parentContext.isBack;
   const contextValue = useObjectMemo({
     entering: parentContext.entering || entering,
-    isBack,
+    isBack: computedIsBack,
   });
   return <TransitionContext.Provider value={contextValue}>{children}</TransitionContext.Provider>;
 };
