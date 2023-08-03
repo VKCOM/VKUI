@@ -427,9 +427,6 @@ export const View = ({
         if (nextPanel !== null) {
           scroll?.scrollTo(0, scrolls.current[nextPanel]);
         }
-        // NOTE [!IMPORTANT] check this transition and the value of isBack that is passed to the Transition provider on
-        // end of swiping
-        // console.log(`Calls prevOnTransition with is Back (state value is ${isBackTransition})`);
         prevOnTransition &&
           prevOnTransition({
             isBack: true,
