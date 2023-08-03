@@ -9,7 +9,7 @@ import {
   type VKUITestOptions,
 } from '@vkui-e2e/test';
 import dotenv from 'dotenv';
-import { makePostcssPlugins } from 'scripts/postcss';
+import { makePostcssPlugins } from './scripts/postcss';
 import * as tsconfig from './tsconfig.json';
 
 // см. `.env`
