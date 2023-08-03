@@ -56,18 +56,25 @@ import { usePrevious } from '../../hooks/usePrevious';
 
 const Content = () => {
   const direction = useNavTransitionDirection();
+
   const [spinner, setSpinner] = useState(null);
+  const isMountedRef = React.useRef(false);
 
   React.useEffect(
     function simulateDataLoadingWhenMovingForwards() {
+      let timerId = null;
       const loadData = () => {
         setSpinner(<Spinner size="large" style={{ margin: '20px 0' }} />);
-        return setTimeout(() => setSpinner(null), 1000);
+        timerId = setTimeout(() => setSpinner(null), 1000);
       };
 
-      let timerId = null;
+      if (isMountedRef.current) {
+        return () => clearTimeout(timerId);
+      }
+      isMountedRef.current = true;
+
       if (direction !== 'backwards') {
-        timerId = loadData();
+        loadData();
       }
 
       return () => clearTimeout(timerId);

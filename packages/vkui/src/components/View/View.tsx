@@ -170,7 +170,6 @@ export const View = ({
       setVisiblePanels([activePanelProp]);
       setActivePanel(activePanelProp);
       setAnimated(false);
-      // setIsBack(undefined);
 
       afterTransition.current = () => {
         scroll?.scrollTo(0, isBackTransition ? scrolls.current[activePanelProp] : 0);
