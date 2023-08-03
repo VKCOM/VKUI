@@ -9,7 +9,15 @@ const TransitionContext = React.createContext<TransitionContextProps>({
   entering: false,
   isBack: undefined,
 });
-export const useNavTransition = () => React.useContext(TransitionContext);
+export const useNavTransition = () => {
+  const context = React.useContext(TransitionContext);
+  const transitionDirection =
+    context.isBack === undefined ? 'initial' : Boolean(context.isBack) ? 'backwards' : 'forwards';
+  return {
+    ...context,
+    direction: transitionDirection,
+  };
+};
 
 export const NavTransitionProvider = ({
   children,
@@ -24,10 +32,3 @@ export const NavTransitionProvider = ({
   });
   return <TransitionContext.Provider value={contextValue}>{children}</TransitionContext.Provider>;
 };
-
-export function useNavTransitionDirection(): 'initial' | 'backwards' | 'forwards' {
-  const context = React.useContext(TransitionContext);
-  const transitionDirection =
-    context.isBack === undefined ? 'initial' : Boolean(context.isBack) ? 'backwards' : 'forwards';
-  return transitionDirection;
-}

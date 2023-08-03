@@ -4,7 +4,7 @@
 При смене значения свойства `activeView` происходит плавный переход от одной `View` к другой.
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
-Чтобы понять был это переход вперёд или назад можно воспользоваться хуком `useNavTransitionDirection()`. [Подробнее ниже](/#/Root?id=useNavTransitionDirection_example).
+Чтобы понять был это переход вперёд или назад можно воспользоваться хуком `useNavTransition()`. [Подробнее ниже](/#/Root?id=usenavtransition_example).
 
 ```jsx
 const [activeView, setActiveView] = useState('view1');
@@ -35,27 +35,27 @@ const [activeView, setActiveView] = useState('view1');
 
 <br />
 
-## <a id="/Root?id=useNavTransitionDirection_example" style="position: relative; top: -100px;"></a> Хук `useNavTransitionDirection()` для определения типа анимации перехода с которой была отрисована панель
+## <a id="/Root?id=usenavtransition_example" style="position: relative; top: -100px;"></a> Определение типа анимации перехода, с которой была отрисована панель, с помощью хука `useNavTransition()`
 
-Хук `useNavTransitionDirection()` возвращает одно из трёх значений:
+Хук `useNavTransition()` возвращает объект, где свойство `direction` имеет одно из трёх значений:
 
 - `initial` означает, что компонент был смонтирован без анимации перехода (тип перехода не определён);
 - `forwards` переход вперёд;
 - `backwards` переход назад.
 
 Значение известно ещё до завершения анимации.
-Для того, чтобы привязаться к моменту когда анимация закончилась можно воспользоваться хуком `useNavTransition()` и следить за изменением флага `entering` который имеет значение `true` во время анимации. В этом же хуке можно найти флаг `isBack` который тоже отражает тип перехода. `useNavTransitionDirection()` опирается на данные из `useNavTransition()`.
-Эти хуки также можно использовать для определения типа анимации перехода между панелями внутри одного `View`.
+Для того, чтобы привязаться к моменту когда анимация закончилась можно воспользоваться другими свойствами объекта, которые возвращает хук `useNavTransition()` и следить за изменением флага `entering` который имеет значение `true` во время анимации. В этом же хуке можно найти флаг `isBack` который тоже отражает тип перехода. Свойство `direction` опирается на значение флага `isBack`.
+Это хук можно использовать для определения типа анимации перехода не только между `View` внутри `Root`, но и между `Panel` внутри одного `View`.
 
 В примере ниже мы имитируем загрузку данныx, показывая спиннер, если панель была отрисована с анимацией перехода вперед.
 Используем два `View` и по три `Panel` компонента в каждом, чтобы показать, что тип перехода можно узнать как при переходе между `View`, так и при переходе между `Panel`.
 
 ```jsx
-import { useNavTransitionDirection } from '../NavTransitionContext/NavTransitionContext';
+import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { usePrevious } from '../../hooks/usePrevious';
 
 const Content = () => {
-  const direction = useNavTransitionDirection();
+  const { direction } = useNavTransition();
 
   const [spinner, setSpinner] = useState(null);
   const isMountedRef = React.useRef(false);
