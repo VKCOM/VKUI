@@ -423,6 +423,7 @@ export const View = ({
       setSwipeBackShift(0);
       setActivePanel(nextPanel);
       setVisiblePanels([nextPanel]);
+      setIsBack(true);
 
       afterTransition.current = () => {
         if (nextPanel !== null) {
