@@ -4,7 +4,7 @@
 При смене значения свойства `activeView` происходит плавный переход от одной `View` к другой.
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
-Чтобы понять был это переход вперёд или назад можно воспользоваться хуком `useNavTransition()`. [Подробнее ниже](#/Root?id=usenavtransition_example).
+Чтобы понять был это переход вперёд или назад можно воспользоваться хуком [`useNavTransition()`](#/Root?id=usenavtransition_example).
 
 ```jsx
 const [activeView, setActiveView] = useState('view1');
@@ -35,7 +35,7 @@ const [activeView, setActiveView] = useState('view1');
 
 <br />
 
-## <a id="usenavtransition_example" style="position: relative; top: -100px;"></a> Определение типа анимации перехода, с которой была отрисована панель, с помощью хука `useNavTransition()`
+## <a id="usenavtransition_example" style="position: relative; top: -100px;"></a>[Определение типа анимации перехода, с которой была отрисована панель, с помощью хука `useNavTransition()`](#/Root?id=usenavtransition_example)
 
 Хук `useNavTransition()` возвращает объект, где свойство `direction` имеет одно из трёх значений:
 
