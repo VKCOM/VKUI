@@ -362,7 +362,7 @@ class ViewInfiniteComponent extends React.Component<
         visiblePanels: [activePanel],
         activePanel: activePanel,
         animated: false,
-        isBack: undefined,
+        isBack,
       },
       () => {
         this.props.scroll?.scrollTo(0, isBack ? scrollPosition : 0);
@@ -666,6 +666,7 @@ class ViewInfiniteComponent extends React.Component<
                 >
                   <NavTransitionProvider
                     entering={panelId === nextPanel || panelId === swipeBackNextPanel}
+                    isBack={isBack}
                   >
                     {panel}
                   </NavTransitionProvider>
