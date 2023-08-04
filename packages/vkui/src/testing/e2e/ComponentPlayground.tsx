@@ -1,9 +1,9 @@
 import * as React from 'react';
-import type { AppearanceType } from '@vkontakte/vk-bridge';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
 import { BREAKPOINTS, SizeType } from '../../lib/adaptivity';
+import type { AppearanceType } from '../../lib/appearance';
 import { Platform } from '../../lib/platform';
 import { AppDefaultWrapper, type AppWrapperProps } from './AppDefaultWrapper';
 import { TEST_CLASS_NAMES } from './constants';

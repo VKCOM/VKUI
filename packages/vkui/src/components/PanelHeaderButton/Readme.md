@@ -40,8 +40,3 @@ import { Icon28SettingsOutline, Icon28Notifications } from '@vkontakte/icons';
   }
 />;
 ```
-
-**VK Mini Apps**
-
-Если вы разрабатываете приложение на платформе [VK Mini Apps](https://vk.com/vkappsdev), то вам будут недоступны
-кнопки справа, так как на их месте отображаются нативные кнопки для управления приложением.
