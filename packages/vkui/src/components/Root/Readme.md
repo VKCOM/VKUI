@@ -51,9 +51,6 @@ const [activeView, setActiveView] = useState('view1');
 Используем два `View` и по три `Panel` компонента в каждом, чтобы показать, что тип перехода можно узнать как при переходе между `View`, так и при переходе между `Panel`.
 
 ```jsx
-import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
-import { usePrevious } from '../../hooks/usePrevious';
-
 const Content = () => {
   const { direction } = useNavTransition();
 
