@@ -11,10 +11,10 @@ updates:
     ignore:
       # Для разработки v5 фиксируем 17 версию.
       - dependency-name: 'react*'
-        update-types: ['18.x']
+        update-types: ['version-update:semver-major']
       # Для разработки v5 фиксируем 17 версию.
       - dependency-name: '@types/react*'
-        update-types: ['18.x']
+        update-types: ['version-update:semver-major']
     groups:
       react:
         patterns:
