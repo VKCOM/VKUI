@@ -4,7 +4,7 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Panel } from '../Panel/Panel';
 import { Root } from '../Root/Root';
 import { View } from '../View/View';
-import { useNavTransition } from './NavTransitionContext';
+import { useNavDirection } from './NavTransitionContext';
 
 describe('useNavTransition', () => {
   beforeAll(() => jest.useFakeTimers());
@@ -12,7 +12,7 @@ describe('useNavTransition', () => {
 
   it('properly detects transition direction', async () => {
     const TestContent = () => {
-      const { direction } = useNavTransition();
+      const direction = useNavDirection();
       return <span>Direction: {direction || 'undefined'}</span>;
     };
 

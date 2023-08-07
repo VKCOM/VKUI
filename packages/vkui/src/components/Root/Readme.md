@@ -51,8 +51,10 @@ const [activeView, setActiveView] = useState('view1');
 Используем два `View` и по три `Panel` компонента в каждом, чтобы показать, что тип перехода можно узнать как при переходе между `View`, так и при переходе между `Panel`.
 
 ```jsx
+import { useNavDirection } from '../../components/NavTransitionContext/NavTransitionContext';
+
 const Content = () => {
-  const { direction } = useNavTransition();
+  const direction = useNavDirection();
 
   const [spinner, setSpinner] = useState(null);
   const isMountedRef = React.useRef(false);
