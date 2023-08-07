@@ -11,7 +11,7 @@
     "@project-tools/stylelint-bad-multiplication": "1.0.0"
   },
   "devDependencies": {
-    "@csstools/postcss-global-data": "2.0.0",
+    "@csstools/postcss-global-data": "2.0.1",
     "@playwright/experimental-ct-react17": "1.36.1",
     "@playwright/test": "1.36.1",
     "@size-limit/file": "^8.2.6",
@@ -66,7 +66,7 @@
     "postcss": "^8.4.27",
     "postcss-cli": "^10.0.0",
     "postcss-custom-media": "^10.0.0",
-    "postcss-custom-properties": "^13.2.1",
+    "postcss-custom-properties": "^13.3.0",
     "postcss-import": "^15.0.0",
     "postcss-loader": "^7.3.3",
     "postcss-modules": "^6.0.0",
