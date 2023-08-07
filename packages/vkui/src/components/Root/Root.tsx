@@ -149,7 +149,7 @@ export const Root = ({
             )}
           >
             <NavTransitionDirectionProvider isBack={isBack}>
-              <NavTransitionProvider entering={transition && viewId === activeView} isBack={isBack}>
+              <NavTransitionProvider entering={transition && viewId === activeView}>
                 <div
                   className={styles['Root__scrollCompensation']}
                   style={{

@@ -541,7 +541,6 @@ export const View = ({
                 <NavTransitionDirectionProvider isBack={isBack}>
                   <NavTransitionProvider
                     entering={panelId === nextPanel || panelId === swipeBackNextPanel}
-                    isBack={isBack}
                   >
                     {panel}
                   </NavTransitionProvider>
