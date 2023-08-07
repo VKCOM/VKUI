@@ -4,7 +4,7 @@
 При смене значения свойства `activePanel` происходит плавный переход от одной панели к другой.
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
-Чтобы понять был это переход вперёд или назад можно воспользоваться хуком `useNavTransition()`. [Подробнее в примере с компонентом Root](#/Root?id=usenavtransition_example).
+Чтобы понять был это переход вперёд или назад можно воспользоваться хуком [`useNavDirection()`](#/Root?id=usenavtransition_example).
 
 ```jsx
 const [activePanel, setActivePanel] = useState('panel1');
