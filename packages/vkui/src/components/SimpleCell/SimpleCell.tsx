@@ -181,7 +181,6 @@ export const SimpleCell = ({
         )}
         {extraSubtitle && (
           <Footnote
-            normalize={false}
             className={classNames(styles['SimpleCell__text'], styles['SimpleCell__extraSubtitle'])}
           >
             {extraSubtitle}
