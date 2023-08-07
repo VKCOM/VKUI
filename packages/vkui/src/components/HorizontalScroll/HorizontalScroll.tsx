@@ -190,7 +190,7 @@ export const HorizontalScroll = ({
     scrollTo(getScrollPosition);
   }, [getScrollToRight, scrollTo, scrollerRef]);
 
-  const onscroll = React.useCallback(() => {
+  const calculateArrowsVisibility = React.useCallback(() => {
     if (showArrows && hasPointer && scrollerRef.current && !isCustomScrollingRef.current) {
       const scrollElement = scrollerRef.current;
 
@@ -202,13 +202,20 @@ export const HorizontalScroll = ({
     }
   }, [hasPointer, scrollerRef, showArrows]);
 
-  const scrollEvent = useEventListener('scroll', onscroll);
-  React.useEffect(() => {
-    if (scrollerRef.current) {
+  const scrollEvent = useEventListener('scroll', calculateArrowsVisibility);
+  React.useEffect(
+    function addScrollerRefToScrollEvent() {
+      if (!scrollerRef.current) {
+        return noop;
+      }
+
       scrollEvent.add(scrollerRef.current);
-    }
-  }, [scrollEvent, scrollerRef]);
-  React.useEffect(onscroll, [scrollerRef, children, onscroll]);
+      return scrollEvent.remove;
+    },
+    [scrollEvent, scrollerRef],
+  );
+
+  React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility]);
 
   /**
    * Прокрутка с помощью любого колеса мыши
@@ -222,15 +229,18 @@ export const HorizontalScroll = ({
   );
 
   const wheelEvent = useEventListener('wheel', onwheel);
-  React.useEffect(() => {
-    if (!scrollerRef.current || !scrollOnAnyWheel) {
-      return noop;
-    }
+  React.useEffect(
+    function addScrollerRefToWheelEvent() {
+      if (!scrollerRef.current || !scrollOnAnyWheel) {
+        return noop;
+      }
 
-    wheelEvent.add(scrollerRef.current);
+      wheelEvent.add(scrollerRef.current);
 
-    return wheelEvent.remove;
-  }, [wheelEvent, scrollerRef, scrollOnAnyWheel]);
+      return wheelEvent.remove;
+    },
+    [wheelEvent, scrollerRef, scrollOnAnyWheel],
+  );
 
   return (
     <div
@@ -241,6 +251,7 @@ export const HorizontalScroll = ({
         showArrows === 'always' && styles['HorizontalScroll--withConstArrows'],
         className,
       )}
+      onMouseEnter={calculateArrowsVisibility}
     >
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
         <ScrollArrow
