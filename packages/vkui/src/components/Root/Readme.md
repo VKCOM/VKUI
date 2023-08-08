@@ -63,7 +63,6 @@ const Content = () => {
   const direction = useNavDirection();
 
   const [spinner, setSpinner] = useState(null);
-  const isMountedRef = React.useRef(false);
 
   React.useEffect(
     function simulateDataLoadingWhenMovingForwards() {
@@ -72,11 +71,6 @@ const Content = () => {
         setSpinner(<Spinner size="large" style={{ margin: '20px 0' }} />);
         timerId = setTimeout(() => setSpinner(null), 1000);
       };
-
-      if (isMountedRef.current) {
-        return () => clearTimeout(timerId);
-      }
-      isMountedRef.current = true;
 
       if (direction !== 'backwards') {
         loadData();
@@ -90,7 +84,7 @@ const Content = () => {
   return (
     <Div>
       <Headline level="1" style={{ marginBottom: 16 }}>
-        Transition direction: {direction}
+        Transition direction: {direction || 'undefined'}
       </Headline>
       {spinner}
     </Div>
