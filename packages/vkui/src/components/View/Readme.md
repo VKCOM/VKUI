@@ -202,7 +202,7 @@ const SettingsPanelContent = ({ name, onChangeName }) => {
 
 <br />
 
-## <a id="usenavdirection_example" style="position: relative; top: -100px;"></a>[Определение типа перехода (вперёд/назад), с которым была отрисована панель, с помощью хука `useNavDirection()`](#/View?id=usenavdirection_example)
+## <a id="usenavdirection_example" style="position: relative; top: -100px;"></a>[useNavDirection(): определение типа перехода (вперёд/назад), с которым была отрисована панель.](#/View?id=usenavdirection_example)
 
 Хук `useNavDirection()` возвращает одно из трёх значений:
 
