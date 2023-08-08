@@ -7,10 +7,7 @@ export interface TransitionContextProps {
 const TransitionContext = React.createContext<TransitionContextProps>({
   entering: false,
 });
-
-export type TransitionDirection = undefined | 'forwards' | 'backwards';
-
-export const useNavTransition = (): TransitionContextProps => React.useContext(TransitionContext);
+export const useNavTransition = () => React.useContext(TransitionContext);
 
 export const NavTransitionProvider = ({
   children,
