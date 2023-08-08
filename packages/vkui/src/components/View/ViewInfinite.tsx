@@ -14,6 +14,7 @@ import {
   ConfigProviderContextInterface,
 } from '../ConfigProvider/ConfigProviderContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitColContext';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { swipeBackExcluded } from './utils';
@@ -664,12 +665,13 @@ class ViewInfiniteComponent extends React.Component<
                   className={styles['View__panel-in']}
                   style={{ marginTop: compensateScroll ? -scroll : undefined }}
                 >
-                  <NavTransitionProvider
-                    entering={panelId === nextPanel || panelId === swipeBackNextPanel}
-                    isBack={isBack}
-                  >
-                    {panel}
-                  </NavTransitionProvider>
+                  <NavTransitionDirectionProvider isBack={swipingBack || isBack}>
+                    <NavTransitionProvider
+                      entering={panelId === nextPanel || panelId === swipeBackNextPanel}
+                    >
+                      {panel}
+                    </NavTransitionProvider>
+                  </NavTransitionDirectionProvider>
                 </div>
               </div>
             );
