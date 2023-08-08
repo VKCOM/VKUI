@@ -226,13 +226,6 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 <br/><br/>
 
-## Отказ от CSS селекторов `vkui__root` и `vkui__portal-root`
-
-Раньше [`AppRoot`](#/AppRoot) автоматически устанавливал в **root-элемент** классы `vkui__root` и `vkui__portal-root`,
-а в случае `<AppRoot mode="partial">` надо было добавить `vkui__root` вручную. В CSS этим классам задавались правила для
-`font-family` и `color`. Глобальное перебивание этих свойств создавало проблемы (cм. [#3593](https://github.com/VKCOM/VKUI/issues/3593)),
-поэтому мы избавились от необходимости в этих классах.
-
 ## [`ConfigProvider`](#/ConfigProvider)
 
 - По умолчанию `appearance` определяется автоматически — в зависимости от темы, указанной в VK, или настроек ОС
