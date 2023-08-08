@@ -51,3 +51,24 @@ export const SliderPlaygroundForKeyboardTest = ({
     </ConfigProvider>
   );
 };
+
+export const SliderPlaygroundForTooltipTest = ({
+  appearance,
+  ...restProps
+}: ComponentPlaygroundProps & (SliderProps | SliderMultipleProps)) => {
+  return (
+    <ConfigProvider appearance={appearance}>
+      <AdaptivityProvider hasPointer>
+        <AppRoot
+          style={{
+            padding: '80px 30px 30px',
+            width: '320px',
+            height: 'auto',
+          }}
+        >
+          <Slider withTooltip {...restProps} />
+        </AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvider>
+  );
+};

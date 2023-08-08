@@ -202,4 +202,29 @@ describe('Slider', () => {
       fireEvent.mouseUp(startSlider);
     });
   });
+
+  describe('with tooltip', () => {
+    it('shows tooltip on hover/focus', () => {
+      render(<Slider defaultValue={30} withTooltip />);
+      const slider = screen.getByRole('slider');
+
+      expect(screen.queryByText('30')).not.toBeInTheDocument();
+
+      // shows tooltip on hover
+      userEvent.hover(slider);
+      expect(screen.queryByText('30')).toBeInTheDocument();
+
+      // hides on unhover
+      userEvent.unhover(slider);
+      expect(screen.queryByText('30')).not.toBeInTheDocument();
+
+      // shows tooltip on focus
+      slider.focus();
+      expect(screen.queryByText('30')).toBeInTheDocument();
+
+      // hides on blur
+      slider.blur();
+      expect(screen.queryByText('30')).not.toBeInTheDocument();
+    });
+  });
 });

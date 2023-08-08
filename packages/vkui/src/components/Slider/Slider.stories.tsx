@@ -53,3 +53,10 @@ export const Playground: Story = {
     withVKUILayout,
   ],
 };
+
+export const Tooltip: Story = {
+  ...Playground,
+  args: {
+    withTooltip: true,
+  },
+};

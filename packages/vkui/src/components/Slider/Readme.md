@@ -19,6 +19,7 @@ const options = () => {
 
 const Example = () => {
   const [valueBasic, setValueBasic] = useState(24.4234);
+  const [valueWithTooltipBasic, setValueWithTooltipBasic] = useState(24.4234);
   const [valueDisabled, setValueDisabled] = useState(15);
   const [valueStep, setValueStep] = useState(0.2);
 
@@ -73,6 +74,25 @@ const Example = () => {
           </FormItem>
           <FormItem top="Multiple">
             <Slider
+              multiple
+              step={1}
+              defaultValue={[20, 80]}
+              getAriaValueText={(value, index) =>
+                index === 0 ? `Start thumb is ${value}` : `End thumb is ${value}`
+              }
+            />
+          </FormItem>
+          <FormItem top="Basic: with tooltip">
+            <Slider
+              withTooltip
+              value={Number(valueWithTooltipBasic)}
+              aria-labelledby="basic"
+              onChange={setValueWithTooltipBasic}
+            />
+          </FormItem>
+          <FormItem top="Multiple: with tooltip">
+            <Slider
+              withTooltip
               multiple
               step={1}
               defaultValue={[20, 80]}

@@ -90,7 +90,14 @@
   }
 }
 
-.Group--mode-card::after {
+/**
+ * Изменено с ::after на ::before
+ * потому что при ::after абсолютно позиционированный элемент накладывается
+ * поверх любого другого абсолютно позиционированного элемента внутри Group,
+ * например поверх Tooltip
+ * См. пример: Slider c пропом withTooltip
+ */
+.Group--mode-card::before {
   content: '';
   left: 0;
   top: 0;
@@ -103,7 +110,7 @@
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none::after {
+  .Group--sizeX-none.Group--mode-none::before {
     content: '';
     left: 0;
     top: 0;

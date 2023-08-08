@@ -1,11 +1,36 @@
 import * as React from 'react';
 import { expect, test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
-import { SliderPlayground, SliderPlaygroundForKeyboardTest } from './Slider.e2e-playground';
+import {
+  SliderPlayground,
+  SliderPlaygroundForKeyboardTest,
+  SliderPlaygroundForTooltipTest,
+} from './Slider.e2e-playground';
 
 test('Slider', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
   await mount(<SliderPlayground {...componentPlaygroundProps} />);
   await expectScreenshotClippedToContent();
+});
+
+test.describe('Slider with Tooltip', () => {
+  test.use({ onlyForPlatforms: [Platform.VKCOM] });
+  test('Slider with tooltip', async ({
+    mount,
+    page,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(
+      <SliderPlaygroundForTooltipTest
+        {...componentPlaygroundProps}
+        defaultValue={24.4234234234234}
+        min={24.4234}
+        max={30}
+      />,
+    );
+    await page.keyboard.press('Tab');
+    await expectScreenshotClippedToContent();
+  });
 });
 
 /**
