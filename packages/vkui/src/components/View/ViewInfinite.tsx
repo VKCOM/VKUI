@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-// ignore test coverage for this file because we test it inside the View.test.tsx
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { withContext } from '../../hoc/withContext';
@@ -39,7 +37,7 @@ interface ViewsScrolls {
 
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
-let scrollsCache: ViewsScrolls = {};
+export let scrollsCache: ViewsScrolls = {};
 
 export type TransitionParams = { from: string | null; to: string | null };
 
