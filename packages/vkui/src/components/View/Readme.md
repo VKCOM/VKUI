@@ -225,6 +225,8 @@ Xук возвращает правильное значение даже есл
 В примере ниже мы имитируем загрузку данныx, показывая спиннер, если панель была отрисована с анимацией перехода вперед.
 Используем два `View` и по три `Panel` компонента в каждом, чтобы показать, что тип перехода можно узнать как при переходе между `View`, так и при переходе между `Panel`.
 
+На третьем `View` можно посмотреть пример со свайпом в iOS от левого края назад, где видно, что панель на которую идёт переход определяет его тип в самом начале свайпа.
+
 ```jsx
 const Content = () => {
   const direction = useNavDirection();
@@ -251,7 +253,12 @@ const Content = () => {
   return (
     <Div>
       <Headline level="1" style={{ marginBottom: 16 }}>
-        Transition direction: {direction || 'undefined'}
+        Направление перехода:{' '}
+        {direction === 'forwards'
+          ? 'вперёд'
+          : direction === 'backwards'
+          ? 'назад'
+          : 'не определено'}
       </Headline>
       {spinner}
     </Div>
@@ -260,55 +267,120 @@ const Content = () => {
 
 const Example = () => {
   const [activeView, setActiveView] = useState('view1');
-
   const [activePanel, setActivePanel] = useState(1);
+
+  const [swipeViewHistory, setSwipeViewHistory] = useState([`swipeView.${activePanel}`]);
+  const pushSwipeViewHistory = React.useCallback((panel) => {
+    setSwipeViewHistory((prevHistory) => [...prevHistory, `swipeView.${panel}`]);
+  }, []);
+  const onSwipeBack = React.useCallback(() => {
+    const newHistory = swipeViewHistory.slice(0, -1);
+    setSwipeViewHistory(newHistory);
+
+    const newActiveSwipeViewPanel = newHistory[newHistory.length - 1];
+    const swipeViewPanel = +newActiveSwipeViewPanel.split('swipeView.')[1];
+    setActivePanel(swipeViewPanel);
+  }, [swipeViewHistory]);
+
+  handleActivePanelSet = React.useCallback(
+    (panel) => {
+      setActivePanel(panel);
+      if (activeView === 'swipeView') {
+        pushSwipeViewHistory(panel);
+      }
+    },
+    [pushSwipeViewHistory, activeView],
+  );
+
+  handleActiveViewSet = React.useCallback(
+    (view) => {
+      if (view === 'swipeView') {
+        const defaultSwipeViewActivePanel = 1;
+        setSwipeViewHistory([`swipeView.${defaultSwipeViewActivePanel}`]);
+        setActivePanel(defaultSwipeViewActivePanel);
+      }
+      setActiveView(view);
+    },
+    [activePanel],
+  );
 
   const navigationButtons = (
     <NavigationButtons
       activePanel={activePanel}
       activeView={activeView}
-      setActivePanel={setActivePanel}
-      setActiveView={setActiveView}
+      setActivePanel={handleActivePanelSet}
+      setActiveView={handleActiveViewSet}
     />
   );
 
+  const swipeViewActivePanel = swipeViewHistory[swipeViewHistory.length - 1];
   return (
-    <Root activeView={activeView}>
-      <View activePanel={`panel1.${activePanel}`} id="view1">
-        <Panel id="panel1.1">
-          <PanelHeader>Panel 1.1</PanelHeader>
-          {navigationButtons}
-          <Content />
-        </Panel>
-        <Panel id="panel1.2">
-          <PanelHeader>Panel 1.2</PanelHeader>
-          {navigationButtons}
-          <Content />
-        </Panel>
-        <Panel id="panel1.3">
-          <PanelHeader>Panel 1.3</PanelHeader>
-          {navigationButtons}
-          <Content />
-        </Panel>
-      </View>
-      <View activePanel={`panel2.${activePanel}`} id="view2">
-        <Panel id="panel2.1">
-          <PanelHeader>Panel 2.1</PanelHeader>
-          {navigationButtons}
-          <Content />
-        </Panel>
-        <Panel id="panel2.2">
-          <PanelHeader>Panel 2.2</PanelHeader>
-          {navigationButtons}
-          <Content />
-        </Panel>
-        <Panel id="panel2.3">
-          <PanelHeader>Panel 2.3</PanelHeader>
-          {navigationButtons}
-          <Content />
-        </Panel>
-      </View>
-    </Root>
+    <ConfigProvider
+      {...(activeView === 'swipeView' ? { platform: Platform.IOS, isWebView: true } : {})}
+    >
+      <SplitLayout>
+        <SplitCol>
+          <Root activeView={activeView}>
+            <View activePanel={`panel1.${activePanel}`} id="view1">
+              <Panel id="panel1.1">
+                <PanelHeader>Панель 1.1</PanelHeader>
+                {navigationButtons}
+                <Content />
+              </Panel>
+              <Panel id="panel1.2">
+                <PanelHeader>Панель 1.2</PanelHeader>
+                {navigationButtons}
+                <Content />
+              </Panel>
+              <Panel id="panel1.3">
+                <PanelHeader>Панель 1.3</PanelHeader>
+                {navigationButtons}
+                <Content />
+              </Panel>
+            </View>
+            <View activePanel={`panel2.${activePanel}`} id="view2">
+              <Panel id="panel2.1">
+                <PanelHeader>Панель 2.1</PanelHeader>
+                {navigationButtons}
+                <Content />
+              </Panel>
+              <Panel id="panel2.2">
+                <PanelHeader>Панель 2.2</PanelHeader>
+                {navigationButtons}
+                <Content />
+              </Panel>
+              <Panel id="panel2.3">
+                <PanelHeader>Панель 2.3</PanelHeader>
+                {navigationButtons}
+                <Content />
+              </Panel>
+            </View>
+            <View
+              id="swipeView"
+              activePanel={swipeViewActivePanel}
+              history={swipeViewHistory}
+              onSwipeBack={onSwipeBack}
+            >
+              <Panel id="swipeView.1">
+                <PanelHeader>П.1 iOS Swipe Back</PanelHeader>
+                {navigationButtons}
+                <Content />
+              </Panel>
+              <Panel id="swipeView.2">
+                <PanelHeader>П.2 iOS Swipe Back</PanelHeader>
+                {navigationButtons}
+                <Content />
+              </Panel>
+              <Panel id="swipeView.3">
+                <PanelHeader>П.3 iOS Swipe Back</PanelHeader>
+                {navigationButtons}
+                <Content />
+              </Panel>
+            </View>
+          </Root>
+        </SplitCol>
+      </SplitLayout>
+    </ConfigProvider>
   );
 };
 
@@ -317,48 +389,92 @@ function NavigationButtons({ activePanel, activeView, setActiveView, setActivePa
     <>
       <Spacing size={12} />
       {activeView === 'view1' ? (
-        <CellButton onClick={() => setActiveView('view2')}>Go to View 2</CellButton>
+        <>
+          <CellButton disabled>Перейти на View 1</CellButton>
+          <CellButton onClick={() => setActiveView('view2')}>Перейти на View 2</CellButton>
+          <CellButton onClick={() => setActiveView('swipeView')}>
+            Перейти на пример с iOS Swipe Back
+          </CellButton>
+        </>
+      ) : activeView === 'view2' ? (
+        <>
+          <CellButton onClick={() => setActiveView('view1')}>Назад View 1</CellButton>
+          <CellButton disabled>Перейти на View 2</CellButton>
+          <CellButton onClick={() => setActiveView('swipeView')}>
+            Перейти на пример с iOS Swipe Back
+          </CellButton>
+        </>
       ) : (
-        <CellButton onClick={() => setActiveView('view1')}>Back to View 1</CellButton>
+        activeView === 'swipeView' && (
+          <>
+            <CellButton onClick={() => setActiveView('view1')}>Назад на View 1</CellButton>
+            <CellButton onClick={() => setActiveView('view2')}>Назад на View 2</CellButton>
+            <CellButton disabled>Перейти на пример с iOS Swipe Back</CellButton>
+          </>
+        )
       )}
       <Spacing size={24}>
         <Separator />
       </Spacing>
       <Group>
-        {(() => {
-          const getCellButton = (viewNumber, panelNumber) => {
-            const goOrBack = activePanel <= panelNumber ? 'Go' : 'Back';
-            return (
-              <CellButton
-                disabled={activePanel === panelNumber}
-                onClick={() => setActivePanel(panelNumber)}
-              >
-                {goOrBack} to panel {viewNumber}.{panelNumber}
-              </CellButton>
-            );
-          };
-          return (
-            <>
-              {activeView === 'view1' ? (
-                <>
-                  {getCellButton(1, 1)}
-                  {getCellButton(1, 2)}
-                  {getCellButton(1, 3)}
-                </>
-              ) : (
-                <>
-                  {getCellButton(2, 1)}
-                  {getCellButton(2, 2)}
-                  {getCellButton(2, 3)}
-                </>
-              )}
-            </>
-          );
-        })()}
+        {activeView === 'view1' ? (
+          <>
+            {Array.from({ length: 3 }, (_, index) => (
+              <PanelNavigationButton
+                viewNumber={1}
+                panelNumber={index + 1}
+                activePanel={activePanel}
+                setActivePanel={setActivePanel}
+              />
+            ))}
+          </>
+        ) : activeView === 'view2' ? (
+          <>
+            {Array.from({ length: 3 }, (_, index) => (
+              <PanelNavigationButton
+                viewNumber={2}
+                panelNumber={index + 1}
+                activePanel={activePanel}
+                setActivePanel={setActivePanel}
+              />
+            ))}
+          </>
+        ) : (
+          activeView === 'swipeView' && (
+            <SwipeViewNavigationButton activePanel={activePanel} setActivePanel={setActivePanel} />
+          )
+        )}
       </Group>
       <Spacing size={24}>
         <Separator />
       </Spacing>
+    </>
+  );
+}
+
+function PanelNavigationButton({ activePanel, viewNumber, panelNumber, setActivePanel }) {
+  const goOrBack = activePanel <= panelNumber ? 'Перейти' : 'Назад';
+  return (
+    <CellButton disabled={activePanel === panelNumber} onClick={() => setActivePanel(panelNumber)}>
+      {goOrBack} на панель {viewNumber}.{panelNumber}
+    </CellButton>
+  );
+}
+
+function SwipeViewNavigationButton({ activePanel, setActivePanel }) {
+  return (
+    <>
+      {activePanel === 1 && (
+        <Placeholder>Перейдите на панель 2 чтобы можно было свайпнуть назад</Placeholder>
+      )}
+      {activePanel > 1 && (
+        <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
+      )}
+      {activePanel < 3 && (
+        <CellButton onClick={() => setActivePanel(activePanel + 1)}>
+          Перейти на панель {activePanel + 1}
+        </CellButton>
+      )}
     </>
   );
 }
