@@ -84,7 +84,7 @@ export interface ViewInfiniteState {
   prevPanel: string | null;
   nextPanel: string | null;
 
-  swipingBack: boolean;
+  swipingBack?: boolean;
   swipeBackPrevented: boolean;
   swipeBackStartX: number;
   swipeBackShift: number;
@@ -113,7 +113,7 @@ class ViewInfiniteComponent extends React.Component<
       prevPanel: null,
       nextPanel: null,
 
-      swipingBack: false,
+      swipingBack: undefined,
       swipeBackPrevented: false,
       swipeBackStartX: 0,
       swipeBackShift: 0,
