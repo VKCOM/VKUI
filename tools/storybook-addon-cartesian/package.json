@@ -9,7 +9,7 @@
     "test:ci": "echo no test:ci"
   },
   "dependencies": {
-    "@babel/core": "^7.22.9",
+    "@babel/core": "^7.22.10",
     "@storybook/addon-a11y": "7.2.1",
     "@storybook/addon-actions": "7.2.1",
     "@storybook/addon-essentials": "7.2.1",
