@@ -15,6 +15,11 @@ updates:
       # Для разработки v5 фиксируем 17 версию.
       - dependency-name: '@types/react*'
         update-types: ['version-update:semver-major']
+      # С версии v13.0.0 больше не поддерживается React 17.
+      #
+      # https://github.com/testing-library/react-testing-library/releases/tag/v13.0.0
+      - dependency-name: '@testing-library/react'
+        update-types: ['version-update:semver-major']
     groups:
       react:
         patterns:
