@@ -62,8 +62,6 @@ Xук возвращает правильное значение даже есл
 Используем два `View` и по три `Panel` компонента в каждом, чтобы показать, что тип перехода можно узнать как при переходе между `View`, так и при переходе между `Panel`.
 
 ```jsx
-import { useNavDirection } from '../../components/NavTransitionContext/NavTransitionContext';
-
 const Content = () => {
   const direction = useNavDirection();
 
