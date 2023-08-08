@@ -12,10 +12,8 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { useScroll } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import {
-  NavTransitionDirectionProvider,
-  NavTransitionProvider,
-} from '../NavTransitionContext/NavTransitionContext';
+import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { useSplitCol } from '../SplitCol/SplitColContext';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { swipeBackExcluded } from './utils';

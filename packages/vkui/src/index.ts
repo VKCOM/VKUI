@@ -356,11 +356,9 @@ export { useAppearance } from './hooks/useAppearance';
 export { usePagination } from './hooks/usePagination';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
-export {
-  useNavTransition,
-  useNavDirection,
-} from './components/NavTransitionContext/NavTransitionContext';
-export type { TransitionDirection } from './components/NavTransitionContext/NavTransitionContext';
+export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
+export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
+export type { TransitionDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useModalRootContext } from './components/ModalRoot/useModalRootContext';
 
 /**

@@ -9,10 +9,8 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { ScrollContext } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import {
-  NavTransitionDirectionProvider,
-  NavTransitionProvider,
-} from '../NavTransitionContext/NavTransitionContext';
+import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './Root.module.css';
 

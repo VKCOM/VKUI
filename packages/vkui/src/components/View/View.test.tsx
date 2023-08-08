@@ -5,7 +5,7 @@ import { Platform } from '../../lib/platform';
 import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
 import { HasChildren } from '../../types';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { useNavDirection } from '../NavTransitionContext/NavTransitionContext';
+import { useNavDirection } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { Panel } from '../Panel/Panel';
 import { scrollsCache, View, type ViewProps } from './View';
 import { ViewInfinite } from './ViewInfinite';
