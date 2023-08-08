@@ -5,6 +5,7 @@ import { Platform } from '../../lib/platform';
 import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
 import { HasChildren } from '../../types';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { useNavDirection } from '../NavTransitionContext/NavTransitionContext';
 import { Panel } from '../Panel/Panel';
 import { scrollsCache, View, type ViewProps } from './View';
 import { ViewInfinite } from './ViewInfinite';
@@ -104,45 +105,7 @@ describe.each([
 
   describe('can swipeBack', () => {
     let nowMock: jest.SpyInstance;
-    const setupSwipeBack = (
-      Wrapper: ComponentType<HasChildren> = Fragment,
-      children: any = null,
-      initialProps: Partial<ViewProps> = {},
-    ) => {
-      const events = {
-        onSwipeBack: jest.fn(),
-        onTransition: jest.fn(),
-        onSwipeBackStart: jest.fn(),
-        onSwipeBackCancel: jest.fn(),
-      };
-      const SwipeBack = (p: Partial<ViewProps>) => (
-        <Wrapper>
-          <ConfigProvider platform={Platform.IOS} isWebView>
-            <View
-              id="scroll"
-              activePanel="p2"
-              history={['p1', 'p2']}
-              {...events}
-              {...p}
-              {...initialProps}
-            >
-              <Panel id="p1" />
-              <Panel id="p2">{children}</Panel>
-            </View>
-          </ConfigProvider>
-        </Wrapper>
-      );
-      const h = render(<SwipeBack />);
-      act(() => {
-        jest.runAllTimers();
-      });
-      const view = h.container.firstElementChild as Element;
-      // force detect x-swipe
-      fireEvent.mouseDown(view, { clientX: 50, clientY: 100 });
-      fireEvent.mouseMove(view, { clientX: 40, clientY: 100 });
-      nowMock = jest.spyOn(Date, 'now');
-      return { view, ...events, rerender: h.rerender, SwipeBack };
-    };
+    beforeEach(() => (nowMock = jest.spyOn(Date, 'now')));
     afterEach(() => nowMock && nowMock.mockClear());
     it('cancels swipeBack on swipe left', () => {
       const { view, ...events } = setupSwipeBack();
@@ -161,6 +124,28 @@ describe.each([
       expect(events.onSwipeBack).toBeCalledTimes(1);
       expect(events.onSwipeBackCancel).not.toBeCalled();
     });
+    it('detects transition direction on swipeBack with useNavDirection() hook', async () => {
+      const PanelContent = () => {
+        const direction = useNavDirection();
+
+        return <span>Direction: {direction || 'undefined'}</span>;
+      };
+      const { view } = setupSwipeBack({
+        childrenForPanel1: <PanelContent />,
+        childrenForPanel2: <PanelContent />,
+        shouldForceDetectXSwipe: false,
+      });
+
+      // only panel 2 visible by default with undefined direction
+      expect(screen.queryByText('Direction: undefined')).toBeTruthy();
+      expect(screen.queryByText('Direction: backwards')).toBeFalsy();
+      fireEvent.mouseDown(view, { clientX: 50, clientY: 100 });
+      fireEvent.mouseMove(view, { clientX: 40, clientY: 100 });
+
+      // both panels are visible and the content on panel 1 knows about backwards direction
+      expect(screen.queryByText('Direction: undefined')).toBeTruthy();
+      expect(screen.queryByText('Direction: backwards')).toBeTruthy();
+    });
     describe('does not swipeback on', () => {
       it.each<[string, ReactNode, Partial<ViewProps>]>([
         ['input', <input data-testid="ex" key="" />, {}],
@@ -175,8 +160,12 @@ describe.each([
           <div data-testid="ex" key="" />,
           { onSwipeBackStart: () => 'prevent' },
         ],
-      ])('%s', (_name, cmp, props) => {
-        const { view, ...events } = setupSwipeBack(Fragment, cmp, props);
+      ])('%s', (_name, component, props) => {
+        const { view, ...events } = setupSwipeBack({
+          Wrapper: Fragment,
+          childrenForPanel2: component,
+          initialProps: props,
+        });
         fireEvent.mouseMove(screen.getByTestId('ex'), {
           clientX: window.innerWidth + 1,
           clientY: 100,
@@ -235,7 +224,7 @@ describe.each([
         let y = 101;
         scrollsCache['scroll']['p1'] = 22;
         const [MockScroll, scrollTo] = mockScrollContext(() => y);
-        const { view, rerender, SwipeBack } = setupSwipeBack(MockScroll);
+        const { view, rerender, SwipeBack } = setupSwipeBack({ Wrapper: MockScroll });
         fireEvent.mouseMove(view, {
           clientX: window.innerWidth + 1,
           clientY: 100,
@@ -302,3 +291,52 @@ describe.each([
     });
   });
 });
+
+function setupSwipeBack({
+  Wrapper = Fragment,
+  childrenForPanel1 = null,
+  childrenForPanel2 = null,
+  initialProps = {},
+  shouldForceDetectXSwipe = true,
+}: {
+  Wrapper?: ComponentType<HasChildren>;
+  childrenForPanel1?: any;
+  childrenForPanel2?: any;
+  initialProps?: Partial<ViewProps>;
+  shouldForceDetectXSwipe?: boolean;
+} = {}) {
+  const events = {
+    onSwipeBack: jest.fn(),
+    onTransition: jest.fn(),
+    onSwipeBackStart: jest.fn(),
+    onSwipeBackCancel: jest.fn(),
+  };
+  const SwipeBack = (p: Partial<ViewProps>) => (
+    <Wrapper>
+      <ConfigProvider platform={Platform.IOS} isWebView>
+        <View
+          id="scroll"
+          activePanel="p2"
+          history={['p1', 'p2']}
+          {...events}
+          {...p}
+          {...initialProps}
+        >
+          <Panel id="p1">{childrenForPanel1}</Panel>
+          <Panel id="p2">{childrenForPanel2}</Panel>
+        </View>
+      </ConfigProvider>
+    </Wrapper>
+  );
+  const component = render(<SwipeBack />);
+  act(() => {
+    jest.runAllTimers();
+  });
+  const view = component.container.firstElementChild as Element;
+  // force detect x-swipe
+  if (shouldForceDetectXSwipe) {
+    fireEvent.mouseDown(view, { clientX: 50, clientY: 100 });
+    fireEvent.mouseMove(view, { clientX: 40, clientY: 100 });
+  }
+  return { view, ...events, rerender: component.rerender, SwipeBack };
+}

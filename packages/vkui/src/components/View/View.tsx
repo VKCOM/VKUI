@@ -122,7 +122,7 @@ export const View = ({
   const [prevPanel, setPrevPanel] = React.useState<string | null>(null);
   const [nextPanel, setNextPanel] = React.useState<string | null>(null);
 
-  const [swipingBack, setSwipingBack] = React.useState<boolean>(false);
+  const [swipingBack, setSwipingBack] = React.useState<boolean | undefined>(undefined);
   const [swipeBackPrevented, setSwipeBackPrevented] = React.useState<boolean>(false);
   const [swipeBackStartX, setSwipeBackStartX] = React.useState<number>(0);
   const [swipeBackShift, setSwipeBackShift] = React.useState<number>(0);
@@ -538,7 +538,7 @@ export const View = ({
                   marginTop: compensateScroll ? -(scrolls.current[panelId] ?? 0) : undefined,
                 }}
               >
-                <NavTransitionDirectionProvider isBack={isBack}>
+                <NavTransitionDirectionProvider isBack={swipingBack || isBack}>
                   <NavTransitionProvider
                     entering={panelId === nextPanel || panelId === swipeBackNextPanel}
                   >
