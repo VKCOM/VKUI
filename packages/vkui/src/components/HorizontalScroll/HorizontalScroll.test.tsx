@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { HorizontalScroll } from './HorizontalScroll';
 
@@ -24,5 +24,37 @@ describe('HorizontalScroll', () => {
     });
 
     expect(scrollBy).toBeCalledTimes(1);
+  });
+
+  it('calculates and shows arrow on hover', async () => {
+    function mockRef(element: HTMLDivElement) {
+      if (!element) {
+        return;
+      }
+
+      // to make sure we really call the logic that calculates show flag using element properties
+      // we return 0 for first initial render, so, arrow won't be visible,
+      // and on second call, we return value, which will allows us to see arrow on hover.
+      jest
+        .spyOn(element, 'scrollWidth', 'get')
+        .mockImplementationOnce(() => {
+          return 0;
+        })
+        .mockImplementation(() => {
+          return 300;
+        });
+    }
+
+    render(
+      <HorizontalScroll getRef={mockRef} data-testid="horizontal-scroll">
+        <div style={{ width: '800px', height: '50px' }} />
+      </HorizontalScroll>,
+    );
+    // no arrow button on the screen on first render
+    expect(screen.queryByRole('button')).toBeFalsy();
+
+    fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
+
+    await screen.findByRole('button');
   });
 });
