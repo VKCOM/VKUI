@@ -93,7 +93,10 @@ export type { PopoutWrapperProps } from './components/PopoutWrapper/PopoutWrappe
 export { Alert } from './components/Alert/Alert';
 export type { AlertProps, AlertActionInterface } from './components/Alert/Alert';
 export { ActionSheet } from './components/ActionSheet/ActionSheet';
-export type { ActionSheetProps } from './components/ActionSheet/ActionSheet';
+export type {
+  ActionSheetProps,
+  ActionSheetOnCloseHandler,
+} from './components/ActionSheet/ActionSheet';
 export { ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';
 export { ActionSheetDefaultIosCloseItem } from './components/ActionSheet/ActionSheetDefaultIosCloseItem';

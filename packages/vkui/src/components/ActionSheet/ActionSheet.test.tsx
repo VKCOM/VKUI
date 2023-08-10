@@ -67,9 +67,9 @@ describe('ActionSheet', () => {
         if (!props.autoClose) {
           expect(onCloseHandler).not.toBeCalled();
         } else if (props.autoClose && props.isCancelItem) {
-          expect(onCloseHandler).toBeCalledWith({ closedBy: 'cancelItem' });
+          expect(onCloseHandler).toBeCalledWith({ closedBy: 'cancel-item' });
         } else {
-          props.autoClose && expect(onCloseHandler).toBeCalledWith({ closedBy: 'actionItem' });
+          props.autoClose && expect(onCloseHandler).toBeCalledWith({ closedBy: 'action-item' });
         }
       });
     });

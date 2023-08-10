@@ -17,7 +17,8 @@ import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
 const warn = warnOnce('ActionSheet');
-type CloseInitiators = 'actionItem' | 'cancelItem' | 'other';
+type CloseInitiators = 'action-item' | 'cancel-item' | 'other';
+export type ActionSheetOnCloseHandler = (options: { closedBy: CloseInitiators }) => void;
 
 export interface ActionSheetProps
   extends Pick<
@@ -30,7 +31,7 @@ export interface ActionSheetProps
   /**
    * Закрыть попап по клику снаружи.
    */
-  onClose(options: { closedBy: CloseInitiators }): void;
+  onClose: ActionSheetOnCloseHandler;
   /**
    * Только мобильный iOS.
    */
@@ -89,7 +90,7 @@ export const ActionSheet = ({
         immediateAction && immediateAction(event);
         if (autoClose) {
           _action.current = () => action && action(event);
-          setClosingBy(isCancelItem ? 'cancelItem' : 'actionItem');
+          setClosingBy(isCancelItem ? 'cancel-item' : 'action-item');
         } else {
           action && action(event);
         }
