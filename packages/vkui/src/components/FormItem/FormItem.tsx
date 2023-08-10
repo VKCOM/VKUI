@@ -37,6 +37,10 @@ export interface FormItemProps
    * Режим `indent` предназначен для визуального отступа
    */
   removable?: boolean | 'indent';
+  /**
+   * Удаляет внешние отступы вокруг компонента
+   */
+  noPadding?: boolean;
 }
 
 /**
@@ -55,6 +59,7 @@ export const FormItem = ({
   className,
   htmlFor,
   bottomId,
+  noPadding,
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
@@ -90,6 +95,7 @@ export const FormItem = ({
       ref={rootEl}
       className={classNames(
         styles['FormItem'],
+        !noPadding && styles['FormItem--withPadding'],
         'vkuiInternalFormItem',
         status !== 'default' &&
           {
