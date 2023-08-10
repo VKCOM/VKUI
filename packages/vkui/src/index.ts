@@ -361,6 +361,7 @@ export { useModalRootContext } from './components/ModalRoot/useModalRootContext'
  */
 export { classNames } from '@vkontakte/vkjs';
 export { animate } from './lib/animate';
+export { defaultFilterFn as filterFnForSelect } from './lib/select';
 export { removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
 export type { SSRWrapperProps } from './lib/SSR';
