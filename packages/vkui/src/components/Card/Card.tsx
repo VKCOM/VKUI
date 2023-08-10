@@ -6,7 +6,7 @@ import styles from './Card.module.css';
 export interface CardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
-  mode?: 'tint' | 'shadow' | 'outline';
+  mode?: 'tint' | 'shadow' | 'outline' | 'outline-tint';
 }
 
 /**
@@ -19,6 +19,7 @@ export const Card = ({
   className,
   ...restProps
 }: CardProps) => {
+  const withBorder = mode === 'outline' || mode === 'outline-tint';
   return (
     <div
       {...restProps}
@@ -27,6 +28,7 @@ export const Card = ({
         styles['Card'],
         mode === 'outline' && styles['Card--mode-outline'],
         mode === 'shadow' && styles['Card--mode-shadow'],
+        withBorder && styles['Card--withBorder'],
         className,
       )}
     >

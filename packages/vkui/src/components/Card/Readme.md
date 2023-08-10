@@ -24,6 +24,16 @@
           </Card>
         </CardGrid>
       </Group>
+      <Group
+        mode="plain"
+        header={<Header mode="secondary">С внутренней обводкой и дефолтным фоном</Header>}
+      >
+        <CardGrid size="l">
+          <Card mode="outline-tint">
+            <div style={{ height: 96 }} />
+          </Card>
+        </CardGrid>
+      </Group>
     </Group>
   </Panel>
 </View>

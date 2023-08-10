@@ -12,7 +12,7 @@ export const CardPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          mode: ['tint', 'shadow', 'outline'],
+          mode: ['tint', 'shadow', 'outline', 'outline-tint'],
         },
       ]}
     >
