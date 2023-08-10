@@ -46,8 +46,14 @@ describe('ActionSheet', () => {
       ])('when %s', async (props) => {
         const onCloseHandler = jest.fn();
         const handlers = { onClick: jest.fn(), onChange: jest.fn() };
+
         const { unmount } = render(
-          <ActionSheet onClose={(...args) => onCloseHandler(...args) && unmount()}>
+          <ActionSheet
+            onClose={(...args) => {
+              onCloseHandler(...args);
+              unmount();
+            }}
+          >
             <ActionSheetItem {...props} {...handlers} {...props} data-testid="item" />
           </ActionSheet>,
         );
