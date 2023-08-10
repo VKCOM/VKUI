@@ -95,7 +95,7 @@ export type { AlertProps, AlertActionInterface } from './components/Alert/Alert'
 export { ActionSheet } from './components/ActionSheet/ActionSheet';
 export type {
   ActionSheetProps,
-  ActionSheetOnCloseHandler,
+  ActionSheetOnCloseOptions,
 } from './components/ActionSheet/ActionSheet';
 export { ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';

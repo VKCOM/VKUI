@@ -18,7 +18,9 @@ import styles from './ActionSheet.module.css';
 
 const warn = warnOnce('ActionSheet');
 type CloseInitiators = 'action-item' | 'cancel-item' | 'other';
-export type ActionSheetOnCloseHandler = (options: { closedBy: CloseInitiators }) => void;
+export interface ActionSheetOnCloseOptions {
+  closedBy: CloseInitiators;
+}
 
 export interface ActionSheetProps
   extends Pick<
@@ -31,7 +33,7 @@ export interface ActionSheetProps
   /**
    * Закрыть попап по клику снаружи.
    */
-  onClose: ActionSheetOnCloseHandler;
+  onClose(options: ActionSheetOnCloseOptions): VoidFunction;
   /**
    * Только мобильный iOS.
    */
