@@ -39,7 +39,8 @@ export interface ActionSheetItemProps
    */
   iconChecked?: React.ReactNode;
   /**
-   * Позволяет отделить ActionItem от CancelItem
+   * Позволяет отделить ActionItem от CancelItem для определении того,
+   * кто вызвал закрытие ActionSheet. Используется в ActionSheet.onClose()
    */
   isCancelItem?: boolean;
 }
