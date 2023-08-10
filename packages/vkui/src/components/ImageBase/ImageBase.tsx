@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import type { HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
@@ -112,6 +113,23 @@ export const ImageBase = ({
     onError?.(event);
   };
 
+  const imgRef = useExternRef(getRef);
+  const isMountedRef = React.useRef(false);
+  React.useEffect(
+    function dispatchLoadEventForAlreadyLoadedResource() {
+      if (isMountedRef.current) {
+        return;
+      }
+      isMountedRef.current = true;
+
+      if (imgRef.current && imgRef.current.complete && !loaded) {
+        const event = new Event('load');
+        imgRef.current.dispatchEvent(event);
+      }
+    },
+    [imgRef, loaded],
+  );
+
   const sizeClassName = (() => {
     switch (size) {
       case 28:
@@ -147,7 +165,7 @@ export const ImageBase = ({
       >
         {hasSrc && (
           <img
-            ref={getRef}
+            ref={imgRef}
             alt={alt}
             className={styles['ImageBase__img']}
             crossOrigin={crossOrigin}
