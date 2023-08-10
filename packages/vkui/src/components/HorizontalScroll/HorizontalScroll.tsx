@@ -215,7 +215,7 @@ export const HorizontalScroll = ({
     [scrollEvent, scrollerRef],
   );
 
-  React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility]);
+  React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
 
   /**
    * Прокрутка с помощью любого колеса мыши
