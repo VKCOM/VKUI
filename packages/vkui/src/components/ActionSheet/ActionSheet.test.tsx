@@ -42,10 +42,18 @@ describe('ActionSheet', () => {
         { selectable: true },
         { autoClose: true },
         { autoClose: true, selectable: true },
+        { autoClose: true, isCancelItem: true },
       ])('when %s', async (props) => {
+        const onCloseHandler = jest.fn();
         const handlers = { onClick: jest.fn(), onChange: jest.fn() };
+
         const { unmount } = render(
-          <ActionSheet onClose={() => unmount()}>
+          <ActionSheet
+            onClose={(...args) => {
+              onCloseHandler(...args);
+              unmount();
+            }}
+          >
             <ActionSheetItem {...props} {...handlers} {...props} data-testid="item" />
           </ActionSheet>,
         );
@@ -55,6 +63,14 @@ describe('ActionSheet', () => {
         runAllTimers();
         expect(handlers.onClick).toBeCalled();
         props.selectable && expect(handlers.onChange).toBeCalled();
+
+        if (!props.autoClose) {
+          expect(onCloseHandler).not.toBeCalled();
+        } else if (props.autoClose && props.isCancelItem) {
+          expect(onCloseHandler).toBeCalledWith({ closedBy: 'cancel-item' });
+        } else {
+          props.autoClose && expect(onCloseHandler).toBeCalledWith({ closedBy: 'action-item' });
+        }
       });
     });
 
@@ -84,6 +100,17 @@ describe('ActionSheet', () => {
       userEvent.click(document.body);
       runAllTimers();
       expect(onClose).toBeCalledTimes(1);
+      expect(onClose).toBeCalledWith({ closedBy: 'other' });
+    });
+    it('closes on item click with autoClose', async () => {
+      const onClose = jest.fn();
+      render(<ActionSheetDesktop onClose={onClose} />);
+      await waitForFloatingPosition();
+      runAllTimers();
+      userEvent.click(document.body);
+      runAllTimers();
+      expect(onClose).toBeCalledTimes(1);
+      expect(onClose).toBeCalledWith({ closedBy: 'other' });
     });
     it('calls popupDirection with element', async () => {
       const popupDirection = jest.fn();
@@ -104,6 +131,7 @@ describe('ActionSheet', () => {
       userEvent.click(document.querySelector('.vkuiPopoutWrapper__overlay') as Element);
       runAllTimers();
       expect(onClose).toBeCalledTimes(1);
+      expect(onClose).toBeCalledWith({ closedBy: 'other' });
     });
   });
 });

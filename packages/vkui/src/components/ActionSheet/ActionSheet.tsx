@@ -17,6 +17,10 @@ import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
 const warn = warnOnce('ActionSheet');
+type CloseInitiators = 'action-item' | 'cancel-item' | 'other';
+export interface ActionSheetOnCloseOptions {
+  closedBy: CloseInitiators;
+}
 
 export interface ActionSheetProps
   extends Pick<
@@ -29,7 +33,7 @@ export interface ActionSheetProps
   /**
    * Закрыть попап по клику снаружи.
    */
-  onClose: VoidFunction;
+  onClose(options: ActionSheetOnCloseOptions): void;
   /**
    * Только мобильный iOS.
    */
@@ -52,12 +56,12 @@ export const ActionSheet = ({
   ...restProps
 }: ActionSheetProps) => {
   const platform = usePlatform();
-  const [closing, setClosing] = React.useState(false);
-  const onClose = () => setClosing(true);
+  const [closingBy, setClosingBy] = React.useState<undefined | CloseInitiators>(undefined);
+  const onClose = () => setClosingBy('other');
   const _action = React.useRef(noop);
 
   const afterClose = () => {
-    restProps.onClose();
+    restProps.onClose({ closedBy: closingBy || 'other' });
     _action.current();
     _action.current = noop;
   };
@@ -74,24 +78,25 @@ export const ActionSheet = ({
 
   const fallbackTransitionFinish = useTimeout(afterClose, timeout);
   React.useEffect(() => {
-    if (closing) {
+    if (closingBy) {
       fallbackTransitionFinish.set();
     } else {
       fallbackTransitionFinish.clear();
     }
-  }, [closing, fallbackTransitionFinish]);
+  }, [closingBy, fallbackTransitionFinish]);
 
   const onItemClick = React.useCallback<ItemClickHandler>(
-    (action, immediateAction, autoClose) => (event) => {
-      event.persist();
-      immediateAction && immediateAction(event);
-      if (autoClose) {
-        _action.current = () => action && action(event);
-        setClosing(true);
-      } else {
-        action && action(event);
-      }
-    },
+    ({ action, immediateAction, autoClose, isCancelItem }) =>
+      (event) => {
+        event.persist();
+        immediateAction && immediateAction(event);
+        if (autoClose) {
+          _action.current = () => action && action(event);
+          setClosingBy(isCancelItem ? 'cancel-item' : 'action-item');
+        } else {
+          action && action(event);
+        }
+      },
     [],
   );
   const contextValue = useObjectMemo({ onItemClick, isDesktop });
@@ -112,7 +117,7 @@ export const ActionSheet = ({
   const actionSheet = (
     <ActionSheetContext.Provider value={contextValue}>
       <DropdownComponent
-        closing={closing}
+        closing={Boolean(closingBy)}
         timeout={timeout}
         {...dropdownProps}
         onClose={onClose}
@@ -143,7 +148,7 @@ export const ActionSheet = ({
 
   return (
     <PopoutWrapper
-      closing={closing}
+      closing={Boolean(closingBy)}
       alignY="bottom"
       className={className}
       style={style}

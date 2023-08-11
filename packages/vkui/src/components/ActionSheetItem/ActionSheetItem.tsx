@@ -38,6 +38,11 @@ export interface ActionSheetItemProps
    * Иконка для `checked` режима.
    */
   iconChecked?: React.ReactNode;
+  /**
+   * Позволяет отделить ActionItem от CancelItem для определении того,
+   * кто вызвал закрытие ActionSheet. Используется в ActionSheet.onClose()
+   */
+  isCancelItem?: boolean;
 }
 
 /**
@@ -61,6 +66,7 @@ const ActionSheetItem = ({
   multiline = false,
   iconChecked: iconCheckedProp,
   className,
+  isCancelItem,
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
@@ -85,7 +91,16 @@ const ActionSheetItem = ({
     <Tappable
       Component={Component}
       {...restProps}
-      onClick={selectable ? onClick : onItemClick(onClick, onImmediateClick, Boolean(autoClose))}
+      onClick={
+        selectable
+          ? onClick
+          : onItemClick({
+              action: onClick,
+              immediateAction: onImmediateClick,
+              autoClose: Boolean(autoClose),
+              isCancelItem: Boolean(isCancelItem),
+            })
+      }
       activeMode={platform === Platform.IOS ? styles['ActionSheetItem--active'] : undefined}
       className={classNames(
         styles['ActionSheetItem'],
@@ -135,7 +150,12 @@ const ActionSheetItem = ({
             name={name}
             value={value}
             onChange={onChange}
-            onClick={onItemClick(noop, noop, Boolean(autoClose))}
+            onClick={onItemClick({
+              action: noop,
+              immediateAction: noop,
+              autoClose: Boolean(autoClose),
+              isCancelItem: Boolean(isCancelItem),
+            })}
             defaultChecked={defaultChecked}
             checked={checked}
             disabled={restProps.disabled}
