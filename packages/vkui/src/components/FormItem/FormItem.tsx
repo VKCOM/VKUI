@@ -39,6 +39,7 @@ export interface FormItemProps
   removable?: boolean | 'indent';
   /**
    * Удаляет внешние отступы вокруг компонента
+   * @since 5.8.0
    */
   noPadding?: boolean;
 }
