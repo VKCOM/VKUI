@@ -101,31 +101,27 @@ import type { UseAdaptivity } from '@vkontakte/vk-bridge-react';
 /**
  * Требуется конвертировать данные из VK Bridge в те, что принимает AdaptivityProvider из VKUI.
  */
-export const transformVKBridgeAdaptivity = (vkBridgeAdaptivity: UseAdaptivity): AdaptivityProps => {
-  let viewWidth;
-  let viewHeight;
-  let sizeX;
-  let sizeY;
-
-  if (vkBridgeAdaptivity.type === 'adaptive') {
-    const { viewportWidth, viewportHeight } = vkBridgeAdaptivity;
-    viewWidth = getViewWidthByViewportWidth(viewportWidth);
-    viewHeight = getViewHeightByViewportHeight(viewportHeight);
-  } else if (
-    vkBridgeAdaptivity.type === 'force_mobile' ||
-    vkBridgeAdaptivity.type === 'force_mobile_compact'
-  ) {
-    viewWidth = ViewWidth.MOBILE;
-    sizeX = SizeType.COMPACT;
-
-    if (vkBridgeAdaptivity.type === 'force_mobile_compact') {
-      sizeY = SizeType.COMPACT;
-    } else {
-      sizeY = SizeType.REGULAR;
-    }
+export const transformVKBridgeAdaptivity = ({
+  type,
+  viewportWidth,
+  viewportHeight,
+}: UseAdaptivity): AdaptivityProps => {
+  switch (type) {
+    case 'adaptive':
+      return {
+        viewWidth: getViewWidthByViewportWidth(viewportWidth),
+        viewHeight: getViewHeightByViewportHeight(viewportHeight),
+      };
+    case 'force_mobile':
+    case 'force_mobile_compact':
+      return {
+        viewWidth: ViewWidth.MOBILE,
+        sizeX: SizeType.COMPACT,
+        sizeY: type === 'force_mobile_compact' ? SizeType.COMPACT : SizeType.REGULAR,
+      };
+    default:
+      return {};
   }
-
-  return { viewWidth, viewHeight, sizeX, sizeY };
 };
 ```
 
