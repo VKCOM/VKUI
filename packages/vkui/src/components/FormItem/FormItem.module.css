@@ -1,5 +1,8 @@
 .FormItem {
   display: block;
+}
+
+.FormItem--withPadding {
   padding: var(--vkui--size_form_item_padding_vertical--regular)
     var(--vkui--size_base_padding_horizontal--regular);
 }
