@@ -102,6 +102,10 @@ export const ImageBase = ({
   }
 
   const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    if (loaded) {
+      return;
+    }
+
     setLoaded(true);
     setFailed(false);
     onLoad?.(event);
@@ -114,13 +118,13 @@ export const ImageBase = ({
   };
 
   const imgRef = useExternRef(getRef);
-  const isMountedRef = React.useRef(false);
+  const isOnLoadStatusCheckedRef = React.useRef(false);
   React.useEffect(
-    function dispatchLoadEventForAlreadyLoadedResource() {
-      if (isMountedRef.current) {
+    function dispatchLoadEventForAlreadyLoadedResourceIfReactInitializedLater() {
+      if (isOnLoadStatusCheckedRef.current) {
         return;
       }
-      isMountedRef.current = true;
+      isOnLoadStatusCheckedRef.current = true;
 
       if (imgRef.current && imgRef.current.complete && !loaded) {
         const event = new Event('load');

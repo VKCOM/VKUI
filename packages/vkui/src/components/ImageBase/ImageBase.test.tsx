@@ -104,6 +104,51 @@ describe(ImageBase, () => {
       expect(getImageBaseImgEl()).toHaveAttribute(attr);
     });
   });
+
+  it('calls onLoad prop when image emits laod event', () => {
+    const onLoadMock = jest.fn();
+    render(<ImageBaseTest onLoad={onLoadMock} src="https://image.to.load" />);
+
+    expect(onLoadMock).not.toBeCalled();
+
+    const imageBaseElement = getImageBaseRootEl();
+    const imageElement = getImageBaseImgEl(imageBaseElement) as HTMLImageElement;
+    if (imageElement) {
+      fireEvent.load(imageElement);
+    }
+
+    expect(onLoadMock).toBeCalledTimes(1);
+  });
+
+  it('calls onLoad prop if image is already loaded but onLoad event listener missed that', () => {
+    // could happen when image loaded after the event listener was initialized
+    const onLoadMock = jest.fn();
+    const getRefMock = jest
+      .fn()
+      .mockImplementation(function emulateImageWithCompleteState(element) {
+        if (!element) {
+          return;
+        }
+
+        Object.defineProperty(element, 'complete', {
+          get: () => true,
+        });
+      });
+
+    render(<ImageBaseTest getRef={getRefMock} onLoad={onLoadMock} src="https://loaded.image" />);
+
+    // make sure onLoad prop is called as is if img elment has 'complete=true'
+    expect(onLoadMock).toBeCalledTimes(1);
+
+    const imageBaseElement = getImageBaseRootEl();
+    const imageElement = getImageBaseImgEl(imageBaseElement) as HTMLImageElement;
+    if (imageElement) {
+      fireEvent.load(imageElement);
+    }
+
+    // make sure we ignore img.onLoad that is fired for some reason after we manually handled the complete state.
+    expect(onLoadMock).toBeCalledTimes(1);
+  });
 });
 
 describe(ImageBase.Badge, () => {
