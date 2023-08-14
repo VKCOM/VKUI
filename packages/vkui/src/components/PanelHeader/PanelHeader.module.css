@@ -9,10 +9,12 @@
 
 .PanelHeader:not(.PanelHeader--vis):not(.PanelHeader--fixed) {
   height: 0;
+  /* см. https://github.com/VKCOM/VKUI/issues/5571 */
+  z-index: var(--vkui_internal--z_index_panel_header);
 }
 
 .PanelHeader__fixed {
-  z-index: var(--vkui_internal--z_index_panel_header_fixed);
+  z-index: var(--vkui_internal--z_index_panel_header);
 }
 
 .PanelHeader__in {
@@ -238,7 +240,7 @@
  */
 .PanelHeader--vkcom {
   position: relative;
-  z-index: var(--vkui_internal--z_index_panel_header_fixed);
+  z-index: var(--vkui_internal--z_index_panel_header);
 }
 
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(:global(.vkuiInternalModalPageHeader__in)):not(
