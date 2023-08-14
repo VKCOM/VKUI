@@ -119,6 +119,10 @@ https://github.com/VKCOM/VKUI/pull/3641
   }
 }
 
+.Tappable.Tappable--borderRadiusInherit {
+  border-radius: inherit;
+}
+
 /**
  * Animations
  */
