@@ -149,7 +149,7 @@ jobs:
           path: all-blob-reports
 
       - name: Merge Playwright blob reports into HTML Report
-        run: npx playwright merge-reports --reporter html ./all-blob-reports
+        run: yarn run playwright:cmd:merge-reports --reporter html ./all-blob-reports
 
       - name: Upload Playwright Report
         if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
