@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {
+  Icon24ArrowLeftOutline,
+  Icon24ChevronLeftOutline,
   Icon28ArrowLeftOutline,
   Icon28ChevronBack,
   Icon28ChevronLeftOutline,
@@ -9,6 +11,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
+import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import styles from '../PanelHeaderButton/PanelHeaderButton.module.css';
 
@@ -31,14 +34,26 @@ export const PanelHeaderBack = ({
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
   const showLabel = platform === Platform.VKCOM || platform === Platform.IOS;
 
-  let icon = <Icon28ArrowLeftOutline />;
+  let icon;
   switch (platform) {
     case Platform.IOS:
       icon = <Icon28ChevronBack />;
       break;
     case Platform.VKCOM:
-      icon = <Icon28ChevronLeftOutline />;
+      icon = (
+        <AdaptiveIconRenderer
+          IconCompact={Icon24ChevronLeftOutline}
+          IconRegular={Icon28ChevronLeftOutline}
+        />
+      );
       break;
+    default:
+      icon = (
+        <AdaptiveIconRenderer
+          IconCompact={Icon24ArrowLeftOutline}
+          IconRegular={Icon28ArrowLeftOutline}
+        />
+      );
   }
 
   return (

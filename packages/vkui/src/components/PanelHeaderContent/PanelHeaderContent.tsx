@@ -6,7 +6,6 @@ import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { Headline } from '../Typography/Headline/Headline';
 import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeaderContent.module.css';
 
@@ -29,18 +28,15 @@ interface PanelHeaderChildrenProps extends HasChildren {
 
 const PanelHeaderChildren = ({ hasStatus, hasBefore, children }: PanelHeaderChildrenProps) => {
   const platform = usePlatform();
-  if (platform === Platform.VKCOM) {
-    return (
-      <Text className={styles['PanelHeaderContent__childrenText']} Component="div" weight="2">
-        {children}
-      </Text>
-    );
-  }
 
   return hasStatus || hasBefore ? (
-    <Headline className={styles['PanelHeaderContent__childrenText']} Component="div" weight="2">
+    <Text
+      className={styles['PanelHeaderContent__childrenText']}
+      Component="div"
+      weight={platform === Platform.VKCOM ? '2' : undefined}
+    >
       {children}
-    </Headline>
+    </Text>
   ) : (
     <div className={styles['PanelHeaderContent__children-in']}>{children}</div>
   );

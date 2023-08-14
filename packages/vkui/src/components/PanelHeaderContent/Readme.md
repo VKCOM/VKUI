@@ -17,9 +17,9 @@ const Example = () => {
           before={<PanelHeaderBack label="Назад" />}
           after={
             <PanelHeaderButton>
-              <Icon28MessageOutline
-                width={platform === Platform.VKCOM ? 24 : 28}
-                height={platform === Platform.VKCOM ? 24 : 28}
+              <AdaptiveIconRenderer
+                IconCompact={Icon24MessageOutline}
+                IconRegular={Icon28MessageOutline}
               />
             </PanelHeaderButton>
           }

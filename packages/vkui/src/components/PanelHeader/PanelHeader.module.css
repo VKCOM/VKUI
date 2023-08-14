@@ -148,6 +148,7 @@
  */
 .PanelHeader--android .PanelHeader__before:not(:empty) {
   padding: 4px 0 4px 4px;
+  margin-right: -8px;
 }
 
 .PanelHeader--android .PanelHeader__content {
