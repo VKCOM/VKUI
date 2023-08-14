@@ -376,10 +376,10 @@ class ViewInfiniteComponent extends React.Component<
     if (
       (!e ||
         [
-          styles['vkui-animation-ios-next-forward'],
-          styles['vkui-animation-ios-prev-back'],
-          styles['vkui-animation-view-next-forward'],
-          styles['vkui-animation-view-prev-back'],
+          styles['animation-ios-next-forward'],
+          styles['animation-ios-prev-back'],
+          styles['animation-view-next-forward'],
+          styles['animation-view-prev-back'],
         ].includes(e.animationName)) &&
       this.state.prevPanel !== null
     ) {

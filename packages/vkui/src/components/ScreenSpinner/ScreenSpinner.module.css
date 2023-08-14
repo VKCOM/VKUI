@@ -1,5 +1,5 @@
 .ScreenSpinner {
-  animation: vkui-screen-spinner-intro 0.3s ease;
+  animation: screen-spinner-intro 0.3s ease;
 }
 
 .ScreenSpinner--clickable {
@@ -36,16 +36,16 @@
 }
 
 .ScreenSpinner__icon :global(.vkuiIcon) {
-  animation: vkui-screen-spinner-intro 0.2s ease;
+  animation: screen-spinner-intro 0.2s ease;
 }
 
 .ScreenSpinner__icon--state-done :global(.vkuiIcon) path {
   stroke-dasharray: 50;
   stroke-dashoffset: 50;
-  animation: vkui-screen-spinner-iconDone 0.6s 0.3s var(--vkui--animation_easing_platform) forwards;
+  animation: screen-spinner-icon-done 0.6s 0.3s var(--vkui--animation_easing_platform) forwards;
 }
 
-@keyframes vkui-screen-spinner-iconDone {
+@keyframes screen-spinner-icon-done {
   from {
     stroke-dashoffset: 50;
   }
@@ -54,7 +54,7 @@
     stroke-dashoffset: 0;
   }
 }
-@keyframes vkui-screen-spinner-intro {
+@keyframes screen-spinner-intro {
   from {
     opacity: 0;
   }

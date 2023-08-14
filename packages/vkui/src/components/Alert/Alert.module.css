@@ -7,7 +7,7 @@
   margin: auto 24px;
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius_paper--regular);
-  animation: vkui-animation-android-alert-intro 0.2s var(--vkui--animation_easing_platform);
+  animation: animation-android-alert-intro 0.2s var(--vkui--animation_easing_platform);
 }
 
 .Alert--desktop {
@@ -94,7 +94,7 @@
   width: 270px;
   min-width: 270px;
   overflow: hidden;
-  animation: vkui-animation-ios-alert-intro 0.3s var(--vkui--animation_easing_platform);
+  animation: animation-ios-alert-intro 0.3s var(--vkui--animation_easing_platform);
   box-shadow: none;
 }
 
@@ -260,7 +260,7 @@
 /**
  * Animations
  */
-@keyframes vkui-animation-ios-alert-intro {
+@keyframes animation-ios-alert-intro {
   from {
     opacity: 0;
     transform: scale(1.05);
@@ -271,7 +271,7 @@
     transform: scale(1);
   }
 }
-@keyframes vkui-animation-android-alert-intro {
+@keyframes animation-android-alert-intro {
   from {
     opacity: 0;
     transform: scale(0.95);

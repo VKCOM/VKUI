@@ -50,20 +50,20 @@
 }
 
 .PanelHeaderContext--opened .PanelHeaderContext__fade {
-  animation: vkui-animation-panelheadercontext-fade-in 0.2s ease;
+  animation: animation-panelheadercontext-fade-in 0.2s ease;
 }
 
 .PanelHeaderContext--closing .PanelHeaderContext__fade {
-  animation: vkui-animation-panelheadercontext-fade-out 0.2s ease;
+  animation: animation-panelheadercontext-fade-out 0.2s ease;
 }
 
 .PanelHeaderContext--opened .PanelHeaderContext__in {
   pointer-events: auto;
-  animation: vkui-animation-panelheadercontext-translate-in 0.2s ease;
+  animation: animation-panelheadercontext-translate-in 0.2s ease;
 }
 
 .PanelHeaderContext--closing .PanelHeaderContext__in {
-  animation: vkui-animation-panelheadercontext-translate-out 0.2s ease;
+  animation: animation-panelheadercontext-translate-out 0.2s ease;
 }
 
 .PanelHeaderContext__content {
@@ -127,7 +127,7 @@
   Animations
  */
 
-@keyframes vkui-animation-panelheadercontext-translate-in {
+@keyframes animation-panelheadercontext-translate-in {
   from {
     transform: translateY(-100%);
   }
@@ -136,7 +136,7 @@
     transform: translateY(0);
   }
 }
-@keyframes vkui-animation-panelheadercontext-translate-out {
+@keyframes animation-panelheadercontext-translate-out {
   from {
     transform: translateY(0);
   }
@@ -145,7 +145,7 @@
     transform: translateY(-100%);
   }
 }
-@keyframes vkui-animation-panelheadercontext-fade-in {
+@keyframes animation-panelheadercontext-fade-in {
   from {
     opacity: 0;
   }
@@ -154,7 +154,7 @@
     opacity: 1;
   }
 }
-@keyframes vkui-animation-panelheadercontext-fade-out {
+@keyframes animation-panelheadercontext-fade-out {
   from {
     opacity: 1;
   }

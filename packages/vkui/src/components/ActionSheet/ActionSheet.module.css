@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  animation: vkui-animation-actionsheet-intro 0.2s var(--vkui--animation_easing_platform);
+  animation: animation-actionsheet-intro 0.2s var(--vkui--animation_easing_platform);
   padding: 8px 0;
   margin: 10px;
   border-radius: 12px;
@@ -33,7 +33,7 @@
  */
 .ActionSheet--ios {
   width: 100%;
-  animation: vkui-animation-actionsheet-intro 0.3s var(--vkui--animation_easing_platform);
+  animation: animation-actionsheet-intro 0.3s var(--vkui--animation_easing_platform);
   padding: 8px;
   margin: unset;
   background: transparent;
@@ -97,7 +97,7 @@
 /**
 * Animations
 */
-@keyframes vkui-animation-actionsheet-intro {
+@keyframes animation-actionsheet-intro {
   from {
     transform: translateY(100%);
   }
