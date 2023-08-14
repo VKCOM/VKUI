@@ -3871,10 +3871,10 @@
   dependencies:
     "@swc/helpers" "^0.5.0"
 
-"@vkontakte/vkui-tokens@4.36.0":
-  version "4.36.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.36.0.tgz#f4b1a0caf96ba8ff22937ff6a84251e2c12b68c0"
-  integrity sha512-zQ6BMHE3HQLCpjW2iJ66vF/OSU+vm6iVV/XFtIxx5NZ+y3CMvr22i53IhsQX7iQ4sM418GZWfoCvAEJT6bCueg==
+"@vkontakte/vkui-tokens@4.37.0":
+  version "4.37.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.37.0.tgz#b58dedd374b4000e14c787120d2795c134749b10"
+  integrity sha512-Kyy1RFu3bnozDYmpYUYS4MPnOZ3UbVAHYTahg+R2o0CpnKj1thORtgG2vmuSWi0Sadg93yRIfoubrSmPzXXEVw==
   dependencies:
     csstype "^3.1.1"
 
