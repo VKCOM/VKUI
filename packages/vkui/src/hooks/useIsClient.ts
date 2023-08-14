@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 /**
  * Хук для two-pass рендеринга.
@@ -11,7 +12,7 @@ import * as React from 'react';
 export function useIsClient(initial = false) {
   const [isClient, setIsClient] = React.useState(initial);
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setIsClient(true);
   }, []);
 
