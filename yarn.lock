@@ -3121,10 +3121,10 @@
   dependencies:
     tslib "^2.4.0"
 
-"@swc/jest@^0.2.28":
-  version "0.2.28"
-  resolved "https://registry.yarnpkg.com/@swc/jest/-/jest-0.2.28.tgz#cf21200a6058ab0dd2555b3ee1164d149bd8534b"
-  integrity sha512-iCB3lvngkQldLga35krb8LPa+6gmkVXnlpfCTXOAgMaEYFagLxOIFbIO8II7dhHa8ApOv5ap8iFRETI4lVY0vw==
+"@swc/jest@^0.2.29":
+  version "0.2.29"
+  resolved "https://registry.yarnpkg.com/@swc/jest/-/jest-0.2.29.tgz#b27d647ec430c909f9bb567d1df2a47eaa3841f4"
+  integrity sha512-8reh5RvHBsSikDC3WGCd5ZTd2BXKkyOdK7QwynrCH58jk2cQFhhHhFBg/jvnWZehUQe/EoOImLENc9/DwbBFow==
   dependencies:
     "@jest/create-cache-key-function" "^27.4.2"
     jsonc-parser "^3.2.0"
@@ -8626,10 +8626,10 @@ jest-pnp-resolver@^1.2.2:
   resolved "https://registry.yarnpkg.com/jest-pnp-resolver/-/jest-pnp-resolver-1.2.3.tgz#930b1546164d4ad5937d5540e711d4d38d4cad2e"
   integrity sha512-+3NpwQEnRoIBtx4fyhblQDPgJI0H1IEIkX7ShLUjPGA7TtUTvI1oiKi3SR4oBR0hQhQR80l4WAe5RrXBwWMA8w==
 
-jest-preset-stylelint@^6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/jest-preset-stylelint/-/jest-preset-stylelint-6.1.1.tgz#00fa5eaee2069bb0a03adc7ad39c163829e41bd1"
-  integrity sha512-rrZODELzLku1HIm0HrtopXAckvqXglh+7T1J5EqczHQSH3XdtkGTqIj9GJfMv7utKMeMmTvuLz26WJFuCVoHig==
+jest-preset-stylelint@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/jest-preset-stylelint/-/jest-preset-stylelint-6.2.0.tgz#85738123d32876222811053ec4c5e20a2ac351b5"
+  integrity sha512-QcNUDqishn0dgMV5MqfLsJje6JSQfdBs1istqJZPbxpQxOs43OdzItNZoh+uKccNWKP0/uz4BrrbKDtHhTtH0Q==
 
 jest-regex-util@^29.4.3:
   version "29.4.3"
