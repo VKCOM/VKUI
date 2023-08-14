@@ -33,7 +33,7 @@
   display: none;
 }
 
-.Group:last-of-type ~ .Group__separator--force,
+.Group:last-of-type ~ .Group__separator--force.Group__separator--separator,
 .Group--mode-card:last-of-type + .Group__separator--spacing {
   display: block;
 }
