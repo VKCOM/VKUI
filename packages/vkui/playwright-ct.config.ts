@@ -22,10 +22,7 @@ const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).reduce<
   return aliases;
 }, {});
 
-const DEFAULT_REPORTERS: ReporterDescription[] = [
-  ['html', { open: 'never' }],
-  ['json', { outputFile: 'e2e-results.json' }],
-];
+const DEFAULT_REPORTERS: ReporterDescription[] = [['json', { outputFile: 'e2e-results.json' }]];
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -56,16 +53,18 @@ export default defineConfig<VKUITestOptions>({
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: 0,
+  /* Limit the number of failures on CI to save resources. */
+  maxFailures: process.env.CI ? 10 : undefined,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI
-    ? 4
+    ? 1
     : typeof process.env.PLAYWRIGHT_WORKERS === 'string'
     ? Number(process.env.PLAYWRIGHT_WORKERS)
     : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI
-    ? [['github'], ['dot'], ...DEFAULT_REPORTERS]
-    : [['list'], ...DEFAULT_REPORTERS],
+    ? [['github'], ['dot'], ['blob'], ...DEFAULT_REPORTERS]
+    : [['list'], ['html', { open: 'never' }], ...DEFAULT_REPORTERS],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

@@ -17,6 +17,8 @@ lint-results.json
 e2e-results.json
 yarn-error.log
 playwright-report/
+blob-report/
+all-blob-reports/
 
 # Caches
 .cache

@@ -88,6 +88,40 @@ jobs:
     with:
       ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
+  test_e2e_prepare_report:
+    needs: test_e2e
+    name: Prepare e2e's HTML report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Download Playwright blob reports from GitHub Actions Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: all-blob-reports
+          path: all-blob-reports
+
+      - name: Merge Playwright blob reports into HTML Report
+        run: yarn run playwright:cmd:merge-reports --reporter html ./all-blob-reports
+
+      - name: Upload Playwright HTML report to GitHub Actions Artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 30
+
   analyze_bundle_size:
     if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
     needs: changed_files
@@ -126,7 +160,7 @@ jobs:
       - changed_files
       - linters
       - test
-      - test_e2e
+      - test_e2e_prepare_report
     runs-on: ubuntu-latest
     name: Report CI results
     steps:
@@ -140,13 +174,12 @@ jobs:
         with:
           name: test-output
 
-      - name: Download Playwright Report artifact
-        # см. [Примечание 1]
+      - name: Download Playwright HTML report from GitHub Actions Artifacts
         if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
         uses: actions/download-artifact@v3
         with:
           name: playwright-report
-          path: playwright-report/
+          path: playwright-report
 
       - name: Upload Playwright Report
         if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}

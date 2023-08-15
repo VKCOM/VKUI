@@ -125,6 +125,7 @@
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "playwright:install": "playwright install --with-deps",
+    "playwright:cmd:merge-reports": "playwright merge-reports",
     "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install",
     "deduplicate": "yarn-deduplicate --list && yarn-deduplicate --fail"
   },
