@@ -19,7 +19,8 @@ const ImageBaseTest = (props: ImageBaseProps) => (
 
 const getImageBaseRootEl = () => screen.getByTestId(TEST_LOCATORS.ROOT);
 
-const getImageBaseImgEl = (elParent = getImageBaseRootEl()) => elParent.querySelector('img');
+const getImageBaseImgEl = (elParent = getImageBaseRootEl()) =>
+  elParent.querySelector<HTMLImageElement>('img');
 
 describe(ImageBase, () => {
   baselineComponent(ImageBase);
@@ -55,7 +56,10 @@ describe(ImageBase, () => {
     );
 
     const elImageBase = getImageBaseRootEl();
-    const elImg = getImageBaseImgEl(elImageBase) as HTMLImageElement; // Note: потому что точно знаем, что не null
+    const elImg = getImageBaseImgEl(elImageBase);
+    if (!elImg) {
+      throw new Error('Cannot find img element');
+    }
 
     elImg.onerror = jest.fn(() => {
       // ждём re-render со стороны react
@@ -103,6 +107,53 @@ describe(ImageBase, () => {
     Object.keys(imgOnlyAttributes).forEach((attr) => {
       expect(getImageBaseImgEl()).toHaveAttribute(attr);
     });
+  });
+
+  it('calls onLoad prop when image emits load event', () => {
+    const onLoadMock = jest.fn();
+    render(<ImageBaseTest onLoad={onLoadMock} src="https://image.to.load" />);
+
+    expect(onLoadMock).not.toBeCalled();
+
+    const imageElement = getImageBaseImgEl();
+    if (!imageElement) {
+      throw new Error('Cannot find img element');
+    }
+
+    fireEvent.load(imageElement);
+
+    expect(onLoadMock).toBeCalledTimes(1);
+  });
+
+  it('calls onLoad prop if image is already loaded but onLoad event listener missed that', () => {
+    // could happen when image loaded after the event listener was initialized
+    const onLoadMock = jest.fn();
+    const getRefMock = jest
+      .fn()
+      .mockImplementation(function emulateImageWithCompleteState(element) {
+        if (!element) {
+          return;
+        }
+
+        Object.defineProperty(element, 'complete', {
+          get: () => true,
+        });
+      });
+
+    render(<ImageBaseTest getRef={getRefMock} onLoad={onLoadMock} src="https://loaded.image" />);
+
+    // make sure onLoad prop is called as is if img elment has 'complete=true'
+    expect(onLoadMock).toBeCalledTimes(1);
+
+    const imageElement = getImageBaseImgEl();
+    if (!imageElement) {
+      throw new Error('Cannot find img element');
+    }
+
+    fireEvent.load(imageElement);
+
+    // make sure we ignore img.onLoad that is fired for some reason after we manually handled the complete state.
+    expect(onLoadMock).toBeCalledTimes(1);
   });
 });
 
