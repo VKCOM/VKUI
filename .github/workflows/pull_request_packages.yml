@@ -120,7 +120,7 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report
-          retention-days: 1
+          retention-days: 30
 
   analyze_bundle_size:
     if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
