@@ -87,11 +87,6 @@ export const Group = ({
 
   const tabIndex = isTabPanel && tabIndexProp === undefined ? 0 : tabIndexProp;
 
-  const separatorClassName = classNames(
-    styles['Group__separator'],
-    separator === 'show' && styles['Group__separator--force'],
-  );
-
   return (
     <>
       <section
@@ -127,11 +122,15 @@ export const Group = ({
       {separator !== 'hide' && (
         <React.Fragment>
           <Spacing
-            className={classNames(separatorClassName, styles['Group__separator--spacing'])}
+            className={classNames(styles['Group__separator'], styles['Group__separator--spacing'])}
             size={16}
           />
           <Separator
-            className={classNames(separatorClassName, styles['Group__separator--separator'])}
+            className={classNames(
+              styles['Group__separator'],
+              styles['Group__separator--separator'],
+              separator === 'show' && styles['Group__separator--force'],
+            )}
           />
         </React.Fragment>
       )}
