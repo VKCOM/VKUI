@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import type { HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
@@ -101,6 +102,10 @@ export const ImageBase = ({
   }
 
   const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    if (loaded) {
+      return;
+    }
+
     setLoaded(true);
     setFailed(false);
     onLoad?.(event);
@@ -111,6 +116,23 @@ export const ImageBase = ({
     setFailed(true);
     onError?.(event);
   };
+
+  const imgRef = useExternRef(getRef);
+  const isOnLoadStatusCheckedRef = React.useRef(false);
+  React.useEffect(
+    function dispatchLoadEventForAlreadyLoadedResourceIfReactInitializedLater() {
+      if (isOnLoadStatusCheckedRef.current) {
+        return;
+      }
+      isOnLoadStatusCheckedRef.current = true;
+
+      if (imgRef.current && imgRef.current.complete && !loaded) {
+        const event = new Event('load');
+        imgRef.current.dispatchEvent(event);
+      }
+    },
+    [imgRef, loaded],
+  );
 
   const sizeClassName = (() => {
     switch (size) {
@@ -147,7 +169,7 @@ export const ImageBase = ({
       >
         {hasSrc && (
           <img
-            ref={getRef}
+            ref={imgRef}
             alt={alt}
             className={styles['ImageBase__img']}
             crossOrigin={crossOrigin}
