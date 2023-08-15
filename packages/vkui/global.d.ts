@@ -29,6 +29,10 @@ interface Object {
   hasOwnProperty<T>(this: T, v: PropertyKey): v is keyof T;
 }
 
-interface Window {
+interface VKUIPrivateGlobalInterface {
+  __VKUI__: { globalTokensClassNameUsage: Record<string, number> };
+}
+
+interface Window extends VKUIPrivateGlobalInterface {
   __isVkuiTesting: boolean;
 }

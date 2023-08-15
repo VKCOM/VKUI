@@ -6,6 +6,7 @@ import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { useDOM } from '../../lib/dom';
 import { TokensClassProvider } from '../../lib/tokensClassProvider';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { VKUIGlobalTokensClassNameUsage } from '../../lib/vkuiGlobalTokensClassNameUsage';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
@@ -39,17 +40,22 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
 
   const appearance = useAutoDetectAppearance(appearanceProp, onDetectAppearanceByBridge);
 
-  const { document } = useDOM();
+  const { document, window } = useDOM();
 
   useIsomorphicLayoutEffect(() => {
     const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
+    const tokensClassNameUsage = new VKUIGlobalTokensClassNameUsage(window, VKUITokensClassName);
 
     // eslint-disable-next-line no-restricted-properties
     document!.body.classList.add(VKUITokensClassName);
+    tokensClassNameUsage.incrementUsageNumber();
 
     return () => {
-      // eslint-disable-next-line no-restricted-properties
-      document!.body.classList.remove(VKUITokensClassName);
+      tokensClassNameUsage.decrementUsageNumber();
+      if (!tokensClassNameUsage.isInUse()) {
+        // eslint-disable-next-line no-restricted-properties
+        document!.body.classList.remove(VKUITokensClassName);
+      }
     };
   }, [platform, appearance]);
 
