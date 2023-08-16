@@ -1,9 +1,20 @@
+/*
+ * Специальная обертка для работы с window и глобальной переменной __VKUI__.
+ *
+ * Необходима для подсчёта колличества VKUI приложений
+ * которые используют одинаковый className на body.
+ * Необходима для того, чтобы приложения,
+ * при размотировании не удаляли класс, небходимый для токенов, с body,
+ * если этот класс ещё используется другими приложениями.
+ *
+ * см. https://github.com/VKCOM/VKUI/issues/5518
+ * */
 export class VKUIGlobalTokensClassNameUsage {
-  public window: VKUIPrivateGlobalInterface;
-  public className: string;
+  private readonly window: VKUIPrivateGlobalInterface;
+  private className: string;
 
   constructor(window: Window | undefined, className: string) {
-    const windowObject = extendWindowByVKUI(window || {});
+    const windowObject = extendWindowWithVKUIVariable(window || {});
     if (!windowObject.__VKUI__.globalTokensClassNameUsage[className]) {
       windowObject.__VKUI__.globalTokensClassNameUsage[className] = 0;
     }
@@ -19,8 +30,7 @@ export class VKUIGlobalTokensClassNameUsage {
 
   decrementUsageNumber(): void {
     const currentUsage = this.window.__VKUI__.globalTokensClassNameUsage[this.className] ?? 0;
-    this.window.__VKUI__.globalTokensClassNameUsage[this.className] = currentUsage + 1;
-    if (currentUsage) {
+    if (currentUsage > 0) {
       this.window.__VKUI__.globalTokensClassNameUsage[this.className] = currentUsage - 1;
     }
   }
@@ -38,7 +48,7 @@ function isExtendedByVKUI(
   );
 }
 
-function extendWindowByVKUI(
+function extendWindowWithVKUIVariable(
   windowInput: Partial<VKUIPrivateGlobalInterface>,
 ): VKUIPrivateGlobalInterface {
   const windowObject: Partial<VKUIPrivateGlobalInterface> = windowInput || {

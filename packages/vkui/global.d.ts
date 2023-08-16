@@ -33,6 +33,6 @@ interface VKUIPrivateGlobalInterface {
   __VKUI__: { globalTokensClassNameUsage: Record<string, number> };
 }
 
-interface Window extends VKUIPrivateGlobalInterface {
+interface Window extends Partial<VKUIPrivateGlobalInterface> {
   __isVkuiTesting: boolean;
 }
