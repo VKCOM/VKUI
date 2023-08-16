@@ -1,0 +1,202 @@
+name: 'Pull Request / Packages: Report'
+
+on:
+  workflow_run:
+    workflows: ['Pull Request / Packages']
+    types: [completed]
+
+concurrency:
+  group: pr-packages-report-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  workflow_payload:
+    runs-on: ubuntu-latest
+    name: Get workflow payload
+    outputs:
+      pr_number: ${{ steps.pr_number.outputs.value }}
+    steps:
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: workflow_payload
+          workflow: pull_request_packages.yml
+          run_id: ${{ github.event.workflow_run.id }}
+
+      - name: Get PR number
+        id: pr_number
+        run: echo "value=$(cat PR_number.txt)" >> $GITHUB_OUTPUT
+
+  report_lint:
+    runs-on: ubuntu-latest
+    name: Report lint results
+    steps:
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: lint-scripts-output
+          workflow: pull_request_packages.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          if_no_artifact_found: warn
+
+      - name: Report
+        uses: VKCOM/gh-actions/VKUI/reporter@main
+
+  report_test:
+    runs-on: ubuntu-latest
+    name: Report test results
+    steps:
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: test-output
+          workflow: pull_request_packages.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          if_no_artifact_found: warn
+
+      - name: Report
+        uses: VKCOM/gh-actions/VKUI/reporter@main
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unittests
+          files: .nyc_output/coverage-final.json
+          fail_ci_if_error: true
+
+  report_test_e2e:
+    needs: workflow_payload
+    runs-on: ubuntu-latest
+    name: Report test e2e results
+    steps:
+      - name: Download artifact
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: playwright-report
+          path: playwright-report/
+          workflow: pull_request_packages.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          if_no_artifact_found: warn
+
+      - name: Deploy Playwright Report
+        if: ${{ steps.download-artifact.outputs.found_artifact == 'true' }}
+        id: deploy
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: vkui-screenshot
+          awsEndpoint: https://hb.bizmrg.com
+          command: upload
+          commandUploadSrc: playwright-report/
+          commandUploadDist: pull/${{ needs.workflow_payload.outputs.pr_number }}/${{ github.sha }}/playwright-report
+
+      - name: Report
+        if: ${{ steps.deploy.conclusion == 'success' }}
+        uses: VKCOM/gh-actions/VKUI/reporter@main
+        with:
+          playwrightReportURL: https://vkui-screenshot.hb.bizmrg.com/pull/${{ needs.workflow_payload.outputs.pr_number }}/${{ github.sha }}/playwright-report/index.html
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy_styleguide:
+    needs: workflow_payload
+    runs-on: ubuntu-latest
+    name: Deploy docs (styleguide)
+    outputs:
+      url: ${{ steps.url.outputs.value }}
+    steps:
+      - name: Download styleguide dist artifact
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: styleguide-dist
+          path: styleguide-dist/
+          workflow: pull_request_packages.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          if_no_artifact_found: warn
+
+      - name: Upload styleguide S3
+        if: ${{ steps.download-artifact.outputs.found_artifact == 'true' }}
+        id: deploy
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: vkui-screenshot
+          awsEndpoint: https://hb.bizmrg.com
+          command: upload
+          commandUploadSrc: styleguide-dist/
+          commandUploadDist: pull/${{ needs.workflow_payload.outputs.pr_number }}/${{ github.sha }}/styleguide
+
+      - name: Create styleguide doc url
+        if: ${{ steps.deploy.conclusion == 'success' }}
+        id: url
+        run: echo "value=https://vkui-screenshot.hb.bizmrg.com/pull/${{ needs.workflow_payload.outputs.pr_number }}/${{ github.sha }}/styleguide/index.html" >> $GITHUB_OUTPUT
+
+  deploy_storybook:
+    needs: workflow_payload
+    runs-on: ubuntu-latest
+    name: Deploy docs (storybook)
+    outputs:
+      url: ${{ steps.url.outputs.value }}
+    steps:
+      - name: Download storybook dist artifact
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: storybook-dist
+          path: storybook-dist/
+          workflow: pull_request_packages.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          if_no_artifact_found: warn
+
+      - name: Upload storybook S3
+        if: ${{ steps.download-artifact.outputs.found_artifact == 'true' }}
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: vkui-screenshot
+          awsEndpoint: https://hb.bizmrg.com
+          command: upload
+          commandUploadSrc: storybook-dist/
+          commandUploadDist: pull/${{ needs.workflow_payload.outputs.pr_number }}/${{ github.sha }}/storybook
+
+      - name: Create styleguide doc url
+        if: ${{ steps.download-artifact.outputs.found_artifact == 'true' }}
+        id: url
+        run: echo "value=https://vkui-screenshot.hb.bizmrg.com/pull/${{ needs.workflow_payload.outputs.pr_number }}/${{ github.sha }}/storybook/index.html" >> $GITHUB_OUTPUT
+
+  docs_comment:
+    needs:
+      - workflow_payload
+      - deploy_storybook
+      - deploy_styleguide
+    if: ${{ needs.deploy_styleguide.outputs.url && needs.deploy_storybook.outputs.url }}
+    runs-on: ubuntu-latest
+    name: Docs comment
+    steps:
+      - name: Find docs URLs comment
+        uses: peter-evans/find-comment@v2
+        id: find_url_comment
+        with:
+          issue-number: ${{ needs.workflow_payload.outputs.pr_number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: <!-- docs_urls -->
+
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
+          issue-number: ${{ needs.workflow_payload.outputs.pr_number }}
+          body: |
+            <!-- docs_urls -->
+            ## 👀 Docs deployed
+
+            - [Styleguide](${{ needs.deploy_styleguide.outputs.url }})
+            - [Storybook](${{ needs.deploy_storybook.outputs.url }})
+
+            Commit ${{ github.sha }}
+          edit-mode: replace
