@@ -29,10 +29,27 @@ describe('ConfigProvider', () => {
       });
       return null;
     };
-    render(
+    const { unmount } = render(
       <ConfigProvider {...config}>
         <ConfigUser />
       </ConfigProvider>,
+    );
+    expect(window.__VKUI__).toEqual(
+      expect.objectContaining({
+        globalTokensClassNameUsage: {
+          'vkui--vkBase--light': 1,
+        },
+      }),
+    );
+
+    unmount();
+
+    expect(window.__VKUI__).toEqual(
+      expect.objectContaining({
+        globalTokensClassNameUsage: {
+          'vkui--vkBase--light': 0,
+        },
+      }),
     );
   });
   describe('inherits properties from parent ConfigProvider context', () => {
