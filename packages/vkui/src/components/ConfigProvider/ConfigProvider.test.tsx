@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
-import { render } from '@testing-library/react';
+import React, { useContext, useState } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Appearance } from '../../helpers/appearance';
+import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
 import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from './ConfigProvider';
@@ -129,5 +130,74 @@ describe('ConfigProvider', () => {
 
       expect(config).toEqual(expect.objectContaining({ ...defaultConfig, [prop]: value }));
     });
+  });
+
+  it('adds VKUITokenClassName to document.body on mount and removed on unmount', async () => {
+    const config = { appearance: Appearance.LIGHT, platform: Platform.VKCOM };
+    const ConfigUser = () => {
+      return null;
+    };
+    const { unmount } = render(
+      <ConfigProvider {...config}>
+        <ConfigUser />
+      </ConfigProvider>,
+    );
+
+    const vkuiBodySelector = generateVKUITokensClassName(config.platform, config.appearance);
+
+    expect(document.querySelector(`body.${vkuiBodySelector}`)).toBeTruthy();
+
+    unmount();
+
+    // removed on unmount
+    expect(document.querySelector(`body.${vkuiBodySelector}`)).toBeFalsy();
+  });
+
+  it('adds VKUITokenClassName to document.body on mount and not removes if child ConfigProvider is unmounted', async () => {
+    const config = { appearance: Appearance.LIGHT, platform: Platform.VKCOM };
+    const ConfigUser = () => {
+      return <div>User config</div>;
+    };
+
+    const ConfigUserWithOwnProvider = () => {
+      return (
+        <ConfigProvider {...config}>
+          <ConfigUser />
+        </ConfigProvider>
+      );
+    };
+
+    const TestComponent = () => {
+      const [isMounted, setIsMounted] = useState(true);
+
+      return (
+        <ConfigProvider {...config}>
+          <div>
+            <button onClick={() => setIsMounted(false)}>Unmount child context</button>
+            {isMounted && <ConfigUserWithOwnProvider />}
+          </div>
+        </ConfigProvider>
+      );
+    };
+
+    const { unmount, rerender } = render(<TestComponent />);
+
+    const vkuiBodySelector = generateVKUITokensClassName(config.platform, config.appearance);
+    rerender(<TestComponent />);
+
+    // class name is applied to body
+    expect(document.querySelector(`body.${vkuiBodySelector}`)).toBeTruthy();
+
+    // unmount child ConfigProvider
+    fireEvent.click(screen.getByRole('button'));
+
+    // class from body is not removed on unmount of child context
+    expect(document.querySelector(`body.${vkuiBodySelector}`)).toBeTruthy();
+
+    // unmount parent context as well
+    unmount();
+
+    // when last context that is using this class is unmounted the class is removed from body
+    expect(document.querySelector(`body.${vkuiBodySelector}`)).toBeFalsy();
   });
 });

@@ -6,6 +6,7 @@ import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { useDOM } from '../../lib/dom';
 import { TokensClassProvider } from '../../lib/tokensClassProvider';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { addClassNameToElement, removeClassNameFromElement } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import {
   ConfigProviderContext,
@@ -83,12 +84,9 @@ ${webviewTypeRule}
   useIsomorphicLayoutEffect(() => {
     const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
 
-    // eslint-disable-next-line no-restricted-properties
-    document!.body.classList.add(VKUITokensClassName);
-
+    addClassNameToElement(document!.body, VKUITokensClassName);
     return () => {
-      // eslint-disable-next-line no-restricted-properties
-      document!.body.classList.remove(VKUITokensClassName);
+      removeClassNameFromElement(document!.body, VKUITokensClassName);
     };
   }, [platform, appearance]);
 
