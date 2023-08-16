@@ -38,7 +38,7 @@
   top: var(--vkui_internal--safe_area_inset_top);
 }
 
-:not(.ModalRoot--desktop).ModalRoot--vkapps .ModalRoot__viewport {
+:not(.ModalRoot--desktop).ModalRoot--hasCustomPanelHeaderAfterSlot .ModalRoot__viewport {
   top: calc(
     var(--vkui_internal--safe_area_inset_top) + var(--vkui--size_panel_header_height--regular)
   );

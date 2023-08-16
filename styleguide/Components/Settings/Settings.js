@@ -2,14 +2,14 @@ import React, { Fragment } from 'react';
 import { Platform, useAdaptivityConditionalRender } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 import { AppearanceSelect } from './AppearanceSelect';
+import { HasCustomPanelHeaderAfter } from './HasCustomPanelHeaderAfter';
 import { HasPointerCheckbox } from './HasPointerCheckbox';
 import { PlatformSelect } from './PlatformSelect';
 import { ViewHeightSelect } from './ViewHeightSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
-import { WebviewTypeSelect } from './WebviewTypeSelect';
 import './Settings.css';
 
-export const Settings = ({ adaptivity, webviewType }) => {
+export const Settings = ({ adaptivity, showCustomPanelHeaderAfterProps }) => {
   const { sizeX } = useAdaptivityConditionalRender();
   return (
     <StyleGuideContext.Consumer>
@@ -25,10 +25,10 @@ export const Settings = ({ adaptivity, webviewType }) => {
                 onChange={(appearance) => context.setContext({ appearance })}
                 value={context.appearance}
               />
-              {webviewType && (
-                <WebviewTypeSelect
-                  onChange={(v) => context.setContext({ webviewType: v })}
-                  value={context.webviewType}
+              {showCustomPanelHeaderAfterProps && (
+                <HasCustomPanelHeaderAfter
+                  onChange={(v) => context.setContext({ hasCustomPanelHeaderAfter: v })}
+                  value={context.hasCustomPanelHeaderAfter}
                 />
               )}
               {adaptivity && (

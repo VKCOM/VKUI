@@ -37,7 +37,7 @@ const App = () => {
 либо идентификатор предыдущей модалки, либо `null` для скрытия.
 Каждой конкретной `ModalPage` или `ModalCard` можно передать свой обработчик `onClose`, если нужно переопределить поведение.
 
-```jsx { "props": { "layout": false, "adaptivity": true, "webviewType": true } }
+```jsx { "props": { "layout": false, "adaptivity": true, "showCustomPanelHeaderAfterProps": true } }
 const MODAL_PAGE_FILTERS = 'filters';
 const MODAL_PAGE_COUNTRIES = 'countries';
 const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';

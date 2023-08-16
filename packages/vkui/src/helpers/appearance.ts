@@ -22,6 +22,10 @@ export interface VKBridgeConfigData {
   scheme: AppearanceScheme;
 }
 
+/**
+ * TODO [>=6]: удалить `helpers/appearance.ts` (#5049)
+ * @deprecated v5.8.0
+ */
 export function resolveAppearance(data: VKBridgeConfigData): AppearanceType | null {
   const { scheme, appearance } = data;
 
