@@ -10,6 +10,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import { ScrollContext } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './Root.module.css';
 
@@ -145,16 +146,18 @@ export const Root = ({
               transition && viewId === activeView && !isBack && styles['Root__view--show-forward'],
             )}
           >
-            <NavTransitionProvider entering={transition && viewId === activeView}>
-              <div
-                className={styles['Root__scrollCompensation']}
-                style={{
-                  marginTop: compensateScroll ? viewId && -(scrolls[viewId] ?? 0) : undefined,
-                }}
-              >
-                {view}
-              </div>
-            </NavTransitionProvider>
+            <NavTransitionDirectionProvider isBack={isBack}>
+              <NavTransitionProvider entering={transition && viewId === activeView}>
+                <div
+                  className={styles['Root__scrollCompensation']}
+                  style={{
+                    marginTop: compensateScroll ? viewId && -(scrolls[viewId] ?? 0) : undefined,
+                  }}
+                >
+                  {view}
+                </div>
+              </NavTransitionProvider>
+            </NavTransitionDirectionProvider>
           </div>
         );
       })}

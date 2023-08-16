@@ -4,6 +4,9 @@
 При смене значения свойства `activeView` происходит плавный переход от одной `View` к другой.
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
+Чтобы понять был это переход вперёд или назад можно воспользоваться хуком [`useNavDirection()`](#/View?id=usenavdirection_example).
+Этот хук работает даже если анимации выключены (`<ConfigProvider transitionMotionEnabled={false}>`).
+
 ```jsx
 const [activeView, setActiveView] = useState('view1');
 

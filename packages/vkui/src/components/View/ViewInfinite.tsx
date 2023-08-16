@@ -14,6 +14,7 @@ import {
   ConfigProviderContextInterface,
 } from '../ConfigProvider/ConfigProviderContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
+import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitColContext';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { swipeBackExcluded } from './utils';
@@ -36,7 +37,7 @@ interface ViewsScrolls {
 
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
-let scrollsCache: ViewsScrolls = {};
+export let scrollsCache: ViewsScrolls = {};
 
 export type TransitionParams = { from: string | null; to: string | null };
 
@@ -83,7 +84,7 @@ export interface ViewInfiniteState {
   prevPanel: string | null;
   nextPanel: string | null;
 
-  swipingBack: boolean;
+  swipingBack?: boolean;
   swipeBackPrevented: boolean;
   swipeBackStartX: number;
   swipeBackShift: number;
@@ -112,7 +113,7 @@ class ViewInfiniteComponent extends React.Component<
       prevPanel: null,
       nextPanel: null,
 
-      swipingBack: false,
+      swipingBack: undefined,
       swipeBackPrevented: false,
       swipeBackStartX: 0,
       swipeBackShift: 0,
@@ -362,7 +363,7 @@ class ViewInfiniteComponent extends React.Component<
         visiblePanels: [activePanel],
         activePanel: activePanel,
         animated: false,
-        isBack: undefined,
+        isBack,
       },
       () => {
         this.props.scroll?.scrollTo(0, isBack ? scrollPosition : 0);
@@ -664,11 +665,13 @@ class ViewInfiniteComponent extends React.Component<
                   className={styles['View__panel-in']}
                   style={{ marginTop: compensateScroll ? -scroll : undefined }}
                 >
-                  <NavTransitionProvider
-                    entering={panelId === nextPanel || panelId === swipeBackNextPanel}
-                  >
-                    {panel}
-                  </NavTransitionProvider>
+                  <NavTransitionDirectionProvider isBack={swipingBack || isBack}>
+                    <NavTransitionProvider
+                      entering={panelId === nextPanel || panelId === swipeBackNextPanel}
+                    >
+                      {panel}
+                    </NavTransitionProvider>
+                  </NavTransitionDirectionProvider>
                 </div>
               </div>
             );

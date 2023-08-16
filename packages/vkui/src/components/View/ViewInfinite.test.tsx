@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { type ComponentType, Fragment, type ReactNode } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
@@ -7,14 +7,14 @@ import { HasChildren } from '../../types';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { useNavDirection } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { Panel } from '../Panel/Panel';
-import { scrollsCache, View, type ViewProps } from './View';
+import { scrollsCache, ViewInfinite, type ViewInfiniteProps } from './ViewInfinite';
 
-// Basically the same as Root.test.tsx
+// Basically the same as View.test.tsx
 
-describe('View', () => {
+describe('ViewInfinite', () => {
   beforeAll(() => jest.useFakeTimers());
   afterAll(() => jest.useRealTimers());
-  baselineComponent((props: ViewProps) => <View {...props} />, {
+  baselineComponent((props: ViewInfiniteProps) => <ViewInfinite {...props} />, {
     // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
     //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
     a11y: false,
@@ -22,21 +22,21 @@ describe('View', () => {
 
   describe('With Panel', () =>
     mountTest(() => (
-      <View activePanel="panel">
+      <ViewInfinite activePanel="panel">
         <Panel id="panel" />
-      </View>
+      </ViewInfinite>
     )));
 
   describe('shows active panel', () => {
     const panels = [<Panel id="p1" key="1" />, <Panel id="p2" key="2" />];
     it('on mount', () => {
-      render(<View activePanel="p1">{panels}</View>);
+      render(<ViewInfinite activePanel="p1">{panels}</ViewInfinite>);
       expect(document.getElementById('p1')).not.toBeNull();
       expect(document.getElementById('p2')).toBeNull();
     });
     it('after prop update', () => {
-      render(<View activePanel="p1">{panels}</View>).rerender(
-        <View activePanel="p2">{panels}</View>,
+      render(<ViewInfinite activePanel="p1">{panels}</ViewInfinite>).rerender(
+        <ViewInfinite activePanel="p2">{panels}</ViewInfinite>,
       );
       act(() => {
         jest.runAllTimers();
@@ -47,13 +47,13 @@ describe('View', () => {
     it('calls onTransition', () => {
       const onTransition = jest.fn();
       render(
-        <View activePanel="p1" onTransition={onTransition}>
+        <ViewInfinite activePanel="p1" onTransition={onTransition}>
           {panels}
-        </View>,
+        </ViewInfinite>,
       ).rerender(
-        <View activePanel="p2" onTransition={onTransition}>
+        <ViewInfinite activePanel="p2" onTransition={onTransition}>
           {panels}
-        </View>,
+        </ViewInfinite>,
       );
       act(() => {
         jest.runAllTimers();
@@ -68,13 +68,13 @@ describe('View', () => {
     it('detects back transition', () => {
       const onTransition = jest.fn();
       render(
-        <View activePanel="p2" onTransition={onTransition}>
+        <ViewInfinite activePanel="p2" onTransition={onTransition}>
           {panels}
-        </View>,
+        </ViewInfinite>,
       ).rerender(
-        <View activePanel="p1" onTransition={onTransition}>
+        <ViewInfinite activePanel="p1" onTransition={onTransition}>
           {panels}
-        </View>,
+        </ViewInfinite>,
       );
       act(() => {
         jest.runAllTimers();
@@ -92,8 +92,8 @@ describe('View', () => {
     it('on activePanel change', () => {
       renderFocused();
       const panels = [<Panel id="focus" key="1" />, <Panel id="other" key="2" />];
-      render(<View activePanel="focus">{panels}</View>).rerender(
-        <View activePanel="other">{panels}</View>,
+      render(<ViewInfinite activePanel="focus">{panels}</ViewInfinite>).rerender(
+        <ViewInfinite activePanel="other">{panels}</ViewInfinite>,
       );
       expect(document.activeElement === document.body).toBe(true);
     });
@@ -143,7 +143,7 @@ describe('View', () => {
       expect(screen.queryByText('Direction: backwards')).toBeTruthy();
     });
     describe('does not swipeback on', () => {
-      it.each<[string, ReactNode, Partial<ViewProps>]>([
+      it.each<[string, ReactNode, Partial<ViewInfiniteProps>]>([
         ['input', <input data-testid="ex" key="" />, {}],
         ['textarea', <textarea data-testid="ex" key="" />, {}],
         [
@@ -217,7 +217,7 @@ describe('View', () => {
     });
     it('restores scroll after swipeBack', () => {
       let y = 101;
-      scrollsCache['scroll']['p1'] = 22;
+      scrollsCache['scroll']['p1'] = [22];
       const [MockScroll, scrollTo] = mockScrollContext(() => y);
       const { view, rerender, SwipeBack } = setupSwipeBack({ Wrapper: MockScroll });
       fireEvent.mouseMove(view, {
@@ -237,18 +237,18 @@ describe('View', () => {
       const [MockScroll, scrollTo] = mockScrollContext(() => y);
       const h = render(
         <MockScroll>
-          <View activePanel="p1">{panels}</View>
+          <ViewInfinite activePanel="p1">{panels}</ViewInfinite>
         </MockScroll>,
       );
       // trigger scroll save
       h.rerender(
         <MockScroll>
-          <View activePanel="p2">{panels}</View>
+          <ViewInfinite activePanel="p2">{panels}</ViewInfinite>
         </MockScroll>,
       );
       h.rerender(
         <MockScroll>
-          <View activePanel="p1">{panels}</View>
+          <ViewInfinite activePanel="p1">{panels}</ViewInfinite>
         </MockScroll>,
       );
       act(() => {
@@ -261,13 +261,13 @@ describe('View', () => {
       const [MockScroll, scrollTo] = mockScrollContext(() => y);
       const h = render(
         <MockScroll>
-          <View activePanel="p2">{panels}</View>
+          <ViewInfinite activePanel="p2">{panels}</ViewInfinite>
         </MockScroll>,
       );
       // trigger scroll save
       h.rerender(
         <MockScroll>
-          <View activePanel="p1">{panels}</View>
+          <ViewInfinite activePanel="p1">{panels}</ViewInfinite>
         </MockScroll>,
       );
       act(() => {
@@ -276,7 +276,7 @@ describe('View', () => {
       scrollTo.mockReset();
       h.rerender(
         <MockScroll>
-          <View activePanel="p2">{panels}</View>
+          <ViewInfinite activePanel="p2">{panels}</ViewInfinite>
         </MockScroll>,
       );
       act(() => {
@@ -297,7 +297,7 @@ function setupSwipeBack({
   Wrapper?: ComponentType<HasChildren>;
   childrenForPanel1?: any;
   childrenForPanel2?: any;
-  initialProps?: Partial<ViewProps>;
+  initialProps?: Partial<ViewInfiniteProps>;
   shouldForceDetectXSwipe?: boolean;
 } = {}) {
   const events = {
@@ -306,10 +306,10 @@ function setupSwipeBack({
     onSwipeBackStart: jest.fn(),
     onSwipeBackCancel: jest.fn(),
   };
-  const SwipeBack = (p: Partial<ViewProps>) => (
+  const SwipeBack = (p: Partial<ViewInfiniteProps>) => (
     <Wrapper>
       <ConfigProvider platform={Platform.IOS} isWebView>
-        <View
+        <ViewInfinite
           id="scroll"
           activePanel="p2"
           history={['p1', 'p2']}
@@ -319,7 +319,7 @@ function setupSwipeBack({
         >
           <Panel id="p1">{childrenForPanel1}</Panel>
           <Panel id="p2">{childrenForPanel2}</Panel>
-        </View>
+        </ViewInfinite>
       </ConfigProvider>
     </Wrapper>
   );
