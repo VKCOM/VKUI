@@ -82,11 +82,15 @@ ${webviewTypeRule}
   const { document } = useDOM();
 
   useIsomorphicLayoutEffect(() => {
+    if (!document) {
+      return;
+    }
+
     const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
 
-    addClassNameToElement(document!.body, VKUITokensClassName);
+    addClassNameToElement(document.body, VKUITokensClassName);
     return () => {
-      removeClassNameFromElement(document!.body, VKUITokensClassName);
+      removeClassNameFromElement(document.body, VKUITokensClassName);
     };
   }, [platform, appearance]);
 
