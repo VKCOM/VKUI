@@ -29,7 +29,7 @@ describe('removeClassNameFromElement', () => {
 
     // remove not existing class
     removeClassNameFromElement(div, 'unknown-class');
-    expect(div.getAttribute('class')).toEqual('b-class a-class a-class');
+    expect(div.getAttribute('class')).toEqual('a-class b-class a-class');
 
     removeClassNameFromElement(div, 'a-class');
     expect(div.getAttribute('class')).toEqual('b-class a-class');
