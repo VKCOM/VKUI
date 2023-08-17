@@ -81,18 +81,22 @@ ${webviewTypeRule}
 
   const { document } = useDOM();
 
-  useIsomorphicLayoutEffect(() => {
-    if (!document) {
-      return;
-    }
+  // TODO [>=6]: переместить хук в AppRoot (см. https://github.com/VKCOM/VKUI/issues/4810).
+  useIsomorphicLayoutEffect(
+    function attachVKUITokensClassNameToBody() {
+      if (!document) {
+        return;
+      }
 
-    const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
+      const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
 
-    addClassNameToElement(document.body, VKUITokensClassName);
-    return () => {
-      removeClassNameFromElement(document.body, VKUITokensClassName);
-    };
-  }, [platform, appearance]);
+      addClassNameToElement(document.body, VKUITokensClassName);
+      return () => {
+        removeClassNameFromElement(document.body, VKUITokensClassName);
+      };
+    },
+    [platform, appearance],
+  );
 
   const configContext = useObjectMemo({
     webviewType,
