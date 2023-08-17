@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { useAppearance } from '../../hooks/useAppearance';
-import { useIsClient } from '../../hooks/useIsClient';
 import { isRefObject } from '../../lib/isRefObject';
 import { HasChildren } from '../../types';
 import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
@@ -18,19 +17,18 @@ export interface AppRootPortalProps extends HasChildren {
   portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
 }
 
-export const AppRootPortal = ({
+const useNullableFetch = () => Promise.resolve();
+
+const AppRootPortalWithLazy = ({
   children,
   className,
   forcePortal: forcePortalProp,
-  portalRoot: portalRootProp = null,
+  portalRoot: portalRootProp,
 }: AppRootPortalProps) => {
+  void useNullableFetch();
+
   const { portalRoot, mode, disablePortal } = React.useContext(AppRootContext);
   const appearance = useAppearance();
-
-  const isClient = useIsClient();
-  if (!isClient) {
-    return null;
-  }
 
   const forcePortal = forcePortalProp ?? mode !== 'full';
 
@@ -50,6 +48,27 @@ export const AppRootPortal = ({
     )
   ) : (
     <React.Fragment>{children}</React.Fragment>
+  );
+};
+
+/**
+ * Используем <Suspense>, чтобы компонент рендерился только на клиенте, тем самым избегаем
+ * ошибки при гидратации.
+ *
+ * см. https://react.dev/reference/react/useLayoutEffect#troubleshooting
+ *
+ * > Note:
+ * >
+ * > Изначальное решения через useIsClient() не подошло, т.к. из-за двойного рендера у пользователей
+ * > нет доступа к ref элемента при useEffect() на первом рендере.
+ * >
+ * > см. https://github.com/VKCOM/VKUI/issues/5634
+ */
+export const AppRootPortal = ({ portalRoot = null, ...props }: AppRootPortalProps) => {
+  return (
+    <React.Suspense fallback={null}>
+      <AppRootPortalWithLazy portalRoot={portalRoot} {...props} />
+    </React.Suspense>
   );
 };
 
