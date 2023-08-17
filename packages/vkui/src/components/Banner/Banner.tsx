@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-  Icon24Cancel,
-  Icon24Chevron,
-  Icon24DismissDark,
-  Icon24DismissSubstract,
-} from '@vkontakte/icons';
+import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
@@ -115,7 +110,7 @@ export const Banner = ({
   const HeaderTypography = size === 'm' ? Title : Headline;
   const SubheaderTypography = size === 'm' ? Text : Subhead;
 
-  const IconDismissIOS = mode === 'image' ? Icon24DismissDark : Icon24DismissSubstract;
+  const IconDismissIOS = mode === 'image' ? Icon24DismissDark : Icon24Dismiss;
 
   const content = (
     <>
