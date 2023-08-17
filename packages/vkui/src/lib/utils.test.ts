@@ -30,7 +30,13 @@ describe('removeClassNameFromElement', () => {
     removeClassNameFromElement(div, 'a-class');
     expect(div.getAttribute('class')).toEqual('b-class a-class');
 
+    // allows to remove duplicated class name
+    div.setAttribute('class', 'a-class b-class a-class');
+
     removeClassNameFromElement(div, 'b-class');
+    expect(div.getAttribute('class')).toEqual('a-class a-class');
+
+    removeClassNameFromElement(div, 'a-class');
     expect(div.getAttribute('class')).toEqual('a-class');
 
     removeClassNameFromElement(div, 'a-class');
