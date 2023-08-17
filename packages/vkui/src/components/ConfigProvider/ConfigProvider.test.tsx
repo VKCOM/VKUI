@@ -180,10 +180,9 @@ describe('ConfigProvider', () => {
       );
     };
 
-    const { unmount, rerender } = render(<TestComponent />);
+    const { unmount } = render(<TestComponent />);
 
     const vkuiBodySelector = generateVKUITokensClassName(config.platform, config.appearance);
-    rerender(<TestComponent />);
 
     // class name is applied to body
     expect(document.querySelector(`body.${vkuiBodySelector}`)).toBeTruthy();
