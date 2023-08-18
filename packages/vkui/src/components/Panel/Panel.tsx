@@ -6,6 +6,7 @@ import { SizeType } from '../../lib/adaptivity';
 import { NavIdProps } from '../../lib/getNavId';
 import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { Touch } from '../Touch/Touch';
@@ -27,6 +28,7 @@ export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, N
 export const Panel = ({ centered = false, children, nav, ...restProps }: PanelProps) => {
   const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
+  const { layout } = React.useContext(AppRootContext);
 
   return (
     <RootComponent
@@ -35,6 +37,7 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
         styles['Panel'],
         sizeXClassNames[sizeX],
         centered && 'vkuiInternalPanel--centered',
+        layout && styles['Panel--layoutSetting'],
       )}
     >
       <Touch

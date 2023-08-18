@@ -16,6 +16,7 @@ let initialState = {
   styleguideAppearance: Appearance.LIGHT,
   hasCustomPanelHeaderAfter: true,
   transitionMotionEnabled: true,
+  layout: undefined,
 };
 
 try {

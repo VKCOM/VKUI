@@ -4,12 +4,13 @@ import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 import { AppearanceSelect } from './AppearanceSelect';
 import { HasCustomPanelHeaderAfter } from './HasCustomPanelHeaderAfter';
 import { HasPointerCheckbox } from './HasPointerCheckbox';
+import { LayoutSelect } from './LayoutSelect';
 import { PlatformSelect } from './PlatformSelect';
 import { ViewHeightSelect } from './ViewHeightSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
 import './Settings.css';
 
-export const Settings = ({ adaptivity, showCustomPanelHeaderAfterProps }) => {
+export const Settings = ({ adaptivity, showCustomPanelHeaderAfterProps, showLayoutSelect }) => {
   const { sizeX } = useAdaptivityConditionalRender();
   return (
     <StyleGuideContext.Consumer>
@@ -57,6 +58,12 @@ export const Settings = ({ adaptivity, showCustomPanelHeaderAfterProps }) => {
                     />
                   )}
                 </Fragment>
+              )}
+              {showLayoutSelect && (
+                <LayoutSelect
+                  onChange={(layout) => context.setContext({ layout })}
+                  value={context.layout}
+                />
               )}
             </div>
           </div>

@@ -28,6 +28,25 @@ const vkuiSizeXClassNames = {
   [SizeType.REGULAR]: 'vkui--sizeX-regular',
 };
 
+const vkuiLayoutClassNames = {
+  card: 'vkui--layout-card',
+  plain: 'vkui--layout-plain',
+};
+
+function containerClassNames(layout: AppRootProps['layout'], sizeX: SizeType | 'none'): string[] {
+  const classNames: string[] = [];
+
+  if (layout) {
+    classNames.push(vkuiLayoutClassNames[layout]);
+  }
+
+  if (sizeX !== SizeType.COMPACT) {
+    classNames.push(vkuiSizeXClassNames[sizeX]);
+  }
+
+  return classNames;
+}
+
 const INSET_CUSTOM_PROPERTY_PREFIX = `--vkui_internal--safe_area_inset_`;
 
 // Используйте classList, но будьте осторожны
@@ -54,6 +73,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * Это поведение можно отключить с помощью этого параметра.
    */
   disableParentTransformForPositionFixedElements?: boolean;
+  layout?: 'card' | 'plain';
 }
 
 /**
@@ -68,6 +88,7 @@ export const AppRoot = ({
   disableParentTransformForPositionFixedElements,
   className,
   safeAreaInsets,
+  layout,
   ...props
 }: AppRootProps) => {
   const isKeyboardInputActive = useKeyboardInputTracker();
@@ -180,18 +201,20 @@ export const AppRoot = ({
     if (mode === 'partial') {
       return noop;
     }
-    const className = sizeX !== SizeType.COMPACT ? vkuiSizeXClassNames[sizeX] : null;
+
+    const classNames = containerClassNames(layout, sizeX);
+
     const container = mode === 'embedded' ? rootRef.current?.parentElement : document!.body;
 
-    if (className === null || !container) {
+    if (!classNames.length || !container) {
       return noop;
     }
 
-    container.classList.add(className);
+    container.classList.add(...classNames);
     return () => {
-      container.classList.remove(className);
+      container.classList.remove(...classNames);
     };
-  }, [sizeX]);
+  }, [sizeX, layout]);
 
   useIsomorphicLayoutEffect(() => {
     if (mode !== 'full' || appearance === undefined) {
@@ -216,6 +239,7 @@ export const AppRoot = ({
         keyboardInput: isKeyboardInputActive,
         mode,
         disablePortal,
+        layout,
       }}
     >
       <ScrollController elRef={rootRef}>

@@ -9,6 +9,7 @@ const PlaygroundRenderer = ({ name, preview, previewProps, tabBody, exampleIndex
     iframe = true, // Рендерить пример в айфреме
     adaptivity: _adaptivity, // Продвинутые контролеры настроек адаптивности
     showCustomPanelHeaderAfterProps = false, // Контроллер настроек, связанных с пользовательским слотом `after` у `PanelHeader`
+    showLayoutSelect = false,
     integration,
     containerStyle,
     config,
@@ -28,6 +29,7 @@ const PlaygroundRenderer = ({ name, preview, previewProps, tabBody, exampleIndex
       <Settings
         adaptivity={adaptivity}
         showCustomPanelHeaderAfterProps={showCustomPanelHeaderAfterProps}
+        showLayoutSelect={showLayoutSelect}
       />
       <div className="Playground__preview" {...wrapperProps} data-preview={name}>
         {cloneElement(preview, {

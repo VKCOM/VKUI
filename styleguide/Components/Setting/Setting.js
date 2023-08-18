@@ -25,6 +25,14 @@ export const Setting = ({
     [],
   );
 
+  const title =
+    options?.find((option) => {
+      if (typeof option === 'string' || typeof option === 'number') {
+        return false;
+      }
+      return option.value === value;
+    })?.title || value;
+
   const labelJsx = <span className="Setting__label">{label}:&nbsp;</span>;
 
   return (
@@ -69,7 +77,7 @@ export const Setting = ({
             );
           }}
         >
-          {value}
+          {title}
           <Icon16Dropdown />
         </Link>
       )}
