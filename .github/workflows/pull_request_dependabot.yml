@@ -5,6 +5,10 @@ on:
     types: [opened]
     branches: [master]
 
+permissions:
+  pull-requests: write
+  repository-projects: write
+
 concurrency:
   group: pr-dependabot-${{ github.event.pull_request.number }}
   cancel-in-progress: true
