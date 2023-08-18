@@ -62,7 +62,7 @@ export const Alert = ({
 }: AlertProps) => {
   const generatedId = useId();
 
-  const headerId = `vkui-alert-${generatedId}-header`;
+  const header_id = `vkui-alert-${generatedId}-header`;
   const textId = `vkui-alert-${generatedId}-text`;
 
   const platform = usePlatform();
@@ -130,11 +130,11 @@ export const Alert = ({
         )}
         role="alertdialog"
         aria-modal
-        aria-labelledby={headerId}
+        aria-labelledby={header_id}
         aria-describedby={textId}
       >
         <div className={styles['Alert__content']}>
-          {hasReactNode(header) && <AlertHeader id={headerId}>{header}</AlertHeader>}
+          {hasReactNode(header) && <AlertHeader id={header_id}>{header}</AlertHeader>}
           {hasReactNode(text) && <AlertText id={textId}>{text}</AlertText>}
           {children}
         </div>
