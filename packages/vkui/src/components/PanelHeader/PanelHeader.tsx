@@ -5,10 +5,11 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { HasComponent, HasRef, HasRootRef } from '../../types';
+import { HasComponent, HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
@@ -28,9 +29,8 @@ const sizeXClassNames = {
 };
 
 export interface PanelHeaderProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRef<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
+    HasRef<HTMLDivElement> {
   before?: React.ReactNode;
   /**
    * Добавляет элемент справа.
@@ -132,7 +132,6 @@ export const PanelHeader = ({
   getRef,
   getRootRef,
   fixed,
-  className,
   typographyProps,
   ...restProps
 }: PanelHeaderProps) => {
@@ -142,9 +141,9 @@ export const PanelHeader = ({
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles['PanelHeader'],
         'vkuiInternalPanelHeader',
         platformClassNames.hasOwnProperty(platform)
@@ -161,9 +160,8 @@ export const PanelHeader = ({
         !after && styles['PanelHeader--no-after'],
         isFixed && styles['PanelHeader--fixed'],
         sizeX !== SizeType.COMPACT && sizeXClassNames[sizeX],
-        className,
       )}
-      ref={isFixed ? getRootRef : getRef}
+      getRootRef={isFixed ? getRootRef : getRef}
     >
       {isFixed ? (
         <FixedLayout
@@ -198,7 +196,7 @@ export const PanelHeader = ({
           )}
         </React.Fragment>
       )}
-    </div>
+    </RootComponent>
   );
 };
 

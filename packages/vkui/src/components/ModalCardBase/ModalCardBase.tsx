@@ -6,17 +6,16 @@ import { useKeyboard } from '../../hooks/useKeyboard';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
 import styles from './ModalCardBase.module.css';
 
-export interface ModalCardBaseProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {
+export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Иконка.
    *
@@ -64,7 +63,6 @@ export interface ModalCardBaseProps
  * @see https://vkcom.github.io/VKUI/#/ModalCardBase
  */
 export const ModalCardBase = ({
-  getRootRef,
   icon,
   header,
   subheader,
@@ -72,7 +70,6 @@ export const ModalCardBase = ({
   actions,
   onClose,
   dismissLabel = 'Скрыть',
-  className,
   style,
   size: sizeProp,
   ...restProps
@@ -86,15 +83,13 @@ export const ModalCardBase = ({
   const size = isDesktop ? sizeProp : undefined;
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         'vkuiInternalModalCardBase',
         platform === Platform.IOS && styles['ModalCardBase--ios'],
         isDesktop && styles['ModalCardBase--desktop'],
-        className,
       )}
-      ref={getRootRef}
       style={{
         ...style,
         maxWidth: size,
@@ -147,6 +142,6 @@ export const ModalCardBase = ({
           </PanelHeaderButton>
         )}
       </div>
-    </div>
+    </RootComponent>
   );
 };

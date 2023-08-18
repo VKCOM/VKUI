@@ -5,7 +5,7 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
-import { HasRef, HasRootRef } from '../../types';
+import { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import styles from './FixedLayout.module.css';
@@ -19,8 +19,7 @@ const stylesVertical = {
 };
 
 export interface FixedLayoutProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement>,
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   vertical?: 'top' | 'bottom';
   /**

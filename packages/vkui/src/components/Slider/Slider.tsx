@@ -4,7 +4,7 @@ import { clamp } from '../../helpers/math';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../lib/adaptivity';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { Touch, type TouchEvent, type TouchEventHandler } from '../Touch/Touch';
 import { SliderThumb } from './SliderThumb/SliderThumb';
 import {
@@ -26,8 +26,7 @@ const sizeYClassNames = {
 };
 
 export interface SliderBaseProps
-  extends HasRootRef<HTMLDivElement>,
-    Omit<React.HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'> {
   min?: number;
   max?: number;
   step?: number;

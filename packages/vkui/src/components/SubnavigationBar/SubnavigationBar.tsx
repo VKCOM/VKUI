@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { HTMLAttributesWithRootRef } from '../../types';
 import {
   HorizontalScroll,
   HorizontalScrollProps,
   ScrollPositionHandler,
 } from '../HorizontalScroll/HorizontalScroll';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './SubnavigationBar.module.css';
 
 export interface SubnavigationBarProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
     Pick<
       HorizontalScrollProps,
       'showArrows' | 'getScrollToLeft' | 'getScrollToRight' | 'scrollAnimationDuration'
@@ -30,7 +31,6 @@ export const SubnavigationBar = ({
   getScrollToLeft = defaultScrollToLeft,
   getScrollToRight = defaultScrollToRight,
   scrollAnimationDuration,
-  className,
   ...restProps
 }: SubnavigationBarProps) => {
   let ScrollWrapper: React.ElementType;
@@ -49,17 +49,14 @@ export const SubnavigationBar = ({
   }
 
   return (
-    <div
+    <RootComponent
+      // TODO: [>=6]
+      // Заменить у SubnavigationButton `display: inline-block` на `width: 100%`
+      // и удалить применение селектора в `SubnavigationButton.module.css`.
+      // 2. Заменить глобальный селектор на CSS Modules `styles['SubnavigationBar--mode-fixed']`
+      // mode !== 'fixed' && classNames('vkuiInternalSubnavigationBar--mode-fixed')
+      baseClassName={mode === 'fixed' ? 'vkuiInternalSubnavigationBar--mode-fixed' : undefined}
       {...restProps}
-      className={classNames(
-        // TODO: [>=6]
-        // Заменить у SubnavigationButton `display: inline-block` на `width: 100%`
-        // и удалить применение селектора в `SubnavigationButton.module.css`.
-        // 2. Заменить глобальный селектор на CSS Modules `styles['SubnavigationBar--mode-fixed']`
-        // mode !== 'fixed' && classNames('vkuiInternalSubnavigationBar--mode-fixed')
-        mode === 'fixed' && 'vkuiInternalSubnavigationBar--mode-fixed',
-        className,
-      )}
     >
       <ScrollWrapper className={styles['SubnavigationBar__in']} {...scrollWrapperProps}>
         <ul className={styles['SubnavigationBar__scrollIn']}>
@@ -70,6 +67,6 @@ export const SubnavigationBar = ({
           ))}
         </ul>
       </ScrollWrapper>
-    </div>
+    </RootComponent>
   );
 };

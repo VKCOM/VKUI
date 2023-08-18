@@ -4,7 +4,8 @@ import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
-import { HasRef } from '../../types';
+import { HasRef, HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';
 
@@ -26,7 +27,7 @@ interface ScrollContext {
 export type ScrollPositionHandler = (currentPosition: number) => number;
 
 export interface HorizontalScrollProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   /**
    * Функция для расчета величины прокрутки при клике на левую стрелку.
@@ -140,7 +141,6 @@ export const HorizontalScroll = ({
   arrowOffsetY,
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
-  className,
   scrollOnAnyWheel = false,
   ...restProps
 }: HorizontalScrollProps) => {
@@ -243,13 +243,12 @@ export const HorizontalScroll = ({
   );
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles['HorizontalScroll'],
         'vkuiInternalHorizontalScroll',
         showArrows === 'always' && styles['HorizontalScroll--withConstArrows'],
-        className,
       )}
       onMouseEnter={calculateArrowsVisibility}
     >
@@ -280,6 +279,6 @@ export const HorizontalScroll = ({
       <div className={styles['HorizontalScroll__in']} ref={scrollerRef}>
         <div className={styles['HorizontalScroll__in-wrapper']}>{children}</div>
       </div>
-    </div>
+    </RootComponent>
   );
 };

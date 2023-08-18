@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
-import { HasRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { CustomScrollView } from '../CustomScrollView/CustomScrollView';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import { Popper } from '../Popper/Popper';
@@ -9,8 +9,7 @@ import { Spinner } from '../Spinner/Spinner';
 import styles from './CustomSelectDropdown.module.css';
 
 export interface CustomSelectDropdownProps
-  extends React.HTMLAttributes<HTMLElement>,
-    HasRef<HTMLDivElement>,
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
     TrackerOptionsProps {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;

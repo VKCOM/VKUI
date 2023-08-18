@@ -2,9 +2,11 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Tabbar.module.css';
 
-export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TabbarProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Флаг для показа/скрытия верхней тени (Android) или границы (iOS)
    */
@@ -34,22 +36,19 @@ const getItemsLayoutClassName = (
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabbar
  */
-export const Tabbar = ({ children, shadow = true, mode, className, ...restProps }: TabbarProps) => {
+export const Tabbar = ({ shadow = true, mode, ...restProps }: TabbarProps) => {
   const platform = usePlatform();
 
   return (
-    <div
-      className={classNames(
+    <RootComponent
+      baseClassName={classNames(
         'vkuiInternalTabbar',
         styles['Tabbar'],
         platform === Platform.IOS && styles['Tabbar--ios'],
-        getItemsLayoutClassName(mode, children),
+        getItemsLayoutClassName(mode, restProps.children),
         shadow && styles['Tabbar--shadow'],
-        className,
       )}
       {...restProps}
-    >
-      {children}
-    </div>
+    />
   );
 };

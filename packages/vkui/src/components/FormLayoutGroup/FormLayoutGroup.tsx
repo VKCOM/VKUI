@@ -3,8 +3,9 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../lib/adaptivity';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './FormLayoutGroup.module.css';
 
 const sizeYClassNames = {
@@ -19,9 +20,8 @@ const sizeYClassNames = {
 };
 
 export interface FormLayoutGroupProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    RemovableProps,
-    HasRootRef<HTMLDivElement> {
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
+    RemovableProps {
   mode?: 'vertical' | 'horizontal';
   /**
    * Только для режима horizontal. Дает возможность удалить всю группу `FormItem`.
@@ -47,7 +47,6 @@ export const FormLayoutGroup = ({
   removePlaceholder = 'Удалить',
   onRemove = noop,
   getRootRef,
-  className,
   ...restProps
 }: FormLayoutGroupProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -56,9 +55,9 @@ export const FormLayoutGroup = ({
   const rootEl = useExternRef(getRootRef);
 
   return (
-    <div
-      ref={rootEl}
-      className={classNames(
+    <RootComponent
+      getRootRef={rootEl}
+      baseClassName={classNames(
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         mode === 'horizontal' &&
           classNames(
@@ -75,7 +74,6 @@ export const FormLayoutGroup = ({
             styles['FormLayoutGroup--segmented'],
             'vkuiInternalFormLayoutGroup--segmented',
           ),
-        className,
       )}
       {...restProps}
     >
@@ -99,6 +97,6 @@ export const FormLayoutGroup = ({
           <span className={styles['FormLayoutGroup__offset']} aria-hidden />
         </React.Fragment>
       )}
-    </div>
+    </RootComponent>
   );
 };

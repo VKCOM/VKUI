@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { HasChildren } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Spacing.module.css';
 
-export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement>, HasChildren {
+export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Высота спэйсинга
    */
@@ -13,12 +13,12 @@ export interface SpacingProps extends React.HTMLAttributes<HTMLDivElement>, HasC
 /**
  * @see https://vkcom.github.io/VKUI/#/Spacing
  */
-export const Spacing = ({ size = 8, style: styleProp, className, ...restProps }: SpacingProps) => {
+export const Spacing = ({ size = 8, style: styleProp, ...restProps }: SpacingProps) => {
   const style: React.CSSProperties = {
     height: size,
     padding: `${size / 2}px 0`,
     ...styleProp,
   };
 
-  return <div {...restProps} className={classNames(className, styles['Spacing'])} style={style} />;
+  return <RootComponent {...restProps} baseClassName={styles['Spacing']} style={style} />;
 };

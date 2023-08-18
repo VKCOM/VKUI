@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Separator.module.css';
 
-export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * С этим свойством компонент не будет иметь отступы слева и справа
    */
@@ -12,11 +14,11 @@ export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/Separator
  */
-export const Separator = ({ wide, className, ...restProps }: SeparatorProps) => (
-  <div
+export const Separator = ({ wide, ...restProps }: SeparatorProps) => (
+  <RootComponent
     {...restProps}
-    className={classNames(styles['Separator'], !wide && styles['Separator--padded'], className)}
+    baseClassName={classNames(styles['Separator'], !wide && styles['Separator--padded'])}
   >
     <hr className={styles['Separator__in']} />
-  </div>
+  </RootComponent>
 );

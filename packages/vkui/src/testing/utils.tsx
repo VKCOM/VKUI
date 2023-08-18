@@ -50,6 +50,7 @@ export type ComponentTestOptions = {
   style?: boolean;
   adaptivity?: AdaptivityProps;
   a11y?: boolean;
+  getRootRef?: boolean;
 };
 
 type BasicProps = { style?: any; className?: string };
@@ -75,6 +76,25 @@ export function a11yTest(Component: React.ComponentType<any>) {
   });
 }
 
+export function getRootRefTest(Component: React.ComponentType<any>) {
+  it('getRootRef', () => {
+    const stableRef = { current: undefined };
+
+    const ref = {
+      get current() {
+        return stableRef.current;
+      },
+      set current(el) {
+        stableRef.current = el;
+      },
+    };
+
+    render(<Component getRootRef={ref} />);
+
+    expect(ref.current).not.toBeNull();
+  });
+}
+
 export function baselineComponent<Props extends BasicProps>(
   RawComponent: React.ComponentType<Props>,
   {
@@ -83,6 +103,7 @@ export function baselineComponent<Props extends BasicProps>(
     className = true,
     domAttr = true,
     a11y = true,
+    getRootRef = true,
     adaptivity,
   }: ComponentTestOptions = {},
 ) {
@@ -125,6 +146,8 @@ export function baselineComponent<Props extends BasicProps>(
           );
       }
     });
+
+  getRootRef && getRootRefTest(Component);
 }
 
 type RectOptions = { x?: number; y?: number; w?: number; h?: number };

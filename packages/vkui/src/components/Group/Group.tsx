@@ -5,8 +5,9 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasChildren, HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -28,10 +29,7 @@ const stylesPadding = {
   m: styles['Group--padding-m'],
 };
 
-export interface GroupProps
-  extends HasRootRef<HTMLElement>,
-    React.HTMLAttributes<HTMLElement>,
-    HasChildren {
+export interface GroupProps extends HTMLAttributesWithRootRef<HTMLElement> {
   header?: React.ReactNode;
   description?: React.ReactNode;
   /**
@@ -62,10 +60,8 @@ export const Group = ({
   description,
   children,
   separator = 'auto',
-  getRootRef,
   mode: modeProps,
   padding = 'm',
-  className,
   tabIndex: tabIndexProp,
   ...restProps
 }: GroupProps) => {
@@ -100,11 +96,11 @@ export const Group = ({
 
   return (
     <>
-      <section
+      <RootComponent
+        Component="section"
         {...restProps}
         tabIndex={tabIndex}
-        ref={getRootRef}
-        className={classNames(
+        baseClassName={classNames(
           'vkuiInternalGroup',
           styles['Group'],
           isInsideModal && styles['Group--inside-modal'],
@@ -112,7 +108,6 @@ export const Group = ({
           sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
           mode && stylesMode[mode],
           stylesPadding[padding],
-          className,
         )}
       >
         {header}
@@ -120,7 +115,7 @@ export const Group = ({
         {hasReactNode(description) && (
           <Footnote className={styles['Group__description']}>{description}</Footnote>
         )}
-      </section>
+      </RootComponent>
 
       {separator !== 'hide' && (
         <React.Fragment>

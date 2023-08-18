@@ -10,6 +10,7 @@ import { Platform } from '../../lib/platform';
 import { animationEvent } from '../../lib/supportEvents';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { useScroll } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
@@ -36,7 +37,7 @@ interface ViewsScrolls {
 
 export let scrollsCache: ViewsScrolls = {};
 
-export interface ViewProps extends React.HTMLAttributes<HTMLElement>, NavIdProps {
+export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavIdProps {
   activePanel: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**

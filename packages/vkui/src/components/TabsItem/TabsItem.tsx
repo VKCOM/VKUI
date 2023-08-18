@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
 import { Tappable } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
@@ -21,7 +22,7 @@ const stylesMode = {
   secondary: styles['TabsItem--mode-secondary'],
 };
 
-export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
+export interface TabsItemProps extends HTMLAttributesWithRootRef<HTMLElement> {
   /**
    * Добавляет иконку слева.
    *

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { AlignType, HasRootRef } from '../../types';
+import type { AlignType, HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './ButtonGroup.module.css';
 
 const stylesMode = {
@@ -20,9 +21,7 @@ const stylesAlign = {
   right: styles['ButtonGroup--align-right'],
 };
 
-export interface ButtonGroupProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {
+export interface ButtonGroupProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Задает расположение элементов внутри группы, вертикальное или горизонтальное.
    */
@@ -51,15 +50,11 @@ export const ButtonGroup = ({
   gap = 'm',
   stretched = false,
   align = 'left' /* NOTE: Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */,
-  getRootRef,
-  className,
-  children,
   ...restProps
 }: ButtonGroupProps) => {
   return (
-    <div
-      className={classNames(
-        className,
+    <RootComponent
+      baseClassName={classNames(
         styles.ButtonGroup,
         stylesMode[mode],
         gap !== 'none' && stylesGap[gap],
@@ -67,10 +62,7 @@ export const ButtonGroup = ({
         stylesAlign[align],
       )}
       role="group"
-      ref={getRootRef}
       {...restProps}
-    >
-      {children}
-    </div>
+    />
   );
 };

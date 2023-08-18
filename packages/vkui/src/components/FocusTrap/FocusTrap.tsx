@@ -9,9 +9,9 @@ import { HasComponent, HasRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 
 const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
-export interface FocusTrapProps
-  extends React.AllHTMLAttributes<HTMLElement>,
-    HasRootRef<HTMLElement>,
+export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
+  extends React.AllHTMLAttributes<T>,
+    HasRootRef<T>,
     HasComponent {
   restoreFocus?: boolean;
   timeout?: number;
@@ -21,7 +21,7 @@ export interface FocusTrapProps
 /**
  * @see https://vkcom.github.io/VKUI/#/FocusTrap
  */
-export const FocusTrap = ({
+export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   Component = 'div',
   onClose,
   restoreFocus = true,
@@ -29,8 +29,8 @@ export const FocusTrap = ({
   getRootRef,
   children,
   ...restProps
-}: FocusTrapProps) => {
-  const ref = useExternRef<HTMLElement>(getRootRef);
+}: FocusTrapProps<T>) => {
+  const ref = useExternRef<T>(getRootRef);
 
   const { document, window } = useDOM();
 

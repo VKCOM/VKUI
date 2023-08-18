@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HasComponent, HasRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Typography.module.css';
 
 const stylesWeight = {
@@ -28,21 +29,18 @@ export interface TypographyProps
 }
 
 export const Typography = ({
-  className,
   weight,
   Component = 'span',
   normalize,
-  getRootRef,
   ...restProps
 }: TypographyProps) => (
-  <Component
-    {...restProps}
-    ref={getRootRef}
-    className={classNames(
-      className,
+  <RootComponent
+    Component={Component}
+    baseClassName={classNames(
       styles['Typography'],
       normalize && styles['Typography--normalize'],
       weight && stylesWeight[weight],
     )}
+    {...restProps}
   />
 );

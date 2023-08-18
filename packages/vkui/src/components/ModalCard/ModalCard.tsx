@@ -7,6 +7,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import { ModalCardBase, ModalCardBaseProps } from '../ModalCardBase/ModalCardBase';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './ModalCard.module.css';
 
 const platformClassNames = {
@@ -31,9 +32,7 @@ export const ModalCard = ({
   onClose,
   nav,
   id,
-  className,
   size,
-  getRootRef,
   ...restProps
 }: ModalCardProps) => {
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
@@ -43,17 +42,15 @@ export const ModalCard = ({
   const { refs } = useModalRegistry(getNavId({ nav, id }, warn), ModalType.CARD);
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      ref={getRootRef}
       id={id}
-      className={classNames(
+      baseClassName={classNames(
         styles['ModalCard'],
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
         isDesktop && styles['ModalCard--desktop'],
-        className,
       )}
     >
       <ModalCardBase
@@ -68,6 +65,6 @@ export const ModalCard = ({
       >
         {children}
       </ModalCardBase>
-    </div>
+    </RootComponent>
   );
 };

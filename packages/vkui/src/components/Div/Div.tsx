@@ -1,19 +1,11 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Div.module.css';
 
-export interface DivProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {}
+export type DivProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Div
  */
-export const Div = ({ children, getRootRef, className, ...restProps }: DivProps) => {
-  return (
-    <div {...restProps} ref={getRootRef} className={classNames(styles['Div'], className)}>
-      {children}
-    </div>
-  );
-};
+export const Div = (props: DivProps) => <RootComponent baseClassName={styles['Div']} {...props} />;

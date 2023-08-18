@@ -3,12 +3,13 @@ import { Icon24Reorder, Icon24ReorderIos } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { Platform } from '../../../lib/platform';
+import { HTMLAttributesWithRootRef } from '../../../types';
 import { Touch } from '../../Touch/Touch';
 import { DraggableProps } from '../useDraggable';
 import styles from './CellDragger.module.css';
 
 type CellDraggerProps = DraggableProps &
-  Omit<React.HTMLAttributes<HTMLElement>, keyof DraggableProps>;
+  Omit<HTMLAttributesWithRootRef<HTMLElement>, keyof DraggableProps>;
 
 export const CellDragger = ({
   onDragStart,

@@ -5,14 +5,15 @@ import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/cal
 import { isSameDay, isSameMonth } from '../../lib/date';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
 import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
 import { CalendarTime, CalendarTimeProps } from '../CalendarTime/CalendarTime';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Calendar.module.css';
 
 export interface CalendarProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>,
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
     Pick<CalendarTimeProps, 'changeHoursAriaLabel' | 'changeMinutesAriaLabel'>,
     Pick<
       CalendarHeaderProps,
@@ -27,8 +28,7 @@ export interface CalendarProps
       | 'prevMonthProps'
       | 'nextMonthProps'
     >,
-    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate'>,
-    HasRootRef<HTMLDivElement> {
+    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate'> {
   value?: Date;
   disablePast?: boolean;
   disableFuture?: boolean;
@@ -68,7 +68,6 @@ export const Calendar = ({
   enableTime = false,
   doneButtonText,
   weekStartsOn = 1,
-  getRootRef,
   disablePickers,
   changeHoursAriaLabel,
   changeMinutesAriaLabel,
@@ -88,7 +87,6 @@ export const Calendar = ({
   prevMonthProps,
   nextMonthProps,
   dayProps,
-  className,
   listenDayChangesForUpdate,
   ...props
 }: CalendarProps) => {
@@ -155,14 +153,9 @@ export const Calendar = ({
   );
 
   return (
-    <div
+    <RootComponent
       {...props}
-      ref={getRootRef}
-      className={classNames(
-        styles['Calendar'],
-        size === 's' && styles['Calendar--size-s'],
-        className,
-      )}
+      baseClassName={classNames(styles['Calendar'], size === 's' && styles['Calendar--size-s'])}
     >
       <CalendarHeader
         viewDate={externalViewDate || viewDate}
@@ -211,6 +204,6 @@ export const Calendar = ({
           />
         </div>
       )}
-    </div>
+    </RootComponent>
   );
 };

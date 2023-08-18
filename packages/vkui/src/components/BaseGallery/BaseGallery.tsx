@@ -5,6 +5,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { calcMax, calcMin } from './helpers';
@@ -50,7 +51,6 @@ export const BaseGallery = ({
   align = 'left',
   showArrows,
   getRef,
-  className,
   arrowSize = 'l',
   ...restProps
 }: BaseGalleryProps) => {
@@ -311,16 +311,15 @@ export const BaseGallery = ({
   const isDraggable = isDraggableProp && !layoutState.current.isFullyVisible;
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles['BaseGallery'],
         align === 'center' && styles['BaseGallery--align-center'],
         slideWidth === 'custom' && styles['BaseGallery--custom-width'],
         isDraggable && styles['BaseGallery--draggable'],
-        className,
       )}
-      ref={rootRef}
+      getRootRef={rootRef}
     >
       <Touch
         className={styles['BaseGallery__viewport']}
@@ -377,6 +376,6 @@ export const BaseGallery = ({
           size={arrowSize}
         />
       )}
-    </div>
+    </RootComponent>
   );
 };

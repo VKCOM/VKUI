@@ -4,6 +4,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { HasComponent, HasRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './TabbarItem.module.css';
@@ -36,8 +37,6 @@ export const TabbarItem = ({
   href,
   Component = href ? 'a' : 'button',
   disabled,
-  className,
-  getRootRef,
   ...restProps
 }: TabbarItemProps) => {
   const platform = usePlatform();
@@ -51,17 +50,16 @@ export const TabbarItem = ({
   }
 
   return (
-    <Component
+    <RootComponent
+      Component={Component}
       {...restProps}
-      ref={getRootRef}
       disabled={disabled}
       href={href}
-      className={classNames(
+      baseClassName={classNames(
         styles['TabbarItem'],
         platform === Platform.IOS && styles['TabbarItem--ios'],
         platform === Platform.ANDROID && styles['TabbarItem--android'],
         selected && styles['TabbarItem--selected'],
-        className,
       )}
     >
       <Tappable
@@ -88,6 +86,6 @@ export const TabbarItem = ({
           </Footnote>
         )}
       </div>
-    </Component>
+    </RootComponent>
   );
 };

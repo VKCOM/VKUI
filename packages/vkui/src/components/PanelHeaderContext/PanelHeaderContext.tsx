@@ -8,6 +8,7 @@ import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import styles from './PanelHeaderContext.module.css';
@@ -18,7 +19,7 @@ const sizeXClassNames = {
   [SizeType.REGULAR]: styles['PanelHeaderContext--sizeX-regular'],
 };
 
-export interface PanelHeaderContextProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   opened: boolean;
   onClose: VoidFunction;
 }

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { HasRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './FocusVisible.module.css';
 
 const stylesMode = {
@@ -10,7 +12,7 @@ const stylesMode = {
 
 export type FocusVisibleMode = 'inside' | 'outside' | 'outline';
 
-export interface FocusVisibleProps {
+export interface FocusVisibleProps extends HasRootRef<HTMLSpanElement> {
   visible: boolean | undefined;
   mode: FocusVisibleMode;
   thin?: boolean;
@@ -20,10 +22,10 @@ export interface FocusVisibleProps {
  * @see https://vkcom.github.io/VKUI/#/FocusVisible
  */
 export const FocusVisible = ({ visible, mode, thin, ...restProps }: FocusVisibleProps) => (
-  <span
+  <RootComponent
     {...restProps}
     aria-hidden
-    className={classNames(
+    baseClassName={classNames(
       styles['FocusVisible'],
       visible && styles['FocusVisible--visible'],
       thin && styles['FocusVisible--thin'],

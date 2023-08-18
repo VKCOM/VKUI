@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useDOM } from '../../lib/dom';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { HorizontalScroll, HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardScroll.module.css';
 
 const stylesSize = {
@@ -10,7 +12,7 @@ const stylesSize = {
   l: 'vkuiInternalCardScroll--size-l',
 };
 
-export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardScrollProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * При `size=false` ширина `Card` будет регулироваться контентом внутри. В остальных случаях — будет явно задана в процентах.
    */
@@ -27,7 +29,6 @@ export const CardScroll = ({
   size = 's',
   showArrows = true,
   withSpaces = true,
-  className,
   ...restProps
 }: CardScrollProps) => {
   const refContainer = React.useRef<HTMLDivElement>(null);
@@ -88,14 +89,13 @@ export const CardScroll = ({
   }
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles['CardScroll'],
         'vkuiInternalCardScroll',
         size !== false && stylesSize[size],
         withSpaces && styles['CardScroll--withSpaces'],
-        className,
       )}
     >
       <HorizontalScroll
@@ -109,6 +109,6 @@ export const CardScroll = ({
           <span className={styles['CardScroll__gap']} />
         </div>
       </HorizontalScroll>
-    </div>
+    </RootComponent>
   );
 };

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Gradient.module.css';
 
 const stylesMode = {
@@ -13,7 +15,7 @@ const stylesTo = {
   bottom: styles['Gradient--to-bottom'],
 };
 
-export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface GradientProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Тип градиента
    */
@@ -27,20 +29,12 @@ export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/Gradient
  */
-export const Gradient = ({
-  mode = 'tint',
-  children,
-  to = 'top',
-  className,
-  ...restProps
-}: GradientProps) => {
+export const Gradient = ({ mode = 'tint', to = 'top', ...restProps }: GradientProps) => {
   return (
-    <div
+    <RootComponent
       role="presentation"
       {...restProps}
-      className={classNames(stylesMode[mode], stylesTo[to], className)}
-    >
-      {children}
-    </div>
+      baseClassName={classNames(stylesMode[mode], stylesTo[to])}
+    />
   );
 };

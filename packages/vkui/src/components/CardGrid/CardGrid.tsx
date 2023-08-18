@@ -2,6 +2,8 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardGrid.module.css';
 
 const sizeXClassNames = {
@@ -15,7 +17,7 @@ const stylesSize = {
   l: 'vkuiInternalCardGrid--size-l',
 };
 
-export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
   /**
    * Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа
@@ -26,28 +28,19 @@ export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/CardGrid
  */
-export const CardGrid = ({
-  children,
-  size = 's',
-  spaced = false,
-  className,
-  ...restProps
-}: CardGridProps) => {
+export const CardGrid = ({ size = 's', spaced = false, ...restProps }: CardGridProps) => {
   const { sizeX = 'none' } = useAdaptivity();
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles['CardGrid'],
         'vkuiInternalCardGrid',
         spaced && styles['CardGrid--spaced'],
         stylesSize[size],
         sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
-        className,
       )}
-    >
-      {children}
-    </div>
+    />
   );
 };

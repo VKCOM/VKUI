@@ -9,9 +9,11 @@ import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { Platform } from '../../lib/platform';
 import { multiRef } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { ModalPageContext } from './ModalPageContext';
 import styles from './ModalPage.module.css';
 
@@ -21,7 +23,7 @@ const sizeClassName = {
   l: styles['ModalPage--size-l'],
 };
 
-export interface ModalPageProps extends React.HTMLAttributes<HTMLDivElement>, NavIdProps {
+export interface ModalPageProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
@@ -80,7 +82,6 @@ export const ModalPage = ({
   nav,
   id: idProp,
   hideCloseButton = false,
-  className,
   ...restProps
 }: ModalPageProps) => {
   const generatingId = useId();
@@ -108,19 +109,18 @@ export const ModalPage = ({
 
   return (
     <ModalPageContext.Provider value={contextValue}>
-      <div
+      <RootComponent
         {...restProps}
         role="dialog"
         aria-modal="true"
         aria-labelledby={contextValue.labelId}
         id={id}
-        className={classNames(
+        baseClassName={classNames(
           styles['ModalPage'],
           platform === Platform.IOS && styles['ModalPage--ios'],
           isDesktop && styles['ModalPage--desktop'],
           sizeX === SizeType.REGULAR && 'vkuiInternalModalPage--sizeX-regular',
           typeof size === 'string' && sizeClassName[size],
-          className,
         )}
       >
         <div
@@ -146,7 +146,7 @@ export const ModalPage = ({
             {isCloseButtonShown && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
           </div>
         </div>
-      </div>
+      </RootComponent>
     </ModalPageContext.Provider>
   );
 };

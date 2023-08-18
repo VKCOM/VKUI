@@ -2,6 +2,8 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useId } from '../../hooks/useId';
 import { warnOnce } from '../../lib/warnOnce';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './UsersStack.module.css';
@@ -18,7 +20,7 @@ const stylesDirection = {
   'column': styles['UsersStack--direction-column'],
 };
 
-export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Массив ссылок на фотографии
    */
@@ -131,7 +133,6 @@ export const UsersStack = ({
   size = 'm',
   layout,
   children,
-  className,
   direction: directionProp = 'row',
   ...restProps
 }: UsersStackProps) => {
@@ -190,14 +191,13 @@ export const UsersStack = ({
   const direction = (layout && (layout === 'vertical' ? 'column' : 'row')) || directionProp;
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         'vkuiInternalUsersStack',
         styles['UsersStack'],
         stylesSize[size],
         stylesDirection[direction],
-        className,
       )}
     >
       {(photosElements.length > 0 || othersElement) && (
@@ -209,6 +209,6 @@ export const UsersStack = ({
       {hasReactNode(children) && (
         <Footnote className={styles['UsersStack__text']}>{children}</Footnote>
       )}
-    </div>
+    </RootComponent>
   );
 };

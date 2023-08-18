@@ -7,6 +7,7 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './ScrollArrow.module.css';
 
 const stylesSize = {
@@ -54,25 +55,22 @@ export const ScrollArrow = ({
   size = 'l',
   offsetY,
   direction,
-  className,
-  getRootRef,
   children = <ArrowIcon direction={direction} size={size} />,
   ...restProps
 }: ScrollArrowProps) => {
   return (
-    <button
-      className={classNames(
+    <RootComponent
+      Component="button"
+      baseClassName={classNames(
         styles['ScrollArrow'],
         stylesSize[size],
         stylesDirection[direction],
-        className,
       )}
-      ref={getRootRef}
       {...restProps}
     >
       <span className={styles['ScrollArrow__icon']} style={offsetY ? { top: offsetY } : undefined}>
         {children}
       </span>
-    </button>
+    </RootComponent>
   );
 };

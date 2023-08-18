@@ -3,8 +3,9 @@ import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -17,7 +18,7 @@ const stylesSize = {
   m: styles['Banner--size-m'],
 };
 
-export interface BannerProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLElement> {
+export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Тип баннера.
    */
@@ -105,8 +106,6 @@ export const Banner = ({
   actions,
   onDismiss,
   dismissLabel = 'Скрыть',
-  className,
-  getRootRef,
   noPadding,
   ...restProps
 }: BannerProps) => {
@@ -151,18 +150,17 @@ export const Banner = ({
   );
 
   return (
-    <section
+    <RootComponent
+      Component="section"
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles['Banner'],
         !noPadding && styles['Banner--withPadding'],
         platform === Platform.IOS && styles['Banner--ios'],
         mode === 'image' && styles['Banner--mode-image'],
         stylesSize[size],
         mode === 'image' && imageTheme === 'dark' && styles['Banner--inverted'],
-        className,
       )}
-      ref={getRootRef}
     >
       {asideMode === 'expand' ? (
         <Tappable
@@ -195,6 +193,6 @@ export const Banner = ({
           )}
         </div>
       )}
-    </section>
+    </RootComponent>
   );
 };

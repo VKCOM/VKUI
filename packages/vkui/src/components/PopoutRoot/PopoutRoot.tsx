@@ -1,41 +1,32 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { blurActiveElement, useDOM } from '../../lib/dom';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutRoot.module.css';
 
 interface PopoutRootPopoutProps {
   children: React.ReactNode;
 }
 
-const PopoutRootPopout = ({ children }: PopoutRootPopoutProps) => {
-  return <div className={classNames(styles['PopoutRoot__popout'])}>{children}</div>;
-};
+const PopoutRootPopout = (props: PopoutRootPopoutProps) => (
+  <div className={styles['PopoutRoot__popout']} {...props} />
+);
 
 interface PopoutRootModalProps {
   children: React.ReactNode;
 }
 
-const PopoutRootModal = ({ children }: PopoutRootModalProps) => {
-  return <div className={styles['PopoutRoot__modal']}>{children}</div>;
-};
+const PopoutRootModal = (props: PopoutRootModalProps) => (
+  <div className={styles['PopoutRoot__modal']} {...props} />
+);
 
-export interface PopoutRootProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {
+export interface PopoutRootProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   popout?: React.ReactNode;
   modal?: React.ReactNode;
 }
 
-export const PopoutRoot = ({
-  popout,
-  modal,
-  children,
-  getRootRef,
-  className,
-  ...restProps
-}: PopoutRootProps) => {
+export const PopoutRoot = ({ popout, modal, children, ...restProps }: PopoutRootProps) => {
   const { document } = useDOM();
 
   React.useEffect(() => {
@@ -43,12 +34,12 @@ export const PopoutRoot = ({
   }, [document, popout]);
 
   return (
-    <div {...restProps} className={classNames(styles['PopoutRoot'], className)} ref={getRootRef}>
+    <RootComponent {...restProps} baseClassName={styles['PopoutRoot']}>
       {children}
       <AppRootPortal>
         {!!popout && <PopoutRootPopout>{popout}</PopoutRootPopout>}
         {!!modal && <PopoutRootModal>{modal}</PopoutRootModal>}
       </AppRootPortal>
-    </div>
+    </RootComponent>
   );
 };

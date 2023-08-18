@@ -2,7 +2,8 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
-import { HasChildren } from '../../types';
+import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
@@ -15,7 +16,7 @@ const platformClassNames = {
   vkcom: styles['PanelHeaderContent--vkcom'],
 };
 
-export interface PanelHeaderContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PanelHeaderContentProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   aside?: React.ReactNode;
   before?: React.ReactNode;
   status?: React.ReactNode;
@@ -49,8 +50,6 @@ const PanelHeaderChildren = ({ hasStatus, hasBefore, children }: PanelHeaderChil
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderContent
  */
 export const PanelHeaderContent = ({
-  className,
-  style,
   aside,
   status,
   before,
@@ -72,15 +71,13 @@ export const PanelHeaderContent = ({
     : {};
 
   return (
-    <div
+    <RootComponent
       {...rootProps}
-      style={style}
-      className={classNames(
+      baseClassName={classNames(
         styles['PanelHeaderContent'],
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        className,
       )}
     >
       {hasReactNode(before) && <div className={styles['PanelHeaderContent__before']}>{before}</div>}
@@ -104,6 +101,6 @@ export const PanelHeaderContent = ({
         </div>
         {hasReactNode(before) && <div className={styles['PanelHeaderContent__width']} />}
       </InComponent>
-    </div>
+    </RootComponent>
   );
 };
