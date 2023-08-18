@@ -10,6 +10,7 @@ const Example = () => {
   const [align, setAlign] = useState('center');
   const [appearance, setAppearance] = useState('accent');
   const [sizeY, setSizeY] = useState('compact');
+  const [rounded, setRounded] = useState(false);
   const [stretched, setStretched] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [size, setSize] = useState('s');
@@ -58,6 +59,7 @@ const Example = () => {
                 after={buttonAfter}
                 appearance={appearance}
                 stretched={stretched}
+                rounded={rounded}
                 mode={mode}
                 disabled={disabled}
                 size={size}
@@ -121,6 +123,7 @@ const Example = () => {
           />
         </FormItem>
         <FormItem top="props">
+          <Checkbox onChange={(e) => setRounded(e.target.checked)}>rounded</Checkbox>
           <Checkbox onChange={(e) => setStretched(e.target.checked)}>stretched</Checkbox>
           <Checkbox onChange={(e) => setLoading(e.target.checked)}>loading</Checkbox>
           <Checkbox onChange={(e) => setDisabled(e.target.checked)}>disabled</Checkbox>
