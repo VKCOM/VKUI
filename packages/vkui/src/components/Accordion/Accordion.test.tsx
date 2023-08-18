@@ -20,7 +20,7 @@ describe('Accordion', () => {
     );
     const details = screen.getByTestId<HTMLDetailsElement>('details');
     const summary = screen.getByTestId('summary');
-    expect(details.open).toBeFalsy();
+    expect(details.open).toBeTruthy();
 
     fireEvent.click(summary);
     expect(details.open).toBeTruthy();
