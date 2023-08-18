@@ -3,6 +3,12 @@ name: 'Close Pull Request'
 on:
   pull_request:
     types: [closed]
+  workflow_dispatch:
+    inputs:
+      pull_request_number:
+        description: 'Number of PR'
+        type: number
+        required: true
 
 jobs:
   undeploy_s3:
@@ -17,7 +23,7 @@ jobs:
           awsBucket: vkui-screenshot
           awsEndpoint: https://hb.bizmrg.com
           command: delete
-          commandDeletePrefix: pull/${{ github.event.pull_request.number }}
+          commandDeletePrefix: pull/${{ inputs.pull_request_number || github.event.pull_request.number }}
 
   patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')

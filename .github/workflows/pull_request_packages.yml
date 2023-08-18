@@ -192,6 +192,7 @@ jobs:
           command: upload
           commandUploadSrc: playwright-report/
           commandUploadDist: pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/playwright-report
+        continue-on-error: true
 
       - name: Push reports (with Playwright Report comment)
         if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}

@@ -16,3 +16,8 @@
 .Typography--weight-3.Typography--weight-3.Typography--weight-3 {
   font-weight: var(--vkui--font_weight_accent3);
 }
+
+/* stylelint-disable-next-line @project-tools/stylelint-atomic */
+.Typography b {
+  font-weight: var(--vkui--font_weight_accent1);
+}

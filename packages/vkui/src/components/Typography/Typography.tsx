@@ -34,6 +34,7 @@ export const Typography = ({
     ref={getRootRef}
     className={classNames(
       className,
+      styles['Typography'],
       normalize && styles['Typography--normalize'],
       weight &&
         {
