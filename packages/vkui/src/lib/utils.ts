@@ -53,3 +53,23 @@ export function getTitleFromChildren(children: React.ReactNode): string {
 
 export const stopPropagation = <T extends React.SyntheticEvent>(event: T) =>
   event.stopPropagation();
+
+export function addClassNameToElement(element: HTMLElement, className: string) {
+  const elementClassName = element.getAttribute('class') || '';
+  const updatedClassName = `${elementClassName}${elementClassName ? ' ' : ''}${className}`;
+
+  element.setAttribute('class', updatedClassName);
+}
+
+export function removeClassNameFromElement(element: HTMLElement, classNameToRemove: string) {
+  const classNamesArray = (element.getAttribute('class') || '').split(/\s+/);
+  const elementIndexToRemove = classNamesArray.findIndex(
+    (className) => className === classNameToRemove,
+  );
+  if (elementIndexToRemove === -1) {
+    return;
+  }
+  classNamesArray.splice(elementIndexToRemove, 1);
+
+  element.setAttribute('class', classNamesArray.join(' '));
+}

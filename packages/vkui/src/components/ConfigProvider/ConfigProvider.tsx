@@ -6,6 +6,7 @@ import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { useDOM } from '../../lib/dom';
 import { TokensClassProvider } from '../../lib/tokensClassProvider';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { addClassNameToElement, removeClassNameFromElement } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import {
   ConfigProviderContext,
@@ -80,17 +81,22 @@ ${webviewTypeRule}
 
   const { document } = useDOM();
 
-  useIsomorphicLayoutEffect(() => {
-    const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
+  // TODO [>=6]: переместить хук в AppRoot (см. https://github.com/VKCOM/VKUI/issues/4810).
+  useIsomorphicLayoutEffect(
+    function attachVKUITokensClassNameToBody() {
+      if (!document) {
+        return;
+      }
 
-    // eslint-disable-next-line no-restricted-properties
-    document!.body.classList.add(VKUITokensClassName);
+      const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
 
-    return () => {
-      // eslint-disable-next-line no-restricted-properties
-      document!.body.classList.remove(VKUITokensClassName);
-    };
-  }, [platform, appearance]);
+      addClassNameToElement(document.body, VKUITokensClassName);
+      return () => {
+        removeClassNameFromElement(document.body, VKUITokensClassName);
+      };
+    },
+    [platform, appearance],
+  );
 
   const configContext = useObjectMemo({
     webviewType,
