@@ -89,6 +89,7 @@ jobs:
       ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
   test_e2e_prepare_report:
+    if: always()
     needs: test_e2e
     name: Prepare e2e's HTML report
     runs-on: ubuntu-latest
@@ -115,7 +116,6 @@ jobs:
         run: yarn run playwright:cmd:merge-reports --reporter html ./all-blob-reports
 
       - name: Upload Playwright HTML report to GitHub Actions Artifacts
-        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: playwright-report
