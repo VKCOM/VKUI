@@ -38,6 +38,7 @@ const App = () => {
 Каждой конкретной `ModalPage` или `ModalCard` можно передать свой обработчик `onClose`, если нужно переопределить поведение.
 
 ```jsx { "props": { "layout": false, "adaptivity": true, "showCustomPanelHeaderAfterProps": true } }
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 const MODAL_PAGE_FILTERS = 'filters';
 const MODAL_PAGE_COUNTRIES = 'countries';
 const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
@@ -91,7 +92,7 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
 
 const App = () => {
   const { sizeX } = useAdaptivityConditionalRender();
-  const [activeModal, setActiveModal] = useState(null);
+  const [activeModal, setActiveModal] = useState(MODAL_PAGE_FULLSCREEN);
   const [modalHistory, setModalHistory] = useState([]);
   const [randomUser] = useState(() => getRandomUser());
   const [users] = useState(() =>
@@ -494,7 +495,22 @@ const App = () => {
   );
 };
 
-<App />;
+<div>
+  <App />
+
+  <div
+    style={{
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: 'var(--vkui_internal--safe_area_inset_bottom)',
+      outline: '1px solid red',
+      zIndex: 100,
+      backgroundColor: "var(--vkui--color_transparent--hover)",
+    }}
+  ></div>
+</div>;
 ```
 
 ### FAQ
