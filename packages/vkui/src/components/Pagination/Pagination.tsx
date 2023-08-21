@@ -1,18 +1,12 @@
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
-import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { PaginationPageType, usePagination } from '../../hooks/usePagination';
-import { SizeType } from '../../lib/adaptivity';
 import type { HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
-import { Tappable } from '../Tappable/Tappable';
-import { Text } from '../Typography/Text/Text';
+import { PaginationPageButton } from './PaginationPage/PaginationPageButton';
+import { PaginationPageEllipsis } from './PaginationPage/PaginationPageEllipsis';
+import { getPageAriaLabelDefault } from './utils';
 import styles from './Pagination.module.css';
-
-function getPageAriaLabelDefault(page: number, isCurrent: boolean): string {
-  return isCurrent ? `${page} страница` : `Перейти на ${page} страницу`;
-}
 
 export interface PaginationProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>,
@@ -71,8 +65,6 @@ export const Pagination = ({
   onChange,
   ...resetProps
 }: PaginationProps) => {
-  const { sizeY = 'none' } = useAdaptivity();
-
   const pages = usePagination({
     currentPage,
     totalPages,
@@ -109,50 +101,27 @@ export const Pagination = ({
         case 'end-ellipsis':
           return (
             <li key={page}>
-              <Text
-                className={classNames(
-                  styles['Pagination__page'],
-                  styles['Pagination__page--type-ellipsis'],
-                  sizeY === 'none' && styles['Pagination__page--sizeY-none'],
-                  sizeY === SizeType.COMPACT && styles['Pagination__page--sizeY-compact'],
-                  disabled && styles['Pagination__page--disabled'],
-                )}
-              >
-                &#8230;
-              </Text>
+              <PaginationPageEllipsis disabled={disabled} />
             </li>
           );
         default: {
           const isCurrent = page === currentPage;
           return (
             <li key={page}>
-              <Tappable
-                className={classNames(
-                  styles['Pagination__page'],
-                  sizeY === 'none' && styles['Pagination__page--sizeY-none'],
-                  sizeY === SizeType.COMPACT && styles['Pagination__page--sizeY-compact'],
-                  isCurrent && styles['Pagination__page--current'],
-                  disabled && styles['Pagination__page--disabled'],
-                )}
-                activeMode={styles['Pagination__page--state-active']}
-                hoverMode={styles['Pagination__page--state-hover']}
-                hasActive={!isCurrent}
-                hasHover={!isCurrent}
-                focusVisibleMode="outside"
-                disabled={disabled}
-                data-page={page}
-                aria-current={isCurrent ? true : undefined}
-                aria-label={getPageAriaLabel(page, isCurrent)}
+              <PaginationPageButton
+                getPageAriaLabel={getPageAriaLabel}
+                isCurrent={isCurrent}
                 onClick={handleClick}
+                disabled={disabled}
               >
-                <Text normalize={false}>{page}</Text>
-              </Tappable>
+                {page}
+              </PaginationPageButton>
             </li>
           );
         }
       }
     },
-    [sizeY, currentPage, disabled, getPageAriaLabel, handleClick],
+    [currentPage, disabled, getPageAriaLabel, handleClick],
   );
 
   return (
