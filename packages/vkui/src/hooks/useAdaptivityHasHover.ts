@@ -15,9 +15,11 @@ export function useAdaptivityHasHover(deferDetect = true): undefined | boolean {
   const { hasHover: hasHoverContext } = React.useContext(AdaptivityContext);
   const hasHover = hasHoverContext === undefined ? hasHoverLib : hasHoverContext;
 
-  const isClient = useIsClient(!deferDetect);
-  if (!isClient) {
-    return undefined;
+  const needTwoPassRendering = deferDetect || hasHoverContext === undefined;
+
+  const isClient = useIsClient(!needTwoPassRendering);
+  if (!isClient || hasHoverContext !== undefined) {
+    return hasHoverContext;
   }
 
   return hasHover;
