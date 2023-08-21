@@ -25,7 +25,7 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@v1
         with:
-          github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check is '@playwrgiht/test'
         id: result
@@ -52,13 +52,13 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@v1
         with:
-          github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Complete Playwright update
         if: ${{ contains(steps.metadata.outputs.dependency-names, '@playwright/test') }}
         uses: ./.github/actions/complete_playwright_update
         with:
           branch: ${{ github.head_ref }}
-          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           prev_version: ${{ steps.metadata.outputs.previous-version }}
           next_version: ${{ steps.metadata.outputs.new-version }}
