@@ -3,6 +3,12 @@ import { classNames } from '@vkontakte/vkjs';
 import { HasComponent, HasRootRef } from '../../types';
 import styles from './Typography.module.css';
 
+const stylesWeight = {
+  '1': styles['Typography--weight-1'],
+  '2': styles['Typography--weight-2'],
+  '3': styles['Typography--weight-3'],
+};
+
 export interface HasCaps {
   caps?: boolean;
 }
@@ -36,12 +42,7 @@ export const Typography = ({
       className,
       styles['Typography'],
       normalize && styles['Typography--normalize'],
-      weight &&
-        {
-          '1': styles['Typography--weight-1'],
-          '2': styles['Typography--weight-2'],
-          '3': styles['Typography--weight-3'],
-        }[weight],
+      weight && stylesWeight[weight],
     )}
   />
 );

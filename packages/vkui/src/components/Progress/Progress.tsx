@@ -4,6 +4,12 @@ import { clamp } from '../../helpers/math';
 import { HasRootRef } from '../../types';
 import styles from './Progress.module.css';
 
+const stylesAppearance = {
+  accent: styles['Progress--appearance-accent'],
+  positive: styles['Progress--appearance-positive'],
+  negative: styles['Progress--appearance-negative'],
+};
+
 function progressCustomHeightStyle(height: number | undefined): React.CSSProperties | undefined {
   return height
     ? {
@@ -64,15 +70,7 @@ export const Progress = ({
       aria-valuemin={PROGRESS_MIN_VALUE}
       aria-valuemax={PROGRESS_MAX_VALUE}
       ref={getRootRef}
-      className={classNames(
-        styles['Progress'],
-        {
-          accent: styles['Progress--appearance-accent'],
-          positive: styles['Progress--appearance-positive'],
-          negative: styles['Progress--appearance-negative'],
-        }[appearance],
-        className,
-      )}
+      className={classNames(styles['Progress'], stylesAppearance[appearance], className)}
     >
       <div className={styles['Progress__in']} style={{ width: `${progress}%` }} />
     </div>

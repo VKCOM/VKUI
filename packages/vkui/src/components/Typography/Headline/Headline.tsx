@@ -5,6 +5,11 @@ import { SizeType } from '../../../lib/adaptivity';
 import { Typography, TypographyProps } from '../Typography';
 import styles from './Headline.module.css';
 
+const stylesLevel = {
+  '1': styles['Headline--level-1'],
+  '2': styles['Headline--level-2'],
+};
+
 const sizeYClassNames = {
   none: styles['Headline--sizeY-none'],
   [SizeType.COMPACT]: styles['Headline--sizeY-compact'],
@@ -34,12 +39,8 @@ export const Headline = ({
       weight={weight}
       className={classNames(
         className,
-        styles['Headline'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        {
-          '1': styles['Headline--level-1'],
-          '2': styles['Headline--level-2'],
-        }[level],
+        stylesLevel[level],
       )}
       {...restProps}
     />

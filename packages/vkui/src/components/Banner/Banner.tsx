@@ -17,6 +17,11 @@ import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './Banner.module.css';
 
+const stylesSize = {
+  s: styles['Banner--size-s'],
+  m: styles['Banner--size-m'],
+};
+
 export interface BannerProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLElement> {
   /**
    * Тип баннера.
@@ -158,10 +163,7 @@ export const Banner = ({
         !noPadding && styles['Banner--withPadding'],
         platform === Platform.IOS && styles['Banner--ios'],
         mode === 'image' && styles['Banner--mode-image'],
-        {
-          s: styles['Banner--size-s'],
-          m: styles['Banner--size-m'],
-        }[size],
+        stylesSize[size],
         mode === 'image' && imageTheme === 'dark' && styles['Banner--inverted'],
         className,
       )}

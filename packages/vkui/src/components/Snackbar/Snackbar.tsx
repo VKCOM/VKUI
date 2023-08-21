@@ -14,6 +14,11 @@ import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './Snackbar.module.css';
 
+const stylesLayout = {
+  vertical: styles['Snackbar--layout-vertical'],
+  horizontal: styles['Snackbar--layout-horizontal'],
+};
+
 export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Название кнопки действия в уведомлении
@@ -203,10 +208,7 @@ export const Snackbar = ({
         className={classNames(
           styles['Snackbar'],
           platform === Platform.IOS && styles['Snackbar--ios'],
-          {
-            vertical: styles['Snackbar--layout-vertical'],
-            horizontal: styles['Snackbar--layout-horizontal'],
-          }[layout],
+          stylesLayout[layout],
           mode === 'dark' && styles['Snackbar--mode-dark'],
           closing && styles['Snackbar--closing'],
           touched && styles['Snackbar--touched'],

@@ -15,6 +15,12 @@ const sizeYClassNames = {
   [SizeType.COMPACT]: styles['TabsItem--sizeY-compact'],
 };
 
+const stylesMode = {
+  default: styles['TabsItem--mode-default'],
+  accent: styles['TabsItem--mode-accent'],
+  secondary: styles['TabsItem--mode-secondary'],
+};
+
 export interface TabsItemProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Добавляет иконку слева.
@@ -103,12 +109,7 @@ export const TabsItem = ({
       {...restProps}
       className={classNames(
         styles['TabsItem'],
-        mode &&
-          {
-            default: styles['TabsItem--mode-default'],
-            accent: styles['TabsItem--mode-accent'],
-            secondary: styles['TabsItem--mode-secondary'],
-          }[mode],
+        mode && stylesMode[mode],
         selected && styles['TabsItem--selected'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         withGaps && styles['TabsItem--withGaps'],

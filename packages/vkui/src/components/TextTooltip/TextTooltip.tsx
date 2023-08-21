@@ -4,6 +4,13 @@ import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './TextTooltip.module.css';
 
+const stylesAppearance = {
+  accent: styles['TextTooltip--appearance-accent'],
+  white: styles['TextTooltip--appearance-white'],
+  black: styles['TextTooltip--appearance-black'],
+  inversion: styles['TextTooltip--appearance-inversion'],
+};
+
 export interface TextTooltipProps
   extends Omit<HoverPopperProps, 'arrow' | 'arrowClassName' | 'content'> {
   /**
@@ -35,13 +42,7 @@ export const TextTooltip = ({
     <HoverPopper
       className={classNames(
         styles['TextTooltip'],
-        appearance !== 'neutral' &&
-          {
-            accent: styles['TextTooltip--appearance-accent'],
-            white: styles['TextTooltip--appearance-white'],
-            black: styles['TextTooltip--appearance-black'],
-            inversion: styles['TextTooltip--appearance-inversion'],
-          }[appearance],
+        appearance !== 'neutral' && stylesAppearance[appearance],
         className,
       )}
       arrow

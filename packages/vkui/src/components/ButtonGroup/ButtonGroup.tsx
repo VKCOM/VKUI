@@ -3,6 +3,23 @@ import { classNames } from '@vkontakte/vkjs';
 import type { AlignType, HasRootRef } from '../../types';
 import styles from './ButtonGroup.module.css';
 
+const stylesMode = {
+  vertical: styles['ButtonGroup--mode-vertical'],
+  horizontal: styles['ButtonGroup--mode-horizontal'],
+};
+
+const stylesGap = {
+  space: styles['ButtonGroup--gap-space'],
+  s: styles['ButtonGroup--gap-s'],
+  m: styles['ButtonGroup--gap-m'],
+};
+
+const stylesAlign = {
+  left: styles['ButtonGroup--align-left'],
+  center: styles['ButtonGroup--align-center'],
+  right: styles['ButtonGroup--align-right'],
+};
+
 export interface ButtonGroupProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
@@ -44,22 +61,10 @@ export const ButtonGroup = ({
       className={classNames(
         className,
         styles.ButtonGroup,
-        {
-          vertical: styles['ButtonGroup--mode-vertical'],
-          horizontal: styles['ButtonGroup--mode-horizontal'],
-        }[mode],
-        gap !== 'none' &&
-          {
-            space: styles['ButtonGroup--gap-space'],
-            s: styles['ButtonGroup--gap-s'],
-            m: styles['ButtonGroup--gap-m'],
-          }[gap],
+        stylesMode[mode],
+        gap !== 'none' && stylesGap[gap],
         stretched && styles['ButtonGroup--stretched'],
-        {
-          left: styles['ButtonGroup--align-left'],
-          center: styles['ButtonGroup--align-center'],
-          right: styles['ButtonGroup--align-right'],
-        }[align],
+        stylesAlign[align],
       )}
       role="group"
       ref={getRootRef}

@@ -3,6 +3,12 @@ import { classNames } from '@vkontakte/vkjs';
 import { Typography, TypographyProps } from '../Typography';
 import styles from './Title.module.css';
 
+const stylesLevel = {
+  '1': styles['Title--level-1'],
+  '2': styles['Title--level-2'],
+  '3': styles['Title--level-3'],
+};
+
 export interface TitleProps extends TypographyProps {
   level?: '1' | '2' | '3';
 }
@@ -25,14 +31,7 @@ export const Title = ({
     <Typography
       Component={Component}
       normalize={normalize}
-      className={classNames(
-        className,
-        {
-          '1': styles['Title--level-1'],
-          '2': styles['Title--level-2'],
-          '3': styles['Title--level-3'],
-        }[level],
-      )}
+      className={classNames(className, stylesLevel[level])}
       {...restProps}
     />
   );

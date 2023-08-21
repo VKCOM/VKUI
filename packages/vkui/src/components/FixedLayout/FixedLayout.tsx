@@ -10,6 +10,14 @@ import { SplitColContext } from '../SplitCol/SplitColContext';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import styles from './FixedLayout.module.css';
 
+const stylesVertical = {
+  top: styles['FixedLayout--vertical-top'],
+  bottom: classNames(
+    styles['FixedLayout--vertical-bottom'],
+    'vkuiInternalFixedLayout--vertical-bottom',
+  ),
+};
+
 export interface FixedLayoutProps
   extends React.HTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement>,
@@ -84,14 +92,7 @@ export const FixedLayout = ({
         styles['FixedLayout'],
         platform === Platform.IOS && 'vkuiInternalFixedLayout--ios',
         filled && styles['FixedLayout--filled'],
-        vertical &&
-          {
-            top: styles['FixedLayout--vertical-top'],
-            bottom: classNames(
-              styles['FixedLayout--vertical-bottom'],
-              'vkuiInternalFixedLayout--vertical-bottom',
-            ),
-          }[vertical],
+        vertical && stylesVertical[vertical],
         className,
       )}
       style={{ ...style, width }}

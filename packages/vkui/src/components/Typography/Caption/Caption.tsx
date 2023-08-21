@@ -3,6 +3,12 @@ import { classNames } from '@vkontakte/vkjs';
 import { HasCaps, Typography, TypographyProps } from '../Typography';
 import styles from './Caption.module.css';
 
+const stylesLevel = {
+  '1': styles['Caption--level-1'],
+  '2': styles['Caption--level-2'],
+  '3': styles['Caption--level-3'],
+};
+
 export interface CaptionProps extends TypographyProps, HasCaps {
   level?: '1' | '2' | '3';
 }
@@ -22,15 +28,7 @@ export const Caption = ({
     <Typography
       Component={Component}
       normalize={normalize}
-      className={classNames(
-        className,
-        caps && styles['Caption--caps'],
-        {
-          '1': styles['Caption--level-1'],
-          '2': styles['Caption--level-2'],
-          '3': styles['Caption--level-3'],
-        }[level],
-      )}
+      className={classNames(className, caps && styles['Caption--caps'], stylesLevel[level])}
       {...restProps}
     />
   );

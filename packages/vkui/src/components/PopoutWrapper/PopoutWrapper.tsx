@@ -7,6 +7,18 @@ import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import styles from './PopoutWrapper.module.css';
 
+const stylesAlignX = {
+  center: styles['PopoutWrapper--alignX-center'],
+  left: styles['PopoutWrapper--alignX-left'],
+  right: styles['PopoutWrapper--alignX-right'],
+};
+
+const stylesAlignY = {
+  center: styles['PopoutWrapper--alignY-center'],
+  top: styles['PopoutWrapper--alignY-top'],
+  bottom: styles['PopoutWrapper--alignY-bottom'],
+};
+
 export interface PopoutWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
   hasMask?: boolean;
   fixed?: boolean;
@@ -53,16 +65,8 @@ export const PopoutWrapper = ({
       {...restProps}
       className={classNames(
         styles['PopoutWrapper'],
-        {
-          center: styles['PopoutWrapper--alignY-center'],
-          top: styles['PopoutWrapper--alignY-top'],
-          bottom: styles['PopoutWrapper--alignY-bottom'],
-        }[alignY],
-        {
-          center: styles['PopoutWrapper--alignX-center'],
-          left: styles['PopoutWrapper--alignX-left'],
-          right: styles['PopoutWrapper--alignX-right'],
-        }[alignX],
+        stylesAlignY[alignY],
+        stylesAlignX[alignX],
         closing && styles['PopoutWrapper--closing'],
         opened && styles['PopoutWrapper--opened'],
         fixed && styles['PopoutWrapper--fixed'],

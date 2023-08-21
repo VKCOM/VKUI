@@ -31,6 +31,10 @@ const SHIFT_DEFAULT_STATE = {
   indent: 0,
 };
 
+const stylesBullets = {
+  dark: styles['BaseGallery__bullets--dark'],
+  light: styles['BaseGallery__bullets--light'],
+};
 export const BaseGallery = ({
   bullets = false,
   getRootRef,
@@ -343,13 +347,7 @@ export const BaseGallery = ({
       {bullets && (
         <div
           aria-hidden
-          className={classNames(
-            styles['BaseGallery__bullets'],
-            {
-              dark: styles['BaseGallery__bullets--dark'],
-              light: styles['BaseGallery__bullets--light'],
-            }[bullets],
-          )}
+          className={classNames(styles['BaseGallery__bullets'], stylesBullets[bullets])}
         >
           {React.Children.map(children, (_item: React.ReactNode, index: number) => (
             <div

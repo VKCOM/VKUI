@@ -13,6 +13,11 @@ const sizeYClassNames = {
   [SizeType.COMPACT]: styles['FormField--sizeY-compact'],
 };
 
+const stylesStatus = {
+  error: styles['FormField--status-error'],
+  valid: styles['FormField--status-valid'],
+};
+
 export interface FormFieldProps {
   status?: 'default' | 'error' | 'valid';
   /**
@@ -83,11 +88,7 @@ export const FormField = ({
       className={classNames(
         styles['FormField'],
         mode === 'default' && styles['FormField--mode-default'],
-        status !== 'default' &&
-          {
-            error: styles['FormField--status-error'],
-            valid: styles['FormField--status-valid'],
-          }[status],
+        status !== 'default' && stylesStatus[status],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         disabled && styles['FormField--disabled'],
         !disabled && hover && styles['FormField--hover'],
