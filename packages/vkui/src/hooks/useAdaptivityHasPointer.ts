@@ -13,12 +13,13 @@ export function useAdaptivityHasPointer(deferDetect?: true): undefined | boolean
 export function useAdaptivityHasPointer(deferDetect?: false): boolean;
 export function useAdaptivityHasPointer(deferDetect = true): undefined | boolean {
   const { hasPointer: hasPointerContext } = React.useContext(AdaptivityContext);
-  const hasPointer = hasPointerContext === undefined ? hasPointerLib : hasPointerContext;
 
-  const isClient = useIsClient(!deferDetect);
-  if (!isClient) {
-    return undefined;
+  const needTwoPassRendering = !deferDetect || hasPointerContext !== undefined;
+
+  const isClient = useIsClient(needTwoPassRendering);
+  if (!isClient || hasPointerContext !== undefined) {
+    return hasPointerContext;
   }
 
-  return hasPointer;
+  return hasPointerLib;
 }
