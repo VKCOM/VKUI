@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { blurActiveElement, useDOM } from '../../lib/dom';
 import { HasRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -11,18 +10,7 @@ interface PopoutRootPopoutProps {
 }
 
 const PopoutRootPopout = ({ children }: PopoutRootPopoutProps) => {
-  const { isDesktop } = useAdaptivityWithJSMediaQueries();
-
-  return (
-    <div
-      className={classNames(
-        styles['PopoutRoot__popout'],
-        isDesktop && styles['PopoutRoot__popout--absolute'],
-      )}
-    >
-      {children}
-    </div>
-  );
+  return <div className={classNames(styles['PopoutRoot__popout'])}>{children}</div>;
 };
 
 interface PopoutRootModalProps {
