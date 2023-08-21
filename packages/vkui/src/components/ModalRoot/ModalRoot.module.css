@@ -13,7 +13,7 @@
   background: rgba(0, 0, 0, 0.4);
   user-select: none;
   transition: opacity 167ms ease-out;
-  animation: vkui-animation-fadeIn 0.32s ease;
+  animation: animation-fade-in 0.32s ease;
 }
 
 .ModalRoot--touched .ModalRoot__mask {
@@ -51,7 +51,7 @@
   box-sizing: border-box;
 }
 
-@keyframes vkui-animation-fadeIn {
+@keyframes animation-fade-in {
   from {
     opacity: 0;
   }

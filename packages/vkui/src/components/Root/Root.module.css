@@ -27,12 +27,11 @@
 }
 
 .Root__view--show-forward {
-  animation: vkui-root-android-animation-show-forward 0.3s var(--vkui--animation_easing_platform);
+  animation: root-android-animation-show-forward 0.3s var(--vkui--animation_easing_platform);
 }
 
 .Root__view--hide-back {
-  animation: vkui-root-android-animation-hide-back 0.3s var(--vkui--animation_easing_platform)
-    forwards;
+  animation: root-android-animation-hide-back 0.3s var(--vkui--animation_easing_platform) forwards;
 }
 
 /**
@@ -52,22 +51,22 @@
 }
 
 .Root--ios .Root__view--show-back::after {
-  animation: vkui-root-ios-animation-show-back 0.6s var(--vkui--animation_easing_platform) forwards;
+  animation: root-ios-animation-show-back 0.6s var(--vkui--animation_easing_platform) forwards;
 }
 
 .Root--ios .Root__view--hide-forward::after {
-  animation: vkui-root-ios-animation-hide-forward 0.6s var(--vkui--animation_easing_platform);
+  animation: root-ios-animation-hide-forward 0.6s var(--vkui--animation_easing_platform);
 }
 
 .Root--ios .Root__view--show-forward {
-  animation: vkui-root-ios-animation-show-forward 0.6s var(--vkui--animation_easing_platform);
+  animation: root-ios-animation-show-forward 0.6s var(--vkui--animation_easing_platform);
 }
 
 .Root--ios .Root__view--hide-back {
-  animation: vkui-root-ios-animation-hide-back 0.6s var(--vkui--animation_easing_platform) forwards;
+  animation: root-ios-animation-hide-back 0.6s var(--vkui--animation_easing_platform) forwards;
 }
 
-@keyframes vkui-root-ios-animation-show-back {
+@keyframes root-ios-animation-show-back {
   from {
     opacity: 0.3;
   }
@@ -76,7 +75,7 @@
     opacity: 0;
   }
 }
-@keyframes vkui-root-ios-animation-hide-forward {
+@keyframes root-ios-animation-hide-forward {
   from {
     opacity: 0;
   }
@@ -85,7 +84,7 @@
     opacity: 0.3;
   }
 }
-@keyframes vkui-root-ios-animation-hide-back {
+@keyframes root-ios-animation-hide-back {
   from {
     transform: translate3d(0, 0, 0);
   }
@@ -94,7 +93,7 @@
     transform: translate3d(0, 100%, 0);
   }
 }
-@keyframes vkui-root-ios-animation-show-forward {
+@keyframes root-ios-animation-show-forward {
   from {
     transform: translate3d(0, 100%, 0);
   }
@@ -108,7 +107,7 @@
  * Android
  */
 
-@keyframes vkui-root-android-animation-hide-back {
+@keyframes root-android-animation-hide-back {
   from {
     transform: scale(1);
     opacity: 1;
@@ -119,7 +118,7 @@
     opacity: 0;
   }
 }
-@keyframes vkui-root-android-animation-show-forward {
+@keyframes root-android-animation-show-forward {
   from {
     transform: scale(1.05);
     opacity: 0;

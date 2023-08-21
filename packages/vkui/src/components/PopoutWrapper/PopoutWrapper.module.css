@@ -26,7 +26,7 @@
   width: 100%;
   height: 100%;
   opacity: 1;
-  animation: vkui-animation-full-fade-in var(--vkui--animation_duration_m) ease;
+  animation: animation-full-fade-in var(--vkui--animation_duration_m) ease;
 }
 
 .PopoutWrapper--closing .PopoutWrapper__overlay {
@@ -86,7 +86,7 @@
   justify-content: flex-end;
 }
 
-@keyframes vkui-animation-full-fade-in {
+@keyframes animation-full-fade-in {
   from {
     opacity: 0;
   }

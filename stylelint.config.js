@@ -50,7 +50,6 @@ module.exports = {
         ignore: ['custom-properties'],
       },
     ],
-    'keyframes-name-pattern': 'vkui-.+',
     'csstools/value-no-unknown-custom-properties': [
       true,
       {

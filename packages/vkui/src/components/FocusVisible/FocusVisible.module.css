@@ -58,7 +58,7 @@
  */
 @media (prefers-reduced-motion: no-preference) {
   .FocusVisible--visible.FocusVisible--mode-inside {
-    animation: vkui-animation-focus-visible 0.15s ease-in-out forwards;
+    animation: animation-focus-visible 0.15s ease-in-out forwards;
     animation-delay: 0.01ms;
     will-change: top, left, bottom, right;
 
@@ -66,13 +66,13 @@
   }
 
   .FocusVisible--visible.FocusVisible--mode-outside {
-    animation-name: vkui-animation-focus-visible-outside;
+    animation-name: animation-focus-visible-outside;
 
     --vkui_internal--focus_visible_distance: 0;
   }
 }
 
-@keyframes vkui-animation-focus-visible {
+@keyframes animation-focus-visible {
   0% {
   }
 
@@ -84,7 +84,7 @@
     will-change: auto;
   }
 }
-@keyframes vkui-animation-focus-visible-outside {
+@keyframes animation-focus-visible-outside {
   0% {
   }
 

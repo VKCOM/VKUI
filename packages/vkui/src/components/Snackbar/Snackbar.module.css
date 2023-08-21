@@ -27,7 +27,7 @@
 
 .Snackbar__in {
   padding: 8px;
-  animation: vkui-animation-snackbar-intro-vertical 340ms var(--vkui--animation_easing_platform);
+  animation: animation-snackbar-intro-vertical 340ms var(--vkui--animation_easing_platform);
 }
 
 .Snackbar--closing .Snackbar__in {
@@ -120,7 +120,7 @@
 
 .Snackbar--desktop .Snackbar__in {
   padding: 12px;
-  animation-name: vkui-animation-snackbar-intro-horizontal;
+  animation-name: animation-snackbar-intro-horizontal;
 }
 
 .Snackbar--desktop.Snackbar--closing .Snackbar__in {
@@ -137,7 +137,7 @@
 /**
  * Animations
  */
-@keyframes vkui-animation-snackbar-intro-vertical {
+@keyframes animation-snackbar-intro-vertical {
   from {
     transform: translate3d(0, 140%, 0);
   }
@@ -146,7 +146,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
-@keyframes vkui-animation-snackbar-intro-horizontal {
+@keyframes animation-snackbar-intro-horizontal {
   from {
     transform: translate3d(-140%, 0, 0);
   }
