@@ -76,7 +76,7 @@
   align-items: center;
   justify-content: flex-end;
   width: 28px;
-  color: var(--vkui--color_icon_tertiary);
+  color: var(--vkui--color_icon_secondary);
 }
 
 .Banner__dismiss {
@@ -140,7 +140,7 @@
 
 .Banner--ios .Banner__dismiss,
 .Banner--ios.Banner--mode-image .Banner__dismiss {
-  color: var(--vkui--color_icon_tertiary);
+  color: var(--vkui--color_icon_secondary);
 }
 
 /**
