@@ -146,3 +146,12 @@
   .IconButton:last-child {
   margin-right: -9px;
 }
+
+/**
+ * CMP:
+ * Alert
+ */
+:global(.vkuiInternalAlert__dismiss).IconButton {
+  height: 36px;
+  padding: 8px;
+}

@@ -37,6 +37,10 @@
   padding: 24px 24px 16px;
 }
 
+.Alert__content--withButton {
+  padding-right: 52px;
+}
+
 .Alert__action {
   white-space: nowrap;
   background: transparent;
@@ -105,7 +109,7 @@
 }
 
 .Alert--ios .Alert__content {
-  padding: 19px 16px 20px;
+  padding: 20px 16px;
   text-align: center;
 }
 
@@ -255,6 +259,13 @@
 
 .Alert--vkcom .Alert__button--mode-cancel {
   order: 1;
+}
+
+.Alert__dismiss {
+  position: absolute;
+  color: var(--vkui--color_icon_secondary);
+  top: 8px;
+  right: 8px;
 }
 
 /**
