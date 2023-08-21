@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useAutoFocus } from '../../hooks/useAutoFocus';
+import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../lib/adaptivity';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HasRootRef } from '../../types';
@@ -42,10 +44,15 @@ export const SelectMimicry = ({
   selectType = 'default',
   status,
   className,
+  autoFocus,
   ...restProps
 }: SelectMimicryProps) => {
+  const rootRef = useExternRef(getRootRef);
+
   const { sizeY = 'none' } = useAdaptivity();
   const title = children || placeholder;
+
+  useAutoFocus(rootRef, autoFocus);
 
   return (
     <FormField
@@ -61,7 +68,7 @@ export const SelectMimicry = ({
         before && styles['Select--hasBefore'],
         className,
       )}
-      getRootRef={getRootRef}
+      getRootRef={rootRef}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
       before={before}
