@@ -110,6 +110,10 @@ module.exports = {
           'ImportDeclaration[source.value=/\\.css$/i] ~ ImportDeclaration[source.value!=/\\.css$/i]',
         message: 'CSS import must be last',
       },
+      {
+        selector: 'CallExpression[callee.name="classNames"][arguments.length=1]',
+        message: 'Do not use classNames with one argument',
+      },
     ],
 
     'import/no-default-export': 'error',

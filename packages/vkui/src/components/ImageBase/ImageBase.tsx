@@ -186,9 +186,7 @@ export const ImageBase = ({
             onError={handleImageError}
           />
         )}
-        {fallbackIcon && (
-          <div className={classNames(styles['ImageBase__fallback'])}>{fallbackIcon}</div>
-        )}
+        {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
         {children}
         {withBorder && <div aria-hidden className={styles['ImageBase__border']} />}
       </div>

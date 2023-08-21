@@ -276,13 +276,12 @@ export function CustomSelect(props: SelectProps) {
 
   const openedClassNames = React.useMemo(
     () =>
-      classNames(
-        opened &&
-          dropdownOffsetDistance === 0 &&
-          (popperPlacement?.includes('top')
-            ? styles['CustomSelect--pop-up']
-            : styles['CustomSelect--pop-down']),
-      ),
+      (opened &&
+        dropdownOffsetDistance === 0 &&
+        (popperPlacement?.includes('top')
+          ? styles['CustomSelect--pop-up']
+          : styles['CustomSelect--pop-down'])) ||
+      undefined,
     [dropdownOffsetDistance, opened, popperPlacement],
   );
 
