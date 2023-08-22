@@ -83,16 +83,14 @@ export const Header = ({
   className,
   ...restProps
 }: HeaderProps) => {
-  const platform = usePlatform();
-
   return (
     <header
       {...restProps}
       ref={getRootRef}
       className={classNames(
         styles['Header'],
-        platform === Platform.IOS && styles['Header--ios'],
         stylesMode[mode],
+        size === 'large' && styles['Header--large'],
         isPrimitiveReactNode(indicator) && styles['Header--pi'],
         hasReactNode(subtitle) && styles['Header--with-subtitle'],
         className,
