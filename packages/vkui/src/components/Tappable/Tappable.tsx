@@ -33,6 +33,16 @@ const sizeXClassNames = {
   compact: styles['Tappable--sizeX-compact'],
 };
 
+const stylesHoverMode = {
+  background: styles['Tappable--hover-background'],
+  opacity: styles['Tappable--hover-opacity'],
+};
+
+const stylesActiveMode = {
+  background: styles['Tappable--active-background'],
+  opacity: styles['Tappable--active-opacity'],
+};
+
 type StateMode = 'opacity' | 'background';
 
 const WAVE_LIVE = 225;
@@ -321,20 +331,8 @@ export const Tappable = ({
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && active && !isPresetActiveMode && activeMode,
     focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
-    hasHover &&
-      hovered &&
-      isPresetHoverMode &&
-      {
-        background: styles['Tappable--hover-background'],
-        opacity: styles['Tappable--hover-opacity'],
-      }[hoverMode],
-    hasActive &&
-      active &&
-      isPresetActiveMode &&
-      {
-        background: styles['Tappable--active-background'],
-        opacity: styles['Tappable--active-opacity'],
-      }[activeMode],
+    hasHover && hovered && isPresetHoverMode && stylesHoverMode[hoverMode],
+    hasActive && active && isPresetActiveMode && stylesActiveMode[activeMode],
     focusVisible && styles['Tappable--focus-visible'],
     borderRadiusMode === 'inherit' && styles['Tappable--borderRadiusInherit'],
   );

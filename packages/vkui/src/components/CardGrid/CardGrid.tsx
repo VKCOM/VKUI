@@ -9,6 +9,12 @@ const sizeXClassNames = {
   [SizeType.COMPACT]: styles['CardGrid--sizeX-compact'],
 };
 
+const stylesSize = {
+  s: 'vkuiInternalCardGrid--size-s',
+  m: 'vkuiInternalCardGrid--size-m',
+  l: 'vkuiInternalCardGrid--size-l',
+};
+
 export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
   /**
@@ -36,11 +42,7 @@ export const CardGrid = ({
         styles['CardGrid'],
         'vkuiInternalCardGrid',
         spaced && styles['CardGrid--spaced'],
-        {
-          s: 'vkuiInternalCardGrid--size-s',
-          m: 'vkuiInternalCardGrid--size-m',
-          l: 'vkuiInternalCardGrid--size-l',
-        }[size],
+        stylesSize[size],
         sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
         className,
       )}

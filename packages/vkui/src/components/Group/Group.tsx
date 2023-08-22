@@ -17,6 +17,17 @@ const sizeXClassNames = {
   [SizeType.COMPACT]: styles['Group--sizeX-compact'],
 };
 
+const stylesMode = {
+  none: classNames(styles['Group--mode-none'], 'vkuiInternalGroup--mode-none'),
+  plain: classNames(styles['Group--mode-plain'], 'vkuiInternalGroup--mode-plain'),
+  card: classNames(styles['Group--mode-card'], 'vkuiInternalGroup--mode-card'),
+};
+
+const stylesPadding = {
+  s: styles['Group--padding-s'],
+  m: styles['Group--padding-m'],
+};
+
 export interface GroupProps
   extends HasRootRef<HTMLElement>,
     React.HTMLAttributes<HTMLElement>,
@@ -99,16 +110,8 @@ export const Group = ({
           isInsideModal && styles['Group--inside-modal'],
           platform === Platform.IOS && styles['Group--ios'],
           sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
-          mode &&
-            {
-              none: classNames(styles['Group--mode-none'], 'vkuiInternalGroup--mode-none'),
-              plain: classNames(styles['Group--mode-plain'], 'vkuiInternalGroup--mode-plain'),
-              card: classNames(styles['Group--mode-card'], 'vkuiInternalGroup--mode-card'),
-            }[mode],
-          {
-            s: styles['Group--padding-s'],
-            m: styles['Group--padding-m'],
-          }[padding],
+          mode && stylesMode[mode],
+          stylesPadding[padding],
           className,
         )}
       >

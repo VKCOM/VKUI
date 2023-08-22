@@ -2,6 +2,17 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import styles from './Gradient.module.css';
 
+const stylesMode = {
+  tint: styles['Gradient--mode-tint'],
+  black: styles['Gradient--mode-black'],
+  white: styles['Gradient--mode-white'],
+};
+
+const stylesTo = {
+  top: styles['Gradient--to-top'],
+  bottom: styles['Gradient--to-bottom'],
+};
+
 export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Тип градиента
@@ -27,18 +38,7 @@ export const Gradient = ({
     <div
       role="presentation"
       {...restProps}
-      className={classNames(
-        {
-          tint: styles['Gradient--mode-tint'],
-          black: styles['Gradient--mode-black'],
-          white: styles['Gradient--mode-white'],
-        }[mode],
-        {
-          top: styles['Gradient--to-top'],
-          bottom: styles['Gradient--to-bottom'],
-        }[to],
-        className,
-      )}
+      className={classNames(stylesMode[mode], stylesTo[to], className)}
     >
       {children}
     </div>

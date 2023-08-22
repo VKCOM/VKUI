@@ -9,6 +9,16 @@ import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import styles from './ScrollArrow.module.css';
 
+const stylesSize = {
+  m: styles['ScrollArrow--size-m'],
+  l: styles['ScrollArrow--size-l'],
+};
+
+const stylesDirection = {
+  left: styles['ScrollArrow--direction-left'],
+  right: styles['ScrollArrow--direction-right'],
+};
+
 const ArrowIcon = ({ size, direction }: Pick<ScrollArrowProps, 'size' | 'direction'>) => {
   if (size === 'm') {
     return direction === 'left' ? <Icon16ChevronLeft /> : <Icon16Chevron />;
@@ -53,14 +63,8 @@ export const ScrollArrow = ({
     <button
       className={classNames(
         styles['ScrollArrow'],
-        {
-          m: styles['ScrollArrow--size-m'],
-          l: styles['ScrollArrow--size-l'],
-        }[size],
-        {
-          left: styles['ScrollArrow--direction-left'],
-          right: styles['ScrollArrow--direction-right'],
-        }[direction],
+        stylesSize[size],
+        stylesDirection[direction],
         className,
       )}
       ref={getRootRef}

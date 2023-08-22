@@ -10,6 +10,35 @@ import { Tappable, TappableProps } from '../Tappable/Tappable';
 import '../Spinner/Spinner.module.css';
 import styles from './Button.module.css';
 
+const stylesSize = {
+  s: styles['Button--size-s'],
+  m: styles['Button--size-m'],
+  l: styles['Button--size-l'],
+};
+
+const stylesMode = {
+  primary: styles['Button--mode-primary'],
+  secondary: styles['Button--mode-secondary'],
+  tertiary: styles['Button--mode-tertiary'],
+  outline: styles['Button--mode-outline'],
+  link: styles['Button--mode-link'],
+};
+
+const stylesAppearance = {
+  'accent': styles['Button--appearance-accent'],
+  'positive': styles['Button--appearance-positive'],
+  'negative': styles['Button--appearance-negative'],
+  'neutral': styles['Button--appearance-neutral'],
+  'overlay': styles['Button--appearance-overlay'],
+  'accent-invariable': styles['Button--appearance-accent-invariable'],
+};
+
+const stylesAlign = {
+  left: styles['Button--align-left'],
+  center: styles['Button--align-center'],
+  right: styles['Button--align-right'],
+};
+
 const sizeYClassNames = {
   none: styles['Button--sizeY-none'],
   [SizeType.REGULAR]: styles['Button--sizeY-regular'],
@@ -65,31 +94,10 @@ export const Button = ({
       className={classNames(
         className,
         styles.Button,
-        {
-          s: styles['Button--size-s'],
-          m: styles['Button--size-m'],
-          l: styles['Button--size-l'],
-        }[size],
-        {
-          primary: styles['Button--mode-primary'],
-          secondary: styles['Button--mode-secondary'],
-          tertiary: styles['Button--mode-tertiary'],
-          outline: styles['Button--mode-outline'],
-          link: styles['Button--mode-link'],
-        }[mode],
-        {
-          'accent': styles['Button--appearance-accent'],
-          'positive': styles['Button--appearance-positive'],
-          'negative': styles['Button--appearance-negative'],
-          'neutral': styles['Button--appearance-neutral'],
-          'overlay': styles['Button--appearance-overlay'],
-          'accent-invariable': styles['Button--appearance-accent-invariable'],
-        }[appearance],
-        {
-          left: styles['Button--align-left'],
-          center: styles['Button--align-center'],
-          right: styles['Button--align-right'],
-        }[align],
+        stylesSize[size],
+        stylesMode[mode],
+        stylesAppearance[appearance],
+        stylesAlign[align],
         sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
         platform === Platform.IOS && styles['Button--ios'],
         stretched && styles['Button--stretched'],

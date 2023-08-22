@@ -5,6 +5,18 @@ import { Tappable } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './MiniInfoCell.module.css';
 
+const stylesMode = {
+  add: styles['MiniInfoCell--mode-add'],
+  accent: styles['MiniInfoCell--mode-accent'],
+  more: styles['MiniInfoCell--mode-more'],
+};
+
+const stylesTextWrap = {
+  nowrap: styles['MiniInfoCell--textWrap-nowrap'],
+  full: styles['MiniInfoCell--textWrap-full'],
+  short: styles['MiniInfoCell--textWrap-short'],
+};
+
 export interface MiniInfoCellProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Иконка слева.<br />
@@ -58,17 +70,8 @@ export const MiniInfoCell = ({
 }: MiniInfoCellProps) => {
   const cellClasses = classNames(
     styles['MiniInfoCell'],
-    {
-      nowrap: styles['MiniInfoCell--textWrap-nowrap'],
-      full: styles['MiniInfoCell--textWrap-full'],
-      short: styles['MiniInfoCell--textWrap-short'],
-    }[textWrap],
-    mode !== 'base' &&
-      {
-        add: styles['MiniInfoCell--mode-add'],
-        accent: styles['MiniInfoCell--mode-accent'],
-        more: styles['MiniInfoCell--mode-more'],
-      }[mode],
+    stylesTextWrap[textWrap],
+    mode !== 'base' && stylesMode[mode],
     className,
   );
 

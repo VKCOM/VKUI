@@ -8,6 +8,12 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './HorizontalCell.module.css';
 
+const stylesSize = {
+  s: styles['HorizontalCell--size-s'],
+  m: styles['HorizontalCell--size-m'],
+  l: styles['HorizontalCell--size-l'],
+};
+
 interface CellTypographyProps extends React.HTMLAttributes<HTMLDivElement> {
   size: HorizontalCellProps['size'];
 }
@@ -60,15 +66,7 @@ export const HorizontalCell = ({
     <div
       ref={getRootRef}
       style={style}
-      className={classNames(
-        styles['HorizontalCell'],
-        {
-          s: styles['HorizontalCell--size-s'],
-          m: styles['HorizontalCell--size-m'],
-          l: styles['HorizontalCell--size-l'],
-        }[size],
-        className,
-      )}
+      className={classNames(styles['HorizontalCell'], stylesSize[size], className)}
     >
       <Tappable className={styles['HorizontalCell__body']} getRootRef={getRef} {...restProps}>
         {hasReactNode(children) && (

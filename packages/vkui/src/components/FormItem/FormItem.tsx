@@ -17,6 +17,11 @@ const sizeYClassNames = {
   ),
 };
 
+const stylesStatus = {
+  error: classNames(styles['FormItem--status-error'], 'vkuiInternalFormItem--status-error'),
+  valid: classNames(styles['FormItem--status-valid'], 'vkuiInternalFormItem--status-valid'),
+};
+
 export interface FormItemProps
   extends React.AllHTMLAttributes<HTMLElement>,
     HasRootRef<HTMLElement>,
@@ -98,17 +103,7 @@ export const FormItem = ({
         styles['FormItem'],
         !noPadding && styles['FormItem--withPadding'],
         'vkuiInternalFormItem',
-        status !== 'default' &&
-          {
-            error: classNames(
-              styles['FormItem--status-error'],
-              'vkuiInternalFormItem--status-error',
-            ),
-            valid: classNames(
-              styles['FormItem--status-valid'],
-              'vkuiInternalFormItem--status-valid',
-            ),
-          }[status],
+        status !== 'default' && stylesStatus[status],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         hasReactNode(top) &&
           classNames(styles['FormItem--withTop'], 'vkuiInternalFormItem--withTop'),

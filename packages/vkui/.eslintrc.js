@@ -102,6 +102,10 @@ module.exports = {
     'no-restricted-syntax': [
       'error',
       {
+        selector: 'CallExpression[callee.name="classNames"] ObjectExpression',
+        message: 'Необходимо вынести объект на уровень модуля как константу',
+      },
+      {
         selector: 'ImportDeclaration[source.value=/^\\W+(index(\\.ts)?)?$/i]',
         message: 'Do not import index',
       },

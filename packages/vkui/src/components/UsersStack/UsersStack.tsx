@@ -6,6 +6,18 @@ import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './UsersStack.module.css';
 
+const stylesSize = {
+  s: styles['UsersStack--size-s'],
+  m: styles['UsersStack--size-m'],
+  l: styles['UsersStack--size-l'],
+};
+
+const stylesDirection = {
+  'row': styles['UsersStack--direction-row'],
+  'row-reverse': styles['UsersStack--direction-row-reverse'],
+  'column': styles['UsersStack--direction-column'],
+};
+
 export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Массив ссылок на фотографии
@@ -183,16 +195,8 @@ export const UsersStack = ({
       className={classNames(
         'vkuiInternalUsersStack',
         styles['UsersStack'],
-        {
-          s: styles['UsersStack--size-s'],
-          m: styles['UsersStack--size-m'],
-          l: styles['UsersStack--size-l'],
-        }[size],
-        {
-          'row': styles['UsersStack--direction-row'],
-          'row-reverse': styles['UsersStack--direction-row-reverse'],
-          'column': styles['UsersStack--direction-column'],
-        }[direction],
+        stylesSize[size],
+        stylesDirection[direction],
         className,
       )}
     >

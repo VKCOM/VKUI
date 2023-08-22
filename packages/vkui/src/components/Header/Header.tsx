@@ -63,6 +63,11 @@ const HeaderContent = ({ mode, size, ...restProps }: HeaderContentProps) => {
   return null;
 };
 
+const stylesMode = {
+  primary: styles['Header--mode-primary'],
+  secondary: styles['Header--mode-secondary'],
+  tertiary: styles['Header--mode-tertiary'],
+};
 /**
  * @see https://vkcom.github.io/VKUI/#/Header
  */
@@ -87,11 +92,7 @@ export const Header = ({
       className={classNames(
         styles['Header'],
         platform === Platform.IOS && styles['Header--ios'],
-        {
-          primary: styles['Header--mode-primary'],
-          secondary: styles['Header--mode-secondary'],
-          tertiary: styles['Header--mode-tertiary'],
-        }[mode],
+        stylesMode[mode],
         isPrimitiveReactNode(indicator) && styles['Header--pi'],
         hasReactNode(subtitle) && styles['Header--with-subtitle'],
         className,

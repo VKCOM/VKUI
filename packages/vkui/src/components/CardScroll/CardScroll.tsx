@@ -4,6 +4,12 @@ import { useDOM } from '../../lib/dom';
 import { HorizontalScroll, HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
 import styles from './CardScroll.module.css';
 
+const stylesSize = {
+  s: 'vkuiInternalCardScroll--size-s',
+  m: 'vkuiInternalCardScroll--size-m',
+  l: 'vkuiInternalCardScroll--size-l',
+};
+
 export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * При `size=false` ширина `Card` будет регулироваться контентом внутри. В остальных случаях — будет явно задана в процентах.
@@ -87,12 +93,7 @@ export const CardScroll = ({
       className={classNames(
         styles['CardScroll'],
         'vkuiInternalCardScroll',
-        size !== false &&
-          {
-            s: 'vkuiInternalCardScroll--size-s',
-            m: 'vkuiInternalCardScroll--size-m',
-            l: 'vkuiInternalCardScroll--size-l',
-          }[size],
+        size !== false && stylesSize[size],
         withSpaces && styles['CardScroll--withSpaces'],
         className,
       )}

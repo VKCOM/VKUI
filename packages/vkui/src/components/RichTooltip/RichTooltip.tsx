@@ -3,6 +3,13 @@ import { classNames } from '@vkontakte/vkjs';
 import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
 import styles from './RichTooltip.module.css';
 
+const stylesAppearance = {
+  accent: styles['RichTooltip--appearance-accent'],
+  white: styles['RichTooltip--appearance-white'],
+  black: styles['RichTooltip--appearance-black'],
+  inversion: styles['RichTooltip--appearance-inversion'],
+};
+
 export interface RichTooltipProps extends Omit<HoverPopperProps, 'arrowClassName'> {
   /**
    * Стиль отображения подсказки
@@ -24,13 +31,7 @@ export const RichTooltip = ({
     <HoverPopper
       className={classNames(
         styles['RichTooltip'],
-        appearance !== 'neutral' &&
-          {
-            accent: styles['RichTooltip--appearance-accent'],
-            white: styles['RichTooltip--appearance-white'],
-            black: styles['RichTooltip--appearance-black'],
-            inversion: styles['RichTooltip--appearance-inversion'],
-          }[appearance],
+        appearance !== 'neutral' && stylesAppearance[appearance],
         className,
       )}
       arrow={arrow}
