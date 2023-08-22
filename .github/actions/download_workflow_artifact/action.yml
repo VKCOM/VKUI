@@ -1,0 +1,69 @@
+name: Download workflow artifact
+description: Download and extract an artifact associated with given workflow
+
+inputs:
+  name:
+    description: Name of the artifact to download
+    required: true
+    type: string
+  path:
+    description: Directory with downloaded artifacts
+    required: false
+    type: string
+    default: './'
+
+outputs:
+  found_artifact:
+    value: ${{ steps.artifact.outputs.result }}
+
+runs:
+  using: composite
+  steps:
+    - name: Download artifact
+      id: artifact
+      uses: actions/github-script@v6
+      with:
+        script: |
+          console.log(`downloading artifacts for workflow_run: ${context.payload.workflow_run.id}`);
+          console.log(`workflow_run: ${JSON.stringify(context.payload.workflow_run, null, 2)}`);
+
+          const { data } = await github.rest.actions.listWorkflowRunArtifacts({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: context.payload.workflow_run.id
+          });
+
+          console.log('total = ', data.total_count);
+
+          const name = '${{ inputs.name }}';
+          const filteredArtifacts = data.artifacts.filter(a => a.name === name);
+
+          if (filteredArtifacts.length === 0) {
+            return 'false';
+          }
+
+          const report = filteredArtifacts[0]
+          const result = await github.rest.actions.downloadArtifact({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            artifact_id: report.id,
+            archive_format: 'zip'
+          });
+
+          if (!result) {
+            return 'false';
+          }
+
+          console.log('download result', result);
+
+          const fs = require('fs');
+
+          fs.writeFileSync(`${name}.zip`, Buffer.from(result.data));
+
+          return 'true';
+        result-encoding: string
+
+    - name: Unzip blob report
+      if: ${{ steps.artifact.outputs.result == 'true' }}
+      run: unzip ${{ inputs.name }}.zip -d ${{ inputs.path }}
+      shell: bash
