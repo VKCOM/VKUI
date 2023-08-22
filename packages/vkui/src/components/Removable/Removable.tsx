@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { getTitleFromChildren } from '../../lib/utils';
-import { HasChildren, HasRootRef } from '../../types';
+import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import styles from './Removable.module.css';
 
@@ -106,10 +106,7 @@ const RemovableIos = ({
   );
 };
 
-interface RemovableOwnProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    RemovableProps,
-    HasRootRef<HTMLDivElement> {
+interface RemovableOwnProps extends HTMLAttributesWithRootRef<HTMLDivElement>, RemovableProps {
   /**
    * Расположение кнопки удаления.
    */
@@ -125,18 +122,14 @@ interface RemovableOwnProps
  * @see https://vkcom.github.io/VKUI/#/Removable
  */
 export const Removable = ({
-  getRootRef,
   children,
   onRemove = noop,
   removePlaceholder = 'Удалить',
   align = 'center',
-  className,
   indent = false,
   ...restProps
 }: RemovableOwnProps) => {
   const platform = usePlatform();
-
-  const ref = useExternRef(getRootRef);
 
   const onRemoveClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -146,14 +139,12 @@ export const Removable = ({
   const removePlaceholderString: string = getTitleFromChildren(removePlaceholder);
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      ref={ref}
-      className={classNames(
+      baseClassName={classNames(
         platform === Platform.IOS && styles['Removable--ios'],
         align === 'start' && styles['Removable--align-start'],
         indent && styles['Removable--indent'],
-        className,
       )}
     >
       {platform !== Platform.IOS && (
@@ -183,6 +174,6 @@ export const Removable = ({
           {children}
         </RemovableIos>
       )}
-    </div>
+    </RootComponent>
   );
 };

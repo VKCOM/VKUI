@@ -7,8 +7,10 @@ import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { ViewWidth } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { Button } from '../Button/Button';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -19,7 +21,7 @@ const stylesLayout = {
   horizontal: styles['Snackbar--layout-horizontal'],
 };
 
-export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
+export interface SnackbarProps extends HTMLAttributesWithRootRef<HTMLElement> {
   /**
    * Название кнопки действия в уведомлении
    * Не может использоваться одновременно с `subtitle`
@@ -83,7 +85,6 @@ export const Snackbar = ({
   onActionClick,
   onClose,
   mode = 'default',
-  className,
   subtitle,
   offsetY,
   style,
@@ -203,9 +204,9 @@ export const Snackbar = ({
 
   return (
     <AppRootPortal>
-      <div
+      <RootComponent
         {...restProps}
-        className={classNames(
+        baseClassName={classNames(
           styles['Snackbar'],
           platform === Platform.IOS && styles['Snackbar--ios'],
           stylesLayout[layout],
@@ -213,7 +214,6 @@ export const Snackbar = ({
           closing && styles['Snackbar--closing'],
           touched && styles['Snackbar--touched'],
           isDesktop && styles['Snackbar--desktop'],
-          className,
         )}
         style={offsetY ? { ...style, bottom: offsetY } : style}
       >
@@ -250,7 +250,7 @@ export const Snackbar = ({
             {after && <div className={styles['Snackbar__after']}>{after}</div>}
           </div>
         </Touch>
-      </div>
+      </RootComponent>
     </AppRootPortal>
   );
 };

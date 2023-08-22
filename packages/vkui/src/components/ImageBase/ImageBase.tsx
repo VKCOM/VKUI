@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import type { HasRef, HasRootRef, LiteralUnion } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import { ImageBaseContext } from './context';
@@ -75,8 +76,6 @@ export const ImageBase = ({
   width,
   height,
   style,
-  className,
-  getRootRef,
   withBorder = true,
   'fallbackIcon': fallbackIconProp,
   children,
@@ -153,12 +152,10 @@ export const ImageBase = ({
 
   return (
     <ImageBaseContext.Provider value={{ size }}>
-      <div
+      <RootComponent
         {...restProps}
-        ref={getRootRef}
         style={{ ...style, width: size, height: size }}
-        className={classNames(
-          className,
+        baseClassName={classNames(
           styles['ImageBase'],
           sizeClassName,
           loaded && styles['ImageBase--loaded'],
@@ -189,7 +186,7 @@ export const ImageBase = ({
         {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
         {children}
         {withBorder && <div aria-hidden className={styles['ImageBase__border']} />}
-      </div>
+      </RootComponent>
     </ImageBaseContext.Provider>
   );
 };

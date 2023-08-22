@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
 import { Headline } from '../Typography/Headline/Headline';
 import styles from './Counter.module.css';
@@ -17,7 +18,7 @@ const sizeClassNames = {
   m: styles['Counter--size-m'],
 };
 
-export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
   /**
    * Тип счетчика.  В режиме `inherit` если компонент находится в кнопке, то
    * цвета зависят от кнопки. Если компонент находится вне кнопки, применяется

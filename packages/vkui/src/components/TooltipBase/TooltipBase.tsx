@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { DefaultIcon } from '../PopperArrow/DefaultIcon';
 import { PopperArrow, type PopperArrowProps } from '../PopperArrow/PopperArrow';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './TooltipBase.module.css';
 
@@ -70,16 +71,14 @@ export const TooltipBase = ({
   ArrowIcon = DefaultIcon,
   text,
   header,
-  className,
   ...restProps
 }: TooltipBaseProps) => {
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles['TooltipBase'],
         appearance !== 'neutral' && stylesAppearance[appearance],
-        className,
       )}
     >
       <div ref={getRootRef} style={floatingStyle}>
@@ -97,6 +96,6 @@ export const TooltipBase = ({
           {text && <Subhead>{text}</Subhead>}
         </div>
       </div>
-    </div>
+    </RootComponent>
   );
 };

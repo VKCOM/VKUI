@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Progress.module.css';
 
 const stylesAppearance = {
@@ -26,9 +27,7 @@ function progressStyle(height: number | undefined, styleProps: React.CSSProperti
   return style;
 }
 
-export interface ProgressProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {
+export interface ProgressProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Стиль отображения прогрессбара
    */
@@ -48,8 +47,6 @@ const PROGRESS_MAX_VALUE = 100;
  */
 export const Progress = ({
   value = 0,
-  getRootRef,
-  className,
   appearance = 'accent',
   height,
   style: styleProps,
@@ -61,7 +58,7 @@ export const Progress = ({
   const style = progressStyle(height, styleProps);
 
   return (
-    <div
+    <RootComponent
       aria-valuenow={value}
       title={title}
       style={style}
@@ -69,10 +66,9 @@ export const Progress = ({
       role="progressbar"
       aria-valuemin={PROGRESS_MIN_VALUE}
       aria-valuemax={PROGRESS_MAX_VALUE}
-      ref={getRootRef}
-      className={classNames(styles['Progress'], stylesAppearance[appearance], className)}
+      baseClassName={classNames(styles['Progress'], stylesAppearance[appearance])}
     >
       <div className={styles['Progress__in']} style={{ width: `${progress}%` }} />
-    </div>
+    </RootComponent>
   );
 };

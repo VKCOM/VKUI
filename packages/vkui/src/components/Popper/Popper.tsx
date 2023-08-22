@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import {
   arrowMiddleware,
@@ -17,7 +16,7 @@ import {
   useFloating,
   type UseFloatingMiddleware,
 } from '../../lib/floating';
-import type { HasRef } from '../../types';
+import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import {
   DEFAULT_ARROW_HEIGHT,
@@ -25,6 +24,7 @@ import {
   DefaultIcon,
 } from '../PopperArrow/DefaultIcon';
 import { PopperArrow, type PopperArrowProps } from '../PopperArrow/PopperArrow';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Popper.module.css';
 
 export interface PopperRenderContentProps {
@@ -32,7 +32,7 @@ export interface PopperRenderContentProps {
 }
 
 export interface PopperCommonProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   /**
    * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
@@ -133,7 +133,7 @@ export const Popper = ({
   style: styleProp,
   customMiddlewares,
   renderContent,
-  className,
+  getRootRef,
   ...restProps
 }: PopperProps) => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
@@ -216,7 +216,8 @@ export const Popper = ({
     },
   });
 
-  const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRef);
+  // TODO [>=6]: убрать getRef
+  const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRef, getRootRef);
 
   React.useEffect(() => {
     refs.setReference(targetRef.current);
@@ -229,10 +230,10 @@ export const Popper = ({
   }, [onPlacementChange, resolvedPlacement]);
 
   const dropdown = (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(styles['Popper'], className)}
-      ref={handleRootRef}
+      baseClassName={styles['Popper']}
+      getRootRef={handleRootRef}
       style={{
         ...styleProp,
         ...convertFloatingDataToReactCSSProperties(
@@ -253,7 +254,7 @@ export const Popper = ({
         />
       )}
       {renderContent ? renderContent({ className: '' }) : children}
-    </div>
+    </RootComponent>
   );
 
   return (

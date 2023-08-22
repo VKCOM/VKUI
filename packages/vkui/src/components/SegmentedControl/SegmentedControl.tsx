@@ -6,7 +6,8 @@ import { useId } from '../../hooks/useId';
 import { SizeType } from '../../lib/adaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { SegmentedControlOption } from './SegmentedControlOption/SegmentedControlOption';
 import styles from './SegmentedControl.module.css';
 
@@ -24,8 +25,7 @@ export interface SegmentedControlOptionInterface
 }
 
 export interface SegmentedControlProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>,
-    HasRootRef<HTMLDivElement> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
   options: SegmentedControlOptionInterface[];
   size?: 'm' | 'l';
   name?: string;
@@ -43,10 +43,8 @@ export const SegmentedControl = ({
   size = 'l',
   name,
   options,
-  getRootRef,
   defaultValue = options[0]?.value,
   children,
-  className,
   onChange: onChangeProp,
   value: valueProp,
   ...restProps
@@ -72,15 +70,13 @@ export const SegmentedControl = ({
   const translateX = `translateX(${100 * actualIndex}%)`;
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles['SegmentedControl'],
         sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
         size === 'l' && styles['SegmentedControl--size-l'],
-        className,
       )}
-      ref={getRootRef}
     >
       <div role="radiogroup" className={styles['SegmentedControl__in']}>
         {actualIndex > -1 && (
@@ -107,6 +103,6 @@ export const SegmentedControl = ({
           </SegmentedControlOption>
         ))}
       </div>
-    </div>
+    </RootComponent>
   );
 };

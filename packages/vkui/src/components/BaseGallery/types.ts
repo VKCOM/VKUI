@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { HasAlign, HasRef, HasRootRef } from '../../types';
+import { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 
@@ -26,9 +26,8 @@ export interface LayoutState {
 }
 
 export interface BaseGalleryProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
     HasAlign,
-    HasRootRef<HTMLDivElement>,
     HasRef<HTMLElement> {
   slideWidth?: string | number;
   slideIndex?: number;

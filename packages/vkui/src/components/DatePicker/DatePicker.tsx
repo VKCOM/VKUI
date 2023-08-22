@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { classNames, leadingZero } from '@vkontakte/vkjs';
+import { leadingZero } from '@vkontakte/vkjs';
 import { range } from '../../helpers/range';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
 import { Input } from '../Input/Input';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './DatePicker.module.css';
 
 const DefaultMonths: string[] = [
@@ -28,7 +30,7 @@ export type DatePickerDateFormat = {
 };
 
 export interface DatePickerProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'defaultValue' | 'min' | 'max'> {
   min?: DatePickerDateFormat;
   max?: DatePickerDateFormat;
   name?: string;
@@ -77,7 +79,6 @@ const DatePickerCustom = ({
   year = 0,
   onDateChange,
   disabled,
-  className,
   ...restProps
 }: DatePickerProps & Partial<DatePickerDateFormat>) => {
   const onSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -101,7 +102,7 @@ const DatePickerCustom = ({
     value: value,
   }));
   return (
-    <div className={classNames(styles['DatePicker'], className)} {...restProps}>
+    <RootComponent baseClassName={styles['DatePicker']} {...restProps}>
       <div className={styles['DatePicker__container']}>
         <div className={styles['DatePicker__day']}>
           <CustomSelect
@@ -139,7 +140,7 @@ const DatePickerCustom = ({
         </div>
       </div>
       <input type="hidden" name={name} value={convertToInputFormat({ day, month, year })} />
-    </div>
+    </RootComponent>
   );
 };
 

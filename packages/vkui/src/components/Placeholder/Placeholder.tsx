@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
 import styles from './Placeholder.module.css';
 
-export interface PlaceholderProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {
+export interface PlaceholderProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Иконка
    */
@@ -39,19 +38,15 @@ export const Placeholder = ({
   action,
   children,
   stretched,
-  getRootRef,
-  className,
   withPadding = true,
   ...restProps
 }: PlaceholderProps) => (
-  <div
+  <RootComponent
     {...restProps}
-    ref={getRootRef}
-    className={classNames(
+    baseClassName={classNames(
       styles['Placeholder'],
       stretched && styles['Placeholder--stretched'],
       withPadding && styles['Placeholder--withPadding'],
-      className,
     )}
   >
     {hasReactNode(icon) && <div className={styles['Placeholder__icon']}>{icon}</div>}
@@ -66,5 +61,5 @@ export const Placeholder = ({
       </Headline>
     )}
     {hasReactNode(action) && <div className={styles['Placeholder__action']}>{action}</div>}
-  </div>
+  </RootComponent>
 );

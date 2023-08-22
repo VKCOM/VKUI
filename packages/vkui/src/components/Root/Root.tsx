@@ -7,14 +7,16 @@ import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { Platform } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { ScrollContext } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './Root.module.css';
 
-export interface RootProps extends React.HTMLAttributes<HTMLDivElement>, NavIdProps {
+export interface RootProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   children: React.ReactElement | Iterable<React.ReactElement>;
@@ -37,7 +39,6 @@ export const Root = ({
   activeView: _activeView,
   onTransition,
   nav,
-  className,
   ...restProps
 }: RootProps) => {
   const scroll = React.useContext(ScrollContext);
@@ -116,13 +117,12 @@ export const Root = ({
   };
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles['Root'],
         platform === Platform.IOS && styles['Root--ios'],
         transition && styles['Root--transition'],
-        className,
       )}
     >
       {views.map((view) => {
@@ -161,6 +161,6 @@ export const Root = ({
           </div>
         );
       })}
-    </div>
+    </RootComponent>
   );
 };

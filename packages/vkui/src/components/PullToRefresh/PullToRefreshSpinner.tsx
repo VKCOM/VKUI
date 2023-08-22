@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PullToRefresh.module.css';
 
 function calcStrokeDashOffset(value: number, radius: number) {
@@ -7,21 +9,20 @@ function calcStrokeDashOffset(value: number, radius: number) {
   return 2 * Math.PI * radius * (1 - progress);
 }
 
-export interface PullToRefreshSpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
-  'size'?: number;
-  'strokeWidth'?: number;
-  'on'?: boolean;
-  'progress'?: number;
-  'aria-label'?: string;
+export interface PullToRefreshSpinnerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  size?: number;
+  strokeWidth?: number;
+  on?: boolean;
+  progress?: number;
 }
 
 export const PullToRefreshSpinner = ({
   on = true,
   size = 24,
   strokeWidth = 2.5,
-  style,
   progress = 0,
   'aria-label': ariaLabel = 'Пожалуйста, подождите...',
+  ...restProps
 }: PullToRefreshSpinnerProps) => {
   const radius = 0.5 * size - 0.5 * strokeWidth;
   const dasharray = 2 * Math.PI * radius;
@@ -30,13 +31,13 @@ export const PullToRefreshSpinner = ({
   const dashoffset = calcStrokeDashOffset(on ? 80 : progress, radius);
 
   return (
-    <div
-      className={classNames(
+    <RootComponent
+      baseClassName={classNames(
         styles['PullToRefresh__spinner'],
         on && styles['PullToRefresh__spinner--on'],
       )}
-      style={style}
       aria-label={on ? ariaLabel : undefined}
+      {...restProps}
     >
       <svg
         role="presentation"
@@ -68,6 +69,6 @@ export const PullToRefreshSpinner = ({
           />
         </g>
       </svg>
-    </div>
+    </RootComponent>
   );
 };

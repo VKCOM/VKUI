@@ -5,6 +5,8 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutWrapper.module.css';
 
 const stylesAlignX = {
@@ -19,7 +21,7 @@ const stylesAlignY = {
   bottom: styles['PopoutWrapper--alignY-bottom'],
 };
 
-export interface PopoutWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   hasMask?: boolean;
   fixed?: boolean;
   alignY?: 'top' | 'center' | 'bottom';
@@ -38,12 +40,10 @@ export const PopoutWrapper = ({
   fixed = true,
   children,
   onClick,
-  className,
   ...restProps
 }: PopoutWrapperProps) => {
   const platform = usePlatform();
   const [opened, setOpened] = React.useState(!hasMask);
-  const elRef = React.useRef<HTMLDivElement>(null);
 
   const onFadeInEnd = (e?: React.AnimationEvent) => {
     if (!e || e.animationName === styles['animation-full-fade-in']) {
@@ -61,9 +61,9 @@ export const PopoutWrapper = ({
   });
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles['PopoutWrapper'],
         stylesAlignY[alignY],
         stylesAlignX[alignX],
@@ -71,15 +71,13 @@ export const PopoutWrapper = ({
         opened && styles['PopoutWrapper--opened'],
         fixed && styles['PopoutWrapper--fixed'],
         hasMask && styles['PopoutWrapper--masked'],
-        className,
       )}
       onAnimationEnd={opened ? undefined : onFadeInEnd}
-      ref={elRef}
     >
       <div className={styles['PopoutWrapper__container']}>
         <div className={styles['PopoutWrapper__overlay']} onClick={onClick} />
         <div className={styles['PopoutWrapper__content']}>{children}</div>
       </div>
-    </div>
+    </RootComponent>
   );
 };

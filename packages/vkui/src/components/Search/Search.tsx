@@ -9,7 +9,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { touchEnabled, VKUITouchEvent } from '../../lib/touch';
-import { HasRef } from '../../types';
+import { HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
 import { TouchEvent } from '../Touch/Touch';
@@ -18,6 +18,7 @@ import styles from './Search.module.css';
 
 export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
+    HasRootRef<HTMLDivElement>,
     HasRef<HTMLInputElement> {
   /**
    * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
@@ -54,6 +55,7 @@ export const Search = ({
   iconAriaLabel,
   clearAriaLabel = 'Очистить',
   noPadding,
+  getRootRef,
   ...inputProps
 }: SearchProps) => {
   const inputRef = useExternRef(getRef);
@@ -124,6 +126,7 @@ export const Search = ({
         !noPadding && styles['Search--withPadding'],
         className,
       )}
+      ref={getRootRef}
       style={style}
     >
       <div className={styles['Search__field']}>

@@ -2,13 +2,12 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
-import { HasRef, HasRootRef } from '../../types';
+import { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
 import styles from './SplitLayout.module.css';
 
 export interface SplitLayoutProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement>,
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   /**
    * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.

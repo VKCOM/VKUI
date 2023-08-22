@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { HasComponent, HasRef, HasRootRef } from '../../types';
+import { HasComponent, HasRef, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { Tappable } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
@@ -14,7 +14,7 @@ const stylesSize = {
   l: styles['HorizontalCell--size-l'],
 };
 
-interface CellTypographyProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CellTypographyProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   size: HorizontalCellProps['size'];
 }
 

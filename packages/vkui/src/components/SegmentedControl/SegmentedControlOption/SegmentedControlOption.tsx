@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { callMultiple } from '../../../lib/callMultiple';
-import { HasRef } from '../../../types';
+import { HasRef, HasRootRef } from '../../../types';
 import { FocusVisible } from '../../FocusVisible/FocusVisible';
 import { Headline } from '../../Typography/Headline/Headline';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
@@ -10,6 +10,7 @@ import styles from './SegmentedControlOption.module.css';
 
 export interface SegmentedControlOptionProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
+    HasRootRef<HTMLLabelElement>,
     HasRef<HTMLInputElement> {}
 
 /**
@@ -20,6 +21,7 @@ export const SegmentedControlOption = ({
   className,
   style,
   children,
+  getRootRef,
   ...restProps
 }: SegmentedControlOptionProps) => {
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
@@ -31,6 +33,7 @@ export const SegmentedControlOption = ({
         restProps.checked && styles['SegmentedControlOption--checked'],
         className,
       )}
+      ref={getRootRef}
       style={style}
     >
       <VisuallyHidden

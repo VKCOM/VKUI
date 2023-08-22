@@ -1,13 +1,11 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { callMultiple } from '../../lib/callMultiple';
 import { stopPropagation } from '../../lib/utils';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './InputLike.module.css';
 
-export interface InputLikeProps
-  extends React.HTMLAttributes<HTMLSpanElement>,
-    HasRootRef<HTMLSpanElement> {
+export interface InputLikeProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
   length: number;
   index: number;
   value?: string;
@@ -35,8 +33,6 @@ export const InputLike = ({
   onElementSelect,
   onClick,
   onFocus,
-  getRootRef,
-  className,
   ...props
 }: InputLikeProps) => {
   const handleElementSelect = React.useCallback(
@@ -48,14 +44,10 @@ export const InputLike = ({
   );
 
   return (
-    <span
-      className={classNames(
-        styles['InputLike'],
-        value?.length === length && styles['InputLike--full'],
-        className,
-      )}
+    <RootComponent
+      Component="span"
+      baseClassName={value?.length === length ? styles['InputLike--full'] : undefined}
       tabIndex={0}
-      ref={getRootRef}
       onClick={callMultiple(onClick, handleElementSelect)}
       onFocus={callMultiple(stopPropagation, onFocus)}
       {...props}
@@ -67,7 +59,7 @@ export const InputLike = ({
         </span>
       )}
       {getMaskElements(length - (value?.length ?? 0))}
-    </span>
+    </RootComponent>
   );
 };
 

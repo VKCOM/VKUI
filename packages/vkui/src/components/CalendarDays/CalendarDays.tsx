@@ -1,14 +1,18 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
 import { isSameDay, isSameMonth } from '../../lib/date';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { CalendarDay, CalendarDayElementProps } from '../CalendarDay/CalendarDay';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './CalendarDays.module.css';
 
-export interface CalendarDaysProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface CalendarDaysProps
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
   value?: Date | Array<Date | null>;
   viewDate: Date;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -49,12 +53,12 @@ export const CalendarDays = ({
   size,
   showNeighboringMonth = false,
   dayProps,
-  className,
   listenDayChangesForUpdate = false,
+  getRootRef,
   ...props
 }: CalendarDaysProps) => {
   const { locale } = useConfigProvider();
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useExternRef(getRootRef);
   const now = useTodayDate(listenDayChangesForUpdate);
 
   const weeks = React.useMemo(() => getWeeks(viewDate, weekStartsOn), [weekStartsOn, viewDate]);
@@ -70,11 +74,11 @@ export const CalendarDays = ({
 
       ref.current?.focus();
     },
-    [onDayChange],
+    [onDayChange, ref],
   );
 
   return (
-    <div {...props} className={classNames(styles['CalendarDays'], className)} ref={ref}>
+    <RootComponent {...props} baseClassName={styles['CalendarDays']} getRootRef={ref}>
       <div
         className={classNames(
           styles['CalendarDays__row'],
@@ -124,6 +128,6 @@ export const CalendarDays = ({
           })}
         </div>
       ))}
-    </div>
+    </RootComponent>
   );
 };

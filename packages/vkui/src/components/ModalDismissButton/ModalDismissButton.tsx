@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { Tappable } from '../Tappable/Tappable';
 import styles from './ModalDismissButton.module.css';
 
-export type ModalDismissButtonProps = React.HTMLAttributes<HTMLButtonElement>;
+export type ModalDismissButtonProps = HTMLAttributesWithRootRef<HTMLButtonElement>;
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalDismissButton

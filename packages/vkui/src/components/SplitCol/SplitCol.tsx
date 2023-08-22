@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { ViewWidth, viewWidthToClassName } from '../../lib/adaptivity';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
 import { warnOnce } from '../../lib/warnOnce';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { SplitColContext } from './SplitColContext';
 import styles from './SplitCol.module.css';
 
@@ -45,7 +48,7 @@ function useTransitionAnimate(animateProp?: boolean) {
   return animate;
 }
 
-export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   width?: number | string;
   maxWidth?: number | string;
   minWidth?: number | string;
@@ -87,10 +90,10 @@ export const SplitCol = (props: SplitColProps) => {
     style,
     autoSpaced,
     stretchedOnMobile,
-    className,
+    getRootRef,
     ...restProps
   } = props;
-  const baseRef = React.useRef<HTMLDivElement>(null);
+  const baseRef = useExternRef(getRootRef);
   const { viewWidth } = useAdaptivity();
   const animate = useTransitionAnimate(animateProp);
 
@@ -105,7 +108,7 @@ export const SplitCol = (props: SplitColProps) => {
   }
 
   return (
-    <div
+    <RootComponent
       {...restProps}
       style={{
         ...style,
@@ -113,8 +116,8 @@ export const SplitCol = (props: SplitColProps) => {
         maxWidth: maxWidth,
         minWidth: minWidth,
       }}
-      ref={baseRef}
-      className={classNames(
+      getRootRef={baseRef}
+      baseClassName={classNames(
         styles['SplitCol'],
         viewWidthToClassName(breakpointClassNames, viewWidth),
         spaced && classNames(styles['SplitCol--spaced'], 'vkuiInternalSplitCol--spaced'),
@@ -124,12 +127,11 @@ export const SplitCol = (props: SplitColProps) => {
           classNames(styles['SplitCol--spaced-auto'], 'vkuiInternalSplitCol--spaced-auto'),
         fixed && styles['SplitCol--fixed'],
         stretchedOnMobile && styles['SplitCol--stretched-on-mobile'],
-        className,
       )}
     >
       <SplitColContext.Provider value={contextValue}>
         {fixed ? <div className={styles['SplitCol__fixedInner']}>{children}</div> : children}
       </SplitColContext.Provider>
-    </div>
+    </RootComponent>
   );
 };

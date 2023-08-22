@@ -5,6 +5,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../lib/adaptivity';
 import { HasComponent, HasRootRef } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './FormItem.module.css';
@@ -57,12 +58,10 @@ export const FormItem = ({
   top,
   bottom,
   status = 'default',
-  Component = 'div',
   removable,
   onRemove = noop,
   removePlaceholder = 'Удалить',
   getRootRef,
-  className,
   htmlFor,
   bottomId,
   noPadding,
@@ -96,10 +95,10 @@ export const FormItem = ({
   );
 
   return (
-    <Component
+    <RootComponent
       {...restProps}
-      ref={rootEl}
-      className={classNames(
+      getRootRef={rootEl}
+      baseClassName={classNames(
         styles['FormItem'],
         !noPadding && styles['FormItem--withPadding'],
         'vkuiInternalFormItem',
@@ -108,7 +107,6 @@ export const FormItem = ({
         hasReactNode(top) &&
           classNames(styles['FormItem--withTop'], 'vkuiInternalFormItem--withTop'),
         removable && classNames(styles['FormItem--removable'], 'vkuiInternalFormItem--removable'),
-        className,
       )}
     >
       {removable ? (
@@ -131,6 +129,6 @@ export const FormItem = ({
       ) : (
         wrappedChildren
       )}
-    </Component>
+    </RootComponent>
   );
 };

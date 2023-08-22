@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from '@vkontakte/icons';
-import { classNames } from '@vkontakte/vkjs';
 import { warnOnce } from '../../lib/warnOnce';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Spinner.module.css';
 
-export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
   size?: 'small' | 'regular' | 'medium' | 'large';
   disableAnimation?: boolean;
 }
@@ -21,7 +22,6 @@ export const Spinner = React.memo(
     // TODO [>=6]: Удалить автоматическое приведение aria-label
     'aria-label': ariaLabel = 'Загружается...',
     disableAnimation,
-    className,
     ...restProps
   }: SpinnerProps) => {
     const SpinnerIcon = {
@@ -48,7 +48,12 @@ export const Spinner = React.memo(
     }
 
     return (
-      <span role="status" {...restProps} className={classNames(styles['Spinner'], className)}>
+      <RootComponent
+        Component="span"
+        role="status"
+        {...restProps}
+        baseClassName={styles['Spinner']}
+      >
         <SpinnerIcon>
           {!disableAnimation && (
             // TODO [a11y]: use reduced motion hook?
@@ -65,7 +70,7 @@ export const Spinner = React.memo(
           )}
         </SpinnerIcon>
         <VisuallyHidden>{children ?? ariaLabel}</VisuallyHidden>
-      </span>
+      </RootComponent>
     );
   },
 );

@@ -2,7 +2,8 @@ import * as React from 'react';
 import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
-import { HasComponent, HasRootRef } from '../../types';
+import { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
@@ -10,7 +11,7 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
 import styles from './Header.module.css';
 
-export interface HeaderProps extends React.HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement> {
   mode?: 'primary' | 'secondary' | 'tertiary';
   size?: 'regular' | 'large';
   subtitle?: React.ReactNode;
@@ -78,24 +79,21 @@ export const Header = ({
   subtitle,
   indicator,
   aside,
-  getRootRef,
   multiline,
-  className,
   ...restProps
 }: HeaderProps) => {
   const platform = usePlatform();
 
   return (
-    <header
+    <RootComponent
+      Component="header"
       {...restProps}
-      ref={getRootRef}
-      className={classNames(
+      baseClassName={classNames(
         styles['Header'],
         platform === Platform.IOS && styles['Header--ios'],
         stylesMode[mode],
         isPrimitiveReactNode(indicator) && styles['Header--pi'],
         hasReactNode(subtitle) && styles['Header--with-subtitle'],
-        className,
       )}
     >
       <div className={styles['Header__main']}>
@@ -138,6 +136,6 @@ export const Header = ({
           {aside}
         </Paragraph>
       )}
-    </header>
+    </RootComponent>
   );
 };

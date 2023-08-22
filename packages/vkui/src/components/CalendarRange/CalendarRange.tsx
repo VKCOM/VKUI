@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { useCalendar } from '../../hooks/useCalendar';
 import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import {
@@ -12,13 +11,14 @@ import {
   isWithinInterval,
   startOfDay,
 } from '../../lib/date';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
 import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CalendarRange.module.css';
 
 export interface CalendarRangeProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>,
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
     Pick<
       CalendarHeaderProps,
       | 'prevMonthAriaLabel'
@@ -28,8 +28,7 @@ export interface CalendarRangeProps
       | 'prevMonthIcon'
       | 'nextMonthIcon'
     >,
-    Pick<CalendarDaysProps, 'listenDayChangesForUpdate'>,
-    HasRootRef<HTMLDivElement> {
+    Pick<CalendarDaysProps, 'listenDayChangesForUpdate'> {
   value?: Array<Date | null>;
   disablePast?: boolean;
   disableFuture?: boolean;
@@ -69,7 +68,6 @@ export const CalendarRange = ({
   changeDayAriaLabel = 'Изменить день',
   prevMonthIcon,
   nextMonthIcon,
-  className,
   listenDayChangesForUpdate,
   ...props
 }: CalendarRangeProps) => {
@@ -181,7 +179,7 @@ export const CalendarRange = ({
   );
 
   return (
-    <div {...props} ref={getRootRef} className={classNames(styles['CalendarRange'], className)}>
+    <RootComponent {...props} baseClassName={styles['CalendarRange']}>
       <div className={styles['CalendarRange__inner']}>
         <CalendarHeader
           viewDate={viewDate}
@@ -254,6 +252,6 @@ export const CalendarRange = ({
           onBlur={resetSelectedDay}
         />
       </div>
-    </div>
+    </RootComponent>
   );
 };

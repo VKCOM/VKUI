@@ -7,7 +7,7 @@ import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { Platform } from '../../lib/platform';
 import { animationEvent, transitionEvent } from '../../lib/supportEvents';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasPlatform } from '../../types';
+import { HasPlatform, HTMLAttributesWithRootRef } from '../../types';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import {
   ConfigProviderContext,
@@ -42,7 +42,7 @@ export let scrollsCache: ViewsScrolls = {};
 export type TransitionParams = { from: string | null; to: string | null };
 
 export interface ViewInfiniteProps
-  extends React.HTMLAttributes<HTMLElement>,
+  extends HTMLAttributesWithRootRef<HTMLElement>,
     HasPlatform,
     NavIdProps {
   activePanel: string;

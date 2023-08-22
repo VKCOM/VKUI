@@ -2,10 +2,12 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollSaver } from './ScrollSaver';
 import styles from './Epic.module.css';
 
-export interface EpicProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface EpicProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   tabbar?: React.ReactNode;
   activeStory: string;
   children: React.ReactElement | Iterable<React.ReactElement>;
@@ -16,9 +18,8 @@ const warn = warnOnce('Epic');
 /**
  * @see https://vkcom.github.io/VKUI/#/Epic
  */
-export const Epic = (props: EpicProps) => {
+export const Epic = ({ activeStory, tabbar, children, ...restProps }: EpicProps) => {
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
-  const { activeStory, tabbar, children, className, ...restProps } = props;
 
   const story =
     (React.Children.toArray(children).find(
@@ -26,9 +27,9 @@ export const Epic = (props: EpicProps) => {
     ) as React.ReactElement | undefined) ?? null;
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(styles['Epic'], tabbar && 'vkuiInternalEpic--hasTabbar', className)}
+      baseClassName={classNames(styles['Epic'], tabbar && 'vkuiInternalEpic--hasTabbar')}
     >
       <ScrollSaver
         key={activeStory}
@@ -38,6 +39,6 @@ export const Epic = (props: EpicProps) => {
         {story}
       </ScrollSaver>
       {tabbar}
-    </div>
+    </RootComponent>
   );
 };

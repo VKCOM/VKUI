@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { HasRootRef } from '../../../types';
+import { RootComponent } from '../../RootComponent/RootComponent';
 import { ImageBaseContext } from '../context';
 import type { ImageBaseExpectedIconProps } from '../types';
 import { validateBadgeIcon } from '../validators';
@@ -10,7 +12,7 @@ const backgroundStyles = {
   shadow: styles['ImageBaseBadge--background-shadow'],
 };
 
-export interface ImageBaseBadgeProps extends React.AriaAttributes {
+export interface ImageBaseBadgeProps extends React.AriaAttributes, HasRootRef<HTMLDivElement> {
   /**
    * Вид подложки под иконку.
    *
@@ -38,26 +40,19 @@ export interface ImageBaseBadgeProps extends React.AriaAttributes {
  *
  * > Не используйте при `size < 24`
  */
-export const ImageBaseBadge = ({
-  background = 'shadow',
-  children,
-  className,
-  ...restProps
-}: ImageBaseBadgeProps) => {
+export const ImageBaseBadge = ({ background = 'shadow', ...restProps }: ImageBaseBadgeProps) => {
   if (process.env.NODE_ENV === 'development') {
-    if (children) {
+    if (restProps.children) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const { size } = React.useContext(ImageBaseContext);
-      validateBadgeIcon(size, { name: 'children', value: children });
+      validateBadgeIcon(size, { name: 'children', value: restProps.children });
     }
   }
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      className={classNames(styles['ImageBaseBadge'], backgroundStyles[background], className)}
-    >
-      {children}
-    </div>
+      baseClassName={classNames(styles['ImageBaseBadge'], backgroundStyles[background])}
+    />
   );
 };

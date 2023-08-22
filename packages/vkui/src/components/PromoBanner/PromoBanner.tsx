@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Icon24Dismiss } from '@vkontakte/icons';
-import { classNames } from '@vkontakte/vkjs';
 import { warnOnce } from '../../lib/warnOnce';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { Image } from '../Image/Image';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './PromoBanner.module.css';
@@ -37,7 +38,7 @@ type BannerData = {
   ageRestrictions?: string;
 };
 
-export interface PromoBannerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PromoBannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /** Данные рекламного баннера, полученные из VKWebAppGetAds */
   bannerData: BannerData;
   /** Флаг скрытия кнопки закрытия рекламы */
@@ -58,7 +59,6 @@ export const PromoBanner = ({
   bannerData = {},
   onClose,
   isCloseButtonHidden,
-  className,
   ...restProps
 }: PromoBannerProps) => {
   if (process.env.NODE_ENV === 'development') {
@@ -89,7 +89,7 @@ export const PromoBanner = ({
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div className={classNames(styles['PromoBanner'], className)} {...restProps}>
+    <RootComponent baseClassName={styles['PromoBanner']} {...restProps}>
       <div className={styles['PromoBanner__head']}>
         <Footnote>{bannerData.advertisingLabel || 'Advertisement'}</Footnote>
         {bannerData.ageRestrictions && (
@@ -137,6 +137,6 @@ export const PromoBanner = ({
           <img src={currentPixel} alt="" />
         </div>
       )}
-    </div>
+    </RootComponent>
   );
 };

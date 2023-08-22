@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 import { PaginationPageType, usePagination } from '../../hooks/usePagination';
-import type { HasRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { PaginationPageButton } from './PaginationPage/PaginationPageButton';
 import { PaginationPageEllipsis } from './PaginationPage/PaginationPageEllipsis';
 import { getPageAriaLabelDefault } from './utils';
 import styles from './Pagination.module.css';
 
-export interface PaginationProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>,
-    HasRootRef<HTMLElement> {
+export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElement>, 'onChange'> {
   /**
    * Текущая страница.
    */
@@ -61,7 +60,6 @@ export const Pagination = ({
   getPageAriaLabel = getPageAriaLabelDefault,
   prevButtonAriaLabel = 'Перейти на предыдущую страницу',
   nextButtonAriaLabel = 'Перейти на следующую страницу',
-  getRootRef,
   onChange,
   ...resetProps
 }: PaginationProps) => {
@@ -125,7 +123,12 @@ export const Pagination = ({
   );
 
   return (
-    <nav role="navigation" aria-label="Навигация по страницам" ref={getRootRef} {...resetProps}>
+    <RootComponent
+      Component="nav"
+      role="navigation"
+      aria-label="Навигация по страницам"
+      {...resetProps}
+    >
       <ul className={styles['Pagination__list']}>
         <li className={styles['Pagination__prevButtonContainer']}>
           <Button
@@ -151,6 +154,6 @@ export const Pagination = ({
           />
         </li>
       </ul>
-    </nav>
+    </RootComponent>
   );
 };

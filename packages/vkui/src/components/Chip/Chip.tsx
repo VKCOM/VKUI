@@ -4,6 +4,8 @@ import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { getTitleFromChildren } from '../../lib/utils';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Chip.module.css';
@@ -21,7 +23,7 @@ export interface ChipOption {
   [otherProp: string]: any;
 }
 
-export interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ChipProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   value: ChipValue;
   option?: ChipOption;
   onRemove?: (event?: React.MouseEvent, value?: ChipValue) => void;
@@ -49,7 +51,6 @@ export const Chip = ({
   before = null,
   after,
   children,
-  className,
   ...restProps
 }: ChipProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -62,12 +63,11 @@ export const Chip = ({
   const title = getTitleFromChildren(children);
 
   return (
-    <div
-      className={classNames(
+    <RootComponent
+      baseClassName={classNames(
         styles['Chip'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         removable && styles['Chip--removable'],
-        className,
       )}
       role="option"
       aria-label={title}
@@ -93,6 +93,6 @@ export const Chip = ({
           </Tappable>
         )}
       </div>
-    </div>
+    </RootComponent>
   );
 };

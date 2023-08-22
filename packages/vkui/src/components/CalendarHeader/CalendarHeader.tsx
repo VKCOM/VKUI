@@ -8,9 +8,11 @@ import { classNames } from '@vkontakte/vkjs';
 import { SizeType } from '../../lib/adaptivity';
 import { getMonths, getYears } from '../../lib/calendar';
 import { addMonths, setMonth, setYear, subMonths } from '../../lib/date';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable, TappableElementProps } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './CalendarHeader.module.css';
@@ -18,7 +20,7 @@ import styles from './CalendarHeader.module.css';
 type ArrowMonthProps = Omit<TappableElementProps, 'onClick' | 'aria-label'>;
 
 export interface CalendarHeaderProps
-  extends Pick<React.HTMLAttributes<HTMLDivElement>, 'className'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
   viewDate: Date;
   prevMonth?: boolean;
   nextMonth?: boolean;
@@ -50,7 +52,6 @@ export const CalendarHeader = ({
   disablePickers = false,
   onNextMonth,
   onPrevMonth,
-  className,
   prevMonthProps = {},
   nextMonthProps = {},
   prevMonthAriaLabel = 'Предыдущий месяц',
@@ -71,6 +72,7 @@ export const CalendarHeader = ({
       height={30}
     />
   ),
+  ...restProps
 }: CalendarHeaderProps) => {
   const { locale } = useConfigProvider();
   const onMonthsChange = React.useCallback(
@@ -106,7 +108,7 @@ export const CalendarHeader = ({
   const { className: nextMonthClassName, ...restNextMonthProps } = nextMonthProps;
 
   return (
-    <div className={classNames(styles['CalendarHeader'], className)}>
+    <RootComponent baseClassName={styles['CalendarHeader']} {...restProps}>
       {prevMonth && (
         <AdaptivityProvider sizeX={SizeType.REGULAR}>
           <Tappable
@@ -198,6 +200,6 @@ export const CalendarHeader = ({
           </Tappable>
         </AdaptivityProvider>
       )}
-    </div>
+    </RootComponent>
   );
 };

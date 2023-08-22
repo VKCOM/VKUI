@@ -5,12 +5,11 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { pressedKey } from '../../lib/accessibility';
 import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Tabs.module.css';
 
-export interface TabsProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {
+export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   mode?: 'default' | 'accent' | 'secondary';
 }
 
@@ -27,14 +26,7 @@ export const TabsModeContext = React.createContext<TabsContextProps>({
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabs
  */
-export const Tabs = ({
-  children,
-  mode = 'default',
-  getRootRef,
-  className,
-  role = 'tablist',
-  ...restProps
-}: TabsProps) => {
+export const Tabs = ({ children, mode = 'default', role = 'tablist', ...restProps }: TabsProps) => {
   const platform = usePlatform();
   const { document } = useDOM();
 
@@ -137,22 +129,20 @@ export const Tabs = ({
   });
 
   return (
-    <div
+    <RootComponent
       {...restProps}
-      ref={getRootRef}
-      className={classNames(
+      baseClassName={classNames(
         styles['Tabs'],
         'vkuiInternalTabs',
         platform === Platform.VKCOM && 'vkuiInternalTabs--vkcom',
         withGaps && classNames(styles['Tabs--withGaps'], 'vkuiInternalTabs--withGaps'),
         mode === 'default' && styles['Tabs--mode-default'],
-        className,
       )}
       role={role}
     >
       <div className={styles['Tabs__in']} ref={tabsRef}>
         <TabsModeContext.Provider value={{ mode, withGaps }}>{children}</TabsModeContext.Provider>
       </div>
-    </div>
+    </RootComponent>
   );
 };

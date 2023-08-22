@@ -4,7 +4,7 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './CustomSelectOption.module.css';
@@ -14,9 +14,7 @@ const sizeYClassNames = {
   [SizeType.REGULAR]: styles['CustomSelectOption--sizeY-regular'],
 };
 
-export interface CustomSelectOptionProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {
+export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Вставляет основной контент.
    * @deprecated since v6.0.0
