@@ -13,6 +13,62 @@ export interface ImageProps extends Omit<ImageBaseProps, 'badge'> {
   borderRadius?: 's' | 'l' | 'm';
 }
 
+const getBorderRadiusBySize = (
+  size: Exclude<ImageBaseProps['size'], undefined>,
+  borderRadius: Exclude<ImageProps['borderRadius'], undefined>,
+) => {
+  switch (borderRadius) {
+    case 's': {
+      if (size <= 32) {
+        return 2;
+      }
+      if (size <= 56) {
+        return 3;
+      }
+      return 4;
+    }
+    case 'm': {
+      if (size <= 32) {
+        return 3;
+      }
+      if (size <= 48) {
+        return 4;
+      }
+      if (size <= 72) {
+        return 6;
+      }
+      if (size <= 80) {
+        return 8;
+      }
+      return 10;
+    }
+    case 'l': {
+      if (size <= 16) {
+        return 4;
+      }
+      if (size <= 20) {
+        return 5;
+      }
+      if (size <= 32) {
+        return 6;
+      }
+      if (size <= 40) {
+        return 8;
+      }
+      if (size <= 48) {
+        return 10;
+      }
+      if (size <= 56) {
+        return 12;
+      }
+      if (size <= 64) {
+        return 14;
+      }
+      return 16;
+    }
+  }
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/Image
  */
@@ -23,50 +79,10 @@ export const Image = ({
   className,
   ...restProps
 }: ImageProps) => {
-  let borderRadius: number;
-
-  switch (borderRadiusProp) {
-    case 's': {
-      if (size <= 32) {
-        borderRadius = 2;
-      } else if (size <= 56) {
-        borderRadius = 3;
-      }
-      borderRadius = 4;
-      break;
-    }
-    case 'm': {
-      if (size <= 32) {
-        borderRadius = 3;
-      } else if (size <= 48) {
-        borderRadius = 4;
-      } else if (size <= 72) {
-        borderRadius = 6;
-      } else if (size <= 80) {
-        borderRadius = 8;
-      }
-      borderRadius = 10;
-      break;
-    }
-    case 'l': {
-      if (size <= 16) {
-        borderRadius = 4;
-      } else if (size <= 20) {
-        borderRadius = 5;
-      } else if (size <= 32) {
-        borderRadius = 6;
-      } else if (size <= 40) {
-        borderRadius = 8;
-      } else if (size <= 48) {
-        borderRadius = 10;
-      } else if (size <= 56) {
-        borderRadius = 12;
-      } else if (size <= 64) {
-        borderRadius = 14;
-      }
-      borderRadius = 16;
-    }
-  }
+  const borderRadius = React.useMemo(
+    () => getBorderRadiusBySize(size, borderRadiusProp),
+    [size, borderRadiusProp],
+  );
 
   return (
     <ImageBase
