@@ -46,7 +46,7 @@ const gradientStyles = {
   'violet': styles['Avatar--gradient-violet'],
 };
 
-export interface AvatarProps extends ImageBaseProps {
+export interface AvatarProps extends Omit<ImageBaseProps, 'widthSize' | 'heightSize'> {
   /**
    * Инициалы пользователя.
    *
