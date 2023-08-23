@@ -1,0 +1,58 @@
+name: 'Reusable workflow / PR workflow payload'
+
+on:
+  workflow_call:
+    inputs:
+      action:
+        description: 'Use "upload" or "download"'
+        required: true
+        type: string
+    outputs:
+      status:
+        value: ${{ jobs.download.outputs.status }}
+      pr_number:
+        value: ${{ jobs.download.outputs.pr_number }}
+
+jobs:
+  download:
+    if: ${{ inputs.action == 'download' }}
+    runs-on: ubuntu-latest
+    name: Download PR workflow payload artifact
+    outputs:
+      status: ${{ steps.payload.outputs.status || steps.payload_fallback.outputs.status }}
+      pr_number: ${{ steps.payload.outputs.pr_number }}
+    steps:
+      - name: Download artifact
+        id: artifact
+        uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
+        with:
+          name: pr_workflow_payload
+          path: pr_workflow_payload/
+
+      - name: Extract payload to GITHUB_OUTPUT
+        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
+        id: payload
+        run: |
+          echo "status=success" >> $GITHUB_OUTPUT
+          echo "pr_number=$(cat pr_workflow_payload/pr_number.txt)" >> $GITHUB_OUTPUT
+
+      - name: NO ARTEFACT
+        if: ${{ steps.artifact.outputs.found_artifact != 'true' }}
+        id: payload_fallback
+        run: echo "status=canceled" >> $GITHUB_OUTPUT
+
+  upload:
+    if: ${{ inputs.action == 'upload' }}
+    runs-on: ubuntu-latest
+    name: Upload PR workflow payload artifact
+    steps:
+      - name: Prepare data
+        run: |
+          mkdir pr_workflow_payload
+          echo ${{ github.event.pull_request.number }} > pr_workflow_payload/pr_number.txt
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: pr_workflow_payload
+          path: pr_workflow_payload/

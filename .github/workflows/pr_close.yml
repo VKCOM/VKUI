@@ -11,19 +11,15 @@ on:
         required: true
 
 jobs:
-  undeploy_s3:
-    runs-on: ubuntu-latest
-    name: Undeploy S3
-    steps:
-      - name: Delete from S3
-        uses: VKCOM/gh-actions/VKUI/s3@main
-        with:
-          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
-          awsBucket: vkui-screenshot
-          awsEndpoint: https://hb.bizmrg.com
-          command: delete
-          commandDeletePrefix: pull/${{ inputs.pull_request_number || github.event.pull_request.number }}
+  upload_pr_workflow_payload:
+    # Не используем always(), т.к. он не учитывает отмену воркфлоу
+    # см. https://github.com/orgs/community/discussions/26303
+    if: ${{ !cancelled() }}
+    name: Call reusable workflow
+    uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
+    with:
+      action: upload
+      pr_number: ${{ inputs.pull_request_number || github.event.pull_request.number }}
 
   patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
