@@ -31,6 +31,10 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
       href: 'https://github.com/VKCOM/VKUI',
     },
     {
+      title: 'Storybook',
+      href: 'https://vkcom.github.io/VKUI/playground/',
+    },
+    {
       title: 'Релизы',
       href: 'https://github.com/VKCOM/VKUI/releases',
     },
