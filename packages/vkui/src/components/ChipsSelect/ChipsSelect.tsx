@@ -174,7 +174,12 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
   };
 
   const handleClickOutside = (e: MouseEvent) => {
-    if (e.target !== rootRef.current && !rootRef.current?.contains(e.target as Node)) {
+    const isClickOutsideFormField =
+      e.target !== rootRef.current && !rootRef.current?.contains(e.target as Node);
+    const isClickOutsideDropdown =
+      e.target !== scrollBoxRef.current && !scrollBoxRef.current?.contains(e.target as Node);
+
+    if (isClickOutsideFormField && isClickOutsideDropdown) {
       setOpened(false);
     }
   };

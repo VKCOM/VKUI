@@ -6,7 +6,7 @@ import { useChipsInput } from './useChipsInput';
 export const useChipsSelect = <Option extends ChipOption>(
   props: Partial<ChipsSelectProps<Option>>,
 ) => {
-  const { options, filterFn, getOptionLabel, getOptionValue } = props;
+  const { options, filterFn, getOptionLabel, getOptionValue, showSelected } = props;
 
   const [opened, setOpened] = React.useState(false);
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | null>(0);
@@ -32,22 +32,25 @@ export const useChipsSelect = <Option extends ChipOption>(
       : (options as Option[]);
   }, [options, filterFn, fieldValue, getOptionLabel]);
 
-  filteredOptions = React.useMemo(() => {
-    if (!filteredOptions.length) {
-      return filteredOptions;
-    }
-
-    const filteredSet = new Set(filteredOptions);
-    const selected = selectedOptions.map((item) => getOptionValue!(item));
-
-    for (const item of filteredSet) {
-      if (selected.includes(getOptionValue!(item))) {
-        filteredSet.delete(item);
+  filteredOptions = React.useMemo(
+    function filterOutSelectedIfNeeded() {
+      if (!filteredOptions.length || showSelected) {
+        return filteredOptions;
       }
-    }
 
-    return [...filteredSet];
-  }, [filteredOptions, selectedOptions, getOptionValue]);
+      const filteredSet = new Set(filteredOptions);
+      const selected = selectedOptions.map((item) => getOptionValue!(item));
+
+      for (const item of filteredSet) {
+        if (selected.includes(getOptionValue!(item))) {
+          filteredSet.delete(item);
+        }
+      }
+
+      return [...filteredSet];
+    },
+    [filteredOptions, selectedOptions, getOptionValue, showSelected],
+  );
 
   return {
     ...chipsInputState,
