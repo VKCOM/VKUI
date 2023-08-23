@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
@@ -63,7 +62,7 @@ export const PopoutWrapper = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['PopoutWrapper'],
         stylesAlignY[alignY],
         stylesAlignX[alignX],
@@ -71,7 +70,7 @@ export const PopoutWrapper = ({
         opened && styles['PopoutWrapper--opened'],
         fixed && styles['PopoutWrapper--fixed'],
         hasMask && styles['PopoutWrapper--masked'],
-      )}
+      ]}
       onAnimationEnd={opened ? undefined : onFadeInEnd}
     >
       <div className={styles['PopoutWrapper__container']}>

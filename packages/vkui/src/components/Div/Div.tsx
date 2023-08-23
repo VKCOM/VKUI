@@ -8,4 +8,6 @@ export type DivProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 /**
  * @see https://vkcom.github.io/VKUI/#/Div
  */
-export const Div = (props: DivProps) => <RootComponent baseClassName={styles['Div']} {...props} />;
+export const Div = (props: DivProps) => (
+  <RootComponent baseClassNames={[styles['Div']]} {...props} />
+);

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ListContext } from './ListContext';
@@ -17,7 +16,7 @@ export const List = ({ children, ...restProps }: ListProps) => {
     <RootComponent
       role="list"
       {...restProps}
-      baseClassName={classNames(styles['List'], isDragging && 'vkuiInternalList--dragging')}
+      baseClassNames={[styles['List'], isDragging && 'vkuiInternalList--dragging']}
     >
       <ListContext.Provider value={React.useMemo(() => ({ toggleDrag }), [])}>
         {children}

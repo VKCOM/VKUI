@@ -98,7 +98,7 @@ export const MiniInfoCell = ({
       {cellContent}
     </Tappable>
   ) : (
-    <RootComponent {...restProps} baseClassName={cellClasses}>
+    <RootComponent {...restProps} baseClassNames={[cellClasses]}>
       {cellContent}
     </RootComponent>
   );

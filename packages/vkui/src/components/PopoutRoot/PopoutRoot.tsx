@@ -34,7 +34,7 @@ export const PopoutRoot = ({ popout, modal, children, ...restProps }: PopoutRoot
   }, [document, popout]);
 
   return (
-    <RootComponent {...restProps} baseClassName={styles['PopoutRoot']}>
+    <RootComponent {...restProps} baseClassNames={[styles['PopoutRoot']]}>
       {children}
       <AppRootPortal>
         {!!popout && <PopoutRootPopout>{popout}</PopoutRootPopout>}

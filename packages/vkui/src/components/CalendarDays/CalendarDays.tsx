@@ -78,7 +78,7 @@ export const CalendarDays = ({
   );
 
   return (
-    <RootComponent {...props} baseClassName={styles['CalendarDays']} getRootRef={ref}>
+    <RootComponent {...props} baseClassNames={[styles['CalendarDays']]} getRootRef={ref}>
       <div
         className={classNames(
           styles['CalendarDays__row'],

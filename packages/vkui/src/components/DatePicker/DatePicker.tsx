@@ -102,7 +102,7 @@ const DatePickerCustom = ({
     value: value,
   }));
   return (
-    <RootComponent baseClassName={styles['DatePicker']} {...restProps}>
+    <RootComponent baseClassNames={[styles['DatePicker']]} {...restProps}>
       <div className={styles['DatePicker__container']}>
         <div className={styles['DatePicker__day']}>
           <CustomSelect

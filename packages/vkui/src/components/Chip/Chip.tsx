@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { getTitleFromChildren } from '../../lib/utils';
@@ -64,11 +64,11 @@ export const Chip = ({
 
   return (
     <RootComponent
-      baseClassName={classNames(
+      baseClassNames={[
         styles['Chip'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         removable && styles['Chip--removable'],
-      )}
+      ]}
       role="option"
       aria-label={title}
       {...restProps}

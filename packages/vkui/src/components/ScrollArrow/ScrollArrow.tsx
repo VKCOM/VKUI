@@ -5,7 +5,6 @@ import {
   Icon24Chevron,
   Icon24ChevronCompactLeft,
 } from '@vkontakte/icons';
-import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './ScrollArrow.module.css';
@@ -61,11 +60,7 @@ export const ScrollArrow = ({
   return (
     <RootComponent
       Component="button"
-      baseClassName={classNames(
-        styles['ScrollArrow'],
-        stylesSize[size],
-        stylesDirection[direction],
-      )}
+      baseClassNames={[styles['ScrollArrow'], stylesSize[size], stylesDirection[direction]]}
       {...restProps}
     >
       <span className={styles['ScrollArrow__icon']} style={offsetY ? { top: offsetY } : undefined}>

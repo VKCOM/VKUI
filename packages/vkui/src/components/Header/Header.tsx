@@ -88,13 +88,13 @@ export const Header = ({
     <RootComponent
       Component="header"
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['Header'],
         platform === Platform.IOS && styles['Header--ios'],
         stylesMode[mode],
         isPrimitiveReactNode(indicator) && styles['Header--pi'],
         hasReactNode(subtitle) && styles['Header--with-subtitle'],
-      )}
+      ]}
     >
       <div className={styles['Header__main']}>
         <HeaderContent

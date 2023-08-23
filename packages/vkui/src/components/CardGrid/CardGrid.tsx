@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -34,13 +33,13 @@ export const CardGrid = ({ size = 's', spaced = false, ...restProps }: CardGridP
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['CardGrid'],
         'vkuiInternalCardGrid',
         spaced && styles['CardGrid--spaced'],
         stylesSize[size],
         sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
-      )}
+      ]}
     />
   );
 };

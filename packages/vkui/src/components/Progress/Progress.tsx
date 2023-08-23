@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -66,7 +65,7 @@ export const Progress = ({
       role="progressbar"
       aria-valuemin={PROGRESS_MIN_VALUE}
       aria-valuemax={PROGRESS_MAX_VALUE}
-      baseClassName={classNames(styles['Progress'], stylesAppearance[appearance])}
+      baseClassNames={[styles['Progress'], stylesAppearance[appearance]]}
     >
       <div className={styles['Progress__in']} style={{ width: `${progress}%` }} />
     </RootComponent>

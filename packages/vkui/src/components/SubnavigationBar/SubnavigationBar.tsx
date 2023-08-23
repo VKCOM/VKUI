@@ -55,7 +55,7 @@ export const SubnavigationBar = ({
       // и удалить применение селектора в `SubnavigationButton.module.css`.
       // 2. Заменить глобальный селектор на CSS Modules `styles['SubnavigationBar--mode-fixed']`
       // mode !== 'fixed' && classNames('vkuiInternalSubnavigationBar--mode-fixed')
-      baseClassName={mode === 'fixed' ? 'vkuiInternalSubnavigationBar--mode-fixed' : undefined}
+      baseClassNames={[mode === 'fixed' ? 'vkuiInternalSubnavigationBar--mode-fixed' : undefined]}
       {...restProps}
     >
       <ScrollWrapper className={styles['SubnavigationBar__in']} {...scrollWrapperProps}>

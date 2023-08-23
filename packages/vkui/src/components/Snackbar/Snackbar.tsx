@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
@@ -206,7 +205,7 @@ export const Snackbar = ({
     <AppRootPortal>
       <RootComponent
         {...restProps}
-        baseClassName={classNames(
+        baseClassNames={[
           styles['Snackbar'],
           platform === Platform.IOS && styles['Snackbar--ios'],
           stylesLayout[layout],
@@ -214,7 +213,7 @@ export const Snackbar = ({
           closing && styles['Snackbar--closing'],
           touched && styles['Snackbar--touched'],
           isDesktop && styles['Snackbar--desktop'],
-        )}
+        ]}
         style={offsetY ? { ...style, bottom: offsetY } : style}
       >
         <Touch

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
@@ -45,13 +44,13 @@ export const ModalCard = ({
     <RootComponent
       {...restProps}
       id={id}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['ModalCard'],
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
         isDesktop && styles['ModalCard--desktop'],
-      )}
+      ]}
     >
       <ModalCardBase
         className={styles['ModalCard__in']}

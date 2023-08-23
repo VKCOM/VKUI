@@ -85,11 +85,11 @@ export const ModalCardBase = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         'vkuiInternalModalCardBase',
         platform === Platform.IOS && styles['ModalCardBase--ios'],
         isDesktop && styles['ModalCardBase--desktop'],
-      )}
+      ]}
       style={{
         ...style,
         maxWidth: size,

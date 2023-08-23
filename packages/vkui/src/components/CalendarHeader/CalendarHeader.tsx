@@ -108,7 +108,7 @@ export const CalendarHeader = ({
   const { className: nextMonthClassName, ...restNextMonthProps } = nextMonthProps;
 
   return (
-    <RootComponent baseClassName={styles['CalendarHeader']} {...restProps}>
+    <RootComponent baseClassNames={[styles['CalendarHeader']]} {...restProps}>
       {prevMonth && (
         <AdaptivityProvider sizeX={SizeType.REGULAR}>
           <Tappable

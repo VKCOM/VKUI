@@ -143,7 +143,7 @@ export const PanelHeader = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['PanelHeader'],
         'vkuiInternalPanelHeader',
         platformClassNames.hasOwnProperty(platform)
@@ -160,7 +160,7 @@ export const PanelHeader = ({
         !after && styles['PanelHeader--no-after'],
         isFixed && styles['PanelHeader--fixed'],
         sizeX !== SizeType.COMPACT && sizeXClassNames[sizeX],
-      )}
+      ]}
       getRootRef={isFixed ? getRootRef : getRef}
     >
       {isFixed ? (

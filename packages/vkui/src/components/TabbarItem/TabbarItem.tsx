@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
@@ -55,12 +55,12 @@ export const TabbarItem = ({
       {...restProps}
       disabled={disabled}
       href={href}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['TabbarItem'],
         platform === Platform.IOS && styles['TabbarItem--ios'],
         platform === Platform.ANDROID && styles['TabbarItem--android'],
         selected && styles['TabbarItem--selected'],
-      )}
+      ]}
     >
       <Tappable
         role="presentation"

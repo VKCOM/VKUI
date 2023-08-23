@@ -232,7 +232,7 @@ export const Popper = ({
   const dropdown = (
     <RootComponent
       {...restProps}
-      baseClassName={styles['Popper']}
+      baseClassNames={[styles['Popper']]}
       getRootRef={handleRootRef}
       style={{
         ...styleProp,

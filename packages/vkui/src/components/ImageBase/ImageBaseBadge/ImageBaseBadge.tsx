@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ImageBaseContext } from '../context';
@@ -52,7 +51,7 @@ export const ImageBaseBadge = ({ background = 'shadow', ...restProps }: ImageBas
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles['ImageBaseBadge'], backgroundStyles[background])}
+      baseClassNames={[styles['ImageBaseBadge'], backgroundStyles[background]]}
     />
   );
 };

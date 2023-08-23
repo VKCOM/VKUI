@@ -245,11 +245,11 @@ export const HorizontalScroll = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['HorizontalScroll'],
         'vkuiInternalHorizontalScroll',
         showArrows === 'always' && styles['HorizontalScroll--withConstArrows'],
-      )}
+      ]}
       onMouseEnter={calculateArrowsVisibility}
     >
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { useDOM } from '../../lib/dom';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { HorizontalScroll, HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
@@ -91,12 +90,12 @@ export const CardScroll = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['CardScroll'],
         'vkuiInternalCardScroll',
         size !== false && stylesSize[size],
         withSpaces && styles['CardScroll--withSpaces'],
-      )}
+      ]}
     >
       <HorizontalScroll
         getScrollToLeft={getScrollToLeft}

@@ -131,13 +131,13 @@ export const Tabs = ({ children, mode = 'default', role = 'tablist', ...restProp
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['Tabs'],
         'vkuiInternalTabs',
         platform === Platform.VKCOM && 'vkuiInternalTabs--vkcom',
         withGaps && classNames(styles['Tabs--withGaps'], 'vkuiInternalTabs--withGaps'),
         mode === 'default' && styles['Tabs--mode-default'],
-      )}
+      ]}
       role={role}
     >
       <div className={styles['Tabs__in']} ref={tabsRef}>

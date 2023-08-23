@@ -17,7 +17,7 @@ export type AccordionProps = React.DetailsHTMLAttributes<HTMLDetailsElement> &
  * @see https://vkcom.github.io/VKUI/#/Accordion
  */
 export const Accordion = (props: AccordionProps) => (
-  <RootComponent Component="details" baseClassName={styles['Accordion']} {...props} />
+  <RootComponent Component="details" baseClassNames={[styles['Accordion']]} {...props} />
 );
 
 Accordion.Summary = AccordionSummary;

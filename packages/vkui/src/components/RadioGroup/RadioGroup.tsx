@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './RadioGroup.module.css';
@@ -13,11 +12,11 @@ export interface RadioGroupProps extends HTMLAttributesWithRootRef<HTMLDivElemen
  */
 export const RadioGroup = ({ mode = 'vertical', ...restProps }: RadioGroupProps) => (
   <RootComponent
-    baseClassName={classNames(
+    baseClassNames={[
       styles['RadioGroup'],
       'vkuiInternalRadioGroup',
       mode === 'horizontal' && styles['RadioGroup--mode-horizontal'],
-    )}
+    ]}
     {...restProps}
   />
 );

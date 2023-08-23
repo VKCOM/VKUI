@@ -119,11 +119,11 @@ export const Root = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['Root'],
         platform === Platform.IOS && styles['Root--ios'],
         transition && styles['Root--transition'],
-      )}
+      ]}
     >
       {views.map((view) => {
         const viewId = getNavId(view.props, warn);

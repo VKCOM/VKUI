@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './AspectRatio.module.css';
@@ -37,10 +36,10 @@ export function AspectRatio({
 
   return (
     <RootComponent
-      baseClassName={classNames(
+      baseClassNames={[
         styles.AspectRatio,
         mode === 'stretch' && styles['AspectRatio--mode-stretch'],
-      )}
+      ]}
       style={{ ...styleProp, ...style }}
       {...props}
     />

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Gradient.module.css';
@@ -34,7 +33,7 @@ export const Gradient = ({ mode = 'tint', to = 'top', ...restProps }: GradientPr
     <RootComponent
       role="presentation"
       {...restProps}
-      baseClassName={classNames(stylesMode[mode], stylesTo[to])}
+      baseClassNames={[stylesMode[mode], stylesTo[to]]}
     />
   );
 };

@@ -141,11 +141,11 @@ export const Removable = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         platform === Platform.IOS && styles['Removable--ios'],
         align === 'start' && styles['Removable--align-start'],
         indent && styles['Removable--indent'],
-      )}
+      ]}
     >
       {platform !== Platform.IOS && (
         <div className={classNames(styles['Removable__content'], 'vkuiInternalRemovable__content')}>

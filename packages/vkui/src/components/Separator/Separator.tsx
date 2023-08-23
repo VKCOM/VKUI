@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Separator.module.css';
@@ -17,7 +16,7 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
 export const Separator = ({ wide, ...restProps }: SeparatorProps) => (
   <RootComponent
     {...restProps}
-    baseClassName={classNames(styles['Separator'], !wide && styles['Separator--padded'])}
+    baseClassNames={[styles['Separator'], !wide && styles['Separator--padded']]}
   >
     <hr className={styles['Separator__in']} />
   </RootComponent>

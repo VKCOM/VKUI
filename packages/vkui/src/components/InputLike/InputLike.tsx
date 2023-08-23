@@ -46,7 +46,7 @@ export const InputLike = ({
   return (
     <RootComponent
       Component="span"
-      baseClassName={value?.length === length ? styles['InputLike--full'] : undefined}
+      baseClassNames={[value?.length === length ? styles['InputLike--full'] : undefined]}
       tabIndex={0}
       onClick={callMultiple(onClick, handleElementSelect)}
       onFocus={callMultiple(stopPropagation, onFocus)}

@@ -72,11 +72,11 @@ export const SegmentedControl = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['SegmentedControl'],
         sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
         size === 'l' && styles['SegmentedControl--size-l'],
-      )}
+      ]}
     >
       <div role="radiogroup" className={styles['SegmentedControl__in']}>
         {actualIndex > -1 && (

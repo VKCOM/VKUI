@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PullToRefresh.module.css';
@@ -32,10 +31,10 @@ export const PullToRefreshSpinner = ({
 
   return (
     <RootComponent
-      baseClassName={classNames(
+      baseClassNames={[
         styles['PullToRefresh__spinner'],
         on && styles['PullToRefresh__spinner--on'],
-      )}
+      ]}
       aria-label={on ? ariaLabel : undefined}
       {...restProps}
     >

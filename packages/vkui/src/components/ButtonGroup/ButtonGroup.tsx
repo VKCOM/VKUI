@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import type { AlignType, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './ButtonGroup.module.css';
@@ -54,13 +53,13 @@ export const ButtonGroup = ({
 }: ButtonGroupProps) => {
   return (
     <RootComponent
-      baseClassName={classNames(
+      baseClassNames={[
         styles.ButtonGroup,
         stylesMode[mode],
         gap !== 'none' && stylesGap[gap],
         stretched && styles['ButtonGroup--stretched'],
         stylesAlign[align],
-      )}
+      ]}
       role="group"
       {...restProps}
     />

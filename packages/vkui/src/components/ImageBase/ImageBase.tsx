@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import type { HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -155,11 +154,7 @@ export const ImageBase = ({
       <RootComponent
         {...restProps}
         style={{ ...style, width: size, height: size }}
-        baseClassName={classNames(
-          styles['ImageBase'],
-          sizeClassName,
-          loaded && styles['ImageBase--loaded'],
-        )}
+        baseClassNames={[styles['ImageBase'], sizeClassName, loaded && styles['ImageBase--loaded']]}
         role={hasSrc ? 'img' : 'presentation'}
         aria-label={ariaLabel}
         onClick={onClick}

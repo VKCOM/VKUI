@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Card.module.css';
@@ -16,12 +15,12 @@ export const Card = ({ mode = 'tint', ...restProps }: CardProps) => {
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['Card'],
         mode === 'outline' && styles['Card--mode-outline'],
         mode === 'shadow' && styles['Card--mode-shadow'],
         withBorder && styles['Card--withBorder'],
-      )}
+      ]}
     />
   );
 };

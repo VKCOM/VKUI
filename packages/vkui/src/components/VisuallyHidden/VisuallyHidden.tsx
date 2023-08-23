@@ -16,5 +16,5 @@ interface VisuallyHiddenProps
  * @see https://vkcom.github.io/VKUI/#/VisuallyHidden
  */
 export const VisuallyHidden = ({ Component = 'span', ...restProps }: VisuallyHiddenProps) => (
-  <RootComponent Component={Component} {...restProps} baseClassName={styles['VisuallyHidden']} />
+  <RootComponent Component={Component} {...restProps} baseClassNames={[styles['VisuallyHidden']]} />
 );

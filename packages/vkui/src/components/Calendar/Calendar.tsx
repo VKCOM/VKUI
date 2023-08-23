@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { useCalendar } from '../../hooks/useCalendar';
 import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import { isSameDay, isSameMonth } from '../../lib/date';
@@ -155,7 +154,7 @@ export const Calendar = ({
   return (
     <RootComponent
       {...props}
-      baseClassName={classNames(styles['Calendar'], size === 's' && styles['Calendar--size-s'])}
+      baseClassNames={[styles['Calendar'], size === 's' && styles['Calendar--size-s']]}
     >
       <CalendarHeader
         viewDate={externalViewDate || viewDate}

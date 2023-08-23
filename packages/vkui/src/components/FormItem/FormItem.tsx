@@ -98,7 +98,7 @@ export const FormItem = ({
     <RootComponent
       {...restProps}
       getRootRef={rootEl}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['FormItem'],
         !noPadding && styles['FormItem--withPadding'],
         'vkuiInternalFormItem',
@@ -107,7 +107,7 @@ export const FormItem = ({
         hasReactNode(top) &&
           classNames(styles['FormItem--withTop'], 'vkuiInternalFormItem--withTop'),
         removable && classNames(styles['FormItem--removable'], 'vkuiInternalFormItem--removable'),
-      )}
+      ]}
     >
       {removable ? (
         <Removable

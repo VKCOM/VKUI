@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './FocusVisible.module.css';
@@ -25,11 +24,11 @@ export const FocusVisible = ({ visible, mode, thin, ...restProps }: FocusVisible
   <RootComponent
     {...restProps}
     aria-hidden
-    baseClassName={classNames(
+    baseClassNames={[
       styles['FocusVisible'],
       visible && styles['FocusVisible--visible'],
       thin && styles['FocusVisible--thin'],
       stylesMode[mode],
-    )}
+    ]}
   />
 );

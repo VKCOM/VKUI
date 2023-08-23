@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useId } from '../../hooks/useId';
 import { useOrientationChange } from '../../hooks/useOrientationChange';
@@ -115,13 +114,13 @@ export const ModalPage = ({
         aria-modal="true"
         aria-labelledby={contextValue.labelId}
         id={id}
-        baseClassName={classNames(
+        baseClassNames={[
           styles['ModalPage'],
           platform === Platform.IOS && styles['ModalPage--ios'],
           isDesktop && styles['ModalPage--desktop'],
           sizeX === SizeType.REGULAR && 'vkuiInternalModalPage--sizeX-regular',
           typeof size === 'string' && sizeClassName[size],
-        )}
+        ]}
       >
         <div
           className={styles['ModalPage__in-wrap']}

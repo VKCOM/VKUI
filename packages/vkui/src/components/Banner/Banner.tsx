@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -153,14 +153,14 @@ export const Banner = ({
     <RootComponent
       Component="section"
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['Banner'],
         !noPadding && styles['Banner--withPadding'],
         platform === Platform.IOS && styles['Banner--ios'],
         mode === 'image' && styles['Banner--mode-image'],
         stylesSize[size],
         mode === 'image' && imageTheme === 'dark' && styles['Banner--inverted'],
-      )}
+      ]}
     >
       {asideMode === 'expand' ? (
         <Tappable

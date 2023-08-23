@@ -52,7 +52,7 @@ export const Spinner = React.memo(
         Component="span"
         role="status"
         {...restProps}
-        baseClassName={styles['Spinner']}
+        baseClassNames={[styles['Spinner']]}
       >
         <SpinnerIcon>
           {!disableAnimation && (

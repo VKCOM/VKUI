@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -29,7 +28,7 @@ export const Epic = ({ activeStory, tabbar, children, ...restProps }: EpicProps)
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles['Epic'], tabbar && 'vkuiInternalEpic--hasTabbar')}
+      baseClassNames={[styles['Epic'], tabbar !== undefined && 'vkuiInternalEpic--hasTabbar']}
     >
       <ScrollSaver
         key={activeStory}

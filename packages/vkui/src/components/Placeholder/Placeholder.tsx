@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { hasReactNode } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Headline } from '../Typography/Headline/Headline';
@@ -43,11 +43,11 @@ export const Placeholder = ({
 }: PlaceholderProps) => (
   <RootComponent
     {...restProps}
-    baseClassName={classNames(
+    baseClassNames={[
       styles['Placeholder'],
       stretched && styles['Placeholder--stretched'],
       withPadding && styles['Placeholder--withPadding'],
-    )}
+    ]}
   >
     {hasReactNode(icon) && <div className={styles['Placeholder__icon']}>{icon}</div>}
     {hasReactNode(header) && (

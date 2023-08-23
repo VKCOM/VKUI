@@ -57,7 +57,7 @@ export const FormLayoutGroup = ({
   return (
     <RootComponent
       getRootRef={rootEl}
-      baseClassName={classNames(
+      baseClassNames={[
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         mode === 'horizontal' &&
           classNames(
@@ -74,7 +74,7 @@ export const FormLayoutGroup = ({
             styles['FormLayoutGroup--segmented'],
             'vkuiInternalFormLayoutGroup--segmented',
           ),
-      )}
+      ]}
       {...restProps}
     >
       {isRemovable ? (

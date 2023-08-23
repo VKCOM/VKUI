@@ -193,12 +193,12 @@ export const UsersStack = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         'vkuiInternalUsersStack',
         styles['UsersStack'],
         stylesSize[size],
         stylesDirection[direction],
-      )}
+      ]}
     >
       {(photosElements.length > 0 || othersElement) && (
         <div className={styles['UsersStack__photos']} aria-hidden>

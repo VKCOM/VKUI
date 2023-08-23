@@ -117,7 +117,7 @@ export const SplitCol = (props: SplitColProps) => {
         minWidth: minWidth,
       }}
       getRootRef={baseRef}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['SplitCol'],
         viewWidthToClassName(breakpointClassNames, viewWidth),
         spaced && classNames(styles['SplitCol--spaced'], 'vkuiInternalSplitCol--spaced'),
@@ -127,7 +127,7 @@ export const SplitCol = (props: SplitColProps) => {
           classNames(styles['SplitCol--spaced-auto'], 'vkuiInternalSplitCol--spaced-auto'),
         fixed && styles['SplitCol--fixed'],
         stretchedOnMobile && styles['SplitCol--stretched-on-mobile'],
-      )}
+      ]}
     >
       <SplitColContext.Provider value={contextValue}>
         {fixed ? <div className={styles['SplitCol__fixedInner']}>{children}</div> : children}

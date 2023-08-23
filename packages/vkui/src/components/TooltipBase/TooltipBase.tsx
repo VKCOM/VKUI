@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { DefaultIcon } from '../PopperArrow/DefaultIcon';
 import { PopperArrow, type PopperArrowProps } from '../PopperArrow/PopperArrow';
@@ -76,10 +75,10 @@ export const TooltipBase = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['TooltipBase'],
         appearance !== 'neutral' && stylesAppearance[appearance],
-      )}
+      ]}
     >
       <div ref={getRootRef} style={floatingStyle}>
         {withArrow && (

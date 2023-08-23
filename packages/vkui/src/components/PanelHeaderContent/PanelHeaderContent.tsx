@@ -73,12 +73,12 @@ export const PanelHeaderContent = ({
   return (
     <RootComponent
       {...rootProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['PanelHeaderContent'],
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-      )}
+      ]}
     >
       {hasReactNode(before) && <div className={styles['PanelHeaderContent__before']}>{before}</div>}
       <InComponent

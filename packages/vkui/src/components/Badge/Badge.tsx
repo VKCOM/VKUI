@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Badge.module.css';
@@ -19,7 +18,7 @@ export interface BadgeProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
 export const Badge = ({ mode = 'new', ...restProps }: BadgeProps) => (
   <RootComponent
     Component="span"
-    baseClassName={classNames(styles['Badge'], stylesMode[mode])}
+    baseClassNames={[styles['Badge'], stylesMode[mode]]}
     {...restProps}
   />
 );

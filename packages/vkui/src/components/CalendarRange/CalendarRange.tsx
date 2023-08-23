@@ -179,7 +179,7 @@ export const CalendarRange = ({
   );
 
   return (
-    <RootComponent {...props} baseClassName={styles['CalendarRange']}>
+    <RootComponent {...props} baseClassNames={[styles['CalendarRange']]}>
       <div className={styles['CalendarRange__inner']}>
         <CalendarHeader
           viewDate={viewDate}

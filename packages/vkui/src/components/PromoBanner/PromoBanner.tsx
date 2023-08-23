@@ -89,7 +89,7 @@ export const PromoBanner = ({
   }, [statsPixels.playbackStarted]);
 
   return (
-    <RootComponent baseClassName={styles['PromoBanner']} {...restProps}>
+    <RootComponent baseClassNames={[styles['PromoBanner']]} {...restProps}>
       <div className={styles['PromoBanner__head']}>
         <Footnote>{bannerData.advertisingLabel || 'Advertisement'}</Footnote>
         {bannerData.ageRestrictions && (

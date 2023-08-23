@@ -313,12 +313,12 @@ export const BaseGallery = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['BaseGallery'],
         align === 'center' && styles['BaseGallery--align-center'],
         slideWidth === 'custom' && styles['BaseGallery--custom-width'],
         isDraggable && styles['BaseGallery--draggable'],
-      )}
+      ]}
       getRootRef={rootRef}
     >
       <Touch

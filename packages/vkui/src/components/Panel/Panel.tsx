@@ -31,11 +31,11 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(
+      baseClassNames={[
         styles['Panel'],
         sizeXClassNames[sizeX],
         centered && 'vkuiInternalPanel--centered',
-      )}
+      ]}
     >
       <Touch
         Component={TooltipContainer}

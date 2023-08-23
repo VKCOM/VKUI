@@ -100,7 +100,7 @@ export const Group = ({
         Component="section"
         {...restProps}
         tabIndex={tabIndex}
-        baseClassName={classNames(
+        baseClassNames={[
           'vkuiInternalGroup',
           styles['Group'],
           isInsideModal && styles['Group--inside-modal'],
@@ -108,7 +108,7 @@ export const Group = ({
           sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
           mode && stylesMode[mode],
           stylesPadding[padding],
-        )}
+        ]}
       >
         {header}
         {children}
