@@ -483,7 +483,12 @@ const App = () => {
               <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_DYNAMIC)}>
                 Открыть модальную страницу с динамической высотой
               </CellButton>
-              <CellButton onClick={() => changeActiveModal(MODAL_CARD_MONEY_SEND)}>
+              <CellButton
+                onClick={() => {
+                  console.log('Click on "open modal card"', new Date());
+                  changeActiveModal(MODAL_CARD_MONEY_SEND);
+                }}
+              >
                 Открыть модальные карточки
               </CellButton>
             </Group>

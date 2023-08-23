@@ -569,7 +569,18 @@ class ModalRootTouchComponent extends React.Component<
           >
             <div
               className={styles['ModalRoot__mask']}
-              onClick={this.props.onExit}
+              onClick={(event) => {
+                const elements = this.document.elementsFromPoint(event.clientX, event.clientY);
+                const firstElementOutOfModalStructure = elements.find(
+                  (element) => !element.contains(event.target as HTMLDivElement),
+                );
+                const clickEvent = new Event('click', { bubbles: true });
+                if (firstElementOutOfModalStructure) {
+                  firstElementOutOfModalStructure.dispatchEvent(clickEvent);
+                }
+
+                this.props.onExit();
+              }}
               ref={this.maskElementRef}
             />
             <div className={styles['ModalRoot__viewport']} ref={this.viewportRef}>
