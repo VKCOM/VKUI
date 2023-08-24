@@ -1,9 +1,15 @@
 import * as React from 'react';
 import { Icon12Lock } from '@vkontakte/icons';
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import {
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+  TEST_CLASS_NAMES,
+} from '@vkui-e2e/playground-helpers';
 import { Checkbox, type CheckboxProps } from './Checkbox';
 
-const baseRender = (props: CheckboxProps) => <Checkbox {...props}>label</Checkbox>;
+const baseRender = ({ children = 'label', ...restProps }: CheckboxProps) => (
+  <Checkbox {...restProps}>{children}</Checkbox>
+);
 
 export const CheckboxPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -33,6 +39,12 @@ export const CheckboxSizesAndDescriptionPlayground = (props: ComponentPlayground
         {
           description: [undefined, 'Description'],
           titleAfter: [undefined, <Icon12Lock key="icon" />],
+          children: [
+            <div key="text-without-ellipsis">Длииииииииииииииииииииииииииииииинный текст</div>,
+            <div key="text-with-ellipsis" className={TEST_CLASS_NAMES.TEXT_ELLIPSIS}>
+              Длииииииииииииииииииииииииииииииинный текст
+            </div>,
+          ],
         },
       ]}
     >
