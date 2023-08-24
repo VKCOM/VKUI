@@ -8,6 +8,7 @@ import {
   convertFloatingDataToReactCSSProperties,
   flipMiddleware,
   getAutoPlacementAlign,
+  hideMiddleware,
   offsetMiddleware,
   type Placement,
   type PlacementWithAuto,
@@ -146,6 +147,7 @@ export const Popper = ({
         crossAxis: offsetSkidding,
         mainAxis: arrow ? offsetDistance + arrowHeight : offsetDistance,
       }),
+      hideMiddleware(),
     ];
 
     // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
@@ -205,7 +207,7 @@ export const Popper = ({
     strategy: floatingPositionStrategy,
     placement: resolvedPlacement,
     refs,
-    middlewareData: { arrow: arrowCoords },
+    middlewareData: { arrow: arrowCoords, hide },
   } = useFloating({
     placement: isNotAutoPlacement ? placementProp : undefined,
     middleware: memoizedMiddlewares,
@@ -242,6 +244,7 @@ export const Popper = ({
           floatingDataY,
           sameWidth ? null : undefined,
         ),
+        visibility: hide?.referenceHidden ? 'hidden' : styleProp?.visibility || 'visible',
       }}
     >
       {arrow && (

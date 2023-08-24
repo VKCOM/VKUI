@@ -6,6 +6,7 @@ export {
   autoPlacement as autoPlacementMiddleware,
   arrow as arrowMiddleware,
   size as sizeMiddleware,
+  hide as hideMiddleware,
 } from '@floating-ui/react-dom';
 
 export type {
