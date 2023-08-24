@@ -40,6 +40,7 @@
 .Checkbox__content {
   flex-grow: 1;
   color: var(--vkui--color_text_primary);
+  min-width: 0; /* см. https://github.com/VKCOM/VKUI/issues/5687 */
   word-break: break-word;
 }
 
@@ -61,8 +62,13 @@
   margin-bottom: 12px;
 }
 
+.Checkbox__titleBefore {
+  min-width: 0; /* см. https://github.com/VKCOM/VKUI/issues/5687 */
+}
+
 .Checkbox__titleAfter {
   margin-left: 4px;
+  flex-shrink: 0;
   color: var(--vkui--color_icon_tertiary);
 }
 
