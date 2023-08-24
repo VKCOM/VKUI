@@ -123,10 +123,6 @@
   height: 100%;
 }
 
-.ModalPage__content-in {
-  position: relative;
-}
-
 .ModalPage__content-in::after {
   content: '';
   height: var(--vkui_internal--safe_area_inset_bottom);
