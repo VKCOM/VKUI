@@ -69,6 +69,12 @@ describe('ChipsSelect', () => {
       userEvent.click(queryListOption(colors[0]) as Element);
       expect(queryListOption(colors[1])).toBeNull();
     });
+    it('does not close options after select with showSelected and closeAfterSelect={false}', async () => {
+      render(<ChipsSelect options={colors} value={[]} showSelected closeAfterSelect={false} />);
+      await toggleDropdown();
+      userEvent.click(queryListOption(colors[0]) as Element);
+      expect(queryListOption(colors[1])).toBeTruthy();
+    });
     it('closes options on esc', async () => {
       render(<ChipsSelect options={colors} value={[]} />);
       await toggleDropdown();
@@ -105,8 +111,13 @@ describe('ChipsSelect', () => {
       expect(queryListOption(options[idx])).toBeNull();
       expect(value).toEqual([options[idx]]);
     });
+    it('does not hide selected option from list', async () => {
+      render(<ChipsSelect options={colors} value={[colors[0]]} showSelected />);
+      await toggleDropdown();
+      expect(queryListOption(colors[0])).toBeTruthy();
+    });
     it('hides selected option from list', async () => {
-      render(<ChipsSelect options={colors} value={[colors[0]]} />);
+      render(<ChipsSelect options={colors} value={[colors[0]]} showSelected={false} />);
       await toggleDropdown();
       expect(queryListOption(colors[0])).toBeNull();
     });
