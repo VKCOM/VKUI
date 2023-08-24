@@ -5,7 +5,7 @@ on:
     types: [closed]
   workflow_dispatch:
     inputs:
-      pull_request_number:
+      pr_number_by_workflow_dispatch:
         description: 'Number of PR'
         type: number
         required: true
@@ -19,7 +19,7 @@ jobs:
     uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: upload
-      override_pr_number: ${{ inputs.pull_request_number }}
+      override_pr_number: ${{ inputs.pr_number_by_workflow_dispatch }}
 
   patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
