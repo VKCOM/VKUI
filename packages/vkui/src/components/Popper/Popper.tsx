@@ -147,7 +147,6 @@ export const Popper = ({
         crossAxis: offsetSkidding,
         mainAxis: arrow ? offsetDistance + arrowHeight : offsetDistance,
       }),
-      hideMiddleware(),
     ];
 
     // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
@@ -186,6 +185,8 @@ export const Popper = ({
         }),
       );
     }
+
+    middlewares.push(hideMiddleware());
 
     return middlewares;
   }, [
