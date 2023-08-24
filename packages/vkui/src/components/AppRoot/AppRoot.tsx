@@ -43,8 +43,17 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * Кастомный root-элемент портала
    */
   portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
-  /** Disable portal for components */
+  /**
+   * Отключает рендер всплывающих компонентов в отдельном контейнере
+   */
   disablePortal?: boolean;
+  /**
+   * По умолчанию, mode="embedded" переносит систему координат элементов с `position: fixed` на
+   * свой контейнер через `transform: translate3d(0, 0, 0)`.
+   *
+   * Это поведение можно отключить с помощью этого параметра.
+   */
+  disableParentTransformForPositionFixedElements?: boolean;
 }
 
 /**
@@ -56,6 +65,7 @@ export const AppRoot = ({
   scroll = 'global',
   portalRoot: portalRootProp = null,
   disablePortal,
+  disableParentTransformForPositionFixedElements,
   className,
   safeAreaInsets,
   ...props
@@ -107,12 +117,22 @@ export const AppRoot = ({
 
     const parent = rootRef.current?.parentElement;
     const classes = ['vkui__root'].concat(mode === 'embedded' ? 'vkui__root--embedded' : []);
-    parent?.classList.add(...classes);
+    if (parent) {
+      if (!disableParentTransformForPositionFixedElements) {
+        parent.style.transform = 'translate3d(0, 0, 0)';
+      }
+      parent.classList.add(...classes);
+    }
 
     return () => {
-      parent?.classList.remove(...classes);
+      if (parent) {
+        if (!disableParentTransformForPositionFixedElements) {
+          parent.style.transform = '';
+        }
+        parent.classList.remove(...classes);
+      }
     };
-  }, []);
+  }, [disableParentTransformForPositionFixedElements]);
 
   useIsomorphicLayoutEffect(() => {
     if (mode === 'full') {
