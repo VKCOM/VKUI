@@ -191,7 +191,7 @@ export const Checkbox = ({
       </div>
       <div className={styles['Checkbox__content']}>
         <div className={styles['Checkbox__title']}>
-          <Text>{children}</Text>
+          <Text className={styles['Checkbox__titleBefore']}>{children}</Text>
           <div className={styles['Checkbox__titleAfter']}>{titleAfter}</div>
         </div>
         {hasReactNode(description) && (

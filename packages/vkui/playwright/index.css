@@ -74,6 +74,12 @@
   color: var(--playwright-text);
 }
 
+.vkuiTestTextEllipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 /* stylelint-disable-next-line selector-max-id */
 #root {
   position: relative;
