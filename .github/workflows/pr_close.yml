@@ -19,7 +19,7 @@ jobs:
     uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: upload
-      pr_number: ${{ inputs.pull_request_number || github.event.pull_request.number }}
+      override_pr_number: ${{ inputs.pull_request_number }}
 
   patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')

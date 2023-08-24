@@ -7,9 +7,8 @@ on:
         description: 'Use "upload" or "download"'
         required: true
         type: string
-      pr_number:
-        default: ${{ github.event.pull_request.number }}
-        description: 'Helpful if trigger is not PR, example, worflow_dispatch'
+      override_pr_number:
+        description: 'Helpful if trigger is not PR (example, worflow_dispatch)'
         required: false
         type: string
     outputs:
@@ -54,7 +53,7 @@ jobs:
       - name: Prepare data
         run: |
           mkdir pr_workflow_payload
-          echo ${{ inputs.pr_number }} > pr_workflow_payload/pr_number.txt
+          echo ${{ inputs.override_pr_number || github.event.pull_request.number }} > pr_workflow_payload/pr_number.txt
 
       - name: Upload
         uses: actions/upload-artifact@v3
