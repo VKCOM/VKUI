@@ -26,7 +26,7 @@ const story: Meta<AspectRatioProps> = {
 
 export default story;
 
-type Story = StoryObj<AspectRatioProps>;
+type Story = StoryObj<Omit<AspectRatioProps, 'ratio'> & { ratio: '16/9' | '1/1' | '3/4' | 'None' }>;
 
 export const Playground: Story = {
   args: {
@@ -37,6 +37,7 @@ export const Playground: Story = {
         src="https://sun9-35.userapi.com/TH0O6TfKR2O5W8hjgSdzQzHvV_2TGRAXhLHuog/Js_f2L5EMYM.jpg"
       />
     ),
+    ratio: '16/9',
   },
   decorators: [
     (Component, context) => (
@@ -54,7 +55,7 @@ export const Playground: Story = {
 export const WithModeNone: Story = {
   ...Playground,
   args: {
-    ratio: 16 / 9,
+    ratio: '16/9',
     mode: 'none',
     children: (
       <img

@@ -1,29 +1,17 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import {
-  Icon16Dropdown,
-  Icon24Done,
-  Icon28AddOutline,
-  Icon28Notifications,
-  Icon28PictureOutline,
-  Icon28SettingsOutline,
-  Icon28UsersOutline,
-} from '@vkontakte/icons';
+import { Icon28Notifications, Icon28PictureOutline, Icon28SettingsOutline } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Avatar } from '../Avatar/Avatar';
-import { Cell } from '../Cell/Cell';
 import { Counter } from '../Counter/Counter';
 import { Div } from '../Div/Div';
-import { List } from '../List/List';
 import { Panel } from '../Panel/Panel';
 import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
-import { PanelHeaderContent } from '../PanelHeaderContent/PanelHeaderContent';
-import { PanelHeaderContext } from '../PanelHeaderContext/PanelHeaderContext';
 import { Search } from '../Search/Search';
 import { Tabs } from '../Tabs/Tabs';
 import { TabsItem } from '../TabsItem/TabsItem';
@@ -123,27 +111,6 @@ export const PanelHeaderWithMultipleIcons: Story = {
   ),
 };
 
-export const PanelHeaderWithPanelHeaderContent: Story = {
-  render: function Render() {
-    const platform = usePlatform();
-
-    return (
-      <View id="main" activePanel="panel1">
-        <Panel id="panel1">
-          <PanelHeader
-            before={<PanelHeaderBack label={platform === Platform.VKCOM ? 'Назад' : undefined} />}
-          >
-            <PanelHeaderContent before={<Avatar size={36} />} status="Был в сети вчера">
-              Влад Анесов
-            </PanelHeaderContent>
-          </PanelHeader>
-          <Div>PanelHeaderContent</Div>
-        </Panel>
-      </View>
-    );
-  },
-};
-
 export const PanelHeaderWithSearch: Story = {
   render: function Render() {
     const platform = usePlatform();
@@ -175,72 +142,4 @@ export const PanelHeaderWithTabs: Story = {
       </Panel>
     </View>
   ),
-};
-
-export const PanelHeaderWithPanelHeaderContext: Story = {
-  render: function Render() {
-    const [contextOpened, setContextOpened] = React.useState(true);
-    const [mode, setMode] = React.useState<string | undefined>('all');
-
-    const toggleContext = () => {
-      setContextOpened((prev) => !prev);
-    };
-
-    const select = (e: React.MouseEvent<HTMLElement>) => {
-      const mode = e.currentTarget.dataset.mode;
-      setMode(mode);
-      requestAnimationFrame(toggleContext);
-    };
-
-    return (
-      <View id="main" activePanel="panel1">
-        <Panel id="panel1">
-          <PanelHeader
-            before={<PanelHeaderBack />}
-            after={
-              <PanelHeaderButton>
-                <Icon28AddOutline />
-              </PanelHeaderButton>
-            }
-          >
-            <PanelHeaderContent
-              aside={
-                <Icon16Dropdown
-                  style={{
-                    transform: `rotate(${contextOpened ? '180deg' : '0'})`,
-                  }}
-                />
-              }
-              onClick={toggleContext}
-            >
-              Communities
-            </PanelHeaderContent>
-          </PanelHeader>
-          <PanelHeaderContext opened={contextOpened} onClose={toggleContext}>
-            <List>
-              <Cell
-                before={<Icon28UsersOutline />}
-                after={mode === 'all' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null}
-                onClick={select}
-                data-mode="all"
-              >
-                Communities
-              </Cell>
-              <Cell
-                before={<Icon28SettingsOutline />}
-                after={
-                  mode === 'managed' ? <Icon24Done fill="var(--vkui--color_icon_accent)" /> : null
-                }
-                onClick={select}
-                data-mode="managed"
-              >
-                Managed Communities
-              </Cell>
-            </List>
-          </PanelHeaderContext>
-          <Div>PanelHeaderContext</Div>
-        </Panel>
-      </View>
-    );
-  },
 };

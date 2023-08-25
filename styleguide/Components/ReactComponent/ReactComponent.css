@@ -17,6 +17,13 @@
 
 .ReactComponent__name {
   margin-top: 4px;
+  display: flex;
+}
+
+.ReactComponent__logo {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
 }
 
 .ReactComponent__name--deprecated {

@@ -15,21 +15,41 @@ const story: Meta<ListProps> = {
 
 export default story;
 
-type Story = StoryObj<ListProps>;
+type Story = StoryObj<
+  ListProps & {
+    items: Array<{
+      before: React.ReactNode;
+      title: string;
+    }>;
+  }
+>;
 
 export const Playground: Story = {
-  render: ({ children, ...args }) => <List {...args}>{children}</List>,
+  render: function Render({ items, ...args }) {
+    const [draggingList, updateDraggingList] = React.useState(items);
+
+    const onDragFinish = ({ from, to }: { from: number; to: number }) => {
+      const _list = [...draggingList];
+      _list.splice(from, 1);
+      _list.splice(to, 0, draggingList[from]);
+      updateDraggingList(_list);
+    };
+
+    return (
+      <List {...args}>
+        {draggingList.map((item) => (
+          <Cell key={item.title} before={item.before} draggable onDragFinish={onDragFinish}>
+            {item.title}
+          </Cell>
+        ))}
+      </List>
+    );
+  },
   args: {
-    children: [
-      <Cell key={0} expandable before={<Icon28UserOutline />}>
-        Учетная запись
-      </Cell>,
-      <Cell key={1} expandable before={<Icon28SettingsOutline />}>
-        Основные
-      </Cell>,
-      <Cell key={2} expandable before={<Icon28PrivacyOutline />}>
-        Приватность
-      </Cell>,
+    items: [
+      { before: <Icon28UserOutline />, title: 'Учетная запись' },
+      { before: <Icon28SettingsOutline />, title: 'Основные' },
+      { before: <Icon28PrivacyOutline />, title: 'Приватность' },
     ],
   },
   decorators: [

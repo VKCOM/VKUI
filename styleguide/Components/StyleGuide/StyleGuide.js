@@ -38,6 +38,7 @@ export default class StyleGuide extends Component {
           config,
           slots,
           cssRevision,
+          sections,
         }}
       >
         <StyleGuideRenderer
