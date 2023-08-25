@@ -7,6 +7,8 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './TooltipBase.module.css';
 
+export const TOOLTIP_MAX_WIDTH = 220;
+
 const stylesAppearance = {
   accent: styles['TooltipBase--appearance-accent'],
   white: styles['TooltipBase--appearance-white'],
@@ -52,6 +54,12 @@ export interface TooltipBaseProps extends HasRootRef<HTMLDivElement> {
    * Пользовательские css-классы, будут добавлены на root-элемент
    */
   className?: string;
+  /**
+   * Перебивает максимальную ширину заданную по умолчанию.
+   *
+   * Передача `null` полностью сбрасывает установку `max-width` на элемент.
+   */
+  maxWidth?: number | string | null;
   floatingStyle?: React.CSSProperties;
 }
 
@@ -71,6 +79,7 @@ export const TooltipBase = ({
   ArrowIcon = DefaultIcon,
   text,
   header,
+  maxWidth = TOOLTIP_MAX_WIDTH,
   ...restProps
 }: TooltipBaseProps) => {
   return (
@@ -91,7 +100,10 @@ export const TooltipBase = ({
             Icon={ArrowIcon}
           />
         )}
-        <div className={styles['TooltipBase__content']}>
+        <div
+          className={styles['TooltipBase__content']}
+          style={maxWidth !== null ? { maxWidth } : undefined}
+        >
           {header && <Subhead weight="2">{header}</Subhead>}
           {text && <Subhead>{text}</Subhead>}
         </div>

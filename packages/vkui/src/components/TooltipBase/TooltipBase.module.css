@@ -13,7 +13,6 @@
   padding: 9px 12px 10px;
   border-radius: var(--vkui--size_border_radius--regular);
   color: var(--vkui--color_text_primary);
-  max-width: 220px;
 }
 
 .TooltipBase__arrow {

@@ -20,7 +20,7 @@ import {
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
-import { TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
+import { TOOLTIP_MAX_WIDTH, TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { tooltipContainerAttr } from './TooltipContainer';
 import styles from './Tooltip.module.css';
 
@@ -139,6 +139,7 @@ export const Tooltip = ({
   arrow = true,
   arrowPadding = 14,
   placement: placementProp,
+  maxWidth = TOOLTIP_MAX_WIDTH,
   ...restProps
 }: TooltipProps) => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
@@ -290,6 +291,7 @@ export const Tooltip = ({
               arrowCoords={arrowCoords}
               arrowPlacement={resolvedPlacement}
               getArrowRef={setArrowRef}
+              maxWidth={maxWidth}
             />
             <div className={styles['Tooltip__overlay']} onClickCapture={onClose} />
           </>,
