@@ -95,6 +95,12 @@ describe('AppRoot', () => {
       render(<AppRoot mode="embedded" />).unmount();
       expect(document.body).toContainElement(portalRoot1 as HTMLElement);
     });
+    it('should disable CSS transform on parent for mode="embedded"', () => {
+      const { rerender, container } = render(<AppRoot mode="embedded" />);
+      expect(container.style.transform).toBe('translate3d(0, 0, 0)');
+      rerender(<AppRoot mode="embedded" disableParentTransformForPositionFixedElements />);
+      expect(container.style.transform).toBe('');
+    });
     it('Accepts custom portal root', () => {
       const customPortalRoot = document.createElement('div');
       let portalRoot: HTMLElement | undefined | null;
