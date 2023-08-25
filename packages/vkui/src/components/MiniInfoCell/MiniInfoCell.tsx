@@ -79,7 +79,7 @@ export const MiniInfoCell = ({
 
   const cellContent = (
     <React.Fragment>
-      <span className={styles['MiniInfoCell__before']}>{before}</span>
+      {hasReactNode(before) && <span className={styles['MiniInfoCell__before']}>{before}</span>}
       <div className={styles['MiniInfoCell__middle']}>
         <Paragraph
           className={styles['MiniInfoCell__content']}

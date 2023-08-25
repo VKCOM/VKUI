@@ -63,6 +63,9 @@ export const MiniInfoCellPlayground = (props: ComponentPlaygroundProps) => {
           children: ['Подробная информация'],
           expandable: [true],
         },
+        {
+          children: ['Ячейка без иконки'],
+        },
       ]}
     >
       {(props: MiniInfoCellProps) => <MiniInfoCell {...props} />}
