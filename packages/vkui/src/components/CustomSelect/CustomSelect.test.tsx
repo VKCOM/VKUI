@@ -4,6 +4,23 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { CustomSelect, type SelectProps } from './CustomSelect';
 
+jest.mock('../../lib/floating', function mockFloatingHideMiddleware() {
+  const actual = jest.requireActual('../../lib/floating');
+  return {
+    ...actual,
+    hideMiddleware(...args: any) {
+      return {
+        ...actual.hideMiddleware(...args),
+        fn: () => ({
+          data: {
+            referenceHidden: false,
+          },
+        }),
+      };
+    },
+  };
+});
+
 const getCustomSelectValue = () => screen.getByTestId('target').textContent;
 
 const CustomSelectControlled = ({
