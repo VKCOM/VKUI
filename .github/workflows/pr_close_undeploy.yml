@@ -1,0 +1,31 @@
+name: 'Close Pull Request: Undeploy'
+# Note: display_title не задокументирован
+run-name: '${{ github.event.workflow_run.display_title }} • ${{ github.event.workflow_run.head_branch }} • ${{ github.event.workflow_run.id }}'
+
+on:
+  workflow_run:
+    workflows: ['Close Pull Request']
+    types: [completed]
+
+jobs:
+  pr_workflow_payload:
+    name: Call reusable workflow
+    uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
+    with:
+      action: download
+
+  undeploy_s3:
+    needs: pr_workflow_payload
+    if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
+    runs-on: ubuntu-latest
+    name: Undeploy S3
+    steps:
+      - name: Delete from S3
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: delete
+          commandDeletePrefix: pull/${{ needs.pr_workflow_payload.outputs.pr_number  }}
