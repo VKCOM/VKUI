@@ -6,6 +6,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../lib/adaptivity';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { Chip, ChipOption, ChipValue, RenderChip } from '../Chip/Chip';
+import { Text } from '../Typography/Text/Text';
 import styles from './ChipsInputBase.module.css';
 
 export interface ChipsInputBaseProps<Option extends ChipOption>
@@ -176,7 +177,8 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
         );
       })}
       <label className={styles['ChipsInputBase__label']} aria-label={inputAriaLabel}>
-        <input
+        <Text
+          Component="input"
           type="text"
           autoCapitalize="none"
           autoComplete="off"
@@ -185,7 +187,7 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
           aria-autocomplete="list"
           className={styles['ChipsInputBase__el']}
           {...restProps}
-          ref={inputRef}
+          getRootRef={inputRef}
           value={fieldValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
