@@ -5,23 +5,6 @@ import { baselineComponent, waitForFloatingPosition } from '../../testing/utils'
 import { ChipOption } from '../Chip/Chip';
 import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
 
-jest.mock('../../lib/floating', function mockFloatingHideMiddleware() {
-  const actual = jest.requireActual('../../lib/floating');
-  return {
-    ...actual,
-    hideMiddleware(...args: any) {
-      return {
-        ...actual.hideMiddleware(...args),
-        fn: () => ({
-          data: {
-            referenceHidden: false,
-          },
-        }),
-      };
-    },
-  };
-});
-
 const ChipsSelectTest = (props: ChipsSelectProps<ChipOption>) => (
   <ChipsSelect data-testid="chips-select" {...props} />
 );
