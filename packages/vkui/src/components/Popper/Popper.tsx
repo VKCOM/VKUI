@@ -105,6 +105,10 @@ export interface PopperCommonProps
    */
   renderContent?(props: PopperRenderContentProps): React.ReactNode;
   onPlacementChange?(data: { placement?: Placement }): void;
+  /**
+   * Принудительно скрывает компонет если целевой элемент исчез
+   */
+  hideWhenReferenceHidden?: boolean;
 }
 
 export interface PopperProps extends PopperCommonProps {
@@ -135,6 +139,7 @@ export const Popper = ({
   customMiddlewares,
   renderContent,
   getRootRef,
+  hideWhenReferenceHidden,
   ...restProps
 }: PopperProps) => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
@@ -186,7 +191,9 @@ export const Popper = ({
       );
     }
 
-    middlewares.push(hideMiddleware());
+    if (hideWhenReferenceHidden) {
+      middlewares.push(hideMiddleware());
+    }
 
     return middlewares;
   }, [
@@ -200,6 +207,7 @@ export const Popper = ({
     sameWidth,
     customMiddlewares,
     placementProp,
+    hideWhenReferenceHidden,
   ]);
 
   const {
@@ -245,7 +253,10 @@ export const Popper = ({
           floatingDataY,
           sameWidth ? null : undefined,
         ),
-        visibility: hide?.referenceHidden ? 'hidden' : styleProp?.visibility || 'visible',
+        ...(hideWhenReferenceHidden &&
+          hide?.referenceHidden && {
+            visibility: 'hidden',
+          }),
       }}
     >
       {arrow && (
