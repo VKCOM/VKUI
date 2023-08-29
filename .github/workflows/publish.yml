@@ -39,20 +39,36 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Set Git credentials
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
 
+      - name: Saving current version to env
+        id: prev_version
+        run: |
+          echo "version=$(yarn workspace @vkontakte/vkui node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
       - name: Bump by version type
         if: ${{ !github.event.inputs.custom_version }}
-        run: yarn workspace @vkontakte/vkui version --${{ github.event.inputs.type }} --no-commit-hooks
+        run: yarn workspace @vkontakte/vkui run g:npm:version ${{ github.event.inputs.type }}
 
       - name: Bump by custom version
         if: ${{ github.event.inputs.custom_version }}
-        run: yarn workspace @vkontakte/vkui version --new-version ${{ github.event.inputs.custom_version }} --no-commit-hooks
+        run: yarn workspace @vkontakte/vkui run g:npm:version ${{ github.event.inputs.custom_version }}
+
+      - name: Saving updated version to env
+        id: updated_version
+        run: |
+          echo "version=$(yarn workspace @vkontakte/vkui node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Adding commit and tag with updated version number
+        run: |
+          git add -A
+          git commit -m 'bump(@vkontakte/vkui): from ${{ steps.prev_version.outputs.version }} to ${{ steps.updated_version.outputs.version }}'
+          git tag v${{ steps.updated_version.outputs.version }}
 
       - name: Run linters
         run: yarn run lint
@@ -65,6 +81,7 @@ jobs:
         with:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
+          tags: true
 
       - name: Create stable branch
         uses: VKCOM/gh-actions/VKUI/stable-branch@main
@@ -72,14 +89,17 @@ jobs:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           directory: packages/vkui/
 
-      - name: Publishing release
-        run: yarn workspace @vkontakte/vkui publish --non-interactive
+      - name: Setup NPM Auth Token to .yarnrc.yml
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+        shell: bash
+        run: |
+          yarn config set npmAlwaysAuth true
+          yarn config set npmAuthToken $NODE_AUTH_TOKEN
 
-      - name: Save updated package version to env
-        id: updated_version
-        run: echo "version=$(yarn workspace @vkontakte/vkui --silent run --silent package:version)" >> $GITHUB_OUTPUT
+      - name: Publishing release
+        run: |
+          yarn workspace @vkontakte/vkui npm publish
 
       - name: Creating doc for stable release
         run: |

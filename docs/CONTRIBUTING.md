@@ -4,9 +4,8 @@
 
 Ознакомиться можно по следующим ссылкам:
 
-- [Документация по "Workspaces"](https://classic.yarnpkg.com/lang/en/docs/workspaces/)
-- [Статья "Workspaces in Yarn"](https://classic.yarnpkg.com/blog/2017/08/02/introducing-workspaces/)
-- [GitHub issue #3846 с описанием нюансов](https://github.com/VKCOM/VKUI/issues/3846#issuecomment-1362796617)
+- [Документация по "Workspaces"](https://yarnpkg.com/features/workspaces)
+- [GitHub issue #3846 с описанием нюансов (про yarn v1, но всё ещё актуально для v3)](https://github.com/VKCOM/VKUI/issues/3846#issuecomment-1362796617)
 
 ### Быстрый старт
 
