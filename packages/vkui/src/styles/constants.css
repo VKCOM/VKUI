@@ -24,7 +24,7 @@
   /* insets */
   --vkui_internal--safe_area_inset_top: 0px;
   --vkui_internal--safe_area_inset_right: 0px;
-  --vkui_internal--safe_area_inset_bottom: 50px;
+  --vkui_internal--safe_area_inset_bottom: 0px;
   --vkui_internal--safe_area_inset_left: 0px;
 
   /* animations */
@@ -84,7 +84,7 @@
   :root {
     --vkui_internal--safe_area_inset_top: constant(safe-area-inset-top);
     --vkui_internal--safe_area_inset_right: constant(safe-area-inset-right);
-    --vkui_internal--safe_area_inset_bottom: 50px;
+    --vkui_internal--safe_area_inset_bottom: constant(safe-area-inset-bottom);
     --vkui_internal--safe_area_inset_left: constant(safe-area-inset-left);
   }
 }
@@ -93,7 +93,7 @@
   :root {
     --vkui_internal--safe_area_inset_top: env(safe-area-inset-top);
     --vkui_internal--safe_area_inset_right: env(safe-area-inset-right);
-    --vkui_internal--safe_area_inset_bottom: 50px;
+    --vkui_internal--safe_area_inset_bottom: env(safe-area-inset-bottom);
     --vkui_internal--safe_area_inset_left: env(safe-area-inset-left);
   }
 }
