@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IconSettingsProvider } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAppearance } from '../../hooks/useAppearance';
@@ -218,9 +217,7 @@ export const AppRoot = ({
         disablePortal,
       }}
     >
-      <ScrollController elRef={rootRef}>
-        <IconSettingsProvider classPrefix="vkui">{children}</IconSettingsProvider>
-      </ScrollController>
+      <ScrollController elRef={rootRef}>{children}</ScrollController>
     </AppRootContext.Provider>
   );
 
