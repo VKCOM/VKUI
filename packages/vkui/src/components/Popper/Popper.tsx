@@ -253,10 +253,9 @@ export const Popper = ({
           floatingDataY,
           sameWidth ? null : undefined,
         ),
-        ...(hideWhenReferenceHidden &&
-          hide?.referenceHidden && {
-            visibility: 'hidden',
-          }),
+        ...(hide?.referenceHidden && {
+          visibility: 'hidden',
+        }),
       }}
     >
       {arrow && (
