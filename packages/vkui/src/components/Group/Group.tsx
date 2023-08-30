@@ -33,13 +33,15 @@ const stylesPadding = {
 /**
  * Вычисляем mode для Group.
  */
-function useGroupMode(modeProps: GroupProps['mode']): 'plain' | 'card' | 'none' {
-  const { isInsideModal } = React.useContext(ModalRootContext);
+function useGroupMode(
+  forcedMode: GroupProps['mode'],
+  sizeX: SizeType | 'none',
+  isInsideModal: boolean,
+): 'plain' | 'card' | 'none' {
   const { layout } = React.useContext(AppRootContext);
-  const { sizeX = 'none' } = useAdaptivity();
 
-  if (modeProps) {
-    return modeProps;
+  if (forcedMode) {
+    return forcedMode;
   }
 
   if (isInsideModal) {
@@ -97,7 +99,7 @@ export const Group = ({
   const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
 
-  const mode = useGroupMode(modeProps);
+  const mode = useGroupMode(modeProps, sizeX, isInsideModal);
 
   const isTabPanel = restProps.role === 'tabpanel';
 

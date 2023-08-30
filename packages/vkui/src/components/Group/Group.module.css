@@ -64,25 +64,15 @@
   }
 }
 
+.Group--sizeX-compact,
 .Group--sizeX-compact.Group--mode-card {
   padding-left: 0;
   padding-right: 0;
 }
 
 @media (--sizeX-compact) {
+  .Group--sizeX-none,
   .Group--sizeX-none.Group--mode-card {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
-.Group--sizeX-compact {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-@media (--sizeX-compact) {
-  .Group--sizeX-none {
     padding-left: 0;
     padding-right: 0;
   }
