@@ -118,7 +118,7 @@ export const AppRoot = ({
     const parent = rootRef.current?.parentElement;
     const classes = ['vkui__root'].concat(mode === 'embedded' ? 'vkui__root--embedded' : []);
     if (parent) {
-      if (!disableParentTransformForPositionFixedElements) {
+      if (mode === 'embedded' && !disableParentTransformForPositionFixedElements) {
         parent.style.transform = 'translate3d(0, 0, 0)';
       }
       parent.classList.add(...classes);
@@ -126,7 +126,7 @@ export const AppRoot = ({
 
     return () => {
       if (parent) {
-        if (!disableParentTransformForPositionFixedElements) {
+        if (mode === 'embedded' && !disableParentTransformForPositionFixedElements) {
           parent.style.transform = '';
         }
         parent.classList.remove(...classes);
