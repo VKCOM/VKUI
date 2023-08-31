@@ -16,6 +16,7 @@ export interface ModalElements {
   innerElement?: HTMLElement | null;
   headerElement?: HTMLElement | null;
   contentElement?: HTMLElement | null;
+  bottomInset?: HTMLElement | null;
 }
 
 export interface ModalsStateEntry extends ModalElements {

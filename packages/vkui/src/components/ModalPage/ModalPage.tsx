@@ -142,6 +142,7 @@ export const ModalPage = ({
               >
                 <div className={styles['ModalPage__content-in']}>{children}</div>
               </div>
+              <div ref={refs.bottomInset} className={styles['ModalPage__bottom-inset']} />
             </div>
             {isCloseButtonShown && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
           </div>

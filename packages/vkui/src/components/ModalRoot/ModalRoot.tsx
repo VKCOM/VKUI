@@ -642,9 +642,10 @@ function initModal(modalState: ModalsStateEntry) {
 }
 
 function initPageModal(modalState: ModalsStateEntry) {
-  const { contentElement } = modalState;
-  const contentHeight = (contentElement?.firstElementChild as HTMLElement).offsetHeight;
-
+  const { contentElement, bottomInset } = modalState;
+  const contentElementHeight = (contentElement?.firstElementChild as HTMLElement).offsetHeight;
+  const bottomInsetHeight = bottomInset?.offsetHeight || 0;
+  const contentHeight = contentElementHeight + bottomInsetHeight;
   let prevTranslateY = modalState.translateY;
 
   modalState.expandable =

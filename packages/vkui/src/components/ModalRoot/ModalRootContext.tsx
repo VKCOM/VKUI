@@ -42,6 +42,7 @@ export function useModalRegistry(id: string | undefined, type: ModalType) {
     innerElement: (e) => (elements.innerElement = e),
     headerElement: (e) => (elements.headerElement = e),
     contentElement: (e) => (elements.contentElement = e),
+    bottomInset: (e) => (elements.bottomInset = e),
   }).current;
   return { refs };
 }
