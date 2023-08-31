@@ -162,8 +162,8 @@
   background-color: var(--vkui--color_background_content);
 }
 
-.Panel.Panel--sizeX-regular .Panel__in,
-.Panel.Panel--sizeX-regular::before {
+.Panel--sizeX-regular .Panel__in,
+.Panel--sizeX-regular::before {
   background-color: transparent;
 }
 
@@ -172,4 +172,10 @@
   .Panel--sizeX-none::before {
     background-color: transparent;
   }
+}
+
+/* В AppRoot была установлена layout настройка  */
+.Panel--layoutSetting .Panel__in,
+.Panel--layoutSetting::before {
+  background-color: transparent;
 }

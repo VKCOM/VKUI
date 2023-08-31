@@ -7,6 +7,7 @@ export interface AppRootContextInterface {
   mode?: 'partial' | 'embedded' | 'full';
   keyboardInput?: boolean;
   disablePortal?: boolean;
+  layout?: 'card' | 'plain';
 }
 
 export const AppRootContext = React.createContext<AppRootContextInterface>({

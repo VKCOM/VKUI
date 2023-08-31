@@ -39,11 +39,11 @@ const Layout = ({ children }) => {
   );
 };
 
-const Config = ({ hasPointer, children, ...config }) => {
+const Config = ({ hasPointer, layout, children, ...config }) => {
   return (
     <ConfigProvider {...config}>
       <AdaptivityProvider hasPointer={hasPointer}>
-        <AppRoot>{children}</AppRoot>
+        <AppRoot layout={layout}>{children}</AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
   );

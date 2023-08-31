@@ -1,6 +1,6 @@
 Группа – базовый компонент для группировки контента по смыслу.
 
-```jsx { "props": { "layout": false, "adaptivity": true } }
+```jsx { "props": { "layout": false, "showLayoutSelect": true, "adaptivity": true } }
 const MODAL_NAME = 'modal';
 
 const Example = () => {

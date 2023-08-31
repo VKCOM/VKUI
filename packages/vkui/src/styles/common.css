@@ -33,3 +33,11 @@
     background: var(--vkui--color_background);
   }
 }
+
+.vkui--layout-card {
+  background: var(--vkui--color_background);
+}
+
+.vkui--layout-plain {
+  background: var(--vkui--color_background_content);
+}

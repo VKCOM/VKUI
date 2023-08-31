@@ -6,6 +6,7 @@ import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
@@ -28,6 +29,35 @@ const stylesPadding = {
   s: styles['Group--padding-s'],
   m: styles['Group--padding-m'],
 };
+
+/**
+ * Вычисляем mode для Group.
+ */
+function useGroupMode(
+  forcedMode: GroupProps['mode'],
+  sizeX: SizeType | 'none',
+  isInsideModal: boolean,
+): 'plain' | 'card' | 'none' {
+  const { layout } = React.useContext(AppRootContext);
+
+  if (forcedMode) {
+    return forcedMode;
+  }
+
+  if (isInsideModal) {
+    return 'plain';
+  }
+
+  if (layout) {
+    return layout;
+  }
+
+  if (sizeX !== 'none') {
+    return sizeX === SizeType.REGULAR ? 'card' : 'plain';
+  }
+
+  return 'none';
+}
 
 export interface GroupProps extends HTMLAttributesWithRootRef<HTMLElement> {
   header?: React.ReactNode;
@@ -69,16 +99,7 @@ export const Group = ({
   const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
 
-  let mode: GroupProps['mode'] | 'none' = modeProps;
-
-  if (!modeProps) {
-    // Подробнее в "none" можно прочитать в ADAPTIVITY_GUIDE.md
-    mode = isInsideModal ? 'plain' : 'none';
-  }
-
-  if (mode === 'none' && sizeX !== 'none') {
-    mode = sizeX === SizeType.REGULAR ? 'card' : 'plain';
-  }
+  const mode = useGroupMode(modeProps, sizeX, isInsideModal);
 
   const isTabPanel = restProps.role === 'tabpanel';
 
