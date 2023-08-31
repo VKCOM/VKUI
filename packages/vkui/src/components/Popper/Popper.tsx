@@ -8,6 +8,7 @@ import {
   convertFloatingDataToReactCSSProperties,
   flipMiddleware,
   getAutoPlacementAlign,
+  hideMiddleware,
   offsetMiddleware,
   type Placement,
   type PlacementWithAuto,
@@ -104,6 +105,10 @@ export interface PopperCommonProps
    */
   renderContent?(props: PopperRenderContentProps): React.ReactNode;
   onPlacementChange?(data: { placement?: Placement }): void;
+  /**
+   * Принудительно скрывает компонет если целевой элемент исчез
+   */
+  hideWhenReferenceHidden?: boolean;
 }
 
 export interface PopperProps extends PopperCommonProps {
@@ -134,6 +139,7 @@ export const Popper = ({
   customMiddlewares,
   renderContent,
   getRootRef,
+  hideWhenReferenceHidden,
   ...restProps
 }: PopperProps) => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
@@ -185,6 +191,10 @@ export const Popper = ({
       );
     }
 
+    if (hideWhenReferenceHidden) {
+      middlewares.push(hideMiddleware());
+    }
+
     return middlewares;
   }, [
     offsetSkidding,
@@ -197,6 +207,7 @@ export const Popper = ({
     sameWidth,
     customMiddlewares,
     placementProp,
+    hideWhenReferenceHidden,
   ]);
 
   const {
@@ -205,7 +216,7 @@ export const Popper = ({
     strategy: floatingPositionStrategy,
     placement: resolvedPlacement,
     refs,
-    middlewareData: { arrow: arrowCoords },
+    middlewareData: { arrow: arrowCoords, hide },
   } = useFloating({
     placement: isNotAutoPlacement ? placementProp : undefined,
     middleware: memoizedMiddlewares,
@@ -242,6 +253,9 @@ export const Popper = ({
           floatingDataY,
           sameWidth ? null : undefined,
         ),
+        ...(hide?.referenceHidden && {
+          visibility: 'hidden',
+        }),
       }}
     >
       {arrow && (
