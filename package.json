@@ -126,7 +126,8 @@
     "playwright:install": "playwright install --with-deps",
     "playwright:cmd:merge-reports": "playwright merge-reports",
     "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install",
-    "deduplicate": "yarn-deduplicate --list && yarn-deduplicate --fail"
+    "deduplicate": "yarn-deduplicate --list && yarn-deduplicate --fail",
+    "size:ci": "yarn workspace @vkontakte/vkui run size:ci"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
