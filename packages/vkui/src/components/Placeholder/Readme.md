@@ -85,3 +85,23 @@ const onNavClick = (e) => {
   </Panel>
 </View>;
 ```
+
+## Покомпоненты
+
+```jsx { "props": { "layout": false, "iframe": false } }
+<Placeholder.Container>
+  <Placeholder.Icon>
+    <Icon56UserAddOutline />
+  </Placeholder.Icon>
+  <Placeholder.Header>Find friends</Placeholder.Header>
+  <Placeholder.Text>The people you add as your friends will be displayed here</Placeholder.Text>
+  <Placeholder.Actions>
+    <ButtonGroup mode="vertical" align="center">
+      <Button size="m">Button</Button>
+      <Button size="m" mode="tertiary">
+        Button
+      </Button>
+    </ButtonGroup>
+  </Placeholder.Actions>
+</Placeholder.Container>
+```

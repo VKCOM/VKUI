@@ -1,12 +1,71 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { HTMLAttributesWithRootRef } from '../../types';
+import { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
 import styles from './Placeholder.module.css';
 
-export interface PlaceholderProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface PlaceholderContainerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Растягивает плейсхолдер на весь экран, но в таком случае на экране должен быть только плейсхолдер
+   */
+  stretched?: boolean;
+  /**
+   * Добавляет отступы к компоненту
+   */
+  withPadding?: boolean;
+}
+
+const PlaceholderContainer = ({
+  stretched,
+  withPadding = true,
+  ...restProps
+}: PlaceholderContainerProps) => (
+  <RootComponent
+    baseClassName={classNames(
+      styles['Placeholder'],
+      stretched && styles['Placeholder--stretched'],
+      withPadding && styles['Placeholder--withPadding'],
+    )}
+    {...restProps}
+  />
+);
+
+export type PlaceholderIconProps = HTMLAttributesWithRootRef<HTMLDivElement>;
+
+const PlaceholderIcon = (props: PlaceholderIconProps) => (
+  <RootComponent baseClassName={styles['Placeholder__icon']} {...props} />
+);
+
+export type PlaceholderHeaderProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
+
+const PlaceholderHeader = ({ className, ...restProps }: PlaceholderHeaderProps) => (
+  <Title
+    level="2"
+    weight="2"
+    className={classNames(className, styles['Placeholder__header'])}
+    {...restProps}
+  />
+);
+
+export type PlaceholderTextProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
+
+const PlaceholderText = ({ className, ...restProps }: PlaceholderTextProps) => (
+  <Headline
+    weight="3"
+    className={classNames(className, styles['Placeholder__text'])}
+    {...restProps}
+  />
+);
+
+export type PlaceholderActionsProps = HTMLAttributesWithRootRef<HTMLDivElement>;
+
+const PlaceholderActions = (props: PlaceholderActionsProps) => (
+  <RootComponent baseClassName={styles['Placeholder__action']} {...props} />
+);
+
+export interface PlaceholderProps extends PlaceholderContainerProps {
   /**
    * Иконка
    */
@@ -19,14 +78,6 @@ export interface PlaceholderProps extends HTMLAttributesWithRootRef<HTMLDivEleme
    * Кнопка действия
    */
   action?: React.ReactNode;
-  /**
-   * Растягивает плейсхолдер на весь экран, но в таком случае на экране должен быть только плейсхолдер
-   */
-  stretched?: boolean;
-  /**
-   * Добавляет отступы к компоненту
-   */
-  withPadding?: boolean;
 }
 
 /**
@@ -35,31 +86,21 @@ export interface PlaceholderProps extends HTMLAttributesWithRootRef<HTMLDivEleme
 export const Placeholder = ({
   icon,
   header,
-  action,
   children,
-  stretched,
+  action,
   withPadding = true,
   ...restProps
 }: PlaceholderProps) => (
-  <RootComponent
-    {...restProps}
-    baseClassName={classNames(
-      styles['Placeholder'],
-      stretched && styles['Placeholder--stretched'],
-      withPadding && styles['Placeholder--withPadding'],
-    )}
-  >
-    {hasReactNode(icon) && <div className={styles['Placeholder__icon']}>{icon}</div>}
-    {hasReactNode(header) && (
-      <Title level="2" weight="2" className={styles['Placeholder__header']}>
-        {header}
-      </Title>
-    )}
-    {hasReactNode(children) && (
-      <Headline weight="3" className={styles['Placeholder__text']}>
-        {children}
-      </Headline>
-    )}
-    {hasReactNode(action) && <div className={styles['Placeholder__action']}>{action}</div>}
-  </RootComponent>
+  <PlaceholderContainer withPadding={withPadding} {...restProps}>
+    {hasReactNode(icon) && <PlaceholderIcon>{icon}</PlaceholderIcon>}
+    {hasReactNode(header) && <PlaceholderHeader>{header}</PlaceholderHeader>}
+    {hasReactNode(children) && <PlaceholderText>{children}</PlaceholderText>}
+    {hasReactNode(action) && <PlaceholderActions>{action}</PlaceholderActions>}
+  </PlaceholderContainer>
 );
+
+Placeholder.Container = PlaceholderContainer;
+Placeholder.Icon = PlaceholderIcon;
+Placeholder.Header = PlaceholderHeader;
+Placeholder.Text = PlaceholderText;
+Placeholder.Actions = PlaceholderActions;
