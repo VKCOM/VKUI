@@ -7,7 +7,6 @@ import { getTitleFromChildren } from '../../lib/utils';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
-import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Chip.module.css';
 
 const sizeYClassNames = {
@@ -75,9 +74,9 @@ export const Chip = ({
     >
       <div className={styles['Chip__in']} role="presentation">
         {hasReactNode(before) && <div className={styles['Chip__before']}>{before}</div>}
-        <Footnote className={styles['Chip__content']} title={title} aria-hidden>
+        <span className={styles['Chip__content']} title={title} aria-hidden>
           {children}
-        </Footnote>
+        </span>
         {hasReactNode(after) && <div className={styles['Chip__after']}>{after}</div>}
 
         {removable && (

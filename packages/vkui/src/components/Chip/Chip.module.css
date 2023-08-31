@@ -25,6 +25,30 @@
   text-overflow: ellipsis;
   color: var(--vkui--color_text_primary);
   display: inline-block;
+
+  /* Typography/Paragraph */
+  font-size: var(--vkui--font_paragraph--font_size--regular);
+  line-height: var(--vkui--font_paragraph--line_height--regular);
+  font-weight: var(--vkui--font_paragraph--font_weight--regular);
+  font-family: var(--vkui--font_paragraph--font_family--regular);
+}
+
+.Chip--sizeY-compact .Chip__content {
+  /* Typography/Footnote */
+  font-size: var(--vkui--font_footnote--font_size--regular);
+  line-height: var(--vkui--font_footnote--line_height--regular);
+  font-weight: var(--vkui--font_footnote--font_weight--regular);
+  font-family: var(--vkui--font_footnote--font_family--regular);
+}
+
+@media (--sizeY-compact) {
+  .Chip--sizeY-none .Chip__content {
+    /* Typography/Footnote */
+    font-size: var(--vkui--font_footnote--font_size--regular);
+    line-height: var(--vkui--font_footnote--line_height--regular);
+    font-weight: var(--vkui--font_footnote--font_weight--regular);
+    font-family: var(--vkui--font_footnote--font_family--regular);
+  }
 }
 
 .Chip__remove {
