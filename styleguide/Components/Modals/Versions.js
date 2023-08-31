@@ -13,6 +13,7 @@ export function Versions({ id }) {
       return null;
     }
     const allVersions = Object.keys(dataRaw.versions);
+
     const fromIndex = allVersions.indexOf(MINIMUM_VERSION);
     return allVersions.slice(fromIndex).filter(filterPrereleaseVersion).reverse();
   }, [dataRaw]);

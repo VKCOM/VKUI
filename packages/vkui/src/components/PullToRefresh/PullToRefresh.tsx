@@ -24,6 +24,7 @@ function cancelEvent(event: any) {
   while (event.originalEvent) {
     event = event.originalEvent;
   }
+
   if (event.preventDefault && event.cancelable) {
     event.preventDefault();
   }
