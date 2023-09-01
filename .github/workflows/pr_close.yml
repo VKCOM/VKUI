@@ -21,11 +21,45 @@ jobs:
       action: upload
       override_pr_number: ${{ inputs.pr_number_by_workflow_dispatch }}
 
+  v5:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'v5')
+    concurrency: ci-stable
+    runs-on: ubuntu-latest
+    name: v5 Patch
+    steps:
+      - name: Checkout (for forked PR)
+        if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
+        uses: actions/checkout@v3
+
+      - name: Checkout (for maintainer's PR)
+        if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Make patch
+        uses: VKCOM/gh-actions/VKUI/patch@main
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          directory: packages/vkui/
+          targetBranch: v5
+          needScreenshots: true
+
   patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
     concurrency: ci-stable
     runs-on: ubuntu-latest
-    name: Patch
+    name: Stable Patch
     steps:
       - name: Checkout (for forked PR)
         if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
