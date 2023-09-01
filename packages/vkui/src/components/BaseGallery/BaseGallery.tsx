@@ -237,6 +237,7 @@ export const BaseGallery = ({
   };
 
   const onStart = (e: TouchEvent) => {
+    e.originalEvent.stopPropagation();
     onDragStart?.(e);
     setShiftState((prevState) => ({ ...prevState, animation: false }));
   };

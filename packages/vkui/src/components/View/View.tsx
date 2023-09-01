@@ -18,10 +18,12 @@ import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionCont
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { useSplitCol } from '../SplitCol/SplitColContext';
 import { Touch, TouchEvent } from '../Touch/Touch';
-import { swipeBackExcluded } from './utils';
+import {
+  getSwipeBackPredicates,
+  hasHorizontalScrollableElementWithScrolledToLeft,
+  swipeBackExcluded,
+} from './utils';
 import styles from './View.module.css';
-
-const SWIPE_BACK_AREA = 70;
 
 enum SwipeBackResults {
   fail = 1,
@@ -58,25 +60,6 @@ export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavId
   history?: string[];
 
   children: React.ReactElement | Iterable<React.ReactElement>;
-}
-
-export interface ViewState {
-  animated: boolean;
-
-  visiblePanels: string[];
-  activePanel: string | null;
-  isBack: boolean | undefined;
-  prevPanel: string | null;
-  nextPanel: string | null;
-
-  swipingBack: boolean;
-  swipeBackStartX: number;
-  swipeBackShift: number;
-  swipeBackNextPanel: string | null;
-  swipeBackPrevPanel: string | null;
-  swipeBackResult: SwipeBackResults | null;
-
-  browserSwipe: boolean;
 }
 
 const warn = warnOnce('View');
@@ -122,8 +105,8 @@ export const View = ({
   const [prevPanel, setPrevPanel] = React.useState<string | null>(null);
   const [nextPanel, setNextPanel] = React.useState<string | null>(null);
 
+  const swipeBackPrevented = React.useRef<boolean>(false);
   const [swipingBack, setSwipingBack] = React.useState<boolean | undefined>(undefined);
-  const [swipeBackPrevented, setSwipeBackPrevented] = React.useState<boolean>(false);
   const [swipeBackStartX, setSwipeBackStartX] = React.useState<number>(0);
   const [swipeBackShift, setSwipeBackShift] = React.useState<number>(0);
   const [swipeBackNextPanel, setSwipeBackNextPanel] = React.useState<string | null>(null);
@@ -152,9 +135,12 @@ export const View = ({
   );
 
   const disableAnimation =
-    configProvider?.transitionMotionEnabled === false ||
-    !splitCol?.animate ||
-    platform === Platform.VKCOM;
+    !configProvider.transitionMotionEnabled || !splitCol.animate || platform === Platform.VKCOM;
+  const iOSSwipeBackSimulationEnabled =
+    !disableAnimation &&
+    platform === Platform.IOS &&
+    configProvider.isWebView &&
+    Boolean(onSwipeBack);
 
   const pickPanel = (id: string | null) => {
     if (id === null) {
@@ -250,37 +236,52 @@ export const View = ({
     [onSwipeBackCancel, onSwipeBackSuccess, swipeBackNextPanel, swipeBackResult],
   );
 
-  const onMoveX = (event: TouchEvent): void => {
-    if (
-      platform !== Platform.IOS ||
-      swipeBackPrevented ||
-      swipeBackExcluded(event) ||
-      disableAnimation
-    ) {
+  const handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: TouchEvent) => {
+    if (browserSwipe) {
+      return;
+    }
+    const { swipeBackTriggered, viewportStartEdgeTouched, viewportEndEdgeTouched } =
+      getSwipeBackPredicates(event.startX, event.shiftX, window!.innerWidth);
+
+    if ((viewportStartEdgeTouched || viewportEndEdgeTouched) && swipeBackTriggered) {
+      setBrowserSwipe(true);
+    }
+  };
+
+  const handleTouchMoveXForIOSSwipeBackSimulation = (event: TouchEvent) => {
+    if (swipeBackPrevented.current || swipeBackExcluded(event)) {
       return;
     }
 
-    if (!configProvider?.isWebView) {
-      if (
-        (event.startX <= SWIPE_BACK_AREA || event.startX >= window!.innerWidth - SWIPE_BACK_AREA) &&
-        !browserSwipe
-      ) {
-        setBrowserSwipe(true);
+    const { swipedToOpposite, swipeBackTriggered, viewportStartEdgeTouched } =
+      getSwipeBackPredicates(event.startX, event.shiftX, window!.innerWidth);
+
+    if (animated && swipeBackTriggered) {
+      return;
+    }
+
+    if (!swipingBack && history && history.length > 1) {
+      if (swipedToOpposite) {
+        swipeBackPrevented.current = true;
+        return;
       }
 
-      return;
-    }
+      if (!swipeBackTriggered) {
+        return;
+      }
 
-    if (!onSwipeBack || (animated && event.startX <= SWIPE_BACK_AREA)) {
-      return;
-    }
-
-    if (!swipingBack && event.startX <= SWIPE_BACK_AREA && history && history.length > 1) {
+      if (
+        !viewportStartEdgeTouched &&
+        hasHorizontalScrollableElementWithScrolledToLeft(event.originalEvent.target as HTMLElement)
+      ) {
+        swipeBackPrevented.current = true;
+        return;
+      }
       // Начался свайп назад
       if (onSwipeBackStart) {
         const payload = onSwipeBackStart(activePanel);
         if (payload === 'prevent') {
-          setSwipeBackPrevented(true);
+          swipeBackPrevented.current = true;
           return;
         }
       }
@@ -298,46 +299,32 @@ export const View = ({
     }
 
     if (swipingBack) {
-      let swipeBackShift = 0;
       if (event.shiftX < 0) {
-        swipeBackShift = 0;
+        setSwipeBackShift(0);
       } else if (event.shiftX > window!.innerWidth - swipeBackStartX) {
-        swipeBackShift = window!.innerWidth;
+        setSwipeBackShift(window!.innerWidth);
       } else {
-        swipeBackShift = event.shiftX;
+        setSwipeBackShift(event.shiftX);
       }
-      setSwipeBackShift(swipeBackShift);
     }
   };
 
-  const onEnd = React.useCallback(
-    (event: TouchEvent): void => {
-      if (swipingBack) {
-        const speed = (swipeBackShift / event.duration) * 1000;
-        if (swipeBackShift === 0) {
-          onSwipeBackCancel();
-        } else if (swipeBackShift >= (window!.innerWidth ?? 0)) {
-          onSwipeBackSuccess();
-        } else if (speed > 250 || swipeBackStartX + swipeBackShift > window!.innerWidth / 2) {
-          setSwipeBackResult(SwipeBackResults.success);
-        } else {
-          setSwipeBackResult(SwipeBackResults.fail);
-        }
+  const handleTouchEndForIOSSwipeBackSimulation = (event: TouchEvent) => {
+    swipeBackPrevented.current = false;
+
+    if (swipingBack) {
+      const speed = (swipeBackShift / event.duration) * 1000;
+      if (swipeBackShift === 0) {
+        onSwipeBackCancel();
+      } else if (swipeBackShift >= (window!.innerWidth ?? 0)) {
+        onSwipeBackSuccess();
+      } else if (speed > 250 || swipeBackShift >= window!.innerWidth / 2) {
+        setSwipeBackResult(SwipeBackResults.success);
+      } else {
+        setSwipeBackResult(SwipeBackResults.fail);
       }
-      if (swipeBackPrevented) {
-        setSwipeBackPrevented(false);
-      }
-    },
-    [
-      onSwipeBackCancel,
-      onSwipeBackSuccess,
-      swipeBackShift,
-      swipeBackStartX,
-      swipingBack,
-      swipeBackPrevented,
-      window,
-    ],
-  );
+    }
+  };
 
   const calcPanelSwipeStyles = (panelId: string | undefined): React.CSSProperties => {
     if (!canUseDOM || !window) {
@@ -473,8 +460,6 @@ export const View = ({
     disableAnimation,
     document,
     flushTransition,
-    onSwipeBackStart,
-    panels,
     platform,
     prevActivePanel,
     prevBrowserSwipe,
@@ -485,7 +470,6 @@ export const View = ({
     scroll,
     swipeBackNextPanel,
     swipeBackResult,
-    swipingBack,
     swipingBackTransitionEndHandler,
     waitTransitionFinish,
   ]);
@@ -503,8 +487,14 @@ export const View = ({
           disableAnimation && styles['View--no-motion'],
           className,
         )}
-        onMoveX={onMoveX}
-        onEnd={onEnd}
+        onMoveX={
+          iOSSwipeBackSimulationEnabled
+            ? handleTouchMoveXForIOSSwipeBackSimulation
+            : platform === Platform.IOS
+            ? handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
+            : undefined
+        }
+        onEnd={iOSSwipeBackSimulationEnabled ? handleTouchEndForIOSSwipeBackSimulation : undefined}
       >
         <div className={styles['View__panels']}>
           {panels.map((panel: React.ReactElement) => {

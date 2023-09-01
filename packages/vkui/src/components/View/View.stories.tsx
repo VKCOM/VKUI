@@ -3,12 +3,18 @@ import { Meta, StoryObj } from '@storybook/react';
 import vkBridge from '@vkontakte/vk-bridge';
 import { Platform } from '../../lib/platform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getRandomUsers } from '../../testing/mock';
 import { Alert } from '../Alert/Alert';
+import { Avatar } from '../Avatar/Avatar';
 import { CellButton } from '../CellButton/CellButton';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 import { Div } from '../Div/Div';
 import { FormItem } from '../FormItem/FormItem';
+import { Gallery } from '../Gallery/Gallery';
 import { Group } from '../Group/Group';
+import { Header } from '../Header/Header';
+import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
+import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
 import { Input } from '../Input/Input';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
@@ -32,7 +38,9 @@ const MainPanelContent = ({ onProfileClick }: { onProfileClick: () => void }) =>
     <React.Fragment>
       <PanelHeader>Main</PanelHeader>
       <Group>
-        <CellButton onClick={onProfileClick}>Профиль</CellButton>
+        <CellButton stopPropagation={false} onClick={onProfileClick}>
+          Профиль
+        </CellButton>
       </Group>
     </React.Fragment>
   );
@@ -49,7 +57,33 @@ const ProfilePanelContent = ({ onSettingsClick }: { onSettingsClick: () => void 
         </Div>
       </Group>
       <Group>
-        <CellButton onClick={onSettingsClick}>Настройки</CellButton>
+        <CellButton stopPropagation={false} onClick={onSettingsClick}>
+          Настройки
+        </CellButton>
+      </Group>
+      <Group
+        header={<Header>Gallery</Header>}
+        description="Полностью блокирует свайпбэк (за счёт event.stopPropagation() на onStartX компонента Touch)"
+      >
+        <Gallery slideWidth="90%" bullets="dark">
+          <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+          <img src="https://placebear.com/1024/640" style={{ display: 'block' }} />
+          <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+        </Gallery>
+      </Group>
+      <Group
+        header={<Header>HorizontalScroll</Header>}
+        description="Свайпбэк срабатывает либо если мы тянем за левый край экрана, либо если позиция горизонтального скролла равна нулю"
+      >
+        <HorizontalScroll>
+          <div style={{ display: 'flex' }}>
+            {getRandomUsers(15).map((user) => (
+              <HorizontalCell key={user.id} size="s" header={user.first_name}>
+                <Avatar size={56} src={user.photo_100} />
+              </HorizontalCell>
+            ))}
+          </div>
+        </HorizontalScroll>
       </Group>
     </React.Fragment>
   );
