@@ -39,15 +39,15 @@ function MiniInfoCellExample() {
       >
         <Separator style={{ marginBottom: 12 }} />
 
-        <MiniInfoCell before={<Icon20CommunityName />} textWrap="full" textLevel="primary">
+        <MiniInfoCell before={<Icon20CommunityName />} textWrap="full">
           Команда вконтакте
         </MiniInfoCell>
 
-        <MiniInfoCell before={<Icon20MessageOutline />} textWrap="full" textLevel="primary">
+        <MiniInfoCell before={<Icon20MessageOutline />} textWrap="full">
           Официальная страница Команды ВКонтакте.
         </MiniInfoCell>
 
-        <MiniInfoCell before={<Icon20ArticleOutline />} textWrap="full" textLevel="primary">
+        <MiniInfoCell before={<Icon20ArticleOutline />} textWrap="full">
           ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с
           безграничными возможностями и миллионами пользователей.
         </MiniInfoCell>
