@@ -159,7 +159,7 @@ export const Cell = ({
         removePlaceholder={removePlaceholder}
         onRemove={(e) => onRemove(e, rootElRef.current)}
       >
-        {Platform.IOS ? (
+        {platform === Platform.IOS ? (
           ({ isRemoving }) => (
             <SimpleCell {...simpleCellProps} disabled={simpleCellProps.disabled || isRemoving} />
           )
