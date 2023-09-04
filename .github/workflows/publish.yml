@@ -104,7 +104,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Close milestone, comment on issues and release notes
-        uses: VKCOM/gh-actions/VKUI/close-milestone@main
+        uses: VKCOM/gh-actions/VKUI/complete-publish@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           releaseTag: ${{ needs.publish.outputs.release_tag }}
