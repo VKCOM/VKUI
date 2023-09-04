@@ -12,7 +12,6 @@
 
 .vkui,
 .vkui > body {
-  -webkit-font-smoothing: subpixel-antialiased;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   font-family: var(--vkui--font_family_base);
