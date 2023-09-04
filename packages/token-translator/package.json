@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@types/node": "^20.5.7",
-    "postcss": "^8.4.28",
+    "postcss": "^8.4.29",
     "postcss-less": "^6.0.0",
     "postcss-scss": "^4.0.7",
     "postcss-value-parser": "^4.2.0",
