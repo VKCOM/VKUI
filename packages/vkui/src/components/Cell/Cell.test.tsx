@@ -73,4 +73,26 @@ describe('Cell', () => {
       expect(updatedList).toEqual(initialList);
     });
   });
+
+  test('handles click in removable mode', () => {
+    const removeStub = jest.fn();
+    const clickStub = jest.fn();
+
+    render(
+      <Cell mode="removable" onRemove={removeStub} onClick={clickStub}>
+        Саша Колобов
+      </Cell>,
+    );
+
+    fireEvent.click(screen.getByLabelText('Удалить'));
+    expect(removeStub).toHaveBeenCalledTimes(1);
+    expect(clickStub).not.toHaveBeenCalled();
+
+    removeStub.mockClear();
+    clickStub.mockClear();
+    fireEvent.click(screen.getByText('Саша Колобов'));
+
+    expect(removeStub).toHaveBeenCalledTimes(0);
+    expect(clickStub).toHaveBeenCalledTimes(1);
+  });
 });
