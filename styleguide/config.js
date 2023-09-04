@@ -233,6 +233,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/GridAvatar/GridAvatar.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Image/Image.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Gallery/Gallery.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Carousel/Carousel.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Progress/Progress.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Search/Search.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Tabs/Tabs.tsx`,

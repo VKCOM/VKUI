@@ -164,6 +164,8 @@ export { InfoRow } from './components/InfoRow/InfoRow';
 export type { InfoRowProps } from './components/InfoRow/InfoRow';
 export { Gallery } from './components/Gallery/Gallery';
 export type { GalleryProps } from './components/Gallery/Gallery';
+export { Carousel } from './components/Carousel/Carousel';
+export type { CarouselProps } from './components/Carousel/Carousel';
 export { Avatar } from './components/Avatar/Avatar';
 export type {
   AvatarProps,

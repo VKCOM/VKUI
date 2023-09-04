@@ -1,26 +1,25 @@
 import * as React from 'react';
-import { clamp } from '../../helpers/math';
 import { useTimeout } from '../../hooks/useTimeout';
-import { BaseGallery } from '../BaseGallery/BaseGallery';
+import { CarouselBase } from '../BaseGallery/CarouselBase/CarouselBase';
+import type { CarouselBaseProps } from '../BaseGallery/CarouselBase/CarouselBase';
 import { useSkipFirstRender } from '../BaseGallery/hooks';
-import { BaseGalleryProps } from '../BaseGallery/types';
 
-export interface GalleryProps extends BaseGalleryProps {
+export interface CarouselProps extends CarouselBaseProps {
   initialSlideIndex?: number;
   timeout?: number;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Gallery
+ * @see https://vkcom.github.io/VKUI/#/Carousel
  */
-export const Gallery = ({
+export const Carousel = ({
   initialSlideIndex = 0,
   children,
   timeout = 0,
   onChange,
   bullets,
   ...props
-}: GalleryProps) => {
+}: CarouselProps) => {
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
   const isControlled = typeof props.slideIndex === 'number';
   const slideIndex = isControlled ? props.slideIndex ?? 0 : localSlideIndex;
@@ -32,7 +31,7 @@ export const Gallery = ({
   const childCount = slides.length;
   const inited = useSkipFirstRender();
 
-  const handleChange: GalleryProps['onChange'] = React.useCallback(
+  const handleChange: CarouselProps['onChange'] = React.useCallback(
     (current: number) => {
       if (current === slideIndex) {
         return;
@@ -49,30 +48,19 @@ export const Gallery = ({
     [timeout, slideIndex, autoplay],
   );
 
-  // prevent invalid slideIndex
-  // any slide index is invalid with no slides, just keep it as is
-  const safeSlideIndex = childCount > 0 ? clamp(slideIndex, 0, childCount - 1) : slideIndex;
-  // notify parent in controlled mode
-  React.useEffect(() => {
-    if (onChange && safeSlideIndex !== slideIndex) {
-      onChange(safeSlideIndex);
-    }
-    setSlideIndex(safeSlideIndex);
-  }, [onChange, safeSlideIndex, slideIndex]);
-
   if (!inited) {
     return null;
   }
 
   return (
-    <BaseGallery
+    <CarouselBase
       isDraggable={isDraggable}
       {...props}
       bullets={childCount > 0 && bullets}
-      slideIndex={safeSlideIndex}
+      slideIndex={slideIndex}
       onChange={handleChange}
     >
       {slides}
-    </BaseGallery>
+    </CarouselBase>
   );
 };
