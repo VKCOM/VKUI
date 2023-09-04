@@ -106,10 +106,10 @@ export const Root = ({
   const onAnimationEnd = (e: React.AnimationEvent) => {
     if (
       [
-        styles['vkui-root-android-animation-hide-back'],
-        styles['vkui-root-android-animation-show-forward'],
-        styles['vkui-root-ios-animation-hide-back'],
-        styles['vkui-root-ios-animation-show-forward'],
+        styles['root-android-animation-hide-back'],
+        styles['root-android-animation-show-forward'],
+        styles['root-ios-animation-hide-back'],
+        styles['root-ios-animation-show-forward'],
       ].includes(e.animationName)
     ) {
       finishTransition();

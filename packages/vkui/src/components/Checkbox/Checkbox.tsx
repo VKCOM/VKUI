@@ -24,7 +24,6 @@ import styles from './Checkbox.module.css';
 const sizeYClassNames = {
   none: styles['Checkbox--sizeY-none'],
   [SizeType.COMPACT]: styles['Checkbox--sizeY-compact'],
-  [SizeType.REGULAR]: styles['Checkbox--sizeY-regular'],
 };
 
 export interface CheckboxProps
@@ -114,8 +113,7 @@ export const Checkbox = ({
       Component="label"
       className={classNames(
         styles['Checkbox'],
-        platform === Platform.VKCOM && styles['Checkbox--vkcom'],
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         !(hasReactNode(children) || hasReactNode(description)) && styles['Checkbox--simple'],
         className,
       )}
