@@ -15,6 +15,7 @@
     "@storybook/addon-essentials": "7.4.0",
     "@storybook/addon-interactions": "7.4.0",
     "@storybook/addon-links": "7.4.0",
+    "@storybook/addons": "7.4.0",
     "@storybook/api": "7.4.0",
     "@storybook/blocks": "7.4.0",
     "@storybook/components": "7.4.0",
