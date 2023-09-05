@@ -106,5 +106,5 @@ jobs:
       - name: Close milestone, comment on issues and release notes
         uses: VKCOM/gh-actions/VKUI/complete-publish@main
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           releaseTag: ${{ needs.publish.outputs.release_tag }}
