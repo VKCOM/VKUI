@@ -26,13 +26,6 @@
   margin-top: calc(var(--vkui--size_cardgrid_padding_vertical--regular) * 2);
 }
 
-@media (--sizeX-compact) {
-  .CardGrid--sizeX-none.CardGrid--android {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-}
-
 /**
  * CMP:
  * Group
