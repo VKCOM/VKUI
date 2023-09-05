@@ -24,15 +24,19 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
     },
     {
       title: 'NPM',
-      href: 'https://www.npmjs.com/package/@vkontakte/vkui',
+      href: `${VKUI_PACKAGE.URLS.NPM}`,
     },
     {
       title: 'Github',
-      href: 'https://github.com/VKCOM/VKUI',
+      href: `${VKUI_PACKAGE.URLS.REPOSITORY}`,
+    },
+    {
+      title: 'Storybook',
+      href: `${VKUI_PACKAGE.URLS.HOMEPAGE}playground`,
     },
     {
       title: 'Релизы',
-      href: 'https://github.com/VKCOM/VKUI/releases',
+      href: `${VKUI_PACKAGE.URLS.REPOSITORY}/releases`,
     },
   ];
 

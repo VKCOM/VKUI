@@ -10,7 +10,7 @@ interface VisuallyHiddenProps
     HasComponent {}
 
 const story: Meta<VisuallyHiddenProps> = {
-  title: 'Helpers/VisuallyHidden',
+  title: 'Service/VisuallyHidden',
   component: VisuallyHidden,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };

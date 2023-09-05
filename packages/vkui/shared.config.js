@@ -13,6 +13,8 @@ module.exports.VERSION = pkg.version;
 module.exports.URLS = {
   REPOSITORY: pkg.repository.url.replace('.git', ''),
   ISSUES: pkg.bugs,
+  HOMEPAGE: pkg.homepage,
+  NPM: 'https://www.npmjs.com/package/@vkontakte/vkui',
 };
 
 /**
