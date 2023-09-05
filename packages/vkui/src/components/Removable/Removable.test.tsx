@@ -41,13 +41,13 @@ describe('Removable', () => {
       </ConfigProvider>,
     );
 
-    const removeButton = screen.getAllByRole('button')[1];
-    if (!removeButton) {
+    const removeActionButton = screen.getAllByRole('button')[1];
+    if (!removeActionButton) {
       throw new Error('Cannot find actionable remove button');
     }
     // set width of the removeButton which is used in the Removable state to
     // move content.
-    Object.defineProperty(removeButton, 'offsetWidth', { value: 12 });
+    Object.defineProperty(removeActionButton, 'offsetWidth', { value: 12 });
 
     expect(screen.queryByText(/сдвинут/)).toBeFalsy();
 
