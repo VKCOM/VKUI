@@ -1,4 +1,15 @@
 ```jsx
+const slideStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '72px',
+};
+
+const Slide = ({ children, width, backgroundColor }) => (
+  <div style={{ ...slideStyle, width, backgroundColor }}>{children}</div>
+);
+
 const Example = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [isDraggable, setIsDraggable] = useState(true);
@@ -97,6 +108,15 @@ const Example = () => {
               Next slide
             </Button>
           </FormItem>
+        </Group>
+        <Group header={<Header mode="secondary">With loop prop</Header>}>
+          <Gallery slideWidth="90%" style={{ height: 150 }} bullets="dark" showArrows loop>
+            <Slide backgroundColor="var(--vkui--color_background_negative)">1</Slide>
+            <Slide backgroundColor="var(--vkui--color_background_positive)">2</Slide>
+            <Slide backgroundColor="var(--vkui--color_background_accent)">3</Slide>
+            <Slide backgroundColor="var(--vkui--color_background_negative)">4</Slide>
+            <Slide backgroundColor="var(--vkui--color_background_positive)">5</Slide>
+          </Gallery>
         </Group>
       </Panel>
     </View>

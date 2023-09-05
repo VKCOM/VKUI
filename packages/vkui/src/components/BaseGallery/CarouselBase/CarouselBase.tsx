@@ -15,11 +15,6 @@ import { BaseGalleryProps, GallerySlidesState, LayoutState } from '../types';
 import { ControlElementsState, LoopPoint, ShiftingState } from './types';
 import styles from '../BaseGallery.module.css';
 
-export interface CarouselBaseProps extends Omit<BaseGalleryProps, 'align'> {
-  // выравнивает слайды по центру
-  align?: 'default' | 'center';
-}
-
 const ANIMATION_DURATION = 0.24;
 
 const LAYOUT_DEFAULT_STATE: LayoutState = {
@@ -61,12 +56,12 @@ export const CarouselBase = ({
   onChange,
   onPrevClick,
   onNextClick,
-  align = 'default',
+  align = 'left',
   showArrows,
   getRef,
   arrowSize = 'l',
   ...restProps
-}: CarouselBaseProps) => {
+}: BaseGalleryProps) => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
   const layoutState = React.useRef<LayoutState>(LAYOUT_DEFAULT_STATE);
   const shiftState = React.useRef<ShiftingState>(SHIFT_DEFAULT_STATE);
@@ -211,7 +206,7 @@ export const CarouselBase = ({
         slides: localSlides,
         viewportOffsetWidth: localViewportOffsetWidth,
         isCenterWithCustomWidth,
-        align: align === 'center' ? 'center' : 'left',
+        align,
       }),
       slides: localSlides,
       isFullyVisible: localLayerWidth <= localContainerWidth,
