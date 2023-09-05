@@ -13,7 +13,7 @@ jobs:
       options: --ipc=host
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # см. https://github.com/actions/checkout/issues/1169
       - name: Set safe directory

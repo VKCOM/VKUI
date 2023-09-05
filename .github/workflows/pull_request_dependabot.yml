@@ -38,7 +38,7 @@ jobs:
     name: Complete '@playwright/test' update
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
