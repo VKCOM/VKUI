@@ -53,6 +53,7 @@ export interface VKUIButtonProps extends HasAlign {
   after?: React.ReactNode;
   loading?: boolean;
   disableSpinnerAnimation?: boolean;
+  rounded?: boolean;
 }
 
 export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
@@ -75,6 +76,7 @@ export const Button = ({
   stopPropagation = true,
   className,
   disableSpinnerAnimation,
+  rounded,
   ...restProps
 }: ButtonProps) => {
   const hasIcons = Boolean(before || after);
@@ -104,6 +106,7 @@ export const Button = ({
         hasIcons && styles['Button--with-icon'],
         hasIconOnly && !stretched && styles['Button--singleIcon'],
         loading && styles['Button--loading'],
+        rounded && styles['Button--rounded'],
       )}
       getRootRef={getRootRef}
     >
