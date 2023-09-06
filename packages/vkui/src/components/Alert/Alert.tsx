@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useId } from '../../hooks/useId';
@@ -10,6 +11,7 @@ import { AlignType, AnchorHTMLAttributesOnly } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { ButtonProps } from '../Button/Button';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { IconButton } from '../IconButton/IconButton';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { AlertActionProps } from './AlertAction';
@@ -41,6 +43,11 @@ export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
    * `aria-label` для кнопки закрытия. Необходим, чтобы кнопка была доступной.
    */
   dismissLabel?: string;
+  /**
+   * Расположение кнопки закрытия (внутри и вне `popout'a`)
+   * Доступно только в `compact`-режиме, не отображается на `iOS`
+   */
+  dismissButtonMode?: 'inside' | 'outside';
 }
 
 /**
@@ -58,6 +65,7 @@ export const Alert = ({
   dismissLabel = 'Закрыть предупреждение',
   renderAction,
   actionsAlign,
+  dismissButtonMode = 'outside',
   ...restProps
 }: AlertProps) => {
   const generatedId = useId();
@@ -70,6 +78,7 @@ export const Alert = ({
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
   const [closing, setClosing] = React.useState(false);
+  const isDismissButtonVisible = isDesktop && platform !== Platform.IOS;
 
   const elementRef = React.useRef<HTMLDivElement>(null);
 
@@ -133,10 +142,26 @@ export const Alert = ({
         aria-labelledby={headerId}
         aria-describedby={textId}
       >
-        <div className={styles['Alert__content']}>
+        <div
+          className={classNames(
+            styles['Alert__content'],
+            dismissButtonMode === 'inside' && styles['Alert__content--withButton'],
+          )}
+        >
           {hasReactNode(header) && <AlertHeader id={headerId}>{header}</AlertHeader>}
           {hasReactNode(text) && <AlertText id={textId}>{text}</AlertText>}
           {children}
+          {isDismissButtonVisible && dismissButtonMode === 'inside' && (
+            <IconButton
+              aria-label={dismissLabel}
+              className={classNames(styles['Alert__dismiss'], 'vkuiInternalAlert__dismiss')}
+              onClick={close}
+              hoverMode="opacity"
+              activeMode="opacity"
+            >
+              <Icon20Cancel />
+            </IconButton>
+          )}
         </div>
         <AlertActions
           actions={actions}
@@ -145,7 +170,9 @@ export const Alert = ({
           renderAction={renderAction}
           onItemClick={onItemClick}
         />
-        {isDesktop && <ModalDismissButton onClick={close} aria-label={dismissLabel} />}
+        {isDismissButtonVisible && dismissButtonMode === 'outside' && (
+          <ModalDismissButton onClick={close} aria-label={dismissLabel} />
+        )}
       </FocusTrap>
     </PopoutWrapper>
   );
