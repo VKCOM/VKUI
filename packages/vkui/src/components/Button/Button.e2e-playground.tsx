@@ -64,6 +64,10 @@ export const ButtonPlayground = (props: ComponentPlaygroundProps) => {
           stretched: [true],
           align: ['left', 'center', 'right'],
         },
+        {
+          size: ['s', 'm', 'l'],
+          rounded: [true],
+        },
       ]}
     >
       {(props: ButtonProps) => <Button {...props}>Кнопка</Button>}
