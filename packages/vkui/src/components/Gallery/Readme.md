@@ -109,8 +109,8 @@ const Example = () => {
             </Button>
           </FormItem>
         </Group>
-        <Group header={<Header mode="secondary">With loop prop</Header>}>
-          <Gallery slideWidth="90%" style={{ height: 150 }} bullets="dark" showArrows loop>
+        <Group header={<Header mode="secondary">With looped prop</Header>}>
+          <Gallery slideWidth="90%" style={{ height: 150 }} bullets="dark" showArrows looped>
             <Slide backgroundColor="var(--vkui--color_background_negative)">1</Slide>
             <Slide backgroundColor="var(--vkui--color_background_positive)">2</Slide>
             <Slide backgroundColor="var(--vkui--color_background_accent)">3</Slide>

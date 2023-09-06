@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { clamp } from '../../helpers/math';
+import { useIsClient } from '../../hooks/useIsClient';
 import { useTimeout } from '../../hooks/useTimeout';
 import { BaseGallery } from '../BaseGallery/BaseGallery';
 import { CarouselBase } from '../BaseGallery/CarouselBase/CarouselBase';
-import { useSkipFirstRender } from '../BaseGallery/hooks';
 import { BaseGalleryProps } from '../BaseGallery/types';
 
 export interface GalleryProps extends BaseGalleryProps {
   initialSlideIndex?: number;
   timeout?: number;
   // Отвечает за зацикливание слайдов
-  loop?: boolean;
+  looped?: boolean;
 }
 
 /**
@@ -22,7 +22,7 @@ export const Gallery = ({
   timeout = 0,
   onChange,
   bullets,
-  loop,
+  looped,
   ...props
 }: GalleryProps) => {
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
@@ -34,7 +34,7 @@ export const Gallery = ({
     [children],
   );
   const childCount = slides.length;
-  const inited = useSkipFirstRender();
+  const isClient = useIsClient();
 
   const handleChange: GalleryProps['onChange'] = React.useCallback(
     (current: number) => {
@@ -64,11 +64,11 @@ export const Gallery = ({
     setSlideIndex(safeSlideIndex);
   }, [onChange, safeSlideIndex, slideIndex]);
 
-  if (!inited) {
+  if (!isClient) {
     return null;
   }
 
-  const Component = loop ? CarouselBase : BaseGallery;
+  const Component = looped ? CarouselBase : BaseGallery;
 
   return (
     <Component
