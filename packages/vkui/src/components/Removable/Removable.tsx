@@ -81,7 +81,11 @@ const RemovableIos = ({
         hasActive={false}
         hasHover={false}
         aria-label={removePlaceholderString}
-        className={classNames(styles['Removable__action'], styles['Removable__toggle'])}
+        className={classNames(
+          styles['Removable__action'],
+          styles['Removable__toggle'],
+          'vkuiInternalRemovable__action',
+        )}
         onClick={onRemoveActivateClick}
         disabled={removeOffset > 0}
       >
@@ -167,7 +171,7 @@ export const Removable = ({
           <IconButton
             activeMode="opacity"
             hoverMode="opacity"
-            className={styles['Removable__action']}
+            className={classNames(styles['Removable__action'], 'vkuiInternalRemovable__action')}
             onClick={onRemoveClick}
             aria-label={removePlaceholderString}
           >

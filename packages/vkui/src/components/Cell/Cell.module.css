@@ -35,10 +35,18 @@
 
 .Cell--removable .Cell__content {
   flex-grow: 1;
-  padding-right: 0;
+  /* размер removable icon */
+  padding-right: 44px;
 }
 
 .Cell--removable :global(.vkuiInternalRemovable__content) {
+  padding-left: 0;
+}
+
+/* для того чтобы активная область Cell распространялась и на область removable */
+.Cell--removable :global(.vkuiInternalRemovable__action) {
+  position: absolute;
+  right: 0;
   padding-left: 0;
 }
 
@@ -50,8 +58,28 @@
   margin-left: 12px;
 }
 
+.Cell--ios.Cell--removable .Cell__dragger {
+  margin-right: 16px;
+}
+
 .Cell--ios .Cell__checkbox {
   margin-right: 12px;
+}
+
+.Cell--ios.Cell--removable .Cell__content {
+  /* размер removable icon */
+  padding-left: 44px;
+  padding-right: 0;
+}
+
+.Cell--ios.Cell--removable :global(.vkuiInternalRemovable__action) {
+  right: auto;
+  left: 0;
+  z-index: 1;
+}
+
+.Cell--ios.Cell--removable :global(.vkuiInternalRemovable__content) {
+  padding-right: 0;
 }
 
 /**
