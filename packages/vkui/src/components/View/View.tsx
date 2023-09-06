@@ -13,6 +13,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { useScroll } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { NavViewIdContext } from '../NavIdContext/NavIdContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { useSplitCol } from '../SplitCol/SplitColContext';
@@ -95,11 +96,11 @@ export const View = ({
   className,
   ...restProps
 }: ViewProps) => {
-  const scrolls = React.useRef(scrollsCache[getNavId({ nav, id: restProps.id }) as string] || {});
+  const id = getNavId({ nav, id: restProps.id });
+  const scrolls = React.useRef(scrollsCache[id as string] || {});
   const afterTransition = React.useRef(noop);
 
   React.useEffect(() => () => {
-    const id = getNavId({ nav, id: restProps.id });
     if (id) {
       scrollsCache[id] = scrolls.current;
     }
@@ -490,65 +491,67 @@ export const View = ({
   ]);
 
   return (
-    <Touch
-      Component="section"
-      {...restProps}
-      className={classNames(
-        styles['View'],
-        platform === Platform.IOS && classNames(styles['View--ios'], 'vkuiInternalView--ios'),
-        !disableAnimation && animated && styles['View--animated'],
-        !disableAnimation && swipingBack && styles['View--swiping-back'],
-        disableAnimation && styles['View--no-motion'],
-        className,
-      )}
-      onMoveX={onMoveX}
-      onEnd={onEnd}
-    >
-      <div className={styles['View__panels']}>
-        {panels.map((panel: React.ReactElement) => {
-          const panelId = getNavId(panel.props, warn);
-          const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
-          const isTransitionTarget = animated && panelId === (isBack ? prevPanel : nextPanel);
-          const compensateScroll =
-            isPrev || panelId === swipeBackNextPanel || (panelId === nextPanel && isBack);
+    <NavViewIdContext.Provider value={id}>
+      <Touch
+        Component="section"
+        {...restProps}
+        className={classNames(
+          styles['View'],
+          platform === Platform.IOS && classNames(styles['View--ios'], 'vkuiInternalView--ios'),
+          !disableAnimation && animated && styles['View--animated'],
+          !disableAnimation && swipingBack && styles['View--swiping-back'],
+          disableAnimation && styles['View--no-motion'],
+          className,
+        )}
+        onMoveX={onMoveX}
+        onEnd={onEnd}
+      >
+        <div className={styles['View__panels']}>
+          {panels.map((panel: React.ReactElement) => {
+            const panelId = getNavId(panel.props, warn);
+            const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
+            const isTransitionTarget = animated && panelId === (isBack ? prevPanel : nextPanel);
+            const compensateScroll =
+              isPrev || panelId === swipeBackNextPanel || (panelId === nextPanel && isBack);
 
-          return (
-            <div
-              className={classNames(
-                styles['View__panel'],
-                panelId === activePanel && styles['View__panel--active'],
-                panelId === prevPanel && styles['View__panel--prev'],
-                panelId === nextPanel && styles['View__panel--next'],
-                panelId === swipeBackPrevPanel && styles['View__panel--swipe-back-prev'],
-                panelId === swipeBackNextPanel && styles['View__panel--swipe-back-next'],
-                swipeBackResult === SwipeBackResults.success &&
-                  styles['View__panel--swipe-back-success'],
-                swipeBackResult === SwipeBackResults.fail &&
-                  styles['View__panel--swipe-back-failed'],
-              )}
-              onAnimationEnd={isTransitionTarget ? transitionEndHandler : undefined}
-              ref={(el) => panelId !== undefined && (panelNodes.current[panelId] = el)}
-              style={calcPanelSwipeStyles(panelId)}
-              key={panelId}
-            >
+            return (
               <div
-                className={styles['View__panel-in']}
-                style={{
-                  marginTop: compensateScroll ? -(scrolls.current[panelId] ?? 0) : undefined,
-                }}
+                className={classNames(
+                  styles['View__panel'],
+                  panelId === activePanel && styles['View__panel--active'],
+                  panelId === prevPanel && styles['View__panel--prev'],
+                  panelId === nextPanel && styles['View__panel--next'],
+                  panelId === swipeBackPrevPanel && styles['View__panel--swipe-back-prev'],
+                  panelId === swipeBackNextPanel && styles['View__panel--swipe-back-next'],
+                  swipeBackResult === SwipeBackResults.success &&
+                    styles['View__panel--swipe-back-success'],
+                  swipeBackResult === SwipeBackResults.fail &&
+                    styles['View__panel--swipe-back-failed'],
+                )}
+                onAnimationEnd={isTransitionTarget ? transitionEndHandler : undefined}
+                ref={(el) => panelId !== undefined && (panelNodes.current[panelId] = el)}
+                style={calcPanelSwipeStyles(panelId)}
+                key={panelId}
               >
-                <NavTransitionDirectionProvider isBack={swipingBack || isBack}>
-                  <NavTransitionProvider
-                    entering={panelId === nextPanel || panelId === swipeBackNextPanel}
-                  >
-                    {panel}
-                  </NavTransitionProvider>
-                </NavTransitionDirectionProvider>
+                <div
+                  className={styles['View__panel-in']}
+                  style={{
+                    marginTop: compensateScroll ? -(scrolls.current[panelId] ?? 0) : undefined,
+                  }}
+                >
+                  <NavTransitionDirectionProvider isBack={swipingBack || isBack}>
+                    <NavTransitionProvider
+                      entering={panelId === nextPanel || panelId === swipeBackNextPanel}
+                    >
+                      {panel}
+                    </NavTransitionProvider>
+                  </NavTransitionDirectionProvider>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-    </Touch>
+            );
+          })}
+        </div>
+      </Touch>
+    </NavViewIdContext.Provider>
   );
 };
