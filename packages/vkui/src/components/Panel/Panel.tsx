@@ -7,6 +7,7 @@ import { NavIdProps } from '../../lib/getNavId';
 import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
+import { NavPanelIdContext } from '../NavIdContext/NavIdContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { Touch } from '../Touch/Touch';
@@ -31,24 +32,26 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
   const { layout } = React.useContext(AppRootContext);
 
   return (
-    <RootComponent
-      {...restProps}
-      baseClassName={classNames(
-        styles['Panel'],
-        sizeXClassNames[sizeX],
-        centered && 'vkuiInternalPanel--centered',
-        layout && styles['Panel--layoutSetting'],
-      )}
-    >
-      <Touch
-        Component={TooltipContainer}
-        className={classNames(styles['Panel__in'], 'vkuiInternalPanel__in')}
+    <NavPanelIdContext.Provider value={restProps.id || nav}>
+      <RootComponent
+        {...restProps}
+        baseClassName={classNames(
+          styles['Panel'],
+          sizeXClassNames[sizeX],
+          centered && 'vkuiInternalPanel--centered',
+          layout && styles['Panel--layoutSetting'],
+        )}
       >
-        <div className={styles['Panel__in-before']} />
-        {centered ? <div className={styles['Panel__centered']}>{children}</div> : children}
-        {platform === Platform.IOS && <div className="vkuiInternalPanel__fade" />}
-        <div className={styles['Panel__in-after']} />
-      </Touch>
-    </RootComponent>
+        <Touch
+          Component={TooltipContainer}
+          className={classNames(styles['Panel__in'], 'vkuiInternalPanel__in')}
+        >
+          <div className={styles['Panel__in-before']} />
+          {centered ? <div className={styles['Panel__centered']}>{children}</div> : children}
+          {platform === Platform.IOS && <div className="vkuiInternalPanel__fade" />}
+          <div className={styles['Panel__in-after']} />
+        </Touch>
+      </RootComponent>
+    </NavPanelIdContext.Provider>
   );
 };
