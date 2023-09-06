@@ -36,6 +36,9 @@
 .Cell--removable .Cell__content {
   flex-grow: 1;
   padding-right: 0;
+}
+
+.Cell--removable :global(.vkuiInternalRemovable__content) {
   padding-left: 0;
 }
 

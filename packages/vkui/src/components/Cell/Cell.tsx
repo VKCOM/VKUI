@@ -130,7 +130,7 @@ export const Cell = ({
 
   const simpleCellProps = {
     hasActive: hasActive,
-    hasHover: hasActive,
+    hasHover: hasActive && !removable,
     ...restProps,
     className: styles['Cell__content'],
     disabled: simpleCellDisabled,
