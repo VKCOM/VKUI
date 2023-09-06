@@ -76,6 +76,7 @@ const Example = () => {
           },
         ]}
         actionsLayout="horizontal"
+        dismissButtonMode="inside"
         onClose={closePopout}
         header="Удаление документа"
         text="Вы уверены, что хотите удалить этот документ?"
