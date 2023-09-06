@@ -5,6 +5,7 @@ import { TabbarPlayground } from './Tabbar.e2e-playground';
 
 test.use({
   onlyForPlatforms: [Platform.ANDROID, Platform.IOS],
+  threshold: 0,
 });
 
 test('Tabbar', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
