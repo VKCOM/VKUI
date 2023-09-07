@@ -67,9 +67,10 @@
 }
 
 .Cell--ios.Cell--removable .Cell__content {
-  /* размер removable icon */
-  padding-left: 44px;
-  padding-right: 0;
+  /* размер removable icon + icon margins*/
+  padding-left: 48px;
+  /* правый паддинг от removable который мы обнулили ниже */
+  padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .Cell--ios.Cell--removable :global(.vkuiInternalRemovable__action) {
