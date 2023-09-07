@@ -66,11 +66,10 @@
   align-items: flex-end;
 }
 
-/* stylelint-disable @project-tools/stylelint-atomic */
+/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
 .Alert__actions > * {
   margin: 4px;
 }
-/* stylelint-enable @project-tools/stylelint-atomic */
 
 .Alert__actions--align-left {
   justify-content: flex-start;

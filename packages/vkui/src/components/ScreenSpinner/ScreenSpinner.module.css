@@ -39,6 +39,7 @@
   animation: screen-spinner-intro 0.2s ease;
 }
 
+/* stylelint-disable-next-line selector-max-type */
 .ScreenSpinner__icon--state-done :global(.vkuiIcon) path {
   stroke-dasharray: 50;
   stroke-dashoffset: 50;

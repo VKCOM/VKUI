@@ -46,6 +46,7 @@
  * CMP:
  * PanelHeader
  */
+/* stylelint-disable-next-line selector-max-universal */
 :global(.vkuiInternalPanelHeader) ~ .FixedLayout--vertical-top,
 :global(.vkuiInternalPanelHeader)
   ~ *

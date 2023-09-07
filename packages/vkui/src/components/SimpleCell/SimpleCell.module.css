@@ -81,6 +81,7 @@
   color: var(--vkui--color_icon_accent);
 }
 
+/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
 .SimpleCell__content > *:not(:last-child) {
   margin-right: 4px;
 }
@@ -216,6 +217,7 @@
   margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
+/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
 .SimpleCell__main > *:not(:first-child) {
   margin-top: 2px;
 }
