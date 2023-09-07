@@ -1,5 +1,5 @@
 {
-  "node": "16",
+  "node": "18",
   "installCommand": "codesandbox:install",
   "buildCommand": "build:vkui",
   "packages": ["packages/vkui"],
