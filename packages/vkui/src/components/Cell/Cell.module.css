@@ -58,10 +58,6 @@
   margin-left: 12px;
 }
 
-.Cell--ios.Cell--removable .Cell__dragger {
-  margin-right: 16px;
-}
-
 .Cell--ios .Cell__checkbox {
   margin-right: 12px;
 }
