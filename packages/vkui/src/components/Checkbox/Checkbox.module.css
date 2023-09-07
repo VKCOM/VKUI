@@ -90,6 +90,7 @@
   display: none;
 }
 
+/* stylelint-disable-next-line selector-max-universal */
 .Checkbox__input[disabled] ~ * {
   opacity: var(--vkui--opacity_disable_accessibility);
 }

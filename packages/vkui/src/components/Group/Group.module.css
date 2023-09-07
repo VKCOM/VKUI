@@ -9,11 +9,13 @@
   display: none;
 }
 
+/* stylelint-disable-next-line selector-max-universal */
 .Group--mode-plain + * + .Group__separator--separator {
   display: block;
 }
 
 @media (--sizeX-compact) {
+  /* stylelint-disable-next-line selector-max-universal */
   .Group--sizeX-none.Group--mode-none + * + .Group__separator--separator {
     display: block;
   }
@@ -192,6 +194,7 @@
  * CMP:
  * PanelHeader
  */
+/* stylelint-disable-next-line selector-max-universal */
 :global(.vkuiInternalPanelHeader--vkcom) ~ .Group:first-of-type,
 :global(.vkuiInternalPanelHeader--vkcom) + * .Group:first-of-type {
   position: relative;

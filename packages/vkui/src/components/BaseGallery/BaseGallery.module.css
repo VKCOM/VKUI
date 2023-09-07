@@ -41,6 +41,7 @@
   width: auto;
 }
 
+/* stylelint-disable-next-line selector-max-universal */
 .BaseGallery__slide > * {
   width: 100%;
   min-height: 100%;

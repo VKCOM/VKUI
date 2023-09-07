@@ -51,6 +51,7 @@
   overflow: hidden;
 }
 
+/* stylelint-disable-next-line selector-max-universal */
 .PanelHeader__content > * {
   display: block;
   overflow: hidden;
@@ -77,7 +78,7 @@
   color: var(--vkui--color_icon_accent_themed);
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic */
+/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
 .PanelHeader__after > *:not(:last-child) {
   margin-right: 4px;
 }
@@ -109,6 +110,7 @@
   font-size: 21px;
 }
 
+/* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--ios .PanelHeader__content > * {
   padding: 0 4px;
 }
@@ -117,6 +119,7 @@
   padding-left: 8px;
 }
 
+/* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--ios.PanelHeader--no-after .PanelHeader__content > * {
   padding-right: 0;
 }
@@ -157,6 +160,7 @@
   font-size: 23px;
 }
 
+/* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--android .PanelHeader__content > * {
   padding: 0 12px;
 }
@@ -189,6 +193,7 @@
   }
 }
 
+/* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--android.PanelHeader--no-after .PanelHeader__content > *,
 .PanelHeader--vkcom.PanelHeader--no-after .PanelHeader__content > * {
   padding-right: 0;
@@ -304,6 +309,7 @@
   margin-top: calc(-1 * var(--vkui_internal--thin_border));
 }
 
+/* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--no-before .PanelHeader__content > * {
   padding-left: 0;
 }

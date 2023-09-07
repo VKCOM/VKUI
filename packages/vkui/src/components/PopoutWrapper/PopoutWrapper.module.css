@@ -58,6 +58,7 @@
   position: relative;
 }
 
+/* stylelint-disable-next-line selector-max-universal */
 .PopoutWrapper__content > * {
   pointer-events: auto;
 }

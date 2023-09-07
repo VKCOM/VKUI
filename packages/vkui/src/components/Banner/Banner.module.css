@@ -63,6 +63,7 @@
   z-index: var(--vkui_internal--z_index_banner_background);
 }
 
+/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
 .Banner__bg,
 .Banner__bg > * {
   width: 100%;
