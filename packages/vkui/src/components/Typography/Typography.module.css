@@ -17,7 +17,7 @@
   font-weight: var(--vkui--font_weight_accent3);
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic */
+/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-type */
 .Typography b {
   font-weight: var(--vkui--font_weight_accent1);
 }

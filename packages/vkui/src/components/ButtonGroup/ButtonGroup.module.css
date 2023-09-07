@@ -18,7 +18,7 @@
   align-items: flex-start;
 }
 
-/* stylelint-disable @project-tools/stylelint-atomic */
+/* stylelint-disable @project-tools/stylelint-atomic, selector-max-universal */
 
 /**
  * [Примечание 3] Чтобы не завязываться на класс компонента, используем каскад и универсальный селектор.
@@ -62,7 +62,7 @@
   margin-right: var(--vkui--size_button_group_gap_medium--regular);
 }
 
-/* stylelint-enable @project-tools/stylelint-atomic */
+/* stylelint-enable @project-tools/stylelint-atomic, selector-max-universal */
 
 .ButtonGroup--mode-vertical.ButtonGroup--align-left {
   align-items: flex-start;
