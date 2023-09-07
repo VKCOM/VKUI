@@ -57,9 +57,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
       );
       expect(await screenshotWithClipToContent(page, options, browserName)).toMatchSnapshot(
         customScreenshotName,
-        typeof toMatchSnapshot?.threshold === 'number'
-          ? { threshold: toMatchSnapshot.threshold }
-          : undefined,
+        toMatchSnapshot,
       );
       expectCallCount += 1;
     };
