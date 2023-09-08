@@ -81,10 +81,15 @@ describe('Cell', () => {
       const removeStub = jest.fn();
       const clickStub = jest.fn();
 
-      render(
+      const { rerender } = render(
         <Cell mode="removable" onRemove={removeStub} onClick={clickStub}>
           Саша Колобов
         </Cell>,
+      );
+
+      expect(screen.getByRole('button', { name: /Саша Колобов/ })).not.toHaveAttribute(
+        'aria-disabled',
+        'true',
       );
 
       fireEvent.click(screen.getByLabelText('Удалить'));
@@ -97,6 +102,18 @@ describe('Cell', () => {
 
       expect(removeStub).toHaveBeenCalledTimes(0);
       expect(clickStub).toHaveBeenCalledTimes(1);
+
+      // cell should be disabled in removable state without onClick handler
+      rerender(
+        <Cell mode="removable" onRemove={removeStub}>
+          Саша Колобов
+        </Cell>,
+      );
+
+      expect(screen.getByRole('button', { name: /Саша Колобов/ })).toHaveAttribute(
+        'aria-disabled',
+        'true',
+      );
     });
 
     test('[iOS] handles click and ignores onClick in removing state', async () => {

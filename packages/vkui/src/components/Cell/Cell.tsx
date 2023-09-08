@@ -116,7 +116,8 @@ export const Cell = ({
     checkbox = <CellCheckbox className={styles['Cell__checkbox']} {...checkboxProps} />;
   }
 
-  const simpleCellDisabled = (draggable && !selectable) || disabled;
+  const simpleCellDisabled =
+    (draggable && !selectable) || (removable && !restProps.onClick) || disabled;
   const hasActive = !simpleCellDisabled && !dragging;
 
   const cellClasses = classNames(
