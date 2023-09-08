@@ -15,6 +15,11 @@ on:
       custom_version:
         description: 'custom version: x.y.z (without "v")'
         required: false
+      close_milestone:
+        description: 'whether to close associated milestone after publish'
+        required: true
+        type: boolean
+        default: true
 
 run-name: Publish ${{ inputs.type }} ${{ inputs.custom_version }}
 
@@ -101,6 +106,7 @@ jobs:
 
   close_milestone:
     needs: ['publish']
+    if: ${{ github.event.inputs.close_milestone  }}
     runs-on: ubuntu-latest
     steps:
       - name: Close milestone, comment on issues and release notes
