@@ -31,7 +31,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Run tests
         run: yarn run test
@@ -44,19 +44,40 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Bump version
-        run: yarn version --new-version ${{ github.event.inputs.version }} --no-commit-hooks --no-git-tag-version
+      - name: Saving current version to env
+        id: prev_version
+        run: |
+          echo "version=$(yarn node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
-      - name: Commit bumped version
-        run: git add -A && git commit -m '[token-translator] v${{ github.event.inputs.version }}'
+      - name: Bump version
+        run: yarn run g:npm:version ${{ github.event.inputs.version }}
+
+      - name: Saving updated version to env
+        id: updated_version
+        run: |
+          echo "version=$(yarn node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Adding commit and tag with updated version number
+        run: |
+          git add -A
+          git commit -m 'bump(@vkontakte/vkui-token-translator): from ${{ steps.prev_version.outputs.version }} to ${{ steps.updated_version.outputs.version }}'
+          git tag @vkontakte/vkui-token-translator@${{ steps.updated_version.outputs.version }}
 
       - name: Pushing changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
+          tags: true
 
-      - name: Publishing release
-        run: yarn publish --non-interactive --access public
+      - name: Setup NPM Auth Token to .yarnrc.yml
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+        shell: bash
+        run: |
+          yarn config set npmAlwaysAuth true
+          yarn config set npmAuthToken $NODE_AUTH_TOKEN
+
+      - name: Publishing release
+        run: |
+          yarn npm publish
