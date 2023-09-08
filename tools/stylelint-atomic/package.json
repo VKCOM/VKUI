@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "echo no build",
-    "test": "jest",
+    "test": "yarn run --top-level jest",
     "test:ci": "yarn test"
   }
 }

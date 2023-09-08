@@ -47,3 +47,13 @@ __diff_output__
 
 # OS
 .DS_Store
+
+# yarn specific
+# see https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
