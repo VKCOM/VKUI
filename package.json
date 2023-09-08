@@ -92,8 +92,7 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^5.9.0",
-    "yargs": "^17.7.2",
-    "yarn-deduplicate": "^6.0.2"
+    "yargs": "^17.7.2"
   },
   "resolutions": {
     "@types/react": "^17.0.0",
@@ -105,10 +104,10 @@
     "docs:styleguide:build": "yarn workspace @project-docs/styleguide run build",
     "docs:storybook": "yarn workspace @vkontakte/vkui storybook",
     "docs:storybook:build": "yarn workspace @vkontakte/vkui storybook:build",
-    "build": "yarn workspaces run build",
+    "build": "yarn workspaces foreach run build",
     "build:vkui": "yarn workspace @vkontakte/vkui run build",
-    "test": "yarn workspaces run test",
-    "test:ci": "yarn workspaces run test:ci",
+    "test": "yarn workspaces foreach run test",
+    "test:ci": "yarn workspaces foreach run test:ci",
     "test:e2e": "yarn workspace @vkontakte/vkui run test:e2e",
     "test:e2e-update": "yarn workspace @vkontakte/vkui run test:e2e-update",
     "test:e2e:ci": "yarn workspace @vkontakte/vkui run test:e2e:ci",
@@ -126,8 +125,8 @@
     "playwright:install": "playwright install --with-deps",
     "playwright:cmd:merge-reports": "playwright merge-reports",
     "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install",
-    "deduplicate": "yarn-deduplicate --list && yarn-deduplicate --fail",
-    "size:ci": "yarn workspace @vkontakte/vkui run size:ci"
+    "size:ci": "yarn workspace @vkontakte/vkui run size:ci",
+    "g:npm:version": "cd $INIT_CWD && npm version --no-workspaces-update --no-commit-hooks --no-git-tag-version"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
@@ -142,10 +141,7 @@
       "prettier --check"
     ]
   },
-  "engines": {
-    "yarn": "^1.21.1"
-  },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "yarn@3.6.3",
   "workspaces": {
     "packages": [
       "styleguide",

@@ -25,11 +25,11 @@ jobs:
         with:
           node-version: 18
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-scripts
+      - run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Run tests for all workspaces
         if: ${{ !inputs.workspace }}
-        run: yarn workspaces run test:ci
+        run: yarn run test:ci
 
       - name: Run tests for the specified workspace
         if: ${{ inputs.workspace }}
