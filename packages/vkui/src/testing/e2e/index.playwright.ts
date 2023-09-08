@@ -35,8 +35,10 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
   onlyForPlatforms: [null, { option: true }],
   onlyForAppearances: [null, { option: true }],
 
+  toMatchSnapshot: [undefined, { option: true }],
+
   expectScreenshotClippedToContent: async (
-    { page, platform, browserName, appearance },
+    { page, platform, browserName, appearance, toMatchSnapshot },
     use,
     testInfo,
   ) => {
@@ -55,6 +57,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
       );
       expect(await screenshotWithClipToContent(page, options, browserName)).toMatchSnapshot(
         customScreenshotName,
+        toMatchSnapshot,
       );
       expectCallCount += 1;
     };
