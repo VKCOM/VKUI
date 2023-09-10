@@ -100,7 +100,7 @@ export const AppRoot = ({
 
   const { hasPointer, sizeX = 'none' } = useAdaptivity();
 
-  if (process.env.NODE_ENVIRONMENT === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     if (!safeAreaInsets) {
       // TODO [>=6]: удалить warn
       warn("[@vkontakte/vk-bridge] Интеграция VKUI с @vkontakte/vk-bridge устарела и будет удалена в v6. Используйте хук `useInsets()` из @vkontakte/vk-bridge-react и результат передайте в параметр `safeAreaInsets` (см. https://github.com/VKCOM/VKUI/issues/5049)"); // prettier-ignore
