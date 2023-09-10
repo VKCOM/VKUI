@@ -57,7 +57,7 @@ export const ConfigProvider = (props: ConfigProviderProps) => {
       ? props.webviewType === WebviewType.VKAPPS
       : hasCustomPanelHeaderAfterMerged;
 
-  if (process.env.NODE_ENVIRONMENT === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     // TODO [>=6]: удалить warn
     let webviewTypeRule = '';
     if (props.webviewType) {
