@@ -4574,6 +4574,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/helpers@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "@swc/helpers@npm:0.5.2"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: 51d7e3d8bd56818c49d6bfbd715f0dbeedc13cf723af41166e45c03e37f109336bbcb57a1f2020f4015957721aeb21e1a7fff281233d797ff7d3dd1f447fa258
+  languageName: node
+  linkType: hard
+
 "@swc/jest@npm:^0.2.29":
   version: 0.2.29
   resolution: "@swc/jest@npm:0.2.29"
@@ -5754,7 +5763,7 @@ __metadata:
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
     "@floating-ui/react-dom": ^2.0.2
-    "@swc/helpers": ^0.5.1
+    "@swc/helpers": ^0.5.2
     "@vkontakte/icons": ^2.62.0
     "@vkontakte/vkjs": ^1.1.0
     dayjs: ^1.11.9
