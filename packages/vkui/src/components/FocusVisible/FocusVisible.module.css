@@ -25,7 +25,7 @@
 }
 
 .FocusVisible--thin {
-  --vkui_internal--focus_visible_thin: var(--vkui_internal--thin_border);
+  --vkui_internal--focus_visible_thin: var(--vkui--size_border--regular);
 }
 
 .FocusVisible--mode-inside,

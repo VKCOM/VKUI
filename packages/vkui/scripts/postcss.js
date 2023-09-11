@@ -38,6 +38,7 @@ function makePostcssPlugins({
     postcssGlobalData({
       files: [
         './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
+        VKUI_PACKAGE.PATHS.CSS_DYNAMIC_TOKENS,
         VKUI_PACKAGE.PATHS.CSS_CONSTANTS,
         VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS,
       ].map((pathSegment) => path.join(rootDirectory, pathSegment)),

@@ -2,19 +2,8 @@
   color: var(--vkui--color_separator_primary);
 }
 
-@media (min-resolution: 2dppx) {
-  .Separator {
-    color: var(--vkui--color_separator_primary2x);
-  }
-}
-@media (min-resolution: 3dppx) {
-  .Separator {
-    color: var(--vkui--color_separator_primary3x);
-  }
-}
-
 .Separator__in {
-  height: var(--vkui_internal--thin_border);
+  height: var(--vkui--size_border--regular);
   margin: 0;
   background: currentColor;
   color: inherit;

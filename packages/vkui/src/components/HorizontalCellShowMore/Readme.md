@@ -106,7 +106,7 @@ const largeImageStyles = {
   height: 124,
   borderRadius: 4,
   boxSizing: 'border-box',
-  border: 'var(--vkui_internal--thin_border) solid var(--vkui--color_image_border_alpha)',
+  border: 'var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha)',
   objectFit: 'cover',
 };
 

@@ -2,7 +2,6 @@
 :root {
   /* sizes */
   --vkui_internal--tabbar_height: 48px;
-  --vkui_internal--thin_border: 1px;
   --vkui_internal--grid_avatar_image_offset: 2px;
   --vkui_internal--slider_thumb_size: 28px;
   --vkui_internal--side_cell_gap: calc(
@@ -64,19 +63,6 @@
 
   /* z_index HorizontalScroll isolate */
   --vkui_internal--z_index_horizontal_scroll_arrow: 1;
-}
-
-@media (min-resolution: 2dppx) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :root {
-    --vkui_internal--thin_border: 0.5px;
-  }
-}
-@media (min-resolution: 3dppx) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :root {
-    --vkui_internal--thin_border: 0.33px;
-  }
 }
 
 @supports (padding-top: constant(safe-area-inset-top)) {

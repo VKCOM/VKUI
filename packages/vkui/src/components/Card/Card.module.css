@@ -25,7 +25,7 @@
   height: 100%;
   content: '';
   display: block;
-  border: var(--vkui_internal--thin_border) solid var(--vkui--color_image_border_alpha);
+  border: var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha);
   pointer-events: none;
   box-sizing: border-box;
   border-radius: inherit;
