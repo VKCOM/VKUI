@@ -6,7 +6,15 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "./dist"
+    "./dist",
+    "./src",
+    "!./src/**/*.png",
+    "!./src/**/*.md",
+    "!./src/**/*.*.ts",
+    "!./src/**/*.*.tsx",
+    "!./src/vkui.js",
+    "!./src/testing/",
+    "!./src/storybook/"
   ],
   "sideEffects": [
     "./dist/lib/polyfills.js",
