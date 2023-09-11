@@ -7,9 +7,7 @@ import {
 } from '@vkui-e2e/playground-helpers';
 import { Checkbox, type CheckboxProps } from './Checkbox';
 
-const baseRender = ({ children = 'label', ...restProps }: CheckboxProps) => (
-  <Checkbox {...restProps}>{children}</Checkbox>
-);
+const baseRender = (props: CheckboxProps) => <Checkbox {...props} />;
 
 export const CheckboxPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -17,12 +15,16 @@ export const CheckboxPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
+          children: ['label'],
           checked: [false, true],
           disabled: [undefined, true],
+          $adaptivity: 'y',
         },
         {
+          children: ['label'],
           indeterminate: [true],
           disabled: [undefined, true],
+          $adaptivity: 'y',
         },
       ]}
     >
