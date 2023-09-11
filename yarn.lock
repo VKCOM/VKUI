@@ -5717,7 +5717,7 @@ __metadata:
     stylelint-value-no-unknown-custom-properties: ^4.0.0
     swc-loader: ^0.2.3
     swc-plugin-css-modules: 0.1.3
-    swc-plugin-transform-remove-imports: 1.7.0
+    swc-plugin-transform-remove-imports: 1.8.0
     ts-node: ^10.9.1
     typescript: ^5.2.2
     typescript-plugin-css-modules: ^5.0.1
@@ -17841,10 +17841,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-plugin-transform-remove-imports@npm:1.7.0":
-  version: 1.7.0
-  resolution: "swc-plugin-transform-remove-imports@npm:1.7.0"
-  checksum: da22b2b86ceaf97edf7c073521db3e595bf0a59d26ed9622f18e95f632b417f722f38c3b1b253c9670152d96f5382e8899665e170161db828bda0d998564e679
+"swc-plugin-transform-remove-imports@npm:1.8.0":
+  version: 1.8.0
+  resolution: "swc-plugin-transform-remove-imports@npm:1.8.0"
+  checksum: cb03199442d60939917eb95798616e80b2bb7313b63d2411e98bb900ce58eb372b7ec2a001eb8b8beb950d099a667b506652132c2d6bae935893c1e2563ca19b
   languageName: node
   linkType: hard
 
