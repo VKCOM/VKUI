@@ -1,4 +1,4 @@
-ActionSheet – имитация [нативного компонента](https://developer.apple.com/ios/human-interface-guidelines/views/action-sheets/).
+ActionSheet – имитация [нативного компонента](https://developer.apple.com/design/human-interface-guidelines/action-sheets/).
 Удобно использовать, когда нужно дать пользователю выбрать одно из множества действий. В качестве `children` принимает
 коллекцию `ActionSheetItem`.
 На больших экранах прокрутка не отключается.
