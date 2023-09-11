@@ -87,7 +87,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  border: var(--vkui_internal--thin_border) solid transparent;
+  border: var(--vkui--size_border--regular) solid transparent;
   border-radius: inherit;
   pointer-events: none;
 }

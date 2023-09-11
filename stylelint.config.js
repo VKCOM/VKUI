@@ -55,6 +55,7 @@ module.exports = {
       {
         importFrom: [
           path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_CONSTANTS),
+          path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_DYNAMIC_TOKENS),
           path.join(
             __dirname,
             'node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css',

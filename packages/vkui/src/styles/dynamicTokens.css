@@ -1,0 +1,16 @@
+/* stylelint-disable selector-pseudo-class-disallowed-list */
+
+:root {
+  --vkui--size_border--regular: var(--vkui--size_border1x--regular);
+}
+
+@media (min-resolution: 2dppx) {
+  :root {
+    --vkui--size_border--regular: var(--vkui--size_border2x--regular);
+  }
+}
+@media (min-resolution: 3dppx) {
+  :root {
+    --vkui--size_border--regular: var(--vkui--size_border3x--regular);
+  }
+}
