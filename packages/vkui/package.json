@@ -9,6 +9,7 @@
     "./dist",
     "./src",
     "!./src/**/*.png",
+    "!./src/**/*.md",
     "!./src/**/*.*.ts",
     "!./src/**/*.*.tsx",
     "!./src/vkui.js",
