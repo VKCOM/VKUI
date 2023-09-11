@@ -24,6 +24,11 @@ on:
       custom_version:
         description: 'custom version: x.y.z-beta.0 (without "v")'
         required: false
+      close_milestone:
+        description: 'whether to close associated milestone after publish'
+        required: true
+        type: boolean
+        default: true
 
 run-name: Publish pre-release ${{ inputs.type }} ${{ inputs.custom_version }} (tag ${{ inputs.tag }})
 
@@ -120,6 +125,7 @@ jobs:
 
   close_milestone:
     needs: ['publish']
+    if: ${{ github.event.inputs.close_milestone  }}
     runs-on: ubuntu-latest
     steps:
       - name: Close milestone, comment on issues and release notes
