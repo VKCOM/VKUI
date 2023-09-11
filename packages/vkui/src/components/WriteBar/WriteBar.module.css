@@ -81,7 +81,7 @@
 .WriteBar--ios .WriteBar__formIn {
   box-sizing: border-box;
   background-color: var(--vkui--color_write_bar_input_background);
-  border: var(--vkui_internal--thin_border) solid var(--vkui--color_write_bar_input_border);
+  border: var(--vkui--size_border--regular) solid var(--vkui--color_write_bar_input_border);
   border-radius: 18px;
   margin: 8px 0;
 }
@@ -92,7 +92,7 @@
 
 .WriteBar--ios .WriteBar__inlineAfter {
   /* чтобы правильно выровнять иконку, нужно учитывать border */
-  --vkui_internal--writebar-right-gap: calc(-1 * var(--vkui_internal--thin_border));
+  --vkui_internal--writebar-right-gap: calc(-1 * var(--vkui--size_border--regular));
   --vkui_internal--writebar-vertical-gap: calc(var(--vkui_internal--writebar-right-gap) - 8px);
 
   margin-right: var(--vkui_internal--writebar-right-gap);

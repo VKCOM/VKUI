@@ -28,7 +28,7 @@
   position: absolute;
   left: 0;
   width: 100%;
-  height: var(--vkui_internal--thin_border);
+  height: var(--vkui--size_border--regular);
   background: var(--vkui--color_separator_primary_alpha);
   content: '';
 }

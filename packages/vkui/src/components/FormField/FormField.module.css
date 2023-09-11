@@ -73,7 +73,7 @@
   height: 100%;
   box-sizing: border-box;
   transform-origin: left top;
-  border: var(--vkui_internal--thin_border) solid transparent;
+  border: var(--vkui--size_border--regular) solid transparent;
   border-radius: inherit;
 }
 
