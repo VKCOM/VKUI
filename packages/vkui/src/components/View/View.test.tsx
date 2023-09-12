@@ -228,7 +228,6 @@ describe('View', () => {
     it('fails weak swipeBack', () => {
       const { view, ...events } = setupSwipeBack();
       fireEvent.mouseDown(view, { clientX: 0, clientY: 100 });
-      // fireEvent.mouseMove(view, { clientX: SWIPE_BACK_THRESHOLD, clientY: 100 });
       fireEvent.mouseMove(view, {
         clientX: window.innerWidth / 2 - 1,
         clientY: 100,
