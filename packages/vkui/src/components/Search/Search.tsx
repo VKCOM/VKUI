@@ -2,13 +2,17 @@ import * as React from 'react';
 import { Icon16Clear, Icon16SearchOutline, Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { useBooleanState } from '../../hooks/useBooleanState';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
+import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { touchEnabled, VKUITouchEvent } from '../../lib/touch';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
@@ -26,7 +30,7 @@ export interface SearchProps
   after?: React.ReactNode;
   before?: React.ReactNode;
   icon?: React.ReactNode;
-  onIconClick?: (e: VKUITouchEvent) => void;
+  onIconClick?(e: VKUITouchEvent): void;
   defaultValue?: string;
   iconAriaLabel?: string;
   clearAriaLabel?: string;
@@ -34,6 +38,14 @@ export interface SearchProps
    * Удаляет отступы у компонента
    */
   noPadding?: boolean;
+  /**
+   * Текст для кнопки Найти
+   */
+  findButtonText?: string;
+  /**
+   * Коллбэк для кнопки Найти
+   */
+  onFindButtonClick?: React.MouseEventHandler<HTMLElement>;
 }
 
 /**
@@ -56,6 +68,8 @@ export const Search = ({
   clearAriaLabel = 'Очистить',
   noPadding,
   getRootRef,
+  findButtonText = 'Найти',
+  onFindButtonClick,
   ...inputProps
 }: SearchProps) => {
   const inputRef = useExternRef(getRef);
@@ -71,7 +85,15 @@ export const Search = ({
     value: valueProp,
   });
   const { sizeY = 'none' } = useAdaptivity();
+  const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
   const platform = usePlatform();
+
+  const findButtonRef = React.useRef<HTMLElement>(null);
+  const controlRef = React.useRef<HTMLLabelElement>(null);
+  const iconsContainerRef = React.useRef<HTMLDivElement>(null);
+  const prevButtonWidth = React.useRef(0);
+  const { window } = useDOM();
+  const isValuePresent = !!value;
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocusedTrue();
@@ -111,6 +133,35 @@ export const Search = ({
     [inputRef, onCancel],
   );
 
+  const recalculateComponentStyles = React.useCallback(() => {
+    if (findButtonRef.current) {
+      const { offsetWidth } = findButtonRef.current;
+      if (offsetWidth === 0) {
+        prevButtonWidth.current = offsetWidth;
+        controlRef.current!.style.marginRight = '';
+        iconsContainerRef.current!.style.transform = '';
+        return;
+      }
+
+      controlRef.current!.style.marginRight = `${isValuePresent ? offsetWidth : 0}px`;
+      iconsContainerRef.current!.style.transform = `translateX(${
+        isValuePresent ? -offsetWidth : 0
+      }px)`;
+
+      iconsContainerRef.current!.style.transition =
+        prevButtonWidth.current === 0 && offsetWidth !== 0 ? 'none' : '';
+      prevButtonWidth.current = offsetWidth;
+    }
+  }, [isValuePresent]);
+
+  useIsomorphicLayoutEffect(() => {
+    recalculateComponentStyles();
+  }, [recalculateComponentStyles]);
+
+  useGlobalEventListener(window, 'resize', () => {
+    recalculateComponentStyles();
+  });
+
   return (
     <div
       className={classNames(
@@ -130,7 +181,7 @@ export const Search = ({
       style={style}
     >
       <div className={styles['Search__field']}>
-        <label className={styles['Search__control']}>
+        <label ref={controlRef} className={styles['Search__control']}>
           {before}
           <Headline
             Component="input"
@@ -148,7 +199,7 @@ export const Search = ({
             value={value}
           />
         </label>
-        <div className={styles['Search__icons']}>
+        <div className={styles['Search__icons']} ref={iconsContainerRef}>
           {icon && (
             <IconButton
               hoverMode="opacity"
@@ -171,6 +222,19 @@ export const Search = ({
             >
               {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
             </IconButton>
+          )}
+          {adaptiveSizeY.compact && onFindButtonClick && (
+            <Button
+              mode="primary"
+              size="m"
+              className={classNames(styles['Search__findButton'], adaptiveSizeY.compact.className)}
+              focusVisibleMode="inside"
+              onClick={onFindButtonClick}
+              getRootRef={findButtonRef}
+              tabIndex={value ? undefined : -1}
+            >
+              {findButtonText}
+            </Button>
           )}
         </div>
       </div>
