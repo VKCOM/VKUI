@@ -1,16 +1,24 @@
-/* stylelint-disable selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-max-universal -- поведение динамических переменных необходимо применять на всех элементах */
 
-:root {
+* {
   --vkui--size_border--regular: var(--vkui--size_border1x--regular);
+
+  /**
+   * TODO: необходимо исправить название в vkui-tokens:
+   *
+   * --vkui--color_separator_primary: var(--vkui--color_separator_primary1x);
+   */
 }
 
 @media (min-resolution: 2dppx) {
-  :root {
+  * {
     --vkui--size_border--regular: var(--vkui--size_border2x--regular);
+    --vkui--color_separator_primary: var(--vkui--color_separator_primary2x);
   }
 }
 @media (min-resolution: 3dppx) {
-  :root {
+  * {
     --vkui--size_border--regular: var(--vkui--size_border3x--regular);
+    --vkui--color_separator_primary: var(--vkui--color_separator_primary3x);
   }
 }
