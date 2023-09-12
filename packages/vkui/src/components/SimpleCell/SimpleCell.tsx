@@ -15,19 +15,9 @@ import styles from './SimpleCell.module.css';
 
 const warn = warnOnce('SimpleCell');
 
-const platformClassNames = {
-  ios: classNames(styles['SimpleCell--ios'], 'vkuiInternalSimpleCell--ios'),
-  android: styles['SimpleCell--android'],
-  vkcom: styles['SimpleCell--vkcom'],
-};
-
 const sizeYClassNames = {
-  none: classNames(styles['SimpleCell--sizeY-none'], 'vkuiInternalSimpleCell--sizeY-none'),
-  [SizeType.COMPACT]: classNames(
-    styles['SimpleCell--sizeY-compact'],
-    'vkuiInternalSimpleCell--sizeY-compact',
-  ),
-  [SizeType.REGULAR]: styles['SimpleCell--sizeY-regular'],
+  none: styles['SimpleCell--sizeY-none'],
+  [SizeType.COMPACT]: styles['SimpleCell--sizeY-compact'],
 };
 
 export interface SimpleCellOwnProps extends HasComponent {
@@ -125,7 +115,6 @@ export const SimpleCell = ({
     expandable === 'always' ||
     ((expandable === true || expandable === 'auto') && platform === Platform.IOS);
 
-  const hasAfter = hasReactNode(after) || hasChevron;
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
@@ -133,17 +122,13 @@ export const SimpleCell = ({
       {...restProps}
       className={classNames(
         styles['SimpleCell'],
-        'vkuiInternalSimpleCell',
-        platformClassNames.hasOwnProperty(platform)
-          ? platformClassNames[platform]
-          : platformClassNames.android,
-        sizeYClassNames[sizeY],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         multiline && styles['SimpleCell--mult'],
         className,
       )}
     >
-      {before}
-      <div className={classNames(styles['SimpleCell__main'], 'vkuiInternalSimpleCell__main')}>
+      <div className={styles['SimpleCell__before']}>{before}</div>
+      <div className={styles['SimpleCell__middle']}>
         {subhead && (
           <Subhead
             Component="span"
@@ -192,14 +177,10 @@ export const SimpleCell = ({
           {indicator}
         </Headline>
       )}
-      {hasAfter && (
-        <div className={classNames(styles['SimpleCell__after'], 'vkuiInternalSimpleCell__after')}>
-          {after}
-          {hasChevron && (
-            <Chevron size={chevronSize} className={styles['SimpleCell__chevronIcon']} />
-          )}
-        </div>
-      )}
+      <div className={classNames(styles['SimpleCell__after'], 'vkuiInternalSimpleCell__after')}>
+        {after}
+        {hasChevron && <Chevron size={chevronSize} className={styles['SimpleCell__chevronIcon']} />}
+      </div>
     </Tappable>
   );
 };
