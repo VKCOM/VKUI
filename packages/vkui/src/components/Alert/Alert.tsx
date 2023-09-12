@@ -28,6 +28,7 @@ export interface AlertActionInterface
   action?: VoidFunction;
   autoClose?: boolean;
   mode: AlertActionMode;
+  ['data-testid']?: string;
 }
 
 export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
