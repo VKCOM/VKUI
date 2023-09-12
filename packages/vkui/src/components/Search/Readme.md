@@ -185,3 +185,52 @@ const SearchExample = () => {
 
 <SearchExample />;
 ```
+
+## Поиск с кнопкой Найти
+
+```jsx { "props": { "adaptivity": true } }
+const App = () => {
+  const platform = usePlatform();
+
+  const isVKCOM = platform === Platform.VKCOM;
+
+  const [activeModal, setActiveModal] = React.useState(null);
+
+  const onFindButtonClick = () => {
+    setActiveModal('findModal');
+  };
+  return (
+    <SplitLayout
+      modal={
+        <ModalRoot activeModal={activeModal}>
+          <ModalCard
+            id="findModal"
+            onClose={() => setActiveModal(null)}
+            icon={<Icon56MoneyTransferOutline />}
+            header="Здесь ничего нет"
+            actions={
+              <Button size="l" mode="primary" stretched onClick={() => setActiveModal(null)}>
+                Понятно
+              </Button>
+            }
+          ></ModalCard>
+        </ModalRoot>
+      }
+      header={!isVKCOM && <PanelHeader separator={false} />}
+    >
+      <SplitCol>
+        <View activePanel="find">
+          <Panel id="find">
+            <PanelHeader>Только для Compact-версии</PanelHeader>
+            <Group>
+              <Search defaultValue="value" onFindButtonClick={onFindButtonClick} />
+            </Group>
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
+};
+
+<App />;
+```

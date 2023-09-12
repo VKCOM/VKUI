@@ -6,6 +6,7 @@ import { Search } from './Search';
 
 const getInput = () => screen.getByRole('searchbox');
 const getClearIcon = () => document.querySelector('.vkuiSearch__icon') as Element;
+const getFindButton = () => document.querySelector('.vkuiSearch__findButton') as Element;
 
 describe('Search', () => {
   baselineComponent(Search);
@@ -87,6 +88,13 @@ describe('Search', () => {
     const cb = jest.fn();
     render(<Search icon={<div data-testid="icon" />} onIconClick={cb} />);
     userEvent.click(screen.getByTestId('icon'));
+    expect(cb).toHaveBeenCalled();
+  });
+
+  it('calls onFindButtonClick', () => {
+    const cb = jest.fn();
+    render(<Search value="test" onFindButtonClick={cb} />);
+    userEvent.click(getFindButton());
     expect(cb).toHaveBeenCalled();
   });
 });

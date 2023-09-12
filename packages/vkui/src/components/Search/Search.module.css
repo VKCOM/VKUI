@@ -35,6 +35,7 @@
    * Костыль для PanelHeader. Необходимо для растягивания на всю ширину.
   */
   width: 10000px;
+  overflow: hidden;
 }
 
 .Search__field:hover {
@@ -54,6 +55,7 @@
   width: calc(100% - 1px);
   height: 100%;
   border-radius: inherit;
+  position: relative;
 }
 
 .Search__input {
@@ -94,15 +96,6 @@
   border-bottom-right-radius: 0;
 }
 
-.Search--has-value .Search__input,
-.Search--has-icon .Search__input {
-  margin-right: calc(var(--vkui_internal--search_height) + 4px);
-}
-
-.Search--has-icon.Search--has-value .Search__input {
-  margin-right: calc((var(--vkui_internal--search_height) + 4px) * 2);
-}
-
 .Search--disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
   pointer-events: none;
@@ -128,6 +121,16 @@
   align-items: center;
   justify-content: center;
   color: var(--vkui--color_icon_secondary);
+}
+
+.Search--sizeY-compact .Search__icons {
+  transition: transform 0.3s var(--vkui--animation_easing_platform);
+}
+
+@media (--sizeY-compact) {
+  .Search--sizeY-none .Search__icons {
+    transition: transform 0.3s var(--vkui--animation_easing_platform);
+  }
 }
 
 .Search__icon {
@@ -170,6 +173,14 @@
   white-space: nowrap;
   text-overflow: clip;
   overflow: hidden;
+}
+
+.Search__findButton {
+  position: absolute;
+  left: 100%;
+  min-width: initial;
+  max-width: initial;
+  width: initial;
 }
 
 .Group--mode-plain .Search {
