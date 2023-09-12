@@ -10,7 +10,7 @@ describe('ModalPage', () => {
     a11y: false,
   });
 
-  test('testid is for content', () => {
+  test('testid for modal page content', () => {
     const { rerender } = render(<ModalPage nav="id" />);
 
     expect(screen.queryByTestId('modal-page-id')).not.toBeTruthy();
