@@ -52,7 +52,8 @@ export interface PanelHeaderProps
   /**
    * По умолчанию как `Component` используется `span`.
    */
-  typographyProps?: HasComponent & React.HTMLAttributes<HTMLElement>;
+  typographyProps?: HasComponent &
+    React.HTMLAttributes<HTMLDivElement> & { 'data-testid'?: string };
 }
 
 const PanelHeaderIn = ({
