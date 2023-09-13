@@ -1,16 +1,16 @@
 .ActionSheet {
-  overflow: hidden;
-  box-shadow: var(--vkui--elevation3);
-  width: calc(100% - 20px);
+  width: 100%;
   max-width: var(--vkui--size_popup_small--regular);
-  align-items: stretch;
-  display: flex;
-  flex-direction: column;
+  padding: 10px;
   box-sizing: border-box;
   animation: animation-actionsheet-intro 0.2s var(--vkui--animation_easing_platform);
+}
+
+.ActionSheet__content-wrapper {
   padding: 8px 0;
-  margin: 10px;
+  overflow: hidden;
   border-radius: 12px;
+  box-shadow: var(--vkui--elevation3);
   background: var(--vkui--color_background_modal);
 }
 
@@ -34,9 +34,21 @@
 .ActionSheet--ios {
   width: 100%;
   animation: animation-actionsheet-intro 0.3s var(--vkui--animation_easing_platform);
-  padding: 8px;
-  margin: unset;
   background: transparent;
+}
+
+.ActionSheet--ios .ActionSheet__content-wrapper {
+  border-radius: 14px;
+  padding: 0;
+}
+
+.ActionSheet__close-item-wrapper--ios {
+  margin-top: 8px;
+  margin-bottom: var(--vkui_internal--safe_area_inset_bottom);
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: var(--vkui--elevation3);
+  background: var(--vkui--color_background_modal);
 }
 
 .ActionSheet--ios.ActionSheet--closing {
@@ -46,8 +58,6 @@
 
 .ActionSheet--ios .ActionSheet__header {
   position: relative;
-  overflow: hidden;
-  border-radius: 14px 14px 0 0;
   text-align: center;
 }
 
@@ -85,11 +95,11 @@
   width: auto;
   height: auto;
   animation: none;
-  margin: 0;
+  padding: 0;
   max-width: 100%;
 }
 
-.ActionSheet--desktop.ActionSheet--ios {
+.ActionSheet--desktop.ActionSheet--ios .ActionSheet__content-wrapper {
   border-radius: 14px;
   padding: 0;
 }
