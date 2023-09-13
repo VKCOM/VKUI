@@ -32,7 +32,6 @@
  * iOS
  */
 .ActionSheet--ios {
-  width: 100%;
   padding: 8px;
   animation: animation-actionsheet-intro 0.3s var(--vkui--animation_easing_platform);
   background: transparent;
