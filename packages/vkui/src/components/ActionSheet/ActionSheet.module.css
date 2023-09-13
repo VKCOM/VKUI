@@ -1,7 +1,7 @@
 .ActionSheet {
   width: 100%;
   max-width: var(--vkui--size_popup_small--regular);
-  padding: 10px;
+  padding: 8px;
   box-sizing: border-box;
   animation: animation-actionsheet-intro 0.2s var(--vkui--animation_easing_platform);
 }
