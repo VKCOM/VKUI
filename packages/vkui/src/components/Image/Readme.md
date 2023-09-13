@@ -3,8 +3,7 @@
 ```jsx
 const Default = () => {
   return (
-    <Group>
-      <Header mode="secondary">По умолчанию</Header>
+    <Group header={<Header mode="secondary">По умолчанию</Header>}>
       <SimpleCell before={<Image src={getAvatarUrl('app_shorm_online')} />} description="Ролевая">
         Шторм онлайн
       </SimpleCell>
@@ -21,8 +20,7 @@ const OthersFeatures = () => {
   const [overlay, setOverlay] = React.useState();
 
   return (
-    <Group>
-      <Header mode="secondary">Другие возможности</Header>
+    <Group header={<Header mode="secondary">Другие возможности</Header>}>
       <ImagePropsForm
         onBorderRadiusChange={setBorderRadius}
         onBadgeChange={setBadge}

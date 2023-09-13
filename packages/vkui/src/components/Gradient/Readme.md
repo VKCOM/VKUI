@@ -40,8 +40,7 @@ const Example = () => {
               Редактировать
             </Button>
           </Gradient>
-          <Group mode="plain">
-            <Header>Учебные заведения и классы</Header>
+          <Group mode="plain" header={<Header>Учебные заведения и классы</Header>}>
             <SimpleCell before={<Icon28SchoolOutline />} subtitle="Екатеринбург">
               Школа №180
             </SimpleCell>
