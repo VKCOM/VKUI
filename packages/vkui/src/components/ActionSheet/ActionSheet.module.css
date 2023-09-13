@@ -1,7 +1,7 @@
 .ActionSheet {
   width: 100%;
   max-width: var(--vkui--size_popup_small--regular);
-  padding: 8px;
+  padding: 10px;
   box-sizing: border-box;
   animation: animation-actionsheet-intro 0.2s var(--vkui--animation_easing_platform);
 }
@@ -33,6 +33,7 @@
  */
 .ActionSheet--ios {
   width: 100%;
+  padding: 8px;
   animation: animation-actionsheet-intro 0.3s var(--vkui--animation_easing_platform);
   background: transparent;
 }
