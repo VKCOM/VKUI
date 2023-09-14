@@ -122,6 +122,7 @@ class ModalRootTouchComponent extends React.Component<
           ? `${this.timeout}ms`
           : '';
         this.animateTranslate(enteringState, enteringState.translateY);
+        this.setMaskOpacity(enteringState, 1);
       }
     }
 
@@ -538,6 +539,8 @@ class ModalRootTouchComponent extends React.Component<
             ? 1 - (translateYCurrent - translateY) / (100 - translateY) || 0
             : forceOpacity;
         this.maskElementRef.current.style.opacity = clamp(opacity, 0, 100).toString();
+        this.maskElementRef.current.style.transitionDelay =
+          opacity && this.props.delayEnter ? `${this.timeout}ms` : '';
       }
     });
   }
