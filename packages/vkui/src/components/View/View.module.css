@@ -116,6 +116,15 @@
   z-index: var(--vkui_internal--z_index_panel_header_fade);
 }
 
+.View--ios
+  .View__panel--swipe-back-next.View__panel--swipe-back-success
+  .View__panel-swipe-back-overlay,
+.View--ios
+  .View__panel--swipe-back-next.View__panel--swipe-back-failed
+  .View__panel-swipe-back-overlay {
+  transition: opacity 0.3s var(--vkui--animation_easing_platform);
+}
+
 /**
  * Panel transition
  */

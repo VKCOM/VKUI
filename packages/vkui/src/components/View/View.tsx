@@ -370,19 +370,23 @@ export const View = ({
     return {};
   };
 
-  const calcPanelSwipeBackOverlayStyles = (panelId: string): React.CSSProperties => {
+  const calcPanelSwipeBackOverlayStyles = (): React.CSSProperties => {
     if (!canUseDOM || !window) {
       return {};
     }
 
-    const isNext = panelId === swipeBackNextPanel;
-    if (!isNext) {
-      return {};
-    }
-
     const calculatedOpacity = 1 - swipeBackShift / window.innerWidth;
+    const opacityOnSwipeEnd =
+      swipeBackResult === SwipeBackResults.success
+        ? 0
+        : swipeBackResult === SwipeBackResults.fail
+        ? 1
+        : null;
 
-    return { display: 'block', opacity: calculatedOpacity };
+    return {
+      display: 'block',
+      opacity: opacityOnSwipeEnd === null ? calculatedOpacity : opacityOnSwipeEnd,
+    };
   };
 
   React.useEffect(() => {
@@ -542,12 +546,6 @@ export const View = ({
                 style={calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
-                {panelId === swipeBackNextPanel && (
-                  <div
-                    className={styles['View__panel-swipe-back-overlay']}
-                    style={calcPanelSwipeBackOverlayStyles(panelId)}
-                  />
-                )}
                 <div
                   className={styles['View__panel-in']}
                   style={{
@@ -562,6 +560,12 @@ export const View = ({
                     </NavTransitionProvider>
                   </NavTransitionDirectionProvider>
                 </div>
+                {panelId === swipeBackNextPanel && (
+                  <div
+                    className={styles['View__panel-swipe-back-overlay']}
+                    style={calcPanelSwipeBackOverlayStyles()}
+                  />
+                )}
               </div>
             );
           })}
