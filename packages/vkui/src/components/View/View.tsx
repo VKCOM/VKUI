@@ -370,8 +370,13 @@ export const View = ({
     return {};
   };
 
-  const calcPanelSwipeBackOverlayStyles = (): React.CSSProperties => {
+  const calcPanelSwipeBackOverlayStyles = (panelId?: string): React.CSSProperties => {
     if (!canUseDOM || !window) {
+      return {};
+    }
+
+    const isNext = panelId === swipeBackNextPanel;
+    if (!isNext) {
       return {};
     }
 
@@ -560,12 +565,10 @@ export const View = ({
                     </NavTransitionProvider>
                   </NavTransitionDirectionProvider>
                 </div>
-                {panelId === swipeBackNextPanel && (
-                  <div
-                    className={styles['View__panel-swipe-back-overlay']}
-                    style={calcPanelSwipeBackOverlayStyles()}
-                  />
-                )}
+                <div
+                  className={styles['View__panel-overlay']}
+                  style={calcPanelSwipeBackOverlayStyles(panelId)}
+                />
               </div>
             );
           })}
