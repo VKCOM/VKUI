@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
-import type { HasRef, HasRootRef, LiteralUnion } from '../../types';
-import { RootComponent } from '../RootComponent/RootComponent';
+import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from '../../types';
+import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import { ImageBaseContext } from './context';
@@ -28,6 +28,7 @@ export { ImageBaseContext };
 
 export interface ImageBaseProps
   extends React.ImgHTMLAttributes<HTMLElement>,
+    AnchorHTMLAttributesOnly,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLImageElement> {
   /**
@@ -77,10 +78,8 @@ export const ImageBase = ({
   height,
   style,
   withBorder = true,
-  'fallbackIcon': fallbackIconProp,
+  fallbackIcon: fallbackIconProp,
   children,
-  'aria-label': ariaLabel,
-  onClick,
   onLoad,
   onError,
   ...restProps
@@ -135,13 +134,10 @@ export const ImageBase = ({
 
   return (
     <ImageBaseContext.Provider value={{ size }}>
-      <RootComponent
-        {...restProps}
+      <Clickable
         style={{ ...style, width: size, height: size }}
         baseClassName={classNames(styles['ImageBase'], loaded && styles['ImageBase--loaded'])}
-        role={hasSrc ? 'img' : 'presentation'}
-        aria-label={ariaLabel}
-        onClick={onClick}
+        {...restProps}
       >
         {hasSrc && (
           <img
@@ -165,7 +161,7 @@ export const ImageBase = ({
         {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
         {children}
         {withBorder && <div aria-hidden className={styles['ImageBase__border']} />}
-      </RootComponent>
+      </Clickable>
     </ImageBaseContext.Provider>
   );
 };

@@ -1,0 +1,8 @@
+.Clickable--clickable {
+  cursor: pointer;
+}
+
+.Clickable__host:focus,
+.Clickable__host:focus-visible {
+  outline: none;
+}
