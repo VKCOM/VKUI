@@ -80,12 +80,28 @@
   min-width: 1px;
 }
 
-:global(.vkuiInternalFormLayoutGroup--mode-horizontal):not(
-    :global(.vkuiInternalFormLayoutGroup--segmented)
-  )
+:global(.vkuiInternalFormLayoutGroup--mode-horizontal:not(.vkuiInternalFormLayoutGroup--segmented))
   .FormItem
   + .FormItem {
   margin-left: 24px;
+}
+
+:global(.vkuiInternalFormLayoutGroup--mode-horizontal.vkuiInternalFormLayoutGroup--segmented)
+  .FormItem
+  + .FormItem {
+  margin-left: calc(-1 * var(--vkui--size_border--regular));
+}
+
+:global(.vkuiInternalFormLayoutGroup--mode-vertical.vkuiInternalFormLayoutGroup--segmented)
+  .FormItem
+  + .FormItem {
+  padding-top: 0;
+  margin-top: calc(-1 * var(--vkui--size_border--regular));
+}
+
+:global(.vkuiInternalFormLayoutGroup--mode-vertical.vkuiInternalFormLayoutGroup--segmented)
+  .FormItem:not(:last-of-type) {
+  padding-bottom: 0;
 }
 
 .FormItem--withTop .FormItem__removable,

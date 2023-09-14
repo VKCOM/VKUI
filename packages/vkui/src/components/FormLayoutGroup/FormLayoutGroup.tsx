@@ -31,7 +31,7 @@ export interface FormLayoutGroupProps
   removable?: boolean | 'indent';
 
   /**
-   * Только для режима horizontal. Дает возможность склеить несколько `FormItem`.
+   * Дает возможность склеить несколько `FormItem`.
    */
   segmented?: boolean;
 }
@@ -51,7 +51,6 @@ export const FormLayoutGroup = ({
 }: FormLayoutGroupProps) => {
   const { sizeY = 'none' } = useAdaptivity();
   const isRemovable = removable && mode === 'horizontal';
-  const isSegmented = segmented && mode === 'horizontal';
   const rootEl = useExternRef(getRootRef);
 
   return (
@@ -64,12 +63,17 @@ export const FormLayoutGroup = ({
             styles['FormLayoutGroup--mode-horizontal'],
             'vkuiInternalFormLayoutGroup--mode-horizontal',
           ),
+        mode === 'vertical' &&
+          classNames(
+            styles['FormLayoutGroup--mode-vertical'],
+            'vkuiInternalFormLayoutGroup--mode-vertical',
+          ),
         isRemovable &&
           classNames(
             styles['FormLayoutGroup--removable'],
             'vkuiInternalFormLayoutGroup--removable',
           ),
-        isSegmented &&
+        segmented &&
           classNames(
             styles['FormLayoutGroup--segmented'],
             'vkuiInternalFormLayoutGroup--segmented',
