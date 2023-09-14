@@ -353,11 +353,6 @@ export const View = ({
 
     let prevPanelTranslate = `${swipeBackShift}px`;
     let nextPanelTranslate = `${-50 + (swipeBackShift * 100) / window.innerWidth / 2}%`;
-    let prevPanelShadow = (0.3 * (window.innerWidth - swipeBackShift)) / window.innerWidth;
-
-    if (swipeBackResult) {
-      return isPrev ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` } : {};
-    }
 
     if (isNext) {
       return {
@@ -369,11 +364,25 @@ export const View = ({
       return {
         transform: `translate3d(${prevPanelTranslate}, 0, 0)`,
         WebkitTransform: `translate3d(${prevPanelTranslate}, 0, 0)`,
-        boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})`,
       };
     }
 
     return {};
+  };
+
+  const calcPanelSwipeBackOverlayStyles = (panelId: string): React.CSSProperties => {
+    if (!canUseDOM || !window) {
+      return {};
+    }
+
+    const isNext = panelId === swipeBackNextPanel;
+    if (!isNext) {
+      return {};
+    }
+
+    const calculatedOpacity = 1 - swipeBackShift / window.innerWidth;
+
+    return { display: 'block', opacity: calculatedOpacity };
   };
 
   React.useEffect(() => {
@@ -533,6 +542,12 @@ export const View = ({
                 style={calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
+                {panelId === swipeBackNextPanel && (
+                  <div
+                    className={styles['View__panel-swipe-back-overlay']}
+                    style={calcPanelSwipeBackOverlayStyles(panelId)}
+                  />
+                )}
                 <div
                   className={styles['View__panel-in']}
                   style={{
