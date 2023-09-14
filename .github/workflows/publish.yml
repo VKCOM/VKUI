@@ -17,12 +17,10 @@ on:
         required: false
       close_milestone:
         description: 'whether to close associated milestone after publish'
-        required: true
         type: boolean
         default: true
       latest:
         description: 'set latest tag'
-        required: true
         type: boolean
         default: true
 
