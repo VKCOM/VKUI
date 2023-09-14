@@ -20,6 +20,11 @@ on:
         required: true
         type: boolean
         default: true
+      latest:
+        description: 'set latest tag'
+        required: true
+        type: boolean
+        default: true
 
 run-name: Publish ${{ inputs.type }} ${{ inputs.custom_version }}
 
@@ -102,11 +107,16 @@ jobs:
           yarn config set npmAlwaysAuth true
           yarn config set npmAuthToken $NODE_AUTH_TOKEN
 
-      - name: Publishing release
-        run: |
-          yarn workspace @vkontakte/vkui npm publish
+      - name: Publishing with latest tag
+        if: ${{ github.event.inputs.latest == 'true' }}
+        run: yarn workspace @vkontakte/vkui npm publish
+
+      - name: Publishing with legacy tag
+        if: ${{ github.event.inputs.latest != 'true' }}
+        run: yarn workspace @vkontakte/vkui npm publish --tag legacy
 
       - name: Creating doc for stable release
+        if: ${{ github.event.inputs.latest == 'true' }}
         run: |
           yarn run docs:styleguide:build
           yarn run docs:storybook:build
@@ -114,6 +124,12 @@ jobs:
           cp -R packages/vkui/storybook-static/* styleguide/dist/playground
           cp -R styleguide/dist/* styleguide/${{ steps.updated_version.outputs.version }}
           mv styleguide/${{ steps.updated_version.outputs.version }} styleguide/dist/${{ steps.updated_version.outputs.version }}
+
+      - name: Build styleguide and storybook for legacy release
+        if: ${{ github.event.inputs.latest != 'true' }}
+        run: |
+          yarn run docs:styleguide:build --dist dist/${{ steps.updated_version.outputs.version }}
+          yarn docs:storybook:build -o ../../styleguide/dist/${{ steps.updated_version.outputs.version }}/playground
 
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@v4
@@ -126,7 +142,7 @@ jobs:
 
   close_milestone:
     needs: ['publish']
-    if: ${{ github.event.inputs.close_milestone  }}
+    if: ${{ github.event.inputs.close_milestone == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Close milestone, comment on issues and release notes
@@ -134,3 +150,4 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           releaseTag: ${{ needs.publish.outputs.release_tag }}
+          latest: ${{ github.event.inputs.latest }}

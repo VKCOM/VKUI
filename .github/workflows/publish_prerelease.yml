@@ -125,7 +125,7 @@ jobs:
 
   close_milestone:
     needs: ['publish']
-    if: ${{ github.event.inputs.close_milestone  }}
+    if: ${{ github.event.inputs.close_milestone == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Close milestone, comment on issues and release notes
@@ -133,3 +133,4 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           releaseTag: ${{ needs.publish.outputs.release_tag }}
+          latest: false
