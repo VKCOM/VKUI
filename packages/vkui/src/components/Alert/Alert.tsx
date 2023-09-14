@@ -7,7 +7,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { Platform } from '../../lib/platform';
 import { stopPropagation } from '../../lib/utils';
-import { AlignType, AnchorHTMLAttributesOnly } from '../../types';
+import { AlignType, AnchorHTMLAttributesOnly, HasDataAttribute } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { ButtonProps } from '../Button/Button';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
@@ -23,12 +23,12 @@ type AlertActionMode = 'cancel' | 'destructive' | 'default';
 
 export interface AlertActionInterface
   extends Pick<ButtonProps, 'Component'>,
-    AnchorHTMLAttributesOnly {
+    AnchorHTMLAttributesOnly,
+    HasDataAttribute {
   title: string;
   action?: VoidFunction;
   autoClose?: boolean;
   mode: AlertActionMode;
-  ['data-testid']?: string;
 }
 
 export interface AlertProps extends React.HTMLAttributes<HTMLElement> {

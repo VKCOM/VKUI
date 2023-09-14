@@ -5,7 +5,7 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { HasComponent, HasRef, HTMLAttributesWithRootRef } from '../../types';
+import { HasComponent, HasDataAttribute, HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
@@ -52,8 +52,7 @@ export interface PanelHeaderProps
   /**
    * По умолчанию как `Component` используется `span`.
    */
-  typographyProps?: HasComponent &
-    React.HTMLAttributes<HTMLDivElement> & { 'data-testid'?: string };
+  typographyProps?: HasComponent & React.HTMLAttributes<HTMLDivElement> & HasDataAttribute;
 }
 
 const PanelHeaderIn = ({
