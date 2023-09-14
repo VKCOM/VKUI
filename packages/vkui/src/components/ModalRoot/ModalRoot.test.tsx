@@ -121,4 +121,25 @@ describe.each([
       });
     }
   });
+
+  it('check modal mask with fast modal change', async () => {
+    const onClose = jest.fn();
+    const modals = [
+      <ModalPage id="m" key="m" />,
+      <ModalPage id="other" key="o" onClose={onClose} />,
+    ];
+
+    const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
+    runAllTimers();
+    h.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
+    h.rerender(<ModalRoot activeModal="other">{modals}</ModalRoot>);
+    runAllTimers();
+
+    // check if mask is present
+    expect((document.querySelector('.vkuiModalRoot__mask') as HTMLElement).style.opacity).toBe('1');
+
+    // onClose is working
+    clickFade();
+    expect(onClose).toBeCalledTimes(1);
+  });
 });
