@@ -73,4 +73,19 @@ describe('Alert', () => {
       });
     });
   });
+
+  it('passes data-testid to actions', () => {
+    render(
+      <Alert
+        onClose={jest.fn()}
+        actions={[
+          { 'title': 'Allow', 'mode': 'default', 'data-testid': 'allow-test-id' },
+          { 'title': 'Deny', 'mode': 'default', 'data-testid': 'deny-test-id' },
+        ]}
+      />,
+    );
+
+    expect(screen.getByTestId('allow-test-id')).toHaveTextContent('Allow');
+    expect(screen.getByTestId('deny-test-id')).toHaveTextContent('Deny');
+  });
 });
