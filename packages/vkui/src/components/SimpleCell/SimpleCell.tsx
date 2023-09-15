@@ -115,6 +115,7 @@ export const SimpleCell = ({
     expandable === 'always' ||
     ((expandable === true || expandable === 'auto') && platform === Platform.IOS);
 
+  const hasAfter = hasReactNode(after) || hasChevron;
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
@@ -177,10 +178,14 @@ export const SimpleCell = ({
           {indicator}
         </Headline>
       )}
-      <div className={classNames(styles['SimpleCell__after'], 'vkuiInternalSimpleCell__after')}>
-        {after}
-        {hasChevron && <Chevron size={chevronSize} className={styles['SimpleCell__chevronIcon']} />}
-      </div>
+      {hasAfter && (
+        <div className={classNames(styles['SimpleCell__after'], 'vkuiInternalSimpleCell__after')}>
+          {after}
+          {hasChevron && (
+            <Chevron size={chevronSize} className={styles['SimpleCell__chevronIcon']} />
+          )}
+        </div>
+      )}
     </Tappable>
   );
 };
