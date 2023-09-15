@@ -3,10 +3,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
 import { Search } from './Search';
+import styles from './Search.module.css';
 
 const getInput = () => screen.getByRole('searchbox');
-const getClearIcon = () => document.querySelector('.vkuiSearch__icon') as Element;
-const getFindButton = () => document.querySelector('.vkuiSearch__findButton') as Element;
+const getClearIcon = () => document.querySelector(`.${styles.Search__icon}`)!;
+const getFindButton = () => document.querySelector(`.${styles.Search__findButton}`)!;
 
 describe('Search', () => {
   baselineComponent(Search);
