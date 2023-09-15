@@ -109,6 +109,9 @@ export const ModalRootDesktop = ({
             timeout,
           );
           animateModalOpacity(enteringState, true);
+          if (enteringState) {
+            setMaskOpacity(enteringState, 1);
+          }
         }
       });
 
@@ -116,10 +119,13 @@ export const ModalRootDesktop = ({
     }
 
     // Переход между модальными окнами без анимации
-    if (enteringState?.innerElement) {
-      enteringState.innerElement.style.transition = 'none';
-      enteringState.innerElement.style.opacity = '1';
-    }
+    requestAnimationFrame(() => {
+      if (enteringState?.innerElement) {
+        enteringState.innerElement.style.transition = 'none';
+        enteringState.innerElement.style.opacity = '1';
+        setMaskOpacity(enteringState, 1);
+      }
+    });
 
     onEntered(enteringModal);
   };
