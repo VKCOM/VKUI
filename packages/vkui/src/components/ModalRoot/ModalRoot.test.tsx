@@ -6,8 +6,9 @@ import { ModalCard } from '../ModalCard/ModalCard';
 import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
+import styles from './ModalRoot.module.css';
 
-const clickFade = () => userEvent.click(document.querySelector('.vkuiModalRoot__mask') as Element);
+const clickFade = () => userEvent.click(document.querySelector(`.${styles.ModalRoot__mask}`)!);
 let rafSpies: jest.SpyInstance[];
 
 describe.each([
@@ -120,5 +121,28 @@ describe.each([
         expect(onCloseRoot).toBeCalledTimes(1);
       });
     }
+  });
+
+  it('check modal mask with fast modal change', async () => {
+    const onClose = jest.fn();
+    const modals = [
+      <ModalPage id="m" key="m" />,
+      <ModalPage id="other" key="o" onClose={onClose} />,
+    ];
+
+    const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
+    runAllTimers();
+    h.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
+    h.rerender(<ModalRoot activeModal="other">{modals}</ModalRoot>);
+    runAllTimers();
+
+    // check if mask is present
+    expect(document.querySelector<HTMLElement>(`.${styles.ModalRoot__mask}`)?.style.opacity).toBe(
+      '1',
+    );
+
+    // onClose is working
+    clickFade();
+    expect(onClose).toBeCalledTimes(1);
   });
 });
