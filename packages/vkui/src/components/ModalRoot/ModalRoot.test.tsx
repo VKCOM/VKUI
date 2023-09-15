@@ -6,8 +6,9 @@ import { ModalCard } from '../ModalCard/ModalCard';
 import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
+import styles from './ModalRoot.module.css';
 
-const clickFade = () => userEvent.click(document.querySelector('.vkuiModalRoot__mask') as Element);
+const clickFade = () => userEvent.click(document.querySelector(`.${styles.ModalRoot__mask}`)!);
 let rafSpies: jest.SpyInstance[];
 
 describe.each([
@@ -136,7 +137,9 @@ describe.each([
     runAllTimers();
 
     // check if mask is present
-    expect((document.querySelector('.vkuiModalRoot__mask') as HTMLElement).style.opacity).toBe('1');
+    expect(document.querySelector<HTMLElement>(`.${styles.ModalRoot__mask}`)?.style.opacity).toBe(
+      '1',
+    );
 
     // onClose is working
     clickFade();
