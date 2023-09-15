@@ -354,6 +354,7 @@ export { usePlatform } from './hooks/usePlatform';
 export { useAdaptivity } from './hooks/useAdaptivity';
 export {
   type UseAdaptivityConditionalRender,
+  type ElementProps,
   useAdaptivityConditionalRender,
 } from './hooks/useAdaptivityConditionalRender';
 export {
@@ -387,6 +388,7 @@ export {
   getViewWidthByViewportWidth,
   getViewHeightByViewportHeight,
 } from './lib/adaptivity';
+export { type Placement as FloatingPlacement } from './lib/floating';
 export { getPlatformClassName } from './helpers/getPlatformClassName';
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';
