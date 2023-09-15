@@ -4,6 +4,30 @@
   padding-bottom: 8px;
 }
 
+.Group__header:empty {
+  display: none;
+}
+
+.Group--mode-plain:not(:first-of-type) > .Group__header {
+  margin-top: -16px;
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-none:not(:first-of-type) > .Group__header {
+    margin-top: -16px;
+  }
+}
+
+.Group--mode-card > .Group__header {
+  margin-top: -4px;
+}
+
+@media (--sizeX-regular) {
+  .Group--sizeX-none.Group--mode-none > .Group__header {
+    margin-top: -4px;
+  }
+}
+
 .Group__separator--spacing,
 .Group__separator--separator {
   display: none;
