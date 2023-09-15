@@ -22,6 +22,7 @@ export const ModalPageHeader = ({
   separator = true,
   getRef,
   className,
+  typographyProps,
   ...restProps
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
@@ -40,14 +41,15 @@ export const ModalPageHeader = ({
     >
       <PanelHeader
         className={classNames('vkuiInternalModalPageHeader__in', className)}
+        typographyProps={{
+          Component: 'h2',
+          id: labelId,
+          ...typographyProps,
+        }}
         {...restProps}
         fixed={false}
         separator={false}
         transparent
-        typographyProps={{
-          Component: 'h2',
-          id: labelId,
-        }}
       >
         {children}
       </PanelHeader>

@@ -61,6 +61,7 @@ export interface ModalPageProps extends HTMLAttributesWithRootRef<HTMLDivElement
    * Скрывает кнопку закрытия (актуально для iOS, т.к. можно отрисовать кнопку закрытия внутри модалки)
    */
   hideCloseButton?: boolean;
+  modalContentTestId?: string;
 }
 
 const warn = warnOnce('ModalPage');
@@ -82,6 +83,7 @@ export const ModalPage = ({
   nav,
   id: idProp,
   hideCloseButton = false,
+  modalContentTestId,
   ...restProps
 }: ModalPageProps) => {
   const generatingId = useId();
@@ -139,6 +141,7 @@ export const ModalPage = ({
               <div
                 className={styles['ModalPage__content']}
                 ref={multiRef<HTMLDivElement>(refs.contentElement, getModalContentRef)}
+                {...(modalContentTestId && { 'data-testid': modalContentTestId })}
               >
                 <div className={styles['ModalPage__content-in']}>{children}</div>
               </div>
