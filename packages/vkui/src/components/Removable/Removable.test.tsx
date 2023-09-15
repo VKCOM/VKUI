@@ -29,4 +29,33 @@ describe('Removable', () => {
     userEvent.click(screen.getByTestId('content'));
     expect(eventListener).toHaveBeenCalled();
   });
+
+  it('[iOS] render prop isRemoving is true when toggle button is clicked ', async () => {
+    render(
+      <ConfigProvider platform={Platform.IOS}>
+        <Removable>
+          {({ isRemoving }) => (
+            <div data-testid="content">Контент для удаления {isRemoving && 'сдвинут'}</div>
+          )}
+        </Removable>
+      </ConfigProvider>,
+    );
+
+    const removeActionButton = screen.getAllByRole('button')[1];
+    if (!removeActionButton) {
+      throw new Error('Cannot find actionable remove button');
+    }
+    // set width of the removeButton which is used in the Removable state to
+    // move content.
+    Object.defineProperty(removeActionButton, 'offsetWidth', { value: 12 });
+
+    expect(screen.queryByText(/сдвинут/)).toBeFalsy();
+
+    userEvent.click(screen.getByLabelText('Удалить'));
+
+    await screen.findByText(/сдвинут/);
+
+    userEvent.click(screen.getByTestId('content'));
+    expect(screen.queryByText(/сдвинут/)).toBeFalsy();
+  });
 });

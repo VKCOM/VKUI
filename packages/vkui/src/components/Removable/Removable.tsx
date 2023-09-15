@@ -34,7 +34,7 @@ const RemovableIos = ({
   onRemove,
   removePlaceholder,
   removePlaceholderString,
-  children,
+  children: childrenProp,
 }: RemovableIosOwnProps) => {
   const { window } = useDOM();
 
@@ -81,13 +81,19 @@ const RemovableIos = ({
         hasActive={false}
         hasHover={false}
         aria-label={removePlaceholderString}
-        className={classNames(styles['Removable__action'], styles['Removable__toggle'])}
+        className={classNames(
+          styles['Removable__action'],
+          styles['Removable__toggle'],
+          'vkuiInternalRemovable__action',
+        )}
         onClick={onRemoveActivateClick}
         disabled={removeOffset > 0}
       >
         <i className={styles['Removable__toggle-in']} role="presentation" />
       </IconButton>
-      {children}
+      {typeof childrenProp === 'function'
+        ? childrenProp({ isRemoving: removeOffset > 0 })
+        : childrenProp}
 
       <span className={styles['Removable__offset']} aria-hidden />
 
@@ -106,6 +112,16 @@ const RemovableIos = ({
   );
 };
 
+interface RemovableIosRenderProps {
+  /**
+   * Показывает состояние Removable на платформе iOS при клике на иконку удаления.
+   * Для имитации поведения на iOS при клике на иконку удаления самого удаление не происходит,
+   * контент сдвигается влево и справа выезжает настоящая кнопка "Удалить".
+   * Когда контент сдвинут `isRemoving = true`.
+   */
+  isRemoving: boolean;
+}
+
 interface RemovableOwnProps extends HTMLAttributesWithRootRef<HTMLDivElement>, RemovableProps {
   /**
    * Расположение кнопки удаления.
@@ -116,6 +132,7 @@ interface RemovableOwnProps extends HTMLAttributesWithRootRef<HTMLDivElement>, R
    * @since 5.4.0
    */
   indent?: boolean;
+  children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
 }
 
 /**
@@ -154,7 +171,7 @@ export const Removable = ({
           <IconButton
             activeMode="opacity"
             hoverMode="opacity"
-            className={styles['Removable__action']}
+            className={classNames(styles['Removable__action'], 'vkuiInternalRemovable__action')}
             onClick={onRemoveClick}
             aria-label={removePlaceholderString}
           >

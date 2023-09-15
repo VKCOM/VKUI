@@ -116,7 +116,8 @@ export const Cell = ({
     checkbox = <CellCheckbox className={styles['Cell__checkbox']} {...checkboxProps} />;
   }
 
-  const simpleCellDisabled = (draggable && !selectable) || removable || disabled;
+  const simpleCellDisabled =
+    (draggable && !selectable) || (removable && !restProps.onClick) || disabled;
   const hasActive = !simpleCellDisabled && !dragging;
 
   const cellClasses = classNames(
@@ -128,29 +129,27 @@ export const Cell = ({
     disabled && styles['Cell--disabled'],
   );
 
-  const simpleCell = (
-    <SimpleCell
-      hasActive={hasActive}
-      hasHover={hasActive}
-      {...restProps}
-      className={styles['Cell__content']}
-      disabled={simpleCellDisabled}
-      Component={Component}
-      before={
-        <React.Fragment>
-          {draggable && platform !== Platform.IOS && dragger}
-          {selectable && checkbox}
-          {before}
-        </React.Fragment>
-      }
-      after={
-        <React.Fragment>
-          {draggable && platform === Platform.IOS && dragger}
-          {after}
-        </React.Fragment>
-      }
-    />
-  );
+  const simpleCellProps = {
+    hasActive: hasActive,
+    hasHover: hasActive && !removable,
+    ...restProps,
+    className: styles['Cell__content'],
+    disabled: simpleCellDisabled,
+    Component: Component,
+    before: (
+      <React.Fragment>
+        {draggable && platform !== Platform.IOS && dragger}
+        {selectable && checkbox}
+        {before}
+      </React.Fragment>
+    ),
+    after: (
+      <React.Fragment>
+        {draggable && platform === Platform.IOS && dragger}
+        {after}
+      </React.Fragment>
+    ),
+  };
 
   if (removable) {
     return (
@@ -161,14 +160,20 @@ export const Cell = ({
         removePlaceholder={removePlaceholder}
         onRemove={(e) => onRemove(e, rootElRef.current)}
       >
-        {simpleCell}
+        {platform === Platform.IOS ? (
+          ({ isRemoving }) => (
+            <SimpleCell {...simpleCellProps} disabled={simpleCellProps.disabled || isRemoving} />
+          )
+        ) : (
+          <SimpleCell {...simpleCellProps} />
+        )}
       </Removable>
     );
   }
 
   return (
     <div className={classNames(cellClasses, className)} style={style} ref={rootElRef}>
-      {simpleCell}
+      <SimpleCell {...simpleCellProps} />
     </div>
   );
 };
