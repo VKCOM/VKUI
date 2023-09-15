@@ -133,33 +133,12 @@ export const ImageBase = ({
     [imgRef, loaded],
   );
 
-  const sizeClassName = (() => {
-    switch (size) {
-      case 28:
-        return styles['ImageBase--size-28'];
-      case 32:
-        return styles['ImageBase--size-32'];
-      case 40:
-        return styles['ImageBase--size-40'];
-      case 48:
-        return styles['ImageBase--size-48'];
-      case 72:
-        return styles['ImageBase--size-72'];
-    }
-
-    return null;
-  })();
-
   return (
     <ImageBaseContext.Provider value={{ size }}>
       <RootComponent
         {...restProps}
         style={{ ...style, width: size, height: size }}
-        baseClassName={classNames(
-          styles['ImageBase'],
-          sizeClassName,
-          loaded && styles['ImageBase--loaded'],
-        )}
+        baseClassName={classNames(styles['ImageBase'], loaded && styles['ImageBase--loaded'])}
         role={hasSrc ? 'img' : 'presentation'}
         aria-label={ariaLabel}
         onClick={onClick}
