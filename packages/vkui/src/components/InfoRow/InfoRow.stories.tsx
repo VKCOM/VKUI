@@ -28,8 +28,7 @@ export const Example: Story = {
   ...Playground,
   decorators: [
     (Component) => (
-      <Group>
-        <Header mode="secondary">Информация о пользователе</Header>
+      <Group header={<Header mode="secondary">Информация о пользователе</Header>}>
         <SimpleCell multiline>
           <Component args={{ header: 'Дата рождения', children: '30 января 1993' }} />
         </SimpleCell>

@@ -10,8 +10,7 @@
 ```jsx
 const Default = () => {
   return (
-    <Group>
-      <Header mode="secondary">По умолчанию</Header>
+    <Group header={<Header mode="secondary">По умолчанию</Header>}>
       <SimpleCell before={<Avatar src={getAvatarUrl('user_id34')} />}>Татьяна Плуталова</SimpleCell>
     </Group>
   );
@@ -19,8 +18,10 @@ const Default = () => {
 
 const Fallbacks = () => {
   return (
-    <Group description="На случаи если аватарка не загрузилась или она отсутсвует">
-      <Header mode="secondary">Фолбеки</Header>
+    <Group
+      header={<Header mode="secondary">Фолбеки</Header>}
+      description="На случаи если аватарка не загрузилась или она отсутсвует"
+    >
       <SimpleCell
         before={<Avatar size={48} fallbackIcon={<Icon28Users />} src="#" />}
         subtitle="Только от друзей друзей"
@@ -47,8 +48,7 @@ const OthersFeatures = () => {
   const [overlay, setOverlay] = React.useState();
 
   return (
-    <Group>
-      <Header mode="secondary">Другие возможности</Header>
+    <Group header={<Header mode="secondary">Другие возможности</Header>}>
       <AvatarPropsForm
         onUseInisitals={setUseInisitals}
         onGradientColorChange={setGradientColorChange}

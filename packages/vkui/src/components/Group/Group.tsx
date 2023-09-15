@@ -131,7 +131,7 @@ export const Group = ({
           stylesPadding[padding],
         )}
       >
-        {header}
+        {hasReactNode(header) && <div className={styles['Group__header']}>{header}</div>}
         {children}
         {hasReactNode(description) && (
           <Footnote className={styles['Group__description']}>{description}</Footnote>
