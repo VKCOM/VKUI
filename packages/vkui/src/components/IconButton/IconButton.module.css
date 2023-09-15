@@ -141,9 +141,7 @@
   margin-right: -12px;
 }
 
-:global(.vkuiInternalSimpleCell--ios)
-  :global(.vkuiInternalSimpleCell__after)
-  .IconButton:last-child {
+:global(.vkuiInternalSimpleCell__after) .IconButton--ios:last-child {
   margin-right: -9px;
 }
 

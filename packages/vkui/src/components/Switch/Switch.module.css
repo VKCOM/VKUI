@@ -189,7 +189,3 @@
 :global(.vkuiInternalSimpleCell__after) > .Switch {
   margin-left: 12px;
 }
-
-:global(.vkuiInternalSimpleCell) > .Switch:first-child {
-  margin-right: 12px;
-}
