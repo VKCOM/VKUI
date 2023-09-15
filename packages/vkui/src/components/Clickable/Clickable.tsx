@@ -2,15 +2,48 @@ import React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { callMultiple } from '../../lib/callMultiple';
-import { HasComponent, HasRootRef } from '../../types';
 import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
-import { RootComponent } from '../RootComponent/RootComponent';
+import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './Clickable.module.css';
 
-export interface ClickableProps<T> extends React.AllHTMLAttributes<T>, HasRootRef<T>, HasComponent {
+export interface ClickableProps<T> extends RootComponentProps<T> {
   baseClassName?: string;
   focusVisibleMode?: FocusVisibleMode;
 }
+
+/**
+ * Некликабельный компонент. Отключаем возможность нажимать на компонент.
+ */
+const NonClickable = <T,>({
+  href,
+  onClick,
+  onClickCapture,
+  ...restProps
+}: RootComponentProps<T>) => <RootComponent {...restProps} />;
+
+/**
+ * Кликабельный компонент. Добавляем кучу обвесов
+ */
+const RealClickable = <T,>({
+  baseClassName,
+  children,
+  focusVisibleMode = 'inside',
+  ...restProps
+}: ClickableProps<T>) => {
+  const { focusVisible, onBlur, onFocus } = useFocusVisible();
+
+  return (
+    <RootComponent
+      baseClassName={classNames(baseClassName, styles['Clickable__host'])}
+      onBlur={callMultiple(onBlur, restProps.onBlur)}
+      onFocus={callMultiple(onFocus, restProps.onFocus)}
+      {...restProps}
+    >
+      {children}
+      <FocusVisible visible={focusVisible} mode={focusVisibleMode} />
+    </RootComponent>
+  );
+};
 
 /**
  * Проверяем, является ли компонент кликабельным
@@ -25,22 +58,7 @@ function checkClickable<T>(props: ClickableProps<T>): boolean {
 }
 
 /**
- * Если компонент не кликабельный, отключаем ему все события
- */
-function handlersRewrite(isClickable: boolean) {
-  return !isClickable
-    ? {
-        href: undefined,
-        onClick: undefined,
-        onClickCapture: undefined,
-        onBlur: undefined,
-        onFocus: undefined,
-      }
-    : {};
-}
-
-/**
- * Определяет правильный компонент и
+ * Определяет правильный компонент и его свойства
  *
  * - если передан Component, используем его
  * - при передаче `href` превратится в `a`,
@@ -53,7 +71,7 @@ function component<T>({
   onClickCapture,
   href,
   disabled,
-}: ClickableProps<T>): ClickableProps<T> & Required<HasComponent> {
+}: RootComponentProps<T>): RootComponentProps<T> {
   if (Component !== undefined) {
     return { Component };
   } else if (href !== undefined) {
@@ -67,7 +85,7 @@ function component<T>({
     };
   }
 
-  return { Component: 'div' };
+  return {};
 }
 
 /**
@@ -77,34 +95,13 @@ function component<T>({
  * - при передаче `onClick` превратится в `div` c `role="button"` и `tabIndex="0"`.
  * - иначе используется `div`.
  */
-export const Clickable = <T,>({
-  baseClassName,
-  children,
-  focusVisibleMode = 'inside',
-  ...restProps
-}: ClickableProps<T>) => {
+export const Clickable = <T,>({ focusVisibleMode = 'inside', ...restProps }: ClickableProps<T>) => {
   const commonProps = component(restProps);
   const isClickable = checkClickable(restProps);
-  const { focusVisible, onBlur, onFocus } = useFocusVisible();
 
-  // Если компонент не кликабельный, отключаем ему все события
-  const handlers = handlersRewrite(isClickable);
+  if (isClickable) {
+    return <RealClickable focusVisibleMode={focusVisibleMode} {...commonProps} {...restProps} />;
+  }
 
-  return (
-    <RootComponent
-      baseClassName={classNames(
-        baseClassName,
-        styles['Clickable__host'],
-        isClickable && styles['Clickable--clickable'],
-      )}
-      onBlur={callMultiple(onBlur, restProps.onBlur)}
-      onFocus={callMultiple(onFocus, restProps.onFocus)}
-      {...commonProps}
-      {...restProps}
-      {...handlers}
-    >
-      {children}
-      {isClickable && <FocusVisible visible={focusVisible} mode={focusVisibleMode} />}
-    </RootComponent>
-  );
+  return <NonClickable {...commonProps} {...restProps} />;
 };
