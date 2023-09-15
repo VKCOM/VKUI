@@ -6,8 +6,7 @@ const Example = () => {
     <View activePanel={activePanel}>
       <Panel id="list">
         <PanelHeader>SimpleCell</PanelHeader>
-        <Group>
-          <Header mode="secondary">Меню</Header>
+        <Group header={<Header mode="secondary">Меню</Header>}>
           <SimpleCell
             onClick={() => setActivePanel('nothing')}
             expandable
@@ -30,8 +29,7 @@ const Example = () => {
             Основные
           </SimpleCell>
         </Group>
-        <Group>
-          <Header mode="secondary">Настройки</Header>
+        <Group header={<Header mode="secondary">Настройки</Header>}>
           <SimpleCell Component="label" after={<Switch defaultChecked />}>
             Сжимать фотографии
           </SimpleCell>
@@ -39,8 +37,7 @@ const Example = () => {
             Сжимать видео
           </SimpleCell>
         </Group>
-        <Group>
-          <Header mode="secondary">Настройки системы</Header>
+        <Group header={<Header mode="secondary">Настройки системы</Header>}>
           <SimpleCell onClick={() => setActivePanel('nothing')} expandable indicator="Русский">
             Язык
           </SimpleCell>
@@ -52,8 +49,7 @@ const Example = () => {
             Геолокация
           </SimpleCell>
         </Group>
-        <Group>
-          <Header mode="secondary">Список диалогов</Header>
+        <Group header={<Header mode="secondary">Список диалогов</Header>}>
           <SimpleCell
             before={<Avatar size={40} src={getAvatarUrl('user_xyz')} />}
             after={
@@ -75,8 +71,7 @@ const Example = () => {
             Artur Stambultsian
           </SimpleCell>
         </Group>
-        <Group>
-          <Header mode="secondary">Список друзей</Header>
+        <Group header={<Header mode="secondary">Список друзей</Header>}>
           <SimpleCell
             before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />}
             badgeAfterTitle={<Icon12Verified />}
