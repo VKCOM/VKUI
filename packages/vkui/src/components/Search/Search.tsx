@@ -143,9 +143,9 @@ export const Search = ({
         return;
       }
 
-      controlRef.current!.style.marginRight = `${isValuePresent ? offsetWidth : 0}px`;
+      controlRef.current!.style.marginRight = `${isValuePresent ? 0 : -offsetWidth}px`;
       iconsContainerRef.current!.style.transform = `translateX(${
-        isValuePresent ? -offsetWidth : 0
+        isValuePresent ? 0 : offsetWidth
       }px)`;
 
       iconsContainerRef.current!.style.transition =
@@ -154,13 +154,9 @@ export const Search = ({
     }
   }, [isValuePresent]);
 
-  useIsomorphicLayoutEffect(() => {
-    recalculateComponentStyles();
-  }, [recalculateComponentStyles]);
+  useIsomorphicLayoutEffect(() => recalculateComponentStyles(), [recalculateComponentStyles]);
 
-  useGlobalEventListener(window, 'resize', () => {
-    recalculateComponentStyles();
-  });
+  useGlobalEventListener(window, 'resize', () => recalculateComponentStyles());
 
   return (
     <div

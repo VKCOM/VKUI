@@ -176,8 +176,6 @@
 }
 
 .Search__findButton {
-  position: absolute;
-  left: 100%;
   min-width: initial;
   max-width: initial;
   width: initial;
