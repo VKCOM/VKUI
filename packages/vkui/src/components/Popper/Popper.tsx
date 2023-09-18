@@ -17,6 +17,7 @@ import {
   useFloating,
   type UseFloatingMiddleware,
 } from '../../lib/floating';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import {
@@ -230,11 +231,11 @@ export const Popper = ({
   // TODO [>=6]: убрать getRef
   const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRef, getRootRef);
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     refs.setReference(targetRef.current);
   }, [refs, targetRef]);
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (resolvedPlacement && onPlacementChange) {
       onPlacementChange({ placement: resolvedPlacement });
     }
