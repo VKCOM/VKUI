@@ -64,7 +64,7 @@
   white-space: nowrap;
 }
 
-/* stylelint-disable @project-tools/stylelint-atomic */
+/* stylelint-disable @project-tools/stylelint-atomic, selector-max-universal */
 .Header__aside.Header__aside > * {
   margin-top: 13px;
   margin-left: 12px;
