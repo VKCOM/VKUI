@@ -354,7 +354,6 @@ export { usePlatform } from './hooks/usePlatform';
 export { useAdaptivity } from './hooks/useAdaptivity';
 export {
   type UseAdaptivityConditionalRender,
-  type ElementProps,
   useAdaptivityConditionalRender,
 } from './hooks/useAdaptivityConditionalRender';
 export {

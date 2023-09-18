@@ -1,2 +1,2 @@
-export type { UseAdaptivityConditionalRender, ElementProps } from './types';
+export type { UseAdaptivityConditionalRender } from './types';
 export { useAdaptivityConditionalRender } from './useAdaptivityConditionalRender';
