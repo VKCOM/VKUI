@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { Icon24DoneOutline, Icon28DoneOutline, Icon28EditOutline } from '@vkontakte/icons';
+import {
+  Icon24DoneOutline,
+  Icon24PenOutline,
+  Icon28DoneOutline,
+  Icon28EditOutline,
+} from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
@@ -33,7 +38,7 @@ export const PanelHeaderEdit = ({
   const CommonIcon = isActive ? (
     <AdaptiveIconRenderer IconCompact={Icon24DoneOutline} IconRegular={Icon28DoneOutline} />
   ) : (
-    <AdaptiveIconRenderer IconCompact={Icon28EditOutline} IconRegular={Icon28EditOutline} />
+    <AdaptiveIconRenderer IconCompact={Icon24PenOutline} IconRegular={Icon28EditOutline} />
   );
   const platform = usePlatform();
 

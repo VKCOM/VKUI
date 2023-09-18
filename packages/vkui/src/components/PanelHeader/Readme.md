@@ -79,7 +79,10 @@ const Example = () => {
                     </Counter>
                   }
                 >
-                  <AdaptiveIconRenderer IconCompact={Icon24Settings} IconRegular={Icon28Settings} />
+                  <AdaptiveIconRenderer
+                    IconCompact={Icon24GearOutline}
+                    IconRegular={Icon28SettingsOutline}
+                  />
                 </PanelHeaderButton>
                 <PanelHeaderButton
                   aria-label="Уведомления"

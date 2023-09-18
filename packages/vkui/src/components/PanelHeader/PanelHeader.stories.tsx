@@ -1,10 +1,18 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { Icon28Notifications, Icon28PictureOutline, Icon28SettingsOutline } from '@vkontakte/icons';
+import {
+  Icon24GearOutline,
+  Icon24NotificationOutline,
+  Icon24PictureOutline,
+  Icon28Notifications,
+  Icon28PictureOutline,
+  Icon28SettingsOutline,
+} from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { Avatar } from '../Avatar/Avatar';
 import { Counter } from '../Counter/Counter';
 import { Div } from '../Div/Div';
@@ -59,7 +67,10 @@ export const PanelHeaderWithCounter: Story = {
                   </Counter>
                 }
               >
-                <Icon28PictureOutline />
+                <AdaptiveIconRenderer
+                  IconCompact={Icon24PictureOutline}
+                  IconRegular={Icon28PictureOutline}
+                />
               </PanelHeaderButton>
             }
           >
@@ -88,7 +99,10 @@ export const PanelHeaderWithMultipleIcons: Story = {
                   </Counter>
                 }
               >
-                <Icon28SettingsOutline />
+                <AdaptiveIconRenderer
+                  IconCompact={Icon24GearOutline}
+                  IconRegular={Icon28SettingsOutline}
+                />
               </PanelHeaderButton>
               <PanelHeaderButton
                 aria-label="Уведомления"
@@ -98,7 +112,10 @@ export const PanelHeaderWithMultipleIcons: Story = {
                   </Counter>
                 }
               >
-                <Icon28Notifications />
+                <AdaptiveIconRenderer
+                  IconCompact={Icon24NotificationOutline}
+                  IconRegular={Icon28Notifications}
+                />
               </PanelHeaderButton>
             </React.Fragment>
           }
