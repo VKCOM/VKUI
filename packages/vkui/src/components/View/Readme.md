@@ -256,6 +256,81 @@ const Content = () => {
   );
 };
 
+const TabbarExample = () => {
+  return (
+    <Epic
+      tabbar={
+        <Tabbar>
+          <TabbarItem data-story="feed" text="Новости">
+            <Icon28NewsfeedOutline />
+          </TabbarItem>
+          <TabbarItem data-story="services" text="Сервисы">
+            <Icon28ServicesOutline />
+          </TabbarItem>
+          <TabbarItem
+            data-story="messages"
+            indicator={
+              <Counter size="s" mode="prominent">
+                12
+              </Counter>
+            }
+            text="Сообщения"
+          >
+            <Icon28MessageOutline />
+          </TabbarItem>
+          <TabbarItem data-story="clips" text="Клипы">
+            <Icon28ClipOutline />
+          </TabbarItem>
+          <TabbarItem data-story="profile" indicator={<Badge mode="prominent" />} text="Профиль">
+            <Icon28UserCircleOutline />
+          </TabbarItem>
+        </Tabbar>
+      }
+    >
+      <View id="feed" activePanel="feed">
+        <Panel id="feed">
+          <PanelHeader before={<PanelHeaderBack />}>Новости</PanelHeader>
+          <Group style={{ height: '1000px' }}>
+            <Placeholder icon={<Icon56NewsfeedOutline width={56} height={56} />} />
+          </Group>
+        </Panel>
+      </View>
+      <View id="services" activePanel="services">
+        <Panel id="services">
+          <PanelHeader before={<PanelHeaderBack />}>Сервисы</PanelHeader>
+          <Group style={{ height: '1000px' }}>
+            <Placeholder icon={<Icon28ServicesOutline width={56} height={56} />}></Placeholder>
+          </Group>
+        </Panel>
+      </View>
+      <View id="messages" activePanel="messages">
+        <Panel id="messages">
+          <PanelHeader before={<PanelHeaderBack />}>Сообщения</PanelHeader>
+          <Group style={{ height: '1000px' }}>
+            <Placeholder icon={<Icon28MessageOutline width={56} height={56} />}></Placeholder>
+          </Group>
+        </Panel>
+      </View>
+      <View id="clips" activePanel="clips">
+        <Panel id="clips">
+          <PanelHeader before={<PanelHeaderBack />}>Клипы</PanelHeader>
+          <Group style={{ height: '1000px' }}>
+            <Placeholder icon={<Icon28ClipOutline width={56} height={56} />}></Placeholder>
+          </Group>
+        </Panel>
+      </View>
+      <View id="profile" activePanel="profile">
+        <Panel id="profile">
+          <PanelHeader before={<PanelHeaderBack />}>Профиль</PanelHeader>
+          <Group style={{ height: '1000px' }}>
+            <Placeholder icon={<Icon28UserCircleOutline width={56} height={56} />}></Placeholder>
+          </Group>
+        </Panel>
+      </View>
+    </Epic>
+  );
+};
+
 const Example = () => {
   const [activeView, setActiveView] = useState('view1');
   const [activePanel, setActivePanel] = useState(1);
@@ -356,10 +431,12 @@ const Example = () => {
                 <PanelHeader>П.1 iOS Swipe Back</PanelHeader>
                 {navigationButtons}
                 <Content />
+                <TabbarExample />
               </Panel>
               <Panel id="swipeView.2">
                 <PanelHeader>П.2 iOS Swipe Back</PanelHeader>
                 {navigationButtons}
+                <TabbarExample />
                 <Content />
               </Panel>
               <Panel id="swipeView.3">

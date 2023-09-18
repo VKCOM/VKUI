@@ -129,6 +129,8 @@ export const View = ({
   const [swipeBackNextPanel, setSwipeBackNextPanel] = React.useState<string | null>(null);
   const [swipeBackPrevPanel, setSwipeBackPrevPanel] = React.useState<string | null>(null);
   const [swipeBackResult, setSwipeBackResult] = React.useState<SwipeBackResults | null>(null);
+  const [swipeBackActivePanelHasTabbar, setSwipeBackActivePanelHasTabbar] =
+    React.useState<boolean>(false);
 
   const [browserSwipe, setBrowserSwipe] = React.useState(false);
 
@@ -295,6 +297,10 @@ export const View = ({
       setSwipeBackStartX(event.startX);
       setSwipeBackPrevPanel(activePanel);
       setSwipeBackNextPanel(history.slice(-2)[0]);
+      setSwipeBackActivePanelHasTabbar(
+        // eslint-disable-next-line no-restricted-properties
+        Boolean(pickPanel(activePanel)?.querySelector('.vkuiInternalTabbar')),
+      );
     }
 
     if (swipingBack) {
@@ -323,6 +329,8 @@ export const View = ({
         } else {
           setSwipeBackResult(SwipeBackResults.fail);
         }
+
+        setSwipeBackActivePanelHasTabbar(false);
       }
       if (swipeBackPrevented) {
         setSwipeBackPrevented(false);
@@ -541,6 +549,9 @@ export const View = ({
                   panelId === nextPanel && styles['View__panel--next'],
                   panelId === swipeBackPrevPanel && styles['View__panel--swipe-back-prev'],
                   panelId === swipeBackNextPanel && styles['View__panel--swipe-back-next'],
+                  panelId === swipeBackNextPanel &&
+                    swipeBackActivePanelHasTabbar &&
+                    styles['View__panel--active-panel-has-tabbar'],
                   swipeBackResult === SwipeBackResults.success &&
                     styles['View__panel--swipe-back-success'],
                   swipeBackResult === SwipeBackResults.fail &&
@@ -551,6 +562,10 @@ export const View = ({
                 style={calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
+                <div
+                  className={styles['View__panel-overlay']}
+                  style={calcPanelSwipeBackOverlayStyles(panelId)}
+                />
                 <div
                   className={styles['View__panel-in']}
                   style={{
@@ -565,10 +580,6 @@ export const View = ({
                     </NavTransitionProvider>
                   </NavTransitionDirectionProvider>
                 </div>
-                <div
-                  className={styles['View__panel-overlay']}
-                  style={calcPanelSwipeBackOverlayStyles(panelId)}
-                />
               </div>
             );
           })}
