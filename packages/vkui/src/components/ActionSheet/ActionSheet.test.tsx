@@ -134,4 +134,56 @@ describe('ActionSheet', () => {
       expect(onClose).toBeCalledWith({ closedBy: 'other' });
     });
   });
+
+  test('renders header and text', () => {
+    render(<ActionSheetMobile header="The header title" text="Text footnote" />);
+    expect(screen.queryByText('The header title')).toBeTruthy();
+    expect(screen.queryByText('Text footnote')).toBeTruthy();
+  });
+
+  test('renders close button only on mobile iOS', () => {
+    const { rerender } = render(
+      <ConfigProvider platform={Platform.IOS}>
+        <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
+          <ActionSheet onClose={jest.fn()} />
+        </AdaptivityProvider>
+      </ConfigProvider>,
+    );
+
+    // mobile iOS
+    expect(screen.queryByText('Отмена')).toBeTruthy();
+
+    rerender(
+      <ConfigProvider platform={Platform.IOS}>
+        <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
+          <ActionSheet onClose={jest.fn()} />
+        </AdaptivityProvider>
+      </ConfigProvider>,
+    );
+
+    // desktop iOS
+    expect(screen.queryByText('Отмена')).toBeFalsy();
+
+    rerender(
+      <ConfigProvider platform={Platform.ANDROID}>
+        <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
+          <ActionSheet onClose={jest.fn()} />
+        </AdaptivityProvider>
+      </ConfigProvider>,
+    );
+
+    // mobile Android
+    expect(screen.queryByText('Отмена')).toBeFalsy();
+
+    rerender(
+      <ConfigProvider platform={Platform.ANDROID}>
+        <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
+          <ActionSheet onClose={jest.fn()} />
+        </AdaptivityProvider>
+      </ConfigProvider>,
+    );
+
+    // desktop Android
+    expect(screen.queryByText('Отмена')).toBeFalsy();
+  });
 });

@@ -124,20 +124,24 @@ export const ActionSheet = ({
         className={isDesktop ? className : undefined}
         style={isDesktop ? style : undefined}
       >
-        {(header || text) && (
-          <header className={styles['ActionSheet__header']}>
-            {header && (
-              <Footnote weight="2" className={styles['ActionSheet__title']}>
-                {header}
-              </Footnote>
-            )}
-            {text && <Footnote className={styles['ActionSheet__text']}>{text}</Footnote>}
-          </header>
+        <div className={styles['ActionSheet__content-wrapper']}>
+          {(header || text) && (
+            <header className={styles['ActionSheet__header']}>
+              {header && (
+                <Footnote weight="2" className={styles['ActionSheet__title']}>
+                  {header}
+                </Footnote>
+              )}
+              {text && <Footnote className={styles['ActionSheet__text']}>{text}</Footnote>}
+            </header>
+          )}
+          {children}
+        </div>
+        {platform === Platform.IOS && !isDesktop && (
+          <div className={styles['ActionSheet__close-item-wrapper--ios']}>
+            {iosCloseItem ?? <ActionSheetDefaultIosCloseItem />}
+          </div>
         )}
-        {children}
-        {platform === Platform.IOS &&
-          !isDesktop &&
-          (iosCloseItem ?? <ActionSheetDefaultIosCloseItem />)}
       </DropdownComponent>
     </ActionSheetContext.Provider>
   );
