@@ -5573,7 +5573,7 @@ __metadata:
     "@vkontakte/prettier-config": ^0.1.0
     "@vkontakte/stylelint-config": ^3.3.0
     "@vkontakte/vk-bridge": ^2.1.3
-    "@vkontakte/vkui-tokens": 4.38.1
+    "@vkontakte/vkui-tokens": 4.39.1
     autoprefixer: ^10.4.15
     concurrently: ^8.2.1
     cross-env: ^7.0.2
@@ -5653,12 +5653,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/vkui-tokens@npm:4.38.1":
-  version: 4.38.1
-  resolution: "@vkontakte/vkui-tokens@npm:4.38.1"
+"@vkontakte/vkui-tokens@npm:4.39.1":
+  version: 4.39.1
+  resolution: "@vkontakte/vkui-tokens@npm:4.39.1"
   dependencies:
     csstype: ^3.1.1
-  checksum: 0e6645cded67c39efe043c61743ab73f7cf9b2269efc0a8efd565fa1248b96b73e71ec121dca6485a34544388523ae1a93ffcf8a7b09557f17e071b58c4a1309
+  checksum: 42df4ca2881f3baf8877d9712e1808b902603b2a6ad10d0fb8df3cb212fcd32ea5fbb4c6e371eafcbc929e3daa2056c579dd6263cd3f78e1976d2a2d1fe3ae85
   languageName: node
   linkType: hard
 
