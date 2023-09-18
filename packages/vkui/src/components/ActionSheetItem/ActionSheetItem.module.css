@@ -7,7 +7,6 @@
   color: var(--vkui--color_text_primary);
   padding: 0 20px;
   min-height: 48px;
-  border-radius: 0;
   box-sizing: border-box;
 }
 
@@ -109,7 +108,6 @@
 .ActionSheetItem--ios {
   padding: 14px 18px;
   min-height: 56px;
-  border-radius: 0;
   color: var(--vkui--color_text_accent_themed);
   background: var(--vkui--color_background_modal);
 }
@@ -124,17 +122,6 @@
 
 .ActionSheetItem--ios.ActionSheetItem--mode-destructive {
   color: var(--vkui--color_text_negative);
-}
-
-.ActionSheetItem--ios:first-child {
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
-}
-
-.ActionSheetItem--ios:not(.ActionSheetItem--desktop):nth-last-child(2),
-.ActionSheetItem--ios:last-child {
-  border-bottom-left-radius: 14px;
-  border-bottom-right-radius: 14px;
 }
 
 .ActionSheetItem--ios::before {
@@ -192,9 +179,6 @@
 }
 
 .ActionSheetItem--mode-cancel {
-  margin-top: 8px;
-  margin-bottom: var(--vkui_internal--safe_area_inset_bottom);
-  border-radius: 14px;
   min-height: 52px;
 }
 
