@@ -329,8 +329,6 @@ export const View = ({
         } else {
           setSwipeBackResult(SwipeBackResults.fail);
         }
-
-        setSwipeBackActivePanelHasTabbar(false);
       }
       if (swipeBackPrevented) {
         setSwipeBackPrevented(false);
