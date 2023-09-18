@@ -11,6 +11,9 @@ test.describe('ActionSheet', () => {
       sizeY: SizeType.REGULAR,
     },
     onlyForPlatforms: [Platform.IOS, Platform.ANDROID],
+    toMatchSnapshot: {
+      threshold: 0.02,
+    },
   });
   test('ViewWidth.MOBILE sizeY=regular', async ({
     mount,
@@ -29,6 +32,9 @@ test.describe('ActionSheet', () => {
       sizeY: SizeType.REGULAR,
     },
     onlyForPlatforms: [Platform.VKCOM],
+    toMatchSnapshot: {
+      threshold: 0.02,
+    },
   });
   test('ViewWidth.DESKTOP sizeY=regular', async ({
     mount,
