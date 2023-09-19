@@ -80,7 +80,7 @@ export interface TappableProps
    */
   hovered?: boolean;
   /**
-   * Позволяет управлять hovered-состоянием извне
+   * Позволяет управлять activated-состоянием извне
    */
   activated?: boolean;
   /**
