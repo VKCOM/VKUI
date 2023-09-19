@@ -136,7 +136,7 @@ export const ModalPage = ({
           className={styles['ModalPage__in-wrap']}
           style={{
             maxWidth: typeof size === 'number' ? size : undefined,
-            ...(height ? { height } : null),
+            height,
           }}
           ref={refs.innerElement}
         >
