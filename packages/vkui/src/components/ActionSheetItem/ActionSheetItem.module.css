@@ -84,21 +84,16 @@
   color: var(--vkui--color_icon_negative);
 }
 
-.ActionSheetItem__radio {
-  display: none;
-}
-
-.ActionSheetItem__marker {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  color: var(--vkui--color_icon_accent);
-  margin-left: 16px;
-}
-
-.ActionSheetItem__radio:checked ~ .ActionSheetItem__marker {
+.ActionSheetItem__after {
   display: flex;
+  flex-direction: row;
+  margin-left: 16px;
+  color: var(--vkui--color_icon_accent);
+}
+
+/* stylelint-disable-next-line selector-max-universal -- gap 12px */
+.ActionSheetItem__after > *:not(:last-child) {
+  margin-right: 12px;
 }
 
 /**
