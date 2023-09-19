@@ -5,6 +5,7 @@
 
 - В `PanelHeader` рисуется [`Search`](#!/Search).
 - После `PanelHeader` рисуется [`Search`](#!/Search).
+- После `PanelHeader` рисуется [`Banner`](#!/Banner).
 - В `PanelHeader` рисуются [`Tabs`](#!/Tabs).
 
 В таких случаях передавайте в `PanelHeader` свойство `separator={false}`.
