@@ -67,7 +67,7 @@
   margin-right: 16px;
 }
 
-.ActionSheetItem--desktop .ActionSheetItem__before {
+.ActionSheetItem--menu .ActionSheetItem__before {
   margin-right: 12px;
 }
 
@@ -186,7 +186,7 @@
  * Desktop
  */
 
-.ActionSheetItem--desktop {
+.ActionSheetItem--menu {
   width: auto;
   cursor: pointer;
 }

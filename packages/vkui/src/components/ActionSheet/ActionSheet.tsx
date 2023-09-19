@@ -11,8 +11,8 @@ import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
 import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
-import { ActionSheetDropdown } from './ActionSheetDropdown';
-import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
+import { ActionSheetDropdownMenu } from './ActionSheetDropdownMenu';
+import { ActionSheetDropdownSheet } from './ActionSheetDropdownSheet';
 import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
@@ -38,6 +38,7 @@ export interface ActionSheetProps
    * Только мобильный iOS.
    */
   iosCloseItem?: React.ReactNode;
+  mode?: 'sheet' | 'menu';
 }
 
 /**
@@ -53,6 +54,7 @@ export const ActionSheet = ({
   popupDirection,
   popupOffsetDistance,
   placement,
+  mode: modeProp,
   ...restProps
 }: ActionSheetProps) => {
   const platform = usePlatform();
@@ -67,12 +69,13 @@ export const ActionSheet = ({
   };
 
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
+  const mode = modeProp ?? (isDesktop ? 'menu' : 'sheet');
 
-  useScrollLock(!isDesktop);
+  useScrollLock(mode === 'sheet');
 
   let timeout = platform === Platform.IOS ? 300 : 200;
 
-  if (isDesktop) {
+  if (mode === 'menu') {
     timeout = 0;
   }
 
@@ -99,9 +102,9 @@ export const ActionSheet = ({
       },
     [],
   );
-  const contextValue = useObjectMemo({ onItemClick, isDesktop });
+  const contextValue = useObjectMemo({ onItemClick, mode });
 
-  const DropdownComponent = isDesktop ? ActionSheetDropdownDesktop : ActionSheetDropdown;
+  const DropdownComponent = mode === 'menu' ? ActionSheetDropdownMenu : ActionSheetDropdownSheet;
 
   if (process.env.NODE_ENV === 'development' && popupDirection) {
     // TODO [>=6]: popupDirection
@@ -110,9 +113,10 @@ export const ActionSheet = ({
 
   popupDirection = popupDirection !== undefined ? popupDirection : 'bottom';
 
-  const dropdownProps = isDesktop
-    ? Object.assign(restProps, { popupOffsetDistance, popupDirection, placement })
-    : restProps;
+  const dropdownProps =
+    mode === 'menu'
+      ? Object.assign(restProps, { popupOffsetDistance, popupDirection, placement })
+      : restProps;
 
   const actionSheet = (
     <ActionSheetContext.Provider value={contextValue}>
@@ -121,8 +125,8 @@ export const ActionSheet = ({
         timeout={timeout}
         {...dropdownProps}
         onClose={onClose}
-        className={isDesktop ? className : undefined}
-        style={isDesktop ? style : undefined}
+        className={mode === 'menu' ? className : undefined}
+        style={mode === 'menu' ? style : undefined}
       >
         <div className={styles['ActionSheet__content-wrapper']}>
           {(header || text) && (
@@ -137,7 +141,7 @@ export const ActionSheet = ({
           )}
           {children}
         </div>
-        {platform === Platform.IOS && !isDesktop && (
+        {platform === Platform.IOS && mode === 'sheet' && (
           <div className={styles['ActionSheet__close-item-wrapper--ios']}>
             {iosCloseItem ?? <ActionSheetDefaultIosCloseItem />}
           </div>
@@ -146,7 +150,7 @@ export const ActionSheet = ({
     </ActionSheetContext.Provider>
   );
 
-  if (isDesktop) {
+  if (mode === 'menu') {
     return actionSheet;
   }
 

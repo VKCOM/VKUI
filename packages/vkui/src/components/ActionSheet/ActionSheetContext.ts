@@ -11,7 +11,7 @@ export type ItemClickHandler<T extends Element = Element> = (options: {
 
 export type ActionSheetContextType<T extends Element = Element> = {
   onItemClick?: ItemClickHandler<T>;
-  isDesktop?: boolean;
+  mode?: 'sheet' | 'menu';
 };
 
 export const ActionSheetContext = React.createContext<ActionSheetContextType<any>>({});

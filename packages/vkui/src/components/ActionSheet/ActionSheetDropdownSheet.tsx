@@ -15,7 +15,7 @@ export type ActionSheetDropdownProps = Omit<
   'popupDirection' | 'popupOffsetDistance' | 'placement'
 >;
 
-export const ActionSheetDropdown = ({
+export const ActionSheetDropdownSheet = ({
   children,
   closing,
   // these 2 props are only omitted - ActionSheetDesktop compat

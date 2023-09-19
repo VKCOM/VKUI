@@ -70,7 +70,7 @@ const ActionSheetItem = ({
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
-  const { onItemClick = () => noop, isDesktop } =
+  const { onItemClick = () => noop, mode: actionSheetMode } =
     React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
   const { sizeY } = useAdaptivityWithJSMediaQueries();
 
@@ -109,7 +109,7 @@ const ActionSheetItem = ({
         mode === 'destructive' && styles['ActionSheetItem--mode-destructive'],
         sizeY === SizeType.COMPACT && styles['ActionSheetItem--sizeY-compact'],
         isRich && styles['ActionSheetItem--rich'],
-        isDesktop && styles['ActionSheetItem--desktop'],
+        actionSheetMode === 'menu' && styles['ActionSheetItem--menu'],
         selectable && styles['ActionSheetItem--selectable'],
         className,
       )}

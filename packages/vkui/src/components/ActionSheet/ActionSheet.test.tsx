@@ -25,10 +25,18 @@ describe('ActionSheet', () => {
       <ActionSheet toggleRef={toggle} onClose={jest.fn()} {...props} />
     </AdaptivityProvider>
   );
+  const ActionSheetMenu = (props: Partial<ActionSheetProps>) => (
+    <ActionSheet mode="menu" toggleRef={toggle} onClose={jest.fn()} {...props} />
+  );
+  const ActionSheetSheet = (props: Partial<ActionSheetProps>) => (
+    <ActionSheet mode="sheet" toggleRef={toggle} onClose={jest.fn()} {...props} />
+  );
 
   describe.each([
     ['desktop', ActionSheetDesktop],
     ['mobile', ActionSheetMobile],
+    ['menu', ActionSheetMenu],
+    ['sheet', ActionSheetSheet],
   ])('%s', (_name, ActionSheet) => {
     baselineComponent((props) => <ActionSheet {...props} />, {
       // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
