@@ -91,7 +91,7 @@
  * Desktop version
  */
 
-.ActionSheet--desktop {
+.ActionSheet--menu {
   width: auto;
   height: auto;
   animation: none;
@@ -99,7 +99,7 @@
   max-width: 100%;
 }
 
-.ActionSheet--desktop.ActionSheet--ios .ActionSheet__content-wrapper {
+.ActionSheet--menu.ActionSheet--ios .ActionSheet__content-wrapper {
   border-radius: 14px;
   padding: 0;
 }

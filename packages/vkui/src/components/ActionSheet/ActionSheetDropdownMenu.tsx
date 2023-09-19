@@ -19,7 +19,7 @@ function getEl(ref: SharedDropdownProps['toggleRef']): Element | null | undefine
   return ref && 'current' in ref ? ref.current : ref;
 }
 
-export const ActionSheetDropdownDesktop = ({
+export const ActionSheetDropdownMenu = ({
   children,
   toggleRef,
   closing,
@@ -83,7 +83,7 @@ export const ActionSheetDropdownDesktop = ({
       className={classNames(
         styles['ActionSheet'],
         platform === Platform.IOS && styles['ActionSheet--ios'],
-        styles['ActionSheet--desktop'],
+        styles['ActionSheet--menu'],
         sizeY === SizeType.COMPACT && styles['ActionSheet--sizeY-compact'],
         className,
       )}
