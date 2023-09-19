@@ -33,6 +33,12 @@ export interface ModalPageProps extends HTMLAttributesWithRootRef<HTMLDivElement
    */
   size?: 's' | 'm' | 'l' | number;
   /**
+   * Задаёт модальному окну фиксированную высоту.
+   * Можно передать числовое значение в пикселях, а можно строкой, в том числе и в процентах "50%".
+   * В мобильной версии 'settlingHeight' будет считаться относительно заданного height.
+   */
+  height?: string | number;
+  /**
    * Будет вызвано при начале открытия модалки.
    */
   onOpen?: VoidFunction;
@@ -83,6 +89,7 @@ export const ModalPage = ({
   nav,
   id: idProp,
   hideCloseButton = false,
+  height,
   modalContentTestId,
   ...restProps
 }: ModalPageProps) => {
@@ -129,6 +136,7 @@ export const ModalPage = ({
           className={styles['ModalPage__in-wrap']}
           style={{
             maxWidth: typeof size === 'number' ? size : undefined,
+            ...(height ? { height } : null),
           }}
           ref={refs.innerElement}
         >
