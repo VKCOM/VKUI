@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Icon20CheckCircleOn, Icon24CheckCircleOn } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -10,6 +9,7 @@ import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
+import { Radio } from './subcomponents/Radio/Radio';
 import styles from './ActionSheetItem.module.css';
 
 export interface ActionSheetItemProps
@@ -18,6 +18,7 @@ export interface ActionSheetItemProps
     Pick<React.InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'> {
   mode?: 'default' | 'destructive' | 'cancel';
   before?: React.ReactNode;
+  after?: React.ReactNode;
   meta?: React.ReactNode;
   subtitle?: React.ReactNode;
   autoClose?: boolean;
@@ -48,13 +49,14 @@ export interface ActionSheetItemProps
 /**
  * @see https://vkcom.github.io/VKUI/#/ActionSheetItem
  */
-const ActionSheetItem = ({
+export const ActionSheetItem = ({
   children,
   autoClose,
   mode = 'default',
   meta,
   subtitle,
   before,
+  after,
   selectable,
   value,
   name,
@@ -64,7 +66,7 @@ const ActionSheetItem = ({
   onClick,
   onImmediateClick,
   multiline = false,
-  iconChecked: iconCheckedProp,
+  iconChecked,
   className,
   isCancelItem,
   ...restProps
@@ -73,10 +75,6 @@ const ActionSheetItem = ({
   const { onItemClick = () => noop, mode: actionSheetMode } =
     React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
   const { sizeY } = useAdaptivityWithJSMediaQueries();
-
-  const iconChecked =
-    iconCheckedProp ||
-    (sizeY === SizeType.COMPACT ? <Icon20CheckCircleOn /> : <Icon24CheckCircleOn />);
 
   let Component: React.ElementType = restProps.href ? 'a' : 'div';
 
@@ -142,29 +140,29 @@ const ActionSheetItem = ({
         </div>
         {subtitle && <Subhead className={styles['ActionSheetItem__subtitle']}>{subtitle}</Subhead>}
       </div>
-      {selectable && (
+      {(selectable || after) && (
         <div className={styles['ActionSheetItem__after']}>
-          <input
-            type="radio"
-            className={styles['ActionSheetItem__radio']}
-            name={name}
-            value={value}
-            onChange={onChange}
-            onClick={onItemClick({
-              action: noop,
-              immediateAction: noop,
-              autoClose: Boolean(autoClose),
-              isCancelItem: Boolean(isCancelItem),
-            })}
-            defaultChecked={defaultChecked}
-            checked={checked}
-            disabled={restProps.disabled}
-          />
-          <div className={styles['ActionSheetItem__marker']}>{iconChecked}</div>
+          {after}
+          {selectable && (
+            <Radio
+              name={name}
+              value={value}
+              onChange={onChange}
+              onClick={onItemClick({
+                action: noop,
+                immediateAction: noop,
+                autoClose: Boolean(autoClose),
+                isCancelItem: Boolean(isCancelItem),
+              })}
+              defaultChecked={defaultChecked}
+              checked={checked}
+              disabled={restProps.disabled}
+            >
+              {iconChecked}
+            </Radio>
+          )}
         </div>
       )}
     </Tappable>
   );
 };
-
-export { ActionSheetItem };
