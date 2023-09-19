@@ -14,7 +14,7 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
-  padding: 12px 12px 12px 16px;
+  padding: 12px;
   background-color: var(--vkui--color_background_secondary);
   border-radius: var(--vkui--size_border_radius--regular);
   overflow: hidden;
@@ -117,13 +117,6 @@
 .Banner--inverted .Banner__subheader {
   color: var(--vkui--color_text_contrast);
   opacity: 0.72;
-}
-
-/**
- * Size "s"
- */
-.Banner--size-s .Banner__before {
-  margin-left: -4px;
 }
 
 /**
