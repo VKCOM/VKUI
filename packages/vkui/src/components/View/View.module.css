@@ -82,15 +82,6 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Не затемняем Tabbar при свайбеке от одной панели с Tabbar к другой панели с Tabbar.
- * Увеличиваем z-index Tabbar следующей панели, чтобы overlay панели не закрывал его.
- * Только при условии что текущая панель тоже имеет в себе Tabbar. */
-.View--ios
-  .View__panel--swipe-back-next.View__panel--active-panel-has-tabbar
-  :global(.vkuiInternalTabbar) {
-  z-index: calc(var(--vkui_internal--z_index_panel_header_fade) + 1);
-}
-
 .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-success .View__panel-overlay,
 .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-failed .View__panel-overlay {
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
