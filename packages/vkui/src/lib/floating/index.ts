@@ -7,6 +7,7 @@ export {
   arrow as arrowMiddleware,
   size as sizeMiddleware,
   hide as hideMiddleware,
+  getOverflowAncestors,
 } from '@floating-ui/react-dom';
 
 export type {

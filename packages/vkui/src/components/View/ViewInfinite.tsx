@@ -18,7 +18,11 @@ import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionCont
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitColContext';
 import { Touch, TouchEvent } from '../Touch/Touch';
-import { swipeBackExcluded } from './utils';
+import {
+  getSwipeBackPredicates,
+  hasHorizontalScrollableElementWithScrolledToLeft,
+  swipeBackExcluded,
+} from './utils';
 import styles from './View.module.css';
 
 const warn = warnOnce('ViewInfinite');
@@ -86,7 +90,6 @@ export interface ViewInfiniteState {
   nextPanel: string | null;
 
   swipingBack?: boolean;
-  swipeBackPrevented: boolean;
   swipeBackStartX: number;
   swipeBackShift: number;
   swipeBackNextPanel: string | null;
@@ -100,8 +103,6 @@ class ViewInfiniteComponent extends React.Component<
   ViewInfiniteProps & DOMProps,
   ViewInfiniteState
 > {
-  private static readonly SWIPE_BACK_AREA = 70;
-
   constructor(props: ViewInfiniteProps) {
     super(props);
 
@@ -115,7 +116,6 @@ class ViewInfiniteComponent extends React.Component<
       nextPanel: null,
 
       swipingBack: undefined,
-      swipeBackPrevented: false,
       swipeBackStartX: 0,
       swipeBackShift: 0,
       swipeBackNextPanel: null,
@@ -130,6 +130,7 @@ class ViewInfiniteComponent extends React.Component<
     history: [],
   };
 
+  private swipeBackPrevented = false;
   private scrolls = scrollsCache[getNavId(this.props, warn) as string] || {};
   private transitionFinishTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
   private animationFinishTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
@@ -422,46 +423,52 @@ class ViewInfiniteComponent extends React.Component<
     });
   }
 
-  onMoveX = (event: TouchEvent): void => {
-    if (
-      !this.window ||
-      this.props.platform !== Platform.IOS ||
-      this.state.swipeBackPrevented ||
-      swipeBackExcluded(event) ||
-      this.shouldDisableTransitionMotion()
-    ) {
+  handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: TouchEvent) => {
+    if (this.state.browserSwipe) {
+      return;
+    }
+    const { swipeBackTriggered, viewportStartEdgeTouched, viewportEndEdgeTouched } =
+      getSwipeBackPredicates(event.startX, event.shiftX, this.window!.innerWidth);
+
+    if ((viewportStartEdgeTouched || viewportEndEdgeTouched) && swipeBackTriggered) {
+      this.setState({ browserSwipe: true });
+    }
+  };
+
+  handleTouchMoveXForIOSSwipeBackSimulation = (event: TouchEvent) => {
+    if (this.swipeBackPrevented || swipeBackExcluded(event)) {
       return;
     }
 
-    if (!this.props.configProvider?.isWebView) {
-      if (
-        (event.startX <= ViewInfiniteComponent.SWIPE_BACK_AREA ||
-          event.startX >= this.window.innerWidth - ViewInfiniteComponent.SWIPE_BACK_AREA) &&
-        !this.state.browserSwipe
-      ) {
-        this.setState({ browserSwipe: true });
+    const { swipedToOpposite, swipeBackTriggered, viewportStartEdgeTouched } =
+      getSwipeBackPredicates(event.startX, event.shiftX, this.window!.innerWidth);
+
+    if (this.state.animated && swipeBackTriggered) {
+      return;
+    }
+
+    if (!this.state.swipingBack && this.props.history && this.props.history.length > 1) {
+      if (swipedToOpposite) {
+        this.swipeBackPrevented = true;
+        return;
       }
 
-      return;
-    }
+      if (!swipeBackTriggered) {
+        return;
+      }
 
-    if (
-      !this.props.onSwipeBack ||
-      (this.state.animated && event.startX <= ViewInfiniteComponent.SWIPE_BACK_AREA)
-    ) {
-      return;
-    }
-
-    if (
-      !this.state.swipingBack &&
-      event.startX <= ViewInfiniteComponent.SWIPE_BACK_AREA &&
-      this.props.history &&
-      this.props.history.length > 1
-    ) {
+      if (
+        !viewportStartEdgeTouched &&
+        hasHorizontalScrollableElementWithScrolledToLeft(event.originalEvent.target as HTMLElement)
+      ) {
+        this.swipeBackPrevented = true;
+        return;
+      }
+      // Начался свайп назад
       if (this.props.onSwipeBackStart) {
         const payload = this.props.onSwipeBackStart(this.state.activePanel);
         if (payload === 'prevent') {
-          this.setState({ swipeBackPrevented: true });
+          this.swipeBackPrevented = true;
           return;
         }
       }
@@ -485,36 +492,30 @@ class ViewInfiniteComponent extends React.Component<
     }
 
     if (this.state.swipingBack) {
-      let swipeBackShift;
       if (event.shiftX < 0) {
-        swipeBackShift = 0;
-      } else if (event.shiftX > this.window.innerWidth - this.state.swipeBackStartX) {
-        swipeBackShift = this.window.innerWidth;
+        this.setState({ swipeBackShift: 0 });
+      } else if (event.shiftX > this.window!.innerWidth - this.state.swipeBackStartX) {
+        this.setState({ swipeBackShift: this.window!.innerWidth });
       } else {
-        swipeBackShift = event.shiftX;
+        this.setState({ swipeBackShift: event.shiftX });
       }
-      this.setState({ swipeBackShift });
     }
   };
 
-  onEnd = (event: TouchEvent): void => {
+  handleTouchEndForIOSSwipeBackSimulation = (event: TouchEvent) => {
+    this.swipeBackPrevented = false;
+
     if (this.state.swipingBack && this.window) {
       const speed = (this.state.swipeBackShift / event.duration) * 1000;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {
         this.onSwipeBackSuccess();
-      } else if (
-        speed > 250 ||
-        this.state.swipeBackStartX + this.state.swipeBackShift > this.window.innerWidth / 2
-      ) {
+      } else if (speed > 250 || this.state.swipeBackShift >= this.window.innerWidth / 2) {
         this.setState({ swipeBackResult: SwipeBackResults.success });
       } else {
         this.setState({ swipeBackResult: SwipeBackResults.fail });
       }
-    }
-    if (this.state.swipeBackPrevented) {
-      this.setState({ swipeBackPrevented: false });
     }
   };
 
@@ -617,6 +618,11 @@ class ViewInfiniteComponent extends React.Component<
       });
 
     const disableAnimation = this.shouldDisableTransitionMotion();
+    const iOSSwipeBackSimulationEnabled =
+      !disableAnimation &&
+      platform === Platform.IOS &&
+      configProvider?.isWebView &&
+      Boolean(onSwipeBack);
 
     return (
       <NavViewIdContext.Provider value={id || nav}>
@@ -631,8 +637,16 @@ class ViewInfiniteComponent extends React.Component<
             disableAnimation && styles['View--no-motion'],
             className,
           )}
-          onMoveX={this.onMoveX}
-          onEnd={this.onEnd}
+          onMoveX={
+            iOSSwipeBackSimulationEnabled
+              ? this.handleTouchMoveXForIOSSwipeBackSimulation
+              : platform === Platform.IOS
+              ? this.handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
+              : undefined
+          }
+          onEnd={
+            iOSSwipeBackSimulationEnabled ? this.handleTouchEndForIOSSwipeBackSimulation : undefined
+          }
         >
           <div className={styles['View__panels']}>
             {panels.map((panel: React.ReactElement) => {

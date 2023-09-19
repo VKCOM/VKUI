@@ -50,7 +50,10 @@ const [activePanel, setActivePanel] = useState('panel1');
 
 **Блокировка свайпа (вариант #1)**
 
-Компоненты, которые сами обрабатывают жесты (например, карта), могут конфликтовать со свайпбеком — повесьте на них свойство `data-vkui-swipe-back={false}`
+Компоненты, которые сами обрабатывают жесты (например, карта или кастомный компонент по типу карусели), могут конфликтовать со свайпбеком. Вот как можно это решить:
+
+- либо повесьте на них свойство `data-vkui-swipe-back={false}`;
+- либо вызывайте `event.stopPropagation()` на событие `onStartX` компонента [Touch](#/Touch).
 
 <br />
 
@@ -141,7 +144,9 @@ const MainPanelContent = ({ onProfileClick }) => {
       <PanelHeader>Main</PanelHeader>
       <Group>
         <div style={{ height: 200 }} />
-        <CellButton onClick={onProfileClick}>Профиль</CellButton>
+        <CellButton stopPropagation={false} onClick={onProfileClick}>
+          Профиль
+        </CellButton>
         <div style={{ height: 600 }} />
       </Group>
     </React.Fragment>
@@ -159,7 +164,33 @@ const ProfilePanelContent = ({ onSettingsClick }) => {
         </Div>
       </Group>
       <Group>
-        <CellButton onClick={onSettingsClick}>Настройки</CellButton>
+        <CellButton stopPropagation={false} onClick={onSettingsClick}>
+          Настройки
+        </CellButton>
+      </Group>
+      <Group
+        header={<Header>Gallery</Header>}
+        description="Полностью блокирует свайпбэк (за счёт event.stopPropagation() на onStartX компонента Touch)"
+      >
+        <Gallery slideWidth="90%" bullets="dark">
+          <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+          <img src="https://placebear.com/1024/640" style={{ display: 'block' }} />
+          <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+        </Gallery>
+      </Group>
+      <Group
+        header={<Header>HorizontalScroll</Header>}
+        description="Свайпбэк срабатывает либо если мы тянем за левый край экрана, либо если позиция горизонтального скролла равна нулю"
+      >
+        <HorizontalScroll>
+          <div style={{ display: 'flex' }}>
+            {getRandomUsers(15).map((user) => (
+              <HorizontalCell key={user.id} size="s" header={user.first_name}>
+                <Avatar size={56} src={user.photo_100} />
+              </HorizontalCell>
+            ))}
+          </div>
+        </HorizontalScroll>
       </Group>
     </React.Fragment>
   );
