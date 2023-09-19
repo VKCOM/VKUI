@@ -80,6 +80,10 @@ export interface TappableProps
    */
   hovered?: boolean;
   /**
+   * Позволяет управлять activated-состоянием извне
+   */
+  activated?: boolean;
+  /**
    * Указывает, должен ли компонент реагировать на active-состояние
    */
   hasActive?: boolean;
@@ -210,6 +214,7 @@ export const Tappable = ({
   onLeave,
   className,
   hovered: hoveredProp,
+  activated: activatedProp,
   borderRadiusMode = 'auto',
   ...props
 }: TappableProps) => {
@@ -242,6 +247,7 @@ export const Tappable = ({
 
   const [activity, { start, stop, delayStart }] = useActivity(hasActive, activeEffectDelay);
   const active = activity === TapState.active || activity === TapState.exiting;
+  const activated = (active || activatedProp) && !props.disabled;
 
   const containerRef = useExternRef(getRootRef);
 
@@ -329,10 +335,10 @@ export const Tappable = ({
     hasHover && styles['Tappable--hasHover'],
     hasActive && styles['Tappable--hasActive'],
     hasHover && hovered && !isPresetHoverMode && hoverMode,
-    hasActive && active && !isPresetActiveMode && activeMode,
+    hasActive && activated && !isPresetActiveMode && activeMode,
     focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
     hasHover && hovered && isPresetHoverMode && stylesHoverMode[hoverMode],
-    hasActive && active && isPresetActiveMode && stylesActiveMode[activeMode],
+    hasActive && activated && isPresetActiveMode && stylesActiveMode[activeMode],
     focusVisible && styles['Tappable--focus-visible'],
     borderRadiusMode === 'inherit' && styles['Tappable--borderRadiusInherit'],
   );
