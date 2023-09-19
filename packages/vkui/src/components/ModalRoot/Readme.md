@@ -43,6 +43,7 @@ const MODAL_PAGE_COUNTRIES = 'countries';
 const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
 const MODAL_PAGE_USER_INFO = 'user-info';
 const MODAL_PAGE_FULLSCREEN = 'fullscreen';
+const MODAL_PAGE_WITH_FIXED_HEIGHT = 'fixed-height';
 const MODAL_PAGE_DYNAMIC = 'dynamic';
 
 const MODAL_CARD_MONEY_SEND = 'money-send';
@@ -91,6 +92,7 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
 
 const App = () => {
   const { sizeX } = useAdaptivityConditionalRender();
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const [activeModal, setActiveModal] = useState(null);
   const [modalHistory, setModalHistory] = useState([]);
   const [randomUser] = useState(() => getRandomUser());
@@ -124,6 +126,41 @@ const App = () => {
     changeActiveModal(modalHistory[modalHistory.length - 2]);
   };
 
+  const randomUserFriends = (
+    <React.Fragment>
+      <Gradient
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          padding: 32,
+        }}
+      >
+        <Avatar size={96} src={randomUser.photo_100} />
+        <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="2">
+          {randomUser.first_name + ' ' + randomUser.last_name}
+        </Title>
+      </Gradient>
+      <Group
+        header={
+          <Header mode="secondary" indicator="25">
+            Друзья
+          </Header>
+        }
+      >
+        {users.map((user) => {
+          return (
+            <SimpleCell before={<Avatar src={user.photo_100} />} key={user.id}>
+              {user.name}
+            </SimpleCell>
+          );
+        })}
+      </Group>
+    </React.Fragment>
+  );
+
   const modal = (
     <ModalRoot activeModal={activeModal} onClose={modalBack}>
       <ModalPage
@@ -151,36 +188,36 @@ const App = () => {
           </ModalPageHeader>
         }
       >
-        <Gradient
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            padding: 32,
-          }}
-        >
-          <Avatar size={96} src={randomUser.photo_100} />
-          <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="2">
-            {randomUser.first_name + ' ' + randomUser.last_name}
-          </Title>
-        </Gradient>
-        <Group
-          header={
-            <Header mode="secondary" indicator="25">
-              Друзья
-            </Header>
-          }
-        >
-          {users.map((user) => {
-            return (
-              <SimpleCell before={<Avatar src={user.photo_100} />} key={user.id}>
-                {user.name}
-              </SimpleCell>
-            );
-          })}
-        </Group>
+        {randomUserFriends}
+      </ModalPage>
+
+      <ModalPage
+        id={MODAL_PAGE_WITH_FIXED_HEIGHT}
+        onClose={modalBack}
+        settlingHeight={100}
+        height={isDesktop ? 250 : '70%'}
+        hideCloseButton={platform === Platform.IOS}
+        header={
+          <ModalPageHeader
+            before={
+              sizeX.compact &&
+              platform === Platform.ANDROID && (
+                <PanelHeaderClose className={sizeX.compact.className} onClick={modalBack} />
+              )
+            }
+            after={
+              platform === Platform.IOS && (
+                <PanelHeaderButton onClick={modalBack}>
+                  <Icon24Dismiss />
+                </PanelHeaderButton>
+              )
+            }
+          >
+            @{randomUser.screen_name}
+          </ModalPageHeader>
+        }
+      >
+        {randomUserFriends}
       </ModalPage>
 
       <DynamicModalPage id={MODAL_PAGE_DYNAMIC} onClose={modalBack} dynamicContentHeight />
@@ -480,6 +517,9 @@ const App = () => {
               <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_FULLSCREEN)}>
                 Открыть полноэкранную модальную страницу
               </CellButton>
+              <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_WITH_FIXED_HEIGHT)}>
+                Открыть модальную страницу c фиксированной высотой
+              </CellButton>
               <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_DYNAMIC)}>
                 Открыть модальную страницу с динамической высотой
               </CellButton>
@@ -502,6 +542,14 @@ const App = () => {
 #### Как поменять максимальную ширину контента?
 
 Используйте параметр `size`.
+
+#### Как задать фиксированную высоту контента в ModalPage?
+
+Используйте параметр `height`.
+Высоту можно задать как числом (`height={300}`) так и в проценах (`height={'80%'}`).
+Работает и для мобильной версии и для декстопной.
+В мобильной версии при появлении модального окна на высоту по умолчанию также влияет значение `settlingHeight`.
+Чтобы отключить его влияние достаточно задать `settlingHeight={100}`.
 
 #### Я указал `dynamicContentHeight` у `ModalPage`, но высота модальной страницы не меняется
 
