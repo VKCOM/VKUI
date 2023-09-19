@@ -560,10 +560,12 @@ export const View = ({
                 style={calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
-                <div
-                  className={styles['View__panel-overlay']}
-                  style={calcPanelSwipeBackOverlayStyles(panelId)}
-                />
+                {platform === Platform.IOS && (
+                  <div
+                    className={styles['View__panel-overlay']}
+                    style={calcPanelSwipeBackOverlayStyles(panelId)}
+                  />
+                )}
                 <div
                   className={styles['View__panel-in']}
                   style={{
