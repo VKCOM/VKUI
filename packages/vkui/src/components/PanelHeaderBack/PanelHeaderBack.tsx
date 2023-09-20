@@ -10,13 +10,34 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
+import { Platform, PlatformType } from '../../lib/platform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import styles from '../PanelHeaderButton/PanelHeaderButton.module.css';
 
 export type PanelHeaderBackProps = PanelHeaderButtonProps & {
   'aria-label'?: string;
+};
+
+const getBackIcon = (platform: PlatformType) => {
+  switch (platform) {
+    case Platform.IOS:
+      return <Icon28ChevronBack />;
+    case Platform.VKCOM:
+      return (
+        <AdaptiveIconRenderer
+          IconCompact={Icon24ChevronLeftOutline}
+          IconRegular={Icon28ChevronLeftOutline}
+        />
+      );
+    default:
+      return (
+        <AdaptiveIconRenderer
+          IconCompact={Icon24ArrowLeftOutline}
+          IconRegular={Icon28ArrowLeftOutline}
+        />
+      );
+  }
 };
 
 /**
@@ -34,28 +55,6 @@ export const PanelHeaderBack = ({
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
   const showLabel = platform === Platform.VKCOM || platform === Platform.IOS;
 
-  let icon;
-  switch (platform) {
-    case Platform.IOS:
-      icon = <Icon28ChevronBack />;
-      break;
-    case Platform.VKCOM:
-      icon = (
-        <AdaptiveIconRenderer
-          IconCompact={Icon24ChevronLeftOutline}
-          IconRegular={Icon28ChevronLeftOutline}
-        />
-      );
-      break;
-    default:
-      icon = (
-        <AdaptiveIconRenderer
-          IconCompact={Icon24ArrowLeftOutline}
-          IconRegular={Icon28ArrowLeftOutline}
-        />
-      );
-  }
-
   return (
     <PanelHeaderButton
       {...restProps}
@@ -69,7 +68,7 @@ export const PanelHeaderBack = ({
       label={showLabel && label}
       aria-label={ariaLabel}
     >
-      {icon}
+      {getBackIcon(platform)}
     </PanelHeaderButton>
   );
 };

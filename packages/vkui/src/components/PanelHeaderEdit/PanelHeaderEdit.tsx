@@ -35,16 +35,18 @@ export const PanelHeaderEdit = ({
   ...restProps
 }: PanelHeaderEditProps) => {
   const iOSText = isActive ? doneLabel : editLabel;
-  const CommonIcon = isActive ? (
-    <AdaptiveIconRenderer IconCompact={Icon24DoneOutline} IconRegular={Icon28DoneOutline} />
-  ) : (
-    <AdaptiveIconRenderer IconCompact={Icon24PenOutline} IconRegular={Icon28EditOutline} />
-  );
   const platform = usePlatform();
 
   return (
     <PanelHeaderButton aria-label={iOSText} {...restProps}>
-      {platform === Platform.IOS ? iOSText : CommonIcon}
+      {platform === Platform.IOS ? (
+        iOSText
+      ) : (
+        <AdaptiveIconRenderer
+          IconCompact={isActive ? Icon24DoneOutline : Icon24PenOutline}
+          IconRegular={isActive ? Icon28DoneOutline : Icon28EditOutline}
+        />
+      )}
     </PanelHeaderButton>
   );
 };
