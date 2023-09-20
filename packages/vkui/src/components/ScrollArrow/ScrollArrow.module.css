@@ -1,15 +1,25 @@
 .ScrollArrow {
   cursor: pointer;
   user-select: auto;
-  height: 100%;
   padding: 0;
   border: 0;
   background-color: transparent;
   transition: opacity 0.15s;
   transition-timing-function: var(--vkui--animation_easing_platform);
   display: flex;
-  flex-direction: column;
   justify-content: center;
+}
+
+.ScrollArrow--direction-left,
+.ScrollArrow--direction-right {
+  height: 100%;
+  flex-direction: column;
+}
+
+.ScrollArrow--direction-up,
+.ScrollArrow--direction-down {
+  width: 100%;
+  flex-direction: row;
 }
 
 .ScrollArrow__icon {
@@ -42,4 +52,26 @@
 .ScrollArrow--direction-right {
   padding-right: var(--vkui--size_base_padding_horizontal--regular, 16px);
   right: 0;
+}
+
+.ScrollArrow--direction-up {
+  padding-top: var(--vkui--size_base_padding_horizontal--regular, 16px);
+  top: 0;
+}
+
+.ScrollArrow--direction-down {
+  padding-bottom: var(--vkui--size_base_padding_horizontal--regular, 16px);
+  bottom: 0;
+}
+
+.ScrollArrow--direction-left .ScrollArrow__defaultIcon {
+  transform: rotate(180deg);
+}
+
+.ScrollArrow--direction-up .ScrollArrow__defaultIcon {
+  transform: rotate(-90deg);
+}
+
+.ScrollArrow--direction-down .ScrollArrow__defaultIcon {
+  transform: rotate(90deg);
 }
