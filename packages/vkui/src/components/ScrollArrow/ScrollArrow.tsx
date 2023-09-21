@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-  Icon16Chevron,
-  Icon16ChevronLeft,
-  Icon24Chevron,
-  Icon24ChevronCompactLeft,
-} from '@vkontakte/icons';
+import { Icon16Chevron, Icon24Chevron } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -16,16 +11,19 @@ const stylesSize = {
 };
 
 const stylesDirection = {
-  left: styles['ScrollArrow--direction-left'],
+  up: styles['ScrollArrow--direction-up'],
   right: styles['ScrollArrow--direction-right'],
+  down: styles['ScrollArrow--direction-down'],
+  left: styles['ScrollArrow--direction-left'],
 };
 
-const ArrowIcon = ({ size, direction }: Pick<ScrollArrowProps, 'size' | 'direction'>) => {
+const ArrowIcon = ({ size }: Pick<ScrollArrowProps, 'size'>) => {
+  let Icon = Icon24Chevron;
   if (size === 'm') {
-    return direction === 'left' ? <Icon16ChevronLeft /> : <Icon16Chevron />;
+    Icon = Icon16Chevron;
   }
 
-  return direction === 'left' ? <Icon24ChevronCompactLeft /> : <Icon24Chevron />;
+  return <Icon className={styles['ScrollArrow__defaultIcon']} />;
 };
 
 export interface ScrollArrowProps
@@ -34,7 +32,7 @@ export interface ScrollArrowProps
   /**
    * Направление стрелки
    */
-  direction: 'left' | 'right';
+  direction: 'up' | 'right' | 'down' | 'left';
   /**
    * Размер стрелки
    */
@@ -55,7 +53,7 @@ export const ScrollArrow = ({
   size = 'l',
   offsetY,
   direction,
-  children = <ArrowIcon direction={direction} size={size} />,
+  children = <ArrowIcon size={size} />,
   ...restProps
 }: ScrollArrowProps) => {
   return (
