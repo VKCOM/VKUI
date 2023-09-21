@@ -9,7 +9,7 @@ export const ScrollArrowPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           size: ['m', 'l'],
-          direction: ['left', 'right'],
+          direction: ['left', 'right', 'up', 'down'],
         },
       ]}
     >
