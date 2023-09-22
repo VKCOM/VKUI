@@ -30,15 +30,13 @@ function MiniInfoCellExample() {
                 </PanelHeaderButton>
               )
             }
-            noShadow
           >
             Подробнее
           </ModalPageHeader>
         }
         id="extended_info"
       >
-        <Separator style={{ marginBottom: 12 }} />
-
+        <Spacing size={12} />
         <MiniInfoCell before={<Icon20CommunityName />} textWrap="full">
           Команда вконтакте
         </MiniInfoCell>
@@ -52,13 +50,14 @@ function MiniInfoCellExample() {
           безграничными возможностями и миллионами пользователей.
         </MiniInfoCell>
 
-        <Separator style={{ marginTop: 12, marginBottom: 12 }} />
+        <Spacing size={24}>
+          <Separator />
+        </Spacing>
 
         <MiniInfoCell before={<Icon20PlaceOutline />}>Санкт-Петербург, Россия</MiniInfoCell>
 
         <MiniInfoCell before={<Icon20MentionOutline />}>team</MiniInfoCell>
-
-        <div style={{ height: 24 }} />
+        <Spacing size={12} />
       </ModalPage>
     </ModalRoot>
   );
