@@ -387,6 +387,7 @@ export {
   getViewWidthByViewportWidth,
   getViewHeightByViewportHeight,
 } from './lib/adaptivity';
+export { type Placement as FloatingPlacement } from './lib/floating';
 export { getPlatformClassName } from './helpers/getPlatformClassName';
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';
