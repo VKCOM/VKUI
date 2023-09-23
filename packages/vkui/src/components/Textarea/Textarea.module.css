@@ -4,14 +4,14 @@
 
 .Textarea__el {
   margin: 0;
-  width: 100%;
+  inline-size: 100%;
   display: block;
   box-sizing: border-box;
   resize: none;
   appearance: none;
   color: var(--vkui--color_text_primary);
   padding: 12px;
-  max-height: 204px;
+  max-block-size: 204px;
   border: 0;
   z-index: var(--vkui_internal--z_index_form_field_element);
   position: relative;
@@ -19,16 +19,16 @@
 }
 
 .Textarea__el[cols] {
-  width: initial;
+  inline-size: initial;
 }
 
 .Textarea--sizeY-compact .Textarea__el {
-  max-height: 196px;
+  max-block-size: 196px;
 }
 
 @media (--sizeY-compact) {
   .Textarea--sizeY-none .Textarea__el {
-    max-height: 196px;
+    max-block-size: 196px;
   }
 }
 

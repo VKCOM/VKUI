@@ -1,17 +1,17 @@
 .AvatarBadge {
-  right: 0;
-  bottom: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
 }
 
 .AvatarBadge--shifted {
-  right: -2px;
-  bottom: -2px;
+  inset-inline-end: -2px;
+  inset-block-end: -2px;
 }
 
 .AvatarBadge--preset-online,
 .AvatarBadge--preset-onlineMobile {
-  right: 14%;
-  bottom: 14%;
+  inset-inline-end: 14%;
+  inset-block-end: 14%;
   color: var(--vkui--color_accent_green);
   transform: translate(50%, 50%);
 }

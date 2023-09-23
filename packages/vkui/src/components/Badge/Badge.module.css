@@ -2,8 +2,8 @@
   display: block;
   flex-grow: 0;
   flex-shrink: 0;
-  width: 6px;
-  height: 6px;
+  inline-size: 6px;
+  block-size: 6px;
   border-radius: 50%;
 }
 
@@ -21,6 +21,6 @@
  */
 :global(.vkuiInternalTabbarItem__label) .Badge {
   position: absolute;
-  top: -2px;
-  right: -2px;
+  inset-block-start: -2px;
+  inset-inline-end: -2px;
 }

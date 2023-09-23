@@ -6,7 +6,7 @@
 
 .BaseGallery__viewport {
   margin: 0;
-  height: 100%;
+  block-size: 100%;
   position: relative;
 }
 
@@ -16,9 +16,9 @@
 
 .BaseGallery__layer {
   display: flex;
-  width: 100%;
-  height: 100%;
-  min-height: 100px;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 100px;
   align-items: stretch;
 }
 
@@ -27,32 +27,32 @@
 }
 
 .BaseGallery__layer:empty {
-  min-height: 0;
+  min-block-size: 0;
 }
 
 .BaseGallery__slide {
-  width: 100%;
+  inline-size: 100%;
   flex: 0 0 auto;
-  max-width: 100%;
+  max-inline-size: 100%;
   overflow: hidden;
 }
 
 .BaseGallery--custom-width .BaseGallery__slide {
-  width: auto;
+  inline-size: auto;
 }
 
 /* stylelint-disable-next-line selector-max-universal */
 .BaseGallery__slide > * {
-  width: 100%;
-  min-height: 100%;
+  inline-size: 100%;
+  min-block-size: 100%;
 }
 
 .BaseGallery__bullets {
   position: absolute;
-  bottom: 10px;
-  height: 6px;
-  width: 100%;
-  left: 0;
+  inset-block-end: 10px;
+  block-size: 6px;
+  inline-size: 100%;
+  inset-inline-start: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,8 +67,8 @@
 }
 
 .BaseGallery__bullet {
-  height: 6px;
-  width: 6px;
+  block-size: 6px;
+  inline-size: 6px;
   border-radius: 50%;
   margin: 0 3px;
   opacity: var(--vkui--opacity_disable_accessibility);
@@ -80,7 +80,7 @@
 
 .BaseGallery__arrow {
   position: absolute;
-  top: 0;
+  inset-block-start: 0;
   opacity: 0;
 }
 

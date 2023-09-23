@@ -12,7 +12,7 @@
 .SubnavigationBar__scrollIn::before,
 .SubnavigationBar__scrollIn::after {
   content: '';
-  min-width: var(--vkui--size_base_padding_horizontal--regular);
+  min-inline-size: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .SubnavigationBar__item {
@@ -21,7 +21,7 @@
 }
 
 .SubnavigationBar__item + .SubnavigationBar__item {
-  margin-left: var(--vkui--size_subnavigation_bar_gap--regular);
+  margin-inline-start: var(--vkui--size_subnavigation_bar_gap--regular);
 }
 
 /**
@@ -31,5 +31,5 @@
 
 :global(.vkuiInternalSubnavigationBar--mode-fixed) .SubnavigationBar__item {
   flex: 1;
-  min-width: 0;
+  min-inline-size: 0;
 }

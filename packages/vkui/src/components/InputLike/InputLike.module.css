@@ -6,15 +6,15 @@
 .InputLike__mask::after {
   content: '';
   position: absolute;
-  width: calc(100% - 0.1em);
-  height: 1px;
-  bottom: 0;
-  left: 0;
-  border-bottom: solid 1px var(--vkui--color_text_secondary);
+  inline-size: calc(100% - 0.1em);
+  block-size: 1px;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  border-block-end: solid 1px var(--vkui--color_text_secondary);
 }
 
 .InputLike__mask:last-child {
-  margin-right: 1px;
+  margin-inline-end: 1px;
 }
 
 .InputLike__last_character {

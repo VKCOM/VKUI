@@ -6,11 +6,11 @@
   position: absolute;
   visibility: hidden;
   pointer-events: none;
-  left: 0;
-  top: 0;
+  inset-inline-start: 0;
+  inset-block-start: 0;
   padding: 0;
-  width: 0;
-  height: 0;
+  inline-size: 0;
+  block-size: 0;
   appearance: none;
   border: 0;
 }

@@ -2,15 +2,14 @@
   display: flex;
   align-items: flex-start;
   padding: 0;
-  padding-left: var(--vkui--size_base_padding_horizontal--regular);
-  padding-right: var(--vkui--size_base_padding_horizontal--regular);
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   user-select: text;
   font-family: var(--vkui--font_family_base);
 }
 
 .Header__main {
   flex: 1 0 0;
-  min-width: 0;
+  min-inline-size: 0;
   color: var(--vkui--color_text_primary);
 }
 
@@ -43,7 +42,7 @@
 
 .Header__indicator {
   color: var(--vkui--color_text_secondary);
-  margin-left: 6px;
+  margin-inline-start: 6px;
   flex-shrink: 0;
 }
 
@@ -56,7 +55,7 @@
 }
 
 .Header--mode-secondary .Header__indicator {
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }
 
 .Header__aside {
@@ -66,9 +65,8 @@
 
 /* stylelint-disable @project-tools/stylelint-atomic, selector-max-universal */
 .Header__aside.Header__aside > * {
-  margin-top: 13px;
-  margin-left: 12px;
-  margin-bottom: 7px;
+  margin-block: 13px 7px;
+  margin-inline-start: 12px;
 }
 
 .Header__aside > :global(.vkuiIcon) {
@@ -77,49 +75,45 @@
 }
 
 .Header__aside > :global(.vkuiIcon--24) {
-  margin-top: 11px;
-  margin-bottom: 5px;
+  margin-block: 11px 5px;
 }
 
 .Header__aside > :global(.vkuiIcon--16) {
-  margin-top: 15px;
-  margin-bottom: 9px;
+  margin-block: 15px 9px;
 }
 /* stylelint-enable @project-tools/stylelint-atomic */
 
 .Header--mode-primary {
-  padding-top: 3px;
-  padding-bottom: 1px;
+  padding-block: 3px 1px;
 }
 
 .Header__content {
-  margin-top: 12px;
+  margin-block-start: 12px;
 }
 
 .Header__content:last-child {
-  margin-bottom: 8px;
+  margin-block-end: 8px;
 }
 
 .Header--mode-tertiary .Header__content {
-  margin-top: 15px;
+  margin-block-start: 15px;
 }
 
 .Header--mode-tertiary .Header__content:last-child {
-  margin-bottom: 9px;
+  margin-block-end: 9px;
 }
 
 .Header__subtitle {
-  margin-bottom: 7px;
+  margin-block-end: 7px;
 }
 
 /* Компенсируем 1 пиксель из-за паддинга в .Header--mode-primary */
 .Header--mode-primary .Header__subtitle {
-  margin-bottom: 6px;
+  margin-block-end: 6px;
 }
 
 .Header--large .Header__content {
-  margin-top: 10px;
-  margin-bottom: 6px;
+  margin-block: 10px 6px;
 }
 
 /**
@@ -132,7 +126,7 @@
 :global(.vkuiInternalGroup--mode-plain):not(:first-of-type)
   > :global(.vkuiInternalTappable):first-child
   > .Header {
-  margin-top: -16px;
+  margin-block-start: -16px;
 }
 
 @media (--sizeX-compact) {
@@ -141,7 +135,7 @@
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
     > :global(.vkuiInternalTappable):first-child
     > .Header {
-    margin-top: -16px;
+    margin-block-start: -16px;
   }
 }
 
@@ -149,7 +143,7 @@
 :global(.vkuiInternalGroup--mode-card)
   > :global(.vkuiInternalTappable):first-child
   > .Header:not(.Header--mode-tertiary) {
-  margin-top: -4px;
+  margin-block-start: -4px;
 }
 
 @media (--sizeX-regular) {
@@ -158,7 +152,7 @@
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
     > :global(.vkuiInternalTappable):first-child
     > .Header:not(.Header--mode-tertiary) {
-    margin-top: -4px;
+    margin-block-start: -4px;
   }
 }
 

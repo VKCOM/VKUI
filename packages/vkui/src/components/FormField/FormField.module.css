@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  min-height: var(--vkui--size_field_height--regular);
+  min-block-size: var(--vkui--size_field_height--regular);
   font-family: var(--vkui--font_family_base);
   -webkit-tap-highlight-color: transparent;
   isolation: isolate;
@@ -11,12 +11,12 @@
 }
 
 .FormField--sizeY-compact {
-  min-height: var(--vkui--size_field_height--compact);
+  min-block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
   .FormField--sizeY-none {
-    min-height: var(--vkui--size_field_height--compact);
+    min-block-size: var(--vkui--size_field_height--compact);
   }
 }
 
@@ -35,22 +35,22 @@
   align-content: center;
   justify-content: center;
   flex-shrink: 0;
-  min-width: var(--vkui--size_field_height--regular);
-  height: 100%;
+  min-inline-size: var(--vkui--size_field_height--regular);
+  block-size: 100%;
   color: var(--vkui--color_icon_secondary);
 }
 
 .FormField--sizeY-compact .FormField__before,
 .FormField--sizeY-compact .FormField__after {
-  min-width: var(--vkui--size_field_height--compact);
-  height: var(--vkui--size_field_height--compact);
+  min-inline-size: var(--vkui--size_field_height--compact);
+  block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
   .FormField--sizeY-none .FormField__before,
   .FormField--sizeY-none .FormField__after {
-    min-width: var(--vkui--size_field_height--compact);
-    height: var(--vkui--size_field_height--compact);
+    min-inline-size: var(--vkui--size_field_height--compact);
+    block-size: var(--vkui--size_field_height--compact);
   }
 }
 
@@ -66,10 +66,10 @@
   pointer-events: none;
   position: absolute;
   z-index: var(--vkui_internal--z_index_form_field_border);
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   box-sizing: border-box;
   transform-origin: left top;
   border: var(--vkui--size_border--regular) solid transparent;
@@ -128,7 +128,7 @@
  */
 :global(.vkuiInternalModalCardBase__header) + .FormField,
 :global(.vkuiInternalModalCardBase__subheader) + .FormField {
-  margin-top: 16px;
+  margin-block-start: 16px;
 }
 
 /**
@@ -144,8 +144,8 @@
  * CalendarHeader
  */
 :global(.vkuiInternalCalendarHeader__picker) .FormField__after {
-  min-width: 12px;
-  padding-right: 8px;
+  min-inline-size: 12px;
+  padding-inline-end: 8px;
 }
 
 /**
@@ -171,8 +171,8 @@
       .vkuiInternalFormItem
   ):first-of-type
   .FormField {
-  border-top-left-radius: var(--vkui--size_border_radius--regular);
-  border-bottom-left-radius: var(--vkui--size_border_radius--regular);
+  border-start-start-radius: var(--vkui--size_border_radius--regular);
+  border-end-start-radius: var(--vkui--size_border_radius--regular);
 }
 
 :global(
@@ -180,8 +180,8 @@
       .vkuiInternalFormItem
   ):last-of-type
   .FormField {
-  border-top-right-radius: var(--vkui--size_border_radius--regular);
-  border-bottom-right-radius: var(--vkui--size_border_radius--regular);
+  border-start-end-radius: var(--vkui--size_border_radius--regular);
+  border-end-end-radius: var(--vkui--size_border_radius--regular);
 }
 
 :global(
@@ -189,8 +189,8 @@
       .vkuiInternalFormItem
   ):first-of-type
   .FormField {
-  border-top-left-radius: var(--vkui--size_border_radius--regular);
-  border-top-right-radius: var(--vkui--size_border_radius--regular);
+  border-start-start-radius: var(--vkui--size_border_radius--regular);
+  border-start-end-radius: var(--vkui--size_border_radius--regular);
 }
 
 :global(
@@ -198,8 +198,8 @@
       .vkuiInternalFormItem
   ):last-of-type
   .FormField {
-  border-bottom-left-radius: var(--vkui--size_border_radius--regular);
-  border-bottom-right-radius: var(--vkui--size_border_radius--regular);
+  border-end-start-radius: var(--vkui--size_border_radius--regular);
+  border-end-end-radius: var(--vkui--size_border_radius--regular);
 }
 
 /**

@@ -15,58 +15,55 @@
 .Cell__dragger {
   position: relative;
   flex-shrink: 0;
-  margin-right: 16px;
+  margin-inline-end: 16px;
 }
 
 .Cell__content {
-  max-width: 100%;
-  min-width: 0;
+  max-inline-size: 100%;
+  min-inline-size: 0;
 }
 
 .Cell--removable .Cell__content {
   flex-grow: 1;
   /* размер removable icon */
-  padding-right: 44px;
+  padding-inline-end: 44px;
 }
 
 .Cell--removable :global(.vkuiInternalRemovable__content) {
-  padding-left: 0;
+  padding-inline-start: 0;
 }
 
 /* для того чтобы активная область Cell распространялась и на область removable */
 .Cell--removable :global(.vkuiInternalRemovable__action) {
   position: absolute;
-  right: 0;
-  padding-left: 0;
+  inset-inline-end: 0;
+  padding-inline-start: 0;
 }
 
 /**
  * iOS
  */
 .Cell--ios .Cell__dragger {
-  margin-right: 0;
-  margin-left: 12px;
+  margin-inline: 12px 0;
 }
 
 .Cell--ios .Cell__checkbox {
-  margin-right: 12px;
+  margin-inline-end: 12px;
 }
 
 .Cell--ios.Cell--removable .Cell__content {
   /* размер removable icon + icon margins*/
-  padding-left: 48px;
+  padding-inline: 48px var(--vkui--size_base_padding_horizontal--regular);
   /* правый паддинг от removable который мы обнулили ниже */
-  padding-right: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .Cell--ios.Cell--removable :global(.vkuiInternalRemovable__action) {
-  right: auto;
-  left: 0;
+  inset-inline: 0 auto;
   z-index: 1;
 }
 
 .Cell--ios.Cell--removable :global(.vkuiInternalRemovable__content) {
-  padding-right: 0;
+  padding-inline-end: 0;
 }
 
 /**

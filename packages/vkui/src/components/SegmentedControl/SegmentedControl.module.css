@@ -1,5 +1,5 @@
 .SegmentedControl {
-  height: 30px;
+  block-size: 30px;
   padding: 2px;
   border-radius: var(--vkui--size_border_radius--regular);
   background-color: var(--vkui--color_background_secondary);
@@ -8,23 +8,22 @@
 }
 
 .SegmentedControl--size-l {
-  height: 36px;
+  block-size: 36px;
 }
 
 .SegmentedControl__in {
   position: relative;
   display: flex;
-  height: 100%;
-  width: 100%;
+  block-size: 100%;
+  inline-size: 100%;
   transition: all 100ms ease-out;
   border-radius: inherit;
 }
 
 .SegmentedControl__slider {
   position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  inset-block: 0;
+  inset-inline-start: 0;
   background-color: var(--vkui--color_segmented_control);
   transition: transform 150ms;
   transform-origin: 0 0;
@@ -37,19 +36,19 @@
  * sizeY REGULAR
  */
 .SegmentedControl--sizeY-regular {
-  height: 36px;
+  block-size: 36px;
 }
 
 .SegmentedControl--sizeY-regular.SegmentedControl--size-l {
-  height: 44px;
+  block-size: 44px;
 }
 
 @media (--sizeY-regular) {
   .SegmentedControl--sizeY-none {
-    height: 36px;
+    block-size: 36px;
   }
 
   .SegmentedControl--sizeY-none.SegmentedControl--size-l {
-    height: 44px;
+    block-size: 44px;
   }
 }

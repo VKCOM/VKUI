@@ -2,8 +2,8 @@
   user-select: none;
   color: var(--vkui--color_text_primary);
   position: relative;
-  min-width: 280px;
-  max-width: 416px;
+  min-inline-size: 280px;
+  max-inline-size: 416px;
   margin: auto 24px;
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius_paper--regular);
@@ -11,7 +11,7 @@
 }
 
 .Alert--desktop {
-  width: 100%;
+  inline-size: 100%;
 }
 
 .Alert--closing {
@@ -23,10 +23,10 @@
 
 .Alert::before {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   background-color: var(--vkui--color_background_modal);
   content: '';
   border-radius: inherit;
@@ -38,7 +38,7 @@
 }
 
 .Alert__content--withButton {
-  padding-right: 52px;
+  padding-inline-end: 52px;
 }
 
 .Alert__action {
@@ -48,13 +48,13 @@
 
 .Alert__actions {
   display: flex;
-  max-width: 100%;
+  max-inline-size: 100%;
   position: relative;
   padding: 0 12px 12px;
 }
 
 .Alert__header {
-  margin-bottom: 8px;
+  margin-block-end: 8px;
 }
 
 .Alert__text {
@@ -99,8 +99,8 @@
  * iOS version
  */
 .Alert--ios {
-  width: 270px;
-  min-width: 270px;
+  inline-size: 270px;
+  min-inline-size: 270px;
   overflow: hidden;
   animation: animation-ios-alert-intro 0.3s var(--vkui--animation_easing_platform);
   box-shadow: none;
@@ -118,7 +118,7 @@
 }
 
 .Alert--ios .Alert__header:not(:last-child) {
-  margin-bottom: 7px;
+  margin-block-end: 7px;
 }
 
 .Alert--ios .Alert__text {
@@ -128,10 +128,9 @@
 .Alert--ios .Alert__content::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  height: 1px;
-  right: 0;
-  left: 0;
+  inset-block-end: 0;
+  block-size: 1px;
+  inset-inline: 0;
   background: var(--vkui--color_separator_primary_alpha);
   transform-origin: center bottom;
 }
@@ -154,7 +153,7 @@
   border: 0;
   padding: 0 6px;
   margin: 0;
-  height: 44px;
+  block-size: 44px;
   display: block;
   text-align: center;
   text-decoration: none;
@@ -170,10 +169,10 @@
 }
 
 .Alert--ios .Alert__actions--direction-horizontal .Alert__action::after {
-  top: 0;
-  right: 0;
-  width: 1px;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  inline-size: 1px;
+  block-size: 100%;
   transform-origin: right center;
 }
 
@@ -188,18 +187,18 @@
 }
 
 .Alert--ios .Alert__actions--direction-horizontal .Alert__action:first-child {
-  border-bottom-left-radius: var(--vkui--size_border_radius_paper--regular);
+  border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
 .Alert--ios .Alert__actions--direction-horizontal .Alert__action:last-child {
-  border-bottom-right-radius: var(--vkui--size_border_radius_paper--regular);
+  border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
 .Alert--ios .Alert__actions--direction-vertical .Alert__action::after {
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
+  inset-inline-start: 0;
+  inset-block-end: 0;
+  inline-size: 100%;
+  block-size: 1px;
   transform-origin: center bottom;
 }
 
@@ -246,11 +245,11 @@
 
 .Alert--vkcom {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 0 96px rgba(0, 0, 0, 0.16);
-  width: 400px;
+  inline-size: 400px;
 }
 
 .Alert--vkcom .Alert__content {
-  padding-bottom: 20px;
+  padding-block-end: 20px;
 }
 
 .Alert--vkcom .Alert__actions {
@@ -268,8 +267,8 @@
 .Alert__dismiss {
   position: absolute;
   color: var(--vkui--color_icon_secondary);
-  top: 8px;
-  right: 8px;
+  inset-block-start: 8px;
+  inset-inline-end: 8px;
 }
 
 /**

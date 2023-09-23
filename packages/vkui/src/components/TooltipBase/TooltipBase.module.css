@@ -1,9 +1,9 @@
 .TooltipBase {
   position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  block-size: 100%;
+  inline-size: 100%;
   white-space: normal;
 }
 

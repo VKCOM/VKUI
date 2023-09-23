@@ -1,7 +1,6 @@
 .Group {
   color: var(--vkui--color_text_primary);
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-block: 8px;
 }
 
 .Group__header:empty {
@@ -9,22 +8,22 @@
 }
 
 .Group--mode-plain:not(:first-of-type) > .Group__header {
-  margin-top: -8px;
+  margin-block-start: -8px;
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none.Group--mode-none:not(:first-of-type) > .Group__header {
-    margin-top: -8px;
+    margin-block-start: -8px;
   }
 }
 
 .Group--mode-card > .Group__header {
-  margin-top: -4px;
+  margin-block-start: -4px;
 }
 
 @media (--sizeX-regular) {
   .Group--sizeX-none.Group--mode-none > .Group__header {
-    margin-top: -4px;
+    margin-block-start: -4px;
   }
 }
 
@@ -92,15 +91,13 @@
 
 .Group--sizeX-compact,
 .Group--sizeX-compact.Group--mode-card {
-  padding-left: 0;
-  padding-right: 0;
+  padding-inline: 0;
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none,
   .Group--sizeX-none.Group--mode-card {
-    padding-left: 0;
-    padding-right: 0;
+    padding-inline: 0;
   }
 }
 
@@ -139,10 +136,10 @@
  */
 .Group--mode-card::before {
   content: '';
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   position: absolute;
   border-radius: inherit;
   pointer-events: none;
@@ -152,10 +149,10 @@
 @media (--sizeX-regular) {
   .Group--sizeX-none.Group--mode-none::before {
     content: '';
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    inset-inline-start: 0;
+    inset-block-start: 0;
+    inline-size: 100%;
+    block-size: 100%;
     position: absolute;
     border-radius: inherit;
     pointer-events: none;
@@ -175,15 +172,13 @@
 
 .Group--mode-plain + .Group__separator,
 .Group--mode-plain + .Group__separator + .Group__separator {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-block: 8px;
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none.Group--mode-none + .Group__separator,
   .Group--sizeX-none.Group--mode-none + .Group__separator + .Group__separator {
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-block: 8px;
   }
 }
 
@@ -195,16 +190,15 @@
 
 .Group .Group,
 .Group .Group + .Group__separator {
-  padding-left: 0;
-  padding-right: 0;
+  padding-inline: 0;
 }
 
 .Group .Group:first-of-type {
-  padding-top: 0;
+  padding-block-start: 0;
 }
 
 .Group .Group:last-of-type {
-  padding-bottom: 0;
+  padding-block-end: 0;
 }
 
 /**
@@ -222,7 +216,7 @@
 :global(.vkuiInternalPanelHeader--vkcom) ~ .Group:first-of-type,
 :global(.vkuiInternalPanelHeader--vkcom) + * .Group:first-of-type {
   position: relative;
-  top: -1px;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
+  inset-block-start: -1px;
+  border-start-end-radius: 0;
+  border-start-start-radius: 0;
 }

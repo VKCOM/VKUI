@@ -28,13 +28,13 @@
   flex: 2;
   position: relative;
   display: flex;
-  height: var(--vkui_internal--search_height);
+  block-size: var(--vkui_internal--search_height);
   background-color: var(--vkui--color_search_field_background);
   border-radius: var(--vkui--size_border_radius--regular);
   /**
    * Костыль для PanelHeader. Необходимо для растягивания на всю ширину.
   */
-  width: 10000px;
+  inline-size: 10000px;
   overflow: hidden;
 }
 
@@ -49,43 +49,37 @@
 .Search__label {
   position: absolute;
   cursor: text;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   opacity: 0;
 }
 
 .Search__input {
-  padding-left: 12px;
+  padding-inline-start: 12px;
   color: var(--vkui--color_icon_medium);
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: calc(100% - 1px);
-  height: 100%;
+  inline-size: calc(100% - 1px);
+  block-size: 100%;
   border-radius: inherit;
   position: relative;
 }
 
 .Search__nativeInput {
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  height: 100%;
+  inset: 0;
+  block-size: 100%;
   -webkit-appearance: none; /* не используем textfield из-за бага в iOS 15.1 http://www.openradar.me/FB9744107 */
   border: 0;
   margin: 0;
   padding: 0;
-  padding-left: 36px;
+  padding-inline-start: 36px;
   box-sizing: border-box;
   border-radius: inherit;
-  max-width: 100%;
+  max-inline-size: 100%;
   flex-grow: 1;
-  min-width: 0;
-  width: stretch; /* автопрефиксер добавит фолбеки https://caniuse.com/mdn-css_properties_width_stretch */
+  min-inline-size: 0;
+  inline-size: stretch; /* автопрефиксер добавит фолбеки https://caniuse.com/mdn-css_properties_width_stretch */
   background-color: transparent;
   color: var(--vkui--color_text_primary);
 }
@@ -102,8 +96,8 @@
 }
 
 .Search--has-after .Search__nativeInput {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
 }
 
 .Search--disabled {
@@ -149,11 +143,11 @@
 }
 
 .Search__icon {
-  width: var(--vkui_internal--search_icon_size);
+  inline-size: var(--vkui_internal--search_icon_size);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  block-size: 100%;
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
@@ -166,14 +160,13 @@
   flex: 0;
   transform: translate(50%);
   transform-origin: left;
-  min-width: initial;
-  max-width: min-content;
+  min-inline-size: initial;
+  max-inline-size: min-content;
   pointer-events: none;
   transition: flex 0.3s var(--vkui--animation_easing_platform),
     transform 0.3s var(--vkui--animation_easing_platform);
   overflow: hidden;
-  margin-left: 4px;
-  margin-right: calc(4px - var(--vkui--size_base_padding_horizontal--regular));
+  margin-inline: 4px calc(4px - var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .Search--focused .Search__after,
@@ -191,11 +184,11 @@
 }
 
 .Search__findButton {
-  min-width: initial;
-  max-width: initial;
-  width: initial;
+  min-inline-size: initial;
+  max-inline-size: initial;
+  inline-size: initial;
 }
 
 .Group--mode-plain .Search {
-  padding-top: 4px;
+  padding-block-start: 4px;
 }

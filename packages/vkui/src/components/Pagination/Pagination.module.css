@@ -6,9 +6,9 @@
 }
 
 .Pagination__prevButtonContainer {
-  margin-right: 8px;
+  margin-inline-end: 8px;
 }
 
 .Pagination__nextButtonContainer {
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }

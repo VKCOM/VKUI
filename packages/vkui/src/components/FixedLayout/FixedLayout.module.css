@@ -11,10 +11,9 @@
    *
    * Единственное, есть проблема при срабатывании insets в landscape ориентации экрана (https://github.com/VKCOM/VKUI/issues/2422).
    */
-  left: auto;
+  inset-inline-start: auto;
   z-index: var(--vkui_internal--z_index_fixed_layout);
-  padding-left: var(--vkui_internal--safe_area_inset_left);
-  padding-right: var(--vkui_internal--safe_area_inset_right);
+  padding-inline: var(--vkui_internal--safe_area_inset_left) var(--vkui_internal--safe_area_inset_right);
 }
 
 .FixedLayout--filled {
@@ -22,14 +21,14 @@
 }
 
 .FixedLayout--vertical-top {
-  width: 100%;
-  top: 0;
+  inline-size: 100%;
+  inset-block-start: 0;
 }
 
 .FixedLayout--vertical-bottom {
-  width: 100%;
-  bottom: 0;
-  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
+  inline-size: 100%;
+  inset-block-end: 0;
+  padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
 }
 
 /**
@@ -37,7 +36,7 @@
  * Epic
  */
 :global(.vkuiInternalEpic--hasTabbar) .FixedLayout--vertical-bottom {
-  padding-bottom: calc(
+  padding-block-end: calc(
     var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
   );
 }
@@ -51,5 +50,5 @@
 :global(.vkuiInternalPanelHeader)
   ~ *
   .FixedLayout--vertical-top:not(:global(.vkuiInternalPanelHeader__fixed)) {
-  top: calc(var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top));
+  inset-block-start: calc(var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top));
 }

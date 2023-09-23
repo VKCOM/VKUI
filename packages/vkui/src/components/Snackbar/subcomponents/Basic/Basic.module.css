@@ -1,7 +1,7 @@
 .Snackbar__body {
   box-sizing: border-box;
   padding: 12px;
-  min-height: 56px;
+  min-block-size: 56px;
   display: flex;
   align-items: center;
   background: var(--vkui--color_background_modal);
@@ -14,11 +14,11 @@
 }
 
 .Snackbar__before {
-  margin-right: 12px;
+  margin-inline-end: 12px;
 }
 
 .Snackbar__after {
-  margin-left: 12px;
+  margin-inline-start: 12px;
 }
 
 .Snackbar__content {
@@ -36,7 +36,7 @@
 .Snackbar__content-text {
   flex: 1;
   color: var(--vkui--color_text_primary);
-  width: 100%;
+  inline-size: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -45,7 +45,7 @@
 
 .Snackbar__content-subtitle {
   color: var(--vkui--color_text_subhead);
-  margin-top: 2px;
+  margin-block-start: 2px;
 }
 
 .Snackbar--mode-dark .Snackbar__content-text {
@@ -53,11 +53,11 @@
 }
 
 .Snackbar--layout-horizontal .Snackbar__action {
-  margin-left: 12px;
+  margin-inline-start: 12px;
   position: relative;
 }
 
 .Snackbar--layout-vertical .Snackbar__action {
-  margin-top: 2px;
-  min-height: initial;
+  margin-block-start: 2px;
+  min-block-size: initial;
 }

@@ -31,7 +31,7 @@
 .HorizontalScroll__arrow {
   z-index: var(--vkui_internal--z_index_horizontal_scroll_arrow);
   position: absolute;
-  top: 0;
+  inset-block-start: 0;
   opacity: 0;
 }
 
@@ -58,7 +58,7 @@
  * Tabs
  */
 :global(.vkuiInternalTabs) .HorizontalScroll {
-  min-width: 100%;
+  min-inline-size: 100%;
 }
 
 :global(.vkuiInternalTabs) .HorizontalScroll__in-wrapper {
@@ -69,8 +69,8 @@
 :global(.vkuiInternalTabs--withGaps) .HorizontalScroll__in-wrapper::after,
 :global(.vkuiInternalTabs--withGaps) .HorizontalScroll__in-wrapper::before {
   display: block;
-  width: var(--vkui--size_base_padding_horizontal--regular);
+  inline-size: var(--vkui--size_base_padding_horizontal--regular);
   flex-shrink: 0;
-  height: 1px;
+  block-size: 1px;
   content: '';
 }

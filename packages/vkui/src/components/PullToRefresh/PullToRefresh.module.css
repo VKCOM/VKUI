@@ -8,7 +8,7 @@
 }
 
 .PullToRefresh__controls {
-  width: 100%;
+  inline-size: 100%;
   pointer-events: none;
 }
 
@@ -19,8 +19,8 @@
 .PullToRefresh__spinner {
   display: flex;
   margin: auto;
-  width: 40px;
-  height: 40px;
+  inline-size: 40px;
+  block-size: 40px;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;

@@ -2,12 +2,11 @@
   user-select: none;
   z-index: var(--vkui--z_index_popout);
   position: fixed;
-  bottom: 0;
-  left: auto;
-  width: 100%;
-  padding-left: var(--vkui_internal--safe_area_inset_left);
-  padding-right: var(--vkui_internal--safe_area_inset_right);
-  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
+  inset-block-end: 0;
+  inset-inline-start: auto;
+  inline-size: 100%;
+  padding-inline: var(--vkui_internal--safe_area_inset_left) var(--vkui_internal--safe_area_inset_right);
+  padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
 }
 
 /**
@@ -15,7 +14,7 @@
  * Epic
  */
 :global(.vkuiInternalEpic--hasTabbar) .Snackbar {
-  padding-bottom: calc(
+  padding-block-end: calc(
     var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
   );
 }
@@ -35,7 +34,7 @@
 }
 
 .ModalRoot .Snackbar {
-  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
+  padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
 }
 
 /* iOS */
@@ -49,9 +48,9 @@
  */
 
 .Snackbar--desktop {
-  max-width: 351px;
-  left: 0;
-  bottom: 0;
+  max-inline-size: 351px;
+  inset-inline-start: 0;
+  inset-block-end: 0;
 }
 
 .Snackbar--desktop .Snackbar__in {

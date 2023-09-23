@@ -9,7 +9,7 @@
  * FormItem
  */
 :global(.vkuiInternalFormItem) .Radio {
-  width: 100%;
+  inline-size: 100%;
   box-sizing: content-box;
   margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
@@ -26,9 +26,9 @@
 
 .Radio__icon {
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
-  margin-right: 14px;
+  inline-size: 22px;
+  block-size: 22px;
+  margin-inline-end: 14px;
   color: var(--vkui--color_icon_tertiary);
   transition: color 0.15s var(--vkui--animation_easing_platform);
 }
@@ -50,30 +50,29 @@
 .Radio__content {
   display: block;
   flex-grow: 1;
-  max-width: 100%;
+  max-inline-size: 100%;
   color: var(--vkui--color_text_primary);
 }
 
 .Radio__description {
   display: block;
   color: var(--vkui--color_text_secondary);
-  margin-bottom: 12px;
-  margin-top: 2px;
+  margin-block: 2px 12px;
 }
 
 .Radio__title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 12px;
+  margin-block-start: 12px;
 }
 
 .Radio__title:last-child {
-  margin-bottom: 12px;
+  margin-block-end: 12px;
 }
 
 .Radio__titleAfter {
-  margin-left: 4px;
+  margin-inline-start: 4px;
   color: var(--vkui--color_icon_tertiary);
 }
 
@@ -82,48 +81,48 @@
  */
 
 .Radio--sizeY-compact .Radio__title {
-  margin-top: 8px;
+  margin-block-start: 8px;
 }
 
 .Radio--sizeY-compact .Radio__title:last-child {
-  margin-bottom: 8px;
+  margin-block-end: 8px;
 }
 
 .Radio--sizeY-compact .Radio__description {
-  margin-bottom: 7px;
+  margin-block-end: 7px;
 }
 
 .Radio--sizeY-compact .Radio__icon {
-  width: 18px;
-  height: 18px;
+  inline-size: 18px;
+  block-size: 18px;
 }
 
 .Radio--sizeY-compact .Radio__icon::after {
-  width: 12px;
-  height: 12px;
+  inline-size: 12px;
+  block-size: 12px;
 }
 
 @media (--sizeY-compact) {
   .Radio--sizeY-none .Radio__title {
-    margin-top: 8px;
+    margin-block-start: 8px;
   }
 
   .Radio--sizeY-none .Radio__title:last-child {
-    margin-bottom: 8px;
+    margin-block-end: 8px;
   }
 
   .Radio--sizeY-none .Radio__description {
-    margin-bottom: 7px;
+    margin-block-end: 7px;
   }
 
   .Radio--sizeY-none .Radio__icon {
-    width: 18px;
-    height: 18px;
+    inline-size: 18px;
+    block-size: 18px;
   }
 
   .Radio--sizeY-none .Radio__icon::after {
-    width: 12px;
-    height: 12px;
+    inline-size: 12px;
+    block-size: 12px;
   }
 }
 

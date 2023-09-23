@@ -4,12 +4,12 @@
 
 .HorizontalCellShowMore--compensate-last-cell-indent {
   /* Компенсация бокового отступа, заданного в последнем HorizontalCell:last-child::after */
-  margin-left: calc(-1 * var(--vkui_internal--side_cell_gap));
+  margin-inline-start: calc(-1 * var(--vkui_internal--side_cell_gap));
 }
 
 .HorizontalCellShowMore:last-child::after {
   content: '';
-  min-width: var(--vkui_internal--side_cell_gap);
+  min-inline-size: var(--vkui_internal--side_cell_gap);
 }
 
 .HorizontalCellShowMore__body {
@@ -21,14 +21,14 @@
 }
 
 .HorizontalCellShowMore--size-s .HorizontalCellShowMore__body {
-  min-width: 64px;
+  min-inline-size: 64px;
   padding: var(--vkui--spacing_size_xs);
 }
 
 .HorizontalCellShowMore--size-m .HorizontalCellShowMore__body,
 .HorizontalCellShowMore--size-l .HorizontalCellShowMore__body {
-  width: 128px;
-  margin-bottom: auto;
+  inline-size: 128px;
+  margin-block-end: auto;
 }
 
 /* Перебиваем селектор в Tappable--sizeX-(compact|none) */
@@ -41,6 +41,6 @@
 }
 
 .HorizontalCellShowMore__text {
-  padding-top: 8px;
+  padding-block-start: 8px;
   color: var(--vkui--color_text_accent);
 }

@@ -11,19 +11,17 @@
 }
 
 .CardGrid--sizeX-compact {
-  padding-left: var(--vkui--size_base_padding_horizontal--regular);
-  padding-right: var(--vkui--size_base_padding_horizontal--regular);
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 @media (--sizeX-compact) {
   .CardGrid--sizeX-none {
-    padding-left: var(--vkui--size_base_padding_horizontal--regular);
-    padding-right: var(--vkui--size_base_padding_horizontal--regular);
+    padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   }
 }
 
 .CardGrid + .CardGrid {
-  margin-top: calc(var(--vkui--size_cardgrid_padding_vertical--regular) * 2);
+  margin-block-start: calc(var(--vkui--size_cardgrid_padding_vertical--regular) * 2);
 }
 
 /**
@@ -32,21 +30,19 @@
  */
 
 :global(.vkuiInternalGroup--mode-card) .CardGrid {
-  padding-left: var(--vkui--size_base_padding_horizontal--regular);
-  padding-right: var(--vkui--size_base_padding_horizontal--regular);
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 @media (--sizeX-regular) {
   :global(.vkuiInternalGroup--mode-none) .CardGrid {
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-inline: 8px;
   }
 }
 
 :global(.vkuiInternalGroup) .CardGrid:first-child {
-  margin-top: var(--vkui--size_cardgrid_padding_vertical--regular);
+  margin-block-start: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
 :global(.vkuiInternalGroup) .CardGrid:last-child {
-  margin-bottom: var(--vkui--size_cardgrid_padding_vertical--regular);
+  margin-block-end: var(--vkui--size_cardgrid_padding_vertical--regular);
 }

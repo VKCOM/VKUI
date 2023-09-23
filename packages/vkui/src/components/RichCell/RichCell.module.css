@@ -1,7 +1,7 @@
 .RichCell {
   display: flex;
   padding: 8px var(--vkui--size_base_padding_horizontal--regular);
-  min-height: 64px;
+  min-block-size: 64px;
   box-sizing: border-box;
   color: var(--vkui--color_text_primary);
   text-decoration: none; /* в случае если Component="a" */
@@ -9,17 +9,17 @@
 }
 
 .RichCell--sizeY-compact {
-  min-height: 60px;
+  min-block-size: 60px;
 }
 
 @media (--sizeY-compact) {
   .RichCell--sizeY-none {
-    min-height: 60px;
+    min-block-size: 60px;
   }
 }
 
 .RichCell__before {
-  margin-right: 12px;
+  margin-inline-end: 12px;
 }
 
 .RichCell__in {
@@ -27,8 +27,8 @@
   flex-direction: column;
   justify-content: center;
   flex-grow: 1;
-  max-width: 100%;
-  min-width: 0;
+  max-inline-size: 100%;
+  min-inline-size: 0;
 }
 
 .RichCell__content {
@@ -38,7 +38,7 @@
 
 .RichCell__content-before {
   flex-grow: 1;
-  min-width: 0;
+  min-inline-size: 0;
 }
 
 .RichCell__content-after {
@@ -46,7 +46,7 @@
   flex-direction: column;
   align-items: flex-end;
   flex-shrink: 0;
-  padding-left: 12px;
+  padding-inline-start: 12px;
   box-sizing: border-box;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .RichCell__after-caption {
-  margin-top: 2px;
+  margin-block-start: 2px;
   font-size: var(--vkui--font_footnote--font_size--regular);
   line-height: var(--vkui--font_footnote--line_height--regular);
   color: var(--vkui--color_text_secondary);
@@ -78,7 +78,7 @@
 }
 
 .RichCell__caption {
-  margin-top: 1px;
+  margin-block-start: 1px;
   color: var(--vkui--color_text_secondary);
 }
 
@@ -92,16 +92,16 @@
 .RichCell--text-ellipsis .RichCell__caption {
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 100%;
+  max-inline-size: 100%;
   overflow: hidden;
 }
 
 .RichCell__bottom {
-  margin-top: 5px;
+  margin-block-start: 5px;
 }
 
 .RichCell__actions {
-  margin-top: 8px;
+  margin-block-start: 8px;
 }
 
 .RichCell__children,
@@ -132,12 +132,11 @@
  * FormItem
  **/
 :global(.vkuiInternalFormItem) .RichCell {
-  margin-right: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
-  margin-left: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
+  margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
 @media (--sizeY-compact) {
   .RichCell--sizeY-none {
-    min-height: 60px;
+    min-block-size: 60px;
   }
 }

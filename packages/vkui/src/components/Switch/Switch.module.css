@@ -48,33 +48,33 @@
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 
   /* Делаем пин по центру */
-  top: calc((var(--vkui--size_switch_height--regular) - var(--vkui--size_switch_pin--regular)) / 2);
-  left: calc(
+  inset-block-start: calc((var(--vkui--size_switch_height--regular) - var(--vkui--size_switch_pin--regular)) / 2);
+  inset-inline-start: calc(
     (var(--vkui--size_switch_height--regular) - var(--vkui--size_switch_pin--regular)) / 2
   );
-  width: var(--vkui--size_switch_pin--regular);
-  height: var(--vkui--size_switch_pin--regular);
+  inline-size: var(--vkui--size_switch_pin--regular);
+  block-size: var(--vkui--size_switch_pin--regular);
 }
 
 .Switch--sizeY-compact .Switch__pseudo::before {
-  top: calc((var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2);
-  left: calc(
+  inset-block-start: calc((var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2);
+  inset-inline-start: calc(
     (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
   );
-  width: var(--vkui--size_switch_pin--compact);
-  height: var(--vkui--size_switch_pin--compact);
+  inline-size: var(--vkui--size_switch_pin--compact);
+  block-size: var(--vkui--size_switch_pin--compact);
 }
 
 @media (--sizeY-compact) {
   .Switch--sizeY-none .Switch__pseudo::before {
-    top: calc(
+    inset-block-start: calc(
       (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
     );
-    left: calc(
+    inset-inline-start: calc(
       (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
     );
-    width: var(--vkui--size_switch_pin--compact);
-    height: var(--vkui--size_switch_pin--compact);
+    inline-size: var(--vkui--size_switch_pin--compact);
+    block-size: var(--vkui--size_switch_pin--compact);
   }
 }
 
@@ -93,21 +93,21 @@
   display: block;
   background: var(--vkui--color_icon_tertiary_alpha);
   border-radius: calc(var(--vkui--size_switch_width--regular) / 2);
-  width: var(--vkui--size_switch_width--regular);
-  height: var(--vkui--size_switch_height--regular);
+  inline-size: var(--vkui--size_switch_width--regular);
+  block-size: var(--vkui--size_switch_height--regular);
 }
 
 .Switch--sizeY-compact .Switch__pseudo::after {
   border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
-  width: var(--vkui--size_switch_width--compact);
-  height: var(--vkui--size_switch_height--compact);
+  inline-size: var(--vkui--size_switch_width--compact);
+  block-size: var(--vkui--size_switch_height--compact);
 }
 
 @media (--sizeY-compact) {
   .Switch--sizeY-none .Switch__pseudo::after {
     border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
-    width: var(--vkui--size_switch_width--compact);
-    height: var(--vkui--size_switch_height--compact);
+    inline-size: var(--vkui--size_switch_width--compact);
+    block-size: var(--vkui--size_switch_height--compact);
   }
 }
 
@@ -187,5 +187,5 @@
  * SimpleCell
  */
 :global(.vkuiInternalSimpleCell__after) > .Switch {
-  margin-left: 12px;
+  margin-inline-start: 12px;
 }

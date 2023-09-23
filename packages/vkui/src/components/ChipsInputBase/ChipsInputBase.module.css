@@ -4,14 +4,14 @@
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  max-width: 100%;
+  max-inline-size: 100%;
   padding: 3px;
   z-index: var(--vkui_internal--z_index_form_field_element);
   overflow: hidden;
 }
 
 .ChipsInputBase__chip {
-  max-width: calc(100% - 4px);
+  max-inline-size: calc(100% - 4px);
   margin: 2px;
 }
 
@@ -25,8 +25,8 @@
 
 .ChipsInputBase__el {
   position: relative;
-  width: 100%;
-  margin-bottom: 2px;
+  inline-size: 100%;
+  margin-block-end: 2px;
   padding: 0;
   color: var(--vkui--color_text_primary);
   background: transparent;
@@ -36,7 +36,7 @@
 }
 
 .ChipsInputBase__el:focus {
-  min-width: 64px;
+  min-inline-size: 64px;
 }
 
 .ChipsInputBase__el::-ms-clear {
@@ -62,8 +62,7 @@
 }
 
 .ChipsInputBase--hasPlaceholder .ChipsInputBase__label {
-  margin-left: 9px;
-  margin-right: 0;
+  margin-inline: 9px 0;
 }
 
 .ChipsInputBase--hasPlaceholder .ChipsInputBase__el {

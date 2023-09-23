@@ -1,10 +1,10 @@
 .PromoBanner {
-  width: 100%;
+  inline-size: 100%;
   box-sizing: border-box;
   outline: var(--vkui--size_border--regular) solid var(--vkui--color_separator_primary_alpha);
   color: var(--vkui--color_text_primary);
   background: var(--vkui--color_background_content);
-  padding-bottom: 10px;
+  padding-block-end: 10px;
   position: relative;
 }
 
@@ -15,15 +15,15 @@
 }
 
 .PromoBanner__age {
-  margin-left: 6px;
+  margin-inline-start: 6px;
 }
 
 .PromoBanner__close {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 48px;
-  height: 48px;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  inline-size: 48px;
+  block-size: 48px;
   color: var(--vkui--color_icon_secondary);
   display: flex;
   justify-content: center;

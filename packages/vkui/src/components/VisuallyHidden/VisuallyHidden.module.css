@@ -1,8 +1,8 @@
 /* stylelint-disable declaration-no-important */
 .VisuallyHidden {
   position: absolute !important;
-  height: 1px !important;
-  width: 1px !important;
+  block-size: 1px !important;
+  inline-size: 1px !important;
   padding: 0 !important;
   margin: -1px !important; /* Fix for https://github.com/twbs/bootstrap/issues/25686 */
   white-space: nowrap !important;

@@ -8,7 +8,7 @@
   padding: 0;
   margin: 0;
   position: relative;
-  height: 48px;
+  block-size: 48px;
 
   /**
    * Чтобы закргуление было равно половине высоты.
@@ -18,7 +18,7 @@
 }
 
 .IconButton--sizeY-compact {
-  height: 44px;
+  block-size: 44px;
 }
 
 .IconButton[disabled] {
@@ -60,7 +60,7 @@
 
 @media (--sizeY-compact) {
   .IconButton--sizeY-none {
-    height: 44px;
+    block-size: 44px;
   }
 
   .IconButton--sizeY-none :global(.vkuiIcon--16),
@@ -92,8 +92,8 @@
   align-items: center;
   align-content: center;
   justify-content: center;
-  width: var(--vkui--size_field_height--regular);
-  height: var(--vkui--size_field_height--regular);
+  inline-size: var(--vkui--size_field_height--regular);
+  block-size: var(--vkui--size_field_height--regular);
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
@@ -104,8 +104,8 @@
 }
 
 :global(.vkuiInternalFormField__after) .IconButton--sizeY-compact {
-  width: var(--vkui--size_field_height--compact);
-  height: var(--vkui--size_field_height--compact);
+  inline-size: var(--vkui--size_field_height--compact);
+  block-size: var(--vkui--size_field_height--compact);
 }
 
 :global(.vkuiInternalFormItem--removable)
@@ -114,13 +114,13 @@
 :global(.vkuiInternalFormLayoutGroup--removable)
   :global(.vkuiInternalRemovable__content)
   > .IconButton--sizeY-compact {
-  height: var(--vkui--size_field_height--compact);
+  block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
   :global(.vkuiInternalFormField__after) .IconButton--sizeY-none {
-    width: var(--vkui--size_field_height--compact);
-    height: var(--vkui--size_field_height--compact);
+    inline-size: var(--vkui--size_field_height--compact);
+    block-size: var(--vkui--size_field_height--compact);
   }
 
   :global(.vkuiInternalFormItem--removable)
@@ -129,7 +129,7 @@
   :global(.vkuiInternalFormLayoutGroup--removable)
     :global(.vkuiInternalRemovable__content)
     > .IconButton--sizeY-none {
-    height: var(--vkui--size_field_height--compact);
+    block-size: var(--vkui--size_field_height--compact);
   }
 }
 
@@ -138,11 +138,11 @@
  * SimpleCell
  */
 :global(.vkuiInternalSimpleCell__after) .IconButton:last-child {
-  margin-right: -12px;
+  margin-inline-end: -12px;
 }
 
 :global(.vkuiInternalSimpleCell__after) .IconButton--ios:last-child {
-  margin-right: -9px;
+  margin-inline-end: -9px;
 }
 
 /**
@@ -150,6 +150,6 @@
  * Alert
  */
 :global(.vkuiInternalAlert__dismiss).IconButton {
-  height: 36px;
+  block-size: 36px;
   padding: 8px;
 }

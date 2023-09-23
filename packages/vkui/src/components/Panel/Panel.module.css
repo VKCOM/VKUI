@@ -1,23 +1,23 @@
 .Panel {
   position: relative;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .Panel::before {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
   content: '';
 }
 
 .Panel__in {
   position: relative;
   box-sizing: border-box;
-  width: 100%;
-  min-height: 100%;
+  inline-size: 100%;
+  min-block-size: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -34,20 +34,20 @@
 /* stylelint-disable selector-max-universal */
 
 .Panel__centered :global(.vkuiInternalPanelHeader--vis) + * {
-  margin-top: var(--vkui_internal--panel_header_height);
+  margin-block-start: var(--vkui_internal--panel_header_height);
 }
 
 .Panel__centered :global(.vkuiInternalPanelHeader--ios):global(.vkuiInternalPanelHeader--vis) + * {
-  margin-top: var(--vkui_internal--panel_header_height);
+  margin-block-start: var(--vkui_internal--panel_header_height);
 }
 
 .Panel--sizeX-compact .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
-  margin-top: calc(var(--vkui_internal--panel_header_height) + 5px);
+  margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
 }
 
 @media (--sizeX-compact) {
   .Panel--sizeX-none .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
-    margin-top: calc(var(--vkui_internal--panel_header_height) + 5px);
+    margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
   }
 }
 
@@ -55,7 +55,7 @@
   .Panel__centered
   :global(.vkuiInternalPanelHeader--ios):global(.vkuiInternalPanelHeader--sep)
   + * {
-  margin-top: calc(var(--vkui_internal--panel_header_height) + 5px);
+  margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
 }
 
 @media (--sizeX-compact) {
@@ -63,7 +63,7 @@
     .Panel__centered
     :global(.vkuiInternalPanelHeader--ios):global(.vkuiInternalPanelHeader--sep)
     + * {
-    margin-top: calc(var(--vkui_internal--panel_header_height) + 5px);
+    margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
   }
 }
 
@@ -71,7 +71,7 @@
   .Panel__centered
   :global(.vkuiInternalPanelHeader--vkcom):global(.vkuiInternalPanelHeader--sep)
   + * {
-  margin-top: calc(var(--vkui_internal--panel_header_height) + 5px);
+  margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
 }
 
 @media (--sizeX-compact) {
@@ -79,17 +79,17 @@
     .Panel__centered
     :global(.vkuiInternalPanelHeader--vkcom):global(.vkuiInternalPanelHeader--sep)
     + * {
-    margin-top: calc(var(--vkui_internal--panel_header_height) + 5px);
+    margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
   }
 }
 
 .Panel--sizeX-regular .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
-  margin-top: calc(var(--vkui_internal--panel_header_height) + 16px);
+  margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
 }
 
 @media (--sizeX-regular) {
   .Panel--sizeX-none .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
-    margin-top: calc(var(--vkui_internal--panel_header_height) + 16px);
+    margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
   }
 }
 
@@ -97,7 +97,7 @@
   .Panel__centered
   :global(.vkuiInternalPanelHeader--ios):global(.vkuiInternalPanelHeader--sep)
   + * {
-  margin-top: calc(var(--vkui_internal--panel_header_height) + 16px);
+  margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
 }
 
 @media (--sizeX-regular) {
@@ -105,7 +105,7 @@
     .Panel__centered
     :global(.vkuiInternalPanelHeader--ios):global(.vkuiInternalPanelHeader--sep)
     + * {
-    margin-top: calc(var(--vkui_internal--panel_header_height) + 16px);
+    margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
   }
 }
 
@@ -113,7 +113,7 @@
   .Panel__centered
   :global(.vkuiInternalPanelHeader--vkcom):global(.vkuiInternalPanelHeader--sep)
   + * {
-  margin-top: calc(var(--vkui_internal--panel_header_height) + 16px);
+  margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
 }
 
 @media (--sizeX-regular) {
@@ -121,7 +121,7 @@
     .Panel__centered
     :global(.vkuiInternalPanelHeader--vkcom):global(.vkuiInternalPanelHeader--sep)
     + * {
-    margin-top: calc(var(--vkui_internal--panel_header_height) + 16px);
+    margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
   }
 }
 
@@ -132,7 +132,7 @@
  * View
  */
 :global(.vkuiInternalView--ios) .Panel__in {
-  padding-bottom: var(--vkui_internal--safe_area_inset_bottom);
+  padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
 }
 
 :global(.vkuiInternalView--ios) .Panel__in {
@@ -145,20 +145,20 @@
  * Epic
  */
 :global(.vkuiInternalEpic--hasTabbar) .Panel__in {
-  padding-bottom: var(--vkui_internal--tabbar_height);
+  padding-block-end: var(--vkui_internal--tabbar_height);
   padding-bottom: calc(
     var(--vkui_internal--safe_area_inset_bottom) + var(--vkui_internal--tabbar_height)
   );
 }
 
 .Panel__in-before {
-  height: 1px;
-  margin-bottom: -1px;
+  block-size: 1px;
+  margin-block-end: -1px;
 }
 
 .Panel__in-after {
-  height: 1px;
-  margin-top: -1px;
+  block-size: 1px;
+  margin-block-start: -1px;
 }
 
 .Panel .Panel__in,
