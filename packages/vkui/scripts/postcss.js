@@ -6,6 +6,7 @@ const cssnano = require('cssnano');
 const postcssCustomMedia = require('postcss-custom-media');
 const postcssGapProperties = require('postcss-gap-properties');
 const cssImport = require('postcss-import');
+const postcssLogical = require('postcss-logical');
 const cssModules = require('postcss-modules');
 const { VKUI_PACKAGE, VKUI_TOKENS_CSS, generateScopedName } = require('../../../shared');
 
@@ -50,6 +51,13 @@ function makePostcssPlugins({
     // Обработка CustomMedia
     postcssCustomMedia(),
   ];
+
+  // Обработка CSS Logical
+  //
+  // https://caniuse.com/css-logical-props
+  if (!isESNext) {
+    plugins.push(postcssLogical());
+  }
 
   // Обработка css modules. Добавляет префикс vkui
   if (isVKUIPackageBuild && isCssModulesFile && !isESNext) {

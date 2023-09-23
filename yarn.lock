@@ -5650,6 +5650,7 @@ __metadata:
     postcss-gap-properties: ^5.0.0
     postcss-import: ^15.0.0
     postcss-loader: ^7.3.3
+    postcss-logical: ^7.0.0
     postcss-modules: ^6.0.0
     postcss-value-parser: ^4.2.0
     prettier: ^2.8.8
@@ -5664,6 +5665,7 @@ __metadata:
     stylelint-config-standard: ^34.0.0
     stylelint-declaration-strict-value: ^1.9.2
     stylelint-media-use-custom-media: ^2.0.0
+    stylelint-use-logical: ^2.1.0
     stylelint-value-no-unknown-custom-properties: ^5.0.0
     swc-loader: ^0.2.3
     swc-plugin-css-modules: 0.1.6
@@ -14942,6 +14944,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-logical@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "postcss-logical@npm:7.0.0"
+  dependencies:
+    postcss-value-parser: ^4.2.0
+  peerDependencies:
+    postcss: ^8.4
+  checksum: 1d8c0f97dfc4ab3fed5f9dd6718f52e35ac00f3612ddf477771a4a0e2027f92be69f97d4dcdde275bcef680c2ac9af9dce455b87b82639926ff4a731c31986f8
+  languageName: node
+  linkType: hard
+
 "postcss-merge-longhand@npm:^6.0.0":
   version: 6.0.0
   resolution: "postcss-merge-longhand@npm:6.0.0"
@@ -17707,6 +17720,15 @@ __metadata:
   peerDependencies:
     stylelint: 10 - 14
   checksum: cf096050290127621e5b162da5ea18d0aa211c339061be88b9dbd585a0d7750b08ec1eb57530db0b315255e9cbb7f93fbaa961d6a92f3c57eac934206388588d
+  languageName: node
+  linkType: hard
+
+"stylelint-use-logical@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "stylelint-use-logical@npm:2.1.0"
+  peerDependencies:
+    stylelint: ">= 11 < 16"
+  checksum: d8e0d2aea6e417479c7d3759f8ffa189111adbc3558f17f26f15459b4d863d7b25dcdc7cbdba2a361eb3f0950c224f35554c0be58253fd00b8dbe5ad0ab09450
   languageName: node
   linkType: hard
 

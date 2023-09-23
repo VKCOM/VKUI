@@ -8,6 +8,7 @@ module.exports = {
     'stylelint-media-use-custom-media',
     '@project-tools/stylelint-atomic',
     '@project-tools/stylelint-bad-multiplication',
+    'stylelint-use-logical',
   ],
   rules: {
     'indentation': null,
@@ -83,5 +84,6 @@ module.exports = {
     // To explicitly enable in https://github.com/VKCOM/VKUI/pull/5847
     'plugin/logical-shorthands': null,
     'property-disallowed-list': null,
+    'csstools/use-logical': 'always',
   },
 };
