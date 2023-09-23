@@ -1630,7 +1630,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/cascade-layer-name-parser@npm:^1.0.4, @csstools/cascade-layer-name-parser@npm:^1.0.5":
+"@csstools/cascade-layer-name-parser@npm:^1.0.4":
   version: 1.0.5
   resolution: "@csstools/cascade-layer-name-parser@npm:1.0.5"
   peerDependencies:
@@ -1640,7 +1640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-parser-algorithms@npm:^2.3.1, @csstools/css-parser-algorithms@npm:^2.3.2":
+"@csstools/css-parser-algorithms@npm:^2.3.1":
   version: 2.3.2
   resolution: "@csstools/css-parser-algorithms@npm:2.3.2"
   peerDependencies:
@@ -1649,7 +1649,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-tokenizer@npm:^2.2.0, @csstools/css-tokenizer@npm:^2.2.1":
+"@csstools/css-tokenizer@npm:^2.2.0":
   version: 2.2.1
   resolution: "@csstools/css-tokenizer@npm:2.2.1"
   checksum: ebd9f65b253037d3a575ded45dbe41c12e71d83d6aa8a6a3a9fc2427862a805678df2a825cd19cf36b587be93f5cb1bd0932bb5c362d227ed9533db35b1fc6fa
@@ -5588,7 +5588,6 @@ __metadata:
     postcss: ^8.4.31
     postcss-cli: ^10.0.0
     postcss-custom-media: ^10.0.1
-    postcss-custom-properties: ^13.3.2
     postcss-import: ^15.0.0
     postcss-loader: ^7.3.3
     postcss-modules: ^6.0.0
@@ -14621,20 +14620,6 @@ __metadata:
   peerDependencies:
     postcss: ^8.4
   checksum: 8e56241957e0a53e746934181448eea81f94946d59bfb9cf4bda71d0700a00554ee973e2e4808712da57127a3ab4e455bc0aba9c9d8c975b412d9fc991741388
-  languageName: node
-  linkType: hard
-
-"postcss-custom-properties@npm:^13.3.2":
-  version: 13.3.2
-  resolution: "postcss-custom-properties@npm:13.3.2"
-  dependencies:
-    "@csstools/cascade-layer-name-parser": ^1.0.5
-    "@csstools/css-parser-algorithms": ^2.3.2
-    "@csstools/css-tokenizer": ^2.2.1
-    postcss-value-parser: ^4.2.0
-  peerDependencies:
-    postcss: ^8.4
-  checksum: d53f6b2514b9d144008e646c16bd000d3536aec5776941bd1452d39fe9b173e131b429672e946fd1811820d2dc2938f7ea20b52f1c7abd2a713644b8d43fdcc4
   languageName: node
   linkType: hard
 
