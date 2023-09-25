@@ -10,7 +10,6 @@ export interface AspectRatioProps extends HTMLAttributesWithRootRef<HTMLDivEleme
    * По умолчанию, вложенный контент будет растягиваться и заполнять весь блок.
    */
   mode?: 'stretch' | 'none';
-  children: React.ReactNode;
   /**
    * Например 16 / 9, 4 / 3, 1920 / 1080
    */
@@ -20,13 +19,12 @@ export interface AspectRatioProps extends HTMLAttributesWithRootRef<HTMLDivEleme
 /**
  * `AspectRatio` позволяет поддерживать постоянное соотношение ширины и высоты.
  * Его можно использовать для отображения изображений, карт, видео и других медиафайлов.
- 
+
  * @since 5.5.0
  * @see https://vkcom.github.io/VKUI/#/AspectRatio
  */
 export function AspectRatio({
   ratio,
-  children,
   mode = 'stretch',
   style: styleProp,
   ...props
