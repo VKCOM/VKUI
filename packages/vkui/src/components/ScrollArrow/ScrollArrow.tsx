@@ -61,6 +61,7 @@ export const ScrollArrow = ({
   return (
     <RootComponent
       Component="button"
+      type="button"
       baseClassName={classNames(
         styles['ScrollArrow'],
         stylesSize[size],
