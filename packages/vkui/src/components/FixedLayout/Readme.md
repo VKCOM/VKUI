@@ -17,7 +17,7 @@ const Example = () => {
   return (
     <View activePanel="fixedLayout">
       <Panel id="fixedLayout">
-        <PanelHeader>Fixed layout</PanelHeader>
+        <PanelHeader fixed>Fixed layout</PanelHeader>
         <FixedLayout vertical="top" filled>
           <Search />
           <Separator wide />
