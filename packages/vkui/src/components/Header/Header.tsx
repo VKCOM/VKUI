@@ -3,11 +3,11 @@ import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs'
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import { OptionalFootnote, OptionalSubhead } from '../OptionalWrapper/OptionalWrapper';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
-import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
 import styles from './Header.module.css';
 
@@ -109,24 +109,20 @@ export const Header = ({
           >
             {children}
           </span>
-          {hasReactNode(indicator) && (
-            <Footnote className={styles['Header__indicator']} weight="2">
-              {indicator}
-            </Footnote>
-          )}
+          <OptionalFootnote className={styles['Header__indicator']} weight="2">
+            {indicator}
+          </OptionalFootnote>
         </HeaderContent>
 
-        {hasReactNode(subtitle) && (
-          <Subhead
-            className={classNames(
-              styles['Header__subtitle'],
-              multiline && styles['Header__content--multiline'],
-            )}
-            Component="span"
-          >
-            {subtitle}
-          </Subhead>
-        )}
+        <OptionalSubhead
+          className={classNames(
+            styles['Header__subtitle'],
+            multiline && styles['Header__content--multiline'],
+          )}
+          Component="span"
+        >
+          {subtitle}
+        </OptionalSubhead>
       </div>
 
       {hasReactNode(aside) && (

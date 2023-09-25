@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasAlign } from '../../types';
+import { OptionalSpan } from '../OptionalWrapper/OptionalWrapper';
 import { Spinner } from '../Spinner/Spinner';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import '../Spinner/Spinner.module.css';
@@ -118,32 +119,26 @@ export const Button = ({
         />
       )}
       <span className={styles.Button__in}>
-        {hasReactNode(before) && (
-          <span
-            className={styles.Button__before}
-            role="presentation"
-            data-testid={process.env.NODE_ENV === 'test' ? 'before' : undefined}
-          >
-            {before}
-          </span>
-        )}
-        {hasReactNode(children) && (
-          <span
-            className={styles.Button__content}
-            data-testid={process.env.NODE_ENV === 'test' ? 'children' : undefined}
-          >
-            {children}
-          </span>
-        )}
-        {hasReactNode(after) && (
-          <span
-            className={styles.Button__after}
-            role="presentation"
-            data-testid={process.env.NODE_ENV === 'test' ? 'after' : undefined}
-          >
-            {after}
-          </span>
-        )}
+        <OptionalSpan
+          className={styles.Button__before}
+          role="presentation"
+          data-testid={process.env.NODE_ENV === 'test' ? 'before' : undefined}
+        >
+          {before}
+        </OptionalSpan>
+        <OptionalSpan
+          className={styles.Button__content}
+          data-testid={process.env.NODE_ENV === 'test' ? 'children' : undefined}
+        >
+          {children}
+        </OptionalSpan>
+        <OptionalSpan
+          className={styles.Button__after}
+          role="presentation"
+          data-testid={process.env.NODE_ENV === 'test' ? 'after' : undefined}
+        >
+          {after}
+        </OptionalSpan>
       </span>
     </Tappable>
   );

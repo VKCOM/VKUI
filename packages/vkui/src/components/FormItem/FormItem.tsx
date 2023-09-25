@@ -4,10 +4,9 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../lib/adaptivity';
 import { HasComponent, HasRootRef } from '../../types';
+import { OptionalFootnote, OptionalSubhead } from '../OptionalWrapper/OptionalWrapper';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './FormItem.module.css';
 
 const sizeYClassNames = {
@@ -72,25 +71,21 @@ export const FormItem = ({
 
   const wrappedChildren = (
     <React.Fragment>
-      {hasReactNode(top) && (
-        <Subhead
-          className={styles['FormItem__top']}
-          Component={htmlFor ? 'label' : 'h5'}
-          htmlFor={htmlFor}
-        >
-          {top}
-        </Subhead>
-      )}
+      <OptionalSubhead
+        className={styles['FormItem__top']}
+        Component={htmlFor ? 'label' : 'h5'}
+        htmlFor={htmlFor}
+      >
+        {top}
+      </OptionalSubhead>
       {children}
-      {hasReactNode(bottom) && (
-        <Footnote
-          className={styles['FormItem__bottom']}
-          id={bottomId}
-          role={status === 'error' ? 'alert' : undefined}
-        >
-          {bottom}
-        </Footnote>
-      )}
+      <OptionalFootnote
+        className={styles['FormItem__bottom']}
+        id={bottomId}
+        role={status === 'error' ? 'alert' : undefined}
+      >
+        {bottom}
+      </OptionalFootnote>
     </React.Fragment>
   );
 

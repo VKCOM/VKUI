@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Icon16Chevron } from '@vkontakte/icons';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
+import { OptionalSpan } from '../OptionalWrapper/OptionalWrapper';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
@@ -79,7 +80,7 @@ export const MiniInfoCell = ({
 
   const cellContent = (
     <React.Fragment>
-      {hasReactNode(before) && <span className={styles['MiniInfoCell__before']}>{before}</span>}
+      <OptionalSpan className={styles['MiniInfoCell__before']}>{before}</OptionalSpan>
       <div className={styles['MiniInfoCell__middle']}>
         <Paragraph
           className={styles['MiniInfoCell__content']}
@@ -89,7 +90,7 @@ export const MiniInfoCell = ({
         </Paragraph>
         {expandable && <Icon16Chevron />}
       </div>
-      {hasReactNode(after) && <span className={styles['MiniInfoCell__after']}>{after}</span>}
+      <OptionalSpan className={styles['MiniInfoCell__after']}>{after}</OptionalSpan>
     </React.Fragment>
   );
 

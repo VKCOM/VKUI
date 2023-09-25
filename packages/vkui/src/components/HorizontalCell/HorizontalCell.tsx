@@ -2,9 +2,9 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { HasComponent, HasRef, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
+import { OptionalDiv, OptionalFootnote } from '../OptionalWrapper/OptionalWrapper';
 import { Tappable } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
-import { Footnote } from '../Typography/Footnote/Footnote';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './HorizontalCell.module.css';
 
@@ -69,17 +69,15 @@ export const HorizontalCell = ({
       className={classNames(styles['HorizontalCell'], stylesSize[size], className)}
     >
       <Tappable className={styles['HorizontalCell__body']} getRootRef={getRef} {...restProps}>
-        {hasReactNode(children) && (
-          <div className={styles['HorizontalCell__image']}>{children}</div>
-        )}
+        <OptionalDiv className={styles['HorizontalCell__image']}>{children}</OptionalDiv>
         <div className={styles['HorizontalCell__content']}>
           {hasReactNode(header) && <CellTypography size={size}>{header}</CellTypography>}
-          {hasReactNode(subtitle) && (
-            <Footnote className={styles['HorizontalCell__subtitle']}>{subtitle}</Footnote>
-          )}
-          {hasReactNode(extraSubtitle) && (
-            <Footnote className={styles['HorizontalCell__subtitle']}>{extraSubtitle}</Footnote>
-          )}
+          <OptionalFootnote className={styles['HorizontalCell__subtitle']}>
+            {subtitle}
+          </OptionalFootnote>
+          <OptionalFootnote className={styles['HorizontalCell__subtitle']}>
+            {extraSubtitle}
+          </OptionalFootnote>
         </div>
       </Tappable>
     </div>

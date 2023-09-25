@@ -6,6 +6,7 @@ import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasComponent } from '../../types';
+import { OptionalSpan } from '../OptionalWrapper/OptionalWrapper';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
@@ -139,15 +140,11 @@ export const SimpleCell = ({
           </Subhead>
         )}
         <div className={styles['SimpleCell__content']}>
-          {badgeBeforeTitle && (
-            <span className={styles['SimpleCell__badge']}>{badgeBeforeTitle}</span>
-          )}
+          <OptionalSpan className={styles['SimpleCell__badge']}>{badgeBeforeTitle}</OptionalSpan>
           <Headline Component="span" className={styles['SimpleCell__children']} weight="3">
             {children}
           </Headline>
-          {hasReactNode(badgeAfterTitle) && (
-            <span className={styles['SimpleCell__badge']}>{badgeAfterTitle}</span>
-          )}
+          <OptionalSpan className={styles['SimpleCell__badge']}>{badgeAfterTitle}</OptionalSpan>
         </div>
         {subtitle && (
           <div className={styles['SimpleCell__content']}>

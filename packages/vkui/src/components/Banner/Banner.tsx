@@ -5,6 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
+import { OptionalDiv } from '../OptionalWrapper/OptionalWrapper';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
@@ -137,9 +138,7 @@ export const Banner = ({
             {text}
           </Text>
         )}
-        {hasReactNode(actions) && React.Children.count(actions) > 0 && (
-          <div className={styles['Banner__actions']}>{actions}</div>
-        )}
+        <OptionalDiv className={styles['Banner__actions']}>{actions}</OptionalDiv>
       </div>
     </>
   );

@@ -9,6 +9,7 @@ import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
+import { OptionalDiv } from '../OptionalWrapper/OptionalWrapper';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -101,7 +102,7 @@ export const ModalCardBase = ({
           isSoftwareKeyboardOpened && styles['ModalCardBase__container--softwareKeyboardOpened'],
         )}
       >
-        {hasReactNode(icon) && <div className={styles['ModalCardBase__icon']}>{icon}</div>}
+        <OptionalDiv className={styles['ModalCardBase__icon']}>{icon}</OptionalDiv>
         {hasReactNode(header) && (
           <Title
             level="2"
@@ -129,7 +130,7 @@ export const ModalCardBase = ({
 
         {children}
 
-        {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
+        <OptionalDiv className={styles['ModalCardBase__actions']}>{actions}</OptionalDiv>
 
         {isDesktop && <ModalDismissButton onClick={onClose} />}
         {canShowCloseButtonIOS && (

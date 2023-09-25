@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
+import { OptionalDiv } from '../OptionalWrapper/OptionalWrapper';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
 import { TypographyProps } from '../Typography/Typography';
@@ -105,7 +106,7 @@ export const WriteBar = ({
       style={style}
     >
       <div className={styles['WriteBar__form']}>
-        {hasReactNode(before) && <div className={styles['WriteBar__before']}>{before}</div>}
+        <OptionalDiv className={styles['WriteBar__before']}>{before}</OptionalDiv>
 
         <div className={styles['WriteBar__formIn']}>
           <WriteBarTypography
@@ -116,12 +117,10 @@ export const WriteBar = ({
             getRootRef={textareaRef}
             value={value}
           />
-          {hasReactNode(inlineAfter) && (
-            <div className={styles['WriteBar__inlineAfter']}>{inlineAfter}</div>
-          )}
+          <OptionalDiv className={styles['WriteBar__inlineAfter']}>{inlineAfter}</OptionalDiv>
         </div>
 
-        {hasReactNode(after) && <div className={styles['WriteBar__after']}>{after}</div>}
+        <OptionalDiv className={styles['WriteBar__after']}>{after}</OptionalDiv>
       </div>
     </div>
   );

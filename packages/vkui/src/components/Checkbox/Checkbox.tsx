@@ -15,8 +15,8 @@ import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRef, HasRootRef } from '../../types';
+import { OptionalFootnote } from '../OptionalWrapper/OptionalWrapper';
 import { ACTIVE_EFFECT_DELAY, Tappable, type TappableProps } from '../Tappable/Tappable';
-import { Footnote } from '../Typography/Footnote/Footnote';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Checkbox.module.css';
@@ -192,9 +192,9 @@ export const Checkbox = ({
           <Text className={styles['Checkbox__titleBefore']}>{children}</Text>
           <div className={styles['Checkbox__titleAfter']}>{titleAfter}</div>
         </div>
-        {hasReactNode(description) && (
-          <Footnote className={styles['Checkbox__description']}>{description}</Footnote>
-        )}
+        <OptionalFootnote className={styles['Checkbox__description']}>
+          {description}
+        </OptionalFootnote>
       </div>
     </Tappable>
   );

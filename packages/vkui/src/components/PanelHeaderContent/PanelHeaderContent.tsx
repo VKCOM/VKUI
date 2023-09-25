@@ -3,9 +3,9 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
+import { OptionalDiv, OptionalFootnote } from '../OptionalWrapper/OptionalWrapper';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
-import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeaderContent.module.css';
@@ -80,7 +80,7 @@ export const PanelHeaderContent = ({
           : platformClassNames.android,
       )}
     >
-      {hasReactNode(before) && <div className={styles['PanelHeaderContent__before']}>{before}</div>}
+      <OptionalDiv className={styles['PanelHeaderContent__before']}>{before}</OptionalDiv>
       <InComponent
         {...inProps}
         className={classNames(
@@ -88,16 +88,14 @@ export const PanelHeaderContent = ({
           !before && platform !== Platform.ANDROID && styles['PanelHeaderContent__in--centered'],
         )}
       >
-        {hasReactNode(status) && (
-          <Footnote className={styles['PanelHeaderContent__status']}>{status}</Footnote>
-        )}
+        <OptionalFootnote className={styles['PanelHeaderContent__status']}>
+          {status}
+        </OptionalFootnote>
         <div className={styles['PanelHeaderContent__children']}>
           <PanelHeaderChildren hasStatus={hasReactNode(status)} hasBefore={hasReactNode(before)}>
             {children}
           </PanelHeaderChildren>
-          {hasReactNode(aside) && (
-            <div className={styles['PanelHeaderContent__aside']}>{aside}</div>
-          )}
+          <OptionalDiv className={styles['PanelHeaderContent__aside']}>{aside}</OptionalDiv>
         </div>
         {hasReactNode(before) && <div className={styles['PanelHeaderContent__width']} />}
       </InComponent>

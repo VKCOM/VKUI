@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
-import { Footnote } from '../Typography/Footnote/Footnote';
+import { OptionalDiv, OptionalFootnote } from '../OptionalWrapper/OptionalWrapper';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './CustomSelectOption.module.css';
 
@@ -117,15 +117,15 @@ export const CustomSelectOption = ({
       )}
       style={style}
     >
-      {hasReactNode(before) && <div className={styles['CustomSelectOption__before']}>{before}</div>}
+      <OptionalDiv className={styles['CustomSelectOption__before']}>{before}</OptionalDiv>
       <div className={styles['CustomSelectOption__main']}>
         <div className={styles['CustomSelectOption__children']}>{children}</div>
-        {hasReactNode(description) && (
-          <Footnote className={styles['CustomSelectOption__description']}>{description}</Footnote>
-        )}
+        <OptionalFootnote className={styles['CustomSelectOption__description']}>
+          {description}
+        </OptionalFootnote>
       </div>
       <div className={styles['CustomSelectOption__after']}>
-        {hasReactNode(after) && <div>{after}</div>}
+        <OptionalDiv>{after}</OptionalDiv>
         {selected && <Icon16Done className={styles['CustomSelectOption__selectedIcon']} />}
       </div>
     </Paragraph>

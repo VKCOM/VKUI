@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useId } from '../../hooks/useId';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
+import { OptionalFootnote } from '../OptionalWrapper/OptionalWrapper';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -206,9 +207,7 @@ export const UsersStack = ({
           {othersElement}
         </div>
       )}
-      {hasReactNode(children) && (
-        <Footnote className={styles['UsersStack__text']}>{children}</Footnote>
-      )}
+      <OptionalFootnote className={styles['UsersStack__text']}>{children}</OptionalFootnote>
     </RootComponent>
   );
 };

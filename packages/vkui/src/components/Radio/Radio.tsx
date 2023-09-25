@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
+import { OptionalFootnote } from '../OptionalWrapper/OptionalWrapper';
 import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
-import { Footnote } from '../Typography/Footnote/Footnote';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Radio.module.css';
@@ -76,9 +76,9 @@ export const Radio = ({
             <Text>{children}</Text>
             <div className={styles['Radio__titleAfter']}>{titleAfter}</div>
           </div>
-          {hasReactNode(description) && (
-            <Footnote className={styles['Radio__description']}>{description}</Footnote>
-          )}
+          <OptionalFootnote className={styles['Radio__description']}>
+            {description}
+          </OptionalFootnote>
         </div>
       </div>
     </Tappable>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
@@ -8,10 +8,10 @@ import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { OptionalDiv, OptionalFootnote } from '../OptionalWrapper/OptionalWrapper';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
-import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Group.module.css';
 
 const sizeXClassNames = {
@@ -131,11 +131,9 @@ export const Group = ({
           stylesPadding[padding],
         )}
       >
-        {hasReactNode(header) && <div className={styles['Group__header']}>{header}</div>}
+        <OptionalDiv className={styles['Group__header']}>{header}</OptionalDiv>
         {children}
-        {hasReactNode(description) && (
-          <Footnote className={styles['Group__description']}>{description}</Footnote>
-        )}
+        <OptionalFootnote className={styles['Group__description']}>{description}</OptionalFootnote>
       </RootComponent>
 
       {separator !== 'hide' && (

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { getTitleFromChildren } from '../../lib/utils';
 import { HTMLAttributesWithRootRef } from '../../types';
+import { OptionalDiv } from '../OptionalWrapper/OptionalWrapper';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import styles from './Chip.module.css';
@@ -73,11 +74,11 @@ export const Chip = ({
       {...restProps}
     >
       <div className={styles['Chip__in']} role="presentation">
-        {hasReactNode(before) && <div className={styles['Chip__before']}>{before}</div>}
+        <OptionalDiv className={styles['Chip__before']}>{before}</OptionalDiv>
         <span className={styles['Chip__content']} title={title} aria-hidden>
           {children}
         </span>
-        {hasReactNode(after) && <div className={styles['Chip__after']}>{after}</div>}
+        <OptionalDiv className={styles['Chip__after']}>{after}</OptionalDiv>
 
         {removable && (
           <Tappable

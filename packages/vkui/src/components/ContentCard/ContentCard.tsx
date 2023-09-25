@@ -2,9 +2,9 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { HasRef, HasRootRef } from '../../types';
 import { Card, CardProps } from '../Card/Card';
+import { OptionalFootnote } from '../OptionalWrapper/OptionalWrapper';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
-import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Text } from '../Typography/Text/Text';
 import styles from './ContentCard.module.css';
@@ -117,13 +117,11 @@ export const ContentCard = ({
             </Headline>
           )}
           {hasReactNode(text) && <Text className={styles['ContentCard__text']}>{text}</Text>}
-          {hasReactNode(caption) && (
-            <Footnote
-              className={classNames(styles['ContentCard__text'], styles['ContentCard__caption'])}
-            >
-              {caption}
-            </Footnote>
-          )}
+          <OptionalFootnote
+            className={classNames(styles['ContentCard__text'], styles['ContentCard__caption'])}
+          >
+            {caption}
+          </OptionalFootnote>
         </div>
       </Tappable>
     </Card>
