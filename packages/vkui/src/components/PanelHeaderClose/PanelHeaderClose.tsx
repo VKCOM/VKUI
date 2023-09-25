@@ -6,7 +6,7 @@ import { getTitleFromChildren } from '../../lib/utils';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderClose
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
  */
 export const PanelHeaderClose = ({ children = 'Отмена', ...restProps }: PanelHeaderButtonProps) => {
   const platform = usePlatform();
