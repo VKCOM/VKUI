@@ -76,3 +76,39 @@ export const WriteBarPlayground = (props: ComponentPlaygroundProps) => {
     </ComponentPlayground>
   );
 };
+
+const WriteBarIosSmileIcon = (
+  <WriteBarIcon aria-label="Смайлы и стикеры">
+    <Icon28SmileOutline />
+  </WriteBarIcon>
+);
+
+export const WriteBarIosIconsPlayground = (props: ComponentPlaygroundProps) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          value: ['', 'Сообщение'],
+        },
+      ]}
+    >
+      {(props: WriteBarProps) => {
+        const value = String(props.value);
+        return (
+          <WriteBar
+            {...props}
+            inlineAfter={value.length > 0 && WriteBarIosSmileIcon}
+            after={
+              <>
+                {value.length === 0 && WriteBarIosSmileIcon}
+                <WriteBarIcon disabled={!value.length} mode="send" />
+              </>
+            }
+            placeholder="Сообщение"
+          />
+        );
+      }}
+    </ComponentPlayground>
+  );
+};
