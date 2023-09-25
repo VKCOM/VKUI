@@ -169,35 +169,41 @@
 :global(.vkuiInternalFormLayoutGroup--segmented) .FormField {
   z-index: auto;
   isolation: auto;
-}
-
-:global(.vkuiInternalFormLayoutGroup--segmented)
-  > :global(.vkuiInternalFormItem):not(:first-of-type):not(:last-of-type)
-  .FormField,
-:global(.vkuiInternalFormLayoutGroup--segmented)
-  :global(.vkuiInternalRemovable__content)
-  > :global(.vkuiInternalFormItem):not(:first-of-type):not(:last-of-type)
-  .FormField {
   border-radius: 0;
 }
 
-/* stylelint-disable-next-line selector-max-universal */
-:global(.vkuiInternalFormLayoutGroup--segmented) > *:first-of-type:not(:last-of-type) .FormField,
-:global(.vkuiInternalFormLayoutGroup--segmented)
-  :global(.vkuiInternalRemovable__content)
-  > *:first-of-type:not(:last-of-type)
+:global(
+    .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-horizontal
+      .vkuiInternalFormItem
+  ):first-of-type
   .FormField {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-top-left-radius: var(--vkui--size_border_radius--regular);
+  border-bottom-left-radius: var(--vkui--size_border_radius--regular);
 }
 
-:global(.vkuiInternalFormLayoutGroup--segmented)
-  > :global(.vkuiInternalFormItem):not(:first-of-type):last-of-type
-  .FormField,
-:global(.vkuiInternalFormLayoutGroup--segmented)
-  :global(.vkuiInternalRemovable__content)
-  > :global(.vkuiInternalFormItem):not(:first-of-type):last-of-type
+:global(
+    .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-horizontal
+      .vkuiInternalFormItem
+  ):last-of-type
   .FormField {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-top-right-radius: var(--vkui--size_border_radius--regular);
+  border-bottom-right-radius: var(--vkui--size_border_radius--regular);
+}
+
+:global(
+    .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-vertical
+      .vkuiInternalFormItem
+  ):first-of-type
+  .FormField {
+  border-top-left-radius: var(--vkui--size_border_radius--regular);
+  border-top-right-radius: var(--vkui--size_border_radius--regular);
+}
+
+:global(
+    .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-vertical
+      .vkuiInternalFormItem
+  ):last-of-type
+  .FormField {
+  border-bottom-left-radius: var(--vkui--size_border_radius--regular);
+  border-bottom-right-radius: var(--vkui--size_border_radius--regular);
 }

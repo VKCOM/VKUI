@@ -40,6 +40,22 @@ const Example = () => {
               </FormItem>
             </FormLayoutGroup>
 
+            <FormLayoutGroup mode="vertical" segmented>
+              <FormItem htmlFor="doctype" top="Документ, удостоверяющий личность">
+                <Select
+                  id="doctype"
+                  options={['Паспорт гражданина РФ', 'Загранпаспорт'].map((i) => ({
+                    label: i,
+                    value: i,
+                  }))}
+                  defaultValue={'Загранпаспорт'}
+                />
+              </FormItem>
+              <FormItem htmlFor="docnumber" bottom="Номер документа">
+                <Input id="docnumber" />
+              </FormItem>
+            </FormLayoutGroup>
+
             {!showDates ? (
               <CellButton onClick={() => toggleDates(true)}>Указать даты поездки</CellButton>
             ) : (
