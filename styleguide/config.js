@@ -166,6 +166,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/FixedLayout/FixedLayout.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/HorizontalScroll/HorizontalScroll.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/AspectRatio/AspectRatio.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Scaffold/Scaffold.tsx`,
           ],
         },
         {
