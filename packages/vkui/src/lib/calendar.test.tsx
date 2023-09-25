@@ -1,4 +1,4 @@
-import { getYears, setTimeEqual } from './calendar';
+import { clamp, getYears, isDayMinMaxRestricted, setTimeEqual } from './calendar';
 
 describe('calendar utils', () => {
   describe('setTimeEqual', () => {
@@ -61,5 +61,54 @@ describe('calendar utils', () => {
         },
       ]);
     });
+  });
+  describe(isDayMinMaxRestricted, () => {
+    const minDate = new Date('2023-09-15T10:35:00.000Z');
+    const sameDayMinDate = new Date('2023-09-15T10:30:00.000Z');
+    const beforeMinDate = new Date('2023-09-10T10:30:00.000Z');
+    const maxDate = new Date('2023-09-29T17:20:00.000Z');
+    const sameDayMaxDate = new Date('2023-09-29T17:40:00.000Z');
+    const afterMaxDate = new Date('2023-10-29T17:40:00.000Z');
+    const isRangeDate = new Date('2023-09-20T17:12:00.000Z');
+
+    test.each`
+      targetDate        | min          | max          | withTime | expected
+      ${isRangeDate}    | ${minDate}   | ${maxDate}   | ${false} | ${false}
+      ${beforeMinDate}  | ${undefined} | ${maxDate}   | ${false} | ${false}
+      ${afterMaxDate}   | ${minDate}   | ${undefined} | ${false} | ${false}
+      ${isRangeDate}    | ${undefined} | ${undefined} | ${false} | ${false}
+      ${sameDayMinDate} | ${minDate}   | ${undefined} | ${false} | ${false}
+      ${sameDayMaxDate} | ${undefined} | ${maxDate}   | ${false} | ${false}
+      ${sameDayMinDate} | ${minDate}   | ${undefined} | ${true}  | ${true}
+      ${sameDayMaxDate} | ${undefined} | ${maxDate}   | ${true}  | ${true}
+    `(
+      'returns $expected when [$min < $targetDate < $max] (withTime: $withTime)',
+      ({ targetDate, min, max, withTime, expected }) => {
+        const result = isDayMinMaxRestricted(targetDate, { max, min, withTime });
+        expect(result).toBe(expected);
+      },
+    );
+  });
+
+  describe(clamp, () => {
+    const minDate = new Date('2023-09-15T10:35:00.000Z');
+    const beforeMinDate = new Date('2023-08-15T10:35:00.000Z');
+    const maxDate = new Date('2023-09-29T17:20:00.000Z');
+    const afterMaxDate = new Date('2023-10-29T17:20:00.000Z');
+    const isRangeDate = new Date('2023-09-20T17:12:00.000Z');
+
+    test.each`
+      targetDate       | min          | max          | expected
+      ${isRangeDate}   | ${minDate}   | ${maxDate}   | ${'2023-09-20T17:12:00.000Z'}
+      ${isRangeDate}   | ${undefined} | ${undefined} | ${'2023-09-20T17:12:00.000Z'}
+      ${beforeMinDate} | ${minDate}   | ${undefined} | ${'2023-09-15T10:35:00.000Z'}
+      ${afterMaxDate}  | ${undefined} | ${maxDate}   | ${'2023-09-29T17:20:00.000Z'}
+    `(
+      'returns $expected when [$min < $targetDate < $max]',
+      ({ targetDate, min, max, expected }) => {
+        const result = clamp(targetDate, { max, min });
+        expect(result.toISOString()).toBe(expected);
+      },
+    );
   });
 });

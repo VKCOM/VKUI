@@ -13,6 +13,7 @@ export interface CalendarTimeProps {
   changeMinutesAriaLabel?: string;
   onChange?(value: Date): void;
   onClose?(): void;
+  isDayDisabled?(day: Date, withTime?: boolean): boolean;
 }
 
 const hours: Array<{
@@ -38,7 +39,20 @@ export const CalendarTime = ({
   onClose,
   changeHoursAriaLabel = 'Изменить час',
   changeMinutesAriaLabel = 'Изменить минуту',
+  isDayDisabled,
 }: CalendarTimeProps) => {
+  const localHours = isDayDisabled
+    ? hours.map((hour) => {
+        return { ...hour, disabled: isDayDisabled(setHours(value, hour.value), true) };
+      })
+    : hours;
+
+  const localMinutes = isDayDisabled
+    ? minutes.map((minute) => {
+        return { ...minute, disabled: isDayDisabled(setMinutes(value, minute.value), true) };
+      })
+    : hours;
+
   const onHoursChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange?.(setHours(value, Number(event.target.value))),
@@ -56,7 +70,7 @@ export const CalendarTime = ({
         <AdaptivityProvider sizeY={SizeType.COMPACT}>
           <CustomSelect
             value={value.getHours()}
-            options={hours}
+            options={localHours}
             onChange={onHoursChange}
             forceDropdownPortal={false}
             aria-label={changeHoursAriaLabel}
@@ -68,7 +82,7 @@ export const CalendarTime = ({
         <AdaptivityProvider sizeY={SizeType.COMPACT}>
           <CustomSelect
             value={value.getMinutes()}
-            options={minutes}
+            options={localMinutes}
             onChange={onMinutesChange}
             forceDropdownPortal={false}
             aria-label={changeMinutesAriaLabel}

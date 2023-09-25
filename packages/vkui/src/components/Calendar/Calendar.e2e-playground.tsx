@@ -47,6 +47,11 @@ export const CalendarPlayground = (props: ComponentPlaygroundProps) => {
             </span>,
           ],
         },
+        {
+          value: [new Date('1970-05-05')],
+          minDateTime: [new Date('1970-05-03')],
+          maxDateTime: [new Date('1970-05-10')],
+        },
       ]}
     >
       {(props: CalendarProps) => <Calendar {...props} />}
