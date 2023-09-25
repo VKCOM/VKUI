@@ -97,7 +97,7 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
           ],
         },
         {
-          mode: ['horizontal'],
+          mode: ['horizontal', 'vertical'],
           segmented: [true],
           children: [
             <React.Fragment key="kids">
