@@ -5888,7 +5888,7 @@ __metadata:
     "@swc/helpers": ^0.5.2
     "@vkontakte/icons": ^2.62.0
     "@vkontakte/vkjs": ^1.1.0
-    dayjs: ^1.11.9
+    dayjs: ^1.11.10
     mitt: ^3.0.1
     storybook: 7.4.2
   peerDependencies:
@@ -8359,10 +8359,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.11.9":
-  version: 1.11.9
-  resolution: "dayjs@npm:1.11.9"
-  checksum: a4844d83dc87f921348bb9b1b93af851c51e6f71fa259604809cfe1b49d1230e6b0212dab44d1cb01994c096ad3a77ea1cf18fa55154da6efcc9d3610526ac38
+"dayjs@npm:^1.11.10":
+  version: 1.11.10
+  resolution: "dayjs@npm:1.11.10"
+  checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
   languageName: node
   linkType: hard
 
