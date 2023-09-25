@@ -4,6 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
+import { OptionalDiv } from '../OptionalWrapper/OptionalWrapper';
 import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
 import { Tappable } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
@@ -124,7 +125,7 @@ export const TabsItem = ({
       aria-selected={selected}
       tabIndex={tabIndex}
     >
-      {before && <div className={styles['TabsItem__before']}>{before}</div>}
+      <OptionalDiv className={styles['TabsItem__before']}>{before}</OptionalDiv>
       <Headline
         Component="span"
         className={styles['TabsItem__label']}
@@ -134,7 +135,7 @@ export const TabsItem = ({
         {children}
       </Headline>
       {statusComponent}
-      {after && <div className={styles['TabsItem__after']}>{after}</div>}
+      <OptionalDiv className={styles['TabsItem__after']}>{after}</OptionalDiv>
       {mode === 'default' && (
         <div className={styles['TabsItem__underline']} aria-hidden data-selected={selected} />
       )}

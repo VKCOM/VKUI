@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
+import { OptionalDiv } from '../OptionalWrapper/OptionalWrapper';
 import { AvatarBadge, type AvatarBadgeProps } from './AvatarBadge/AvatarBadge';
 import {
   AvatarBadgeWithPreset,
@@ -102,16 +103,14 @@ export const Avatar = ({
         className,
       )}
     >
-      {initials && (
-        <div
-          className={styles['Avatar__initials']}
-          style={{
-            fontSize: getInitialsFontSize(size),
-          }}
-        >
-          {initials}
-        </div>
-      )}
+      <OptionalDiv
+        className={styles['Avatar__initials']}
+        style={{
+          fontSize: getInitialsFontSize(size),
+        }}
+      >
+        {initials}
+      </OptionalDiv>
       {children}
     </ImageBase>
   );

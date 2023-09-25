@@ -120,7 +120,7 @@ export const Banner = ({
         </div>
       )}
 
-      {before && <div className={styles['Banner__before']}>{before}</div>}
+      <OptionalDiv className={styles['Banner__before']}>{before}</OptionalDiv>
 
       <div className={styles['Banner__content']}>
         {hasReactNode(header) && (

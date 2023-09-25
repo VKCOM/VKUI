@@ -6,6 +6,7 @@ import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { SizeType } from '../../lib/adaptivity';
 import { HasComponent, HasRootRef } from '../../types';
 import { FocusVisible } from '../FocusVisible/FocusVisible';
+import { OptionalSpan } from '../OptionalWrapper/OptionalWrapper';
 import styles from './FormField.module.css';
 
 const sizeYClassNames = {
@@ -95,13 +96,13 @@ export const FormField = ({
         className,
       )}
     >
-      {before && <span className={styles['FormField__before']}>{before}</span>}
+      <OptionalSpan className={styles['FormField__before']}>{before}</OptionalSpan>
       {children}
-      {after && (
-        <span className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}>
-          {after}
-        </span>
-      )}
+      <OptionalSpan
+        className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}
+      >
+        {after}
+      </OptionalSpan>
       <span aria-hidden className={styles['FormField__border']} />
       <FocusVisible thin visible={focusWithin} mode="outline" />
     </Component>

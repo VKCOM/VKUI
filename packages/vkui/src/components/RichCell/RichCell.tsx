@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
+import { OptionalDiv } from '../OptionalWrapper/OptionalWrapper';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { RichCellIcon } from './RichCellIcon/RichCellIcon';
@@ -91,7 +92,7 @@ export const RichCell = ({
         className,
       )}
     >
-      {before && <div className={styles['RichCell__before']}>{before}</div>}
+      <OptionalDiv className={styles['RichCell__before']}>{before}</OptionalDiv>
       <div className={styles['RichCell__in']}>
         <div className={styles['RichCell__content']}>
           <div className={styles['RichCell__content-before']}>
@@ -101,7 +102,7 @@ export const RichCell = ({
               </Subhead>
             )}
             <div className={styles['RichCell__children']}>{children}</div>
-            {text && <div className={styles['RichCell__text']}>{text}</div>}
+            <OptionalDiv className={styles['RichCell__text']}>{text}</OptionalDiv>
             {caption && (
               <Subhead Component="div" className={styles['RichCell__caption']}>
                 {caption}
@@ -110,15 +111,15 @@ export const RichCell = ({
           </div>
           {(after || afterCaption) && (
             <div className={styles['RichCell__content-after']}>
-              {after && <div className={styles['RichCell__after-children']}>{after}</div>}
-              {afterCaption && (
-                <div className={styles['RichCell__after-caption']}>{afterCaption}</div>
-              )}
+              <OptionalDiv className={styles['RichCell__after-children']}>{after}</OptionalDiv>
+              <OptionalDiv className={styles['RichCell__after-caption']}>
+                {afterCaption}
+              </OptionalDiv>
             </div>
           )}
         </div>
-        {bottom && <div className={styles['RichCell__bottom']}>{bottom}</div>}
-        {actions && <div className={styles['RichCell__actions']}>{actions}</div>}
+        <OptionalDiv className={styles['RichCell__bottom']}>{bottom}</OptionalDiv>
+        <OptionalDiv className={styles['RichCell__actions']}>{actions}</OptionalDiv>
       </div>
     </Tappable>
   );

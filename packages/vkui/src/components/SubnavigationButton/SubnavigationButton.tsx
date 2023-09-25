@@ -4,6 +4,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { HasChildren, HasComponent } from '../../types';
+import { OptionalSpan } from '../OptionalWrapper/OptionalWrapper';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -103,7 +104,7 @@ export const SubnavigationButton = ({
       )}
     >
       <span className={styles['SubnavigationButton__in']}>
-        {before && <span className={styles['SubnavigationButton__before']}>{before}</span>}
+        <OptionalSpan className={styles['SubnavigationButton__before']}>{before}</OptionalSpan>
         <SubnavigationButtonTypography
           textLevel={textLevel}
           className={styles['SubnavigationButton__label']}
@@ -111,7 +112,7 @@ export const SubnavigationButton = ({
         >
           {children}
         </SubnavigationButtonTypography>
-        {after && <span className={styles['SubnavigationButton__after']}>{after}</span>}
+        <OptionalSpan className={styles['SubnavigationButton__after']}>{after}</OptionalSpan>
         {expandable && <Icon16Dropdown className={styles['SubnavigationButton__expandableIcon']} />}
       </span>
     </Tappable>

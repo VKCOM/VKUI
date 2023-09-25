@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { Clickable } from '../Clickable/Clickable';
+import { OptionalDiv } from '../OptionalWrapper/OptionalWrapper';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import { ImageBaseContext } from './context';
@@ -158,7 +159,7 @@ export const ImageBase = ({
             onError={handleImageError}
           />
         )}
-        {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
+        <OptionalDiv className={styles['ImageBase__fallback']}>{fallbackIcon}</OptionalDiv>
         {children}
         {withBorder && <div aria-hidden className={styles['ImageBase__border']} />}
       </Clickable>

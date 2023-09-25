@@ -10,6 +10,7 @@ import { rubber } from '../../lib/touch';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { Button } from '../Button/Button';
+import { OptionalDiv } from '../OptionalWrapper/OptionalWrapper';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
@@ -225,7 +226,7 @@ export const Snackbar = ({
           onEnd={onTouchEnd}
         >
           <div className={styles['Snackbar__body']} ref={bodyElRef}>
-            {before && <div className={styles['Snackbar__before']}>{before}</div>}
+            <OptionalDiv className={styles['Snackbar__before']}>{before}</OptionalDiv>
 
             <div className={styles['Snackbar__content']}>
               <Paragraph className={styles['Snackbar__content-text']}>{children}</Paragraph>
@@ -247,7 +248,7 @@ export const Snackbar = ({
               )}
             </div>
 
-            {after && <div className={styles['Snackbar__after']}>{after}</div>}
+            <OptionalDiv className={styles['Snackbar__after']}>{after}</OptionalDiv>
           </div>
         </Touch>
       </RootComponent>

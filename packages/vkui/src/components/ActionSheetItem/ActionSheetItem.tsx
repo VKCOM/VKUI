@@ -5,6 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { ActionSheetContext, type ActionSheetContextType } from '../ActionSheet/ActionSheetContext';
+import { OptionalDiv } from '../OptionalWrapper/OptionalWrapper';
 import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
@@ -112,7 +113,7 @@ export const ActionSheetItem = ({
         className,
       )}
     >
-      {before && <div className={styles['ActionSheetItem__before']}>{before}</div>}
+      <OptionalDiv className={styles['ActionSheetItem__before']}>{before}</OptionalDiv>
       <div
         className={classNames(
           styles['ActionSheetItem__container'],
