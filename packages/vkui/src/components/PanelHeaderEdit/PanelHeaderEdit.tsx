@@ -20,7 +20,7 @@ export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderEdit
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
  */
 export const PanelHeaderEdit = ({
   isActive = false,

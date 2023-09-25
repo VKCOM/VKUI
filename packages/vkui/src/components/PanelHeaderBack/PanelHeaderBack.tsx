@@ -17,7 +17,7 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps & {
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderBack
+ * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
  */
 export const PanelHeaderBack = ({
   label,
