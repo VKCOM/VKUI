@@ -22,7 +22,7 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@swc/core": "1.3.85",
+    "@swc/core": "1.3.88",
     "@swc/jest": "^0.2.29",
     "@types/jest": "^29.5.5",
     "@types/postcss-less": "^4.0.2",
