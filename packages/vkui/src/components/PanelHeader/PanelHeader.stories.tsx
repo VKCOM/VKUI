@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon28Notifications, Icon28PictureOutline, Icon28SettingsOutline } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';

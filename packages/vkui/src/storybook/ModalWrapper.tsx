@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Button } from '../components/Button/Button';
 import { ModalRoot } from '../components/ModalRoot/ModalRootAdaptive';
 import { Placeholder } from '../components/Placeholder/Placeholder';

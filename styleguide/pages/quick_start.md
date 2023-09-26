@@ -42,7 +42,7 @@ pnpm add @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
 Соберите базовый app shell для VKUI.
 
 ```jsx static
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import {
   AdaptivityProvider,

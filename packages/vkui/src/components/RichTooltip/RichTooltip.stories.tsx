@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon16HelpOutline, Icon28UserAddOutline } from '@vkontakte/icons';
 import { DisableCartesianParam } from '../../storybook/constants';

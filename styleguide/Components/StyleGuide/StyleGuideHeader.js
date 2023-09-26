@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Icon16Dropdown, Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
 import { IconButton, Link, SplitCol, SplitLayout, Tappable, useAppearance } from '@vkui';
 import { VKUI_PACKAGE } from '../../../shared';

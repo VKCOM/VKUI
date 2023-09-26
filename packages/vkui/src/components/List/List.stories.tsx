@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon28PrivacyOutline, Icon28SettingsOutline, Icon28UserOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';

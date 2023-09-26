@@ -118,6 +118,10 @@ module.exports = {
         selector: 'CallExpression[callee.name="classNames"][arguments.length=1]',
         message: 'Do not use classNames with one argument',
       },
+      {
+        selector: 'ImportDefaultSpecifier[local.name="React"][parent.source.value="react"]',
+        message: 'Не используйте импорт React по умолчанию',
+      },
     ],
 
     'import/no-default-export': 'error',

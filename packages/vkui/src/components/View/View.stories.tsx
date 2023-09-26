@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import vkBridge from '@vkontakte/vk-bridge';
 import { Platform } from '../../lib/platform';

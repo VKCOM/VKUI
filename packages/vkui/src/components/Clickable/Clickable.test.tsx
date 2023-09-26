@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { Clickable } from './Clickable';

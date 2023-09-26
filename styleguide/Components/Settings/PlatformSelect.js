@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Link, Platform } from '@vkui';
 import { Setting } from '../Setting/Setting';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';

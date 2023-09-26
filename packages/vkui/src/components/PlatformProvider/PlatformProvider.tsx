@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { useAppearance } from '../../hooks/useAppearance';
 import { PlatformType } from '../../lib/platform';
 import { TokensClassProvider } from '../../lib/tokensClassProvider';

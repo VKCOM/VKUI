@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';

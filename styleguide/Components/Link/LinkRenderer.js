@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Link } from '@vkui';
 
 export const LinkRenderer = ({ href: _href, ...restProps }) => {
