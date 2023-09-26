@@ -23,12 +23,13 @@
   padding-top: 6px;
   padding-bottom: 6px;
   padding-right: 12px;
-  color: var(--vkui--color_icon_accent);
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic -- добиваем отступ до 16px */
+/* stylelint-disable-next-line @project-tools/stylelint-atomic */
 .SimpleCell__before > :global(.vkuiIcon) {
+  /* добиваем отступ до 16px  */
   padding-right: 4px;
+  color: var(--vkui--color_icon_accent);
 }
 
 .SimpleCell__before:empty {
@@ -115,11 +116,11 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  color: var(--vkui--color_icon_accent);
 }
 
 .SimpleCell__after > :global(.vkuiIcon) {
   padding-left: 8px;
+  color: var(--vkui--color_icon_accent);
 }
 
 .SimpleCell__after > :global(.vkuiIcon):last-child {
