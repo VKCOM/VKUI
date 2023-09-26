@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon16Chevron, Icon24Chevron } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useId } from '../../hooks/useId';
 import { warnOnce } from '../../lib/warnOnce';

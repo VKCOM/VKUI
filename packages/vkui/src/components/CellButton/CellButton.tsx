@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
 import styles from './CellButton.module.css';

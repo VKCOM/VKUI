@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Icon20ChevronUp,
   Icon20Dropdown,
@@ -19,13 +18,13 @@ export const DropdownIcon = ({ opened = false, className, ...restProps }: Dropdo
   const IconRegular = opened ? Icon24ChevronUp : Icon24ChevronDown;
 
   return (
-    <React.Fragment>
+    <>
       {sizeY.compact && (
         <IconCompact className={classNames(sizeY.compact.className, className)} {...restProps} />
       )}
       {sizeY.regular && (
         <IconRegular className={classNames(sizeY.regular.className, className)} {...restProps} />
       )}
-    </React.Fragment>
+    </>
   );
 };

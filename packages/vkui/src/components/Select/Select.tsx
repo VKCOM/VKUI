@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { CustomSelect, SelectProps } from '../CustomSelect/CustomSelect';
 import { NativeSelect } from '../NativeSelect/NativeSelect';
@@ -36,7 +35,7 @@ export const Select = ({ children, ...props }: SelectProps) => {
   const hasPointer = useAdaptivityHasPointer();
 
   return (
-    <React.Fragment>
+    <>
       {(hasPointer === undefined || hasPointer) && <CustomSelect {...props} />}
       {(hasPointer === undefined || !hasPointer) && (
         <NativeSelect {...nativeProps}>
@@ -47,6 +46,6 @@ export const Select = ({ children, ...props }: SelectProps) => {
           ))}
         </NativeSelect>
       )}
-    </React.Fragment>
+    </>
   );
 };

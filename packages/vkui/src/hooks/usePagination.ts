@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo } from 'react';
 import { clamp } from '../helpers/math';
 import { rangeIncrement } from '../helpers/range';
 
@@ -43,7 +43,7 @@ export const usePagination = ({
   boundaryCount = 1,
   totalPages: endPage = 1,
 }: UsePaginationProps = {}): UsePaginationResult =>
-  React.useMemo(() => {
+  useMemo(() => {
     const startPages = rangeIncrement(1, Math.min(boundaryCount, endPage));
     const endPages = rangeIncrement(
       Math.max(endPage - boundaryCount + 1, boundaryCount + 1),

@@ -1,4 +1,4 @@
-import React from 'react';
+import { createContext } from 'react';
 
-export const NavViewIdContext = React.createContext<string | undefined>(undefined);
-export const NavPanelIdContext = React.createContext<string | undefined>(undefined);
+export const NavViewIdContext = createContext<string | undefined>(undefined);
+export const NavPanelIdContext = createContext<string | undefined>(undefined);

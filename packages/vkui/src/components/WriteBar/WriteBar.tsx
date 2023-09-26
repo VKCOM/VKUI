@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -72,9 +72,9 @@ export const WriteBar = ({
   });
 
   const textareaRef = useExternRef(getRef);
-  const currentScrollHeight = React.useRef<number>();
+  const currentScrollHeight = useRef<number>();
 
-  const resize = React.useCallback(() => {
+  const resize = useCallback(() => {
     const textareaEl = textareaRef.current;
     if (!textareaEl) {
       return;
@@ -91,7 +91,7 @@ export const WriteBar = ({
     }
   }, [onHeightChange, textareaRef]);
 
-  React.useEffect(resize, [resize, value, platform]);
+  useEffect(resize, [resize, value, platform]);
 
   return (
     <div

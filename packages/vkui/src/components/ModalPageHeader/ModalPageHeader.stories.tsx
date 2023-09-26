@@ -1,4 +1,3 @@
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon24Cancel, Icon24Done } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -35,23 +34,23 @@ export const Example: Story = {
           header={
             <ModalPageHeader
               before={
-                <React.Fragment>
+                <>
                   {(platform === Platform.ANDROID || platform === Platform.VKCOM) && (
                     <PanelHeaderButton>
                       <Icon24Cancel />
                     </PanelHeaderButton>
                   )}
-                </React.Fragment>
+                </>
               }
               after={
-                <React.Fragment>
+                <>
                   {(platform === Platform.ANDROID || platform === Platform.VKCOM) && (
                     <PanelHeaderButton>
                       <Icon24Done />
                     </PanelHeaderButton>
                   )}
                   {platform === Platform.IOS && <PanelHeaderButton>Готово</PanelHeaderButton>}
-                </React.Fragment>
+                </>
               }
               {...args}
             >

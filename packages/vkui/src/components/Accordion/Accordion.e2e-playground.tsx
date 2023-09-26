@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon24AddOutline, Icon24MinusOutline } from '@vkontakte/icons';
 import {
   ComponentPlayground,

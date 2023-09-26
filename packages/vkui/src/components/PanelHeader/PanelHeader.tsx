@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { isValidElement, useContext } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
@@ -64,7 +64,7 @@ const PanelHeaderIn = ({
 }: PanelHeaderProps) => {
   const { Component = 'span', ...restProps } = typographyProps;
   const { hasCustomPanelHeaderAfter, customPanelHeaderAfterMinWidth } = useConfigProvider();
-  const { isInsideModal } = React.useContext(ModalRootContext);
+  const { isInsideModal } = useContext(ModalRootContext);
   const platform = usePlatform();
 
   const afterSlotProps =
@@ -79,7 +79,7 @@ const PanelHeaderIn = ({
 
   // TODO [>=6]: Удалить условие
   if (
-    React.isValidElement(children) &&
+    isValidElement(children) &&
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     (children as JSX.Element).type.displayName === LegacyPanelHeaderContent.displayName
   ) {
@@ -98,7 +98,7 @@ const PanelHeaderIn = ({
   }
 
   return (
-    <React.Fragment>
+    <>
       <TooltipContainer fixed className={styles['PanelHeader__in']}>
         <div
           className={classNames(styles['PanelHeader__before'], 'vkuiInternalPanelHeader__before')}
@@ -114,7 +114,7 @@ const PanelHeaderIn = ({
       {separator && platform === Platform.VKCOM && (
         <Separator className={styles['PanelHeader__separator']} wide />
       )}
-    </React.Fragment>
+    </>
   );
 };
 
@@ -189,12 +189,12 @@ export const PanelHeader = ({
         </PanelHeaderIn>
       )}
       {separator && visor && platform !== Platform.VKCOM && (
-        <React.Fragment>
+        <>
           {adaptiveSizeX.compact && <Separator className={adaptiveSizeX.compact.className} />}
           {adaptiveSizeX.regular && (
             <Spacing className={adaptiveSizeX.regular.className} size={16} />
           )}
-        </React.Fragment>
+        </>
       )}
     </RootComponent>
   );

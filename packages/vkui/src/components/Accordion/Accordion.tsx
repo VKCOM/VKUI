@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { AccordionSummary } from './AccordionSummary';

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useConfigProvider } from '../components/ConfigProvider/ConfigProviderContext';
 import { HasPlatform } from '../types';
 

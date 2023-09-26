@@ -19,7 +19,7 @@
     },
     "transform": {
       "react": {
-        "runtime": "classic"
+        "runtime": "automatic"
       }
     },
     "target": "esnext",

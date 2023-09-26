@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Icon20CheckBoxOff,
   Icon20CheckBoxOn,

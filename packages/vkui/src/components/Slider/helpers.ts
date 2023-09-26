@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { rescale } from '../../helpers/math';
 import type { InternalDraggingType, InternalValueState } from './types';
 

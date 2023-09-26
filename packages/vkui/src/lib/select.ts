@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { SelectType } from '../components/Select/Select';
 import { getTitleFromChildren } from './utils';
 

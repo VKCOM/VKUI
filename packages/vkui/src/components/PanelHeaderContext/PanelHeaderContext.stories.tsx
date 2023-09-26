@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import {
   Icon16Dropdown,
@@ -35,8 +35,8 @@ type Story = StoryObj<PanelHeaderContextProps>;
 
 export const Example: Story = {
   render: function Render() {
-    const [contextOpened, setContextOpened] = React.useState(true);
-    const [mode, setMode] = React.useState<string | undefined>('all');
+    const [contextOpened, setContextOpened] = useState(true);
+    const [mode, setMode] = useState<string | undefined>('all');
 
     const toggleContext = () => {
       setContextOpened((prev) => !prev);

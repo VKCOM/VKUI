@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -27,19 +27,19 @@ export const CustomScrollView = ({
 }: CustomScrollViewProps) => {
   const { document, window } = useDOM();
 
-  const ratio = React.useRef(NaN);
-  const lastTrackerTop = React.useRef(0);
-  const clientHeight = React.useRef(0);
-  const trackerHeight = React.useRef(0);
-  const scrollHeight = React.useRef(0);
-  const transformProp = React.useRef('');
-  const startY = React.useRef(0);
-  const trackerTop = React.useRef(0);
+  const ratio = useRef(NaN);
+  const lastTrackerTop = useRef(0);
+  const clientHeight = useRef(0);
+  const trackerHeight = useRef(0);
+  const scrollHeight = useRef(0);
+  const transformProp = useRef('');
+  const startY = useRef(0);
+  const trackerTop = useRef(0);
 
   const boxRef = useExternRef(externalBoxRef);
 
-  const barY = React.useRef<HTMLDivElement>(null);
-  const trackerY = React.useRef<HTMLDivElement>(null);
+  const barY = useRef<HTMLDivElement>(null);
+  const trackerY = useRef<HTMLDivElement>(null);
 
   const setTrackerPosition = (scrollTop: number) => {
     lastTrackerTop.current = scrollTop;

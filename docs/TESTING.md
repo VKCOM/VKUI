@@ -96,7 +96,6 @@ test.describe('Example', () => {
 
 ```tsx
 // Accordion.e2e.tsx
-import * as React from 'react';
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
 import { AccordionPlayground } from './Accordion.e2e-playground';
@@ -126,7 +125,6 @@ test.describe(() => {
 
 ```tsx
 // Accordion.e2e.tsx
-import * as React from 'react';
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
 import { AccordionPlayground } from './Accordion.e2e-playground';

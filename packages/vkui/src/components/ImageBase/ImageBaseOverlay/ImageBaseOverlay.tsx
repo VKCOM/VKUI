@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useAppearance } from '../../../hooks/useAppearance';
@@ -60,7 +60,7 @@ export const ImageBaseOverlay = ({
   if (process.env.NODE_ENV === 'development') {
     if (children) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { size } = React.useContext(ImageBaseContext);
+      const { size } = useContext(ImageBaseContext);
       validateOverlayIcon(size, { name: 'children', value: children });
     }
   }

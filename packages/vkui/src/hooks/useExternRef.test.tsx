@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createRef, useRef } from 'react';
 import { render } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
@@ -31,12 +31,12 @@ describe(useExternRef, () => {
   });
   describe('sets outer ref to null', () => {
     it('on wrapper unmount', () => {
-      const ref = React.createRef<HTMLDivElement>();
+      const ref = createRef<HTMLDivElement>();
       render(<RefForwarder getRef={ref} />).unmount();
       expect(ref.current).toBeNull();
     });
     it('on inner node unmount', () => {
-      const ref = React.createRef();
+      const ref = createRef();
       const RefForwarder = (props: HasRef<any> & { hide?: boolean }) => {
         const ref = useExternRef(props.getRef);
         return props.hide ? null : <div ref={ref} />;
@@ -48,7 +48,7 @@ describe(useExternRef, () => {
   describe('calls outer ref', () => {
     it('before useLayoutEffect', () => {
       const RefUser = () => {
-        const ref = React.useRef(null);
+        const ref = useRef(null);
         useIsomorphicLayoutEffect(() => {
           expect(ref.current).toBeInTheDocument();
         }, []);
@@ -57,7 +57,7 @@ describe(useExternRef, () => {
       render(<RefUser />);
     });
     it('when node changes', () => {
-      const ref = React.createRef();
+      const ref = createRef();
       const RefForwarder = (props: HasRef<any> & { remountKey?: any }) => (
         <div key={props.remountKey} ref={useExternRef(props.getRef)} />
       );

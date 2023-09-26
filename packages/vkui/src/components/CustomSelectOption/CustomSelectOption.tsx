@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo } from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -82,7 +82,7 @@ export const CustomSelectOption = ({
 }: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : undefined;
   const { sizeY = 'none' } = useAdaptivity();
-  const style = React.useMemo(
+  const style = useMemo(
     () =>
       hierarchy > 0
         ? {

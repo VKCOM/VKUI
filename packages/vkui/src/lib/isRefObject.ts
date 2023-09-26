@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 export const isRefObject = <T, E = Element>(
   refObject: React.RefObject<E> | T,
 ): refObject is React.RefObject<E> => {

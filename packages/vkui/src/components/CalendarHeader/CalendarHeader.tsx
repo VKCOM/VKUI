@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   Icon12Dropdown,
   Icon20ChevronLeftOutline,
@@ -75,18 +75,18 @@ export const CalendarHeader = ({
   ...restProps
 }: CalendarHeaderProps) => {
   const { locale } = useConfigProvider();
-  const onMonthsChange = React.useCallback(
+  const onMonthsChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange(setMonth(viewDate, Number(event.target.value))),
     [onChange, viewDate],
   );
-  const onYearChange = React.useCallback(
+  const onYearChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange(setYear(viewDate, Number(event.target.value))),
     [onChange, viewDate],
   );
 
-  const months = React.useMemo(
+  const months = useMemo(
     () =>
       getMonths(locale).map(({ value, label }) => ({
         value,
@@ -97,7 +97,7 @@ export const CalendarHeader = ({
 
   const currentYear = viewDate.getFullYear();
 
-  const years = React.useMemo(() => getYears(currentYear, 100), [currentYear]);
+  const years = useMemo(() => getYears(currentYear, 100), [currentYear]);
 
   const formatter = new Intl.DateTimeFormat(locale, {
     year: 'numeric',

@@ -1,4 +1,3 @@
-import React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { callMultiple } from '../../lib/callMultiple';

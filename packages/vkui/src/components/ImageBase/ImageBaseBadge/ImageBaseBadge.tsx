@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
@@ -44,7 +44,7 @@ export const ImageBaseBadge = ({ background = 'shadow', ...restProps }: ImageBas
   if (process.env.NODE_ENV === 'development') {
     if (restProps.children) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { size } = React.useContext(ImageBaseContext);
+      const { size } = useContext(ImageBaseContext);
       validateBadgeIcon(size, { name: 'children', value: restProps.children });
     }
   }

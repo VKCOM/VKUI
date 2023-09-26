@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Appearance } from '../../helpers/appearance';
 import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';

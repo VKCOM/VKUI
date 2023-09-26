@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
@@ -65,7 +65,7 @@ export const TabsItem = ({
   ...restProps
 }: TabsItemProps) => {
   const { sizeY = 'none' } = useAdaptivity();
-  const { mode, withGaps }: TabsContextProps = React.useContext(TabsModeContext);
+  const { mode, withGaps }: TabsContextProps = useContext(TabsModeContext);
   let statusComponent = null;
 
   const isTabFlow = role === 'tab';

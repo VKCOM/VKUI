@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
@@ -30,7 +30,7 @@ export interface CalendarDayProps extends CalendarDayElementProps {
   onLeave?(value: Date): void;
 }
 
-export const CalendarDay = React.memo(
+export const CalendarDay = memo(
   ({
     day,
     today,
@@ -53,12 +53,12 @@ export const CalendarDay = React.memo(
     ...props
   }: CalendarDayProps) => {
     const { locale } = useConfigProvider();
-    const ref = React.useRef<HTMLElement>(null);
-    const onClick = React.useCallback(() => onChange(day), [day, onChange]);
-    const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
-    const handleLeave = React.useCallback(() => onLeave?.(day), [day, onLeave]);
+    const ref = useRef<HTMLElement>(null);
+    const onClick = useCallback(() => onChange(day), [day, onChange]);
+    const handleEnter = useCallback(() => onEnter?.(day), [day, onEnter]);
+    const handleLeave = useCallback(() => onLeave?.(day), [day, onLeave]);
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (focused && ref.current) {
         ref.current.dispatchEvent(new Event(ENABLE_KEYBOARD_INPUT_EVENT_NAME, { bubbles: true }));
         ref.current.focus();

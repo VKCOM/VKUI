@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDOM } from '../lib/dom';
 import { useBooleanState } from './useBooleanState';
 import { useGlobalEventListener } from './useGlobalEventListener';
@@ -32,13 +32,13 @@ export function useDateInput<T extends HTMLElement, D>({
 }: UseDateInputDependencies<T, D>) {
   const { document } = useDOM();
   const { value: open, setTrue: openCalendar, setFalse: closeCalendar } = useBooleanState(false);
-  const rootRef = React.useRef<HTMLDivElement>(null);
-  const calendarRef = React.useRef<HTMLDivElement>(null);
-  const [internalValue, setInternalValue] = React.useState<string[]>([]);
-  const [focusedElement, setFocusedElement] = React.useState<number | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
+  const [internalValue, setInternalValue] = useState<string[]>([]);
+  const [focusedElement, setFocusedElement] = useState<number | null>(null);
   const { window } = useDOM();
 
-  const removeFocusFromField = React.useCallback(() => {
+  const removeFocusFromField = useCallback(() => {
     if (open) {
       setFocusedElement(null);
       closeCalendar();
@@ -47,7 +47,7 @@ export function useDateInput<T extends HTMLElement, D>({
     }
   }, [closeCalendar, getInternalValue, open, value, window]);
 
-  const handleClickOutside = React.useCallback(
+  const handleClickOutside = useCallback(
     (e: MouseEvent) => {
       if (
         !rootRef.current?.contains(e.target as Node | null) &&
@@ -59,7 +59,7 @@ export function useDateInput<T extends HTMLElement, D>({
     [removeFocusFromField],
   );
 
-  const selectFirst = React.useCallback(() => {
+  const selectFirst = useCallback(() => {
     setFocusedElement(0);
   }, []);
 
@@ -67,17 +67,17 @@ export function useDateInput<T extends HTMLElement, D>({
     capture: true,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     setInternalValue(getInternalValue(value));
   }, [getInternalValue, value]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (autoFocus) {
       selectFirst();
     }
   }, [autoFocus, selectFirst]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (disabled || focusedElement === null) {
       return;
     }
@@ -97,18 +97,18 @@ export function useDateInput<T extends HTMLElement, D>({
     }
   }, [disabled, focusedElement, openCalendar, refs, window]);
 
-  const clear = React.useCallback(() => {
+  const clear = useCallback(() => {
     onChange?.(undefined);
     selectFirst();
   }, [onChange, selectFirst]);
 
-  const handleFieldEnter = React.useCallback(() => {
+  const handleFieldEnter = useCallback(() => {
     if (!open) {
       selectFirst();
     }
   }, [open, selectFirst]);
 
-  const handleKeyDown = React.useCallback(
+  const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLSpanElement>) => {
       if (focusedElement === null) {
         return;

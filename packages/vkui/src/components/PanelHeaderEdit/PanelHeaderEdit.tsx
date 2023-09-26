@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon28DoneOutline, Icon28EditOutline } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';

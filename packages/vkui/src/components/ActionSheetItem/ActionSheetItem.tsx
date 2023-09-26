@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -73,7 +73,7 @@ export const ActionSheetItem = ({
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
   const { onItemClick = () => noop, mode: actionSheetMode } =
-    React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
+    useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
   const { sizeY } = useAdaptivityWithJSMediaQueries();
 
   let Component: React.ElementType = restProps.href ? 'a' : 'div';

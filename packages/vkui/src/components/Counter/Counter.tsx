@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
@@ -38,7 +38,7 @@ export const Counter = ({
   className,
   ...restProps
 }: CounterProps) => {
-  if (React.Children.count(children) === 0) {
+  if (Children.count(children) === 0) {
     return null;
   }
 

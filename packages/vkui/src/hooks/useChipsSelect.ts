@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo, useState } from 'react';
 import { ChipOption } from '../components/Chip/Chip';
 import { ChipsSelectProps } from '../components/ChipsSelect/ChipsSelect';
 import { useChipsInput } from './useChipsInput';
@@ -8,9 +8,9 @@ export const useChipsSelect = <Option extends ChipOption>(
 ) => {
   const { options, filterFn, getOptionLabel, getOptionValue, showSelected } = props;
 
-  const [opened, setOpened] = React.useState(false);
-  const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | null>(0);
-  const [focusedOption, setFocusedOption] = React.useState<Option | null>(null);
+  const [opened, setOpened] = useState(false);
+  const [focusedOptionIndex, setFocusedOptionIndex] = useState<number | null>(0);
+  const [focusedOption, setFocusedOption] = useState<Option | null>(null);
 
   const { fieldValue, selectedOptions, ...chipsInputState } = useChipsInput(props);
 
@@ -26,13 +26,13 @@ export const useChipsSelect = <Option extends ChipOption>(
     }
   };
 
-  let filteredOptions = React.useMemo(() => {
+  let filteredOptions = useMemo(() => {
     return filterFn
       ? options!.filter((option) => filterFn(fieldValue, option, getOptionLabel))
       : (options as Option[]);
   }, [options, filterFn, fieldValue, getOptionLabel]);
 
-  filteredOptions = React.useMemo(
+  filteredOptions = useMemo(
     function filterOutSelectedIfNeeded() {
       if (!filteredOptions.length || showSelected) {
         return filteredOptions;

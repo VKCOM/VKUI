@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { Headline } from '../Typography/Headline/Headline';

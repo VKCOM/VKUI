@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useImperativeHandle, useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
@@ -17,8 +17,8 @@ function firePull(el: HTMLElement, { end = true } = {}) {
 }
 
 function Refresher(props: any) {
-  const [isFetching, setIsFetching] = React.useState(false);
-  React.useImperativeHandle(props.controller, () => (v: boolean) => setIsFetching(v));
+  const [isFetching, setIsFetching] = useState(false);
+  useImperativeHandle(props.controller, () => (v: boolean) => setIsFetching(v));
   return (
     <PullToRefresh
       onRefresh={() => setIsFetching(true)}

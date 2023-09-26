@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { HasRef, HasRootRef } from '../../types';
 import { Button, VKUIButtonProps } from '../Button/Button';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';

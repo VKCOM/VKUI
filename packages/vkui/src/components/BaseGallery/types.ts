@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import { TouchEvent, TouchEventHandler } from '../Touch/Touch';

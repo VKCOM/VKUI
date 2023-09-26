@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
 import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';

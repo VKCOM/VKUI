@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';

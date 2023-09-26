@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { ChipOption } from '../Chip/Chip';
 import { ChipsInputBase, ChipsInputBaseProps } from '../ChipsInputBase/ChipsInputBase';

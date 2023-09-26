@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -96,10 +95,10 @@ export const FormLayoutGroup = ({
           {children}
         </Removable>
       ) : (
-        <React.Fragment>
+        <>
           {children}
           <span className={styles['FormLayoutGroup__offset']} aria-hidden />
-        </React.Fragment>
+        </>
       )}
     </RootComponent>
   );

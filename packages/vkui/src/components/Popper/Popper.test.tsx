@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { waitForFloatingPosition } from '../../testing/utils';
 import { Popper } from './Popper';
@@ -28,7 +28,7 @@ describe('Popper', () => {
     test('hides when referece is hidden', async () => {
       isReferenceHidden = true;
       const TestComponent = () => {
-        const ref = React.useRef<HTMLDivElement>(null);
+        const ref = useRef<HTMLDivElement>(null);
         return (
           <div>
             <div ref={ref}>Reference element</div>
@@ -48,7 +48,7 @@ describe('Popper', () => {
     test("doesn't hide when referece is not hidden", async () => {
       isReferenceHidden = false;
       const TestComponent = () => {
-        const ref = React.useRef<HTMLDivElement>(null);
+        const ref = useRef<HTMLDivElement>(null);
         return (
           <div>
             <div ref={ref}>Reference element</div>

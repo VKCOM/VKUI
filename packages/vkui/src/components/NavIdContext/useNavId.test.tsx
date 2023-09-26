@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { Panel } from '../Panel/Panel';
 import { View } from '../View/View';

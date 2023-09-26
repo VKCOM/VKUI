@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon28MusicOutline, Icon28UserOutline, Icon28UsersOutline } from '@vkontakte/icons';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
@@ -26,7 +26,7 @@ type Story = StoryObj<PanelProps>;
 
 export const Example: Story = {
   render: function Render() {
-    const [activePanel, setActivePanel] = React.useState('panel1');
+    const [activePanel, setActivePanel] = useState('panel1');
 
     return (
       <View activePanel={activePanel}>

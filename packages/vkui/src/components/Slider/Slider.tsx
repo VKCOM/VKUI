@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -91,9 +91,9 @@ export const Slider = ({
   const { sizeY = 'none' } = useAdaptivity();
 
   const isControlled = valueProp !== undefined;
-  const [localValue, setValue] = React.useState(defaultValue);
+  const [localValue, setValue] = useState(defaultValue);
 
-  const value = React.useMemo<InternalValueState>(() => {
+  const value = useMemo<InternalValueState>(() => {
     const resolvedValue = isControlled ? valueProp : localValue;
     return Array.isArray(resolvedValue)
       ? [clamp(resolvedValue[0], min, max), clamp(resolvedValue[1], min, max)]
@@ -105,14 +105,14 @@ export const Slider = ({
   const startValueInPercent = toPercent(startValue, min, max);
   const endReversedValueInPercent = multiple ? toPercent(endValue, min, max) : 0;
 
-  const gesture = React.useRef<InternalGestureRef>({
+  const gesture = useRef<InternalGestureRef>({
     dragging: null,
     startX: 0,
     containerWidth: 0,
   }).current;
   const thumbsContainerRef = useExternRef(getRootRef);
-  const thumbStartInputRef = React.useRef<HTMLInputElement>(null);
-  const thumbEndInputRef = React.useRef<HTMLInputElement>(null);
+  const thumbStartInputRef = useRef<HTMLInputElement>(null);
+  const thumbEndInputRef = useRef<HTMLInputElement>(null);
 
   const { ariaLabel, ariaValueText, ariaLabelledBy, ...restPropsWithoutAriaAttributes } =
     extractSliderAriaAttributesFromRestProps(restProps);

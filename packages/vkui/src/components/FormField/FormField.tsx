@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -67,7 +67,7 @@ export const FormField = ({
   const elRef = useExternRef(getRootRef);
   const focusWithin = useFocusWithin(elRef);
   const { sizeY = 'none' } = useAdaptivity();
-  const [hover, setHover] = React.useState(false);
+  const [hover, setHover] = useState(false);
 
   const handleMouseEnter = (e: MouseEvent) => {
     e.stopPropagation();

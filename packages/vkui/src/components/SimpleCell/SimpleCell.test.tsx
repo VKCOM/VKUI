@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { SizeType } from '../../lib/adaptivity';
 import { baselineComponent } from '../../testing/utils';

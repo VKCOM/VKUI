@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { useDOM } from '../lib/dom';
 import { useGlobalEventListener } from './useGlobalEventListener';
 
@@ -28,7 +28,7 @@ function getOrientation(window: Window | undefined): Orientation {
 export function useOrientationChange(): Orientation {
   const { window } = useDOM();
 
-  const [orientation, setOrientation] = React.useState(() => getOrientation(window));
+  const [orientation, setOrientation] = useState(() => getOrientation(window));
 
   useGlobalEventListener(window, 'orientationchange', () => setOrientation(getOrientation(window)));
 

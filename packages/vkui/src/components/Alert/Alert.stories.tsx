@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Button } from '../Button/Button';
@@ -17,7 +17,7 @@ export default story;
 
 export const Playground: StoryObj<AlertProps> = {
   render: function Render(args) {
-    const [visible, setVisible] = React.useState(true);
+    const [visible, setVisible] = useState(true);
     const popout = visible ? <Alert {...args} onClose={() => setVisible(false)} /> : null;
 
     return (

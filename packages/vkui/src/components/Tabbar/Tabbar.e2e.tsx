@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
 import { TabbarPlayground } from './Tabbar.e2e-playground';

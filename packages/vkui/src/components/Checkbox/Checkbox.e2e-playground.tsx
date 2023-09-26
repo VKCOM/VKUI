@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon12Lock } from '@vkontakte/icons';
 import {
   ComponentPlayground,

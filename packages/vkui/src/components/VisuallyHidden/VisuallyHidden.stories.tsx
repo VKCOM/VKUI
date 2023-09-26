@@ -1,11 +1,10 @@
-import React, { AllHTMLAttributes } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { HasComponent, HasRootRef } from '../../types';
 import { VisuallyHidden } from './VisuallyHidden';
 
 interface VisuallyHiddenProps
-  extends AllHTMLAttributes<HTMLElement>,
+  extends React.AllHTMLAttributes<HTMLElement>,
     HasRootRef<HTMLElement>,
     HasComponent {}
 

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { useRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { useAutoFocus } from './useAutoFocus';
 
 const Playground = ({ autoFocus, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   useAutoFocus(ref, autoFocus);
 
   return <div data-testid="div" ref={ref} tabIndex={0} {...props} />;

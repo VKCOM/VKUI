@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -47,10 +47,10 @@ export const Playground: Story = {
 
 export const ShowCase: Story = {
   render: function Render() {
-    const [tooltip, setTooltip] = React.useState(true);
-    const [tooltip2, setTooltip2] = React.useState(true);
-    const [tooltip3, setTooltip3] = React.useState(false);
-    const [activePanel, setActivePanel] = React.useState('tooltip');
+    const [tooltip, setTooltip] = useState(true);
+    const [tooltip2, setTooltip2] = useState(true);
+    const [tooltip3, setTooltip3] = useState(false);
+    const [activePanel, setActivePanel] = useState('tooltip');
 
     return (
       <View activePanel={activePanel}>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppearance } from '../../hooks/useAppearance';
 import { useIsClient } from '../../hooks/useIsClient';
@@ -24,7 +24,7 @@ export const AppRootPortal = ({
   forcePortal: forcePortalProp,
   portalRoot: portalRootProp = null,
 }: AppRootPortalProps) => {
-  const { portalRoot, mode, disablePortal } = React.useContext(AppRootContext);
+  const { portalRoot, mode, disablePortal } = useContext(AppRootContext);
   const appearance = useAppearance();
 
   const isClient = useIsClient();
@@ -49,7 +49,7 @@ export const AppRootPortal = ({
       portalContainer,
     )
   ) : (
-    <React.Fragment>{children}</React.Fragment>
+    <>{children}</>
   );
 };
 

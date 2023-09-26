@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -38,7 +38,7 @@ function useGroupMode(
   sizeX: SizeType | 'none',
   isInsideModal: boolean,
 ): 'plain' | 'card' | 'none' {
-  const { layout } = React.useContext(AppRootContext);
+  const { layout } = useContext(AppRootContext);
 
   if (forcedMode) {
     return forcedMode;
@@ -95,7 +95,7 @@ export const Group = ({
   tabIndex: tabIndexProp,
   ...restProps
 }: GroupProps) => {
-  const { isInsideModal } = React.useContext(ModalRootContext);
+  const { isInsideModal } = useContext(ModalRootContext);
   const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
 
@@ -139,7 +139,7 @@ export const Group = ({
       </RootComponent>
 
       {separator !== 'hide' && (
-        <React.Fragment>
+        <>
           <Spacing
             className={classNames(styles['Group__separator'], styles['Group__separator--spacing'])}
             size={16}
@@ -151,7 +151,7 @@ export const Group = ({
               separator === 'show' && styles['Group__separator--force'],
             )}
           />
-        </React.Fragment>
+        </>
       )}
     </>
   );

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { PlacementWithAuto } from '../../lib/floating/types';
 import { FocusTrapProps } from '../FocusTrap/FocusTrap';
 

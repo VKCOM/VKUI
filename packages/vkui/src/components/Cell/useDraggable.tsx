@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { TouchEvent } from '../Touch/Touch';
 import { CellProps } from './Cell';
 
@@ -18,13 +18,13 @@ export const useDraggable = <T extends HTMLElement>({
 }: Pick<CellProps, 'onDragFinish'> & {
   rootElRef: React.MutableRefObject<T | null>;
 }) => {
-  const [dragging, setDragging] = React.useState<boolean>(false);
+  const [dragging, setDragging] = useState<boolean>(false);
 
-  const [siblings, setSiblings] = React.useState<HTMLElement[]>([]);
-  const [dragStartIndex, setDragStartIndex] = React.useState<number>(0);
-  const [dragEndIndex, setDragEndIndex] = React.useState<number>(0);
-  const [dragShift, setDragShift] = React.useState<number>(0);
-  const [dragDirection, setDragDirection] = React.useState<'down' | 'up' | undefined>(undefined);
+  const [siblings, setSiblings] = useState<HTMLElement[]>([]);
+  const [dragStartIndex, setDragStartIndex] = useState<number>(0);
+  const [dragEndIndex, setDragEndIndex] = useState<number>(0);
+  const [dragShift, setDragShift] = useState<number>(0);
+  const [dragDirection, setDragDirection] = useState<'down' | 'up' | undefined>(undefined);
 
   const onDragStart = (event: TouchEvent) => {
     const rootEl = rootElRef.current;

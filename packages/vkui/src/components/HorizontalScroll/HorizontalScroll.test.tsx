@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { HorizontalScroll } from './HorizontalScroll';
@@ -7,7 +7,7 @@ describe('HorizontalScroll', () => {
   baselineComponent(HorizontalScroll);
 
   it('scrollOnAnyWheel', () => {
-    const ref = React.createRef<HTMLDivElement>();
+    const ref = createRef<HTMLDivElement>();
     render(
       <HorizontalScroll getRef={ref} scrollOnAnyWheel>
         <div />

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { createRef } from 'react';
 import { isRefObject } from './isRefObject';
 
 describe('isRefObject', () => {
   it('Returns true if object is RefObject', () => {
-    const result = isRefObject(React.createRef());
+    const result = isRefObject(createRef());
     expect(result).toEqual(true);
   });
 

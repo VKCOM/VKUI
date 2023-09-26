@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext, useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -18,7 +18,7 @@ export interface TabsContextProps {
   withGaps: boolean;
 }
 
-export const TabsModeContext = React.createContext<TabsContextProps>({
+export const TabsModeContext = createContext<TabsContextProps>({
   mode: 'default',
   withGaps: false,
 });
@@ -32,7 +32,7 @@ export const Tabs = ({ children, mode = 'default', role = 'tablist', ...restProp
 
   const isTabFlow = role === 'tablist';
 
-  const tabsRef = React.useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
 
   const withGaps = mode === 'accent' || mode === 'secondary';
 

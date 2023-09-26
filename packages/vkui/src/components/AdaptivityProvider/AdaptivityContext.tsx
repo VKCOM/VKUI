@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext } from 'react';
 import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
 
 export interface SizeProps {
@@ -25,4 +25,4 @@ export interface AdaptivityProps extends SizeProps {
   hasHover?: boolean;
 }
 
-export const AdaptivityContext = React.createContext<AdaptivityProps>({});
+export const AdaptivityContext = createContext<AdaptivityProps>({});

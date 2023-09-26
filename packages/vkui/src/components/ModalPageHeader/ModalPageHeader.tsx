@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -28,7 +28,7 @@ export const ModalPageHeader = ({
   const platform = usePlatform();
   const hasSeparator = separator && platform === Platform.VKCOM;
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
-  const { labelId } = React.useContext(ModalPageContext);
+  const { labelId } = useContext(ModalPageContext);
 
   return (
     <div

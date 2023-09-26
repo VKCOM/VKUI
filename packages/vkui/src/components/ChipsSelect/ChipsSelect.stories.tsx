@@ -1,4 +1,3 @@
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon12Download } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon12Verified, Icon28MessageOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';

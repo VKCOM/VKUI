@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { HasComponent, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './VisuallyHidden.module.css';

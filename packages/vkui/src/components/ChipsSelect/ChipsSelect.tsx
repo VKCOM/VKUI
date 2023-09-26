@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useChipsSelect } from '../../hooks/useChipsSelect';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -134,9 +134,9 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
 
   const { document } = useDOM();
 
-  const [popperPlacement, setPopperPlacement] = React.useState<Placement | undefined>(undefined);
+  const [popperPlacement, setPopperPlacement] = useState<Placement | undefined>(undefined);
 
-  const scrollBoxRef = React.useRef<HTMLDivElement>(null);
+  const scrollBoxRef = useRef<HTMLDivElement>(null);
   const rootRef = useExternRef(getRef);
   const {
     fieldValue,
@@ -182,7 +182,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     }
   };
 
-  const chipsSelectOptions = React.useRef<HTMLElement[]>([]).current;
+  const chipsSelectOptions = useRef<HTMLElement[]>([]).current;
 
   const scrollToElement = (index: number, center = false) => {
     const dropdown = scrollBoxRef.current;
@@ -287,7 +287,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (focusedOptionIndex != null && filteredOptions[focusedOptionIndex]) {
       setFocusedOption(filteredOptions[focusedOptionIndex]);
     } else if (focusedOptionIndex === null || focusedOptionIndex === 0) {
@@ -316,14 +316,14 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
 
   const isPopperDirectionTop = popperPlacement?.includes('top');
 
-  const onPlacementChange = React.useCallback(
+  const onPlacementChange = useCallback(
     (placement?: Placement) => {
       setPopperPlacement(placement);
     },
     [setPopperPlacement],
   );
 
-  const onDropdownMouseLeave = React.useCallback(() => {
+  const onDropdownMouseLeave = useCallback(() => {
     setFocusedOptionIndex(null);
   }, [setFocusedOptionIndex]);
 
@@ -413,7 +413,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
               const value = getOptionValue!(option);
 
               return (
-                <React.Fragment key={`${typeof value}-${value}`}>
+                <Fragment key={`${typeof value}-${value}`}>
                   {renderOption!({
                     option,
                     hovered: Boolean(hovered),
@@ -436,7 +436,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
                     },
                     onMouseEnter: () => setFocusedOptionIndex(index),
                   })}
-                </React.Fragment>
+                </Fragment>
               );
             })
           )}

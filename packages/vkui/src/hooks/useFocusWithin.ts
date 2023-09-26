@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { useGlobalEventListener } from './useGlobalEventListener';
@@ -13,7 +13,7 @@ export function useFocusWithin(ref: React.RefObject<HTMLElement | null>): boolea
     return ref.current.contains(document.activeElement);
   };
 
-  const [focusWithin, setFocusWithin] = React.useState<boolean>(isFocusWithin);
+  const [focusWithin, setFocusWithin] = useState<boolean>(isFocusWithin);
 
   const listener = () => {
     const focus = isFocusWithin();

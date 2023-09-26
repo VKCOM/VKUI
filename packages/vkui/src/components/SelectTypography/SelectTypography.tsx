@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
 import type { SelectType } from '../Select/Select';
 import { Text } from '../Typography/Text/Text';

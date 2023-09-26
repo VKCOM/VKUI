@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, useEffect, useRef } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
@@ -25,9 +25,9 @@ export const ModalRootDesktop = ({
   onClose,
   onClosed,
 }: ModalRootWithDOMProps) => {
-  const maskElementRef = React.useRef<HTMLDivElement>(null);
-  const maskAnimationFrame = React.useRef<number | undefined>(undefined);
-  const restoreFocusTo = React.useRef<HTMLElement | undefined>(undefined);
+  const maskElementRef = useRef<HTMLDivElement>(null);
+  const maskAnimationFrame = useRef<number | undefined>(undefined);
+  const restoreFocusTo = useRef<HTMLElement | undefined>(undefined);
 
   const { document } = useDOM();
   const { hasCustomPanelHeaderAfter, platform } = useConfigProvider();
@@ -58,7 +58,7 @@ export const ModalRootDesktop = ({
   });
 
   const timeout = platform === Platform.IOS ? 400 : 320;
-  const modals = React.Children.toArray(children) as React.ReactElement[];
+  const modals = Children.toArray(children) as React.ReactElement[];
 
   /* Анимирует сдвиг модального окна */
   const animateModalOpacity = (modalState: ModalsStateEntry | undefined, display: boolean) => {
@@ -151,7 +151,7 @@ export const ModalRootDesktop = ({
     onExited(id);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!prevProps) {
       return;
     }

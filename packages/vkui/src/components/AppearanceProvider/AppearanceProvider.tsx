@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { AppearanceType } from '../../lib/appearance';
 import { TokensClassProvider } from '../../lib/tokensClassProvider';

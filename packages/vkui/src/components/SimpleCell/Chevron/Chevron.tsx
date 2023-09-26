@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon16Chevron, Icon24ChevronCompactRight } from '@vkontakte/icons';
 
 const iconSize = {

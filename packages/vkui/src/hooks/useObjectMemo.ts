@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef } from 'react';
 
 export function objectEquals(o1: any, o2: any) {
   return (
@@ -8,7 +8,7 @@ export function objectEquals(o1: any, o2: any) {
 }
 
 export function useObjectMemo<T>(object: T): T {
-  const cache = React.useRef(object);
+  const cache = useRef(object);
   if (!objectEquals(cache.current, object)) {
     cache.current = object;
   }

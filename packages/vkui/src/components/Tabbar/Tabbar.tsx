@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
@@ -27,7 +27,7 @@ const getItemsLayoutClassName = (
     case 'vertical':
       return 'vkuiInternalTabbar--layout-vertical';
     default:
-      return React.Children.count(children) > 2
+      return Children.count(children) > 2
         ? getItemsLayoutClassName('vertical', [])
         : getItemsLayoutClassName('horizontal', []);
   }

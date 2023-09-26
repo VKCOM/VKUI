@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo } from 'react';
 import { hasMouse as _hasPointer } from '@vkontakte/vkjs';
 import { BridgeAdaptivity, useBridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
 import { BREAKPOINTS, SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
@@ -40,7 +40,7 @@ export const AdaptivityProvider = ({
     }
   }
 
-  const adaptivity = React.useMemo(
+  const adaptivity = useMemo(
     () =>
       calculateAdaptivity(
         {

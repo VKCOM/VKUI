@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useMemo } from 'react';
 import { AdaptivityContext } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { usePlatform } from '../usePlatform';
 import {
@@ -19,10 +19,10 @@ export const useAdaptivityConditionalRender = (): UseAdaptivityConditionalRender
     viewWidth: viewWidthContext,
     viewHeight: viewHeightContext,
     hasPointer: hasPointerContext,
-  } = React.useContext(AdaptivityContext);
+  } = useContext(AdaptivityContext);
   const platform = usePlatform();
 
-  return React.useMemo(() => {
+  return useMemo(() => {
     const sizeX = getAdaptiveSizeType(sizeXContext, sizeXCompactClassNames, sizeXRegularClassNames);
     const sizeY = getAdaptiveSizeType(sizeYContext, sizeYCompactClassNames, sizeYRegularClassNames);
     const viewWidth = getAdaptiveViewWidth(viewWidthContext, viewWidthClassNames);

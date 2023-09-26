@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRef } from '../../types';

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 export const FOCUSABLE_ELEMENTS_LIST = [
   'a[href]',
   'area[href]',

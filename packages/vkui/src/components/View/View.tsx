@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, useCallback, useEffect, useRef, useState } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
@@ -80,16 +80,16 @@ export const View = ({
   ...restProps
 }: ViewProps) => {
   const id = getNavId({ nav, id: restProps.id });
-  const scrolls = React.useRef(scrollsCache[id as string] || {});
-  const afterTransition = React.useRef(noop);
+  const scrolls = useRef(scrollsCache[id as string] || {});
+  const afterTransition = useRef(noop);
 
-  React.useEffect(() => () => {
+  useEffect(() => () => {
     if (id) {
       scrollsCache[id] = scrolls.current;
     }
   });
 
-  const panelNodes = React.useRef<{ [id: string]: HTMLDivElement | null }>({});
+  const panelNodes = useRef<{ [id: string]: HTMLDivElement | null }>({});
 
   const { window, document } = useDOM();
   const scroll = useScroll();
@@ -97,23 +97,23 @@ export const View = ({
   const splitCol = useSplitCol();
   const platform = usePlatform();
 
-  const [animated, setAnimated] = React.useState(false);
+  const [animated, setAnimated] = useState(false);
 
-  const [visiblePanels, setVisiblePanels] = React.useState([activePanelProp]);
-  const [activePanel, setActivePanel] = React.useState<string | null>(activePanelProp);
-  const [isBack, setIsBack] = React.useState<boolean | undefined>(undefined);
-  const [prevPanel, setPrevPanel] = React.useState<string | null>(null);
-  const [nextPanel, setNextPanel] = React.useState<string | null>(null);
+  const [visiblePanels, setVisiblePanels] = useState([activePanelProp]);
+  const [activePanel, setActivePanel] = useState<string | null>(activePanelProp);
+  const [isBack, setIsBack] = useState<boolean | undefined>(undefined);
+  const [prevPanel, setPrevPanel] = useState<string | null>(null);
+  const [nextPanel, setNextPanel] = useState<string | null>(null);
 
-  const swipeBackPrevented = React.useRef<boolean>(false);
-  const [swipingBack, setSwipingBack] = React.useState<boolean | undefined>(undefined);
-  const [swipeBackStartX, setSwipeBackStartX] = React.useState<number>(0);
-  const [swipeBackShift, setSwipeBackShift] = React.useState<number>(0);
-  const [swipeBackNextPanel, setSwipeBackNextPanel] = React.useState<string | null>(null);
-  const [swipeBackPrevPanel, setSwipeBackPrevPanel] = React.useState<string | null>(null);
-  const [swipeBackResult, setSwipeBackResult] = React.useState<SwipeBackResults | null>(null);
+  const swipeBackPrevented = useRef<boolean>(false);
+  const [swipingBack, setSwipingBack] = useState<boolean | undefined>(undefined);
+  const [swipeBackStartX, setSwipeBackStartX] = useState<number>(0);
+  const [swipeBackShift, setSwipeBackShift] = useState<number>(0);
+  const [swipeBackNextPanel, setSwipeBackNextPanel] = useState<string | null>(null);
+  const [swipeBackPrevPanel, setSwipeBackPrevPanel] = useState<string | null>(null);
+  const [swipeBackResult, setSwipeBackResult] = useState<SwipeBackResults | null>(null);
 
-  const [browserSwipe, setBrowserSwipe] = React.useState(false);
+  const [browserSwipe, setBrowserSwipe] = useState(false);
 
   const prevActivePanel = usePrevious(activePanelProp);
   const prevSwipingBack = usePrevious(swipingBack);
@@ -122,7 +122,7 @@ export const View = ({
   const prevSwipeBackPrevPanel = usePrevious(swipeBackPrevPanel);
   const prevOnTransition = usePrevious(onTransition);
 
-  const panels = (React.Children.toArray(children) as React.ReactElement[]).filter(
+  const panels = (Children.toArray(children) as React.ReactElement[]).filter(
     (panel: React.ReactElement) => {
       const panelId = getNavId(panel.props, warn);
 
@@ -149,7 +149,7 @@ export const View = ({
     return panelNodes.current[id];
   };
 
-  const flushTransition = React.useCallback(
+  const flushTransition = useCallback(
     (prevPanel: string, isBackTransition: boolean) => {
       if (isBackTransition) {
         scrolls.current[prevPanel] = 0;
@@ -179,7 +179,7 @@ export const View = ({
     afterTransition.current = noop;
   }, [afterTransition.current]);
 
-  const transitionEndHandler = React.useCallback(
+  const transitionEndHandler = useCallback(
     (e?: React.AnimationEvent): void => {
       if (
         (!e ||
@@ -203,11 +203,11 @@ export const View = ({
     platform === Platform.IOS ? 600 : 300,
   );
 
-  const onSwipeBackSuccess = React.useCallback(() => {
+  const onSwipeBackSuccess = useCallback(() => {
     onSwipeBack && onSwipeBack();
   }, [onSwipeBack]);
 
-  const onSwipeBackCancel = React.useCallback(() => {
+  const onSwipeBackCancel = useCallback(() => {
     onSwipeBackCancelProp && onSwipeBackCancelProp();
     setSwipeBackPrevPanel(null);
     setSwipeBackNextPanel(null);
@@ -217,7 +217,7 @@ export const View = ({
     setSwipeBackShift(0);
   }, [onSwipeBackCancelProp]);
 
-  const swipingBackTransitionEndHandler = React.useCallback(
+  const swipingBackTransitionEndHandler = useCallback(
     (e?: TransitionEvent): void => {
       // indexOf because of vendor prefixes in old browsers
       if (
@@ -363,7 +363,7 @@ export const View = ({
     return {};
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Нужен переход
     if (
       prevActivePanel &&
@@ -371,7 +371,7 @@ export const View = ({
       !prevSwipingBack &&
       !prevBrowserSwipe
     ) {
-      const firstLayerId = (React.Children.toArray(children) as React.ReactElement[])
+      const firstLayerId = (Children.toArray(children) as React.ReactElement[])
         .map((panel) => getNavId(panel.props, warn))
         .find((id) => id === prevActivePanel || id === activePanelProp);
 

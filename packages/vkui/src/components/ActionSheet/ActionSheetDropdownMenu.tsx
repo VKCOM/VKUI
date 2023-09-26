@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useEffectDev } from '../../hooks/useEffectDev';
@@ -34,7 +34,7 @@ export const ActionSheetDropdownMenu = ({
   const { document } = useDOM();
   const platform = usePlatform();
   const { sizeY } = useAdaptivityWithJSMediaQueries();
-  const elementRef = React.useRef<HTMLDivElement | null>(null);
+  const elementRef = useRef<HTMLDivElement | null>(null);
 
   useEffectDev(() => {
     const toggleEl = getEl(toggleRef);
@@ -43,7 +43,7 @@ export const ActionSheetDropdownMenu = ({
     }
   }, [toggleRef]);
 
-  const isPopupDirectionTop = React.useMemo(
+  const isPopupDirectionTop = useMemo(
     () =>
       popupDirection === 'top' ||
       (typeof popupDirection === 'function' && popupDirection(elementRef) === 'top'),
@@ -59,15 +59,15 @@ export const ActionSheetDropdownMenu = ({
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTimeout(() => {
       bodyClickListener.add(document!.body);
     });
   }, [bodyClickListener, document]);
 
-  const onClick = React.useCallback((e: React.MouseEvent<HTMLElement>) => e.stopPropagation(), []);
+  const onClick = useCallback((e: React.MouseEvent<HTMLElement>) => e.stopPropagation(), []);
 
-  const targetRef = React.useMemo(() => {
+  const targetRef = useMemo(() => {
     if (isRefObject<SharedDropdownProps['toggleRef'], HTMLElement>(toggleRef)) {
       return toggleRef;
     }

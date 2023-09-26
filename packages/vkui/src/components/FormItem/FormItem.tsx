@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -71,7 +70,7 @@ export const FormItem = ({
   const { sizeY = 'none' } = useAdaptivity();
 
   const wrappedChildren = (
-    <React.Fragment>
+    <>
       {hasReactNode(top) && (
         <Subhead
           className={styles['FormItem__top']}
@@ -91,7 +90,7 @@ export const FormItem = ({
           {bottom}
         </Footnote>
       )}
-    </React.Fragment>
+    </>
   );
 
   return (

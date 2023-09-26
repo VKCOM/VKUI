@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, isValidElement, useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
@@ -19,11 +19,11 @@ const warn = warnOnce('Epic');
  * @see https://vkcom.github.io/VKUI/#/Epic
  */
 export const Epic = ({ activeStory, tabbar, children, ...restProps }: EpicProps) => {
-  const scroll = React.useRef<{ [key: string]: number }>({}).current;
+  const scroll = useRef<{ [key: string]: number }>({}).current;
 
   const story =
-    (React.Children.toArray(children).find(
-      (story) => React.isValidElement(story) && getNavId(story.props, warn) === activeStory,
+    (Children.toArray(children).find(
+      (story) => isValidElement(story) && getNavId(story.props, warn) === activeStory,
     ) as React.ReactElement | undefined) ?? null;
 
   return (

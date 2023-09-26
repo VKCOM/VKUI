@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 export const Icon48DoneOutline = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     className="vkuiIcon"

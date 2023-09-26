@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import { callMultiple } from '../../lib/callMultiple';
 import { stopPropagation } from '../../lib/utils';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -35,7 +35,7 @@ export const InputLike = ({
   onFocus,
   ...props
 }: InputLikeProps) => {
-  const handleElementSelect = React.useCallback(
+  const handleElementSelect = useCallback(
     (event: React.MouseEvent<HTMLSpanElement>) => {
       stopPropagation(event);
       onElementSelect?.(index);

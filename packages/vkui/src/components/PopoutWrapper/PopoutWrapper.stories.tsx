@@ -1,4 +1,3 @@
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { SplitCol } from '../SplitCol/SplitCol';

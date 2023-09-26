@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { CustomSelectDropdown } from './CustomSelectDropdown';
 
 describe('CustomSelectDropdown', () => {
   it('Displays only spinner if fetching: true', () => {
     render(
-      <CustomSelectDropdown targetRef={React.createRef()} scrollBoxRef={React.createRef()} fetching>
+      <CustomSelectDropdown targetRef={createRef()} scrollBoxRef={createRef()} fetching>
         <div data-testid="test-content">test</div>
       </CustomSelectDropdown>,
     );
@@ -14,7 +14,7 @@ describe('CustomSelectDropdown', () => {
 
   it('Displays children if fetching: false', () => {
     render(
-      <CustomSelectDropdown targetRef={React.createRef()} scrollBoxRef={React.createRef()}>
+      <CustomSelectDropdown targetRef={createRef()} scrollBoxRef={createRef()}>
         <div data-testid="test-content">test</div>
       </CustomSelectDropdown>,
     );

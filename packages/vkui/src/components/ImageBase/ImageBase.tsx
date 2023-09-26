@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { isValidElement, useEffect, useRef, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from '../../types';
@@ -84,11 +84,11 @@ export const ImageBase = ({
   onError,
   ...restProps
 }: ImageBaseProps) => {
-  const [loaded, setLoaded] = React.useState(false);
-  const [failed, setFailed] = React.useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   const hasSrc = src || srcSet;
-  const needShowFallbackIcon = (failed || !hasSrc) && React.isValidElement(fallbackIconProp);
+  const needShowFallbackIcon = (failed || !hasSrc) && isValidElement(fallbackIconProp);
 
   const fallbackIcon = needShowFallbackIcon ? fallbackIconProp : null;
 
@@ -116,8 +116,8 @@ export const ImageBase = ({
   };
 
   const imgRef = useExternRef(getRef);
-  const isOnLoadStatusCheckedRef = React.useRef(false);
-  React.useEffect(
+  const isOnLoadStatusCheckedRef = useRef(false);
+  useEffect(
     function dispatchLoadEventForAlreadyLoadedResourceIfReactInitializedLater() {
       if (isOnLoadStatusCheckedRef.current) {
         return;

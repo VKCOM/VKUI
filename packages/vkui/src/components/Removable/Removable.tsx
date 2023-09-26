@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useState } from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
@@ -38,9 +38,9 @@ const RemovableIos = ({
 }: RemovableIosOwnProps) => {
   const { window } = useDOM();
 
-  const removeButtonRef = React.useRef<HTMLElement>(null);
-  const disabledRef = React.useRef(true);
-  const [removeOffset, updateRemoveOffset] = React.useState(0);
+  const removeButtonRef = useRef<HTMLElement>(null);
+  const disabledRef = useRef(true);
+  const [removeOffset, updateRemoveOffset] = useState(0);
 
   useGlobalEventListener(
     window,

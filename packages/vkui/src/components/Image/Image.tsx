@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo } from 'react';
 import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
 import { ImageBadge, type ImageBadgeProps } from './ImageBadge/ImageBadge';
 
@@ -79,7 +79,7 @@ export const Image = ({
   className,
   ...restProps
 }: ImageProps) => {
-  const borderRadius = React.useMemo(
+  const borderRadius = useMemo(
     () => getBorderRadiusBySize(size, borderRadiusProp),
     [size, borderRadiusProp],
   );

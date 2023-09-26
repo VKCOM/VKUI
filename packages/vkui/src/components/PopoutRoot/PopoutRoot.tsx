@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { blurActiveElement, useDOM } from '../../lib/dom';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -29,7 +29,7 @@ export interface PopoutRootProps extends HTMLAttributesWithRootRef<HTMLDivElemen
 export const PopoutRoot = ({ popout, modal, children, ...restProps }: PopoutRootProps) => {
   const { document } = useDOM();
 
-  React.useEffect(() => {
+  useEffect(() => {
     popout && blurActiveElement(document);
   }, [document, popout]);
 

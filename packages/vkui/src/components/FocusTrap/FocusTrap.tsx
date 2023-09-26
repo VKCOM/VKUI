@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useTimeout } from '../../hooks/useTimeout';
@@ -34,12 +34,12 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
   const { document, window } = useDOM();
 
-  const [focusableNodes, setFocusableNodes] = React.useState<HTMLElement[] | null>(null);
-  const [restoreFocusTo, setRestoreFocusTo] = React.useState<HTMLElement | null>(null);
+  const [focusableNodes, setFocusableNodes] = useState<HTMLElement[] | null>(null);
+  const [restoreFocusTo, setRestoreFocusTo] = useState<HTMLElement | null>(null);
 
   // HANDLE TRAP MOUNT
 
-  const { keyboardInput } = React.useContext(AppRootContext);
+  const { keyboardInput } = useContext(AppRootContext);
   const focusOnTrapMount = useTimeout(() => {
     if (
       keyboardInput &&

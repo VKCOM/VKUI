@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import vkBridge, {
   AnyReceiveMethodName,
   AppearanceType,
@@ -69,12 +69,12 @@ export const useAutoDetectAppearance = (
   onDetectAppearanceByBridge?: () => void,
 ): AppearanceType => {
   const { window } = useDOM();
-  const onceDetectAppearanceByBridge = React.useRef(() => {
+  const onceDetectAppearanceByBridge = useRef(() => {
     onDetectAppearanceByBridge && onDetectAppearanceByBridge();
     onceDetectAppearanceByBridge.current = noop;
   });
 
-  const [appearance, setAppearance] = React.useState<AppearanceType>(() => {
+  const [appearance, setAppearance] = useState<AppearanceType>(() => {
     if (appearanceProp) {
       return appearanceProp;
     }
@@ -86,7 +86,7 @@ export const useAutoDetectAppearance = (
     return mediaQuery?.matches ? 'dark' : 'light';
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (appearanceProp) {
       setAppearance(appearanceProp);
       return noop;

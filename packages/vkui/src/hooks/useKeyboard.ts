@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDOM } from '../lib/dom';
 import { useGlobalEventListener } from './useGlobalEventListener';
 
@@ -28,9 +28,9 @@ const eventOptions = {
 export function useKeyboard(): SoftwareKeyboardState {
   const { document } = useDOM();
 
-  const [isOpened, setIsOpened] = React.useState(false);
+  const [isOpened, setIsOpened] = useState(false);
 
-  const onFocus = React.useCallback(
+  const onFocus = useCallback(
     (event: FocusEvent | true) => {
       const isOpened =
         (event === true || event.type === 'focusin') &&
@@ -45,7 +45,7 @@ export function useKeyboard(): SoftwareKeyboardState {
    У полей с autoFocus не отлавливаются события focus, для этого вызываем вручную,
    чтобы иметь хоть какое-то понимание происходящего.
    */
-  React.useEffect(() => {
+  useEffect(() => {
     onFocus(true);
   }, [onFocus]);
 

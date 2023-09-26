@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useTimeout } from '../../hooks/useTimeout';
 
 /**
@@ -11,22 +11,22 @@ export const useTrackerVisibility = (
   autoHideScrollbar = false,
   autoHideScrollbarDelay = 500,
 ): TrackerVisibilityProps => {
-  const [trackerVisible, setTrackerVisible] = React.useState(!autoHideScrollbar);
-  const isMouseOver = React.useRef(false);
-  const isTrackerDragging = React.useRef(false);
+  const [trackerVisible, setTrackerVisible] = useState(!autoHideScrollbar);
+  const isMouseOver = useRef(false);
+  const isTrackerDragging = useRef(false);
 
   const { set: setVisibilityTimeout, clear: clearVisibilityTimeout } = useTimeout(
     () => setTrackerVisible(false),
     autoHideScrollbarDelay,
   );
 
-  const onTrackerDragStart = React.useCallback(() => {
+  const onTrackerDragStart = useCallback(() => {
     clearVisibilityTimeout();
     setTrackerVisible(true);
     isTrackerDragging.current = true;
   }, [clearVisibilityTimeout]);
 
-  const onTrackerDragStop = React.useCallback(() => {
+  const onTrackerDragStop = useCallback(() => {
     isTrackerDragging.current = false;
     if (!isMouseOver.current) {
       setVisibilityTimeout();
@@ -37,7 +37,7 @@ export const useTrackerVisibility = (
    * Позволяет "запланировать" скрытие ползунка через delay миллисекунд. Если тайм-аут не успевает сработать, то каждый
    * последующий вызов функции откладывает скрытие ползунка на delay миллисекунд
    */
-  const queueTrackerVisibility = React.useCallback(() => {
+  const queueTrackerVisibility = useCallback(() => {
     if (isTrackerDragging.current) {
       return;
     }
@@ -45,18 +45,18 @@ export const useTrackerVisibility = (
     setVisibilityTimeout();
   }, [setVisibilityTimeout]);
 
-  const onTrackerMouseEnter = React.useCallback(() => {
+  const onTrackerMouseEnter = useCallback(() => {
     clearVisibilityTimeout();
     isMouseOver.current = true;
     setTrackerVisible(true);
   }, [clearVisibilityTimeout]);
 
-  const onTrackerMouseLeave = React.useCallback(() => {
+  const onTrackerMouseLeave = useCallback(() => {
     queueTrackerVisibility();
     isMouseOver.current = false;
   }, [queueTrackerVisibility]);
 
-  const onTargetScroll = React.useCallback(() => {
+  const onTargetScroll = useCallback(() => {
     queueTrackerVisibility();
   }, [queueTrackerVisibility]);
 

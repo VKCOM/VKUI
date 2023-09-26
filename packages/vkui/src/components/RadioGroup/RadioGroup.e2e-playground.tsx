@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Fragment } from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { FormItem } from '../FormItem/FormItem';
 import { FormLayout } from '../FormLayout/FormLayout';
@@ -17,14 +17,14 @@ export const RadioGroupPlayground = (props: ComponentPlaygroundProps) => {
         {
           mode: [undefined, 'horizontal'],
           children: [
-            <React.Fragment key="kids">
+            <Fragment key="kids">
               <Radio name="size" value="s">
                 Small
               </Radio>
               <Radio name="size" value="m">
                 Medium
               </Radio>
-            </React.Fragment>,
+            </Fragment>,
           ],
           // Специально передаём FormItem строкой. Если передать компонент напрямую,
           // то при приведении типов в разметке будет [object Object].

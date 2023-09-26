@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -29,7 +29,7 @@ export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, N
 export const Panel = ({ centered = false, children, nav, ...restProps }: PanelProps) => {
   const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
-  const { layout } = React.useContext(AppRootContext);
+  const { layout } = useContext(AppRootContext);
 
   return (
     <NavPanelIdContext.Provider value={restProps.id || nav}>

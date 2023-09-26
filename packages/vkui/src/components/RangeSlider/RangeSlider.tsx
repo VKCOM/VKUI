@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Slider, type SliderMultipleProps } from '../Slider/Slider';
 
 export type RangeSliderProps = Omit<SliderMultipleProps, 'multiple'>;

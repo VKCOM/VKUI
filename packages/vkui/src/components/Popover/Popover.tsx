@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -80,9 +80,9 @@ export const Popover = ({
   const { document } = useDOM();
 
   const hoverable = action === 'hover';
-  const hovered = React.useRef(false);
-  const [computedShown, setComputedShown] = React.useState(shownProp || false);
-  const [dropdownNode, setPopperNode] = React.useState<HTMLElement | null>(null);
+  const hovered = useRef(false);
+  const [computedShown, setComputedShown] = useState(shownProp || false);
+  const [dropdownNode, setPopperNode] = useState<HTMLElement | null>(null);
 
   const shown = typeof shownProp === 'boolean' ? shownProp : computedShown;
 
@@ -142,7 +142,7 @@ export const Popover = ({
   const targetClickEvent = useEventListener('click', handleTargetClick);
   const targetLeaveListener = useEventListener('mouseleave', handleTargetLeave);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!childRef.current) {
       return;
     }
@@ -150,7 +150,7 @@ export const Popover = ({
     targetClickEvent.add(childRef.current);
   }, [childRef, targetClickEvent]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!childRef.current) {
       return;
     }
@@ -167,7 +167,7 @@ export const Popover = ({
   }, [childRef, hoverable, targetEnterListener, targetLeaveListener]);
 
   return (
-    <React.Fragment>
+    <>
       {child}
       {shown && (
         <Popper
@@ -197,6 +197,6 @@ export const Popover = ({
           onMouseOut={hoverable ? handleTargetLeave : undefined}
         />
       )}
-    </React.Fragment>
+    </>
   );
 };

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import { Icon16Clear, Icon16SearchOutline, Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -83,7 +83,7 @@ export const Search = ({
     inputProps.onBlur && inputProps.onBlur(e);
   };
 
-  const onCancel = React.useCallback(() => {
+  const onCancel = useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
       HTMLInputElement.prototype,
@@ -95,12 +95,12 @@ export const Search = ({
     inputRef.current?.dispatchEvent(ev2);
   }, [inputRef]);
 
-  const onIconClickStart = React.useCallback(
+  const onIconClickStart = useCallback(
     (e: TouchEvent) => onIconClick(e.originalEvent),
     [onIconClick],
   );
 
-  const onIconCancelClickStart = React.useCallback(
+  const onIconCancelClickStart = useCallback(
     (e: TouchEvent) => {
       e.originalEvent.preventDefault();
       inputRef.current?.focus();

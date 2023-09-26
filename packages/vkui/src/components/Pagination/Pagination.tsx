@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 import { PaginationPageType, usePagination } from '../../hooks/usePagination';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -72,13 +72,13 @@ export const Pagination = ({
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 
-  const handlePrevClick = React.useCallback(() => {
+  const handlePrevClick = useCallback(() => {
     if (onChange && !isFirstPage) {
       onChange(currentPage - 1);
     }
   }, [currentPage, isFirstPage, onChange]);
 
-  const handleClick = React.useCallback(
+  const handleClick = useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
       const page: string = event.currentTarget.dataset.page || '1';
       onChange?.(Number(page));
@@ -86,13 +86,13 @@ export const Pagination = ({
     [onChange],
   );
 
-  const handleNextClick = React.useCallback(() => {
+  const handleNextClick = useCallback(() => {
     if (onChange && !isLastPage) {
       onChange(currentPage + 1);
     }
   }, [currentPage, isLastPage, onChange]);
 
-  const renderPages = React.useCallback(
+  const renderPages = useCallback(
     (page: PaginationPageType) => {
       switch (page) {
         case 'start-ellipsis':

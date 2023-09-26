@@ -1,4 +1,3 @@
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';

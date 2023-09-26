@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';

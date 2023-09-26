@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
@@ -15,7 +14,7 @@ const CustomSelectControlled = ({
   initialValue?: string;
   onChangeStub?(event: React.ChangeEvent<HTMLSelectElement>): void;
 }) => {
-  const [value, setValue] = React.useState(initialValue);
+  const [value, setValue] = useState(initialValue);
   const handleChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     setValue(event.target.value);
     onChangeStub?.(event);

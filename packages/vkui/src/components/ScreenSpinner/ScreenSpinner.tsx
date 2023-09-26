@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useScrollLock } from '../AppRoot/ScrollContext';

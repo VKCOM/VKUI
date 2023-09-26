@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { fireEvent, queryByText, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';

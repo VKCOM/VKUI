@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   Icon20CheckBoxIndetermanate,
   Icon20CheckBoxOff,
@@ -68,7 +68,7 @@ export const Checkbox = ({
   const { sizeY = 'none' } = useAdaptivity();
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const indeterminateValue = indeterminate === undefined ? defaultIndeterminate : indeterminate;
 
     if (inputRef.current) {
@@ -76,7 +76,7 @@ export const Checkbox = ({
     }
   }, [defaultIndeterminate, indeterminate, inputRef]);
 
-  const handleChange: CheckboxProps['onChange'] = React.useCallback(
+  const handleChange: CheckboxProps['onChange'] = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       if (
         defaultIndeterminate !== undefined &&
@@ -139,28 +139,28 @@ export const Checkbox = ({
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOn />
         ) : (
-          <React.Fragment>
+          <>
             {adaptiveSizeY.compact && (
               <Icon20CheckBoxOn className={adaptiveSizeY.compact.className} />
             )}
             {adaptiveSizeY.regular && (
               <Icon24CheckBoxOn className={adaptiveSizeY.regular.className} />
             )}
-          </React.Fragment>
+          </>
         )}
       </div>
       <div className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--off'])}>
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxOff />
         ) : (
-          <React.Fragment>
+          <>
             {adaptiveSizeY.compact && (
               <Icon20CheckBoxOff className={adaptiveSizeY.compact.className} />
             )}
             {adaptiveSizeY.regular && (
               <Icon24CheckBoxOff className={adaptiveSizeY.regular.className} />
             )}
-          </React.Fragment>
+          </>
         )}
       </div>
       <div
@@ -169,7 +169,7 @@ export const Checkbox = ({
         {platform === Platform.VKCOM ? (
           <Icon20CheckBoxIndetermanate width={20} height={20} />
         ) : (
-          <React.Fragment>
+          <>
             {adaptiveSizeY.compact && (
               <Icon20CheckBoxIndetermanate
                 className={adaptiveSizeY.compact.className}
@@ -184,7 +184,7 @@ export const Checkbox = ({
                 height={24}
               />
             )}
-          </React.Fragment>
+          </>
         )}
       </div>
       <div className={styles['Checkbox__content']}>

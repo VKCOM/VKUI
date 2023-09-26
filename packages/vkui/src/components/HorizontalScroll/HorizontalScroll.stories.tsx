@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
@@ -36,10 +36,10 @@ type Story = StoryObj<HorizontalScrollProps>;
 
 export const Playground: Story = {
   render: function Render(args) {
-    const [commonFriends, setCommonFriends] = React.useState<UserExtendedInterface[]>([]);
-    const timer = React.useRef<ReturnType<typeof setTimeout>>();
+    const [commonFriends, setCommonFriends] = useState<UserExtendedInterface[]>([]);
+    const timer = useRef<ReturnType<typeof setTimeout>>();
 
-    React.useEffect(() => {
+    useEffect(() => {
       // Эмуляция загрузки
       timer.current = setTimeout(() => {
         setCommonFriends(getRandomUsers(30));
@@ -55,7 +55,7 @@ export const Playground: Story = {
         <div style={{ display: 'flex' }}>
           {commonFriends.length === 0 && <PanelSpinner />}
           {commonFriends.length > 0 && (
-            <React.Fragment>
+            <>
               {commonFriends.map((item) => {
                 return (
                   <HorizontalCell key={item.id} header={item.first_name}>
@@ -63,7 +63,7 @@ export const Playground: Story = {
                   </HorizontalCell>
                 );
               })}
-            </React.Fragment>
+            </>
           )}
         </div>
       </HorizontalScroll>

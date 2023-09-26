@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useState } from 'react';
 import { leadingZero } from '@vkontakte/vkjs';
 import { range } from '../../helpers/range';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
@@ -160,7 +160,7 @@ const DatePickerNative = ({
 }: DatePickerProps & Partial<DatePickerDateFormat>) => {
   const defProps =
     day && month && year ? { defaultValue: convertToInputFormat({ day, month, year }) } : {};
-  const onStringChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
+  const onStringChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       onDateChange?.(parseInputDate(e.currentTarget.value));
     },
@@ -183,13 +183,13 @@ const DatePickerNative = ({
  */
 export const DatePicker = ({ defaultValue, ...props }: DatePickerProps) => {
   const hasPointer = useAdaptivityHasPointer();
-  const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(() => ({
+  const [value, setValue] = useState<Partial<DatePickerDateFormat>>(() => ({
     day: defaultValue?.day || 0,
     month: defaultValue?.month || 0,
     year: defaultValue?.year || 0,
   }));
 
-  const onDateChange = React.useCallback(
+  const onDateChange = useCallback(
     (update: DatePickerDateFormat) => {
       setValue(update);
       props.onDateChange && props.onDateChange({ ...update });

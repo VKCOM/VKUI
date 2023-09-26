@@ -1,7 +1,7 @@
-import * as React from 'react';
+import { forwardRef } from 'react';
 
 export const tooltipContainerAttr = 'data-tooltip-container';
-export const TooltipContainer = React.forwardRef<
+export const TooltipContainer = forwardRef<
   HTMLDivElement,
   React.HtmlHTMLAttributes<HTMLDivElement> & { fixed?: boolean }
 >(function TooltipContainer({ fixed = false, ...props }, ref) {

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import { render, RenderResult, screen } from '@testing-library/react';
 import { configureAxe, toHaveNoViolations } from 'jest-axe';

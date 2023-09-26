@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useEventListener } from '../../hooks/useEventListener';
@@ -144,18 +144,18 @@ export const HorizontalScroll = ({
   scrollOnAnyWheel = false,
   ...restProps
 }: HorizontalScrollProps) => {
-  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
-  const [canScrollRight, setCanScrollRight] = React.useState(false);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const isCustomScrollingRef = React.useRef(false);
+  const isCustomScrollingRef = useRef(false);
 
   const scrollerRef = useExternRef(getRef);
 
-  const animationQueue = React.useRef<VoidFunction[]>([]);
+  const animationQueue = useRef<VoidFunction[]>([]);
 
   const hasPointer = useAdaptivityHasPointer();
 
-  const scrollTo = React.useCallback(
+  const scrollTo = useCallback(
     (getScrollPosition: ScrollPositionHandler) => {
       const scrollElement = scrollerRef.current;
 
@@ -178,19 +178,19 @@ export const HorizontalScroll = ({
     [scrollAnimationDuration, scrollerRef],
   );
 
-  const scrollToLeft = React.useCallback(() => {
+  const scrollToLeft = useCallback(() => {
     const getScrollPosition =
       getScrollToLeft ?? ((i: number) => i - scrollerRef.current!.offsetWidth);
     scrollTo(getScrollPosition);
   }, [getScrollToLeft, scrollTo, scrollerRef]);
 
-  const scrollToRight = React.useCallback(() => {
+  const scrollToRight = useCallback(() => {
     const getScrollPosition =
       getScrollToRight ?? ((i: number) => i + scrollerRef.current!.offsetWidth);
     scrollTo(getScrollPosition);
   }, [getScrollToRight, scrollTo, scrollerRef]);
 
-  const calculateArrowsVisibility = React.useCallback(() => {
+  const calculateArrowsVisibility = useCallback(() => {
     if (showArrows && hasPointer && scrollerRef.current && !isCustomScrollingRef.current) {
       const scrollElement = scrollerRef.current;
 
@@ -203,7 +203,7 @@ export const HorizontalScroll = ({
   }, [hasPointer, scrollerRef, showArrows]);
 
   const scrollEvent = useEventListener('scroll', calculateArrowsVisibility);
-  React.useEffect(
+  useEffect(
     function addScrollerRefToScrollEvent() {
       if (!scrollerRef.current) {
         return noop;
@@ -215,12 +215,12 @@ export const HorizontalScroll = ({
     [scrollEvent, scrollerRef],
   );
 
-  React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
+  useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
 
   /**
    * Прокрутка с помощью любого колеса мыши
    */
-  const onwheel = React.useCallback(
+  const onwheel = useCallback(
     (e: WheelEvent) => {
       scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });
       e.preventDefault();
@@ -229,7 +229,7 @@ export const HorizontalScroll = ({
   );
 
   const wheelEvent = useEventListener('wheel', onwheel);
-  React.useEffect(
+  useEffect(
     function addScrollerRefToWheelEvent() {
       if (!scrollerRef.current || !scrollOnAnyWheel) {
         return noop;

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { HasChildren } from '../../types';

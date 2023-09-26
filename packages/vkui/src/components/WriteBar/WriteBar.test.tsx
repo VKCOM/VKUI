@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { baselineComponent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { WriteBar, WriteBarProps } from './WriteBar';

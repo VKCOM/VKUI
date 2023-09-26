@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useState } from 'react';
 import { Keys, pressedKey } from '../lib/accessibility';
 import { useDOM } from '../lib/dom';
 import { useGlobalEventListener } from './useGlobalEventListener';
@@ -9,13 +9,13 @@ export const DISABLE_KEYBOARD_INPUT_EVENT_NAME = 'disableKeyboardInput';
 export function useKeyboardInputTracker(): boolean {
   const { document } = useDOM();
 
-  const [isKeyboardInputActive, toggleKeyboardInput] = React.useState<boolean>(false);
+  const [isKeyboardInputActive, toggleKeyboardInput] = useState<boolean>(false);
 
-  const enableKeyboardInput = React.useCallback(() => {
+  const enableKeyboardInput = useCallback(() => {
     toggleKeyboardInput(true);
   }, []);
 
-  const handleKeydown = React.useCallback(
+  const handleKeydown = useCallback(
     (e: KeyboardEvent) => {
       if (pressedKey(e) === Keys.TAB) {
         enableKeyboardInput();
@@ -24,7 +24,7 @@ export function useKeyboardInputTracker(): boolean {
     [enableKeyboardInput],
   );
 
-  const disableKeyboardInput = React.useCallback(() => {
+  const disableKeyboardInput = useCallback(() => {
     toggleKeyboardInput(false);
   }, []);
 

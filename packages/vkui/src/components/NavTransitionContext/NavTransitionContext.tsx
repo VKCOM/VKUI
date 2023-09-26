@@ -1,13 +1,13 @@
-import * as React from 'react';
+import { createContext, useContext } from 'react';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 
 export interface TransitionContextProps {
   entering: boolean;
 }
-const TransitionContext = React.createContext<TransitionContextProps>({
+const TransitionContext = createContext<TransitionContextProps>({
   entering: false,
 });
-export const useNavTransition = () => React.useContext(TransitionContext);
+export const useNavTransition = () => useContext(TransitionContext);
 
 export const NavTransitionProvider = ({
   children,

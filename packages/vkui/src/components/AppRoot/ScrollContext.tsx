@@ -1,4 +1,12 @@
-import * as React from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { useDOM } from '../../lib/dom';
@@ -34,7 +42,7 @@ export interface ScrollContextInterface {
   beforeScrollLockFnSetRef?: React.RefObject<Set<() => void>>;
 }
 
-export const ScrollContext = React.createContext<ScrollContextInterface>({
+export const ScrollContext = createContext<ScrollContextInterface>({
   getScroll: () => ({ x: 0, y: 0 }),
   scrollTo: noop,
   isScrollLock: false,
@@ -42,7 +50,7 @@ export const ScrollContext = React.createContext<ScrollContextInterface>({
   disableScrollLock: noop,
 });
 
-export const useScroll = () => React.useContext(ScrollContext);
+export const useScroll = () => useContext(ScrollContext);
 
 export interface ScrollControllerProps extends HasChildren {
   elRef: React.RefObject<HTMLElement>;
@@ -50,17 +58,17 @@ export interface ScrollControllerProps extends HasChildren {
 
 export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
   const { window, document } = useDOM();
-  const [isScrollLock, setScrollLock] = React.useState(false);
-  const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
+  const [isScrollLock, setScrollLock] = useState(false);
+  const beforeScrollLockFnSetRef = useRef<Set<() => void>>(new Set());
 
-  const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
+  const getScroll = useCallback<ScrollContextInterface['getScroll']>(
     () => ({
       x: window!.pageXOffset,
       y: getPageYOffsetWithoutKeyboardHeight(window!),
     }),
     [window],
   );
-  const scrollTo = React.useCallback<ScrollContextInterface['scrollTo']>(
+  const scrollTo = useCallback<ScrollContextInterface['scrollTo']>(
     (x = 0, y = 0) => {
       // Some iOS versions do not normalize scroll — do it manually.
       window!.scrollTo(
@@ -71,7 +79,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
     [document, window],
   );
 
-  const enableScrollLock = React.useCallback<ScrollContextInterface['enableScrollLock']>(() => {
+  const enableScrollLock = useCallback<ScrollContextInterface['enableScrollLock']>(() => {
     beforeScrollLockFnSetRef.current.forEach((fn) => {
       fn();
     });
@@ -92,7 +100,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
     setScrollLock(true);
   }, [document, window]);
 
-  const disableScrollLock = React.useCallback<ScrollContextInterface['disableScrollLock']>(() => {
+  const disableScrollLock = useCallback<ScrollContextInterface['disableScrollLock']>(() => {
     const scrollY = document!.body.style.top;
     const scrollX = document!.body.style.left;
 
@@ -101,7 +109,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
     setScrollLock(false);
   }, [document, window]);
 
-  const scrollController = React.useMemo<ScrollContextInterface>(
+  const scrollController = useMemo<ScrollContextInterface>(
     () => ({
       getScroll,
       scrollTo,
@@ -118,17 +126,17 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
 };
 
 export const ElementScrollController = ({ elRef, children }: ScrollControllerProps) => {
-  const [isScrollLock, setScrollLock] = React.useState(false);
-  const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
+  const [isScrollLock, setScrollLock] = useState(false);
+  const beforeScrollLockFnSetRef = useRef<Set<() => void>>(new Set());
 
-  const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
+  const getScroll = useCallback<ScrollContextInterface['getScroll']>(
     () => ({
       x: elRef.current?.scrollLeft ?? 0,
       y: elRef.current?.scrollTop ?? 0,
     }),
     [elRef],
   );
-  const scrollTo = React.useCallback<ScrollContextInterface['scrollTo']>(
+  const scrollTo = useCallback<ScrollContextInterface['scrollTo']>(
     (x = 0, y = 0) => {
       const el = elRef.current;
       // Some iOS versions do not normalize scroll — do it manually.
@@ -140,7 +148,7 @@ export const ElementScrollController = ({ elRef, children }: ScrollControllerPro
     [elRef],
   );
 
-  const enableScrollLock = React.useCallback<ScrollContextInterface['enableScrollLock']>(() => {
+  const enableScrollLock = useCallback<ScrollContextInterface['enableScrollLock']>(() => {
     const el = elRef.current;
     if (!el) {
       return;
@@ -165,7 +173,7 @@ export const ElementScrollController = ({ elRef, children }: ScrollControllerPro
     setScrollLock(true);
   }, [elRef]);
 
-  const disableScrollLock = React.useCallback<ScrollContextInterface['disableScrollLock']>(() => {
+  const disableScrollLock = useCallback<ScrollContextInterface['disableScrollLock']>(() => {
     const el = elRef.current;
     if (!el) {
       return;
@@ -179,7 +187,7 @@ export const ElementScrollController = ({ elRef, children }: ScrollControllerPro
     setScrollLock(false);
   }, [elRef]);
 
-  const scrollController = React.useMemo<ScrollContextInterface>(
+  const scrollController = useMemo<ScrollContextInterface>(
     () => ({
       getScroll,
       scrollTo,
@@ -200,18 +208,18 @@ export const ElementScrollController = ({ elRef, children }: ScrollControllerPro
  * @param deps effect обновится только при изменении значений в списке.
  */
 export const useScrollLockEffect = (effect: React.EffectCallback, deps: React.DependencyList) => {
-  const destructorRef = React.useRef<ReturnType<React.EffectCallback>>(noop);
+  const destructorRef = useRef<ReturnType<React.EffectCallback>>(noop);
   const { isScrollLock, beforeScrollLockFnSetRef } = useScroll();
 
   // Изменяем effectCallback только при изменении deps
-  const effectCallback = React.useCallback(() => {
+  const effectCallback = useCallback(() => {
     destructorRef.current = effect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
   // Добавляем effectCallback в список функций, которые необходимо вызвать
   // до блокировки
-  React.useEffect(() => {
+  useEffect(() => {
     const beforeSet = beforeScrollLockFnSetRef?.current;
     if (!beforeSet) {
       return noop;
@@ -225,7 +233,7 @@ export const useScrollLockEffect = (effect: React.EffectCallback, deps: React.De
   }, [beforeScrollLockFnSetRef, effectCallback]);
 
   // Вызываем сбрасывающую функцию, после отключения блокировки
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isScrollLock && destructorRef.current) {
       destructorRef.current();
     }

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -53,7 +53,7 @@ export const Chip = ({
   ...restProps
 }: ChipProps) => {
   const { sizeY = 'none' } = useAdaptivity();
-  const onRemoveWrapper = React.useCallback(
+  const onRemoveWrapper = useCallback(
     (event: React.MouseEvent) => {
       onRemove(event, value);
     },

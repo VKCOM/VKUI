@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import {
   Icon28CopyOutline,
@@ -34,8 +34,8 @@ type Story = StoryObj<ActionSheetProps & { items: ActionSheetItemProps[] }>;
 
 export const Base: Story = {
   render: function Render({ items, ...args }) {
-    const baseToggleRef = React.useRef(null);
-    const [visible, setVisible] = React.useState(true);
+    const baseToggleRef = useRef(null);
+    const [visible, setVisible] = useState(true);
     const popout = visible ? (
       <ActionSheet {...args} onClose={() => setVisible(false)} toggleRef={baseToggleRef}>
         {items.map(({ children, ...rest }, index) => (

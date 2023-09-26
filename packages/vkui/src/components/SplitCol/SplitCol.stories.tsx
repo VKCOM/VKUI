@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon56MentionOutline, Icon56UsersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -29,7 +29,7 @@ export const Playground: Story = {
     maxWidth: 560,
   },
   render: function Render(args) {
-    const [panel, setPanel] = React.useState(panels[0]);
+    const [panel, setPanel] = useState(panels[0]);
 
     return (
       <SplitLayout style={{ justifyContent: 'center' }}>

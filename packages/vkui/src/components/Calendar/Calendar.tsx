@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useCalendar } from '../../hooks/useCalendar';
 import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
@@ -124,7 +124,7 @@ export const Calendar = ({
     warn("Нельзя включить выбор времени, если размер календаря 's'", 'error');
   }
 
-  const handleKeyDown = React.useCallback(
+  const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
         event.preventDefault();
@@ -140,17 +140,14 @@ export const Calendar = ({
     [focusedDay, setFocusedDay, setViewDate, value, viewDate],
   );
 
-  const onDayChange = React.useCallback(
+  const onDayChange = useCallback(
     (date: Date) => {
       onChange?.(setTimeEqual(date, value as Date | undefined | null));
     },
     [value, onChange],
   );
 
-  const isDayActive = React.useCallback(
-    (day: Date) => Boolean(value && isSameDay(day, value)),
-    [value],
-  );
+  const isDayActive = useCallback((day: Date) => Boolean(value && isSameDay(day, value)), [value]);
 
   return (
     <RootComponent

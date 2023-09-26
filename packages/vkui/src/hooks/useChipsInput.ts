@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ChipOption } from '../components/Chip/Chip';
 import { ChipsInputBaseProps } from '../components/ChipsInputBase/ChipsInputBase';
 
@@ -7,15 +7,15 @@ export const useChipsInput = <Option extends ChipOption>(
 ) => {
   const { value, getOptionValue, onChange, onInputChange, getNewOptionData } = props;
 
-  const [fieldValue, setFieldValue] = React.useState(props.inputValue);
-  const [selectedOptions, setSelectedOptions] = React.useState(value ?? []);
+  const [fieldValue, setFieldValue] = useState(props.inputValue);
+  const [selectedOptions, setSelectedOptions] = useState(value ?? []);
 
-  const clearInput = React.useCallback(() => {
+  const clearInput = useCallback(() => {
     setFieldValue('');
     onInputChange!({ target: { value: '' } } as any);
   }, [onInputChange]);
 
-  const handleInputChange = React.useCallback(
+  const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setFieldValue(e.target.value);
       onInputChange!(e);
@@ -23,7 +23,7 @@ export const useChipsInput = <Option extends ChipOption>(
     [onInputChange],
   );
 
-  const toggleOption = React.useCallback(
+  const toggleOption = useCallback(
     (newOption: Option, value?: boolean) => {
       const newSelectedOptions = selectedOptions.filter(
         (option: Option) => getOptionValue!(newOption) !== getOptionValue!(option),
@@ -39,11 +39,11 @@ export const useChipsInput = <Option extends ChipOption>(
     [selectedOptions, getOptionValue, onChange],
   );
 
-  const addOption = React.useCallback(
+  const addOption = useCallback(
     (newOption: Option) => toggleOption(newOption, true),
     [toggleOption],
   );
-  const addOptionFromInput = React.useCallback(() => {
+  const addOptionFromInput = useCallback(() => {
     const trimmedValue = fieldValue?.trim();
 
     if (trimmedValue) {
@@ -51,20 +51,20 @@ export const useChipsInput = <Option extends ChipOption>(
       clearInput();
     }
   }, [addOption, clearInput, getNewOptionData, fieldValue]);
-  const removeOption = React.useCallback(
+  const removeOption = useCallback(
     (value) => {
       toggleOption(getNewOptionData!(undefined, value as string), false);
     },
     [toggleOption, getNewOptionData],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     setSelectedOptions(value as Option[]);
 
     return () => setSelectedOptions([]);
   }, [props.value, value]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFieldValue(props.inputValue);
 
     return () => setFieldValue('');

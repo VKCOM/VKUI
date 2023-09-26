@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { useEventListener } from '../../hooks/useEventListener';
 import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
 import { useTimeout } from '../../hooks/useTimeout';
@@ -42,7 +42,7 @@ export const HoverPopper = ({
   hideDelay = 150,
   ...restProps
 }: HoverPopperProps) => {
-  const [computedShown, setComputedShown] = React.useState(_shown || false);
+  const [computedShown, setComputedShown] = useState(_shown || false);
 
   const shown = typeof _shown === 'boolean' ? _shown : computedShown;
 
@@ -84,7 +84,7 @@ export const HoverPopper = ({
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       {child}
       {shown && (
         <Popper
@@ -97,6 +97,6 @@ export const HoverPopper = ({
           {content}
         </Popper>
       )}
-    </React.Fragment>
+    </>
   );
 };

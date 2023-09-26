@@ -24,6 +24,19 @@ const rules = [
     test: /\.[jt]sx?$/,
     exclude: /node_modules/,
     loader: 'swc-loader',
+    options: {
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          tsx: true,
+        },
+        transform: {
+          react: {
+            runtime: 'automatic',
+          },
+        },
+      },
+    },
   },
   {
     test: /\.(jpeg|jpg|png|woff|woff2|svg|otf)$/,

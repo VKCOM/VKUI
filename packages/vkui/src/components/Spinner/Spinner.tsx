@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { memo } from 'react';
 import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from '@vkontakte/icons';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -15,7 +15,7 @@ const warn = warnOnce('Spinner');
 /**
  * @see https://vkcom.github.io/VKUI/#/Spinner
  */
-export const Spinner = React.memo(
+export const Spinner = memo(
   ({
     size = 'regular',
     children = 'Загружается...',

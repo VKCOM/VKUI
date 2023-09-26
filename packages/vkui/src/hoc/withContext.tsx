@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 
 export function withContext<T, X>(
   Component: React.ComponentType<T>,
@@ -6,7 +6,7 @@ export function withContext<T, X>(
   prop: string,
 ): React.FC<T> {
   function WithContext(props: T) {
-    const context = React.useContext<X>(Ctx);
+    const context = useContext<X>(Ctx);
 
     return <Component {...props} {...{ [prop]: context }} />;
   }

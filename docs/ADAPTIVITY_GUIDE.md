@@ -27,7 +27,6 @@
 _Component.tsx_
 
 ```tsx
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../../lib/adaptivity';
@@ -87,7 +86,6 @@ _Component.module.css_
 _Component.tsx_
 
 ```tsx
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { ViewWidth, viewWidthToClassName } from '../../../lib/adaptivity';
@@ -202,9 +200,9 @@ const App = () => {
 
 // ✅ good for SSR
 const App = () => {
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext, useContext } from 'react';
 import { canUseDOM } from '@vkontakte/vkjs';
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
 
@@ -22,10 +22,10 @@ export const getDOM = () => ({
 });
 /* eslint-enable no-restricted-globals */
 
-export const DOMContext = React.createContext<DOMContextInterface>(getDOM());
+export const DOMContext = createContext<DOMContextInterface>(getDOM());
 
 export const useDOM = () => {
-  return React.useContext(DOMContext);
+  return useContext(DOMContext);
 };
 
 export function withDOM<Props>(

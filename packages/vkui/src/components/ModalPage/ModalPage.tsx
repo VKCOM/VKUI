@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useId } from '../../hooks/useId';
@@ -96,13 +96,13 @@ export const ModalPage = ({
   const generatingId = useId();
   const id = idProp || generatingId;
 
-  const { updateModalHeight } = React.useContext(ModalRootContext);
+  const { updateModalHeight } = useContext(ModalRootContext);
 
   const platform = usePlatform();
   const orientation = useOrientationChange();
   const { sizeX, isDesktop } = useAdaptivityWithJSMediaQueries();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (dynamicContentHeight) {
       updateModalHeight();
     }
@@ -111,10 +111,10 @@ export const ModalPage = ({
   const isCloseButtonShown = !hideCloseButton && isDesktop;
   const size = isDesktop ? sizeProp : 's';
 
-  const modalContext = React.useContext(ModalRootContext);
+  const modalContext = useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId({ nav, id }, warn), ModalType.PAGE);
 
-  const contextValue = React.useMemo(() => ({ labelId: `${id}-label` }), [id]);
+  const contextValue = useMemo(() => ({ labelId: `${id}-label` }), [id]);
 
   return (
     <ModalPageContext.Provider value={contextValue}>

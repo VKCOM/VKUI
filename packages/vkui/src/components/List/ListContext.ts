@@ -1,6 +1,6 @@
-import * as React from 'react';
+import { createContext } from 'react';
 import { noop } from '@vkontakte/vkjs';
 
-export const ListContext = React.createContext({
+export const ListContext = createContext({
   toggleDrag: noop as (value: boolean) => void,
 });

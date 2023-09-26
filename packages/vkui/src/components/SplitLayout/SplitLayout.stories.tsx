@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import {
   Icon56MentionOutline,
@@ -43,9 +43,9 @@ export const Example: Story = {
   render: function Render() {
     const platform = usePlatform();
     const { viewWidth } = useAdaptivityConditionalRender();
-    const [panel, setPanel] = React.useState(panels[0]);
-    const [modal, setModal] = React.useState<string | null>(null);
-    const [popout, setPopout] = React.useState<React.ReactNode | null>(null);
+    const [panel, setPanel] = useState(panels[0]);
+    const [modal, setModal] = useState<string | null>(null);
+    const [popout, setPopout] = useState<React.ReactNode | null>(null);
 
     const modalRoot = (
       <ModalRoot activeModal={modal}>

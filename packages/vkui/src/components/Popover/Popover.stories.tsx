@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { DisableCartesianParam } from '../../storybook/constants';
 import { Button } from '../Button/Button';
@@ -39,7 +39,7 @@ export const Playground: Story = {
 
 export const Example: Story = {
   render: function Render() {
-    const [shown, setShown] = React.useState(true);
+    const [shown, setShown] = useState(true);
 
     return (
       <>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
@@ -78,14 +78,14 @@ export const Alert = ({
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
-  const [closing, setClosing] = React.useState(false);
+  const [closing, setClosing] = useState(false);
   const isDismissButtonVisible = isDesktop && platform !== Platform.IOS;
 
-  const elementRef = React.useRef<HTMLDivElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
 
   const timeout = platform === Platform.IOS ? 300 : 200;
 
-  const close = React.useCallback(() => {
+  const close = useCallback(() => {
     setClosing(true);
     waitTransitionFinish(
       elementRef.current,
@@ -98,7 +98,7 @@ export const Alert = ({
     );
   }, [elementRef, waitTransitionFinish, onClose, timeout]);
 
-  const onItemClick = React.useCallback(
+  const onItemClick = useCallback(
     (item: AlertActionInterface) => {
       const { action, autoClose } = item;
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -21,10 +21,10 @@ const breakpointClassNames = {
 
 function useTransitionAnimate(animateProp?: boolean) {
   const { viewWidth } = useAdaptivity();
-  const [animate, setAnimate] = React.useState(Boolean(animateProp));
+  const [animate, setAnimate] = useState(Boolean(animateProp));
   const mediaQueries = useMediaQueries();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (animateProp !== undefined) {
       setAnimate(animateProp);
       return;

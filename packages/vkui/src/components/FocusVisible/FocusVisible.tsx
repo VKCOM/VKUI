@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';

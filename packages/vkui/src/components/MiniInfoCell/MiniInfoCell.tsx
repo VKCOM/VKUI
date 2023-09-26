@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon16Chevron } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -78,7 +77,7 @@ export const MiniInfoCell = ({
   );
 
   const cellContent = (
-    <React.Fragment>
+    <>
       {hasReactNode(before) && <span className={styles['MiniInfoCell__before']}>{before}</span>}
       <div className={styles['MiniInfoCell__middle']}>
         <Paragraph
@@ -90,7 +89,7 @@ export const MiniInfoCell = ({
         {expandable && <Icon16Chevron />}
       </div>
       {hasReactNode(after) && <span className={styles['MiniInfoCell__after']}>{after}</span>}
-    </React.Fragment>
+    </>
   );
 
   return restProps.onClick ? (

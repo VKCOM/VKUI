@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, Component, createRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { withContext } from '../../hoc/withContext';
@@ -39,7 +39,7 @@ interface ModalRootState {
   modalOpenedLog: string[];
 }
 
-class ModalRootTouchComponent extends React.Component<
+class ModalRootTouchComponent extends Component<
   ModalRootWithDOMProps & DOMProps & ModalTransitionProps,
   ModalRootState
 > {
@@ -51,7 +51,7 @@ class ModalRootTouchComponent extends React.Component<
       modalOpenedLog: [],
     };
 
-    this.maskElementRef = React.createRef();
+    this.maskElementRef = createRef();
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
@@ -65,7 +65,7 @@ class ModalRootTouchComponent extends React.Component<
 
   private documentScrolling = false;
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
-  private readonly viewportRef = React.createRef<HTMLDivElement>();
+  private readonly viewportRef = createRef<HTMLDivElement>();
   private maskAnimationFrame: number | undefined = undefined;
   private readonly modalRootContext: ModalRootContextInterface;
   private readonly frameIds: {
@@ -86,7 +86,7 @@ class ModalRootTouchComponent extends React.Component<
   }
 
   getModals() {
-    return React.Children.toArray(this.props.children) as React.ReactElement[];
+    return Children.toArray(this.props.children) as React.ReactElement[];
   }
 
   componentDidMount() {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext, useContext, useMemo, useRef, useState } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import mitt from 'mitt';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -125,7 +125,7 @@ const activeBus = mitt<{ active: string }>();
 const TapState = { none: 0, pending: 1, active: 2, exiting: 3 } as const;
 
 type TappableContextInterface = { onHoverChange: (s: boolean) => void };
-const TappableContext = React.createContext<TappableContextInterface>({
+const TappableContext = createContext<TappableContextInterface>({
   onHoverChange: noop,
 });
 
@@ -140,11 +140,9 @@ function isPresetStateMode(stateMode: LiteralUnion<StateMode, string>): stateMod
 }
 
 function useActivity(hasActive: boolean, stopDelay: number) {
-  const id = React.useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
+  const id = useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
 
-  const [activity, setActivity] = React.useState<(typeof TapState)[keyof typeof TapState]>(
-    TapState.none,
-  );
+  const [activity, setActivity] = useState<(typeof TapState)[keyof typeof TapState]>(TapState.none);
   const _stop = () => setActivity(TapState.none);
   const start = () => hasActive && setActivity(TapState.active);
   const delayStart = () => {
@@ -220,16 +218,16 @@ export const Tappable = ({
 }: TappableProps) => {
   Component = Component || ((props.href ? 'a' : 'div') as React.ElementType);
 
-  const { onHoverChange } = React.useContext(TappableContext);
-  const insideTouchRoot = React.useContext(TouchRootContext);
+  const { onHoverChange } = useContext(TappableContext);
+  const insideTouchRoot = useContext(TouchRootContext);
   const platform = usePlatform();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const { sizeX = 'none' } = useAdaptivity();
   const hasPointerContext = useAdaptivityHasPointer();
   const hasHoverContext = useAdaptivityHasHover();
 
-  const [clicks, setClicks] = React.useState<Wave[]>([]);
-  const [childHover, setChildHover] = React.useState(false);
+  const [clicks, setClicks] = useState<Wave[]>([]);
+  const [childHover, setChildHover] = useState(false);
   const {
     value: _hovered,
     setTrue: setHoveredTrue,
@@ -252,7 +250,7 @@ export const Tappable = ({
   const containerRef = useExternRef(getRootRef);
 
   // hover propagation
-  const childContext = React.useRef({ onHoverChange: setChildHover }).current;
+  const childContext = useRef({ onHoverChange: setChildHover }).current;
   useIsomorphicLayoutEffect(() => {
     if (!hovered) {
       return noop;

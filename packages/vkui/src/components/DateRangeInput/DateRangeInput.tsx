@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -136,14 +136,14 @@ export const DateRangeInput = ({
   disableCalendar = false,
   ...props
 }: DateRangeInputProps) => {
-  const daysStartRef = React.useRef<HTMLSpanElement>(null);
-  const monthsStartRef = React.useRef<HTMLSpanElement>(null);
-  const yearsStartRef = React.useRef<HTMLSpanElement>(null);
-  const daysEndRef = React.useRef<HTMLSpanElement>(null);
-  const monthsEndRef = React.useRef<HTMLSpanElement>(null);
-  const yearsEndRef = React.useRef<HTMLSpanElement>(null);
+  const daysStartRef = useRef<HTMLSpanElement>(null);
+  const monthsStartRef = useRef<HTMLSpanElement>(null);
+  const yearsStartRef = useRef<HTMLSpanElement>(null);
+  const daysEndRef = useRef<HTMLSpanElement>(null);
+  const monthsEndRef = useRef<HTMLSpanElement>(null);
+  const yearsEndRef = useRef<HTMLSpanElement>(null);
 
-  const onInternalValueChange = React.useCallback(
+  const onInternalValueChange = useCallback(
     (internalValue: string[]) => {
       let isStartValid = true;
       let isEndValid = true;
@@ -187,7 +187,7 @@ export const DateRangeInput = ({
     [onChange, value],
   );
 
-  const refs = React.useMemo(
+  const refs = useMemo(
     () => [daysStartRef, monthsStartRef, yearsStartRef, daysEndRef, monthsEndRef, yearsEndRef],
     [daysStartRef, monthsStartRef, yearsStartRef, daysEndRef, monthsEndRef, yearsEndRef],
   );
@@ -220,7 +220,7 @@ export const DateRangeInput = ({
 
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
-  const onCalendarChange = React.useCallback(
+  const onCalendarChange = useCallback(
     (newValue?: Array<Date | null> | undefined) => {
       onChange?.(newValue);
       if (closeOnChange && newValue?.[1] && newValue[1] !== value?.[1]) {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { useAdaptivityHasHover } from './useAdaptivityHasHover';

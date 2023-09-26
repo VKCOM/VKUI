@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Icon28ArrowLeftOutline,
   Icon28ChevronBack,

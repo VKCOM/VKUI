@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
@@ -58,9 +58,9 @@ export const ActionSheet = ({
   ...restProps
 }: ActionSheetProps) => {
   const platform = usePlatform();
-  const [closingBy, setClosingBy] = React.useState<undefined | CloseInitiators>(undefined);
+  const [closingBy, setClosingBy] = useState<undefined | CloseInitiators>(undefined);
   const onClose = () => setClosingBy('other');
-  const _action = React.useRef(noop);
+  const _action = useRef(noop);
 
   const afterClose = () => {
     restProps.onClose({ closedBy: closingBy || 'other' });
@@ -80,7 +80,7 @@ export const ActionSheet = ({
   }
 
   const fallbackTransitionFinish = useTimeout(afterClose, timeout);
-  React.useEffect(() => {
+  useEffect(() => {
     if (closingBy) {
       fallbackTransitionFinish.set();
     } else {
@@ -88,7 +88,7 @@ export const ActionSheet = ({
     }
   }, [closingBy, fallbackTransitionFinish]);
 
-  const onItemClick = React.useCallback<ItemClickHandler>(
+  const onItemClick = useCallback<ItemClickHandler>(
     ({ action, immediateAction, autoClose, isCancelItem }) =>
       (event) => {
         event.persist();

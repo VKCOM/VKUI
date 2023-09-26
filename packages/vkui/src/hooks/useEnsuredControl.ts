@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useState } from 'react';
 
 interface UseEnsuredControlProps<V, E extends React.ChangeEvent<any>> {
   value?: V;
@@ -14,7 +14,7 @@ export function useEnsuredControl<V, E extends React.ChangeEvent<any>>({
 }: UseEnsuredControlProps<V, E>): [V | undefined, (e: E) => any] {
   const [value, onChangeValue] = useCustomEnsuredControl(props);
 
-  const onChange = React.useCallback(
+  const onChange = useCallback(
     (e: E) => {
       if (disabled) {
         return;
@@ -43,9 +43,9 @@ export function useCustomEnsuredControl<V>({
   value,
 }: UseCustomEnsuredControlProps<V>): [V | undefined, (e: V) => any] {
   const isControlled = value !== undefined;
-  const [localValue, setLocalValue] = React.useState(defaultValue);
+  const [localValue, setLocalValue] = useState(defaultValue);
 
-  const onChange = React.useCallback(
+  const onChange = useCallback(
     (v: V) => {
       if (disabled) {
         return;

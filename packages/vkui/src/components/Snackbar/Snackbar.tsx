@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -95,16 +95,16 @@ export const Snackbar = ({
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
-  const [closing, setClosing] = React.useState(false);
-  const [touched, setTouched] = React.useState(false);
+  const [closing, setClosing] = useState(false);
+  const [touched, setTouched] = useState(false);
 
-  const shiftXPercentRef = React.useRef<number>(0);
-  const shiftXCurrentRef = React.useRef<number>(0);
+  const shiftXPercentRef = useRef<number>(0);
+  const shiftXCurrentRef = useRef<number>(0);
 
-  const bodyElRef = React.useRef<HTMLDivElement | null>(null);
-  const innerElRef = React.useRef<HTMLDivElement | null>(null);
+  const bodyElRef = useRef<HTMLDivElement | null>(null);
+  const innerElRef = useRef<HTMLDivElement | null>(null);
 
-  const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
+  const animationFrameRef = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
 
   const transitionFinishDurationFallback = platform === Platform.IOS ? 320 : 400;
 
@@ -198,7 +198,7 @@ export const Snackbar = ({
     callback && requestAnimationFrame(callback);
   };
 
-  React.useEffect(() => closeTimeout.set(), [closeTimeout]);
+  useEffect(() => closeTimeout.set(), [closeTimeout]);
 
   const layout = after || isDesktop || subtitle ? 'vertical' : layoutProps;
 

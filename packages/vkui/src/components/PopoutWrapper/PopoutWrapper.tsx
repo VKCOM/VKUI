@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -43,7 +43,7 @@ export const PopoutWrapper = ({
   ...restProps
 }: PopoutWrapperProps) => {
   const platform = usePlatform();
-  const [opened, setOpened] = React.useState(!hasMask);
+  const [opened, setOpened] = useState(!hasMask);
 
   const onFadeInEnd = (e?: React.AnimationEvent) => {
     if (!e || e.animationName === styles['animation-full-fade-in']) {
@@ -51,7 +51,7 @@ export const PopoutWrapper = ({
     }
   };
   const animationFinishFallback = useTimeout(onFadeInEnd, platform === Platform.IOS ? 300 : 200);
-  React.useEffect(() => {
+  useEffect(() => {
     !opened && animationFinishFallback.set();
   }, [animationFinishFallback, opened]);
 

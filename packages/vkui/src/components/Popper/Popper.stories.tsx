@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Button } from '../Button/Button';
@@ -17,11 +17,11 @@ type Story = StoryObj<PopperProps>;
 
 export const Playground: Story = {
   render: function Render(args) {
-    const [shown, setShown] = React.useState(false);
-    const buttonRef = React.useRef(null);
+    const [shown, setShown] = useState(false);
+    const buttonRef = useRef(null);
 
     return (
-      <React.Fragment>
+      <>
         <Button getRootRef={buttonRef} onClick={() => setShown(!shown)}>
           {shown ? 'Закрыть' : 'Открыть'}
         </Button>
@@ -30,7 +30,7 @@ export const Playground: Story = {
             <Div>Привет</Div>
           </Popper>
         )}
-      </React.Fragment>
+      </>
     );
   },
 };

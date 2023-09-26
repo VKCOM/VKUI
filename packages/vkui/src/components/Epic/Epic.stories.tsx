@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import {
   Icon28ClipOutline,
@@ -46,7 +46,7 @@ export const Example: Story = {
   render: function Render() {
     const platform = usePlatform();
     const { viewWidth } = useAdaptivityConditionalRender();
-    const [activeStory, setActiveStory] = React.useState<string>('profile');
+    const [activeStory, setActiveStory] = useState<string>('profile');
     const onStoryChange = (e: React.MouseEvent<HTMLElement>) =>
       setActiveStory(e.currentTarget.dataset.story!);
     const isVKCOM = platform !== Platform.VKCOM;

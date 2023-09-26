@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon28PrivacyOutline, Icon28SettingsOutline, Icon28UserOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
@@ -26,7 +26,7 @@ type Story = StoryObj<
 
 export const Playground: Story = {
   render: function Render({ items, ...args }) {
-    const [draggingList, updateDraggingList] = React.useState(items);
+    const [draggingList, updateDraggingList] = useState(items);
 
     const onDragFinish = ({ from, to }: { from: number; to: number }) => {
       const _list = [...draggingList];

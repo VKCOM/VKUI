@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { Typography, TypographyProps } from '../Typography';
 import styles from './Title.module.css';

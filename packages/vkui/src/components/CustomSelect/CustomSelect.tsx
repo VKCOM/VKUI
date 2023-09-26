@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -191,7 +191,7 @@ type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
  * @see https://vkcom.github.io/VKUI/#/CustomSelect
  */
 export function CustomSelect(props: SelectProps) {
-  const [opened, setOpened] = React.useState(false);
+  const [opened, setOpened] = useState(false);
   const {
     before,
     name,
@@ -230,27 +230,25 @@ export function CustomSelect(props: SelectProps) {
 
   const { sizeY = 'none' } = useAdaptivity();
 
-  const containerRef = React.useRef<HTMLLabelElement>(null);
+  const containerRef = useRef<HTMLLabelElement>(null);
   const handleRootRef = useExternRef(containerRef, getRootRef);
-  const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
+  const scrollBoxRef = useRef<HTMLDivElement | null>(null);
   const selectElRef = useExternRef(getRef);
 
-  const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
-  const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
-  const [inputValue, setInputValue] = React.useState('');
-  const [nativeSelectValue, setNativeSelectValue] = React.useState(
+  const [focusedOptionIndex, setFocusedOptionIndex] = useState<number | undefined>(-1);
+  const [isControlledOutside, setIsControlledOutside] = useState(props.value !== undefined);
+  const [inputValue, setInputValue] = useState('');
+  const [nativeSelectValue, setNativeSelectValue] = useState(
     () => props.value ?? props.defaultValue ?? (allowClearButton ? '' : undefined),
   );
-  const [keyboardInput, setKeyboardInput] = React.useState('');
-  const [popperPlacement, setPopperPlacement] = React.useState<PlacementWithAuto | undefined>(
-    undefined,
-  );
-  const [options, setOptions] = React.useState(optionsProp);
-  const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
+  const [keyboardInput, setKeyboardInput] = useState('');
+  const [popperPlacement, setPopperPlacement] = useState<PlacementWithAuto | undefined>(undefined);
+  const [options, setOptions] = useState(optionsProp);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | undefined>(
     findSelectedIndex(optionsProp, props.value ?? props.defaultValue, allowClearButton),
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsControlledOutside(props.value !== undefined);
     setNativeSelectValue((nativeSelectValue) => props.value ?? nativeSelectValue);
   }, [props.value]);
@@ -266,7 +264,7 @@ export function CustomSelect(props: SelectProps) {
     }
   }, [nativeSelectValue]);
 
-  const selected = React.useMemo(() => {
+  const selected = useMemo(() => {
     if (!options.length) {
       return null;
     }
@@ -274,7 +272,7 @@ export function CustomSelect(props: SelectProps) {
     return selectedOptionIndex !== undefined ? options[selectedOptionIndex] : undefined;
   }, [options, selectedOptionIndex]);
 
-  const openedClassNames = React.useMemo(
+  const openedClassNames = useMemo(
     () =>
       (opened &&
         dropdownOffsetDistance === 0 &&
@@ -285,11 +283,11 @@ export function CustomSelect(props: SelectProps) {
     [dropdownOffsetDistance, opened, popperPlacement],
   );
 
-  const resetKeyboardInput = React.useCallback(() => {
+  const resetKeyboardInput = useCallback(() => {
     setKeyboardInput('');
   }, []);
 
-  const scrollToElement = React.useCallback((index: number, center = false) => {
+  const scrollToElement = useCallback((index: number, center = false) => {
     const dropdown = scrollBoxRef.current;
     const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
 
@@ -311,14 +309,14 @@ export function CustomSelect(props: SelectProps) {
     }
   }, []);
 
-  const isValidIndex = React.useCallback(
+  const isValidIndex = useCallback(
     (index: number) => {
       return index >= 0 && index < (options.length ?? 0);
     },
     [options.length],
   );
 
-  const focusOptionByIndex = React.useCallback(
+  const focusOptionByIndex = useCallback(
     (index: number | undefined, scrollTo = true) => {
       if (index === undefined || index < 0 || index > (options.length ?? 0) - 1) {
         return;
@@ -342,11 +340,11 @@ export function CustomSelect(props: SelectProps) {
     [options, scrollToElement],
   );
 
-  const areOptionsShown = React.useCallback(() => {
+  const areOptionsShown = useCallback(() => {
     return scrollBoxRef.current !== null;
   }, []);
 
-  const setScrollBoxRef = React.useCallback(
+  const setScrollBoxRef = useCallback(
     (ref: HTMLDivElement | null) => {
       scrollBoxRef.current = ref;
 
@@ -359,7 +357,7 @@ export function CustomSelect(props: SelectProps) {
     [isValidIndex, scrollToElement, selectedOptionIndex],
   );
 
-  const onKeyboardInput = React.useCallback(
+  const onKeyboardInput = useCallback(
     (key: string) => {
       const fullInput = keyboardInput + key;
 
@@ -380,7 +378,7 @@ export function CustomSelect(props: SelectProps) {
    * Note: сбрасывать `options` через `setOptions(optionsProp)` не нужно.
    *  Сброс происходит в одном из эффекте `updateOptionsAndSelectedOptionIndex()`.
    */
-  const close = React.useCallback(() => {
+  const close = useCallback(() => {
     resetKeyboardInput();
 
     setInputValue('');
@@ -389,7 +387,7 @@ export function CustomSelect(props: SelectProps) {
     onClose?.();
   }, [onClose, resetKeyboardInput]);
 
-  const selectOption = React.useCallback(
+  const selectOption = useCallback(
     (index: number) => {
       const item = options[index];
 
@@ -409,7 +407,7 @@ export function CustomSelect(props: SelectProps) {
     [close, options, selectElRef, isControlledOutside, props.value, nativeSelectValue],
   );
 
-  const selectFocused = React.useCallback(() => {
+  const selectFocused = useCallback(() => {
     if (focusedOptionIndex === undefined || !isValidIndex(focusedOptionIndex)) {
       return;
     }
@@ -417,7 +415,7 @@ export function CustomSelect(props: SelectProps) {
     selectOption(focusedOptionIndex);
   }, [focusedOptionIndex, isValidIndex, selectOption]);
 
-  const open = React.useCallback(() => {
+  const open = useCallback(() => {
     setOpened(true);
     setFocusedOptionIndex(selectedOptionIndex);
 
@@ -426,22 +424,22 @@ export function CustomSelect(props: SelectProps) {
     }
   }, [onOpen, selectedOptionIndex]);
 
-  const onBlur = React.useCallback(() => {
+  const onBlur = useCallback(() => {
     close();
     const event = new Event('blur');
     selectElRef.current?.dispatchEvent(event);
   }, [close, selectElRef]);
 
-  const resetFocusedOption = React.useCallback(() => {
+  const resetFocusedOption = useCallback(() => {
     setFocusedOptionIndex(-1);
   }, []);
 
-  const onFocus = React.useCallback(() => {
+  const onFocus = useCallback(() => {
     const event = new Event('focus');
     selectElRef.current?.dispatchEvent(event);
   }, [selectElRef]);
 
-  const onClick = React.useCallback(() => {
+  const onClick = useCallback(() => {
     if (opened) {
       close();
     } else {
@@ -449,9 +447,9 @@ export function CustomSelect(props: SelectProps) {
     }
   }, [close, open, opened]);
 
-  const handleKeyUp = React.useMemo(() => debounce(resetKeyboardInput, 1000), [resetKeyboardInput]);
+  const handleKeyUp = useMemo(() => debounce(resetKeyboardInput, 1000), [resetKeyboardInput]);
 
-  const focusOption = React.useCallback(
+  const focusOption = useCallback(
     (type: 'next' | 'prev') => {
       let index = focusedOptionIndex;
 
@@ -468,7 +466,7 @@ export function CustomSelect(props: SelectProps) {
     [focusOptionByIndex, focusedOptionIndex, options],
   );
 
-  React.useEffect(
+  useEffect(
     function updateOptionsAndSelectedOptionIndex() {
       const value = props.value ?? nativeSelectValue ?? props.defaultValue;
 
@@ -496,7 +494,7 @@ export function CustomSelect(props: SelectProps) {
    * Нужен для правильного поведения обработчика onClick на select. Фильтрует клики, которые были сделаны по
    * выпадающему списку.
    */
-  const onLabelClick = React.useCallback((e: React.MouseEvent<HTMLLabelElement>) => {
+  const onLabelClick = useCallback((e: React.MouseEvent<HTMLLabelElement>) => {
     if (scrollBoxRef.current?.contains(e.target as Node)) {
       e.preventDefault();
     }
@@ -517,7 +515,7 @@ export function CustomSelect(props: SelectProps) {
     }
   };
 
-  const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = React.useCallback(
+  const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
     (event) => {
       ['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key) &&
         areOptionsShown() &&
@@ -541,7 +539,7 @@ export function CustomSelect(props: SelectProps) {
     [areOptionsShown, close, focusOption, selectFocused],
   );
 
-  const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
+  const onInputChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       // TODO [>=6]: удалить `onInputChangeProp`.
       if (onInputChangeProp) {
@@ -566,7 +564,7 @@ export function CustomSelect(props: SelectProps) {
     [filterFn, nativeSelectValue, onInputChangeProp, optionsProp, allowClearButton],
   );
 
-  const handleKeyDownSelect = React.useCallback(
+  const handleKeyDownSelect = useCallback(
     (event: React.KeyboardEvent) => {
       if (event.key.length === 1 && event.key !== ' ') {
         onKeyboardInput(event.key);
@@ -609,7 +607,7 @@ export function CustomSelect(props: SelectProps) {
     [areOptionsShown, close, focusOption, onKeyboardInput, open, opened, selectFocused],
   );
 
-  const handleOptionClick = React.useCallback(
+  const handleOptionClick = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       const index = Array.prototype.indexOf.call(
         e.currentTarget.parentNode?.children,
@@ -624,7 +622,7 @@ export function CustomSelect(props: SelectProps) {
     [options, selectOption],
   );
 
-  const handleOptionHover = React.useCallback(
+  const handleOptionHover = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       focusOptionByIndex(
         Array.prototype.indexOf.call(e.currentTarget.parentNode?.children, e.currentTarget),
@@ -634,13 +632,13 @@ export function CustomSelect(props: SelectProps) {
     [focusOptionByIndex],
   );
 
-  const renderOption = React.useCallback(
+  const renderOption = useCallback(
     (option: CustomSelectOptionInterface, index: number) => {
       const hovered = index === focusedOptionIndex;
       const selected = index === selectedOptionIndex;
 
       return (
-        <React.Fragment key={`${option.value}`}>
+        <Fragment key={`${option.value}`}>
           {renderOptionProp({
             option,
             hovered,
@@ -659,7 +657,7 @@ export function CustomSelect(props: SelectProps) {
             // Более подробно по ссылке https://github.com/facebook/react/issues/13956#issuecomment-1082055744
             onMouseOver: handleOptionHover,
           })}
-        </React.Fragment>
+        </Fragment>
       );
     },
     [
@@ -671,7 +669,7 @@ export function CustomSelect(props: SelectProps) {
     ],
   );
 
-  const resolvedContent = React.useMemo(() => {
+  const resolvedContent = useMemo(() => {
     const defaultDropdownContent =
       options?.length > 0 ? (
         options.map(renderOption)
@@ -691,7 +689,7 @@ export function CustomSelect(props: SelectProps) {
   const clearButtonShown =
     allowClearButton && !opened && (controlledValueSet || uncontrolledValueSet);
 
-  const clearButton = React.useMemo(() => {
+  const clearButton = useMemo(() => {
     if (!clearButtonShown) {
       return null;
     }
@@ -704,7 +702,7 @@ export function CustomSelect(props: SelectProps) {
     );
   }, [clearButtonShown, ClearButton, iconProp]);
 
-  const icon = React.useMemo(() => {
+  const icon = useMemo(() => {
     if (iconProp !== undefined) {
       return iconProp;
     }
@@ -718,10 +716,10 @@ export function CustomSelect(props: SelectProps) {
   }, [clearButtonShown, iconProp, opened]);
 
   const afterIcons = (icon || clearButtonShown) && (
-    <React.Fragment>
+    <>
       {clearButton}
       {icon}
-    </React.Fragment>
+    </>
   );
 
   return (

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Icon28VoiceOutline } from '@vkontakte/icons';
 import { baselineComponent } from '../../testing/utils';

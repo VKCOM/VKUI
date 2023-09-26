@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
@@ -48,12 +48,12 @@ export const Textarea = ({
     onChange: onChangeProp,
     value: valueProp,
   });
-  const currentScrollHeight = React.useRef<number>();
+  const currentScrollHeight = useRef<number>();
   const elementRef = useExternRef(getRef);
   const { sizeY = 'none' } = useAdaptivity();
 
   // autosize input
-  React.useEffect(() => {
+  useEffect(() => {
     const el = elementRef.current;
 
     if (grow && el?.offsetParent) {

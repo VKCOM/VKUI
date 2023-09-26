@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';

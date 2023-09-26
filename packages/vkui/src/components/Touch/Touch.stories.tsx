@@ -1,4 +1,4 @@
-import React from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Touch, TouchEvent, TouchProps } from './Touch';
@@ -38,17 +38,17 @@ const containerStyle = {
 
 export const Playground: Story = {
   render: function Render(args) {
-    const [shiftX, setShiftX] = React.useState(0);
-    const [shiftY, setShiftY] = React.useState(0);
-    const [limitX, setLimitX] = React.useState(0);
-    const [limitY, setLimitY] = React.useState(0);
+    const [shiftX, setShiftX] = useState(0);
+    const [shiftY, setShiftY] = useState(0);
+    const [limitX, setLimitX] = useState(0);
+    const [limitY, setLimitY] = useState(0);
 
-    const circleRef = React.useRef<HTMLDivElement | null>(null);
-    const startX = React.useRef(0);
-    const startY = React.useRef(0);
+    const circleRef = useRef<HTMLDivElement | null>(null);
+    const startX = useRef(0);
+    const startY = useRef(0);
 
     // eslint-disable-next-line no-restricted-properties,react-hooks/exhaustive-deps,no-restricted-properties
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
       if (circleRef.current) {
         setLimitX(circleRef.current.offsetLeft);
         setLimitY(circleRef.current.offsetTop);

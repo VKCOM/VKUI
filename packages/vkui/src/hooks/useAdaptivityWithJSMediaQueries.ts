@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { canUseDOM, hasHover as hasHoverLib, hasMouse as hasPointerLib } from '@vkontakte/vkjs';
 import {
   AdaptivityContext,
@@ -49,17 +49,17 @@ export const useAdaptivityWithJSMediaQueries = (): UseAdaptivityWithJSMediaQueri
     sizeY: sizeYContext,
     hasPointer: hasPointerContext,
     hasHover: hasHoverContext,
-  } = React.useContext(AdaptivityContext);
+  } = useContext(AdaptivityContext);
 
   const platform = usePlatform();
   const mediaQueries = useMediaQueries();
 
-  const [[viewWidthLocal, viewHeightLocal], setViewSizeLocal] = React.useState(() => [
+  const [[viewWidthLocal, viewHeightLocal], setViewSizeLocal] = useState(() => [
     getOrDefault(viewWidthContext, getViewWidthByMediaQueries(mediaQueries)),
     getOrDefault(viewHeightContext, getViewHeightByMediaQueries(mediaQueries)),
   ]);
 
-  const adaptivityProps = React.useMemo(() => {
+  const adaptivityProps = useMemo(() => {
     const hasPointer = getOrDefault(hasPointerContext, hasPointerLib);
     const hasHover = getOrDefault(hasHoverContext, hasHoverLib);
     const viewWidth = getOrDefault(viewWidthContext, viewWidthLocal);
@@ -89,7 +89,7 @@ export const useAdaptivityWithJSMediaQueries = (): UseAdaptivityWithJSMediaQueri
     platform,
   ]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleMediaQuery = () => {
       setViewSizeLocal((prevSizeLocal) => {
         const newViewWidthLocal = getOrDefault(

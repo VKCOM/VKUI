@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext, useContext } from 'react';
 import vkBridge from '@vkontakte/vk-bridge';
 import type { AppearanceType } from '../../lib/appearance';
 import { platform, PlatformType } from '../../lib/platform';
@@ -80,7 +80,7 @@ export interface ConfigProviderContextInterface {
   locale: string;
 }
 
-export const ConfigProviderContext = React.createContext<ConfigProviderContextInterface>({
+export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({
   // TODO [>=6]: удалить свойство (#5049).
   webviewType: undefined,
   // TODO [>=6]: сделать по умолчанию `false` (#5049).
@@ -94,4 +94,4 @@ export const ConfigProviderContext = React.createContext<ConfigProviderContextIn
   locale: 'ru',
 });
 
-export const useConfigProvider = () => React.useContext(ConfigProviderContext);
+export const useConfigProvider = () => useContext(ConfigProviderContext);

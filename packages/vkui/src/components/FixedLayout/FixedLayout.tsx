@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
@@ -57,9 +57,9 @@ export const FixedLayout = ({
 }: FixedLayoutProps) => {
   const platform = usePlatform();
   const ref = useExternRef(getRootRef, getRef); // TODO [>=6]: удалить getRef
-  const [width, setWidth] = React.useState<string | undefined>(undefined);
+  const [width, setWidth] = useState<string | undefined>(undefined);
   const { window } = useDOM();
-  const { colRef } = React.useContext(SplitColContext);
+  const { colRef } = useContext(SplitColContext);
 
   const doResize = () => {
     if (useParentWidth && ref.current) {
@@ -79,7 +79,7 @@ export const FixedLayout = ({
       setWidth(undefined);
     }
   };
-  React.useEffect(doResize, [colRef, platform, ref, useParentWidth]);
+  useEffect(doResize, [colRef, platform, ref, useParentWidth]);
   useGlobalEventListener(window, 'resize', doResize);
 
   return (

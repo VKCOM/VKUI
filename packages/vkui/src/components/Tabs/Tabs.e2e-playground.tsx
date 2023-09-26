@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { Icon16Dropdown, Icon20PictureOutline, Icon24PictureOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { HasChildren } from '../../types';
@@ -9,7 +9,7 @@ import { TabsItem, TabsItemProps } from '../TabsItem/TabsItem';
 import { Tabs, TabsModeContext, type TabsProps } from './Tabs';
 
 function useIconByMode() {
-  const { mode } = React.useContext(TabsModeContext);
+  const { mode } = useContext(TabsModeContext);
   return mode === 'default' ? <Icon24PictureOutline /> : <Icon20PictureOutline />;
 }
 
@@ -22,7 +22,7 @@ const Unscrollable = ({
   const beforeIconByMode = useIconByMode();
 
   return (
-    <React.Fragment>
+    <>
       <TabsItem before={beforeIconByMode} status={status} after={<Icon16Dropdown />} selected>
         Новости
       </TabsItem>
@@ -30,7 +30,7 @@ const Unscrollable = ({
         Интересное
       </TabsItem>
       {children}
-    </React.Fragment>
+    </>
   );
 };
 
@@ -38,7 +38,7 @@ const Scrollable = ({ disabled }: { disabled?: boolean }) => {
   const beforeIconByMode = useIconByMode();
 
   return (
-    <React.Fragment>
+    <>
       <HorizontalScroll arrowSize="m">
         <TabsItem disabled={disabled}>Сообщества</TabsItem>
         <TabsItem before={beforeIconByMode} after={<Icon16Dropdown />} selected disabled={disabled}>
@@ -73,7 +73,7 @@ const Scrollable = ({ disabled }: { disabled?: boolean }) => {
           Фотографии
         </TabsItem>
       </HorizontalScroll>
-    </React.Fragment>
+    </>
   );
 };
 

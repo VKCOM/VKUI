@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { ImageBase, type ImageBaseBadgeProps, ImageBaseContext } from '../../ImageBase/ImageBase';
 import styles from './GridAvatarBadge.module.css';
@@ -6,7 +6,7 @@ import styles from './GridAvatarBadge.module.css';
 export type GridAvatarBadgeProps = ImageBaseBadgeProps;
 
 export const GridAvatarBadge = ({ className, ...restProps }: GridAvatarBadgeProps) => {
-  const { size } = React.useContext(ImageBaseContext);
+  const { size } = useContext(ImageBaseContext);
   return (
     <ImageBase.Badge
       {...restProps}

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo, useRef } from 'react';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useDOM } from '../../lib/dom';
@@ -83,9 +83,9 @@ export const Touch = ({
   ...restProps
 }: TouchProps) => {
   const { document } = useDOM();
-  const events = React.useMemo(getSupportedEvents, []);
-  const didSlide = React.useRef(false);
-  const gesture = React.useRef<Partial<Gesture> | null>(null);
+  const events = useMemo(getSupportedEvents, []);
+  const didSlide = useRef(false);
+  const gesture = useRef<Partial<Gesture> | null>(null);
   const handle = (e: VKUITouchEvent, handlers: Array<TouchEventHandler | undefined | false>) => {
     stopPropagation && e.stopPropagation();
     handlers.forEach((cb) => {

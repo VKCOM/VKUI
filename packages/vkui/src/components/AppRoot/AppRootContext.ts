@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext } from 'react';
 
 export interface AppRootContextInterface {
   appRoot?: React.RefObject<HTMLDivElement>;
@@ -10,6 +10,6 @@ export interface AppRootContextInterface {
   layout?: 'card' | 'plain';
 }
 
-export const AppRootContext = React.createContext<AppRootContextInterface>({
+export const AppRootContext = createContext<AppRootContextInterface>({
   portalRoot: null,
 });

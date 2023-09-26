@@ -1,4 +1,3 @@
-import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon20GiftCircleFillRed } from '@vkontakte/icons';

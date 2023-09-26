@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { cloneElement, isValidElement } from 'react';
 import { warnOnce } from '../lib/warnOnce';
 import { useEffectDev } from './useEffectDev';
 import { useExternRef } from './useExternRef';
@@ -15,7 +15,7 @@ export const usePatchChildrenRef = <T = HTMLElement>(
   children?: ChildrenElement<T>,
 ): [React.MutableRefObject<T | null>, ChildrenElement<T> | undefined] => {
   const childRef =
-    React.isValidElement(children) &&
+    isValidElement(children) &&
     (isDOMTypeElement(children) ? (children.ref as React.Ref<T>) : children.props.getRootRef);
   const patchedRef = useExternRef<T>(childRef);
 
@@ -30,8 +30,8 @@ export const usePatchChildrenRef = <T = HTMLElement>(
 
   return [
     patchedRef,
-    React.isValidElement(children)
-      ? React.cloneElement(children, {
+    isValidElement(children)
+      ? cloneElement(children, {
           [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
         })
       : children,

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef } from 'react';
 import { Icon28SettingsOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import {
@@ -21,7 +21,7 @@ const AppWrapper = ({ children, ...restProps }: HasChildren) => (
 
 const ActionSheetWrapper = (props: ActionSheetProps) => {
   const platform = usePlatform();
-  const toggleRef = React.useRef<HTMLButtonElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   return (
     <div style={platform === Platform.VKCOM ? { height: 900 } : {}}>

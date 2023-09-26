@@ -1,17 +1,17 @@
-import * as React from 'react';
+import { useCallback, useState } from 'react';
 
 export const useBooleanState = (defaultValue = false) => {
-  const [value, setValue] = React.useState(defaultValue);
+  const [value, setValue] = useState(defaultValue);
 
-  const setTrue = React.useCallback(() => {
+  const setTrue = useCallback(() => {
     setValue(true);
   }, []);
 
-  const setFalse = React.useCallback(() => {
+  const setFalse = useCallback(() => {
     setValue(false);
   }, []);
 
-  const toggle = React.useCallback(() => {
+  const toggle = useCallback(() => {
     setValue(!value);
   }, [value]);
 

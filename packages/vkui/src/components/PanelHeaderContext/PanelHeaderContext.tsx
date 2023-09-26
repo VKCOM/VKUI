@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
@@ -36,10 +36,10 @@ export const PanelHeaderContext = ({
 }: PanelHeaderContextProps) => {
   const { document } = useDOM();
   const platform = usePlatform();
-  const [visible, setVisible] = React.useState(opened);
+  const [visible, setVisible] = useState(opened);
   const closing = visible && !opened;
   const { sizeX = 'none' } = useAdaptivity();
-  const elementRef = React.useRef<HTMLDivElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
 
   useIsomorphicLayoutEffect(() => {
     opened && setVisible(true);
@@ -65,7 +65,7 @@ export const PanelHeaderContext = ({
   // fallback onAnimationEnd when animationend not supported
   const onAnimationEnd = () => setVisible(false);
   const animationFallback = useTimeout(onAnimationEnd, 200);
-  React.useEffect(
+  useEffect(
     () => (closing ? animationFallback.set() : animationFallback.clear()),
     [animationFallback, closing],
   );

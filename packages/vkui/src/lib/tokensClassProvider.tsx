@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, cloneElement, isValidElement } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { generateVKUITokensClassName } from '../helpers/generateVKUITokensClassName';
 
@@ -15,9 +15,9 @@ export const TokensClassProvider = ({
 }: TokensClassProviderProps) => {
   return (
     <>
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement<{ className?: string }>(child)) {
-          return React.cloneElement(child, {
+      {Children.map(children, (child) => {
+        if (isValidElement<{ className?: string }>(child)) {
+          return cloneElement(child, {
             className: classNames(
               child.props.className,
               generateVKUITokensClassName(platform, appearance),

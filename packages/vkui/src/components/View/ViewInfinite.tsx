@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, Component } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -99,10 +99,7 @@ export interface ViewInfiniteState {
   browserSwipe: boolean;
 }
 
-class ViewInfiniteComponent extends React.Component<
-  ViewInfiniteProps & DOMProps,
-  ViewInfiniteState
-> {
+class ViewInfiniteComponent extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteState> {
   constructor(props: ViewInfiniteProps) {
     super(props);
 
@@ -144,7 +141,7 @@ class ViewInfiniteComponent extends React.Component<
   }
 
   get panels() {
-    return React.Children.toArray(this.props.children) as React.ReactElement[];
+    return Children.toArray(this.props.children) as React.ReactElement[];
   }
 
   panelNodes: { [id: string]: HTMLDivElement | null } = {};

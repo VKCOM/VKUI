@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import {
   getBadgeIconSizeByImageBaseSize,
@@ -24,7 +24,7 @@ export const AvatarBadgeWithPreset = ({
   className,
   ...restProps
 }: AvatarBadgeWithPresetProps) => {
-  const { size } = React.useContext(ImageBaseContext);
+  const { size } = useContext(ImageBaseContext);
   const badgeSize = getBadgeIconSizeByImageBaseSize(size);
   const isOnlinePreset = preset === 'online';
   const presetClassName = isOnlinePreset

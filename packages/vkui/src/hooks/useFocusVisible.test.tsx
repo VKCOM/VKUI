@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { AppRootContext } from '../components/AppRoot/AppRootContext';
 import { useFocusVisible } from './useFocusVisible';

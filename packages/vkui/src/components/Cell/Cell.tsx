@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useEffect } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -83,8 +83,8 @@ export const Cell = ({
     onDragFinish,
   });
 
-  const { toggleDrag } = React.useContext(ListContext);
-  React.useEffect(() => {
+  const { toggleDrag } = useContext(ListContext);
+  useEffect(() => {
     if (dragging) {
       toggleDrag(true);
       return () => toggleDrag(false);
@@ -137,17 +137,17 @@ export const Cell = ({
     disabled: simpleCellDisabled,
     Component: Component,
     before: (
-      <React.Fragment>
+      <>
         {draggable && platform !== Platform.IOS && dragger}
         {selectable && checkbox}
         {before}
-      </React.Fragment>
+      </>
     ),
     after: (
-      <React.Fragment>
+      <>
         {draggable && platform === Platform.IOS && dragger}
         {after}
-      </React.Fragment>
+      </>
     ),
   };
 

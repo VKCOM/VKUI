@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon16Clear } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { ChipsInput, type ChipsInputProps } from './ChipsInput';

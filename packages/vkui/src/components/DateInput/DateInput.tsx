@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -144,15 +144,15 @@ export const DateInput = ({
   disableCalendar = false,
   ...props
 }: DateInputProps) => {
-  const daysRef = React.useRef<HTMLSpanElement>(null);
-  const monthsRef = React.useRef<HTMLSpanElement>(null);
-  const yearsRef = React.useRef<HTMLSpanElement>(null);
-  const hoursRef = React.useRef<HTMLSpanElement>(null);
-  const minutesRef = React.useRef<HTMLSpanElement>(null);
+  const daysRef = useRef<HTMLSpanElement>(null);
+  const monthsRef = useRef<HTMLSpanElement>(null);
+  const yearsRef = useRef<HTMLSpanElement>(null);
+  const hoursRef = useRef<HTMLSpanElement>(null);
+  const minutesRef = useRef<HTMLSpanElement>(null);
 
   const maxElement = enableTime ? 4 : 2;
 
-  const onInternalValueChange = React.useCallback(
+  const onInternalValueChange = useCallback(
     (internalValue: string[]) => {
       for (let i = 0; i <= maxElement; i += 1) {
         if (internalValue[i].length < elementsConfig(i).length) {
@@ -174,7 +174,7 @@ export const DateInput = ({
     [enableTime, maxElement, onChange, value],
   );
 
-  const refs = React.useMemo(
+  const refs = useMemo(
     () => [daysRef, monthsRef, yearsRef, hoursRef, minutesRef],
     [daysRef, monthsRef, yearsRef, hoursRef, minutesRef],
   );
@@ -207,7 +207,7 @@ export const DateInput = ({
 
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
-  const onCalendarChange = React.useCallback(
+  const onCalendarChange = useCallback(
     (value?: Date | undefined) => {
       onChange?.(value);
       if (closeOnChange && !enableTime) {
@@ -271,7 +271,7 @@ export const DateInput = ({
           aria-label={changeYearAriaLabel}
         />
         {enableTime && (
-          <React.Fragment>
+          <>
             <InputLikeDivider className={styles['DateInput__input--time-divider']}>
               {' '}
             </InputLikeDivider>
@@ -292,7 +292,7 @@ export const DateInput = ({
               value={internalValue[4]}
               aria-label={changeMinutesAriaLabel}
             />
-          </React.Fragment>
+          </>
         )}
       </Text>
       {open && !disableCalendar && (

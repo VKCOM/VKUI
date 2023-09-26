@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import {
   AdaptivityContext,
   type AdaptivityProps,
@@ -10,5 +10,5 @@ export type { AdaptivityProps };
  * Возвращает сырые данные из AdaptivityProvider.
  */
 export const useAdaptivity = (): AdaptivityProps => {
-  return React.useContext(AdaptivityContext);
+  return useContext(AdaptivityContext);
 };

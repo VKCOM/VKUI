@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HasComponent, HasRef } from '../../types';
 import styles from './FormLayout.module.css';

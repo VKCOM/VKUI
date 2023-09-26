@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HasRootRef } from '../../../types';
 import { Tappable } from '../../Tappable/Tappable';

@@ -1,6 +1,6 @@
-import * as React from 'react';
+import { createContext } from 'react';
 import { ImageBaseContextProps } from './types';
 
-export const ImageBaseContext = React.createContext<ImageBaseContextProps>({
+export const ImageBaseContext = createContext<ImageBaseContextProps>({
   size: 0,
 });

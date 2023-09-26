@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, useCallback, useReducer, useRef } from 'react';
 import { isFunction, noop } from '@vkontakte/vkjs';
 import { getNavId } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -24,7 +24,7 @@ export interface ModalTransitionProps extends ModalTransitionState {
 }
 
 function getModals(children: React.ReactNode | React.ReactNode[]) {
-  return React.Children.toArray(children) as React.ReactElement[];
+  return Children.toArray(children) as React.ReactElement[];
 }
 
 const warn = warnOnce('ModalRoot');
@@ -93,7 +93,7 @@ export function useModalManager(
   onClosed: (id: string) => void = noop,
   initModal: (state: ModalsStateEntry) => void = noop,
 ): ModalTransitionProps {
-  const modalsState = React.useRef<ModalsState>({}).current;
+  const modalsState = useRef<ModalsState>({}).current;
   getModals(children).forEach((Modal) => {
     const modalProps = Modal.props;
     const id = getNavId(modalProps, warn);
@@ -117,7 +117,7 @@ export function useModalManager(
 
   const isMissing = activeModal && !modalsState[activeModal];
   const safeActiveModal = isMissing ? null : activeModal;
-  const [transitionState, dispatchTransition] = React.useReducer(modalTransitionReducer, {
+  const [transitionState, dispatchTransition] = useReducer(modalTransitionReducer, {
     activeModal: safeActiveModal,
     enteringModal: null,
     exitingModal: null,
@@ -144,7 +144,7 @@ export function useModalManager(
 
   const isCard = (id: string | null | undefined) =>
     id != null && modalsState[id]?.type === ModalType.CARD;
-  const onEntered = React.useCallback(
+  const onEntered = useCallback(
     (id: string | null) => {
       if (id) {
         const modalState = modalsState[id];
@@ -160,7 +160,7 @@ export function useModalManager(
     },
     [modalsState, onOpened],
   );
-  const onExited = React.useCallback(
+  const onExited = useCallback(
     (id: string | null) => {
       if (id) {
         const modalState = modalsState[id];
@@ -179,7 +179,7 @@ export function useModalManager(
   const delayEnter = Boolean(
     transitionState.exitingModal && (isCard(activeModal) || isCard(transitionState.exitingModal)),
   );
-  const getModalState = React.useCallback(
+  const getModalState = useCallback(
     (id: string | undefined | null) => (id ? modalsState[id] : undefined),
     [modalsState],
   );

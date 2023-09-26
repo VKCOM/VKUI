@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { getMillisecondsToTomorrow, isSameDay } from '../lib/date';
 import { useDOM } from '../lib/dom';
 
@@ -13,9 +13,9 @@ import { useDOM } from '../lib/dom';
  */
 export function useTodayDate(listenDayChangesForUpdate = false) {
   const { document, window } = useDOM();
-  const [todayDate, setTodayDate] = React.useState(() => new Date());
+  const [todayDate, setTodayDate] = useState(() => new Date());
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!listenDayChangesForUpdate || !document || !window) {
       return;
     }

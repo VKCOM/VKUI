@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HasComponent } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';

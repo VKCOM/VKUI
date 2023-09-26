@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -48,10 +47,10 @@ export const TextTooltip = ({
       arrow
       arrowClassName={styles['TextTooltip__arrow']}
       content={
-        <React.Fragment>
+        <>
           {hasReactNode(header) && <Subhead weight="2">{header}</Subhead>}
           {hasReactNode(text) && <Subhead>{text}</Subhead>}
-        </React.Fragment>
+        </>
       }
       {...popperProps}
     >

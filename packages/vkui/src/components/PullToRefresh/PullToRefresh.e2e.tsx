@@ -1,4 +1,3 @@
-import React from 'react';
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
 import { PullToRefreshPlayground } from './PullToRefresh.e2e-playground';

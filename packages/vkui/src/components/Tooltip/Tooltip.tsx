@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, cloneElement, isValidElement, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -41,7 +41,7 @@ const isDOMTypeElement = <
 >(
   element: React.ReactElement,
 ): element is DOMElement<P, T> => {
-  return React.isValidElement(element) && typeof element.type === 'string';
+  return isValidElement(element) && typeof element.type === 'string';
 };
 
 const warn = warnOnce('Tooltip');
@@ -142,10 +142,10 @@ export const Tooltip = ({
   maxWidth = TOOLTIP_MAX_WIDTH,
   ...restProps
 }: TooltipProps) => {
-  const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
-  const [target, setTarget] = React.useState<HTMLElement | null>(null);
+  const [arrowRef, setArrowRef] = useState<HTMLDivElement | null>(null);
+  const [target, setTarget] = useState<HTMLElement | null>(null);
   /* eslint-disable no-restricted-properties */
-  const tooltipContainer = React.useMemo(
+  const tooltipContainer = useMemo(
     () => target?.closest<HTMLDivElement>(`[${tooltipContainerAttr}]`),
     [target],
   );
@@ -156,7 +156,7 @@ export const Tooltip = ({
   const isNotAutoPlacement = checkIsNotAutoPlacement(placement);
 
   if (process.env.NODE_ENV === 'development') {
-    const multiChildren = React.Children.count(children) > 1;
+    const multiChildren = Children.count(children) > 1;
     // Empty children is a noop
     const primitiveChild = hasReactNode(children) && typeof children !== 'object';
     (multiChildren || primitiveChild) &&
@@ -172,7 +172,7 @@ export const Tooltip = ({
       );
   }
 
-  const floatingPositionStrategy = React.useMemo(
+  const floatingPositionStrategy = useMemo(
     () => (target?.style.position === 'fixed' ? 'fixed' : 'absolute'),
     [target],
   );
@@ -181,7 +181,7 @@ export const Tooltip = ({
     throw new Error('Use TooltipContainer for Tooltip outside Panel (see docs)');
   }
 
-  const memoizedMiddlewares = React.useMemo(() => {
+  const memoizedMiddlewares = useMemo(() => {
     const middlewares: UseFloatingMiddleware[] = [
       offsetMiddleware({
         crossAxis: offsetX,
@@ -262,18 +262,18 @@ export const Tooltip = ({
 
   const childRef = isDOMTypeElement<React.HTMLAttributes<HTMLElement>, HTMLElement>(children)
     ? children.ref
-    : React.isValidElement<HasRootRef<HTMLElement>>(children)
+    : isValidElement<HasRootRef<HTMLElement>>(children)
     ? children.props.getRootRef
     : null;
   const patchedRef = useExternRef<HTMLElement>(setTarget, refs.setReference, childRef);
-  const child = React.isValidElement(children)
-    ? React.cloneElement(children, {
+  const child = isValidElement(children)
+    ? cloneElement(children, {
         [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
       })
     : children;
 
   return (
-    <React.Fragment>
+    <>
       {child}
       {isShown &&
         target != null &&
@@ -297,6 +297,6 @@ export const Tooltip = ({
           </>,
           tooltipContainer,
         )}
-    </React.Fragment>
+    </>
   );
 };

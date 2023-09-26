@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -67,9 +67,9 @@ export const PromoBanner = ({
     );
   }
 
-  const [currentPixel, setCurrentPixel] = React.useState('');
+  const [currentPixel, setCurrentPixel] = useState('');
 
-  const statsPixels = React.useMemo(
+  const statsPixels = useMemo(
     () =>
       (bannerData.statistics
         ? bannerData.statistics.reduce((acc, item) => ({ ...acc, [item.type]: item.url }), {})
@@ -77,12 +77,9 @@ export const PromoBanner = ({
     [bannerData.statistics],
   );
 
-  const onClick = React.useCallback(
-    () => setCurrentPixel(statsPixels.click || ''),
-    [statsPixels.click],
-  );
+  const onClick = useCallback(() => setCurrentPixel(statsPixels.click || ''), [statsPixels.click]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (statsPixels.playbackStarted) {
       setCurrentPixel(statsPixels.playbackStarted);
     }

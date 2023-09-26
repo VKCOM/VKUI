@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Icon24SmileOutline,
   Icon24VoiceOutline,

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import {
   Icon28ClipOutline,
@@ -27,7 +27,7 @@ type Story = StoryObj<TabbarProps>;
 
 export const Playground: Story = {
   render: function Render(args) {
-    const [activeStory, setActiveStory] = React.useState<string>('profile');
+    const [activeStory, setActiveStory] = useState<string>('profile');
     const onStoryChange = (e: React.MouseEvent<HTMLElement>) =>
       setActiveStory(e.currentTarget.dataset.story!);
 

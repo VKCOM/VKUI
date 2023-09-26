@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Fragment } from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { AppRoot } from '../AppRoot/AppRoot';
 import { Group } from '../Group/Group';
@@ -19,14 +19,14 @@ export const PanelPlayground = (props: ComponentPlaygroundProps) => {
         {
           centered: [true, false],
           children: [
-            <React.Fragment key="">
+            <Fragment key="">
               <PanelHeader>Head</PanelHeader>
               {content(500)}
-            </React.Fragment>,
-            <React.Fragment key="">
+            </Fragment>,
+            <Fragment key="">
               <PanelHeader>Head</PanelHeader>
               {content(30)}
-            </React.Fragment>,
+            </Fragment>,
           ],
           $adaptivity: 'x',
         },

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { isValidElement } from 'react';
 import type {
   AdaptivityProps,
   SizeProps,
@@ -83,8 +83,8 @@ export function prettyProps(props: any) {
         return prop;
       }
       if (
-        React.isValidElement(value) ||
-        (Array.isArray(value) && value.every((node: any) => React.isValidElement(node)))
+        isValidElement(value) ||
+        (Array.isArray(value) && value.every((node: any) => isValidElement(node)))
       ) {
         return `${prop}=<jsx>`;
       }

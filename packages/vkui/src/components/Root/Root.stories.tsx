@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -22,7 +22,7 @@ type Story = StoryObj<RootProps>;
 
 export const Example: Story = {
   render: function Render() {
-    const [activeView, setActiveView] = React.useState('view1');
+    const [activeView, setActiveView] = useState('view1');
 
     return (
       <Root activeView={activeView}>

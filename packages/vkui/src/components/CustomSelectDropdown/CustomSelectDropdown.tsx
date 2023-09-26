@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -38,9 +38,9 @@ export const CustomSelectDropdown = ({
   className,
   ...restProps
 }: CustomSelectDropdownProps) => {
-  const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
+  const [isTop, setIsTop] = useState(() => calcIsTop(placement));
 
-  const onPlacementChange = React.useCallback(
+  const onPlacementChange = useCallback(
     ({ placement }: { placement?: Placement }) => {
       setIsTop(calcIsTop(placement));
       parentOnPlacementChange?.(placement);

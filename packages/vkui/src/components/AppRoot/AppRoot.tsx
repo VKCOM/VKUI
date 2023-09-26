@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAppearance } from '../../hooks/useAppearance';
@@ -91,8 +91,8 @@ export const AppRoot = ({
   ...props
 }: AppRootProps) => {
   const isKeyboardInputActive = useKeyboardInputTracker();
-  const rootRef = React.useRef<HTMLDivElement | null>(null);
-  const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
   const { document } = useDOM();
   const deprecatedInsets = useInsets(!safeAreaInsets);
   const insets = safeAreaInsets ? safeAreaInsets : deprecatedInsets;
@@ -224,7 +224,7 @@ export const AppRoot = ({
     return () => document!.documentElement.style.removeProperty('color-scheme');
   }, [appearance]);
 
-  const ScrollController = React.useMemo(
+  const ScrollController = useMemo(
     () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
     [scroll],
   );

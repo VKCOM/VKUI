@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Fragment, HtmlHTMLAttributes, ReactElement } from 'react';
+import { HtmlHTMLAttributes, ReactElement } from 'react';
 import { render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { HasRootRef } from '../../types';
@@ -70,10 +69,10 @@ describe('Tooltip', () => {
     expect(() =>
       render(
         <Tooltip isShown>
-          <Fragment>
+          <>
             text
             <div />
-          </Fragment>
+          </>
         </Tooltip>,
       ),
     ).not.toThrow();

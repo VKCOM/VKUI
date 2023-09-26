@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
@@ -61,8 +61,8 @@ const NativeSelect = ({
   value: valueProp,
   ...restProps
 }: NativeSelectProps) => {
-  const [title, setTitle] = React.useState('');
-  const [empty, setEmpty] = React.useState(false);
+  const [title, setTitle] = useState('');
+  const [empty, setEmpty] = useState(false);
   const [value, onChange] = useEnsuredControl({
     defaultValue,
     disabled,

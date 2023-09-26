@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -30,11 +30,11 @@ const MODAL_PAGE_WITH_AUTO_FOCUS = 'modal-page-with-auto-focus';
 
 export const ModalDynamicHeight: Story = {
   render: function Render() {
-    const [isLoading, setIsLoading] = React.useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const { updateModalHeight } = useModalRootContext();
-    const timer = React.useRef<ReturnType<typeof setTimeout>>();
+    const timer = useRef<ReturnType<typeof setTimeout>>();
 
-    React.useEffect(() => {
+    useEffect(() => {
       timer.current = setTimeout(() => {
         setIsLoading(false);
       }, 2000);
@@ -45,7 +45,7 @@ export const ModalDynamicHeight: Story = {
     }, []);
 
     // После установки стейта и перерисовки компонента SelectModal сообщим ModalRoot об изменениях
-    React.useEffect(() => {
+    useEffect(() => {
       if (!isLoading) {
         updateModalHeight();
       }
@@ -66,16 +66,16 @@ export const ModalDynamicHeight: Story = {
 
 export const ModalRootAutoFocus: Story = {
   render: function Render() {
-    const [activeModal, setActiveModal] = React.useState<string | null>(MODAL_ROOT_WITH_AUTO_FOCUS);
-    const inputRef = React.useRef<HTMLInputElement>(null);
+    const [activeModal, setActiveModal] = useState<string | null>(MODAL_ROOT_WITH_AUTO_FOCUS);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleOpen = React.useCallback((id) => {
+    const handleOpen = useCallback((id) => {
       if (id === MODAL_ROOT_WITH_AUTO_FOCUS && inputRef.current) {
         inputRef.current.focus();
       }
     }, []);
 
-    const onClose = React.useCallback(() => {
+    const onClose = useCallback(() => {
       setActiveModal(null);
     }, []);
 
@@ -103,9 +103,9 @@ export const ModalRootAutoFocus: Story = {
 
 export const ModalPageAutoFocus: Story = {
   render: function Render() {
-    const inputRef = React.useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleOpen = React.useCallback(() => {
+    const handleOpen = useCallback(() => {
       if (inputRef.current) {
         inputRef.current.focus();
       }

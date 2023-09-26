@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import vkBridge from '@vkontakte/vk-bridge';
 import { Platform } from '../../lib/platform';
@@ -35,20 +35,20 @@ type Story = StoryObj<ViewProps>;
 
 const MainPanelContent = ({ onProfileClick }: { onProfileClick: () => void }) => {
   return (
-    <React.Fragment>
+    <>
       <PanelHeader>Main</PanelHeader>
       <Group>
         <CellButton stopPropagation={false} onClick={onProfileClick}>
           Профиль
         </CellButton>
       </Group>
-    </React.Fragment>
+    </>
   );
 };
 
 const ProfilePanelContent = ({ onSettingsClick }: { onSettingsClick: () => void }) => {
   return (
-    <React.Fragment>
+    <>
       <PanelHeader>Профиль</PanelHeader>
       <Group>
         <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
@@ -85,7 +85,7 @@ const ProfilePanelContent = ({ onSettingsClick }: { onSettingsClick: () => void 
           </div>
         </HorizontalScroll>
       </Group>
-    </React.Fragment>
+    </>
   );
 };
 
@@ -96,7 +96,7 @@ const SettingsPanelContent = ({
   name: string;
   onChangeName: (val: string) => void;
 }) => {
-  const handleNameChange = React.useCallback(
+  const handleNameChange = useCallback(
     (event) => {
       onChangeName(event.target.value.trim());
     },
@@ -104,7 +104,7 @@ const SettingsPanelContent = ({
   );
 
   return (
-    <React.Fragment>
+    <>
       <PanelHeader>Настройки</PanelHeader>
       <Group>
         <Placeholder>Пример с блокированием свайпбека пока не будет выполнено условие</Placeholder>
@@ -112,38 +112,39 @@ const SettingsPanelContent = ({
           <Input id="name" value={name} onChange={handleNameChange} />
         </FormItem>
       </Group>
-    </React.Fragment>
+    </>
   );
 };
 
 export const SwipeBlockExample: Story = {
   render: function Render() {
-    const [history, setHistory] = React.useState(['main']);
+    const [history, setHistory] = useState(['main']);
     const activePanel = history[history.length - 1];
     const isFirst = history.length === 1;
 
-    const go = React.useCallback((panel) => {
+    const go = useCallback((panel) => {
       setHistory((prevHistory) => [...prevHistory, panel]);
     }, []);
-    const goBack = React.useCallback(() => {
+    const goBack = useCallback(() => {
       setHistory((prevHistory) => prevHistory.slice(0, -1));
     }, []);
 
-    const handleProfileClick = React.useCallback(() => go('profile'), [go]);
-    const handleSettingsClick = React.useCallback(() => go('settings'), [go]);
+    const handleProfileClick = useCallback(() => go('profile'), [go]);
+    const handleSettingsClick = useCallback(() => go('settings'), [go]);
 
-    React.useEffect(() => {
+    useEffect(() => {
       // В стандартных мини-приложениях делайте так:
       void vkBridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
       // В мини-приложениях `WebviewType.INTERNAL` делайте так:
       void vkBridge.send(isFirst ? 'VKWebAppEnableSwipeBack' : 'VKWebAppDisableSwipeBack');
     }, [isFirst]);
 
-    const [userName, setUserName] = React.useState('');
-    const [popoutWithRestriction, setPopoutWithRestriction] =
-      React.useState<React.ReactNode | null>(null);
+    const [userName, setUserName] = useState('');
+    const [popoutWithRestriction, setPopoutWithRestriction] = useState<React.ReactNode | null>(
+      null,
+    );
 
-    const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
+    const handleSwipeBackStartForPreventIfNeeded = useCallback(
       (activePanel) => {
         if (activePanel === 'settings') {
           if (userName !== '') {

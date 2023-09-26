@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, useRef, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -54,9 +54,9 @@ export const BaseGallery = ({
   arrowSize = 'l',
   ...restProps
 }: BaseGalleryProps) => {
-  const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
-  const layoutState = React.useRef<LayoutState>(LAYOUT_DEFAULT_STATE);
-  const [shiftState, setShiftState] = React.useState<ShiftingState>(SHIFT_DEFAULT_STATE);
+  const slidesStore = useRef<Record<string, HTMLDivElement | null>>({});
+  const layoutState = useRef<LayoutState>(LAYOUT_DEFAULT_STATE);
+  const [shiftState, setShiftState] = useState<ShiftingState>(SHIFT_DEFAULT_STATE);
 
   const rootRef = useExternRef(getRootRef);
   const viewportRef = useExternRef(getRef);
@@ -124,7 +124,7 @@ export const BaseGallery = ({
 
   const initializeSlides = (options: { animation?: boolean } = {}) => {
     const localSlides =
-      React.Children.map(children, (_item: React.ReactNode, i: number): GallerySlidesState => {
+      Children.map(children, (_item: React.ReactNode, i: number): GallerySlidesState => {
         const elem = slidesStore.current[`slide-${i}`];
         return {
           coordX: elem?.offsetLeft ?? 0,
@@ -332,7 +332,7 @@ export const BaseGallery = ({
         noSlideClick
       >
         <div className={styles['BaseGallery__layer']} style={layerStyle}>
-          {React.Children.map(children, (item: React.ReactNode, i: number) => (
+          {Children.map(children, (item: React.ReactNode, i: number) => (
             <div
               className={styles['BaseGallery__slide']}
               key={`slide-${i}`}
@@ -349,7 +349,7 @@ export const BaseGallery = ({
           aria-hidden
           className={classNames(styles['BaseGallery__bullets'], stylesBullets[bullets])}
         >
-          {React.Children.map(children, (_item: React.ReactNode, index: number) => (
+          {Children.map(children, (_item: React.ReactNode, index: number) => (
             <div
               className={classNames(
                 styles['BaseGallery__bullet'],

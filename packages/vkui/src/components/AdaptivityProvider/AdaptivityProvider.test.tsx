@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { render, screen } from '@testing-library/react';
 import { type BridgeAdaptivity, useBridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
 import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
@@ -21,7 +21,7 @@ jest.mock('../../hooks/useBridgeAdaptivity', () => {
 });
 
 function CatchAdaptivityProviderContext() {
-  const { sizeX, sizeY, viewWidth, viewHeight } = React.useContext(AdaptivityContext);
+  const { sizeX, sizeY, viewWidth, viewHeight } = useContext(AdaptivityContext);
 
   return (
     <div

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useInsets } from '../hooks/useInsets';
 import { HasInsets } from '../types';
 

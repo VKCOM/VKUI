@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useState } from 'react';
 import { useCalendar } from '../../hooks/useCalendar';
 import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import {
@@ -82,10 +82,10 @@ export const CalendarRange = ({
     isDayDisabled,
     resetSelectedDay,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
-  const [hintedDate, setHintedDate] = React.useState<Array<Date | null>>();
+  const [hintedDate, setHintedDate] = useState<Array<Date | null>>();
   const secondViewDate = addMonths(viewDate, 1);
 
-  const handleKeyDown = React.useCallback(
+  const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
         event.preventDefault();
@@ -105,7 +105,7 @@ export const CalendarRange = ({
     [focusedDay, setFocusedDay, setViewDate, value, viewDate],
   );
 
-  const getNewValue = React.useCallback(
+  const getNewValue = useCallback(
     (date: Date) => {
       if (!value) {
         return [date, null];
@@ -126,7 +126,7 @@ export const CalendarRange = ({
     [value],
   );
 
-  const onDayChange = React.useCallback(
+  const onDayChange = useCallback(
     (date: Date) => {
       onChange?.(getNewValue(date));
       setHintedDate(undefined);
@@ -134,49 +134,46 @@ export const CalendarRange = ({
     [onChange, getNewValue],
   );
 
-  const isDaySelected = React.useCallback((day: Date) => getIsDaySelected(day, value), [value]);
+  const isDaySelected = useCallback((day: Date) => getIsDaySelected(day, value), [value]);
 
-  const isDayActive = React.useCallback(
+  const isDayActive = useCallback(
     (day: Date) =>
       Boolean((value?.[0] && isSameDay(day, value[0])) || (value?.[1] && isSameDay(day, value[1]))),
     [value],
   );
 
-  const isDaySelectionEnd = React.useCallback(
+  const isDaySelectionEnd = useCallback(
     (day: Date, dayOfWeek: number) =>
       Boolean(isLastDay(day, dayOfWeek) || (value?.[1] && isSameDay(day, value[1]))),
     [value],
   );
 
-  const isHintedDaySelectionEnd = React.useCallback(
+  const isHintedDaySelectionEnd = useCallback(
     (day: Date, dayOfWeek: number) =>
       Boolean(isLastDay(day, dayOfWeek) || (hintedDate?.[1] && isSameDay(day, hintedDate[1]))),
     [hintedDate],
   );
 
-  const isDaySelectionStart = React.useCallback(
+  const isDaySelectionStart = useCallback(
     (day: Date, dayOfWeek: number) =>
       Boolean(isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDay(day, value[0]))),
     [value],
   );
 
-  const isHintedDaySelectionStart = React.useCallback(
+  const isHintedDaySelectionStart = useCallback(
     (day: Date, dayOfWeek: number) =>
       Boolean(isFirstDay(day, dayOfWeek) || (hintedDate?.[0] && isSameDay(day, hintedDate[0]))),
     [hintedDate],
   );
 
-  const onDayEnter = React.useCallback(
+  const onDayEnter = useCallback(
     (date: Date) => setHintedDate(getNewValue(date)),
     [setHintedDate, getNewValue],
   );
 
-  const onDayLeave = React.useCallback(() => setHintedDate(undefined), [setHintedDate]);
+  const onDayLeave = useCallback(() => setHintedDate(undefined), [setHintedDate]);
 
-  const isDayHinted = React.useCallback(
-    (day: Date) => getIsDaySelected(day, hintedDate),
-    [hintedDate],
-  );
+  const isDayHinted = useCallback((day: Date) => getIsDaySelected(day, hintedDate), [hintedDate]);
 
   return (
     <RootComponent {...props} baseClassName={styles['CalendarRange']}>

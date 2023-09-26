@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import { SizeType } from '../../lib/adaptivity';
 import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -39,12 +39,12 @@ export const CalendarTime = ({
   changeHoursAriaLabel = 'Изменить час',
   changeMinutesAriaLabel = 'Изменить минуту',
 }: CalendarTimeProps) => {
-  const onHoursChange = React.useCallback(
+  const onHoursChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange?.(setHours(value, Number(event.target.value))),
     [onChange, value],
   );
-  const onMinutesChange = React.useCallback(
+  const onMinutesChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
       onChange?.(setMinutes(value, Number(event.target.value))),
     [onChange, value],

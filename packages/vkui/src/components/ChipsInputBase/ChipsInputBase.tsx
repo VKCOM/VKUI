@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Fragment, useState } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useChipsInput } from '../../hooks/useChipsInput';
@@ -85,7 +85,7 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
   } = propsWithDefault;
   const { sizeY } = useAdaptivity();
 
-  const [focused, setFocused] = React.useState(false);
+  const [focused, setFocused] = useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } =
     useChipsInput(propsWithDefault);
   const inputRef = useExternRef(getRef);
@@ -164,7 +164,7 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
         const label = getOptionLabel!(option);
 
         return (
-          <React.Fragment key={`${typeof value}-${value}`}>
+          <Fragment key={`${typeof value}-${value}`}>
             {renderChip!({
               option,
               value,
@@ -173,7 +173,7 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
               disabled: Boolean(restProps.disabled),
               className: styles['ChipsInputBase__chip'],
             })}
-          </React.Fragment>
+          </Fragment>
         );
       })}
       <label className={styles['ChipsInputBase__label']} aria-label={inputAriaLabel}>

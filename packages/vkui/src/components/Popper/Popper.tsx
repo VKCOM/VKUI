@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo, useState } from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
 import {
   arrowMiddleware,
@@ -143,11 +143,11 @@ export const Popper = ({
   hideWhenReferenceHidden,
   ...restProps
 }: PopperProps) => {
-  const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
+  const [arrowRef, setArrowRef] = useState<HTMLDivElement | null>(null);
 
   const isNotAutoPlacement = checkIsNotAutoPlacement(placementProp);
 
-  const memoizedMiddlewares = React.useMemo(() => {
+  const memoizedMiddlewares = useMemo(() => {
     const middlewares: UseFloatingMiddleware[] = [
       offsetMiddleware({
         crossAxis: offsetSkidding,

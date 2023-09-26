@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useMemo } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useTodayDate } from '../../hooks/useTodayDate';
@@ -61,14 +61,14 @@ export const CalendarDays = ({
   const ref = useExternRef(getRootRef);
   const now = useTodayDate(listenDayChangesForUpdate);
 
-  const weeks = React.useMemo(() => getWeeks(viewDate, weekStartsOn), [weekStartsOn, viewDate]);
+  const weeks = useMemo(() => getWeeks(viewDate, weekStartsOn), [weekStartsOn, viewDate]);
 
-  const daysNames = React.useMemo(
+  const daysNames = useMemo(
     () => getDaysNames(now, weekStartsOn, locale),
     [locale, now, weekStartsOn],
   );
 
-  const handleDayChange = React.useCallback(
+  const handleDayChange = useCallback(
     (date: Date) => {
       onDayChange(date);
 

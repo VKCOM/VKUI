@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
 import styles from './RichTooltip.module.css';

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon16Add } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { BREAKPOINTS, SizeType } from '../../lib/adaptivity';

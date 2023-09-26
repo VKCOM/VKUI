@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { SizeType } from '../../lib/adaptivity';
 import { baselineComponent } from '../../testing/utils';
@@ -29,8 +29,8 @@ describe('AppRoot', () => {
 
       it('does not remove external portalRoot provided as prop', () => {
         const TestComponent = () => {
-          const [shouldMount, setShouldMount] = React.useState(false);
-          const portalRootRef = React.useRef<HTMLDivElement | null>(null);
+          const [shouldMount, setShouldMount] = useState(false);
+          const portalRootRef = useRef<HTMLDivElement | null>(null);
           return (
             <div>
               {shouldMount && <AppRoot portalRoot={portalRootRef} />}

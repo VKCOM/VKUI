@@ -1,4 +1,3 @@
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon56MoneyTransferOutline, Icon56NotificationOutline } from '@vkontakte/icons';
 import { ModalWrapper } from '../../storybook/ModalWrapper';

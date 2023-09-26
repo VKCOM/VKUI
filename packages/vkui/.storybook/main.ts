@@ -27,7 +27,24 @@ const config: StorybookConfig = {
     './addons/appearance',
     './addons/pointer',
     './addons/customPanelHeaderAfter',
-    'storybook-addon-swc',
+    {
+      name: 'storybook-addon-swc',
+      options: {
+        swcLoaderOptions: {
+          jsc: {
+            parser: {
+              syntax: 'typescript',
+              tsx: true,
+            },
+            transform: {
+              react: {
+                runtime: 'automatic',
+              },
+            },
+          },
+        },
+      },
+    },
   ],
   framework: {
     name: '@storybook/react-webpack5',

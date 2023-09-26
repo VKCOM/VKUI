@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -27,10 +27,10 @@ const initUsers = getRandomUsers(10);
 
 export const Example: Story = {
   render: function Render() {
-    const [users, setUsers] = React.useState(initUsers);
-    const [fetching, setFetching] = React.useState(false);
+    const [users, setUsers] = useState(initUsers);
+    const [fetching, setFetching] = useState(false);
 
-    const onRefresh = React.useCallback(() => {
+    const onRefresh = useCallback(() => {
       setFetching(true);
 
       setTimeout(() => {

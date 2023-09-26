@@ -1,4 +1,3 @@
-import React from 'react';
 import { useArgs } from '@storybook/addons';
 import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';

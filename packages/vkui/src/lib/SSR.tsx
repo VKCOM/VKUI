@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ConfigProviderOverride } from '../components/ConfigProvider/ConfigProviderOverride';
 import { useObjectMemo } from '../hooks/useObjectMemo';
 import { BrowserInfo, computeBrowserInfo } from './browser';

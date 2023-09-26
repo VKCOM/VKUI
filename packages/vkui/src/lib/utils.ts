@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children } from 'react';
 
 export type ImgOnlyAttributes = {
   [index in Exclude<
@@ -42,7 +42,7 @@ export function multiRef<T>(...refs: Array<React.Ref<T> | undefined>): React.Ref
 export function getTitleFromChildren(children: React.ReactNode): string {
   let label = '';
 
-  React.Children.map(children, (child) => {
+  Children.map(children, (child) => {
     if (typeof child === 'string') {
       label += ' ' + child;
     }

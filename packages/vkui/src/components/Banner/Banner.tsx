@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children } from 'react';
 import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -137,7 +137,7 @@ export const Banner = ({
             {text}
           </Text>
         )}
-        {hasReactNode(actions) && React.Children.count(actions) > 0 && (
+        {hasReactNode(actions) && Children.count(actions) > 0 && (
           <div className={styles['Banner__actions']}>{actions}</div>
         )}
       </div>

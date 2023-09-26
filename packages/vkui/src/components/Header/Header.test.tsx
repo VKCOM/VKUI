@@ -1,5 +1,3 @@
-import * as React from 'react';
-import { Fragment } from 'react';
 import { render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
@@ -88,11 +86,11 @@ describe('Header', () => {
 
   it('[typography] HeaderSubtitle is span regardless of mode', () => {
     render(
-      <Fragment>
+      <>
         <Header mode="primary" subtitle="Русский" />
         <Header mode="secondary" subtitle="English" />
         <Header mode="tertiary" subtitle="Espanõl" />
-      </Fragment>,
+      </>,
     );
     expect(getTypographyTagNameByText('Русский')).toMatch('span');
     expect(getTypographyTagNameByText('English')).toMatch('span');
@@ -101,7 +99,7 @@ describe('Header', () => {
 
   it('[typography] HeaderAside is span regardless of platform', () => {
     render(
-      <Fragment>
+      <>
         <ConfigProvider platform={Platform.ANDROID}>
           <Header aside="Русский" />
         </ConfigProvider>
@@ -111,7 +109,7 @@ describe('Header', () => {
         <ConfigProvider platform={Platform.VKCOM}>
           <Header aside="Espanõl" />
         </ConfigProvider>
-      </Fragment>,
+      </>,
     );
     expect(getTypographyTagNameByText('Русский')).toMatch('span');
     expect(getTypographyTagNameByText('English')).toMatch('span');

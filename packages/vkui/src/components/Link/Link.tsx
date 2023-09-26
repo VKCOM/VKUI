@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import styles from './Link.module.css';

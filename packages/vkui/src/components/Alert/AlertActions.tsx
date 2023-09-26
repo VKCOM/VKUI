@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Fragment } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
@@ -47,13 +47,13 @@ export const AlertActions = ({
         const { title: children, action: _, autoClose, ...restProps } = action;
 
         return (
-          <React.Fragment key={i}>
+          <Fragment key={i}>
             {renderAction({
               children,
               onClick: () => onItemClick(action),
               ...restProps,
             })}
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </div>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Fragment } from 'react';
 import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import {
@@ -48,23 +48,23 @@ export const ImagePlayground = (props: ComponentPlaygroundProps) => {
               <IconExampleForBadgeBasedOnImageBaseSize />
             </Image.Badge>,
 
-            <React.Fragment key="overlay-base">
+            <Fragment key="overlay-base">
               <Image.Badge background="stroke">
                 <IconExampleForBadgeBasedOnImageBaseSize />
               </Image.Badge>
               <Image.Overlay theme="light" visibility="always">
                 <IconExampleForOverlayBasedOnImageBaseSize />
               </Image.Overlay>
-            </React.Fragment>,
+            </Fragment>,
 
-            <React.Fragment key="overlay-dark-always">
+            <Fragment key="overlay-dark-always">
               <Image.Badge background="stroke">
                 <IconExampleForBadgeBasedOnImageBaseSize />
               </Image.Badge>
               <Image.Overlay theme="dark" visibility="always">
                 <Icon20GiftCircleFillRed width={32} height={32} />
               </Image.Overlay>
-            </React.Fragment>,
+            </Fragment>,
           ],
         },
       ]}

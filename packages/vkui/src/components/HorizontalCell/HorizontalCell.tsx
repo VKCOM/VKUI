@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { HasComponent, HasRef, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
 import { Avatar } from '../Avatar/Avatar';

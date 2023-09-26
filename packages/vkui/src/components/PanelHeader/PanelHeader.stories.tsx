@@ -1,4 +1,3 @@
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon28Notifications, Icon28PictureOutline, Icon28SettingsOutline } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -79,7 +78,7 @@ export const PanelHeaderWithMultipleIcons: Story = {
         <PanelHeader
           before={<PanelHeaderBack />}
           after={
-            <React.Fragment>
+            <>
               <PanelHeaderButton
                 aria-label="Настройки"
                 label={
@@ -100,7 +99,7 @@ export const PanelHeaderWithMultipleIcons: Story = {
               >
                 <Icon28Notifications />
               </PanelHeaderButton>
-            </React.Fragment>
+            </>
           }
         >
           Две иконки

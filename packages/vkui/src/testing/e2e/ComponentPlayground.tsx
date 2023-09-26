@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Fragment } from 'react';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
@@ -73,14 +73,14 @@ export const ComponentPlayground = <
             }
 
             return (
-              <React.Fragment key={i}>
+              <Fragment key={i}>
                 <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(props)}</div>
                 <div>
                   <AdaptivityProvider {...clonedAdaptivityProviderProps}>
                     {children(props)}
                   </AdaptivityProvider>
                 </div>
-              </React.Fragment>
+              </Fragment>
             );
           })}
         </AppWrapper>

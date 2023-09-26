@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import vkBridge, { Insets as BridgeInsets } from '@vkontakte/vk-bridge';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
@@ -46,7 +46,7 @@ function resolveInsets(e: BridgeEvent): Insets | null {
  * @deprecated v5.8.0
  */
 export function useInsets(disabled = false): Insets {
-  const [insets, setInsets] = React.useState<Insets>(initialState);
+  const [insets, setInsets] = useState<Insets>(initialState);
 
   useIsomorphicLayoutEffect(() => {
     if (disabled) {

@@ -1,19 +1,19 @@
-import * as React from 'react';
+import { useCallback, useRef } from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useDOM } from '../lib/dom';
 import { transitionEvent } from '../lib/supportEvents';
 
 export const useWaitTransitionFinish = () => {
-  const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { document } = useDOM();
-  const detach = React.useRef(noop);
+  const detach = useRef(noop);
 
-  const remove = React.useCallback(() => {
+  const remove = useCallback(() => {
     detach.current();
     detach.current = noop;
   }, []);
 
-  const waitTransitionFinish = React.useCallback(
+  const waitTransitionFinish = useCallback(
     (
       element: HTMLElement | undefined | null,
       eventHandler: VoidFunction,

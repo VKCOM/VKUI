@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { HTMLAttributesWithRootRef } from '../../types';

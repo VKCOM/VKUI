@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -38,7 +38,7 @@ export const ModalCard = ({
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const platform = usePlatform();
 
-  const modalContext = React.useContext(ModalRootContext);
+  const modalContext = useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId({ nav, id }, warn), ModalType.CARD);
 
   return (

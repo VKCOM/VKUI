@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
@@ -52,7 +52,7 @@ export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
    * > не нужно.
    * >
    * > ```jsx
-   * > const onRefresh = React.useCallback(() => {
+   * > const onRefresh = useCallback(() => {
    * >  // ...
    * >  return runTapticImpactOccurred();
    * > }, []);
@@ -91,7 +91,7 @@ export const PullToRefresh = ({
   const { document } = useDOM();
   const prevIsFetching = usePrevious(isFetching);
 
-  const initParams = React.useMemo(
+  const initParams = useMemo(
     () => ({
       start: platform === Platform.IOS ? -10 : -45,
       max: platform === Platform.IOS ? 50 : 80,
@@ -102,16 +102,16 @@ export const PullToRefresh = ({
     [platform],
   );
 
-  const [spinnerY, setSpinnerY] = React.useState(initParams.start);
-  const [watching, setWatching] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
-  const [canRefresh, setCanRefresh] = React.useState(false);
-  const [touchDown, setTouchDown] = React.useState(false);
+  const [spinnerY, setSpinnerY] = useState(initParams.start);
+  const [watching, setWatching] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [canRefresh, setCanRefresh] = useState(false);
+  const [touchDown, setTouchDown] = useState(false);
   const prevTouchDown = usePrevious(touchDown);
 
-  const touchY = React.useRef(0);
-  const [contentShift, setContentShift] = React.useState(0);
-  const [spinnerProgress, setSpinnerProgress] = React.useState(0);
+  const touchY = useRef(0);
+  const [contentShift, setContentShift] = useState(0);
+  const [spinnerProgress, setSpinnerProgress] = useState(0);
 
   const onWindowTouchMove = (event: Event) => {
     if (refreshing) {
@@ -122,7 +122,7 @@ export const PullToRefresh = ({
 
   useGlobalEventListener(document, 'touchmove', onWindowTouchMove, TOUCH_MOVE_EVENT_PARAMS);
 
-  const resetRefreshingState = React.useCallback(() => {
+  const resetRefreshingState = useCallback(() => {
     setWatching(false);
     setCanRefresh(false);
     setRefreshing(false);
@@ -131,7 +131,7 @@ export const PullToRefresh = ({
     setContentShift(0);
   }, [initParams]);
 
-  const onRefreshingFinish = React.useCallback(() => {
+  const onRefreshingFinish = useCallback(() => {
     if (!touchDown) {
       resetRefreshingState();
     }
@@ -154,7 +154,7 @@ export const PullToRefresh = ({
     }
   }, [isFetching, prevIsFetching, clearWaitFetchingTimeout]);
 
-  const runRefreshing = React.useCallback(() => {
+  const runRefreshing = useCallback(() => {
     if (!refreshing && onRefresh) {
       // cleanup if the consumer does not start fetching in 1s
       setWaitFetchingTimeout();

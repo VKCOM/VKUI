@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon28CancelOutline } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';

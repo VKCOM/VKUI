@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { Banner } from '../Banner/Banner';

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
@@ -45,13 +45,13 @@ const randomUser = getRandomUser();
 const users = getRandomUsers(25);
 
 const AndroidCloseButton = ({ className }: { className?: string }) => {
-  const { onClose } = React.useContext(ModalRootContext);
+  const { onClose } = useContext(ModalRootContext);
 
   return <PanelHeaderClose className={className} onClick={onClose} />;
 };
 
 const IosCloseButton = ({ className }: { className?: string }) => {
-  const { onClose } = React.useContext(ModalRootContext);
+  const { onClose } = useContext(ModalRootContext);
 
   return (
     <PanelHeaderButton onClick={onClose} className={className}>
@@ -64,8 +64,8 @@ export const DynamicModalPage: Story = {
   render: function Render() {
     const platform = usePlatform();
     const { sizeX } = useAdaptivityConditionalRender();
-    const [expanded, setExpanded] = React.useState(false);
-    const toggle = React.useCallback(() => setExpanded(!expanded), [expanded]);
+    const [expanded, setExpanded] = useState(false);
+    const toggle = useCallback(() => setExpanded(!expanded), [expanded]);
 
     return (
       <ModalWrapper modalId={MODAL_PAGE_DYNAMIC}>

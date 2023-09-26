@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
@@ -41,19 +41,19 @@ export const Root = ({
   nav,
   ...restProps
 }: RootProps) => {
-  const scroll = React.useContext(ScrollContext);
+  const scroll = useContext(ScrollContext);
   const platform = usePlatform();
   const { document } = useDOM();
-  const scrolls = React.useRef<Record<string, number>>({}).current;
-  const viewNodes = React.useRef<Record<string, HTMLElement | null>>({}).current;
+  const scrolls = useRef<Record<string, number>>({}).current;
+  const viewNodes = useRef<Record<string, HTMLElement | null>>({}).current;
 
   const { transitionMotionEnabled = true } = useConfigProvider();
-  const { animate } = React.useContext(SplitColContext);
+  const { animate } = useContext(SplitColContext);
   const disableAnimation = !transitionMotionEnabled || !animate;
 
-  const views = React.Children.toArray(children) as React.ReactElement[];
+  const views = Children.toArray(children) as React.ReactElement[];
 
-  const [{ prevView, activeView, transition, isBack }, _setState] = React.useState<RootState>({
+  const [{ prevView, activeView, transition, isBack }, _setState] = useState<RootState>({
     activeView: _activeView,
     transition: false,
   });
@@ -70,7 +70,7 @@ export const Root = ({
       });
     }
   };
-  const finishTransition = React.useCallback(
+  const finishTransition = useCallback(
     () => _setState({ activeView, prevView, isBack, transition: false }),
     [activeView, isBack, prevView],
   );
@@ -95,7 +95,7 @@ export const Root = ({
   }, [transition, prevView]);
 
   const fallbackTransition = useTimeout(finishTransition, platform === Platform.IOS ? 600 : 300);
-  React.useEffect(() => {
+  useEffect(() => {
     if (!transition) {
       fallbackTransition.clear();
       return;

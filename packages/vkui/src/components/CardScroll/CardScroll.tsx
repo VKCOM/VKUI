@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useDOM } from '../../lib/dom';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -31,8 +31,8 @@ export const CardScroll = ({
   withSpaces = true,
   ...restProps
 }: CardScrollProps) => {
-  const refContainer = React.useRef<HTMLDivElement>(null);
-  const gapRef = React.useRef<HTMLDivElement>(null);
+  const refContainer = useRef<HTMLDivElement>(null);
+  const gapRef = useRef<HTMLDivElement>(null);
 
   const { window } = useDOM();
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext } from 'react';
 import { hasHover as hasHoverLib } from '@vkontakte/vkjs';
 import { AdaptivityContext } from '../components/AdaptivityProvider/AdaptivityContext';
 import { useIsClient } from './useIsClient';
@@ -12,7 +12,7 @@ import { useIsClient } from './useIsClient';
 export function useAdaptivityHasHover(deferDetect?: true): undefined | boolean;
 export function useAdaptivityHasHover(deferDetect?: false): boolean;
 export function useAdaptivityHasHover(deferDetect = true): undefined | boolean {
-  const { hasHover: hasHoverContext } = React.useContext(AdaptivityContext);
+  const { hasHover: hasHoverContext } = useContext(AdaptivityContext);
   const hasHover = hasHoverContext === undefined ? hasHoverLib : hasHoverContext;
 
   const needTwoPassRendering = deferDetect || hasHoverContext === undefined;

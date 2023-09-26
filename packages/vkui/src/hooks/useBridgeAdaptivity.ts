@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import vkBridge from '@vkontakte/vk-bridge';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
@@ -47,7 +47,7 @@ function resolveAdaptivity(data: any): BridgeAdaptivity | null {
  * @deprecated v5.8.0
  */
 export function useBridgeAdaptivity(disable = false): BridgeAdaptivity {
-  const [bridgeAdaptivity, setBridgeAdaptivity] = React.useState<BridgeAdaptivity>(initialState);
+  const [bridgeAdaptivity, setBridgeAdaptivity] = useState<BridgeAdaptivity>(initialState);
 
   useIsomorphicLayoutEffect(() => {
     if (disable) {

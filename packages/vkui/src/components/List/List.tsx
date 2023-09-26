@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -11,7 +11,7 @@ export type ListProps = HTMLAttributesWithRootRef<HTMLDivElement>;
  * @see https://vkcom.github.io/VKUI/#/List
  */
 export const List = ({ children, ...restProps }: ListProps) => {
-  const [isDragging, toggleDrag] = React.useState(false);
+  const [isDragging, toggleDrag] = useState(false);
 
   return (
     <RootComponent
@@ -19,7 +19,7 @@ export const List = ({ children, ...restProps }: ListProps) => {
       {...restProps}
       baseClassName={classNames(styles['List'], isDragging && 'vkuiInternalList--dragging')}
     >
-      <ListContext.Provider value={React.useMemo(() => ({ toggleDrag }), [])}>
+      <ListContext.Provider value={useMemo(() => ({ toggleDrag }), [])}>
         {children}
       </ListContext.Provider>
     </RootComponent>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useBooleanState } from '../../../hooks/useBooleanState';
 import { useExternRef } from '../../../hooks/useExternRef';
@@ -33,9 +33,9 @@ export const SliderThumb = ({
   ...restProps
 }: SliderThumbProps) => {
   const { focusVisible, onBlur, onFocus } = useFocusVisible(false);
-  const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
+  const [arrowRef, setArrowRef] = useState<HTMLDivElement | null>(null);
 
-  const memoizedMiddlewares = React.useMemo(() => {
+  const memoizedMiddlewares = useMemo(() => {
     return [
       offsetMiddleware({
         crossAxis: 0,
@@ -73,7 +73,7 @@ export const SliderThumb = ({
   const shouldShowTooltip = withTooltip && (focusVisible || isHovered);
 
   const inputValue = inputProps && inputProps.value;
-  React.useEffect(
+  useEffect(
     function udpateTooltipPositionOnValueChange() {
       if (shouldShowTooltip && inputValue !== 'undefined') {
         updateTooltipPosition();
@@ -83,7 +83,7 @@ export const SliderThumb = ({
   );
 
   return (
-    <React.Fragment>
+    <>
       <span
         {...restProps}
         ref={handleRootRef}
@@ -120,6 +120,6 @@ export const SliderThumb = ({
           text={inputValue}
         />
       )}
-    </React.Fragment>
+    </>
   );
 };
