@@ -128,7 +128,9 @@ export const SimpleCell = ({
         className,
       )}
     >
-      <div className={styles['SimpleCell__before']}>{before}</div>
+      <div className={classNames(styles['SimpleCell__before'], 'vkuiInternalSimpleCell__before')}>
+        {before}
+      </div>
       <div className={styles['SimpleCell__middle']}>
         {subhead && (
           <Subhead
