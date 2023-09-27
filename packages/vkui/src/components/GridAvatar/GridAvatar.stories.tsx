@@ -1,8 +1,8 @@
 import React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, StoryObj } from '@storybook/react';
-import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
 import { CanvasFullLayout } from '../../storybook/constants';
+import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { getAvatarUrl } from '../../testing/mock';
 import { imageBaseSizes } from '../ImageBase/types';
 import { GridAvatar, GridAvatarProps } from './GridAvatar';
@@ -32,14 +32,19 @@ export default story;
 type Story = StoryObj<StoryGridAvatarProps>;
 
 export const Playground: Story = {
-  render: ({ badged, ...args }) => {
-    const badge = badged ? (
-      <GridAvatar.Badge>
-        <Icon20GiftCircleFillRed width={16} height={16} />
-      </GridAvatar.Badge>
-    ) : undefined;
+  render: ({ badged, size = 48, ...args }) => {
+    const badge =
+      size >= 24 && badged ? (
+        <GridAvatar.Badge>
+          <IconExampleForBadgeBasedOnImageBaseSize />
+        </GridAvatar.Badge>
+      ) : undefined;
 
-    return <GridAvatar {...args}>{badge}</GridAvatar>;
+    return (
+      <GridAvatar {...args} size={size}>
+        {badge}
+      </GridAvatar>
+    );
   },
   args: {
     src: [getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()],
