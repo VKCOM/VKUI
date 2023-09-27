@@ -54,12 +54,8 @@
  * CMP:
  * CellButton
  */
-:global(.vkuiInternalCellButton) > .ImageBase :global(.vkuiIcon) {
-  color: var(--vkui--color_icon_accent);
-}
-
-:global(.vkuiInternalCellButton--mode-danger) > .ImageBase :global(.vkuiIcon) {
-  color: var(--vkui--color_icon_negative);
+:global(.vkuiInternalCellButton) .ImageBase {
+  color: var(--vkui_internal--simple_cell_icon_color, var(--vkui--color_icon_accent));
 }
 
 /**

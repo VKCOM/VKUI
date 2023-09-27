@@ -41,16 +41,13 @@
 }
 
 .CellButton {
+  --vkui_internal--simple_cell_icon_color: var(--vkui--color_icon_accent);
+
   color: var(--vkui--color_text_accent);
 }
 
-.CellButton :global(.vkuiInternalSimpleCell__before),
-.CellButton :global(.vkuiInternalSimpleCell__after) {
-  color: var(--vkui--color_icon_accent);
-}
+.CellButton--mode-danger {
+  --vkui_internal--simple_cell_icon_color: var(--vkui--color_text_negative);
 
-.CellButton--mode-danger,
-.CellButton--mode-danger :global(.vkuiInternalSimpleCell__before),
-.CellButton--mode-danger :global(.vkuiInternalSimpleCell__after) {
   color: var(--vkui--color_text_negative);
 }
