@@ -5,7 +5,7 @@
   justify-content: center;
   flex-shrink: 0;
   box-sizing: border-box;
-  color: var(--vkui--color_icon_secondary);
+  color: var(--vkui_internal--icon_color, var(--vkui--color_icon_secondary));
   background-color: var(--vkui--color_background_secondary);
   background-size: cover;
   isolation: isolate;
@@ -48,14 +48,6 @@
   /* Расчитываем на ценитрирование через родительский `display: flex` */
   top: auto;
   left: auto;
-}
-
-/**
- * CMP:
- * CellButton
- */
-:global(.vkuiInternalCellButton) .ImageBase {
-  color: var(--vkui_internal--simple_cell_icon_color, var(--vkui--color_icon_accent));
 }
 
 /**

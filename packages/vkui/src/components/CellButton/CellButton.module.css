@@ -41,13 +41,13 @@
 }
 
 .CellButton {
-  --vkui_internal--simple_cell_icon_color: var(--vkui--color_icon_accent);
+  --vkui_internal--icon_color: var(--vkui--color_icon_accent);
 
   color: var(--vkui--color_text_accent);
 }
 
 .CellButton--mode-danger {
-  --vkui_internal--simple_cell_icon_color: var(--vkui--color_text_negative);
+  --vkui_internal--icon_color: var(--vkui--color_text_negative);
 
   color: var(--vkui--color_text_negative);
 }

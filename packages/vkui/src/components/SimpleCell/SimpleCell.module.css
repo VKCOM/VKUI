@@ -23,7 +23,7 @@
   padding-top: 6px;
   padding-bottom: 6px;
   padding-right: 12px;
-  color: var(--vkui_internal--simple_cell_icon_color, var(--vkui--color_icon_accent));
+  color: var(--vkui_internal--icon_color, var(--vkui--color_icon_accent));
 }
 
 /* stylelint-disable-next-line @project-tools/stylelint-atomic -- добиваем отступ до 16px */
@@ -115,7 +115,7 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  color: var(--vkui_internal--simple_cell_icon_color, var(--vkui--color_icon_accent));
+  color: var(--vkui_internal--icon_color, var(--vkui--color_icon_accent));
 }
 
 .SimpleCell__after > :global(.vkuiIcon) {
@@ -126,7 +126,7 @@
   padding-right: 2px;
 }
 
-.SimpleCell__after .SimpleCell__chevronIcon {
+.SimpleCell__chevronIcon {
   color: var(--vkui--color_icon_tertiary);
   padding-left: 12px;
 }
