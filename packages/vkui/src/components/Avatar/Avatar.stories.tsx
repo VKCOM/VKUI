@@ -75,9 +75,9 @@ export default story;
 type Story = StoryObj<AvatarStoryProps>;
 
 export const Playground: Story = {
-  render: ({ badge, overlay, children, ...args }) => (
-    <Avatar src={args.initials ? undefined : getAvatarUrl('user_id34')} {...args}>
-      {badge}
+  render: ({ badge, overlay, children, size = 48, ...args }) => (
+    <Avatar src={args.initials ? undefined : getAvatarUrl('user_id34')} {...args} size={size}>
+      {size >= 24 && badge}
       {overlay}
       {children}
     </Avatar>
