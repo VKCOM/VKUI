@@ -61,10 +61,26 @@ function now() {
 }
 
 /**
+ * Округление к большему по модулю
+ *
+ * ## Пример
+ *
+ * ```ts
+ * import { strict as assert } from 'node:assert';
+ *
+ * assert.equal(roundingAwayFromZero(5.1), 6)
+ * assert.equal(roundingAwayFromZero(-5.1), -6)
+ * ```
+ */
+function roundingAwayFromZero(value: number): number {
+  return value > 0 ? Math.ceil(value) : Math.floor(value);
+}
+
+/**
  * Округляем el.scrollLeft
  * https://github.com/VKCOM/VKUI/pull/2445
  */
-const roundUpElementScrollLeft = (el: HTMLElement) => Math.ceil(el.scrollLeft);
+const roundUpElementScrollLeft = (el: HTMLElement) => roundingAwayFromZero(el.scrollLeft);
 
 /**
  * Код анимации скрола, на основе полифила: https://github.com/iamdustan/smoothscroll
@@ -118,7 +134,7 @@ function doScroll({
     const value = easeInOutSine(elapsed);
 
     const currentScrollLeft = startScrollLeft + (endScrollLeft - startScrollLeft) * value;
-    scrollElement.scrollLeft = Math.ceil(currentScrollLeft);
+    scrollElement.scrollLeft = roundingAwayFromZero(currentScrollLeft);
 
     const scrollEnd =
       textDirection === 'ltr' ? Math.max(0, endScrollLeft) : Math.min(0, endScrollLeft);
@@ -205,7 +221,7 @@ export const HorizontalScroll = ({
     if (showArrows && hasPointer && scrollerRef.current && !isCustomScrollingRef.current) {
       const scrollElement = scrollerRef.current;
 
-      setCanScrollStart(Math.abs(scrollElement.scrollLeft) > 0);
+      setCanScrollStart(scrollElement.scrollLeft !== 0);
       setCanScrollEnd(
         Math.abs(roundUpElementScrollLeft(scrollElement)) + scrollElement.offsetWidth <
           scrollElement.scrollWidth,
