@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Decorator, ReactRenderer } from '@storybook/react';
-import type { StoryContext, StrictArgs } from '@storybook/types';
+import type { StoryContext, StrictArgs, StrictArgTypes } from '@storybook/types';
 
 const CartesianContainerStyle: React.CSSProperties = {
   display: 'flex',
@@ -9,20 +9,29 @@ const CartesianContainerStyle: React.CSSProperties = {
   margin: '10px',
   gap: '5px',
   boxSizing: 'border-box',
-  alignItems: 'baseline',
+  height: '100%',
+  width: '100%',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 interface CartesianPropType extends StrictArgs {
   cartesian?: { [s: string]: unknown } | ArrayLike<unknown>;
 }
 
-function cartesianFunc(propDesc: CartesianPropType['cartesian'] = []) {
+function cartesianFunc(
+  propDesc: CartesianPropType['cartesian'] = [],
+  argTypes: StrictArgTypes<CartesianPropType>,
+) {
   return Object.entries(propDesc).reduce(
     (acc, [prop, values]: [string, any]) => {
       const res: any[] = [];
       acc.forEach((props) => {
         values.forEach((value: any) => {
-          res.push({ ...props, [prop]: value });
+          res.push({
+            ...props,
+            [prop]: argTypes[prop].mapping ? argTypes[prop].mapping[value] : value,
+          });
         });
       });
       return res;
@@ -33,11 +42,12 @@ function cartesianFunc(propDesc: CartesianPropType['cartesian'] = []) {
 
 export const withCartesian: Decorator = (StoryFn, context) => {
   const {
+    argTypes,
     args: { cartesian, ...restArgs },
   } = context as StoryContext<ReactRenderer, CartesianPropType>;
 
   if (cartesian) {
-    const variants = cartesianFunc(cartesian);
+    const variants = cartesianFunc(cartesian, argTypes);
 
     return (
       <div style={CartesianContainerStyle}>
