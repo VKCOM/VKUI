@@ -646,7 +646,7 @@ function initModal(modalState: ModalsStateEntry) {
 
 function initPageModal(modalState: ModalsStateEntry) {
   const { contentElement, bottomInset } = modalState;
-  const contentElementHeight = (contentElement?.firstElementChild as HTMLElement).offsetHeight;
+  const contentElementHeight = (contentElement?.firstElementChild as HTMLElement).scrollHeight;
   const bottomInsetHeight = bottomInset?.offsetHeight || 0;
   const contentHeight = contentElementHeight + bottomInsetHeight;
   let prevTranslateY = modalState.translateY;
