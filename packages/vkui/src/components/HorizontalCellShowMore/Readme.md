@@ -36,6 +36,7 @@ const Example = () => {
   return (
     <View activePanel="horizontalCell">
       <Panel id="horizontalCell">
+        <PanelHeader>HorizontalCellShowMore</PanelHeader>
         <Group header={<Header>Альбомы</Header>}>
           <HorizontalScroll>
             <div style={{ display: 'flex' }}>
