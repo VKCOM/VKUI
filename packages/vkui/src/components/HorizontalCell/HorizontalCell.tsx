@@ -72,15 +72,17 @@ export const HorizontalCell = ({
         {hasReactNode(children) && (
           <div className={styles['HorizontalCell__image']}>{children}</div>
         )}
-        <div className={styles['HorizontalCell__content']}>
-          {hasReactNode(header) && <CellTypography size={size}>{header}</CellTypography>}
-          {hasReactNode(subtitle) && (
-            <Footnote className={styles['HorizontalCell__subtitle']}>{subtitle}</Footnote>
-          )}
-          {hasReactNode(extraSubtitle) && (
-            <Footnote className={styles['HorizontalCell__subtitle']}>{extraSubtitle}</Footnote>
-          )}
-        </div>
+        {(header || subtitle || extraSubtitle) && (
+          <div className={styles['HorizontalCell__content']}>
+            {hasReactNode(header) && <CellTypography size={size}>{header}</CellTypography>}
+            {hasReactNode(subtitle) && (
+              <Footnote className={styles['HorizontalCell__subtitle']}>{subtitle}</Footnote>
+            )}
+            {hasReactNode(extraSubtitle) && (
+              <Footnote className={styles['HorizontalCell__subtitle']}>{extraSubtitle}</Footnote>
+            )}
+          </div>
+        )}
       </Tappable>
     </div>
   );
