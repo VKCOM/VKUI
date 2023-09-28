@@ -2,3 +2,7 @@
   position: relative;
   box-sizing: border-box;
 }
+
+.Spacing--mode-vertical {
+  display: inline-flex;
+}

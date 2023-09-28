@@ -8,26 +8,40 @@
   background: currentColor;
   color: inherit;
   border: 0;
-  transform-origin: center top;
 }
 
-.Separator--padded .Separator__in {
+.Separator--mode-vertical {
+  display: inline-flex;
+}
+
+.Separator--mode-vertical .Separator__in {
+  width: var(--vkui--size_border--regular);
+  height: auto;
+  align-self: stretch;
+}
+
+.Separator--mode-horizontal.Separator--padded .Separator__in {
   margin-left: var(--vkui--size_base_padding_horizontal--regular);
   margin-right: var(--vkui--size_base_padding_horizontal--regular);
+}
+
+.Separator--mode-vertical.Separator--padded .Separator__in {
+  margin-top: var(--vkui--size_base_padding_vertical--regular);
+  margin-bottom: var(--vkui--size_base_padding_vertical--regular);
 }
 
 /*
  * CMP:
  * ModalPage
  */
-:global(.vkuiInternalModalPage--sizeX-regular) .Separator--padded {
+:global(.vkuiInternalModalPage--sizeX-regular) .Separator--mode-horizontal.Separator--padded {
   padding-left: 8px;
   padding-right: 8px;
 }
 
 /* FIXME: Мертвый код */
 @media (--sizeX-regular) {
-  :global(.vkuiInternalModalPage--sizeX-none) .Separator--padded {
+  :global(.vkuiInternalModalPage--sizeX-none) .Separator--mode-horizontal.Separator--padded {
     padding-left: 8px;
     padding-right: 8px;
   }

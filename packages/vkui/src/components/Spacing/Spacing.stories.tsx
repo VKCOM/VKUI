@@ -29,14 +29,11 @@ export const Playground: Story = {
 };
 
 export const Example: Story = {
-  ...Playground,
-  decorators: [
-    (Component) => (
-      <Group>
-        <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
-        <Component />
-        <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
-      </Group>
-    ),
-  ],
+  render: () => (
+    <Group>
+      <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
+      <Spacing />
+      <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
+    </Group>
+  ),
 };

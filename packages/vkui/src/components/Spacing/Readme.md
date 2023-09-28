@@ -23,6 +23,11 @@
 <Spacing size={20} />
 ```
 
+Есть возможность задать `mode=vertical` для создания вертикального отступа между элементами.
+
+> Обратите внимание, если вы используете `Spacing` с вложенным компонентом `Separator` в режиме `vertical`,
+> то родительский элемент должен быть `flex`-контейнером.
+
 ```jsx
 <View activePanel="separator">
   <Panel id="separator">
@@ -86,6 +91,15 @@
 
       <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
       <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
+    </Group>
+    <Group header={<Header mode="secondary">Vertical Spacings</Header>}>
+      <Div style={{ display: 'flex' }}>
+        <Link>Новости</Link>
+        <Spacing size={24} mode="vertical" />
+        <Link>Звонки</Link>
+        <Spacing size={24} mode="vertical" />
+        <Link>Друзья</Link>
+      </Div>
     </Group>
   </Panel>
 </View>
