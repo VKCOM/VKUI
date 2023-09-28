@@ -23,9 +23,7 @@ export const CellButton = ({
       {...restProps}
       className={classNames(
         styles['CellButton'],
-        'vkuiInternalCellButton',
-        mode === 'danger' &&
-          classNames(styles['CellButton--mode-danger'], 'vkuiInternalCellButton--mode-danger'),
+        mode === 'danger' && styles['CellButton--mode-danger'],
         centered && styles['CellButton--centered'],
         className,
       )}

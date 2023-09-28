@@ -10,10 +10,6 @@
   flex-grow: 0;
   flex-shrink: 0;
   border: 0;
-}
-
-/* Увеличиваем вес селектора */
-.Removable__action.Removable__action {
   color: var(--vkui--color_icon_secondary);
 }
 
