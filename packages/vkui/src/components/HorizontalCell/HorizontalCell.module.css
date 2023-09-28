@@ -23,10 +23,6 @@
   text-overflow: ellipsis;
 }
 
-.HorizontalCell__content:empty {
-  display: none;
-}
-
 .HorizontalCell__subtitle {
   color: var(--vkui--color_text_secondary);
 }
