@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Div, ModalPage, ModalPageHeader, PanelSpinner, Platform, SimpleCell } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 import { useFetch } from './useFetch';

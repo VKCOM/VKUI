@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { SplitCol, SplitLayout } from '@vkui';
 import { StyleGuideHeader } from './StyleGuideHeader';
 import { StyleGuideModal } from './StyleGuideModal';

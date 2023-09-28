@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Icon28ChevronRightCircle } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { HasRef, HasRootRef, LiteralUnion } from '../../types';

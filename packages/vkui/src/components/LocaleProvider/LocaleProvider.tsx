@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 

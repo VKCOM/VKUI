@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Div, ModalPage, ModalPageHeader, PanelSpinner, SimpleCell } from '@vkui';
 import { useFetch } from './useFetch';
 

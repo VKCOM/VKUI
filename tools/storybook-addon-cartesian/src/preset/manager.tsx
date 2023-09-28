@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { addons, types } from '@storybook/manager-api';
 import { Tool } from '../Tool';
 import { ADDON_ID, TOOL_ID } from '../constants';

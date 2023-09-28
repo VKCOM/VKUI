@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { ModalRoot } from '@vkui';
 import { Platforms } from '../Modals/Platforms';
 import { Versions } from '../Modals/Versions';

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Icon16ErrorCircleOutline } from '@vkontakte/icons';
 import {
   classNames,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
@@ -9,7 +9,7 @@ describe('Checkbox', () => {
 
   it('handles change', () => {
     const CheckboxController = () => {
-      const [checked, setChecked] = useState(false);
+      const [checked, setChecked] = React.useState(false);
       return (
         <Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)}>
           check

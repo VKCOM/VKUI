@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
@@ -17,7 +17,7 @@ describe('NativeSelect', () => {
 
   it('works correctly with value and onChange', () => {
     const SelectController = () => {
-      const [value, setValue] = useState('0');
+      const [value, setValue] = React.useState('0');
       return (
         <NativeSelect data-testid="target" value={value} onChange={(e) => setValue(e.target.value)}>
           <option value="0">Mike</option>

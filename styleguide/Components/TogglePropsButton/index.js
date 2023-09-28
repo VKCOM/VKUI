@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { CellButton } from '@vkui';
 import './TogglePropsButton.css';
 

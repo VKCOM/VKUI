@@ -10,7 +10,7 @@
 > Учтите порядок подключения компонентов для конфигурации. `ConfigProvider` -> `AdaptivityProvider` -> `AppRoot`
 
 ```jsx static
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { ConfigProvider, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';

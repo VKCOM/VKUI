@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { BREAKPOINTS } from '@vkui/lib/adaptivity';
 import { Setting } from '../Setting/Setting';
 
