@@ -41,17 +41,13 @@
 }
 
 .CellButton {
+  --vkui_internal--icon_color: var(--vkui--color_icon_accent);
+
   color: var(--vkui--color_text_accent);
 }
 
-.CellButton :global(.vkuiIcon) {
-  color: var(--vkui--color_icon_accent);
-}
-
 .CellButton--mode-danger {
-  color: var(--vkui--color_text_negative);
-}
+  --vkui_internal--icon_color: var(--vkui--color_text_negative);
 
-.CellButton--mode-danger :global(.vkuiIcon) {
-  color: var(--vkui--color_icon_negative);
+  color: var(--vkui--color_text_negative);
 }
