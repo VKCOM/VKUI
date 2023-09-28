@@ -49,7 +49,7 @@ yarn add @vkontakte/vk-bridge @vkontakte/vk-bridge-react
 [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge).
 
 ```tsx static
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import vkBridge, { parseURLSearchParamsForGetLaunchParams } from '@vkontakte/vk-bridge';
 import { useAppearance, useInsets, useAdaptivity } from '@vkontakte/vk-bridge-react';

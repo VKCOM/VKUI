@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { act, render, screen } from '@testing-library/react';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Panel } from '../Panel/Panel';

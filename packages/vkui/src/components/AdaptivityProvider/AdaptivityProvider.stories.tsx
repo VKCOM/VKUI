@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';

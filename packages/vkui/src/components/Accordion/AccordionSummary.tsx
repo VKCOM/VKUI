@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Icon24ChevronDown, Icon24ChevronUp } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';

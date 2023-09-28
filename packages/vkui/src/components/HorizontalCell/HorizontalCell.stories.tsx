@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';

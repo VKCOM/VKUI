@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { getMillisecondsToTomorrow, isSameDay } from '../lib/date';
 import { useDOM } from '../lib/dom';
 

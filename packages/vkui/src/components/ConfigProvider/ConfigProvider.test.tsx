@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Appearance } from '../../helpers/appearance';
 import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
@@ -20,7 +20,7 @@ describe('ConfigProvider', () => {
       transitionMotionEnabled: false,
     };
     const ConfigUser = () => {
-      expect(useContext(ConfigProviderContext)).toEqual({
+      expect(React.useContext(ConfigProviderContext)).toEqual({
         platform: Platform.ANDROID,
         isWebView: false,
         locale: 'ru',
@@ -46,7 +46,7 @@ describe('ConfigProvider', () => {
         transitionMotionEnabled: false,
       };
       const ConfigUser = () => {
-        expect(useContext(ConfigProviderContext)).toEqual({
+        expect(React.useContext(ConfigProviderContext)).toEqual({
           platform: Platform.ANDROID,
           isWebView: false,
           locale: 'ru',
@@ -71,7 +71,7 @@ describe('ConfigProvider', () => {
         transitionMotionEnabled: false,
       };
       const ConfigUser = () => {
-        expect(useContext(ConfigProviderContext)).toEqual({
+        expect(React.useContext(ConfigProviderContext)).toEqual({
           platform: Platform.ANDROID,
           isWebView: false,
           locale: 'ru',
@@ -93,7 +93,7 @@ describe('ConfigProvider', () => {
   describe('inherits properties from parent ConfigProvider context', () => {
     let config: ConfigProviderContextInterface | undefined;
     const ReadConfig = () => {
-      config = useContext(ConfigProviderContext);
+      config = React.useContext(ConfigProviderContext);
       return null;
     };
 
@@ -168,7 +168,7 @@ describe('ConfigProvider', () => {
     };
 
     const TestComponent = () => {
-      const [isMounted, setIsMounted] = useState(true);
+      const [isMounted, setIsMounted] = React.useState(true);
 
       return (
         <ConfigProvider {...config}>

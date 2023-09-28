@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Components from '@rsg-components/Components';
 import { useStyleGuideContext } from '@rsg-components/Context';
 import Examples from '@rsg-components/Examples';

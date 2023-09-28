@@ -7,7 +7,7 @@
 **Пример:**
 
 ```tsx
-import React from 'react';
+import * as React from 'react';
 import { Story, Meta } from '@storybook/react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Component, ComponentProps } from './Component.path';

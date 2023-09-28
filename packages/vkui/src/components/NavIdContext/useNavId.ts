@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { NavPanelIdContext, NavViewIdContext } from './NavIdContext';
 
 export const useNavId = () => ({

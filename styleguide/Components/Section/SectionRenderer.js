@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Markdown from '@rsg-components/Markdown';
 import SectionHeading from '@rsg-components/SectionHeading';
 import PropTypes from 'prop-types';

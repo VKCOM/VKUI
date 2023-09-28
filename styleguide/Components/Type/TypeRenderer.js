@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { classNames, Text } from '@vkui';
 import './Type.css';
 
