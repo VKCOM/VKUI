@@ -11,7 +11,6 @@
   border-radius: var(--vkui--size_border_radius--regular);
   max-width: 100%;
   min-width: var(--vkui--size_button_minimum_width--regular);
-  font-family: var(--vkui--font_family_base);
 }
 
 .Button--rounded {
@@ -52,7 +51,6 @@
   min-height: inherit;
   text-align: center;
   box-sizing: border-box;
-  font-family: var(--vkui--font_family_base);
 }
 
 .Button--align-left .Button__in {
