@@ -36,7 +36,7 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
           styles['Panel'],
           sizeXClassNames[sizeX],
           centered && 'vkuiInternalPanel--centered',
-          layout && styles['Panel--layoutSetting'],
+          layout === 'card' && styles['Panel--layout-card'],
         )}
       >
         <Touch
