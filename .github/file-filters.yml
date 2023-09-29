@@ -26,3 +26,10 @@ docs_styleguide:
   - *package_vkui
   - 'packages/vkui/src/**/*.md'
   - 'styleguide/**'
+
+docs_storybook:
+  - *package_vkui
+  - 'packages/vkui/.storybook/**'
+  - 'packages/vkui/storybook/**'
+  - 'packages/vkui/src/**/*.stories.*'
+  - 'tools/storybook-*/**'
