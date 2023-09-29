@@ -25,6 +25,7 @@ jobs:
     outputs:
       package_vkui: ${{ steps.changes.outputs.package_vkui }}
       docs_styleguide: ${{ steps.changes.outputs.docs_styleguide }}
+      docs_storybook: ${{ steps.changes.outputs.docs_storybook }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -187,7 +188,7 @@ jobs:
           path: styleguide/dist
 
   docs_storybook_upload:
-    if: ${{ needs.changed_files.outputs.docs_styleguide == 'true' }}
+    if: ${{ needs.changed_files.outputs.docs_storybook == 'true' }}
     needs: changed_files
     runs-on: ubuntu-latest
     name: Upload docs dist artifact (storybook)
