@@ -5,6 +5,7 @@ import { useExternRef } from '../../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../../hooks/useGlobalEventListener';
 import { useDOM } from '../../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
+import { warnOnce } from '../../../lib/warnOnce';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ScrollArrow } from '../../ScrollArrow/ScrollArrow';
 import { Touch, TouchEvent } from '../../Touch/Touch';
@@ -19,6 +20,8 @@ const stylesBullets = {
   dark: styles['BaseGallery__bullets--dark'],
   light: styles['BaseGallery__bullets--light'],
 };
+
+const warn = warnOnce('Gallery');
 
 export const CarouselBase = ({
   bullets = false,
@@ -109,6 +112,20 @@ export const CarouselBase = ({
     const viewportOffsetWidth = viewportRef.current.offsetWidth;
     const layerWidth = localSlides.reduce((val, slide) => slide.width + val, 0);
 
+    if (process.env.NODE_ENV === 'development') {
+      let remainingWidth = containerWidth;
+      let slideIndex = 0;
+
+      while (remainingWidth > 0 && slideIndex < localSlides.length) {
+        remainingWidth -= localSlides[slideIndex].width;
+        slideIndex++;
+      }
+      if (remainingWidth <= 0 && slideIndex === localSlides.length) {
+        warn(
+          'Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше."',
+        );
+      }
+    }
     if (align === 'center') {
       const firstSlideShift = (containerWidth - localSlides[0].width) / 2;
       localSlides = localSlides.map((item) => {
@@ -163,61 +180,77 @@ export const CarouselBase = ({
     initializeSlides();
   }, [children, align, slideWidth]);
 
-  useIsomorphicLayoutEffect(() => {
-    if (!initialized.current) {
-      return;
-    }
-    const { snaps, slides } = slidesManager.current;
-    const indent = snaps[slideIndex];
-    let startPoint = shiftXCurrentRef.current;
+  useIsomorphicLayoutEffect(
+    function performSlideChange() {
+      if (!initialized.current) {
+        return;
+      }
+      const { snaps, slides } = slidesManager.current;
+      const indent = snaps[slideIndex];
+      let startPoint = shiftXCurrentRef.current;
 
-    if (indent === snaps[0] && shiftXCurrentRef.current <= snaps[snaps.length - 1]) {
-      const distance =
-        Math.abs(snaps[snaps.length - 1]) + slides[slides.length - 1].width + startPoint;
+      /**
+       * Переключаемся с последнего элемента на первый
+       * Для корректной анимации мы прокручиваем последний слайд на всю длину (shiftX) "вперед"
+       * В конце анимации при отрисовке следующего кадра задаем всем слайдам начальные значения
+       */
+      if (indent === snaps[0] && shiftXCurrentRef.current <= snaps[snaps.length - 1]) {
+        const distance =
+          Math.abs(snaps[snaps.length - 1]) + slides[slides.length - 1].width + startPoint;
 
-      addToAnimationQueue(
-        getAnimateFunction((progress) => {
-          const shiftX = startPoint + progress * distance * -1;
+        addToAnimationQueue(
+          getAnimateFunction((progress) => {
+            const shiftX = startPoint + progress * distance * -1;
 
-          transformCssStyles(shiftX);
+            transformCssStyles(shiftX);
 
-          if (shiftX <= snaps[snaps.length - 1] - slides[slides.length - 1].width) {
-            requestAnimationFrame(() => {
-              shiftXCurrentRef.current = indent;
-              transformCssStyles(snaps[0]);
-            });
-          }
-        }),
-      );
-    } else if (indent === snaps[snaps.length - 1] && shiftXCurrentRef.current === snaps[0]) {
-      startPoint = indent - slides[slides.length - 1].width;
+            if (shiftX <= snaps[snaps.length - 1] - slides[slides.length - 1].width) {
+              requestAnimationFrame(() => {
+                shiftXCurrentRef.current = indent;
+                transformCssStyles(snaps[0]);
+              });
+            }
+          }),
+        );
+        /**
+         * Переключаемся с первого слайда на последний
+         * Для корректной анимации сначала задаем первым видимым слайдам смещение
+         * В следующем кадре начинаем анимация прокрутки "назад"
+         */
+      } else if (indent === snaps[snaps.length - 1] && shiftXCurrentRef.current === snaps[0]) {
+        startPoint = indent - slides[slides.length - 1].width;
 
-      addToAnimationQueue(() => {
-        requestAnimationFrame(() => {
-          const shiftX = indent - slides[slides.length - 1].width;
-          transformCssStyles(shiftX);
+        addToAnimationQueue(() => {
+          requestAnimationFrame(() => {
+            const shiftX = indent - slides[slides.length - 1].width;
+            transformCssStyles(shiftX);
+
+            getAnimateFunction((progress) => {
+              transformCssStyles(startPoint + progress * slides[slides.length - 1].width);
+            })();
+          });
+        });
+        /**
+         * Если не обработаны `corner`-кейсы выше, то просто проигрываем анимацию смещения
+         */
+      } else {
+        addToAnimationQueue(() => {
+          const distance = Math.abs(indent - startPoint);
+          let direction = startPoint <= indent ? 1 : -1;
 
           getAnimateFunction((progress) => {
-            transformCssStyles(startPoint + progress * slides[slides.length - 1].width);
+            const shiftX = startPoint + progress * distance * direction;
+            transformCssStyles(shiftX);
           })();
         });
-      });
-    } else {
-      addToAnimationQueue(() => {
-        const distance = Math.abs(indent - startPoint);
-        let direction = startPoint <= indent ? 1 : -1;
+      }
 
-        getAnimateFunction((progress) => {
-          const shiftX = startPoint + progress * distance * direction;
-          transformCssStyles(shiftX);
-        })();
-      });
-    }
+      startAnimation();
 
-    startAnimation();
-
-    shiftXCurrentRef.current = indent;
-  }, [slideIndex]);
+      shiftXCurrentRef.current = indent;
+    },
+    [slideIndex],
+  );
 
   const slideLeft = (event: React.MouseEvent) => {
     onChange?.(
