@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { NavIdProps } from '../../lib/getNavId';
-import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 import { NavPanelIdContext } from '../NavIdContext/NavIdContext';
@@ -27,7 +25,6 @@ export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, N
  * @see https://vkcom.github.io/VKUI/#/Panel
  */
 export const Panel = ({ centered = false, children, nav, ...restProps }: PanelProps) => {
-  const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
   const { layout } = React.useContext(AppRootContext);
 
@@ -48,7 +45,6 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
         >
           <div className={styles['Panel__in-before']} />
           {centered ? <div className={styles['Panel__centered']}>{children}</div> : children}
-          {platform === Platform.IOS && <div className="vkuiInternalPanel__fade" />}
           <div className={styles['Panel__in-after']} />
         </Touch>
       </RootComponent>
