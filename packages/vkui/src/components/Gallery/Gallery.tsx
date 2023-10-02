@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { clamp } from '../../helpers/math';
+import { useIsClient } from '../../hooks/useIsClient';
 import { useTimeout } from '../../hooks/useTimeout';
 import { BaseGallery } from '../BaseGallery/BaseGallery';
+import { CarouselBase } from '../BaseGallery/CarouselBase/CarouselBase';
 import { BaseGalleryProps } from '../BaseGallery/types';
 
 export interface GalleryProps extends BaseGalleryProps {
   initialSlideIndex?: number;
   timeout?: number;
+  // Отвечает за зацикливание слайдов
+  looped?: boolean;
 }
 
 /**
@@ -18,6 +22,7 @@ export const Gallery = ({
   timeout = 0,
   onChange,
   bullets,
+  looped,
   ...props
 }: GalleryProps) => {
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
@@ -29,6 +34,7 @@ export const Gallery = ({
     [children],
   );
   const childCount = slides.length;
+  const isClient = useIsClient();
 
   const handleChange: GalleryProps['onChange'] = React.useCallback(
     (current: number) => {
@@ -58,8 +64,14 @@ export const Gallery = ({
     setSlideIndex(safeSlideIndex);
   }, [onChange, safeSlideIndex, slideIndex]);
 
+  if (!isClient) {
+    return null;
+  }
+
+  const Component = looped ? CarouselBase : BaseGallery;
+
   return (
-    <BaseGallery
+    <Component
       isDraggable={isDraggable}
       {...props}
       bullets={childCount > 0 && bullets}
@@ -67,6 +79,6 @@ export const Gallery = ({
       onChange={handleChange}
     >
       {slides}
-    </BaseGallery>
+    </Component>
   );
 };
