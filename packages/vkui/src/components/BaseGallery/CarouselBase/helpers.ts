@@ -42,7 +42,11 @@ export function getShiftedIndexes(
   const startIndex = direction === 1 ? 0 : slides.length - 1;
   const endIndex = direction === 1 ? slides.length - 1 : 0;
 
-  for (let i = startIndex; i !== endIndex && gap > 0; i += direction) {
+  for (
+    let i = startIndex;
+    (direction === 1 ? i <= endIndex : i >= endIndex) && gap > 0;
+    i += direction
+  ) {
     const slideWidth = slides[i].width;
 
     if (gap > 0) {

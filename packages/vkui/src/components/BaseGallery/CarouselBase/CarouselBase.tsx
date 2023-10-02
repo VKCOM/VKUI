@@ -176,10 +176,6 @@ export const CarouselBase = ({
 
   useGlobalEventListener(window, 'resize', onResize);
 
-  useIsomorphicLayoutEffect(() => {
-    initializeSlides();
-  }, [children, align, slideWidth]);
-
   useIsomorphicLayoutEffect(
     function performSlideChange() {
       if (!initialized.current) {
@@ -251,6 +247,10 @@ export const CarouselBase = ({
     },
     [slideIndex],
   );
+
+  useIsomorphicLayoutEffect(() => {
+    initializeSlides();
+  }, [children, align, slideWidth]);
 
   const slideLeft = (event: React.MouseEvent) => {
     onChange?.(
