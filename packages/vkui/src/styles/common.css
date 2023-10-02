@@ -1,9 +1,4 @@
 /* stylelint-disable-next-line selector-max-type */
-.vkui > body {
-  overflow-x: hidden;
-}
-
-/* stylelint-disable-next-line selector-max-type */
 .vkui,
 .vkui > body,
 .vkui__root {
