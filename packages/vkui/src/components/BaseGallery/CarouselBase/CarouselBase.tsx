@@ -265,6 +265,7 @@ export const CarouselBase = ({
   };
 
   const onStart = (e: TouchEvent) => {
+    e.originalEvent.stopPropagation();
     onDragStart?.(e);
     shiftXCurrentRef.current = slidesManager.current.snaps[slideIndex];
     shiftXDeltaRef.current = 0;
