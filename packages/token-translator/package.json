@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@types/node": "^20.8.0",
-    "postcss": "^8.4.30",
+    "postcss": "^8.4.31",
     "postcss-less": "^6.0.0",
-    "postcss-scss": "^4.0.8",
+    "postcss-scss": "^4.0.9",
     "postcss-value-parser": "^4.2.0",
     "typescript": "^5.2.2"
   },
