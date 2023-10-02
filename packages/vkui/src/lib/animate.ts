@@ -15,21 +15,26 @@ export interface AnimateArgumentsInterface {
   duration: number;
   timing: TimingInterface;
   draw: DrawInterface;
+  animationQueue: VoidFunction[];
 }
 
-export function animate({ duration, timing, draw }: AnimateArgumentsInterface): void {
+export function animate({
+  duration,
+  timing,
+  draw,
+  animationQueue = [],
+}: AnimateArgumentsInterface): void {
   if (!canUseDOM) {
     return;
   }
 
-  const start = performance.now();
+  let start: number;
 
   requestAnimationFrame(function animate(time: number): void {
-    let timeFraction = (time - start) / duration;
-
-    if (timeFraction > 1) {
-      timeFraction = 1;
+    if (!start) {
+      start = time;
     }
+    let timeFraction = Math.min((time - start) / duration, 1);
 
     const progress = timing(timeFraction);
 
@@ -37,6 +42,11 @@ export function animate({ duration, timing, draw }: AnimateArgumentsInterface): 
 
     if (timeFraction < 1) {
       requestAnimationFrame(animate);
+      return;
+    }
+    animationQueue.shift();
+    if (animationQueue.length > 0) {
+      animationQueue[0]();
     }
   });
 }
