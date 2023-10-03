@@ -62,18 +62,19 @@ jobs:
         id: prev_version
         run: echo "version=$(yarn node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
-      - name: Bump by version type
+      - name: Bumping @vkontakte/vkui-floating-ui-react-dom version via version type
         if: ${{ !github.event.inputs.custom_version }}
-        run: yarn workspace @vkontakte/vkui-floating-ui-react-dom run g:npm:version ${{ github.event.inputs.type }}
+        run: |
+          yarn run g:npm:version ${{ github.event.inputs.type }} --preid ${{ github.event.inputs.tag }}
 
-      - name: Bump by custom version
+      - name: Bumping @vkontakte/vkui-floating-ui-react-dom version via custom version
         if: ${{ github.event.inputs.custom_version }}
-        run: yarn workspace @vkontakte/vkui-floating-ui-react-dom run g:npm:version ${{ github.event.inputs.custom_version }}
+        run: |
+          yarn run g:npm:version ${{ github.event.inputs.custom_version }} --preid ${{ github.event.inputs.tag }}
 
       - name: Saving updated version to env
         id: updated_version
-        run: |
-          echo "version=$(yarn workspace @vkontakte/vkui-floating-ui-react-dom node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+        run: echo "version=$(yarn node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Adding commit and tag with updated version number
         run: |
@@ -100,10 +101,6 @@ jobs:
         if: ${{ github.event.inputs.tag }}
         run: |
           yarn npm publish --tag ${{ github.event.inputs.tag }}
-
-      - name: Publishing with legacy tag
-        if: ${{ github.event.inputs.latest != 'true' }}
-        run: yarn workspace @vkontakte/vkui npm publish --tag legacy
 
       - name: Publishing release
         if: ${{ !github.event.inputs.tag }}
