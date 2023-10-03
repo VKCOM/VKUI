@@ -81,6 +81,8 @@ describe('calendar utils', () => {
       ${sameDayMaxDate} | ${undefined} | ${maxDate}   | ${false} | ${false}
       ${sameDayMinDate} | ${minDate}   | ${undefined} | ${true}  | ${true}
       ${sameDayMaxDate} | ${undefined} | ${maxDate}   | ${true}  | ${true}
+      ${beforeMinDate}  | ${minDate}   | ${maxDate}   | ${true}  | ${true}
+      ${afterMaxDate}   | ${minDate}   | ${maxDate}   | ${true}  | ${true}
     `(
       'returns $expected when [$min < $targetDate < $max] (withTime: $withTime)',
       ({ targetDate, min, max, withTime, expected }) => {
