@@ -70,10 +70,10 @@
     "react-dom": "^17.0.0 || ^18.1.0"
   },
   "dependencies": {
+    "@floating-ui/react-dom": "^2.0.2",
     "@swc/helpers": "^0.5.2",
     "@vkontakte/icons": "^2.62.0",
     "@vkontakte/vkjs": "^1.1.0",
-    "@vkontakte/vkui-floating-ui-react-dom": "worskpace:*",
     "dayjs": "^1.11.10",
     "mitt": "^3.0.1"
   },
