@@ -63,7 +63,7 @@ async function copyFileToDir(src, destDir) {
  *
  * @param {string} filePath путь к файлу
  * @param {string} outputDir выходная папка
- * @param {'es5' | 'commonjs'} moduleType тип модуля
+ * @param {'es6' | 'commonjs'} moduleType тип модуля
  * @param {import('@swc/types').JscConfig['paths']} pathsMapping маппинг путей
  */
 async function build(filePath, outputDir, moduleType) {
@@ -108,6 +108,7 @@ async function main() {
 
   await Promise.all(FILES_UMD_PATH.map((filePath) => build(filePath, OUTPUT_PATH, 'commonjs')));
   await Promise.all(FILES_ESM_PATH.map((filePath) => build(filePath, OUTPUT_PATH, 'es6')));
+  await copyFileToDir('types.d.ts', OUTPUT_PATH);
 }
 
 await main();
