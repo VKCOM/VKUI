@@ -57,7 +57,9 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
+        run: |
+          YARN_ENABLE_SCRIPTS=false yarn install --immutable
+          yarn build:vkui-floating-ui
 
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
