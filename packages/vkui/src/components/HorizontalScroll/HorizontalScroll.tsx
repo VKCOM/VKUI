@@ -115,6 +115,13 @@ function doScroll({
 
   onScrollStart();
 
+  /**
+   * Если окончание прокрутки вышло за ноль
+   */
+  if (startScrollLeft * endScrollLeft < 0) {
+    endScrollLeft = 0;
+  }
+
   if (Math.abs(endScrollLeft) >= Math.abs(extremeScrollLeft)) {
     onScrollToEndBorder();
     endScrollLeft = extremeScrollLeft;
