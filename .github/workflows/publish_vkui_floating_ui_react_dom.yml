@@ -1,0 +1,112 @@
+name: 'Publish @vkontakte/vkui-floating-ui-react-dom'
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        description: 'version type. Choose empty option if using custom version'
+        type: choice
+        default: 'minor'
+        options:
+          - patch
+          - minor
+          - major
+          - prerelease
+          - prepatch
+          - preminor
+          - premajor
+          - ~
+        required: true
+      custom_version:
+        description: 'custom version: x.y.z-preid.a (without "v"). Overrides version type'
+        required: false
+      tag:
+        description: 'prerelease tag: preid ("alpha" or "beta"). Leave empty for release'
+        required: false
+
+run-name: Publish @vkontakte/vkui-floating-ui-react-dom ${{ inputs.custom_version }} ${{ inputs.type }} ${{ inputs.tag }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/vkui-floating-ui-react-dom
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+          always-auth: true
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
+
+      - name: Build
+        run: yarn run build
+
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Saving current version to env
+        id: prev_version
+        run: |
+        run: echo "version=$(yarn node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Bump by version type
+        if: ${{ !github.event.inputs.custom_version }}
+        run: yarn workspace @vkontakte/vkui-floating-ui-react-dom run g:npm:version ${{ github.event.inputs.type }}
+
+      - name: Bump by custom version
+        if: ${{ github.event.inputs.custom_version }}
+        run: yarn workspace @vkontakte/vkui-floating-ui-react-dom run g:npm:version ${{ github.event.inputs.custom_version }}
+
+      - name: Saving updated version to env
+        id: updated_version
+        run: |
+          echo "version=$(yarn workspace @vkontakte/vkui-floating-ui-react-dom node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Adding commit and tag with updated version number
+        run: |
+          git add -A
+          git commit -m 'bump(@vkontakte/vkui-floating-ui-react-dom): from ${{ steps.prev_version.outputs.version }} to ${{ steps.updated_version.outputs.version }}'
+          git tag @vkontakte/vkui-floating-ui-react-dom@${{ steps.updated_version.outputs.version }}
+
+      - name: Pushing changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          tags: true
+
+      - name: Setup NPM Auth Token to .yarnrc.yml
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+        shell: bash
+        run: |
+          yarn config set npmAlwaysAuth true
+          yarn config set npmAuthToken $NODE_AUTH_TOKEN
+
+      - name: Publishing tagged release
+        if: ${{ github.event.inputs.tag }}
+        run: |
+          yarn npm publish --tag ${{ github.event.inputs.tag }}
+
+      - name: Publishing with legacy tag
+        if: ${{ github.event.inputs.latest != 'true' }}
+        run: yarn workspace @vkontakte/vkui npm publish --tag legacy
+
+      - name: Publishing release
+        if: ${{ !github.event.inputs.tag }}
+        run: |
+          yarn npm publish
