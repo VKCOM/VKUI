@@ -9,12 +9,12 @@
 }
 
 .Group--mode-plain:not(:first-of-type) > .Group__header {
-  margin-top: -16px;
+  margin-top: -8px;
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none.Group--mode-none:not(:first-of-type) > .Group__header {
-    margin-top: -16px;
+    margin-top: -8px;
   }
 }
 
