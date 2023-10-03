@@ -60,7 +60,6 @@ jobs:
 
       - name: Saving current version to env
         id: prev_version
-        run: |
         run: echo "version=$(yarn node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Bump by version type
