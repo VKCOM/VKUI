@@ -76,7 +76,7 @@ async function build(filePath, outputDir, moduleType) {
     },
     jsc: {
       externalHelpers: true,
-      target: 'es2015',
+      target: 'es5',
     },
     cwd: __dirname,
   });
