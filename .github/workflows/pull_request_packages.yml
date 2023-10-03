@@ -51,9 +51,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: |
-          YARN_ENABLE_SCRIPTS=false yarn install --immutable
-          yarn build:vkui-floating-ui
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Run Stylelint
         run: yarn run lint:style
@@ -111,9 +109,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: |
-          YARN_ENABLE_SCRIPTS=false yarn install --immutable
-          yarn build:vkui-floating-ui
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Download Playwright blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v3
@@ -152,9 +148,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: |
-          YARN_ENABLE_SCRIPTS=false yarn install --immutable
-          yarn build:vkui-floating-ui
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - uses: andresz1/size-limit-action@v1.7.0
         with:
@@ -182,9 +176,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: |
-          YARN_ENABLE_SCRIPTS=false yarn install --immutable
-          yarn build:vkui-floating-ui
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Build
         run: yarn run docs:styleguide:build
@@ -211,9 +203,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: |
-          YARN_ENABLE_SCRIPTS=false yarn install --immutable
-          yarn build:vkui-floating-ui
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Build
         run: yarn docs:storybook:build

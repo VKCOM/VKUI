@@ -23,9 +23,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: |
-          YARN_ENABLE_SCRIPTS=false yarn install --immutable
-          yarn build:vkui-floating-ui
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Run Prettier
         run: yarn run lint:prettier

@@ -39,7 +39,6 @@
     "size": "yarn clear && yarn build:no-types && size-limit",
     "size:ci": "YARN_ENABLE_SCRIPTS=false yarn install --immutable && yarn build:no-types",
     "build": "yarn run -T concurrently 'yarn:build:*'",
-    "build:vkui-floating-ui": "yarn workspace @vkontakte/vkui-floating-ui-react-dom run build",
     "build:types": "yarn run -T concurrently 'yarn:tsc:*'",
     "build:no-types": "yarn run -T concurrently 'yarn:swc:*' 'yarn:postcss'",
     "clear": "yarn run -T shx rm -rf dist/*",
