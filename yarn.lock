@@ -1922,18 +1922,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@file:../vkui-floating-ui-react-dom::locator=%40vkontakte%2Fvkui%40workspace%3Apackages%2Fvkui":
-  version: 0.0.1
-  resolution: "@floating-ui/react-dom@file:../vkui-floating-ui-react-dom#../vkui-floating-ui-react-dom::hash=77fbaa&locator=%40vkontakte%2Fvkui%40workspace%3Apackages%2Fvkui"
-  dependencies:
-    "@swc/helpers": ^0.5.2
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 570bd12865abf602d7610fc95f22ff34d50955de90c64dce781942587c378063cc409489b67a51021ffb8850bcd824925de435c7368713c5eea4c00996509ca0
-  languageName: node
-  linkType: hard
-
 "@floating-ui/react-dom@npm:^2.0.0, @floating-ui/react-dom@npm:^2.0.2":
   version: 2.0.2
   resolution: "@floating-ui/react-dom@npm:2.0.2"
@@ -5652,7 +5640,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
-    "@floating-ui/react-dom": "file:../vkui-floating-ui-react-dom"
+    "@floating-ui/react-dom": ^2.0.2
     "@swc/helpers": ^0.5.2
     "@vkontakte/icons": ^2.62.0
     "@vkontakte/vkjs": ^1.1.0
