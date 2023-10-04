@@ -59,7 +59,6 @@ export const CalendarRange = ({
   shouldDisableDate,
   onClose,
   weekStartsOn = 1,
-  getRootRef,
   disablePickers,
   prevMonthAriaLabel,
   nextMonthAriaLabel,

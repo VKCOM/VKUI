@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { HasRootRef } from 'src/types';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { DOMProps, useDOM } from '../../lib/dom';
@@ -8,7 +9,11 @@ import { stopPropagation } from '../../lib/utils';
 import { TrackerOptionsProps, useTrackerVisibility } from './useTrackerVisibility';
 import styles from './CustomScrollView.module.css';
 
-export interface CustomScrollViewProps extends DOMProps, TrackerOptionsProps {
+export interface CustomScrollViewProps
+  extends React.AllHTMLAttributes<HTMLDivElement>,
+    DOMProps, // TODO [>=6]: remove
+    HasRootRef<HTMLDivElement>,
+    TrackerOptionsProps {
   windowResize?: boolean;
   boxRef?: React.Ref<HTMLDivElement>;
   className?: HTMLDivElement['className'];
@@ -24,6 +29,8 @@ export const CustomScrollView = ({
   autoHideScrollbar = false,
   autoHideScrollbarDelay,
   onScroll,
+  getRootRef,
+  ...restProps
 }: CustomScrollViewProps) => {
   const { document, window } = useDOM();
 
@@ -174,7 +181,11 @@ export const CustomScrollView = ({
   };
 
   return (
-    <div className={classNames(styles['CustomScrollView'], className)}>
+    <div
+      className={classNames(styles['CustomScrollView'], className)}
+      ref={getRootRef}
+      {...restProps}
+    >
       <div className={styles['CustomScrollView__box']} tabIndex={-1} ref={boxRef} onScroll={scroll}>
         {children}
       </div>
