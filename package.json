@@ -8,8 +8,7 @@
     "@project-tools/postcss-restructure-variable": "1.0.0",
     "@project-tools/storybook-addon-cartesian": "1.0.0",
     "@project-tools/stylelint-atomic": "1.0.0",
-    "@project-tools/stylelint-bad-multiplication": "1.0.0",
-    "@vkontakte/vkui-floating-ui-react-dom": "npm:@vkontakte/vkui-floating-ui-react-dom@0.0.2-alpha.0"
+    "@project-tools/stylelint-bad-multiplication": "1.0.0"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "2.1.0",
