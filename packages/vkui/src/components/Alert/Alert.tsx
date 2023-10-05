@@ -7,7 +7,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { Platform } from '../../lib/platform';
 import { stopPropagation } from '../../lib/utils';
-import { AlignType, AnchorHTMLAttributesOnly, HasDataAttribute } from '../../types';
+import { AlignType, AnchorHTMLAttributesOnly, HasDataAttribute, HasRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { ButtonProps } from '../Button/Button';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
@@ -31,7 +31,7 @@ export interface AlertActionInterface
   mode: AlertActionMode;
 }
 
-export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
+export interface AlertProps extends React.HTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
   actionsLayout?: 'vertical' | 'horizontal';
   actionsAlign?: AlignType;
   actions?: AlertActionInterface[];
@@ -67,6 +67,7 @@ export const Alert = ({
   renderAction,
   actionsAlign,
   dismissButtonMode = 'outside',
+  getRootRef,
   ...restProps
 }: AlertProps) => {
   const generatedId = useId();
@@ -124,7 +125,13 @@ export const Alert = ({
   useScrollLock();
 
   return (
-    <PopoutWrapper className={className} closing={closing} style={style} onClick={close}>
+    <PopoutWrapper
+      className={className}
+      closing={closing}
+      style={style}
+      onClick={close}
+      getRootRef={getRootRef}
+    >
       <FocusTrap
         {...restProps}
         getRootRef={elementRef}

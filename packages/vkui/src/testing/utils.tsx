@@ -91,7 +91,7 @@ export function getRootRefTest(Component: React.ComponentType<any>) {
 
     render(<Component getRootRef={ref} />);
 
-    expect(ref.current).not.toBeNull();
+    expect(ref.current).toBeTruthy();
   });
 }
 

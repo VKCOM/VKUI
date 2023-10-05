@@ -26,7 +26,7 @@ describe('Tooltip', () => {
         </Tooltip>
       </TooltipContainer>
     ),
-    { forward: false },
+    { forward: false, getRootRef: false },
   );
 
   it('renders tooltip when isShown=true', async () => {
