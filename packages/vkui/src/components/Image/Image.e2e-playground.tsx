@@ -31,6 +31,9 @@ export const ImagePlayground = (props: ComponentPlaygroundProps) => {
           withBorder: [undefined, false],
         },
         {
+          withTransparentBackground: [undefined, true],
+        },
+        {
           size: [96, 24],
           children: [
             <Image.Badge key="example-icon">

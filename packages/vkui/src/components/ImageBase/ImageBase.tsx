@@ -57,6 +57,11 @@ export interface ImageBaseProps
    * > ⚠️ Может перекрывать `children`.
    */
   fallbackIcon?: React.ReactElement<ImageBaseExpectedIconProps>;
+  /**
+   * Отключает фон, заданный по умолчанию. Полезен для отображения картинок с прозрачностью.
+   * @since 5.10.0
+   */
+  withTransparentBackground?: boolean;
 }
 
 /**
@@ -82,6 +87,7 @@ export const ImageBase = ({
   children,
   onLoad,
   onError,
+  withTransparentBackground,
   ...restProps
 }: ImageBaseProps) => {
   const [loaded, setLoaded] = React.useState(false);
@@ -136,7 +142,11 @@ export const ImageBase = ({
     <ImageBaseContext.Provider value={{ size }}>
       <Clickable
         style={{ ...style, width: size, height: size }}
-        baseClassName={classNames(styles['ImageBase'], loaded && styles['ImageBase--loaded'])}
+        baseClassName={classNames(
+          styles['ImageBase'],
+          loaded && styles['ImageBase--loaded'],
+          withTransparentBackground && styles['ImageBase--transparent-background'],
+        )}
         {...restProps}
       >
         {hasSrc && (
