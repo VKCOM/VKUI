@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { HasComponent, HasRef, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
+import { HasRef, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
-import { Tappable } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -27,10 +27,9 @@ const CellTypography = ({ size, children, ...restProps }: CellTypographyProps) =
 };
 
 export interface HorizontalCellProps
-  extends React.AnchorHTMLAttributes<HTMLElement>,
+  extends Omit<TappableProps, 'size' | 'getRootRef'>,
     HasRootRef<HTMLDivElement>,
-    HasRef<HTMLDivElement>,
-    HasComponent {
+    HasRef<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
   /**
    * Заголовок
@@ -44,7 +43,6 @@ export interface HorizontalCellProps
    * Дополнительная строка текста под `children` и `subtitle`.
    */
   extraSubtitle?: React.ReactNode;
-  disabled?: boolean;
 }
 
 /**
