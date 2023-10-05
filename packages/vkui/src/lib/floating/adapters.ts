@@ -3,7 +3,7 @@ import {
   type AutoUpdateOptions,
   type FloatingElement,
   type ReferenceType,
-} from '@floating-ui/react-dom';
+} from '@vkontakte/vkui-floating-ui-react-dom';
 
 const defaultOptions = {
   ancestorScroll: true,
