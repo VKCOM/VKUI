@@ -137,7 +137,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
   const [popperPlacement, setPopperPlacement] = React.useState<Placement | undefined>(undefined);
 
   const scrollBoxRef = React.useRef<HTMLDivElement>(null);
-  const rootRef = useExternRef(getRef);
+  const rootRef = useExternRef(getRootRef);
   const {
     fieldValue,
     selectedOptions = [],

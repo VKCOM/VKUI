@@ -12,7 +12,7 @@ import {
 } from './ConfigProviderContext';
 
 describe('ConfigProvider', () => {
-  baselineComponent<any>(ConfigProvider, { forward: false, a11y: false });
+  baselineComponent<any>(ConfigProvider, { forward: false, a11y: false, getRootRef: false });
   it('provides config context', () => {
     const config = {
       appearance: Appearance.LIGHT,

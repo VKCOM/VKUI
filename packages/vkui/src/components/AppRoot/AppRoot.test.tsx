@@ -7,7 +7,7 @@ import { AppRoot } from './AppRoot';
 import { AppRootContext } from './AppRootContext';
 
 describe('AppRoot', () => {
-  baselineComponent(AppRoot);
+  baselineComponent(AppRoot, { getRootRef: false });
   describe('Manages portal root in embedded mode', () => {
     describe('Creates & injects portal root', () => {
       it.each(['embedded', 'partial'] as const)('in %s mode', (mode) => {
