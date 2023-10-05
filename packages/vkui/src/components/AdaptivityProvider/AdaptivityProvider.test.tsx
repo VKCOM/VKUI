@@ -79,7 +79,7 @@ describe('AdaptivityProvider', () => {
     });
   });
 
-  baselineComponent(AdaptivityProvider, { forward: false, a11y: false });
+  baselineComponent(AdaptivityProvider, { forward: false, a11y: false, getRootRef: false });
 
   describe('without bridge', () => {
     it('should return undefined adaptivity props', () => {
