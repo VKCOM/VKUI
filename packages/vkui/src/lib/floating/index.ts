@@ -8,7 +8,7 @@ export {
   size as sizeMiddleware,
   hide as hideMiddleware,
   getOverflowAncestors,
-} from '@floating-ui/react-dom';
+} from '@vkontakte/vkui-floating-ui-react-dom';
 
 export type {
   Placement,
