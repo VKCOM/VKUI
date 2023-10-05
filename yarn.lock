@@ -2531,7 +2531,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@project-docs/styleguide@1.0.0, @project-docs/styleguide@workspace:styleguide":
+"@project-docs/styleguide@workspace:1.0.0, @project-docs/styleguide@workspace:styleguide":
   version: 0.0.0-use.local
   resolution: "@project-docs/styleguide@workspace:styleguide"
   dependencies:
@@ -2542,19 +2542,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@project-tools/eslint-plugin-vkui@1.0.0, @project-tools/eslint-plugin-vkui@workspace:tools/eslint-plugin-vkui":
+"@project-tools/eslint-plugin-vkui@workspace:1.0.0, @project-tools/eslint-plugin-vkui@workspace:tools/eslint-plugin-vkui":
   version: 0.0.0-use.local
   resolution: "@project-tools/eslint-plugin-vkui@workspace:tools/eslint-plugin-vkui"
   languageName: unknown
   linkType: soft
 
-"@project-tools/postcss-restructure-variable@1.0.0, @project-tools/postcss-restructure-variable@workspace:tools/postcss-restructure-variable":
+"@project-tools/postcss-restructure-variable@workspace:1.0.0, @project-tools/postcss-restructure-variable@workspace:tools/postcss-restructure-variable":
   version: 0.0.0-use.local
   resolution: "@project-tools/postcss-restructure-variable@workspace:tools/postcss-restructure-variable"
   languageName: unknown
   linkType: soft
 
-"@project-tools/storybook-addon-cartesian@1.0.0, @project-tools/storybook-addon-cartesian@workspace:tools/storybook-addon-cartesian":
+"@project-tools/storybook-addon-cartesian@workspace:1.0.0, @project-tools/storybook-addon-cartesian@workspace:tools/storybook-addon-cartesian":
   version: 0.0.0-use.local
   resolution: "@project-tools/storybook-addon-cartesian@workspace:tools/storybook-addon-cartesian"
   dependencies:
@@ -2579,13 +2579,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@project-tools/stylelint-atomic@1.0.0, @project-tools/stylelint-atomic@workspace:tools/stylelint-atomic":
+"@project-tools/stylelint-atomic@workspace:1.0.0, @project-tools/stylelint-atomic@workspace:tools/stylelint-atomic":
   version: 0.0.0-use.local
   resolution: "@project-tools/stylelint-atomic@workspace:tools/stylelint-atomic"
   languageName: unknown
   linkType: soft
 
-"@project-tools/stylelint-bad-multiplication@1.0.0, @project-tools/stylelint-bad-multiplication@workspace:tools/stylelint-bad-multiplication":
+"@project-tools/stylelint-bad-multiplication@workspace:1.0.0, @project-tools/stylelint-bad-multiplication@workspace:tools/stylelint-bad-multiplication":
   version: 0.0.0-use.local
   resolution: "@project-tools/stylelint-bad-multiplication@workspace:tools/stylelint-bad-multiplication"
   languageName: unknown
@@ -5614,6 +5614,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vkontakte/vkui-floating-ui-react-dom@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@vkontakte/vkui-floating-ui-react-dom@npm:0.1.0"
+  dependencies:
+    "@floating-ui/react-dom": ^2.0.2
+    "@swc/helpers": ^0.5.2
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 59242b3c3cd6d4130bc8a8872c2ddaf05632634ad143cf461929459be559c1482acea2035c674ad4a5d8b738d8d89a5b4abd059fd57f71ebeea5603d178d28e5
+  languageName: node
+  linkType: hard
+
 "@vkontakte/vkui-floating-ui-react-dom@workspace:packages/vkui-floating-ui-react-dom":
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-floating-ui-react-dom@workspace:packages/vkui-floating-ui-react-dom"
@@ -5634,12 +5647,12 @@ __metadata:
     "@csstools/postcss-global-data": 2.1.0
     "@playwright/experimental-ct-react17": 1.38.1
     "@playwright/test": 1.38.1
-    "@project-docs/styleguide": 1.0.0
-    "@project-tools/eslint-plugin-vkui": 1.0.0
-    "@project-tools/postcss-restructure-variable": 1.0.0
-    "@project-tools/storybook-addon-cartesian": 1.0.0
-    "@project-tools/stylelint-atomic": 1.0.0
-    "@project-tools/stylelint-bad-multiplication": 1.0.0
+    "@project-docs/styleguide": "workspace:1.0.0"
+    "@project-tools/eslint-plugin-vkui": "workspace:1.0.0"
+    "@project-tools/postcss-restructure-variable": "workspace:1.0.0"
+    "@project-tools/storybook-addon-cartesian": "workspace:1.0.0"
+    "@project-tools/stylelint-atomic": "workspace:1.0.0"
+    "@project-tools/stylelint-bad-multiplication": "workspace:1.0.0"
     "@size-limit/file": ^9.0.0
     "@size-limit/webpack": ^9.0.0
     "@size-limit/webpack-css": ^9.0.0
@@ -5756,10 +5769,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
-    "@floating-ui/react-dom": ^2.0.2
     "@swc/helpers": ^0.5.2
     "@vkontakte/icons": ^2.62.0
     "@vkontakte/vkjs": ^1.1.0
+    "@vkontakte/vkui-floating-ui-react-dom": 0.1.0
     dayjs: ^1.11.10
     mitt: ^3.0.1
     storybook: 7.4.5
