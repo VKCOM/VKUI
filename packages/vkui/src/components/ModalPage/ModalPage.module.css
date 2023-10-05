@@ -116,10 +116,7 @@
 }
 
 .ModalPage--desktop .ModalPage__content-in,
-:global(.vkuiInternalModalRoot__modal--expandable):not(
-    :global(.vkuiInternalModalRoot__modal--collapsed)
-  )
-  .ModalPage__content-in {
+:global(.vkuiInternalModalRoot__modal--expandable) .ModalPage__content-in {
   height: 100%;
 }
 

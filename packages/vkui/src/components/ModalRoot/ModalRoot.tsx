@@ -402,7 +402,7 @@ class ModalRootTouchComponent extends React.Component<
 
       modalState.translateY = translateY;
       modalState.translateYCurrent = translateY;
-      modalState.collapsed = translateY > 0 && translateY < shiftYEndPercent;
+      modalState.collapsed = numberInRange(translateY, modalState.collapsedRange);
       modalState.expanded = translateY === 0;
       modalState.hidden = translateY === 100;
 
@@ -661,9 +661,10 @@ function initPageModal(modalState: ModalsStateEntry) {
   let translateYFrom;
   let translateY;
   let expandedRange: TranslateRange;
-  let collapsedRange: TranslateRange;
+  let collapsedRange: TranslateRange | undefined;
   let hiddenRange: TranslateRange;
 
+  const hasCollapsedState = Boolean(modalState.expandable && modalState.settlingHeight !== 100);
   if (modalState.expandable) {
     translateYFrom = 100 - (modalState.settlingHeight ?? 0);
 
@@ -671,10 +672,10 @@ function initPageModal(modalState: ModalsStateEntry) {
     const visiblePart = 100 - translateYFrom;
 
     expandedRange = [0, shiftHalf];
-    collapsedRange = [shiftHalf, translateYFrom + visiblePart / 4];
+    collapsedRange = hasCollapsedState ? [shiftHalf, translateYFrom + visiblePart / 4] : undefined;
     hiddenRange = [translateYFrom + visiblePart / 4, 100];
 
-    collapsed = translateYFrom > 0;
+    collapsed = hasCollapsedState && translateYFrom > 0;
     expanded = translateYFrom <= 0;
     translateY = translateYFrom;
   } else {
@@ -686,7 +687,7 @@ function initPageModal(modalState: ModalsStateEntry) {
     translateY = translateYFrom;
 
     expandedRange = [translateY, translateY + 25];
-    collapsedRange = [translateY + 25, translateY + 25];
+    collapsedRange = undefined;
     hiddenRange = [translateY + 25, translateY + 100];
   }
 
