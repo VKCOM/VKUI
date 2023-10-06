@@ -122,3 +122,5 @@ Avatar.Badge = AvatarBadge;
 Avatar.BadgeWithPreset = AvatarBadgeWithPreset;
 
 Avatar.Overlay = ImageBase.Overlay;
+
+Avatar.getInitialsFontSize = getInitialsFontSize;
