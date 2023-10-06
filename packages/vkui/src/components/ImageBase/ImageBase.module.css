@@ -11,6 +11,10 @@
   isolation: isolate;
 }
 
+.ImageBase--transparent-background {
+  background-color: transparent;
+}
+
 .ImageBase__border {
   pointer-events: none;
   position: absolute;
