@@ -77,7 +77,7 @@ export function prettyProps(props: any) {
     .sort(([key1], [key2]) => Number(key1 > key2))
     .map(([prop, value]: [string, any]) => {
       if (value === undefined) {
-        return '';
+        return `${prop}=undefined`;
       }
       if (value === true) {
         return prop;
