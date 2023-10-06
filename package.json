@@ -65,7 +65,6 @@
     "postcss": "^8.4.31",
     "postcss-cli": "^10.0.0",
     "postcss-custom-media": "^10.0.1",
-    "postcss-custom-properties": "^13.3.2",
     "postcss-import": "^15.0.0",
     "postcss-loader": "^7.3.3",
     "postcss-modules": "^6.0.0",

@@ -4,7 +4,6 @@ const restructureVariable = require('@project-tools/postcss-restructure-variable
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const postcssCustomMedia = require('postcss-custom-media');
-const cssCustomProperties = require('postcss-custom-properties');
 const cssImport = require('postcss-import');
 const cssModules = require('postcss-modules');
 const { VKUI_PACKAGE, VKUI_TOKENS_CSS, generateScopedName } = require('../../../shared');
@@ -50,16 +49,6 @@ function makePostcssPlugins({
     // Обработка CustomMedia
     postcssCustomMedia(),
   ];
-
-  // Обработка custom properties для поддержки в старых браузерах
-  if (!isESNext) {
-    plugins.push(
-      cssCustomProperties({
-        preserve: true,
-        disableDeprecationNotice: true,
-      }),
-    );
-  }
 
   // Обработка css modules. Добавляет префикс vkui
   if (isVKUIPackageBuild && isCssModulesFile && !isESNext) {
