@@ -14,7 +14,7 @@ const stylesMode = {
 export interface GradientProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Тип градиента
-   * TODO [>=6]: удалить 'white' и 'black'
+   * TODO [>=6]: удалить 'white' и 'black', сделать `default` по умолчанию
    */
   mode?: 'tint' | 'white' | 'black' | 'default';
   /**
