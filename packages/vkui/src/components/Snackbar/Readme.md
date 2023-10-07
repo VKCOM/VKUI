@@ -149,3 +149,22 @@ const SnackBarExample = () => {
 
 <SnackBarExample />;
 ```
+
+## Snackbar.Basic
+
+Базовый компонент снекбара
+
+```jsx { "props": { "layout": false, "iframe": false } }
+<div style={{ display: 'grid', padding: 32, gap: 32 }}>
+  <Snackbar.Basic
+    before={<Icon28CheckCircleOutline fill="var(--vkui--color_icon_positive)" />}
+    after={
+      <Button mode="link" appearance="accent" size="s">
+        Поделиться
+      </Button>
+    }
+  >
+    Ссылка скопирована
+  </Snackbar.Basic>
+</div>
+```
