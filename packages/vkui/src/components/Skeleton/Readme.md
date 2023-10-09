@@ -1,0 +1,19 @@
+```jsx
+<PanelHeader>
+  <Skeleton width="100%" />
+</PanelHeader>
+<Group>
+  <SimpleCell
+    disabled
+    before={<Skeleton width={36} height={36} circle />}
+    subtitle={<Skeleton width={90} />}
+  >
+    <Skeleton width={120} />
+  </SimpleCell>
+  <Div>
+    <Skeleton width="100%" />
+    <Skeleton width="100%" />
+    <Skeleton width="75%" />
+  </Div>
+</Group>
+```

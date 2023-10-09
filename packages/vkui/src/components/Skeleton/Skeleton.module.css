@@ -1,0 +1,62 @@
+.Skeleton {
+  --vkui_internal--skeleton_color_from: var(--vkui--color_skeleton_from);
+  --vkui_internal--skeleton_color_to: var(--vkui--color_skeleton_to);
+  --vkui_internal--skeleton_gradient_left: 0;
+
+  background-color: var(--vkui_internal--skeleton_color_from);
+  width: 100%;
+  max-width: 100%;
+  border-radius: 6px;
+  display: inline-flex;
+  line-height: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Если скелетон находится внутри другого скелетона он меняет цвет */
+.Skeleton .Skeleton {
+  --vkui_internal--skeleton_color_from: var(--vkui--color_background_content);
+  --vkui_internal--skeleton_color_to: var(--vkui--color_background_tertiary);
+}
+
+.Skeleton .Skeleton .Skeleton {
+  --vkui_internal--skeleton_color_from: var(--vkui--color_skeleton_from);
+  --vkui_internal--skeleton_color_to: var(--vkui--color_skeleton_to);
+}
+
+.Skeleton::after {
+  position: absolute;
+  left: var(--vkui_internal--skeleton_gradient_left);
+  top: 0;
+  content: ' ';
+  width: 100vw;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--vkui_internal--skeleton_color_from),
+    var(--vkui_internal--skeleton_color_to),
+    var(--vkui_internal--skeleton_color_from)
+  );
+  transform: translateX(-100vw);
+  animation-name: skeleton;
+  animation-direction: normal /*rtl:reverse*/;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes skeleton {
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+.Skeleton--disableAnimation::after {
+  content: none;
+
+  /**
+   * Safari тратит время не пересчет анимации даже если элемент скрыт
+   * Для повышения производительности анимацию необходимо выключить
+   */
+  animation-name: none;
+}

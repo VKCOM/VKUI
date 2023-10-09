@@ -318,6 +318,8 @@ export { DateInput } from './components/DateInput/DateInput';
 export type { DateInputProps } from './components/DateInput/DateInput';
 export { DateRangeInput } from './components/DateRangeInput/DateRangeInput';
 export type { DateRangeInputProps } from './components/DateRangeInput/DateRangeInput';
+export { Skeleton } from './components/Skeleton/Skeleton';
+export type { SkeletonProps } from './components/Skeleton/Skeleton';
 
 /**
  * Helpers
