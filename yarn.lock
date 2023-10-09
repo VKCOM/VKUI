@@ -5615,7 +5615,7 @@ __metadata:
     stylelint-media-use-custom-media: ^2.0.0
     stylelint-value-no-unknown-custom-properties: ^4.0.0
     swc-loader: ^0.2.3
-    swc-plugin-css-modules: 0.1.4
+    swc-plugin-css-modules: 0.1.5
     swc-plugin-transform-remove-imports: 1.8.0
     ts-node: ^10.9.1
     typescript: ^5.2.2
@@ -17660,10 +17660,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-plugin-css-modules@npm:0.1.4":
-  version: 0.1.4
-  resolution: "swc-plugin-css-modules@npm:0.1.4"
-  checksum: bcafbb929ddf717d38211e2223cc8c92fd835fb0d5380d78ab694f874cc82de09bad4527b91ead5ac9326745146e4ee6a8ddaab1ee7c75ac3733e741edfb062e
+"swc-plugin-css-modules@npm:0.1.5":
+  version: 0.1.5
+  resolution: "swc-plugin-css-modules@npm:0.1.5"
+  checksum: cc260a8e9c86975a0cf9a3e82e426d9026ded9500b93e5a576d30994d5827112a7e20ed0b2c44a10bb0650b3184e7f091449510c500d129209096b2dccdc4d75
   languageName: node
   linkType: hard
 
