@@ -70,7 +70,7 @@
     "react-dom": "^17.0.0 || ^18.1.0"
   },
   "dependencies": {
-    "@swc/helpers": "^0.5.2",
+    "@swc/helpers": "^0.5.3",
     "@vkontakte/icons": "^2.62.0",
     "@vkontakte/vkjs": "^1.1.0",
     "@vkontakte/vkui-floating-ui-react-dom": "0.1.0",
