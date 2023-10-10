@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon16Add, Icon24Camera } from '@vkontakte/icons';
+import { Icon12Add, Icon12Tag, Icon16Add, Icon24Camera } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Counter } from '../Counter/Counter';
 import { Button, type ButtonProps } from './Button';
@@ -99,6 +99,34 @@ export const ButtonWithCounterPlayground = (props: ComponentPlaygroundProps) => 
         }
         return ButtonElement;
       }}
+    </ComponentPlayground>
+  );
+};
+
+export const ButtonWithPaddingsPlayground = (props: ComponentPlaygroundProps) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          size: ['s', 'm', 'l'],
+          stretched: [true, false],
+          before: [<Icon12Add key="before" />],
+        },
+        {
+          size: ['s', 'm', 'l'],
+          stretched: [true, false],
+          after: [<Icon12Tag key="after" />],
+        },
+      ]}
+    >
+      {(props: ButtonProps) => (
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {(['primary', 'secondary', 'tertiary', 'outline', 'link'] as const).map((mode) => (
+            <Button key={mode} {...props} mode={mode} />
+          ))}
+        </div>
+      )}
     </ComponentPlayground>
   );
 };
