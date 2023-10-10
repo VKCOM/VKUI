@@ -51,7 +51,7 @@ export const CalendarTime = ({
     ? minutes.map((minute) => {
         return { ...minute, disabled: isDayDisabled(setMinutes(value, minute.value), true) };
       })
-    : hours;
+    : minutes;
 
   const onHoursChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
