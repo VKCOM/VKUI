@@ -11,22 +11,43 @@ import styles from './Tabs.module.css';
 
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   mode?: 'default' | 'accent' | 'secondary';
+  /* Включает прокрутку контейнера до активной (`selected`) вкладки */
+  withScrollToSelectedTab?: boolean;
+  /* Отвечает за горизонтальное выравнивание при прокрутке */
+  scrollBehaviorToSelectedTab?: ScrollIntoViewOptions['inline'];
+  /* Включает прокрутку до выбранной вкладки при инициализации. Может быть нежелательно если вкладки расположены вне зоны видимости. Обусловлено тем, что
+   * внутри используется [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView), а значит контент также может быть прокручен вертикально. */
+  withScrollToSelectedOnMount?: boolean;
 }
 
 export interface TabsContextProps {
   mode: TabsProps['mode'];
   withGaps: boolean;
+  withScrollToSelectedTab: TabsProps['withScrollToSelectedTab'];
+  scrollBehaviorToSelectedTab: TabsProps['scrollBehaviorToSelectedTab'];
+  withScrollToSelectedOnMount: TabsProps['withScrollToSelectedOnMount'];
 }
 
 export const TabsModeContext = React.createContext<TabsContextProps>({
   mode: 'default',
   withGaps: false,
+  withScrollToSelectedTab: false,
+  scrollBehaviorToSelectedTab: undefined,
+  withScrollToSelectedOnMount: false,
 });
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabs
  */
-export const Tabs = ({ children, mode = 'default', role = 'tablist', ...restProps }: TabsProps) => {
+export const Tabs = ({
+  children,
+  mode = 'default',
+  role = 'tablist',
+  withScrollToSelectedTab,
+  scrollBehaviorToSelectedTab = 'nearest',
+  withScrollToSelectedOnMount,
+  ...restProps
+}: TabsProps) => {
   const platform = usePlatform();
   const { document } = useDOM();
 
@@ -141,7 +162,17 @@ export const Tabs = ({ children, mode = 'default', role = 'tablist', ...restProp
       role={role}
     >
       <div className={styles['Tabs__in']} ref={tabsRef}>
-        <TabsModeContext.Provider value={{ mode, withGaps }}>{children}</TabsModeContext.Provider>
+        <TabsModeContext.Provider
+          value={{
+            mode,
+            withGaps,
+            withScrollToSelectedTab,
+            scrollBehaviorToSelectedTab,
+            withScrollToSelectedOnMount,
+          }}
+        >
+          {children}
+        </TabsModeContext.Provider>
       </div>
     </RootComponent>
   );

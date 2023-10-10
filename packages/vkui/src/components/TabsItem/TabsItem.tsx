@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -62,10 +63,17 @@ export const TabsItem = ({
   className,
   role = 'tab',
   tabIndex: tabIndexProp,
+  getRootRef,
   ...restProps
 }: TabsItemProps) => {
   const { sizeY = 'none' } = useAdaptivity();
-  const { mode, withGaps }: TabsContextProps = React.useContext(TabsModeContext);
+  const {
+    mode,
+    withGaps,
+    withScrollToSelectedTab,
+    scrollBehaviorToSelectedTab,
+    withScrollToSelectedOnMount,
+  }: TabsContextProps = React.useContext(TabsModeContext);
   let statusComponent = null;
 
   const isTabFlow = role === 'tab';
@@ -105,9 +113,35 @@ export const TabsItem = ({
     tabIndex = selected ? 0 : -1;
   }
 
+  const rootRef = useExternRef(getRootRef);
+
+  const prevSelected = React.useRef(selected);
+  React.useEffect(() => {
+    prevSelected.current = selected;
+  }, [selected]);
+  const shouldScrollToSelected =
+    withScrollToSelectedTab &&
+    (withScrollToSelectedOnMount ? selected : prevSelected.current !== selected && selected);
+
+  React.useEffect(
+    function scrollToSelectedItem() {
+      if (!shouldScrollToSelected || !rootRef.current || !scrollBehaviorToSelectedTab) {
+        return;
+      }
+
+      rootRef.current.scrollIntoView({
+        inline: scrollBehaviorToSelectedTab,
+        block: 'nearest',
+        behavior: 'smooth',
+      });
+    },
+    [rootRef, shouldScrollToSelected, scrollBehaviorToSelectedTab],
+  );
+
   return (
     <Tappable
       {...restProps}
+      getRootRef={rootRef}
       className={classNames(
         styles['TabsItem'],
         mode && stylesMode[mode],

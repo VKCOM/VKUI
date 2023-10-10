@@ -6,6 +6,11 @@
 - В компонент вкладки (`TabsItem`) нужно передать `id` и `aria-controls`, указывающий на id области с его контентом. <br />
 - В область контента необходимо передать параметры `id`, `tabIndex = 0` и `aria-labelledby`, ссылающийся на компонент таба
 
+## Скролл при выборе вкладки
+
+По умолчанию скролл на выбранную `selected=true` владку выключен. Для включения нужно воспользоваться свойством `scrollBehaviorToSelectedTab'. Значения соответствуют опциям метода [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView).
+Так как для скролла мы используем [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView), то кроме горизонтального скролла, при выборе вкладки также может происходить вертикальный скролл, если вкладка вертикально полностью не видна. Это может быть особенно неприятно если вкладки при загрузке приложения/страницы расположены вне видимой области. Чтобы не происходило нежелательного скрола при инициализации приложения скролл на выбранную вкладку выключен. Чтобы включить скролл также и при инициализации приложения можно воспользоваться свойством `withScrollToSelectedOnMount`.
+
 ```jsx
 const Example = () => {
   const [mode, setMode] = React.useState('all');
@@ -122,7 +127,7 @@ const Scrollable = () => {
 
   return (
     <Group>
-      <Tabs mode={mode}>
+      <Tabs mode={mode} scrollBehaviorToSelectedTab="center" withScrollToSelectedOnMount>
         <HorizontalScroll arrowSize="m">
           <TabsItem
             selected={selected === 'groups'}
