@@ -185,7 +185,9 @@
 .Button--mode-link .Button__after,
 .Button--mode-link .Button__before,
 .Button--mode-link .Button__content:first-child,
-.Button--mode-link .Button__content:last-child {
+.Button--mode-link .Button__content:last-child,
+.Button--stretched .Button__after:only-child,
+.Button--stretched .Button__before:only-child {
   padding-left: 0;
   padding-right: 0;
 }
