@@ -111,6 +111,10 @@ export interface CustomSelectOptionInterface {
   [index: string]: any;
 }
 
+interface CustomSelectRenderOption extends CustomSelectOptionProps {
+  option?: CustomSelectOptionInterface;
+}
+
 export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerOptionsProps {
   /**
    * Если `true`, то при клике на селект в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
@@ -149,7 +153,7 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
    * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе селект не будет знать об актуальном состоянии
    * опции.
    */
-  renderOption?: (props: CustomSelectOptionProps) => React.ReactNode;
+  renderOption?: (props: CustomSelectRenderOption) => React.ReactNode;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.
    * В `defaultDropdownContent` содержится список опций в виде скроллящегося блока.
