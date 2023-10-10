@@ -42,7 +42,7 @@
   align-items: center;
   background: var(--vkui--color_background_modal);
   box-shadow: var(--vkui--elevation4);
-  border-radius: var(--vkui--size_border_radius--regular);
+  border-radius: var(--vkui--size_card_border_radius--regular);
 }
 
 .Snackbar--mode-dark .Snackbar__body {
