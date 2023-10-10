@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { usePrevious } from '../../hooks/usePrevious';
 import { useDOM } from '../../lib/dom';
 import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -76,7 +77,8 @@ function useSkeletonSyncAnimation(
  */
 function useSkeletonPosition(rootRef: React.MutableRefObject<HTMLElement | null>) {
   const { document, window } = useDOM();
-  const skeletonGradientLeft = React.useRef('0');
+  const [skeletonGradientLeft, setSkeletonGradientLeft] = React.useState('0');
+  const prevSkeletonGradientLeft = usePrevious(skeletonGradientLeft);
 
   const updatePosition = React.useCallback(() => {
     const el = rootRef.current;
@@ -85,15 +87,16 @@ function useSkeletonPosition(rootRef: React.MutableRefObject<HTMLElement | null>
     }
 
     const value = -(el.getBoundingClientRect().left - document.body.getBoundingClientRect().left);
-    skeletonGradientLeft.current = value === 0 ? '0' : `${value}px`;
-
-    el.style.setProperty(CUSTOM_PROPERTY_GRADIENT_LEFT, skeletonGradientLeft.current);
-  }, [document, rootRef]);
+    const gradientValue = value === 0 ? '0' : `${value}px`;
+    if (prevSkeletonGradientLeft !== gradientValue) {
+      setSkeletonGradientLeft(gradientValue);
+    }
+  }, [document, prevSkeletonGradientLeft, rootRef]);
 
   React.useEffect(updatePosition, [updatePosition]);
   useGlobalEventListener(window, 'resize', updatePosition);
 
-  return skeletonGradientLeft.current;
+  return skeletonGradientLeft;
 }
 
 export interface SkeletonProps extends HTMLAttributesWithRootRef<HTMLDivElement | HTMLSpanElement> {
