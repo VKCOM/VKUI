@@ -27,7 +27,7 @@ const LIBS = ['utils', 'utils/dom', 'core', 'dom', 'react-dom'];
 const FILES_ESM_PATH = LIBS.map((name) => floatinguiPath(name, 'esm'));
 const FILES_UMD_PATH = LIBS.map((name) => floatinguiPath(name, 'umd'));
 
-const REGEX_MODULES = RegExp("'@floating-ui\\/(" + LIBS.join('|').replace('/', '\\/') + ")'", 'g');
+const REGEX_MODULES = RegExp('"@floating-ui\\/(' + LIBS.join('|').replace('/', '\\/') + ')"', 'g');
 
 const BUILD_DIR = './tmp';
 const BUILD_PATH = path.resolve(__dirname, BUILD_DIR);
