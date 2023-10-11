@@ -27,12 +27,21 @@ const vkuiSizeXClassNames = {
   [SizeType.REGULAR]: 'vkui--sizeX-regular',
 };
 
+const vkuiSizeYClassNames = {
+  none: 'vkui--sizeY-none',
+  [SizeType.COMPACT]: 'vkui--sizeY-compact',
+};
+
 const vkuiLayoutClassNames = {
   card: 'vkui--layout-card',
   plain: 'vkui--layout-plain',
 };
 
-function containerClassNames(layout: AppRootProps['layout'], sizeX: SizeType | 'none'): string[] {
+function containerClassNames(
+  layout: AppRootProps['layout'],
+  sizeX: SizeType | 'none',
+  sizeY: SizeType | 'none',
+): string[] {
   const classNames: string[] = [];
 
   if (layout) {
@@ -41,6 +50,10 @@ function containerClassNames(layout: AppRootProps['layout'], sizeX: SizeType | '
 
   if (sizeX !== SizeType.COMPACT) {
     classNames.push(vkuiSizeXClassNames[sizeX]);
+  }
+
+  if (sizeY !== SizeType.REGULAR) {
+    classNames.push(vkuiSizeYClassNames[sizeY]);
   }
 
   return classNames;
@@ -98,7 +111,7 @@ export const AppRoot = ({
   const insets = safeAreaInsets ? safeAreaInsets : deprecatedInsets;
   const appearance = useAppearance();
 
-  const { hasPointer, sizeX = 'none' } = useAdaptivity();
+  const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
 
   if (process.env.NODE_ENV === 'development') {
     if (!safeAreaInsets) {
@@ -201,7 +214,7 @@ export const AppRoot = ({
       return noop;
     }
 
-    const classNames = containerClassNames(layout, sizeX);
+    const classNames = containerClassNames(layout, sizeX, sizeY);
 
     const container = mode === 'embedded' ? rootRef.current?.parentElement : document!.body;
 
@@ -213,7 +226,7 @@ export const AppRoot = ({
     return () => {
       container.classList.remove(...classNames);
     };
-  }, [sizeX, layout]);
+  }, [sizeX, sizeY, layout]);
 
   useIsomorphicLayoutEffect(() => {
     if (mode !== 'full' || appearance === undefined) {

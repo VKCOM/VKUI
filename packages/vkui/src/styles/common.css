@@ -31,6 +31,16 @@
   }
 }
 
+.vkui--sizeY-compact {
+  --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--compact);
+}
+
+@media (--sizeY-compact) {
+  .vkui--sizeY-none {
+    --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--compact);
+  }
+}
+
 .vkui--layout-card {
   background: var(--vkui--color_background);
 }

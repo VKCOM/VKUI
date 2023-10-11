@@ -7,6 +7,7 @@
   --vkui_internal--side_cell_gap: calc(
     var(--vkui--size_base_padding_horizontal--regular) - var(--vkui--spacing_size_s)
   );
+  --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--regular);
 
   /**
    * "Safe Zone" добавляет невидимую интерактивную область, по которой пользователь будет вводить мышкой и тем самым

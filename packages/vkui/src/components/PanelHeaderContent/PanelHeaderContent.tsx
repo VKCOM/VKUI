@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -13,6 +15,11 @@ const platformClassNames = {
   ios: styles['PanelHeaderContent--ios'],
   android: styles['PanelHeaderContent--android'],
   vkcom: styles['PanelHeaderContent--vkcom'],
+};
+
+const sizeYClassNames = {
+  none: styles['PanelHeaderContent--sizeY-none'],
+  compact: styles['PanelHeaderContent--sizeY-compact'],
 };
 
 export interface PanelHeaderContentProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -53,6 +60,7 @@ export const PanelHeaderContent = ({
   onClick,
   ...restProps
 }: PanelHeaderContentProps) => {
+  const { sizeY = 'none' } = useAdaptivity();
   const InComponent = onClick ? Tappable : 'div';
   const rootProps = onClick ? {} : restProps;
   const platform = usePlatform();
@@ -74,6 +82,7 @@ export const PanelHeaderContent = ({
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
       )}
     >
       {hasReactNode(before) && <div className={styles['PanelHeaderContent__before']}>{before}</div>}
