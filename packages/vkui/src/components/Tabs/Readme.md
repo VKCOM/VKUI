@@ -8,7 +8,7 @@
 
 ## Скролл при выборе вкладки
 
-По умолчанию скролл на выбранную `selected=true` владку выключен. Для включения нужно воспользоваться свойством `withScrollToSelectedTab`.
+По умолчанию скролл на выбранную `selected=true` вкладку выключен. Для включения нужно воспользоваться свойством `withScrollToSelectedTab`.
 Контролировать горизонтально выравнивание при прокрутке к выбранной вкладке поможет свойство `scrollBehaviorToSelectedTab`.
 Значения `scrollBehaviorToSelectedTab` соответствуют опциям метода [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView).
 
