@@ -66,7 +66,6 @@ function getPackageJSONTemplate(subPackagePath) {
  * @param {string} filePath путь к файлу
  * @param {string} outputDir выходная папка
  * @param {'es6' | 'commonjs'} moduleType тип модуля
- * @param {import('@swc/types').JscConfig['paths']} pathsMapping маппинг путей
  */
 async function build(filePath, outputDir, moduleType) {
   const filename = path.basename(filePath);
