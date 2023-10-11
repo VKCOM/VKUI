@@ -17,7 +17,7 @@
 .PanelHeaderButton--primitive {
   height: 48px;
   line-height: 48px;
-  padding: 0 12px;
+  padding: 0 10px;
 }
 
 /*
@@ -42,6 +42,11 @@
 
 .PanelHeaderButton--ios :global(.vkuiIcon--28) {
   padding: 8px;
+}
+
+/* stylelint-disable-next-line @project-tools/stylelint-atomic -- фикс для иконки назад */
+.PanelHeaderBack--ios :global(.vkuiIcon--w-20) {
+  padding-left: 4px;
 }
 
 /*
