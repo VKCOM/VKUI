@@ -25,17 +25,17 @@ const Example = () => {
     borderRadius: 8,
   };
   const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
-  const isVKCOM = platform !== Platform.VKCOM;
+  const hasHeader = platform !== Platform.VKCOM;
 
   return (
     <SplitLayout
-      header={isVKCOM && <PanelHeader separator={false} />}
+      header={hasHeader && <PanelHeader separator={false} />}
       style={{ justifyContent: 'center' }}
     >
       {viewWidth.tabletPlus && (
         <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
           <Panel>
-            {isVKCOM && <PanelHeader />}
+            {hasHeader && <PanelHeader />}
             <Group>
               <Cell
                 disabled={activeStory === 'feed'}
