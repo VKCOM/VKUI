@@ -30,7 +30,6 @@ const FLOATING_UI_SUB_PACKAGES_NAME_REGEX = RegExp(
 
 const NODE_MODULES_PATH = path.resolve(__dirname, '../../node_modules');
 const FLOATING_UI_PATH = path.join(NODE_MODULES_PATH, '@floating-ui');
-const BUILD_DIR = './tmp';
 const OUTPUT_DIR = './dist';
 
 /**
