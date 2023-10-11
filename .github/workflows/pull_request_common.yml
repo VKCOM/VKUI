@@ -29,7 +29,7 @@ jobs:
 
       # TODO [>=6]: удалить после v6
       - name: V5
-        if: ${{ !startsWith(github.event.pull_request.title, 'BREAKING CHANGE') }}
+        if: ${{ !(startsWith(github.event.pull_request.title, 'BREAKING CHANGE') || contains(github.event.pull_request.title, 'v6'))}}
         uses: actions/github-script@v6
         with:
           script: |
