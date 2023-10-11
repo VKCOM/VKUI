@@ -5613,7 +5613,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/vkui-floating-ui@workspace:^, @vkontakte/vkui-floating-ui@workspace:packages/vkui-floating-ui":
+"@vkontakte/vkui-floating-ui@npm:0.0.1-alpha.0":
+  version: 0.0.1-alpha.0
+  resolution: "@vkontakte/vkui-floating-ui@npm:0.0.1-alpha.0"
+  dependencies:
+    "@floating-ui/react-dom": ^2.0.2
+    "@swc/helpers": ^0.5.3
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 540365448b6b7c93c363c335ccb94a05e327b9f6000fe7149451f8dc243bac19c7f78a6c94af0798c32a9e5b06ff2ac22336c55519003a677fb325dce18a469f
+  languageName: node
+  linkType: hard
+
+"@vkontakte/vkui-floating-ui@workspace:packages/vkui-floating-ui":
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-floating-ui@workspace:packages/vkui-floating-ui"
   dependencies:
@@ -5757,7 +5770,7 @@ __metadata:
     "@swc/helpers": ^0.5.3
     "@vkontakte/icons": ^2.62.0
     "@vkontakte/vkjs": ^1.1.0
-    "@vkontakte/vkui-floating-ui": "workspace:^"
+    "@vkontakte/vkui-floating-ui": 0.0.1-alpha.0
     dayjs: ^1.11.10
     mitt: ^3.0.1
     storybook: 7.4.6
