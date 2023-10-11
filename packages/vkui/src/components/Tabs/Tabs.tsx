@@ -11,9 +11,15 @@ import styles from './Tabs.module.css';
 
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   mode?: 'default' | 'accent' | 'secondary';
-  /** Включает прокрутку контейнера до активной (`selected`) вкладки */
+  /**
+   * Включает прокрутку контейнера до активной (`selected`) вкладки
+   * @since 5.10.0
+   */
   withScrollToSelectedTab?: boolean;
-  /** Отвечает за горизонтальное выравнивание при прокрутке до активной вкладке */
+  /**
+   * Отвечает за горизонтальное выравнивание при прокрутке до активной вкладке
+   * @since 5.10.0
+   */
   scrollBehaviorToSelectedTab?: ScrollIntoViewOptions['inline'];
 }
 
