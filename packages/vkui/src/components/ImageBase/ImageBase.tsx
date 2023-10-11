@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
+import { minOr } from '../../lib/comparing';
 import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
@@ -26,6 +27,11 @@ export {
 
 export { ImageBaseContext };
 
+/**
+ * Размер по умолчанию.
+ */
+const defaultSize = 24;
+
 export interface ImageBaseProps
   extends React.ImgHTMLAttributes<HTMLElement>,
     AnchorHTMLAttributesOnly,
@@ -39,6 +45,14 @@ export interface ImageBaseProps
    * > ⚠️ Использование кастомного размера – это пограничный кейс.
    */
   size?: LiteralUnion<ImageBaseSize, number>;
+  /**
+   * Высота изображения
+   */
+  widthSize?: number;
+  /**
+   * Ширина изображения
+   */
+  heightSize?: number;
   /**
    * Включает или отключает обводку.
    */
@@ -78,9 +92,11 @@ export const ImageBase = ({
   srcSet,
   useMap,
   getRef,
-  size = 24,
-  width,
-  height,
+  size: sizeProp,
+  width: widthImg,
+  height: heightImg,
+  widthSize,
+  heightSize,
   style,
   withBorder = true,
   fallbackIcon: fallbackIconProp,
@@ -90,6 +106,11 @@ export const ImageBase = ({
   withTransparentBackground,
   ...restProps
 }: ImageBaseProps) => {
+  const size = sizeProp ?? minOr([widthSize, heightSize], defaultSize);
+
+  const width = widthSize ?? size;
+  const height = heightSize ?? size;
+
   const [loaded, setLoaded] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
 
@@ -141,7 +162,7 @@ export const ImageBase = ({
   return (
     <ImageBaseContext.Provider value={{ size }}>
       <Clickable
-        style={{ ...style, width: size, height: size }}
+        style={{ width, height, ...style }}
         baseClassName={classNames(
           styles['ImageBase'],
           loaded && styles['ImageBase--loaded'],
@@ -162,8 +183,8 @@ export const ImageBase = ({
             src={src}
             srcSet={srcSet}
             useMap={useMap}
-            width={width}
-            height={height}
+            width={widthImg}
+            height={heightImg}
             onLoad={handleImageLoad}
             onError={handleImageError}
           />
