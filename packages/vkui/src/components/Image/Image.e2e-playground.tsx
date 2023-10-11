@@ -70,6 +70,16 @@ export const ImagePlayground = (props: ComponentPlaygroundProps) => {
             </React.Fragment>,
           ],
         },
+        {
+          src: [base64Image],
+          widthSize: [64],
+          heightSize: [48],
+        },
+        {
+          src: [base64Image],
+          widthSize: [48],
+          heightSize: [64],
+        },
       ]}
     >
       {(props: ImageProps) => <Image {...props} />}
