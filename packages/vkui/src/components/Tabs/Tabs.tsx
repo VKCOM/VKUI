@@ -11,29 +11,24 @@ import styles from './Tabs.module.css';
 
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   mode?: 'default' | 'accent' | 'secondary';
-  /* Включает прокрутку контейнера до активной (`selected`) вкладки */
+  /** Включает прокрутку контейнера до активной (`selected`) вкладки */
   withScrollToSelectedTab?: boolean;
-  /* Отвечает за горизонтальное выравнивание при прокрутке */
+  /** Отвечает за горизонтальное выравнивание при прокрутке до активной вкладке */
   scrollBehaviorToSelectedTab?: ScrollIntoViewOptions['inline'];
-  /* Включает прокрутку до выбранной вкладки при инициализации. Может быть нежелательно если вкладки расположены вне зоны видимости. Обусловлено тем, что
-   * внутри используется [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView), а значит контент также может быть прокручен вертикально. */
-  withScrollToSelectedOnMount?: boolean;
 }
 
 export interface TabsContextProps {
   mode: TabsProps['mode'];
   withGaps: boolean;
   withScrollToSelectedTab: TabsProps['withScrollToSelectedTab'];
-  scrollBehaviorToSelectedTab: TabsProps['scrollBehaviorToSelectedTab'];
-  withScrollToSelectedOnMount: TabsProps['withScrollToSelectedOnMount'];
+  scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
 }
 
 export const TabsModeContext = React.createContext<TabsContextProps>({
   mode: 'default',
   withGaps: false,
   withScrollToSelectedTab: false,
-  scrollBehaviorToSelectedTab: undefined,
-  withScrollToSelectedOnMount: false,
+  scrollBehaviorToSelectedTab: 'nearest',
 });
 
 /**
@@ -45,7 +40,6 @@ export const Tabs = ({
   role = 'tablist',
   withScrollToSelectedTab,
   scrollBehaviorToSelectedTab = 'nearest',
-  withScrollToSelectedOnMount,
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
@@ -168,7 +162,6 @@ export const Tabs = ({
             withGaps,
             withScrollToSelectedTab,
             scrollBehaviorToSelectedTab,
-            withScrollToSelectedOnMount,
           }}
         >
           {children}

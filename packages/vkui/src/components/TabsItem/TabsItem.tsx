@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../lib/adaptivity';
+import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
@@ -67,13 +68,8 @@ export const TabsItem = ({
   ...restProps
 }: TabsItemProps) => {
   const { sizeY = 'none' } = useAdaptivity();
-  const {
-    mode,
-    withGaps,
-    withScrollToSelectedTab,
-    scrollBehaviorToSelectedTab,
-    withScrollToSelectedOnMount,
-  }: TabsContextProps = React.useContext(TabsModeContext);
+  const { mode, withGaps, scrollBehaviorToSelectedTab, withScrollToSelectedTab }: TabsContextProps =
+    React.useContext(TabsModeContext);
   let statusComponent = null;
 
   const isTabFlow = role === 'tab';
@@ -115,27 +111,37 @@ export const TabsItem = ({
 
   const rootRef = useExternRef(getRootRef);
 
-  const prevSelected = React.useRef(selected);
-  React.useEffect(() => {
-    prevSelected.current = selected;
-  }, [selected]);
-  const shouldScrollToSelected =
-    withScrollToSelectedTab &&
-    (withScrollToSelectedOnMount ? selected : prevSelected.current !== selected && selected);
-
+  const { document } = useDOM();
   React.useEffect(
     function scrollToSelectedItem() {
-      if (!shouldScrollToSelected || !rootRef.current || !scrollBehaviorToSelectedTab) {
+      if (!withScrollToSelectedTab || !rootRef.current || !document || !selected) {
         return;
       }
 
-      rootRef.current.scrollIntoView({
-        inline: scrollBehaviorToSelectedTab,
-        block: 'nearest',
-        behavior: 'smooth',
-      });
+      const tabDOMRect = rootRef.current.getBoundingClientRect();
+      const isTabVerticallyOutsideOfViewport =
+        tabDOMRect.top < 0 || tabDOMRect.bottom > document.documentElement.clientHeight;
+
+      /* проверяем, возможен ли вертикальный скролл, а он возможен для scrollIntoView если
+       * элемент вертикально вне зоны видимости */
+      if (isTabVerticallyOutsideOfViewport) {
+        return;
+      }
+
+      /* Не все браузеры поддерживают используемые нами опции. */
+      try {
+        rootRef.current.scrollIntoView({
+          inline: scrollBehaviorToSelectedTab,
+          block: 'nearest',
+          behavior: 'smooth',
+        });
+      } catch {
+        /* Вызывать scrollIntoView с булевым аргументов не следует, потому что это повлечёт
+         * вертикальный скролл.
+         **/
+      }
     },
-    [rootRef, shouldScrollToSelected, scrollBehaviorToSelectedTab],
+    [rootRef, document, withScrollToSelectedTab, selected, scrollBehaviorToSelectedTab],
   );
 
   return (
