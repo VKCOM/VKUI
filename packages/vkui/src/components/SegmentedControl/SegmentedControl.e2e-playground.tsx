@@ -31,6 +31,15 @@ export const SegmentedControlPlayground = (props: ComponentPlaygroundProps) => {
           size: ['m', 'l'],
           $adaptivity: 'y',
         },
+        {
+          options: [
+            [
+              { label: 'vk', before: <Icon24LogoVk />, value: 'vk' },
+              { label: 'fb', before: <Icon24LogoFacebook />, value: 'fb' },
+              { label: 'google', before: <Icon24LogoGoogle />, value: 'google' },
+            ],
+          ],
+        },
       ]}
     >
       {(props: SegmentedControlProps) => <SegmentedControl {...props} />}

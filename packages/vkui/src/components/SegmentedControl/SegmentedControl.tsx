@@ -20,6 +20,11 @@ export type SegmentedControlValue = string | number | undefined;
 
 export interface SegmentedControlOptionInterface
   extends Omit<React.HTMLAttributes<HTMLElement>, 'label'> {
+  /**
+   * Вставляет элемент перед основным контентом.
+   * Рекомендуется использовать только иконки с размером 20
+   */
+  before?: React.ReactNode;
   label: React.ReactChild;
   value: SegmentedControlValue;
 }
@@ -90,11 +95,10 @@ export const SegmentedControl = ({
             }}
           />
         )}
-        {options.map(({ label, className: optionClassName, ...optionProps }) => (
+        {options.map(({ label, ...optionProps }) => (
           <SegmentedControlOption
             key={`${optionProps.value}`}
             {...optionProps}
-            className={classNames(styles['SegmentedControl__option'], optionClassName)}
             name={name ?? id}
             checked={value === optionProps.value}
             onChange={() => onChange(optionProps.value)}

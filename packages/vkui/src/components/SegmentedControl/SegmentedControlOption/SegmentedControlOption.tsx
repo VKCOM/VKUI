@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { callMultiple } from '../../../lib/callMultiple';
 import { HasRef, HasRootRef } from '../../../types';
@@ -11,7 +11,9 @@ import styles from './SegmentedControlOption.module.css';
 export interface SegmentedControlOptionProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {}
+    HasRef<HTMLInputElement> {
+  before?: React.ReactNode;
+}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/SegmentedControl
@@ -22,6 +24,7 @@ export const SegmentedControlOption = ({
   style,
   children,
   getRootRef,
+  before,
   ...restProps
 }: SegmentedControlOptionProps) => {
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
@@ -44,7 +47,10 @@ export const SegmentedControlOption = ({
         onBlur={callMultiple(onBlur, restProps.onBlur)}
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
-      <Headline className={styles['SegmentedControlOption__content']} level="2" weight="2">
+      {hasReactNode(before) && (
+        <div className={styles['SegmentedControlOption__before']}>{before}</div>
+      )}
+      <Headline level="2" weight="2">
         {children}
       </Headline>
       <FocusVisible visible={focusVisible} mode="inside" />
