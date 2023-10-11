@@ -1,4 +1,4 @@
-name: 'Publish @vkontakte/vkui-floating-ui-react-dom'
+name: 'Publish @vkontakte/vkui-floating-ui'
 
 on:
   workflow_dispatch:
@@ -24,14 +24,14 @@ on:
         description: 'prerelease tag: preid ("alpha" or "beta"). Leave empty for release'
         required: false
 
-run-name: Publish @vkontakte/vkui-floating-ui-react-dom ${{ inputs.custom_version }} ${{ inputs.type }} ${{ inputs.tag }}
+run-name: Publish @vkontakte/vkui-floating-ui ${{ inputs.custom_version }} ${{ inputs.type }} ${{ inputs.tag }}
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./packages/vkui-floating-ui-react-dom
+        working-directory: ./packages/vkui-floating-ui
 
     steps:
       - name: Checkout
@@ -62,12 +62,12 @@ jobs:
         id: prev_version
         run: echo "version=$(yarn node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
-      - name: Bumping @vkontakte/vkui-floating-ui-react-dom version via version type
+      - name: Bumping @vkontakte/vkui-floating-ui version via version type
         if: ${{ !github.event.inputs.custom_version }}
         run: |
           yarn run g:npm:version ${{ github.event.inputs.type }} --preid ${{ github.event.inputs.tag }}
 
-      - name: Bumping @vkontakte/vkui-floating-ui-react-dom version via custom version
+      - name: Bumping @vkontakte/vkui-floating-ui version via custom version
         if: ${{ github.event.inputs.custom_version }}
         run: |
           yarn run g:npm:version ${{ github.event.inputs.custom_version }} --preid ${{ github.event.inputs.tag }}
@@ -79,8 +79,8 @@ jobs:
       - name: Adding commit and tag with updated version number
         run: |
           git add -A
-          git commit -m 'bump(@vkontakte/vkui-floating-ui-react-dom): from ${{ steps.prev_version.outputs.version }} to ${{ steps.updated_version.outputs.version }}'
-          git tag @vkontakte/vkui-floating-ui-react-dom@${{ steps.updated_version.outputs.version }}
+          git commit -m 'bump(@vkontakte/vkui-floating-ui): from ${{ steps.prev_version.outputs.version }} to ${{ steps.updated_version.outputs.version }}'
+          git tag @vkontakte/vkui-floating-ui@${{ steps.updated_version.outputs.version }}
 
       - name: Pushing changes
         uses: ad-m/github-push-action@master
