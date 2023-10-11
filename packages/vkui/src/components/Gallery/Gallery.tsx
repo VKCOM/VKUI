@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { clamp } from '../../helpers/math';
 import { useIsClient } from '../../hooks/useIsClient';
-import { useTimeout } from '../../hooks/useTimeout';
 import { BaseGallery } from '../BaseGallery/BaseGallery';
 import { CarouselBase } from '../BaseGallery/CarouselBase/CarouselBase';
 import { BaseGalleryProps } from '../BaseGallery/types';
+import { useAutoPlay } from './hooks';
 
 export interface GalleryProps extends BaseGalleryProps {
   initialSlideIndex?: number;
@@ -47,11 +47,7 @@ export const Gallery = ({
     [isControlled, onChange, slideIndex],
   );
 
-  const autoplay = useTimeout(() => handleChange((slideIndex + 1) % childCount), timeout);
-  React.useEffect(
-    () => (timeout ? autoplay.set() : autoplay.clear()),
-    [timeout, slideIndex, autoplay],
-  );
+  useAutoPlay(timeout, slideIndex, () => handleChange((slideIndex + 1) % childCount));
 
   // prevent invalid slideIndex
   // any slide index is invalid with no slides, just keep it as is
