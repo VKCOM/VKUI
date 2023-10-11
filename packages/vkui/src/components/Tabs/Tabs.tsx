@@ -17,7 +17,8 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    */
   withScrollToSelectedTab?: boolean;
   /**
-   * Отвечает за горизонтальное выравнивание при прокрутке до активной вкладке
+   * Отвечает за горизонтальное выравнивание при прокрутке до активной вкладки.
+   * @see [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)
    * @since 5.10.0
    */
   scrollBehaviorToSelectedTab?: ScrollIntoViewOptions['inline'];
