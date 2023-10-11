@@ -9,6 +9,37 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  labels:
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    name: Add labels
+    steps:
+      - name: Patch
+        if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["patch"]
+            })
+
+      # TODO [>=6]: удалить после v6
+      - name: V5
+        if: ${{ !startsWith(github.event.pull_request.title, 'BREAKING CHANGE') }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["v5"]
+            })
+
   lint_codes_format:
     runs-on: ubuntu-latest
     name: Check code formatting
