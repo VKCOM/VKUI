@@ -20,5 +20,8 @@ playwright-report/
 blob-report/
 all-blob-reports/
 
+packages/vkui-floating-ui/**/package.json
+!packages/vkui-floating-ui/package.json
+
 # Yarn
 .yarn/*
