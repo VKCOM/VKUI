@@ -1,0 +1,86 @@
+{
+  "name": "@vkontakte/vkui-floating-ui",
+  "version": "0.0.0",
+  "license": "MIT",
+  "bugs": "https://github.com/VKCOM/VKUI",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VKCOM/VKUI.git",
+    "directory": "packages/vkui-floating-ui"
+  },
+  "files": [
+    "core/",
+    "dom/",
+    "utils/",
+    "utils/dom/",
+    "react-dom/"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./core/package.json": "./core/package.json",
+    "./dom/package.json": "./dom/package.json",
+    "./utils/package.json": "./utils/package.json",
+    "./utils/dom/package.json": "./utils/dom/package.json",
+    "./react-dom/package.json": "./react-dom/package.json",
+    "./core": {
+      "import": {
+        "types": "./core/dist/floating-ui.core.d.ts",
+        "default": "./core/dist/floating-ui.core.esm.js"
+      },
+      "types": "./core/dist/floating-ui.core.d.ts",
+      "module": "./core/dist/floating-ui.core.esm.js",
+      "default": "./core/dist/floating-ui.core.umd.js"
+    },
+    "./dom": {
+      "import": {
+        "types": "./dom/dist/floating-ui.dom.d.ts",
+        "default": "./dom/dist/floating-ui.dom.esm.js"
+      },
+      "types": "./dom/dist/floating-ui.dom.d.ts",
+      "module": "./dom/dist/floating-ui.dom.esm.js",
+      "default": "./dom/dist/floating-ui.dom.umd.js"
+    },
+    "./utils": {
+      "import": {
+        "types": "./utils/dist/floating-ui.utils.d.ts",
+        "default": "./utils/dist/floating-ui.utils.esm.js"
+      },
+      "types": "./utils/dist/floating-ui.utils.d.ts",
+      "module": "./utils/dist/floating-ui.utils.esm.js",
+      "default": "./utils/dist/floating-ui.utils.umd.js"
+    },
+    "./utils/dom": {
+      "import": {
+        "types": "./utils/dom/dist/floating-ui.utils.dom.d.ts",
+        "default": "./utils/dom/dist/floating-ui.utils.dom.esm.js"
+      },
+      "types": "./utils/dom/dist/floating-ui.utils.dom.d.ts",
+      "module": "./utils/dom/dist/floating-ui.utils.dom.esm.js",
+      "default": "./utils/dom/dist/floating-ui.utils.dom.umd.js"
+    },
+    "./react-dom": {
+      "import": {
+        "types": "./react-dom/dist/floating-ui.react-dom.d.ts",
+        "default": "./react-dom/dist/floating-ui.react-dom.esm.js"
+      },
+      "types": "./react-dom/dist/floating-ui.react-dom.d.ts",
+      "module": "./react-dom/dist/floating-ui.react-dom.esm.js",
+      "default": "./react-dom/dist/floating-ui.react-dom.umd.js"
+    }
+  },
+  "scripts": {
+    "build": "node index.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "@floating-ui/react-dom": "^2.0.2",
+    "@swc/helpers": "^0.5.3"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.3.92"
+  },
+  "packageManager": "yarn@3.6.3"
+}
