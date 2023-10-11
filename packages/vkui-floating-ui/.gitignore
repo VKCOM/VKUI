@@ -1,7 +1,2 @@
-*
-
-!.gitignore
-!index.mjs
-!LICENSE
-!./package.json
-!README.md
+**/dist
+**/package.json
