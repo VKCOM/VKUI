@@ -5,7 +5,6 @@
   position: relative;
   box-sizing: border-box;
   padding: 8px 12px;
-  white-space: nowrap;
   user-select: none;
   cursor: pointer;
   color: var(--vkui--color_text_primary);
@@ -52,8 +51,6 @@
 
 .CustomSelectOption__children {
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .CustomSelectOption__after {
@@ -65,8 +62,6 @@
 
 .CustomSelectOption__description {
   color: var(--vkui--color_text_secondary);
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 
 .CustomSelectOption__selectedIcon {
