@@ -5,7 +5,7 @@ import { usePlatform } from '../../../hooks/usePlatform';
 import { Platform } from '../../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../../types';
 import { Touch } from '../../Touch/Touch';
-import { DraggableProps } from '../useDraggable';
+import type { DraggableProps } from '../types';
 import styles from './CellDragger.module.css';
 
 type CellDraggerProps = DraggableProps &

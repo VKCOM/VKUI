@@ -250,3 +250,7 @@ export function isMatch(input: string, format: string) {
 export function getMillisecondsToTomorrow(date: DirtyDate) {
   return dayjs(endOfDay(date)).diff(dayjs(date), 'ms');
 }
+
+export function now() {
+  return performance && performance.now ? performance.now() : Date.now();
+}

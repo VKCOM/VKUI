@@ -2,15 +2,6 @@
   position: relative;
 }
 
-/**
- * CMP:
- * List
- */
-:global(.vkuiInternalList--dragging) .Cell:not(.Cell--dragging) {
-  transition: transform 0.3s ease;
-  pointer-events: none;
-}
-
 .Cell--dragging {
   background-color: var(--vkui--color_background_secondary);
   box-shadow: var(--vkui--elevation3);

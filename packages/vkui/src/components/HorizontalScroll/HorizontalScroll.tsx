@@ -4,6 +4,7 @@ import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useDirection } from '../../hooks/useDirection';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
+import { now } from '../../lib/date';
 import { easeInOutSine } from '../../lib/fx';
 import { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -51,13 +52,6 @@ export interface HorizontalScrollProps
    * По умолчанию прокручивается как любой горизонтальный контент через shift.
    */
   scrollOnAnyWheel?: boolean;
-}
-
-/**
- * timing method
- */
-function now() {
-  return performance && performance.now ? performance.now() : Date.now();
 }
 
 /**

@@ -4,11 +4,12 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { HasRootRef } from '../../types';
-import { ListContext } from '../List/ListContext';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { CellCheckbox, CellCheckboxProps } from './CellCheckbox/CellCheckbox';
 import { CellDragger } from './CellDragger/CellDragger';
+import { DEFAULT_DRAGGABLE_LABEL } from './constants';
+import { SwappedItemRange } from './types';
 import { useDraggable } from './useDraggable';
 import styles from './Cell.module.css';
 
@@ -39,7 +40,7 @@ export interface CellProps
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
-  onDragFinish?: ({ from, to }: { from: number; to: number }) => void;
+  onDragFinish?(swappedItemRange: SwappedItemRange): void;
   /**
    * aria-label для кнопки перетаскивания ячейки
    */
@@ -65,7 +66,7 @@ export const Cell = ({
   checked,
   defaultChecked,
   getRootRef,
-  draggerLabel = 'Перенести ячейку',
+  draggerLabel = DEFAULT_DRAGGABLE_LABEL,
   className,
   style,
   ...restProps
@@ -79,18 +80,9 @@ export const Cell = ({
   const rootElRef = useExternRef(getRootRef);
 
   const { dragging, ...draggableProps } = useDraggable({
-    rootElRef,
+    elRef: rootElRef,
     onDragFinish,
   });
-
-  const { toggleDrag } = React.useContext(ListContext);
-  React.useEffect(() => {
-    if (dragging) {
-      toggleDrag(true);
-      return () => toggleDrag(false);
-    }
-    return undefined;
-  }, [dragging, toggleDrag]);
 
   let dragger;
   if (draggable) {
