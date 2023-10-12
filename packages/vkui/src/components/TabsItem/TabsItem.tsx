@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { usePrevious } from '../../hooks/usePrevious';
 import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
@@ -111,10 +112,15 @@ export const TabsItem = ({
 
   const rootRef = useExternRef(getRootRef);
 
+  const prevSelected = usePrevious(selected);
+  const isInitialRender = prevSelected === undefined;
+  const shouldScrollToSelected =
+    withScrollToSelectedTab && !isInitialRender && prevSelected !== selected && selected;
+
   const { document } = useDOM();
   React.useEffect(
     function scrollToSelectedItem() {
-      if (!withScrollToSelectedTab || !rootRef.current || !document || !selected) {
+      if (!shouldScrollToSelected || !rootRef.current || !document) {
         return;
       }
 
@@ -141,7 +147,7 @@ export const TabsItem = ({
          **/
       }
     },
-    [rootRef, document, withScrollToSelectedTab, selected, scrollBehaviorToSelectedTab],
+    [rootRef, document, shouldScrollToSelected, scrollBehaviorToSelectedTab],
   );
 
   return (
