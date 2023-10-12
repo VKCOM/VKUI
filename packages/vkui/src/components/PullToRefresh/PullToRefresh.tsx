@@ -8,6 +8,7 @@ import { useTimeout } from '../../hooks/useTimeout';
 import { DOMProps, useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { runTapticImpactOccurred } from '../../lib/taptic';
+import { coordY, VKUITouchEvent } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AnyFunction, HasChildren } from '../../types';
 import { ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
@@ -113,15 +114,6 @@ export const PullToRefresh = ({
   const [contentShift, setContentShift] = React.useState(0);
   const [spinnerProgress, setSpinnerProgress] = React.useState(0);
 
-  const onWindowTouchMove = (event: Event) => {
-    if (refreshing) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  };
-
-  useGlobalEventListener(document, 'touchmove', onWindowTouchMove, TOUCH_MOVE_EVENT_PARAMS);
-
   const resetRefreshingState = React.useCallback(() => {
     setWatching(false);
     setCanRefresh(false);
@@ -199,12 +191,34 @@ export const PullToRefresh = ({
     runRefreshing,
   ]);
 
+  const startYRef = React.useRef(0);
+
   const onTouchStart = (e: TouchEvent) => {
     if (refreshing) {
       cancelEvent(e);
     }
     setTouchDown(true);
+    startYRef.current = e.startY;
   };
+
+  const isRefreshGestureStarted = (event: VKUITouchEvent) => {
+    if (watching) {
+      return true;
+    }
+
+    const shiftY = coordY(event) - startYRef.current;
+    const pageYOffset = scroll?.getScroll().y;
+    return pageYOffset === 0 && shiftY > 0 && touchDown;
+  };
+
+  const onWindowTouchMove = (event: VKUITouchEvent) => {
+    if (isRefreshGestureStarted(event)) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
+  useGlobalEventListener(document, 'touchmove', onWindowTouchMove, TOUCH_MOVE_EVENT_PARAMS);
 
   const onTouchMove = (e: TouchEvent) => {
     const { isY, shiftY } = e;
