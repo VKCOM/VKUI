@@ -6,6 +6,8 @@ import styles from './Footnote.module.css';
 export interface FootnoteProps extends TypographyProps, HasCaps {}
 
 /**
+ * Используется для основных подписей.
+ *
  * @see https://vkcom.github.io/VKUI/#/Footnote
  */
 export const Footnote = ({
