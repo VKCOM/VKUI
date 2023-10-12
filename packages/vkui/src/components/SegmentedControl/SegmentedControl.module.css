@@ -33,14 +33,6 @@
     0 3px 1px rgba(0, 0, 0, 0.04);
 }
 
-.SegmentedControl__option {
-  position: relative;
-  flex: 1;
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-
 /**
  * sizeY REGULAR
  */
