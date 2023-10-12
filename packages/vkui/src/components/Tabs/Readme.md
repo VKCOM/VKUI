@@ -136,7 +136,7 @@ const Scrollable = () => {
 
   return (
     <Group>
-      <Tabs mode={mode} scrollBehaviorToSelectedTab="center" withScrollToSelectedOnMount>
+      <Tabs mode={mode} withScrollToSelectedTab scrollBehaviorToSelectedTab="center">
         <HorizontalScroll arrowSize="m">
           <TabsItem
             selected={selected === 'groups'}
