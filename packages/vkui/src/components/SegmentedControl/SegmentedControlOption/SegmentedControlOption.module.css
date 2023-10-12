@@ -9,22 +9,17 @@
   box-sizing: border-box;
   cursor: pointer;
   appearance: none;
-}
-
-.SegmentedControlOption :global(.vkuiIcon) {
-  color: var(--vkui--color_icon_primary);
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
 
 .SegmentedControlOption:not(.SegmentedControlOption--checked):hover {
   opacity: 0.5;
 }
 
-.SegmentedControlOption__content {
-  display: flex;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  border-radius: inherit;
+.SegmentedControlOption__before {
+  margin-right: 6px;
 }
