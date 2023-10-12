@@ -15,6 +15,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Unpublish
-        run: npm unpublish @vkontakte/vkui-floating-ui-react-dom -f
+        run: npm deprecate @vkontakte/vkui-floating-ui-react-dom "This package has been deprecated and is no longer maintained. Please use @vkontakte/vkui-floating-ui."
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
