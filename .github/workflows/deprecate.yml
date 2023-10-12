@@ -3,6 +3,14 @@ name: 'Deprecate package'
 on:
   workflow_dispatch:
     inputs:
+      package_name:
+        description: 'package name'
+        type: choice
+        options:
+          - '@vkontakte/vkui'
+          - '@vkontakte/vkui-floating-ui'
+          - '@vkontakte/vkui-token-translator'
+        required: true
       version:
         description: 'type version: x.y.z (without "v")'
         required: true
@@ -22,6 +30,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Deprecate version
-        run: npm deprecate "@vkontakte/vkui@${{ github.event.inputs.version }}" "${{ github.event.inputs.reason }}"
+        run: npm deprecate "${{ github.event.inputs.package_name }}@${{ github.event.inputs.version }}" "${{ github.event.inputs.reason }}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}

@@ -1,0 +1,20 @@
+name: 'Unpublish package'
+
+on:
+  workflow_dispatch:
+
+run-name: Unpublish package
+
+jobs:
+  deprecate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Unpublish
+        run: npm unpublish @vkontakte/vkui-floating-ui-react-dom -f
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
