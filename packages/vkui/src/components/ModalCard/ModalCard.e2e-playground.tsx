@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { HasChildren } from '../../types';
-import { AppRoot } from '../AppRoot/AppRoot';
+import {
+  AppDefaultWrapper,
+  type AppWrapperProps,
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+} from '@vkui-e2e/playground-helpers';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Image } from '../Image/Image';
@@ -11,10 +14,10 @@ import { Textarea } from '../Textarea/Textarea';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { ModalCard, type ModalCardProps } from './ModalCard';
 
-const AppWrapper = ({ children, ...restProps }: HasChildren) => (
-  <AppRoot mode="embedded" scroll="contain" {...restProps}>
+const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
+  <AppDefaultWrapper scroll="contain" {...restProps}>
     {children}
-  </AppRoot>
+  </AppDefaultWrapper>
 );
 
 const propSets = [
