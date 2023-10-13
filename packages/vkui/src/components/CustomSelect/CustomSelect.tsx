@@ -112,7 +112,7 @@ export interface CustomSelectOptionInterface {
 }
 
 interface CustomSelectRenderOption extends CustomSelectOptionProps {
-  option?: CustomSelectOptionInterface;
+  option: CustomSelectOptionInterface;
 }
 
 export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerOptionsProps {
