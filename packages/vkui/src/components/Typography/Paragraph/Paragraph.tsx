@@ -6,6 +6,8 @@ import styles from './Paragraph.module.css';
 export type ParagraphProps = TypographyProps;
 
 /**
+ * Используется для основного текста.
+ *
  * @see https://vkcom.github.io/VKUI/#/Paragraph
  */
 export const Paragraph = ({

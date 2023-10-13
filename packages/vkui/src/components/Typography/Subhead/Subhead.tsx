@@ -13,6 +13,8 @@ const sizeYClassNames = {
 export type SubheadProps = TypographyProps;
 
 /**
+ * Используется для подзаголовков 2 уровня.
+ *
  * @see https://vkcom.github.io/VKUI/#/Subhead
  */
 export const Subhead = ({

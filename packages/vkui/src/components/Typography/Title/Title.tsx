@@ -14,6 +14,8 @@ export interface TitleProps extends TypographyProps {
 }
 
 /**
+ * Используется для заголовков.
+ *
  * @see https://vkcom.github.io/VKUI/#/Title
  */
 export const Title = ({
