@@ -288,6 +288,7 @@ export const HorizontalScroll = ({
     >
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
         <ScrollArrow
+          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrow' : undefined}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="left"
@@ -301,6 +302,7 @@ export const HorizontalScroll = ({
       )}
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
         <ScrollArrow
+          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrow' : undefined}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="right"
