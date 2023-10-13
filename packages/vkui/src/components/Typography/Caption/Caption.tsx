@@ -14,6 +14,8 @@ export interface CaptionProps extends TypographyProps, HasCaps {
 }
 
 /**
+ * Используется для мелких подписей.
+ *
  * @see https://vkcom.github.io/VKUI/#/Caption
  */
 export const Caption = ({

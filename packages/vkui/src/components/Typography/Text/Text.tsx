@@ -13,6 +13,8 @@ const sizeYClassNames = {
 export type TextProps = TypographyProps;
 
 /**
+ * Основной наборный текст.
+ *
  * @see https://vkcom.github.io/VKUI/#/Text
  */
 export const Text = ({
