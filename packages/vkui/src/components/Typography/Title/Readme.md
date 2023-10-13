@@ -1,5 +1,3 @@
-Семейство заголовков.
-
 ```jsx { "props": { "layout": false, "iframe": false } }
 <div style={{ padding: 20 }}>
   <Title level="1" style={{ marginBottom: 16 }}>
