@@ -201,18 +201,23 @@ export const PullToRefresh = ({
     startYRef.current = e.startY;
   };
 
-  const isRefreshGestureStarted = (event: VKUITouchEvent) => {
-    if (watching) {
+  const shouldPreventTouchMove = (event: VKUITouchEvent) => {
+    if (watching || refreshing) {
       return true;
     }
 
+    /* Нам нужно запретить touchmove у документа как только стало понятно, что
+     * начинается pull.
+     * состояния watching и refreshing устанавливаются слишком поздно и браузер
+     * может успеть начать нативный pull to refresh. */
     const shiftY = coordY(event) - startYRef.current;
     const pageYOffset = scroll?.getScroll().y;
-    return pageYOffset === 0 && shiftY > 0 && touchDown;
+    const isRefreshGestureStarted = pageYOffset === 0 && shiftY > 0 && touchDown;
+    return isRefreshGestureStarted;
   };
 
   const onWindowTouchMove = (event: VKUITouchEvent) => {
-    if (isRefreshGestureStarted(event)) {
+    if (shouldPreventTouchMove(event)) {
       event.preventDefault();
       event.stopPropagation();
     }
