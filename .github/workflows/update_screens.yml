@@ -1,6 +1,10 @@
 name: 'Update screenshots'
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '*-stable'
 
 run-name: Update screenshots for ${{ github.ref_name }}
 
@@ -11,6 +15,12 @@ jobs:
       # см. https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.focal
       image: mcr.microsoft.com/playwright:v1.38.1-focal
       options: --ipc=host
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        shardTotal: [10]
+    name: 'Run e2e tests for (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,6 +34,14 @@ jobs:
         run: |
           curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
           apt-get install -y git-lfs
+
+      - name: Install rsync
+        run: |
+          apt-get install -y rsync
+
+      - name: Install zip
+        run: |
+          apt-get install -y zip
 
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
@@ -48,7 +66,53 @@ jobs:
 
       - name: Update screenshots
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
-        run: HOME=/root yarn run test:e2e-update:ci
+        run: HOME=/root yarn run test:e2e-update:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+
+      - name: Zip changed screenshots
+        id: zip-screenshots
+        run: |
+          git add ./**/*.png
+          mkdir screenshots
+          rsync -R $(git diff --name-only --cached --relative) screenshots
+          if [ -d screenshots/components ]; then
+            echo "needUpload=true" >> $GITHUB_OUTPUT
+            cd screenshots
+            zip -q -r ../../screenshots-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}.zip components
+          fi
+        shell: bash
+        working-directory: ./packages/vkui/src
+
+      - name: Upload archive
+        if: steps.zip-screenshots.outputs.needUpload == 'true'
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshots-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
+          path: packages/vkui/screenshots-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}.zip
+
+  collect_all_chnages_and_push:
+    runs-on: ubuntu-latest
+    needs: [update_screens]
+    name: 'Collect updated screenshots and push changes'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        id: artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: packages/vkui/artifacts
+
+      - name: Unzip archives
+        id: unzip
+        run: |
+          if [ -d artifacts ]; then
+             echo "found=true" >> $GITHUB_OUTPUT
+             cd artifacts
+             find . -type f -name 'screenshots-*.zip' -exec unzip -q -o -d ../src {} \;
+           fi
+        shell: bash
+        working-directory: ./packages/vkui
 
       - name: Set Git credentials
         run: |
@@ -56,4 +120,17 @@ jobs:
           git config --local user.name "GitHub Action"
 
       - name: Push updated screenshots
+        if: ${{ steps.unzip.outputs.found == 'true' && github.event_name != 'push' }}
         uses: VKCOM/gh-actions/VKUI/push-screenshots@main
+
+      - name: Create pull request with updated screenshots
+        if: ${{ steps.unzip.outputs.found == 'true' && github.event_name == 'push' }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Update screenshots for ${{ github.ref_name }}
+          branch: ${{ github.ref_name }}-screenshots-updates
+          commit-message: 'chore(e2e): update screenshots'
+          body: Automated screenshots updates
+          add-paths: |
+            **/*.png
