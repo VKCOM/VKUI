@@ -51,10 +51,10 @@ describe('HorizontalScroll', () => {
       </HorizontalScroll>,
     );
     // no arrow button on the screen on first render
-    expect(screen.queryByRole('button')).toBeFalsy();
+    expect(screen.queryByTestId('ScrollArrow')).toBeFalsy();
 
     fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
 
-    await screen.findByRole('button');
+    await screen.findByTestId('ScrollArrow');
   });
 });
