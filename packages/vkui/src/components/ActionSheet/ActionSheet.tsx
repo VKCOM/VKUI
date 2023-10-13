@@ -130,14 +130,14 @@ export const ActionSheet = ({
       >
         <div className={styles['ActionSheet__content-wrapper']}>
           {(header || text) && (
-            <header className={styles['ActionSheet__header']}>
+            <div className={styles['ActionSheet__header']}>
               {header && (
                 <Footnote weight="2" className={styles['ActionSheet__title']}>
                   {header}
                 </Footnote>
               )}
               {text && <Footnote className={styles['ActionSheet__text']}>{text}</Footnote>}
-            </header>
+            </div>
           )}
           {children}
         </div>
