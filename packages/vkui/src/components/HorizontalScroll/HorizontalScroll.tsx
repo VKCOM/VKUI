@@ -288,9 +288,11 @@ export const HorizontalScroll = ({
     >
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
         <ScrollArrow
+          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrow' : undefined}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="left"
+          aria-hidden
           className={classNames(
             styles['HorizontalScroll__arrow'],
             styles['HorizontalScroll__arrowLeft'],
@@ -300,9 +302,11 @@ export const HorizontalScroll = ({
       )}
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
         <ScrollArrow
+          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrow' : undefined}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="right"
+          aria-hidden
           className={classNames(
             styles['HorizontalScroll__arrow'],
             styles['HorizontalScroll__arrowRight'],
