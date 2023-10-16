@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { AppRoot } from '../AppRoot/AppRoot';
 import { Group } from '../Group/Group';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { Panel, type PanelProps } from './Panel';
@@ -31,7 +30,6 @@ export const PanelPlayground = (props: ComponentPlaygroundProps) => {
           $adaptivity: 'x',
         },
       ]}
-      AppWrapper={AppRoot}
     >
       {(props: PanelProps) => (
         <div

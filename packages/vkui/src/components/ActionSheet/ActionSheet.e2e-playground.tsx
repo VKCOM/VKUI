@@ -2,21 +2,21 @@ import * as React from 'react';
 import { Icon28SettingsOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import {
+  AppDefaultWrapper,
+  type AppWrapperProps,
   ComponentPlayground,
   type ComponentPlaygroundProps,
   TEST_CLASS_NAMES,
 } from '@vkui-e2e/playground-helpers';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
-import { HasChildren } from '../../types';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
-import { AppRoot } from '../AppRoot/AppRoot';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
-const AppWrapper = ({ children, ...restProps }: HasChildren) => (
-  <AppRoot mode="embedded" scroll="contain" {...restProps}>
+const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
+  <AppDefaultWrapper scroll="contain" {...restProps}>
     {children}
-  </AppRoot>
+  </AppDefaultWrapper>
 );
 
 const ActionSheetWrapper = (props: ActionSheetProps) => {
