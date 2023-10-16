@@ -61,6 +61,11 @@
   color: var(--vkui--color_text_secondary);
 }
 
+.Alert__header,
+.Alert__text {
+  word-break: break-word;
+}
+
 .Alert__actions--direction-horizontal {
   justify-content: flex-end;
 }

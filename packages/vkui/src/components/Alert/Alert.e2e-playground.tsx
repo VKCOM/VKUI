@@ -70,3 +70,24 @@ export const AlertDesktopPlayground = (props: ComponentPlaygroundProps) => {
     </ComponentPlayground>
   );
 };
+
+export const AlertLongWordPlayground = (props: ComponentPlaygroundProps) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          header: [
+            'Оченьоченьоченьдлинноенеразрывноеслововзаголовкекотороедолжнопереноситьсянановуюстрочкуиневыходитьзаграницы',
+          ],
+          text: [
+            'Оченьоченьоченьдлинноенеразрывноеслововописаниикотороедолжнопереноситьсянановуюстрочкуиневыходитьзаграницы',
+          ],
+        },
+      ]}
+      AppWrapper={AppWrapper}
+    >
+      {(props: AlertProps) => <Alert {...props} style={{ position: 'relative' }} />}
+    </ComponentPlayground>
+  );
+};
