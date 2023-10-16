@@ -79,6 +79,10 @@ export const Playground: Story = {
 };
 
 export const WithHorizontalScroll: Story = {
+  args: {
+    withScrollToSelectedTab: true,
+    scrollBehaviorToSelectedTab: 'center',
+  },
   render: function Render({ selected = 'groups', ...args }) {
     const [, updateArg] = useArgs();
 

@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
+import { usePrevious } from '../../hooks/usePrevious';
 import { SizeType } from '../../lib/adaptivity';
+import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
@@ -62,10 +65,12 @@ export const TabsItem = ({
   className,
   role = 'tab',
   tabIndex: tabIndexProp,
+  getRootRef,
   ...restProps
 }: TabsItemProps) => {
   const { sizeY = 'none' } = useAdaptivity();
-  const { mode, withGaps }: TabsContextProps = React.useContext(TabsModeContext);
+  const { mode, withGaps, scrollBehaviorToSelectedTab, withScrollToSelectedTab }: TabsContextProps =
+    React.useContext(TabsModeContext);
   let statusComponent = null;
 
   const isTabFlow = role === 'tab';
@@ -105,9 +110,50 @@ export const TabsItem = ({
     tabIndex = selected ? 0 : -1;
   }
 
+  const rootRef = useExternRef(getRootRef);
+
+  const prevSelected = usePrevious(selected);
+  const isInitialRender = prevSelected === undefined;
+  const shouldScrollToSelected =
+    withScrollToSelectedTab && !isInitialRender && prevSelected !== selected && selected;
+
+  const { document } = useDOM();
+  React.useEffect(
+    function scrollToSelectedItem() {
+      if (!shouldScrollToSelected || !rootRef.current || !document) {
+        return;
+      }
+
+      const tabDOMRect = rootRef.current.getBoundingClientRect();
+      const isTabVerticallyOutsideOfViewport =
+        tabDOMRect.top < 0 || tabDOMRect.bottom > document.documentElement.clientHeight;
+
+      /* проверяем, возможен ли вертикальный скролл, а он возможен для scrollIntoView если
+       * элемент вертикально вне зоны видимости */
+      if (isTabVerticallyOutsideOfViewport) {
+        return;
+      }
+
+      /* Не все браузеры поддерживают используемые нами опции. */
+      try {
+        rootRef.current.scrollIntoView({
+          inline: scrollBehaviorToSelectedTab,
+          block: 'nearest',
+          behavior: 'smooth',
+        });
+      } catch {
+        /* Вызывать scrollIntoView с булевым аргументом не следует, потому что это повлечёт
+         * вертикальный скролл.
+         **/
+      }
+    },
+    [rootRef, document, shouldScrollToSelected, scrollBehaviorToSelectedTab],
+  );
+
   return (
     <Tappable
       {...restProps}
+      getRootRef={rootRef}
       className={classNames(
         styles['TabsItem'],
         mode && stylesMode[mode],

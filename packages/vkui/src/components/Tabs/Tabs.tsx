@@ -11,22 +11,44 @@ import styles from './Tabs.module.css';
 
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   mode?: 'default' | 'accent' | 'secondary';
+  /**
+   * Включает прокрутку контейнера до активной (`selected`) вкладки
+   * @since 5.10.0
+   */
+  withScrollToSelectedTab?: boolean;
+  /**
+   * Отвечает за горизонтальное выравнивание при прокрутке до активной вкладки.
+   * @see [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)
+   * @since 5.10.0
+   */
+  scrollBehaviorToSelectedTab?: ScrollIntoViewOptions['inline'];
 }
 
 export interface TabsContextProps {
   mode: TabsProps['mode'];
   withGaps: boolean;
+  withScrollToSelectedTab: TabsProps['withScrollToSelectedTab'];
+  scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
 }
 
 export const TabsModeContext = React.createContext<TabsContextProps>({
   mode: 'default',
   withGaps: false,
+  withScrollToSelectedTab: false,
+  scrollBehaviorToSelectedTab: 'nearest',
 });
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabs
  */
-export const Tabs = ({ children, mode = 'default', role = 'tablist', ...restProps }: TabsProps) => {
+export const Tabs = ({
+  children,
+  mode = 'default',
+  role = 'tablist',
+  withScrollToSelectedTab,
+  scrollBehaviorToSelectedTab = 'nearest',
+  ...restProps
+}: TabsProps) => {
   const platform = usePlatform();
   const { document } = useDOM();
 
@@ -141,7 +163,16 @@ export const Tabs = ({ children, mode = 'default', role = 'tablist', ...restProp
       role={role}
     >
       <div className={styles['Tabs__in']} ref={tabsRef}>
-        <TabsModeContext.Provider value={{ mode, withGaps }}>{children}</TabsModeContext.Provider>
+        <TabsModeContext.Provider
+          value={{
+            mode,
+            withGaps,
+            withScrollToSelectedTab,
+            scrollBehaviorToSelectedTab,
+          }}
+        >
+          {children}
+        </TabsModeContext.Provider>
       </div>
     </RootComponent>
   );
