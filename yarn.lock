@@ -1630,7 +1630,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/cascade-layer-name-parser@npm:^1.0.4, @csstools/cascade-layer-name-parser@npm:^1.0.5":
+"@csstools/cascade-layer-name-parser@npm:^1.0.5":
   version: 1.0.5
   resolution: "@csstools/cascade-layer-name-parser@npm:1.0.5"
   peerDependencies:
@@ -1663,6 +1663,16 @@ __metadata:
     "@csstools/css-parser-algorithms": ^2.3.1
     "@csstools/css-tokenizer": ^2.2.0
   checksum: 8fa5be6acea01af39f49e08b2f2e2f7f54c2881c2c8a7a8cc783f8668610404398e81f86092f44ae64914d0f7626a5177d721ce5d1858b1599b26c91687f311e
+  languageName: node
+  linkType: hard
+
+"@csstools/media-query-list-parser@npm:^2.1.5":
+  version: 2.1.5
+  resolution: "@csstools/media-query-list-parser@npm:2.1.5"
+  peerDependencies:
+    "@csstools/css-parser-algorithms": ^2.3.2
+    "@csstools/css-tokenizer": ^2.2.1
+  checksum: 119c27951377781c06c0b68ee6f7815c71d7623e439da0d5009f2101a6cd996f60b3fd60466d7059b8f7a936fbc9fbd2306ba953fa2daf9728a710881971ab08
   languageName: node
   linkType: hard
 
@@ -5586,7 +5596,7 @@ __metadata:
     mini-css-extract-plugin: ^2.7.6
     postcss: ^8.4.31
     postcss-cli: ^10.0.0
-    postcss-custom-media: ^10.0.1
+    postcss-custom-media: ^10.0.2
     postcss-custom-properties: ^13.3.2
     postcss-import: ^15.0.0
     postcss-loader: ^7.3.3
@@ -14601,17 +14611,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-custom-media@npm:^10.0.1":
-  version: 10.0.1
-  resolution: "postcss-custom-media@npm:10.0.1"
+"postcss-custom-media@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "postcss-custom-media@npm:10.0.2"
   dependencies:
-    "@csstools/cascade-layer-name-parser": ^1.0.4
-    "@csstools/css-parser-algorithms": ^2.3.1
-    "@csstools/css-tokenizer": ^2.2.0
-    "@csstools/media-query-list-parser": ^2.1.4
+    "@csstools/cascade-layer-name-parser": ^1.0.5
+    "@csstools/css-parser-algorithms": ^2.3.2
+    "@csstools/css-tokenizer": ^2.2.1
+    "@csstools/media-query-list-parser": ^2.1.5
   peerDependencies:
     postcss: ^8.4
-  checksum: 8e56241957e0a53e746934181448eea81f94946d59bfb9cf4bda71d0700a00554ee973e2e4808712da57127a3ab4e455bc0aba9c9d8c975b412d9fc991741388
+  checksum: fc249688ce87016d55e2cbb32172f11ad58beb3a2786d42e98f956f8805487c997b79f4ca3d0fec559b89e8f353beb387b7d482955789233d0b06242ca4ef80f
   languageName: node
   linkType: hard
 
