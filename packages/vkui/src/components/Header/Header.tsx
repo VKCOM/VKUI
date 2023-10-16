@@ -84,7 +84,6 @@ export const Header = ({
 }: HeaderProps) => {
   return (
     <RootComponent
-      Component="header"
       {...restProps}
       baseClassName={classNames(
         styles['Header'],
