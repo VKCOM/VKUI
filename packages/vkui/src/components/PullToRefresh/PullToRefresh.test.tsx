@@ -109,9 +109,11 @@ describe('PullToRefresh', () => {
 
   describe('touch prevention', () => {
     const expectEvents = (toHaveDefault: boolean) => {
-      const hasDefaultMove = fireEvent.touchMove(document.body);
+      const hasDefaultMove = fireEvent.touchMove(document.body, {
+        changedTouches: [{ clientY: 0 }],
+      });
       expect(hasDefaultMove).toBe(toHaveDefault);
-      const hasDefaultStart = fireEvent.mouseDown(screen.getByTestId('xxx'));
+      const hasDefaultStart = fireEvent.mouseDown(screen.getByTestId('xxx'), { clientY: 0 });
       expect(hasDefaultStart).toBe(toHaveDefault);
     };
     it('prevents during refresh', () => {
@@ -129,7 +131,9 @@ describe('PullToRefresh', () => {
       const { unmount } = renderRefresher();
       firePull(screen.getByTestId('xxx'));
       unmount();
-      const hasDefaultMove = fireEvent.touchMove(document.body);
+      const hasDefaultMove = fireEvent.touchMove(document.body, {
+        changedTouches: [{ clientY: 0 }],
+      });
       expect(hasDefaultMove).toBe(true);
     });
   });
