@@ -8,7 +8,7 @@ import { useTimeout } from '../../hooks/useTimeout';
 import { DOMProps, useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { runTapticImpactOccurred } from '../../lib/taptic';
-import { VKUITouchEvent } from '../../lib/touch';
+import { coordY, VKUITouchEvent } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AnyFunction, HasChildren } from '../../types';
 import { ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
@@ -191,11 +191,14 @@ export const PullToRefresh = ({
     runRefreshing,
   ]);
 
+  const startYRef = React.useRef(0);
+
   const onTouchStart = (e: TouchEvent) => {
     if (refreshing) {
       cancelEvent(e);
     }
     setTouchDown(true);
+    startYRef.current = e.startY;
 
     if (document) {
       // eslint-disable-next-line no-restricted-properties
@@ -203,8 +206,27 @@ export const PullToRefresh = ({
     }
   };
 
+  const shouldPreventTouchMove = (event: VKUITouchEvent) => {
+    if (watching || refreshing) {
+      return true;
+    }
+
+    /* Нам нужно запретить touchmove у документа как только стало понятно, что
+     * начинается pull.
+     * состояния watching и refreshing устанавливаются слишком поздно и браузер
+     * может успеть начать нативный pull to refresh.
+     *
+     * Этот код является запасным вариантом, на случай, если css свойство
+     * overscroll-behavior не поддерживается
+     * */
+    const shiftY = coordY(event) - startYRef.current;
+    const pageYOffset = scroll?.getScroll().y;
+    const isRefreshGestureStarted = pageYOffset === 0 && shiftY > 0 && touchDown;
+    return isRefreshGestureStarted;
+  };
+
   const onWindowTouchMove = (event: VKUITouchEvent) => {
-    if (refreshing) {
+    if (shouldPreventTouchMove(event)) {
       event.preventDefault();
       event.stopPropagation();
     }
