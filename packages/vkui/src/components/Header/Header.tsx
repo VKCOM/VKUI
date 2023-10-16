@@ -11,7 +11,7 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
 import styles from './Header.module.css';
 
-export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement> {
+export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, HasComponent {
   mode?: 'primary' | 'secondary' | 'tertiary';
   size?: 'regular' | 'large';
   subtitle?: React.ReactNode;
@@ -75,6 +75,7 @@ const stylesMode = {
 export const Header = ({
   mode = 'primary',
   size = 'regular',
+  Component = 'h2',
   children,
   subtitle,
   indicator,
@@ -96,7 +97,7 @@ export const Header = ({
       <div className={styles['Header__main']}>
         <HeaderContent
           className={styles['Header__content']}
-          Component="span"
+          Component={Component}
           mode={mode}
           size={size}
         >

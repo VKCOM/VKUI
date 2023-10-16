@@ -9,9 +9,9 @@ import { Header } from './Header';
 const getTypographyTagNameByText = (text: string) => screen.getByText(text).tagName.toLowerCase();
 
 describe('Header', () => {
-  baselineComponent(Header);
+  baselineComponent((props) => <Header {...props}>Title</Header>);
 
-  it('[typography] HeaderContent is span on ANDROID regardless of mode and size', () => {
+  it('[typography] HeaderContent is h2 on ANDROID regardless of mode and size', () => {
     render(
       <ConfigProvider platform={Platform.ANDROID}>
         <Header mode="primary">Русский</Header>
@@ -28,15 +28,15 @@ describe('Header', () => {
         </Header>
       </ConfigProvider>,
     );
-    expect(screen.getByText('Русский').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('English').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('Espanõl').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('Français').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('Deutsch').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('中國人').parentElement?.tagName.toLowerCase()).toMatch('span');
+    expect(screen.getByText('Русский').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('English').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('Espanõl').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('Français').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('Deutsch').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('中國人').parentElement?.tagName.toLowerCase()).toMatch('h2');
   });
 
-  it('[typography] HeaderContent is span on IOS regardless of mode and size', () => {
+  it('[typography] HeaderContent is h2 on IOS regardless of mode and size', () => {
     render(
       <ConfigProvider platform={Platform.IOS}>
         <Header mode="primary">Русский</Header>
@@ -53,15 +53,15 @@ describe('Header', () => {
         </Header>
       </ConfigProvider>,
     );
-    expect(screen.getByText('Русский').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('English').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('Espanõl').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('Français').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('Deutsch').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('中國人').parentElement?.tagName.toLowerCase()).toMatch('span');
+    expect(screen.getByText('Русский').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('English').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('Espanõl').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('Français').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('Deutsch').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('中國人').parentElement?.tagName.toLowerCase()).toMatch('h2');
   });
 
-  it('[typography] HeaderContent is span on VKCOM regardless of mode and size', () => {
+  it('[typography] HeaderContent is h2 on VKCOM regardless of mode and size', () => {
     render(
       <ConfigProvider platform={Platform.VKCOM}>
         <Header mode="primary">Русский</Header>
@@ -78,12 +78,12 @@ describe('Header', () => {
         </Header>
       </ConfigProvider>,
     );
-    expect(screen.getByText('Русский').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('English').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('Espanõl').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('Français').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('Deutsch').parentElement?.tagName.toLowerCase()).toMatch('span');
-    expect(screen.getByText('中國人').parentElement?.tagName.toLowerCase()).toMatch('span');
+    expect(screen.getByText('Русский').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('English').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('Espanõl').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('Français').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('Deutsch').parentElement?.tagName.toLowerCase()).toMatch('h2');
+    expect(screen.getByText('中國人').parentElement?.tagName.toLowerCase()).toMatch('h2');
   });
 
   it('[typography] HeaderSubtitle is span regardless of mode', () => {
