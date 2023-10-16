@@ -6,6 +6,20 @@
 - В компонент вкладки (`TabsItem`) нужно передать `id` и `aria-controls`, указывающий на id области с его контентом. <br />
 - В область контента необходимо передать параметры `id`, `tabIndex = 0` и `aria-labelledby`, ссылающийся на компонент таба
 
+## Скролл при выборе вкладки
+
+По умолчанию скролл на выбранную `selected=true` вкладку выключен. Для включения нужно воспользоваться свойством `withScrollToSelectedTab`.
+Контролировать горизонтально выравнивание при прокрутке к выбранной вкладке поможет свойство `scrollBehaviorToSelectedTab`.
+Значения `scrollBehaviorToSelectedTab` соответствуют опциям метода [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView).
+
+#### Особенности
+
+- Так как для скролла мы используем [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView),
+  то кроме горизонтального скролла, при выборе вкладки также может происходить вертикальный скролл, если вкладка вертикально полностью не видна.
+  Это может быть особенно неприятно если вкладки при загрузке приложения/страницы расположены вне видимой области.
+  Чтобы не происходило нежелательного вертикального скролла мы выключаем скролл, если вкладка вертикально вне зоны видимости.
+- Ещё одна особенность в том, что [не все браузеры поддерживают](https://caniuse.com/?search=scrollintoview) параметры scrollIntoView для контроля выравнивания. В таких браузерах скролл будет выключен.
+
 ```jsx
 const Example = () => {
   const [mode, setMode] = React.useState('all');
@@ -122,7 +136,7 @@ const Scrollable = () => {
 
   return (
     <Group>
-      <Tabs mode={mode}>
+      <Tabs mode={mode} withScrollToSelectedTab scrollBehaviorToSelectedTab="center">
         <HorizontalScroll arrowSize="m">
           <TabsItem
             selected={selected === 'groups'}
