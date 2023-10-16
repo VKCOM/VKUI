@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { HasChildren } from '../../types';
-import { AppRoot } from '../AppRoot/AppRoot';
+import {
+  AppDefaultWrapper,
+  type AppWrapperProps,
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+} from '@vkui-e2e/playground-helpers';
 import { Alert, type AlertActionInterface, type AlertProps } from './Alert';
 
-const AppWrapper = ({ children, ...restProps }: HasChildren) => (
-  <AppRoot mode="embedded" scroll="contain" {...restProps}>
+const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
+  <AppDefaultWrapper scroll="contain" {...restProps}>
     {children}
-  </AppRoot>
+  </AppDefaultWrapper>
 );
 
 const cancel: AlertActionInterface = { mode: 'cancel', title: 'Cancel' };
