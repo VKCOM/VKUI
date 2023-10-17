@@ -146,7 +146,7 @@ class ModalRootTouchComponent extends React.Component<
     this.documentScrolling = enabled;
 
     if (enabled) {
-      // восстанавливаем значение overscroll behavior,
+      // восстанавливаем значение overscroll behavior
       // eslint-disable-next-line no-restricted-properties
       this.document.documentElement.classList.remove('vkui--modal-overscroll-behavior');
 
