@@ -61,7 +61,6 @@ class ModalRootTouchComponent extends React.Component<
     };
 
     this.frameIds = {};
-    this.prevHtmlOverlayBehaviorValue = '';
   }
 
   private documentScrolling = false;
@@ -73,7 +72,6 @@ class ModalRootTouchComponent extends React.Component<
     [index: string]: number;
   };
   private restoreFocusTo: HTMLElement | undefined | null = undefined;
-  private prevHtmlOverlayBehaviorValue: CSSStyleDeclaration['overscrollBehavior'];
 
   get timeout(): number {
     return this.props.platform === Platform.IOS ? 400 : 320;
@@ -148,10 +146,9 @@ class ModalRootTouchComponent extends React.Component<
     this.documentScrolling = enabled;
 
     if (enabled) {
-      // восстанавливаем сохраненное значение overscroll behavior,
-      // чтобы вернуть нативный pull-to-refresh и bounce-эффект
-      this.document.documentElement.style.overscrollBehavior =
-        this.prevHtmlOverlayBehaviorValue || '';
+      // восстанавливаем значение overscroll behavior,
+      // eslint-disable-next-line no-restricted-properties
+      this.document.documentElement.classList.remove('vkui--modal-overscroll-behavior');
 
       // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
       // https://github.com/VKCOM/VKUI/issues/444
@@ -161,8 +158,9 @@ class ModalRootTouchComponent extends React.Component<
       });
     } else {
       // отключаем нативный pull-to-refresh при открытом модальном окне
-      this.prevHtmlOverlayBehaviorValue = this.document.documentElement.style['overscrollBehavior'];
-      this.document.documentElement.style.overscrollBehavior = 'none';
+      // чтобы он не срабатывал при закрытии модалки смахиванием вниз
+      // eslint-disable-next-line no-restricted-properties
+      this.document.documentElement.classList.add('vkui--modal-overscroll-behavior');
 
       this.window.addEventListener('touchmove', this.preventTouch, {
         passive: false,

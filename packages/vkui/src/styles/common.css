@@ -38,3 +38,13 @@
 .vkui--layout-plain {
   background: var(--vkui--color_background_content);
 }
+
+/* отключаем нативный pull-to-refresh при закрывании модалки */
+.vkui--modal-overscroll-behavior {
+  overscroll-behavior-y: contain;
+}
+
+/* отключаем нативный pull-to-refresh в PullToRefresh компоненте*/
+.vkui--disable-overscroll-behavior {
+  overscroll-behavior-y: none;
+}
