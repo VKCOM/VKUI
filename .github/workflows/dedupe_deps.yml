@@ -1,0 +1,36 @@
+name: 'Deduplicate dependencies'
+
+on: workflow_dispatch
+
+run-name: Deduplicate dependencies on ${{ github.ref_name }}
+
+jobs:
+  dedupe_deps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Dedupe deps
+        run: yarn dedupe
+
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Create pull request with deduped deps
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'chore: Deduplicate dependencies on ${{ github.ref_name }}'
+          branch: ${{ github.ref_name }}-dedupe-deps
+          commit-message: 'chore: deduplicate dependencies'
+          body: Automated dependencies deduplication
+          delete-branch: true
