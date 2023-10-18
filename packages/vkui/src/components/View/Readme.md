@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Базовый компонент для создания панелей.
 
 - В качестве `children` принимает коллекцию [Panel](#/Panel). У каждой [Panel](#/Panel) должен быть
@@ -263,7 +264,49 @@ Xук возвращает правильное значение даже есл
 
 На третьем `View` пример со свайпом в iOS от левого края назад, где видно, что панель на которую идёт переход определяет его тип в самом начале свайпа.
 
+=======
+## <a id="usenavdirection_example" style="position: relative; top: -100px;"></a>[useNavDirection(): определение типа перехода (вперёд/назад), с которым была отрисована панель.](#/View?id=usenavdirection_example)
+
+>>>>>>> ffd276e66 (Update View Readme to use ScrollSaver with HorizontalScroll)
 ```jsx
+const albumItems = [
+  {
+    id: 1,
+    title: 'Команда <3',
+    size: 4,
+    thumb_src: 'https://sun9-33.userapi.com/ODk8khvW97c6aSx_MxHXhok5byDCsHEoU-3BwA/sO-lGf_NjN4.jpg',
+  },
+  {
+    id: 2,
+    title: 'Зингер',
+    size: 22,
+    thumb_src: 'https://sun9-60.userapi.com/bjwt581hETPAp4oY92bDcRvMymyfCaEsnojaUA/_KWQfS-MAd4.jpg',
+  },
+  {
+    id: 3,
+    title: 'Медиагалерея ВКонтакте',
+    size: 64,
+    thumb_src: 'https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg',
+  },
+];
+
+const largeImageStyles = {
+  width: 220,
+  height: 124,
+  borderRadius: 4,
+  boxSizing: 'border-box',
+  border: 'var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha)',
+  objectFit: 'cover',
+};
+
+const AlbumItems = () => {
+  return albumItems.map(({ id, title, size, thumb_src }) => (
+    <HorizontalCell key={id} size="l" header={title} subtitle={`${size} фотографии`}>
+      <img style={largeImageStyles} src={thumb_src} />
+    </HorizontalCell>
+  ));
+};
+
 const Content = () => {
   const direction = useNavDirection();
 
@@ -297,6 +340,13 @@ const Content = () => {
           : 'не определено'}
       </Headline>
       {spinner}
+      <ScrollSaver id="horizontal-scroll" useGetRef>
+        <HorizontalScroll>
+          <div style={{ display: 'flex' }}>
+            <AlbumItems />
+          </div>
+        </HorizontalScroll>
+      </ScrollSaver>
     </Div>
   );
 };
