@@ -343,6 +343,7 @@ export type {
   PopoverOnShownChange,
   PopoverContentRenderProp,
 } from './components/Popover/Popover';
+export { ScrollSaver } from './components/ScrollSaver/ScrollSaver';
 
 /**
  * HOCs
