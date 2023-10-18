@@ -1,4 +1,12 @@
-.Gradient--mode-tint.Gradient--to-top {
+.Gradient {
+  background: linear-gradient(to bottom, var(--vkui--gradient));
+}
+
+.Gradient.Gradient--to-bottom {
+  background: linear-gradient(to top, var(--vkui--gradient));
+}
+
+.Gradient--mode-tint {
   background: linear-gradient(to bottom, var(--vkui--gradient_tint));
 }
 
@@ -6,7 +14,7 @@
   background: linear-gradient(to top, var(--vkui--gradient_tint));
 }
 
-.Gradient--mode-white.Gradient--to-top {
+.Gradient--mode-white {
   background: linear-gradient(to bottom, var(--vkui--gradient_white));
 }
 
@@ -14,7 +22,7 @@
   background: linear-gradient(to top, var(--vkui--gradient_white));
 }
 
-.Gradient--mode-black.Gradient--to-top {
+.Gradient--mode-black {
   background: linear-gradient(to bottom, var(--vkui--gradient_black));
 }
 
