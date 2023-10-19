@@ -1,7 +1,13 @@
 import * as React from 'react';
-import { Icon28DoneOutline, Icon28EditOutline } from '@vkontakte/icons';
+import {
+  Icon24DoneOutline,
+  Icon24PenOutline,
+  Icon28DoneOutline,
+  Icon28EditOutline,
+} from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
+import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 
 export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
@@ -29,12 +35,18 @@ export const PanelHeaderEdit = ({
   ...restProps
 }: PanelHeaderEditProps) => {
   const iOSText = isActive ? doneLabel : editLabel;
-  const AndroidIcon = isActive ? Icon28DoneOutline : Icon28EditOutline;
   const platform = usePlatform();
 
   return (
     <PanelHeaderButton aria-label={iOSText} {...restProps}>
-      {platform === Platform.IOS ? iOSText : <AndroidIcon />}
+      {platform === Platform.IOS ? (
+        iOSText
+      ) : (
+        <AdaptiveIconRenderer
+          IconCompact={isActive ? Icon24DoneOutline : Icon24PenOutline}
+          IconRegular={isActive ? Icon28DoneOutline : Icon28EditOutline}
+        />
+      )}
     </PanelHeaderButton>
   );
 };

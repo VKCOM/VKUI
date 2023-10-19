@@ -1,5 +1,5 @@
 .StyleGuideHeader {
-  height: var(--vkui--size_panel_header_height--regular);
+  height: var(--vkui_internal--panel_header_height);
   background: var(--vkui--color_background_content);
   border-bottom: 1px solid var(--vkui--color_image_border_alpha);
   box-sizing: border-box;

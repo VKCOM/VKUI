@@ -53,7 +53,10 @@ const Example = () => {
                   </Counter>
                 }
               >
-                <Icon28PictureOutline />
+                <AdaptiveIconRenderer
+                  IconCompact={Icon24PictureOutline}
+                  IconRegular={Icon28PictureOutline}
+                />
               </PanelHeaderButton>
             }
           >
@@ -76,7 +79,10 @@ const Example = () => {
                     </Counter>
                   }
                 >
-                  <Icon28SettingsOutline />
+                  <AdaptiveIconRenderer
+                    IconCompact={Icon24GearOutline}
+                    IconRegular={Icon28SettingsOutline}
+                  />
                 </PanelHeaderButton>
                 <PanelHeaderButton
                   aria-label="Уведомления"
@@ -86,7 +92,10 @@ const Example = () => {
                     </Counter>
                   }
                 >
-                  <Icon28Notifications />
+                  <AdaptiveIconRenderer
+                    IconCompact={Icon24NotificationOutline}
+                    IconRegular={Icon28Notifications}
+                  />
                 </PanelHeaderButton>
               </React.Fragment>
             }

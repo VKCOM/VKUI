@@ -57,10 +57,7 @@
   border-radius: 50%;
 }
 
-.PanelHeaderButton--android :global(.vkuiIcon--24) {
-  padding: 12px;
-}
-
+.PanelHeaderButton--android :global(.vkuiIcon--24),
 .PanelHeaderButton--android :global(.vkuiIcon--28) {
   padding: 10px;
 }

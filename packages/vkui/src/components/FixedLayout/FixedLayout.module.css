@@ -51,7 +51,5 @@
 :global(.vkuiInternalPanelHeader)
   ~ *
   .FixedLayout--vertical-top:not(:global(.vkuiInternalPanelHeader__fixed)) {
-  top: calc(
-    var(--vkui--size_panel_header_height--regular) + var(--vkui_internal--safe_area_inset_top)
-  );
+  top: calc(var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top));
 }

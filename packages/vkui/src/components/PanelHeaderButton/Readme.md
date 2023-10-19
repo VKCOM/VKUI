@@ -1,12 +1,9 @@
 Компонент для отрисовки кнопок в шапке панели. Внутрь компонента передается либо [иконка](https://vkcom.github.io/icons/),
-либо текст. Текстовые кнопки чаще всего используются в iOS, но есть исключения для Android.
+либо текст. Текстовые кнопки чаще всего используются в iOS, но есть исключения для Android. Обратите внимание, что для `compact`-режима необходимо использовать кнопки размера `24`, а для `regular` размера `28` (возможно, будет полезен [AdaptiveIconRenderer](#!/AdaptiveIconRenderer)).
 
 Кнопки могут быть переданы в `before` или `after` компонента `PanelHeader`:
 
 ```jsx static
-import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
-import { Icon28Notifications, Icon28SettingsOutline } from '@vkontakte/icons';
-
 <PanelHeader
   before={
     <PanelHeaderButton>
@@ -18,15 +15,12 @@ import { Icon28Notifications, Icon28SettingsOutline } from '@vkontakte/icons';
       <Icon28SettingsOutline />
     </PanelHeaderButton>
   }
-/>;
+/>
 ```
 
 Если нужно несколько кнопок справа или слева, то используем `React.Fragment`:
 
 ```jsx static
-import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
-import { Icon28SettingsOutline, Icon28Notifications } from '@vkontakte/icons';
-
 <PanelHeader
   after={
     <React.Fragment>
@@ -38,7 +32,7 @@ import { Icon28SettingsOutline, Icon28Notifications } from '@vkontakte/icons';
       </PanelHeaderButton>
     </React.Fragment>
   }
-/>;
+/>
 ```
 
 ## Пресеты
@@ -48,23 +42,19 @@ import { Icon28SettingsOutline, Icon28Notifications } from '@vkontakte/icons';
 Этот компонент используется для показа кнопки назад в панелях в рамках одного `View`. Внутри инкапсулирована логика показа нужной иконки для платформы.
 
 ```jsx static
-import { PanelHeaderBack } from '@vkontakte/vkui';
-
 <PanelHeader before={<PanelHeaderBack onClick={this.props.onBackClick} />}>
   Заголовок панели
-</PanelHeader>;
+</PanelHeader>
 ```
 
 ### PanelHeaderClose
 
-Этот компонент используется для показа кнопки "Отмена" в модальных окнах для закрытия текущего `View` в рамках `Root`. На iOS будет показан текст, передаваемый как `children`, на Android - `<Icon28CancelOutline />`:
+Этот компонент используется для показа кнопки "Отмена" в модальных окнах для закрытия текущего `View` в рамках `Root`. На iOS будет показан текст, передаваемый как `children`, на Android - `<Icon28CancelOutline />` или `<Icon24CancelOutline />`:
 
 ```jsx static
-import { PanelHeaderClose } from '@vkontakte/vkui';
-
 <PanelHeader before={<PanelHeaderClose onClick={this.props.onCloseClick} />}>
   Заголовок модального окна
-</PanelHeader>;
+</PanelHeader>
 ```
 
 ### PanelHeaderEdit
@@ -72,8 +62,6 @@ import { PanelHeaderClose } from '@vkontakte/vkui';
 Компонент для отрисовки кнопки **Редактировать** в шапке. Принимает свойство `isActive`, которое определяет состояние кнопки (включен ли режим редактирования).
 
 ```jsx static
-import { PanelHeaderEdit } from '@vkontakte/vkui';
-
 <PanelHeader after={<PanelHeaderEdit onClick={this.props.onEdit}>Готово</PanelHeaderSubmit>}>
   Заголовок модального окна
 </PanelHeader>;
@@ -81,12 +69,10 @@ import { PanelHeaderEdit } from '@vkontakte/vkui';
 
 ### PanelHeaderSubmit
 
-Этот компонент используется для показа кнопки "Готово" в модальных окнах для закрытия текущего `View` в рамках `Root` и сохранения какого-либо результата. На iOS будет показан текст, передаваемый как `children`, на Android - `<Icon28DoneOutline />`:
+Этот компонент используется для показа кнопки "Готово" в модальных окнах для закрытия текущего `View` в рамках `Root` и сохранения какого-либо результата. На iOS будет показан текст, передаваемый как `children`, на Android - `<Icon28DoneOutline />` или `<Icon24DoneOutline />`:
 
 ```jsx static
-import { PanelHeaderSubmit } from '@vkontakte/vkui';
-
 <PanelHeader after={<PanelHeaderSubmit onClick={this.props.onSubmit}>Готово</PanelHeaderSubmit>}>
   Заголовок модального окна
-</PanelHeader>;
+</PanelHeader>
 ```

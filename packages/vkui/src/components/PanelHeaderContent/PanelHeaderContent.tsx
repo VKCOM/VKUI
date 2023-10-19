@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { Headline } from '../Typography/Headline/Headline';
 import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeaderContent.module.css';
 
@@ -14,6 +15,11 @@ const platformClassNames = {
   ios: styles['PanelHeaderContent--ios'],
   android: styles['PanelHeaderContent--android'],
   vkcom: styles['PanelHeaderContent--vkcom'],
+};
+
+const sizeYClassNames = {
+  none: styles['PanelHeaderContent--sizeY-none'],
+  compact: styles['PanelHeaderContent--sizeY-compact'],
 };
 
 export interface PanelHeaderContentProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -29,18 +35,15 @@ interface PanelHeaderChildrenProps extends HasChildren {
 
 const PanelHeaderChildren = ({ hasStatus, hasBefore, children }: PanelHeaderChildrenProps) => {
   const platform = usePlatform();
-  if (platform === Platform.VKCOM) {
-    return (
-      <Text className={styles['PanelHeaderContent__childrenText']} Component="div" weight="2">
-        {children}
-      </Text>
-    );
-  }
 
   return hasStatus || hasBefore ? (
-    <Headline className={styles['PanelHeaderContent__childrenText']} Component="div" weight="2">
+    <Text
+      className={styles['PanelHeaderContent__childrenText']}
+      Component="div"
+      weight={platform === Platform.VKCOM ? '2' : undefined}
+    >
       {children}
-    </Headline>
+    </Text>
   ) : (
     <div className={styles['PanelHeaderContent__children-in']}>{children}</div>
   );
@@ -57,6 +60,7 @@ export const PanelHeaderContent = ({
   onClick,
   ...restProps
 }: PanelHeaderContentProps) => {
+  const { sizeY = 'none' } = useAdaptivity();
   const InComponent = onClick ? Tappable : 'div';
   const rootProps = onClick ? {} : restProps;
   const platform = usePlatform();
@@ -78,6 +82,7 @@ export const PanelHeaderContent = ({
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
       )}
     >
       {hasReactNode(before) && <div className={styles['PanelHeaderContent__before']}>{before}</div>}

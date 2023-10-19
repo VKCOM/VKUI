@@ -28,6 +28,11 @@ const sizeXClassNames = {
   regular: styles['PanelHeader--sizeX-regular'],
 };
 
+const sizeYClassNames = {
+  none: styles['PanelHeader--sizeY-none'],
+  compact: styles['PanelHeader--sizeY-compact'],
+};
+
 export interface PanelHeaderProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
@@ -136,7 +141,7 @@ export const PanelHeader = ({
   ...restProps
 }: PanelHeaderProps) => {
   const platform = usePlatform();
-  const { sizeX = 'none' } = useAdaptivity();
+  const { sizeX = 'none', sizeY = 'none' } = useAdaptivity();
   const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
@@ -160,6 +165,7 @@ export const PanelHeader = ({
         !after && styles['PanelHeader--no-after'],
         isFixed && styles['PanelHeader--fixed'],
         sizeX !== SizeType.COMPACT && sizeXClassNames[sizeX],
+        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
       )}
       getRootRef={isFixed ? getRootRef : getRef}
     >
