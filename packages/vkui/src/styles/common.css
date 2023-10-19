@@ -39,7 +39,7 @@
   background: var(--vkui--color_background_content);
 }
 
-/* отключаем нативный pull-to-refresh при закрывании модалки */
+/* отключаем нативный pull-to-refresh при открывании модалки */
 .vkui--modal-overscroll-behavior {
   overscroll-behavior-y: contain;
 }
