@@ -152,7 +152,7 @@ const SnackBarExample = () => {
 
 ## Snackbar.Basic
 
-Базовый компонент снекбара
+Компонент без позиционирования и логики.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 <div style={{ display: 'grid', padding: 32, gap: 32 }}>
