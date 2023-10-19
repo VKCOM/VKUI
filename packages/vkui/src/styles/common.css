@@ -44,7 +44,7 @@
   overscroll-behavior-y: contain;
 }
 
-/* отключаем нативный pull-to-refresh в PullToRefresh компоненте */
+/* отключаем нативный pull-to-refresh при взаимодействии с компонентом PullToRefresh */
 .vkui--disable-overscroll-behavior {
   overscroll-behavior-y: none;
 }
