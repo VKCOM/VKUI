@@ -2,7 +2,6 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import mitt from 'mitt';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useAdaptivityHasHover } from '../../hooks/useAdaptivityHasHover';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useBooleanState } from '../../hooks/useBooleanState';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -224,9 +223,8 @@ export const Tappable = ({
   const insideTouchRoot = React.useContext(TouchRootContext);
   const platform = usePlatform();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
-  const { sizeX = 'none' } = useAdaptivity();
+  const { sizeX = 'none', hasHover: hasHoverContext = true } = useAdaptivity();
   const hasPointerContext = useAdaptivityHasPointer();
-  const hasHoverContext = useAdaptivityHasHover();
 
   const [clicks, setClicks] = React.useState<Wave[]>([]);
   const [childHover, setChildHover] = React.useState(false);
