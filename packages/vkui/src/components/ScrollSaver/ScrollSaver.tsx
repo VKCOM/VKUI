@@ -4,6 +4,7 @@ export { useNavId } from '../../components/NavIdContext/useNavId';
 import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasRootRef } from '../../types';
+import { useScrollSaverCache } from './ScrollSaverContext';
 
 export interface ScrollSaverProps {
   /*
@@ -27,8 +28,6 @@ export interface ScrollSaverProps {
   saveMode?: 'forward' | 'always';
 }
 
-let scrollSaverCache: { [key: string]: { inlineStart: number; blockStart: number } } = {};
-
 /**
  * Компонент-обертка для сохранения позиции скролла элемента при переходах между View и Panel.
  * По умолчанию позволяет восстановить значение скролла при возвращении назад.
@@ -42,6 +41,7 @@ export function ScrollSaver({
   const uniqueId = useUniqueId(id);
   const [childrenRef, children] = usePatchChildrenRef(childrenProp, useGetRef);
   const direction = useNavDirection();
+  const scrollSaverCache = useScrollSaverCache();
 
   useIsomorphicLayoutEffect(
     function handleScrollPosition() {
@@ -55,7 +55,6 @@ export function ScrollSaver({
         const shouldRestoreMovingForwards = saveMode === 'always';
         const shouldRestore = shouldRestoreMovingBackwards || shouldRestoreMovingForwards;
         if (!shouldRestore) {
-          // should I clean up the cache
           return;
         }
 

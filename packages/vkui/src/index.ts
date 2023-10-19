@@ -344,6 +344,12 @@ export type {
   PopoverContentRenderProp,
 } from './components/Popover/Popover';
 export { ScrollSaver } from './components/ScrollSaver/ScrollSaver';
+export {
+  ScrollSaverContextProvider,
+  useScrollSaverCache,
+  useClearScrollSaverCache,
+  type ScrollSaverCache,
+} from './components/ScrollSaver/ScrollSaverContext';
 
 /**
  * HOCs
