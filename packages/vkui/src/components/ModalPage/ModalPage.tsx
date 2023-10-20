@@ -2,7 +2,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useId } from '../../hooks/useId';
 import { useOrientationChange } from '../../hooks/useOrientationChange';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
@@ -97,7 +96,7 @@ export const ModalPage = ({
   getRootRef,
   ...restProps
 }: ModalPageProps) => {
-  const generatingId = useId();
+  const generatingId = React.useId();
   const id = idProp || generatingId;
 
   const { updateModalHeight } = React.useContext(ModalRootContext);

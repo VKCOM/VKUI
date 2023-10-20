@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { setRef } from '../../lib/utils';
-import { baselineComponent, mockRect } from '../../testing/utils';
+import { baselineComponent, mockRect, userEvent } from '../../testing/utils';
 import { RangeSlider as RangeSliderBase, type RangeSliderProps } from './RangeSlider';
 
 const RangeSlider = (props: RangeSliderProps) => {
@@ -49,14 +48,18 @@ describe('RangeSlider', () => {
   describe('changes', () => {
     const pointerPos = (x: number) => ({ clientX: x, clientY: 10 });
     describe('with tap', () => {
-      it('moves start', () => {
+      it('moves start', async () => {
         render(<RangeSlider defaultValue={[3, 7]} />);
-        userEvent.click(getSlider(), pointerPos(20));
+        await userEvent.pointer([
+          { target: getSlider(), coords: pointerPos(20), keys: '[MouseLeft]' },
+        ]);
         expect(getSlider()).toHaveAttribute('data-value', '2,7');
       });
-      it('moves end', () => {
+      it('moves end', async () => {
         render(<RangeSlider defaultValue={[3, 7]} />);
-        userEvent.click(getSlider(), pointerPos(80));
+        await userEvent.pointer([
+          { target: getSlider(), coords: pointerPos(80), keys: '[MouseLeft]' },
+        ]);
         expect(getSlider()).toHaveAttribute('data-value', '3,8');
       });
     });

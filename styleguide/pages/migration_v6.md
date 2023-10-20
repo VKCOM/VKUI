@@ -2,6 +2,10 @@
 
 <br/><br/>
 
+## Обновление React
+
+- Минимальная поддерживаемая версия **React** увеличена до v18.2.0
+
 ## Удалили интеграцию с [VK Mini Apps](https://vk.com/miniapps) и [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge)
 
 > **Note**

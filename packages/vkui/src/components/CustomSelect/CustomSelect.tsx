@@ -3,7 +3,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
-import { useId } from '../../hooks/useId';
 import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn } from '../../lib/select';
@@ -657,7 +656,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [focusOptionByIndex],
   );
 
-  const popupAriaId = useId();
+  const popupAriaId = React.useId();
   const renderOption = React.useCallback(
     (option: OptionInterfaceT, index: number) => {
       const hovered = index === focusedOptionIndex;

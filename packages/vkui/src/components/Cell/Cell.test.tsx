@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { List } from '../List/List';
 import { Cell } from './Cell';
@@ -12,7 +11,7 @@ describe('Cell', () => {
   baselineComponent((props) => <Cell {...props}>Cell</Cell>);
 
   describe('Controls dragging', () => {
-    it('does not reorder dragged item on click', () => {
+    it('does not reorder dragged item on click', async () => {
       const initialList = ['eugpoloz', 'arthurstam', 'xyz'];
       let updatedList = [...initialList];
 
@@ -37,7 +36,7 @@ describe('Cell', () => {
         </List>,
       );
 
-      userEvent.click(
+      await userEvent.click(
         screen.getByTestId('list-xyz').querySelector(`[aria-label="${label}"]`) as Element,
       );
 

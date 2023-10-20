@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { setRef } from '../../lib/utils';
-import { baselineComponent, mockRect } from '../../testing/utils';
+import { baselineComponent, mockRect, userEvent } from '../../testing/utils';
 import type { TouchEvent } from '../Touch/Touch';
 import { Slider as SliderBase, type SliderMultipleProps, type SliderProps } from './Slider';
 
@@ -106,34 +105,42 @@ describe('Slider', () => {
   });
 
   describe('change with tap', () => {
-    it('moves start', () => {
+    it('moves start', async () => {
       const handleChange: jest.Mock<void, [number, TouchEvent]> = jest.fn();
       render(<Slider defaultValue={30} onChange={handleChange} />);
-      userEvent.click(screen.getByTestId('root'), pointerPos(20));
+      await userEvent.pointer([
+        { target: screen.getByTestId('root'), coords: pointerPos(20), keys: '[MouseLeft]' },
+      ]);
       expect(screen.getByRole('slider')).toHaveValue('20');
       expect(handleChange).toHaveBeenLastCalledWith(20, expect.anything());
     });
 
-    it('moves start (multiple)', () => {
+    it('moves start (multiple)', async () => {
       const handleChange: jest.Mock<void, [[number, number], TouchEvent]> = jest.fn();
       render(<Slider multiple defaultValue={[30, 70]} onChange={handleChange} />);
       const [startSlider, endSlider] = screen.getAllByRole('slider');
-      userEvent.click(screen.getByTestId('root'), pointerPos(20));
+      await userEvent.pointer([
+        { target: screen.getByTestId('root'), coords: pointerPos(20), keys: '[MouseLeft]' },
+      ]);
       expect(startSlider).toHaveValue('20');
       expect(endSlider).toHaveValue('70');
       expect(handleChange).toHaveBeenLastCalledWith([20, 70], expect.anything());
     });
 
-    it('moves end', () => {
+    it('moves end', async () => {
       render(<Slider defaultValue={70} />);
-      userEvent.click(screen.getByTestId('root'), pointerPos(80));
+      await userEvent.pointer([
+        { target: screen.getByTestId('root'), coords: pointerPos(80), keys: '[MouseLeft]' },
+      ]);
       expect(screen.getByRole('slider')).toHaveValue('80');
     });
 
-    it('moves end (multiple)', () => {
+    it('moves end (multiple)', async () => {
       render(<Slider multiple defaultValue={[30, 70]} />);
       const [startSlider, endSlider] = screen.getAllByRole('slider');
-      userEvent.click(screen.getByTestId('root'), pointerPos(80));
+      await userEvent.pointer([
+        { target: screen.getByTestId('root'), coords: pointerPos(80), keys: '[MouseLeft]' },
+      ]);
       expect(startSlider).toHaveValue('30');
       expect(endSlider).toHaveValue('80');
     });
@@ -204,27 +211,27 @@ describe('Slider', () => {
   });
 
   describe('with tooltip', () => {
-    it('shows tooltip on hover/focus', () => {
+    it('shows tooltip on hover/focus', async () => {
       render(<Slider defaultValue={30} withTooltip />);
       const slider = screen.getByRole('slider');
 
       expect(screen.queryByText('30')).not.toBeInTheDocument();
 
       // shows tooltip on hover
-      userEvent.hover(slider);
+      await userEvent.hover(slider);
       expect(screen.queryByText('30')).toBeInTheDocument();
 
       // hides on unhover
-      userEvent.unhover(slider);
+      await userEvent.unhover(slider);
       expect(screen.queryByText('30')).not.toBeInTheDocument();
 
       // shows tooltip on focus
       slider.focus();
-      expect(screen.queryByText('30')).toBeInTheDocument();
+      await waitFor(() => expect(screen.queryByText('30')).toBeInTheDocument());
 
       // hides on blur
       slider.blur();
-      expect(screen.queryByText('30')).not.toBeInTheDocument();
+      await waitFor(() => expect(screen.queryByText('30')).not.toBeInTheDocument());
     });
   });
 });

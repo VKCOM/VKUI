@@ -6,7 +6,6 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import { useBooleanState } from '../../hooks/useBooleanState';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useId } from '../../hooks/useId';
 import { usePlatform } from '../../hooks/usePlatform';
 import { touchEnabled, VKUITouchEvent } from '../../lib/touch';
 import { HasRef, HasRootRef } from '../../types';
@@ -75,7 +74,7 @@ export const Search = ({
     setTrue: setFocusedTrue,
     setFalse: setFocusedFalse,
   } = useBooleanState(false);
-  const generatedId = useId();
+  const generatedId = React.useId();
   const inputId = idProp ? idProp : `search-${generatedId}`;
 
   const [value, onChange] = useEnsuredControl({

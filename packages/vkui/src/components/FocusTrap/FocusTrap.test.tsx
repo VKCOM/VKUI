@@ -1,8 +1,13 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, waitFor } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, runAllTimers, waitForFloatingPosition } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimers,
+  runAllTimers,
+  userEvent,
+  waitForFloatingPosition,
+} from '../../testing/utils';
 import { ActionSheet, ActionSheetProps } from '../ActionSheet/ActionSheet';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -63,16 +68,11 @@ const ActionSheetTest = ({
 };
 
 describe('FocusTrap', () => {
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
-  baselineComponent(FocusTrap, {
-    // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
-    //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
-    a11y: false,
-  });
+  fakeTimers();
+  baselineComponent(FocusTrap);
 
   const mountActionSheetViaClick = async () => {
-    userEvent.click(screen.getByTestId('toggle')); // mount ActionSheet
+    await userEvent.click(screen.getByTestId('toggle')); // mount ActionSheet
     await waitForFloatingPosition();
     runAllTimers();
   };
@@ -80,7 +80,7 @@ describe('FocusTrap', () => {
   const mountAndUnmountActionSheet = async () => {
     await mountActionSheetViaClick();
 
-    userEvent.keyboard('{esc}');
+    await userEvent.keyboard('{Escape}');
     runAllTimers();
   };
 
@@ -115,7 +115,7 @@ describe('FocusTrap', () => {
       render(<ActionSheetTest onClose={() => jest.fn()} />);
       await mountAndUnmountActionSheet();
 
-      expect(screen.getByTestId('toggle')).toHaveFocus();
+      await waitFor(() => expect(screen.getByTestId('toggle')).toHaveFocus());
     });
 
     it('does not restore focus if restoreFocus={false}', async () => {
@@ -128,8 +128,8 @@ describe('FocusTrap', () => {
 
   describe('specific keyboard navigation', () => {
     const mountViaKeyboard = async () => {
-      userEvent.tab(); // focus toggle via keyboard
-      userEvent.keyboard('{enter}'); // mount ActionSheet via keyboard
+      await userEvent.tab(); // focus toggle via keyboard
+      await userEvent.keyboard('{enter}'); // mount ActionSheet via keyboard
       await waitForFloatingPosition();
       runAllTimers();
     };
@@ -146,19 +146,19 @@ describe('FocusTrap', () => {
       await mountViaKeyboard();
 
       // backwards
-      userEvent.tab({ shift: true });
+      await userEvent.tab({ shift: true });
       expect(screen.getByTestId('last')).toHaveFocus();
 
       // backwards
-      userEvent.tab({ shift: true });
+      await userEvent.tab({ shift: true });
       expect(screen.getByTestId('middle')).toHaveFocus();
 
       // forward
-      userEvent.tab();
+      await userEvent.tab();
       expect(screen.getByTestId('last')).toHaveFocus();
 
       // forward
-      userEvent.tab();
+      await userEvent.tab();
       expect(screen.getByTestId('first')).toHaveFocus();
     });
   });

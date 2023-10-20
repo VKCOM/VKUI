@@ -1,16 +1,21 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, runAllTimers, waitForFloatingPosition } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimers,
+  runAllTimers,
+  userEvent,
+  waitForFloatingPosition,
+} from '../../testing/utils';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ActionSheet, ActionSheetProps } from './ActionSheet';
 
 describe('ActionSheet', () => {
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
+  fakeTimers();
+
   const toggle = document.createElement('div');
   const ActionSheetDesktop = (props: Partial<ActionSheetProps>) => (
     <ConfigProvider platform="vkcom">
@@ -37,11 +42,7 @@ describe('ActionSheet', () => {
     ['menu', ActionSheetMenu],
     ['sheet', ActionSheetSheet],
   ])('%s', (_name, ActionSheet) => {
-    baselineComponent((props) => <ActionSheet {...props} />, {
-      // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
-      //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
-      a11y: false,
-    });
+    baselineComponent(ActionSheet);
 
     describe('calls handlers', () => {
       it.each([
@@ -65,7 +66,7 @@ describe('ActionSheet', () => {
           </ActionSheet>,
         );
         await waitForFloatingPosition();
-        userEvent.click(screen.getByTestId('item'));
+        await userEvent.click(screen.getByTestId('item'));
 
         runAllTimers();
         expect(handlers.onClick).toBeCalled();
@@ -93,29 +94,33 @@ describe('ActionSheet', () => {
       );
       await waitForFloatingPosition();
       runAllTimers();
-      userEvent.click(getNode());
+      await userEvent.click(getNode());
+
       expect(onClose).not.toBeCalled();
     });
   });
 
   describe('desktop', () => {
-    it('closes on click outside', async () => {
-      const onClose = jest.fn();
-      render(<ActionSheetDesktop onClose={onClose} />);
-      await waitForFloatingPosition();
-      runAllTimers();
-      userEvent.click(document.body);
-      runAllTimers();
-      expect(onClose).toBeCalledTimes(1);
-      expect(onClose).toBeCalledWith({ closedBy: 'other' });
-    });
+    it(
+      'closes on click outside',
+      async () => {
+        const onClose = jest.fn();
+        render(<ActionSheetDesktop onClose={onClose} />);
+        await waitForFloatingPosition();
+        await userEvent.click(document.body);
+        expect(onClose).toBeCalledTimes(1);
+        expect(onClose).toBeCalledWith({ closedBy: 'other' });
+      },
+      1000 * 20,
+    );
     it('closes on item click with autoClose', async () => {
       const onClose = jest.fn();
       render(<ActionSheetDesktop onClose={onClose} />);
       await waitForFloatingPosition();
       runAllTimers();
-      userEvent.click(document.body);
+      await userEvent.click(document.body);
       runAllTimers();
+
       expect(onClose).toBeCalledTimes(1);
       expect(onClose).toBeCalledWith({ closedBy: 'other' });
     });
@@ -135,7 +140,7 @@ describe('ActionSheet', () => {
       render(<ActionSheetMobile onClose={onClose} />);
       await waitForFloatingPosition();
       runAllTimers();
-      userEvent.click(document.querySelector('.vkuiPopoutWrapper__overlay') as Element);
+      await userEvent.click(document.querySelector('.vkuiPopoutWrapper__overlay') as Element);
       runAllTimers();
       expect(onClose).toBeCalledTimes(1);
       expect(onClose).toBeCalledWith({ closedBy: 'other' });

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { modalTransitionReducer, useModalManager } from './useModalManager';
 
@@ -31,9 +31,11 @@ describe(useModalManager, () => {
       const handle = renderHook(({ id }) => useModalManager(id, modals), {
         initialProps: { id: null as string | null },
       });
-      expect(handle.result.all).toMatchObject([
-        { activeModal: null, enteringModal: null, exitingModal: null },
-      ]);
+      expect(handle.result.current).toMatchObject({
+        activeModal: null,
+        enteringModal: null,
+        exitingModal: null,
+      });
       handle.rerender({ id: 'm1' });
       expect(handle.result.current).toMatchObject({
         activeModal: 'm1',

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useId } from '../../hooks/useId';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { stopPropagation } from '../../lib/utils';
@@ -69,7 +68,7 @@ export const Alert = ({
   getRootRef,
   ...restProps
 }: AlertProps) => {
-  const generatedId = useId();
+  const generatedId = React.useId();
 
   const headerId = `vkui-alert-${generatedId}-header`;
   const textId = `vkui-alert-${generatedId}-text`;

@@ -5,7 +5,7 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { getTitleFromChildren } from '../../lib/utils';
-import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
@@ -22,8 +22,9 @@ export interface RemovableProps {
   onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement | null) => void;
 }
 
-interface RemovableIosOwnProps extends RemovableProps, HasChildren {
+interface RemovableIosOwnProps extends RemovableProps {
   removePlaceholderString?: string;
+  children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
 }
 
 /**
@@ -121,7 +122,9 @@ interface RemovableIosRenderProps {
   isRemoving: boolean;
 }
 
-interface RemovableOwnProps extends HTMLAttributesWithRootRef<HTMLDivElement>, RemovableProps {
+interface RemovableOwnProps
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children'>,
+    RemovableProps {
   /**
    * Расположение кнопки удаления.
    */
@@ -165,7 +168,7 @@ export const Removable = ({
     >
       {platform !== 'ios' && (
         <div className={classNames(styles['Removable__content'], 'vkuiInternalRemovable__content')}>
-          {children}
+          {typeof children === 'function' ? children({ isRemoving: false }) : children}
 
           <IconButton
             activeMode="opacity"

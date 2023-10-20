@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent, mountTest, runAllTimers } from '../../testing/utils';
+import { baselineComponent, mountTest, runAllTimers, userEvent } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
 import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
 import styles from './ModalRoot.module.css';
 
-const clickFade = () => userEvent.click(document.querySelector(`.${styles.ModalRoot__mask}`)!);
+const clickFade = async () =>
+  await userEvent.click(document.querySelector(`.${styles.ModalRoot__mask}`)!);
 let rafSpies: jest.SpyInstance[];
 
 describe.each([
@@ -80,7 +80,7 @@ describe.each([
 
   describe('calls onClose', () => {
     describe('on fade click', () => {
-      it('calls modal onClose', () => {
+      it('calls modal onClose', async () => {
         const onClose = jest.fn();
         const onCloseRoot = jest.fn();
         render(
@@ -90,11 +90,11 @@ describe.each([
         );
         // wait for animations
         runAllTimers();
-        clickFade();
+        await clickFade();
         expect(onClose).toBeCalledTimes(1);
         expect(onCloseRoot).not.toBeCalled();
       });
-      it('calls root onClose if modal has no onClose', () => {
+      it('calls root onClose if modal has no onClose', async () => {
         const onCloseRoot = jest.fn();
         render(
           <ModalRoot onClose={onCloseRoot} activeModal="m">
@@ -103,12 +103,12 @@ describe.each([
         );
         // wait for animations
         runAllTimers();
-        clickFade();
+        await clickFade();
         expect(onCloseRoot).toBeCalledTimes(1);
       });
     });
     if (name === 'ModalRootDesktop') {
-      it('on esc click', () => {
+      it('on esc click', async () => {
         const onCloseRoot = jest.fn();
         render(
           <ModalRoot onClose={onCloseRoot} activeModal="m">
@@ -117,7 +117,7 @@ describe.each([
         );
         // wait for animations
         runAllTimers();
-        userEvent.keyboard('{esc}');
+        await userEvent.keyboard('{Escape}');
         expect(onCloseRoot).toBeCalledTimes(1);
       });
     }
@@ -142,7 +142,7 @@ describe.each([
     );
 
     // onClose is working
-    clickFade();
+    await clickFade();
     expect(onClose).toBeCalledTimes(1);
   });
 

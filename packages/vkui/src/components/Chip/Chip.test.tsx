@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { Chip } from './Chip';
 
 describe('Chip', () => {
@@ -13,7 +12,7 @@ describe('Chip', () => {
     a11y: false,
   });
 
-  it('removes chip on onRemove click', () => {
+  it('removes chip on onRemove click', async () => {
     const onRemove = jest.fn();
 
     render(
@@ -22,7 +21,7 @@ describe('Chip', () => {
       </Chip>,
     );
 
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
 
     expect(onRemove).toHaveBeenCalled();
   });

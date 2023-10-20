@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { NativeSelect } from './NativeSelect';
 
 describe('NativeSelect', () => {
@@ -15,7 +14,7 @@ describe('NativeSelect', () => {
     </>
   ));
 
-  it('works correctly with value and onChange', () => {
+  it('works correctly with value and onChange', async () => {
     const SelectController = () => {
       const [value, setValue] = React.useState('0');
       return (
@@ -29,11 +28,11 @@ describe('NativeSelect', () => {
     render(<SelectController />);
 
     expect(screen.getByTestId<HTMLSelectElement>('target').value).toBe('0');
-    userEvent.selectOptions(screen.getByTestId('target'), ['1']);
+    await userEvent.selectOptions(screen.getByTestId('target'), ['1']);
     expect(screen.getByTestId<HTMLSelectElement>('target').value).toBe('1');
   });
 
-  it('works correctly with pinned value', () => {
+  it('works correctly with pinned value', async () => {
     render(
       <NativeSelect data-testid="target" value="0">
         <option value="0">Mike</option>
@@ -42,7 +41,7 @@ describe('NativeSelect', () => {
     );
 
     expect(screen.getByTestId<HTMLSelectElement>('target').value).toBe('0');
-    userEvent.selectOptions(screen.getByTestId('target'), ['1']);
+    await userEvent.selectOptions(screen.getByTestId('target'), ['1']);
     expect(screen.getByTestId<HTMLSelectElement>('target').value).toBe('0');
   });
 

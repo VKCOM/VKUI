@@ -14,7 +14,7 @@ const sizeYClassNames = {
 };
 
 export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onResize'>,
     HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
     Pick<React.CSSProperties, 'maxHeight'>,

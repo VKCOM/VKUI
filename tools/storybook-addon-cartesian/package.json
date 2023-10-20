@@ -25,6 +25,9 @@
     "@storybook/react-webpack5": "7.5.3",
     "@storybook/theming": "7.5.3",
     "@storybook/types": "7.5.3",
+    "@swc/core": "*",
+    "react": "*",
+    "react-dom": "*",
     "storybook": "7.5.3",
     "storybook-addon-swc": "^1.2.0"
   }

@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { act } from 'react-dom/test-utils';
-import { render, RenderResult, screen } from '@testing-library/react';
+import { act, render, RenderResult, screen } from '@testing-library/react';
+// eslint-disable-next-line no-restricted-imports -- используем здесь setup
+import userEventLib from '@testing-library/user-event';
 import { configureAxe, toHaveNoViolations } from 'jest-axe';
 import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
@@ -15,15 +16,22 @@ export const axe = configureAxe({
 });
 expect.extend(toHaveNoViolations);
 
+/**
+ * Переконфигурируем работу userEvent под jest
+ *
+ * https://github.com/testing-library/user-event/issues/833
+ */
+export const userEvent = userEventLib.setup({ advanceTimers: jest.advanceTimersByTime });
+
 export function fakeTimers() {
   beforeEach(() => jest.useFakeTimers());
-  afterEach(() => jest.useRealTimers());
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+  });
 }
 
-export const runAllTimers = () =>
-  act(() => {
-    jest.runAllTimers();
-  });
+export const runAllTimers = () => act(() => jest.runAllTimers());
 
 export const tryToGetByTestId = (id: string, elParent: HTMLElement) =>
   elParent.querySelector<HTMLElement>(`[data-testid="${id}"]`);
@@ -53,8 +61,6 @@ export type ComponentTestOptions = {
   getRootRef?: boolean;
 };
 
-type BasicProps = { style?: any; className?: string };
-
 export function mountTest(Component: React.ComponentType<any>) {
   it('renders', () => {
     let api: RenderResult;
@@ -71,7 +77,8 @@ export function a11yTest(Component: React.ComponentType<any>) {
   it('a11y: has no violations', async () => {
     const { container } = render(<Component />);
 
-    const results = await axe(container);
+    jest.useRealTimers();
+    const results = await axe(container, {});
     expect(results).toHaveNoViolations();
   });
 }
@@ -95,7 +102,7 @@ export function getRootRefTest(Component: React.ComponentType<any>) {
   });
 }
 
-export function baselineComponent<Props extends BasicProps>(
+export function baselineComponent<Props extends object>(
   RawComponent: React.ComponentType<Props>,
   {
     forward = true,

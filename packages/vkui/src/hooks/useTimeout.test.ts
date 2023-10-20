@@ -1,27 +1,23 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { fakeTimers, runAllTimers } from '../testing/utils';
 import { useTimeout } from './useTimeout';
 
 describe(useTimeout, () => {
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
+  fakeTimers();
   it('sets timeout', () => {
     const cb = jest.fn();
     const { result } = renderHook(() => useTimeout(cb, 100));
     act(() => {
       result.current.set();
     });
-    act(() => {
-      jest.runAllTimers();
-    });
+    runAllTimers();
     expect(cb).toBeCalledTimes(1);
   });
   it('clears timeout on unmount', () => {
     const { result, unmount } = renderHook(() => useTimeout(noop, 100));
     // run useEffect
-    act(() => {
-      jest.runAllTimers();
-    });
+    runAllTimers();
     act(() => {
       result.current.set();
     });
@@ -35,9 +31,7 @@ describe(useTimeout, () => {
     });
     const cb = jest.fn();
     rerender(cb);
-    act(() => {
-      jest.runAllTimers();
-    });
+    runAllTimers();
     expect(cb).toBeCalledTimes(1);
   });
   it('set() replaces old timeout', () => {
@@ -49,9 +43,7 @@ describe(useTimeout, () => {
     act(() => {
       result.current.set();
     });
-    act(() => {
-      jest.runAllTimers();
-    });
+    runAllTimers();
     expect(cb).toBeCalledTimes(1);
   });
 });

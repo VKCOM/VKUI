@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { act } from 'react-dom/test-utils';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, runAllTimers } from '../../testing/utils';
+import { baselineComponent, fakeTimers, runAllTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
 
@@ -39,14 +38,9 @@ function renderRefresher({ platform = 'android' as string } = {}) {
 }
 
 describe('PullToRefresh', () => {
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
+  fakeTimers();
 
-  baselineComponent(PullToRefresh, {
-    // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
-    //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
-    a11y: false,
-  });
+  baselineComponent(PullToRefresh);
 
   describe('calls onRefresh', () => {
     it('after pull', () => {
