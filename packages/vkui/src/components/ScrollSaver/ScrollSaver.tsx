@@ -6,7 +6,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasRootRef } from '../../types';
 import { useScrollSaverCache } from './ScrollSaverContext';
 
-interface ScrollSaverHookProps<T = HTMLElement> {
+interface ScrollSaverProps {
   /*
    * Уникальный идентификатор элемента скролл которого надо запомнить.
    * Важно задавать id, так как на одной панели может понадобится запомнить позиции нескольких скролл-боксов.
@@ -18,66 +18,6 @@ interface ScrollSaverHookProps<T = HTMLElement> {
    * `always` - позиция скролла сохраняется и при переходе вперёд и при переходе назад.
    **/
   saveMode?: 'forward' | 'always';
-  /* Ref элемента, скроллом которого надо управлять */
-  ref: React.RefObject<T>;
-}
-
-function useScrollSaver({ ref, id, saveMode = 'forward' }: ScrollSaverHookProps) {
-  const uniqueId = useUniqueId(id);
-  const direction = useNavDirection();
-  const scrollSaverCache = useScrollSaverCache();
-
-  useIsomorphicLayoutEffect(
-    function handleScrollPosition() {
-      const scrollId = uniqueId;
-      const refNode = ref.current;
-
-      function restoreScrollPosition() {
-        if (!refNode) {
-          return;
-        }
-
-        const scrollPosition = scrollSaverCache[scrollId];
-
-        const shouldRestoreMovingBackwards = direction === 'backwards' && saveMode === 'forward';
-        const shouldRestoreMovingForwards = saveMode === 'always';
-        const shouldRestore = shouldRestoreMovingBackwards || shouldRestoreMovingForwards;
-        if (!shouldRestore) {
-          return;
-        }
-
-        if (!scrollPosition) {
-          return;
-        }
-
-        const { inlineStart, blockStart } = scrollSaverCache[scrollId];
-        if (inlineStart) {
-          refNode.scrollLeft = inlineStart;
-        }
-        if (blockStart) {
-          refNode.scrollTop = blockStart;
-        }
-      }
-
-      restoreScrollPosition();
-
-      return function saveScrollPositionOnUnmount() {
-        if (!refNode) {
-          return;
-        }
-        scrollSaverCache[scrollId] = {
-          inlineStart: refNode.scrollLeft,
-          blockStart: refNode.scrollTop,
-        };
-      };
-    },
-    [direction, uniqueId, saveMode, ref],
-  );
-
-  return ref;
-}
-
-interface ScrollSaverProps extends Omit<ScrollSaverHookProps, 'ref'> {
   /*
    * Если передан реакт-компонент, то он должен поддерживать getRootRef.
    **/
@@ -94,19 +34,74 @@ interface ScrollSaverProps extends Omit<ScrollSaverHookProps, 'ref'> {
  */
 export function ScrollSaver(props: ScrollSaverProps) {
   const [childrenRef, children] = usePatchChildrenRef(props.children, props.useGetRef);
-  useScrollSaver({ ref: childrenRef, id: props.id, saveMode: props.saveMode });
+  useScrollSaver(childrenRef, props.id, props.saveMode);
 
   return children;
 }
 
-interface ScrollSaverWithoutChildren<T = HTMLElement> extends Omit<ScrollSaverHookProps, 'ref'> {
-  elementRef: React.RefObject<T>;
-  children?: React.ReactElement | null;
+export function useScrollSaver<T extends HTMLElement>(
+  elementRef: React.RefObject<T>,
+  id: ScrollSaverProps['id'],
+  saveMode: ScrollSaverProps['saveMode'] = 'forward',
+) {
+  const uniqueId = useUniqueId(id);
+  const direction = useNavDirection();
+  const scrollSaverCache = useScrollSaverCache();
+
+  useIsomorphicLayoutEffect(
+    function handleScrollPosition() {
+      const scrollId = uniqueId;
+      const refNode = elementRef.current;
+
+      function restoreScrollPosition() {
+        if (!refNode) {
+          return;
+        }
+
+        const scrollPosition = scrollSaverCache[scrollId];
+        if (!scrollPosition) {
+          return;
+        }
+
+        const shouldRestoreMovingBackwards = direction === 'backwards' && saveMode === 'forward';
+        const shouldRestoreMovingForwards = saveMode === 'always';
+        const shouldRestore = shouldRestoreMovingBackwards || shouldRestoreMovingForwards;
+        if (!shouldRestore) {
+          return;
+        }
+
+        const { inlineStart, blockStart } = scrollSaverCache[scrollId];
+        refNode.scrollLeft = inlineStart;
+        refNode.scrollTop = blockStart;
+      }
+
+      restoreScrollPosition();
+
+      return function saveScrollPositionOnUnmount() {
+        if (!refNode) {
+          return;
+        }
+        scrollSaverCache[scrollId] = {
+          inlineStart: refNode.scrollLeft,
+          blockStart: refNode.scrollTop,
+        };
+      };
+    },
+    [direction, uniqueId, saveMode, elementRef],
+  );
+
+  return elementRef;
 }
 
-/* Компонентный Вариант useScrollSaver хука для динамического рендеринга, чтобы можно было пробросить и использовать любой ref */
-export function ScrollSaverWithoutChildren(props: ScrollSaverWithoutChildren) {
-  useScrollSaver({ ref: props.elementRef, id: props.id, saveMode: props.saveMode });
+interface ScrollSaverWithoutChildrenProps<T = HTMLElement>
+  extends Omit<ScrollSaverProps, 'useGetRef'> {
+  elementRef: React.RefObject<T>;
+}
+
+/* Компонентный Вариант useScrollSaver хука для динамического рендеринга, чтобы можно было пробросить и использовать любой ref
+ * children проп можно передать, но ref из него браться не будет */
+export function ScrollSaverWithoutChildren(props: ScrollSaverWithoutChildrenProps) {
+  useScrollSaver(props.elementRef, props.id, props.saveMode);
 
   return props.children;
 }
