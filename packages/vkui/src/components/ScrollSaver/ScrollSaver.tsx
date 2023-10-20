@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { useNavId } from '../../components/NavIdContext/useNavId';
 import { useNavDirection } from '../../components/NavTransitionDirectionContext/NavTransitionDirectionContext';
-export { useNavId } from '../../components/NavIdContext/useNavId';
 import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasRootRef } from '../../types';
