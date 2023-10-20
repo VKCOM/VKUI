@@ -372,28 +372,26 @@ const ContentWithScrollSaverComponent = () => {
 };
 
 const ContentWithScrollSaverWithoutChildren = () => {
-  const horizontalScrollRef = useRef();
-
   const horizontalRef = useRef();
   return (
     <Div>
       <Headline level="1" style={{ marginBottom: 16 }}>
         With ScrollSaverWithoutChildren - doesn't look for children ref
       </Headline>
-      <ScrollSaver id="horizontal-scroll-saver-hook" elementRef={horizontalRef}>
-        <HorizontalScroll getRef={horizontalScrollRef} getRef={horizontalRef}>
+      <ScrollSaverWithoutChildren id="horizontal-scroll-saver-hook" elementRef={horizontalRef}>
+        <HorizontalScroll getRef={horizontalRef}>
           <div style={{ display: 'flex' }}>
             <AlbumItems />
           </div>
         </HorizontalScroll>
-      </ScrollSaver>
+      </ScrollSaverWithoutChildren>
     </Div>
   );
 };
 
 const ContentWithScrollSaverHook = () => {
   const horizontalScrollRef = useRef();
-  useScrollSaver({ elementRef: horizontalScrollRef, id: 'horizontal-scroll-saver-hook' });
+  useScrollSaver(horizontalScrollRef, 'horizontal-scroll-saver-hook');
 
   return (
     <Div>
