@@ -148,7 +148,7 @@ class ModalRootTouchComponent extends React.Component<
     if (enabled) {
       // восстанавливаем значение overscroll behavior
       // eslint-disable-next-line no-restricted-properties
-      this.document.documentElement.classList.remove('vkui--modal-overscroll-behavior');
+      this.document.documentElement.classList.remove('vkui--disable-overscroll-behavior');
 
       // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
       // https://github.com/VKCOM/VKUI/issues/444
@@ -160,7 +160,7 @@ class ModalRootTouchComponent extends React.Component<
       // отключаем нативный pull-to-refresh при открытом модальном окне
       // чтобы он не срабатывал при закрытии модалки смахиванием вниз
       // eslint-disable-next-line no-restricted-properties
-      this.document.documentElement.classList.add('vkui--modal-overscroll-behavior');
+      this.document.documentElement.classList.add('vkui--disable-overscroll-behavior');
 
       this.window.addEventListener('touchmove', this.preventTouch, {
         passive: false,
