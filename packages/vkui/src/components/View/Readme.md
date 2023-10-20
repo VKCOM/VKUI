@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 Базовый компонент для создания панелей.
 
 - В качестве `children` принимает коллекцию [Panel](#/Panel). У каждой [Panel](#/Panel) должен быть
@@ -266,6 +267,13 @@ Xук возвращает правильное значение даже есл
 
 =======
 ## <a id="usenavdirection_example" style="position: relative; top: -100px;"></a>[useNavDirection(): определение типа перехода (вперёд/назад), с которым была отрисована панель.](#/View?id=usenavdirection_example)
+=======
+В примере ниже на View1 и View2 сохраняются позиции скролла HorizontalScroll используя ScrollSaver, useScrollSaver и ScrollSaverWithoutChildren.
+Позиция сохраняется как при переходе между View так и при переходе между Panel
+При возврате на View1 c других View мы сбрасываем весь кэш ScrollSaver.
+
+ScrollSaverWtihoutChildren - это версия useScrollSaver обёрнутая в компонент для динамического рендеринга, но она требудет преедачи пропа elementRef.
+>>>>>>> cffef2295 (Update Readme to show only ScrollSaver Example)
 
 >>>>>>> ffd276e66 (Update View Readme to use ScrollSaver with HorizontalScroll)
 ```jsx
@@ -340,13 +348,63 @@ const Content = () => {
           : 'не определено'}
       </Headline>
       {spinner}
-      <ScrollSaver id="horizontal-scroll" useGetRef>
-        <HorizontalScroll>
+    </Div>
+  );
+};
+
+const ContentWithScrollSaverComponent = () => {
+  const horizontalScrollRef = useRef();
+
+  return (
+    <Div>
+      <Headline level="1" style={{ marginBottom: 16 }}>
+        With ScrollSaver component
+      </Headline>
+      <ScrollSaver id="horizontal-scroll-saver-hook" useGetRef>
+        <HorizontalScroll getRef={horizontalScrollRef}>
           <div style={{ display: 'flex' }}>
             <AlbumItems />
           </div>
         </HorizontalScroll>
       </ScrollSaver>
+    </Div>
+  );
+};
+
+const ContentWithScrollSaverWithoutChildren = () => {
+  const horizontalScrollRef = useRef();
+
+  const horizontalRef = useRef();
+  return (
+    <Div>
+      <Headline level="1" style={{ marginBottom: 16 }}>
+        With ScrollSaverWithoutChildren - doesn't look for children ref
+      </Headline>
+      <ScrollSaver id="horizontal-scroll-saver-hook" elementRef={horizontalRef}>
+        <HorizontalScroll getRef={horizontalScrollRef} getRef={horizontalRef}>
+          <div style={{ display: 'flex' }}>
+            <AlbumItems />
+          </div>
+        </HorizontalScroll>
+      </ScrollSaver>
+    </Div>
+  );
+};
+
+const ContentWithScrollSaverHook = () => {
+  const horizontalScrollRef = useRef();
+  useScrollSaver({ elementRef: horizontalScrollRef, id: 'horizontal-scroll-saver-hook' });
+
+  return (
+    <Div>
+      <Headline level="1" style={{ marginBottom: 16 }}>
+        With ScrollSaverHook
+      </Headline>
+      <HorizontalScroll getRef={horizontalScrollRef}>
+        <div style={{ display: 'flex' }}>
+          <AlbumItems />
+        </div>
+      </HorizontalScroll>
     </Div>
   );
 };
@@ -378,8 +436,14 @@ const Example = () => {
     [pushSwipeViewHistory, activeView],
   );
 
+  const cache = useScrollSaverCache();
+  const clearScrollCache = useClearScrollSaverCache();
   handleActiveViewSet = React.useCallback(
     (view) => {
+      if (view === 'view1') {
+        clearScrollCache();
+      }
+      console.log(cache);
       if (view === 'swipeView') {
         const defaultSwipeViewActivePanel = 1;
         setSwipeViewHistory([`swipeView.${defaultSwipeViewActivePanel}`]);
@@ -387,7 +451,7 @@ const Example = () => {
       }
       setActiveView(view);
     },
-    [activePanel],
+    [activePanel, clearScrollCache, cache],
   );
 
   const navigationButtons = (
@@ -410,16 +474,19 @@ const Example = () => {
                 <PanelHeader>Панель 1.1</PanelHeader>
                 {navigationButtons}
                 <Content />
+                <ContentWithScrollSaverComponent />
               </Panel>
               <Panel id="panel1.2">
                 <PanelHeader>Панель 1.2</PanelHeader>
                 {navigationButtons}
                 <Content />
+                <ContentWithScrollSaverHook />
               </Panel>
               <Panel id="panel1.3">
                 <PanelHeader>Панель 1.3</PanelHeader>
                 {navigationButtons}
                 <Content />
+                <ContentWithScrollSaverWithoutChildren />
               </Panel>
             </View>
             <View activePanel={`panel2.${activePanel}`} id="view2">
@@ -427,16 +494,19 @@ const Example = () => {
                 <PanelHeader>Панель 2.1</PanelHeader>
                 {navigationButtons}
                 <Content />
+                <ContentWithScrollSaverComponent />
               </Panel>
               <Panel id="panel2.2">
                 <PanelHeader>Панель 2.2</PanelHeader>
                 {navigationButtons}
                 <Content />
+                <ContentWithScrollSaverHook />
               </Panel>
               <Panel id="panel2.3">
                 <PanelHeader>Панель 2.3</PanelHeader>
                 {navigationButtons}
                 <Content />
+                <ContentWithScrollSaverWithoutChildren />
               </Panel>
             </View>
             <View
