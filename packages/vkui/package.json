@@ -60,7 +60,7 @@
     "test:e2e:ci": "yarn run -T playwright test --config playwright-ct.config.ts",
     "test:e2e-update:ci": "yarn run test:e2e:ci --update-snapshots",
     "lint:generated-files": "yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
-    "storybook": "yarn run -T cross-env SANDBOX=\\.storybook storybook dev -p 6006",
+    "storybook": "bash -c 'source .env && yarn run -T cross-env SANDBOX=\\.storybook storybook dev -p ${STORYBOOK_DEV_PORT:=6006}'",
     "storybook:build": "yarn run -T cross-env SANDBOX=\\.storybook FROM_STORYBOOK=1 storybook build",
     "generate:css-custom-medias": "node scripts/generateCSSCustomMedias.js"
   },
