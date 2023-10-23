@@ -199,6 +199,11 @@ export const PullToRefresh = ({
     }
     setTouchDown(true);
     startYRef.current = e.startY;
+
+    if (document) {
+      // eslint-disable-next-line no-restricted-properties
+      document.documentElement.classList.add('vkui--disable-overscroll-behavior');
+    }
   };
 
   const shouldPreventTouchMove = (event: VKUITouchEvent) => {
@@ -209,7 +214,11 @@ export const PullToRefresh = ({
     /* Нам нужно запретить touchmove у документа как только стало понятно, что
      * начинается pull.
      * состояния watching и refreshing устанавливаются слишком поздно и браузер
-     * может успеть начать нативный pull to refresh. */
+     * может успеть начать нативный pull to refresh.
+     *
+     * Этот код является запасным вариантом, на случай, если css свойство
+     * overscroll-behavior не поддерживается
+     * */
     const shiftY = coordY(event) - startYRef.current;
     const pageYOffset = scroll?.getScroll().y;
     const isRefreshGestureStarted = pageYOffset === 0 && shiftY > 0 && touchDown;
@@ -261,6 +270,12 @@ export const PullToRefresh = ({
   const onTouchEnd = () => {
     setWatching(false);
     setTouchDown(false);
+
+    // восстанавливаем overscroll behavior
+    if (document) {
+      // eslint-disable-next-line no-restricted-properties
+      document.documentElement.classList.remove('vkui--disable-overscroll-behavior');
+    }
   };
 
   const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
