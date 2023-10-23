@@ -30,7 +30,7 @@
     "@types/node": "^20.8.7",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "@types/webpack": "^5.28.3",
+    "@types/webpack": "^5.28.4",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
     "@vkontakte/eslint-plugin": "^1.1.1",
@@ -91,7 +91,7 @@
     "typescript-plugin-css-modules": "^5.0.2",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
-    "webpack-merge": "^5.9.0",
+    "webpack-merge": "^5.10.0",
     "yargs": "^17.7.2"
   },
   "resolutions": {
