@@ -24,7 +24,7 @@ const FLOATING_UI_SUB_PACKAGES_NAMES_REGEX_GROUP = FLOATING_UI_SUB_PACKAGES_ENTR
   .join('|')
   .replace('/', '\\/');
 const FLOATING_UI_SUB_PACKAGES_NAME_REGEX = RegExp(
-  `"@floating-ui\\/('${FLOATING_UI_SUB_PACKAGES_NAMES_REGEX_GROUP}')"`,
+  `"@floating-ui\\/(${FLOATING_UI_SUB_PACKAGES_NAMES_REGEX_GROUP})"`,
   'g',
 );
 
