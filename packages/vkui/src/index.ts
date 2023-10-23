@@ -51,6 +51,8 @@ export type {
  */
 export { Button } from './components/Button/Button';
 export type { ButtonProps } from './components/Button/Button';
+export { IconButton } from './components/IconButton/IconButton';
+export type { IconButtonProps } from './components/IconButton/IconButton';
 
 /**
  * Layout
@@ -129,8 +131,6 @@ export { Badge } from './components/Badge/Badge';
 export type { BadgeProps } from './components/Badge/Badge';
 export { ButtonGroup } from './components/ButtonGroup/ButtonGroup';
 export type { ButtonGroupProps } from './components/ButtonGroup/ButtonGroup';
-export { IconButton } from './components/IconButton/IconButton';
-export type { IconButtonProps } from './components/IconButton/IconButton';
 export { Card } from './components/Card/Card';
 export type { CardProps } from './components/Card/Card';
 export { CardGrid } from './components/CardGrid/CardGrid';
