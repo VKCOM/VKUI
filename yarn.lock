@@ -4896,10 +4896,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/css-font-loading-module@npm:^0.0.9":
-  version: 0.0.9
-  resolution: "@types/css-font-loading-module@npm:0.0.9"
-  checksum: 78d4a184cbf4673876a0613dbb3db5aacae8b83d6b1bd29f93d90ac62b0aa3d3c0e0b22cbbc2a8cc17ec939912ba0115aeefba9583f7722d96428979dafffe80
+"@types/css-font-loading-module@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "@types/css-font-loading-module@npm:0.0.10"
+  checksum: d080114e04fff8d0aa705619b3d25d5db70c62e898df6b7fa764a54122fdcad7a8c0b21629dfa12e4373d8d519d1f8cba0bcc1ef5d5b3c702e4fc4b3f2870466
   languageName: node
   linkType: hard
 
@@ -5715,7 +5715,7 @@ __metadata:
     "@testing-library/react": ^12.1.5
     "@testing-library/react-hooks": ^8.0.1
     "@testing-library/user-event": ^13.2.1
-    "@types/css-font-loading-module": ^0.0.9
+    "@types/css-font-loading-module": ^0.0.10
     "@types/jest": ^29.5.5
     "@types/jest-axe": ^3.5.6
     "@types/node": ^20.8.6
