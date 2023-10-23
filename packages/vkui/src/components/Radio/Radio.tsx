@@ -4,7 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { HasRef, HasRootRef } from '../../types';
+import { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Text } from '../Typography/Text/Text';
@@ -31,6 +31,10 @@ export interface RadioProps
     HasRootRef<HTMLLabelElement> {
   description?: React.ReactNode;
   titleAfter?: React.ReactNode;
+  /**
+   * Позволяет передавать data-* аттрибуты элементу label
+   **/
+  labelProps?: HasDataAttribute;
 }
 
 /**
@@ -44,6 +48,7 @@ export const Radio = ({
   getRootRef,
   titleAfter,
   getRef,
+  labelProps,
   ...restProps
 }: RadioProps) => {
   const platform = usePlatform();
@@ -61,6 +66,7 @@ export const Radio = ({
       activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
+      {...labelProps}
     >
       <VisuallyHidden
         {...restProps}
