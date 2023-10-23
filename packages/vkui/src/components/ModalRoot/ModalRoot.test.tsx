@@ -145,4 +145,29 @@ describe.each([
     clickFade();
     expect(onClose).toBeCalledTimes(1);
   });
+
+  it('disables native pull-to-refresh when modal is open', () => {
+    const modals = [<ModalPage id="m" key="m" />, <ModalPage id="other" key="o" />];
+
+    const component = render(<ModalRoot activeModal={null}>{modals}</ModalRoot>, {
+      baseElement: document.documentElement,
+    });
+    runAllTimers();
+
+    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+
+    component.rerender(<ModalRoot activeModal="m">{modals}</ModalRoot>);
+    runAllTimers();
+
+    if (name === 'ModalRootTouch') {
+      expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
+    } else {
+      expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+    }
+
+    component.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
+    runAllTimers();
+
+    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+  });
 });
