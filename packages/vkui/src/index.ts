@@ -343,11 +343,13 @@ export type {
   PopoverOnShownChange,
   PopoverContentRenderProp,
 } from './components/Popover/Popover';
+export { ScrollSaver, type ScrollSaverProps } from './components/ScrollSaver/ScrollSaver';
 export {
-  ScrollSaver,
-  ScrollSaverWithoutChildren,
-  useScrollSaver,
-} from './components/ScrollSaver/ScrollSaver';
+  ScrollSaverWithCustomRef,
+  type ScrollSaverWithCustomRefProps,
+} from './components/ScrollSaver/ScrollSaverWithCustomRef';
+export { useScrollSaver } from './components/ScrollSaver/useScrollSaver';
+export { type ScrollSaveModeType } from './components/ScrollSaver/types';
 export {
   ScrollSaverContextProvider,
   useScrollSaverCache,

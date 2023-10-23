@@ -27,16 +27,16 @@
 </ScrollSaver>
 ```
 
-- ScrollSaverWtihoutChildren берёт ref не из children а из пропа elementRef.
+- ScrollSaverWithCustomRef берёт ref не из children а из пропа elementRef.
 
 ```jsx static
-<ScrollSaverWithoutChildren id="horizontal-scroll-saver-hook" elementRef={horizontalRef}>
+<ScrollSaverWithCustomRef id="horizontal-scroll-saver-hook" elementRef={horizontalRef}>
   <HorizontalScroll getRef={horizontalRef}>
     <div style={{ display: 'flex' }}>
       <AlbumItems />
     </div>
   </HorizontalScroll>
-</ScrollSaverWithoutChildren>
+</ScrollSaverWithCustomRef>
 ```
 
 - useScrollSaver хук
@@ -71,7 +71,7 @@ const clearScrollCache = useClearScrollSaverCache();
 
 <br />
 
-В примере ниже на View1 и View2 сохраняются позиции скролла HorizontalScroll используя **ScrollSaver**, **useScrollSaver** и **ScrollSaverWithoutChildren**.
+В примере ниже на View1 и View2 сохраняются позиции скролла HorizontalScroll используя **ScrollSaver**, **useScrollSaver** и **ScrollSaverWithCustomRef**.
 Позиция сохраняется как при переходе между View так и при переходе между Panel
 При возврате на View1 c других View мы сбрасываем весь кэш ScrollSaver.
 
@@ -168,20 +168,20 @@ const ContentWithScrollSaverComponent = () => {
   );
 };
 
-const ContentWithScrollSaverWithoutChildren = () => {
+const ContentWithScrollSaverWithCustomRef = () => {
   const horizontalRef = useRef();
   return (
     <Div>
       <Headline level="1" style={{ marginBottom: 16 }}>
-        With ScrollSaverWithoutChildren - doesn't look for children ref
+        With ScrollSaverWithCustomRef - doesn't look for children ref
       </Headline>
-      <ScrollSaverWithoutChildren id="horizontal-scroll-saver-hook" elementRef={horizontalRef}>
+      <ScrollSaverWithCustomRef id="horizontal-scroll-saver-hook" elementRef={horizontalRef}>
         <HorizontalScroll getRef={horizontalRef}>
           <div style={{ display: 'flex' }}>
             <AlbumItems />
           </div>
         </HorizontalScroll>
-      </ScrollSaverWithoutChildren>
+      </ScrollSaverWithCustomRef>
     </Div>
   );
 };
@@ -283,7 +283,7 @@ const Example = () => {
                 <PanelHeader>Панель 1.3</PanelHeader>
                 {navigationButtons}
                 <Content />
-                <ContentWithScrollSaverWithoutChildren />
+                <ContentWithScrollSaverWithCustomRef />
               </Panel>
             </View>
             <View activePanel={`panel2.${activePanel}`} id="view2">
@@ -303,7 +303,7 @@ const Example = () => {
                 <PanelHeader>Панель 2.3</PanelHeader>
                 {navigationButtons}
                 <Content />
-                <ContentWithScrollSaverWithoutChildren />
+                <ContentWithScrollSaverWithCustomRef />
               </Panel>
             </View>
             <View
