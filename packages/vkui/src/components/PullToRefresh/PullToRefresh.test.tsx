@@ -149,4 +149,23 @@ describe('PullToRefresh', () => {
       expect(hasSpinner()).toBe(false);
     });
   });
+
+  test('disables native pull-to-refresh while pulling', () => {
+    const component = render(
+      <ConfigProvider platform={Platform.IOS}>
+        <PullToRefresh onRefresh={noop} data-testid="xxx" />
+      </ConfigProvider>,
+      { baseElement: document.documentElement },
+    );
+
+    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+
+    // класс присутствует пока пуллим
+    firePull(component.getByTestId('xxx'), { end: false });
+    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
+
+    // класс удаляется когда отпускаем
+    fireEvent.mouseUp(component.getByTestId('xxx'), { clientY: 500 });
+    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+  });
 });
