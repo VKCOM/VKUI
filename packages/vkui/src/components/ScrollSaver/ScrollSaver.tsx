@@ -31,6 +31,8 @@ interface ScrollSaverProps {
 /**
  * Компонент-обертка для сохранения позиции скролла элемента при переходах между View и Panel.
  * По умолчанию позволяет восстановить значение скролла при возвращении назад.
+ *
+ * @see https://vkcom.github.io/VKUI/#/ScrollSaver
  */
 export function ScrollSaver(props: ScrollSaverProps) {
   const [childrenRef, children] = usePatchChildrenRef(props.children, props.useGetRef);

@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Базовый компонент для создания панелей.
 
 - В качестве `children` принимает коллекцию [Panel](#/Panel). У каждой [Panel](#/Panel) должен быть
@@ -274,47 +275,261 @@ Xук возвращает правильное значение даже есл
 
 ScrollSaverWtihoutChildren - это версия useScrollSaver обёрнутая в компонент для динамического рендеринга, но она требудет преедачи пропа elementRef.
 >>>>>>> cffef2295 (Update Readme to show only ScrollSaver Example)
+=======
+Базовый компонент для создания панелей. В качестве `children` принимает коллекцию `Panel`.
+У каждой `Panel` должен быть уникальный `id`. Свойство `activePanel` определяет какая `Panel` активна.
+
+При смене значения свойства `activePanel` происходит плавный переход от одной панели к другой.
+Как только он заканчивается, вызывается свойство-функция `onTransition`.
+
+Чтобы понять был это переход вперёд или назад можно воспользоваться хуком [`useNavDirection()`](#/View?id=usenavdirection_example). Этот хук работает даже если анимации выключены (`<ConfigProvider transitionMotionEnabled={false}>`).
+>>>>>>> af7abaa36 (Add ScrollSaver doc)
 
 >>>>>>> ffd276e66 (Update View Readme to use ScrollSaver with HorizontalScroll)
 ```jsx
-const albumItems = [
-  {
-    id: 1,
-    title: 'Команда <3',
-    size: 4,
-    thumb_src: 'https://sun9-33.userapi.com/ODk8khvW97c6aSx_MxHXhok5byDCsHEoU-3BwA/sO-lGf_NjN4.jpg',
-  },
-  {
-    id: 2,
-    title: 'Зингер',
-    size: 22,
-    thumb_src: 'https://sun9-60.userapi.com/bjwt581hETPAp4oY92bDcRvMymyfCaEsnojaUA/_KWQfS-MAd4.jpg',
-  },
-  {
-    id: 3,
-    title: 'Медиагалерея ВКонтакте',
-    size: 64,
-    thumb_src: 'https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg',
-  },
-];
+const [activePanel, setActivePanel] = useState('panel1');
 
-const largeImageStyles = {
-  width: 220,
-  height: 124,
-  borderRadius: 4,
-  boxSizing: 'border-box',
-  border: 'var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha)',
-  objectFit: 'cover',
+<View activePanel={activePanel}>
+  <Panel id="panel1">
+    <PanelHeader>Panel 1</PanelHeader>
+    <Group>
+      <div style={{ height: 200 }} />
+      <CellButton onClick={() => setActivePanel('panel2')}>Go to panel 2</CellButton>
+      <div style={{ height: 600 }} />
+    </Group>
+  </Panel>
+  <Panel id="panel2">
+    <PanelHeader>Panel 2</PanelHeader>
+    <Group>
+      <div style={{ height: 200 }} />
+      <CellButton onClick={() => setActivePanel('panel3')}>Go to panel 3</CellButton>
+      <div style={{ height: 600 }} />
+    </Group>
+  </Panel>
+  <Panel id="panel3">
+    <PanelHeader>Panel 3</PanelHeader>
+    <Group>
+      <div style={{ height: 200 }} />
+      <CellButton onClick={() => setActivePanel('panel1')}>Back to panel 1</CellButton>
+      <div style={{ height: 600 }} />
+    </Group>
+  </Panel>
+</View>;
+```
+
+<br />
+
+## <a id="/View?id=iosswipeback" style="position: relative; top: -100px;"></a>[iOS Swipe Back](https://vkcom.github.io/VKUI/#/View?id=iosswipeback)
+
+В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы
+повторить такое поведение в VKUI, нужно:
+
+- Передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите `history`.
+- Передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`.
+- Обернуть ваше приложение в `ConfigProvider` — он определит, открыто приложение в webview клиента VK или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение webview: `<ConfigProvider isWebView>`.
+
+**Блокировка свайпа (вариант #1)**
+
+Компоненты, которые сами обрабатывают жесты (например, карта или кастомный компонент по типу карусели), могут конфликтовать со свайпбеком. Вот как можно это решить:
+
+- либо повесьте на них свойство `data-vkui-swipe-back={false}`;
+- либо вызывайте `event.stopPropagation()` на событие `onStartX` компонента [Touch](#/Touch).
+
+<br />
+
+**Блокировка свайпа (вариант #2)**
+
+Для блокирования свайпа по вашему условию есть коллбек `onSwipeBackStart()` (см. **Свойства и методы**)
+
+```tsx static
+import * as React from 'react';
+import { type ViewProps, View } from '@vkontakte/vkui';
+
+type ViewOnSwipeBackStartProp = Required<ViewProps>['onSwipeBackStart'];
+
+const App = () => {
+  const handleSwipeBackStart = React.useCallback<ViewOnSwipeBackStartProp>((activePanel) => {}, []);
+  return <View onSwipeBackStart={handleSwipeBackStart} />;
+};
+```
+
+```jsx
+import vkBridge from '@vkontakte/vk-bridge';
+
+const App = () => {
+  const [history, setHistory] = useState(['main']);
+  const activePanel = history[history.length - 1];
+
+  const go = React.useCallback((panel) => {
+    setHistory((prevHistory) => [...prevHistory, panel]);
+  }, []);
+  const goBack = React.useCallback(() => {
+    setHistory((prevHistory) => prevHistory.slice(0, -1));
+  }, []);
+
+  const handleProfileClick = React.useCallback(() => go('profile'), [go]);
+  const handleSettingsClick = React.useCallback(() => go('settings'), [go]);
+
+  const [userName, setUserName] = React.useState('');
+  const [popoutWithRestriction, setPopoutWithRestriction] = React.useState(null);
+
+  const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
+    (activePanel) => {
+      if (activePanel === 'settings') {
+        if (userName !== '') {
+          return;
+        }
+
+        setPopoutWithRestriction(
+          <Alert
+            header="Поле Имя не заполнено"
+            text="Пожалуйста, заполните его."
+            onClose={() => setPopoutWithRestriction(null)}
+          />,
+        );
+
+        return 'prevent';
+      }
+    },
+    [userName],
+  );
+
+  return (
+    <SplitLayout popout={popoutWithRestriction}>
+      <SplitCol>
+        <View
+          history={history}
+          activePanel={activePanel}
+          onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
+          onSwipeBack={goBack}
+        >
+          <Panel id="main">
+            <MainPanelContent onProfileClick={handleProfileClick} />
+          </Panel>
+          <Panel id="profile">
+            <ProfilePanelContent onSettingsClick={handleSettingsClick} />
+          </Panel>
+          <Panel id="settings">
+            <SettingsPanelContent name={userName} onChangeName={setUserName} />
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
 };
 
-const AlbumItems = () => {
-  return albumItems.map(({ id, title, size, thumb_src }) => (
-    <HorizontalCell key={id} size="l" header={title} subtitle={`${size} фотографии`}>
-      <img style={largeImageStyles} src={thumb_src} />
-    </HorizontalCell>
-  ));
+const MainPanelContent = ({ onProfileClick }) => {
+  return (
+    <React.Fragment>
+      <PanelHeader>Main</PanelHeader>
+      <Group>
+        <div style={{ height: 200 }} />
+        <CellButton stopPropagation={false} onClick={onProfileClick}>
+          Профиль
+        </CellButton>
+        <div style={{ height: 600 }} />
+      </Group>
+    </React.Fragment>
+  );
 };
 
+const ProfilePanelContent = ({ onSettingsClick }) => {
+  return (
+    <React.Fragment>
+      <PanelHeader>Профиль</PanelHeader>
+      <Group>
+        <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
+        <Div style={{ height: 50, background: '#eee' }} data-vkui-swipe-back={false}>
+          Здесь свайпбек отключен
+        </Div>
+      </Group>
+      <Group>
+        <CellButton stopPropagation={false} onClick={onSettingsClick}>
+          Настройки
+        </CellButton>
+      </Group>
+      <Group
+        header={<Header>Gallery</Header>}
+        description="Полностью блокирует свайпбэк (за счёт event.stopPropagation() на onStartX компонента Touch)"
+      >
+        <Gallery slideWidth="90%" bullets="dark">
+          <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+          <img src="https://placebear.com/1024/640" style={{ display: 'block' }} />
+          <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+        </Gallery>
+      </Group>
+      <Group
+        header={<Header>HorizontalScroll</Header>}
+        description="Свайпбэк срабатывает либо если мы тянем за левый край экрана, либо если позиция горизонтального скролла равна нулю"
+      >
+        <HorizontalScroll>
+          <div style={{ display: 'flex' }}>
+            {getRandomUsers(15).map((user) => (
+              <HorizontalCell key={user.id} size="s" header={user.first_name}>
+                <Avatar size={56} src={user.photo_100} />
+              </HorizontalCell>
+            ))}
+          </div>
+        </HorizontalScroll>
+      </Group>
+    </React.Fragment>
+  );
+};
+
+const SettingsPanelContent = ({ name, onChangeName }) => {
+  const handleNameChange = React.useCallback(
+    (event) => {
+      onChangeName(event.target.value.trim());
+    },
+    [onChangeName],
+  );
+
+  return (
+    <React.Fragment>
+      <PanelHeader>Настройки</PanelHeader>
+      <Group>
+        <Placeholder>Пример с блокированием свайпбека пока не будет выполнено условие</Placeholder>
+        <FormItem htmlFor="name" top="Имя">
+          <Input id="name" value={name} onChange={handleNameChange} />
+        </FormItem>
+      </Group>
+    </React.Fragment>
+  );
+};
+
+<ConfigProvider platform={Platform.IOS} isWebView>
+  <App />
+</ConfigProvider>;
+```
+
+<br />
+
+## <a id="usenavdirection_example" style="position: relative; top: -100px;"></a>[useNavDirection(): определение типа перехода (вперёд/назад), с которым была отрисована панель.](#/View?id=usenavdirection_example)
+
+Хук `useNavDirection()` возвращает одно из трёх значений:
+
+- `undefined` означает, что компонент был смонтирован без перехода (тип перехода может быть не определён при самом первом монтировании приложения, когда ещё не было переходов между [View](#/View) и [Panel](#/Panel));
+- `"forwards"` переход вперёд;
+- `"backwards"` переход назад.
+
+Xук возвращает правильное значение даже если анимация **выключена** через [ConfigProvider](#/ConfigProvider) (`<ConfigProvider transitionMotionEnabled={false}>`).
+
+Значение известно ещё до завершения анимации и определяется один раз, при первом монтировании панели.
+
+Этот хук можно использовать для определения типа анимации перехода не только между `Panel` внутри одного `View`, но и между `View` внутри `Root`.
+
+<br />
+
+Хук также работает в режиме [iOS Swipe Back](#/View?id=iosswipeback). Тип перехода известен как только пользователь начал движение.
+
+<br />
+
+В примере ниже c помощью спиннера имитируется загрузка данных если панель отрисована с анимацией перехода вперед.
+Используется два `View` и по три `Panel` компонента в каждом, чтобы показать, что тип перехода известен как при переходе между `View`, так и при переходе между `Panel`.
+
+На третьем `View` пример со свайпом в iOS от левого края назад, где видно, что панель на которую идёт переход определяет его тип в самом начале свайпа.
+
+```jsx
 const Content = () => {
   const direction = useNavDirection();
 
@@ -352,61 +567,6 @@ const Content = () => {
   );
 };
 
-const ContentWithScrollSaverComponent = () => {
-  const horizontalScrollRef = useRef();
-
-  return (
-    <Div>
-      <Headline level="1" style={{ marginBottom: 16 }}>
-        With ScrollSaver component
-      </Headline>
-      <ScrollSaver id="horizontal-scroll-saver-hook" useGetRef>
-        <HorizontalScroll getRef={horizontalScrollRef}>
-          <div style={{ display: 'flex' }}>
-            <AlbumItems />
-          </div>
-        </HorizontalScroll>
-      </ScrollSaver>
-    </Div>
-  );
-};
-
-const ContentWithScrollSaverWithoutChildren = () => {
-  const horizontalRef = useRef();
-  return (
-    <Div>
-      <Headline level="1" style={{ marginBottom: 16 }}>
-        With ScrollSaverWithoutChildren - doesn't look for children ref
-      </Headline>
-      <ScrollSaverWithoutChildren id="horizontal-scroll-saver-hook" elementRef={horizontalRef}>
-        <HorizontalScroll getRef={horizontalRef}>
-          <div style={{ display: 'flex' }}>
-            <AlbumItems />
-          </div>
-        </HorizontalScroll>
-      </ScrollSaverWithoutChildren>
-    </Div>
-  );
-};
-
-const ContentWithScrollSaverHook = () => {
-  const horizontalScrollRef = useRef();
-  useScrollSaver(horizontalScrollRef, 'horizontal-scroll-saver-hook');
-
-  return (
-    <Div>
-      <Headline level="1" style={{ marginBottom: 16 }}>
-        With ScrollSaverHook
-      </Headline>
-      <HorizontalScroll getRef={horizontalScrollRef}>
-        <div style={{ display: 'flex' }}>
-          <AlbumItems />
-        </div>
-      </HorizontalScroll>
-    </Div>
-  );
-};
-
 const Example = () => {
   const [activeView, setActiveView] = useState('view1');
   const [activePanel, setActivePanel] = useState(1);
@@ -434,14 +594,8 @@ const Example = () => {
     [pushSwipeViewHistory, activeView],
   );
 
-  const cache = useScrollSaverCache();
-  const clearScrollCache = useClearScrollSaverCache();
   handleActiveViewSet = React.useCallback(
     (view) => {
-      if (view === 'view1') {
-        clearScrollCache();
-      }
-      console.log(cache);
       if (view === 'swipeView') {
         const defaultSwipeViewActivePanel = 1;
         setSwipeViewHistory([`swipeView.${defaultSwipeViewActivePanel}`]);
@@ -449,7 +603,7 @@ const Example = () => {
       }
       setActiveView(view);
     },
-    [activePanel, clearScrollCache, cache],
+    [activePanel],
   );
 
   const navigationButtons = (
@@ -472,19 +626,16 @@ const Example = () => {
                 <PanelHeader>Панель 1.1</PanelHeader>
                 {navigationButtons}
                 <Content />
-                <ContentWithScrollSaverComponent />
               </Panel>
               <Panel id="panel1.2">
                 <PanelHeader>Панель 1.2</PanelHeader>
                 {navigationButtons}
                 <Content />
-                <ContentWithScrollSaverHook />
               </Panel>
               <Panel id="panel1.3">
                 <PanelHeader>Панель 1.3</PanelHeader>
                 {navigationButtons}
                 <Content />
-                <ContentWithScrollSaverWithoutChildren />
               </Panel>
             </View>
             <View activePanel={`panel2.${activePanel}`} id="view2">
@@ -492,19 +643,16 @@ const Example = () => {
                 <PanelHeader>Панель 2.1</PanelHeader>
                 {navigationButtons}
                 <Content />
-                <ContentWithScrollSaverComponent />
               </Panel>
               <Panel id="panel2.2">
                 <PanelHeader>Панель 2.2</PanelHeader>
                 {navigationButtons}
                 <Content />
-                <ContentWithScrollSaverHook />
               </Panel>
               <Panel id="panel2.3">
                 <PanelHeader>Панель 2.3</PanelHeader>
                 {navigationButtons}
                 <Content />
-                <ContentWithScrollSaverWithoutChildren />
               </Panel>
             </View>
             <View
