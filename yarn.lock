@@ -5524,6 +5524,7 @@ __metadata:
     postcss: ^8.4.31
     postcss-cli: ^10.0.0
     postcss-custom-media: ^10.0.2
+    postcss-gap-properties: ^5.0.0
     postcss-import: ^15.0.0
     postcss-loader: ^7.3.3
     postcss-modules: ^6.0.0
@@ -14704,6 +14705,15 @@ __metadata:
   peerDependencies:
     postcss: ^8.2.15
   checksum: f2d244bb574cf2c0974c56a1af7131f3833e14515be99c68e6fa6fe82df47cb2c9befa413b9ec92f5f067567c682dc253980a0dede3cc697f6cc9135dfc17ec7
+  languageName: node
+  linkType: hard
+
+"postcss-gap-properties@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "postcss-gap-properties@npm:5.0.0"
+  peerDependencies:
+    postcss: ^8.4
+  checksum: 42481ce5f272e722ce623c8aa21f2d18b5da250c8fa18ddbb72725c8c158f2894e3f682c7adfb2451ba01bc07fbc5168182e021d779d96e64f7b1604149db6e5
   languageName: node
   linkType: hard
 

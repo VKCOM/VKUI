@@ -1,7 +1,8 @@
-android >= 5
-iOS >= 10
-Chrome >= 51
+ChromeAndroid >= 57
+iOS >= 10.3
+Chrome >= 57
 Firefox >= 54
 Edge >= 18
-Opera >= 38
-Safari >= 10
+Opera >= 44
+Safari >= 10.1
+Samsung >= 7.2

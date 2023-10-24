@@ -4,6 +4,7 @@ const restructureVariable = require('@project-tools/postcss-restructure-variable
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const postcssCustomMedia = require('postcss-custom-media');
+const postcssGapProperties = require('postcss-gap-properties');
 const cssImport = require('postcss-import');
 const cssModules = require('postcss-modules');
 const { VKUI_PACKAGE, VKUI_TOKENS_CSS, generateScopedName } = require('../../../shared');
@@ -58,6 +59,13 @@ function makePostcssPlugins({
         getJSON: () => void 0,
       }),
     );
+  }
+
+  // TODO [>=7]: Проверить браузерную поддержку
+  //
+  // https://caniuse.com/mdn-css_properties_gap_grid_context
+  if (!isESNext) {
+    plugins.push(postcssGapProperties());
   }
 
   // Уменьшение размера для продакшен сборки
