@@ -15,6 +15,7 @@ const circleStyle = {
   top: '50%',
   marginLeft: -20,
   marginTop: -20,
+  touchAction: 'none',
 };
 
 const containerStyle = {
