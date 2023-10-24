@@ -187,6 +187,10 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
   fixDropdownWidth?: boolean;
   forceDropdownPortal?: boolean;
   selectType?: SelectType;
+  /**
+   * Отключает максимальную высоту по умолчанию
+   */
+  noMaxHeight?: boolean;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -225,6 +229,7 @@ export function CustomSelect(props: SelectProps) {
     allowClearButton = false,
     dropdownOffsetDistance = 0,
     fixDropdownWidth = true,
+    noMaxHeight = false,
     ...restProps
   } = props;
 
@@ -802,6 +807,7 @@ export function CustomSelect(props: SelectProps) {
           forcePortal={forceDropdownPortal}
           autoHideScrollbar={autoHideScrollbar}
           autoHideScrollbarDelay={autoHideScrollbarDelay}
+          noMaxHeight={noMaxHeight}
         >
           {resolvedContent}
         </CustomSelectDropdown>
