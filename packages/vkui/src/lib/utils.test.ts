@@ -1,4 +1,8 @@
-import { addClassNameToElement, removeClassNameFromElement } from './utils';
+import {
+  addClassNameToElement,
+  excludeKeysWithUndefined,
+  removeClassNameFromElement,
+} from './utils';
 
 describe('addClassNameToElement', () => {
   test('adds className to element', () => {
@@ -45,5 +49,14 @@ describe('removeClassNameFromElement', () => {
 
     removeClassNameFromElement(div, 'a-class');
     expect(div.getAttribute('class')).toEqual('');
+  });
+});
+
+describe(excludeKeysWithUndefined, () => {
+  test('should exclude keys with undefined ', () => {
+    expect(excludeKeysWithUndefined({})).toEqual({});
+    expect(excludeKeysWithUndefined({ key1: 1 })).toEqual({ key1: 1 });
+    expect(excludeKeysWithUndefined({ key1: 1, key2: undefined })).toEqual({ key1: 1 });
+    expect(excludeKeysWithUndefined({ key1: 1, key2: null, key3: undefined })).toEqual({ key1: 1, key2: null }); // prettier-ignore
   });
 });
