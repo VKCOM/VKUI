@@ -6,7 +6,11 @@ import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { useDOM } from '../../lib/dom';
 import { TokensClassProvider } from '../../lib/tokensClassProvider';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { addClassNameToElement, removeClassNameFromElement } from '../../lib/utils';
+import {
+  addClassNameToElement,
+  excludeKeysWithUndefined,
+  removeClassNameFromElement,
+} from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import {
   ConfigProviderContext,
@@ -32,7 +36,8 @@ export interface ConfigProviderProps extends Partial<ConfigProviderContextInterf
 /**
  * @see https://vkcom.github.io/VKUI/#/ConfigProvider
  */
-export const ConfigProvider = (props: ConfigProviderProps) => {
+export const ConfigProvider = (propsRaw: ConfigProviderProps) => {
+  const props = excludeKeysWithUndefined(propsRaw);
   const parentConfig = useConfigProvider();
 
   const {

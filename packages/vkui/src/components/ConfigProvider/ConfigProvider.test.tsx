@@ -66,6 +66,7 @@ describe('ConfigProvider', () => {
     });
     it('convert WebviewType.VKAPPS to hasCustomPanelHeaderAfter={true}', () => {
       const config = {
+        platform: undefined,
         appearance: Appearance.LIGHT,
         webviewType: WebviewType.VKAPPS,
         transitionMotionEnabled: false,
