@@ -1,3 +1,4 @@
+const iconPkg = require('../../node_modules/@vkontakte/icons/package.json');
 const pkg = require('./package.json');
 const {
   BREAKPOINTS,
@@ -15,6 +16,8 @@ module.exports.URLS = {
   ISSUES: pkg.bugs,
   HOMEPAGE: pkg.homepage,
   NPM: 'https://www.npmjs.com/package/@vkontakte/vkui',
+  TOKENS: 'https://vkcom.github.io/vkui-tokens',
+  ICONS: iconPkg.homepage,
 };
 
 /**
