@@ -11,7 +11,7 @@ export type AccordionProps = React.DetailsHTMLAttributes<HTMLDetailsElement> &
  * Компонент, позволяет отображать несколько разделов контента в ограниченном
  * пространстве и сворачивать или разворачивать их пользователем.
  *
- * Обертка над details.
+ * Обертка над details.test
  *
  * @since 5.3.0
  * @see https://vkcom.github.io/VKUI/#/Accordion
