@@ -17,10 +17,10 @@ test.describe('Button', () => {
     await mount(<ButtonWithCounterPlayground {...componentPlaygroundProps} />);
     await expectScreenshotClippedToContent();
   });
+});
 
-  test.use({
-    onlyForAppearances: [Appearance.LIGHT],
-  });
+test.describe('Button', () => {
+  test.use({ onlyForAppearances: [Appearance.LIGHT] });
   test('paddings', async ({
     mount,
     expectScreenshotClippedToContent,
