@@ -6,6 +6,8 @@ import {
   HorizontalCellShowMorePlayground,
 } from './HorizontalCellShowMore.e2e-playground';
 
+test.use({ toMatchSnapshot: { threshold: 0.03 } });
+
 test.describe('HorizontalCellShowMore', () => {
   test.use({
     adaptivityProviderProps: {
