@@ -94,6 +94,11 @@ export interface ModalRootProps {
    * Будет вызвано при окончательном закрытии активной модалки с её id
    */
   onClosed?(modalId: string): void;
+
+  /**
+   * `data-testid` для маски
+   */
+  modalOverlayTestId?: string;
 }
 
 export interface ModalRootWithDOMProps extends HasPlatform, ModalRootProps, DOMContextInterface {
