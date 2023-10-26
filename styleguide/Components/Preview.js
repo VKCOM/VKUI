@@ -87,6 +87,7 @@ class Preview extends PreviewParent {
       iframe = true,
       exampleId,
       viewWidth,
+      showLayoutSelect,
     } = this.props;
     const { error } = this.state;
 
@@ -112,6 +113,8 @@ class Preview extends PreviewParent {
           } else {
             width = viewWidth - 32;
           }
+
+          const appRootLayout = showLayoutSelect ? styleGuideContext.layout : undefined;
 
           return (
             <Profiler id={exampleId} onRender={logPerf}>
@@ -149,7 +152,11 @@ class Preview extends PreviewParent {
                           appearance={styleGuideContext.appearance}
                           platform={styleGuideContext.platform}
                         >
-                          <Config {...styleGuideContext} exampleId={exampleId}>
+                          <Config
+                            {...styleGuideContext}
+                            layout={appRootLayout}
+                            exampleId={exampleId}
+                          >
                             {layout ? <Layout>{example}</Layout> : example}
                           </Config>
                         </Frame>
