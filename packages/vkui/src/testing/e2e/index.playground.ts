@@ -1,6 +1,9 @@
 /*
  * Используем в *.e2e-playground.ts* файлах.
  */
+import testImage from './test-image.svg';
+
+export { testImage };
 
 export * from './constants';
 

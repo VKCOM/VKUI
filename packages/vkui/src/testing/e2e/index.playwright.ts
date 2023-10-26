@@ -35,7 +35,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
   onlyForPlatforms: [null, { option: true }],
   onlyForAppearances: [null, { option: true }],
 
-  toMatchSnapshot: [undefined, { option: true }],
+  toMatchSnapshot: [{ threshold: 0.02 }, { option: true }],
 
   expectScreenshotClippedToContent: async (
     { page, platform, browserName, appearance, toMatchSnapshot },
