@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { baselineComponent, mountTest, runAllTimers } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
@@ -169,5 +169,14 @@ describe.each([
     runAllTimers();
 
     expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+  });
+
+  it('modalOverlayTestId for ModalRoot', () => {
+    render(
+      <ModalRoot activeModal="page" modalOverlayTestId="modal-mask">
+        <ModalPage id="page" />
+      </ModalRoot>,
+    );
+    expect(screen.queryByTestId('modal-mask')).toBeTruthy();
   });
 });

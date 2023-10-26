@@ -24,6 +24,7 @@ export const ModalRootDesktop = ({
   onOpened,
   onClose,
   onClosed,
+  modalOverlayTestId,
 }: ModalRootWithDOMProps) => {
   const maskElementRef = React.useRef<HTMLDivElement>(null);
   const maskAnimationFrame = React.useRef<number | undefined>(undefined);
@@ -189,7 +190,12 @@ export const ModalRootDesktop = ({
           styles['ModalRoot--desktop'],
         )}
       >
-        <div className={styles['ModalRoot__mask']} ref={maskElementRef} onClick={onExit} />
+        <div
+          data-testid={modalOverlayTestId}
+          className={styles['ModalRoot__mask']}
+          ref={maskElementRef}
+          onClick={onExit}
+        />
         <div className={styles['ModalRoot__viewport']}>
           {modals.map((Modal: React.ReactElement) => {
             const modalId = getNavId(Modal.props, warn);
