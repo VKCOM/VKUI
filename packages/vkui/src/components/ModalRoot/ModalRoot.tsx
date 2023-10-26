@@ -554,7 +554,7 @@ class ModalRootTouchComponent extends React.Component<
   }
 
   render() {
-    const { activeModal, exitingModal, enteringModal } = this.props;
+    const { activeModal, exitingModal, enteringModal, modalOverlayTestId } = this.props;
     const { touchDown, dragging } = this.state;
 
     if (!activeModal && !exitingModal) {
@@ -579,6 +579,7 @@ class ModalRootTouchComponent extends React.Component<
             onScroll={this.onScroll}
           >
             <div
+              data-testid={modalOverlayTestId}
               className={styles['ModalRoot__mask']}
               onClick={this.props.onExit}
               ref={this.maskElementRef}
