@@ -99,6 +99,11 @@ export interface ModalRootProps {
    * `data-testid` для маски
    */
   modalOverlayTestId?: string;
+
+  /**
+   * Отключает фокус на контейнер диалогового окна при открытии.
+   */
+  noFocusToDialog?: boolean;
 }
 
 export interface ModalRootWithDOMProps extends HasPlatform, ModalRootProps, DOMContextInterface {

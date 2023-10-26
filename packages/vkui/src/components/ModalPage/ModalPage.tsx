@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useExternRef } from '../../hooks/useExternRef';
 import { useId } from '../../hooks/useId';
 import { useOrientationChange } from '../../hooks/useOrientationChange';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -96,6 +97,7 @@ export const ModalPage = ({
   height,
   modalContentTestId,
   modalDismissButtonTestId,
+  getRootRef,
   ...restProps
 }: ModalPageProps) => {
   const generatingId = useId();
@@ -118,6 +120,7 @@ export const ModalPage = ({
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId({ nav, id }, warn), ModalType.PAGE);
+  const rootRef = useExternRef(getRootRef, refs.modalElement);
 
   const contextValue = React.useMemo(() => ({ labelId: `${id}-label` }), [id]);
 
@@ -125,6 +128,8 @@ export const ModalPage = ({
     <ModalPageContext.Provider value={contextValue}>
       <RootComponent
         {...restProps}
+        getRootRef={rootRef}
+        tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby={contextValue.labelId}
