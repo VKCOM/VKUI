@@ -68,6 +68,10 @@ export interface ModalPageProps extends HTMLAttributesWithRootRef<HTMLDivElement
    */
   hideCloseButton?: boolean;
   modalContentTestId?: string;
+  /**
+   * `data-testid` для кнопки закрытия
+   */
+  modalDismissButtonTestId?: string;
 }
 
 const warn = warnOnce('ModalPage');
@@ -91,6 +95,7 @@ export const ModalPage = ({
   hideCloseButton = false,
   height,
   modalContentTestId,
+  modalDismissButtonTestId,
   ...restProps
 }: ModalPageProps) => {
   const generatingId = useId();
@@ -155,7 +160,12 @@ export const ModalPage = ({
               </div>
               <div ref={refs.bottomInset} className={styles['ModalPage__bottom-inset']} />
             </div>
-            {isCloseButtonShown && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
+            {isCloseButtonShown && (
+              <ModalDismissButton
+                data-testid={modalDismissButtonTestId}
+                onClick={onClose || modalContext.onClose}
+              />
+            )}
           </div>
         </div>
       </RootComponent>

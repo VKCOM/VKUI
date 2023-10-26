@@ -57,6 +57,11 @@ export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivEle
    * Задаёт контенту максимальную ширину для десктопной версии.
    */
   size?: number;
+
+  /**
+   * `data-testid` для кнопки закрытия
+   */
+  modalDismissButtonTestId?: string;
 }
 
 /**
@@ -72,6 +77,7 @@ export const ModalCardBase = ({
   dismissLabel = 'Скрыть',
   style,
   size: sizeProp,
+  modalDismissButtonTestId,
   ...restProps
 }: ModalCardBaseProps) => {
   const platform = usePlatform();
@@ -131,7 +137,9 @@ export const ModalCardBase = ({
 
         {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
 
-        {isDesktop && <ModalDismissButton onClick={onClose} />}
+        {isDesktop && (
+          <ModalDismissButton data-testid={modalDismissButtonTestId} onClick={onClose} />
+        )}
         {canShowCloseButtonIOS && (
           <PanelHeaderButton
             aria-label={dismissLabel}

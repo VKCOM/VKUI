@@ -33,6 +33,7 @@ export const ModalCard = ({
   nav,
   id,
   size,
+  modalDismissButtonTestId,
   ...restProps
 }: ModalCardProps) => {
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
@@ -62,6 +63,7 @@ export const ModalCard = ({
         actions={actions}
         onClose={onClose || modalContext.onClose}
         size={size}
+        modalDismissButtonTestId={modalDismissButtonTestId}
       >
         {children}
       </ModalCardBase>
