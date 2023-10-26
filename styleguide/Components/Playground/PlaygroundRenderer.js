@@ -41,6 +41,7 @@ const PlaygroundRenderer = ({ name, preview, previewProps, tabBody, exampleIndex
           integration,
           config,
           exampleId,
+          showLayoutSelect,
         })}
       </div>
       {sizeX.regular && (
