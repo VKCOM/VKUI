@@ -136,23 +136,26 @@ export function generateCustomScreenshotName(
 
 export const checkIfElementIsInsideYEdgesOfViewport = async (
   side: 'top' | 'bottom',
-  locatorA: Locator,
-  locatorB: Locator,
+  elementLocator: Locator,
+  offsetParentLocator: Locator,
   isGlobalScroll = false,
 ) => {
-  const boundingBoxA = await locatorA.boundingBox();
-  const boundingBoxB = await locatorB.boundingBox();
-  if (!boundingBoxA || !boundingBoxB) {
+  const boundingBoxOfElement = await elementLocator.boundingBox();
+  const boundingBoxOfOffsetParent = await offsetParentLocator.boundingBox();
+  if (!boundingBoxOfElement || !boundingBoxOfOffsetParent) {
     return false;
   }
   // Игнорируем вертикальное смещение у document.documentElement, т.к. он равен scrollTop. По факту
   // document.documentElement "стоит" на месте.
-  const yboundingBoxB = isGlobalScroll ? 0 : boundingBoxB.y;
+  const yboundingBoxB = isGlobalScroll ? 0 : boundingBoxOfOffsetParent.y;
   switch (side) {
     case 'top':
-      return boundingBoxA.y === yboundingBoxB;
+      return boundingBoxOfElement.y === yboundingBoxB;
     case 'bottom':
-      return boundingBoxA.y + boundingBoxA.height === yboundingBoxB + boundingBoxB.height;
+      return (
+        boundingBoxOfElement.y + boundingBoxOfElement.height ===
+        yboundingBoxB + boundingBoxOfOffsetParent.height
+      );
   }
 };
 
