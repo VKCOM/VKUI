@@ -6,13 +6,11 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import { useBooleanState } from '../../hooks/useBooleanState';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useId } from '../../hooks/useId';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
-import { useDOM } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { touchEnabled, VKUITouchEvent } from '../../lib/touch';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
@@ -52,6 +50,7 @@ export interface SearchProps
  * @see https://vkcom.github.io/VKUI/#/Search
  */
 export const Search = ({
+  id: idProp,
   before = <Icon16SearchOutline />,
   className,
   defaultValue = '',
@@ -78,6 +77,8 @@ export const Search = ({
     setTrue: setFocusedTrue,
     setFalse: setFocusedFalse,
   } = useBooleanState(false);
+  const generatedId = useId();
+  const inputId = idProp ? idProp : `search-${generatedId}`;
 
   const [value, onChange] = useEnsuredControl({
     defaultValue,
@@ -87,13 +88,6 @@ export const Search = ({
   const { sizeY = 'none' } = useAdaptivity();
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
   const platform = usePlatform();
-
-  const findButtonRef = React.useRef<HTMLElement>(null);
-  const controlRef = React.useRef<HTMLLabelElement>(null);
-  const iconsContainerRef = React.useRef<HTMLDivElement>(null);
-  const prevButtonWidth = React.useRef(0);
-  const { window } = useDOM();
-  const isValuePresent = !!value;
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocusedTrue();
@@ -133,31 +127,6 @@ export const Search = ({
     [inputRef, onCancel],
   );
 
-  const recalculateComponentStyles = React.useCallback(() => {
-    if (findButtonRef.current) {
-      const { offsetWidth } = findButtonRef.current;
-      if (offsetWidth === 0) {
-        prevButtonWidth.current = offsetWidth;
-        controlRef.current!.style.marginRight = '';
-        iconsContainerRef.current!.style.transform = '';
-        return;
-      }
-
-      controlRef.current!.style.marginRight = `${isValuePresent ? 0 : -offsetWidth}px`;
-      iconsContainerRef.current!.style.transform = `translateX(${
-        isValuePresent ? 0 : offsetWidth
-      }px)`;
-
-      iconsContainerRef.current!.style.transition =
-        prevButtonWidth.current === 0 && offsetWidth !== 0 ? 'none' : '';
-      prevButtonWidth.current = offsetWidth;
-    }
-  }, [isValuePresent]);
-
-  useIsomorphicLayoutEffect(() => recalculateComponentStyles(), [recalculateComponentStyles]);
-
-  useGlobalEventListener(window, 'resize', () => recalculateComponentStyles());
-
   return (
     <div
       className={classNames(
@@ -177,7 +146,10 @@ export const Search = ({
       style={style}
     >
       <div className={styles['Search__field']}>
-        <label ref={controlRef} className={styles['Search__control']}>
+        <label htmlFor={inputId} className={styles['Search__label']}>
+          {placeholder}
+        </label>
+        <div className={styles['Search__input']}>
           {before}
           <Headline
             Component="input"
@@ -185,17 +157,24 @@ export const Search = ({
             level="1"
             weight="3"
             {...inputProps}
+            id={inputId}
             placeholder={placeholder}
             autoComplete={autoComplete}
             getRootRef={inputRef}
-            className={styles['Search__input']}
+            className={styles['Search__nativeInput']}
             onFocus={onFocus}
             onBlur={onBlur}
             onChange={onChange}
             value={value}
           />
-        </label>
-        <div className={styles['Search__icons']} ref={iconsContainerRef}>
+        </div>
+        <div
+          className={classNames(
+            styles['Search__controls'],
+            icon && styles['Search__controls--hasIcon'],
+            value && styles['Search__controls--visible'],
+          )}
+        >
           {icon && (
             <IconButton
               hoverMode="opacity"
@@ -208,17 +187,16 @@ export const Search = ({
               {icon}
             </IconButton>
           )}
-          {!!value && (
-            <IconButton
-              hoverMode="opacity"
-              onStart={onIconCancelClickStart}
-              onClick={onCancel}
-              className={styles['Search__icon']}
-              aria-label={clearAriaLabel}
-            >
-              {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
-            </IconButton>
-          )}
+          <IconButton
+            hoverMode="opacity"
+            onStart={onIconCancelClickStart}
+            onClick={onCancel}
+            className={styles['Search__icon']}
+            aria-label={clearAriaLabel}
+            tabIndex={value ? undefined : -1}
+          >
+            {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
+          </IconButton>
           {adaptiveSizeY.compact && onFindButtonClick && (
             <Button
               mode="primary"
@@ -226,7 +204,6 @@ export const Search = ({
               className={classNames(styles['Search__findButton'], adaptiveSizeY.compact.className)}
               focusVisibleMode="inside"
               onClick={onFindButtonClick}
-              getRootRef={findButtonRef}
               tabIndex={value ? undefined : -1}
             >
               {findButtonText}
