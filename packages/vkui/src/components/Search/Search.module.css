@@ -46,7 +46,16 @@
   background-color: var(--vkui--color_search_field_background--active);
 }
 
-.Search__control {
+.Search__label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.Search__input {
   padding-left: 12px;
   color: var(--vkui--color_icon_medium);
   display: flex;
@@ -58,7 +67,7 @@
   position: relative;
 }
 
-.Search__input {
+.Search__nativeInput {
   position: absolute;
   left: 0;
   top: 0;
@@ -80,18 +89,18 @@
   color: var(--vkui--color_text_primary);
 }
 
-.Search__input::-webkit-search-decoration,
-.Search__input::-webkit-search-cancel-button,
-.Search__input::-webkit-search-results-button,
-.Search__input::-webkit-search-results-decoration {
+.Search__nativeInput::-webkit-search-decoration,
+.Search__nativeInput::-webkit-search-cancel-button,
+.Search__nativeInput::-webkit-search-results-button,
+.Search__nativeInput::-webkit-search-results-decoration {
   display: none;
 }
 
-.Search__input:focus {
+.Search__nativeInput:focus {
   outline: none;
 }
 
-.Search--has-after .Search__input {
+.Search--has-after .Search__nativeInput {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -102,39 +111,52 @@
   cursor: default;
 }
 
-.Search__input:disabled {
+.Search__nativeInput:disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.Search__input::placeholder {
+.Search__nativeInput::placeholder {
   color: var(--vkui--color_text_secondary);
   /* Для Firefox */
   opacity: 1;
 }
 
-.Search__input:disabled::placeholder {
+.Search__nativeInput:disabled::placeholder {
   color: var(--vkui--color_text_secondary);
 }
 
-.Search__icons {
+.Search__controls {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--vkui--color_icon_secondary);
+  transform: translateX(100%);
+
+  --vkui_internal--search_icon_size: calc(var(--vkui_internal--search_height) + 4px);
 }
 
-.Search--sizeY-compact .Search__icons {
+.Search__controls--hasIcon {
+  /* Исключаем параметр icon из расчёта, чтобы он оставался видимым */
+  transform: translateX(calc(100% - var(--vkui_internal--search_icon_size)));
+}
+
+.Search__controls--visible {
+  transform: translateX(0);
+}
+
+.Search--sizeY-compact .Search__controls {
   transition: transform 0.3s var(--vkui--animation_easing_platform);
 }
 
 @media (--sizeY-compact) {
-  .Search--sizeY-none .Search__icons {
+  .Search--sizeY-none .Search__controls {
     transition: transform 0.3s var(--vkui--animation_easing_platform);
   }
 }
 
 .Search__icon {
-  width: calc(var(--vkui_internal--search_height) + 4px);
+  width: var(--vkui_internal--search_icon_size);
   display: flex;
   align-items: center;
   justify-content: center;

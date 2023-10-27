@@ -223,7 +223,12 @@ const App = () => {
           <Panel id="find">
             <PanelHeader>Только для Compact-версии</PanelHeader>
             <Group>
-              <Search defaultValue="value" onFindButtonClick={onFindButtonClick} />
+              <Search
+                defaultValue="value"
+                icon={<Icon24Done />}
+                after={<Icon24User />}
+                onFindButtonClick={onFindButtonClick}
+              />
             </Group>
           </Panel>
         </View>
