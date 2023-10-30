@@ -12,16 +12,10 @@ import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Touch, TouchEvent } from '../Touch/Touch';
-import { Paragraph } from '../Typography/Paragraph/Paragraph';
-import { Subhead } from '../Typography/Subhead/Subhead';
+import { Basic, BasicProps } from './subcomponents/Basic/Basic';
 import styles from './Snackbar.module.css';
 
-const stylesLayout = {
-  vertical: styles['Snackbar--layout-vertical'],
-  horizontal: styles['Snackbar--layout-horizontal'],
-};
-
-export interface SnackbarProps extends HTMLAttributesWithRootRef<HTMLElement> {
+export interface SnackbarProps extends HTMLAttributesWithRootRef<HTMLElement>, BasicProps {
   /**
    * Название кнопки действия в уведомлении
    * Не может использоваться одновременно с `subtitle`
@@ -34,22 +28,6 @@ export interface SnackbarProps extends HTMLAttributesWithRootRef<HTMLElement> {
   onActionClick?: (e: React.MouseEvent) => void;
 
   /**
-   * Может быть следующими компонентами:
-   *  - цветная иконка 24x24 или 28x28 пикселя
-   *  - `<Avatar size={32} />`
-   *  - `<Image size={40} />`
-   */
-  before?: React.ReactNode;
-  /**
-   * Контент в правой части, может быть иконкой 24x24
-   */
-  after?: React.ReactNode;
-  /**
-   * Варианты расположения кнопки действия
-   * Игнорируется на десктопах и при наличии элементов `after` или `subtitle`
-   */
-  layout?: 'vertical' | 'horizontal';
-  /**
    * Время в миллисекундах, через которое плашка скроется
    */
   duration?: number;
@@ -57,15 +35,6 @@ export interface SnackbarProps extends HTMLAttributesWithRootRef<HTMLElement> {
    * Обработчик закрытия уведомления
    */
   onClose: () => void;
-  /**
-   * Задает стиль снекбара
-   */
-  mode?: 'default' | 'dark';
-  /**
-   * Дополнительная строка текста под `children`.
-   * Не может использоваться одновременно с `action`
-   */
-  subtitle?: React.ReactNode;
   /**
    * Величина отступа снизу. Используется для позиционирования элемента в случае, когда нежелательно, чтобы Snackbar при появлении перекрывал важные элементы интерфейса.
    */
@@ -119,7 +88,7 @@ export const Snackbar = ({
     );
   };
 
-  const handleActionClick: React.MouseEventHandler<HTMLElement> = (e) => {
+  const handleActionClick = (e: React.MouseEvent) => {
     close();
 
     if (action && typeof onActionClick === 'function') {
@@ -209,8 +178,6 @@ export const Snackbar = ({
         baseClassName={classNames(
           styles['Snackbar'],
           platform === Platform.IOS && styles['Snackbar--ios'],
-          stylesLayout[layout],
-          mode === 'dark' && styles['Snackbar--mode-dark'],
           closing && styles['Snackbar--closing'],
           touched && styles['Snackbar--touched'],
           isDesktop && styles['Snackbar--desktop'],
@@ -224,33 +191,34 @@ export const Snackbar = ({
           onMoveX={onTouchMoveX}
           onEnd={onTouchEnd}
         >
-          <div className={styles['Snackbar__body']} ref={bodyElRef}>
-            {before && <div className={styles['Snackbar__before']}>{before}</div>}
-
-            <div className={styles['Snackbar__content']}>
-              <Paragraph className={styles['Snackbar__content-text']}>{children}</Paragraph>
-              {subtitle && !action && (
-                <Subhead className={styles['Snackbar__content-subtitle']}>{subtitle}</Subhead>
-              )}
-
-              {action && !subtitle && (
+          <Basic
+            className={styles['Snackbar__snackbar']}
+            getRootRef={bodyElRef}
+            layout={layout}
+            mode={mode}
+            before={before}
+            subtitle={subtitle}
+            action={
+              action && (
                 <Button
                   align="left"
                   mode="link"
                   appearance={mode === 'dark' ? 'overlay' : 'accent'}
                   size="s"
-                  className={styles['Snackbar__action']}
                   onClick={handleActionClick}
                 >
                   {action}
                 </Button>
-              )}
-            </div>
-
-            {after && <div className={styles['Snackbar__after']}>{after}</div>}
-          </div>
+              )
+            }
+            after={after}
+          >
+            {children}
+          </Basic>
         </Touch>
       </RootComponent>
     </AppRootPortal>
   );
 };
+
+Snackbar.Basic = Basic;
