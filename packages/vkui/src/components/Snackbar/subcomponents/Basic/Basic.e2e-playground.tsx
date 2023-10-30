@@ -20,7 +20,20 @@ export const BasicPlayground = (props: ComponentPlaygroundProps) => {
               Button
             </Button>,
           ],
-          mode: ['default', 'dark'],
+          mode: ['default'],
+        },
+        {
+          before: [
+            <Icon28CheckCircleOutline key="before" fill="var(--vkui--color_icon_positive)" />,
+          ],
+          children: ['Text message'],
+          subtitle: ['Subtitle'],
+          after: [
+            <Button key="button" mode="link" appearance="overlay" size="s">
+              Button
+            </Button>,
+          ],
+          mode: ['dark'],
         },
         {
           before: [
