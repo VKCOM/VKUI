@@ -19,6 +19,10 @@ export interface CustomSelectDropdownProps
   sameWidth?: boolean;
   forcePortal?: boolean;
   onPlacementChange?: (placement?: Placement) => void;
+  /**
+   * Отключает максимальную высоту по умолчанию
+   */
+  noMaxHeight?: boolean;
 }
 
 const calcIsTop = (placement?: Placement) => placement?.includes('top');
@@ -36,6 +40,7 @@ export const CustomSelectDropdown = ({
   autoHideScrollbar,
   autoHideScrollbarDelay,
   className,
+  noMaxHeight = false,
   ...restProps
 }: CustomSelectDropdownProps) => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
@@ -73,7 +78,7 @@ export const CustomSelectDropdown = ({
     >
       <CustomScrollView
         boxRef={scrollBoxRef}
-        className={styles['CustomSelectDropdown__in']}
+        className={noMaxHeight ? undefined : styles['CustomSelectDropdown__in--withMaxHeight']}
         autoHideScrollbar={autoHideScrollbar}
         autoHideScrollbarDelay={autoHideScrollbarDelay}
       >
