@@ -2,7 +2,11 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useId } from '../../hooks/useId';
+import { usePrevious } from '../../hooks/usePrevious';
 import { SizeType } from '../../lib/adaptivity';
+import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -237,6 +241,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     dropdownOffsetDistance = 0,
     fixDropdownWidth = true,
     noMaxHeight = false,
+    ['aria-labelledby']: ariaLabelledBy,
     ...restProps
   } = props;
 
@@ -442,10 +447,45 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [onOpen, selectedOptionIndex]);
 
+  const hadFocusOutRef = React.useRef<boolean>(false);
+  const handleClickOutside = (e: MouseEvent) => {
+    const isClickOutsideFormField = !handleRootRef.current?.contains(e.target as Node);
+    const isClickOutsideDropdown = !scrollBoxRef.current?.contains(e.target as Node);
+
+    hadFocusOutRef.current = isClickOutsideFormField && isClickOutsideDropdown;
+  };
+  const { document } = useDOM();
+  useGlobalEventListener(document?.body, 'click', handleClickOutside, { capture: true });
+
+  const selecteMimicryRef = React.useRef<HTMLDivElement>(null);
+  const prevOpened = usePrevious(opened);
+  const isDropdownClosed = prevOpened === true && opened === false;
+  React.useEffect(
+    function focusSelectMimicryOnOptionsListClose() {
+      // В режиме searchable мы по условию рендерим то SelectMimicry, то Input.
+      // По умолчанию мы рендерим SelectMimicry, но как только пользователь кликнул
+      // на CustomSelect или с помощью клавиатуры вызвал дропдаун мы рендерим Input.
+      // При этом фокус попадает на Input автоматически из-за пропа autoFocus.
+      // При закрытии дропдауна вместо Input мы снова рендерим SelectMimicry, и если ничего
+      // специально не делать, то фокус пропадёт, хотя почти во всех ситуациях
+      // мы хотим оставить фокус на SelectMimicry.
+      // Единственный вариант когда мы не хотим устанавливать фокус на SelectMimicry
+      // это когда дропдаун закрывается при смене фокуса с помощью Tab или при клике на другой элемент.
+      // к сожалению это не работает когда мы закрываем дропдаун по клику вне Input,
+      // но в пределах CustomSelect, например при клике на dropdownIcon
+      // autoFocus проп SelectMimicry мы использовать не можем, так как hadFocusOutRef это ref
+      if (isDropdownClosed && searchable && !hadFocusOutRef.current) {
+        selecteMimicryRef.current?.focus();
+      }
+    },
+    [isDropdownClosed, searchable],
+  );
+
   const onBlur = React.useCallback(() => {
     close();
-    const event = new Event('blur');
+    const event = new Event('focusout', { bubbles: true });
     selectElRef.current?.dispatchEvent(event);
+    hadFocusOutRef.current = true;
   }, [close, selectElRef]);
 
   const resetFocusedOption = React.useCallback(() => {
@@ -453,7 +493,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   }, []);
 
   const onFocus = React.useCallback(() => {
-    const event = new Event('focus');
+    const event = new Event('focusin', { bubbles: true });
     selectElRef.current?.dispatchEvent(event);
   }, [selectElRef]);
 
@@ -650,6 +690,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [focusOptionByIndex],
   );
 
+  const popupAriaId = useId();
   const renderOption = React.useCallback(
     (option: OptionInterfaceT, index: number) => {
       const hovered = index === focusedOptionIndex;
@@ -674,6 +715,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
             //     но не на тот, на который нажали в первый раз.
             // Более подробно по ссылке https://github.com/facebook/react/issues/13956#issuecomment-1082055744
             onMouseOver: handleOptionHover,
+            id: `${popupAriaId}-${option.value}`,
           })}
         </React.Fragment>
       );
@@ -684,6 +726,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       handleOptionHover,
       renderOptionProp,
       selectedOptionIndex,
+      popupAriaId,
     ],
   );
 
@@ -740,6 +783,30 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     </React.Fragment>
   );
 
+  const ariaActiveDescendantOptionIndex: undefined | number =
+    focusedOptionIndex !== -1
+      ? focusedOptionIndex
+      : selectedOptionIndex !== -1
+      ? selectedOptionIndex
+      : undefined;
+  const ariaActiveDescendantId =
+    ariaActiveDescendantOptionIndex !== undefined
+      ? options[ariaActiveDescendantOptionIndex] && options[ariaActiveDescendantOptionIndex].value
+      : null;
+
+  const selectInputAriaProps: React.HTMLAttributes<HTMLElement> = {
+    'role': 'combobox',
+    'aria-controls': popupAriaId,
+    'aria-owns': popupAriaId,
+    'aria-expanded': opened,
+    ...(ariaActiveDescendantId && {
+      ['aria-activedescendant']: `${popupAriaId}-${ariaActiveDescendantId}`,
+    }),
+    'aria-labelledby': ariaLabelledBy,
+    'aria-haspopup': 'listbox',
+    'aria-autocomplete': 'none',
+  };
+
   return (
     <label
       className={classNames(
@@ -767,11 +834,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           before={before}
           after={afterIcons}
           mode={getFormFieldModeFromSelectType(selectType)}
+          {...selectInputAriaProps}
         />
       ) : (
         <SelectMimicry
           {...restProps}
-          aria-hidden
+          getRootRef={selecteMimicryRef}
           onClick={onClick}
           onKeyDown={handleKeyDownSelect}
           onKeyUp={handleKeyUp}
@@ -781,6 +849,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           before={before}
           after={afterIcons}
           selectType={selectType}
+          {...selectInputAriaProps}
         >
           {selected?.label}
         </SelectMimicry>
@@ -815,6 +884,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           autoHideScrollbar={autoHideScrollbar}
           autoHideScrollbarDelay={autoHideScrollbarDelay}
           noMaxHeight={noMaxHeight}
+          role="listbox"
+          id={popupAriaId}
+          aria-labelledby={ariaLabelledBy}
+          tabIndex={-1}
         >
           {resolvedContent}
         </CustomSelectDropdown>

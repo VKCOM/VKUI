@@ -1,5 +1,9 @@
 Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком. Используется внутри [Select](#!/Select).
 
+## Цифровая доступность (a11y)
+
+Следуйте рекомендациям из раздела "Цифровая доступность" компонента [Select](#!/Select).
+
 ```jsx { "props": { "layout": false, "iframe": false } }
 const getUsers = (usersArray) =>
   usersArray.map((user) => ({
@@ -34,8 +38,15 @@ const Example = () => {
       <Header>Базовые примеры использования</Header>
 
       <FormLayoutGroup mode="horizontal">
-        <FormItem style={{ flexGrow: 1, flexShrink: 1 }} top="Администратор">
+        <FormItem
+          top="Администратор"
+          topId="administrator-select-label-id"
+          htmlFor="administrator-select-id"
+          style={{ flexGrow: 1, flexShrink: 1 }}
+        >
           <CustomSelect
+            id="administrator-select-id"
+            aria-labelledby="administrator-select-label-id"
             placeholder="Не выбран"
             options={users}
             selectType={selectType}
@@ -43,8 +54,15 @@ const Example = () => {
           />
         </FormItem>
 
-        <FormItem top="Вид селекта" style={{ flexBasis: '200px', flexGrow: 0 }}>
+        <FormItem
+          top="Вид селекта"
+          topId="select-type-label-id"
+          htmlFor="select-type-select-id"
+          style={{ flexBasis: '200px', flexGrow: 0 }}
+        >
           <CustomSelect
+            id="select-type-select-id"
+            aria-labelledby="select-type-label-id"
             value={selectType}
             placeholder="Не задан"
             options={selectTypes}
@@ -56,8 +74,17 @@ const Example = () => {
         </FormItem>
       </FormLayoutGroup>
 
-      <FormItem top="Администратор" bottom="Кастомный дизайн элементов списка">
+      <FormItem
+        top="Администратор"
+        topId="administrator-select-label-id-2"
+        bottom="Кастомный дизайн элементов списка"
+        bottomId="custom-administrator-description-id"
+        htmlFor="administrator-select-id-2"
+      >
         <CustomSelect
+          id="administrator-select-id-2"
+          aria-labelledby="administrator-select-label-id-2"
+          aria-describedby="custom-administrator-description-id"
           placeholder="Не выбран"
           options={users}
           renderOption={({ option, ...restProps }) => (
@@ -70,8 +97,17 @@ const Example = () => {
         />
       </FormItem>
 
-      <FormItem top="Администратор" bottom="Ползунок скроллбара по умолчанию скрыт">
+      <FormItem
+        top="Администратор"
+        htmlFor="administrator-select-id-3"
+        topId="administrator-select-label-id-3"
+        bottom="Ползунок скроллбара по умолчанию скрыт"
+        bottomId="administrator-description-2-id"
+      >
         <CustomSelect
+          id="administrator-select-id-3"
+          aria-labelledby="administrator-select-label-id-3"
+          aria-describedby="administrator-description-2-id"
           placeholder="Не выбран"
           options={users}
           selectType={selectType}
@@ -80,8 +116,19 @@ const Example = () => {
       </FormItem>
 
       <Header>Поиск</Header>
-      <FormItem top="Администратор" bottom="Поиск по списку">
-        <CustomSelect placeholder="Введите имя пользователя" searchable options={users} />
+      <FormItem
+        top="Администратор"
+        htmlFor="administrator-select-searchable-id-3"
+        topId="administrator-select-searchable-label-id-3"
+        bottom="Поиск по списку"
+      >
+        <CustomSelect
+          placeholder="Введите имя пользователя"
+          searchable
+          id="administrator-select-searchable-id-3"
+          aria-labelledby="administrator-select-searchable-label-id-3"
+          options={users}
+        />
       </FormItem>
 
       <FormItem top="Администратор" bottom="Кастомное поведение при поиске">

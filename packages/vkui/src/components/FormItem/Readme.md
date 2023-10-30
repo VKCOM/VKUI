@@ -10,6 +10,7 @@
 - При передаче в `FormItem` компонента, отвечающего за пользовательский ввод (например, `<input type="text" />`),
   рекомендуется передавать свойства `top` и `htmlFor`. В компонент пользовательского ввода должно быть передано свойство
   `id`, которое соответствует значению `htmlFor` в `FormItem`. <br />
+- При использовании компонента [Select](#!/Select)/[CustomSelect](#!/CustomSelect) следует также передавать в `FormItem` свойство `topId`, а в [Select](#!/Select)/[CustomSelect](#!/CustomSelect) `aria-labelledby` c тем же значением. <br />
 - При использовании `bottom` атрибута рекомендуется также передавать в компонент пользовательского ввода (например,
   `<input type="text" />`) атрибут `aria-describedby`, а в сам `FormItem` передать `bottomId`, который соответствует значению `aria-describedby`.
 
@@ -18,6 +19,15 @@
 ```js static
 <FormItem top="Имя" htmlFor="name">
   <input id="name" type="text" placeholder="Семён" />
+</FormItem>
+
+<FormItem top="Администратор" topId="select-label-id" htmlFor="select-id">
+  <CustomSelect
+    id="select-id"
+    aria-labelledby="select-label-id"
+    placeholder="Не выбран"
+    options={users}
+  />
 </FormItem>
 
 <FormItem top="E-mail" bottom="Например, email@internet.ru" bottomId="emailExample" htmlFor="email">
@@ -116,8 +126,10 @@ const Example = () => {
               </FormItem>
             )}
 
-            <FormItem top="Пол">
+            <FormItem top="Пол" htmlFor="gender-select-id" topId="gender-label-id">
               <Select
+                id="gender-select-id"
+                aria-labelledby="gender-label-id"
                 placeholder="Выберите пол"
                 options={[
                   {
@@ -156,10 +168,14 @@ const Example = () => {
             ))}
             <FormItem
               top="Цель поездки"
+              topId="purpose-of-the-trip-label-id"
+              htmlFor="purpose-of-the-trip-select-id"
               bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'}
               status={purpose ? 'valid' : 'error'}
             >
               <Select
+                id="purpose-of-the-trip-select-id"
+                aria-labelledby="purpose-of-the-trip-label-id"
                 placeholder="Выберите цель поездки"
                 onChange={onChange}
                 value={purpose}
