@@ -29,7 +29,7 @@
   padding: 12px 0;
 }
 
-.CustomSelectDropdown__in {
+.CustomSelectDropdown__in--withMaxHeight {
   max-height: 160px;
 }
 
@@ -37,6 +37,6 @@
  * CMP:
  * CalendarHeader
  */
-:global(.vkuiInternalCalendarHeader__pickers) .CustomSelectDropdown__in {
+:global(.vkuiInternalCalendarHeader__pickers) .CustomSelectDropdown__in--withMaxHeight {
   max-height: 184px;
 }

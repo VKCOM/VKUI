@@ -70,6 +70,10 @@ export interface ChipsSelectProps<Option extends ChipOption>
    * Добавляет значение в список на событие `onBlur` (использовать вместе с `creatable`)
    */
   addOnBlur?: boolean;
+  /**
+   * Отключает максимальную высоту по умолчанию
+   */
+  noMaxHeight?: boolean;
 }
 
 type FocusActionType = 'next' | 'prev';
@@ -129,6 +133,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     options,
     fixDropdownWidth,
     forceDropdownPortal,
+    noMaxHeight = false,
     ...restProps
   } = propsWithDefault;
 
@@ -390,6 +395,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
           fetching={fetching}
           sameWidth={fixDropdownWidth}
           forcePortal={forceDropdownPortal}
+          noMaxHeight={noMaxHeight}
         >
           {showCreatable && (
             <CustomSelectOption
