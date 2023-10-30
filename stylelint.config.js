@@ -80,6 +80,8 @@ module.exports = {
     'import-notation': null,
     'plugin/vkui': null,
     'plugin/selector-bem-pattern': null,
+    // To explicitly enable in https://github.com/VKCOM/VKUI/pull/5847
+    'plugin/logical-shorthands': null,
     'property-disallowed-list': null,
   },
 };
