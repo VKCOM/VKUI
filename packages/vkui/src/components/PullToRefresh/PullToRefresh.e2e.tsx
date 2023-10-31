@@ -15,7 +15,7 @@ test.describe('PullToRefresh', () => {
   }) => {
     const result = await mount(<PullToRefreshPlayground {...componentPlaygroundProps} />);
     await result.waitFor();
-    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 100)));
 
     await page.mouse.move(100, 100);
     await page.mouse.down();
@@ -34,7 +34,7 @@ test.describe('PullToRefresh', () => {
       <PullToRefreshPlayground {...componentPlaygroundProps} paddingLeft="150px" />,
     );
     await result.waitFor();
-    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 100)));
 
     await page.mouse.move(200, 100);
     await page.mouse.down();
