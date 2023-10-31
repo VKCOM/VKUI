@@ -158,7 +158,7 @@ jobs:
           # В 1.7.0 пока нет этого свойства. См. packages/vkui/yarn.lock
           # package_manager: yarn
           build_script: 'size:ci'
-          script: /bin/bash -c "cd packages/vkui && yarn size-limit --json"
+          script: /bin/bash -c "cd packages/vkui && yarn run -T size-limit --json"
 
   docs_styleguide_upload:
     if: ${{ needs.changed_files.outputs.docs_styleguide == 'true' }}
