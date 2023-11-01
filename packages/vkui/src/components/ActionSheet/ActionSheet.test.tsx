@@ -111,7 +111,6 @@ describe('ActionSheet', () => {
         expect(onClose).toBeCalledTimes(1);
         expect(onClose).toBeCalledWith({ closedBy: 'other' });
       },
-      1000 * 20,
     );
     it('closes on item click with autoClose', async () => {
       const onClose = jest.fn();
