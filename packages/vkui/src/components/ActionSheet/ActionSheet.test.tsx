@@ -101,17 +101,14 @@ describe('ActionSheet', () => {
   });
 
   describe('desktop', () => {
-    it(
-      'closes on click outside',
-      async () => {
-        const onClose = jest.fn();
-        render(<ActionSheetDesktop onClose={onClose} />);
-        await waitForFloatingPosition();
-        await userEvent.click(document.body);
-        expect(onClose).toBeCalledTimes(1);
-        expect(onClose).toBeCalledWith({ closedBy: 'other' });
-      },
-    );
+    it('closes on click outside', async () => {
+      const onClose = jest.fn();
+      render(<ActionSheetDesktop onClose={onClose} />);
+      await waitForFloatingPosition();
+      await userEvent.click(document.body);
+      expect(onClose).toBeCalledTimes(1);
+      expect(onClose).toBeCalledWith({ closedBy: 'other' });
+    });
     it('closes on item click with autoClose', async () => {
       const onClose = jest.fn();
       render(<ActionSheetDesktop onClose={onClose} />);
