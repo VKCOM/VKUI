@@ -53,6 +53,10 @@
   - `webviewType={WebviewType.INTERNAL}` -> `hasCustomPanelHeaderAfter={false}`.
   - `webviewType={WebviewType.VKAPPS}` -> `hasCustomPanelHeaderAfter={true}`. При необходимости передайте `customPanelHeaderAfterMinWidth={<value>}` (по умолчанию `90`).
 
+## ~`withInsets`~
+
+Используйте вместо него хук `useInsets()` из [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react).
+
 ## Поддержка браузеров
 
 Библиотека по умолчанию компилируется в [ES2015 (ES6)](https://262.ecma-international.org/6.0/).
