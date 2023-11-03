@@ -42,6 +42,8 @@ export interface Gesture {
   isSlideX: boolean;
   isSlideY: boolean;
   isSlide: boolean;
+  clientX: number;
+  clientY: number;
   shiftX: number;
   shiftY: number;
   shiftXAbs: number;
@@ -131,9 +133,12 @@ export const Touch = ({
     const { isPressed, isX, isY, startX = 0, startY = 0 } = gesture.current ?? {};
 
     if (isPressed) {
+      const clientX = coordX(e);
+      const clientY = coordY(e);
+
       // смещения
-      const shiftX = coordX(e) - startX;
-      const shiftY = coordY(e) - startY;
+      const shiftX = clientX - startX;
+      const shiftY = clientY - startY;
 
       // абсолютные значения смещений
       const shiftXAbs = Math.abs(shiftX);
@@ -164,6 +169,8 @@ export const Touch = ({
 
       if (gesture.current?.isSlide) {
         Object.assign(gesture.current, {
+          clientX,
+          clientY,
           shiftX,
           shiftY,
           shiftXAbs,
@@ -275,6 +282,8 @@ function initGesture(startX: number, startY: number): Gesture {
     isSlideX: false,
     isSlideY: false,
     isSlide: false,
+    clientX: 0,
+    clientY: 0,
     shiftX: 0,
     shiftY: 0,
     shiftXAbs: 0,

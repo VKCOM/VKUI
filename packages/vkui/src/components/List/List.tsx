@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { DATA_DRAGGABLE_PLACEHOLDER_REACT_PROP } from '../../hooks/useDraggableWithDomApi';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import styles from './List.module.css';
 
 export type ListProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
@@ -10,8 +10,9 @@ export type ListProps = HTMLAttributesWithRootRef<HTMLDivElement>;
  */
 export const List = ({ children, ...restProps }: ListProps) => {
   return (
-    <RootComponent role="list" {...restProps} baseClassName={styles['List']}>
+    <RootComponent role="list" {...restProps}>
       {children}
+      <div aria-hidden {...DATA_DRAGGABLE_PLACEHOLDER_REACT_PROP}></div>
     </RootComponent>
   );
 };

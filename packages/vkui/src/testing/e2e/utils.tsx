@@ -134,31 +134,6 @@ export function generateCustomScreenshotName(
     .toLocaleLowerCase();
 }
 
-export const checkIfElementIsInsideYEdgesOfViewport = async (
-  side: 'top' | 'bottom',
-  elementLocator: Locator,
-  offsetParentLocator: Locator,
-  isGlobalScroll = false,
-) => {
-  const boundingBoxOfElement = await elementLocator.boundingBox();
-  const boundingBoxOfOffsetParent = await offsetParentLocator.boundingBox();
-  if (!boundingBoxOfElement || !boundingBoxOfOffsetParent) {
-    return false;
-  }
-  // Игнорируем вертикальное смещение у document.documentElement, т.к. он равен scrollTop. По факту
-  // document.documentElement "стоит" на месте.
-  const yboundingBoxB = isGlobalScroll ? 0 : boundingBoxOfOffsetParent.y;
-  switch (side) {
-    case 'top':
-      return boundingBoxOfElement.y === yboundingBoxB;
-    case 'bottom':
-      return (
-        boundingBoxOfElement.y + boundingBoxOfElement.height ===
-        yboundingBoxB + boundingBoxOfOffsetParent.height
-      );
-  }
-};
-
 export const getLocatorMouseCoords = async (locator: Locator): Promise<[number, number]> => {
   const boundingBox = await locator.boundingBox();
   return boundingBox

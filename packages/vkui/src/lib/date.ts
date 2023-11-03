@@ -252,5 +252,5 @@ export function getMillisecondsToTomorrow(date: DirtyDate) {
 }
 
 export function now() {
-  return performance && performance.now ? performance.now() : Date.now();
+  return performance.now();
 }

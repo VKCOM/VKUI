@@ -31,7 +31,7 @@
   --vkui_internal--duration: 0.7s;
 
   /* z_index */
-  --vkui_internal--z_index_cell_dragging: 1;
+  --vkui_internal--z_index_cell_dragging: 100;
   --vkui_internal--z_index_tabs: 2;
   --vkui_internal--z_index_fixed_layout: 3;
   --vkui_internal--z_index_panel_header_context: 4;
