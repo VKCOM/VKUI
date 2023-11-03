@@ -57,7 +57,7 @@ const findIndexBefore = (
 
 const warn = warnOnce('CustomSelect');
 
-const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
+const checkOptionsValueType = <T extends CustomSelectOptionInterface>(options: T[]) => {
   if (new Set(options.map((item) => typeof item.value)).size > 1) {
     warn(
       'Некоторые значения ваших опций имеют разные типы. onChange всегда возвращает строковый тип.',
@@ -66,7 +66,10 @@ const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
   }
 };
 
-function defaultRenderOptionFn({ option, ...props }: CustomSelectOptionProps): React.ReactNode {
+function defaultRenderOptionFn<T extends CustomSelectOptionInterface>({
+  option,
+  ...props
+}: CustomSelectRenderOption<T>): React.ReactNode {
   return <CustomSelectOption {...props} />;
 }
 
@@ -74,8 +77,8 @@ const handleOptionDown: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) =
   e.preventDefault();
 };
 
-function findSelectedIndex(
-  options: CustomSelectOptionInterface[],
+function findSelectedIndex<T extends CustomSelectOptionInterface>(
+  options: T[],
   value: SelectValue,
   withClear: boolean,
 ) {
@@ -90,17 +93,21 @@ function findSelectedIndex(
   );
 }
 
-const filter = (
-  options: SelectProps['options'],
+const filter = <T extends CustomSelectOptionInterface>(
+  options: SelectProps<T>['options'],
   inputValue: string,
-  filterFn: SelectProps['filterFn'],
+  filterFn: SelectProps<T>['filterFn'],
 ) => {
   return typeof filterFn === 'function'
     ? options.filter((option) => filterFn(inputValue, option))
     : options;
 };
 
-const defaultOptions: CustomSelectOptionInterface[] = [];
+type FilterFn<T> = (
+  value: string,
+  option: T,
+  getOptionLabel?: (option: Partial<T>) => string,
+) => boolean;
 
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -111,11 +118,16 @@ export interface CustomSelectOptionInterface {
   [index: string]: any;
 }
 
-interface CustomSelectRenderOption extends CustomSelectOptionProps {
-  option: CustomSelectOptionInterface;
+export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
+  extends CustomSelectOptionProps {
+  option: T;
 }
 
-export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerOptionsProps {
+export interface SelectProps<
+  OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
+> extends NativeSelectProps,
+    FormFieldProps,
+    TrackerOptionsProps {
   /**
    * Если `true`, то при клике на селект в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
    * производится по `option.label`.
@@ -129,21 +141,12 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
    * > ⚠️ В **v6** из возвращаемых типов будет удалён `CustomSelectOptionInterface[]`. Для кастомной фильтрации используйте
    * > `filterFn`.
    */
-  onInputChange?: (
-    e: React.ChangeEvent,
-    options: CustomSelectOptionInterface[],
-  ) => void | CustomSelectOptionInterface[];
-  options: CustomSelectOptionInterface[];
+  onInputChange?: (e: React.ChangeEvent, options: OptionInterfaceT[]) => void | OptionInterfaceT[];
+  options: OptionInterfaceT[];
   /**
    * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
    */
-  filterFn?:
-    | false
-    | ((
-        value: string,
-        option: CustomSelectOptionInterface,
-        getOptionLabel?: (option: Partial<CustomSelectOptionInterface>) => string,
-      ) => boolean);
+  filterFn?: false | FilterFn<OptionInterfaceT>;
   popupDirection?: 'top' | 'bottom';
   /**
    * Рендер-проп для кастомного рендера опции.
@@ -153,7 +156,7 @@ export interface SelectProps extends NativeSelectProps, FormFieldProps, TrackerO
    * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе селект не будет знать об актуальном состоянии
    * опции.
    */
-  renderOption?: (props: CustomSelectRenderOption) => React.ReactNode;
+  renderOption?: (props: CustomSelectRenderOption<OptionInterfaceT>) => React.ReactNode;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.
    * В `defaultDropdownContent` содержится список опций в виде скроллящегося блока.
@@ -198,7 +201,9 @@ type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 /**
  * @see https://vkcom.github.io/VKUI/#/CustomSelect
  */
-export function CustomSelect(props: SelectProps) {
+export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterface>(
+  props: SelectProps<OptionInterfaceT>,
+) {
   const [opened, setOpened] = React.useState(false);
   const {
     before,
@@ -221,9 +226,9 @@ export function CustomSelect(props: SelectProps) {
     autoHideScrollbarDelay,
     searchable = false,
     renderOption: renderOptionProp = defaultRenderOptionFn,
-    options: optionsProp = defaultOptions,
+    options: optionsProp,
     emptyText = 'Ничего не найдено',
-    filterFn = defaultFilterFn,
+    filterFn: filterFnProp,
     icon: iconProp,
     ClearButton = CustomSelectClearButton,
     allowClearButton = false,
@@ -232,6 +237,8 @@ export function CustomSelect(props: SelectProps) {
     noMaxHeight = false,
     ...restProps
   } = props;
+
+  const filterFn: FilterFn<OptionInterfaceT> = filterFnProp || defaultFilterFn;
 
   if (process.env.NODE_ENV === 'development') {
     checkOptionsValueType(optionsProp);
@@ -483,7 +490,7 @@ export function CustomSelect(props: SelectProps) {
 
       const options =
         searchable && inputValue !== undefined
-          ? filter(optionsProp, inputValue, filterFn)
+          ? filter<OptionInterfaceT>(optionsProp, inputValue, filterFn)
           : optionsProp;
 
       setOptions(options);
@@ -644,7 +651,7 @@ export function CustomSelect(props: SelectProps) {
   );
 
   const renderOption = React.useCallback(
-    (option: CustomSelectOptionInterface, index: number) => {
+    (option: OptionInterfaceT, index: number) => {
       const hovered = index === focusedOptionIndex;
       const selected = index === selectedOptionIndex;
 

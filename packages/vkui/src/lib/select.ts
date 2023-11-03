@@ -26,14 +26,14 @@ try {
   letterRegexp = new RegExp('\\p{L}', 'u');
 } catch (e) {}
 
-type GetOptionLabel = (option: Option) => string | undefined;
+type GetOptionLabel<T> = (option: Partial<T>) => string | undefined;
 
-const _getOptionLabel: GetOptionLabel = (option) => getTitleFromChildren(option.label);
+const _getOptionLabel: GetOptionLabel<Option> = (option) => getTitleFromChildren(option.label);
 
-export const defaultFilterFn = (
+export const defaultFilterFn = <T extends { label?: React.ReactElement | string }>(
   query = '',
-  option: Option,
-  getOptionLabel: GetOptionLabel = _getOptionLabel,
+  option: T,
+  getOptionLabel: GetOptionLabel<T> = _getOptionLabel,
 ) => {
   query = query.toLocaleLowerCase();
   let label = getOptionLabel(option)?.toLocaleLowerCase();

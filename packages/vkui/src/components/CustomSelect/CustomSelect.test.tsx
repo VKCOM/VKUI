@@ -2,7 +2,9 @@ import * as React from 'react';
 import { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
-import { CustomSelect, type SelectProps } from './CustomSelect';
+import { Avatar } from '../Avatar/Avatar';
+import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
+import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
 
 const getCustomSelectValue = () => screen.getByTestId('target').textContent;
 
@@ -223,7 +225,7 @@ describe('CustomSelect', () => {
           { value: 2, label: 'New York', country: 'USA' },
         ]}
         filterFn={(value, option) =>
-          (option.label as string).toLowerCase().includes(value.toLowerCase()) ||
+          option.label.toLowerCase().includes(value.toLowerCase()) ||
           option.country.toLowerCase().includes(value.toLowerCase())
         }
       />,
@@ -888,5 +890,110 @@ describe('CustomSelect', () => {
     // onChange должен быть вызван
     expect(onChange).toBeCalledTimes(3);
     expect(onChange).toHaveReturnedWith('0');
+  });
+
+  it('accepts options with extended option type and Typescript does not throw', () => {
+    const { rerender } = render(
+      <CustomSelect
+        data-testid="target"
+        options={[
+          { value: 0, label: 'Mike', avatarUrl: 'some-url' },
+          { value: 1, label: 'Josh', avatarUrl: 'some other avatarUrl' },
+        ]}
+        value={1}
+      />,
+    );
+
+    type PublisherFragmentData = {
+      __typename?: 'Publisher';
+      id: string;
+      title: string;
+      logo: string;
+    };
+    type PublisherSelectOption = {
+      data: PublisherFragmentData;
+      value: string;
+      label: string;
+    };
+
+    const complexOptions: PublisherSelectOption[] = [
+      {
+        value: '1',
+        label: 'Mike',
+        data: {
+          __typename: 'Publisher',
+          id: 'some-id-1',
+          title: 'Some Title 1',
+          logo: 'Some logo 1',
+        },
+      },
+      {
+        value: '2',
+        label: 'Sam',
+        data: {
+          __typename: 'Publisher',
+          id: 'some-id-2',
+          title: 'Some Title 2',
+          logo: 'Some logo 2',
+        },
+      },
+    ];
+
+    rerender(<CustomSelect data-testid="target" options={complexOptions} />);
+
+    // типизируем render-функцию
+    const renderOption = ({
+      option,
+      ...restProps
+    }: CustomSelectRenderOption<PublisherSelectOption>) => {
+      return (
+        <CustomSelectOption {...restProps} before={<Avatar size={40} src={option.data.logo} />} />
+      );
+    };
+
+    rerender(
+      <CustomSelect
+        placeholder="my place"
+        disabled={false}
+        searchable
+        options={complexOptions}
+        renderOption={renderOption}
+      />,
+    );
+
+    // типизируем render-функцию через SelectProps
+    const renderOptionViaSelectProp: SelectProps['renderOption'] = ({ option, ...restProps }) => {
+      return (
+        <CustomSelectOption {...restProps} before={<Avatar size={40} src={option.data.logo} />} />
+      );
+    };
+
+    rerender(
+      <CustomSelect
+        placeholder="my place"
+        disabled={false}
+        searchable
+        options={complexOptions}
+        renderOption={renderOptionViaSelectProp}
+      />,
+    );
+
+    // используем рендер функцию inline
+    rerender(
+      <CustomSelect
+        placeholder="my place"
+        disabled={false}
+        searchable
+        options={complexOptions}
+        renderOption={({ option, ...restProps }) => {
+          return (
+            <CustomSelectOption
+              {...restProps}
+              before={<Avatar size={40} src={option.data.logo} />}
+            />
+          );
+        }}
+      />,
+    );
   });
 });
