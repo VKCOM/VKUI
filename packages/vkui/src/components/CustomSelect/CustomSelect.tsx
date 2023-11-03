@@ -78,7 +78,7 @@ const handleOptionDown: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) =
 };
 
 function findSelectedIndex<T extends CustomSelectOptionInterface>(
-  options: T[],
+  options: T[] = [],
   value: SelectValue,
   withClear: boolean,
 ) {
@@ -102,6 +102,8 @@ const filter = <T extends CustomSelectOptionInterface>(
     ? options.filter((option) => filterFn(inputValue, option))
     : options;
 };
+
+const defaultOptions: CustomSelectOptionInterface[] = [];
 
 type FilterFn<T> = (
   value: string,
@@ -226,9 +228,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     autoHideScrollbarDelay,
     searchable = false,
     renderOption: renderOptionProp = defaultRenderOptionFn,
-    options: optionsProp,
+    options: optionsProp = defaultOptions as OptionInterfaceT[],
     emptyText = 'Ничего не найдено',
-    filterFn: filterFnProp,
+    filterFn = defaultFilterFn,
     icon: iconProp,
     ClearButton = CustomSelectClearButton,
     allowClearButton = false,
@@ -237,8 +239,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     noMaxHeight = false,
     ...restProps
   } = props;
-
-  const filterFn: FilterFn<OptionInterfaceT> = filterFnProp || defaultFilterFn;
 
   if (process.env.NODE_ENV === 'development') {
     checkOptionsValueType(optionsProp);
@@ -490,7 +490,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
       const options =
         searchable && inputValue !== undefined
-          ? filter<OptionInterfaceT>(optionsProp, inputValue, filterFn)
+          ? filter(optionsProp, inputValue, filterFn)
           : optionsProp;
 
       setOptions(options);
