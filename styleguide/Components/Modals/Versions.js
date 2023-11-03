@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Semver from 'semver';
 import { Div, ModalPage, ModalPageHeader, PanelSpinner, SimpleCell } from '@vkui';
 import { useFetch } from './useFetch';
 
@@ -14,7 +15,7 @@ export function Versions({ id }) {
     }
     const allVersions = Object.keys(dataRaw.versions);
     const fromIndex = allVersions.indexOf(MINIMUM_VERSION);
-    return allVersions.slice(fromIndex).filter(filterPrereleaseVersion).reverse();
+    return allVersions.slice(fromIndex).filter(filterPrereleaseVersion).sort(Semver.rcompare);
   }, [dataRaw]);
 
   return (
