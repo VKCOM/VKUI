@@ -44,7 +44,7 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
 
   return (
     <React.Fragment>
-      {(hasPointer === undefined || hasPointer) && <CustomSelect<OptionT> {...props} />}
+      {(hasPointer === undefined || hasPointer) && <CustomSelect {...props} />}
       {(hasPointer === undefined || !hasPointer) && (
         <NativeSelect {...nativeProps}>
           {options.map(({ label, value }) => (
