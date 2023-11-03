@@ -52,3 +52,15 @@
 - `webviewType` заменён на `hasCustomPanelHeaderAfter`
   - `webviewType={WebviewType.INTERNAL}` -> `hasCustomPanelHeaderAfter={false}`.
   - `webviewType={WebviewType.VKAPPS}` -> `hasCustomPanelHeaderAfter={true}`. При необходимости передайте `customPanelHeaderAfterMinWidth={<value>}` (по умолчанию `90`).
+
+## ~`withInsets`~
+
+Используйте вместо него хук `useInsets()` из [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react).
+
+## Поддержка браузеров
+
+Библиотека по умолчанию компилируется в [ES2015 (ES6)](https://262.ecma-international.org/6.0/).
+Список поддерживаемых браузеров находится в [.browserslistrc](https://github.com/VKCOM/VKUI/blob/v6.0.0/.browserslistrc)
+
+> В VKUI есть [специальная сборка](https://vkcom.github.io/VKUI/#/CSS%20Modules)
+> в ESNext, которая позволяет уменьшить размер вашего приложения

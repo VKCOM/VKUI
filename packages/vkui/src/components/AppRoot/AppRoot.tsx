@@ -94,7 +94,8 @@ export const AppRoot = ({
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null);
   const { document } = useDOM();
-  const deprecatedInsets = useInsets(!safeAreaInsets);
+  const deprecatedInsetsDisabled = Boolean(safeAreaInsets);
+  const deprecatedInsets = useInsets(deprecatedInsetsDisabled);
   const insets = safeAreaInsets ? safeAreaInsets : deprecatedInsets;
   const appearance = useAppearance();
 
