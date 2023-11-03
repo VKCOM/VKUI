@@ -30,7 +30,7 @@ type GetOptionLabel<T> = (option: Partial<T>) => string | undefined;
 
 const _getOptionLabel: GetOptionLabel<Option> = (option) => getTitleFromChildren(option.label);
 
-export const defaultFilterFn = <T extends { label?: React.ReactElement | string }>(
+export const defaultFilterFn = <T>(
   query = '',
   option: T,
   getOptionLabel: GetOptionLabel<T> = _getOptionLabel,
