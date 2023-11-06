@@ -3151,39 +3151,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@size-limit/file@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "@size-limit/file@npm:9.0.0"
+"@size-limit/file@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "@size-limit/file@npm:10.0.2"
   dependencies:
     semver: 7.5.4
   peerDependencies:
-    size-limit: 9.0.0
-  checksum: e74947acb37294b716f96b93eba9c34dd00b6feac84f15c9bbfa356d94e84c247afa77fd7ea94a39fe526f10266ec61000f9657882198ba696a691f11b7090ce
+    size-limit: 10.0.2
+  checksum: a5a7ee006d6cfc42f0f2e65bdf86eab996f6bff045b2da667c6aaea143b27f551d5ea1c9bddca5d1285f24462c1f3cb38ba555802fd1b9a01614bba303c7a52d
   languageName: node
   linkType: hard
 
-"@size-limit/webpack-css@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "@size-limit/webpack-css@npm:9.0.0"
+"@size-limit/webpack-css@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "@size-limit/webpack-css@npm:10.0.2"
   dependencies:
     css-loader: ^6.8.1
     css-minimizer-webpack-plugin: ^5.0.1
     style-loader: ^3.3.3
   peerDependencies:
-    size-limit: 9.0.0
-  checksum: c92105b3900e17fdd47a0f152c019dd73053e2f0078fd036c90227e2bc41a0198cb85b9e4d67bb8c92c4b1354faf1c980857c4174722a9a7f3d0f7a1ae8b9ffc
+    size-limit: 10.0.2
+  checksum: a0aa50d99b8653738df4f75852230fe81c17fbe940169a35d960b51a04d8d4b1f6ef55866f8f5255a35ac26f60ca5c8684c5c5ef495c2cde1bcadbbfd3953d7e
   languageName: node
   linkType: hard
 
-"@size-limit/webpack@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "@size-limit/webpack@npm:9.0.0"
+"@size-limit/webpack@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "@size-limit/webpack@npm:10.0.2"
   dependencies:
-    nanoid: ^3.3.6
-    webpack: ^5.88.2
+    nanoid: ^5.0.2
+    webpack: ^5.89.0
   peerDependencies:
-    size-limit: 9.0.0
-  checksum: f89fa3c417420e0ade9a49947390ec8c8a43f097b6e6e996567d29300cb3824debb755b4c453735ae2965d104417eb0c4c355902534a36968f551f58c3b22d95
+    size-limit: 10.0.2
+  checksum: 641809302691e4ea630a9c6d7b2c6bb48cf319d95c92abd586bad4af0e0676de4cd3a72cb62aaa17e1ce7eb0312d0c58fadeb7cd60b5b081a8f4bc0df25e3ccb
   languageName: node
   linkType: hard
 
@@ -5609,9 +5609,9 @@ __metadata:
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0"
     "@project-tools/stylelint-atomic": "workspace:1.0.0"
     "@project-tools/stylelint-bad-multiplication": "workspace:1.0.0"
-    "@size-limit/file": ^9.0.0
-    "@size-limit/webpack": ^9.0.0
-    "@size-limit/webpack-css": ^9.0.0
+    "@size-limit/file": ^10.0.2
+    "@size-limit/webpack": ^10.0.2
+    "@size-limit/webpack-css": ^10.0.2
     "@swc/cli": ^0.1.59
     "@swc/core": 1.3.95
     "@swc/jest": ^0.2.29
@@ -5671,7 +5671,7 @@ __metadata:
     react-dom: ^17.0.0
     semver: ^7.5.4
     shx: ^0.3.2
-    size-limit: ^9.0.0
+    size-limit: ^10.0.2
     style-loader: ^3.3.3
     stylelint: ^15.11.0
     stylelint-config-standard: ^34.0.0
@@ -10660,7 +10660,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:^13.0.0, globby@npm:^13.1.1":
+"globby@npm:^13.0.0, globby@npm:^13.1.1, globby@npm:^13.2.2":
   version: 13.2.2
   resolution: "globby@npm:13.2.2"
   dependencies:
@@ -13777,6 +13777,15 @@ __metadata:
   bin:
     nanoid: bin/nanoid.cjs
   checksum: 7d0eda657002738aa5206107bd0580aead6c95c460ef1bdd0b1a87a9c7ae6277ac2e9b945306aaa5b32c6dcb7feaf462d0f552e7f8b5718abfc6ead5c94a71b3
+  languageName: node
+  linkType: hard
+
+"nanoid@npm:^5.0.2":
+  version: 5.0.3
+  resolution: "nanoid@npm:5.0.3"
+  bin:
+    nanoid: bin/nanoid.js
+  checksum: 419f083464f91e148fa8f313d898e3271b2c148aa711d37c6251e5689b119d2e3ac766d5fa26e53214896969e9e9c6ccbce7af679c966d24490b1b5df94ffb5d
   languageName: node
   linkType: hard
 
@@ -17047,19 +17056,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"size-limit@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "size-limit@npm:9.0.0"
+"size-limit@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "size-limit@npm:10.0.2"
   dependencies:
     bytes-iec: ^3.1.1
     chokidar: ^3.5.3
-    globby: ^11.1.0
+    globby: ^13.2.2
     lilconfig: ^2.1.0
     nanospinner: ^1.1.0
     picocolors: ^1.0.0
   bin:
     size-limit: bin.js
-  checksum: c20d5d24aa4edf931234a009067ffe4b7cc4e0e00d944684990284838910b556ba35f91a3c30e604e00037b21df346c966c0205f7539a0e50cb75852c07bb9d7
+  checksum: e93e84dd819931c0f871946872a489552d6179b44dc128bb24666e492a5da85b2877212a74944b9e23b044c60f6559f1c215b2ff4951f0aa2adf0e41d70cd664
   languageName: node
   linkType: hard
 
@@ -19182,7 +19191,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.88.2, webpack@npm:^5.89.0":
+"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.89.0":
   version: 5.89.0
   resolution: "webpack@npm:5.89.0"
   dependencies:
