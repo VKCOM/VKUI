@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
-import { CustomSelect, SelectProps } from '../CustomSelect/CustomSelect';
+import {
+  CustomSelect,
+  type CustomSelectOptionInterface,
+  type SelectProps,
+} from '../CustomSelect/CustomSelect';
 import { NativeSelect } from '../NativeSelect/NativeSelect';
 
 export type SelectType = 'default' | 'plain' | 'accent';
@@ -8,7 +12,10 @@ export type SelectType = 'default' | 'plain' | 'accent';
 /**
  * @see https://vkcom.github.io/VKUI/#/Select
  */
-export const Select = ({ children, ...props }: SelectProps) => {
+export const Select = <OptionT extends CustomSelectOptionInterface>({
+  children,
+  ...props
+}: SelectProps<OptionT>) => {
   const {
     options = [],
     searchable,
