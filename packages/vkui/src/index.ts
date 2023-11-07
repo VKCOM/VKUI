@@ -271,6 +271,7 @@ export { CustomSelect } from './components/CustomSelect/CustomSelect';
 export type {
   SelectProps,
   CustomSelectOptionInterface,
+  CustomSelectRenderOption,
 } from './components/CustomSelect/CustomSelect';
 export { CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
 export type { CustomSelectOptionProps } from './components/CustomSelectOption/CustomSelectOption';
