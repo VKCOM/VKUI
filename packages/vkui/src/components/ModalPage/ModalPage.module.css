@@ -7,6 +7,10 @@
   pointer-events: none;
 }
 
+.ModalPage:focus {
+  outline: none;
+}
+
 .ModalPage--desktop {
   display: flex;
   justify-content: center;
