@@ -91,7 +91,12 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
     <ComponentPlayground {...props} propSets={propSets} AppWrapper={AppWrapper}>
       {(props: ModalCardProps) => (
         <div style={{ height: 500, transform: 'translateZ(0)' }}>
-          <ModalRoot activeModal={props.nav}>
+          <ModalRoot
+            activeModal={props.nav}
+            // Note: с включенным фокусом ломаются скриншоты на движке Webkit из-за фокуса сразу
+            // на несколько окон
+            noFocusToDialog
+          >
             <ModalCard {...props} />
           </ModalRoot>
         </div>

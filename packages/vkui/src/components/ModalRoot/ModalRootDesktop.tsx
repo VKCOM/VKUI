@@ -20,6 +20,7 @@ const warn = warnOnce('ModalRoot');
 export const ModalRootDesktop = ({
   activeModal: activeModalProp,
   children,
+  noFocusToDialog = false,
   onOpen,
   onOpened,
   onClose,
@@ -38,7 +39,7 @@ export const ModalRootDesktop = ({
     getModalState,
     enteringModal,
     onEnter,
-    onEntered,
+    onEntered: onEnteredProp,
     onExited,
     history,
     delayEnter,
@@ -91,6 +92,14 @@ export const ModalRootDesktop = ({
     });
   };
 
+  const onEntered = ({ id, modalElement }: ModalsStateEntry) => {
+    if (!noFocusToDialog && modalElement && !modalElement.contains(document!.activeElement)) {
+      modalElement.focus();
+    }
+
+    onEnteredProp(id);
+  };
+
   const openModal = () => {
     if (!enteringModal || !prevProps) {
       return;
@@ -102,16 +111,10 @@ export const ModalRootDesktop = ({
     // Анимация открытия модального окна
     if (!prevProps.exitingModal) {
       requestAnimationFrame(() => {
-        if (enteringModal === enteringModal) {
-          waitTransitionFinish(
-            enteringState?.innerElement,
-            () => onEntered(enteringModal),
-            timeout,
-          );
+        if (enteringModal === enteringModal && enteringState) {
+          waitTransitionFinish(enteringState.innerElement, () => onEntered(enteringState), timeout);
           animateModalOpacity(enteringState, true);
-          if (enteringState) {
-            setMaskOpacity(enteringState, 1);
-          }
+          setMaskOpacity(enteringState, 1);
         }
       });
 
@@ -127,7 +130,9 @@ export const ModalRootDesktop = ({
       }
     });
 
-    onEntered(enteringModal);
+    if (enteringState) {
+      onEntered(enteringState);
+    }
   };
 
   const closeModal = (id: string) => {

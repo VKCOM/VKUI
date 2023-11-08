@@ -94,6 +94,10 @@ export interface ModalRootProps {
    * Будет вызвано при окончательном закрытии активной модалки с её id
    */
   onClosed?(modalId: string): void;
+  /**
+   * Отключает фокус на контейнер диалогового окна при открытии.
+   */
+  noFocusToDialog?: boolean;
 }
 
 export interface ModalRootWithDOMProps extends HasPlatform, ModalRootProps, DOMContextInterface {
