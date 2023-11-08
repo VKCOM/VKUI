@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
@@ -33,6 +34,7 @@ export const ModalCard = ({
   nav,
   id,
   size,
+  getRootRef,
   ...restProps
 }: ModalCardProps) => {
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
@@ -40,10 +42,18 @@ export const ModalCard = ({
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId({ nav, id }, warn), ModalType.CARD);
+  const rootRef = useExternRef(getRootRef, refs.modalElement);
+
+  const contextValue = React.useMemo(() => ({ labelId: `${id}-label` }), [id]);
 
   return (
     <RootComponent
       {...restProps}
+      getRootRef={rootRef}
+      tabIndex={-1}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={contextValue.labelId}
       id={id}
       baseClassName={classNames(
         styles['ModalCard'],

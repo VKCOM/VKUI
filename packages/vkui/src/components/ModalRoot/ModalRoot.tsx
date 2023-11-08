@@ -107,14 +107,15 @@ class ModalRootTouchComponent extends React.Component<
 
     // transition phase 3: animate entering modal
     if (this.props.enteringModal && this.props.enteringModal !== prevProps.enteringModal) {
-      const { enteringModal } = this.props;
-      const enteringState = this.props.getModalState(enteringModal);
+      const enteringState = this.props.getModalState(this.props.enteringModal);
       this.props.onEnter();
       this.waitTransitionFinish(enteringState, () => {
-        if (enteringState?.innerElement) {
-          enteringState.innerElement.style.transitionDelay = '';
+        if (enteringState) {
+          if (enteringState.innerElement) {
+            enteringState.innerElement.style.transitionDelay = '';
+          }
+          this.onEntered(enteringState);
         }
-        this.props.onEntered(enteringModal);
       });
 
       if (enteringState?.innerElement) {
@@ -218,6 +219,18 @@ class ModalRootTouchComponent extends React.Component<
       }
     }
   };
+
+  onEntered({ id, modalElement }: ModalsStateEntry) {
+    if (
+      !this.props.noFocusToDialog &&
+      modalElement &&
+      !modalElement.contains(this.document.activeElement)
+    ) {
+      modalElement.focus();
+    }
+
+    this.props.onEntered(id);
+  }
 
   closeModal(id: string) {
     // Сбрасываем состояния, которые могут помешать закрытию модального окна
@@ -598,12 +611,6 @@ class ModalRootTouchComponent extends React.Component<
                 return (
                   <FocusTrap
                     key={key}
-                    getRootRef={(e) => {
-                      const modalState = this.props.getModalState(modalId);
-                      if (modalState) {
-                        modalState.modalElement = e;
-                      }
-                    }}
                     onClose={this.props.onExit}
                     timeout={this.timeout}
                     className={classNames(
