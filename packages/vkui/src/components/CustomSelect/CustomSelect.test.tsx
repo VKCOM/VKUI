@@ -26,7 +26,9 @@ const CustomSelectControlled = ({
 };
 
 describe('CustomSelect', () => {
-  baselineComponent(CustomSelect);
+  baselineComponent((props) => (
+    <CustomSelect aria-label="Chose your user" {...props} options={[]} />
+  ));
 
   it('Does not explode on NaN value', () => {
     const h = render(<CustomSelect value={NaN} options={[]} />);

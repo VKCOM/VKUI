@@ -6,7 +6,7 @@ import { Select } from './Select';
 describe('Select', () => {
   baselineComponent((props) => (
     <AdaptivityProvider hasPointer>
-      <Select options={[]} {...props} />
+      <Select aria-label="Select an option" options={[]} {...props} />
     </AdaptivityProvider>
   ));
 });

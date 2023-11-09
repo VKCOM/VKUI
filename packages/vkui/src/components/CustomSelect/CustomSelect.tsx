@@ -799,9 +799,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     'aria-controls': popupAriaId,
     'aria-owns': popupAriaId,
     'aria-expanded': opened,
-    ...(ariaActiveDescendantId && {
-      ['aria-activedescendant']: `${popupAriaId}-${ariaActiveDescendantId}`,
-    }),
+    ['aria-activedescendant']:
+      ariaActiveDescendantId && opened ? `${popupAriaId}-${ariaActiveDescendantId}` : undefined,
     'aria-labelledby': ariaLabelledBy,
     'aria-haspopup': 'listbox',
     'aria-autocomplete': 'none',
