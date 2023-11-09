@@ -821,6 +821,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       {opened && searchable ? (
         <Input
           {...restProps}
+          {...selectInputAriaProps}
           autoFocus
           onBlur={onBlur}
           className={openedClassNames}
@@ -834,11 +835,11 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           before={before}
           after={afterIcons}
           mode={getFormFieldModeFromSelectType(selectType)}
-          {...selectInputAriaProps}
         />
       ) : (
         <SelectMimicry
           {...restProps}
+          {...selectInputAriaProps}
           getRootRef={selecteMimicryRef}
           onClick={onClick}
           onKeyDown={handleKeyDownSelect}
@@ -849,7 +850,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           before={before}
           after={afterIcons}
           selectType={selectType}
-          {...selectInputAriaProps}
         >
           {selected?.label}
         </SelectMimicry>
