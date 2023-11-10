@@ -10,7 +10,7 @@ import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { debounce, getTitleFromChildren } from '../../lib/utils';
+import { debounce } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
@@ -382,19 +382,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const onKeyboardInput = React.useCallback(
     (key: string) => {
-      const fullInput = keyboardInput + key;
-
-      const optionIndex = options.findIndex((option) => {
-        return getTitleFromChildren(option.label).toLowerCase().includes(fullInput);
-      });
-
-      if (optionIndex !== undefined && optionIndex > -1) {
-        focusOptionByIndex(optionIndex);
+      if (!opened) {
+        setOpened(true);
       }
+      const fullInput = keyboardInput + key;
 
       setKeyboardInput(fullInput);
     },
-    [focusOptionByIndex, keyboardInput, options],
+    [keyboardInput, opened],
   );
 
   /**
@@ -404,7 +399,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const close = React.useCallback(() => {
     resetKeyboardInput();
 
-    setInputValue('');
     setOpened(false);
     setFocusedOptionIndex(-1);
     onClose?.();
@@ -415,6 +409,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       const item = options[index];
 
       setNativeSelectValue(item?.value);
+      setInputValue(item.label.toString());
       close();
 
       const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
@@ -483,10 +478,19 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const onBlur = React.useCallback(() => {
     close();
+    if (selectedOptionIndex !== undefined && selectedOptionIndex > -1) {
+      const selectedOption = options[selectedOptionIndex];
+      const optionLabel = selectedOption.label.toString();
+      if (optionLabel !== inputValue) {
+        setInputValue(optionLabel);
+      }
+    } else {
+      setInputValue('');
+    }
     const event = new Event('focusout', { bubbles: true });
     selectElRef.current?.dispatchEvent(event);
     hadFocusOutRef.current = true;
-  }, [close, selectElRef]);
+  }, [close, selectElRef, selectedOptionIndex, options, inputValue]);
 
   const resetFocusedOption = React.useCallback(() => {
     setFocusedOptionIndex(-1);
@@ -573,30 +577,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   };
 
-  const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = React.useCallback(
-    (event) => {
-      ['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key) &&
-        areOptionsShown() &&
-        event.preventDefault();
-
-      switch (event.key) {
-        case 'ArrowUp':
-          areOptionsShown() && focusOption('prev');
-          break;
-        case 'ArrowDown':
-          areOptionsShown() && focusOption('next');
-          break;
-        case 'Escape':
-          close();
-          break;
-        case 'Enter':
-          areOptionsShown() && selectFocused();
-          break;
-      }
-    },
-    [areOptionsShown, close, focusOption, selectFocused],
-  );
-
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
       // TODO [>=6]: удалить `onInputChangeProp`.
@@ -651,6 +631,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         case 'Escape':
           close();
           break;
+        case 'Backspace':
+        case 'Delete': {
+          if (!opened) {
+            setOpened(true);
+          }
+
+          break;
+        }
         case 'Enter':
         case 'Spacebar':
         case ' ':
@@ -829,20 +817,19 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       ref={handleRootRef}
       onClick={onLabelClick}
     >
-      {opened && searchable ? (
+      {searchable ? (
         <Input
           {...restProps}
           {...selectInputAriaProps}
-          autoFocus
+          autoComplete="off"
+          onFocus={onFocus}
           onBlur={onBlur}
           className={openedClassNames}
           value={inputValue}
-          onKeyDown={onInputKeyDown}
+          onKeyUp={handleKeyUp}
+          onKeyDown={handleKeyDownSelect}
           onChange={onInputChange}
-          // TODO Ожидается, что клик поймает нативный select, но его перехватывает Input. К сожалению, это приводит к конфликтам типизации.
-          // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
-          // @ts-expect-error: TS2322 MouseEventHandler<HTMLSelectElement> !== MouseEventHandler<HTMLInputElement>
-          onClick={props.onClick}
+          onClick={onClick}
           before={before}
           after={afterIcons}
           mode={getFormFieldModeFromSelectType(selectType)}
