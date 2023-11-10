@@ -355,7 +355,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         scrollToElement(index);
       }
 
-      // Это оптимизация, прежде всего, под `onMouseOver`
+      // Это оптимизация, прежде всего, под `onMouseMove`
       setFocusedOptionIndex((focusedOptionIndex) =>
         focusedOptionIndex !== index ? index : focusedOptionIndex,
       );
@@ -680,12 +680,24 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [options, selectOption],
   );
 
+  const prevMousePositionRef = React.useRef<{
+    x: React.MouseEvent['clientX'];
+    y: React.MouseEvent['clientY'];
+  }>({ x: 0, y: 0 });
   const handleOptionHover = React.useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
-      focusOptionByIndex(
-        Array.prototype.indexOf.call(e.currentTarget.parentNode?.children, e.currentTarget),
-        false,
-      );
+      const isMouseChangedPosition =
+        Math.abs(prevMousePositionRef.current.x - e.clientX) >= 1 ||
+        Math.abs(prevMousePositionRef.current.y - e.clientY) >= 1;
+
+      if (isMouseChangedPosition) {
+        focusOptionByIndex(
+          Array.prototype.indexOf.call(e.currentTarget.parentNode?.children, e.currentTarget),
+          false,
+        );
+      }
+
+      prevMousePositionRef.current = { x: e.clientX, y: e.clientY };
     },
     [focusOptionByIndex],
   );
@@ -706,15 +718,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
             disabled: option.disabled,
             onClick: handleOptionClick,
             onMouseDown: handleOptionDown,
-            // Используем `onMouseOver` вместо `onMouseEnter`.
-            // При параметре `searchable`, обновляется "ребёнок", из-за чего `onMouseEnter` не срабатывает в следующих кейсах:
-            //  1. До загрузки выпадающего списка, курсор мышки находится над произвольным элементом этого списка.
-            //     > Лечение: только увод курсора мыши и возвращении его обратно вызывает событие `onMouseEnter` на этот элемент.
-            //  2. Если это тач-устройство.
-            //     > Лечение: нужно нажать на какой-нибудь произвольный элемент списка, после чего `onMouseEnter` будет работать на соседние элементы,
-            //     но не на тот, на который нажали в первый раз.
-            // Более подробно по ссылке https://github.com/facebook/react/issues/13956#issuecomment-1082055744
-            onMouseOver: handleOptionHover,
+            // Используем `onMouseMove` вместо `onMouseEnter/onMouseOver`.
+            // Потому что если при навигации с клавиатуры курсор наведён на
+            // список, то при первом автоматическом скролле списка вызывается событие MouseOver/MouseEnter
+            // обработчик которого фокусирует опцию под курсором, хотя при навигация с клавиатуры пользователь мог уйти дальше по списку, это путает.
+            // Причём координаты события меняются на пару пикселей по сравнению с прошлым вызовом,
+            // а значит нельзя на них опираться, чтобы запретить обработку такого события.
+            // C mousemove такой проблемы нет, что позволяет реализовать поведение при наведении с клавиатуры и при наведении мышью идентично нативному селекту.
+            onMouseMove: handleOptionHover,
             id: `${popupAriaId}-${option.value}`,
           })}
         </React.Fragment>
