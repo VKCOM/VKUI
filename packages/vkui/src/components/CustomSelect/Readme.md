@@ -128,6 +128,7 @@ const Example = () => {
           id="administrator-select-searchable-id-3"
           aria-labelledby="administrator-select-searchable-label-id-3"
           options={users}
+          allowClearButton
         />
       </FormItem>
 

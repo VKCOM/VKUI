@@ -4,7 +4,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useId } from '../../hooks/useId';
-import { usePrevious } from '../../hooks/usePrevious';
 import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
@@ -452,30 +451,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const { document } = useDOM();
   useGlobalEventListener(document?.body, 'click', handleClickOutside, { capture: true });
 
-  const selecteMimicryRef = React.useRef<HTMLDivElement>(null);
-  const prevOpened = usePrevious(opened);
-  const isDropdownClosed = prevOpened === true && opened === false;
-  React.useEffect(
-    function focusSelectMimicryOnOptionsListClose() {
-      // В режиме searchable мы по условию рендерим то SelectMimicry, то Input.
-      // По умолчанию мы рендерим SelectMimicry, но как только пользователь кликнул
-      // на CustomSelect или с помощью клавиатуры вызвал дропдаун мы рендерим Input.
-      // При этом фокус попадает на Input автоматически из-за пропа autoFocus.
-      // При закрытии дропдауна вместо Input мы снова рендерим SelectMimicry, и если ничего
-      // специально не делать, то фокус пропадёт, хотя почти во всех ситуациях
-      // мы хотим оставить фокус на SelectMimicry.
-      // Единственный вариант когда мы не хотим устанавливать фокус на SelectMimicry
-      // это когда дропдаун закрывается при смене фокуса с помощью Tab или при клике на другой элемент.
-      // к сожалению это не работает когда мы закрываем дропдаун по клику вне Input,
-      // но в пределах CustomSelect, например при клике на dropdownIcon
-      // autoFocus проп SelectMimicry мы использовать не можем, так как hadFocusOutRef это ref
-      if (isDropdownClosed && searchable && !hadFocusOutRef.current) {
-        selecteMimicryRef.current?.focus();
-      }
-    },
-    [isDropdownClosed, searchable],
-  );
-
   const onBlur = React.useCallback(() => {
     close();
     if (selectedOptionIndex !== undefined && selectedOptionIndex > -1) {
@@ -757,7 +732,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     return (
       <ClearButton
         className={iconProp === undefined ? styles['CustomSelect--clear-icon'] : undefined}
-        onClick={() => setNativeSelectValue('')}
+        onClick={() => {
+          setNativeSelectValue('');
+          setInputValue('');
+        }}
         disabled={restProps.disabled}
       />
     );
@@ -838,7 +816,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         <SelectMimicry
           {...restProps}
           {...selectInputAriaProps}
-          getRootRef={selecteMimicryRef}
           onClick={onClick}
           onKeyDown={handleKeyDownSelect}
           onKeyUp={handleKeyUp}

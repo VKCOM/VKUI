@@ -20,6 +20,7 @@ export const CustomSelectClearButton = ({
       Component="div"
       onClick={(e) => {
         stopPropagation(e);
+        e.preventDefault();
         onClick();
       }}
       aria-label="Очистить поле"
