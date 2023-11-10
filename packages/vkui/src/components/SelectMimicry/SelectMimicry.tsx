@@ -8,6 +8,7 @@ import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HTMLAttributesWithRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, FormFieldProps } from '../FormField/FormField';
+import { RootComponent } from '../RootComponent/RootComponent';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
@@ -55,8 +56,9 @@ export const SelectMimicry = ({
 
   return (
     <FormField
-      {...restProps}
-      tabIndex={disabled ? undefined : tabIndex}
+      Component="div"
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
       className={classNames(
         styles['Select'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
@@ -67,19 +69,24 @@ export const SelectMimicry = ({
         before && styles['Select--hasBefore'],
         className,
       )}
-      getRootRef={rootRef}
-      onClick={disabled ? undefined : onClick}
-      disabled={disabled}
       before={before}
       after={after}
       mode={getFormFieldModeFromSelectType(selectType)}
       status={status}
     >
-      <div className={styles['Select__container']}>
+      <RootComponent
+        Component="div"
+        className={styles['Select__container']}
+        tabIndex={disabled ? undefined : tabIndex}
+        getRootRef={rootRef}
+        onClick={disabled ? undefined : onClick}
+        disabled={disabled}
+        {...restProps}
+      >
         <SelectTypography selectType={selectType} className={styles['Select__title']}>
           {title}
         </SelectTypography>
-      </div>
+      </RootComponent>
     </FormField>
   );
 };

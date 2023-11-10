@@ -770,9 +770,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       <ClearButton
         className={iconProp === undefined ? styles['CustomSelect--clear-icon'] : undefined}
         onClick={() => setNativeSelectValue('')}
+        disabled={restProps.disabled}
       />
     );
-  }, [clearButtonShown, ClearButton, iconProp]);
+  }, [clearButtonShown, ClearButton, iconProp, restProps.disabled]);
 
   const icon = React.useMemo(() => {
     if (iconProp !== undefined) {

@@ -6,9 +6,14 @@ import { IconButton } from '../IconButton/IconButton';
 export interface CustomSelectClearButtonProps {
   className?: string;
   onClick(): void;
+  disabled?: boolean;
 }
 
-export const CustomSelectClearButton = ({ className, onClick }: CustomSelectClearButtonProps) => {
+export const CustomSelectClearButton = ({
+  className,
+  onClick,
+  disabled,
+}: CustomSelectClearButtonProps) => {
   return (
     <IconButton
       className={className}
@@ -22,6 +27,7 @@ export const CustomSelectClearButton = ({ className, onClick }: CustomSelectClea
       role="button"
       activeMode="opacity"
       hoverMode="opacity"
+      disabled={disabled}
     >
       <Icon16Cancel />
     </IconButton>
