@@ -22,7 +22,7 @@
 >
 > В примере навигация между панелями будет в порядке 1 -> 2 -> 3.
 
-Чтобы понять был это переход вперёд или назад можно воспользоваться хуком [`useNavDirection()`](#/View?id=usenavdirection_example). Этот хук работает даже если анимации выключены (`<ConfigProvider transitionMotionEnabled={false}>`).
+Чтобы понять, был это переход вперёд или назад, можно воспользоваться хуком [`useNavDirection()`](#/View?id=usenavdirection_example). Этот хук работает, даже если анимации выключены (`<ConfigProvider transitionMotionEnabled={false}>`).
 
 ```jsx
 const [activePanel, setActivePanel] = useState('panel1');
