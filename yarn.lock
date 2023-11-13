@@ -5122,12 +5122,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/postcss-less@npm:^4.0.5":
-  version: 4.0.5
-  resolution: "@types/postcss-less@npm:4.0.5"
+"@types/postcss-less@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "@types/postcss-less@npm:4.0.6"
   dependencies:
     postcss: ^8.1.2
-  checksum: fade96918a2df1020287419ad95109f6688b033b9eedfeb84f61fa704f91bedb3d229417b481228710c8a9a1f8ddc3090081e1f7e50bd51d9ec6e77d6a412e3a
+  checksum: c37d9de489942443d81cbe6536b45aed22d3fc02b1928e38bfa16dee2c306800df737397f82b61f4ecbb353fa0c82df946e98930bf4462bbb9131baf4d43e51b
   languageName: node
   linkType: hard
 
@@ -5688,7 +5688,7 @@ __metadata:
     "@swc/jest": ^0.2.29
     "@types/jest": ^29.5.8
     "@types/node": ^20.9.0
-    "@types/postcss-less": ^4.0.5
+    "@types/postcss-less": ^4.0.6
     jest: ^29.7.0
     postcss: ^8.4.31
     postcss-less: ^6.0.0
