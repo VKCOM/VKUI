@@ -5639,7 +5639,7 @@ __metadata:
     stylelint-config-standard: ^34.0.0
     stylelint-declaration-strict-value: ^1.9.2
     stylelint-media-use-custom-media: ^2.0.0
-    stylelint-value-no-unknown-custom-properties: ^4.0.0
+    stylelint-value-no-unknown-custom-properties: ^5.0.0
     swc-loader: ^0.2.3
     swc-plugin-css-modules: 0.1.6
     swc-plugin-transform-remove-imports: 1.9.0
@@ -16430,7 +16430,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:^1.1.6, resolve@npm:^1.1.7, resolve@npm:^1.10.0, resolve@npm:^1.14.2, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.22.4":
+"resolve@npm:^1.1.6, resolve@npm:^1.1.7, resolve@npm:^1.10.0, resolve@npm:^1.14.2, resolve@npm:^1.20.0, resolve@npm:^1.22.4, resolve@npm:^1.22.8":
   version: 1.22.8
   resolution: "resolve@npm:1.22.8"
   dependencies:
@@ -16456,7 +16456,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.1.6#~builtin<compat/resolve>, resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.4#~builtin<compat/resolve>":
+"resolve@patch:resolve@^1.1.6#~builtin<compat/resolve>, resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.4#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.8#~builtin<compat/resolve>":
   version: 1.22.8
   resolution: "resolve@patch:resolve@npm%3A1.22.8#~builtin<compat/resolve>::version=1.22.8&hash=c3c19d"
   dependencies:
@@ -17664,15 +17664,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-value-no-unknown-custom-properties@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "stylelint-value-no-unknown-custom-properties@npm:4.0.0"
+"stylelint-value-no-unknown-custom-properties@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "stylelint-value-no-unknown-custom-properties@npm:5.0.0"
   dependencies:
     postcss-value-parser: ^4.2.0
-    resolve: ^1.22.0
+    resolve: ^1.22.8
   peerDependencies:
-    stylelint: 10 - 14
-  checksum: 2c0e932a16932180c1afbb842a93290b44d265b702faa8f17a2ca0ced8503487ad24367d585e474e0866fda67ad3cb8f2de5ae673968cd7bb030e207d822c45e
+    stylelint: 10 - 15
+  checksum: 8e4e449c7debcd15020fc226eb79c383ed342a81041badc282e612d04b10fa58d7eed0efa9e595ea9814a5ad41a794fa2698538aa3831a944451a3880cb26b91
   languageName: node
   linkType: hard
 
