@@ -2,10 +2,8 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useId } from '../../hooks/useId';
 import { SizeType } from '../../lib/adaptivity';
-import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -441,16 +439,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [onOpen, selectedOptionIndex]);
 
-  const hadFocusOutRef = React.useRef<boolean>(false);
-  const handleClickOutside = (e: MouseEvent) => {
-    const isClickOutsideFormField = !handleRootRef.current?.contains(e.target as Node);
-    const isClickOutsideDropdown = !scrollBoxRef.current?.contains(e.target as Node);
-
-    hadFocusOutRef.current = isClickOutsideFormField && isClickOutsideDropdown;
-  };
-  const { document } = useDOM();
-  useGlobalEventListener(document?.body, 'click', handleClickOutside, { capture: true });
-
   const onBlur = React.useCallback(() => {
     close();
     if (selectedOptionIndex !== undefined && selectedOptionIndex > -1) {
@@ -464,7 +452,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
     const event = new Event('focusout', { bubbles: true });
     selectElRef.current?.dispatchEvent(event);
-    hadFocusOutRef.current = true;
   }, [close, selectElRef, selectedOptionIndex, options, inputValue]);
 
   const resetFocusedOption = React.useCallback(() => {
