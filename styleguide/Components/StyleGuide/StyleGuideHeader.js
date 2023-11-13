@@ -38,6 +38,14 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
       title: 'Релизы',
       href: `${VKUI_PACKAGE.URLS.REPOSITORY}/releases`,
     },
+    {
+      title: 'Токены',
+      href: VKUI_PACKAGE.URLS.TOKENS,
+    },
+    {
+      title: 'Иконки',
+      href: VKUI_PACKAGE.URLS.ICONS,
+    },
   ];
 
   if (prData) {
