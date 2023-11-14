@@ -7,7 +7,7 @@
 ```jsx { "props": { "layout": false, "iframe": false } }
 const getUsers = (usersArray) =>
   usersArray.map((user) => ({
-    label: user.name,
+    label: <Text>{user.name}</Text>,
     value: `${user.id}`,
     avatar: user.photo_100,
     description: user.screen_name,
@@ -51,6 +51,7 @@ const Example = () => {
             options={users}
             selectType={selectType}
             allowClearButton
+            onFocus={(event) => console.log("On focus: ", event)}
           />
         </FormItem>
 

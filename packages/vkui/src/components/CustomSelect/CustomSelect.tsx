@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useId } from '../../hooks/useId';
 import { SizeType } from '../../lib/adaptivity';
 import type { PlacementWithAuto } from '../../lib/floating';
@@ -20,9 +21,9 @@ import { FormFieldProps } from '../FormField/FormField';
 import { Input } from '../Input/Input';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import { SelectType } from '../Select/Select';
-import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { CustomSelectClearButton, CustomSelectClearButtonProps } from './CustomSelectClearButton';
+import { CustomSelectInputForeground } from './CustomSelectInputForeground';
 import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
@@ -734,10 +735,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
 
     return (
-      <DropdownIcon
-        className={clearButtonShown ? styles['CustomSelect__dropdown-icon'] : undefined}
-        opened={opened}
-      />
+      <div className={styles['CustomSelect__dropdown-icon-wrapper']}>
+        <DropdownIcon
+          className={clearButtonShown ? styles['CustomSelect__dropdown-icon'] : undefined}
+          opened={opened}
+        />
+      </div>
     );
   }, [clearButtonShown, iconProp, opened]);
 
@@ -771,6 +774,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     'aria-autocomplete': 'none',
   };
 
+  const focusWithin = useFocusWithin(handleRootRef);
+  const withForeground = !searchable;
   return (
     <label
       className={classNames(
@@ -782,40 +787,37 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       ref={handleRootRef}
       onClick={onLabelClick}
     >
-      {searchable ? (
-        <Input
-          {...restProps}
-          {...selectInputAriaProps}
-          autoComplete="off"
-          onFocus={onFocus}
-          onBlur={onBlur}
-          className={openedClassNames}
-          value={inputValue}
-          onKeyUp={handleKeyUp}
-          onKeyDown={handleKeyDownSelect}
-          onChange={onInputChange}
-          onClick={onClick}
-          before={before}
-          after={afterIcons}
-          mode={getFormFieldModeFromSelectType(selectType)}
-        />
-      ) : (
-        <SelectMimicry
-          {...restProps}
-          {...selectInputAriaProps}
-          onClick={onClick}
-          onKeyDown={handleKeyDownSelect}
-          onKeyUp={handleKeyUp}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          className={openedClassNames}
-          before={before}
-          after={afterIcons}
-          selectType={selectType}
-        >
-          {selected?.label}
-        </SelectMimicry>
-      )}
+      <Input
+        autoComplete="off"
+        {...restProps}
+        {...selectInputAriaProps}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        className={classNames(
+          openedClassNames,
+          withForeground && styles['CustomSelect__input--with-foreground'],
+        )}
+        readOnly={!searchable}
+        value={inputValue}
+        onKeyUp={handleKeyUp}
+        onKeyDown={handleKeyDownSelect}
+        onChange={onInputChange}
+        onClick={onClick}
+        before={before}
+        after={afterIcons}
+        mode={getFormFieldModeFromSelectType(selectType)}
+        inputForeground={
+          withForeground && (
+            <CustomSelectInputForeground
+              tabIndex={-1}
+              className={classNames(openedClassNames, styles['CustomSelect__mimicry'])}
+              selectType={selectType}
+            >
+              {selected?.label}
+            </CustomSelectInputForeground>
+          )
+        }
+      />
       <select
         ref={selectElRef}
         name={name}

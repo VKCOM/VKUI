@@ -17,7 +17,9 @@ export interface InputProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
-    FormFieldProps {}
+    FormFieldProps {
+  inputForeground?: React.ReactNode;
+}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Input
@@ -33,12 +35,15 @@ export const Input = ({
   after,
   status,
   mode,
+  inputForeground,
+
   ...restProps
 }: InputProps) => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <FormField
+      Component="div"
       style={style}
       className={classNames(
         styles['Input'],
@@ -64,6 +69,7 @@ export const Input = ({
         className={styles['Input__el']}
         getRootRef={getRef}
       />
+      {inputForeground}
     </FormField>
   );
 };

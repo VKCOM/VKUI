@@ -31,6 +31,14 @@
   justify-content: center;
 }
 
+.CustomSelect__dropdown-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  align-self: stretch;
+}
+
 .CustomSelect__dropdown-icon {
   margin-right: 10px;
 }
@@ -55,4 +63,18 @@
   .CustomSelect--sizeY-none .CustomSelect--clear-icon {
     margin-right: -2px;
   }
+}
+
+.CustomSelect__mimicry {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+
+  pointer-events: none;
+}
+
+.CustomSelect__input--with-foreground input {
+  opacity: 0;
+  cursor: pointer;
 }
