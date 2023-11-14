@@ -810,10 +810,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           withForeground && (
             <CustomSelectInputForeground
               tabIndex={-1}
-              className={classNames(openedClassNames, styles['CustomSelect__mimicry'])}
+              className={classNames(
+                openedClassNames,
+                styles['CustomSelect__mimicry'],
+                !selected && styles['CustomSelect__mimicry--empty'],
+              )}
               selectType={selectType}
             >
-              {selected?.label}
+              {selected?.label || restProps.placeholder}
             </CustomSelectInputForeground>
           )
         }
