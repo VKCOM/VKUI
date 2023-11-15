@@ -28,6 +28,7 @@ export const getAutoScrollingData = (clientY: number, scrollEl: Element | Window
     y: 0,
   };
 
+  // Inspired by https://github.com/SortableJS/Sortable/issues/1907#issuecomment-1495403785
   if (isInTopEdge) {
     result.y = -1 * ((EDGE_SIZE - topDistance) / EDGE_SIZE) * SCROLL_SPEED;
   } else if (isInBottomEdge) {

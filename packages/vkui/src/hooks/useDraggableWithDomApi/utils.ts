@@ -35,6 +35,7 @@ export const setSiblingItemsShiftStyles = ([
 export const setInitialDraggingItemStyles = ({ el, draggingElRect }: DraggingItem) => {
   const { top, left, width, height } = draggingElRect;
   requestAnimationFrame(() => {
+    // Inspired by https://github.com/hello-pangea/dnd
     el.style.setProperty('pointer-events', 'none');
     el.style.setProperty('position', 'fixed');
     el.style.setProperty('top', `${top}px`);
