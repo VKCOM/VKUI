@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HTMLAttributesWithRootRef } from '../../types';
 import { FormFieldProps } from '../FormField/FormField';
 import { RootComponent } from '../RootComponent/RootComponent';
