@@ -74,8 +74,7 @@
 }
 
 /* stylelint-disable-next-line selector-max-type */
-.CustomSelect__input--with-foreground input {
-  opacity: 0;
+.CustomSelect__input--cursor-pointer input {
   cursor: pointer;
 }
 

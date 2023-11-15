@@ -782,7 +782,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const isSearhableSelectWithoutFocus = searchable && !focusWithin;
   const isFocusedSearchableSelectHasNoInputValue = searchable && focusWithin && inputValue === '';
   const withInputForeground =
-    isSimpleSelect || isSearhableSelectWithoutFocus || isFocusedSearchableSelectHasNoInputValue;
+    selected &&
+    (isSimpleSelect || isSearhableSelectWithoutFocus || isFocusedSearchableSelectHasNoInputValue);
 
   return (
     <label
@@ -804,7 +805,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onBlur={onBlur}
         className={classNames(
           openedClassNames,
-          withInputForeground && styles['CustomSelect__input--with-foreground'],
+          ((withInputForeground && !focusWithin) || isSimpleSelect) &&
+            styles['CustomSelect__input--cursor-pointer'],
         )}
         readOnly={!searchable}
         value={inputValue}
@@ -815,6 +817,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         before={before}
         after={afterIcons}
         mode={getFormFieldModeFromSelectType(selectType)}
+        placeholder={withInputForeground ? '' : restProps.placeholder}
         inputForeground={
           withInputForeground && (
             <CustomSelectInputForeground
@@ -826,7 +829,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
               )}
               selectType={selectType}
             >
-              {selected?.label || restProps.placeholder}
+              {selected?.label}
             </CustomSelectInputForeground>
           )
         }
