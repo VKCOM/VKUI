@@ -761,7 +761,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const focusWithin = useFocusWithin(handleRootRef);
 
-  const withVisuallyHiddenPopup = searchable && focusWithin && !opened && ariaActiveDescendantId;
+  const withVisuallyHiddenPopup = focusWithin && !opened && ariaActiveDescendantId;
   const showOptionsList = withVisuallyHiddenPopup || opened;
 
   const selectInputAriaProps: React.HTMLAttributes<HTMLElement> = {

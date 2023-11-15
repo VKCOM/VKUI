@@ -36,7 +36,6 @@ export const Input = ({
   status,
   mode,
   inputForeground,
-
   ...restProps
 }: InputProps) => {
   const { sizeY = 'none' } = useAdaptivity();
