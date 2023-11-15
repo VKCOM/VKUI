@@ -90,6 +90,8 @@ export const ModalCardBase = ({
   const isSoftwareKeyboardOpened = useKeyboard().isOpened;
 
   const size = isDesktop ? sizeProp : undefined;
+  const withSafeZone =
+    !icon && (dismissButtonMode === 'inside' || (platform === Platform.IOS && !isDesktop));
 
   return (
     <RootComponent
@@ -98,8 +100,7 @@ export const ModalCardBase = ({
         'vkuiInternalModalCardBase',
         platform === Platform.IOS && styles['ModalCardBase--ios'],
         isDesktop && styles['ModalCardBase--desktop'],
-        (dismissButtonMode === 'inside' || (platform === Platform.IOS && !isDesktop)) &&
-          styles['ModalCardBase--withSafeZone'],
+        withSafeZone && styles['ModalCardBase--withSafeZone'],
       )}
       style={{
         ...style,
