@@ -70,10 +70,10 @@
   top: 0;
   left: 0;
   height: 100%;
-
   pointer-events: none;
 }
 
+/* stylelint-disable-next-line selector-max-type */
 .CustomSelect__input--with-foreground input {
   opacity: 0;
   cursor: pointer;

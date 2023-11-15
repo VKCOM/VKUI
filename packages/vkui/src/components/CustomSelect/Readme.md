@@ -51,7 +51,7 @@ const Example = () => {
             options={users}
             selectType={selectType}
             allowClearButton
-            onFocus={(event) => console.log("On focus: ", event)}
+            onFocus={(event) => console.log('On focus: ', event)}
           />
         </FormItem>
 
