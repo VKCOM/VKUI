@@ -4,6 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useId } from '../../hooks/useId';
+import { useTimeout } from '../../hooks/useTimeout';
 import { SizeType } from '../../lib/adaptivity';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/select';
@@ -712,6 +713,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const clearButtonShown =
     allowClearButton && !opened && (controlledValueSet || uncontrolledValueSet);
 
+  const selectInputRef = React.useRef<HTMLInputElement | null>(null);
+  const focusOnInput = useTimeout(() => selectInputRef.current?.focus(), 0);
   const clearButton = React.useMemo(() => {
     if (!clearButtonShown) {
       return null;
@@ -721,13 +724,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       <ClearButton
         className={iconProp === undefined ? styles['CustomSelect--clear-icon'] : undefined}
         onClick={() => {
+          focusOnInput.set();
           setNativeSelectValue('');
           setInputValue('');
         }}
         disabled={restProps.disabled}
       />
     );
-  }, [clearButtonShown, ClearButton, iconProp, restProps.disabled]);
+  }, [clearButtonShown, ClearButton, iconProp, restProps.disabled, focusOnInput]);
 
   const icon = React.useMemo(() => {
     if (iconProp !== undefined) {
@@ -791,6 +795,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         autoComplete="off"
         {...restProps}
         {...selectInputAriaProps}
+        getRef={selectInputRef}
         onFocus={onFocus}
         onBlur={onBlur}
         className={classNames(
