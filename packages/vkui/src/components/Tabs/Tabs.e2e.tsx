@@ -1,8 +1,23 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
-import { TabsPlayground } from './Tabs.e2e-playground';
+import { Appearance } from '../../helpers/appearance';
+import { TabsItemsFlexModePlayground, TabsPlayground } from './Tabs.e2e-playground';
 
 test('Tabs', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
   await mount(<TabsPlayground {...componentPlaygroundProps} />);
   await expectScreenshotClippedToContent();
+});
+
+test.describe('Tabs', () => {
+  test.use({
+    onlyForAppearances: [Appearance.LIGHT],
+  });
+  test('items flex mode', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<TabsItemsFlexModePlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
 });
