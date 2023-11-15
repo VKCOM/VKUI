@@ -23,6 +23,7 @@ import { Input } from '../Input/Input';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { CustomSelectClearButton, CustomSelectClearButtonProps } from './CustomSelectClearButton';
 import { CustomSelectInputForeground } from './CustomSelectInputForeground';
 import styles from './CustomSelect.module.css';
@@ -408,7 +409,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       const item = options[index];
 
       setNativeSelectValue(item?.value);
-      setInputValue(item.label.toString());
+      setInputValue('');
       close();
 
       const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
@@ -443,18 +444,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const onBlur = React.useCallback(() => {
     close();
-    if (selectedOptionIndex !== undefined && selectedOptionIndex > -1) {
-      const selectedOption = options[selectedOptionIndex];
-      const optionLabel = selectedOption.label.toString();
-      if (optionLabel !== inputValue) {
-        setInputValue(optionLabel);
-      }
-    } else {
-      setInputValue('');
-    }
+    setInputValue('');
     const event = new Event('focusout', { bubbles: true });
     selectElRef.current?.dispatchEvent(event);
-  }, [close, selectElRef, selectedOptionIndex, options, inputValue]);
+  }, [close, selectElRef]);
 
   const resetFocusedOption = React.useCallback(() => {
     setFocusedOptionIndex(-1);
@@ -766,20 +759,31 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       ? options[ariaActiveDescendantOptionIndex] && options[ariaActiveDescendantOptionIndex].value
       : null;
 
+  const focusWithin = useFocusWithin(handleRootRef);
+
+  const withVisuallyHiddenPopup = searchable && focusWithin && !opened && ariaActiveDescendantId;
+  const showOptionsList = withVisuallyHiddenPopup || opened;
+
   const selectInputAriaProps: React.HTMLAttributes<HTMLElement> = {
     'role': 'combobox',
     'aria-controls': popupAriaId,
     'aria-owns': popupAriaId,
     'aria-expanded': opened,
     ['aria-activedescendant']:
-      ariaActiveDescendantId && opened ? `${popupAriaId}-${ariaActiveDescendantId}` : undefined,
+      ariaActiveDescendantId && showOptionsList
+        ? `${popupAriaId}-${ariaActiveDescendantId}`
+        : undefined,
     'aria-labelledby': ariaLabelledBy,
     'aria-haspopup': 'listbox',
     'aria-autocomplete': 'none',
   };
 
-  const focusWithin = useFocusWithin(handleRootRef);
-  const withForeground = !searchable;
+  const isSimpleSelect = !searchable;
+  const isSearhableSelectWithoutFocus = searchable && !focusWithin;
+  const isFocusedSearchableSelectHasNoInputValue = searchable && focusWithin && inputValue === '';
+  const withInputForeground =
+    isSimpleSelect || isSearhableSelectWithoutFocus || isFocusedSearchableSelectHasNoInputValue;
+
   return (
     <label
       className={classNames(
@@ -800,7 +804,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onBlur={onBlur}
         className={classNames(
           openedClassNames,
-          withForeground && styles['CustomSelect__input--with-foreground'],
+          withInputForeground && styles['CustomSelect__input--with-foreground'],
         )}
         readOnly={!searchable}
         value={inputValue}
@@ -812,7 +816,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         after={afterIcons}
         mode={getFormFieldModeFromSelectType(selectType)}
         inputForeground={
-          withForeground && (
+          withInputForeground && (
             <CustomSelectInputForeground
               tabIndex={-1}
               className={classNames(
@@ -843,7 +847,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           <option key={`${item.value}`} value={item.value} />
         ))}
       </select>
-      {opened && (
+      {showOptionsList && (
         <CustomSelectDropdown
           targetRef={containerRef}
           placement={popupDirection}
@@ -862,7 +866,11 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           aria-labelledby={ariaLabelledBy}
           tabIndex={-1}
         >
-          {resolvedContent}
+          {withVisuallyHiddenPopup ? (
+            <VisuallyHidden>{resolvedContent}</VisuallyHidden>
+          ) : (
+            resolvedContent
+          )}
         </CustomSelectDropdown>
       )}
     </label>
