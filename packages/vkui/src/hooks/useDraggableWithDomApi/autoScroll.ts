@@ -1,9 +1,9 @@
 import { getNodeScroll, getScrollHeight, getScrollRect } from '../../lib/dom';
 import { rafSchd } from '../../lib/rafSchd';
 
-const EDGE_SIZE = 50;
 const SCROLL_SPEED = 10;
-const OUTBOX_OFFSET = -30;
+export const EDGE_SIZE = 50;
+export const OUTBOX_OFFSET = -30;
 
 export const getAutoScrollingData = (clientY: number, scrollEl: Element | Window) => {
   const scrollTop = Math.floor(getNodeScroll(scrollEl).scrollTop);
@@ -18,8 +18,8 @@ export const getAutoScrollingData = (clientY: number, scrollEl: Element | Window
   const [edgeTop, edgeBottom] = edges.y;
   const topDistance = clientY - edgeTop;
   const bottomDistance = edgeBottom - clientY;
-  const isInTopEdge = topDistance < EDGE_SIZE;
-  const isInBottomEdge = bottomDistance < EDGE_SIZE;
+  const isInTopEdge = topDistance <= EDGE_SIZE;
+  const isInBottomEdge = bottomDistance <= EDGE_SIZE;
 
   const result = {
     shouldScrolling:

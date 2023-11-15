@@ -68,8 +68,8 @@ export function blurActiveElement(document: Document | undefined) {
   }
 }
 
-const TRANSFORM_DEFAULT_VALUES = ['none', 'initial', 'inherit', 'unset'];
-const WILL_CHANGE_DEFAULT_VALUES = ['auto', 'initial', 'inherit', 'unset'];
+export const TRANSFORM_DEFAULT_VALUES = ['none', 'initial', 'inherit', 'unset'];
+export const WILL_CHANGE_DEFAULT_VALUES = ['auto', 'initial', 'inherit', 'unset'];
 export function getTransformedParentCoords(element: Element) {
   let parentNode = element.parentNode;
   while (parentNode !== null) {
