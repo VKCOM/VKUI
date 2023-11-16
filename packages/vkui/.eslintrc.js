@@ -146,12 +146,6 @@ module.exports = {
       ],
       settings: {
         lintAllEsApis: true,
-        polyfills: [
-          'Array.includes',
-          'Array.find',
-          'String.padStart',
-          'Intl', // Отсутствует. Не поддерживается в iOS Safari 9, Calendar должен использоваться только на desktop
-        ],
       },
       extends: ['plugin:compat/recommended'],
       rules: {

@@ -1,11 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/swcrc",
-  "exclude": [
-    "\\.(test|spec|e2e|e2e-playground|stories)\\.[jt]sx?$",
-    "testing/",
-    "storybook/",
-    "lib/polyfills.ts"
-  ],
+  "exclude": ["\\.(test|spec|e2e|e2e-playground|stories)\\.[jt]sx?$", "testing/", "storybook/"],
 
   "module": {
     "type": "es6"
@@ -22,17 +17,6 @@
         "runtime": "classic"
       }
     },
-    "target": "esnext",
-
-    "experimental": {
-      "plugins": [
-        [
-          "swc-plugin-transform-remove-imports",
-          {
-            "test": "^./lib/polyfills$"
-          }
-        ]
-      ]
-    }
+    "target": "esnext"
   }
 }
