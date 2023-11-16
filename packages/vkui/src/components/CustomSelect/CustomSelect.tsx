@@ -398,6 +398,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
    */
   const close = React.useCallback(() => {
     resetKeyboardInput();
+    setInputValue('');
 
     setOpened(false);
     setFocusedOptionIndex(-1);
@@ -409,7 +410,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       const item = options[index];
 
       setNativeSelectValue(item?.value);
-      setInputValue('');
       close();
 
       const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
@@ -444,7 +444,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const onBlur = React.useCallback(() => {
     close();
-    setInputValue('');
     const event = new Event('focusout', { bubbles: true });
     selectElRef.current?.dispatchEvent(event);
   }, [close, selectElRef]);
@@ -732,7 +731,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
 
     return (
-      <div className={styles['CustomSelect__dropdown-icon-wrapper']}>
+      <div onClick={onClick} className={styles['CustomSelect__dropdown-icon-wrapper']}>
         <DropdownIcon
           className={clearButtonShown ? styles['CustomSelect__dropdown-icon'] : undefined}
           opened={opened}
@@ -761,18 +760,13 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const focusWithin = useFocusWithin(handleRootRef);
 
-  const withVisuallyHiddenPopup = focusWithin && !opened && ariaActiveDescendantId;
-  const showOptionsList = withVisuallyHiddenPopup || opened;
-
   const selectInputAriaProps: React.HTMLAttributes<HTMLElement> = {
     'role': 'combobox',
     'aria-controls': popupAriaId,
     'aria-owns': popupAriaId,
     'aria-expanded': opened,
     ['aria-activedescendant']:
-      ariaActiveDescendantId && showOptionsList
-        ? `${popupAriaId}-${ariaActiveDescendantId}`
-        : undefined,
+      ariaActiveDescendantId && opened ? `${popupAriaId}-${ariaActiveDescendantId}` : undefined,
     'aria-labelledby': ariaLabelledBy,
     'aria-haspopup': 'listbox',
     'aria-autocomplete': 'none',
@@ -786,7 +780,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     (isSimpleSelect || isSearhableSelectWithoutFocus || isFocusedSearchableSelectHasNoInputValue);
 
   return (
-    <label
+    <div
       className={classNames(
         styles['CustomSelect'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
@@ -796,6 +790,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       ref={handleRootRef}
       onClick={onLabelClick}
     >
+      {focusWithin && selected && !opened && (
+        <VisuallyHidden aria-live="polite">{selected?.label}</VisuallyHidden>
+      )}
       <Input
         autoComplete="off"
         {...restProps}
@@ -850,7 +847,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           <option key={`${item.value}`} value={item.value} />
         ))}
       </select>
-      {showOptionsList && (
+      {opened && (
         <CustomSelectDropdown
           targetRef={containerRef}
           placement={popupDirection}
@@ -869,13 +866,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           aria-labelledby={ariaLabelledBy}
           tabIndex={-1}
         >
-          {withVisuallyHiddenPopup ? (
-            <VisuallyHidden>{resolvedContent}</VisuallyHidden>
-          ) : (
-            resolvedContent
-          )}
+          {resolvedContent}
         </CustomSelectDropdown>
       )}
-    </label>
+    </div>
   );
 }
