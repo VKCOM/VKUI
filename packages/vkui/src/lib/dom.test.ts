@@ -49,6 +49,10 @@ describe('getTransformedParentCoords', () => {
     expect(getTransformedParentCoords(childEl)).toEqual({ x: 0, y: 0 });
   });
 
+  it('should return default values if parent is null', () => {
+    expect(getTransformedParentCoords(document.createElement('div'))).toEqual({ x: 0, y: 0 });
+  });
+
   test.each([
     { transform: 'translateY(0)' },
     { transform: 'translateY(0)', willChange: 'auto' },
