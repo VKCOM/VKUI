@@ -819,6 +819,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           withInputForeground && (
             <CustomSelectInputForeground
               tabIndex={-1}
+              aria-hidden
               className={classNames(
                 openedClassNames,
                 styles['CustomSelect__mimicry'],
