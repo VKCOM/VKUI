@@ -29,6 +29,7 @@ export const CellDragger = ({
   ...restProps
 }: CellDraggerProps) => {
   const platform = usePlatform();
+  const Icon = platform === Platform.IOS ? Icon24ReorderIos : Icon24Reorder;
 
   const { dragging, onDragStart, onDragMove, onDragEnd } = useDraggableWithDomApi({
     elRef,
@@ -49,11 +50,7 @@ export const CellDragger = ({
       onEnd={disabled ? undefined : onDragEnd}
       {...restProps}
     >
-      {platform === Platform.IOS ? (
-        <Icon24ReorderIos className={styles['CellDragger__icon']} />
-      ) : (
-        <Icon24Reorder className={styles['CellDragger__icon']} />
-      )}
+      <Icon className={styles['CellDragger__icon']} />
     </Touch>
   );
 };
