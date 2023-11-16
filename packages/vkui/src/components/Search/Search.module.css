@@ -48,6 +48,7 @@
 
 .Search__label {
   position: absolute;
+  cursor: text;
   top: 0;
   right: 0;
   bottom: 0;
@@ -131,30 +132,20 @@
   align-items: center;
   justify-content: center;
   color: var(--vkui--color_icon_secondary);
-
+  transition: transform 0.3s var(--vkui--animation_easing_platform);
   /* Используем translate3d, чтобы поправить дергание при наведении в Safari */
   transform: translate3d(100%, 0, 0);
 
   --vkui_internal--search_icon_size: calc(var(--vkui_internal--search_height) + 4px);
 }
 
-.Search__controls--hasIcon {
+.Search--has-icon .Search__controls {
   /* Исключаем параметр icon из расчёта, чтобы он оставался видимым */
   transform: translate3d(calc(100% - var(--vkui_internal--search_icon_size)), 0, 0);
 }
 
-.Search__controls--visible {
+.Search--has-value .Search__controls {
   transform: translate3d(0, 0, 0);
-}
-
-.Search--sizeY-compact .Search__controls {
-  transition: transform 0.3s var(--vkui--animation_easing_platform);
-}
-
-@media (--sizeY-compact) {
-  .Search--sizeY-none .Search__controls {
-    transition: transform 0.3s var(--vkui--animation_easing_platform);
-  }
 }
 
 .Search__icon {

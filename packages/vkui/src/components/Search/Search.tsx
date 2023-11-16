@@ -168,13 +168,7 @@ export const Search = ({
             value={value}
           />
         </div>
-        <div
-          className={classNames(
-            styles['Search__controls'],
-            icon && styles['Search__controls--hasIcon'],
-            value && styles['Search__controls--visible'],
-          )}
-        >
+        <div className={styles['Search__controls']}>
           {icon && (
             <IconButton
               hoverMode="opacity"
