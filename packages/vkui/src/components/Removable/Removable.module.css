@@ -46,6 +46,10 @@
   height: 100%;
 }
 
+/**
+ * [a11y][progressive enhancement]
+ * @see https://github.com/VKCOM/VKUI/issues/2703
+ */
 @media (prefers-reduced-motion: no-preference) {
   .Removable--ios .Removable__content {
     transition: transform 0.6s var(--vkui--animation_easing_platform);
