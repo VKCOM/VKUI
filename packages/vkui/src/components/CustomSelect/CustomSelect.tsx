@@ -11,6 +11,7 @@ import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/selec
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { debounce } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
+import { HasRootRef } from '../../types';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
 import {
@@ -131,7 +132,8 @@ export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
 
 export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
-> extends NativeSelectProps,
+> extends Omit<NativeSelectProps, 'getRootRef'>,
+    HasRootRef<HTMLDivElement>,
     FormFieldProps,
     TrackerOptionsProps {
   /**
@@ -251,7 +253,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const { sizeY = 'none' } = useAdaptivity();
 
-  const containerRef = React.useRef<HTMLLabelElement>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const handleRootRef = useExternRef(containerRef, getRootRef);
   const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
   const selectElRef = useExternRef(getRef);
@@ -385,6 +387,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       if (!opened) {
         setOpened(true);
       }
+      setFocusedOptionIndex(-1);
       const fullInput = keyboardInput + key;
 
       setKeyboardInput(fullInput);
@@ -512,7 +515,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
    * Нужен для правильного поведения обработчика onClick на select. Фильтрует клики, которые были сделаны по
    * выпадающему списку.
    */
-  const onLabelClick = React.useCallback((e: React.MouseEvent<HTMLLabelElement>) => {
+  const onLabelClick = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (scrollBoxRef.current?.contains(e.target as Node)) {
       e.preventDefault();
     }
@@ -592,6 +595,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           if (!opened) {
             setOpened(true);
           }
+          setFocusedOptionIndex(-1);
 
           break;
         }
@@ -738,7 +742,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         />
       </div>
     );
-  }, [clearButtonShown, iconProp, opened]);
+  }, [clearButtonShown, iconProp, opened, onClick]);
 
   const afterIcons = (icon || clearButtonShown) && (
     <React.Fragment>
@@ -748,11 +752,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   );
 
   const ariaActiveDescendantOptionIndex: undefined | number =
-    focusedOptionIndex !== -1
-      ? focusedOptionIndex
-      : selectedOptionIndex !== -1
-      ? selectedOptionIndex
-      : undefined;
+    focusedOptionIndex !== -1 ? focusedOptionIndex : undefined;
   const ariaActiveDescendantId =
     ariaActiveDescendantOptionIndex !== undefined
       ? options[ariaActiveDescendantOptionIndex] && options[ariaActiveDescendantOptionIndex].value
