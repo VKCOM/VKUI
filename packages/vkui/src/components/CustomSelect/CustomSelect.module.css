@@ -65,19 +65,7 @@
   }
 }
 
-.CustomSelect__mimicry {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  pointer-events: none;
-}
-
 /* stylelint-disable-next-line selector-max-type */
 .CustomSelect__input--cursor-pointer input {
   cursor: pointer;
-}
-
-.CustomSelect__mimicry--empty {
-  color: var(--vkui--color_text_secondary);
 }

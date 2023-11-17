@@ -30,7 +30,11 @@ export const CustomSelectInputForeground = ({
   return (
     <RootComponent
       Component="div"
-      className={classNames(styles['Select__container'], className)}
+      className={classNames(
+        styles['Select__container'],
+        styles['Select__input-foreground'],
+        className,
+      )}
       {...restProps}
     >
       <SelectTypography selectType={selectType} className={styles['Select__title']}>

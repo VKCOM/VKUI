@@ -7,7 +7,7 @@
 ```jsx { "props": { "layout": false, "iframe": false } }
 const getUsers = (usersArray) =>
   usersArray.map((user) => ({
-    label: <Text>{user.name}</Text>,
+    label: user.name,
     value: `${user.id}`,
     avatar: user.photo_100,
     description: user.screen_name,
@@ -238,15 +238,22 @@ const CustomSearchAlgoSelect = () => {
     option.description.toLowerCase().includes(value.toLowerCase());
 
   return (
-    <CustomSelect
-      placeholder="Введите название города или страны"
-      searchable
-      filterFn={customSearchFilter}
-      renderOption={({ option, ...restProps }) => (
-        <CustomSelectOption {...restProps} description={option.description} />
-      )}
-      options={cities}
-    />
+    <React.Fragment>
+      <label for="city-select-id" id="city-select-label-id">
+        Город:{' '}
+      </label>
+      <CustomSelect
+        id="city-select-id"
+        aria-labelledby="city-select-label-id"
+        placeholder="Введите название города или страны"
+        searchable
+        filterFn={customSearchFilter}
+        renderOption={({ option, ...restProps }) => (
+          <CustomSelectOption {...restProps} description={option.description} />
+        )}
+        options={cities}
+      />
+    </React.Fragment>
   );
 };
 

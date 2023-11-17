@@ -850,11 +850,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
             <CustomSelectInputForeground
               tabIndex={-1}
               aria-hidden
-              className={classNames(
-                openedClassNames,
-                styles['CustomSelect__mimicry'],
-                !selected && styles['CustomSelect__mimicry--empty'],
-              )}
+              className={openedClassNames}
               selectType={selectType}
             >
               {selected.label}
