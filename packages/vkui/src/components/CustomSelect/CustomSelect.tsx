@@ -6,6 +6,7 @@ import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useId } from '../../hooks/useId';
 import { useTimeout } from '../../hooks/useTimeout';
 import { SizeType } from '../../lib/adaptivity';
+import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -509,16 +510,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     ],
   );
 
-  /**
-   * Нужен для правильного поведения обработчика onClick на select. Фильтрует клики, которые были сделаны по
-   * выпадающему списку.
-   */
-  const onLabelClick = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (scrollBoxRef.current?.contains(e.target as Node)) {
-      e.preventDefault();
-    }
-  }, []);
-
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const newSelectedOptionIndex = findSelectedIndex(
       options,
@@ -707,8 +698,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const clearButtonShown =
     allowClearButton && !opened && (controlledValueSet || uncontrolledValueSet);
 
-  const selectInputRef = React.useRef<HTMLInputElement | null>(null);
-  const focusOnInput = useTimeout(() => selectInputRef.current?.focus(), 0);
   const clearButton = React.useMemo(() => {
     if (!clearButtonShown) {
       return null;
@@ -718,14 +707,13 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       <ClearButton
         className={iconProp === undefined ? styles['CustomSelect--clear-icon'] : undefined}
         onClick={() => {
-          focusOnInput.set();
           setNativeSelectValue('');
           setInputValue('');
         }}
         disabled={restProps.disabled}
       />
     );
-  }, [clearButtonShown, ClearButton, iconProp, restProps.disabled, focusOnInput]);
+  }, [clearButtonShown, ClearButton, iconProp, restProps.disabled]);
 
   const icon = React.useMemo(() => {
     if (iconProp !== undefined) {
@@ -733,14 +721,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
 
     return (
-      <div onClick={onClick} className={styles['CustomSelect__dropdown-icon-wrapper']}>
+      <div className={styles['CustomSelect__dropdown-icon-wrapper']}>
         <DropdownIcon
           className={clearButtonShown ? styles['CustomSelect__dropdown-icon'] : undefined}
           opened={opened}
         />
       </div>
     );
-  }, [clearButtonShown, iconProp, opened, onClick]);
+  }, [clearButtonShown, iconProp, opened]);
 
   const afterIcons = (icon || clearButtonShown) && (
     <React.Fragment>
@@ -748,6 +736,34 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       {icon}
     </React.Fragment>
   );
+
+  const { document } = useDOM();
+  const selectInputRef = React.useRef<HTMLInputElement | null>(null);
+  const focusOnInput = useTimeout(() => selectInputRef.current?.focus(), 0);
+  const passClickAndFocusToInputOnClick = React.useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!selectInputRef.current || !document) {
+        return;
+      }
+
+      if (e.target !== selectInputRef.current) {
+        selectInputRef.current.click();
+
+        if (document.activeElement !== selectInputRef.current) {
+          focusOnInput.set();
+        }
+      }
+    },
+    [document, focusOnInput],
+  );
+
+  const preventInputBlurWhenClickInsideFocusedSelectArea = (
+    e: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    if (document?.activeElement === selectInputRef.current) {
+      e.preventDefault();
+    }
+  };
 
   const ariaActiveDescendantOptionIndex: undefined | number =
     focusedOptionIndex !== -1 ? focusedOptionIndex : undefined;
@@ -786,7 +802,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       )}
       style={style}
       ref={handleRootRef}
-      onClick={onLabelClick}
+      onClick={passClickAndFocusToInputOnClick}
+      onMouseDown={preventInputBlurWhenClickInsideFocusedSelectArea}
     >
       {focusWithin && selected && !opened && (
         <VisuallyHidden aria-live="polite">{selected?.label}</VisuallyHidden>
