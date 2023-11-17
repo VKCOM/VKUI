@@ -56,14 +56,6 @@
   }
 }
 
-.Select__input-foreground {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  pointer-events: none;
-}
-
 .Select__title {
   display: block;
 }

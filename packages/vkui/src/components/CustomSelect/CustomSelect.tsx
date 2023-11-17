@@ -8,7 +8,7 @@ import { useTimeout } from '../../hooks/useTimeout';
 import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
-import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/select';
+import { defaultFilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { debounce } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
@@ -20,13 +20,12 @@ import {
 } from '../CustomSelectOption/CustomSelectOption';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormFieldProps } from '../FormField/FormField';
-import { Input } from '../Input/Input';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import { SelectType } from '../Select/Select';
+import { SelectInput } from '../Select/SelectInput';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { CustomSelectClearButton, CustomSelectClearButtonProps } from './CustomSelectClearButton';
-import { CustomSelectInputForeground } from './CustomSelectInputForeground';
 import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
@@ -822,7 +821,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       {focusWithin && selected && !opened && (
         <VisuallyHidden aria-live="polite">{selected.label}</VisuallyHidden>
       )}
-      <Input
+      <SelectInput
         autoComplete="off"
         {...restProps}
         {...selectInputAriaProps}
@@ -842,22 +841,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onClick={onClick}
         before={before}
         after={afterIcons}
-        mode={getFormFieldModeFromSelectType(selectType)}
+        selectType={selectType}
         placeholder={withInputForeground ? '' : restProps.placeholder}
-        inputForeground={
-          withInputForeground &&
-          selected && (
-            <CustomSelectInputForeground
-              tabIndex={-1}
-              aria-hidden
-              className={openedClassNames}
-              selectType={selectType}
-            >
-              {selected.label}
-            </CustomSelectInputForeground>
-          )
-        }
-      />
+        showLabel={Boolean(withInputForeground && selected)}
+      >
+        {selected?.label}
+      </SelectInput>
       <select
         ref={selectElRef}
         name={name}
