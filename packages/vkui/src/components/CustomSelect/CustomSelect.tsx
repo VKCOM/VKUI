@@ -263,7 +263,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const [nativeSelectValue, setNativeSelectValue] = React.useState(
     () => props.value ?? props.defaultValue ?? (allowClearButton ? '' : undefined),
   );
-  const [keyboardInput, setKeyboardInput] = React.useState('');
   const [popperPlacement, setPopperPlacement] = React.useState<PlacementWithAuto | undefined>(
     undefined,
   );
@@ -307,10 +306,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [dropdownOffsetDistance, opened, popperPlacement],
   );
 
-  const resetKeyboardInput = React.useCallback(() => {
-    setKeyboardInput('');
-  }, []);
-
   const scrollToElement = React.useCallback((index: number, center = false) => {
     const dropdown = scrollBoxRef.current;
     const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
@@ -332,13 +327,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       dropdown.scrollTop = itemTop;
     }
   }, []);
-
-  const isValidIndex = React.useCallback(
-    (index: number) => {
-      return index >= 0 && index < (options.length ?? 0);
-    },
-    [options.length],
-  );
 
   const focusOptionByIndex = React.useCallback(
     (index: number | undefined, scrollTo = true) => {
@@ -364,9 +352,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [options, scrollToElement],
   );
 
-  const areOptionsShown = React.useCallback(() => {
-    return scrollBoxRef.current !== null;
-  }, []);
+  const isValidIndex = React.useCallback(
+    (index: number) => {
+      return index >= 0 && index < (options.length ?? 0);
+    },
+    [options.length],
+  );
 
   const setScrollBoxRef = React.useCallback(
     (ref: HTMLDivElement | null) => {
@@ -380,6 +371,11 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     },
     [isValidIndex, scrollToElement, selectedOptionIndex],
   );
+
+  const [keyboardInput, setKeyboardInput] = React.useState('');
+  const resetKeyboardInput = React.useCallback(() => {
+    setKeyboardInput('');
+  }, []);
 
   const onKeyboardInput = React.useCallback(
     (key: string) => {
@@ -549,6 +545,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     },
     [filterFn, nativeSelectValue, onInputChangeProp, optionsProp, allowClearButton],
   );
+
+  const areOptionsShown = React.useCallback(() => {
+    return scrollBoxRef.current !== null;
+  }, []);
 
   const handleKeyDownSelect = React.useCallback(
     (event: React.KeyboardEvent) => {
@@ -740,6 +740,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const { document } = useDOM();
   const selectInputRef = React.useRef<HTMLInputElement | null>(null);
   const focusOnInput = useTimeout(() => selectInputRef.current?.focus(), 0);
+
   const passClickAndFocusToInputOnClick = React.useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (!selectInputRef.current || !document) {
