@@ -21,7 +21,7 @@ const sizeYClassNames = {
 export interface NativeSelectProps
   extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'multiple'>,
     HasRef<HTMLSelectElement>,
-    HasRootRef<HTMLElement>,
+    HasRootRef<HTMLDivElement>,
     HasAlign,
     Pick<FormFieldProps, 'before' | 'status'> {
   placeholder?: string;

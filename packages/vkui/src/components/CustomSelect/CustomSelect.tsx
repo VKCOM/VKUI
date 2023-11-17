@@ -11,7 +11,6 @@ import { defaultFilterFn, getFormFieldModeFromSelectType } from '../../lib/selec
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { debounce } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasRootRef } from '../../types';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
 import {
@@ -132,8 +131,7 @@ export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
 
 export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
-> extends Omit<NativeSelectProps, 'getRootRef'>,
-    HasRootRef<HTMLDivElement>,
+> extends NativeSelectProps,
     FormFieldProps,
     TrackerOptionsProps {
   /**
