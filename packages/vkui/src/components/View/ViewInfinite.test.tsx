@@ -486,6 +486,6 @@ function setupSwipeBack({
     </Wrapper>
   );
   const component = render(<SwipeBack />);
-  runAllTimers;
+  runAllTimers();
   return { view: component.getByTestId('view'), ...events, ...component, SwipeBack };
 }
