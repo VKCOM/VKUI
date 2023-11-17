@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { noop } from '@vkontakte/vkjs';
-import { ModalType } from './types';
 import { modalTransitionReducer, useModalManager } from './useModalManager';
 
 const MockModal = (p: any) => <div {...p} />;
@@ -79,9 +78,9 @@ describe(useModalManager, () => {
       });
     });
     it.each([
-      [ModalType.CARD, ModalType.CARD, true],
-      [ModalType.PAGE, ModalType.PAGE, false],
-    ])('transitions %s -> %s with delay=%s', (t1, t2, delayEnter) => {
+      ['card', 'card', true],
+      ['page', 'page', false],
+    ] as const)('transitions %s -> %s with delay=%s', (t1, t2, delayEnter) => {
       const handle = flushMount('m1');
       handle.result.current.getModalState('m1')!.type = t1;
       handle.result.current.getModalState('m2')!.type = t2;

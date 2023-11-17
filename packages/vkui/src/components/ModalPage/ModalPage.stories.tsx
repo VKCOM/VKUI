@@ -3,7 +3,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUser, getRandomUsers } from '../../testing/mock';
@@ -76,13 +75,11 @@ export const DynamicModalPage: Story = {
             <ModalPageHeader
               before={
                 sizeX.compact &&
-                platform === Platform.ANDROID && (
-                  <AndroidCloseButton className={sizeX.compact.className} />
-                )
+                platform === 'android' && <AndroidCloseButton className={sizeX.compact.className} />
               }
               after={
                 sizeX.compact &&
-                platform === Platform.IOS && <IosCloseButton className={sizeX.compact.className} />
+                platform === 'ios' && <IosCloseButton className={sizeX.compact.className} />
               }
             >
               Dynamic modal
@@ -109,16 +106,14 @@ export const FullscreenModalPage: Story = {
         <ModalPage
           id={MODAL_PAGE_FULLSCREEN}
           settlingHeight={100}
-          hideCloseButton={platform === Platform.IOS}
+          hideCloseButton={platform === 'ios'}
           header={
             <ModalPageHeader
               before={
                 sizeX.compact &&
-                platform === Platform.ANDROID && (
-                  <AndroidCloseButton className={sizeX.compact.className} />
-                )
+                platform === 'android' && <AndroidCloseButton className={sizeX.compact.className} />
               }
-              after={platform === Platform.IOS && <IosCloseButton />}
+              after={platform === 'ios' && <IosCloseButton />}
             >
               @{randomUser.screen_name}
             </ModalPageHeader>

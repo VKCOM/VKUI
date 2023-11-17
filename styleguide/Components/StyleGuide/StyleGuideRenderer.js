@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Appearance, AppRoot, ConfigProvider, Platform } from '@vkui';
+import { AppRoot, ConfigProvider } from '@vkui';
 import { BREAKPOINTS } from '@vkui/lib/adaptivity';
 import { useViewPortSize } from '../../utils';
 import { SMALL_HEIGHT } from '../Settings/ViewHeightSelect';
@@ -8,12 +8,12 @@ import { StyleGuideMobile } from './StyleGuideMobile';
 import './StyleGuideRenderer.css';
 
 let initialState = {
-  platform: Platform.ANDROID,
+  platform: 'android',
   width: BREAKPOINTS.MOBILE,
   height: SMALL_HEIGHT,
   hasPointer: true,
-  appearance: Appearance.LIGHT,
-  styleguideAppearance: Appearance.LIGHT,
+  appearance: 'light',
+  styleguideAppearance: 'light',
   hasCustomPanelHeaderAfter: true,
   transitionMotionEnabled: true,
   layout: undefined,
@@ -51,13 +51,13 @@ let StyleGuideRenderer = ({ children, toc }) => {
   );
 
   useEffect(() => {
-    if (platform === Platform.VKCOM) {
+    if (platform === 'vkcom') {
       setContext({ hasPointer: true, width: BREAKPOINTS.TABLET });
     }
   }, [platform]);
 
   const switchStyleGuideAppearance = useCallback(() => {
-    const value = styleguideAppearance === Appearance.DARK ? Appearance.LIGHT : Appearance.DARK;
+    const value = styleguideAppearance === 'dark' ? 'light' : 'dark';
     setContext({
       styleguideAppearance: value,
       appearance: value,
@@ -74,7 +74,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
   return (
     <StyleGuideContext.Provider value={providerValue}>
       <ConfigProvider
-        platform={Platform.ANDROID}
+        platform="android"
         appearance={styleguideAppearance}
         transitionMotionEnabled={false}
         hasCustomPanelHeaderAfter={false}

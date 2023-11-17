@@ -2,7 +2,6 @@ import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
@@ -196,7 +195,7 @@ describe('Tappable', () => {
       const waveCount = () => document.querySelectorAll(`.${styles.Tappable__wave}`).length;
       render(
         <AdaptivityProvider hasPointer={false}>
-          <ConfigProvider platform={Platform.ANDROID}>
+          <ConfigProvider platform="android">
             <Tappable data-testid="x" />
           </ConfigProvider>
         </AdaptivityProvider>,

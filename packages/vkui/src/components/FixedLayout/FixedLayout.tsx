@@ -4,7 +4,6 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
-import { Platform } from '../../lib/platform';
 import { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
@@ -89,7 +88,7 @@ export const FixedLayout = ({
       ref={ref}
       className={classNames(
         styles['FixedLayout'],
-        platform === Platform.IOS && 'vkuiInternalFixedLayout--ios',
+        platform === 'ios' && 'vkuiInternalFixedLayout--ios',
         filled && styles['FixedLayout--filled'],
         vertical && stylesVertical[vertical],
         className,

@@ -4,7 +4,6 @@ import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { Platform } from '../../lib/platform';
 import { animationEvent, transitionEvent } from '../../lib/supportEvents';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasPlatform, HTMLAttributesWithRootRef } from '../../types';
@@ -26,11 +25,6 @@ import {
 import styles from './View.module.css';
 
 const warn = warnOnce('ViewInfinite');
-
-enum SwipeBackResults {
-  fail = 1,
-  success,
-}
 
 interface Scrolls {
   [index: string]: Array<number | undefined>;
@@ -94,7 +88,7 @@ export interface ViewInfiniteState {
   swipeBackShift: number;
   swipeBackNextPanel: string | null;
   swipeBackPrevPanel: string | null;
-  swipeBackResult: SwipeBackResults | null;
+  swipeBackResult: 'success' | 'fail' | null;
 
   browserSwipe: boolean;
 }
@@ -208,9 +202,7 @@ class ViewInfiniteComponent extends React.Component<
           }
           this.animationFinishTimeout = setTimeout(
             this.transitionEndHandler,
-            this.props.platform === Platform.ANDROID || this.props.platform === Platform.VKCOM
-              ? 300
-              : 600,
+            this.props.platform === 'android' || this.props.platform === 'vkcom' ? 300 : 600,
           );
         }
       }
@@ -269,7 +261,7 @@ class ViewInfiniteComponent extends React.Component<
 
     // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
     if (
-      prevState.swipeBackResult === SwipeBackResults.fail &&
+      prevState.swipeBackResult === 'fail' &&
       !this.state.swipeBackResult &&
       this.state.activePanel !== null
     ) {
@@ -300,7 +292,7 @@ class ViewInfiniteComponent extends React.Component<
     return (
       this.props.configProvider?.transitionMotionEnabled === false ||
       !this.props.splitCol?.animate ||
-      this.props.platform === Platform.VKCOM
+      this.props.platform === 'vkcom'
     );
   }
 
@@ -324,9 +316,7 @@ class ViewInfiniteComponent extends React.Component<
 
       this.transitionFinishTimeout = setTimeout(
         eventHandler,
-        this.props.platform === Platform.ANDROID || this.props.platform === Platform.VKCOM
-          ? 300
-          : 600,
+        this.props.platform === 'android' || this.props.platform === 'vkcom' ? 300 : 600,
       );
     }
   }
@@ -398,10 +388,10 @@ class ViewInfiniteComponent extends React.Component<
         e.target === this.pickPanel(this.state.swipeBackNextPanel))
     ) {
       switch (this.state.swipeBackResult) {
-        case SwipeBackResults.fail:
+        case 'fail':
           this.onSwipeBackCancel();
           break;
-        case SwipeBackResults.success:
+        case 'success':
           this.onSwipeBackSuccess();
       }
     }
@@ -512,9 +502,9 @@ class ViewInfiniteComponent extends React.Component<
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {
         this.onSwipeBackSuccess();
       } else if (speed > 250 || this.state.swipeBackShift >= this.window.innerWidth / 2) {
-        this.setState({ swipeBackResult: SwipeBackResults.success });
+        this.setState({ swipeBackResult: 'success' });
       } else {
-        this.setState({ swipeBackResult: SwipeBackResults.fail });
+        this.setState({ swipeBackResult: 'fail' });
       }
     }
   };
@@ -619,10 +609,7 @@ class ViewInfiniteComponent extends React.Component<
 
     const disableAnimation = this.shouldDisableTransitionMotion();
     const iOSSwipeBackSimulationEnabled =
-      !disableAnimation &&
-      platform === Platform.IOS &&
-      configProvider?.isWebView &&
-      Boolean(onSwipeBack);
+      !disableAnimation && platform === 'ios' && configProvider?.isWebView && Boolean(onSwipeBack);
 
     return (
       <NavViewIdContext.Provider value={id || nav}>
@@ -631,7 +618,7 @@ class ViewInfiniteComponent extends React.Component<
           {...restProps}
           className={classNames(
             styles['View'],
-            platform === Platform.IOS && classNames(styles['View--ios'], 'vkuiInternalView--ios'),
+            platform === 'ios' && classNames(styles['View--ios'], 'vkuiInternalView--ios'),
             !disableAnimation && this.state.animated && styles['View--animated'],
             !disableAnimation && this.state.swipingBack && styles['View--swiping-back'],
             disableAnimation && styles['View--no-motion'],
@@ -640,7 +627,7 @@ class ViewInfiniteComponent extends React.Component<
           onMoveX={
             iOSSwipeBackSimulationEnabled
               ? this.handleTouchMoveXForIOSSwipeBackSimulation
-              : platform === Platform.IOS
+              : platform === 'ios'
               ? this.handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
               : undefined
           }
@@ -667,10 +654,8 @@ class ViewInfiniteComponent extends React.Component<
                     panelId === nextPanel && styles['View__panel--next'],
                     panelId === swipeBackPrevPanel && styles['View__panel--swipe-back-prev'],
                     panelId === swipeBackNextPanel && styles['View__panel--swipe-back-next'],
-                    swipeBackResult === SwipeBackResults.success &&
-                      styles['View__panel--swipe-back-success'],
-                    swipeBackResult === SwipeBackResults.fail &&
-                      styles['View__panel--swipe-back-failed'],
+                    swipeBackResult === 'success' && styles['View__panel--swipe-back-success'],
+                    swipeBackResult === 'fail' && styles['View__panel--swipe-back-failed'],
                   )}
                   onAnimationEnd={isTransitionTarget ? this.transitionEndHandler : undefined}
                   ref={(el) => panelId !== undefined && (this.panelNodes[panelId] = el)}

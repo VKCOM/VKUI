@@ -1,11 +1,13 @@
 import type { Exact } from '../../types';
-import { Platform, type PlatformType } from '../platform';
+import { type PlatformType } from '../platform';
 import {
   BREAKPOINTS,
-  SizeType,
+  SizeTypeValues,
   VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP,
   ViewHeight,
+  ViewHeightType,
   ViewWidth,
+  ViewWidthType,
 } from './constants';
 import type { CSSBreakpointsClassNames, MediaQueries } from './types';
 
@@ -28,7 +30,7 @@ export function getViewWidthByViewportWidth(viewportWidth: number) {
   return ViewWidth.SMALL_MOBILE;
 }
 
-export function getViewWidthByMediaQueries(mediaQueries: MediaQueries): ViewWidth {
+export function getViewWidthByMediaQueries(mediaQueries: MediaQueries): ViewWidthType {
   /* eslint-disable no-restricted-properties */
   if (mediaQueries.desktopPlus.matches) {
     return ViewWidth.DESKTOP;
@@ -59,7 +61,7 @@ export function getViewHeightByViewportHeight(viewportHeight: number) {
   return ViewHeight.EXTRA_SMALL;
 }
 
-export function getViewHeightByMediaQueries(mediaQueries: MediaQueries): ViewHeight {
+export function getViewHeightByMediaQueries(mediaQueries: MediaQueries): ViewHeightType {
   /* eslint-disable no-restricted-properties */
   if (mediaQueries.mediumHeight.matches) {
     return ViewHeight.MEDIUM;
@@ -71,19 +73,19 @@ export function getViewHeightByMediaQueries(mediaQueries: MediaQueries): ViewHei
   return ViewHeight.EXTRA_SMALL;
 }
 
-export function getSizeX(viewWidth: ViewWidth): SizeType {
-  return viewWidth <= ViewWidth.MOBILE ? SizeType.COMPACT : SizeType.REGULAR;
+export function getSizeX(viewWidth: ViewWidthType): SizeTypeValues {
+  return viewWidth <= ViewWidth.MOBILE ? 'compact' : 'regular';
 }
 
 export function getSizeY(
-  viewWidth: ViewWidth,
-  viewHeight: ViewHeight,
+  viewWidth: ViewWidthType,
+  viewHeight: ViewHeightType,
   hasPointer: boolean,
-): SizeType {
+): SizeTypeValues {
   if ((viewWidth >= ViewWidth.SMALL_TABLET && hasPointer) || viewHeight <= ViewHeight.EXTRA_SMALL) {
-    return SizeType.COMPACT;
+    return 'compact';
   }
-  return SizeType.REGULAR;
+  return 'regular';
 }
 
 /**
@@ -93,22 +95,22 @@ export function getSizeY(
  *
  * Возвращаем `null` в случае, если у нас недостаточно данных, чтобы определить платформу.
  *
- * ⚠️ При передаче Platform.VKCOM всегда будет возвращать `true`.
+ * ⚠️ При передаче 'vkcom' всегда будет возвращать `true`.
  */
-export function tryToCheckIsDesktop(viewWidth: ViewWidth, viewHeight: ViewHeight, hasPointer: undefined | boolean, platform?: PlatformType): boolean; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: ViewWidth, viewHeight: undefined, hasPointer: boolean, platform?: PlatformType): boolean; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined | ViewWidth, viewHeight: undefined, hasPointer: undefined, platform?: PlatformType): null; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined, viewHeight: undefined | ViewHeight, hasPointer: undefined, platform?: PlatformType): null; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: ViewWidthType, viewHeight: ViewHeightType, hasPointer: undefined | boolean, platform?: PlatformType): boolean; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: ViewWidthType, viewHeight: undefined, hasPointer: boolean, platform?: PlatformType): boolean; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: undefined | ViewWidthType, viewHeight: undefined, hasPointer: undefined, platform?: PlatformType): null; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: undefined, viewHeight: undefined | ViewHeightType, hasPointer: undefined, platform?: PlatformType): null; // prettier-ignore
 export function tryToCheckIsDesktop(viewWidth: undefined, viewHeight: undefined, hasPointer: undefined | boolean, platform?: PlatformType): null; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined | ViewWidth, viewHeight: undefined | ViewHeight, hasPointer: undefined | boolean, platform?: PlatformType): null | boolean; // prettier-ignore
+export function tryToCheckIsDesktop(viewWidth: undefined | ViewWidthType, viewHeight: undefined | ViewHeightType, hasPointer: undefined | boolean, platform?: PlatformType): null | boolean; // prettier-ignore
 export function tryToCheckIsDesktop(
-  viewWidth: undefined | ViewWidth,
-  viewHeight: undefined | ViewHeight,
+  viewWidth: undefined | ViewWidthType,
+  viewHeight: undefined | ViewHeightType,
   hasPointer: undefined | boolean,
   platform?: PlatformType,
 ): null | boolean {
   // см. https://github.com/VKCOM/VKUI/pull/2473
-  const IS_VKCOM_CRUTCH = platform === Platform.VKCOM;
+  const IS_VKCOM_CRUTCH = platform === 'vkcom';
 
   if (
     ((viewWidth === undefined || hasPointer === undefined) &&
@@ -133,7 +135,7 @@ export function tryToCheckIsDesktop(
  */
 export function viewWidthToClassName<T extends Partial<CSSBreakpointsClassNames>>(
   breakpointClassNames: Exact<CSSBreakpointsClassNames, T>,
-  viewWidth: ViewWidth | 'none' = 'none',
+  viewWidth: ViewWidthType | 'none' = 'none',
 ): string | null {
   if (viewWidth === 'none') {
     return breakpointClassNames.hasOwnProperty('none') ? breakpointClassNames['none']! : null;

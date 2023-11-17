@@ -9,7 +9,6 @@ import {
   Icon28SettingsOutline,
 } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
@@ -57,7 +56,7 @@ export const PanelHeaderWithCounter: Story = {
       <View id="main" activePanel="panel1">
         <Panel id="panel1">
           <PanelHeader
-            before={<PanelHeaderBack label={platform === Platform.VKCOM ? 'Назад' : undefined} />}
+            before={<PanelHeaderBack label={platform === 'vkcom' ? 'Назад' : undefined} />}
             after={
               <PanelHeaderButton
                 aria-label="Изображения"
@@ -135,7 +134,7 @@ export const PanelHeaderWithSearch: Story = {
     return (
       <View id="main" activePanel="panel1">
         <Panel id="panel1">
-          <PanelHeader before={platform !== Platform.VKCOM && <PanelHeaderBack />}>
+          <PanelHeader before={platform !== 'vkcom' && <PanelHeaderBack />}>
             <Search />
           </PanelHeader>
           <Div>Search</Div>

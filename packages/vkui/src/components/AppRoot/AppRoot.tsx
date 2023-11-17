@@ -4,7 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAppearance } from '../../hooks/useAppearance';
 import { useInsets } from '../../hooks/useInsets';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
-import { SizeType } from '../../lib/adaptivity';
+import { SizeTypeValues } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -24,12 +24,12 @@ export type SafeAreaInsets = {
 
 const vkuiSizeXClassNames = {
   none: 'vkui--sizeX-none',
-  [SizeType.REGULAR]: 'vkui--sizeX-regular',
+  ['regular']: 'vkui--sizeX-regular',
 };
 
 const vkuiSizeYClassNames = {
   none: 'vkui--sizeY-none',
-  [SizeType.COMPACT]: 'vkui--sizeY-compact',
+  ['compact']: 'vkui--sizeY-compact',
 };
 
 const vkuiLayoutClassNames = {
@@ -39,8 +39,8 @@ const vkuiLayoutClassNames = {
 
 function containerClassNames(
   layout: AppRootProps['layout'],
-  sizeX: SizeType | 'none',
-  sizeY: SizeType | 'none',
+  sizeX: SizeTypeValues | 'none',
+  sizeY: SizeTypeValues | 'none',
 ): string[] {
   const classNames: string[] = [];
 
@@ -48,11 +48,11 @@ function containerClassNames(
     classNames.push(vkuiLayoutClassNames[layout]);
   }
 
-  if (sizeX !== SizeType.COMPACT) {
+  if (sizeX !== 'compact') {
     classNames.push(vkuiSizeXClassNames[sizeX]);
   }
 
-  if (sizeY !== SizeType.REGULAR) {
+  if (sizeY !== 'regular') {
     classNames.push(vkuiSizeYClassNames[sizeY]);
   }
 

@@ -2,15 +2,15 @@ import * as React from 'react';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
-import { BREAKPOINTS, SizeType } from '../../lib/adaptivity';
+import { BREAKPOINTS } from '../../lib/adaptivity';
 import type { AppearanceType } from '../../lib/appearance';
-import { Platform } from '../../lib/platform';
+import { PlatformType } from '../../lib/platform';
 import { AppDefaultWrapper, type AppWrapperProps } from './AppDefaultWrapper';
 import { TEST_CLASS_NAMES } from './constants';
 import { getAdaptivePxWidth, multiCartesian, prettyProps } from './utils';
 
 export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'div'>> {
-  platform: Platform;
+  platform: PlatformType;
   appearance: AppearanceType;
   adaptivityProviderProps?: Partial<AdaptivityProps>;
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
@@ -37,9 +37,9 @@ export const ComponentPlayground = <
   AppWrapper = AppDefaultWrapper,
   ...restProps
 }: InternalComponentPlaygroundProps<Props>) => {
-  const isVKCOM = platform === Platform.VKCOM;
+  const isVKCOM = platform === 'vkcom';
   const adaptivityProviderProps: AdaptivityProps = Object.assign(
-    isVKCOM ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
+    isVKCOM ? { sizeX: 'compact', sizeY: 'compact' } : {},
     adaptivityProviderPropsProp,
   );
 

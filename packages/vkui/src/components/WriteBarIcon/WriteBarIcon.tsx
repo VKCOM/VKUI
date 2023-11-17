@@ -12,7 +12,6 @@ import {
 } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { Counter } from '../Counter/Counter';
@@ -54,24 +53,24 @@ export const WriteBarIcon = ({
   switch (mode) {
     case 'attach':
       predefinedIcons = {
-        IconCompact: platform === Platform.IOS ? Icon28AddCircleOutline : Icon24Attach,
-        IconRegular: platform === Platform.IOS ? Icon28AddCircleOutline : Icon28AttachOutline,
+        IconCompact: platform === 'ios' ? Icon28AddCircleOutline : Icon24Attach,
+        IconRegular: platform === 'ios' ? Icon28AddCircleOutline : Icon28AttachOutline,
       };
       modeLabel = 'Прикрепить файл';
       break;
 
     case 'send':
       predefinedIcons = {
-        IconCompact: platform === Platform.IOS ? Icon48WritebarSend : Icon24Send,
-        IconRegular: platform === Platform.IOS ? Icon48WritebarSend : Icon28Send,
+        IconCompact: platform === 'ios' ? Icon48WritebarSend : Icon24Send,
+        IconRegular: platform === 'ios' ? Icon48WritebarSend : Icon28Send,
       };
       modeLabel = 'Отправить';
       break;
 
     case 'done':
       predefinedIcons = {
-        IconCompact: platform === Platform.IOS ? Icon48WritebarDone : Icon24CheckCircleOutline,
-        IconRegular: platform === Platform.IOS ? Icon48WritebarDone : Icon28CheckCircleOutline,
+        IconCompact: platform === 'ios' ? Icon48WritebarDone : Icon24CheckCircleOutline,
+        IconRegular: platform === 'ios' ? Icon48WritebarDone : Icon28CheckCircleOutline,
       };
       modeLabel = 'Готово';
       break;
@@ -97,7 +96,7 @@ export const WriteBarIcon = ({
       activeMode={styles['WriteBarIcon__active']}
       className={classNames(
         styles['WriteBarIcon'],
-        platform === Platform.IOS && styles['WriteBarIcon--ios'],
+        platform === 'ios' && styles['WriteBarIcon--ios'],
         mode === 'send' && styles['WriteBarIcon--mode-send'],
         mode === 'done' && styles['WriteBarIcon--mode-done'],
         className,

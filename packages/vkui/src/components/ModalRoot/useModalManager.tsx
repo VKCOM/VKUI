@@ -4,7 +4,7 @@ import { getNavId } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasChildren } from '../../types';
-import { ModalsState, ModalsStateEntry, ModalType } from './types';
+import { ModalsState, ModalsStateEntry } from './types';
 
 interface ModalTransitionState {
   activeModal?: string | null;
@@ -142,8 +142,7 @@ export function useModalManager(
     }
   }, [transitionState.activeModal]);
 
-  const isCard = (id: string | null | undefined) =>
-    id != null && modalsState[id]?.type === ModalType.CARD;
+  const isCard = (id: string | null | undefined) => id != null && modalsState[id]?.type === 'card';
   const onEntered = React.useCallback(
     (id: string | null) => {
       if (id) {

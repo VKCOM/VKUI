@@ -3,11 +3,13 @@ import { LiteralUnion } from '../types';
 import { BrowserInfo, computeBrowserInfo } from './browser';
 import { canUseDOM } from './dom';
 
-export enum Platform {
-  ANDROID = 'android',
-  IOS = 'ios',
-  VKCOM = 'vkcom',
-}
+type PlatformUnion = 'android' | 'ios' | 'vkcom';
+
+export const Platform = {
+  ANDROID: 'android',
+  IOS: 'ios',
+  VKCOM: 'vkcom',
+} as const;
 
 /**
  * TODO [>=6]: удалить из VKUI
@@ -17,8 +19,8 @@ export enum Platform {
  *
  * @deprecated v5.8.0
  */
-function getPlatformByQueryString(queryString: string): Platform | undefined {
-  const PLATFORM_ALIAS = { desktop_web: Platform.VKCOM };
+function getPlatformByQueryString(queryString: string): PlatformUnion | undefined {
+  const PLATFORM_ALIAS = { desktop_web: 'vkcom' } as const;
   const isPlatformAlias = (platformAlias: string): platformAlias is keyof typeof PLATFORM_ALIAS =>
     platformAlias in PLATFORM_ALIAS;
   try {
@@ -35,9 +37,9 @@ function getPlatformByQueryString(queryString: string): Platform | undefined {
 
 const platformByQueryString = canUseDOM ? getPlatformByQueryString(location.search) : undefined;
 
-export type PlatformType = LiteralUnion<'android' | 'ios' | 'vkcom', string>;
+export type PlatformType = LiteralUnion<PlatformUnion, string>;
 
-export function platform(browserInfo?: BrowserInfo): PlatformType {
+export function platform(browserInfo?: BrowserInfo): PlatformUnion {
   if (platformByQueryString) {
     return platformByQueryString;
   }
@@ -46,5 +48,5 @@ export function platform(browserInfo?: BrowserInfo): PlatformType {
     browserInfo = computeBrowserInfo();
   }
 
-  return browserInfo.system === 'ios' ? Platform.IOS : Platform.ANDROID;
+  return browserInfo.system === 'ios' ? 'ios' : 'android';
 }

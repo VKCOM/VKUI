@@ -41,7 +41,7 @@ const Example = () => {
             before={
               <PanelHeaderBack
                 onClick={() => setMainPanel('panel1')}
-                label={platform === Platform.VKCOM ? 'Назад' : undefined}
+                label={platform === 'vkcom' ? 'Назад' : undefined}
               />
             }
             after={
@@ -130,7 +130,7 @@ const Example = () => {
             before={
               <PanelHeaderBack
                 onClick={() => setModalPanel('modal-panel1')}
-                label={platform === Platform.VKCOM ? 'Назад' : undefined}
+                label={platform === 'vkcom' ? 'Назад' : undefined}
               />
             }
           >
@@ -145,7 +145,7 @@ const Example = () => {
         <Panel id="modal-panel3">
           <PanelHeader
             before={
-              platform !== Platform.VKCOM && (
+              platform !== 'vkcom' && (
                 <PanelHeaderBack onClick={() => setModalPanel('modal-panel2')} />
               )
             }
@@ -154,7 +154,7 @@ const Example = () => {
           </PanelHeader>
           <Group>
             <CellButton onClick={() => setModalPanel('modal-panel4')}>Табы</CellButton>
-            {platform === Platform.VKCOM && (
+            {platform === 'vkcom' && (
               <CellButton onClick={() => setModalPanel('modal-panel2')}>Сложный контент</CellButton>
             )}
           </Group>

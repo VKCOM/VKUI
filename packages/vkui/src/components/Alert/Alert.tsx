@@ -5,7 +5,6 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { useId } from '../../hooks/useId';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
-import { Platform } from '../../lib/platform';
 import { stopPropagation } from '../../lib/utils';
 import { AlignType, AnchorHTMLAttributesOnly, HasDataAttribute, HasRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
@@ -80,11 +79,11 @@ export const Alert = ({
   const { waitTransitionFinish } = useWaitTransitionFinish();
 
   const [closing, setClosing] = React.useState(false);
-  const isDismissButtonVisible = isDesktop && platform !== Platform.IOS;
+  const isDismissButtonVisible = isDesktop && platform !== 'ios';
 
   const elementRef = React.useRef<HTMLDivElement>(null);
 
-  const timeout = platform === Platform.IOS ? 300 : 200;
+  const timeout = platform === 'ios' ? 300 : 200;
 
   const close = React.useCallback(() => {
     setClosing(true);
@@ -140,8 +139,8 @@ export const Alert = ({
         timeout={timeout}
         className={classNames(
           styles['Alert'],
-          platform === Platform.IOS && styles['Alert--ios'],
-          platform === Platform.VKCOM && styles['Alert--vkcom'],
+          platform === 'ios' && styles['Alert--ios'],
+          platform === 'vkcom' && styles['Alert--vkcom'],
           closing && styles['Alert--closing'],
           isDesktop && styles['Alert--desktop'],
         )}

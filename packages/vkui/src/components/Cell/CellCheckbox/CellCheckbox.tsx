@@ -9,7 +9,6 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../../hooks/usePlatform';
-import { Platform } from '../../../lib/platform';
 import { HasRef, HasRootRef } from '../../../types';
 import { AdaptiveIconRenderer } from '../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
@@ -31,7 +30,7 @@ function useTypeIcon(type: NonNullable<CellCheckboxProps['type']>) {
     return type;
   }
 
-  if (platform === Platform.IOS || platform === Platform.VKCOM) {
+  if (platform === 'ios' || platform === 'vkcom') {
     return 'circle';
   }
 

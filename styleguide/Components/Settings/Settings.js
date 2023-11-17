@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Platform, useAdaptivityConditionalRender } from '@vkui';
+import { useAdaptivityConditionalRender } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 import { AppearanceSelect } from './AppearanceSelect';
 import { HasCustomPanelHeaderAfter } from './HasCustomPanelHeaderAfter';
@@ -46,7 +46,7 @@ export const Settings = ({ adaptivity, showCustomPanelHeaderAfterProps, showLayo
                       className={sizeX.regular.className}
                       onChange={(width) => context.setContext({ width })}
                       value={context.width}
-                      disabled={context.platform === Platform.VKCOM}
+                      disabled={context.platform === 'vkcom'}
                     />
                   )}
                   {sizeX.regular && (
@@ -54,7 +54,7 @@ export const Settings = ({ adaptivity, showCustomPanelHeaderAfterProps, showLayo
                       className={sizeX.regular.className}
                       onChange={(hasPointer) => context.setContext({ hasPointer })}
                       value={context.hasPointer}
-                      disabled={context.platform === Platform.VKCOM}
+                      disabled={context.platform === 'vkcom'}
                     />
                   )}
                 </Fragment>

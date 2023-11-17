@@ -5,15 +5,12 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useId } from '../../hooks/useId';
 import { useOrientationChange } from '../../hooks/useOrientationChange';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { Platform } from '../../lib/platform';
 import { multiRef } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
-import { ModalType } from '../ModalRoot/types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ModalPageContext } from './ModalPageContext';
 import styles from './ModalPage.module.css';
@@ -119,7 +116,7 @@ export const ModalPage = ({
   const size = isDesktop ? sizeProp : 's';
 
   const modalContext = React.useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId({ nav, id }, warn), ModalType.PAGE);
+  const { refs } = useModalRegistry(getNavId({ nav, id }, warn), 'page');
   const rootRef = useExternRef(getRootRef, refs.modalElement);
 
   const contextValue = React.useMemo(() => ({ labelId: `${id}-label` }), [id]);
@@ -136,9 +133,9 @@ export const ModalPage = ({
         id={id}
         baseClassName={classNames(
           styles['ModalPage'],
-          platform === Platform.IOS && styles['ModalPage--ios'],
+          platform === 'ios' && styles['ModalPage--ios'],
           isDesktop && styles['ModalPage--desktop'],
-          sizeX === SizeType.REGULAR && 'vkuiInternalModalPage--sizeX-regular',
+          sizeX === 'regular' && 'vkuiInternalModalPage--sizeX-regular',
           typeof size === 'string' && sizeClassName[size],
         )}
       >

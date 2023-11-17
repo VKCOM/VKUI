@@ -5,7 +5,6 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { ViewWidth } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -75,7 +74,7 @@ export const Snackbar = ({
 
   const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
 
-  const transitionFinishDurationFallback = platform === Platform.IOS ? 320 : 400;
+  const transitionFinishDurationFallback = platform === 'ios' ? 320 : 400;
 
   const close = () => {
     setClosing(true);
@@ -120,7 +119,7 @@ export const Snackbar = ({
     }
 
     shiftXPercentRef.current = (shiftX / (bodyElRef.current?.offsetWidth ?? 0)) * 100;
-    shiftXCurrentRef.current = rubber(shiftXPercentRef.current, 72, 1.2, platform !== Platform.IOS);
+    shiftXCurrentRef.current = rubber(shiftXPercentRef.current, 72, 1.2, platform !== 'ios');
 
     setBodyTransform(shiftXCurrentRef.current);
   };
@@ -177,7 +176,7 @@ export const Snackbar = ({
         {...restProps}
         baseClassName={classNames(
           styles['Snackbar'],
-          platform === Platform.IOS && styles['Snackbar--ios'],
+          platform === 'ios' && styles['Snackbar--ios'],
           closing && styles['Snackbar--closing'],
           touched && styles['Snackbar--touched'],
           isDesktop && styles['Snackbar--desktop'],

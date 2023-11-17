@@ -2,8 +2,7 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
+import { SizeTypeValues } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
@@ -16,7 +15,7 @@ import styles from './Group.module.css';
 
 const sizeXClassNames = {
   none: classNames(styles['Group--sizeX-none'], 'vkuiInternalGroup--sizeX-none'),
-  [SizeType.COMPACT]: styles['Group--sizeX-compact'],
+  ['compact']: styles['Group--sizeX-compact'],
 };
 
 const stylesMode = {
@@ -35,7 +34,7 @@ const stylesPadding = {
  */
 function useGroupMode(
   forcedMode: GroupProps['mode'],
-  sizeX: SizeType | 'none',
+  sizeX: SizeTypeValues | 'none',
   isInsideModal: boolean,
 ): 'plain' | 'card' | 'none' {
   const { layout } = React.useContext(AppRootContext);
@@ -53,7 +52,7 @@ function useGroupMode(
   }
 
   if (sizeX !== 'none') {
-    return sizeX === SizeType.REGULAR ? 'card' : 'plain';
+    return sizeX === 'regular' ? 'card' : 'plain';
   }
 
   return 'none';
@@ -125,8 +124,8 @@ export const Group = ({
           'vkuiInternalGroup',
           styles['Group'],
           isInsideModal && styles['Group--inside-modal'],
-          platform === Platform.IOS && styles['Group--ios'],
-          sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
+          platform === 'ios' && styles['Group--ios'],
+          sizeX !== 'regular' && sizeXClassNames[sizeX],
           mode && stylesMode[mode],
           stylesPadding[padding],
         )}

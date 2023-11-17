@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Icon20Cancel, Icon24Dismiss } from '@vkontakte/icons';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { Tappable } from '../Tappable/Tappable';
 import styles from './ModalCardBase.module.css';
@@ -27,7 +26,7 @@ export function ModalCardBaseCloseButton({
     return <ModalDismissButton aria-label={dismissLabel} data-testid={testId} onClick={onClose} />;
   }
 
-  if (mode === 'inside' || (platform === Platform.IOS && !isDesktop)) {
+  if (mode === 'inside' || (platform === 'ios' && !isDesktop)) {
     return (
       <Tappable
         aria-label={dismissLabel}
@@ -37,7 +36,7 @@ export function ModalCardBaseCloseButton({
         activeMode="opacity"
         data-testid={testId}
       >
-        {platform === Platform.IOS ? <Icon24Dismiss /> : <Icon20Cancel />}
+        {platform === 'ios' ? <Icon24Dismiss /> : <Icon20Cancel />}
       </Tappable>
     );
   }

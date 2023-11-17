@@ -3,7 +3,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { SizeType } from '../../lib/adaptivity';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
@@ -15,7 +14,7 @@ import styles from '../Select/Select.module.css';
 
 const sizeYClassNames = {
   none: styles['Select--sizeY-none'],
-  [SizeType.COMPACT]: styles['Select--sizeY-compact'],
+  ['compact']: styles['Select--sizeY-compact'],
 };
 
 export interface NativeSelectProps
@@ -91,7 +90,7 @@ const NativeSelect = ({
         multiline && styles['Select--multiline'],
         align === 'center' && styles['Select--align-center'],
         align === 'right' && styles['Select--align-right'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
       style={style}

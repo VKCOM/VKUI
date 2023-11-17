@@ -13,10 +13,8 @@ import {
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
-import { SizeType } from '../../lib/adaptivity';
 import { callMultiple } from '../../lib/callMultiple';
 import { getOffsetRect } from '../../lib/offset';
-import { Platform } from '../../lib/platform';
 import { coordX, coordY } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import {
@@ -273,7 +271,7 @@ export const Tappable = ({
   }
 
   const needWaves =
-    platform === Platform.ANDROID && !hasPointerContext && hasActive && activeMode === 'background';
+    platform === 'android' && !hasPointerContext && hasActive && activeMode === 'background';
 
   const clearClicks = useTimeout(() => setClicks([]), WAVE_LIVE);
 
@@ -332,8 +330,8 @@ export const Tappable = ({
     className,
     styles['Tappable'],
     'vkuiInternalTappable',
-    platform === Platform.IOS && styles['Tappable--ios'],
-    sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
+    platform === 'ios' && styles['Tappable--ios'],
+    sizeX !== 'regular' && sizeXClassNames[sizeX],
     hasHover && styles['Tappable--hasHover'],
     hasActive && styles['Tappable--hasActive'],
     hasHover && hovered && !isPresetHoverMode && hoverMode,

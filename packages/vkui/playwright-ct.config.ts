@@ -3,7 +3,6 @@ import {
   defineConfig,
   type DeviceKey,
   devices,
-  PlaywrightConfigPlatform,
   type ReporterDescription,
   type TestProject,
   type VKUITestOptions,
@@ -130,7 +129,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Pixel 5'),
           appearance,
-          platform: PlaywrightConfigPlatform.ANDROID,
+          platform: 'android',
         },
       },
 
@@ -139,7 +138,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('iPhone XR'),
           appearance,
-          platform: PlaywrightConfigPlatform.IOS,
+          platform: 'ios',
         },
       },
 
@@ -148,7 +147,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Chrome'),
           appearance,
-          platform: PlaywrightConfigPlatform.VKCOM,
+          platform: 'vkcom',
         },
       },
 
@@ -157,7 +156,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Firefox'),
           appearance,
-          platform: PlaywrightConfigPlatform.VKCOM,
+          platform: 'vkcom',
         },
       },
 
@@ -166,7 +165,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Safari'),
           appearance,
-          platform: PlaywrightConfigPlatform.VKCOM,
+          platform: 'vkcom',
         },
       },
     ])

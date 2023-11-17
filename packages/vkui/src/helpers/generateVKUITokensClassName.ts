@@ -1,15 +1,13 @@
-import { Platform } from '../lib/platform';
-
 export const generateVKUITokensClassName = (platform: string, appearance: string): string => {
   let tokensPlatform;
   switch (platform) {
-    case Platform.ANDROID:
+    case 'android':
       tokensPlatform = 'vkBase';
       break;
-    case Platform.IOS:
+    case 'ios':
       tokensPlatform = 'vkIOS';
       break;
-    case Platform.VKCOM:
+    case 'vkcom':
       tokensPlatform = 'vkCom';
       break;
     default:

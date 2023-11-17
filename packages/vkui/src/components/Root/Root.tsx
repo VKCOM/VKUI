@@ -4,7 +4,6 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useDOM } from '../../lib/dom';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { Platform } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -94,7 +93,7 @@ export const Root = ({
     }
   }, [transition, prevView]);
 
-  const fallbackTransition = useTimeout(finishTransition, platform === Platform.IOS ? 600 : 300);
+  const fallbackTransition = useTimeout(finishTransition, platform === 'ios' ? 600 : 300);
   React.useEffect(() => {
     if (!transition) {
       fallbackTransition.clear();
@@ -121,7 +120,7 @@ export const Root = ({
       {...restProps}
       baseClassName={classNames(
         styles['Root'],
-        platform === Platform.IOS && styles['Root--ios'],
+        platform === 'ios' && styles['Root--ios'],
         transition && styles['Root--transition'],
       )}
     >

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { AnchorHTMLAttributesOnly } from '../../types';
 import { Button, ButtonProps } from '../Button/Button';
 import { Tappable } from '../Tappable/Tappable';
@@ -34,7 +33,7 @@ const AlertActionBase = ({ mode, ...restProps }: AlertActionProps) => {
 
   let buttonMode: ButtonProps['mode'] = 'tertiary';
 
-  if (platform === Platform.VKCOM) {
+  if (platform === 'vkcom') {
     buttonMode = mode === 'cancel' ? 'secondary' : 'primary';
   }
 
@@ -54,7 +53,7 @@ const AlertActionBase = ({ mode, ...restProps }: AlertActionProps) => {
 export const AlertAction = (props: AlertActionProps) => {
   const platform = usePlatform();
 
-  if (platform === Platform.IOS) {
+  if (platform === 'ios') {
     return <AlertActionIos {...props} />;
   }
 

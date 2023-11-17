@@ -2,8 +2,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
@@ -32,9 +30,9 @@ export const ActionSheetDropdownSheet = ({
       onClick={stopPropagation}
       className={classNames(
         styles['ActionSheet'],
-        platform === Platform.IOS && styles['ActionSheet--ios'],
+        platform === 'ios' && styles['ActionSheet--ios'],
         closing && styles['ActionSheet--closing'],
-        sizeY === SizeType.COMPACT && styles['ActionSheet--sizeY-compact'],
+        sizeY === 'compact' && styles['ActionSheet--sizeY-compact'],
         className,
       )}
     >

@@ -9,7 +9,6 @@ import {
   TEST_CLASS_NAMES,
 } from '@vkui-e2e/playground-helpers';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
@@ -24,7 +23,7 @@ const ActionSheetWrapper = (props: ActionSheetProps) => {
   const toggleRef = React.useRef<HTMLButtonElement>(null);
 
   return (
-    <div style={platform === Platform.VKCOM ? { height: 900 } : {}}>
+    <div style={platform === 'vkcom' ? { height: 900 } : {}}>
       <button ref={toggleRef} className={TEST_CLASS_NAMES.CONTENT}>
         target
       </button>

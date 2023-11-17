@@ -78,12 +78,8 @@ const openIcons = () =>
         autoClose
         before={
           <AdaptiveIconRenderer
-            IconCompact={
-              platform === Platform.IOS ? Icon20DeleteOutline : Icon20DeleteOutlineAndroid
-            }
-            IconRegular={
-              platform === Platform.IOS ? Icon28DeleteOutline : Icon28DeleteOutlineAndroid
-            }
+            IconCompact={platform === 'ios' ? Icon20DeleteOutline : Icon20DeleteOutlineAndroid}
+            IconRegular={platform === 'ios' ? Icon28DeleteOutline : Icon28DeleteOutlineAndroid}
           />
         }
         mode="destructive"

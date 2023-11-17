@@ -2,7 +2,6 @@ import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { Platform } from '../../lib/platform';
 import { baselineComponent, runAllTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
@@ -28,7 +27,7 @@ function Refresher(props: any) {
   );
 }
 
-function renderRefresher({ platform = Platform.ANDROID } = {}) {
+function renderRefresher({ platform = 'android' as string } = {}) {
   let controller: (v: boolean) => void;
   const setFetching = (v: boolean) => act(() => controller(v));
   const handle = render(
@@ -59,7 +58,7 @@ describe('PullToRefresh', () => {
     it('during pull on iOS', () => {
       const onRefresh = jest.fn();
       render(
-        <ConfigProvider platform={Platform.IOS}>
+        <ConfigProvider platform="ios">
           <PullToRefresh onRefresh={onRefresh} data-testid="xxx" />
         </ConfigProvider>,
       );
@@ -85,7 +84,7 @@ describe('PullToRefresh', () => {
       expect(hasSpinner()).toBe(false);
     });
     it('until touch release after isFetching=false on iOS', () => {
-      const { setFetching } = renderRefresher({ platform: Platform.IOS });
+      const { setFetching } = renderRefresher({ platform: 'ios' });
       firePull(screen.getByTestId('xxx'), { end: false });
       setFetching(false);
       expect(hasSpinner()).toBe(true);
@@ -152,7 +151,7 @@ describe('PullToRefresh', () => {
 
   test('disables native pull-to-refresh while pulling', () => {
     const component = render(
-      <ConfigProvider platform={Platform.IOS}>
+      <ConfigProvider platform="ios">
         <PullToRefresh onRefresh={noop} data-testid="xxx" />
       </ConfigProvider>,
       { baseElement: document.documentElement },

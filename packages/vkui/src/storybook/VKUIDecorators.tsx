@@ -9,7 +9,6 @@ import { SplitCol } from '../components/SplitCol/SplitCol';
 import { SplitLayout } from '../components/SplitLayout/SplitLayout';
 import { View } from '../components/View/View';
 import { usePlatform } from '../hooks/usePlatform';
-import { Platform } from '../lib/platform';
 
 const CenteredStyle: React.CSSProperties = {
   display: 'flex',
@@ -39,7 +38,7 @@ export const withVKUIWrapper: Decorator = (Component, context) => {
 
 const SimpleLayout = ({ children }: { children: React.ReactNode }) => {
   const platform = usePlatform();
-  const isVKCOM = platform === Platform.VKCOM;
+  const isVKCOM = platform === 'vkcom';
 
   return (
     <SplitLayout header={!isVKCOM && <PanelHeader separator={false} />}>

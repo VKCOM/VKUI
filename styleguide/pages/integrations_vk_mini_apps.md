@@ -94,7 +94,6 @@ import {
   getViewWidthByViewportWidth,
   getViewHeightByViewportHeight,
   ViewWidth,
-  SizeType,
 } from '@vkontakte/vkui';
 import type { UseAdaptivity } from '@vkontakte/vk-bridge-react';
 
@@ -116,8 +115,8 @@ export const transformVKBridgeAdaptivity = ({
     case 'force_mobile_compact':
       return {
         viewWidth: ViewWidth.MOBILE,
-        sizeX: SizeType.COMPACT,
-        sizeY: type === 'force_mobile_compact' ? SizeType.COMPACT : SizeType.REGULAR,
+        sizeX: 'compact',
+        sizeY: type === 'force_mobile_compact' ? 'compact' : 'regular',
       };
     default:
       return {};

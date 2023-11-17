@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { getTitleFromChildren } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
@@ -27,7 +26,7 @@ interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {
 const ButtonTypography = ({ primary, children }: ButtonTypographyProps) => {
   const platform = usePlatform();
 
-  if (platform === Platform.IOS) {
+  if (platform === 'ios') {
     return (
       <Title Component="span" level="3" weight={primary ? '1' : '3'}>
         {children}
@@ -35,7 +34,7 @@ const ButtonTypography = ({ primary, children }: ButtonTypographyProps) => {
     );
   }
 
-  return <Text weight={platform === Platform.VKCOM ? undefined : '2'}>{children}</Text>;
+  return <Text weight={platform === 'vkcom' ? undefined : '2'}>{children}</Text>;
 };
 
 const warn = warnOnce('PanelHeaderButton');
@@ -58,11 +57,11 @@ export const PanelHeaderButton = ({
   let activeMode;
 
   switch (platform) {
-    case Platform.IOS:
+    case 'ios':
       hoverMode = 'background';
       activeMode = 'opacity';
       break;
-    case Platform.VKCOM:
+    case 'vkcom':
       hoverMode = styles['PanelHeaderButton--hover'];
       activeMode = styles['PanelHeaderButton--active'];
       break;

@@ -34,7 +34,7 @@ const Example = () => {
     </ModalRoot>
   );
 
-  const isVKCOM = platform === Platform.VKCOM;
+  const isVKCOM = platform === 'vkcom';
 
   return (
     <SplitLayout

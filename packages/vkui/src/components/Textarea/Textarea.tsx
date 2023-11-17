@@ -3,7 +3,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { SizeType } from '../../lib/adaptivity';
 import { HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { Text } from '../Typography/Text/Text';
@@ -11,7 +10,7 @@ import styles from './Textarea.module.css';
 
 const sizeYClassNames = {
   none: styles['Textarea--sizeY-none'],
-  [SizeType.COMPACT]: styles['Textarea--sizeY-compact'],
+  ['compact']: styles['Textarea--sizeY-compact'],
 };
 
 export interface TextareaProps
@@ -71,7 +70,7 @@ export const Textarea = ({
     <FormField
       className={classNames(
         styles['Textarea'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
       style={style}

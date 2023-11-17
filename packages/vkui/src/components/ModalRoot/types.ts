@@ -2,10 +2,7 @@ import { DOMContextInterface } from '../../lib/dom';
 import { HasPlatform } from '../../types';
 import { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 
-export enum ModalType {
-  PAGE = 'page',
-  CARD = 'card',
-}
+export type ModalType = 'page' | 'card';
 
 export type TranslateRange = [number, number];
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Removable } from './Removable';
@@ -16,7 +15,7 @@ describe('Removable', () => {
     window.addEventListener('click', eventListener);
 
     render(
-      <ConfigProvider platform={Platform.IOS}>
+      <ConfigProvider platform="ios">
         <Removable onClick={onClick}>
           <div data-testid="content">Контент для удаления</div>
         </Removable>
@@ -32,7 +31,7 @@ describe('Removable', () => {
 
   it('[iOS] render prop isRemoving is true when toggle button is clicked ', async () => {
     render(
-      <ConfigProvider platform={Platform.IOS}>
+      <ConfigProvider platform="ios">
         <Removable>
           {({ isRemoving }) => (
             <div data-testid="content">Контент для удаления {isRemoving && 'сдвинут'}</div>

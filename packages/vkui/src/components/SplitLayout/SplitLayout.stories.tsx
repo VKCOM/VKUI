@@ -7,7 +7,6 @@ import {
 } from '@vkontakte/icons';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Alert } from '../Alert/Alert';
 import { Avatar } from '../Avatar/Avatar';
@@ -70,7 +69,7 @@ export const Example: Story = {
       </ModalRoot>
     );
 
-    const isVKCOM = platform === Platform.VKCOM;
+    const isVKCOM = platform === 'vkcom';
 
     return (
       <SplitLayout

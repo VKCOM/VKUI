@@ -2,7 +2,6 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { SizeType } from '../../lib/adaptivity';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -13,7 +12,7 @@ const sizeYClassNames = {
     styles['FormLayoutGroup--sizeY-none'],
     'vkuiInternalFormLayoutGroup--sizeY-none',
   ),
-  [SizeType.COMPACT]: classNames(
+  ['compact']: classNames(
     styles['FormLayoutGroup--sizeY-compact'],
     'vkuiInternalFormLayoutGroup--sizeY-compact',
   ),
@@ -57,7 +56,7 @@ export const FormLayoutGroup = ({
     <RootComponent
       getRootRef={rootEl}
       baseClassName={classNames(
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         mode === 'horizontal' &&
           classNames(
             styles['FormLayoutGroup--mode-horizontal'],

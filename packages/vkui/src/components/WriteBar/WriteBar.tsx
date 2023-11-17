@@ -3,7 +3,6 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
@@ -41,7 +40,7 @@ export interface WriteBarProps
 const WriteBarTypography = (props: TypographyProps) => {
   const platform = usePlatform();
 
-  if (platform === Platform.IOS) {
+  if (platform === 'ios') {
     return <Title {...props} level="3" weight="3" />;
   }
 
@@ -98,7 +97,7 @@ export const WriteBar = ({
       ref={getRootRef}
       className={classNames(
         styles['WriteBar'],
-        platform === Platform.IOS && styles['WriteBar--ios'],
+        platform === 'ios' && styles['WriteBar--ios'],
         shadow && styles['WriteBar--shadow'],
         className,
       )}

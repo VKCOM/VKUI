@@ -122,6 +122,10 @@ module.exports = {
         selector: 'ImportDefaultSpecifier[local.name="React"][parent.source.value="react"]',
         message: 'Не используйте импорт React по умолчанию',
       },
+      {
+        selector: 'TSEnumDeclaration',
+        message: 'Не используйте enum',
+      },
     ],
 
     'import/no-default-export': 'error',

@@ -13,7 +13,7 @@ const Example = () => {
     requestAnimationFrame(toggleContext);
   };
 
-  const hasHeader = platform !== Platform.VKCOM;
+  const hasHeader = platform !== 'vkcom';
 
   return (
     <SplitLayout

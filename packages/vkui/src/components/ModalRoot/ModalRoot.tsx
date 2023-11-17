@@ -5,7 +5,6 @@ import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
-import { Platform } from '../../lib/platform';
 import { setTransformStyle } from '../../lib/styles';
 import { transitionEvent } from '../../lib/supportEvents';
 import { rubber } from '../../lib/touch';
@@ -16,7 +15,7 @@ import { Touch, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
-import { ModalRootWithDOMProps, ModalsStateEntry, ModalType, TranslateRange } from './types';
+import { ModalRootWithDOMProps, ModalsStateEntry, TranslateRange } from './types';
 import { ModalTransitionProps, withModalManager } from './useModalManager';
 import styles from './ModalRoot.module.css';
 
@@ -74,7 +73,7 @@ class ModalRootTouchComponent extends React.Component<
   private restoreFocusTo: HTMLElement | undefined | null = undefined;
 
   get timeout(): number {
-    return this.props.platform === Platform.IOS ? 400 : 320;
+    return this.props.platform === 'ios' ? 400 : 320;
   }
 
   get document(): Document {
@@ -185,7 +184,7 @@ class ModalRootTouchComponent extends React.Component<
   checkPageContentHeight() {
     const modalState = this.props.getModalState(this.props.activeModal);
 
-    if (modalState?.type === ModalType.PAGE && modalState?.modalElement) {
+    if (modalState?.type === 'page' && modalState?.modalElement) {
       const prevModalState = { ...modalState };
       initPageModal(modalState);
       const currentModalState = { ...modalState };
@@ -209,7 +208,7 @@ class ModalRootTouchComponent extends React.Component<
   updateModalHeight = () => {
     const modalState = this.props.getModalState(this.props.activeModal);
 
-    if (modalState && modalState.type === ModalType.PAGE) {
+    if (modalState && modalState.type === 'page') {
       if (this.props.enteringModal) {
         this.waitTransitionFinish(modalState, () => {
           requestAnimationFrame(() => this.checkPageContentHeight());
@@ -248,9 +247,9 @@ class ModalRootTouchComponent extends React.Component<
       }));
     }
     const nextModalState = this.props.getModalState(this.props.activeModal);
-    const nextIsPage = !!nextModalState && nextModalState.type === ModalType.PAGE;
+    const nextIsPage = !!nextModalState && nextModalState.type === 'page';
 
-    const prevIsPage = !!prevModalState && prevModalState.type === ModalType.PAGE;
+    const prevIsPage = !!prevModalState && prevModalState.type === 'page';
     this.waitTransitionFinish(prevModalState, () => this.props.onExited(id));
     const exitTranslate =
       prevIsPage &&
@@ -283,11 +282,11 @@ class ModalRootTouchComponent extends React.Component<
       return;
     }
 
-    if (modalState.type === ModalType.PAGE) {
+    if (modalState.type === 'page') {
       return this.onPageTouchMove(e, modalState);
     }
 
-    if (modalState.type === ModalType.CARD) {
+    if (modalState.type === 'card') {
       return this.onCardTouchMove(e, modalState);
     }
   };
@@ -339,7 +338,7 @@ class ModalRootTouchComponent extends React.Component<
       !this.state.dragging && this.setState({ dragging: true });
 
       const shiftYPercent = (shiftY / this.window.innerHeight) * 100;
-      const shiftYCurrent = rubber(shiftYPercent, 72, 0.8, this.props.platform !== Platform.IOS);
+      const shiftYCurrent = rubber(shiftYPercent, 72, 0.8, this.props.platform !== 'ios');
 
       modalState.touchShiftYPercent = shiftYPercent;
       modalState.translateYCurrent = rangeTranslate((modalState.translateY ?? 0) + shiftYCurrent);
@@ -358,7 +357,7 @@ class ModalRootTouchComponent extends React.Component<
       }
 
       const shiftYPercent = (shiftY / modalState.innerElement.offsetHeight) * 100;
-      const shiftYCurrent = rubber(shiftYPercent, 72, 1.2, this.props.platform !== Platform.IOS);
+      const shiftYCurrent = rubber(shiftYPercent, 72, 1.2, this.props.platform !== 'ios');
 
       modalState.touchShiftYPercent = shiftYPercent;
       modalState.translateYCurrent = Math.max(0, (modalState.translateY ?? 0) + shiftYCurrent);
@@ -371,11 +370,11 @@ class ModalRootTouchComponent extends React.Component<
   onTouchEnd = (e: TouchEvent) => {
     const modalState = this.props.getModalState(this.props.activeModal);
 
-    if (modalState?.type === ModalType.PAGE) {
+    if (modalState?.type === 'page') {
       return this.onPageTouchEnd(e, modalState);
     }
 
-    if (modalState?.type === ModalType.CARD) {
+    if (modalState?.type === 'card') {
       return this.onCardTouchEnd(e, modalState);
     }
   };
@@ -499,7 +498,7 @@ class ModalRootTouchComponent extends React.Component<
       return;
     }
     const modalState = this.props.getModalState(activeModal);
-    if (modalState?.type === ModalType.PAGE && modalState?.contentElement?.contains(target)) {
+    if (modalState?.type === 'page' && modalState?.contentElement?.contains(target)) {
       modalState.contentScrolled = true;
 
       if (modalState.contentScrollStopTimeout) {
@@ -606,7 +605,7 @@ class ModalRootTouchComponent extends React.Component<
                 }
                 const modalState = { ..._modalState };
 
-                const isPage = modalState.type === ModalType.PAGE;
+                const isPage = modalState.type === 'page';
                 const key = `modal-${modalId}`;
 
                 return (
@@ -649,10 +648,10 @@ export const ModalRootTouch = withContext(
  */
 function initModal(modalState: ModalsStateEntry) {
   switch (modalState.type) {
-    case ModalType.PAGE:
+    case 'page':
       modalState.settlingHeight = modalState.settlingHeight || MODAL_PAGE_DEFAULT_PERCENT_HEIGHT;
       return initPageModal(modalState);
-    case ModalType.CARD:
+    case 'card':
       return initCardModal(modalState);
     default:
       process.env.NODE_ENV === 'development' &&

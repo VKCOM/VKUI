@@ -64,3 +64,13 @@
 
 > В VKUI есть [специальная сборка](https://vkcom.github.io/VKUI/#/CSS%20Modules)
 > в ESNext, которая позволяет уменьшить размер вашего приложения
+
+## Перечисления заменены на объекты
+
+Следующие перечисления были заменены на [объекты](https://www.typescriptlang.org/docs/handbook/enums.html#objects-vs-enums):
+
+- `Platform`
+- `Appearance`
+- `SizeType`
+- `ViewWidth`
+- `ViewHeight`

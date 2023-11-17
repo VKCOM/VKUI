@@ -2,8 +2,6 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { HasAlign } from '../../types';
 import { Spinner } from '../Spinner/Spinner';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
@@ -41,7 +39,7 @@ const stylesAlign = {
 
 const sizeYClassNames = {
   none: styles['Button--sizeY-none'],
-  [SizeType.REGULAR]: styles['Button--sizeY-regular'],
+  ['regular']: styles['Button--sizeY-regular'],
 };
 
 export interface VKUIButtonProps extends HasAlign {
@@ -100,8 +98,8 @@ export const Button = ({
         stylesMode[mode],
         stylesAppearance[appearance],
         stylesAlign[align],
-        sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
-        platform === Platform.IOS && styles['Button--ios'],
+        sizeY !== 'compact' && sizeYClassNames[sizeY],
+        platform === 'ios' && styles['Button--ios'],
         stretched && styles['Button--stretched'],
         hasIcons && styles['Button--with-icon'],
         hasIconOnly && !stretched && styles['Button--singleIcon'],

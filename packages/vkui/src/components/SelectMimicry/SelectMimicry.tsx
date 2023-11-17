@@ -3,7 +3,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAutoFocus } from '../../hooks/useAutoFocus';
 import { useExternRef } from '../../hooks/useExternRef';
-import { SizeType } from '../../lib/adaptivity';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HTMLAttributesWithRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
@@ -14,7 +13,7 @@ import styles from '../Select/Select.module.css';
 
 const sizeYClassNames = {
   none: styles['Select--sizeY-none'],
-  [SizeType.COMPACT]: styles['Select--sizeY-compact'],
+  ['compact']: styles['Select--sizeY-compact'],
 };
 
 export interface SelectMimicryProps
@@ -59,7 +58,7 @@ export const SelectMimicry = ({
       tabIndex={disabled ? undefined : tabIndex}
       className={classNames(
         styles['Select'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         !children && styles['Select--empty'],
         multiline && styles['Select--multiline'],
         align === 'center' && styles['Select--align-center'],

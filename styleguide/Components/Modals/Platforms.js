@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Div, ModalPage, ModalPageHeader, PanelSpinner, Platform, SimpleCell } from '@vkui';
+import { Div, ModalPage, ModalPageHeader, PanelSpinner, SimpleCell } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 import { useFetch } from './useFetch';
 
@@ -26,7 +26,7 @@ export function Platforms({ id }) {
       .filter((path) => !path.endsWith('Dark'))
       .filter((path) => !ignorePlatforms.includes(path));
 
-    array.unshift(Platform.ANDROID, Platform.IOS, Platform.VKCOM);
+    array.unshift('android', 'ios', 'vkcom');
 
     return array;
   }, [data]);

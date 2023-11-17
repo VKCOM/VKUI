@@ -7,7 +7,6 @@ import {
 } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { WriteBarIcon } from '../WriteBarIcon/WriteBarIcon';
 import { WriteBar, type WriteBarProps } from './WriteBar';
@@ -18,7 +17,7 @@ const WriteBarTestComponent = ({ value, ...restProps }: WriteBarProps) => {
   const SmileOutlineIcon = (
     <AdaptiveIconRenderer
       key="smile-icon"
-      IconCompact={platform === Platform.IOS ? Icon28SmileOutline : Icon24SmileOutline}
+      IconCompact={platform === 'ios' ? Icon28SmileOutline : Icon24SmileOutline}
       IconRegular={Icon28SmileOutline}
     />
   );
@@ -26,7 +25,7 @@ const WriteBarTestComponent = ({ value, ...restProps }: WriteBarProps) => {
   const VoiceOutlineIcon = (
     <AdaptiveIconRenderer
       key="smile-icon"
-      IconCompact={platform === Platform.IOS ? Icon28VoiceOutline : Icon24VoiceOutline}
+      IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}
       IconRegular={Icon28VoiceOutline}
     />
   );

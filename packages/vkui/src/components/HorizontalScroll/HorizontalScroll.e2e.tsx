@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import {
   HorizontalScrollMobilePlayground,
   HorizontalScrollSmallTabletPlayground,
@@ -15,7 +14,7 @@ test.describe('HorizontalScroll', () => {
       viewWidth: ViewWidth.SMALL_TABLET,
       hasPointer: true,
     },
-    onlyForPlatforms: [Platform.ANDROID],
+    onlyForPlatforms: ['android'],
   });
   test('ViewWidth.SMALL_TABLET hasPointer=true', async ({
     mount,
@@ -29,7 +28,7 @@ test.describe('HorizontalScroll', () => {
 
 test.describe('HorizontalScroll', () => {
   test.use({
-    onlyForPlatforms: [Platform.ANDROID],
+    onlyForPlatforms: ['android'],
     adaptivityProviderProps: {
       viewWidth: ViewWidth.MOBILE,
       hasPointer: false,

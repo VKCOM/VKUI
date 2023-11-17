@@ -2,7 +2,7 @@ import * as React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
-import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { ViewHeight, ViewWidth } from '../../lib/adaptivity';
 import {
   deviceTypeClassNames,
   sizeXCompactClassNames,
@@ -55,45 +55,45 @@ describe(useAdaptivityConditionalRender, () => {
       });
 
     describe('sizeX', () => {
-      it(SizeType.COMPACT, () => {
+      it('compact', () => {
         const { result } = renderHookWithAdaptivityProvider({
-          sizeX: SizeType.COMPACT,
+          sizeX: 'compact',
         });
         expect(result.current.sizeX).toMatchObject({
-          compact: sizeXCompactClassNames[SizeType.COMPACT],
+          compact: sizeXCompactClassNames['compact'],
           regular: false,
         });
       });
 
-      it(SizeType.REGULAR, () => {
+      it('regular', () => {
         const { result } = renderHookWithAdaptivityProvider({
-          sizeX: SizeType.REGULAR,
+          sizeX: 'regular',
         });
         expect(result.current.sizeX).toMatchObject({
           compact: false,
-          regular: sizeXRegularClassNames[SizeType.REGULAR],
+          regular: sizeXRegularClassNames['regular'],
         });
       });
     });
 
     describe('sizeY', () => {
-      it(SizeType.COMPACT, () => {
+      it('compact', () => {
         const { result } = renderHookWithAdaptivityProvider({
-          sizeY: SizeType.COMPACT,
+          sizeY: 'compact',
         });
         expect(result.current.sizeY).toMatchObject({
-          compact: sizeYCompactClassNames[SizeType.COMPACT],
+          compact: sizeYCompactClassNames['compact'],
           regular: false,
         });
       });
 
-      it(SizeType.REGULAR, () => {
+      it('regular', () => {
         const { result } = renderHookWithAdaptivityProvider({
-          sizeY: SizeType.REGULAR,
+          sizeY: 'regular',
         });
         expect(result.current.sizeY).toMatchObject({
           compact: false,
-          regular: sizeYRegularClassNames[SizeType.REGULAR],
+          regular: sizeYRegularClassNames['regular'],
         });
       });
     });

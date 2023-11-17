@@ -1,11 +1,11 @@
 import type { PlaywrightWorkerOptions } from '@playwright/test';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import type { AppearanceType } from '../../lib/appearance';
-import { Platform } from '../../lib/platform';
+import { PlatformType } from '../../lib/platform';
 import type { ComponentPlaygroundProps } from './ComponentPlayground';
 
 export interface VKUITestOptions {
-  platform: Platform;
+  platform: PlatformType;
   appearance: AppearanceType;
   toMatchSnapshot?: {
     threshold?: number;
@@ -15,7 +15,7 @@ export interface VKUITestOptions {
 export interface InternalVKUITestOptions {
   adaptivityProviderProps?: null | Partial<AdaptivityProps>;
   onlyForBrowsers?: null | Array<PlaywrightWorkerOptions['browserName']>;
-  onlyForPlatforms?: null | Platform[];
+  onlyForPlatforms?: null | PlatformType[];
   onlyForAppearances?: null | AppearanceType[];
 }
 

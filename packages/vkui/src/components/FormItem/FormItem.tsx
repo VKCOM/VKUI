@@ -2,7 +2,6 @@ import * as React from 'react';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { SizeType } from '../../lib/adaptivity';
 import { HasComponent, HasRootRef } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -12,10 +11,7 @@ import styles from './FormItem.module.css';
 
 const sizeYClassNames = {
   none: classNames(styles['FormItem--sizeY-none'], 'vkuiInternalFormItem--sizeY-none'),
-  [SizeType.COMPACT]: classNames(
-    styles['FormItem--sizeY-compact'],
-    'vkuiInternalFormItem--sizeY-compact',
-  ),
+  ['compact']: classNames(styles['FormItem--sizeY-compact'], 'vkuiInternalFormItem--sizeY-compact'),
 };
 
 const stylesStatus = {
@@ -103,7 +99,7 @@ export const FormItem = ({
         !noPadding && styles['FormItem--withPadding'],
         'vkuiInternalFormItem',
         status !== 'default' && stylesStatus[status],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         hasReactNode(top) &&
           classNames(styles['FormItem--withTop'], 'vkuiInternalFormItem--withTop'),
         removable && classNames(styles['FormItem--removable'], 'vkuiInternalFormItem--removable'),

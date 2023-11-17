@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -151,7 +150,7 @@ export const Banner = ({
       baseClassName={classNames(
         styles['Banner'],
         !noPadding && styles['Banner--withPadding'],
-        platform === Platform.IOS && styles['Banner--ios'],
+        platform === 'ios' && styles['Banner--ios'],
         mode === 'image' && styles['Banner--mode-image'],
         size === 'm' && styles['Banner--size-m'],
         mode === 'image' && imageTheme === 'dark' && styles['Banner--inverted'],
@@ -160,7 +159,7 @@ export const Banner = ({
       {asideMode === 'expand' ? (
         <Tappable
           className={styles['Banner__in']}
-          activeMode={platform === Platform.IOS ? 'opacity' : 'background'}
+          activeMode={platform === 'ios' ? 'opacity' : 'background'}
           role="button"
         >
           {content}
@@ -182,7 +181,7 @@ export const Banner = ({
                 hoverMode="opacity"
                 hasActive={false}
               >
-                {platform === Platform.IOS ? <IconDismissIOS /> : <Icon24Cancel />}
+                {platform === 'ios' ? <IconDismissIOS /> : <Icon24Cancel />}
               </IconButton>
             </div>
           )}

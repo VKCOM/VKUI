@@ -9,8 +9,7 @@ import {
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform, PlatformType } from '../../lib/platform';
+import { PlatformType } from '../../lib/platform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import styles from '../PanelHeaderButton/PanelHeaderButton.module.css';
@@ -21,9 +20,9 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps & {
 
 const getBackIcon = (platform: PlatformType) => {
   switch (platform) {
-    case Platform.IOS:
+    case 'ios':
       return <Icon28ChevronBack />;
-    case Platform.VKCOM:
+    case 'vkcom':
       return (
         <AdaptiveIconRenderer
           IconCompact={Icon24ChevronLeftOutline}
@@ -51,17 +50,17 @@ export const PanelHeaderBack = ({
 }: PanelHeaderButtonProps) => {
   const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
-  // так-же label нужно скрывать при platform === Platform.IOS && sizeX === regular
+  // так-же label нужно скрывать при platform === 'ios' && sizeX === regular
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
-  const showLabel = platform === Platform.VKCOM || platform === Platform.IOS;
+  const showLabel = platform === 'vkcom' || platform === 'ios';
 
   return (
     <PanelHeaderButton
       {...restProps}
       className={classNames(
-        sizeX === SizeType.COMPACT && styles['PanelHeaderBack--sizeX-compact'],
-        platform === Platform.IOS && styles['PanelHeaderBack--ios'],
-        platform === Platform.VKCOM && styles['PanelHeaderBack--vkcom'],
+        sizeX === 'compact' && styles['PanelHeaderBack--sizeX-compact'],
+        platform === 'ios' && styles['PanelHeaderBack--ios'],
+        platform === 'vkcom' && styles['PanelHeaderBack--vkcom'],
         showLabel && !!label && styles['PanelHeaderBack--has-label'],
         className,
       )}

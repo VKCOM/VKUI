@@ -4,7 +4,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useId } from '../../hooks/useId';
-import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn } from '../../lib/select';
@@ -29,7 +28,7 @@ import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
   none: styles['CustomSelect--sizeY-none'],
-  [SizeType.COMPACT]: styles['CustomSelect--sizeY-compact'],
+  ['compact']: styles['CustomSelect--sizeY-compact'],
 };
 
 const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
@@ -844,7 +843,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     <div
       className={classNames(
         styles['CustomSelect'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
       style={style}

@@ -8,8 +8,6 @@ import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useId } from '../../hooks/useId';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { touchEnabled, VKUITouchEvent } from '../../lib/touch';
 import { HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
@@ -133,7 +131,7 @@ export const Search = ({
         'vkuiInternalSearch',
         styles['Search'],
         sizeY === 'none' && styles['Search--sizeY-none'],
-        sizeY === SizeType.COMPACT && styles['Search--sizeY-compact'],
+        sizeY === 'compact' && styles['Search--sizeY-compact'],
         isFocused && styles['Search--focused'],
         value && styles['Search--has-value'],
         after && styles['Search--has-after'],
@@ -189,7 +187,7 @@ export const Search = ({
             aria-label={clearAriaLabel}
             tabIndex={value ? undefined : -1}
           >
-            {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
+            {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
           </IconButton>
           {adaptiveSizeY.compact && onFindButtonClick && (
             <Button
@@ -205,7 +203,7 @@ export const Search = ({
           )}
         </div>
       </div>
-      {platform === Platform.IOS && after && (
+      {platform === 'ios' && after && (
         <Button
           mode="tertiary"
           size="m"

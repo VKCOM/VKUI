@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Icon16Dropdown } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeType } from '../../lib/adaptivity';
 import { HasChildren, HasComponent } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
@@ -28,7 +27,7 @@ const sizeStyles = {
 
 const sizeYClassNames = {
   none: styles['SubnavigationButton--sizeY-none'],
-  [SizeType.COMPACT]: styles['SubnavigationButton--sizeY-compact'],
+  ['compact']: styles['SubnavigationButton--sizeY-compact'],
 };
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
@@ -98,7 +97,7 @@ export const SubnavigationButton = ({
         modeStyles[mode],
         appearanceStyles[appearance],
         selected && styles['SubnavigationButton--selected'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
     >

@@ -65,13 +65,13 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
         <ModalPageHeader
           before={
             sizeX.compact &&
-            platform === Platform.ANDROID && (
+            platform === 'android' && (
               <PanelHeaderClose className={sizeX.compact.className} onClick={onClose} />
             )
           }
           after={
             sizeX.compact &&
-            platform === Platform.IOS && (
+            platform === 'ios' && (
               <PanelHeaderButton className={sizeX.compact.className} onClick={onClose}>
                 <Icon24Dismiss />
               </PanelHeaderButton>
@@ -167,17 +167,17 @@ const App = () => {
         id={MODAL_PAGE_FULLSCREEN}
         onClose={modalBack}
         settlingHeight={100}
-        hideCloseButton={platform === Platform.IOS}
+        hideCloseButton={platform === 'ios'}
         header={
           <ModalPageHeader
             before={
               sizeX.compact &&
-              platform === Platform.ANDROID && (
+              platform === 'android' && (
                 <PanelHeaderClose className={sizeX.compact.className} onClick={modalBack} />
               )
             }
             after={
-              platform === Platform.IOS && (
+              platform === 'ios' && (
                 <PanelHeaderButton onClick={modalBack}>
                   <Icon24Dismiss />
                 </PanelHeaderButton>
@@ -196,17 +196,17 @@ const App = () => {
         onClose={modalBack}
         settlingHeight={100}
         height={isDesktop ? 250 : '70%'}
-        hideCloseButton={platform === Platform.IOS}
+        hideCloseButton={platform === 'ios'}
         header={
           <ModalPageHeader
             before={
               sizeX.compact &&
-              platform === Platform.ANDROID && (
+              platform === 'android' && (
                 <PanelHeaderClose className={sizeX.compact.className} onClick={modalBack} />
               )
             }
             after={
-              platform === Platform.IOS && (
+              platform === 'ios' && (
                 <PanelHeaderButton onClick={modalBack}>
                   <Icon24Dismiss />
                 </PanelHeaderButton>

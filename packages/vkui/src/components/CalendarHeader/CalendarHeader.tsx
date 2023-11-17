@@ -5,7 +5,6 @@ import {
   Icon20ChevronRightOutline,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { SizeType } from '../../lib/adaptivity';
 import { getMonths, getYears } from '../../lib/calendar';
 import { addMonths, setMonth, setYear, subMonths } from '../../lib/date';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -110,7 +109,7 @@ export const CalendarHeader = ({
   return (
     <RootComponent baseClassName={styles['CalendarHeader']} {...restProps}>
       {prevMonth && (
-        <AdaptivityProvider sizeX={SizeType.REGULAR}>
+        <AdaptivityProvider sizeX="regular">
           <Tappable
             className={classNames(
               styles['CalendarHeader__nav-icon'],
@@ -144,7 +143,7 @@ export const CalendarHeader = ({
           }).format(viewDate)}
         </Paragraph>
       ) : (
-        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+        <AdaptivityProvider sizeY="compact">
           <div
             className={classNames(
               styles['CalendarHeader__pickers'],
@@ -185,7 +184,7 @@ export const CalendarHeader = ({
         </AdaptivityProvider>
       )}
       {nextMonth && (
-        <AdaptivityProvider sizeX={SizeType.REGULAR}>
+        <AdaptivityProvider sizeX="regular">
           <Tappable
             className={classNames(
               styles['CalendarHeader__nav-icon'],

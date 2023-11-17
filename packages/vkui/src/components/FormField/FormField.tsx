@@ -4,13 +4,12 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
-import { SizeType } from '../../lib/adaptivity';
 import { HasComponent, HasRootRef } from '../../types';
 import styles from './FormField.module.css';
 
 const sizeYClassNames = {
   none: styles['FormField--sizeY-none'],
-  [SizeType.COMPACT]: styles['FormField--sizeY-compact'],
+  ['compact']: styles['FormField--sizeY-compact'],
 };
 
 const stylesStatus = {
@@ -94,7 +93,7 @@ export const FormField = ({
         styles['FormField'],
         mode === 'default' && styles['FormField--mode-default'],
         status !== 'default' && stylesStatus[status],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         disabled && styles['FormField--disabled'],
         !disabled && hover && styles['FormField--hover'],
         focusVisibleClassNames,

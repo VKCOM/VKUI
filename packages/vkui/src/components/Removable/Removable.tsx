@@ -4,7 +4,6 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
-import { Platform } from '../../lib/platform';
 import { getTitleFromChildren } from '../../lib/utils';
 import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
@@ -159,12 +158,12 @@ export const Removable = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        platform === Platform.IOS && styles['Removable--ios'],
+        platform === 'ios' && styles['Removable--ios'],
         align === 'start' && styles['Removable--align-start'],
         indent && styles['Removable--indent'],
       )}
     >
-      {platform !== Platform.IOS && (
+      {platform !== 'ios' && (
         <div className={classNames(styles['Removable__content'], 'vkuiInternalRemovable__content')}>
           {children}
 
@@ -182,7 +181,7 @@ export const Removable = ({
         </div>
       )}
 
-      {platform === Platform.IOS && (
+      {platform === 'ios' && (
         <RemovableIos
           onRemove={onRemoveClick}
           removePlaceholder={removePlaceholder}

@@ -12,7 +12,7 @@ const Example = () => {
             aside={
               <Link>
                 Показать все
-                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
+                {platform === 'vkcom' && <Icon12ChevronOutline />}
               </Link>
             }
           >
@@ -23,7 +23,7 @@ const Example = () => {
             aside={
               <Link>
                 Показать все
-                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
+                {platform === 'vkcom' && <Icon12ChevronOutline />}
               </Link>
             }
             subtitle="SOHN — Conrad"
@@ -35,7 +35,7 @@ const Example = () => {
             aside={
               <Link>
                 Показать все
-                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
+                {platform === 'vkcom' && <Icon12ChevronOutline />}
               </Link>
             }
             indicator="12"
@@ -47,7 +47,7 @@ const Example = () => {
             aside={
               <Link>
                 Показать все
-                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
+                {platform === 'vkcom' && <Icon12ChevronOutline />}
               </Link>
             }
             indicator={
@@ -65,7 +65,7 @@ const Example = () => {
             aside={
               <Link>
                 Показать все
-                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
+                {platform === 'vkcom' && <Icon12ChevronOutline />}
               </Link>
             }
           >
@@ -76,7 +76,7 @@ const Example = () => {
             aside={
               <Link>
                 Показать все
-                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
+                {platform === 'vkcom' && <Icon12ChevronOutline />}
               </Link>
             }
             indicator="667"
@@ -88,7 +88,7 @@ const Example = () => {
             aside={
               <Link>
                 Показать все
-                {platform === Platform.VKCOM && <Icon12ChevronOutline />}
+                {platform === 'vkcom' && <Icon12ChevronOutline />}
               </Link>
             }
             indicator={

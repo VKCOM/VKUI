@@ -4,16 +4,14 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
 import { callMultiple } from '../../lib/callMultiple';
-import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 
 const sizeYClassNames = {
   none: styles['Switch--sizeY-none'],
-  [SizeType.COMPACT]: styles['Switch--sizeY-compact'],
+  ['compact']: styles['Switch--sizeY-compact'],
 };
 
 export interface SwitchProps
@@ -34,8 +32,8 @@ export const Switch = ({ style, className, getRootRef, getRef, ...restProps }: S
     <label
       className={classNames(
         styles['Switch'],
-        platform === Platform.IOS && styles['Switch--ios'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        platform === 'ios' && styles['Switch--ios'],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         restProps.disabled && styles['Switch--disabled'],
         focusVisibleClassNames,
         className,

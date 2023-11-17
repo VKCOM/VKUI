@@ -3,7 +3,6 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePrevious } from '../../hooks/usePrevious';
-import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -16,7 +15,7 @@ import styles from './TabsItem.module.css';
 
 const sizeYClassNames = {
   none: styles['TabsItem--sizeY-none'],
-  [SizeType.COMPACT]: styles['TabsItem--sizeY-compact'],
+  ['compact']: styles['TabsItem--sizeY-compact'],
 };
 
 const stylesMode = {
@@ -168,7 +167,7 @@ export const TabsItem = ({
         styles['TabsItem'],
         mode && stylesMode[mode],
         selected && styles['TabsItem--selected'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         withGaps && styles['TabsItem--withGaps'],
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
         className,

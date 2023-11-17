@@ -3,7 +3,6 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useChipsInput } from '../../hooks/useChipsInput';
 import { useExternRef } from '../../hooks/useExternRef';
-import { SizeType } from '../../lib/adaptivity';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { Chip, ChipOption, ChipValue, RenderChip } from '../Chip/Chip';
 import { Text } from '../Typography/Text/Text';
@@ -153,7 +152,7 @@ export const ChipsInputBase = <Option extends ChipOption>(props: ChipsInputBaseP
       style={style}
       className={classNames(
         styles['ChipsInputBase'],
-        sizeY === SizeType.COMPACT && styles['ChipsInputBase--sizeY-compact'],
+        sizeY === 'compact' && styles['ChipsInputBase--sizeY-compact'],
         !selectedOptions.length && styles['ChipsInputBase--hasPlaceholder'],
         className,
       )}

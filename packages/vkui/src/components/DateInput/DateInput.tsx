@@ -4,7 +4,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
-import { SizeType } from '../../lib/adaptivity';
 import { callMultiple } from '../../lib/callMultiple';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
@@ -21,7 +20,7 @@ import styles from './DateInput.module.css';
 
 const sizeYClassNames = {
   none: styles['DateInput--sizeY-none'],
-  [SizeType.COMPACT]: styles['DateInput--sizeY-compact'],
+  ['compact']: styles['DateInput--sizeY-compact'],
 };
 
 export interface DateInputProps
@@ -220,7 +219,7 @@ export const DateInput = ({
   return (
     <FormField
       style={style}
-      className={classNames(sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY], className)}
+      className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
       getRootRef={handleRootRef}
       after={
         value ? (

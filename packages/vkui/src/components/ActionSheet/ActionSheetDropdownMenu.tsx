@@ -4,10 +4,8 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { useEffectDev } from '../../hooks/useEffectDev';
 import { useEventListener } from '../../hooks/useEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
-import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { Popper } from '../Popper/Popper';
@@ -82,9 +80,9 @@ export const ActionSheetDropdownMenu = ({
       placement={placement}
       className={classNames(
         styles['ActionSheet'],
-        platform === Platform.IOS && styles['ActionSheet--ios'],
+        platform === 'ios' && styles['ActionSheet--ios'],
         styles['ActionSheet--menu'],
-        sizeY === SizeType.COMPACT && styles['ActionSheet--sizeY-compact'],
+        sizeY === 'compact' && styles['ActionSheet--sizeY-compact'],
         className,
       )}
       style={style}

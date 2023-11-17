@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
-import { Appearance } from '../../helpers/appearance';
 import {
   ButtonPlayground,
   ButtonWithCounterPlayground,
@@ -20,7 +19,7 @@ test.describe('Button', () => {
 });
 
 test.describe('Button', () => {
-  test.use({ onlyForAppearances: [Appearance.LIGHT] });
+  test.use({ onlyForAppearances: ['light'] });
   test('paddings', async ({
     mount,
     expectScreenshotClippedToContent,

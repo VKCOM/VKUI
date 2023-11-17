@@ -3,7 +3,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
-import { SizeType } from '../../lib/adaptivity';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
@@ -14,7 +13,7 @@ import styles from './CustomSelectInput.module.css';
 
 const sizeYClassNames = {
   none: styles['CustomSelectInput--sizeY-none'],
-  [SizeType.COMPACT]: styles['CustomSelectInput--sizeY-compact'],
+  compact: styles['CustomSelectInput--sizeY-compact'],
 };
 
 export interface CustomSelectInputProps
@@ -69,7 +68,7 @@ export const CustomSelectInput = ({
         align === 'center' && styles['CustomSelectInput--align-center'],
         !children && styles['CustomSelectInput--empty'],
         multiline && styles['CustomSelectInput--multiline'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         before && styles['CustomSelectInput--hasBefore'],
         after && styles['CustomSelectInput--hasAfter'],
         className,

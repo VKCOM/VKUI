@@ -1,4 +1,4 @@
-import { type CSSBreakpoints, SizeType } from '../../lib/adaptivity';
+import { type CSSBreakpoints, SizeTypeValues } from '../../lib/adaptivity';
 
 export type ForcedHiddenByAdaptivityProviderType = false; // имеется ввиду, что зашили значение, например, <AdaptivityProvider sizeY="regular" />
 
@@ -7,7 +7,7 @@ export type ElementProps = { className: string };
 /* ================================================================================================================== */
 
 export type AdaptiveSizeType = Record<
-  SizeType,
+  SizeTypeValues,
   ForcedHiddenByAdaptivityProviderType | ElementProps
 >;
 

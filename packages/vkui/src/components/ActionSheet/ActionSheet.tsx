@@ -4,7 +4,6 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
-import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
@@ -73,7 +72,7 @@ export const ActionSheet = ({
 
   useScrollLock(mode === 'sheet');
 
-  let timeout = platform === Platform.IOS ? 300 : 200;
+  let timeout = platform === 'ios' ? 300 : 200;
 
   if (mode === 'menu') {
     timeout = 0;
@@ -141,7 +140,7 @@ export const ActionSheet = ({
           )}
           {children}
         </div>
-        {platform === Platform.IOS && mode === 'sheet' && (
+        {platform === 'ios' && mode === 'sheet' && (
           <div className={styles['ActionSheet__close-item-wrapper--ios']}>
             {iosCloseItem ?? <ActionSheetDefaultIosCloseItem />}
           </div>

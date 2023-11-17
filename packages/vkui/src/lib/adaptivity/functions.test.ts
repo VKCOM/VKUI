@@ -1,4 +1,3 @@
-import { Platform } from '../platform';
 import { ViewHeight, ViewWidth } from './constants';
 import { tryToCheckIsDesktop, viewWidthToClassName } from './functions';
 
@@ -57,14 +56,14 @@ describe('adaptivity/functions', () => {
       });
 
       it('[CRUTCH] should be always true if platform is VKCOM', () => {
-        expect(tryToCheckIsDesktop(undefined, undefined, undefined, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
-        expect(tryToCheckIsDesktop(ViewWidth.SMALL_TABLET, undefined, undefined, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
-        expect(tryToCheckIsDesktop(undefined, ViewHeight.MEDIUM, undefined, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
-        expect(tryToCheckIsDesktop(undefined, undefined, true, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
-        expect(tryToCheckIsDesktop(ViewWidth.SMALL_TABLET, ViewHeight.EXTRA_SMALL, undefined, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
-        expect(tryToCheckIsDesktop(ViewWidth.MOBILE, ViewHeight.EXTRA_SMALL, undefined, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
-        expect(tryToCheckIsDesktop(ViewWidth.MOBILE, ViewHeight.EXTRA_SMALL, true, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
-        expect(tryToCheckIsDesktop(ViewWidth.SMALL_TABLET, undefined, false, Platform.VKCOM)).toBeTruthy(); // prettier-ignore
+        expect(tryToCheckIsDesktop(undefined, undefined, undefined, 'vkcom')).toBeTruthy(); // prettier-ignore
+        expect(tryToCheckIsDesktop(ViewWidth.SMALL_TABLET, undefined, undefined, 'vkcom')).toBeTruthy(); // prettier-ignore
+        expect(tryToCheckIsDesktop(undefined, ViewHeight.MEDIUM, undefined, 'vkcom')).toBeTruthy(); // prettier-ignore
+        expect(tryToCheckIsDesktop(undefined, undefined, true, 'vkcom')).toBeTruthy(); // prettier-ignore
+        expect(tryToCheckIsDesktop(ViewWidth.SMALL_TABLET, ViewHeight.EXTRA_SMALL, undefined, 'vkcom')).toBeTruthy(); // prettier-ignore
+        expect(tryToCheckIsDesktop(ViewWidth.MOBILE, ViewHeight.EXTRA_SMALL, undefined, 'vkcom')).toBeTruthy(); // prettier-ignore
+        expect(tryToCheckIsDesktop(ViewWidth.MOBILE, ViewHeight.EXTRA_SMALL, true, 'vkcom')).toBeTruthy(); // prettier-ignore
+        expect(tryToCheckIsDesktop(ViewWidth.SMALL_TABLET, undefined, false, 'vkcom')).toBeTruthy(); // prettier-ignore
       });
     });
   });

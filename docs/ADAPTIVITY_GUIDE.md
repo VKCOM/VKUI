@@ -19,7 +19,7 @@
 **Пример 1.**
 
 ```tsx
-<AdaptivityProvider sizeX={SizeType.COMPACT}>
+<AdaptivityProvider sizeX="compact">
   <Component>lorem ipsum</Component>
 </AdaptivityProvider>
 ```
@@ -30,12 +30,11 @@ _Component.tsx_
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeType } from '../../../lib/adaptivity';
 import styles from './Component.module.css';
 
 const sizeXClassNames = {
   none: styles['Component--sizeX-none'], // означает, что sizeX не определён в AdaptivityProvider – используем `@media`
-  [SizeType.COMPACT]: styles['Component--sizeX-compact'],
+  ['compact']: styles['Component--sizeX-compact'],
 };
 
 const Component = () => {
@@ -46,7 +45,7 @@ const Component = () => {
       className={classNames(
         styles.Component,
         // компонент слушает только compact
-        sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
+        sizeX !== 'regular' && sizeXClassNames[sizeX],
       )}
     />
   );

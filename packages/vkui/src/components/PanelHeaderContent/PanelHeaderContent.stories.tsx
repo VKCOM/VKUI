@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Avatar } from '../Avatar/Avatar';
@@ -33,7 +32,7 @@ export const Example: Story = {
       <View id="main" activePanel={PANEL_ID}>
         <Panel id={PANEL_ID}>
           <PanelHeader
-            before={<PanelHeaderBack label={platform === Platform.VKCOM ? 'Назад' : undefined} />}
+            before={<PanelHeaderBack label={platform === 'vkcom' ? 'Назад' : undefined} />}
           >
             <PanelHeaderContent before={<Avatar size={36} />} status="Был в сети вчера">
               Влад Анесов

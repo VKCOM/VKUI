@@ -3,11 +3,10 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
-import type { HasRootRef } from '../../types';
-import { Removable, type RemovableProps } from '../Removable/Removable';
-import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
-import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox/CellCheckbox';
+import { HasRootRef } from '../../types';
+import { Removable, RemovableProps } from '../Removable/Removable';
+import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
+import { CellCheckbox, CellCheckboxProps } from './CellCheckbox/CellCheckbox';
 import { CellDragger } from './CellDragger/CellDragger';
 import { DEFAULT_DRAGGABLE_LABEL } from './constants';
 import styles from './Cell.module.css';
@@ -110,7 +109,7 @@ export const Cell = ({
   const cellClasses = classNames(
     styles['Cell'],
     dragging && styles['Cell--dragging'],
-    platform === Platform.IOS && styles['Cell--ios'],
+    platform === 'ios' && styles['Cell--ios'],
     removable && styles['Cell--removable'],
     Component === 'label' && styles['Cell--selectable'],
     disabled && styles['Cell--disabled'],
@@ -125,14 +124,14 @@ export const Cell = ({
     Component: Component,
     before: (
       <React.Fragment>
-        {draggable && platform !== Platform.IOS && dragger}
+        {draggable && platform !== 'ios' && dragger}
         {selectable && checkbox}
         {before}
       </React.Fragment>
     ),
     after: (
       <React.Fragment>
-        {draggable && platform === Platform.IOS && dragger}
+        {draggable && platform === 'ios' && dragger}
         {after}
       </React.Fragment>
     ),
@@ -147,7 +146,7 @@ export const Cell = ({
         removePlaceholder={removePlaceholder}
         onRemove={(e) => onRemove(e, rootElRef.current)}
       >
-        {platform === Platform.IOS ? (
+        {platform === 'ios' ? (
           ({ isRemoving }) => (
             <SimpleCell {...simpleCellProps} disabled={simpleCellProps.disabled || isRemoving} />
           )

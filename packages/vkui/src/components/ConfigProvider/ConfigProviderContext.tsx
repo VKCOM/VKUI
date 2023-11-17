@@ -3,16 +3,6 @@ import vkBridge from '@vkontakte/vk-bridge';
 import type { AppearanceType } from '../../lib/appearance';
 import { platform, PlatformType } from '../../lib/platform';
 
-/**
- * TODO [>=6]: удалить enum (#5049).
- *
- * @deprecated v5.8.0
- */
-export enum WebviewType {
-  VKAPPS = 'vkapps',
-  INTERNAL = 'internal',
-}
-
 export interface ConfigProviderContextInterface {
   /**
    * Подсказывает приложению, обёрнутому в `ConfigProvider`, где открыто приложение: внутри webview или в мобильном браузере.
@@ -42,7 +32,7 @@ export interface ConfigProviderContextInterface {
    *
    * @deprecated v5.8.0
    */
-  webviewType?: WebviewType.INTERNAL | WebviewType.VKAPPS;
+  webviewType?: 'internal' | 'vkapps';
   /**
    * При `true` слот `after` у `PanelHeader` игнорируется под размещение пользовательского
    * "плавающего" элемента (например, панель управления webview).

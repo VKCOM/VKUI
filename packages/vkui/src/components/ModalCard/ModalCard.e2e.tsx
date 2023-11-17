@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
-import { SizeType, ViewWidth } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
+import { ViewWidth } from '../../lib/adaptivity';
 import { ModalCardPlayground } from './ModalCard.e2e-playground';
 
 test.describe('ModalCard', () => {
   test.use({
     adaptivityProviderProps: {
       viewWidth: ViewWidth.MOBILE,
-      sizeY: SizeType.REGULAR,
+      sizeY: 'regular',
     },
-    onlyForPlatforms: [Platform.IOS, Platform.ANDROID],
+    onlyForPlatforms: ['ios', 'android'],
   });
   test('mobile', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
     await mount(<ModalCardPlayground {...componentPlaygroundProps} />);
@@ -22,9 +21,9 @@ test.describe('ModalCard', () => {
   test.use({
     adaptivityProviderProps: {
       viewWidth: ViewWidth.SMALL_TABLET,
-      sizeY: SizeType.COMPACT,
+      sizeY: 'compact',
     },
-    onlyForPlatforms: [Platform.IOS, Platform.ANDROID],
+    onlyForPlatforms: ['ios', 'android'],
   });
   test('tablet', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
     await mount(<ModalCardPlayground {...componentPlaygroundProps} />);
@@ -34,7 +33,7 @@ test.describe('ModalCard', () => {
 
 test.describe(() => {
   test.use({
-    onlyForPlatforms: [Platform.VKCOM],
+    onlyForPlatforms: ['vkcom'],
   });
   test('ModalCard', async ({
     mount,

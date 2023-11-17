@@ -11,8 +11,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRef, HasRootRef } from '../../types';
 import { ACTIVE_EFFECT_DELAY, Tappable, type TappableProps } from '../Tappable/Tappable';
@@ -23,7 +21,7 @@ import styles from './Checkbox.module.css';
 
 const sizeYClassNames = {
   none: styles['Checkbox--sizeY-none'],
-  [SizeType.COMPACT]: styles['Checkbox--sizeY-compact'],
+  ['compact']: styles['Checkbox--sizeY-compact'],
 };
 
 export interface CheckboxProps
@@ -113,13 +111,13 @@ export const Checkbox = ({
       Component="label"
       className={classNames(
         styles['Checkbox'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         !(hasReactNode(children) || hasReactNode(description)) && styles['Checkbox--simple'],
         className,
       )}
       style={style}
       disabled={restProps.disabled}
-      activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
+      activeEffectDelay={platform === 'ios' ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
       hoverMode={hoverMode}
       activeMode={activeMode}
@@ -136,7 +134,7 @@ export const Checkbox = ({
         getRootRef={inputRef}
       />
       <div className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--on'])}>
-        {platform === Platform.VKCOM ? (
+        {platform === 'vkcom' ? (
           <Icon20CheckBoxOn />
         ) : (
           <React.Fragment>
@@ -150,7 +148,7 @@ export const Checkbox = ({
         )}
       </div>
       <div className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--off'])}>
-        {platform === Platform.VKCOM ? (
+        {platform === 'vkcom' ? (
           <Icon20CheckBoxOff />
         ) : (
           <React.Fragment>
@@ -166,7 +164,7 @@ export const Checkbox = ({
       <div
         className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--indeterminate'])}
       >
-        {platform === Platform.VKCOM ? (
+        {platform === 'vkcom' ? (
           <Icon20CheckBoxIndetermanate width={20} height={20} />
         ) : (
           <React.Fragment>

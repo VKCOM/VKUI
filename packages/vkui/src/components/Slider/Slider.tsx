@@ -3,7 +3,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { SizeType } from '../../lib/adaptivity';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { Touch, type TouchEvent, type TouchEventHandler } from '../Touch/Touch';
 import { SliderThumb } from './SliderThumb/SliderThumb';
@@ -22,7 +21,7 @@ import styles from './Slider.module.css';
 
 const sizeYClassNames = {
   none: styles['Slider--sizeY-none'],
-  [SizeType.COMPACT]: styles['Slider--sizeY-compact'],
+  ['compact']: styles['Slider--sizeY-compact'],
 };
 
 export interface SliderBaseProps
@@ -218,7 +217,7 @@ export const Slider = ({
       className={classNames(
         styles['Slider'],
         disabled && styles['Slider--disabled'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
       onStart={disabled ? undefined : handlePointerStart}
