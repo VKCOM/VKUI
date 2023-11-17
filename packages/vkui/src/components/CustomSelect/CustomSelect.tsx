@@ -396,8 +396,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
    */
   const close = React.useCallback(() => {
     resetKeyboardInput();
-    setInputValue('');
 
+    setInputValue('');
     setOpened(false);
     setFocusedOptionIndex(-1);
     onClose?.();
@@ -739,10 +739,20 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const { document } = useDOM();
   const selectInputRef = React.useRef<HTMLInputElement | null>(null);
-  const focusOnInput = useTimeout(() => selectInputRef.current?.focus(), 0);
+  const focusOnInput = useTimeout(
+    () => selectInputRef.current && selectInputRef.current.focus(),
+    0,
+  );
 
   const passClickAndFocusToInputOnClick = React.useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      // Раньше внешней оберткой селекта был лэйбл, что позволяло по клику в любую область селекта,
+      // даже где нету инпута, фокусировать инпут и передавать на него событие клика.
+      // Так мы больше не оборачиваем селект в лэйбл, то для обертки селекта мы симулируем работу лэйбла.
+      // передаем фокус и клик по инпуту, если пользователь кликнул в зоне обертки.
+      // В лэйбл мы не больше не оборачиваем, потому что это заставляет скрин ридер
+      // дважды произносить лэйбл выбранной опции при фокусе, если селект связан с внешним лэйблом.
+
       if (!selectInputRef.current || !document) {
         return;
       }
@@ -761,7 +771,11 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const preventInputBlurWhenClickInsideFocusedSelectArea = (
     e: React.MouseEvent<HTMLDivElement>,
   ) => {
-    if (document?.activeElement === selectInputRef.current) {
+    // Так как инпут больше не оборачивается пустым лэйблом, то клик внутри обертки,
+    // но вне инпута (например по иконке дропдауна), будет убирать фокус с инпута.
+    // Чтобы в такой ситуации отключить blur инпута мы превентим mousedown событие обёртки
+    const isInputFocused = document && document.activeElement === selectInputRef.current;
+    if (isInputFocused) {
       e.preventDefault();
     }
   };
@@ -772,8 +786,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     ariaActiveDescendantOptionIndex !== undefined
       ? options[ariaActiveDescendantOptionIndex] && options[ariaActiveDescendantOptionIndex].value
       : null;
-
-  const focusWithin = useFocusWithin(handleRootRef);
 
   const selectInputAriaProps: React.HTMLAttributes<HTMLElement> = {
     'role': 'combobox',
@@ -787,6 +799,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     'aria-autocomplete': 'none',
   };
 
+  const focusWithin = useFocusWithin(handleRootRef);
   const isSimpleSelect = !searchable;
   const isSearhableSelectWithoutFocus = searchable && !focusWithin;
   const isFocusedSearchableSelectHasNoInputValue = searchable && focusWithin && inputValue === '';
@@ -807,7 +820,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       onMouseDown={preventInputBlurWhenClickInsideFocusedSelectArea}
     >
       {focusWithin && selected && !opened && (
-        <VisuallyHidden aria-live="polite">{selected?.label}</VisuallyHidden>
+        <VisuallyHidden aria-live="polite">{selected.label}</VisuallyHidden>
       )}
       <Input
         autoComplete="off"
@@ -832,7 +845,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         mode={getFormFieldModeFromSelectType(selectType)}
         placeholder={withInputForeground ? '' : restProps.placeholder}
         inputForeground={
-          withInputForeground && (
+          withInputForeground &&
+          selected && (
             <CustomSelectInputForeground
               tabIndex={-1}
               aria-hidden
@@ -843,7 +857,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
               )}
               selectType={selectType}
             >
-              {selected?.label}
+              {selected.label}
             </CustomSelectInputForeground>
           )
         }
