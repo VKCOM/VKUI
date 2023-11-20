@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useCalendar } from '../../hooks/useCalendar';
-import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
+import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import { isSameDay, isSameMonth } from '../../lib/date';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -51,6 +51,14 @@ export interface CalendarProps
    * Изменение даты в шапке календаря.
    */
   onHeaderChange?(value: Date): void;
+  /**
+   * Минимальные дата и время, которые можно выбрать
+   */
+  minDateTime?: Date;
+  /**
+   * Максимальные дата и время, которые можно выбрать
+   */
+  maxDateTime?: Date;
 }
 
 const warn = warnOnce('Calendar');
@@ -88,6 +96,8 @@ export const Calendar = ({
   nextMonthProps,
   dayProps,
   listenDayChangesForUpdate,
+  minDateTime,
+  maxDateTime,
   ...props
 }: CalendarProps) => {
   const {
@@ -108,6 +118,8 @@ export const Calendar = ({
     onHeaderChange,
     onNextMonth,
     onPrevMonth,
+    minDateTime,
+    maxDateTime,
   });
 
   useIsomorphicLayoutEffect(() => {
@@ -142,9 +154,13 @@ export const Calendar = ({
 
   const onDayChange = React.useCallback(
     (date: Date) => {
-      onChange?.(setTimeEqual(date, value as Date | undefined | null));
+      let actualDate = setTimeEqual(date, value);
+      if (minDateTime || maxDateTime) {
+        actualDate = clamp(actualDate, { min: minDateTime, max: maxDateTime });
+      }
+      onChange?.(actualDate);
     },
-    [value, onChange],
+    [value, onChange, maxDateTime, minDateTime],
   );
 
   const isDayActive = React.useCallback(
@@ -201,6 +217,7 @@ export const Calendar = ({
             doneButtonText={doneButtonText}
             changeHoursAriaLabel={changeHoursAriaLabel}
             changeMinutesAriaLabel={changeMinutesAriaLabel}
+            isDayDisabled={minDateTime || maxDateTime ? isDayDisabled : undefined}
           />
         </div>
       )}
