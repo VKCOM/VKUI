@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Icon24Dismiss } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useKeyboard } from '../../hooks/useKeyboard';
@@ -8,11 +7,10 @@ import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
-import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
-import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
+import { ModalCardBaseCloseButton } from './ModalCardBaseCloseButton';
 import styles from './ModalCardBase.module.css';
 
 export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -62,6 +60,12 @@ export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivEle
    * `data-testid` для кнопки закрытия
    */
   modalDismissButtonTestId?: string;
+  /**
+   * Расположение кнопки закрытия (внутри и вне `popout'a`)
+   * Доступно только в `compact`-режиме
+   * На `iOS` в `regular`-режиме всегда включен `inside`
+   */
+  dismissButtonMode?: 'inside' | 'outside';
 }
 
 /**
@@ -78,15 +82,16 @@ export const ModalCardBase = ({
   style,
   size: sizeProp,
   modalDismissButtonTestId,
+  dismissButtonMode = 'outside',
   ...restProps
 }: ModalCardBaseProps) => {
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const isSoftwareKeyboardOpened = useKeyboard().isOpened;
 
-  const canShowCloseButtonIOS = platform === Platform.IOS && !isDesktop;
-
   const size = isDesktop ? sizeProp : undefined;
+  const withSafeZone =
+    !icon && (dismissButtonMode === 'inside' || (platform === Platform.IOS && !isDesktop));
 
   return (
     <RootComponent
@@ -95,6 +100,7 @@ export const ModalCardBase = ({
         'vkuiInternalModalCardBase',
         platform === Platform.IOS && styles['ModalCardBase--ios'],
         isDesktop && styles['ModalCardBase--desktop'],
+        withSafeZone && styles['ModalCardBase--withSafeZone'],
       )}
       style={{
         ...style,
@@ -137,18 +143,12 @@ export const ModalCardBase = ({
 
         {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
 
-        {isDesktop && (
-          <ModalDismissButton data-testid={modalDismissButtonTestId} onClick={onClose} />
-        )}
-        {canShowCloseButtonIOS && (
-          <PanelHeaderButton
-            aria-label={dismissLabel}
-            className={styles['ModalCardBase__dismiss']}
-            onClick={onClose}
-          >
-            <Icon24Dismiss />
-          </PanelHeaderButton>
-        )}
+        <ModalCardBaseCloseButton
+          aria-label={dismissLabel}
+          testId={modalDismissButtonTestId}
+          onClose={onClose}
+          mode={dismissButtonMode}
+        />
       </div>
     </RootComponent>
   );

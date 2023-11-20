@@ -12,6 +12,17 @@
   box-shadow: var(--vkui--elevation3);
 
   --vkui_internal--background: var(--vkui--color_background_modal);
+  --vkui_internal--dismiss_icon_height: 20px;
+  --vkui_internal--dismiss_icon_padding: 12px;
+  --vkui_internal--dismiss_icon_safe_offset: 4px;
+  --vkui_internal--dismiss_icon_desktop_offset: 4px;
+}
+
+.ModalCardBase--withSafeZone .ModalCardBase__container {
+  padding-top: calc(
+    var(--vkui_internal--dismiss_icon_height) + var(--vkui_internal--dismiss_icon_padding) +
+      var(--vkui_internal--dismiss_icon_safe_offset)
+  );
 }
 
 .ModalCardBase__container--softwareKeyboardOpened {
@@ -57,43 +68,48 @@
   margin-top: 32px;
 }
 
-/**
- * iOS
- */
-
 .ModalCardBase__dismiss {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 48px;
-  height: 48px;
+  top: 0;
+  right: 0;
   color: var(--vkui--color_icon_secondary);
-  justify-content: center;
+  padding: var(--vkui_internal--dismiss_icon_padding);
 }
 
 /**
  * iOS
  */
-/*
- * TODO [>=6]: зачем этот стиль? Удалить?
-*/
-.ModalCardBase--ios .ModalCardBase__header:first-child {
-  padding-left: 36px;
-  padding-right: 36px;
-}
-
-/**
- * Android + vkcom
- */
-
 .ModalCardBase--ios .ModalCardBase__container {
   border-radius: 14px;
+
+  --vkui_internal--dismiss_icon_height: 24px;
+  --vkui_internal--dismiss_icon_padding: 12px;
+  --vkui_internal--dismiss_icon_safe_offset: 0px;
 }
 
 /**
  * Desktop
  */
+.ModalCardBase--desktop .ModalCardBase__dismiss {
+  top: var(--vkui_internal--dismiss_icon_desktop_offset);
+  right: var(--vkui_internal--dismiss_icon_desktop_offset);
+}
 
 .ModalCardBase--desktop .ModalCardBase__container {
   padding: 24px;
+
+  --vkui_internal--dismiss_icon_safe_offset: 0px;
+}
+
+.ModalCardBase--desktop.ModalCardBase--ios .ModalCardBase__container {
+  --vkui_internal--dismiss_icon_padding: 10px;
+  --vkui_internal--dismiss_icon_safe_offset: 6px;
+}
+
+.ModalCardBase--withSafeZone.ModalCardBase--desktop .ModalCardBase__container {
+  padding-top: calc(
+    var(--vkui_internal--dismiss_icon_height) + var(--vkui_internal--dismiss_icon_padding) +
+      var(--vkui_internal--dismiss_icon_safe_offset) +
+      var(--vkui_internal--dismiss_icon_desktop_offset)
+  );
 }
