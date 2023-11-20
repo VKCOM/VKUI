@@ -4,9 +4,11 @@ import {
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
+  isAfter,
   isBefore,
   isFirstDayOfMonth,
   isLastDayOfMonth,
+  isSameDay,
   startOfMonth,
   startOfWeek,
   subDays,
@@ -116,3 +118,31 @@ export const isFirstDay = (day: Date, dayOfWeek: number) =>
   dayOfWeek === 0 || isFirstDayOfMonth(day);
 
 export const isLastDay = (day: Date, dayOfWeek: number) => dayOfWeek === 6 || isLastDayOfMonth(day);
+
+/**
+ * Возвращает дату, ограниченную `min` и/или `max` значениями
+ */
+export function clamp(day: Date, options: { min?: Date; max?: Date } = {}) {
+  const { min, max } = options;
+  if (min && isBefore(day, min)) {
+    return min;
+  }
+  if (max && isAfter(day, max)) {
+    return max;
+  }
+  return day;
+}
+
+/**
+ * Позволяет определить удовлетворяет ли исходная дата заданным ограничения `min` и/или `max`
+ */
+export function isDayMinMaxRestricted(
+  day: Date,
+  options: { min?: Date; max?: Date; withTime?: boolean } = {},
+) {
+  const { min, max, withTime = false } = options;
+  if (!withTime && ((min && isSameDay(day, min)) || (max && isSameDay(day, max)))) {
+    return false;
+  }
+  return Boolean((min && isBefore(day, min)) || (max && isAfter(day, max)));
+}

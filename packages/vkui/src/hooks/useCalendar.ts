@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { CalendarProps } from '../components/Calendar/Calendar';
+import { isDayMinMaxRestricted } from '../lib/calendar';
 import {
   addMonths,
   endOfDay,
@@ -11,11 +12,18 @@ import {
 } from '../lib/date';
 
 export interface UseCalendarDependencies
-  extends Pick<CalendarProps, 'onHeaderChange' | 'onNextMonth' | 'onPrevMonth'> {
+  extends Pick<
+    CalendarProps,
+    | 'onHeaderChange'
+    | 'onNextMonth'
+    | 'onPrevMonth'
+    | 'minDateTime'
+    | 'maxDateTime'
+    | 'shouldDisableDate'
+    | 'disableFuture'
+    | 'disablePast'
+  > {
   value?: Array<Date | null> | Date;
-  disablePast?: boolean;
-  disableFuture?: boolean;
-  shouldDisableDate?(value: Date): boolean;
 }
 
 export function useCalendar({
@@ -26,6 +34,8 @@ export function useCalendar({
   onHeaderChange,
   onNextMonth,
   onPrevMonth,
+  minDateTime,
+  maxDateTime,
 }: UseCalendarDependencies) {
   const [viewDate, setViewDate] = React.useState(
     (Array.isArray(value) ? value[0] : value) ?? new Date(),
@@ -55,22 +65,24 @@ export function useCalendar({
   );
 
   const isDayDisabled = React.useCallback(
-    (day: Date) => {
+    (day: Date, withTime?: boolean) => {
       const now = new Date();
-      let disabled = false;
-      if (disablePast) {
-        disabled = isBefore(endOfDay(day), now);
+      if (shouldDisableDate) {
+        return shouldDisableDate(day);
       }
       if (disableFuture) {
-        disabled = isAfter(startOfDay(day), now);
+        return isAfter(startOfDay(day), now);
       }
-      if (shouldDisableDate) {
-        disabled = shouldDisableDate(day);
+      if (disablePast) {
+        return isBefore(endOfDay(day), now);
+      }
+      if (minDateTime || maxDateTime) {
+        return isDayMinMaxRestricted(day, { min: minDateTime, max: maxDateTime, withTime });
       }
 
-      return disabled;
+      return false;
     },
-    [disableFuture, disablePast, shouldDisableDate],
+    [disableFuture, disablePast, shouldDisableDate, minDateTime, maxDateTime],
   );
 
   const resetSelectedDay = React.useCallback(() => {
