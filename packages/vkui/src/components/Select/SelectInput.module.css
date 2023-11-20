@@ -65,14 +65,11 @@
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
+/* Для доступности placeholder в инпуте задан, но визульно не виден, потому что
+ * для комфортного управления видом плейсходера мы рендерим его отдельно, так же как и лэйбл
+ */
 .SelectInput__el::placeholder {
-  color: var(--vkui--color_text_secondary);
-  /* Для Firefox */
-  opacity: 1;
-}
-
-.SelectInput__el:disabled::placeholder {
-  color: var(--vkui--color_text_secondary);
+  opacity: 0;
 }
 
 .SelectInput__container {

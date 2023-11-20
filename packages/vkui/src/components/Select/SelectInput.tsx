@@ -80,6 +80,7 @@ export const SelectInput = ({
           type={type}
           className={styles['SelectInput__el']}
           getRootRef={getRef}
+          placeholder={placeholder}
         />
         {showLabelOrPlaceholder && (
           <RootComponent
