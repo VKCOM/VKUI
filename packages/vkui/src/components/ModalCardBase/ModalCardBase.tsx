@@ -64,8 +64,9 @@ export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivEle
    * Расположение кнопки закрытия (внутри и вне `popout'a`)
    * Доступно только в `compact`-режиме
    * На `iOS` в `regular`-режиме всегда включен `inside`
+   * ⚠️ ВНИМАНИЕ: использование `none` может негативно сказаться на пользовательском опыте
    */
-  dismissButtonMode?: 'inside' | 'outside';
+  dismissButtonMode?: 'inside' | 'outside' | 'none';
 }
 
 /**
@@ -143,12 +144,14 @@ export const ModalCardBase = ({
 
         {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
 
-        <ModalCardBaseCloseButton
-          aria-label={dismissLabel}
-          testId={modalDismissButtonTestId}
-          onClose={onClose}
-          mode={dismissButtonMode}
-        />
+        {dismissButtonMode !== 'none' && (
+          <ModalCardBaseCloseButton
+            aria-label={dismissLabel}
+            testId={modalDismissButtonTestId}
+            onClose={onClose}
+            mode={dismissButtonMode}
+          />
+        )}
       </div>
     </RootComponent>
   );

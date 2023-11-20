@@ -101,7 +101,7 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
               Сохранить
             </Button>,
           ],
-          dismissButtonMode: ['inside', 'outside'],
+          dismissButtonMode: ['inside', 'outside', 'none'],
         },
       ]}
       AppWrapper={AppWrapper}
