@@ -2,9 +2,11 @@ import * as React from 'react';
 import { Icon16Clear, Icon16SearchOutline, Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { useBooleanState } from '../../hooks/useBooleanState';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useId } from '../../hooks/useId';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
@@ -26,7 +28,7 @@ export interface SearchProps
   after?: React.ReactNode;
   before?: React.ReactNode;
   icon?: React.ReactNode;
-  onIconClick?: (e: VKUITouchEvent) => void;
+  onIconClick?(e: VKUITouchEvent): void;
   defaultValue?: string;
   iconAriaLabel?: string;
   clearAriaLabel?: string;
@@ -34,12 +36,21 @@ export interface SearchProps
    * Удаляет отступы у компонента
    */
   noPadding?: boolean;
+  /**
+   * Текст для кнопки Найти
+   */
+  findButtonText?: string;
+  /**
+   * Коллбэк для кнопки Найти
+   */
+  onFindButtonClick?: React.MouseEventHandler<HTMLElement>;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Search
  */
 export const Search = ({
+  id: idProp,
   before = <Icon16SearchOutline />,
   className,
   defaultValue = '',
@@ -56,6 +67,8 @@ export const Search = ({
   clearAriaLabel = 'Очистить',
   noPadding,
   getRootRef,
+  findButtonText = 'Найти',
+  onFindButtonClick,
   ...inputProps
 }: SearchProps) => {
   const inputRef = useExternRef(getRef);
@@ -64,6 +77,8 @@ export const Search = ({
     setTrue: setFocusedTrue,
     setFalse: setFocusedFalse,
   } = useBooleanState(false);
+  const generatedId = useId();
+  const inputId = idProp ? idProp : `search-${generatedId}`;
 
   const [value, onChange] = useEnsuredControl({
     defaultValue,
@@ -71,6 +86,7 @@ export const Search = ({
     value: valueProp,
   });
   const { sizeY = 'none' } = useAdaptivity();
+  const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
   const platform = usePlatform();
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -130,7 +146,10 @@ export const Search = ({
       style={style}
     >
       <div className={styles['Search__field']}>
-        <label className={styles['Search__control']}>
+        <label htmlFor={inputId} className={styles['Search__label']}>
+          {placeholder}
+        </label>
+        <div className={styles['Search__input']}>
           {before}
           <Headline
             Component="input"
@@ -138,17 +157,18 @@ export const Search = ({
             level="1"
             weight="3"
             {...inputProps}
+            id={inputId}
             placeholder={placeholder}
             autoComplete={autoComplete}
             getRootRef={inputRef}
-            className={styles['Search__input']}
+            className={styles['Search__nativeInput']}
             onFocus={onFocus}
             onBlur={onBlur}
             onChange={onChange}
             value={value}
           />
-        </label>
-        <div className={styles['Search__icons']}>
+        </div>
+        <div className={styles['Search__controls']}>
           {icon && (
             <IconButton
               hoverMode="opacity"
@@ -161,16 +181,27 @@ export const Search = ({
               {icon}
             </IconButton>
           )}
-          {!!value && (
-            <IconButton
-              hoverMode="opacity"
-              onStart={onIconCancelClickStart}
-              onClick={onCancel}
-              className={styles['Search__icon']}
-              aria-label={clearAriaLabel}
+          <IconButton
+            hoverMode="opacity"
+            onStart={onIconCancelClickStart}
+            onClick={onCancel}
+            className={styles['Search__icon']}
+            aria-label={clearAriaLabel}
+            tabIndex={value ? undefined : -1}
+          >
+            {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
+          </IconButton>
+          {adaptiveSizeY.compact && onFindButtonClick && (
+            <Button
+              mode="primary"
+              size="m"
+              className={classNames(styles['Search__findButton'], adaptiveSizeY.compact.className)}
+              focusVisibleMode="inside"
+              onClick={onFindButtonClick}
+              tabIndex={value ? undefined : -1}
             >
-              {platform === Platform.IOS ? <Icon16Clear /> : <Icon24Cancel />}
-            </IconButton>
+              {findButtonText}
+            </Button>
           )}
         </div>
       </div>

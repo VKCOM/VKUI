@@ -3,9 +3,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
 import { Search } from './Search';
+import styles from './Search.module.css';
 
 const getInput = () => screen.getByRole('searchbox');
-const getClearIcon = () => document.querySelector('.vkuiSearch__icon') as Element;
+const getClearIcon = () => document.querySelector(`.${styles.Search__icon}`)!;
+const getFindButton = () => document.querySelector(`.${styles.Search__findButton}`)!;
 
 describe('Search', () => {
   baselineComponent(Search);
@@ -87,6 +89,13 @@ describe('Search', () => {
     const cb = jest.fn();
     render(<Search icon={<div data-testid="icon" />} onIconClick={cb} />);
     userEvent.click(screen.getByTestId('icon'));
+    expect(cb).toHaveBeenCalled();
+  });
+
+  it('calls onFindButtonClick', () => {
+    const cb = jest.fn();
+    render(<Search value="test" onFindButtonClick={cb} />);
+    userEvent.click(getFindButton());
     expect(cb).toHaveBeenCalled();
   });
 });
