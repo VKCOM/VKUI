@@ -1,10 +1,10 @@
-.SelectInput {
+.CustomSelectInput {
   position: relative;
   line-height: 20px;
   font-size: 16px;
 }
 
-.SelectInput__el {
+.CustomSelectInput__el {
   height: var(--vkui--size_field_height--regular);
   line-height: var(--vkui--size_field_height--regular);
   margin: 0;
@@ -21,29 +21,29 @@
   background: transparent;
 }
 
-.SelectInput--sizeY-compact .SelectInput__el {
+.CustomSelectInput--sizeY-compact .CustomSelectInput__el {
   height: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .SelectInput--sizeY-none .SelectInput__el {
+  .CustomSelectInput--sizeY-none .CustomSelectInput__el {
     height: var(--vkui--size_field_height--compact);
   }
 }
 
-.SelectInput--hasBefore .SelectInput__el {
+.CustomSelectInput--hasBefore .CustomSelectInput__el {
   padding-left: 0;
 }
 
-.SelectInput--hasAfter .SelectInput__el {
+.CustomSelectInput--hasAfter .CustomSelectInput__el {
   padding-right: 0;
 }
 
-.SelectInput__el:disabled {
+.CustomSelectInput__el:disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.SelectInput__container {
+.CustomSelectInput__container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -59,28 +59,28 @@
   pointer-events: none;
 }
 
-.SelectInput--hasBefore .SelectInput__container {
+.CustomSelectInput--hasBefore .CustomSelectInput__container {
   padding-left: 0;
 }
 
-.SelectInput--multiline .SelectInput__container {
+.CustomSelectInput--multiline .CustomSelectInput__container {
   padding-top: 12px;
   padding-bottom: 12px;
 }
 
-.SelectInput--sizeY-compact.SelectInput--multiline .SelectInput__container {
+.CustomSelectInput--sizeY-compact.CustomSelectInput--multiline .CustomSelectInput__container {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
 @media (--sizeY-compact) {
-  .SelectInput--sizeY-none.SelectInput--multiline .SelectInput__container {
+  .CustomSelectInput--sizeY-none.CustomSelectInput--multiline .CustomSelectInput__container {
     padding-top: 8px;
     padding-bottom: 8px;
   }
 }
 
-.SelectInput__input-group {
+.CustomSelectInput__input-group {
   position: relative;
   display: flex;
   align-self: stretch;
@@ -89,7 +89,7 @@
   overflow: hidden;
 }
 
-.SelectInput__input-foreground {
+.CustomSelectInput__input-foreground {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -105,33 +105,33 @@
   pointer-events: none;
 }
 
-.SelectInput__title {
+.CustomSelectInput__title {
   display: block;
 }
 
-.SelectInput:not(.SelectInput--multiline) .SelectInput__title {
+.CustomSelectInput:not(.CustomSelectInput--multiline) .CustomSelectInput__title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.SelectInput--empty .SelectInput__title {
+.CustomSelectInput--empty .CustomSelectInput__title {
   color: var(--vkui--color_text_secondary);
 }
 
 /* Для доступности placeholder в инпуте задан, но визульно не виден, потому что
  * для комфортного управления видом плейсходера мы рендерим его отдельно, так же как и лэйбл
  */
-.SelectInput__el::placeholder {
+.CustomSelectInput__el::placeholder {
   opacity: 0;
 }
 
-.SelectInput--align-right .SelectInput__title,
-.SelectInput--align-right .SelectInput__el {
+.CustomSelectInput--align-right .CustomSelectInput__title,
+.CustomSelectInput--align-right .CustomSelectInput__el {
   text-align: right;
 }
 
-.SelectInput--align-center .SelectInput__title,
-.SelectInput--align-center .SelectInput__el {
+.CustomSelectInput--align-center .CustomSelectInput__title,
+.CustomSelectInput--align-center .CustomSelectInput__el {
   text-align: center;
 }

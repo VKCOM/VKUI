@@ -9,14 +9,14 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import { Text } from '../Typography/Text/Text';
-import styles from './SelectInput.module.css';
+import styles from './CustomSelectInput.module.css';
 
 const sizeYClassNames = {
-  none: styles['SelectInput--sizeY-none'],
-  [SizeType.COMPACT]: styles['SelectInput--sizeY-compact'],
+  none: styles['CustomSelectInput--sizeY-none'],
+  [SizeType.COMPACT]: styles['CustomSelectInput--sizeY-compact'],
 };
 
-export interface SelectInputProps
+export interface CustomSelectInputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
@@ -27,9 +27,9 @@ export interface SelectInputProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SelectInput
+ * @see https://vkcom.github.io/VKUI/#/CustomSelectInput
  */
-export const SelectInput = ({
+export const CustomSelectInput = ({
   type = 'text',
   align = 'left',
   getRef,
@@ -44,7 +44,7 @@ export const SelectInput = ({
   selectType = 'default',
   multiline,
   ...restProps
-}: SelectInputProps) => {
+}: CustomSelectInputProps) => {
   const { sizeY = 'none' } = useAdaptivity();
 
   const title = children || placeholder;
@@ -55,14 +55,14 @@ export const SelectInput = ({
       Component="div"
       style={style}
       className={classNames(
-        styles['SelectInput'],
-        align === 'right' && styles['SelectInput--align-right'],
-        align === 'center' && styles['SelectInput--align-center'],
-        !children && styles['SelectInput--empty'],
-        multiline && styles['SelectInput--multiline'],
+        styles['CustomSelectInput'],
+        align === 'right' && styles['CustomSelectInput--align-right'],
+        align === 'center' && styles['CustomSelectInput--align-center'],
+        !children && styles['CustomSelectInput--empty'],
+        multiline && styles['CustomSelectInput--multiline'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        before && styles['SelectInput--hasBefore'],
-        after && styles['SelectInput--hasAfter'],
+        before && styles['CustomSelectInput--hasBefore'],
+        after && styles['CustomSelectInput--hasAfter'],
         className,
       )}
       getRootRef={getRootRef}
@@ -72,24 +72,27 @@ export const SelectInput = ({
       mode={getFormFieldModeFromSelectType(selectType)}
       status={status}
     >
-      <div className={styles['SelectInput__input-group']}>
+      <div className={styles['CustomSelectInput__input-group']}>
         <Text
           {...restProps}
           Component="input"
           normalize={false}
           type={type}
-          className={styles['SelectInput__el']}
+          className={styles['CustomSelectInput__el']}
           getRootRef={getRef}
           placeholder={placeholder}
         />
         {showLabelOrPlaceholder && (
           <RootComponent
             Component="div"
-            className={classNames(styles['SelectInput__container'], className)}
+            className={classNames(styles['CustomSelectInput__container'], className)}
             tabIndex={-1}
             aria-hidden
           >
-            <SelectTypography selectType={selectType} className={styles['SelectInput__title']}>
+            <SelectTypography
+              selectType={selectType}
+              className={styles['CustomSelectInput__title']}
+            >
               {title}
             </SelectTypography>
           </RootComponent>

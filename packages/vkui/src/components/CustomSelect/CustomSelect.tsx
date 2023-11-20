@@ -22,10 +22,10 @@ import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormFieldProps } from '../FormField/FormField';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import { SelectType } from '../Select/Select';
-import { SelectInput } from '../Select/SelectInput';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { CustomSelectClearButton, CustomSelectClearButtonProps } from './CustomSelectClearButton';
+import { CustomSelectInput } from './CustomSelectInput';
 import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
@@ -821,7 +821,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       {focusWithin && selected && !opened && (
         <VisuallyHidden aria-live="polite">{selected.label}</VisuallyHidden>
       )}
-      <SelectInput
+      <CustomSelectInput
         autoComplete="off"
         {...restProps}
         {...selectInputAriaProps}
@@ -844,7 +844,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         selectType={selectType}
       >
         {selected?.label}
-      </SelectInput>
+      </CustomSelectInput>
       <select
         ref={selectElRef}
         name={name}
