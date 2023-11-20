@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
+import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
-import { HasRootRef } from '../../types';
-import { ListContext } from '../List/ListContext';
-import { Removable, RemovableProps } from '../Removable/Removable';
-import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
-import { CellCheckbox, CellCheckboxProps } from './CellCheckbox/CellCheckbox';
+import type { HasRootRef } from '../../types';
+import { Removable, type RemovableProps } from '../Removable/Removable';
+import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
+import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox/CellCheckbox';
 import { CellDragger } from './CellDragger/CellDragger';
-import { useDraggable } from './useDraggable';
+import { DEFAULT_DRAGGABLE_LABEL } from './constants';
 import styles from './Cell.module.css';
 
 export interface CellProps
@@ -39,7 +39,7 @@ export interface CellProps
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
-  onDragFinish?: ({ from, to }: { from: number; to: number }) => void;
+  onDragFinish?(swappedItemRange: SwappedItemRange): void;
   /**
    * aria-label для кнопки перетаскивания ячейки
    */
@@ -65,11 +65,12 @@ export const Cell = ({
   checked,
   defaultChecked,
   getRootRef,
-  draggerLabel = 'Перенести ячейку',
+  draggerLabel = DEFAULT_DRAGGABLE_LABEL,
   className,
   style,
   ...restProps
 }: CellProps) => {
+  const [dragging, setDragging] = React.useState(false);
   const selectable = mode === 'selectable';
   const removable = mode === 'removable';
   const Component = selectable ? 'label' : ComponentProps;
@@ -78,40 +79,26 @@ export const Cell = ({
 
   const rootElRef = useExternRef(getRootRef);
 
-  const { dragging, ...draggableProps } = useDraggable({
-    rootElRef,
-    onDragFinish,
-  });
-
-  const { toggleDrag } = React.useContext(ListContext);
-  React.useEffect(() => {
-    if (dragging) {
-      toggleDrag(true);
-      return () => toggleDrag(false);
-    }
-    return undefined;
-  }, [dragging, toggleDrag]);
-
-  let dragger;
-  if (draggable) {
-    dragger = (
-      <CellDragger
-        className={styles['Cell__dragger']}
-        aria-label={draggerLabel}
-        {...draggableProps}
-      />
-    );
-  }
+  const dragger = draggable ? (
+    <CellDragger
+      elRef={rootElRef}
+      className={styles['Cell__dragger']}
+      aria-label={draggerLabel}
+      disabled={disabled}
+      onDragStateChange={setDragging}
+      onDragFinish={onDragFinish}
+    />
+  ) : null;
 
   let checkbox;
   if (selectable) {
     const checkboxProps: CellCheckboxProps = {
       name,
       value,
-      onChange,
       defaultChecked,
       checked,
       disabled,
+      onChange,
     };
     checkbox = <CellCheckbox className={styles['Cell__checkbox']} {...checkboxProps} />;
   }
@@ -122,8 +109,8 @@ export const Cell = ({
 
   const cellClasses = classNames(
     styles['Cell'],
-    platform === Platform.IOS && styles['Cell--ios'],
     dragging && styles['Cell--dragging'],
+    platform === Platform.IOS && styles['Cell--ios'],
     removable && styles['Cell--removable'],
     Component === 'label' && styles['Cell--selectable'],
     disabled && styles['Cell--disabled'],

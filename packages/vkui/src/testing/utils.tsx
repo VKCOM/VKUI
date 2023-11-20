@@ -239,18 +239,40 @@ export async function waitForFloatingPosition() {
   await act(async () => void 0);
 }
 
-// Не реализован в JSDOM.
-// Объявление скопировано с документации https://jestjs.io/ru/docs/26.x/manual-mocks
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // устарело
-    removeListener: jest.fn(), // устарело
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
+export const waitRAF = async () => await new Promise((resolve) => requestAnimationFrame(resolve));
+
+// Решение отсюда https://stackoverflow.com/a/62282721/2903061
+export const requestAnimationFrameMock = {
+  handleCounter: 0,
+  queue: new Map(),
+  requestAnimationFrame(callback: FrameRequestCallback) {
+    const handle = this.handleCounter++;
+    this.queue.set(handle, callback);
+    return handle;
+  },
+  cancelAnimationFrame(handle: number) {
+    this.queue.delete(handle);
+  },
+  triggerNextAnimationFrame(time = performance.now()) {
+    const nextEntry = this.queue.entries().next().value;
+    if (nextEntry === undefined) {
+      return;
+    }
+
+    const [nextHandle, nextCallback] = nextEntry;
+
+    nextCallback(time);
+    this.queue.delete(nextHandle);
+  },
+  triggerAllAnimationFrames(time = performance.now()) {
+    while (this.queue.size > 0) {
+      this.triggerNextAnimationFrame(time);
+    }
+  },
+  init() {
+    this.queue.clear();
+    this.handleCounter = 0;
+    window.requestAnimationFrame = this.requestAnimationFrame.bind(this);
+    window.cancelAnimationFrame = this.cancelAnimationFrame.bind(this);
+  },
+};

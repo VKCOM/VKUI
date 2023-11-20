@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { DATA_DRAGGABLE_PLACEHOLDER_REACT_PROP } from '../../hooks/useDraggableWithDomApi';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { ListContext } from './ListContext';
-import styles from './List.module.css';
 
 export type ListProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
@@ -11,17 +9,10 @@ export type ListProps = HTMLAttributesWithRootRef<HTMLDivElement>;
  * @see https://vkcom.github.io/VKUI/#/List
  */
 export const List = ({ children, ...restProps }: ListProps) => {
-  const [isDragging, toggleDrag] = React.useState(false);
-
   return (
-    <RootComponent
-      role="list"
-      {...restProps}
-      baseClassName={classNames(styles['List'], isDragging && 'vkuiInternalList--dragging')}
-    >
-      <ListContext.Provider value={React.useMemo(() => ({ toggleDrag }), [])}>
-        {children}
-      </ListContext.Provider>
+    <RootComponent role="list" {...restProps}>
+      {children}
+      <div aria-hidden {...DATA_DRAGGABLE_PLACEHOLDER_REACT_PROP}></div>
     </RootComponent>
   );
 };

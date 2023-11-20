@@ -1,3 +1,4 @@
+import type { PlaywrightWorkerOptions } from '@playwright/test';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import type { AppearanceType } from '../../lib/appearance';
 import { Platform } from '../../lib/platform';
@@ -13,6 +14,7 @@ export interface VKUITestOptions {
 
 export interface InternalVKUITestOptions {
   adaptivityProviderProps?: null | Partial<AdaptivityProps>;
+  onlyForBrowsers?: null | Array<PlaywrightWorkerOptions['browserName']>;
   onlyForPlatforms?: null | Platform[];
   onlyForAppearances?: null | AppearanceType[];
 }
