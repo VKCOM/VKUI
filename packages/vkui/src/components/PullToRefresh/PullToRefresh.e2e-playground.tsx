@@ -19,7 +19,7 @@ export const PullToRefreshPlayground = (
                  * Playwright >= 1.40 (https://github.com/microsoft/playwright/releases/tag/v1.40.0)
                  * В WebKit начал выделяется текст, поэтому отключаем выделение.
                  *
-                 * > Note: необходимо именно использую префикс `-webkit-*`, т.к. React не поллифилит.
+                 * > Note: необходимо именно использовать префикс `-webkit-*`, т.к. React не поллифилит.
                  */
                 WebkitUserSelect: 'none',
               }}
