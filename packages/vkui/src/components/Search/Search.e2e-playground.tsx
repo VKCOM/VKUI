@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Icon16Add } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { BREAKPOINTS, SizeType } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
@@ -29,6 +30,10 @@ export const SearchPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           noPadding: [true],
+        },
+        {
+          onFindButtonClick: [noop],
+          value: ['value'],
         },
       ]}
     >
