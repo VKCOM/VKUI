@@ -12,7 +12,7 @@ export interface AppRootPortalProps extends HasChildren {
   forcePortal?: boolean;
   /**
    * Кастомный root-элемент портала.
-   * При передаче вместе с `forcePorta=true` игнорируется `portalRoot` и `disablePortal`
+   * При передаче вместе с `forcePortal=true` игнорируется `portalRoot` и `disablePortal`
    * из контекста `AppRoot`.
    */
   portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
