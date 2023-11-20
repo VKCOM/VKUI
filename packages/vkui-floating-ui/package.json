@@ -82,5 +82,8 @@
   "devDependencies": {
     "@swc/core": "^1.3.96"
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@3.6.3",
+  "publishConfig": {
+    "provenance": true
+  }
 }

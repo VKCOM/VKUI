@@ -37,6 +37,8 @@ jobs:
     concurrency: ci-gh-pages
     outputs:
       release_tag: ${{ steps.updated_version.outputs.version }}
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -97,17 +99,16 @@ jobs:
           branch: ${{ github.ref }}
           tags: true
 
-      - name: Setup NPM Auth Token to .yarnrc.yml
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
-        shell: bash
-        run: |
-          yarn config set npmAlwaysAuth true
-          yarn config set npmAuthToken $NODE_AUTH_TOKEN
+      - name: Generate archive
+        working-directory: ./packages/vkui
+        run: yarn pack
 
       - name: Publishing release
+        working-directory: ./packages/vkui
         run: |
-          yarn workspace @vkontakte/vkui npm publish --tag ${{ github.event.inputs.tag }}
+          npm publish package.tgz --tag ${{ github.event.inputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
 
       - name: Build styleguide
         run: yarn run docs:styleguide:build --dist dist/${{ steps.updated_version.outputs.version }}
