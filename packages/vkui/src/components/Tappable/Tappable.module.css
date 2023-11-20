@@ -4,6 +4,7 @@
   cursor: default;
   border-radius: var(--vkui--size_border_radius--regular);
   transition: background-color 0.15s ease-out, opacity 0.15s ease-out;
+  outline: var(--vkui_internal--outline-reset);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -31,11 +32,6 @@ https://github.com/VKCOM/VKUI/pull/3641
 .Tappable[disabled],
 .Tappable[aria-disabled='true'] {
   cursor: default;
-}
-
-.Tappable:focus,
-.Tappable:focus-visible,
-.Tappable--focus-visible {
   outline: none;
 }
 
