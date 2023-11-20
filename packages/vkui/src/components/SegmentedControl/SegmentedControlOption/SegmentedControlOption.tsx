@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
+import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
 import { callMultiple } from '../../../lib/callMultiple';
 import { HasRef, HasRootRef } from '../../../types';
-import { FocusVisible } from '../../FocusVisible/FocusVisible';
 import { Headline } from '../../Typography/Headline/Headline';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './SegmentedControlOption.module.css';
@@ -28,12 +28,14 @@ export const SegmentedControlOption = ({
   ...restProps
 }: SegmentedControlOptionProps) => {
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible });
 
   return (
     <label
       className={classNames(
         styles['SegmentedControlOption'],
         restProps.checked && styles['SegmentedControlOption--checked'],
+        focusVisibleClassNames,
         className,
       )}
       ref={getRootRef}
@@ -53,7 +55,6 @@ export const SegmentedControlOption = ({
       <Headline level="2" weight="2">
         {children}
       </Headline>
-      <FocusVisible visible={focusVisible} mode="inside" />
     </label>
   );
 };
