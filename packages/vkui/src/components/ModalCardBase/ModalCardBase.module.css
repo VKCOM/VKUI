@@ -14,7 +14,7 @@
   --vkui_internal--background: var(--vkui--color_background_modal);
   --vkui_internal--dismiss_icon_height: 20px;
   --vkui_internal--dismiss_icon_padding: 12px;
-  --vkui_internal--dismiss_icon_safe_offset: 2px;
+  --vkui_internal--dismiss_icon_safe_offset: 4px;
   --vkui_internal--dismiss_icon_desktop_offset: 4px;
 }
 
@@ -83,8 +83,8 @@
   border-radius: 14px;
 
   --vkui_internal--dismiss_icon_height: 24px;
-  --vkui_internal--dismiss_icon_padding: 10px;
-  --vkui_internal--dismiss_icon_safe_offset: 4px;
+  --vkui_internal--dismiss_icon_padding: 12px;
+  --vkui_internal--dismiss_icon_safe_offset: 0px;
 }
 
 /**
@@ -97,6 +97,13 @@
 
 .ModalCardBase--desktop .ModalCardBase__container {
   padding: 24px;
+
+  --vkui_internal--dismiss_icon_safe_offset: 0px;
+}
+
+.ModalCardBase--desktop.ModalCardBase--ios .ModalCardBase__container {
+  --vkui_internal--dismiss_icon_padding: 10px;
+  --vkui_internal--dismiss_icon_safe_offset: 6px;
 }
 
 .ModalCardBase--withSafeZone.ModalCardBase--desktop .ModalCardBase__container {
