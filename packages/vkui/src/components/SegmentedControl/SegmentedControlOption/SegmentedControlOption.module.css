@@ -16,7 +16,7 @@
   flex: 1;
 }
 
-.SegmentedControlOption:not(.SegmentedControlOption--checked):hover {
+.SegmentedControlOption:hover {
   opacity: 0.5;
 }
 
