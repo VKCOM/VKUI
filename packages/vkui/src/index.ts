@@ -3,6 +3,7 @@ import './lib/polyfills';
 import './styles/constants.css';
 import './styles/adaptivity.module.css';
 import './styles/dynamicTokens.css';
+import './styles/focusVisible.module.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
 export type { AppRootProps } from './components/AppRoot/AppRoot';

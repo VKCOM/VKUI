@@ -10,6 +10,13 @@
   --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--regular);
 
   /**
+   * [a11y][focus visible]
+   */
+  --vkui_internal--outline_width: 2px;
+  --vkui_internal--outline: var(--vkui_internal--outline_width, 2px) solid
+    var(--vkui--color_stroke_accent);
+
+  /**
    * "Safe Zone" добавляет невидимую интерактивную область, по которой пользователь будет вводить мышкой и тем самым
    * компонент будет оставаться активным.
    *
