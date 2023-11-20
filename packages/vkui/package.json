@@ -121,5 +121,8 @@
       "path": "dist/vkui.css",
       "webpack": false
     }
-  ]
+  ],
+  "publishConfig": {
+    "provenance": true
+  }
 }

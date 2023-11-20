@@ -28,6 +28,8 @@ run-name: Publish @vkontakte/vkui-floating-ui ${{ inputs.custom_version }} ${{ i
 
 jobs:
   publish:
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -89,20 +91,19 @@ jobs:
           branch: ${{ github.ref }}
           tags: true
 
-      - name: Setup NPM Auth Token to .yarnrc.yml
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
-        shell: bash
-        run: |
-          yarn config set npmAlwaysAuth true
-          yarn config set npmAuthToken $NODE_AUTH_TOKEN
+      - name: Generate archive
+        run: yarn pack
 
       - name: Publishing tagged release
         if: ${{ github.event.inputs.tag }}
         run: |
-          yarn npm publish --tag ${{ github.event.inputs.tag }}
+          npm publish package.tgz --tag ${{ github.event.inputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
 
       - name: Publishing release
         if: ${{ !github.event.inputs.tag }}
         run: |
-          yarn npm publish
+          npm publish package.tgz
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}

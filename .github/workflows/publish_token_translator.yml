@@ -15,7 +15,8 @@ jobs:
     defaults:
       run:
         working-directory: ./packages/token-translator
-
+    permissions:
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,14 +71,11 @@ jobs:
           branch: ${{ github.ref }}
           tags: true
 
-      - name: Setup NPM Auth Token to .yarnrc.yml
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
-        shell: bash
-        run: |
-          yarn config set npmAlwaysAuth true
-          yarn config set npmAuthToken $NODE_AUTH_TOKEN
+      - name: Generate archive
+        run: yarn pack
 
       - name: Publishing release
         run: |
-          yarn npm publish
+          npm publish package.tgz
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
