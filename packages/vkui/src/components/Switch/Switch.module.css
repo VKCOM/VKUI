@@ -159,10 +159,8 @@
 }
 
 /**
- * [a11y]
- * add animation for browsers that support prefers-reduced-motion
- * so that users with vestibular motion disorders have no problem
- * navigating accessible vkui apps via keyboard
+ * [a11y][progressive enhancement]
+ * @see https://github.com/VKCOM/VKUI/issues/2703
  */
 @media (prefers-reduced-motion: no-preference) {
   .Switch__pseudo::after {
