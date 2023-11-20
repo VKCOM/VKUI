@@ -28,6 +28,7 @@ test.describe('Slider with Tooltip', () => {
         max={30}
       />,
     );
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.keyboard.press('Tab');
     await expectScreenshotClippedToContent();
   });
@@ -50,6 +51,8 @@ test.describe('keyboard events', () => {
         {...componentPlaygroundProps}
       />,
     );
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+
     const locator = page.getByRole('slider');
     const [startSlider, endSlider] = await locator.all();
 
