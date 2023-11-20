@@ -98,7 +98,7 @@
 }
 
 .Search__nativeInput:focus {
-  outline: none;
+  outline: var(--vkui_internal--outline-reset);
 }
 
 .Search--has-after .Search__nativeInput {

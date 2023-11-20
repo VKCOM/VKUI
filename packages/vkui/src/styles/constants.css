@@ -15,6 +15,13 @@
   --vkui_internal--outline_width: 2px;
   --vkui_internal--outline: var(--vkui_internal--outline_width, 2px) solid
     var(--vkui--color_stroke_accent);
+  /**
+   * [a11y][windows high contrast mode]
+   * 
+   * windows compatible outline reset
+   * @see https://benmyers.dev/blog/whcm-outlines/
+   */
+  --vkui_internal--outline-reset: var(--vkui_internal--outline_width) solid transparent;
 
   /**
    * "Safe Zone" добавляет невидимую интерактивную область, по которой пользователь будет вводить мышкой и тем самым
