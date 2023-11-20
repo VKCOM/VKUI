@@ -22,9 +22,7 @@ export interface SelectInputProps
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Omit<FormFieldProps, 'mode'> {
-  inputForeground?: React.ReactNode;
   selectType?: SelectType;
-  showLabel?: boolean;
   multiline?: boolean;
 }
 
@@ -41,17 +39,16 @@ export const SelectInput = ({
   before,
   after,
   status,
-  inputForeground,
   children,
   placeholder,
   selectType = 'default',
-  showLabel,
   multiline,
   ...restProps
 }: SelectInputProps) => {
   const { sizeY = 'none' } = useAdaptivity();
 
   const title = children || placeholder;
+  const showLabelOrPlaceholder = !Boolean(restProps.value);
 
   return (
     <FormField
@@ -61,11 +58,11 @@ export const SelectInput = ({
         styles['SelectInput'],
         align === 'right' && styles['SelectInput--align-right'],
         align === 'center' && styles['SelectInput--align-center'],
+        !children && styles['SelectInput--empty'],
         multiline && styles['SelectInput--multiline'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         before && styles['SelectInput--hasBefore'],
         after && styles['SelectInput--hasAfter'],
-        showLabel && styles['SelectInput--with-label'],
         className,
       )}
       getRootRef={getRootRef}
@@ -78,14 +75,13 @@ export const SelectInput = ({
       <div className={styles['SelectInput__input-group']}>
         <Text
           {...restProps}
-          placeholder={showLabel ? '' : placeholder}
           Component="input"
           normalize={false}
           type={type}
           className={styles['SelectInput__el']}
           getRootRef={getRef}
         />
-        {showLabel && (
+        {showLabelOrPlaceholder && (
           <RootComponent
             Component="div"
             className={classNames(styles['SelectInput__container'], className)}

@@ -91,16 +91,6 @@
   pointer-events: none;
 }
 
-.SelectInput--with-label .SelectInput__el {
-  position: absolute;
-  top: 0;
-}
-
-.SelectInput--with-label .SelectInput__container {
-  position: static;
-  transform: none;
-}
-
 .SelectInput--hasBefore .SelectInput__container {
   padding-left: 0;
 }

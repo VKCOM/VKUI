@@ -842,8 +842,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         before={before}
         after={afterIcons}
         selectType={selectType}
-        placeholder={withInputForeground ? '' : restProps.placeholder}
-        showLabel={Boolean(withInputForeground && selected)}
       >
         {selected?.label}
       </SelectInput>
