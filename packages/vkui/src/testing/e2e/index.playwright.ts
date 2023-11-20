@@ -32,6 +32,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
   appearance: ['light', { option: true }],
 
   adaptivityProviderProps: [null, { option: true }],
+  onlyForBrowsers: [null, { option: true }],
   onlyForPlatforms: [null, { option: true }],
   onlyForAppearances: [null, { option: true }],
 
@@ -76,21 +77,29 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
    * @private
    */
   _skipByOnlyForProps: [
-    async ({ platform, appearance, onlyForPlatforms, onlyForAppearances }, use, testInfo) => {
-      const skipPlatform = Array.isArray(onlyForPlatforms) && !onlyForPlatforms.includes(platform);
-      const skipAppearance =
-        Array.isArray(onlyForAppearances) && !onlyForAppearances.includes(appearance);
-      let descriptions = [];
-      if (skipPlatform) {
-        descriptions.push(`${onlyForPlatforms.join(', ')} platforms`);
-      }
-      if (skipAppearance) {
-        descriptions.push(`${onlyForAppearances.join(', ')} appearances`);
-      }
-      testInfo.skip(
-        skipPlatform || skipAppearance,
-        `Because test only for ${descriptions.join(' and ')}`,
-      );
+    async (
+      {
+        platform,
+        appearance,
+        defaultBrowserType,
+        onlyForBrowsers,
+        onlyForPlatforms,
+        onlyForAppearances,
+      },
+      use,
+      testInfo,
+    ) => {
+      const skipReasons = [
+        { type: 'browser', matchList: onlyForBrowsers || [], value: defaultBrowserType },
+        { type: 'platform', matchList: onlyForPlatforms || [], value: platform },
+        { type: 'appearance', matchList: onlyForAppearances || [], value: appearance },
+      ]
+        .filter(
+          ({ matchList, value }) => matchList.length > 0 && matchList.every((i) => i !== value),
+        )
+        .map(({ type, matchList }) => `${matchList.join(', ')} ${type}`);
+
+      testInfo.skip(skipReasons.length > 0, `Because test only for ${skipReasons.join(' and ')}`);
       await use();
     },
     { auto: true },

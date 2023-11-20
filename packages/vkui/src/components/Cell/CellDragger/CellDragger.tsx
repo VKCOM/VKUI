@@ -1,43 +1,56 @@
 import * as React from 'react';
 import { Icon24Reorder, Icon24ReorderIos } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import {
+  type DraggableProps,
+  UseDraggableProps,
+  useDraggableWithDomApi,
+} from '../../../hooks/useDraggableWithDomApi';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { Platform } from '../../../lib/platform';
+import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { HTMLAttributesWithRootRef } from '../../../types';
 import { Touch } from '../../Touch/Touch';
-import { DraggableProps } from '../useDraggable';
 import styles from './CellDragger.module.css';
 
-type CellDraggerProps = DraggableProps &
-  Omit<HTMLAttributesWithRootRef<HTMLElement>, keyof DraggableProps>;
+interface CellDraggerProps
+  extends UseDraggableProps,
+    Omit<HTMLAttributesWithRootRef<HTMLElement>, keyof DraggableProps> {
+  disabled?: boolean;
+  onDragStateChange?(dragging: boolean): void;
+}
 
 export const CellDragger = ({
-  onDragStart,
-  onDragMove,
-  onDragEnd,
-  onClick,
+  elRef,
+  disabled,
   className,
+  onDragStateChange,
+  onDragFinish,
   ...restProps
 }: CellDraggerProps) => {
   const platform = usePlatform();
+  const Icon = platform === Platform.IOS ? Icon24ReorderIos : Icon24Reorder;
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    if (onClick) {
-      onClick(event);
+  const { dragging, onDragStart, onDragMove, onDragEnd } = useDraggableWithDomApi({
+    elRef,
+    onDragFinish,
+  });
+
+  useIsomorphicLayoutEffect(() => {
+    if (onDragStateChange) {
+      onDragStateChange(dragging);
     }
-  };
+  }, [dragging, onDragStateChange]);
 
   return (
     <Touch
       className={classNames(styles['CellDragger'], className)}
-      onStart={onDragStart}
-      onMoveY={onDragMove}
-      onEnd={onDragEnd}
-      onClick={handleClick}
+      onStart={disabled ? undefined : onDragStart}
+      onMoveY={disabled ? undefined : onDragMove}
+      onEnd={disabled ? undefined : onDragEnd}
       {...restProps}
     >
-      {platform === Platform.IOS ? <Icon24ReorderIos /> : <Icon24Reorder />}
+      <Icon className={styles['CellDragger__icon']} />
     </Touch>
   );
 };

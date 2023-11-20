@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { Locator } from '@playwright/test';
 import type {
   AdaptivityProps,
   SizeProps,
@@ -132,3 +133,10 @@ export function generateCustomScreenshotName(
     .join(' ')
     .toLocaleLowerCase();
 }
+
+export const getLocatorMouseCoords = async (locator: Locator): Promise<[number, number]> => {
+  const boundingBox = await locator.boundingBox();
+  return boundingBox
+    ? [boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height / 2]
+    : [0, 0];
+};
