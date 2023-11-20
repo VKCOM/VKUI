@@ -19,7 +19,7 @@ test.describe('Textarea', () => {
   }) => {
     await mount(<TextareaTestFitSizeToContentPlayground {...componentPlaygroundProps} />);
 
-    await page.type('#textarea', '1\n2\n3\n4\n5\n6\n7\n8');
+    await page.locator('#textarea').fill('1\n2\n3\n4\n5\n6\n7\n8');
 
     await page.locator('#textarea').blur(); // чтобы не флакала обводка
 
