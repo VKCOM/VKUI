@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePrevious } from '../../hooks/usePrevious';
@@ -75,7 +75,7 @@ export const TabsItem = ({
 
   const isTabFlow = role === 'tab';
 
-  if (status) {
+  if (hasReactNode(status)) {
     statusComponent =
       typeof status === 'number' ? (
         <Subhead
