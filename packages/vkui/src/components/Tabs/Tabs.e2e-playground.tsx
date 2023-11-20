@@ -111,7 +111,7 @@ export const TabsPlayground = (props: ComponentPlaygroundProps) => {
             >
               <TabsItem>Лента</TabsItem>
             </Unscrollable>,
-            <Unscrollable key="tabs" status={23} />,
+            <Unscrollable key="tabs" status={0} />,
             <Unscrollable key="tabs" status={23}>
               <TabsItem>Лента</TabsItem>
             </Unscrollable>,
