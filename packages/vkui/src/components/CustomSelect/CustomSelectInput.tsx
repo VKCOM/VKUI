@@ -73,6 +73,16 @@ export const CustomSelectInput = ({
       status={status}
     >
       <div className={styles['CustomSelectInput__input-group']}>
+        <RootComponent
+          Component="div"
+          className={classNames(styles['CustomSelectInput__container'], className)}
+          tabIndex={-1}
+          aria-hidden
+        >
+          <SelectTypography selectType={selectType} className={styles['CustomSelectInput__title']}>
+            {showLabelOrPlaceholder && title}
+          </SelectTypography>
+        </RootComponent>
         <Text
           {...restProps}
           Component="input"
@@ -82,21 +92,6 @@ export const CustomSelectInput = ({
           getRootRef={getRef}
           placeholder={placeholder}
         />
-        {showLabelOrPlaceholder && (
-          <RootComponent
-            Component="div"
-            className={classNames(styles['CustomSelectInput__container'], className)}
-            tabIndex={-1}
-            aria-hidden
-          >
-            <SelectTypography
-              selectType={selectType}
-              className={styles['CustomSelectInput__title']}
-            >
-              {title}
-            </SelectTypography>
-          </RootComponent>
-        )}
       </div>
     </FormField>
   );
