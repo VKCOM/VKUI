@@ -702,6 +702,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [emptyText, options, renderDropdown, renderOption]);
 
+  const selectInputRef = React.useRef<HTMLInputElement | null>(null);
+  const focusOnInput = useTimeout(
+    () => selectInputRef.current && selectInputRef.current.focus(),
+    0,
+  );
+
   const controlledValueSet = isControlledOutside && props.value !== '';
   const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== '';
   const clearButtonShown =
@@ -718,12 +724,20 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onClick={() => {
           setNativeSelectValue('');
           setInputValue('');
+          focusOnInput.set();
         }}
         disabled={restProps.disabled}
         data-testid={clearButtonTestId}
       />
     );
-  }, [clearButtonShown, ClearButton, iconProp, restProps.disabled, clearButtonTestId]);
+  }, [
+    clearButtonShown,
+    ClearButton,
+    iconProp,
+    restProps.disabled,
+    clearButtonTestId,
+    focusOnInput,
+  ]);
 
   const icon = React.useMemo(() => {
     if (iconProp !== undefined) {
@@ -748,12 +762,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   );
 
   const { document } = useDOM();
-  const selectInputRef = React.useRef<HTMLInputElement | null>(null);
-  const focusOnInput = useTimeout(
-    () => selectInputRef.current && selectInputRef.current.focus(),
-    0,
-  );
-
   const passClickAndFocusToInputOnClick = React.useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       // Раньше внешней оберткой селекта был лэйбл, что позволяло по клику в любую область селекта,

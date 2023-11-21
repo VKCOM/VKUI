@@ -93,7 +93,7 @@ export const CustomSelectInput = ({
           type={type}
           className={styles['CustomSelectInput__el']}
           getRootRef={getRef}
-          placeholder={placeholder}
+          placeholder={children ? '' : placeholder}
         />
       </div>
     </FormField>
