@@ -1059,4 +1059,23 @@ describe('CustomSelect', () => {
 
     expect(screen.queryByPlaceholderText('Не выбрано')).toBeFalsy();
   });
+
+  it('native select is reachable via nativeSelectTestId', () => {
+    // Это позволяет скринридеру зачитывать placeholder, если опция не выбрана.
+    render(
+      <CustomSelect
+        nativeSelectTestId="nativeSelectTestId"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        placeholder="Не выбрано"
+        allowClearButton
+        defaultValue={1}
+      />,
+    );
+
+    const nativeSelect = screen.getByTestId<HTMLSelectElement>('nativeSelectTestId');
+    expect(nativeSelect.value).toBe('1');
+  });
 });
