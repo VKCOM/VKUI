@@ -784,10 +784,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         return;
       }
 
-      if (e.target !== selectInputRef.current) {
+      const clickTargetIsNotAnInput = e.target !== selectInputRef.current;
+      if (clickTargetIsNotAnInput) {
         selectInputRef.current.click();
 
-        if (document.activeElement !== selectInputRef.current) {
+        const inputIsNotFocused = document.activeElement !== selectInputRef.current;
+        if (inputIsNotFocused) {
           focusOnInput.set();
         }
       }
