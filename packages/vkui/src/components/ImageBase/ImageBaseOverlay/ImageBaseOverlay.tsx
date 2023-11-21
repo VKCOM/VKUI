@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useAppearance } from '../../../hooks/useAppearance';
+import { focusVisiblePresetModeClassNames } from '../../../hooks/useFocusVisibleClassName';
 import { Tappable } from '../../Tappable/Tappable';
 import { ImageBaseContext } from '../context';
 import type { ImageBaseExpectedIconProps } from '../types';
@@ -79,7 +80,10 @@ export const ImageBaseOverlay = ({
       )}
       hasHover={visibility === 'on-hover'}
       hoverMode={visibility === 'on-hover' ? styles['ImageBaseOverlay--visible'] : undefined}
-      focusVisibleMode={styles['ImageBaseOverlay--focus-visible']}
+      focusVisibleMode={classNames(
+        focusVisiblePresetModeClassNames['inside'],
+        styles['ImageBaseOverlay--visible'],
+      )}
       hasActive={false}
       onClick={onClick}
     >
