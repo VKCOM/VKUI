@@ -54,15 +54,11 @@
     <Group>
       <FormItem
         top="Администратор"
-        topId="label-id"
         htmlFor="select-id"
         bottom="Пример селекта для выбора администратора из списка"
-        bottomId="select-description-id"
       >
         <Select
           id="select-id"
-          aria-labelledby="label-id"
-          aria-describedby="select-description-id"
           placeholder="Не выбран"
           options={getRandomUsers(10).map((user) => ({
             label: user.name,
