@@ -200,6 +200,14 @@ export interface SelectProps<
    * Отключает максимальную высоту по умолчанию
    */
   noMaxHeight?: boolean;
+  /**
+   * (e2e) testId элемента, внутри котого отображается текст выбранного элемента селекта, или плейсхолдер.
+   */
+  labelTextTestId?: string;
+  /**
+   * (e2e) testId кнопки очистки
+   */
+  clearButtonTestId?: string;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -242,6 +250,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     fixDropdownWidth = true,
     noMaxHeight = false,
     ['aria-labelledby']: ariaLabelledBy,
+    clearButtonTestId,
+    defaultValue,
     ...restProps
   } = props;
 
@@ -260,14 +270,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
   const [inputValue, setInputValue] = React.useState('');
   const [nativeSelectValue, setNativeSelectValue] = React.useState(
-    () => props.value ?? props.defaultValue ?? (allowClearButton ? '' : undefined),
+    () => props.value ?? defaultValue ?? (allowClearButton ? '' : undefined),
   );
   const [popperPlacement, setPopperPlacement] = React.useState<PlacementWithAuto | undefined>(
     undefined,
   );
   const [options, setOptions] = React.useState(optionsProp);
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
-    findSelectedIndex(optionsProp, props.value ?? props.defaultValue, allowClearButton),
+    findSelectedIndex(optionsProp, props.value ?? defaultValue, allowClearButton),
   );
 
   React.useEffect(() => {
@@ -483,7 +493,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   React.useEffect(
     function updateOptionsAndSelectedOptionIndex() {
-      const value = props.value ?? nativeSelectValue ?? props.defaultValue;
+      const value = props.value ?? nativeSelectValue ?? defaultValue;
 
       const options =
         searchable && inputValue !== undefined
@@ -498,7 +508,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       inputValue,
       nativeSelectValue,
       optionsProp,
-      props.defaultValue,
+      defaultValue,
       props.value,
       searchable,
       allowClearButton,
@@ -710,9 +720,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           setInputValue('');
         }}
         disabled={restProps.disabled}
+        data-testid={clearButtonTestId}
       />
     );
-  }, [clearButtonShown, ClearButton, iconProp, restProps.disabled]);
+  }, [clearButtonShown, ClearButton, iconProp, restProps.disabled, clearButtonTestId]);
 
   const icon = React.useMemo(() => {
     if (iconProp !== undefined) {

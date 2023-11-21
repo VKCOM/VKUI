@@ -24,6 +24,7 @@ export interface CustomSelectInputProps
     Omit<FormFieldProps, 'mode'> {
   selectType?: SelectType;
   multiline?: boolean;
+  labelTextTestId?: string;
 }
 
 /**
@@ -43,6 +44,7 @@ export const CustomSelectInput = ({
   placeholder,
   selectType = 'default',
   multiline,
+  labelTextTestId,
   ...restProps
 }: CustomSelectInputProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -78,6 +80,7 @@ export const CustomSelectInput = ({
           className={classNames(styles['CustomSelectInput__container'], className)}
           tabIndex={-1}
           aria-hidden
+          data-testid={labelTextTestId}
         >
           <SelectTypography selectType={selectType} className={styles['CustomSelectInput__title']}>
             {showLabelOrPlaceholder && title}

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
 
-const getCustomSelectValue = () => screen.getByTestId('target').textContent;
+const getCustomSelectValue = () => screen.getByTestId('labelTextTestId').textContent;
 
 const CustomSelectControlled = ({
   options,
@@ -38,7 +38,7 @@ describe('CustomSelect', () => {
   it('works correctly as uncontrolled component', () => {
     render(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -48,7 +48,7 @@ describe('CustomSelect', () => {
 
     expect(getCustomSelectValue()).toEqual('');
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
@@ -65,7 +65,7 @@ describe('CustomSelect', () => {
       ];
       return (
         <CustomSelect
-          data-testid="target"
+          labelTextTestId="labelTextTestId"
           options={options}
           value={value}
           onChange={(e) => setValue(Number(e.target.value))}
@@ -74,7 +74,7 @@ describe('CustomSelect', () => {
     };
     render(<SelectController />);
     expect(getCustomSelectValue()).toEqual('Mike');
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
@@ -87,10 +87,10 @@ describe('CustomSelect', () => {
       { value: 1, label: 'Josh' },
     ];
 
-    render(<CustomSelect data-testid="target" options={options} value={0} />);
+    render(<CustomSelect labelTextTestId="labelTextTestId" options={options} value={0} />);
 
     expect(getCustomSelectValue()).toEqual('Mike');
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
@@ -100,7 +100,7 @@ describe('CustomSelect', () => {
   it('correctly reacts on options change', () => {
     const { rerender } = render(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -113,7 +113,7 @@ describe('CustomSelect', () => {
 
     rerender(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 1, label: 'Josh' },
           { value: 2, label: 'Anna' },
@@ -126,7 +126,7 @@ describe('CustomSelect', () => {
 
     rerender(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 2, label: 'Anna' },
           { value: 3, label: 'Felix' },
@@ -141,7 +141,7 @@ describe('CustomSelect', () => {
   it('correctly converts from controlled to uncontrolled state', () => {
     const { rerender } = render(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -154,7 +154,7 @@ describe('CustomSelect', () => {
 
     rerender(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -164,7 +164,7 @@ describe('CustomSelect', () => {
 
     expect(getCustomSelectValue()).toEqual('Josh');
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOption = screen.getByRole('option', { selected: false, name: 'Mike' });
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
@@ -175,7 +175,7 @@ describe('CustomSelect', () => {
   it('accept defaultValue', () => {
     render(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -187,11 +187,12 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('Josh');
   });
 
-  it('is searchable', () => {
+  it('is searchable', async () => {
     render(
       <CustomSelect
         searchable
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
+        data-testid="inputTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -199,17 +200,16 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('target')); // here target is SelectMimicry
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
+    await waitFor(() => expect(screen.getByTestId('inputTestId')).toHaveFocus());
 
-    expect(screen.getByTestId('target')).toHaveFocus(); // now target is Input
-
-    fireEvent.change(screen.getByTestId('target'), { target: { value: 'Mi' } });
-    expect(screen.getByTestId<HTMLInputElement>('target').value).toBe('Mi');
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Mi' } });
+    expect(screen.getByTestId<HTMLInputElement>('inputTestId').value).toBe('Mi');
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -220,7 +220,8 @@ describe('CustomSelect', () => {
     render(
       <CustomSelect
         searchable
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
+        data-testid="inputTestId"
         options={[
           { value: 0, label: 'SPb', country: 'Russia' },
           { value: 1, label: 'Moscow', country: 'Russia' },
@@ -233,15 +234,15 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('target'));
-    fireEvent.change(screen.getByTestId('target'), {
+    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.change(screen.getByTestId('inputTestId'), {
       target: { value: 'usa' },
     });
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -252,7 +253,7 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
-        data-testid="target"
+        data-testid="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -260,8 +261,8 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('target'));
-    fireEvent.change(screen.getByTestId('target'), { target: { value: 'Mi' } });
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
+    fireEvent.change(screen.getByTestId('labelTextTestId'), { target: { value: 'Mi' } });
 
     await waitForFloatingPosition();
 
@@ -270,7 +271,7 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid="target"
+        data-testid="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -286,7 +287,7 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
-        data-testid="target"
+        data-testid="labelTextTestId"
         value={1}
         options={[
           { value: 0, label: 'Mike' },
@@ -295,20 +296,20 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
 
     await waitForFloatingPosition();
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
-    fireEvent.change(screen.getByTestId('target'), { target: { value: 'Jo' } });
+    fireEvent.change(screen.getByTestId('labelTextTestId'), { target: { value: 'Jo' } });
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
     rerender(
       <CustomSelect
         searchable
-        data-testid="target"
+        data-testid="labelTextTestId"
         value={1}
         options={[
           { value: 0, label: 'Mike' },
@@ -323,7 +324,7 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid="target"
+        data-testid="labelTextTestId"
         value={3}
         options={[
           { value: 3, label: 'Joe' },
@@ -342,7 +343,8 @@ describe('CustomSelect', () => {
     render(
       <CustomSelectControlled
         searchable
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
+        data-testid="inputTestId"
         initialValue="3"
         options={[
           { value: '0', label: 'Не выбрано' },
@@ -353,11 +355,11 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('inputTestId'));
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
 
-    fireEvent.change(screen.getByTestId('target'), { target: { value: 'Кат' } });
+    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Кат' } });
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
 
@@ -375,7 +377,7 @@ describe('CustomSelect', () => {
       <CustomSelect
         onOpen={openCb}
         onClose={closeCb}
-        data-testid="target"
+        data-testid="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -383,41 +385,42 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
 
     await waitForFloatingPosition();
 
-    expect(openCb).toBeCalledTimes(1);
+    expect(openCb).toHaveBeenCalledTimes(1);
 
-    fireEvent.blur(screen.getByTestId('target'));
+    fireEvent.blur(screen.getByTestId('labelTextTestId'));
 
-    expect(closeCb).toBeCalledTimes(1);
+    expect(closeCb).toHaveBeenCalledTimes(1);
 
-    fireEvent.focus(screen.getByTestId('target'));
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.focus(screen.getByTestId('labelTextTestId'));
+    fireEvent.keyDown(screen.getByTestId('labelTextTestId'), {
       key: 'Enter',
       code: 'Enter',
     });
 
-    expect(openCb).toBeCalledTimes(2);
+    expect(openCb).toHaveBeenCalledTimes(2);
 
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('labelTextTestId'), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
     await waitForFloatingPosition();
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('labelTextTestId'), {
       key: 'Enter',
       code: 'Enter',
     });
 
-    expect(closeCb).toBeCalledTimes(2);
+    expect(closeCb).toHaveBeenCalledTimes(2);
   });
 
   it('is controlled by the keyboard', async () => {
     const { rerender } = render(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
+        data-testid="inputTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -426,24 +429,24 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.focus(screen.getByTestId('target'));
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.focus(screen.getByTestId('inputTestId'));
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'Enter',
       code: 'Enter',
     });
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -452,16 +455,16 @@ describe('CustomSelect', () => {
 
     expect(getCustomSelectValue()).toEqual('Bob');
 
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'Enter',
       code: 'Enter',
     });
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
     await waitForFloatingPosition();
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -470,7 +473,8 @@ describe('CustomSelect', () => {
 
     rerender(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
+        data-testid="inputTestId"
         options={[
           { disabled: true, value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -479,16 +483,16 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'Enter',
       code: 'Enter',
     });
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
     await waitForFloatingPosition();
-    fireEvent.keyDown(screen.getByTestId('target'), {
+    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -502,7 +506,7 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelect
-        data-testid="target"
+        data-testid="labelTextTestId"
         value="invalid"
         onChange={onChange}
         options={[
@@ -512,7 +516,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
   });
 
   it('clear value externally with empty string', () => {
@@ -521,7 +525,7 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         allowClearButton
-        data-testid="target"
+        data-testid="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -534,7 +538,7 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         allowClearButton
-        data-testid="target"
+        data-testid="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -544,16 +548,17 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('');
   });
 
   it('clear value with default clear button', async () => {
     const onChange = jest.fn();
 
-    render(
+    const { rerender, unmount } = render(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
+        clearButtonTestId="clearButtonTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -564,12 +569,35 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Mike');
     fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(getCustomSelectValue()).toEqual('');
 
-    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveBeenCalledTimes(1);
+
+    unmount();
+
+    rerender(
+      <CustomSelect
+        labelTextTestId="labelTextTestId"
+        clearButtonTestId="clearButtonTestId"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        defaultValue={0}
+      />,
+    );
+
+    expect(getCustomSelectValue()).toEqual('Mike');
+    // clear by clicking via button testId
+    fireEvent.click(screen.getByTestId('clearButtonTestId'));
+    expect(getCustomSelectValue()).toEqual('');
+
+    expect(onChange).toHaveBeenCalledTimes(2);
   });
 
   it('(controlled): clearButton is not shown when option selected without props.value change', async () => {
@@ -577,7 +605,7 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelect
-        data-testid="target"
+        data-testid="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -588,7 +616,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     fireEvent.mouseEnter(screen.getByTitle('Mike'));
     fireEvent.click(screen.getByTitle('Mike'));
 
@@ -600,7 +628,7 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -611,25 +639,25 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Mike');
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
     const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
 
-    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveReturnedWith('1');
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
 
     const selectedOption = screen.getByRole('option', { selected: true, name: 'Josh' });
     fireEvent.mouseEnter(selectedOption);
     fireEvent.click(selectedOption);
 
-    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveReturnedWith('1');
   });
 
@@ -639,7 +667,7 @@ describe('CustomSelect', () => {
 
     const { rerender } = render(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -650,15 +678,15 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Mike');
 
     // clear input
     fireEvent.click(screen.getByRole('button', { hidden: true }));
 
-    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveBeenCalledTimes(1);
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOptionFirstClick = screen.getByRole('option', {
       selected: false,
       name: 'Josh',
@@ -666,13 +694,13 @@ describe('CustomSelect', () => {
     fireEvent.mouseEnter(unselectedOptionFirstClick);
     fireEvent.click(unselectedOptionFirstClick);
 
-    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveReturnedWith('1');
 
     // clear input through prop
     rerender(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -683,7 +711,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOptionSecondClick = screen.getByRole('option', {
       selected: false,
       name: 'Mike',
@@ -691,9 +719,9 @@ describe('CustomSelect', () => {
     fireEvent.mouseEnter(unselectedOptionSecondClick);
     fireEvent.click(unselectedOptionSecondClick);
 
-    expect(onChange).toBeCalledTimes(3);
+    expect(onChange).toHaveBeenCalledTimes(3);
 
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOptionThirdClick = screen.getByRole('option', {
       selected: false,
       name: 'Josh',
@@ -701,7 +729,7 @@ describe('CustomSelect', () => {
     fireEvent.mouseEnter(unselectedOptionThirdClick);
     fireEvent.click(unselectedOptionThirdClick);
 
-    expect(onChange).toBeCalledTimes(4);
+    expect(onChange).toHaveBeenCalledTimes(4);
   });
 
   it('(controlled): calls onChange when click on unselected option without value change', async () => {
@@ -709,7 +737,7 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelect
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -720,11 +748,11 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Mike');
 
     // первый клик по не выбранной опции без изменения value
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
     const unselectedOptionFirstClick = screen.getByRole('option', {
       selected: false,
@@ -733,14 +761,14 @@ describe('CustomSelect', () => {
     fireEvent.mouseEnter(unselectedOptionFirstClick);
     fireEvent.click(unselectedOptionFirstClick);
 
-    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveReturnedWith('1');
 
     // второй клик по не выбранной опции без изменения value
     // нужно проверить потому что при первом клике внутреннее value селекта (nativeSelectValue) изменилось
     // на value опиции по которой кликнули.
     // При втором оно уже не меняется если кликнули по той же опции, но onChange должен отработать как в первый раз.
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
     const unselectedOptionSecondClick = screen.getByRole('option', {
       selected: false,
@@ -749,12 +777,12 @@ describe('CustomSelect', () => {
     fireEvent.mouseEnter(unselectedOptionSecondClick);
     fireEvent.click(unselectedOptionSecondClick);
 
-    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveReturnedWith('1');
 
     // третий клик уже по выбранной опции (соответствующей value переданному в контролируемый селект),
     // onChange не должен вызываться.
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const selectedOptionThirdClick = screen.getByRole('option', {
       selected: true,
       name: 'Mike',
@@ -762,7 +790,7 @@ describe('CustomSelect', () => {
     fireEvent.mouseEnter(selectedOptionThirdClick);
     fireEvent.click(selectedOptionThirdClick);
 
-    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveReturnedWith('1');
   });
 
@@ -773,7 +801,7 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelectControlled
-        data-testid="target"
+        labelTextTestId="labelTextTestId"
         initialValue="0"
         options={[
           { value: 0, label: 'Mike' },
@@ -783,11 +811,11 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChangeStub).toBeCalledTimes(0);
+    expect(onChangeStub).toHaveBeenCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Mike');
 
     // первый клик по не выбранной опции с изменением value
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
     const unselectedOptionFirstClick = screen.getByRole('option', {
       selected: false,
@@ -797,21 +825,21 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionFirstClick);
 
     // onChange должен вызываться
-    expect(onChangeStub).toBeCalledTimes(1);
+    expect(onChangeStub).toHaveBeenCalledTimes(1);
     expect(onChangeStub).toHaveReturnedWith('1');
 
     // второй клик по выбранной опции
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const selectedOptionSecondClick = screen.getByRole('option', { selected: true, name: 'Josh' });
     fireEvent.mouseEnter(selectedOptionSecondClick);
     fireEvent.click(selectedOptionSecondClick);
 
     // onChange не должен вызываться
-    expect(onChangeStub).toBeCalledTimes(1);
+    expect(onChangeStub).toHaveBeenCalledTimes(1);
     expect(onChangeStub).toHaveReturnedWith('1');
 
     // третий клик по не выбранной опции
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
     const unselectedOptionThirdClick = screen.getByRole('option', {
       selected: false,
@@ -821,17 +849,17 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionThirdClick);
 
     // onChange должен быть вызван
-    expect(onChangeStub).toBeCalledTimes(2);
+    expect(onChangeStub).toHaveBeenCalledTimes(2);
     expect(onChangeStub).toHaveReturnedWith('0');
 
     // четвертый клик по выбранной опции
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const selectedOptionFourthClick = screen.getByRole('option', { selected: true, name: 'Mike' });
     fireEvent.mouseEnter(selectedOptionFourthClick);
     fireEvent.click(selectedOptionFourthClick);
 
     // onChange не должен вызываться
-    expect(onChangeStub).toBeCalledTimes(2);
+    expect(onChangeStub).toHaveBeenCalledTimes(2);
     expect(onChangeStub).toHaveReturnedWith('0');
   });
 
@@ -840,7 +868,7 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelect
-        data-testid="target"
+        data-testid="labelTextTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -851,11 +879,11 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('');
 
     // первый клик по не выбранной опции без изменения value
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOptionFirstClick = screen.getByRole('option', {
       selected: false,
       name: 'Mike',
@@ -864,11 +892,11 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionFirstClick);
 
     // onChange должен быть вызван
-    expect(onChange).toBeCalledTimes(1);
+    expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveReturnedWith('0');
 
     // второй клик по другой опции без изменения value
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOptionSecondClick = screen.getByRole('option', {
       selected: false,
       name: 'Josh',
@@ -877,11 +905,11 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionSecondClick);
 
     // onChange должен быть вызван
-    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveReturnedWith('1');
 
     // третий клик по той же опции что и в предыдущий раз
-    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOptionThirdClick = screen.getByRole('option', {
       selected: false,
       name: 'Josh',
@@ -890,14 +918,14 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionThirdClick);
 
     // onChange должен быть вызван
-    expect(onChange).toBeCalledTimes(3);
+    expect(onChange).toHaveBeenCalledTimes(3);
     expect(onChange).toHaveReturnedWith('0');
   });
 
   it('accepts options with extended option type and Typescript does not throw', () => {
     const { rerender } = render(
       <CustomSelect
-        data-testid="target"
+        data-testid="labelTextTestId"
         options={[
           { value: 0, label: 'Mike', avatarUrl: 'some-url' },
           { value: 1, label: 'Josh', avatarUrl: 'some other avatarUrl' },
@@ -941,7 +969,7 @@ describe('CustomSelect', () => {
       },
     ];
 
-    rerender(<CustomSelect data-testid="target" options={complexOptions} />);
+    rerender(<CustomSelect data-testid="labelTextTestId" options={complexOptions} />);
 
     // типизируем render-функцию
     const renderOption = ({
