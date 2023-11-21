@@ -141,3 +141,5 @@ export const getScrollRect = (node: Element | Window) => {
     edges: { y },
   };
 };
+
+export const getDocumentBody = (node?: any) => getWindow(node).document.body;
