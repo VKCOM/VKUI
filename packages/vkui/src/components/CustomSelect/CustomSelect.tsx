@@ -205,7 +205,7 @@ export interface SelectProps<
    */
   noMaxHeight?: boolean;
   /**
-   * (e2e) testId элемента, внутри котого отображается текст выбранного элемента селекта, или плейсхолдер.
+   * (e2e) testId элемента, внутри которого отображается текст выбранного элемента селекта, или плейсхолдер.
    */
   labelTextTestId?: string;
   nativeSelectTestId?: string;
