@@ -192,6 +192,10 @@ export interface SelectProps<
    * Если `true`, то справа будет отображаться кнопка для очистки значения
    */
   allowClearButton?: boolean;
+  /**
+   * (e2e) testId кнопки очистки
+   */
+  clearButtonTestId?: string;
   dropdownOffsetDistance?: number;
   fixDropdownWidth?: boolean;
   forceDropdownPortal?: boolean;
@@ -204,10 +208,7 @@ export interface SelectProps<
    * (e2e) testId элемента, внутри котого отображается текст выбранного элемента селекта, или плейсхолдер.
    */
   labelTextTestId?: string;
-  /**
-   * (e2e) testId кнопки очистки
-   */
-  clearButtonTestId?: string;
+  nativeSelectTestId?: string;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -251,6 +252,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     noMaxHeight = false,
     ['aria-labelledby']: ariaLabelledBy,
     clearButtonTestId,
+    nativeSelectTestId,
     defaultValue,
     ...restProps
   } = props;
@@ -875,6 +877,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         value={nativeSelectValue}
         aria-hidden
         className={styles['CustomSelect__control']}
+        data-testid={nativeSelectTestId}
       >
         {allowClearButton && <option key="" value="" />}
         {optionsProp.map((item) => (
