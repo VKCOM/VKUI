@@ -82,7 +82,7 @@ const NativeSelect = ({
 
   return (
     <FormField
-      Component="label"
+      Component="div"
       className={classNames(
         styles['Select'],
         'vkuiInternalNativeSelect',
