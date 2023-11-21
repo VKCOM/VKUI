@@ -29,12 +29,6 @@ export interface FormItemProps
     HasComponent,
     RemovableProps {
   top?: React.ReactNode;
-  /**
-   * Передаётся при использовании `top`.
-   *
-   * Должен совпадать с `aria-labelledby`, который передаётся в компонент, отвечающий за пользовательский ввод. Особенно важно использовать вместе с компонентом Select/CustomSelect.
-   */
-  topId?: string;
   bottom?: React.ReactNode;
   /**
    * Передаётся при использовании `bottom`.
@@ -62,7 +56,6 @@ export interface FormItemProps
 export const FormItem = ({
   children,
   top,
-  topId,
   bottom,
   status = 'default',
   removable,
@@ -81,7 +74,6 @@ export const FormItem = ({
     <React.Fragment>
       {hasReactNode(top) && (
         <Subhead
-          id={topId}
           className={styles['FormItem__top']}
           Component={htmlFor ? 'label' : 'h5'}
           htmlFor={htmlFor}
