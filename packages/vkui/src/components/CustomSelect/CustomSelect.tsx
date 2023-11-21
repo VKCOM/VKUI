@@ -386,17 +386,21 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     setKeyboardInput('');
   }, []);
 
+  const resetFocusedOption = React.useCallback(() => {
+    setFocusedOptionIndex(-1);
+  }, []);
+
   const onKeyboardInput = React.useCallback(
     (key: string) => {
       if (!opened) {
         setOpened(true);
       }
-      setFocusedOptionIndex(-1);
+      resetFocusedOption();
       const fullInput = keyboardInput + key;
 
       setKeyboardInput(fullInput);
     },
-    [keyboardInput, opened],
+    [keyboardInput, opened, resetFocusedOption],
   );
 
   /**
@@ -408,9 +412,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
     setInputValue('');
     setOpened(false);
-    setFocusedOptionIndex(-1);
+    resetFocusedOption();
     onClose?.();
-  }, [onClose, resetKeyboardInput]);
+  }, [onClose, resetKeyboardInput, resetFocusedOption]);
 
   const selectOption = React.useCallback(
     (index: number) => {
@@ -454,10 +458,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     const event = new Event('focusout', { bubbles: true });
     selectElRef.current?.dispatchEvent(event);
   }, [close, selectElRef]);
-
-  const resetFocusedOption = React.useCallback(() => {
-    setFocusedOptionIndex(-1);
-  }, []);
 
   const onFocus = React.useCallback(() => {
     const event = new Event('focusin', { bubbles: true });
@@ -593,7 +593,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           if (!opened) {
             setOpened(true);
           }
-          setFocusedOptionIndex(-1);
+          resetFocusedOption();
 
           break;
         }
@@ -608,7 +608,16 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           break;
       }
     },
-    [areOptionsShown, close, focusOption, onKeyboardInput, open, opened, selectFocused],
+    [
+      areOptionsShown,
+      close,
+      focusOption,
+      onKeyboardInput,
+      open,
+      opened,
+      selectFocused,
+      resetFocusedOption,
+    ],
   );
 
   const handleOptionClick = React.useCallback(
@@ -630,7 +639,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     x: React.MouseEvent['clientX'];
     y: React.MouseEvent['clientY'];
   }>({ x: 0, y: 0 });
-  const handleOptionHover = React.useCallback(
+  const focusOptionOnMouseMove = React.useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       const isMouseChangedPosition =
         Math.abs(prevMousePositionRef.current.x - e.clientX) >= 1 ||
@@ -671,7 +680,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
             // Причём координаты события меняются на пару пикселей по сравнению с прошлым вызовом,
             // а значит нельзя на них опираться, чтобы запретить обработку такого события.
             // C mousemove такой проблемы нет, что позволяет реализовать поведение при наведении с клавиатуры и при наведении мышью идентично нативному селекту.
-            onMouseMove: handleOptionHover,
+            onMouseMove: focusOptionOnMouseMove,
             id: `${popupAriaId}-${option.value}`,
           })}
         </React.Fragment>
@@ -680,7 +689,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [
       focusedOptionIndex,
       handleOptionClick,
-      handleOptionHover,
+      focusOptionOnMouseMove,
       renderOptionProp,
       selectedOptionIndex,
       popupAriaId,
@@ -721,7 +730,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     return (
       <ClearButton
         className={iconProp === undefined ? styles['CustomSelect--clear-icon'] : undefined}
-        onClick={() => {
+        onClick={function clearSelectState() {
           setNativeSelectValue('');
           setInputValue('');
           focusOnInput.set();
@@ -764,10 +773,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     (e: React.MouseEvent<HTMLDivElement>) => {
       // Раньше внешней оберткой селекта был лэйбл, что позволяло по клику в любую область селекта,
       // даже где нету инпута, фокусировать инпут и передавать на него событие клика.
-      // Так мы больше не оборачиваем селект в лэйбл, то для обертки селекта мы симулируем работу лэйбла.
+      // Так как мы больше не оборачиваем селект в лэйбл, то для обертки селекта мы симулируем работу лэйбла.
       // передаем фокус и клик по инпуту, если пользователь кликнул в зоне обертки.
       // В лэйбл мы не больше не оборачиваем, потому что это заставляет скрин ридер
       // дважды произносить лэйбл выбранной опции при фокусе, если селект связан с внешним лэйблом.
+      // Воспроизводится в некоторых версиях Хрома, при навигации по странице с помощью стрелок.
+      // Договорились со специалистом по доступности убрать лэйблы-обёртки из Select и CustomSelect
 
       if (!selectInputRef.current || !document) {
         return;
