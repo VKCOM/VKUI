@@ -40,13 +40,11 @@ const Example = () => {
       <FormLayoutGroup mode="horizontal">
         <FormItem
           top="Администратор"
-          topId="administrator-select-label-id"
           htmlFor="administrator-select-id"
           style={{ flexGrow: 1, flexShrink: 1 }}
         >
           <CustomSelect
             id="administrator-select-id"
-            aria-labelledby="administrator-select-label-id"
             placeholder="Не выбран"
             options={users}
             selectType={selectType}
@@ -57,13 +55,11 @@ const Example = () => {
 
         <FormItem
           top="Вид селекта"
-          topId="select-type-label-id"
           htmlFor="select-type-select-id"
           style={{ flexBasis: '200px', flexGrow: 0 }}
         >
           <CustomSelect
             id="select-type-select-id"
-            aria-labelledby="select-type-label-id"
             value={selectType}
             placeholder="Не задан"
             options={selectTypes}
@@ -77,15 +73,11 @@ const Example = () => {
 
       <FormItem
         top="Администратор"
-        topId="administrator-select-label-id-2"
         bottom="Кастомный дизайн элементов списка"
-        bottomId="custom-administrator-description-id"
         htmlFor="administrator-select-id-2"
       >
         <CustomSelect
           id="administrator-select-id-2"
-          aria-labelledby="administrator-select-label-id-2"
-          aria-describedby="custom-administrator-description-id"
           placeholder="Не выбран"
           options={users}
           renderOption={({ option, ...restProps }) => (
@@ -101,14 +93,10 @@ const Example = () => {
       <FormItem
         top="Администратор"
         htmlFor="administrator-select-id-3"
-        topId="administrator-select-label-id-3"
         bottom="Ползунок скроллбара по умолчанию скрыт"
-        bottomId="administrator-description-2-id"
       >
         <CustomSelect
           id="administrator-select-id-3"
-          aria-labelledby="administrator-select-label-id-3"
-          aria-describedby="administrator-description-2-id"
           placeholder="Не выбран"
           options={users}
           selectType={selectType}
@@ -120,25 +108,31 @@ const Example = () => {
       <FormItem
         top="Администратор"
         htmlFor="administrator-select-searchable-id-3"
-        topId="administrator-select-searchable-label-id-3"
         bottom="Поиск по списку"
       >
         <CustomSelect
           placeholder="Введите имя пользователя"
           searchable
           id="administrator-select-searchable-id-3"
-          aria-labelledby="administrator-select-searchable-label-id-3"
           options={users}
           allowClearButton
         />
       </FormItem>
 
-      <FormItem top="Администратор" bottom="Кастомное поведение при поиске">
-        <CustomSearchLogicSelect />
+      <FormItem
+        top="Администратор"
+        bottom="Кастомное поведение при поиске"
+        htmlFor="custom-search-logic-select-id"
+      >
+        <CustomSearchLogicSelect id="custom-search-logic-select-id" />
       </FormItem>
 
-      <FormItem top="Город" bottom="Кастомный алгоритм поиска">
-        <CustomSearchAlgoSelect />
+      <FormItem
+        top="Город"
+        bottom="Кастомный алгоритм поиска"
+        htmlFor="custom-search-algo-select-id"
+      >
+        <CustomSearchAlgoSelect id="custom-search-algo-select-id" />
       </FormItem>
 
       <Header>Асинхронная загрузка списка</Header>
@@ -150,7 +144,7 @@ const Example = () => {
 // **
 // * Кастомное поведение при поиске
 // **
-const CustomSearchLogicSelect = () => {
+const CustomSearchLogicSelect = ({ id }) => {
   const [value, setValue] = React.useState('');
   const [query, setQuery] = React.useState('');
   const [newUsers, setNewUsers] = React.useState([...getUsers(getRandomUsers(10))]);
@@ -182,6 +176,7 @@ const CustomSearchLogicSelect = () => {
 
   return (
     <CustomSelect
+      id={id}
       value={value}
       placeholder="Введите имя пользователя"
       searchable
@@ -203,7 +198,7 @@ const CustomSearchLogicSelect = () => {
 // **
 // * Кастомный алгоритм поиска
 // **
-const CustomSearchAlgoSelect = () => {
+const CustomSearchAlgoSelect = ({ id }) => {
   const cities = [
     {
       label: 'Санкт-Петербург',
@@ -239,12 +234,8 @@ const CustomSearchAlgoSelect = () => {
 
   return (
     <React.Fragment>
-      <label for="city-select-id" id="city-select-label-id">
-        Город:{' '}
-      </label>
       <CustomSelect
-        id="city-select-id"
-        aria-labelledby="city-select-label-id"
+        id="custom-search-algo-select-id"
         placeholder="Введите название города или страны"
         searchable
         filterFn={customSearchFilter}
@@ -321,6 +312,7 @@ const AsyncCustomSelect = () => {
     <FormLayoutGroup mode="horizontal">
       <FormItem style={{ flexGrow: 1, flexShrink: 1 }}>
         <CustomSelect
+          aria-label="Пользователь"
           options={remoteUsers}
           searchable={searchable}
           placeholder={searchable ? 'Введите имя пользователя' : 'Не выбран'}

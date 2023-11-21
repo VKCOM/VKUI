@@ -5,32 +5,46 @@
 Для корректной работы скринридеров необходимо вручную передавать некоторые параметры:
 <br />
 
-- При использовании вместе с элементом `label` следует `id` лэйбла передать селекту в свойство `aria-labelledby`, а `id` селекта передать в свойство `for`(`htmlFor`) лэйбла.
-  Это обусловлено тем, что внутри [Select](#!/Select) может использоваться [CustomSelect](#!/CustomSelect), который
-  реализован без использования нативного `select` и cледует паттерну [combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/),
-  где для корректного связывания списка и инпута требуется также и установка `aria-labelledby`.
-
+- При использовании вместе с элементом `label` следует `id` селекта передать в свойство `for`(`htmlFor`) лэйбла.
+- При отсутствии лэйбла по дизайну старайтесь всё же его оставлять, но прятать с помощью элемента [VisuallyHidden](#!/VisuallyHidden), чтобы он оставался доступен для пользователей ассистивных технологий. В крайнем случае используйте [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) аттрибут.
 - При использовании вместе с [FormItem](#!/FormItem) следуйте рекомендациям раздела "Цифровая доступность" компонента [FormItem](#!/FormItem).
 
 Пример рекомендуемого использования:
 
+- вместе с `label`
+
 ```js static
-<label id="select-label-id" htmlFor="select-id">Администратор</label>
+<label htmlFor="select-id">Администратор</label>
 <CustomSelect
   id="select-id"
-  aria-labelledby="select-label-id"
   placeholder="Не выбран"
   options={users}
 />
+```
 
-<FormItem top="Администратор" topId="select-label-id" htmlFor="select-id">
-  <CustomSelect
-    id="select-id"
-    aria-labelledby="select-label-id"
-    placeholder="Не выбран"
-    options={users}
-  />
+- вместе с [FormItem](#!/FormItem)
+
+```js static
+<FormItem top="Администратор" htmlFor="select-id">
+  <CustomSelect id="select-id" placeholder="Не выбран" options={users} />
 </FormItem>
+```
+
+- вместе с [VisuallyHidden](#!/VisuallyHidden)
+
+```js static
+<VisuallyHidden Component="label" htmlFor="select-id">Администратор</VisuallyHidden>
+<CustomSelect
+  id="select-id"
+  placeholder="Не выбран"
+  options={users}
+/>
+```
+
+- вместе с [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)
+
+```js static
+<CustomSelect aria-label="Администратор" placeholder="Не выбран" options={users} />
 ```
 
 ```jsx
