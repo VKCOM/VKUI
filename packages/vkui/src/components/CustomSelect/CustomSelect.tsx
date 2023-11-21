@@ -745,12 +745,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
 
     return (
-      <div className={styles['CustomSelect__dropdown-icon-wrapper']}>
-        <DropdownIcon
-          className={clearButtonShown ? styles['CustomSelect__dropdown-icon'] : undefined}
-          opened={opened}
-        />
-      </div>
+      <DropdownIcon
+        className={clearButtonShown ? styles['CustomSelect__dropdown-icon'] : undefined}
+        opened={opened}
+      />
     );
   }, [clearButtonShown, iconProp, opened]);
 
@@ -818,12 +816,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   };
 
   const focusWithin = useFocusWithin(handleRootRef);
-  const isSimpleSelect = !searchable;
-  const isSearhableSelectWithoutFocus = searchable && !focusWithin;
-  const isFocusedSearchableSelectHasNoInputValue = searchable && focusWithin && inputValue === '';
-  const withInputForeground =
-    selected &&
-    (isSimpleSelect || isSearhableSelectWithoutFocus || isFocusedSearchableSelectHasNoInputValue);
 
   return (
     <div
@@ -847,11 +839,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         getRef={selectInputRef}
         onFocus={onFocus}
         onBlur={onBlur}
-        className={classNames(
-          openedClassNames,
-          ((withInputForeground && !focusWithin) || isSimpleSelect) &&
-            styles['CustomSelect__input--cursor-pointer'],
-        )}
+        className={openedClassNames}
         readOnly={!searchable}
         value={inputValue}
         onKeyUp={handleKeyUp}

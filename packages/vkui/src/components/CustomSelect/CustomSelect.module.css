@@ -31,14 +31,6 @@
   justify-content: center;
 }
 
-.CustomSelect__dropdown-icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  align-self: stretch;
-}
-
 .CustomSelect__dropdown-icon {
   margin-right: 10px;
 }
@@ -63,9 +55,4 @@
   .CustomSelect--sizeY-none .CustomSelect--clear-icon {
     margin-right: -2px;
   }
-}
-
-/* stylelint-disable-next-line selector-max-type */
-.CustomSelect__input--cursor-pointer input {
-  cursor: pointer;
 }

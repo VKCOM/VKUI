@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { SizeType } from '../../lib/adaptivity';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
@@ -52,6 +54,9 @@ export const CustomSelectInput = ({
   const title = children || placeholder;
   const showLabelOrPlaceholder = !Boolean(restProps.value);
 
+  const handleRootRef = useExternRef(getRootRef);
+  const focusWithin = useFocusWithin(handleRootRef);
+
   return (
     <FormField
       Component="div"
@@ -67,7 +72,7 @@ export const CustomSelectInput = ({
         after && styles['CustomSelectInput--hasAfter'],
         className,
       )}
-      getRootRef={getRootRef}
+      getRootRef={handleRootRef}
       before={before}
       after={after}
       disabled={restProps.disabled}
@@ -91,7 +96,11 @@ export const CustomSelectInput = ({
           Component="input"
           normalize={false}
           type={type}
-          className={styles['CustomSelectInput__el']}
+          className={classNames(
+            styles['CustomSelectInput__el'],
+            (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) &&
+              styles['CustomSelectInput__el--cursor-pointer'],
+          )}
           getRootRef={getRef}
           placeholder={children ? '' : placeholder}
         />

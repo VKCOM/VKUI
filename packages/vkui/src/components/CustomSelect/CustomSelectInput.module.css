@@ -24,6 +24,10 @@
   background: transparent;
 }
 
+.CustomSelectInput__el--cursor-pointer {
+  cursor: pointer;
+}
+
 .CustomSelectInput--sizeY-compact .CustomSelectInput__el {
   height: var(--vkui--size_field_height--compact);
 }
