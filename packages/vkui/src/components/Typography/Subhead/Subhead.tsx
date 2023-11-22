@@ -18,7 +18,7 @@ export type SubheadProps = TypographyProps;
  */
 export const Subhead = ({
   className,
-  Component = 'h5',
+  Component = 'span',
   normalize = true,
   ...restProps
 }: SubheadProps) => {
