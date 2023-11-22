@@ -49,7 +49,7 @@
 
 ## Тестирование (e2e)
 
-Если `Select` отрисовывает [NativeSelect](#!/NativeSelect), то достаточно передать testId через `data-*` аттрибут, для поиска элемента на странице.
+Если `Select` отрисовывает [NativeSelect](#!/NativeSelect), то достаточно передать testId через `data-*` аттрибут для поиска элемента на странице.
 Если `Select` отрисовывает [CustomSelect](#!/CustomSelect), то следуйте рекомендациям из раздела "Тестирование (e2e)" компонента [CustomSelect](#!/CustomSelect).
 
 ```jsx
