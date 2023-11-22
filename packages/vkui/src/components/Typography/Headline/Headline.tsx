@@ -27,7 +27,7 @@ export const Headline = ({
   className,
   weight = '3',
   level = '1',
-  Component = 'h4',
+  Component = 'span',
   normalize = true,
   ...restProps
 }: HeadlineProps) => {
