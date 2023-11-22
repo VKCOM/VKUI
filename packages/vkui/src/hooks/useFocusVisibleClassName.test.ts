@@ -1,4 +1,3 @@
-// import * as React from 'react';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { classNames } from '@vkontakte/vkjs';
 import {
@@ -14,10 +13,8 @@ const test = (hookConfig: UseFocusVisibleClassNameProps, resultClassNameString: 
   const { result } = renderHook(() => useFocusVisibleClassName(hookConfig));
 
   act(() => {
-    result.current;
+    expect(result.current).toEqual(resultClassNameString);
   });
-
-  expect(result.current).toEqual(resultClassNameString);
 };
 
 describe('useFocusVisibleClassName()', () => {
