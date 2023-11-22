@@ -2,14 +2,18 @@
 
 ## Цифровая доступность (a11y)
 
-Для корректной работы скринридеров необходимо вручную передавать некоторые параметры:
+Старайтесь сопровождать элемент текстовым описанием, для корректной работы скринридеров.
+Для этого необходимо вручную передавать некоторые параметры:
 <br />
 
-- При использовании вместе с элементом `label` передавайте `id` селекта в свойство `for`(`htmlFor`) элемента `label`.
-- При отсутствии лэйбла по дизайну старайтесь всё же его оставлять, но прятать с помощью элемента [VisuallyHidden](#!/VisuallyHidden), чтобы он оставался доступен для пользователей ассистивных технологий. В крайнем случае используйте [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) аттрибут.
+- При задании текстового описания с помощью элемента `label` передавайте `id` селекта в свойство `for`(`htmlFor`) элемента `label`. Это позволит фокусироваться на селекте кликом по лэйблу и автоматически добавит имя селекту для скринридеров.
+- Если по какой-то причине текстовое описание селекта не получается обернуть в тэг `label`, то можно попробовать связать текстовое описание с селектом через [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby). Для этого передайте `id` текстового элемента селекту в свойство [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby).
+- При отсутствии текстового описания селекта по дизайну старайтесь всё же его оставлять, но прятать с помощью элемента [VisuallyHidden](#!/VisuallyHidden), чтобы оно оставалось доступено для пользователей ассистивных технологий. В крайнем случае используйте [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) аттрибут.
 - При использовании вместе с [FormItem](#!/FormItem) следуйте рекомендациям раздела "Цифровая доступность" компонента [FormItem](#!/FormItem).
 
-Пример рекомендуемого использования:
+Cтарайтесь сопровождать элемент плейсхолдером.
+
+Пример рекомендуемого использования селекта с текстовым описанием:
 
 - вместе с `label`
 
@@ -30,12 +34,34 @@
 </FormItem>
 ```
 
-- вместе с [VisuallyHidden](#!/VisuallyHidden)
+- вместе с [VisuallyHidden](#!/VisuallyHidden) (используя `label` и `htmlFor`)
 
 ```js static
 <VisuallyHidden Component="label" htmlFor="select-id">Администратор</VisuallyHidden>
 <CustomSelect
   id="select-id"
+  placeholder="Не выбран"
+  options={users}
+/>
+```
+
+- вместе с [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)
+
+```js static
+<span id="select-label-id">Администратор</span>
+<CustomSelect
+  aria-labelledby="select-label-id"
+  placeholder="Не выбран"
+  options={users}
+/>
+```
+
+- вместе с [VisuallyHidden](#!/VisuallyHidden) (используя [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby))
+
+```js static
+<VisuallyHidden Component="span" id="select-label-id">Администратор</VisuallyHidden>
+<CustomSelect
+  aria-labelledby="select-label-id"
   placeholder="Не выбран"
   options={users}
 />
