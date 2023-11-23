@@ -4,3 +4,51 @@
   border-radius: var(--vkui--size_border_radius--regular);
   -webkit-tap-highlight-color: transparent;
 }
+
+/**
+ * hover & active state
+ */
+.TappableRefactored--hover-background::before,
+.TappableRefactored--active-background::before {
+  content: '';
+  position: absolute;
+  z-index: var(--vkui_internal--z_index_tappable_state);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+.TappableRefactored--hover-background:hover::before {
+  background-color: var(--vkui--color_transparent--hover);
+}
+
+.TappableRefactored--hover-opacity:hover {
+  opacity: 0.8;
+}
+
+.TappableRefactored--active-background:active::before {
+  background-color: var(--vkui--color_transparent--active);
+}
+
+.TappableRefactored--active-opacity:active {
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .TappableRefactored {
+    transition: background-color 0.15s ease-out, opacity 0.15s ease-out;
+    transition-delay: 0.07s, 0.07s;
+  }
+
+  .TappableRefactored::before {
+    transition: background-color 0.15s ease-out;
+    transition-delay: 0.07s;
+  }
+}
