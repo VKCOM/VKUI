@@ -57,6 +57,7 @@ export const TabbarItem = ({
         selected && styles['TabbarItem--selected'],
       )}
       activeMode={false}
+      rippleEffectDelay={70}
       hoverMode={false}
     >
       <span className={styles['TabbarItem__in']}>

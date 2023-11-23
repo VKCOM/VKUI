@@ -8,12 +8,20 @@ import styles from './Ripple.module.css';
 interface RippleProps extends RootComponentProps<HTMLSpanElement> {
   clientX?: number;
   clientY?: number;
+  delay?: number;
 }
+
+const RIPPLE_EFFECT_DELAY = 600;
 
 /**
  * INTERNAL
  */
-const RippleEffect = ({ clientX = 0, clientY = 0, ...restProps }: RippleProps) => {
+const RippleEffect = ({
+  clientX = 0,
+  clientY = 0,
+  delay = RIPPLE_EFFECT_DELAY,
+  ...restProps
+}: RippleProps) => {
   const ref = React.useRef<HTMLSpanElement>(null);
 
   React.useEffect(() => {
@@ -22,9 +30,9 @@ const RippleEffect = ({ clientX = 0, clientY = 0, ...restProps }: RippleProps) =
     const y = clientY - (top ?? 0);
 
     if (ref.current) {
-      ref.current.style.cssText = `--vkui_internal--ripple-x:${x};--vkui_internal--ripple-y:${y};`;
+      ref.current.style.cssText = `--vkui_internal--ripple-x:${x};--vkui_internal--ripple-y:${y};--vkui_internal--ripple-delay:${delay}ms;`;
     }
-  }, [clientX, clientY]);
+  }, [clientX, clientY, delay]);
 
   return (
     <RootComponent

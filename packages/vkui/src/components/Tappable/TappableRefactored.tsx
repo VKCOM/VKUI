@@ -34,7 +34,10 @@ const isActiveStatePresetMode = (mode: ActiveStateMode): mode is ActiveStatePres
   mode === 'background' || mode === 'opacity';
 
 export interface TappableRefactoredProps extends TouchProps {
-  baseClassName?: string;
+  /**
+   * В миллисекундах (ms).
+   */
+  rippleEffectDelay?: number;
   /**
    * Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс во время focus-visible
    */
@@ -57,6 +60,7 @@ export const TappableRefactored = ({
   className,
   children,
   disabled,
+  rippleEffectDelay,
   hoverMode = 'background',
   activeMode = 'background',
   focusVisibleMode = 'inside',
@@ -65,7 +69,7 @@ export const TappableRefactored = ({
   // :focus-visible
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({
-    focusVisible: !disabled && focusVisible,
+    focusVisible,
     mode: focusVisibleMode,
   });
 
@@ -100,7 +104,7 @@ export const TappableRefactored = ({
       )}
     >
       {children}
-      {!disabled && <Ripple clientX={x} clientY={y} />}
+      <Ripple clientX={x} clientY={y} delay={rippleEffectDelay} />
     </Touch>
   );
 };
