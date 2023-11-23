@@ -125,6 +125,7 @@ const Example = () => {
         bottom="Поиск по списку"
       >
         <CustomSelect
+          before={<Icon24User />}
           placeholder="Введите имя пользователя"
           searchable
           id="administrator-select-searchable-id-3"

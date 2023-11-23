@@ -6,21 +6,20 @@
 
 .CustomSelectInput__el {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  z-index: var(--vkui_internal--z_index_form_field_element);
+  width: 100%;
   height: var(--vkui--size_field_height--regular);
   line-height: var(--vkui--size_field_height--regular);
   margin: 0;
-  width: 100%;
-  box-sizing: border-box;
-  box-shadow: none;
   border: 0;
   border-radius: inherit;
+  box-sizing: border-box;
+  box-shadow: none;
   appearance: none;
   color: var(--vkui--color_text_primary);
   padding: 0 12px;
-  z-index: var(--vkui_internal--z_index_form_field_element);
   background: transparent;
 }
 
@@ -90,6 +89,10 @@
   align-items: center;
   flex: 1;
   overflow: hidden;
+}
+
+.CustomSelectInput--hasBefore .CustomSelectInput__input-group {
+  border-radius: 0;
 }
 
 .CustomSelectInput__title {
