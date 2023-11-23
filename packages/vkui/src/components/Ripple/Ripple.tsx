@@ -2,6 +2,7 @@ import * as React from 'react';
 import { getOffsetRect } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './Ripple.module.css';
 
@@ -50,8 +51,9 @@ const RippleEffect = ({
  */
 export const Ripple = (props: RippleProps) => {
   const platform = usePlatform();
+  const { keyboardInput } = React.useContext(AppRootContext);
 
-  if (platform !== Platform.ANDROID) {
+  if (platform !== Platform.ANDROID || keyboardInput) {
     return null;
   }
 
