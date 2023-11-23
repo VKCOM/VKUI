@@ -36,9 +36,7 @@ const MainPanelContent = ({ onProfileClick }: { onProfileClick: () => void }) =>
     <React.Fragment>
       <PanelHeader>Main</PanelHeader>
       <Group>
-        <CellButton stopPropagation={false} onClick={onProfileClick}>
-          Профиль
-        </CellButton>
+        <CellButton onClick={onProfileClick}>Профиль</CellButton>
       </Group>
     </React.Fragment>
   );
@@ -55,9 +53,7 @@ const ProfilePanelContent = ({ onSettingsClick }: { onSettingsClick: () => void 
         </Div>
       </Group>
       <Group>
-        <CellButton stopPropagation={false} onClick={onSettingsClick}>
-          Настройки
-        </CellButton>
+        <CellButton onClick={onSettingsClick}>Настройки</CellButton>
       </Group>
       <Group
         header={<Header>Gallery</Header>}

@@ -76,17 +76,18 @@ describe('Cell', () => {
       expect(removeStub).toHaveBeenCalledTimes(0);
       expect(clickStub).toHaveBeenCalledTimes(1);
 
-      // cell should be disabled in removable state without onClick handler
+      // cell should be div in removable state without onClick handler
       rerender(
-        <Cell mode="removable" onRemove={removeStub}>
+        <Cell data-testid="test" mode="removable" onRemove={removeStub}>
           Саша Колобов
         </Cell>,
       );
+      const el = screen.getByTestId('test');
 
-      expect(screen.getByRole('button', { name: /Саша Колобов/ })).toHaveAttribute(
-        'aria-disabled',
-        'true',
-      );
+      expect(el.tagName.toLowerCase()).toBe('div');
+      expect(el.role).toBeUndefined();
+      expect(el.getAttribute('disabled')).toBeNull();
+      expect(el.getAttribute('aria-disabled')).toBeNull();
     });
 
     test('[iOS] handles click and ignores onClick in removing state', async () => {

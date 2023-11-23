@@ -5,7 +5,15 @@ import { baselineComponent } from '../../testing/utils';
 import { CalendarHeader } from './CalendarHeader';
 
 describe('CalendarHeader', () => {
-  baselineComponent((props) => <CalendarHeader viewDate={new Date()} onChange={noop} {...props} />);
+  baselineComponent((props) => (
+    <CalendarHeader
+      onNextMonth={noop}
+      onPrevMonth={noop}
+      viewDate={new Date()}
+      onChange={noop}
+      {...props}
+    />
+  ));
 
   it('displays prev month button', () => {
     const viewDate = new Date('1970-01-01');

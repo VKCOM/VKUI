@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Icon16Dropdown, Icon20PictureOutline, Icon24PictureOutline } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { HasChildren } from '../../types';
 import { Badge } from '../Badge/Badge';
@@ -23,10 +24,16 @@ const Unscrollable = ({
 
   return (
     <React.Fragment>
-      <TabsItem before={beforeIconByMode} status={status} after={<Icon16Dropdown />} selected>
+      <TabsItem
+        onClick={noop}
+        before={beforeIconByMode}
+        status={status}
+        after={<Icon16Dropdown />}
+        selected
+      >
         Новости
       </TabsItem>
-      <TabsItem before={beforeIconByMode} status={status} after={<Icon16Dropdown />}>
+      <TabsItem onClick={noop} before={beforeIconByMode} status={status} after={<Icon16Dropdown />}>
         Интересное
       </TabsItem>
       {children}
@@ -40,11 +47,20 @@ const Scrollable = ({ disabled }: { disabled?: boolean }) => {
   return (
     <React.Fragment>
       <HorizontalScroll arrowSize="m">
-        <TabsItem disabled={disabled}>Сообщества</TabsItem>
-        <TabsItem before={beforeIconByMode} after={<Icon16Dropdown />} selected disabled={disabled}>
+        <TabsItem onClick={noop} disabled={disabled}>
+          Сообщества
+        </TabsItem>
+        <TabsItem
+          onClick={noop}
+          before={beforeIconByMode}
+          after={<Icon16Dropdown />}
+          selected
+          disabled={disabled}
+        >
           Лента
         </TabsItem>
         <TabsItem
+          onClick={noop}
           before={beforeIconByMode}
           status={<Badge mode="prominent">Есть новые</Badge>}
           after={<Icon16Dropdown />}
@@ -53,6 +69,7 @@ const Scrollable = ({ disabled }: { disabled?: boolean }) => {
           Рекомендации
         </TabsItem>
         <TabsItem
+          onClick={noop}
           before={beforeIconByMode}
           status={
             <Counter mode="prominent" size="s">
@@ -65,6 +82,7 @@ const Scrollable = ({ disabled }: { disabled?: boolean }) => {
           Друзья
         </TabsItem>
         <TabsItem
+          onClick={noop}
           before={beforeIconByMode}
           status={23}
           after={<Icon16Dropdown />}
@@ -87,11 +105,11 @@ export const TabsPlayground = (props: ComponentPlaygroundProps) => {
           children: [
             <Unscrollable key="tabs" />,
             <Unscrollable key="tabs">
-              <TabsItem>Лента</TabsItem>
+              <TabsItem onClick={noop}>Лента</TabsItem>
             </Unscrollable>,
             <Unscrollable key="tabs" status={<Badge mode="prominent">Есть обновления</Badge>} />,
             <Unscrollable key="tabs" status={<Badge mode="prominent">Есть обновления</Badge>}>
-              <TabsItem>Лента</TabsItem>
+              <TabsItem onClick={noop}>Лента</TabsItem>
             </Unscrollable>,
             <Unscrollable
               key="tabs"
@@ -109,11 +127,11 @@ export const TabsPlayground = (props: ComponentPlaygroundProps) => {
                 </Counter>
               }
             >
-              <TabsItem>Лента</TabsItem>
+              <TabsItem onClick={noop}>Лента</TabsItem>
             </Unscrollable>,
             <Unscrollable key="tabs" status={0} />,
             <Unscrollable key="tabs" status={23}>
-              <TabsItem>Лента</TabsItem>
+              <TabsItem onClick={noop}>Лента</TabsItem>
             </Unscrollable>,
             <Scrollable key="tabs" />,
             <Scrollable key="tabs" disabled />,
@@ -135,12 +153,16 @@ export const TabsItemsFlexModePlayground = (props: ComponentPlaygroundProps) => 
           mode: ['default', 'accent', 'secondary'],
           children: [
             <>
-              <TabsItem>Unscrollable</TabsItem>
-              <TabsItem selected>Unscrollable</TabsItem>
+              <TabsItem onClick={noop}>Unscrollable</TabsItem>
+              <TabsItem onClick={noop} selected>
+                Unscrollable
+              </TabsItem>
             </>,
             <HorizontalScroll key="scrolled" arrowSize="m">
-              <TabsItem key="groups">Scrollable</TabsItem>
-              <TabsItem key="news" selected>
+              <TabsItem onClick={noop} key="groups">
+                Scrollable
+              </TabsItem>
+              <TabsItem onClick={noop} key="news" selected>
                 Scrollable
               </TabsItem>
             </HorizontalScroll>,

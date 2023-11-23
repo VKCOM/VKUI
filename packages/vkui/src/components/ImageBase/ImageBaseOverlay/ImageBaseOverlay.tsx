@@ -69,8 +69,6 @@ export const ImageBaseOverlay = ({
   return (
     <Tappable
       {...restProps}
-      type="button"
-      Component="button"
       className={classNames(
         styles['ImageBaseOverlay'],
         visibility === 'always' && styles['ImageBaseOverlay--visible'],

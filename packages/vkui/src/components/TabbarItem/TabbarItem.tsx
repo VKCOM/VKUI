@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { HasComponent, HasRootRef } from '../../types';
@@ -63,12 +63,12 @@ export const TabbarItem = ({
     >
       <Tappable
         role="presentation"
-        Component="div"
         disabled={disabled}
         activeMode={platform === 'ios' ? styles['TabbarItem__tappable--active'] : 'background'}
         activeEffectDelay={platform === 'ios' ? 0 : 300}
         hasHover={false}
         className={styles['TabbarItem__tappable']}
+        onClick={noop}
       />
       <div className={styles['TabbarItem__in']}>
         <div className={styles['TabbarItem__icon']}>

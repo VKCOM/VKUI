@@ -64,6 +64,7 @@ const Example = () => {
                 disabled={disabled}
                 size={size}
                 loading={loading}
+                onClick={() => {}}
               >
                 {buttonText}
               </Button>

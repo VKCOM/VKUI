@@ -78,18 +78,14 @@ export const ActionSheetItem = ({
     React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
   const { sizeY } = useAdaptivityWithJSMediaQueries();
 
-  let Component: React.ElementType = restProps.href ? 'a' : 'div';
-
-  if (selectable) {
-    Component = 'label';
-  }
+  const Component: React.ElementType | undefined = selectable ? 'label' : undefined;
 
   const isRich = subtitle || meta || selectable;
   const isCentered = !isRich && !before && platform === 'ios';
 
   return (
     <Tappable
-      Component={Component}
+      {...(Component && { Component })}
       {...restProps}
       onClick={
         selectable

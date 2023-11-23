@@ -2,12 +2,12 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { Tappable, TappableElementProps } from '../Tappable/Tappable';
+import { Tappable } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CalendarDay.module.css';
 
 export type CalendarDayElementProps = Omit<
-  TappableElementProps,
+  React.AllHTMLAttributes<HTMLElement>,
   'onChange' | 'size' | 'disabled' | 'selected'
 >;
 
@@ -98,8 +98,8 @@ export const CalendarDay = React.memo(
         tabIndex={-1}
         getRootRef={ref}
         focusVisibleMode={active ? 'outside' : 'inside'}
-        onEnter={handleEnter}
-        onLeave={handleLeave}
+        onPointerEnter={handleEnter}
+        onPointerLeave={handleLeave}
         {...restProps}
       >
         <div

@@ -20,7 +20,8 @@ describe('ActionSheetItem', () => {
 
   it('Component: ActionSheetItem w/ href is a native link', () => {
     render(<ActionSheetItemTest href="https://vk.com">ActionSheetItem</ActionSheetItemTest>);
-    expect(item().tagName.toLowerCase()).toMatch('a');
+    const el = item();
+    expect(el.tagName.toLowerCase()).toMatch('a');
   });
 
   it('Component: ActionSheetItem[selectable] is a label', () => {

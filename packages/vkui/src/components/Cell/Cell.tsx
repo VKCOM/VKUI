@@ -123,7 +123,7 @@ export const Cell = ({
     hasHover: hasActive && !removable,
     ...restProps,
     className: styles['Cell__content'],
-    disabled: simpleCellDisabled,
+    ...(restProps.onClick && { disabled: simpleCellDisabled }),
     Component: Component,
     before: (
       <React.Fragment>
@@ -153,7 +153,10 @@ export const Cell = ({
       >
         {platform === 'ios' ? (
           ({ isRemoving }) => (
-            <SimpleCell {...simpleCellProps} disabled={simpleCellProps.disabled || isRemoving} />
+            <SimpleCell
+              {...simpleCellProps}
+              {...(simpleCellProps.onClick && { disabled: simpleCellProps.disabled || isRemoving })}
+            />
           )
         ) : (
           <SimpleCell {...simpleCellProps} />

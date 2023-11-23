@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
@@ -154,7 +154,7 @@ export const Banner = ({
         <Tappable
           className={styles['Banner__in']}
           activeMode={platform === 'ios' ? 'opacity' : 'background'}
-          role="button"
+          onClick={noop}
         >
           {content}
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { ViewWidth } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -9,7 +10,7 @@ import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
 import { HorizontalScroll, type HorizontalScrollProps } from './HorizontalScroll';
 
 const items = new Array(20).fill(0).map((_, i) => (
-  <HorizontalCell key={i} header={`item ${i}`}>
+  <HorizontalCell key={i} header={`item ${i}`} onClick={noop}>
     <Avatar size={56} />
   </HorizontalCell>
 ));

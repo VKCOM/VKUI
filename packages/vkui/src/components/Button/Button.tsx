@@ -71,7 +71,6 @@ export const Button = ({
   getRootRef,
   loading,
   onClick,
-  stopPropagation = true,
   className,
   disableSpinnerAnimation,
   rounded,
@@ -90,7 +89,6 @@ export const Button = ({
       focusVisibleMode="outside"
       {...restProps}
       onClick={loading ? undefined : onClick}
-      stopPropagation={stopPropagation}
       className={classNames(
         className,
         styles.Button,
