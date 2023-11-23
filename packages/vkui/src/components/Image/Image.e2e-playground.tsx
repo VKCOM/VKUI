@@ -86,3 +86,38 @@ export const ImagePlayground = (props: ComponentPlaygroundProps) => {
     </ComponentPlayground>
   );
 };
+
+export const ImageFocusVisiblePlayground = (props: ComponentPlaygroundProps) => (
+  <ComponentPlayground
+    {...props}
+    propSets={[
+      {
+        size: [72],
+        src: [base64Image],
+      },
+    ]}
+  >
+    {(props: ImageProps) => <Image onClick={() => null} {...props} />}
+  </ComponentPlayground>
+);
+
+export const ImageFocusVisibleOverlayPlayground = (props: ComponentPlaygroundProps) => (
+  <ComponentPlayground
+    {...props}
+    propSets={[
+      {
+        size: [72],
+        src: [base64Image],
+        children: [
+          <React.Fragment key="overlay-base">
+            <Image.Overlay theme="light" visibility="always">
+              <IconExampleForOverlayBasedOnImageBaseSize />
+            </Image.Overlay>
+          </React.Fragment>,
+        ],
+      },
+    ]}
+  >
+    {(props: ImageProps) => <Image {...props} />}
+  </ComponentPlayground>
+);

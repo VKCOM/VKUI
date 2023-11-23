@@ -81,20 +81,32 @@ export const Avatar = ({
   className,
   gradientColor,
   initials,
-  fallbackIcon,
+  fallbackIcon: fallbackIconProp,
   children,
   ...restProps
 }: AvatarProps) => {
   const gradientName =
     typeof gradientColor === 'number' ? COLORS_NUMBER_TO_TEXT_MAP[gradientColor] : gradientColor;
   const isGradientNotCustom = gradientName && gradientName !== 'custom';
-  const rewrittenFallbackIcon = initials ? undefined : fallbackIcon;
+
+  const fallbackIcon = initials ? (
+    <div
+      className={styles['Avatar__initials']}
+      style={{
+        fontSize: getInitialsFontSize(size),
+      }}
+    >
+      {initials}
+    </div>
+  ) : (
+    fallbackIconProp
+  );
 
   return (
     <ImageBase
       {...restProps}
       size={size}
-      fallbackIcon={rewrittenFallbackIcon}
+      fallbackIcon={fallbackIcon}
       className={classNames(
         styles['Avatar'],
         gradientName && styles['Avatar--has-gradient'],
@@ -102,16 +114,6 @@ export const Avatar = ({
         className,
       )}
     >
-      {initials && (
-        <div
-          className={styles['Avatar__initials']}
-          style={{
-            fontSize: getInitialsFontSize(size),
-          }}
-        >
-          {initials}
-        </div>
-      )}
       {children}
     </ImageBase>
   );

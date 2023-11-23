@@ -21,7 +21,7 @@ export const Link = ({ hasVisited, children, className, ...restProps }: LinkProp
       className={classNames(styles['Link'], hasVisited && styles['Link--has-visited'], className)}
       hasHover={false}
       activeMode="opacity"
-      focusVisibleMode={styles['Link--focus-visible']}
+      focusVisibleMode="outside"
     >
       {children}
     </Tappable>

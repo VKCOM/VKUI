@@ -97,7 +97,7 @@ const baseConfig = {
           borderRadius: 'none',
         },
         '& textarea:focus': {
-          outline: 0,
+          outline: `2px solid transparent`,
           borderColor: `none !important`,
         },
       },

@@ -45,7 +45,7 @@
 }
 
 .WriteBar__textarea:focus {
-  outline: none;
+  outline: var(--vkui_internal--outline-reset);
 }
 
 .WriteBar__inlineAfter {

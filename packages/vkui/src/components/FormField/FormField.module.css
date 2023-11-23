@@ -8,7 +8,6 @@
   -webkit-tap-highlight-color: transparent;
   isolation: isolate;
   border-radius: var(--vkui--size_border_radius--regular);
-  outline: none;
 }
 
 .FormField--sizeY-compact {
@@ -86,9 +85,9 @@
 }
 
 /**
- * [start]
  * CMP:
  * FormItem
+ * [start]
  */
 :global(.vkuiInternalFormItem--status-error) .FormField__border,
 .FormField--status-error .FormField__border {
@@ -121,11 +120,6 @@
 .FormField--mode-default.FormField--hover .FormField__border {
   border-color: var(--vkui--color_field_border_alpha--hover);
   z-index: var(--vkui_internal--z_index_form_field_border_hover);
-}
-
-/* stylelint-disable-next-line  @project-tools/stylelint-atomic, selector-max-universal */
-.FormField *:focus {
-  outline: none;
 }
 
 /**
@@ -206,4 +200,14 @@
   .FormField {
   border-bottom-left-radius: var(--vkui--size_border_radius--regular);
   border-bottom-right-radius: var(--vkui--size_border_radius--regular);
+}
+
+/**
+ * useFocusVisibleClassName()
+ */
+/* increase specificity for selects */
+.FormField--focus-visible.FormField--focus-visible.FormField--focus-visible {
+  outline: var(--vkui_internal--outline);
+  outline-width: var(--vkui--size_border--regular);
+  outline-offset: calc(-1 * var(--vkui--size_border--regular));
 }
