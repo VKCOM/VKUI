@@ -30,7 +30,8 @@ export interface CustomSelectInputProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CustomSelectInput
+ * @since 5.10.0
+ * @private
  */
 export const CustomSelectInput = ({
   type = 'text',
