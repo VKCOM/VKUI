@@ -6,6 +6,10 @@ import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useBooleanState } from '../../hooks/useBooleanState';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
+import {
+  type FocusVisibleModeProps,
+  useFocusVisibleClassName,
+} from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
@@ -22,7 +26,6 @@ import {
   HasRootRef,
   LiteralUnion,
 } from '../../types';
-import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
 import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import styles from './Tappable.module.css';
@@ -64,7 +67,8 @@ export interface TappableProps
     HasRootRef<HTMLElement>,
     HasComponent,
     HasChildren,
-    Pick<TouchProps, 'onStart' | 'onEnd' | 'onMove'> {
+    Pick<TouchProps, 'onStart' | 'onEnd' | 'onMove'>,
+    FocusVisibleModeProps {
   /**
    * Длительность показа active-состояния
    */
@@ -94,10 +98,6 @@ export interface TappableProps
    * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover
    */
   hoverMode?: LiteralUnion<StateMode, string>;
-  /**
-   * Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс во время focus-visible
-   */
-  focusVisibleMode?: LiteralUnion<FocusVisibleMode, string>;
   onEnter?(outputEvent: MouseEvent): void;
   onLeave?(outputEvent: MouseEvent): void;
   /**
@@ -241,7 +241,6 @@ export const Tappable = ({
     Component !== 'a' && Component !== 'button' && Component !== 'label' && !props.contentEditable;
   const isPresetHoverMode = isPresetStateMode(hoverMode);
   const isPresetActiveMode = isPresetStateMode(activeMode);
-  const isPresetFocusVisibleMode = ['inside', 'outside'].includes(focusVisibleMode);
 
   const [activity, { start, stop, delayStart }] = useActivity(hasActive, activeEffectDelay);
   const active = activity === TapState.active || activity === TapState.exiting;
@@ -324,6 +323,11 @@ export const Tappable = ({
     stop(activeDuration >= 100 ? 0 : activeEffectDelay - activeDuration);
   }
 
+  const focusVisibleClassNames = useFocusVisibleClassName({
+    focusVisible: !props.disabled && focusVisible,
+    mode: focusVisibleMode,
+  });
+
   const classes = classNames(
     className,
     styles['Tappable'],
@@ -334,11 +338,10 @@ export const Tappable = ({
     hasActive && styles['Tappable--hasActive'],
     hasHover && hovered && !isPresetHoverMode && hoverMode,
     hasActive && activated && !isPresetActiveMode && activeMode,
-    focusVisible && !isPresetFocusVisibleMode && focusVisibleMode,
     hasHover && hovered && isPresetHoverMode && stylesHoverMode[hoverMode],
     hasActive && activated && isPresetActiveMode && stylesActiveMode[activeMode],
-    focusVisible && styles['Tappable--focus-visible'],
     borderRadiusMode === 'inherit' && styles['Tappable--borderRadiusInherit'],
+    focusVisibleClassNames,
   );
 
   const handlers: RootComponentProps = {
@@ -383,9 +386,6 @@ export const Tappable = ({
       )}
       {((hasHover && hoverMode === 'background') || (hasActive && activeMode === 'background')) && (
         <span aria-hidden className={styles.Tappable__stateLayer} />
-      )}
-      {!props.disabled && isPresetFocusVisibleMode && (
-        <FocusVisible visible={focusVisible} mode={focusVisibleMode as FocusVisibleMode} />
       )}
     </Touch>
   );

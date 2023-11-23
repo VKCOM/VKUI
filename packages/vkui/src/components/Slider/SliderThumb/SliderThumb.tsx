@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useBooleanState } from '../../../hooks/useBooleanState';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
+import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
 import {
   arrowMiddleware,
   convertFloatingDataToReactCSSProperties,
@@ -12,7 +13,6 @@ import {
   useFloating,
 } from '../../../lib/floating';
 import type { HasDataAttribute, HasRootRef } from '../../../types';
-import { FocusVisible } from '../../FocusVisible/FocusVisible';
 import { TooltipBase } from '../../TooltipBase/TooltipBase';
 import styles from './SliderThumb.module.css';
 
@@ -33,6 +33,10 @@ export const SliderThumb = ({
   ...restProps
 }: SliderThumbProps) => {
   const { focusVisible, onBlur, onFocus } = useFocusVisible(false);
+  const focusVisibleClassNames = useFocusVisibleClassName({
+    focusVisible,
+    mode: styles['SliderThumb--focus-visible'],
+  });
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
   const memoizedMiddlewares = React.useMemo(() => {
@@ -89,11 +93,7 @@ export const SliderThumb = ({
         ref={handleRootRef}
         onMouseEnter={setHoveredTrue}
         onMouseLeave={setHoveredFalse}
-        className={classNames(
-          styles['SliderThumb'],
-          focusVisible && styles['SliderThumb--focused'],
-          className,
-        )}
+        className={classNames(styles['SliderThumb'], focusVisibleClassNames, className)}
       >
         <input
           {...inputProps}
@@ -103,7 +103,6 @@ export const SliderThumb = ({
           onBlur={onBlur}
           onFocus={onFocus}
         />
-        <FocusVisible visible={focusVisible} mode="outside" />
       </span>
       {shouldShowTooltip && (
         <TooltipBase

@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
+import {
+  type FocusVisibleModeProps,
+  useFocusVisibleClassName,
+} from '../../hooks/useFocusVisibleClassName';
 import { callMultiple } from '../../lib/callMultiple';
-import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
 import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './Clickable.module.css';
 
-export interface ClickableProps<T> extends RootComponentProps<T> {
+export interface ClickableProps<T> extends RootComponentProps<T>, FocusVisibleModeProps {
   baseClassName?: string;
-  focusVisibleMode?: FocusVisibleMode;
 }
 
 /**
@@ -31,16 +33,16 @@ const RealClickable = <T,>({
   ...restProps
 }: ClickableProps<T>) => {
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: focusVisibleMode });
 
   return (
     <RootComponent
-      baseClassName={classNames(baseClassName, styles['Clickable__host'])}
+      baseClassName={classNames(baseClassName, focusVisibleClassNames, styles['Clickable__host'])}
       onBlur={callMultiple(onBlur, restProps.onBlur)}
       onFocus={callMultiple(onFocus, restProps.onFocus)}
       {...restProps}
     >
       {children}
-      <FocusVisible visible={focusVisible} mode={focusVisibleMode} />
     </RootComponent>
   );
 };

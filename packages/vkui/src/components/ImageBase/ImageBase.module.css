@@ -31,6 +31,7 @@
 
 .ImageBase__img {
   position: absolute;
+  z-index: var(--vkui_internal--z_index_image_base_img);
   top: 0;
   left: 0;
   display: block;
@@ -49,7 +50,7 @@
 .ImageBase__fallback {
   position: absolute;
 
-  /* Расчитываем на ценитрирование через родительский `display: flex` */
+  /* Расcчитываем на центрирование через родительский `display: flex` */
   top: auto;
   left: auto;
 }

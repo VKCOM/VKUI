@@ -4,13 +4,15 @@
   width: var(--vkui_internal--slider_thumb_size);
   height: var(--vkui_internal--slider_thumb_size);
   border-radius: 50%;
-  border: 0.5px solid var(--vkui--color_separator_primary_alpha);
+  border: var(--vkui--size_border--regular) solid var(--vkui--color_separator_primary_alpha);
   background: var(--vkui--color_background_contrast);
   box-shadow: var(--vkui--elevation3);
   user-select: none;
 }
 
-.SliderThumb--focused {
+.SliderThumb--focus-visible {
+  outline: var(--vkui_internal--outline);
+  outline-offset: calc(-1 * var(--vkui--size_border--regular));
   z-index: 2;
 }
 

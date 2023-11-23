@@ -9,6 +9,20 @@
   );
 
   /**
+   * [a11y][focus visible]
+   */
+  --vkui_internal--outline_width: 2px;
+  --vkui_internal--outline: var(--vkui_internal--outline_width, 2px) solid
+    var(--vkui--color_stroke_accent);
+  /**
+   * [a11y][windows high contrast mode]
+   * 
+   * windows compatible outline reset
+   * @see https://benmyers.dev/blog/whcm-outlines/
+   */
+  --vkui_internal--outline-reset: var(--vkui_internal--outline_width) solid transparent;
+
+  /**
    * "Safe Zone" добавляет невидимую интерактивную область, по которой пользователь будет вводить мышкой и тем самым
    * компонент будет оставаться активным.
    *
@@ -57,6 +71,7 @@
   --vkui_internal--z_index_form_field_side: 6;
 
   /* z_index ImageBase isolate */
+  --vkui_internal--z_index_image_base_img: -1;
   --vkui_internal--z_index_image_base_overlay: 0;
   --vkui_internal--z_index_image_base_border: 1;
   --vkui_internal--z_index_image_base_badge: 2;

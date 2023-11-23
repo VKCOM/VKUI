@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
-import {
-  TextareaPlayground,
-  TextareaTestFitSizeToContentPlayground,
-} from './Textarea.e2e-playground';
+import { Platform } from '../../lib/platform';
+import { TextareaPlayground, TextareaStatePlayground } from './Textarea.e2e-playground';
 
 test('Textarea', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
   await mount(<TextareaPlayground {...componentPlaygroundProps} />);
@@ -11,13 +9,18 @@ test('Textarea', async ({ mount, expectScreenshotClippedToContent, componentPlay
 });
 
 test.describe('Textarea', () => {
+  test.use({
+    onlyForPlatforms: [Platform.ANDROID],
+    onlyForAppearances: ['light'],
+  });
+
   test('fits size to content', async ({
     mount,
     page,
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(<TextareaTestFitSizeToContentPlayground {...componentPlaygroundProps} />);
+    await mount(<TextareaStatePlayground {...componentPlaygroundProps} />);
 
     await page.locator('#textarea').fill('1\n2\n3\n4\n5\n6\n7\n8');
 
@@ -31,6 +34,18 @@ test.describe('Textarea', () => {
 
     await page.locator('#textarea').blur(); // чтобы не флакала обводка
 
+    await expectScreenshotClippedToContent();
+  });
+
+  test('State: Focus Visible', async ({
+    mount,
+    page,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<TextareaStatePlayground {...componentPlaygroundProps} />);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.keyboard.press('Tab');
     await expectScreenshotClippedToContent();
   });
 });
