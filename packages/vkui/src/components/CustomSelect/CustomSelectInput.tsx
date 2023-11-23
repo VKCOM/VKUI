@@ -26,6 +26,7 @@ export interface CustomSelectInputProps
   selectType?: SelectType;
   multiline?: boolean;
   labelTextTestId?: string;
+  fetching?: boolean;
 }
 
 /**
@@ -45,6 +46,8 @@ export const CustomSelectInput = ({
   placeholder,
   selectType = 'default',
   multiline,
+  disabled,
+  fetching,
   labelTextTestId,
   ...restProps
 }: CustomSelectInputProps) => {
@@ -74,7 +77,7 @@ export const CustomSelectInput = ({
       getRootRef={handleRootRef}
       before={before}
       after={after}
-      disabled={restProps.disabled}
+      disabled={disabled}
       mode={getFormFieldModeFromSelectType(selectType)}
       status={status}
     >
@@ -91,6 +94,8 @@ export const CustomSelectInput = ({
         </div>
         <Text
           {...restProps}
+          disabled={disabled && !fetching}
+          readOnly={restProps.readOnly || (disabled && fetching)}
           Component="input"
           normalize={false}
           type="text"

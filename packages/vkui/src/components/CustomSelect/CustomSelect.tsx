@@ -864,6 +864,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onBlur={onBlur}
         className={openedClassNames}
         readOnly={!searchable}
+        fetching={fetching}
         value={inputValue}
         onKeyUp={handleKeyUp}
         onKeyDown={handleKeyDownSelect}
