@@ -3,11 +3,11 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
-import { type TappableProps, TappableRefactored } from '../Tappable/Tappable';
+import { TappableRefactored, type TappableRefactoredProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './TabbarItem.module.css';
 
-export interface TabbarItemProps extends TappableProps {
+export interface TabbarItemProps extends TappableRefactoredProps {
   selected?: boolean;
   /**
    * Текст рядом с иконкой
@@ -56,10 +56,8 @@ export const TabbarItem = ({
         platform === Platform.ANDROID && styles['TabbarItem--android'],
         selected && styles['TabbarItem--selected'],
       )}
-      // hasActive={platform === Platform.IOS}
-      // activeMode={platform === Platform.IOS ? styles['TabbarItem--active'] : ''}
-      // activeEffectDelay={platform === Platform.IOS ? 0 : 300}
-      // hasHover={false}
+      activeMode={false}
+      hoverMode={false}
     >
       <span className={styles['TabbarItem__in']}>
         <span className={styles['TabbarItem__icon']}>

@@ -57,6 +57,8 @@ export const TappableRefactored = ({
   className,
   children,
   disabled,
+  hoverMode = 'background',
+  activeMode = 'background',
   focusVisibleMode = 'inside',
   ...restProps
 }: TappableRefactoredProps) => {

@@ -88,10 +88,12 @@
 /**
  * iOS
  */
-.TabbarItem--ios .TabbarItem__in {
-  transition: transform 0.07s var(--vkui--animation_easing_platform);
-}
+@media (prefers-reduced-motion: no-preference) {
+  .TabbarItem--ios .TabbarItem__in {
+    transition: transform 0.07s var(--vkui--animation_easing_platform);
+  }
 
-.TabbarItem--ios.TabbarItem--active .TabbarItem__in {
-  transform: scale(0.96);
+  .TabbarItem--ios:active .TabbarItem__in {
+    transform: scale(0.96);
+  }
 }
