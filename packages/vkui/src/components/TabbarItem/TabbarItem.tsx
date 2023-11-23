@@ -3,16 +3,11 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
-import { HasComponent, HasRootRef } from '../../types';
-import { RootComponent } from '../RootComponent/RootComponent';
-import { Tappable } from '../Tappable/Tappable';
+import { type TappableProps, TappableRefactored } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './TabbarItem.module.css';
 
-export interface TabbarItemProps
-  extends React.AllHTMLAttributes<HTMLElement>,
-    HasRootRef<HTMLElement>,
-    HasComponent {
+export interface TabbarItemProps extends TappableProps {
   selected?: boolean;
   /**
    * Текст рядом с иконкой
@@ -50,42 +45,35 @@ export const TabbarItem = ({
   }
 
   return (
-    <RootComponent
+    <TappableRefactored
       Component={Component}
       {...restProps}
       disabled={disabled}
       href={href}
-      baseClassName={classNames(
+      className={classNames(
         styles['TabbarItem'],
         platform === Platform.IOS && styles['TabbarItem--ios'],
         platform === Platform.ANDROID && styles['TabbarItem--android'],
         selected && styles['TabbarItem--selected'],
       )}
+      // hasActive={platform === Platform.IOS}
+      // activeMode={platform === Platform.IOS ? styles['TabbarItem--active'] : ''}
+      // activeEffectDelay={platform === Platform.IOS ? 0 : 300}
+      // hasHover={false}
     >
-      <Tappable
-        role="presentation"
-        Component="div"
-        disabled={disabled}
-        activeMode={
-          platform === Platform.IOS ? styles['TabbarItem__tappable--active'] : 'background'
-        }
-        activeEffectDelay={platform === Platform.IOS ? 0 : 300}
-        hasHover={false}
-        className={styles['TabbarItem__tappable']}
-      />
-      <div className={styles['TabbarItem__in']}>
-        <div className={styles['TabbarItem__icon']}>
+      <span className={styles['TabbarItem__in']}>
+        <span className={styles['TabbarItem__icon']}>
           {children}
-          <div className="vkuiInternalTabbarItem__label">
+          <span className="vkuiInternalTabbarItem__label">
             {hasReactNode(indicator) && indicator}
-          </div>
-        </div>
+          </span>
+        </span>
         {text && (
-          <Footnote Component="div" className={styles['TabbarItem__text']} weight="2">
+          <Footnote Component="span" className={styles['TabbarItem__text']} weight="2">
             {text}
           </Footnote>
         )}
-      </div>
-    </RootComponent>
+      </span>
+    </TappableRefactored>
   );
 };
