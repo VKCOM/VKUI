@@ -50,7 +50,7 @@
     animation: animation-outline-offset 0.1s ease-in-out 0.01s forwards;
   }
 
-  .-focus-visible.-focus-visible--mode-inside {
+  .-focus-visible.-focus-visible--focused.-focus-visible--mode-inside {
     outline-offset: calc(-2 * var(--vkui_internal--outline_width));
   }
 }
