@@ -4,7 +4,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useId } from '../../hooks/useId';
-import { useTimeout } from '../../hooks/useTimeout';
 import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
@@ -714,10 +713,19 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   }, [emptyText, options, renderDropdown, renderOption]);
 
   const selectInputRef = React.useRef<HTMLInputElement | null>(null);
-  const focusOnInput = useTimeout(
-    () => selectInputRef.current && selectInputRef.current.focus(),
-    0,
-  );
+  const focusOnInputTimerRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const focusOnInput = React.useCallback(() => {
+    clearTimeout(focusOnInputTimerRef.current);
+
+    focusOnInputTimerRef.current = setTimeout(() => {
+      selectInputRef.current && selectInputRef.current.focus();
+    }, 0);
+  }, []);
+  useIsomorphicLayoutEffect(function clearFocusOnInputTimer() {
+    return () => {
+      clearTimeout(focusOnInputTimerRef.current);
+    };
+  }, []);
 
   const controlledValueSet = isControlledOutside && props.value !== '';
   const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== '';
@@ -735,7 +743,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onClick={function clearSelectState() {
           setNativeSelectValue('');
           setInputValue('');
-          focusOnInput.set();
+          focusOnInput();
         }}
         disabled={restProps.disabled}
         data-testid={clearButtonTestId}
@@ -792,7 +800,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
         const inputIsNotFocused = document.activeElement !== selectInputRef.current;
         if (inputIsNotFocused) {
-          focusOnInput.set();
+          focusOnInput();
         }
       }
     },
