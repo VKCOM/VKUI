@@ -7,7 +7,6 @@ import { SizeType } from '../../lib/adaptivity';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
-import { RootComponent } from '../RootComponent/RootComponent';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import { Text } from '../Typography/Text/Text';
@@ -80,8 +79,7 @@ export const CustomSelectInput = ({
       status={status}
     >
       <div className={styles['CustomSelectInput__input-group']}>
-        <RootComponent
-          Component="div"
+        <div
           className={classNames(styles['CustomSelectInput__container'], className)}
           tabIndex={-1}
           aria-hidden
@@ -90,7 +88,7 @@ export const CustomSelectInput = ({
           <SelectTypography selectType={selectType} className={styles['CustomSelectInput__title']}>
             {showLabelOrPlaceholder && title}
           </SelectTypography>
-        </RootComponent>
+        </div>
         <Text
           {...restProps}
           Component="input"
