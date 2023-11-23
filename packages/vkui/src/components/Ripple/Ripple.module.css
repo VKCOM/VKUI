@@ -1,0 +1,50 @@
+/* Перебиваем .Tappable > * */
+.Ripple.Ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+  transform: translate3d(0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+
+  /* stylelint-disable-next-line declaration-colon-space-after */
+  --vkui_internal--ripple-y: ;
+  /* stylelint-disable-next-line declaration-colon-space-after */
+  --vkui_internal--ripple-x: ;
+  --vkui_internal--ripple-delay: 0;
+}
+
+.Ripple::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--vkui_internal--ripple-y, 0) * 1px);
+  left: calc(var(--vkui_internal--ripple-x, 0) * 1px);
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.5) 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(10, 10);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  transition: transform 0.5s var(--vkui--animation_easing_platform),
+    opacity 1s var(--vkui--animation_easing_platform);
+  transition-delay: var(--vkui_internal--ripple-delay), var(--vkui_internal--ripple-delay);
+  /* Fix for Safari: css animation + border-radius + overflow ignores parent border-radius */
+  will-change: transform;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+*:active > .Ripple::after,
+.Ripple:active::after {
+  transform: translate(-50%, -50%) scale(0, 0);
+  opacity: 0.2;
+  transition: 0s;
+}
