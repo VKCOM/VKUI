@@ -6,7 +6,8 @@ import { Select } from './Select';
 describe('Select', () => {
   baselineComponent((props) => (
     <AdaptivityProvider hasPointer>
-      <Select options={[]} {...props} />
+      <label htmlFor="select-id">Select an option</label>
+      <Select id="select-id" options={[]} {...props} />
     </AdaptivityProvider>
   ));
 });

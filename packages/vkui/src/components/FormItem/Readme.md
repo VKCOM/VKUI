@@ -20,6 +20,14 @@
   <input id="name" type="text" placeholder="Семён" />
 </FormItem>
 
+<FormItem top="Администратор" htmlFor="select-id">
+  <CustomSelect
+    id="select-id"
+    placeholder="Не выбран"
+    options={users}
+  />
+</FormItem>
+
 <FormItem top="E-mail" bottom="Например, email@internet.ru" bottomId="emailExample" htmlFor="email">
   <input id="email" aria-describedby="emailExample" type="email" placeholder="email@internet.ru" />
 </FormItem>
@@ -116,8 +124,9 @@ const Example = () => {
               </FormItem>
             )}
 
-            <FormItem top="Пол">
+            <FormItem top="Пол" htmlFor="gender-select-id">
               <Select
+                id="gender-select-id"
                 placeholder="Выберите пол"
                 options={[
                   {
@@ -156,10 +165,12 @@ const Example = () => {
             ))}
             <FormItem
               top="Цель поездки"
+              htmlFor="purpose-of-the-trip-select-id"
               bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'}
               status={purpose ? 'valid' : 'error'}
             >
               <Select
+                id="purpose-of-the-trip-select-id"
                 placeholder="Выберите цель поездки"
                 onChange={onChange}
                 value={purpose}
