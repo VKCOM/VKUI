@@ -1,0 +1,6 @@
+.TappableRefactored {
+  isolation: isolate;
+  position: relative;
+  border-radius: var(--vkui--size_border_radius--regular);
+  -webkit-tap-highlight-color: transparent;
+}

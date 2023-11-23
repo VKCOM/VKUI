@@ -28,6 +28,7 @@ import {
 } from '../../types';
 import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
+import { TappableRefactored, type TappableRefactoredProps } from './TappableRefactored';
 import styles from './Tappable.module.css';
 
 const sizeXClassNames = {
@@ -113,7 +114,7 @@ interface Wave {
   id: number;
 }
 
-export interface RootComponentProps extends TouchProps {
+export interface TappableRootComponentProps extends TouchProps {
   ref?: React.Ref<HTMLElement>;
 }
 
@@ -344,7 +345,7 @@ export const Tappable = ({
     focusVisibleClassNames,
   );
 
-  const handlers: RootComponentProps = {
+  const handlers: TappableRootComponentProps = {
     onStart: callMultiple(onStart, props.onStart),
     onMove: callMultiple(onMove, props.onMove),
     onEnd: callMultiple(onEnd, props.onEnd),
@@ -390,3 +391,5 @@ export const Tappable = ({
     </Touch>
   );
 };
+
+export { TappableRefactored, type TappableRefactoredProps };
