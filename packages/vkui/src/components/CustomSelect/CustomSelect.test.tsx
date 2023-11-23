@@ -768,7 +768,7 @@ describe('CustomSelect', () => {
     expect(onChange).toHaveReturnedWith('1');
 
     // второй клик по не выбранной опции без изменения value
-    // нужно проверить потому что при первом клике внутреннее value селекта (nativeSelectValue) изменилось
+    // нужно проверить потому что при первом клике внутреннее value CustomSelect (nativeSelectValue) изменилось
     // на value опиции по которой кликнули.
     // При втором оно уже не меняется если кликнули по той же опции, но onChange должен отработать как в первый раз.
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -783,7 +783,7 @@ describe('CustomSelect', () => {
     expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveReturnedWith('1');
 
-    // третий клик уже по выбранной опции (соответствующей value переданному в контролируемый селект),
+    // третий клик уже по выбранной опции (соответствующей value переданному в CustomSelect)
     // onChange не должен вызываться.
     fireEvent.click(screen.getByTestId('labelTextTestId'));
     const selectedOptionThirdClick = screen.getByRole('option', {
