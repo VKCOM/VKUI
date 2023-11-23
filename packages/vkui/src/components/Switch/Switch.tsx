@@ -2,12 +2,12 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
+import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { callMultiple } from '../../lib/callMultiple';
 import { Platform } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
-import { FocusVisible } from '../FocusVisible/FocusVisible';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 
@@ -28,6 +28,7 @@ export const Switch = ({ style, className, getRootRef, getRef, ...restProps }: S
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'outside' });
 
   return (
     <label
@@ -36,6 +37,7 @@ export const Switch = ({ style, className, getRootRef, getRef, ...restProps }: S
         platform === Platform.IOS && styles['Switch--ios'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         restProps.disabled && styles['Switch--disabled'],
+        focusVisibleClassNames,
         className,
       )}
       style={style}
@@ -51,7 +53,6 @@ export const Switch = ({ style, className, getRootRef, getRef, ...restProps }: S
         className={styles['Switch__self']}
       />
       <span aria-hidden className={styles['Switch__pseudo']} />
-      <FocusVisible visible={focusVisible} mode="outside" />
     </label>
   );
 };

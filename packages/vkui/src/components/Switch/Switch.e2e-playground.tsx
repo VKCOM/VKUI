@@ -20,3 +20,13 @@ export const SwitchPlayground = (props: ComponentPlaygroundProps) => {
     </ComponentPlayground>
   );
 };
+
+export const SwitchFocusVisiblePlayground = (props: ComponentPlaygroundProps) => (
+  <ComponentPlayground {...props}>
+    {(props: SwitchProps) => (
+      <div style={{ padding: 10, width: 'fit-content' }}>
+        <Switch {...props} />
+      </div>
+    )}
+  </ComponentPlayground>
+);

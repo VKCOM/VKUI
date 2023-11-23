@@ -5,6 +5,7 @@ import { SizeType } from '../../vkui';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
 import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
+import { Div } from '../Div/Div';
 import { Textarea, type TextareaProps } from './Textarea';
 
 export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
@@ -41,9 +42,7 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
   );
 };
 
-export const TextareaTestFitSizeToContentPlayground = ({
-  appearance,
-}: ComponentPlaygroundProps) => {
+export const TextareaStatePlayground = ({ appearance }: ComponentPlaygroundProps) => {
   return (
     <AppRoot
       mode="embedded"
@@ -55,7 +54,9 @@ export const TextareaTestFitSizeToContentPlayground = ({
     >
       <AppearanceProvider appearance={appearance}>
         <AdaptivityProvider sizeY={SizeType.REGULAR}>
-          <Textarea id="textarea" />
+          <Div style={{ padding: 10 }}>
+            <Textarea id="textarea" />
+          </Div>
         </AdaptivityProvider>
       </AppearanceProvider>
     </AppRoot>
