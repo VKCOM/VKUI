@@ -1,5 +1,4 @@
-/* Перебиваем .Tappable > * */
-.Ripple.Ripple {
+.Ripple {
   position: absolute;
   top: 0;
   left: 0;
@@ -12,18 +11,16 @@
   transform: translate3d(0, 0, 0);
   -webkit-tap-highlight-color: transparent;
 
-  /* stylelint-disable-next-line declaration-colon-space-after */
-  --vkui_internal--ripple-y: ;
-  /* stylelint-disable-next-line declaration-colon-space-after */
-  --vkui_internal--ripple-x: ;
+  --vkui_internal--ripple-y: 0;
+  --vkui_internal--ripple-x: 0;
   --vkui_internal--ripple-delay: 0;
 }
 
 .Ripple::after {
   content: '';
   position: absolute;
-  top: calc(var(--vkui_internal--ripple-y, 0) * 1px);
-  left: calc(var(--vkui_internal--ripple-x, 0) * 1px);
+  top: calc(var(--vkui_internal--ripple-y) * 1px);
+  left: calc(var(--vkui_internal--ripple-x) * 1px);
   display: block;
   width: 100%;
   height: 100%;
