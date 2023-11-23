@@ -54,7 +54,7 @@ export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLD
    * Блокирует весь блок.
    *
    * > ⚠️  Важно: если CustomSelectOption используется внутри [Select](https://vkcom.github.io/VKUI/#/Select) или [CustomSelect](https://vkcom.github.io/VKUI/#/CustomSelect), то свойство явно должно выставляться только через структуру `options`.
-   * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе селект не будет знать об актуальном состоянии
+   * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе [CustomSelect](https://vkcom.github.io/VKUI/#/CustomSelect) не будет знать об актуальном состоянии
    * опции.
    */
   disabled?: boolean;

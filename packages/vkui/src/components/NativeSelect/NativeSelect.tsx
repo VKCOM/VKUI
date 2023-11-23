@@ -21,7 +21,7 @@ const sizeYClassNames = {
 export interface NativeSelectProps
   extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'multiple'>,
     HasRef<HTMLSelectElement>,
-    HasRootRef<HTMLLabelElement>,
+    HasRootRef<HTMLDivElement>,
     HasAlign,
     Pick<FormFieldProps, 'before' | 'status'> {
   placeholder?: string;
@@ -82,7 +82,7 @@ const NativeSelect = ({
 
   return (
     <FormField
-      Component="label"
+      Component="div"
       className={classNames(
         styles['Select'],
         'vkuiInternalNativeSelect',

@@ -1,4 +1,23 @@
-Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком. Используется внутри [Select](#!/Select).
+Кастомизируемое поле выбора значения из раскрывающегося списка. Используется внутри [Select](#!/Select).
+
+## Цифровая доступность (a11y)
+
+Следуйте рекомендациям из раздела "Цифровая доступность" компонента [Select](#!/Select).
+
+## Тестирование (e2e)
+
+Для поиска компонента и его элементов на странице cуществует ряд вспомогательных свойств:
+
+- по умолчанию все `data-\*` атрибуты попадают на `<input>` компонента. А значит при передаче `data-testid` или `data-test-id` идентификатор попадёт `<input>`.<br />
+  Доступ к полю ввода может быть полезен для:
+  - получения текста, введённого пользователем при поиске опций, в режиме `searchable`;
+  - получения информации о наличии фокуса на компоненте;
+  - симуляции работы с компонентом с клавиатуры.
+- для получения текста, выбранной в данный момент опции используйте свойство `labelTextTestId`.
+- для взаимодействия с кнопкой очистки состояния компонента, которая появляется, если `CustomSelect` имеет свойство `searchable` и пользователь выбрал опцию, используйте свойство `clearButtonTestId`.
+- `CustomSelect` внутри себя хранит невидимый `<select>`, для того, чтобы `CustomSelect` можно было использовать внутри формы. Для получения доступа к `<select>` используйте свойство `nativeSelectTestId`. Полезно для доступа к значению `value`, выбранной в данный момент опции.
+
+Все перечисленные выше свойства устанавливают аттрибут `data-testid` у соответствующих элементов. Учитывайте это при построении селекторов.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const getUsers = (usersArray) =>
@@ -34,8 +53,13 @@ const Example = () => {
       <Header>Базовые примеры использования</Header>
 
       <FormLayoutGroup mode="horizontal">
-        <FormItem style={{ flexGrow: 1, flexShrink: 1 }} top="Администратор">
+        <FormItem
+          top="Администратор"
+          htmlFor="administrator-select-id"
+          style={{ flexGrow: 1, flexShrink: 1 }}
+        >
           <CustomSelect
+            id="administrator-select-id"
             placeholder="Не выбран"
             options={users}
             selectType={selectType}
@@ -43,8 +67,13 @@ const Example = () => {
           />
         </FormItem>
 
-        <FormItem top="Вид селекта" style={{ flexBasis: '200px', flexGrow: 0 }}>
+        <FormItem
+          top="Вид выпадающего списка"
+          htmlFor="select-type-select-id"
+          style={{ flexBasis: '200px', flexGrow: 0 }}
+        >
           <CustomSelect
+            id="select-type-select-id"
             value={selectType}
             placeholder="Не задан"
             options={selectTypes}
@@ -56,8 +85,13 @@ const Example = () => {
         </FormItem>
       </FormLayoutGroup>
 
-      <FormItem top="Администратор" bottom="Кастомный дизайн элементов списка">
+      <FormItem
+        top="Администратор"
+        bottom="Кастомный дизайн элементов списка"
+        htmlFor="administrator-select-id-2"
+      >
         <CustomSelect
+          id="administrator-select-id-2"
           placeholder="Не выбран"
           options={users}
           renderOption={({ option, ...restProps }) => (
@@ -70,8 +104,13 @@ const Example = () => {
         />
       </FormItem>
 
-      <FormItem top="Администратор" bottom="Ползунок скроллбара по умолчанию скрыт">
+      <FormItem
+        top="Администратор"
+        htmlFor="administrator-select-id-3"
+        bottom="Ползунок скроллбара по умолчанию скрыт"
+      >
         <CustomSelect
+          id="administrator-select-id-3"
           placeholder="Не выбран"
           options={users}
           selectType={selectType}
@@ -80,16 +119,35 @@ const Example = () => {
       </FormItem>
 
       <Header>Поиск</Header>
-      <FormItem top="Администратор" bottom="Поиск по списку">
-        <CustomSelect placeholder="Введите имя пользователя" searchable options={users} />
+      <FormItem
+        top="Администратор"
+        htmlFor="administrator-select-searchable-id-3"
+        bottom="Поиск по списку"
+      >
+        <CustomSelect
+          before={<Icon24User />}
+          placeholder="Введите имя пользователя"
+          searchable
+          id="administrator-select-searchable-id-3"
+          options={users}
+          allowClearButton
+        />
       </FormItem>
 
-      <FormItem top="Администратор" bottom="Кастомное поведение при поиске">
-        <CustomSearchLogicSelect />
+      <FormItem
+        top="Администратор"
+        bottom="Кастомное поведение при поиске"
+        htmlFor="custom-search-logic-select-id"
+      >
+        <CustomSearchLogicSelect id="custom-search-logic-select-id" />
       </FormItem>
 
-      <FormItem top="Город" bottom="Кастомный алгоритм поиска">
-        <CustomSearchAlgoSelect />
+      <FormItem
+        top="Город"
+        bottom="Кастомный алгоритм поиска"
+        htmlFor="custom-search-algo-select-id"
+      >
+        <CustomSearchAlgoSelect id="custom-search-algo-select-id" />
       </FormItem>
 
       <Header>Асинхронная загрузка списка</Header>
@@ -101,7 +159,7 @@ const Example = () => {
 // **
 // * Кастомное поведение при поиске
 // **
-const CustomSearchLogicSelect = () => {
+const CustomSearchLogicSelect = ({ id }) => {
   const [value, setValue] = React.useState('');
   const [query, setQuery] = React.useState('');
   const [newUsers, setNewUsers] = React.useState([...getUsers(getRandomUsers(10))]);
@@ -133,6 +191,7 @@ const CustomSearchLogicSelect = () => {
 
   return (
     <CustomSelect
+      id={id}
       value={value}
       placeholder="Введите имя пользователя"
       searchable
@@ -154,7 +213,7 @@ const CustomSearchLogicSelect = () => {
 // **
 // * Кастомный алгоритм поиска
 // **
-const CustomSearchAlgoSelect = () => {
+const CustomSearchAlgoSelect = ({ id }) => {
   const cities = [
     {
       label: 'Санкт-Петербург',
@@ -190,6 +249,7 @@ const CustomSearchAlgoSelect = () => {
 
   return (
     <CustomSelect
+      id="custom-search-algo-select-id"
       placeholder="Введите название города или страны"
       searchable
       filterFn={customSearchFilter}
@@ -265,6 +325,7 @@ const AsyncCustomSelect = () => {
     <FormLayoutGroup mode="horizontal">
       <FormItem style={{ flexGrow: 1, flexShrink: 1 }}>
         <CustomSelect
+          aria-label="Пользователь"
           options={remoteUsers}
           searchable={searchable}
           placeholder={searchable ? 'Введите имя пользователя' : 'Не выбран'}
