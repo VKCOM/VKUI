@@ -204,7 +204,7 @@ export interface SelectProps<
    */
   noMaxHeight?: boolean;
   /**
-   * (e2e) testId элемента, внутри которого отображается текст выбранной опции CustomSelect или плейсхолдер.
+   * (e2e) testId элемента, внутри которого отображается текст выбранной опции `CustomSelect` или плейсхолдер.
    */
   labelTextTestId?: string;
   nativeSelectTestId?: string;
