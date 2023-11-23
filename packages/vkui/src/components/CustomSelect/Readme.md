@@ -248,18 +248,16 @@ const CustomSearchAlgoSelect = ({ id }) => {
     option.description.toLowerCase().includes(value.toLowerCase());
 
   return (
-    <React.Fragment>
-      <CustomSelect
-        id="custom-search-algo-select-id"
-        placeholder="Введите название города или страны"
-        searchable
-        filterFn={customSearchFilter}
-        renderOption={({ option, ...restProps }) => (
-          <CustomSelectOption {...restProps} description={option.description} />
-        )}
-        options={cities}
-      />
-    </React.Fragment>
+    <CustomSelect
+      id="custom-search-algo-select-id"
+      placeholder="Введите название города или страны"
+      searchable
+      filterFn={customSearchFilter}
+      renderOption={({ option, ...restProps }) => (
+        <CustomSelectOption {...restProps} description={option.description} />
+      )}
+      options={cities}
+    />
   );
 };
 
