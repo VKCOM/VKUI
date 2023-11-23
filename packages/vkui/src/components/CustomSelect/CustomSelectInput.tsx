@@ -23,7 +23,7 @@ export interface CustomSelectInputProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
-    Omit<FormFieldProps, 'mode'> {
+    Omit<FormFieldProps, 'mode' | 'type'> {
   selectType?: SelectType;
   multiline?: boolean;
   labelTextTestId?: string;
@@ -34,7 +34,6 @@ export interface CustomSelectInputProps
  * @private
  */
 export const CustomSelectInput = ({
-  type = 'text',
   align = 'left',
   getRef,
   className,
@@ -96,7 +95,7 @@ export const CustomSelectInput = ({
           {...restProps}
           Component="input"
           normalize={false}
-          type={type}
+          type="text"
           className={classNames(
             styles['CustomSelectInput__el'],
             (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) &&
