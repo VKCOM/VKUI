@@ -184,3 +184,115 @@ jobs:
 
             Commit ${{ env.PR_HEAD_SHA }}
           edit-mode: replace
+
+  deploy_a11y_report:
+    needs: [pr_workflow_payload]
+    if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
+    runs-on: ubuntu-latest
+    name: Deploy @axe-core/playwright HTML report
+    outputs:
+      url: ${{ steps.url.outputs.value }}
+    steps:
+      - name: Download @axe-core/playwright HTML report from GitHub Actions Artifacts
+        id: artifact
+        uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
+        with:
+          name: axe-report
+          path: axe-report
+
+      - name: Deploy @axe-core/playwright HTML report
+        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
+        id: deploy
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: axe-report/
+          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/axe-report
+
+      - name: Create @axe-core/playwright HTML report url
+        if: ${{ steps.deploy.outcome == 'success' }}
+        id: url
+        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/axe-report/index.html" >> $GITHUB_OUTPUT
+
+  a11y_report_comment:
+    needs: [deploy_a11y_report, pr_workflow_payload]
+    if: ${{ needs.deploy_a11y_report.outputs.url != '' }}
+    runs-on: ubuntu-latest
+    name: a11y report comment
+    steps:
+      - name: Download @axe-core/playwright json report from GitHub Actions Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: a11y-output
+          path: a11y-output
+
+      - name: Get number of a11y violations for BASE and HEAD from @axe-core/playwright json report
+        id: get_violations
+        run: |
+          basejson=`cat packages/vkui/a11y-results.json`
+          headjson=`cat a11y-output/a11y-results.json`
+          echo "BASE=$(jq -r '.count' <<< $basejson)" >> $GITHUB_OUTPUT
+          echo "HEAD=$(jq -r '.count' <<< $headjson)" >> $GITHUB_OUTPUT
+
+      - name: Find Axe Report URL comment
+        uses: peter-evans/find-comment@v2
+        id: find_url_comment
+        with:
+          issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: <!-- axe_report_url -->
+
+      - name: stable a11y — Create or update @axe-core/playwright HTML report comment
+        if: ${{ steps.get_violations.outputs.HEAD == steps.get_violations.outputs.BASE }}
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <!-- axe_report_url -->
+            ## ♿ `@axe-core/playwright` Report
+
+            ### 👌 This PR does not affect accessibility 👌
+
+            > There are ${{ steps.get_violations.outputs.HEAD }} violations on ${{ env.PR_HEAD_SHA }} compared to ${{ steps.get_violations.outputs.BASE }} violations in `a11y-results.json`.
+
+            See full [Axe Accessibility Report](${{ needs.deploy_a11y_report.outputs.url }})
+          edit-mode: replace
+
+      - name: improved a11y — Create or update @axe-core/playwright HTML report
+        if: ${{ steps.get_violations.outputs.HEAD < steps.get_violations.outputs.BASE }}
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <!-- axe_report_url -->
+            ## ♿ `@axe-core/playwright` Report
+
+            ### 🎉 Hooray! This PR improves accessibility! 🎉
+
+            > There are ${{ steps.get_violations.outputs.HEAD }} violations on ${{ env.PR_HEAD_SHA }} compared to ${{ steps.get_violations.outputs.BASE }} violations in `a11y-results.json`.
+
+            See full [Axe Accessibility Report](${{ needs.deploy_a11y_report.outputs.url }})
+          edit-mode: replace
+
+      - name: deteriorated a11y — Create or update @axe-core/playwright HTML report
+        if: ${{ steps.get_violations.outputs.HEAD > steps.get_violations.outputs.BASE }}
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <!-- axe_report_url -->
+            ## ♿ `@axe-core/playwright` Report
+
+            ### 🚨 Attention! This PR deteriorates accessibility! 🚨
+
+            > There are ${{ steps.get_violations.outputs.HEAD }} violations on ${{ env.PR_HEAD_SHA }} compared to ${{ steps.get_violations.outputs.BASE }} violations 
+
+            See full [Axe Accessibility Report](${{ needs.deploy_a11y_report.outputs.url }})
+          edit-mode: replace
