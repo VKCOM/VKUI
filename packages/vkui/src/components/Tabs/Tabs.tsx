@@ -29,13 +29,13 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    * При `stretched` и `shrinked` вкладки либо равномерно занимают всю ширину,
    * либо выравниваются по контенту соответственно
    */
-  itemsFlexMode?: 'auto' | 'stretched' | 'shrinked';
+  layoutFillMode?: 'auto' | 'stretched' | 'shrinked';
 }
 
 export interface TabsContextProps {
   mode: TabsProps['mode'];
   withGaps: boolean;
-  itemsFlexMode: NonNullable<TabsProps['itemsFlexMode']>;
+  layoutFillMode: NonNullable<TabsProps['layoutFillMode']>;
   withScrollToSelectedTab: TabsProps['withScrollToSelectedTab'];
   scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
 }
@@ -43,7 +43,7 @@ export interface TabsContextProps {
 export const TabsModeContext = React.createContext<TabsContextProps>({
   mode: 'default',
   withGaps: false,
-  itemsFlexMode: 'auto',
+  layoutFillMode: 'auto',
   withScrollToSelectedTab: false,
   scrollBehaviorToSelectedTab: 'nearest',
 });
@@ -57,7 +57,7 @@ export const Tabs = ({
   role = 'tablist',
   withScrollToSelectedTab,
   scrollBehaviorToSelectedTab = 'nearest',
-  itemsFlexMode = 'auto',
+  layoutFillMode = 'auto',
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
@@ -178,7 +178,7 @@ export const Tabs = ({
           value={{
             mode,
             withGaps,
-            itemsFlexMode,
+            layoutFillMode,
             withScrollToSelectedTab,
             scrollBehaviorToSelectedTab,
           }}

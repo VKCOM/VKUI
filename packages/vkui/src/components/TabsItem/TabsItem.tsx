@@ -25,7 +25,7 @@ const stylesMode = {
   secondary: styles['TabsItem--mode-secondary'],
 };
 
-const flexGrowModeClassNames = {
+const fillModeClassNames = {
   stretched: styles['TabsItem--stretched'],
   shrinked: styles['TabsItem--shrinked'],
 };
@@ -77,7 +77,7 @@ export const TabsItem = ({
   const {
     mode,
     withGaps,
-    itemsFlexMode,
+    layoutFillMode,
     scrollBehaviorToSelectedTab,
     withScrollToSelectedTab,
   }: TabsContextProps = React.useContext(TabsModeContext);
@@ -170,7 +170,7 @@ export const TabsItem = ({
         selected && styles['TabsItem--selected'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         withGaps && styles['TabsItem--withGaps'],
-        itemsFlexMode !== 'auto' && flexGrowModeClassNames[itemsFlexMode],
+        layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
         className,
       )}
       hoverMode={styles['TabsItem--hover']}

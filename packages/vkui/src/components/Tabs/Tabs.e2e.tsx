@@ -12,7 +12,7 @@ test.describe('Tabs', () => {
   test.use({
     onlyForAppearances: [Appearance.LIGHT],
   });
-  test('items flex mode', async ({
+  test('layout fill mode', async ({
     mount,
     expectScreenshotClippedToContent,
     componentPlaygroundProps,

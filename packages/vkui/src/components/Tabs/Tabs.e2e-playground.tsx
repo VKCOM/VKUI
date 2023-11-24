@@ -145,7 +145,7 @@ export const TabsItemsFlexModePlayground = (props: ComponentPlaygroundProps) => 
               </TabsItem>
             </HorizontalScroll>,
           ],
-          itemsFlexMode: ['auto', 'shrinked', 'stretched'],
+          layoutFillMode: ['auto', 'shrinked', 'stretched'],
         },
       ]}
     >
