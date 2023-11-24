@@ -10,6 +10,8 @@ concurrency:
 
 jobs:
   labels:
+    # TODO [>=6]: удалить условие после релиза v6
+    if: false
     permissions:
       pull-requests: write
     runs-on: ubuntu-latest
@@ -25,19 +27,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               labels: ["patch"]
-            })
-
-      # TODO [>=6]: удалить после v6
-      - name: V5
-        if: ${{ !(startsWith(github.event.pull_request.title, 'BREAKING CHANGE') || contains(github.event.pull_request.title, 'v6') || startsWith(github.event.pull_request.title, 'patch'))}}
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.addLabels({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: ["v5"]
             })
 
   lint_codes_format:
