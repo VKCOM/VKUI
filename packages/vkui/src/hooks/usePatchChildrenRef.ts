@@ -23,10 +23,33 @@ type ChildrenElement<T> =
   | null
   | undefined;
 
+/**
+ * Функция пытается прокинуть в переданный React-элемент хук для получения его ссылки на DOM этого
+ * элемента.
+ *
+ * @param children
+ * @param injectProps
+ * @param externRef – полезен когда нужно прокинуть `ref` элементу выше.
+ *
+ * 👎 Без параметра `externRef`
+ * ```ts
+ * const { ref } = useSomeHook();
+ * const [childRef, child] = usePatchChildrenRef(children);
+ * React.useLayoutEffect(() => {
+ *   ref.current = childRef.current; // или ref.current(childRef.current)
+ * }, [childRef]);
+ * ```
+ *
+ * 👍 С параметром `externRef`
+ * ```ts
+ * const { ref } = useSomeHook();
+ * const [childRef, child] = usePatchChildrenRef(children, undefined, ref);
+ * ```
+ */
 export const usePatchChildrenRef = <ElementType extends HTMLElement = HTMLElement>(
   children?: ChildrenElement<ElementType>,
   injectProps?: InjectProps<ElementType>,
-  refHook?: React.Ref<ElementType>,
+  externRef?: React.Ref<ElementType>,
 ): [React.MutableRefObject<ElementType | null>, ChildrenElement<ElementType> | undefined] => {
   const isValidElementResult = isValidNotReactFragmentElement(children);
   const isDOMTypeElementResult =
@@ -39,7 +62,7 @@ export const usePatchChildrenRef = <ElementType extends HTMLElement = HTMLElemen
       : isValidElementResult
       ? children.props.getRootRef
       : undefined,
-    refHook,
+    externRef,
   );
 
   const mergedEventsByInjectProps = getMergedSameEventsByProps(
