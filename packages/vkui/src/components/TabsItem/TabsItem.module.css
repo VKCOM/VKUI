@@ -217,3 +217,12 @@
   flex-grow: 1;
   flex-shrink: 0;
 }
+
+.TabsItem.TabsItem--stretched {
+  flex-grow: 1;
+}
+
+.TabsItem.TabsItem--shrinked {
+  flex-grow: 0;
+  min-width: auto;
+}
