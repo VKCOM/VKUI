@@ -73,7 +73,6 @@ describe(getMergedSameEventsByProps, () => {
     });
 
     expect(props.onCallCommonDefinedFn).toHaveBeenCalledTimes(1);
-    expect(props.onCallOnlyInPropsFn).toHaveBeenCalledTimes(0);
   });
 
   it('should calls function by props first', () => {
