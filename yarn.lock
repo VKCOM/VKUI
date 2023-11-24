@@ -40,6 +40,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@axe-core/playwright@npm:^4.8.1":
+  version: 4.8.1
+  resolution: "@axe-core/playwright@npm:4.8.1"
+  dependencies:
+    axe-core: ~4.8.2
+  peerDependencies:
+    playwright-core: ">= 1.0.0"
+  checksum: 08f34f6a6f106aafafab4d6bda8f7c273c9785811410cc42c0713bc469bb302d137b8b7a8ce09645525b2f18b6b59eddf80cbbb2cffc364b2b141779958cfffe
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.12.13, @babel/code-frame@npm:^7.16.0, @babel/code-frame@npm:^7.16.7, @babel/code-frame@npm:^7.22.13, @babel/code-frame@npm:^7.8.3":
   version: 7.22.13
   resolution: "@babel/code-frame@npm:7.22.13"
@@ -4966,12 +4977,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 20.9.0
-  resolution: "@types/node@npm:20.9.0"
+"@types/node@npm:*, @types/node@npm:^20.9.2":
+  version: 20.9.2
+  resolution: "@types/node@npm:20.9.2"
   dependencies:
     undici-types: ~5.26.4
-  checksum: bfd927da6bff8a32051fa44bb47ca32a56d2c8bc8ba0170770f181cc1fa3c0b05863c9b930f0ba8604a48d5eb0d319166601709ca53bf2deae0025d8b6c6b8a3
+  checksum: 5bbb8fb2248fc5c5c4071d9809fb9af85997677c07124d65665202b53283a3b7bdff26fb844e9ee407e3847dfce6399c2b01e3329ea44a4b720647b1b987c678
   languageName: node
   linkType: hard
 
@@ -4979,15 +4990,6 @@ __metadata:
   version: 18.18.6
   resolution: "@types/node@npm:18.18.6"
   checksum: a847639b8455fd3dfa6dbc2917274c82c9db789f1d41aaf69f94ac6c9e54c3c1dd29be6e1e1ccd7c17e54db3d78d7011bc4e70544c6447ceca253dccc0a187e1
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^20.9.2":
-  version: 20.9.2
-  resolution: "@types/node@npm:20.9.2"
-  dependencies:
-    undici-types: ~5.26.4
-  checksum: 5bbb8fb2248fc5c5c4071d9809fb9af85997677c07124d65665202b53283a3b7bdff26fb844e9ee407e3847dfce6399c2b01e3329ea44a4b720647b1b987c678
   languageName: node
   linkType: hard
 
@@ -5596,10 +5598,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
+    "@axe-core/playwright": ^4.8.1
     "@swc/helpers": ^0.5.3
     "@vkontakte/icons": ^2.62.0
     "@vkontakte/vkjs": ^1.1.1
     "@vkontakte/vkui-floating-ui": ^0.1.2
+    axe-html-reporter: ^2.2.3
     dayjs: ^1.11.10
     mitt: ^3.0.1
     storybook: 7.5.3
@@ -6502,10 +6506,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.2.0":
+"axe-core@npm:^4.2.0, axe-core@npm:~4.8.2":
   version: 4.8.2
   resolution: "axe-core@npm:4.8.2"
   checksum: 8c19f507dabfcb8514e4280c7fc66e85143be303ddb57ec9f119338021228dc9b80560993938003837bda415fde7c07bba3a96560008ffa5f4145a248ed8f5fe
+  languageName: node
+  linkType: hard
+
+"axe-html-reporter@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "axe-html-reporter@npm:2.2.3"
+  dependencies:
+    mustache: ^4.0.1
+    rimraf: ^3.0.2
+  peerDependencies:
+    axe-core: ">=3"
+  checksum: 758e358d1a8e4b1e5a8b54521cac928966ad797e9d8aa27964a923a13fc43ddcfe01b9238d98565e30d79b28361f93de64da5ebd2f5df051b469f46b6a1fd445
   languageName: node
   linkType: hard
 
@@ -13646,6 +13662,15 @@ __metadata:
   bin:
     multicast-dns: cli.js
   checksum: 00b8a57df152d4cd0297946320a94b7c3cdf75a46a2247f32f958a8927dea42958177f9b7fdae69fab2e4e033fb3416881af1f5e9055a3e1542888767139e2fb
+  languageName: node
+  linkType: hard
+
+"mustache@npm:^4.0.1":
+  version: 4.2.0
+  resolution: "mustache@npm:4.2.0"
+  bin:
+    mustache: bin/mustache
+  checksum: 928fcb63e3aa44a562bfe9b59ba202cccbe40a46da50be6f0dd831b495be1dd7e38ca4657f0ecab2c1a89dc7bccba0885eab7ee7c1b215830da765758c7e0506
   languageName: node
   linkType: hard
 

@@ -75,6 +75,8 @@
     "mitt": "^3.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.8.1",
+    "axe-html-reporter": "^2.2.3",
     "storybook": "7.5.3"
   },
   "size-limit": [
