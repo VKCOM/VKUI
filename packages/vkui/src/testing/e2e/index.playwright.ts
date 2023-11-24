@@ -97,8 +97,6 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
         body: JSON.stringify(componentAxeReport.violations, null, 2),
         contentType: 'application/json',
       });
-
-      // expect(results.violations).toEqual([]);
     };
 
     await use(result);
