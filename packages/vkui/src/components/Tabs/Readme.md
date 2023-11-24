@@ -131,12 +131,18 @@ const DefaultInPanel = ({ menuOpened, onMenuClick, selected, setSelected }) => {
 
 const Scrollable = () => {
   const [mode, setMode] = React.useState('default');
+  const [layoutFillMode, setLayoutFillMode] = React.useState('auto');
   const [selected, setSelected] = React.useState('news');
   const [disabled, setDisabled] = React.useState(false);
 
   return (
     <Group>
-      <Tabs mode={mode} withScrollToSelectedTab scrollBehaviorToSelectedTab="center">
+      <Tabs
+        mode={mode}
+        layoutFillMode={layoutFillMode}
+        withScrollToSelectedTab
+        scrollBehaviorToSelectedTab="center"
+      >
         <HorizontalScroll arrowSize="m">
           <TabsItem
             selected={selected === 'groups'}
@@ -208,6 +214,26 @@ const Scrollable = () => {
             },
           ]}
           onChange={(event) => setMode(event.target.value)}
+        />
+      </FormItem>
+      <FormItem top="layoutFillMode">
+        <CustomSelect
+          value={layoutFillMode}
+          options={[
+            {
+              label: 'auto',
+              value: 'auto',
+            },
+            {
+              label: 'stretched',
+              value: 'stretched',
+            },
+            {
+              label: 'shrinked',
+              value: 'shrinked',
+            },
+          ]}
+          onChange={(event) => setLayoutFillMode(event.target.value)}
         />
       </FormItem>
       <Checkbox onChange={() => setDisabled((prev) => !prev)}>disabled</Checkbox>

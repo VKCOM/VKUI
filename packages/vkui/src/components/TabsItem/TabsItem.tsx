@@ -25,6 +25,11 @@ const stylesMode = {
   secondary: styles['TabsItem--mode-secondary'],
 };
 
+const fillModeClassNames = {
+  stretched: styles['TabsItem--stretched'],
+  shrinked: styles['TabsItem--shrinked'],
+};
+
 export interface TabsItemProps extends HTMLAttributesWithRootRef<HTMLElement> {
   /**
    * Добавляет иконку слева.
@@ -69,8 +74,13 @@ export const TabsItem = ({
   ...restProps
 }: TabsItemProps) => {
   const { sizeY = 'none' } = useAdaptivity();
-  const { mode, withGaps, scrollBehaviorToSelectedTab, withScrollToSelectedTab }: TabsContextProps =
-    React.useContext(TabsModeContext);
+  const {
+    mode,
+    withGaps,
+    layoutFillMode,
+    scrollBehaviorToSelectedTab,
+    withScrollToSelectedTab,
+  }: TabsContextProps = React.useContext(TabsModeContext);
   let statusComponent = null;
 
   const isTabFlow = role === 'tab';
@@ -160,6 +170,7 @@ export const TabsItem = ({
         selected && styles['TabsItem--selected'],
         sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
         withGaps && styles['TabsItem--withGaps'],
+        layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
         className,
       )}
       hoverMode={styles['TabsItem--hover']}
