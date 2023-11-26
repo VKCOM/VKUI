@@ -13,16 +13,8 @@ export interface SharedDropdownProps extends FocusTrapProps {
   /**
    * Элемент, рядом с которым вылезает попап на десктопе.
    * Лучше передавать RefObject c current.
-   * В v6 будет обязательным.
    */
-  toggleRef?: ToggleRef; // TODO [>=6]: сделать обязательным
-  /**
-   * Направление на десктопе
-   *  @deprecated v5.7.0
-   *
-   * Используйте `placement` для позиционирования
-   */
-  popupDirection?: PopupDirection;
+  toggleRef: ToggleRef;
   /**
    * Позиционирование всплывающего окна для десктопа.
    * Компонент выберет наилучшее расположение сам, но можно задать приоритетное направление с помощью этого свойства

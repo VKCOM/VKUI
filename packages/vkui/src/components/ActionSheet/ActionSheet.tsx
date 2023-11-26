@@ -4,7 +4,6 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
-import { warnOnce } from '../../lib/warnOnce';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -15,17 +14,13 @@ import { ActionSheetDropdownSheet } from './ActionSheetDropdownSheet';
 import { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
-const warn = warnOnce('ActionSheet');
 type CloseInitiators = 'action-item' | 'cancel-item' | 'other';
 export interface ActionSheetOnCloseOptions {
   closedBy: CloseInitiators;
 }
 
 export interface ActionSheetProps
-  extends Pick<
-      SharedDropdownProps,
-      'toggleRef' | 'popupDirection' | 'popupOffsetDistance' | 'placement'
-    >,
+  extends Pick<SharedDropdownProps, 'toggleRef' | 'popupOffsetDistance' | 'placement'>,
     React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   text?: React.ReactNode;
@@ -50,7 +45,6 @@ export const ActionSheet = ({
   text,
   style,
   iosCloseItem,
-  popupDirection,
   popupOffsetDistance,
   placement,
   mode: modeProp,
@@ -105,17 +99,8 @@ export const ActionSheet = ({
 
   const DropdownComponent = mode === 'menu' ? ActionSheetDropdownMenu : ActionSheetDropdownSheet;
 
-  if (process.env.NODE_ENV === 'development' && popupDirection) {
-    // TODO [>=6]: popupDirection
-    warn('Свойство "popupDirection" будет удалено в v6. Используйте свойство "placement"');
-  }
-
-  popupDirection = popupDirection !== undefined ? popupDirection : 'bottom';
-
   const dropdownProps =
-    mode === 'menu'
-      ? Object.assign(restProps, { popupOffsetDistance, popupDirection, placement })
-      : restProps;
+    mode === 'menu' ? Object.assign(restProps, { popupOffsetDistance, placement }) : restProps;
 
   const actionSheet = (
     <ActionSheetContext.Provider value={contextValue}>
