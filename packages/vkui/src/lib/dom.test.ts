@@ -1,5 +1,6 @@
 import {
   getBoundingClientRect,
+  getDocumentBody,
   getScrollHeight,
   getScrollRect,
   getTransformedParentCoords,
@@ -140,5 +141,19 @@ describe('getBoundingClientRect', () => {
         height: childElRect.height,
       }),
     );
+  });
+});
+
+describe(getDocumentBody, () => {
+  it('should return document.body anyway', () => {
+    expect(getDocumentBody()).toBe(document.body);
+    expect(getDocumentBody(undefined)).toBe(document.body);
+    expect(getDocumentBody(null)).toBe(document.body);
+    expect(getDocumentBody(window)).toBe(document.body);
+    expect(getDocumentBody(document)).toBe(document.body);
+
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    expect(getDocumentBody(el)).toBe(document.body);
   });
 });

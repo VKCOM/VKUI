@@ -4,10 +4,11 @@ import { rectToClientRect } from '@vkontakte/vkui-floating-ui/core';
 import {
   getNearestOverflowAncestor as getNearestOverflowAncestorLib,
   getWindow,
+  isElement,
   isHTMLElement,
 } from '@vkontakte/vkui-floating-ui/utils/dom';
 
-export { getWindow, getNodeScroll } from '@vkontakte/vkui-floating-ui/utils/dom';
+export { getWindow, getNodeScroll, isElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
 export interface DOMContextInterface {
@@ -128,7 +129,7 @@ export const getScrollHeight = (node: Element | Window) => {
 };
 
 export const getScrollRect = (node: Element | Window) => {
-  const window = node instanceof Element ? getWindow(node) : node;
+  const window = isElement(node) ? getWindow(node) : node;
   const scrollElRect = getBoundingClientRect(node);
 
   const edgeTop = window.scrollY + scrollElRect.top;
@@ -140,3 +141,5 @@ export const getScrollRect = (node: Element | Window) => {
     edges: { y },
   };
 };
+
+export const getDocumentBody = (node?: any) => getWindow(node).document.body;
