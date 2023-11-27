@@ -43,7 +43,7 @@ export const AppRootPortal = ({
 
   return shouldUsePortal && portalContainer ? (
     createPortal(
-      <AppearanceProvider appearance={appearance}>
+      <AppearanceProvider value={appearance}>
         <div className={className}>{children}</div>
       </AppearanceProvider>,
       portalContainer,

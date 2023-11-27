@@ -346,6 +346,12 @@ const baseConfig = {
           name: 'Migration',
           content: './pages/migration_v5.md',
         },
+
+        {
+          title: 'Миграция с v5 на v6',
+          name: 'Migrations',
+          content: './pages/migration_v6.md',
+        },
         {
           name: 'Unstable',
           content: './pages/unstable.md',

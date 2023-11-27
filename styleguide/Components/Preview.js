@@ -116,7 +116,7 @@ class Preview extends PreviewParent {
           return (
             <Profiler id={exampleId} onRender={logPerf}>
               <PlatformProvider value={styleGuideContext.platform}>
-                <AppearanceProvider appearance={styleGuideContext.appearance}>
+                <AppearanceProvider value={styleGuideContext.appearance}>
                   <div
                     className={classNames(
                       'Preview',

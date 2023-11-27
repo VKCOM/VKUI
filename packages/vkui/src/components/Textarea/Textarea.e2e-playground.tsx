@@ -51,7 +51,7 @@ export const TextareaStatePlayground = ({ appearance }: ComponentPlaygroundProps
         width: BREAKPOINTS.MOBILE,
       }}
     >
-      <AppearanceProvider appearance={appearance}>
+      <AppearanceProvider value={appearance}>
         <AdaptivityProvider sizeY="regular">
           <Div style={{ padding: 10 }}>
             <Textarea id="textarea" />
