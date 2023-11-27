@@ -19,12 +19,7 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
           bottom: [undefined, 'Снизу'],
           removable: [undefined, true],
           children: [
-            <Input
-              key={0}
-              aria-labelledby="bottom-id"
-              placeholder="Введите ваше значение"
-              {...props}
-            />,
+            <Input key={0} aria-labelledby="bottom-id" placeholder="Введите ваше значение" />,
           ],
           bottomId: ['bottom-id'],
         },
