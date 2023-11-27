@@ -5,6 +5,9 @@ export type AutoPlacementType = 'auto' | 'auto-start' | 'auto-end';
 export type PlacementWithAuto = AutoPlacementType | Placement;
 
 export type {
+  UseFloatingOptions,
+  ReferenceType,
+  ArrowOptions,
   Placement,
   Middleware as UseFloatingMiddleware,
   UseFloatingData,

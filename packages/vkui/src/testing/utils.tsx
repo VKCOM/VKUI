@@ -1,11 +1,19 @@
 import * as React from 'react';
-import { act, render, RenderResult, screen } from '@testing-library/react';
+import {
+  act,
+  type EventType,
+  fireEvent,
+  render,
+  RenderResult,
+  screen,
+} from '@testing-library/react';
 // eslint-disable-next-line no-restricted-imports -- используем здесь setup
 import userEventLib from '@testing-library/user-event';
 import { configureAxe, toHaveNoViolations } from 'jest-axe';
 import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
+import { isHTMLElement } from '../lib/dom';
 import { ImgOnlyAttributes } from '../lib/utils';
 import { HasChildren } from '../types';
 
@@ -282,4 +290,41 @@ export const requestAnimationFrameMock = {
     window.requestAnimationFrame = this.requestAnimationFrame.bind(this);
     window.cancelAnimationFrame = this.cancelAnimationFrame.bind(this);
   },
+};
+
+/**
+ * Эта функция собирает бойлеплейт по работе с fireEvent.
+ */
+export const fireEventPatch = async (
+  el: Document | Element | Window | Node | null,
+  eventType: EventType,
+  options?: Record<PropertyKey, unknown>,
+) => {
+  if (el === null) {
+    return;
+  }
+  await act(async () => {
+    switch (eventType) {
+      case 'focus':
+        if (isHTMLElement(el)) {
+          // см. https://github.com/testing-library/user-event/issues/350
+          el.focus();
+          await waitRAF();
+        }
+        break;
+      case 'blur':
+        if (isHTMLElement(el)) {
+          el.blur();
+          await waitRAF();
+        }
+        break;
+      case 'mouseOver':
+      case 'mouseLeave':
+        fireEvent[eventType](el);
+        await waitRAF();
+        break;
+      default:
+        fireEvent[eventType](el, options);
+    }
+  });
 };
