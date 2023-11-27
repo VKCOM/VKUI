@@ -50,7 +50,7 @@ yarn add @vkontakte/vk-bridge @vkontakte/vk-bridge-react
 
 ```tsx static
 import * as React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import vkBridge, { parseURLSearchParamsForGetLaunchParams } from '@vkontakte/vk-bridge';
 import { useAppearance, useInsets, useAdaptivity } from '@vkontakte/vk-bridge-react';
 import { Platform, ConfigProvider, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
@@ -83,7 +83,9 @@ const Root = () => {
   );
 };
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(<Root />);
 ```
 
 Файл `./transformers/transformVKBridgeAdaptivity.ts`

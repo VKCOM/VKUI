@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Textarea } from './Textarea';
 
@@ -22,15 +21,15 @@ describe('Textarea', () => {
       render(<Textarea defaultValue="def" />);
       expect(getInput()).toHaveValue('def');
     });
-    it('manages value', () => {
+    it('manages value', async () => {
       render(<Textarea />);
-      userEvent.type(getInput(), 'user');
+      await userEvent.type(getInput(), 'user');
       expect(getInput()).toHaveValue('user');
     });
-    it('fires onChange', () => {
+    it('fires onChange', async () => {
       let value = '';
       render(<Textarea onChange={(e) => (value = e.target.value)} />);
-      userEvent.type(getInput(), 'user');
+      await userEvent.type(getInput(), 'user');
       expect(getInput()).toHaveValue('user');
       expect(value).toBe('user');
     });
@@ -47,24 +46,24 @@ describe('Textarea', () => {
       render(<Textarea defaultValue="def" value="val" />);
       expect(getInput()).toHaveValue('val');
     });
-    it('fires onChange', () => {
+    it('fires onChange', async () => {
       let value = 'init';
       render(<Textarea value={value} onChange={(e) => (value = e.target.value)} />);
-      userEvent.type(getInput(), 'X');
+      await userEvent.type(getInput(), 'X');
       expect(value).toBe('initX');
     });
-    it('does not change without onChange', () => {
+    it('does not change without onChange', async () => {
       render(<Textarea value="init" />);
-      userEvent.type(getInput(), 'user');
+      await userEvent.type(getInput(), 'user');
       expect(getInput()).toHaveValue('init');
     });
   });
 
   describe('calls onResize', () => {
-    it('when editing', () => {
+    it('when editing', async () => {
       const onResize = jest.fn();
       render(<Textarea value="" onResize={onResize} />);
-      userEvent.type(getInput(), '{enter}{enter}{enter}{enter}');
+      await userEvent.type(getInput(), '{enter}{enter}{enter}{enter}');
       expect(onResize).toHaveBeenCalled();
     });
     it('when changing controlled value', () => {

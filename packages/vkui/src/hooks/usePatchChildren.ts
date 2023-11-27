@@ -8,9 +8,10 @@ import { useExternRef } from './useExternRef';
 
 const warn = warnOnce('usePatchChildrenRef');
 
-type InjectProps<T> = Omit<React.HTMLAttributes<T>, keyof React.DOMAttributes<T>> & {
-  ref?: React.Ref<T>;
-};
+type InjectProps<T> = Omit<React.HTMLAttributes<T>, keyof React.DOMAttributes<T>> &
+  React.Attributes & {
+    ref?: React.Ref<T>;
+  };
 
 type ExpectedReactElement<T> = React.ReactElement<HasRootRef<T> & React.DOMAttributes<T>>;
 

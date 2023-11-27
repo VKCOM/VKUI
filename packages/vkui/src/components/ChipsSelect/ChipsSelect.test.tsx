@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { fireEvent, queryByText, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
+import { baselineComponent, userEvent, waitForFloatingPosition } from '../../testing/utils';
 import { ChipOption } from '../Chip/Chip';
 import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
 
@@ -18,7 +17,7 @@ const colors: ChipOption[] = [
 ];
 const testValue = { value: 'testvalue', label: 'testvalue' };
 const toggleDropdown = async () => {
-  userEvent.click(screen.getByRole('textbox'));
+  await userEvent.click(screen.getByRole('textbox'));
   await waitForFloatingPosition();
 };
 // получить опцию из дропдауна (не чип)
@@ -38,7 +37,7 @@ describe('ChipsSelect', () => {
 
   it('filters options', async () => {
     render(<ChipsSelect options={colors} value={[]} />);
-    userEvent.type(screen.getByRole('textbox'), colors[1]?.label?.substring(0, 3) as string);
+    await userEvent.type(screen.getByRole('textbox'), colors[1]?.label?.substring(0, 3) as string);
     await toggleDropdown();
     expect(queryListOption(colors[1])).toBeTruthy();
     expect(screen.queryAllByRole('option')).toHaveLength(1);
@@ -60,25 +59,25 @@ describe('ChipsSelect', () => {
     it('closes options on click outside', async () => {
       render(<ChipsSelect options={colors} value={[]} />);
       await toggleDropdown();
-      userEvent.click(document.body);
+      await userEvent.click(document.body);
       expect(screen.queryByRole('option')).toBeNull();
     });
     it('closes options after select', async () => {
       render(<ChipsSelect options={colors} value={[]} />);
       await toggleDropdown();
-      userEvent.click(queryListOption(colors[0]) as Element);
+      await userEvent.click(queryListOption(colors[0]) as Element);
       expect(queryListOption(colors[1])).toBeNull();
     });
     it('does not close options after select with showSelected and closeAfterSelect={false}', async () => {
       render(<ChipsSelect options={colors} value={[]} showSelected closeAfterSelect={false} />);
       await toggleDropdown();
-      userEvent.click(queryListOption(colors[0]) as Element);
+      await userEvent.click(queryListOption(colors[0]) as Element);
       expect(queryListOption(colors[1])).toBeTruthy();
     });
     it('closes options on esc', async () => {
       render(<ChipsSelect options={colors} value={[]} />);
       await toggleDropdown();
-      userEvent.type(screen.getByRole('textbox'), '{esc}');
+      await userEvent.type(screen.getByRole('textbox'), '{Escape}');
       expect(queryListOption(colors[1])).toBeNull();
     });
   });
@@ -88,7 +87,7 @@ describe('ChipsSelect', () => {
       let value;
       render(<ChipsSelect options={colors} onChange={(e) => (value = e)} value={[]} />);
       await toggleDropdown();
-      userEvent.click(queryListOption(colors[0]) as Element);
+      await userEvent.click(queryListOption(colors[0]) as Element);
       expect(value).toEqual([colors[0]]);
     });
 
@@ -100,13 +99,13 @@ describe('ChipsSelect', () => {
       await toggleDropdown();
 
       // Focus on first element
-      userEvent.keyboard('{arrowdown}');
+      await userEvent.keyboard('{arrowdown}');
 
       const idx = 7;
       for (let i = 0; i < idx; i++) {
-        userEvent.keyboard('{arrowdown}');
+        await userEvent.keyboard('{arrowdown}');
       }
-      userEvent.keyboard('{enter}');
+      await userEvent.keyboard('{enter}');
 
       expect(queryListOption(options[idx])).toBeNull();
       expect(value).toEqual([options[idx]]);
@@ -121,15 +120,15 @@ describe('ChipsSelect', () => {
       await toggleDropdown();
       expect(queryListOption(colors[0])).toBeNull();
     });
-    it('deselects on chip click', () => {
+    it('deselects on chip click', async () => {
       let value;
       render(<ChipsSelect options={colors} value={[colors[0]]} onChange={(e) => (value = e)} />);
-      userEvent.click(screen.getByLabelText(`Удалить ${colors[0].label}`));
+      await userEvent.click(screen.getByLabelText(`Удалить ${colors[0].label}`));
       expect(value).toEqual([]);
     });
   });
 
-  it('does not focus ChipsSelect on chip click', () => {
+  it('does not focus ChipsSelect on chip click', async () => {
     let selectedColors: ChipOption[] = [{ value: 'red', label: 'Красный' }];
     const setSelectedColors = (updatedColors: ChipOption[]) => {
       selectedColors = [...updatedColors];
@@ -148,7 +147,7 @@ describe('ChipsSelect', () => {
 
     const redChipRemove = screen.getByLabelText('Удалить Красный');
 
-    userEvent.click(redChipRemove);
+    await userEvent.click(redChipRemove);
     expect(getChipsSelect()).not.toHaveFocus();
   });
 
@@ -164,8 +163,8 @@ describe('ChipsSelect', () => {
           addOnBlur
         />,
       );
-      userEvent.type(screen.getByRole('textbox'), testValue.label);
-      userEvent.click(document.body);
+      await userEvent.type(screen.getByRole('textbox'), testValue.label);
+      await userEvent.click(document.body);
       expect(value).toEqual([testValue]);
     });
 
@@ -174,8 +173,8 @@ describe('ChipsSelect', () => {
       render(
         <ChipsSelect options={colors} value={[]} onChange={onChange} creatable={false} addOnBlur />,
       );
-      userEvent.type(screen.getByRole('textbox'), testValue.label);
-      userEvent.click(document.body);
+      await userEvent.type(screen.getByRole('textbox'), testValue.label);
+      await userEvent.click(document.body);
       expect(onChange).not.toHaveBeenCalled();
     });
   });

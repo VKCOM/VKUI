@@ -51,7 +51,7 @@ export default defineConfig<VKUITestOptions>({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: 0,
+  retries: process.env.CI ? 1 : 0,
   /* Limit the number of failures on CI to save resources. */
   maxFailures: process.env.CI ? 10 : undefined,
   /* Opt out of parallel tests on CI. */

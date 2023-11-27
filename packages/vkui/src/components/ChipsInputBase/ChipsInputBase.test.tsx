@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { ChipOption } from '../Chip/Chip';
 import { ChipsInputBase, ChipsInputBaseProps } from './ChipsInputBase';
 
@@ -22,17 +21,17 @@ describe('ChipsInputBase', () => {
     expect(redChip()).not.toBeNull();
   });
 
-  it('adds chips', () => {
+  it('adds chips', async () => {
     let value;
 
     render(<ChipsInputBaseTest value={[]} onChange={(changedValue) => (value = changedValue)} />);
 
-    userEvent.type(getChipsInputBase(), 'Красный{enter}');
+    await userEvent.type(getChipsInputBase(), 'Красный{enter}');
 
     expect(value).toEqual([{ value: 'Красный', label: 'Красный' }]);
   });
 
-  it('does not lose data when adding an already existing chip', () => {
+  it('does not lose data when adding an already existing chip', async () => {
     let value: ChipOption[] | undefined = undefined;
 
     render(
@@ -45,7 +44,7 @@ describe('ChipsInputBase', () => {
       />,
     );
 
-    userEvent.type(getChipsInputBase(), 'Красный{enter}');
+    await userEvent.type(getChipsInputBase(), 'Красный{enter}');
 
     expect(value).toEqual([
       { value: 'Синий', label: 'Синий' },
@@ -53,7 +52,7 @@ describe('ChipsInputBase', () => {
     ]);
   });
 
-  it('removes chip on hitting backspace', () => {
+  it('removes chip on hitting backspace', async () => {
     let value: ChipOption[] | undefined = undefined;
 
     render(
@@ -63,12 +62,12 @@ describe('ChipsInputBase', () => {
       />,
     );
 
-    userEvent.type(getChipsInputBase(), '{backspace}');
+    await userEvent.type(getChipsInputBase(), '{backspace}');
 
     expect(value).toEqual([]);
   });
 
-  it('does not delete chips on hitting backspace in readonly mode', () => {
+  it('does not delete chips on hitting backspace in readonly mode', async () => {
     let value: ChipOption[] = [...chipsInputValue];
 
     render(
@@ -79,26 +78,26 @@ describe('ChipsInputBase', () => {
       />,
     );
 
-    userEvent.type(getChipsInputBase(), '{backspace}');
+    await userEvent.type(getChipsInputBase(), '{backspace}');
 
     expect(value).toEqual(chipsInputValue);
   });
 
-  it('focuses ChipsInputBase on surrounding container click', () => {
+  it('focuses ChipsInputBase on surrounding container click', async () => {
     render(<ChipsInputBaseTest value={chipsInputValue} />);
 
-    userEvent.click(document.querySelector('.vkuiChipsInputBase') as Element);
+    await userEvent.click(document.querySelector('.vkuiChipsInputBase') as Element);
     expect(getChipsInputBase()).toHaveFocus();
   });
 
-  it('focuses ChipsInputBase on chip click', () => {
+  it('focuses ChipsInputBase on chip click', async () => {
     render(<ChipsInputBaseTest value={chipsInputValue} />);
 
-    userEvent.click(redChip() as HTMLElement);
+    await userEvent.click(redChip() as HTMLElement);
     expect(getChipsInputBase()).toHaveFocus();
   });
 
-  it('add value on blur event if addOnBlur=true', () => {
+  it('add value on blur event if addOnBlur=true', async () => {
     let value;
 
     render(
@@ -109,8 +108,8 @@ describe('ChipsInputBase', () => {
       />,
     );
 
-    userEvent.type(getChipsInputBase(), 'Красный');
-    userEvent.click(document.body);
+    await userEvent.type(getChipsInputBase(), 'Красный');
+    await userEvent.click(document.body);
 
     expect(value).toEqual([{ value: 'Красный', label: 'Красный' }]);
   });

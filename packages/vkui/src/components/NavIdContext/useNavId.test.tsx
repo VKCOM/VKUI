@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
+import { createWrapper } from '../../testing/createWrapper';
 import { Panel } from '../Panel/Panel';
 import { View } from '../View/View';
 import { useNavId } from './useNavId';
@@ -7,14 +8,14 @@ import { useNavId } from './useNavId';
 describe(useNavId, () => {
   it('Panel with id', () => {
     const { result } = renderHook(useNavId, {
-      wrapper: (props) => <Panel id="test" {...props} />,
+      wrapper: createWrapper(Panel, { id: 'test' }),
     });
     expect(result.current.panel).toEqual('test');
   });
 
   it('Panel with nav', () => {
     const { result } = renderHook(useNavId, {
-      wrapper: (props) => <Panel nav="test" {...props} />,
+      wrapper: createWrapper(Panel, { nav: 'test' }),
     });
     expect(result.current.panel).toEqual('test');
   });

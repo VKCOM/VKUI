@@ -13,7 +13,7 @@
  */
 
 // 1. Расширяем Playwright под свои нужды.
-import { devices, expect, test as testBase } from '@playwright/experimental-ct-react17';
+import { devices, expect, test as testBase } from '@playwright/experimental-ct-react';
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { screenshotWithClipToContent } from './screenshotWithClipToContent';
 import type {
@@ -106,7 +106,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
 });
 
 // 2. Ре-экспортируем из Playwright нужные модули и типы.
-export { expect, defineConfig, devices } from '@playwright/experimental-ct-react17';
+export { expect, defineConfig, devices } from '@playwright/experimental-ct-react';
 export type { PlaywrightTestConfig, ReporterDescription } from '@playwright/test';
 
 // 3. Вычленяем типы, которые не экспортируются самим Playwright.

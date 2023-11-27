@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { act } from 'react-dom/test-utils';
 import { fireEvent, render } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, runAllTimers } from '../../testing/utils';
 import { PopoutWrapper } from './PopoutWrapper';
 
 // TODO: Warning: An update to PopoutWrapper inside a test was not wrapped in act(...)
@@ -29,8 +28,7 @@ describe('PopoutWrapper', () => {
 
   describe('gets opened', () => {
     const isOpened = () => !!document.querySelector('.vkuiPopoutWrapper--opened');
-    beforeEach(() => jest.useFakeTimers());
-    afterEach(() => jest.useRealTimers());
+    fakeTimers();
     it('immediately if no mask', () => {
       render(<PopoutWrapper hasMask={false} />);
       expect(isOpened()).toBe(true);
@@ -38,9 +36,7 @@ describe('PopoutWrapper', () => {
     it('after animation if mask', () => {
       render(<PopoutWrapper hasMask />);
       expect(isOpened()).toBe(false);
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(isOpened()).toBe(true);
     });
   });

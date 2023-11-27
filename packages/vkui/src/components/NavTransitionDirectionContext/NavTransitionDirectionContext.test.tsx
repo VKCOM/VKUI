@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { fakeTimers, runAllTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Panel } from '../Panel/Panel';
 import { Root } from '../Root/Root';
@@ -52,8 +53,7 @@ function setup({ withAnimationsMode }: { withAnimationsMode: boolean }) {
 }
 
 describe('useNavTransition', () => {
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
+  fakeTimers();
 
   it.each([
     ['properly detects transition direction without animations', false],
@@ -71,28 +71,20 @@ describe('useNavTransition', () => {
     expect(screen.queryByText('Direction: backwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v1" />);
-    act(() => {
-      jest.runAllTimers();
-    });
+    runAllTimers();
     expect(screen.queryByText('Direction: backwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v2" />);
-    act(() => {
-      jest.runAllTimers();
-    });
+    runAllTimers();
     expect(screen.queryByText('Direction: forwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v3" />);
-    act(() => {
-      jest.runAllTimers();
-    });
+    runAllTimers();
     expect(screen.queryByText('Direction: forwards')).toBeTruthy();
 
     // transition between panels
     component.rerender(<TestComponent activeView="v2" activePanel="v2.1" />);
-    act(() => {
-      jest.runAllTimers();
-    });
+    runAllTimers();
     expect(screen.queryByText('Direction: backwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v2" activePanel="v2.2" />);

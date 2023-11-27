@@ -19,7 +19,7 @@ test.describe('Slider with Tooltip', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(
+    const result = await mount(
       <SliderPlaygroundForTooltipTest
         {...componentPlaygroundProps}
         defaultValue={24.4234234234234}
@@ -28,6 +28,8 @@ test.describe('Slider with Tooltip', () => {
       />,
     );
     await page.emulateMedia({ reducedMotion: 'reduce' });
+    await result.waitFor();
+
     await page.keyboard.press('Tab');
     await expectScreenshotClippedToContent();
   });
@@ -43,7 +45,7 @@ test.describe('keyboard events', () => {
   test.use({ onlyForPlatforms: ['android'], onlyForAppearances: ['light'] });
 
   test('should be focused with Tab button', async ({ page, mount, componentPlaygroundProps }) => {
-    await mount(
+    const result = await mount(
       <SliderPlaygroundForKeyboardTest
         multiple
         defaultValue={[20, 80]}
@@ -51,6 +53,7 @@ test.describe('keyboard events', () => {
       />,
     );
     await page.emulateMedia({ reducedMotion: 'reduce' });
+    await result.waitFor();
 
     const locator = page.getByRole('slider');
     const [startSlider, endSlider] = await locator.all();
@@ -70,7 +73,9 @@ test.describe('keyboard events', () => {
     mount,
     componentPlaygroundProps,
   }) => {
-    await mount(<SliderPlaygroundForKeyboardTest {...componentPlaygroundProps} />);
+    const result = await mount(<SliderPlaygroundForKeyboardTest {...componentPlaygroundProps} />);
+    await result.waitFor();
+
     const slider = page.getByRole('slider');
 
     await page.keyboard.press('Tab');

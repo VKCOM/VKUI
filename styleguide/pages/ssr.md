@@ -3,7 +3,7 @@
 определения платформы пользователя (iOS или Android) на стороне сервера. Пример:
 
 ```jsx static
-import ReactDOM from 'react-dom';
+import { renderToString } from 'react-dom/server';
 import { Button, SSRWrapper } from '@vkontakte/vkui';
 import express from 'express';
 import useragent from 'express-useragent';
@@ -13,7 +13,7 @@ server.use(useragent.express());
 
 server.get('/', function (req, res) {
   res.send(
-    ReactDOM.renderToString(
+    renderToString(
       <SSRWrapper userAgent={req.useragent.source}>
         <Button>Hello</Button>
       </SSRWrapper>,

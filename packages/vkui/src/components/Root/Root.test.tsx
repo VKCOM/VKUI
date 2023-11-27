@@ -1,7 +1,12 @@
 import * as React from 'react';
-import { act } from 'react-dom/test-utils';
 import { render } from '@testing-library/react';
-import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimers,
+  mockScrollContext,
+  mountTest,
+  runAllTimers,
+} from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { View } from '../View/View';
 import { Root } from './Root';
@@ -19,14 +24,9 @@ const views = [
 ];
 
 describe('Root', () => {
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
+  fakeTimers();
 
-  baselineComponent(Root, {
-    // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
-    //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
-    a11y: false,
-  });
+  baselineComponent(Root);
 
   describe('With View', () =>
     mountTest(() => (
@@ -45,9 +45,7 @@ describe('Root', () => {
     });
     it('after prop update', () => {
       render(<Root activeView="v1">{views}</Root>).rerender(<Root activeView="v2">{views}</Root>);
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(document.getElementById('v1')).toBeNull();
       expect(document.getElementById('v2')).not.toBeNull();
     });
@@ -72,9 +70,7 @@ describe('Root', () => {
           </Root>
         </ConfigProvider>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(onTransition).toBeCalledTimes(1);
       expect(onTransition).toBeCalledWith({
         from: 'v1',
@@ -93,9 +89,7 @@ describe('Root', () => {
           {views}
         </Root>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(onTransition).toBeCalledWith({
         from: 'v2',
         to: 'v1',
@@ -119,9 +113,7 @@ describe('Root', () => {
           {views}
         </Root>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(onTransition).toBeCalledTimes(1);
       expect(onTransition).toBeCalledWith({
         from: 'v1',
@@ -146,9 +138,7 @@ describe('Root', () => {
           {views}
         </Root>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(onTransition).toBeCalledTimes(1);
       expect(onTransition).toBeCalledWith({
         from: 'v2',
@@ -197,9 +187,7 @@ describe('Root', () => {
           <Root activeView="v1">{views}</Root>
         </MockScroll>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(scrollTo).toBeCalledWith(0, y);
     });
     it('resets on forward navigation', () => {
@@ -221,9 +209,7 @@ describe('Root', () => {
           <Root activeView="v2">{views}</Root>
         </MockScroll>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(scrollTo.mock.calls[scrollTo.mock.calls.length - 1]).toEqual([0, 0]);
     });
   });

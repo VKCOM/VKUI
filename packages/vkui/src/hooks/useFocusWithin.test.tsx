@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { useFocusWithin } from './useFocusWithin';
 
 describe(useFocusWithin, () => {
@@ -16,14 +16,18 @@ describe(useFocusWithin, () => {
     expect(focusWithin).toBeFalsy();
   });
 
-  it('focus and blur element', () => {
+  it('focus and blur element', async () => {
     render(<Playground />);
     const el = screen.getByTestId('input');
 
-    el.focus();
+    act(() => {
+      el.focus();
+    });
     expect(focusWithin).toBeTruthy();
 
-    el.blur();
+    act(() => {
+      el.blur();
+    });
     expect(focusWithin).toBeFalsy();
   });
 

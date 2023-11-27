@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { Icon28NewsfeedOutline } from '@vkontakte/icons';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { TabbarItem } from './TabbarItem';
 
 describe('TabbarItem', () => {
@@ -30,15 +29,15 @@ describe('TabbarItem', () => {
     expect(screen.getByTestId('test').tagName.toLowerCase()).toBe('div');
   });
 
-  it('handles disabled state', () => {
+  it('handles disabled state', async () => {
     const cb = jest.fn();
 
     const { rerender } = render(<TabbarItem onClick={cb} data-testid="test" />);
-    userEvent.click(screen.getByTestId('test'));
+    await userEvent.click(screen.getByTestId('test'));
     expect(cb).toBeCalledTimes(1);
 
     rerender(<TabbarItem onClick={cb} data-testid="test" disabled />);
-    userEvent.click(screen.getByTestId('test'));
+    await userEvent.click(screen.getByTestId('test'));
     expect(cb).toBeCalledTimes(1);
   });
 });

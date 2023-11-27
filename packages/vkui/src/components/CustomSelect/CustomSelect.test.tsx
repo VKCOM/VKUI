@@ -554,7 +554,7 @@ describe('CustomSelect', () => {
   it('clear value with default clear button', async () => {
     const onChange = jest.fn();
 
-    const { rerender, unmount } = render(
+    const { unmount } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
         data-testid="inputTestId"
@@ -582,7 +582,7 @@ describe('CustomSelect', () => {
     unmount();
 
     // clear by clicking via button testId
-    rerender(
+    render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
         clearButtonTestId="clearButtonTestId"

@@ -1,5 +1,6 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { usePlatform } from '../vkui';
+import { renderHook } from '@testing-library/react';
+import { usePlatform } from '../hooks/usePlatform';
+import { createWrapper } from '../testing/createWrapper';
 import { SSRWrapper, SSRWrapperProps } from './SSR';
 
 describe.each<{
@@ -57,8 +58,7 @@ describe.each<{
 ])('SSRWrapper($props)', ({ props, expectPlatform }) => {
   test(`usePlatform() return ${expectPlatform}`, () => {
     const renderHookResult = renderHook(() => usePlatform(), {
-      wrapper: SSRWrapper,
-      initialProps: props,
+      wrapper: createWrapper(SSRWrapper, props),
     });
 
     expect(renderHookResult.result.current).toBe(expectPlatform);

@@ -95,7 +95,7 @@ const SettingsPanelContent = ({
   name: string;
   onChangeName: (val: string) => void;
 }) => {
-  const handleNameChange = React.useCallback(
+  const handleNameChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (event) => {
       onChangeName(event.target.value.trim());
     },
@@ -121,7 +121,7 @@ export const SwipeBlockExample: Story = {
     const activePanel = history[history.length - 1];
     const isFirst = history.length === 1;
 
-    const go = React.useCallback((panel) => {
+    const go = React.useCallback((panel: string) => {
       setHistory((prevHistory) => [...prevHistory, panel]);
     }, []);
     const goBack = React.useCallback(() => {
@@ -143,7 +143,7 @@ export const SwipeBlockExample: Story = {
       React.useState<React.ReactNode | null>(null);
 
     const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
-      (activePanel) => {
+      (activePanel: string) => {
         if (activePanel === 'settings') {
           if (userName !== '') {
             return;

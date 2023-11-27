@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { createElement } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { Card } from '../Card/Card';
 import { CardScroll } from '../CardScroll/CardScroll';
@@ -357,10 +356,10 @@ describe('Touch', () => {
       ]);
       expect(hasDefault).toBe(true);
     });
-    it('handles onClickCapture', () => {
+    it('handles onClickCapture', async () => {
       const cb = jest.fn(() => null);
       render(<Touch onClickCapture={cb} onMove={noop} data-testid="touch" />);
-      userEvent.click(screen.getByTestId('touch'));
+      await userEvent.click(screen.getByTestId('touch'));
       expect(cb).toBeCalledTimes(1);
       cb.mockReset();
       slideRight(screen.getByTestId('touch'));
@@ -383,11 +382,11 @@ describe('Touch', () => {
       slideRight(screen.getByTestId('inner'));
       expect(clicked).toEqual(new Set());
     });
-    it('handles click after slide', () => {
+    it('handles click after slide', async () => {
       const cb = jest.fn(() => null);
       render(<Touch onClickCapture={cb} data-testid="touch" />);
       slideRight(screen.getByTestId('touch'));
-      userEvent.click(screen.getByTestId('touch'));
+      await userEvent.click(screen.getByTestId('touch'));
       expect(cb).toBeCalled();
     });
     it('does not prevent click of a button after slide of a parent on mobile', () => {

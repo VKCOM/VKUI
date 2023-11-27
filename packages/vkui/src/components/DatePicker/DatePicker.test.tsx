@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { DatePicker } from './DatePicker';
 
 const getDate = (year = 2021, month = 1, day = 1) => ({ year, month, day });
 
 describe('DatePicker', () => {
+  fakeTimers();
   baselineComponent(DatePicker, {
     // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
     //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
@@ -19,8 +19,8 @@ describe('DatePicker', () => {
       <AdaptivityProvider hasPointer>{jsx}</AdaptivityProvider>
     );
     const getByName = (name: string) => document.getElementsByName(name)[0] as HTMLInputElement;
-    const select = (name: string, value: number) =>
-      userEvent.selectOptions(getByName(name), String(value));
+    const select = async (name: string, value: number) =>
+      await userEvent.selectOptions(getByName(name), String(value));
 
     it('renders value', () => {
       render(forceCustom(<DatePicker name="date" defaultValue={getDate()} />));
@@ -30,7 +30,7 @@ describe('DatePicker', () => {
       expect(getByName('date')).toHaveValue('2021-01-01');
     });
 
-    it('fires change', () => {
+    it('fires change', async () => {
       let date = getDate();
       render(
         forceCustom(
@@ -38,15 +38,15 @@ describe('DatePicker', () => {
         ),
       );
 
-      select('year', 2019);
+      await select('year', 2019);
       expect(date).toEqual(getDate(2019, 1, 1));
       expect(getByName('date')).toHaveValue('2019-01-01');
 
-      select('month', 5);
+      await select('month', 5);
       expect(date).toEqual(getDate(2019, 5, 1));
       expect(getByName('date')).toHaveValue('2019-05-01');
 
-      select('day', 5);
+      await select('day', 5);
       expect(date).toEqual(getDate(2019, 5, 5));
       expect(getByName('date')).toHaveValue('2019-05-05');
     });
@@ -68,17 +68,17 @@ describe('DatePicker', () => {
           expect(getOptions('month')).toEqual(months);
         });
 
-        it.skip('respects min', () => {
+        it.skip('respects min', async () => {
           render(forceCustom(<DatePicker defaultValue={getDate()} min={getDate(2022, 11)} />));
           expect(getOptions('month')).toEqual(months);
-          select('year', 2022);
+          await select('year', 2022);
           expect(getOptions('month')).toEqual(['11', '12']);
         });
 
-        it.skip('respects max', () => {
+        it.skip('respects max', async () => {
           render(forceCustom(<DatePicker defaultValue={getDate()} max={getDate(2018, 2)} />));
           expect(getOptions('month')).toEqual(months);
-          select('year', 2018);
+          await select('year', 2018);
           expect(getOptions('month')).toEqual(['1', '2']);
         });
       });
@@ -86,22 +86,22 @@ describe('DatePicker', () => {
       describe('day', () => {
         const days = (count: number) => new Array(count).fill(0).map((_, i) => String(i + 1));
 
-        it('depends on month', () => {
+        it('depends on month', async () => {
           render(forceCustom(<DatePicker />));
           // allows 31 by default
           expect(getOptions('day')).toEqual(days(31));
 
-          select('month', 5);
+          await select('month', 5);
           expect(getOptions('day')).toEqual(days(31));
 
-          select('month', 4);
+          await select('month', 4);
           expect(getOptions('day')).toEqual(days(30));
         });
 
         describe('respects gap year', () => {
-          it('allows 29 by default', () => {
+          it('allows 29 by default', async () => {
             render(forceCustom(<DatePicker />));
-            select('month', 2);
+            await select('month', 2);
             expect(getOptions('day')).toEqual(days(29));
           });
 
@@ -148,11 +148,11 @@ describe('DatePicker', () => {
       expect(getInput()).toHaveAttribute('max', '2021-01-01');
     });
 
-    it('fires change', () => {
+    it('fires change', async () => {
       let date = getDate();
       render(forceNative(<DatePicker onDateChange={(v) => (date = v)} />));
 
-      userEvent.type(getInput(), '2019-05-05');
+      await userEvent.type(getInput(), '2019-05-05');
       expect(date).toEqual(getDate(2019, 5, 5));
     });
   });

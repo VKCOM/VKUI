@@ -1,28 +1,23 @@
 import * as React from 'react';
-import { act } from 'react-dom/test-utils';
-import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent } from '../../testing/utils';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { baselineComponent, fakeTimers, runAllTimers, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Tappable, TappableProps } from './Tappable';
 import styles from './Tappable.module.css';
 
-const TappableTest = (props: TappableProps) => (
-  <Tappable activeMode="Tappable--active" data-testid="tappable" {...props} />
+const TappableTest = ({ children = 'label', ...props }: TappableProps) => (
+  <Tappable activeMode="Tappable--active" data-testid="tappable" {...props}>
+    {children}
+  </Tappable>
 );
 const tappable = () => screen.getByTestId('tappable');
 
 describe('Tappable', () => {
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
+  fakeTimers();
   afterEach(() => delete window['ontouchstart']);
 
-  baselineComponent(TappableTest, {
-    // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
-    //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
-    a11y: false,
-  });
+  baselineComponent(TappableTest);
 
   it('Component: if no Component is passed Tappable becomes a div', () => {
     render(<TappableTest>Look, ma, no Component!</TappableTest>);
@@ -135,12 +130,12 @@ describe('Tappable', () => {
     expect(tappable()).toHaveAttribute('aria-disabled', 'true');
   });
 
-  it('a11y(button): custom button keyboard events', () => {
+  it('a11y(button): custom button keyboard events', async () => {
     const handleClick = jest.fn();
     render(<TappableTest onClick={handleClick}>Custom Button</TappableTest>);
 
     // gets focused on tab
-    userEvent.tab();
+    await userEvent.tab();
     expect(tappable()).toHaveFocus();
 
     // onClick gets called on Enter and Space
@@ -151,7 +146,7 @@ describe('Tappable', () => {
     expect(handleClick).toHaveBeenCalledTimes(2);
   });
 
-  it('a11y(link): custom link keyboard events', () => {
+  it('a11y(link): custom link keyboard events', async () => {
     const handleClick = jest.fn();
     render(
       <TappableTest role="link" onClick={handleClick}>
@@ -160,7 +155,7 @@ describe('Tappable', () => {
     );
 
     // gets focused on tab
-    userEvent.tab();
+    await userEvent.tab();
     expect(tappable()).toHaveFocus();
 
     // onClick gets called on Enter only
@@ -191,7 +186,7 @@ describe('Tappable', () => {
 
   describe('active', () => {
     afterEach(() => jest.clearAllMocks());
-    it('shows waves on android', () => {
+    it('shows waves on android', async () => {
       const waveCount = () => document.querySelectorAll(`.${styles.Tappable__wave}`).length;
       render(
         <AdaptivityProvider hasPointer={false}>
@@ -202,20 +197,18 @@ describe('Tappable', () => {
       );
 
       // TODO: Warning: Encountered two children with the same key
-      userEvent.click(screen.getByTestId('x'));
+      await userEvent.click(screen.getByTestId('x'));
       expect(waveCount()).toBe(1);
-      userEvent.click(screen.getByTestId('x'));
+      await userEvent.click(screen.getByTestId('x'));
       expect(waveCount()).toBe(2);
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       // removes waves
       expect(waveCount()).toBe(0);
     });
     const isActive = (e = tappable()) => e.classList.contains('Tappable--active');
-    it('activates on click', () => {
+    it('activates on click', async () => {
       render(<TappableTest />);
-      userEvent.click(tappable());
+      await userEvent.click(tappable());
       expect(isActive()).toBe(true);
       act(() => {
         jest.runOnlyPendingTimers();
@@ -233,14 +226,14 @@ describe('Tappable', () => {
       fireEvent.mouseUp(tappable());
       expect(isActive()).toBe(true);
     });
-    it('does not activate on child Tappable click', () => {
+    it('does not activate on child Tappable click', async () => {
       render(
         <Tappable data-testid="parent">
           <TappableTest data-testid="child" />
         </Tappable>,
       );
       const child = screen.getByTestId('child');
-      userEvent.click(child);
+      await userEvent.click(child);
       expect(isActive(child)).toBe(true);
       expect(isActive(screen.getByTestId('parent'))).toBe(false);
     });
@@ -282,23 +275,19 @@ describe('Tappable', () => {
       it('on hasActive=false', () => {
         const h = render(<TappableTest />);
         fireEvent.mouseDown(tappable());
-        act(() => {
-          jest.runOnlyPendingTimers();
-        });
+        runAllTimers();
         h.rerender(<TappableTest hasActive={false} />);
         expect(isActive()).toBe(false);
       });
-      it('on child hover', () => {
+      it('on child hover', async () => {
         render(
           <TappableTest>
             <Tappable data-testid="c" />
           </TappableTest>,
         );
         fireEvent.mouseDown(tappable());
-        act(() => {
-          jest.runOnlyPendingTimers();
-        });
-        userEvent.hover(screen.getByTestId('c'));
+        runAllTimers();
+        await userEvent.hover(screen.getByTestId('c'));
         expect(isActive()).toBe(false);
       });
     });
@@ -312,11 +301,11 @@ describe('Tappable', () => {
       render(<Tappable data-testid="x" />);
       expect(isHovered()).toBe(false);
     });
-    it('tracks mouse', () => {
+    it('tracks mouse', async () => {
       render(<Tappable data-testid="x" />);
-      userEvent.hover(screen.getByTestId('x'));
+      await userEvent.hover(screen.getByTestId('x'));
       expect(isHovered()).toBe(true);
-      userEvent.unhover(screen.getByTestId('x'));
+      await userEvent.unhover(screen.getByTestId('x'));
       expect(isHovered()).toBe(false);
     });
     describe('no hover when disabled', () => {
@@ -324,46 +313,46 @@ describe('Tappable', () => {
         ['as form item', 'button'],
         ['as div', 'div'],
       ] as const)('%s', (_, cmp) => {
-        it('does not hover when disabled', () => {
+        it('does not hover when disabled', async () => {
           render(<Tappable Component={cmp} data-testid="x" disabled />);
-          userEvent.hover(screen.getByTestId('x'));
+          await userEvent.hover(screen.getByTestId('x'));
           expect(isHovered()).toBe(false);
         });
-        it('suspends hover while disabled', () => {
+        it('suspends hover while disabled', async () => {
           const h = render(<Tappable Component={cmp} data-testid="x" />);
-          userEvent.hover(screen.getByTestId('x'));
+          await userEvent.hover(screen.getByTestId('x'));
           h.rerender(<Tappable Component={cmp} data-testid="x" disabled />);
           expect(isHovered()).toBe(false);
           h.rerender(<Tappable Component={cmp} data-testid="x" />);
           expect(isHovered()).toBe(true);
         });
-        it('tracks hover occurred while disabled', () => {
+        it('tracks hover occurred while disabled', async () => {
           const h = render(<Tappable Component={cmp} data-testid="x" disabled />);
-          userEvent.hover(screen.getByTestId('x'));
+          await userEvent.hover(screen.getByTestId('x'));
           h.rerender(<Tappable Component={cmp} data-testid="x" />);
           expect(isHovered()).toBe(true);
         });
       });
     });
     describe('nested hover', () => {
-      it('unhovers on child hover', () => {
+      it('unhovers on child hover', async () => {
         render(
           <Tappable data-testid="x">
             <Tappable data-testid="c" />
           </Tappable>,
         );
-        userEvent.hover(screen.getByTestId('c'));
+        await userEvent.hover(screen.getByTestId('c'));
         expect(isHovered()).toBe(false);
         fireEvent.pointerLeave(screen.getByTestId('c'));
         expect(isHovered()).toBe(true);
       });
-      it('restores hover on child unmount', () => {
+      it('restores hover on child unmount', async () => {
         const h = render(
           <Tappable data-testid="x">
             <Tappable data-testid="c" />
           </Tappable>,
         );
-        userEvent.hover(screen.getByTestId('c'));
+        await userEvent.hover(screen.getByTestId('c'));
         h.rerender(<Tappable data-testid="x" />);
         expect(isHovered()).toBe(true);
       });
@@ -372,22 +361,22 @@ describe('Tappable', () => {
           ['as form item', 'button'],
           ['as div', 'div'],
         ] as const)('%s', (_, cmp) => {
-          it('hovers on disabled child hover', () => {
+          it('hovers on disabled child hover', async () => {
             render(
               <Tappable data-testid="x">
                 <Tappable Component={cmp} data-testid="c" disabled />
               </Tappable>,
             );
-            userEvent.hover(screen.getByTestId('c'));
+            await userEvent.hover(screen.getByTestId('c'));
             expect(isHovered()).toBe(true);
           });
-          it('restores hover on child disable', () => {
+          it('restores hover on child disable', async () => {
             const h = render(
               <Tappable data-testid="x">
                 <Tappable data-testid="c" />
               </Tappable>,
             );
-            userEvent.hover(screen.getByTestId('c'));
+            await userEvent.hover(screen.getByTestId('c'));
             h.rerender(
               <Tappable data-testid="x">
                 <Tappable Component={cmp} data-testid="c" disabled />

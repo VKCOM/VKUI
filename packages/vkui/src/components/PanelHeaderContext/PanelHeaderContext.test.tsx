@@ -1,18 +1,15 @@
 import * as React from 'react';
-import { act } from 'react-dom/test-utils';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, runAllTimers, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { PanelHeaderContext } from './PanelHeaderContext';
 
 describe('PanelHeaderContext', () => {
   baselineComponent(PanelHeaderContext);
   describe('Closes', () => {
-    beforeEach(() => jest.useFakeTimers());
-    afterEach(() => jest.useRealTimers());
+    fakeTimers();
 
     it('does not close on mount', () => {
       render(
@@ -23,32 +20,32 @@ describe('PanelHeaderContext', () => {
       expect(screen.queryByTestId('xxx')).toBeNull();
     });
 
-    it('on desktop outer click', () => {
+    it('on desktop outer click', async () => {
       const onClose = jest.fn();
       render(
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
           <PanelHeaderContext opened onClose={onClose} />
         </AdaptivityProvider>,
       );
-      userEvent.click(document.body);
+      await userEvent.click(document.body);
       expect(onClose).toBeCalledTimes(1);
     });
 
-    it('on mobile fade click', () => {
+    it('on mobile fade click', async () => {
       const onClose = jest.fn();
       render(<PanelHeaderContext opened onClose={onClose} />);
-      userEvent.click(document.querySelector('.vkuiPanelHeaderContext__fade') as Element);
+      await userEvent.click(document.querySelector('.vkuiPanelHeaderContext__fade') as Element);
       expect(onClose).toBeCalledTimes(1);
     });
 
-    it('does not close on content click', () => {
+    it('does not close on content click', async () => {
       const onClose = jest.fn();
       render(
         <PanelHeaderContext opened onClose={onClose}>
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
-      userEvent.click(screen.getByTestId('xxx'));
+      await userEvent.click(screen.getByTestId('xxx'));
       expect(onClose).not.toBeCalled();
     });
 
@@ -63,9 +60,7 @@ describe('PanelHeaderContext', () => {
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(screen.queryByTestId('xxx')).toBeNull();
     });
   });

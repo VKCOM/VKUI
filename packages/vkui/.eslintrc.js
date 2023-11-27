@@ -166,6 +166,17 @@ module.exports = {
         'no-restricted-properties': 'off',
         'no-restricted-globals': 'off',
         'react/display-name': 'off',
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [
+              {
+                group: ['@testing-library/user-event'],
+                message: 'Use `userEvent` from src/testing/utils instead',
+              },
+            ],
+          },
+        ],
       },
     },
 

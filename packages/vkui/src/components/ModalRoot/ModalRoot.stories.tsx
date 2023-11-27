@@ -69,7 +69,7 @@ export const ModalRootAutoFocus: Story = {
     const [activeModal, setActiveModal] = React.useState<string | null>(MODAL_ROOT_WITH_AUTO_FOCUS);
     const inputRef = React.useRef<HTMLInputElement>(null);
 
-    const handleOpen = React.useCallback((id) => {
+    const handleOpen = React.useCallback((id: string) => {
       if (id === MODAL_ROOT_WITH_AUTO_FOCUS && inputRef.current) {
         inputRef.current.focus();
       }

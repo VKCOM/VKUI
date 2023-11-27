@@ -1,22 +1,20 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, runAllTimers } from '../../testing/utils';
+import { baselineComponent, fakeTimers, runAllTimers, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Alert } from './Alert';
 
 describe('Alert', () => {
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
+  fakeTimers();
+
   baselineComponent(Alert, {
-    // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
-    //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+    // TODO [a11y]: "ARIA dialog and alertdialog nodes should have an accessible name (aria-dialog-name)"
     a11y: false,
   });
   describe('closes', () => {
-    it.each(['overlay', 'close'])('with %s click', (trigger) => {
+    it.each(['overlay', 'close'])('with %s click', async (trigger) => {
       const onClose = jest.fn();
       render(
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
@@ -26,7 +24,7 @@ describe('Alert', () => {
       const target =
         trigger === 'overlay' ? '.vkuiPopoutWrapper__overlay' : '.vkuiModalDismissButton';
 
-      userEvent.click(document.querySelector(target) as Element);
+      await userEvent.click(document.querySelector(target) as Element);
       expect(onClose).not.toBeCalled();
       runAllTimers();
       expect(onClose).toBeCalledTimes(1);
@@ -34,7 +32,7 @@ describe('Alert', () => {
   });
   describe('calls actions', () => {
     describe.each(['android', 'ios'])('on %s', (platform) => {
-      it('calls action', () => {
+      it('calls action', async () => {
         const action = jest.fn();
         const onClose = jest.fn();
         render(
@@ -42,10 +40,10 @@ describe('Alert', () => {
             <Alert onClose={onClose} actions={[{ action, title: '__action__', mode: 'default' }]} />
           </ConfigProvider>,
         );
-        userEvent.click(screen.getByText('__action__'));
+        await userEvent.click(screen.getByText('__action__'));
         expect(action).toBeCalledTimes(1);
       });
-      it('calls action after close when autoClose=true', () => {
+      it('calls action after close when autoClose=true', async () => {
         const action = jest.fn();
         const onClose = jest.fn();
         render(
@@ -63,7 +61,7 @@ describe('Alert', () => {
             />
           </ConfigProvider>,
         );
-        userEvent.click(screen.getByText('__action__'));
+        await userEvent.click(screen.getByText('__action__'));
         expect(action).not.toBeCalled();
         expect(onClose).not.toBeCalled();
         runAllTimers();

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { Search } from './Search';
 import styles from './Search.module.css';
 
@@ -10,6 +9,7 @@ const getClearIcon = () => document.querySelector(`.${styles.Search__icon}`)!;
 const getFindButton = () => document.querySelector(`.${styles.Search__findButton}`)!;
 
 describe('Search', () => {
+  fakeTimers();
   baselineComponent(Search);
 
   describe('works uncontrolled', () => {
@@ -17,21 +17,21 @@ describe('Search', () => {
       render(<Search defaultValue="def" />);
       expect(getInput()).toHaveValue('def');
     });
-    it('manages value', () => {
+    it('manages value', async () => {
       render(<Search />);
-      userEvent.type(getInput(), 'user');
+      await userEvent.type(getInput(), 'user');
       expect(getInput()).toHaveValue('user');
     });
-    it('fires onChange', () => {
+    it('fires onChange', async () => {
       let value = '';
       render(<Search onChange={(e) => (value = e.target.value)} />);
-      userEvent.type(getInput(), 'user');
+      await userEvent.type(getInput(), 'user');
       expect(getInput()).toHaveValue('user');
       expect(value).toBe('user');
     });
-    it('clears value', () => {
+    it('clears value', async () => {
       render(<Search defaultValue="def" />);
-      userEvent.click(getClearIcon());
+      await userEvent.click(getClearIcon());
       expect(getInput()).toHaveValue('');
     });
   });
@@ -47,55 +47,55 @@ describe('Search', () => {
       render(<Search defaultValue="def" value="val" />);
       expect(getInput()).toHaveValue('val');
     });
-    it('fires onChange', () => {
+    it('fires onChange', async () => {
       let value = 'init';
       render(<Search value={value} onChange={(e) => (value = e.target.value)} />);
-      userEvent.type(getInput(), 'X');
+      await userEvent.type(getInput(), 'X');
       expect(value).toBe('initX');
     });
-    it('clears value', () => {
+    it('clears value', async () => {
       let value = 'init';
       render(<Search value={value} onChange={(e) => (value = e.target.value)} />);
-      userEvent.click(getClearIcon());
+      await userEvent.click(getClearIcon());
       expect(value).toBe('');
     });
-    it('does not change without onChange', () => {
+    it('does not change without onChange', async () => {
       render(<Search value="init" />);
-      userEvent.type(getInput(), 'user');
+      await userEvent.type(getInput(), 'user');
       expect(getInput()).toHaveValue('init');
     });
     // known bug
-    it.skip('does not clear value without onChange', () => {
+    it.skip('does not clear value without onChange', async () => {
       let value = 'init';
       render(<Search value={value} onChange={(e) => (value = e.target.value)} />);
-      userEvent.click(getClearIcon());
+      await userEvent.click(getClearIcon());
       expect(value).toBe('init');
       expect(getInput()).toHaveValue('init');
     });
   });
 
-  it('calls focus handlers', () => {
+  it('calls focus handlers', async () => {
     const onFocus = jest.fn();
     const onBlur = jest.fn();
     render(<Search onFocus={onFocus} onBlur={onBlur} />);
-    userEvent.click(getInput());
+    await userEvent.click(getInput());
     expect(onFocus).toHaveBeenCalled();
     expect(onBlur).not.toHaveBeenCalled();
-    userEvent.click(document.body);
+    await userEvent.click(document.body);
     expect(onBlur).toHaveBeenCalled();
   });
 
-  it('calls onIconClick', () => {
+  it('calls onIconClick', async () => {
     const cb = jest.fn();
     render(<Search icon={<div data-testid="icon" />} onIconClick={cb} />);
-    userEvent.click(screen.getByTestId('icon'));
+    await userEvent.click(screen.getByTestId('icon'));
     expect(cb).toHaveBeenCalled();
   });
 
-  it('calls onFindButtonClick', () => {
+  it('calls onFindButtonClick', async () => {
     const cb = jest.fn();
     render(<Search value="test" onFindButtonClick={cb} />);
-    userEvent.click(getFindButton());
+    await userEvent.click(getFindButton());
     expect(cb).toHaveBeenCalled();
   });
 });

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { useId } from '../../hooks/useId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -53,7 +52,7 @@ export const SegmentedControl = ({
   value: valueProp,
   ...restProps
 }: SegmentedControlProps) => {
-  const id = useId();
+  const id = React.useId();
 
   const [value, onChange] = useCustomEnsuredControl({
     onChange: onChangeProp,

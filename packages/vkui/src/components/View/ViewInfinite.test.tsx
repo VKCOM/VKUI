@@ -2,7 +2,13 @@ import * as React from 'react';
 import { type ComponentType, Fragment, type ReactNode } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { getRandomUsers } from '../../testing/mock';
-import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimers,
+  mockScrollContext,
+  mountTest,
+  runAllTimers,
+} from '../../testing/utils';
 import { HasChildren } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
@@ -17,13 +23,8 @@ import { SWIPE_BACK_SHIFT_THRESHOLD } from './utils';
 // Basically the same as View.test.tsx
 
 describe('ViewInfinite', () => {
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
-  baselineComponent((props: ViewInfiniteProps) => <ViewInfinite {...props} />, {
-    // TODO [a11y]: "Exceeded timeout of 5000 ms for a test.
-    //              Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
-    a11y: false,
-  });
+  fakeTimers();
+  baselineComponent(ViewInfinite);
 
   describe('With Panel', () =>
     mountTest(() => (
@@ -43,9 +44,7 @@ describe('ViewInfinite', () => {
       render(<ViewInfinite activePanel="p1">{panels}</ViewInfinite>).rerender(
         <ViewInfinite activePanel="p2">{panels}</ViewInfinite>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(document.getElementById('p1')).toBeNull();
       expect(document.getElementById('p2')).not.toBeNull();
     });
@@ -60,9 +59,7 @@ describe('ViewInfinite', () => {
           {panels}
         </ViewInfinite>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(onTransition).toBeCalledTimes(1);
       expect(onTransition).toBeCalledWith({
         from: 'p1',
@@ -81,9 +78,7 @@ describe('ViewInfinite', () => {
           {panels}
         </ViewInfinite>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(onTransition).toBeCalledWith({
         from: 'p2',
         to: 'p1',
@@ -425,9 +420,7 @@ describe('ViewInfinite', () => {
           <ViewInfinite activePanel="p1">{panels}</ViewInfinite>
         </MockScroll>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(scrollTo).toBeCalledWith(0, y);
     });
     it('resets scroll on forward navigation', () => {
@@ -444,18 +437,14 @@ describe('ViewInfinite', () => {
           <ViewInfinite activePanel="p1">{panels}</ViewInfinite>
         </MockScroll>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       scrollTo.mockReset();
       h.rerender(
         <MockScroll>
           <ViewInfinite activePanel="p2">{panels}</ViewInfinite>
         </MockScroll>,
       );
-      act(() => {
-        jest.runAllTimers();
-      });
+      runAllTimers();
       expect(scrollTo).toBeCalledWith(0, 0);
     });
   });
@@ -497,6 +486,6 @@ function setupSwipeBack({
     </Wrapper>
   );
   const component = render(<SwipeBack />);
-  act(() => jest.runAllTimers());
+  runAllTimers();
   return { view: component.getByTestId('view'), ...events, ...component, SwipeBack };
 }

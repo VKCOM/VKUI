@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
+import { createWrapper } from '../testing/createWrapper';
 import { useAdaptivityHasPointer } from './useAdaptivityHasPointer';
 
 describe(useAdaptivityHasPointer, () => {
@@ -11,18 +11,14 @@ describe(useAdaptivityHasPointer, () => {
 
   it('context hasPointer={true}', () => {
     const { result } = renderHook(useAdaptivityHasPointer, {
-      wrapper: ({ children }) => (
-        <AdaptivityProvider hasPointer={true}>{children}</AdaptivityProvider>
-      ),
+      wrapper: createWrapper(AdaptivityProvider, { hasPointer: true }),
     });
     expect(result.current).toEqual(true);
   });
 
   it('context hasPointer={false}', () => {
     const { result } = renderHook(useAdaptivityHasPointer, {
-      wrapper: ({ children }) => (
-        <AdaptivityProvider hasPointer={false}>{children}</AdaptivityProvider>
-      ),
+      wrapper: createWrapper(AdaptivityProvider, { hasPointer: false }),
     });
     expect(result.current).toEqual(false);
   });

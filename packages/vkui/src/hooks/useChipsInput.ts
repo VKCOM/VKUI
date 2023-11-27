@@ -52,7 +52,7 @@ export const useChipsInput = <Option extends ChipOption>(
     }
   }, [addOption, clearInput, getNewOptionData, fieldValue]);
   const removeOption = React.useCallback(
-    (value) => {
+    (value: any) => {
       toggleOption(getNewOptionData!(undefined, value as string), false);
     },
     [toggleOption, getNewOptionData],

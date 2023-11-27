@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { useId } from '../../hooks/useId';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -136,7 +135,7 @@ export const UsersStack = ({
   direction: directionProp = 'row',
   ...restProps
 }: UsersStackProps) => {
-  const cmpId = useId();
+  const cmpId = React.useId();
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';
   const CounterTypography = size === 'l' ? Footnote : Caption;

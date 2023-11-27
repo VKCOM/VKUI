@@ -43,7 +43,7 @@ pnpm add @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
 
 ```jsx static
 import * as React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   AdaptivityProvider,
   ConfigProvider,
@@ -79,13 +79,14 @@ const App = () => {
   );
 };
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(
   <ConfigProvider>
     <AdaptivityProvider>
       <App />
     </AdaptivityProvider>
   </ConfigProvider>,
-  document.getElementById('root'),
 );
 ```
 
