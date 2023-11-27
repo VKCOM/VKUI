@@ -34,12 +34,10 @@ export const Playground: StoryObj<AlertProps> = {
     actions: [
       {
         title: 'Отмена',
-        autoClose: true,
         mode: 'cancel',
       },
       {
         title: 'Удалить',
-        autoClose: true,
         mode: 'destructive',
       },
     ],

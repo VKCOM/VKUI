@@ -1,2 +1,1 @@
-Элемент списка `ActionSheet`. Если в `ActionSheetItem` передать `autoClose={true}`, то `ActionSheet` сам вызовет
-переданный в него `onClose`.
+Элемент списка `ActionSheet`. Если в `ActionSheetItem` передать `autoCloseDisabled={true}`, то при клике на эту опцию `ActionSheet` не будет автоматически вызывать переданный в него `onClose`, закрыть его будет необходимо самостоятельно.

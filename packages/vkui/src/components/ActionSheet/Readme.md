@@ -26,13 +26,11 @@ const baseTopTargetRef = React.useRef();
 const openBase = () =>
   setPopout(
     <ActionSheet onClose={onClose} toggleRef={baseTargetRef}>
-      <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
-      <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
-      <ActionSheetItem autoClose>Выключить комментирование</ActionSheetItem>
-      <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
-      <ActionSheetItem autoClose mode="destructive">
-        Удалить запись
-      </ActionSheetItem>
+      <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
+      <ActionSheetItem>Закрепить запись</ActionSheetItem>
+      <ActionSheetItem>Выключить комментирование</ActionSheetItem>
+      <ActionSheetItem>Закрепить запись</ActionSheetItem>
+      <ActionSheetItem mode="destructive">Удалить запись</ActionSheetItem>
     </ActionSheet>,
   );
 
@@ -40,7 +38,6 @@ const openIcons = () =>
   setPopout(
     <ActionSheet onClose={onClose} toggleRef={iconsTargetRef}>
       <ActionSheetItem
-        autoClose
         before={
           <AdaptiveIconRenderer IconCompact={Icon20WriteOutline} IconRegular={Icon28EditOutline} />
         }
@@ -48,7 +45,6 @@ const openIcons = () =>
         Редактировать профиль
       </ActionSheetItem>
       <ActionSheetItem
-        autoClose
         before={
           <AdaptiveIconRenderer
             IconCompact={Icon20ListPlayOutline}
@@ -59,7 +55,6 @@ const openIcons = () =>
         Слушать далее
       </ActionSheetItem>
       <ActionSheetItem
-        autoClose
         before={
           <AdaptiveIconRenderer IconCompact={Icon20ShareOutline} IconRegular={Icon28ShareOutline} />
         }
@@ -67,7 +62,6 @@ const openIcons = () =>
         Поделиться
       </ActionSheetItem>
       <ActionSheetItem
-        autoClose
         before={
           <AdaptiveIconRenderer IconCompact={Icon20CopyOutline} IconRegular={Icon28CopyOutline} />
         }
@@ -75,7 +69,6 @@ const openIcons = () =>
         Скопировать ссылку
       </ActionSheetItem>
       <ActionSheetItem
-        autoClose
         before={
           <AdaptiveIconRenderer
             IconCompact={platform === 'ios' ? Icon20DeleteOutline : Icon20DeleteOutlineAndroid}
@@ -99,7 +92,6 @@ const openSubtitle = () =>
             IconRegular={Icon28SettingsOutline}
           />
         }
-        autoClose
         subtitle="Авто"
       >
         Качество
@@ -111,7 +103,6 @@ const openSubtitle = () =>
             IconRegular={Icon28SubtitlesOutline}
           />
         }
-        autoClose
         subtitle="Отсутствуют"
         disabled
       >
@@ -121,7 +112,6 @@ const openSubtitle = () =>
         before={
           <AdaptiveIconRenderer IconCompact={Icon20Play} IconRegular={Icon28PlaySpeedOutline} />
         }
-        autoClose
         subtitle="Обычная"
       >
         Скорость воспроизведения
@@ -137,7 +127,6 @@ const openSelectable = () =>
         checked={filter === 'best'}
         name="filter"
         value="best"
-        autoClose
         selectable
       >
         Лучшие друзья
@@ -147,7 +136,6 @@ const openSelectable = () =>
         checked={filter === 'relatives'}
         name="filter"
         value="relatives"
-        autoClose
         selectable
       >
         Родственники
@@ -157,7 +145,6 @@ const openSelectable = () =>
         checked={filter === 'collegues'}
         name="filter"
         value="collegues"
-        autoClose
         selectable
       >
         Коллеги
@@ -167,7 +154,6 @@ const openSelectable = () =>
         checked={filter === 'school'}
         name="filter"
         value="school"
-        autoClose
         selectable
       >
         Друзья по школе
@@ -177,7 +163,6 @@ const openSelectable = () =>
         checked={filter === 'university'}
         name="filter"
         value="university"
-        autoClose
         selectable
       >
         Друзья по вузу
@@ -192,22 +177,18 @@ const openTitle = () =>
       header="Вы действительно хотите удалить это видео из Ваших видео?"
       toggleRef={titleTargetRef}
     >
-      <ActionSheetItem autoClose mode="destructive">
-        Удалить видео
-      </ActionSheetItem>
+      <ActionSheetItem mode="destructive">Удалить видео</ActionSheetItem>
     </ActionSheet>,
   );
 
 const openBaseTop = () =>
   setPopout(
     <ActionSheet onClose={onClose} toggleRef={baseTopTargetRef} placement="top-end">
-      <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
-      <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
-      <ActionSheetItem autoClose>Выключить комментирование</ActionSheetItem>
-      <ActionSheetItem autoClose>Закрепить запись</ActionSheetItem>
-      <ActionSheetItem autoClose mode="destructive">
-        Удалить запись
-      </ActionSheetItem>
+      <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
+      <ActionSheetItem>Закрепить запись</ActionSheetItem>
+      <ActionSheetItem>Выключить комментирование</ActionSheetItem>
+      <ActionSheetItem>Закрепить запись</ActionSheetItem>
+      <ActionSheetItem mode="destructive">Удалить запись</ActionSheetItem>
     </ActionSheet>,
   );
 

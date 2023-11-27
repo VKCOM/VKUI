@@ -43,7 +43,7 @@ export const AlertActions = ({
     >
       {actions.map((action, i) => {
         // Убираем
-        const { title: children, action: _, autoClose, ...restProps } = action;
+        const { title: children, action: _, autoCloseDisabled, ...restProps } = action;
 
         return (
           <React.Fragment key={i}>
