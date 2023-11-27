@@ -1,10 +1,12 @@
 import * as React from 'react';
+import { isFunction } from '@vkontakte/vkjs';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
-interface UseEnsuredControlProps<V, E extends React.ChangeEvent<any>> {
+export interface UseEnsuredControlProps<V, E extends React.ChangeEvent<any>> {
   value?: V;
-  onChange?: (e: E) => any;
   defaultValue: V;
   disabled?: boolean | undefined;
+  onChange?(this: void, e: E): any;
 }
 
 export function useEnsuredControl<V, E extends React.ChangeEvent<any>>({
@@ -29,30 +31,54 @@ export function useEnsuredControl<V, E extends React.ChangeEvent<any>>({
   return [value, onChange];
 }
 
-interface UseCustomEnsuredControlProps<V> {
+export interface UseCustomEnsuredControlProps<V> {
   value?: V;
-  onChange?: (v: V) => any;
   defaultValue: V;
   disabled?: boolean | undefined;
+  onChange?(this: void, v: V): any;
 }
 
-export function useCustomEnsuredControl<V>({
+export function useCustomEnsuredControl<V = any>({
+  value,
+  defaultValue,
   disabled,
   onChange: onChangeProp,
-  defaultValue,
-  value,
-}: UseCustomEnsuredControlProps<V>): [V | undefined, (e: V) => any] {
+}: UseCustomEnsuredControlProps<V>): [V, React.Dispatch<React.SetStateAction<V>>] {
   const isControlled = value !== undefined;
   const [localValue, setLocalValue] = React.useState(defaultValue);
+  const preservedControlledValueRef = React.useRef<V>();
+
+  useIsomorphicLayoutEffect(() => {
+    preservedControlledValueRef.current = value;
+  });
 
   const onChange = React.useCallback(
-    (v: V) => {
+    (nextValue: V | ((prevValue: any) => V)) => {
       if (disabled) {
         return;
       }
 
-      !isControlled && setLocalValue(v);
-      onChangeProp && onChangeProp(v);
+      if (isFunction(nextValue)) {
+        if (!isControlled) {
+          setLocalValue((prevValue) => {
+            const resolvedValue = nextValue(prevValue);
+            if (onChangeProp) {
+              onChangeProp(resolvedValue);
+            }
+            return resolvedValue;
+          });
+        } else if (onChangeProp) {
+          const resolvedValue = nextValue(preservedControlledValueRef.current);
+          onChangeProp(resolvedValue);
+        }
+      } else {
+        if (onChangeProp) {
+          onChangeProp(nextValue);
+        }
+        if (!isControlled) {
+          setLocalValue(nextValue);
+        }
+      }
     },
     [disabled, isControlled, onChangeProp],
   );
