@@ -6,7 +6,6 @@ import { useTimeout } from '../../hooks/useTimeout';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { blurActiveElement, canUseDOM, useDOM } from '../../lib/dom';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { Platform } from '../../lib/platform';
 import { animationEvent } from '../../lib/supportEvents';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -24,11 +23,6 @@ import {
   swipeBackExcluded,
 } from './utils';
 import styles from './View.module.css';
-
-enum SwipeBackResults {
-  fail = 1,
-  success,
-}
 
 interface Scrolls {
   [index: string]: number | undefined;
@@ -111,7 +105,7 @@ export const View = ({
   const [swipeBackShift, setSwipeBackShift] = React.useState<number>(0);
   const [swipeBackNextPanel, setSwipeBackNextPanel] = React.useState<string | null>(null);
   const [swipeBackPrevPanel, setSwipeBackPrevPanel] = React.useState<string | null>(null);
-  const [swipeBackResult, setSwipeBackResult] = React.useState<SwipeBackResults | null>(null);
+  const [swipeBackResult, setSwipeBackResult] = React.useState<'success' | 'fail' | null>(null);
 
   const [browserSwipe, setBrowserSwipe] = React.useState(false);
 
@@ -135,12 +129,9 @@ export const View = ({
   );
 
   const disableAnimation =
-    !configProvider.transitionMotionEnabled || !splitCol.animate || platform === Platform.VKCOM;
+    !configProvider.transitionMotionEnabled || !splitCol.animate || platform === 'vkcom';
   const iOSSwipeBackSimulationEnabled =
-    !disableAnimation &&
-    platform === Platform.IOS &&
-    configProvider.isWebView &&
-    Boolean(onSwipeBack);
+    !disableAnimation && platform === 'ios' && configProvider.isWebView && Boolean(onSwipeBack);
 
   const pickPanel = (id: string | null) => {
     if (id === null) {
@@ -198,10 +189,7 @@ export const View = ({
   );
 
   const { waitTransitionFinish } = useWaitTransitionFinish();
-  const animationFinishTimeout = useTimeout(
-    transitionEndHandler,
-    platform === Platform.IOS ? 600 : 300,
-  );
+  const animationFinishTimeout = useTimeout(transitionEndHandler, platform === 'ios' ? 600 : 300);
 
   const onSwipeBackSuccess = React.useCallback(() => {
     onSwipeBack && onSwipeBack();
@@ -225,10 +213,10 @@ export const View = ({
         (e?.propertyName.includes('transform') && e?.target === pickPanel(swipeBackNextPanel))
       ) {
         switch (swipeBackResult) {
-          case SwipeBackResults.fail:
+          case 'fail':
             onSwipeBackCancel();
             break;
-          case SwipeBackResults.success:
+          case 'success':
             onSwipeBackSuccess();
         }
       }
@@ -319,9 +307,9 @@ export const View = ({
       } else if (swipeBackShift >= (window!.innerWidth ?? 0)) {
         onSwipeBackSuccess();
       } else if (speed > 250 || swipeBackShift >= window!.innerWidth / 2) {
-        setSwipeBackResult(SwipeBackResults.success);
+        setSwipeBackResult('success');
       } else {
-        setSwipeBackResult(SwipeBackResults.fail);
+        setSwipeBackResult('fail');
       }
     }
   };
@@ -369,11 +357,7 @@ export const View = ({
 
     const calculatedOpacity = 1 - swipeBackShift / window.innerWidth;
     const opacityOnSwipeEnd =
-      swipeBackResult === SwipeBackResults.success
-        ? 0
-        : swipeBackResult === SwipeBackResults.fail
-        ? 1
-        : null;
+      swipeBackResult === 'success' ? 0 : swipeBackResult === 'fail' ? 1 : null;
 
     return {
       display: 'block',
@@ -451,12 +435,12 @@ export const View = ({
       waitTransitionFinish(
         pickPanel(swipeBackNextPanel),
         swipingBackTransitionEndHandler,
-        platform === Platform.IOS ? 600 : 300,
+        platform === 'ios' ? 600 : 300,
       );
     }
 
     // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
-    if (prevSwipeBackResult === SwipeBackResults.fail && !swipeBackResult && activePanel !== null) {
+    if (prevSwipeBackResult === 'fail' && !swipeBackResult && activePanel !== null) {
       scroll?.scrollTo(0, scrolls.current[activePanel]);
     }
 
@@ -499,7 +483,7 @@ export const View = ({
         {...restProps}
         className={classNames(
           styles['View'],
-          platform === Platform.IOS && classNames(styles['View--ios'], 'vkuiInternalView--ios'),
+          platform === 'ios' && classNames(styles['View--ios'], 'vkuiInternalView--ios'),
           !disableAnimation && animated && styles['View--animated'],
           !disableAnimation && swipingBack && styles['View--swiping-back'],
           disableAnimation && styles['View--no-motion'],
@@ -508,7 +492,7 @@ export const View = ({
         onMoveX={
           iOSSwipeBackSimulationEnabled
             ? handleTouchMoveXForIOSSwipeBackSimulation
-            : platform === Platform.IOS
+            : platform === 'ios'
             ? handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
             : undefined
         }
@@ -531,17 +515,15 @@ export const View = ({
                   panelId === nextPanel && styles['View__panel--next'],
                   panelId === swipeBackPrevPanel && styles['View__panel--swipe-back-prev'],
                   panelId === swipeBackNextPanel && styles['View__panel--swipe-back-next'],
-                  swipeBackResult === SwipeBackResults.success &&
-                    styles['View__panel--swipe-back-success'],
-                  swipeBackResult === SwipeBackResults.fail &&
-                    styles['View__panel--swipe-back-failed'],
+                  swipeBackResult === 'success' && styles['View__panel--swipe-back-success'],
+                  swipeBackResult === 'fail' && styles['View__panel--swipe-back-failed'],
                 )}
                 onAnimationEnd={isTransitionTarget ? transitionEndHandler : undefined}
                 ref={(el) => panelId !== undefined && (panelNodes.current[panelId] = el)}
                 style={calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
-                {platform === Platform.IOS && (
+                {platform === 'ios' && (
                   <div
                     className={styles['View__panel-overlay']}
                     style={calcPanelSwipeBackOverlayStyles(panelId)}

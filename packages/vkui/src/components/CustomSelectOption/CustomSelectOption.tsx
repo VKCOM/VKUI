@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeType } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -11,7 +10,7 @@ import styles from './CustomSelectOption.module.css';
 
 const sizeYClassNames = {
   none: styles['CustomSelectOption--sizeY-none'],
-  [SizeType.REGULAR]: styles['CustomSelectOption--sizeY-regular'],
+  ['regular']: styles['CustomSelectOption--sizeY-regular'],
 };
 
 export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -109,7 +108,7 @@ export const CustomSelectOption = ({
       aria-selected={selected}
       className={classNames(
         styles['CustomSelectOption'],
-        sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
+        sizeY !== 'compact' && sizeYClassNames[sizeY],
         hovered && !disabled && styles['CustomSelectOption--hover'],
         disabled && styles['CustomSelectOption--disabled'],
         hierarchy > 0 && styles['CustomSelectOption--hierarchy'],

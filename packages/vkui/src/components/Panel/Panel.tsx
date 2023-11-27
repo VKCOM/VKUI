@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeType } from '../../lib/adaptivity';
 import { NavIdProps } from '../../lib/getNavId';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
@@ -13,8 +12,8 @@ import styles from './Panel.module.css';
 
 const sizeXClassNames = {
   none: styles['Panel--sizeX-none'],
-  [SizeType.COMPACT]: styles['Panel--sizeX-compact'],
-  [SizeType.REGULAR]: styles['Panel--sizeX-regular'],
+  ['compact']: styles['Panel--sizeX-compact'],
+  ['regular']: styles['Panel--sizeX-regular'],
 };
 
 export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {

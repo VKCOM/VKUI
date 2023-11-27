@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { hasMouse as _hasPointer } from '@vkontakte/vkjs';
 import { BridgeAdaptivity, useBridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
-import { BREAKPOINTS, SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { BREAKPOINTS, ViewHeight, ViewWidth } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasChildren } from '../../types';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
@@ -89,37 +89,37 @@ function calculateAdaptivity(
     }
 
     if (viewWidth <= ViewWidth.MOBILE) {
-      sizeX = SizeType.COMPACT;
+      sizeX = 'compact';
     } else {
-      sizeX = SizeType.REGULAR;
+      sizeX = 'regular';
     }
 
     if (
       (viewWidth >= ViewWidth.SMALL_TABLET && _hasPointer) ||
       viewHeight <= ViewHeight.EXTRA_SMALL
     ) {
-      sizeY = SizeType.COMPACT;
+      sizeY = 'compact';
     } else {
-      sizeY = SizeType.REGULAR;
+      sizeY = 'regular';
     }
   } else if (
     LEGACY_bridge.type === 'force_mobile' ||
     LEGACY_bridge.type === 'force_mobile_compact'
   ) {
     viewWidth = ViewWidth.MOBILE;
-    sizeX = SizeType.COMPACT;
+    sizeX = 'compact';
 
     if (LEGACY_bridge.type === 'force_mobile_compact') {
-      sizeY = SizeType.COMPACT;
+      sizeY = 'compact';
     } else {
-      sizeY = SizeType.REGULAR;
+      sizeY = 'regular';
     }
   } else {
     if (sizeX === undefined && viewWidth !== undefined) {
       if (viewWidth <= ViewWidth.MOBILE) {
-        sizeX = SizeType.COMPACT;
+        sizeX = 'compact';
       } else {
-        sizeX = SizeType.REGULAR;
+        sizeX = 'regular';
       }
     }
     if (sizeY === undefined && viewWidth !== undefined && viewHeight !== undefined) {
@@ -127,9 +127,9 @@ function calculateAdaptivity(
         (viewWidth >= ViewWidth.SMALL_TABLET && _hasPointer) ||
         viewHeight <= ViewHeight.EXTRA_SMALL
       ) {
-        sizeY = SizeType.COMPACT;
+        sizeY = 'compact';
       } else {
-        sizeY = SizeType.REGULAR;
+        sizeY = 'regular';
       }
     }
   }

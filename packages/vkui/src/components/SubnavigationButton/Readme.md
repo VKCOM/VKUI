@@ -90,7 +90,7 @@ const SubnavigationButtonExample = () => {
               {
                 label: 'regular',
                 value: 'regular',
-                disabled: platform === Platform.VKCOM,
+                disabled: platform === 'vkcom',
               },
             ]}
           />

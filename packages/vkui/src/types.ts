@@ -89,3 +89,5 @@ interface Nothing {}
 export type LiteralUnion<Union, Type> = Union | (Type & Nothing);
 
 export type HTMLAttributesWithRootRef<T> = React.HTMLAttributes<T> & HasRootRef<T>;
+
+export type ValuesOfObject<T> = T[keyof T];

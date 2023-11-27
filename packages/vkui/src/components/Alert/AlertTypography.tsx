@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { HasChildren } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -15,7 +14,7 @@ export const AlertHeader = (props: AlertTypography) => {
   const platform = usePlatform();
 
   switch (platform) {
-    case Platform.IOS:
+    case 'ios':
       return <Title className={styles['Alert__header']} weight="1" level="3" {...props} />;
     default:
       return <Title className={styles['Alert__header']} weight="2" level="2" {...props} />;
@@ -25,9 +24,9 @@ export const AlertText = (props: AlertTypography) => {
   const platform = usePlatform();
 
   switch (platform) {
-    case Platform.VKCOM:
+    case 'vkcom':
       return <Footnote className={styles['Alert__text']} {...props} />;
-    case Platform.IOS:
+    case 'ios':
       return <Caption className={styles['Alert__text']} {...props} />;
     default:
       return <Text Component="span" className={styles['Alert__text']} weight="3" {...props} />;

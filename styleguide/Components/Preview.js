@@ -10,7 +10,6 @@ import {
   ConfigProvider,
   PanelHeader,
   PanelSpinner,
-  Platform,
   PlatformProvider,
   SplitCol,
   SplitLayout,
@@ -30,11 +29,9 @@ const Layout = ({ children }) => {
 
   return (
     <SplitLayout
-      header={
-        platform !== Platform.VKCOM && <PanelHeader className="Layout__header" separator={false} />
-      }
+      header={platform !== 'vkcom' && <PanelHeader className="Layout__header" separator={false} />}
     >
-      <SplitCol autoSpaced={platform !== Platform.VKCOM}>{children}</SplitCol>
+      <SplitCol autoSpaced={platform !== 'vkcom'}>{children}</SplitCol>
     </SplitLayout>
   );
 };

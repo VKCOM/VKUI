@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { expect, test } from '@vkui-e2e/test';
-import { Platform } from '../../lib/platform';
 import {
   SliderPlayground,
   SliderPlaygroundForKeyboardTest,
@@ -13,7 +12,7 @@ test('Slider', async ({ mount, expectScreenshotClippedToContent, componentPlaygr
 });
 
 test.describe('Slider with Tooltip', () => {
-  test.use({ onlyForPlatforms: [Platform.VKCOM] });
+  test.use({ onlyForPlatforms: ['vkcom'] });
   test('Slider with tooltip', async ({
     mount,
     page,
@@ -41,7 +40,7 @@ test.describe('Slider with Tooltip', () => {
  * см. https://github.com/testing-library/user-event/issues/871
  */
 test.describe('keyboard events', () => {
-  test.use({ onlyForPlatforms: [Platform.ANDROID], onlyForAppearances: ['light'] });
+  test.use({ onlyForPlatforms: ['android'], onlyForAppearances: ['light'] });
 
   test('should be focused with Tab button', async ({ page, mount, componentPlaygroundProps }) => {
     await mount(

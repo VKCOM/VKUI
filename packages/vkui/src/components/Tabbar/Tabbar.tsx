@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Tabbar.module.css';
@@ -44,7 +43,7 @@ export const Tabbar = ({ shadow = true, mode, ...restProps }: TabbarProps) => {
       baseClassName={classNames(
         'vkuiInternalTabbar',
         styles['Tabbar'],
-        platform === Platform.IOS && styles['Tabbar--ios'],
+        platform === 'ios' && styles['Tabbar--ios'],
         getItemsLayoutClassName(mode, restProps.children),
         shadow && styles['Tabbar--shadow'],
       )}

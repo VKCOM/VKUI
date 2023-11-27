@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -33,7 +32,7 @@ const HeaderContent = ({ mode, size, ...restProps }: HeaderContentProps) => {
   const isLarge = size === 'large';
 
   const platform = usePlatform();
-  if (platform === Platform.IOS) {
+  if (platform === 'ios') {
     switch (mode) {
       case 'primary':
         return isLarge ? (

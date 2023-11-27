@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { SizeType } from '../../lib/adaptivity';
 import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
@@ -67,7 +66,7 @@ export const CalendarTime = ({
   return (
     <div className={styles['CalendarTime']}>
       <div className={styles['CalendarTime__picker']}>
-        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+        <AdaptivityProvider sizeY="compact">
           <CustomSelect
             value={value.getHours()}
             options={localHours}
@@ -79,7 +78,7 @@ export const CalendarTime = ({
       </div>
       <div className={styles['CalendarTime__divider']}>:</div>
       <div className={styles['CalendarTime__picker']}>
-        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+        <AdaptivityProvider sizeY="compact">
           <CustomSelect
             value={value.getMinutes()}
             options={localMinutes}
@@ -90,7 +89,7 @@ export const CalendarTime = ({
         </AdaptivityProvider>
       </div>
       <div className={styles['CalendarTime__button']}>
-        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+        <AdaptivityProvider sizeY="compact">
           <Button mode="secondary" onClick={onClose} size="l" aria-label={doneButtonText}>
             {doneButtonText}
           </Button>

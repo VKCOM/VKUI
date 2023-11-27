@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
-import { SizeType } from '../../lib/adaptivity';
 import {
   CheckboxPlayground,
   CheckboxSimplePlayground,
@@ -25,8 +24,8 @@ test.describe('Checkbox', () => {
 
 test.describe(() => {
   const testOptions = {
-    adaptivityProviderProps: { sizeY: SizeType.REGULAR },
-  };
+    adaptivityProviderProps: { sizeY: 'regular' },
+  } as const;
   test.use(testOptions);
   test('Checkbox', async ({
     mount,

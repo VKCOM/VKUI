@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PanelHeader, PanelHeaderProps } from './PanelHeader';
@@ -27,7 +26,7 @@ describe('PanelHeader', () => {
 
   it('resolves isFixed if platform is VKCOM', () => {
     const { rerender } = render(
-      <ConfigProvider platform={Platform.VKCOM}>
+      <ConfigProvider platform="vkcom">
         <PanelHeaderTest />
       </ConfigProvider>,
     );
@@ -35,7 +34,7 @@ describe('PanelHeader', () => {
     expect(panelHeader()).not.toHaveClass('vkuiPanelHeader--fixed');
 
     rerender(
-      <ConfigProvider platform={Platform.VKCOM}>
+      <ConfigProvider platform="vkcom">
         <PanelHeaderTest fixed={true} />
       </ConfigProvider>,
     );

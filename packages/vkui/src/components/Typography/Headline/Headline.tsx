@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { SizeType } from '../../../lib/adaptivity';
 import { Typography, TypographyProps } from '../Typography';
 import styles from './Headline.module.css';
 
@@ -12,7 +11,7 @@ const stylesLevel = {
 
 const sizeYClassNames = {
   none: styles['Headline--sizeY-none'],
-  [SizeType.COMPACT]: styles['Headline--sizeY-compact'],
+  ['compact']: styles['Headline--sizeY-compact'],
 };
 
 export interface HeadlineProps extends TypographyProps {
@@ -41,7 +40,7 @@ export const Headline = ({
       weight={weight}
       className={classNames(
         className,
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         stylesLevel[level],
       )}
       {...restProps}

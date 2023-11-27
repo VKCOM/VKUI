@@ -10,7 +10,6 @@ import {
 } from '@vkontakte/icons';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Badge } from '../Badge/Badge';
 import { Cell } from '../Cell/Cell';
@@ -49,7 +48,7 @@ export const Example: Story = {
     const [activeStory, setActiveStory] = React.useState<string>('profile');
     const onStoryChange = (e: React.MouseEvent<HTMLElement>) =>
       setActiveStory(e.currentTarget.dataset.story!);
-    const hasHeader = platform !== Platform.VKCOM;
+    const hasHeader = platform !== 'vkcom';
 
     return (
       <SplitLayout

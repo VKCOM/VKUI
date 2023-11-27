@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { SizeType } from '../../../lib/adaptivity';
 import { Typography, TypographyProps } from '../Typography';
 import styles from './Subhead.module.css';
 
 const sizeYClassNames = {
   none: styles['Subhead--sizeY-none'],
-  [SizeType.COMPACT]: styles['Subhead--sizeY-compact'],
+  ['compact']: styles['Subhead--sizeY-compact'],
 };
 
 export type SubheadProps = TypographyProps;
@@ -32,7 +31,7 @@ export const Subhead = ({
       className={classNames(
         className,
         styles['Subhead'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
       {...restProps}
     />

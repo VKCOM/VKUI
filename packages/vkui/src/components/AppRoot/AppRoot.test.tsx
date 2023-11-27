@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { SizeType } from '../../lib/adaptivity';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from './AppRoot';
@@ -70,7 +69,7 @@ describe('AppRoot', () => {
         expect(adaptiveTarget).not.toHaveClass('vkui--sizeX-regular');
         // adds class
         rerender(
-          <AdaptivityProvider sizeX={SizeType.REGULAR}>
+          <AdaptivityProvider sizeX="regular">
             <AppRoot mode={mode} />
           </AdaptivityProvider>,
         );

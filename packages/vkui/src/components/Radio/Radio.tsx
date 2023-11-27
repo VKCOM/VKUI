@@ -2,8 +2,6 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -13,7 +11,7 @@ import styles from './Radio.module.css';
 
 const sizeYClassNames = {
   none: styles['Radio--sizeY-none'],
-  [SizeType.COMPACT]: styles['Radio--sizeY-compact'],
+  ['compact']: styles['Radio--sizeY-compact'],
 };
 
 const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
@@ -60,10 +58,10 @@ export const Radio = ({
       style={style}
       className={classNames(
         styles['Radio'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
-      activeEffectDelay={platform === Platform.IOS ? 100 : ACTIVE_EFFECT_DELAY}
+      activeEffectDelay={platform === 'ios' ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
       {...labelProps}

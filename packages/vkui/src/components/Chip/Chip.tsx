@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeType } from '../../lib/adaptivity';
 import { getTitleFromChildren } from '../../lib/utils';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -11,7 +10,7 @@ import styles from './Chip.module.css';
 
 const sizeYClassNames = {
   none: styles['Chip--sizeY-none'],
-  [SizeType.COMPACT]: styles['Chip--sizeY-compact'],
+  ['compact']: styles['Chip--sizeY-compact'],
 };
 
 export type ChipValue = string | number;
@@ -65,7 +64,7 @@ export const Chip = ({
     <RootComponent
       baseClassName={classNames(
         styles['Chip'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         removable && styles['Chip--removable'],
       )}
       role="option"

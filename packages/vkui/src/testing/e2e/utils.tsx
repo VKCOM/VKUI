@@ -4,9 +4,9 @@ import type {
   AdaptivityProps,
   SizeProps,
 } from '../../components/AdaptivityProvider/AdaptivityContext';
-import { BREAKPOINTS, SizeType, ViewWidth } from '../../lib/adaptivity';
+import { BREAKPOINTS, ViewWidth, ViewWidthType } from '../../lib/adaptivity';
 
-export function getAdaptivePxWidth(viewWidth: ViewWidth) {
+export function getAdaptivePxWidth(viewWidth: ViewWidthType) {
   switch (viewWidth) {
     case ViewWidth.SMALL_MOBILE:
       return BREAKPOINTS.MOBILE - 10;
@@ -29,10 +29,10 @@ type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
   const extra: PropDesc<SizeProps> = {};
   if (adaptivity && adaptivity !== 'y') {
-    extra.sizeX = Object.values(SizeType);
+    extra.sizeX = ['compact', 'regular'];
   }
   if (adaptivity && adaptivity !== 'x') {
-    extra.sizeY = Object.values(SizeType);
+    extra.sizeY = ['compact', 'regular'];
   }
   return extra;
 }

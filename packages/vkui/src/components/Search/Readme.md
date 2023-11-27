@@ -78,7 +78,7 @@ const HeaderSearch = ({ goSearch, onFiltersClick }) => {
 
   return (
     <React.Fragment>
-      <PanelHeader before={platform !== Platform.VKCOM && <PanelHeaderBack onClick={goSearch} />}>
+      <PanelHeader before={platform !== 'vkcom' && <PanelHeaderBack onClick={goSearch} />}>
         <Search
           value={search}
           onChange={onChange}
@@ -117,7 +117,7 @@ const SearchExample = () => {
 
   const hideModal = () => setActiveModal(null);
 
-  const isVKCOM = platform === Platform.VKCOM;
+  const isVKCOM = platform === 'vkcom';
 
   return (
     <SplitLayout
@@ -130,7 +130,7 @@ const SearchExample = () => {
             header={
               <ModalPageHeader
                 before={
-                  platform === Platform.ANDROID && (
+                  platform === 'android' && (
                     <PanelHeaderButton aria-label="Отмена" onClick={hideModal}>
                       <Icon24Cancel />
                     </PanelHeaderButton>
@@ -138,7 +138,7 @@ const SearchExample = () => {
                 }
                 after={
                   <PanelHeaderButton aria-label="Готово" onClick={hideModal}>
-                    {platform === Platform.IOS ? 'Готово' : <Icon24Done />}
+                    {platform === 'ios' ? 'Готово' : <Icon24Done />}
                   </PanelHeaderButton>
                 }
               >

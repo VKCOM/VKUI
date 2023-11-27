@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
-import { Appearance } from '../../helpers/appearance';
-import { Platform } from '../../lib/platform';
 import {
   AlertDesktopPlayground,
   AlertLongWordPlayground,
@@ -10,7 +8,7 @@ import {
 
 test.describe('Alert', () => {
   test.use({
-    onlyForPlatforms: [Platform.IOS, Platform.ANDROID],
+    onlyForPlatforms: ['ios', 'android'],
   });
   test('mobile', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
     await mount(<AlertMobilePlayground {...componentPlaygroundProps} />);
@@ -20,7 +18,7 @@ test.describe('Alert', () => {
 
 test.describe('Alert', () => {
   test.use({
-    onlyForPlatforms: [Platform.VKCOM],
+    onlyForPlatforms: ['vkcom'],
   });
   // В VKCOM версии возможно только горизонтальное расположение кнопок.
   test('desktop', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
@@ -31,7 +29,7 @@ test.describe('Alert', () => {
 
 test.describe('Alert', () => {
   test.use({
-    onlyForAppearances: [Appearance.LIGHT],
+    onlyForAppearances: ['light'],
   });
   test('long word', async ({
     mount,

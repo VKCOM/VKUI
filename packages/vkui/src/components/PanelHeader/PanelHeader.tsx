@@ -3,8 +3,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { HasComponent, HasDataAttribute, HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
@@ -91,7 +89,7 @@ const PanelHeaderIn = ({
     typographyNode = children;
   } else {
     typographyNode =
-      platform === Platform.VKCOM ? (
+      platform === 'vkcom' ? (
         <Text weight="2" Component={Component} {...restProps}>
           {children}
         </Text>
@@ -116,7 +114,7 @@ const PanelHeaderIn = ({
           {...afterSlotProps}
         />
       </TooltipContainer>
-      {separator && platform === Platform.VKCOM && (
+      {separator && platform === 'vkcom' && (
         <Separator className={styles['PanelHeader__separator']} wide />
       )}
     </React.Fragment>
@@ -143,7 +141,7 @@ export const PanelHeader = ({
   const platform = usePlatform();
   const { sizeX = 'none', sizeY = 'none' } = useAdaptivity();
   const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
-  let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
+  let isFixed = fixed !== undefined ? fixed : platform !== 'vkcom';
 
   return (
     <RootComponent
@@ -164,8 +162,8 @@ export const PanelHeader = ({
           classNames(styles['PanelHeader--no-before'], 'vkuiInternalPanelHeader--no-before'),
         !after && styles['PanelHeader--no-after'],
         isFixed && styles['PanelHeader--fixed'],
-        sizeX !== SizeType.COMPACT && sizeXClassNames[sizeX],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeX !== 'compact' && sizeXClassNames[sizeX],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
       getRootRef={isFixed ? getRootRef : getRef}
     >
@@ -194,7 +192,7 @@ export const PanelHeader = ({
           {children}
         </PanelHeaderIn>
       )}
-      {separator && visor && platform !== Platform.VKCOM && (
+      {separator && visor && platform !== 'vkcom' && (
         <React.Fragment>
           {adaptiveSizeX.compact && <Separator className={adaptiveSizeX.compact.className} />}
           {adaptiveSizeX.regular && (

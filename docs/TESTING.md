@@ -98,12 +98,11 @@ test.describe('Example', () => {
 // Accordion.e2e.tsx
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
-import { Platform } from '../../lib/platform';
 import { AccordionPlayground } from './Accordion.e2e-playground';
 
 test.describe(() => {
   // Будет применяться для всех тестов внутри `test.describe('Accordion')`
-  test.use({ onlyForPlatforms: [Platform.VKCOM] });
+  test.use({ onlyForPlatforms: ['vkcom'] });
   test('Accordion', async ({ mount expectScreenshotClippedToContent componentPlaygroundProps }) => {
     await mount(<AccordionPlayground {...componentPlaygroundProps} />);
     await expectScreenshotClippedToContent();

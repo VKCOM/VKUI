@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { HasComponent, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -57,8 +56,8 @@ export const TabbarItem = ({
       href={href}
       baseClassName={classNames(
         styles['TabbarItem'],
-        platform === Platform.IOS && styles['TabbarItem--ios'],
-        platform === Platform.ANDROID && styles['TabbarItem--android'],
+        platform === 'ios' && styles['TabbarItem--ios'],
+        platform === 'android' && styles['TabbarItem--android'],
         selected && styles['TabbarItem--selected'],
       )}
     >
@@ -66,10 +65,8 @@ export const TabbarItem = ({
         role="presentation"
         Component="div"
         disabled={disabled}
-        activeMode={
-          platform === Platform.IOS ? styles['TabbarItem__tappable--active'] : 'background'
-        }
-        activeEffectDelay={platform === Platform.IOS ? 0 : 300}
+        activeMode={platform === 'ios' ? styles['TabbarItem__tappable--active'] : 'background'}
+        activeEffectDelay={platform === 'ios' ? 0 : 300}
         hasHover={false}
         className={styles['TabbarItem__tappable']}
       />

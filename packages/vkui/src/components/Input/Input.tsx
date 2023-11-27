@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeType } from '../../lib/adaptivity';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { Text } from '../Typography/Text/Text';
@@ -9,7 +8,7 @@ import styles from './Input.module.css';
 
 const sizeYClassNames = {
   none: styles['Input--sizeY-none'],
-  [SizeType.COMPACT]: styles['Input--sizeY-compact'],
+  ['compact']: styles['Input--sizeY-compact'],
 };
 
 export interface InputProps
@@ -44,7 +43,7 @@ export const Input = ({
         styles['Input'],
         align === 'right' && styles['Input--align-right'],
         align === 'center' && styles['Input--align-center'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         before && styles['Input--hasBefore'],
         after && styles['Input--hasAfter'],
         className,

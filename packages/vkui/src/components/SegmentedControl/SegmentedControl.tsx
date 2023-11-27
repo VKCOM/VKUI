@@ -3,7 +3,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useId } from '../../hooks/useId';
-import { SizeType } from '../../lib/adaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -13,7 +12,7 @@ import styles from './SegmentedControl.module.css';
 
 const sizeYClassNames = {
   none: styles['SegmentedControl--sizeY-none'],
-  [SizeType.REGULAR]: styles['SegmentedControl--sizeY-regular'],
+  ['regular']: styles['SegmentedControl--sizeY-regular'],
 };
 
 export type SegmentedControlValue = string | number | undefined;
@@ -79,7 +78,7 @@ export const SegmentedControl = ({
       {...restProps}
       baseClassName={classNames(
         styles['SegmentedControl'],
-        sizeY !== SizeType.COMPACT && sizeYClassNames[sizeY],
+        sizeY !== 'compact' && sizeYClassNames[sizeY],
         size === 'l' && styles['SegmentedControl--size-l'],
       )}
     >

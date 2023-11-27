@@ -20,30 +20,28 @@ const WriteBarExample = (props) => {
 
   const SmileOutlineIcon = (
     <AdaptiveIconRenderer
-      IconCompact={platform === Platform.IOS ? Icon28SmileOutline : Icon24SmileOutline}
+      IconCompact={platform === 'ios' ? Icon28SmileOutline : Icon24SmileOutline}
       IconRegular={Icon28SmileOutline}
     />
   );
 
   const CameraOutlineIcon = (
     <AdaptiveIconRenderer
-      IconCompact={platform === Platform.IOS ? Icon28CameraOutline : Icon24CameraOutline}
+      IconCompact={platform === 'ios' ? Icon28CameraOutline : Icon24CameraOutline}
       IconRegular={Icon28CameraOutline}
     />
   );
 
   const VoiceOutlineIcon = (
     <AdaptiveIconRenderer
-      IconCompact={platform === Platform.IOS ? Icon28VoiceOutline : Icon24VoiceOutline}
+      IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}
       IconRegular={Icon28VoiceOutline}
     />
   );
 
   const KeyboardBotsOutlineIcon = (
     <AdaptiveIconRenderer
-      IconCompact={
-        platform === Platform.IOS ? Icon28KeyboardBotsOutline : Icon24KeyboardBotsOutline
-      }
+      IconCompact={platform === 'ios' ? Icon28KeyboardBotsOutline : Icon24KeyboardBotsOutline}
       IconRegular={Icon28KeyboardBotsOutline}
     />
   );

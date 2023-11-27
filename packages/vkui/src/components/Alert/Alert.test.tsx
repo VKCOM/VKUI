@@ -2,7 +2,6 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ViewWidth } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { baselineComponent, runAllTimers } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
@@ -34,7 +33,7 @@ describe('Alert', () => {
     });
   });
   describe('calls actions', () => {
-    describe.each([Platform.ANDROID, Platform.IOS])('on %s', (platform) => {
+    describe.each(['android', 'ios'])('on %s', (platform) => {
       it('calls action', () => {
         const action = jest.fn();
         const onClose = jest.fn();

@@ -25,7 +25,7 @@ const Example = () => {
     borderRadius: 8,
   };
   const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
-  const hasHeader = platform !== Platform.VKCOM;
+  const hasHeader = platform !== 'vkcom';
 
   return (
     <SplitLayout

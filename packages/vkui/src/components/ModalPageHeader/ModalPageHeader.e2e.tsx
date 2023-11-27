@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import {
   ModalPageHeaderIOSPlayground,
   ModalPageHeaderPlayground,
@@ -12,7 +11,7 @@ test.describe('ModalPageHeader', () => {
     adaptivityProviderProps: {
       viewWidth: ViewWidth.MOBILE,
     },
-    onlyForPlatforms: [Platform.ANDROID, Platform.VKCOM],
+    onlyForPlatforms: ['android', 'vkcom'],
   });
   test('ViewWidth.MOBILE', async ({
     mount,
@@ -29,7 +28,7 @@ test.describe('ModalPageHeader', () => {
     adaptivityProviderProps: {
       viewWidth: ViewWidth.DESKTOP,
     },
-    onlyForPlatforms: [Platform.ANDROID, Platform.VKCOM],
+    onlyForPlatforms: ['android', 'vkcom'],
   });
   test('ViewWidth.DESKTOP', async ({
     mount,
@@ -46,7 +45,7 @@ test.describe('ModalPageHeader', () => {
     adaptivityProviderProps: {
       viewWidth: ViewWidth.MOBILE,
     },
-    onlyForPlatforms: [Platform.IOS],
+    onlyForPlatforms: ['ios'],
   });
   test('ViewWidth.MOBILE ios only', async ({
     mount,
@@ -63,7 +62,7 @@ test.describe('ModalPageHeader', () => {
     adaptivityProviderProps: {
       viewWidth: ViewWidth.DESKTOP,
     },
-    onlyForPlatforms: [Platform.IOS],
+    onlyForPlatforms: ['ios'],
   });
   test('ViewWidth.DESKTOP ios only', async ({
     mount,

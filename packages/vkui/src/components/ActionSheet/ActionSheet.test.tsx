@@ -2,7 +2,6 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ViewWidth } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { baselineComponent, runAllTimers, waitForFloatingPosition } from '../../testing/utils';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -14,7 +13,7 @@ describe('ActionSheet', () => {
   afterAll(() => jest.useRealTimers());
   const toggle = document.createElement('div');
   const ActionSheetDesktop = (props: Partial<ActionSheetProps>) => (
-    <ConfigProvider platform={Platform.VKCOM}>
+    <ConfigProvider platform="vkcom">
       <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
         <ActionSheet toggleRef={toggle} onClose={jest.fn()} {...props} />
       </AdaptivityProvider>
@@ -151,7 +150,7 @@ describe('ActionSheet', () => {
 
   test('renders close button only on mobile iOS', () => {
     const { rerender } = render(
-      <ConfigProvider platform={Platform.IOS}>
+      <ConfigProvider platform="ios">
         <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
           <ActionSheet onClose={jest.fn()} />
         </AdaptivityProvider>
@@ -162,7 +161,7 @@ describe('ActionSheet', () => {
     expect(screen.queryByText('Отмена')).toBeTruthy();
 
     rerender(
-      <ConfigProvider platform={Platform.IOS}>
+      <ConfigProvider platform="ios">
         <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
           <ActionSheet onClose={jest.fn()} />
         </AdaptivityProvider>
@@ -173,7 +172,7 @@ describe('ActionSheet', () => {
     expect(screen.queryByText('Отмена')).toBeFalsy();
 
     rerender(
-      <ConfigProvider platform={Platform.ANDROID}>
+      <ConfigProvider platform="android">
         <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
           <ActionSheet onClose={jest.fn()} />
         </AdaptivityProvider>
@@ -184,7 +183,7 @@ describe('ActionSheet', () => {
     expect(screen.queryByText('Отмена')).toBeFalsy();
 
     rerender(
-      <ConfigProvider platform={Platform.ANDROID}>
+      <ConfigProvider platform="android">
         <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
           <ActionSheet onClose={jest.fn()} />
         </AdaptivityProvider>

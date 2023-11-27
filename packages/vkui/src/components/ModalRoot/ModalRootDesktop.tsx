@@ -6,7 +6,6 @@ import { usePrevious } from '../../hooks/usePrevious';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { useDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
-import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
@@ -59,7 +58,7 @@ export const ModalRootDesktop = ({
     isInsideModal: true,
   });
 
-  const timeout = platform === Platform.IOS ? 400 : 320;
+  const timeout = platform === 'ios' ? 400 : 320;
   const modals = React.Children.toArray(children) as React.ReactElement[];
 
   /* Анимирует сдвиг модального окна */

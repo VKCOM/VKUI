@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { List } from '../List/List';
@@ -91,7 +90,7 @@ describe('Cell', () => {
       const clickStub = jest.fn();
 
       render(
-        <ConfigProvider platform={Platform.IOS}>
+        <ConfigProvider platform="ios">
           <Cell mode="removable" onRemove={removeStub} onClick={clickStub}>
             Саша Колобов
           </Cell>

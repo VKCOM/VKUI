@@ -2,8 +2,6 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
@@ -40,7 +38,7 @@ const PanelHeaderChildren = ({ hasStatus, hasBefore, children }: PanelHeaderChil
     <Text
       className={styles['PanelHeaderContent__childrenText']}
       Component="div"
-      weight={platform === Platform.VKCOM ? '2' : undefined}
+      weight={platform === 'vkcom' ? '2' : undefined}
     >
       {children}
     </Text>
@@ -69,7 +67,7 @@ export const PanelHeaderContent = ({
         ...restProps,
         onClick,
         activeEffectDelay: 200,
-        hasActive: platform === Platform.IOS,
+        hasActive: platform === 'ios',
         activeMode: 'opacity',
       }
     : {};
@@ -82,7 +80,7 @@ export const PanelHeaderContent = ({
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
     >
       {hasReactNode(before) && <div className={styles['PanelHeaderContent__before']}>{before}</div>}
@@ -90,7 +88,7 @@ export const PanelHeaderContent = ({
         {...inProps}
         className={classNames(
           styles['PanelHeaderContent__in'],
-          !before && platform !== Platform.ANDROID && styles['PanelHeaderContent__in--centered'],
+          !before && platform !== 'android' && styles['PanelHeaderContent__in--centered'],
         )}
       >
         {hasReactNode(status) && (

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon24Cancel, Icon24Done } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -36,7 +35,7 @@ export const Example: Story = {
             <ModalPageHeader
               before={
                 <React.Fragment>
-                  {(platform === Platform.ANDROID || platform === Platform.VKCOM) && (
+                  {(platform === 'android' || platform === 'vkcom') && (
                     <PanelHeaderButton>
                       <Icon24Cancel />
                     </PanelHeaderButton>
@@ -45,12 +44,12 @@ export const Example: Story = {
               }
               after={
                 <React.Fragment>
-                  {(platform === Platform.ANDROID || platform === Platform.VKCOM) && (
+                  {(platform === 'android' || platform === 'vkcom') && (
                     <PanelHeaderButton>
                       <Icon24Done />
                     </PanelHeaderButton>
                   )}
-                  {platform === Platform.IOS && <PanelHeaderButton>Готово</PanelHeaderButton>}
+                  {platform === 'ios' && <PanelHeaderButton>Готово</PanelHeaderButton>}
                 </React.Fragment>
               }
               {...args}

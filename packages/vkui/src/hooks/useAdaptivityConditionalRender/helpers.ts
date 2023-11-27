@@ -1,4 +1,10 @@
-import { SizeType, tryToCheckIsDesktop, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import {
+  SizeTypeValues,
+  tryToCheckIsDesktop,
+  ViewHeightType,
+  ViewWidth,
+  ViewWidthType,
+} from '../../lib/adaptivity';
 import type { PlatformType } from '../../lib/platform';
 import type {
   AdaptiveDeviceType,
@@ -10,28 +16,28 @@ import type {
 } from './types';
 
 export const getAdaptiveSizeType = (
-  type: undefined | SizeType,
-  compactClassNames: Record<'mq' | SizeType.COMPACT, ElementProps>,
-  regularClassNames: Record<'mq' | SizeType.REGULAR, ElementProps>,
+  type: undefined | SizeTypeValues,
+  compactClassNames: Record<'mq' | 'compact', ElementProps>,
+  regularClassNames: Record<'mq' | 'regular', ElementProps>,
 ): AdaptiveSizeType => {
   return {
     compact:
       type === undefined
         ? compactClassNames.mq
-        : type === SizeType.COMPACT
+        : type === 'compact'
         ? compactClassNames[type]
         : false,
     regular:
       type === undefined
         ? regularClassNames.mq
-        : type === SizeType.REGULAR
+        : type === 'regular'
         ? regularClassNames[type]
         : false,
   };
 };
 
 export const getAdaptiveViewWidth = (
-  viewWidth: undefined | ViewWidth,
+  viewWidth: undefined | ViewWidthType,
   viewWidthClassNames: Record<ViewWidthCSSBreakpoints, Record<'mq' | 'forced', ElementProps>>,
 ): AdaptiveViewWidth => {
   return {
@@ -51,8 +57,8 @@ export const getAdaptiveViewWidth = (
 };
 
 export const getAdaptiveDeviceType = (
-  viewWidth: undefined | ViewWidth,
-  viewHeight: undefined | ViewHeight,
+  viewWidth: undefined | ViewWidthType,
+  viewHeight: undefined | ViewHeightType,
   hasPointer: undefined | boolean,
   platform: PlatformType,
   deviceTypeClassNames: Record<DeviceTypeCSSBreakpoints, Record<'mq' | 'forced', ElementProps>>,

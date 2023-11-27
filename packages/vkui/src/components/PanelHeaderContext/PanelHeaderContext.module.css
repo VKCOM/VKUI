@@ -77,8 +77,8 @@
 
 /**
  * Имеется ввиду
- * platform !== Platform.IOS ||
- * (platform === Platform.IOS && isDesktop)
+ * platform !== 'ios' ||
+ * (platform === 'ios' && isDesktop)
  */
 .PanelHeaderContext:not(.PanelHeaderContext--ios) .PanelHeaderContext__content,
 .PanelHeaderContext--sizeX-regular.PanelHeaderContext--ios .PanelHeaderContext__content {

@@ -1,3 +1,5 @@
+import { ValuesOfObject } from '../../types';
+
 export { BREAKPOINTS, MEDIA_QUERIES } from '../../shared/breakpoints';
 
 /**
@@ -6,13 +8,15 @@ export { BREAKPOINTS, MEDIA_QUERIES } from '../../shared/breakpoints';
  *
  * > Note: Используется порядковый номер вместо значений в пикселях... ¯\_(ツ)_/¯
  */
-export enum ViewWidth {
-  SMALL_MOBILE = 1,
-  MOBILE,
-  SMALL_TABLET,
-  TABLET,
-  DESKTOP,
-}
+export const ViewWidth = {
+  SMALL_MOBILE: 1,
+  MOBILE: 2,
+  SMALL_TABLET: 3,
+  TABLET: 4,
+  DESKTOP: 5,
+} as const;
+
+export type ViewWidthType = ValuesOfObject<typeof ViewWidth>;
 
 /**
  * Public API.
@@ -20,11 +24,13 @@ export enum ViewWidth {
  *
  * > Note: Используется порядковый номер вместо значений в пикселях... ¯\_(ツ)_/¯
  */
-export enum ViewHeight {
-  EXTRA_SMALL = 1,
-  SMALL,
-  MEDIUM,
-}
+export const ViewHeight = {
+  EXTRA_SMALL: 1,
+  SMALL: 2,
+  MEDIUM: 3,
+};
+
+export type ViewHeightType = ValuesOfObject<typeof ViewHeight>;
 
 /**
  * Public API.
@@ -34,10 +40,12 @@ export enum ViewHeight {
  * - {@link https://www.figma.com/file/2sQl2eaxsp7RDRdMOeneEC/%F0%9F%92%A0-VKUI-Common-Library-%5BBeta%5D?node-id=3220%3A0 | Figma VKUI – Адаптивность}
  * - {@link https://developer.apple.com/design/human-interface-guidelines/foundations/layout/ | Layout - Foundations - Human Interface Guidelines - Design}
  */
-export enum SizeType {
-  COMPACT = 'compact',
-  REGULAR = 'regular',
-}
+export const SizeType = {
+  COMPACT: 'compact',
+  REGULAR: 'regular',
+} as const;
+
+export type SizeTypeValues = ValuesOfObject<typeof SizeType>;
 
 export const VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP = {
   [ViewWidth.SMALL_MOBILE]: 'smallMobileMinus',

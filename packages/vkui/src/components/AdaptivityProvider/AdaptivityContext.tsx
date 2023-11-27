@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { SizeTypeValues, ViewHeightType, ViewWidthType } from '../../lib/adaptivity';
 
 export interface SizeProps {
-  sizeX?: SizeType;
-  sizeY?: SizeType;
+  sizeX?: SizeTypeValues;
+  sizeY?: SizeTypeValues;
 }
 
 export interface AdaptivityProps extends SizeProps {
   /**
    * @ignore
    */
-  viewWidth?: ViewWidth;
+  viewWidth?: ViewWidthType;
   /**
    * @ignore
    */
-  viewHeight?: ViewHeight;
+  viewHeight?: ViewHeightType;
   /**
    * @ignore
    */

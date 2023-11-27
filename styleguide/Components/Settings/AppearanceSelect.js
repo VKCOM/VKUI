@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Appearance, Link } from '@vkui';
+import { Link } from '@vkui';
 import { Setting } from '../Setting/Setting';
 
 export const AppearanceSelect = ({ onChange, value, ...restProps }) => {
@@ -13,8 +13,8 @@ export const AppearanceSelect = ({ onChange, value, ...restProps }) => {
       }
       label="appearance"
       options={[
-        { value: Appearance.LIGHT, title: Appearance.LIGHT },
-        { value: Appearance.DARK, title: Appearance.DARK },
+        { value: 'light', title: 'light' },
+        { value: 'dark', title: 'dark' },
       ]}
       onChange={onChange}
       value={value}

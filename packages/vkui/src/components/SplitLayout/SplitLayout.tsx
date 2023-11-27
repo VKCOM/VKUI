@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
 import styles from './SplitLayout.module.css';
@@ -39,7 +38,7 @@ export const SplitLayout = ({
     <PopoutRoot
       className={classNames(
         styles['SplitLayout'],
-        platform === Platform.IOS && styles['SplitLayout--ios'],
+        platform === 'ios' && styles['SplitLayout--ios'],
       )}
       popout={popout}
       modal={modal}

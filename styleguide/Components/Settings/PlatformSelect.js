@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Link, Platform } from '@vkui';
+import { Link } from '@vkui';
 import { Setting } from '../Setting/Setting';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 
 const more = '···';
 
-const platforms = [Platform.ANDROID, Platform.IOS, Platform.VKCOM, more];
+const platforms = ['android', 'ios', 'vkcom', more];
 
 export const PlatformSelect = ({ onChange, value }) => {
   const { setActiveModal } = React.useContext(StyleGuideContext);

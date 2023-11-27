@@ -2,8 +2,6 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasComponent } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
@@ -17,7 +15,7 @@ const warn = warnOnce('SimpleCell');
 
 const sizeYClassNames = {
   none: styles['SimpleCell--sizeY-none'],
-  [SizeType.COMPACT]: styles['SimpleCell--sizeY-compact'],
+  ['compact']: styles['SimpleCell--sizeY-compact'],
 };
 
 export interface SimpleCellOwnProps extends HasComponent {
@@ -113,7 +111,7 @@ export const SimpleCell = ({
 
   const hasChevron =
     expandable === 'always' ||
-    ((expandable === true || expandable === 'auto') && platform === Platform.IOS);
+    ((expandable === true || expandable === 'auto') && platform === 'ios');
 
   const hasAfter = hasReactNode(after) || hasChevron;
   const { sizeY = 'none' } = useAdaptivity();
@@ -123,7 +121,7 @@ export const SimpleCell = ({
       {...restProps}
       className={classNames(
         styles['SimpleCell'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
         multiline && styles['SimpleCell--mult'],
         className,
       )}

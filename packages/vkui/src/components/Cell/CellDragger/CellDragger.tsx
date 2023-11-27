@@ -7,7 +7,6 @@ import {
   useDraggableWithDomApi,
 } from '../../../hooks/useDraggableWithDomApi';
 import { usePlatform } from '../../../hooks/usePlatform';
-import { Platform } from '../../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { HTMLAttributesWithRootRef } from '../../../types';
 import { Touch } from '../../Touch/Touch';
@@ -29,7 +28,7 @@ export const CellDragger = ({
   ...restProps
 }: CellDraggerProps) => {
   const platform = usePlatform();
-  const Icon = platform === Platform.IOS ? Icon24ReorderIos : Icon24Reorder;
+  const Icon = platform === 'ios' ? Icon24ReorderIos : Icon24Reorder;
 
   const { dragging, onDragStart, onDragMove, onDragEnd } = useDraggableWithDomApi({
     elRef,

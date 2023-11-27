@@ -1,14 +1,9 @@
 import { detectIOS, noop } from '@vkontakte/vkjs';
 import type { Version } from '../types';
 
-export enum System {
-  IOS = 'ios',
-  UNKNOWN = '',
-}
-
 export interface BrowserInfo {
   userAgent: string;
-  system: System;
+  system: 'ios' | '';
   systemVersion: Version | null;
 }
 
@@ -19,24 +14,21 @@ export function computeBrowserInfo(userAgent = ''): BrowserInfo {
     return memoized[userAgent];
   }
 
-  let systemVersion: Version | null = null;
-  let system = System.UNKNOWN;
+  const browserInfo: BrowserInfo = {
+    userAgent,
+    system: '',
+    systemVersion: null,
+  };
 
   const { isIOS, iosMajor, iosMinor } = detectIOS(userAgent);
 
   if (isIOS) {
-    system = System.IOS;
-    systemVersion = {
+    browserInfo.system = 'ios';
+    browserInfo.systemVersion = {
       major: iosMajor,
       minor: iosMinor,
     };
   }
-
-  const browserInfo: BrowserInfo = {
-    userAgent,
-    system,
-    systemVersion,
-  };
 
   memoized[userAgent] = browserInfo;
 

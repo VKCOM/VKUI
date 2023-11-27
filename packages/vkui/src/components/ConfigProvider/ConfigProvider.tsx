@@ -16,7 +16,6 @@ import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   useConfigProvider,
-  WebviewType,
 } from './ConfigProviderContext';
 
 const warn = warnOnce('ConfigProvider');
@@ -59,7 +58,7 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps) => {
   // TODO [>=6]: Удалить данный бэкпорт
   const hasCustomPanelHeaderAfter =
     props.webviewType && props.hasCustomPanelHeaderAfter === undefined
-      ? props.webviewType === WebviewType.VKAPPS
+      ? props.webviewType === 'vkapps'
       : hasCustomPanelHeaderAfterMerged;
 
   if (process.env.NODE_ENV === 'development') {
@@ -67,7 +66,7 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps) => {
     let webviewTypeRule = '';
     if (props.webviewType) {
       webviewTypeRule =
-        props.webviewType === WebviewType.INTERNAL
+        props.webviewType === 'internal'
           ? '3. замените webviewType={WebviewType.INTERNAL} на hasCustomPanelHeaderAfterProp={false}'
           : '3. замените webviewType={WebviewType.VKAPPS} на hasCustomPanelHeaderAfterProp={true}';
     }

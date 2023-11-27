@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasComponent } from '../../types';
 import { Text } from '../Typography/Text/Text';
@@ -29,7 +28,7 @@ export const LegacyPanelHeaderContent = ({
 
   const platform = usePlatform();
 
-  return platform === Platform.VKCOM ? (
+  return platform === 'vkcom' ? (
     <Text weight="2" Component={Component} id={id}>
       {children}
     </Text>

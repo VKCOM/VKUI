@@ -71,7 +71,7 @@ const SubnavigationBarExample = () => {
     setFiltersCount(count);
   };
 
-  const isVKCOM = platform === Platform.VKCOM;
+  const isVKCOM = platform === 'vkcom';
 
   const modal = (
     <ModalRoot activeModal={filtersModalOpened ? MODAL_NAME : null} onClose={closeModal}>
@@ -79,9 +79,9 @@ const SubnavigationBarExample = () => {
         id={MODAL_NAME}
         header={
           <ModalPageHeader
-            before={platform !== Platform.IOS && <PanelHeaderClose onClick={closeModal} />}
+            before={platform !== 'ios' && <PanelHeaderClose onClick={closeModal} />}
             after={
-              platform === Platform.IOS && (
+              platform === 'ios' && (
                 <PanelHeaderButton onClick={closeModal}>
                   <Icon24Dismiss />
                 </PanelHeaderButton>

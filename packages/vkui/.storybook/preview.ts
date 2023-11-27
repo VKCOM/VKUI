@@ -6,7 +6,6 @@ import '../src/styles/adaptivity.module.css';
 
 import { Preview } from '@storybook/react';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
-import { Platform, Appearance } from '../src';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
 
 interface CustomViewPortItem {
@@ -51,7 +50,7 @@ const preview: Preview = {
   },
   globalTypes: {
     appearance: {
-      defaultValue: Appearance.LIGHT,
+      defaultValue: 'light',
     },
     hasPointer: {
       defaultValue: true,
@@ -59,10 +58,10 @@ const preview: Preview = {
     platform: {
       name: 'Platform',
       description: 'Platform for components',
-      defaultValue: Platform.ANDROID,
+      defaultValue: 'android',
       toolbar: {
         icon: 'mobile',
-        items: [Platform.ANDROID, Platform.IOS, Platform.VKCOM],
+        items: ['android', 'ios', 'vkcom'],
         title: 'Platform',
         dynamicTitle: true,
       },

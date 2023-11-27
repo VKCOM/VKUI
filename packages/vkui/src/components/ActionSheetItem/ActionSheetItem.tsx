@@ -2,8 +2,6 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { ActionSheetContext, type ActionSheetContextType } from '../ActionSheet/ActionSheetContext';
 import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -83,7 +81,7 @@ export const ActionSheetItem = ({
   }
 
   const isRich = subtitle || meta || selectable;
-  const isCentered = !isRich && !before && platform === Platform.IOS;
+  const isCentered = !isRich && !before && platform === 'ios';
 
   return (
     <Tappable
@@ -99,13 +97,13 @@ export const ActionSheetItem = ({
               isCancelItem: Boolean(isCancelItem),
             })
       }
-      activeMode={platform === Platform.IOS ? styles['ActionSheetItem--active'] : undefined}
+      activeMode={platform === 'ios' ? styles['ActionSheetItem--active'] : undefined}
       className={classNames(
         styles['ActionSheetItem'],
-        platform === Platform.IOS && styles['ActionSheetItem--ios'],
+        platform === 'ios' && styles['ActionSheetItem--ios'],
         mode === 'cancel' && styles['ActionSheetItem--mode-cancel'],
         mode === 'destructive' && styles['ActionSheetItem--mode-destructive'],
-        sizeY === SizeType.COMPACT && styles['ActionSheetItem--sizeY-compact'],
+        sizeY === 'compact' && styles['ActionSheetItem--sizeY-compact'],
         isRich && styles['ActionSheetItem--rich'],
         actionSheetMode === 'menu' && styles['ActionSheetItem--menu'],
         selectable && styles['ActionSheetItem--selectable'],
@@ -125,7 +123,7 @@ export const ActionSheetItem = ({
             isCentered && styles['ActionSheetItem--centered'],
           )}
         >
-          {platform === Platform.IOS ? (
+          {platform === 'ios' ? (
             <Title
               className={styles['ActionSheetItem__children']}
               weight={mode === 'cancel' ? '2' : '3'}

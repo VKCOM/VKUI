@@ -1,7 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { usePlatform } from '../vkui';
 import { SSRWrapper, SSRWrapperProps } from './SSR';
-import { System } from './browser';
 
 describe.each<{
   props: SSRWrapperProps;
@@ -39,7 +38,7 @@ describe.each<{
     props: {
       browserInfo: {
         userAgent: '',
-        system: System.UNKNOWN,
+        system: '',
         systemVersion: null,
       },
     },
@@ -49,7 +48,7 @@ describe.each<{
     props: {
       browserInfo: {
         userAgent: '',
-        system: System.IOS,
+        system: 'ios',
         systemVersion: null,
       },
     },

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { type BridgeAdaptivity, useBridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
-import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { ViewHeight, ViewWidth } from '../../lib/adaptivity';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
 import { AdaptivityProvider, type AdaptivityProviderProps } from './AdaptivityProvider';
@@ -98,8 +98,8 @@ describe('AdaptivityProvider', () => {
         viewHeight: ViewHeight.MEDIUM,
       });
       expect(result).toEqual({
-        sizeX: SizeType.REGULAR,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'regular',
+        sizeY: 'compact',
         viewWidth: ViewWidth.DESKTOP,
         viewHeight: ViewHeight.MEDIUM,
       });
@@ -110,8 +110,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [viewWidth] SMALL_MOBILE', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 300, 420);
       expect(result).toEqual({
-        sizeX: SizeType.COMPACT,
-        sizeY: SizeType.REGULAR,
+        sizeX: 'compact',
+        sizeY: 'regular',
         viewWidth: ViewWidth.SMALL_MOBILE,
         viewHeight: ViewHeight.SMALL,
       });
@@ -120,8 +120,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [viewWidth] MOBILE', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 320, 420);
       expect(result).toEqual({
-        sizeX: SizeType.COMPACT,
-        sizeY: SizeType.REGULAR,
+        sizeX: 'compact',
+        sizeY: 'regular',
         viewWidth: ViewWidth.MOBILE,
         viewHeight: ViewHeight.SMALL,
       });
@@ -130,8 +130,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [viewWidth] SMALL_TABLET', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 768, 420);
       expect(result).toEqual({
-        sizeX: SizeType.REGULAR,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'regular',
+        sizeY: 'compact',
         viewWidth: ViewWidth.SMALL_TABLET,
         viewHeight: ViewHeight.SMALL,
       });
@@ -140,8 +140,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [viewWidth] TABLET', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 1024, 420);
       expect(result).toEqual({
-        sizeX: SizeType.REGULAR,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'regular',
+        sizeY: 'compact',
         viewWidth: ViewWidth.TABLET,
         viewHeight: ViewHeight.SMALL,
       });
@@ -150,8 +150,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [viewWidth] DESKTOP', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 1280, 420);
       expect(result).toEqual({
-        sizeX: SizeType.REGULAR,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'regular',
+        sizeY: 'compact',
         viewWidth: ViewWidth.DESKTOP,
         viewHeight: ViewHeight.SMALL,
       });
@@ -160,8 +160,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [viewHeight] EXTRA_SMALL', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 320, 340);
       expect(result).toEqual({
-        sizeX: SizeType.COMPACT,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'compact',
+        sizeY: 'compact',
         viewWidth: ViewWidth.MOBILE,
         viewHeight: ViewHeight.EXTRA_SMALL,
       });
@@ -170,8 +170,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [viewHeight] SMALL', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 320, 415);
       expect(result).toEqual({
-        sizeX: SizeType.COMPACT,
-        sizeY: SizeType.REGULAR,
+        sizeX: 'compact',
+        sizeY: 'regular',
         viewWidth: ViewWidth.MOBILE,
         viewHeight: ViewHeight.SMALL,
       });
@@ -180,8 +180,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [viewHeight] MEDIUM', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 320, 720);
       expect(result).toEqual({
-        sizeX: SizeType.COMPACT,
-        sizeY: SizeType.REGULAR,
+        sizeX: 'compact',
+        sizeY: 'regular',
         viewWidth: ViewWidth.MOBILE,
         viewHeight: ViewHeight.MEDIUM,
       });
@@ -190,8 +190,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [both] SMALL_MOBILE / EXTRA_SMALL', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 300, 340);
       expect(result).toEqual({
-        sizeX: SizeType.COMPACT,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'compact',
+        sizeY: 'compact',
         viewWidth: ViewWidth.SMALL_MOBILE,
         viewHeight: ViewHeight.EXTRA_SMALL,
       });
@@ -200,8 +200,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [both] SMALL_TABLET / SMALL', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 768, 415);
       expect(result).toEqual({
-        sizeX: SizeType.REGULAR,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'regular',
+        sizeY: 'compact',
         viewWidth: ViewWidth.SMALL_TABLET,
         viewHeight: ViewHeight.SMALL,
       });
@@ -210,8 +210,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [both] TABLET / MEDIUM', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 1024, 720);
       expect(result).toEqual({
-        sizeX: SizeType.REGULAR,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'regular',
+        sizeY: 'compact',
         viewWidth: ViewWidth.TABLET,
         viewHeight: ViewHeight.MEDIUM,
       });
@@ -220,8 +220,8 @@ describe('AdaptivityProvider', () => {
     it('should apply bridge adaptivity [both] DESKTOP / MEDIUM', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 1280, 720);
       expect(result).toEqual({
-        sizeX: SizeType.REGULAR,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'regular',
+        sizeY: 'compact',
         viewWidth: ViewWidth.DESKTOP,
         viewHeight: ViewHeight.MEDIUM,
       });
@@ -230,8 +230,8 @@ describe('AdaptivityProvider', () => {
     it('should ignore custom mouse with bridge [viewWidth] SMALL_TABLET', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 768, 420, false);
       expect(result).toEqual({
-        sizeX: SizeType.REGULAR,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'regular',
+        sizeY: 'compact',
         viewWidth: ViewWidth.SMALL_TABLET,
         viewHeight: ViewHeight.SMALL,
       });
@@ -240,8 +240,8 @@ describe('AdaptivityProvider', () => {
     it('should use bridge force_mobile preset', () => {
       const result = renderAdaptiveProviderWithBridge('force_mobile');
       expect(result).toEqual({
-        sizeX: SizeType.COMPACT,
-        sizeY: SizeType.REGULAR,
+        sizeX: 'compact',
+        sizeY: 'regular',
         viewWidth: ViewWidth.MOBILE,
         viewHeight: undefined,
       });
@@ -250,8 +250,8 @@ describe('AdaptivityProvider', () => {
     it('should use bridge force_mobile_compact preset', () => {
       const result = renderAdaptiveProviderWithBridge('force_mobile_compact');
       expect(result).toEqual({
-        sizeX: SizeType.COMPACT,
-        sizeY: SizeType.COMPACT,
+        sizeX: 'compact',
+        sizeY: 'compact',
         viewWidth: ViewWidth.MOBILE,
         viewHeight: undefined,
       });

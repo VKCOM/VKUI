@@ -1,30 +1,24 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { Appearance } from '../../helpers/appearance';
 import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
-import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from './ConfigProvider';
-import {
-  ConfigProviderContext,
-  ConfigProviderContextInterface,
-  WebviewType,
-} from './ConfigProviderContext';
+import { ConfigProviderContext, ConfigProviderContextInterface } from './ConfigProviderContext';
 
 describe('ConfigProvider', () => {
   baselineComponent<any>(ConfigProvider, { forward: false, a11y: false, getRootRef: false });
   it('provides config context', () => {
     const config = {
-      appearance: Appearance.LIGHT,
+      appearance: 'light',
       hasCustomPanelHeaderAfter: false,
       transitionMotionEnabled: false,
-    };
+    } as const;
     const ConfigUser = () => {
       expect(React.useContext(ConfigProviderContext)).toEqual({
-        platform: Platform.ANDROID,
+        platform: 'android',
         isWebView: false,
         locale: 'ru',
-        appearance: Appearance.LIGHT,
+        appearance: 'light',
         hasCustomPanelHeaderAfter: false,
         customPanelHeaderAfterMinWidth: 90,
         transitionMotionEnabled: false,
@@ -39,19 +33,19 @@ describe('ConfigProvider', () => {
   });
   // TODO [>=6] Удалить этот тест на бэкпорт
   describe('[deprecated] test webviewType backport', () => {
-    it('convert WebviewType.INTERNAL to hasCustomPanelHeaderAfter={false}', () => {
+    it('convert internal to hasCustomPanelHeaderAfter={false}', () => {
       const config = {
-        appearance: Appearance.LIGHT,
-        webviewType: WebviewType.INTERNAL,
+        appearance: 'light',
+        webviewType: 'internal',
         transitionMotionEnabled: false,
-      };
+      } as const;
       const ConfigUser = () => {
         expect(React.useContext(ConfigProviderContext)).toEqual({
-          platform: Platform.ANDROID,
+          platform: 'android',
           isWebView: false,
           locale: 'ru',
-          appearance: Appearance.LIGHT,
-          webviewType: WebviewType.INTERNAL,
+          appearance: 'light',
+          webviewType: 'internal',
           hasCustomPanelHeaderAfter: false,
           customPanelHeaderAfterMinWidth: 90,
           transitionMotionEnabled: false,
@@ -67,17 +61,17 @@ describe('ConfigProvider', () => {
     it('convert WebviewType.VKAPPS to hasCustomPanelHeaderAfter={true}', () => {
       const config = {
         platform: undefined,
-        appearance: Appearance.LIGHT,
-        webviewType: WebviewType.VKAPPS,
+        appearance: 'light',
+        webviewType: 'vkapps',
         transitionMotionEnabled: false,
-      };
+      } as const;
       const ConfigUser = () => {
         expect(React.useContext(ConfigProviderContext)).toEqual({
-          platform: Platform.ANDROID,
+          platform: 'android',
           isWebView: false,
           locale: 'ru',
-          appearance: Appearance.LIGHT,
-          webviewType: WebviewType.VKAPPS,
+          appearance: 'light',
+          webviewType: 'vkapps',
           hasCustomPanelHeaderAfter: true,
           customPanelHeaderAfterMinWidth: 90,
           transitionMotionEnabled: false,
@@ -99,10 +93,10 @@ describe('ConfigProvider', () => {
     };
 
     const defaultConfig: ConfigProviderContextInterface = {
-      platform: Platform.VKCOM,
-      appearance: Appearance.DARK,
+      platform: 'vkcom',
+      appearance: 'dark',
       // TODO [>=6] Удалить webviewType
-      webviewType: WebviewType.INTERNAL,
+      webviewType: 'internal',
       hasCustomPanelHeaderAfter: true,
       customPanelHeaderAfterMinWidth: 90,
       transitionMotionEnabled: false,
@@ -110,14 +104,14 @@ describe('ConfigProvider', () => {
       locale: 'en',
     };
     it.each([
-      ['platform', Platform.ANDROID],
+      ['platform', 'android'],
       // TODO [>=6] Удалить webviewType
-      ['webviewType', WebviewType.VKAPPS],
+      ['webviewType', 'vkapps'],
       ['hasCustomPanelHeaderAfter', false],
       ['customPanelHeaderAfterMinWidth', 100],
       ['transitionMotionEnabled', true],
       ['isWebView', false],
-      ['platform', Appearance.LIGHT],
+      ['platform', 'light'],
       ['locale', 'ru'],
     ])('%s => %s', (prop, value) => {
       const newConfig = { [prop]: value };
@@ -134,7 +128,7 @@ describe('ConfigProvider', () => {
   });
 
   it('adds VKUITokenClassName to document.body on mount and removed on unmount', async () => {
-    const config = { appearance: Appearance.LIGHT, platform: Platform.VKCOM };
+    const config = { appearance: 'light', platform: 'vkcom' } as const;
     const ConfigUser = () => {
       return null;
     };
@@ -155,7 +149,7 @@ describe('ConfigProvider', () => {
   });
 
   it('adds VKUITokenClassName to document.body on mount and not removes if child ConfigProvider is unmounted', async () => {
-    const config = { appearance: Appearance.LIGHT, platform: Platform.VKCOM };
+    const config = { appearance: 'light', platform: 'vkcom' } as const;
     const ConfigUser = () => {
       return <div>User config</div>;
     };

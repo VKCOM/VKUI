@@ -75,7 +75,7 @@ const SideCol = () => {
 ```jsx static
 function App() {
   const platform = usePlatform();
-  const isVKCOM = platform === Platform.VKCOM;
+  const isVKCOM = platform === 'vkcom';
   const { viewWidth } = useAdaptivityConditionalRender();
 
   // ...
@@ -111,7 +111,7 @@ function App() {
 - `{ className: string }` – CSS селектор, который на основе CSS Media Query будет переключать видимость вашего
   элемента. В данном случае в `AdaptivityProvider` не передавали соответствующий параметр адаптивности.
 
-  > Например, при `<AdaptivityProvider sizeX={SizeType.COMPACT}>` значение `viewWidth.tabletPlus` будет
+  > Например, при `<AdaptivityProvider sizeX="compact">` значение `viewWidth.tabletPlus` будет
   > `{ className: "..." }`.
   >
   > ⚠️ Видимость элемента управляется через `display: none` – отсюда можно сделать вывод, что элемент будет всегда
@@ -170,7 +170,7 @@ const App = () => {
 
 Адаптивность базируется на четырёх свойствах:
 
-- `sizeX` и `sizeY` принимают значения `SizeType.REGULAR | SizeType.COMPACT`
+- `sizeX` и `sizeY` принимают значения `'regular' | 'compact'`
 - `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`
 - `viewHeight` — `ViewHeight.SMALL | ViewHeight.MEDIUM`
 

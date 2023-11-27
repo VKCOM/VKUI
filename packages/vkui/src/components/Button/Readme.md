@@ -22,7 +22,7 @@ const Example = () => {
   const platform = usePlatform();
 
   React.useEffect(() => {
-    if (platform === Platform.VKCOM) {
+    if (platform === 'vkcom') {
       setSizeY('compact');
     }
   }, [platform]);
@@ -117,7 +117,7 @@ const Example = () => {
               {
                 label: 'regular',
                 value: 'regular',
-                disabled: platform === Platform.VKCOM,
+                disabled: platform === 'vkcom',
               },
             ]}
           />

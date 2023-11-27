@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeType } from '../../lib/adaptivity';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardGrid.module.css';
 
 const sizeXClassNames = {
   none: styles['CardGrid--sizeX-none'],
-  [SizeType.COMPACT]: styles['CardGrid--sizeX-compact'],
+  ['compact']: styles['CardGrid--sizeX-compact'],
 };
 
 const stylesSize = {
@@ -39,7 +38,7 @@ export const CardGrid = ({ size = 's', spaced = false, ...restProps }: CardGridP
         'vkuiInternalCardGrid',
         spaced && styles['CardGrid--spaced'],
         stylesSize[size],
-        sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
+        sizeX !== 'regular' && sizeXClassNames[sizeX],
       )}
     />
   );

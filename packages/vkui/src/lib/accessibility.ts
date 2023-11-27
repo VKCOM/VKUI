@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ValuesOfObject } from '../types';
 
 export const FOCUSABLE_ELEMENTS_LIST = [
   'a[href]',
@@ -14,23 +15,25 @@ export const FOCUSABLE_ELEMENTS_LIST = [
   '[tabindex]:not([tabindex="-1"])',
 ];
 
-export enum Keys {
-  ENTER = 'Enter',
-  SPACE = 'Space',
-  TAB = 'Tab',
-  ESCAPE = 'Escape',
-  HOME = 'Home',
-  END = 'End',
-  ARROW_LEFT = 'ArrowLeft',
-  ARROW_RIGHT = 'ArrowRight',
-  ARROW_UP = 'ArrowUp',
-  ARROW_DOWN = 'ArrowDown',
-  PAGE_UP = 'PageUp',
-  PAGE_DOWN = 'PageDown',
-}
+export const Keys = {
+  ENTER: 'Enter',
+  SPACE: 'Space',
+  TAB: 'Tab',
+  ESCAPE: 'Escape',
+  HOME: 'Home',
+  END: 'End',
+  ARROW_LEFT: 'ArrowLeft',
+  ARROW_RIGHT: 'ArrowRight',
+  ARROW_UP: 'ArrowUp',
+  ARROW_DOWN: 'ArrowDown',
+  PAGE_UP: 'PageUp',
+  PAGE_DOWN: 'PageDown',
+} as const;
+
+export type KeysValues = ValuesOfObject<typeof Keys>;
 
 interface AccessibleKey {
-  code: Keys;
+  code: KeysValues;
   key: string[];
   keyCode: number;
 }

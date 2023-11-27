@@ -3,8 +3,6 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useKeyboard } from '../../hooks/useKeyboard';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -91,14 +89,14 @@ export const ModalCardBase = ({
 
   const size = isDesktop ? sizeProp : undefined;
   const withSafeZone =
-    !icon && (dismissButtonMode === 'inside' || (platform === Platform.IOS && !isDesktop));
+    !icon && (dismissButtonMode === 'inside' || (platform === 'ios' && !isDesktop));
 
   return (
     <RootComponent
       {...restProps}
       baseClassName={classNames(
         'vkuiInternalModalCardBase',
-        platform === Platform.IOS && styles['ModalCardBase--ios'],
+        platform === 'ios' && styles['ModalCardBase--ios'],
         isDesktop && styles['ModalCardBase--desktop'],
         withSafeZone && styles['ModalCardBase--withSafeZone'],
       )}
@@ -127,7 +125,7 @@ export const ModalCardBase = ({
           </Title>
         )}
         {hasReactNode(subheader) && (
-          <AdaptivityContext.Provider value={{ sizeY: SizeType.REGULAR }}>
+          <AdaptivityContext.Provider value={{ sizeY: 'regular' }}>
             <Subhead
               className={classNames(
                 styles['ModalCardBase__subheader'],

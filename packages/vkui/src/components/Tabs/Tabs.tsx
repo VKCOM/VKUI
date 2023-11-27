@@ -4,7 +4,6 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { pressedKey } from '../../lib/accessibility';
 import { useDOM } from '../../lib/dom';
-import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Tabs.module.css';
@@ -167,7 +166,7 @@ export const Tabs = ({
       baseClassName={classNames(
         styles['Tabs'],
         'vkuiInternalTabs',
-        platform === Platform.VKCOM && 'vkuiInternalTabs--vkcom',
+        platform === 'vkcom' && 'vkuiInternalTabs--vkcom',
         withGaps && classNames(styles['Tabs--withGaps'], 'vkuiInternalTabs--withGaps'),
         mode === 'default' && styles['Tabs--mode-default'],
       )}

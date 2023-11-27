@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import vkBridge from '@vkontakte/vk-bridge';
-import { Platform } from '../../lib/platform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUsers } from '../../testing/mock';
 import { Alert } from '../Alert/Alert';
@@ -135,7 +134,7 @@ export const SwipeBlockExample: Story = {
     React.useEffect(() => {
       // В стандартных мини-приложениях делайте так:
       void vkBridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
-      // В мини-приложениях `WebviewType.INTERNAL` делайте так:
+      // В мини-приложениях `'internal'` делайте так:
       void vkBridge.send(isFirst ? 'VKWebAppEnableSwipeBack' : 'VKWebAppDisableSwipeBack');
     }, [isFirst]);
 
@@ -166,7 +165,7 @@ export const SwipeBlockExample: Story = {
     );
 
     return (
-      <ConfigProviderOverride platform={Platform.IOS} isWebView>
+      <ConfigProviderOverride platform="ios" isWebView>
         <SplitLayout popout={popoutWithRestriction}>
           <SplitCol>
             <View

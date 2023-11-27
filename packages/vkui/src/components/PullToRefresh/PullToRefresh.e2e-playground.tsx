@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { Platform } from '../../lib/platform';
 import { Div } from '../Div/Div';
 import { PullToRefresh, type PullToRefreshProps } from './PullToRefresh';
 
@@ -9,7 +8,7 @@ export const PullToRefreshPlayground = (
 ) => {
   const { paddingLeft, ...playgroundProps } = props;
   return (
-    <ComponentPlayground {...playgroundProps} platform={Platform.VKCOM}>
+    <ComponentPlayground {...playgroundProps} platform="vkcom">
       {({ ...props }: PullToRefreshProps) => (
         <Div style={{ width: '300px', paddingLeft }}>
           <PullToRefresh {...props}>

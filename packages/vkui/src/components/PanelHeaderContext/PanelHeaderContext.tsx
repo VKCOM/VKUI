@@ -4,9 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
-import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
-import { Platform } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
@@ -15,8 +13,8 @@ import styles from './PanelHeaderContext.module.css';
 
 const sizeXClassNames = {
   none: styles['PanelHeaderContext--sizeX-none'],
-  [SizeType.COMPACT]: styles['PanelHeaderContext--sizeX-compact'],
-  [SizeType.REGULAR]: styles['PanelHeaderContext--sizeX-regular'],
+  ['compact']: styles['PanelHeaderContext--sizeX-compact'],
+  ['regular']: styles['PanelHeaderContext--sizeX-regular'],
 };
 
 export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -45,7 +43,7 @@ export const PanelHeaderContext = ({
     opened && setVisible(true);
   }, [opened]);
 
-  useScrollLock(platform !== Platform.VKCOM && opened);
+  useScrollLock(platform !== 'vkcom' && opened);
 
   // start closing on outer click
   useGlobalEventListener(
@@ -75,7 +73,7 @@ export const PanelHeaderContext = ({
       {...restProps}
       className={classNames(
         styles['PanelHeaderContext'],
-        platform === Platform.IOS && styles['PanelHeaderContext--ios'],
+        platform === 'ios' && styles['PanelHeaderContext--ios'],
         opened && styles['PanelHeaderContext--opened'],
         closing && styles['PanelHeaderContext--closing'],
         sizeXClassNames[sizeX],

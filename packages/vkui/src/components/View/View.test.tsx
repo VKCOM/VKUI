@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { type ComponentType, Fragment, type ReactNode } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { Platform } from '../../lib/platform';
 import { getRandomUsers } from '../../testing/mock';
 import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
 import { HasChildren } from '../../types';
@@ -481,7 +480,7 @@ function setupSwipeBack({
   };
   const SwipeBack = (p: Partial<ViewProps>) => (
     <Wrapper>
-      <ConfigProvider platform={Platform.IOS} isWebView>
+      <ConfigProvider platform="ios" isWebView>
         <View
           data-testid="view"
           id="scroll"

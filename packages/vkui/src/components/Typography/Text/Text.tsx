@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { SizeType } from '../../../lib/adaptivity';
 import { Typography, TypographyProps } from '../Typography';
 import styles from './Text.module.css';
 
 const sizeYClassNames = {
   none: styles['Text--sizeY-none'],
-  [SizeType.COMPACT]: styles['Text--sizeY-compact'],
+  ['compact']: styles['Text--sizeY-compact'],
 };
 
 export type TextProps = TypographyProps;
@@ -32,7 +31,7 @@ export const Text = ({
       className={classNames(
         className,
         styles['Text'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
       {...restProps}
     />

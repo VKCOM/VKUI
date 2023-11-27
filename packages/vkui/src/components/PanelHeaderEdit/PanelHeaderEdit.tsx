@@ -6,7 +6,6 @@ import {
   Icon28EditOutline,
 } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 
@@ -39,7 +38,7 @@ export const PanelHeaderEdit = ({
 
   return (
     <PanelHeaderButton aria-label={iOSText} {...restProps}>
-      {platform === Platform.IOS ? (
+      {platform === 'ios' ? (
         iOSText
       ) : (
         <AdaptiveIconRenderer

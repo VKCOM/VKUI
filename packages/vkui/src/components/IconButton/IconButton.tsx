@@ -2,8 +2,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SizeType } from '../../lib/adaptivity';
-import { Platform } from '../../lib/platform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { HasChildren } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
@@ -11,7 +9,7 @@ import styles from './IconButton.module.css';
 
 const sizeYClassNames = {
   none: styles['IconButton--sizeY-none'],
-  [SizeType.COMPACT]: styles['IconButton--sizeY-compact'],
+  ['compact']: styles['IconButton--sizeY-compact'],
 };
 
 export interface IconButtonProps extends TappableProps, HasChildren {}
@@ -41,8 +39,8 @@ export const IconButton = ({ children, className, ...restProps }: IconButtonProp
       {...restProps}
       className={classNames(
         styles['IconButton'],
-        sizeY !== SizeType.REGULAR && sizeYClassNames[sizeY],
-        platform === Platform.IOS && styles['IconButton--ios'],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        platform === 'ios' && styles['IconButton--ios'],
         className,
       )}
     >

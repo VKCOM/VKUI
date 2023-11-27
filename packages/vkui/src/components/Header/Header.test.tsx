@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Fragment } from 'react';
 import { render, screen } from '@testing-library/react';
-import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Header } from './Header';
@@ -13,7 +12,7 @@ describe('Header', () => {
 
   it('[typography] HeaderContent is h2 on ANDROID regardless of mode and size', () => {
     render(
-      <ConfigProvider platform={Platform.ANDROID}>
+      <ConfigProvider platform="android">
         <Header mode="primary">Русский</Header>
         <Header mode="secondary">English</Header>
         <Header mode="tertiary">Espanõl</Header>
@@ -38,7 +37,7 @@ describe('Header', () => {
 
   it('[typography] HeaderContent is h2 on IOS regardless of mode and size', () => {
     render(
-      <ConfigProvider platform={Platform.IOS}>
+      <ConfigProvider platform="ios">
         <Header mode="primary">Русский</Header>
         <Header mode="secondary">English</Header>
         <Header mode="tertiary">Espanõl</Header>
@@ -63,7 +62,7 @@ describe('Header', () => {
 
   it('[typography] HeaderContent is h2 on VKCOM regardless of mode and size', () => {
     render(
-      <ConfigProvider platform={Platform.VKCOM}>
+      <ConfigProvider platform="vkcom">
         <Header mode="primary">Русский</Header>
         <Header mode="secondary">English</Header>
         <Header mode="tertiary">Espanõl</Header>
@@ -102,13 +101,13 @@ describe('Header', () => {
   it('[typography] HeaderAside is span regardless of platform', () => {
     render(
       <Fragment>
-        <ConfigProvider platform={Platform.ANDROID}>
+        <ConfigProvider platform="android">
           <Header aside="Русский" />
         </ConfigProvider>
-        <ConfigProvider platform={Platform.IOS}>
+        <ConfigProvider platform="ios">
           <Header aside="English" />
         </ConfigProvider>
-        <ConfigProvider platform={Platform.VKCOM}>
+        <ConfigProvider platform="vkcom">
           <Header aside="Espanõl" />
         </ConfigProvider>
       </Fragment>,

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { SizeType } from '../../lib/adaptivity';
 import {
   AdaptivityProvider,
   AdaptivityProviderProps,
@@ -18,7 +17,7 @@ export const DatePickerPlayground = (props: ComponentPlaygroundProps) => {
         {
           defaultValue: [undefined, { day: 2, month: 4, year: 1994 }],
           hasPointer: [true, false],
-          sizeY: [SizeType.COMPACT, SizeType.REGULAR],
+          sizeY: ['compact', 'regular'],
         },
       ]}
     >

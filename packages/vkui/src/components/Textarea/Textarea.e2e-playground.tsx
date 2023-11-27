@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { BREAKPOINTS } from '../../shared/breakpoints';
-import { SizeType } from '../../vkui';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
 import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
@@ -53,7 +52,7 @@ export const TextareaStatePlayground = ({ appearance }: ComponentPlaygroundProps
       }}
     >
       <AppearanceProvider appearance={appearance}>
-        <AdaptivityProvider sizeY={SizeType.REGULAR}>
+        <AdaptivityProvider sizeY="regular">
           <Div style={{ padding: 10 }}>
             <Textarea id="textarea" />
           </Div>

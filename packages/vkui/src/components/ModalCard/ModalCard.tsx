@@ -7,7 +7,6 @@ import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import { ModalCardBase, ModalCardBaseProps } from '../ModalCardBase/ModalCardBase';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
-import { ModalType } from '../ModalRoot/types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './ModalCard.module.css';
 
@@ -44,7 +43,7 @@ export const ModalCard = ({
   const platform = usePlatform();
 
   const modalContext = React.useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId({ nav, id }, warn), ModalType.CARD);
+  const { refs } = useModalRegistry(getNavId({ nav, id }, warn), 'card');
   const rootRef = useExternRef(getRootRef, refs.modalElement);
 
   const contextValue = React.useMemo(() => ({ labelId: `${id}-label` }), [id]);

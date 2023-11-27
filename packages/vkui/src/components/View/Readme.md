@@ -235,7 +235,7 @@ const SettingsPanelContent = ({ name, onChangeName }) => {
   );
 };
 
-<ConfigProvider platform={Platform.IOS} isWebView>
+<ConfigProvider platform={'ios'} isWebView>
   <App />
 </ConfigProvider>;
 ```
@@ -355,9 +355,7 @@ const Example = () => {
 
   const swipeViewActivePanel = swipeViewHistory[swipeViewHistory.length - 1];
   return (
-    <ConfigProvider
-      {...(activeView === 'swipeView' ? { platform: Platform.IOS, isWebView: true } : {})}
-    >
+    <ConfigProvider {...(activeView === 'swipeView' ? { platform: 'ios', isWebView: true } : {})}>
       <SplitLayout>
         <SplitCol>
           <Root activeView={activeView}>

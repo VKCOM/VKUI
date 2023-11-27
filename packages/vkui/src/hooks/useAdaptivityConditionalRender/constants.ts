@@ -1,24 +1,23 @@
-import { SizeType } from '../../lib/adaptivity';
 import styles from '../../styles/adaptivity.module.css';
 
 export const sizeXCompactClassNames = {
   mq: { className: styles['-sizeX--compact-mq'] },
-  [SizeType.COMPACT]: { className: styles['-sizeX--compact-forced'] },
+  ['compact']: { className: styles['-sizeX--compact-forced'] },
 };
 
 export const sizeXRegularClassNames = {
   mq: { className: styles['-sizeX--regular-mq'] },
-  [SizeType.REGULAR]: { className: styles['-sizeX--regular-forced'] },
+  ['regular']: { className: styles['-sizeX--regular-forced'] },
 };
 
 export const sizeYCompactClassNames = {
   mq: { className: styles['-sizeY--compact-mq'] },
-  [SizeType.COMPACT]: { className: styles['-sizeY--compact-forced'] },
+  ['compact']: { className: styles['-sizeY--compact-forced'] },
 };
 
 export const sizeYRegularClassNames = {
   mq: { className: styles['-sizeY--regular-mq'] },
-  [SizeType.REGULAR]: { className: styles['-sizeY--regular-forced'] },
+  ['regular']: { className: styles['-sizeY--regular-forced'] },
 };
 
 export const viewWidthClassNames = {

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Platform } from '../../lib/platform';
 import { AlertActionInterface, AlertProps } from './Alert';
 import { AlertAction } from './AlertAction';
 import styles from './Alert.module.css';
@@ -32,7 +31,7 @@ export const AlertActions = ({
   const platform = usePlatform();
 
   const direction: AlertProps['actionsLayout'] =
-    platform === Platform.VKCOM ? 'horizontal' : actionsLayout;
+    platform === 'vkcom' ? 'horizontal' : actionsLayout;
 
   return (
     <div

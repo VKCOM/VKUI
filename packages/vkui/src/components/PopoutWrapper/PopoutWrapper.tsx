@@ -4,7 +4,6 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useDOM } from '../../lib/dom';
-import { Platform } from '../../lib/platform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutWrapper.module.css';
@@ -50,7 +49,7 @@ export const PopoutWrapper = ({
       setOpened(true);
     }
   };
-  const animationFinishFallback = useTimeout(onFadeInEnd, platform === Platform.IOS ? 300 : 200);
+  const animationFinishFallback = useTimeout(onFadeInEnd, platform === 'ios' ? 300 : 200);
   React.useEffect(() => {
     !opened && animationFinishFallback.set();
   }, [animationFinishFallback, opened]);

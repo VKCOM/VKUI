@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Platform } from '@vkui';
 
 /**
  * Возвращает ссылку на onlyVariablesLocal платформы
@@ -32,7 +31,7 @@ function usePlatformStyleOne(platform, doc = document) {
 
   React.useEffect(() => {
     if (
-      [Platform.ANDROID, Platform.IOS, Platform.VKCOM].includes(platform.replace('Dark', '')) ||
+      ['android', 'ios', 'vkcom'].includes(platform.replace('Dark', '')) ||
       doc.querySelector(`link[href="${onlyVariablesLocalURL(platform)}"]`)
     ) {
       setLoaded(true);

@@ -15,7 +15,6 @@
 // 1. Расширяем Playwright под свои нужды.
 import { devices, expect, test as testBase } from '@playwright/experimental-ct-react17';
 import type { PlaywrightTestConfig } from '@playwright/test';
-import { Platform } from '../../lib/platform';
 import { screenshotWithClipToContent } from './screenshotWithClipToContent';
 import type {
   InternalVKUITestOptions,
@@ -28,7 +27,7 @@ import { generateCustomScreenshotName } from './utils';
 export type { VKUITestOptions } from './types';
 
 export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & VKUITestHelpers>({
-  platform: [Platform.ANDROID, { option: true }],
+  platform: ['android', { option: true }],
   appearance: ['light', { option: true }],
 
   adaptivityProviderProps: [null, { option: true }],
@@ -114,6 +113,3 @@ export type { PlaywrightTestConfig, ReporterDescription } from '@playwright/test
 export type TestProject = Exclude<PlaywrightTestConfig<VKUITestOptions>['projects'], undefined>;
 export type Devices = typeof devices;
 export type DeviceKey = keyof Devices;
-
-// 4. Из-за enum типов приходится экспортировать для использования в playwright-ct.config.ts.
-export { Platform as PlaywrightConfigPlatform } from '../../lib/platform';

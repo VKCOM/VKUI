@@ -324,7 +324,6 @@ export type { ConfigProviderProps } from './components/ConfigProvider/ConfigProv
 export {
   useConfigProvider,
   ConfigProviderContext,
-  WebviewType,
 } from './components/ConfigProvider/ConfigProviderContext';
 export { AppearanceProvider } from './components/AppearanceProvider/AppearanceProvider';
 export type { AppearanceProviderProps } from './components/AppearanceProvider/AppearanceProvider';

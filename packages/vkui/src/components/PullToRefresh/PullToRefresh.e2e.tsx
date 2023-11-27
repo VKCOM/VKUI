@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
-import { Platform } from '../../lib/platform';
 import { PullToRefreshPlayground } from './PullToRefresh.e2e-playground';
 
 test.describe('PullToRefresh', () => {
   // we are interested in VKCOM only as we need to test here mostly
   // whether the spinner is positioned properly
-  test.use({ onlyForPlatforms: [Platform.VKCOM], onlyForAppearances: ['light'] });
+  test.use({ onlyForPlatforms: ['vkcom'], onlyForAppearances: ['light'] });
 
   test('renders spinner properly in default environment', async ({
     page,

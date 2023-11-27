@@ -3,14 +3,13 @@ import { Icon16Moon, Icon16Sun } from '@vkontakte/icons';
 import { useGlobals } from '@storybook/manager-api';
 import { IconButton } from '@storybook/components';
 import { PARAM_KEY } from './constants';
-import { Appearance } from '../../../src';
 
 export const AppearanceSwitch = () => {
   const [globals, updateGlobals] = useGlobals();
-  const isDarkTheme = globals[PARAM_KEY] === Appearance.DARK;
+  const isDarkTheme = globals[PARAM_KEY] === 'dark';
 
   const toggleTheme = React.useCallback(() => {
-    updateGlobals({ [PARAM_KEY]: isDarkTheme ? Appearance.LIGHT : Appearance.DARK });
+    updateGlobals({ [PARAM_KEY]: isDarkTheme ? 'light' : 'dark' });
   }, [isDarkTheme, updateGlobals]);
 
   const title = isDarkTheme ? 'Turn the light theme' : 'Turn the dark theme';
