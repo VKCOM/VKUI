@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEventListener } from '../../hooks/useEventListener';
-import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
+import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { Popper, PopperCommonProps } from '../Popper/Popper';
@@ -61,7 +61,7 @@ export const HoverPopper = ({
     setShown(false);
   }, hideDelay);
 
-  const [childRef, child] = usePatchChildrenRef(children);
+  const [childRef, child] = usePatchChildren(children);
 
   const onTargetEnter = () => {
     hideTimeout.clear();

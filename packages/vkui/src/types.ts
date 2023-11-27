@@ -91,3 +91,9 @@ export type LiteralUnion<Union, Type> = Union | (Type & Nothing);
 export type HTMLAttributesWithRootRef<T> = React.HTMLAttributes<T> & HasRootRef<T>;
 
 export type ValuesOfObject<T> = T[keyof T];
+
+export type GetPropsWithFunctionKeys<T> = {
+  [K in keyof T]: T[K] extends (...args: any[]) => any ? K : never;
+}[keyof T];
+
+export type PickOnlyFunctionProps<T> = Pick<T, GetPropsWithFunctionKeys<T>>;

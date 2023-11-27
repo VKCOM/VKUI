@@ -89,3 +89,21 @@ export const excludeKeysWithUndefined = <T extends Record<string | number | symb
   }
   return filteredObj;
 };
+
+export const isDOMTypeElement = <
+  P extends React.HTMLAttributes<T> | React.SVGAttributes<T>,
+  T extends Element,
+>(
+  element: React.ReactElement,
+): element is Omit<React.DOMElement<P, T>, 'ref'> & { ref?: React.Ref<T> | undefined } =>
+  typeof element.type === 'string';
+
+export function isValidNotReactFragmentElement(
+  children: Parameters<typeof React.isValidElement>[0],
+): children is React.ReactElement<Record<PropertyKey, any>> {
+  return (
+    React.isValidElement(children) &&
+    // @ts-expect-error: TS2339 $$typeof всегда symbol, в отличии от type, благодаря этому пропускаем лишние проверки на тип.
+    children.$$typeof !== Symbol.for('react.fragment')
+  );
+}

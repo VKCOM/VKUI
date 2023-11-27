@@ -3,7 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
+import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useDOM } from '../../lib/dom';
 import { FocusTrap, FocusTrapProps } from '../FocusTrap/FocusTrap';
@@ -88,7 +88,7 @@ export const Popover = ({
 
   const patchedPopperRef = useExternRef<HTMLDivElement>(setPopperNode, getRef);
 
-  const [childRef, child] = usePatchChildrenRef(children);
+  const [childRef, child] = usePatchChildren(children);
 
   const setShown = (value: boolean) => {
     if (typeof shownProp !== 'boolean') {
