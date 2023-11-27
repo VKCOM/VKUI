@@ -2,7 +2,7 @@ import * as React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import { setRef } from '../lib/utils';
 import type { HasRootRef } from '../types';
-import { usePatchChildrenRef } from './usePatchChildrenRef';
+import { usePatchChildren } from './usePatchChildren';
 
 const ComponentWithGetRootRef = ({
   getRootRef,
@@ -22,7 +22,7 @@ const WrapperWithUsePatchChildrenRef = ({
   refHook,
   ...restProps
 }: WrapperWithUsePatchChildrenRefProps) => {
-  const [childRef, child] = usePatchChildrenRef<HTMLDivElement>(children, restProps, refHook);
+  const [childRef, child] = usePatchChildren<HTMLDivElement>(children, restProps, refHook);
 
   React.useEffect(() => {
     if (childRef.current && childRefProp) {
@@ -33,7 +33,7 @@ const WrapperWithUsePatchChildrenRef = ({
   return <div data-testid="child">{child}</div>;
 };
 
-describe(usePatchChildrenRef, () => {
+describe(usePatchChildren, () => {
   it.each([
     { type: 'element', refPropKey: 'childRef' },
     { type: 'element', refPropKey: 'refHook' },

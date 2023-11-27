@@ -45,8 +45,10 @@ type ChildrenElement<T> =
  * const { ref } = useSomeHook();
  * const [childRef, child] = usePatchChildrenRef(children, undefined, ref);
  * ```
+ *
+ * @private
  */
-export const usePatchChildrenRef = <ElementType extends HTMLElement = HTMLElement>(
+export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
   children?: ChildrenElement<ElementType>,
   injectProps?: InjectProps<ElementType>,
   externRef?: React.Ref<ElementType>,
