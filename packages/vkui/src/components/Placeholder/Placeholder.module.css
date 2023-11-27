@@ -8,7 +8,8 @@
 }
 
 .Placeholder--withPadding {
-  padding: 48px 32px;
+  padding-block: 48px;
+  padding-inline: 32px;
 }
 
 .Placeholder--stretched {

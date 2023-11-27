@@ -83,13 +83,15 @@
 .PanelHeaderContext:not(.PanelHeaderContext--ios) .PanelHeaderContext__content,
 .PanelHeaderContext--sizeX-regular.PanelHeaderContext--ios .PanelHeaderContext__content {
   border-radius: 12px;
-  padding: 8px 0;
+  padding-block: 8px;
+  padding-inline: 0;
 }
 
 @media (--sizeX-regular) {
   .PanelHeaderContext--sizeX-none.PanelHeaderContext--ios .PanelHeaderContext__content {
     border-radius: 12px;
-    padding: 8px 0;
+    padding-block: 8px;
+    padding-inline: 0;
   }
 }
 
@@ -98,7 +100,8 @@
  */
 
 .PanelHeaderContext--sizeX-regular .PanelHeaderContext__in {
-  padding: 12px 8px;
+  padding-block: 12px;
+  padding-inline: 8px;
 }
 
 .PanelHeaderContext--sizeX-regular .PanelHeaderContext__content {
@@ -111,7 +114,8 @@
 
 @media (--sizeX-regular) {
   .PanelHeaderContext--sizeX-none .PanelHeaderContext__in {
-    padding: 12px 8px;
+    padding-block: 12px;
+    padding-inline: 8px;
   }
 
   .PanelHeaderContext--sizeX-none .PanelHeaderContext__content {

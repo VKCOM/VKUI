@@ -5,7 +5,8 @@
   align-items: center;
   text-decoration: none;
   color: var(--vkui--color_text_primary);
-  padding: 0 20px;
+  padding-block: 0;
+  padding-inline: 20px;
   min-block-size: 48px;
   box-sizing: border-box;
 }
@@ -24,7 +25,8 @@
 .ActionSheetItem__container {
   max-inline-size: 100%;
   flex-grow: 1;
-  padding: 10px 0;
+  padding-block: 10px;
+  padding-inline: 0;
 }
 
 .ActionSheetItem--ellipsis {
@@ -101,7 +103,8 @@
  */
 
 .ActionSheetItem--ios {
-  padding: 14px 18px;
+  padding-block: 14px;
+  padding-inline: 18px;
   min-block-size: 56px;
   color: var(--vkui--color_text_accent_themed);
   background: var(--vkui--color_background_modal);
@@ -112,7 +115,8 @@
 }
 
 .ActionSheet--ios.ActionSheetItem--selectable {
-  padding: 14px 16px;
+  padding-block: 14px;
+  padding-inline: 16px;
 }
 
 .ActionSheetItem--ios.ActionSheetItem--mode-destructive {
@@ -210,7 +214,8 @@
 
 .ActionSheetItem--sizeY-compact.ActionSheetItem--ios {
   min-block-size: 36px;
-  padding: 4px 20px 4px 18px;
+  padding-block: 4px 4px;
+  padding-inline: 18px 20px;
 }
 
 .ActionSheetItem--sizeY-compact:not(.ActionSheetItem--ios)
@@ -219,5 +224,6 @@
 }
 
 .ActionSheetItem--sizeY-compact .ActionSheetItem__container {
-  padding: 5px 0;
+  padding-block: 5px;
+  padding-inline: 0;
 }

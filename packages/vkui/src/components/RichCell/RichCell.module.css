@@ -1,6 +1,7 @@
 .RichCell {
   display: flex;
-  padding: 8px var(--vkui--size_base_padding_horizontal--regular);
+  padding-block: 8px;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   min-block-size: 64px;
   box-sizing: border-box;
   color: var(--vkui--color_text_primary);

@@ -11,7 +11,8 @@
 }
 
 .BaseGallery--align-center .BaseGallery__viewport {
-  margin: 0 auto;
+  margin-block: 0;
+  margin-inline: auto;
 }
 
 .BaseGallery__layer {
@@ -70,7 +71,8 @@
   block-size: 6px;
   inline-size: 6px;
   border-radius: 50%;
-  margin: 0 3px;
+  margin-block: 0;
+  margin-inline: 3px;
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 

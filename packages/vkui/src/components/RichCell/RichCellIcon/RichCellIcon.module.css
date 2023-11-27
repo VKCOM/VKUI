@@ -7,5 +7,6 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding: 6px 0 6px 12px;
+  padding-block: 6px 6px;
+  padding-inline: 12px 0;
 }

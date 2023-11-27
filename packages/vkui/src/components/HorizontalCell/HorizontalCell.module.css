@@ -41,20 +41,24 @@
 }
 
 .HorizontalCell__image {
-  padding: 4px var(--vkui--spacing_size_s);
+  padding-block: 4px;
+  padding-inline: var(--vkui--spacing_size_s);
 }
 
 .HorizontalCell__content {
-  padding: 2px 6px 8px;
+  padding-block: 2px 8px;
+  padding-inline: 6px;
   text-align: start;
 }
 
 .HorizontalCell--size-s .HorizontalCell__image {
-  padding: 4px var(--vkui--spacing_size_m);
+  padding-block: 4px;
+  padding-inline: var(--vkui--spacing_size_m);
 }
 
 .HorizontalCell--size-s .HorizontalCell__content {
-  padding: 2px 4px 8px;
+  padding-block: 2px 8px;
+  padding-inline: 4px;
   text-align: center;
 }
 

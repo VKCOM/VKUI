@@ -5,8 +5,10 @@
 
 /* TODO [>=6]: удалить или прийти к padding*/
 .Banner--withPadding {
-  margin: 12px 0;
-  padding: 0 var(--vkui--size_base_padding_horizontal--regular);
+  margin-block: 12px;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .Banner__in {

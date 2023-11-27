@@ -136,8 +136,9 @@
 }
 
 :global(.vkuiInternalView--ios) .Panel__in {
-  padding: 0 var(--vkui_internal--safe_area_inset_right)
-    var(--vkui_internal--safe_area_inset_bottom) var(--vkui_internal--safe_area_inset_left);
+  padding-block: 0 var(--vkui_internal--safe_area_inset_bottom);
+  padding-inline: var(--vkui_internal--safe_area_inset_left)
+    var(--vkui_internal--safe_area_inset_right);
 }
 
 /**
@@ -146,7 +147,7 @@
  */
 :global(.vkuiInternalEpic--hasTabbar) .Panel__in {
   padding-block-end: var(--vkui_internal--tabbar_height);
-  padding-bottom: calc(
+  padding-block-end: calc(
     var(--vkui_internal--safe_area_inset_bottom) + var(--vkui_internal--tabbar_height)
   );
 }

@@ -30,7 +30,8 @@
 
 .TabbarItem__in {
   display: flex;
-  padding: 4px 2px 2px;
+  padding-block: 4px 2px;
+  padding-inline: 2px;
   align-items: center;
   justify-content: center;
   pointer-events: none;

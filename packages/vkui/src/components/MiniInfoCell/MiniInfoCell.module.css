@@ -1,6 +1,7 @@
 .MiniInfoCell {
   display: flex;
-  padding: 6px var(--vkui--size_base_padding_horizontal--regular);
+  padding-block: 6px;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   color: var(--vkui--color_text_subhead);
 }
 

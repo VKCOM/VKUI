@@ -29,7 +29,8 @@
   inset-inline-start: 100%;
   inset-block-start: 0;
   block-size: 100%;
-  padding: 0 10px;
+  padding-block: 0;
+  padding-inline: 10px;
   font-size: 15px;
   line-height: 45px;
   color: var(--vkui_internal--white);
@@ -56,7 +57,8 @@
   display: block;
   inline-size: 44px;
   block-size: 44px;
-  margin: 0 2px;
+  margin-block: 0;
+  margin-inline: 2px;
   background: none;
 }
 

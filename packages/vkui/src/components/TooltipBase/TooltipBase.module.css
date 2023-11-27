@@ -10,7 +10,8 @@
 .TooltipBase__content {
   background-color: var(--vkui--color_background_modal);
   box-shadow: var(--vkui--elevation3);
-  padding: 9px 12px 10px;
+  padding-block: 9px 10px;
+  padding-inline: 12px;
   border-radius: var(--vkui--size_border_radius--regular);
   color: var(--vkui--color_text_primary);
 }

@@ -5,7 +5,8 @@
   inset-block-end: 0;
   inset-inline-start: auto;
   inline-size: 100%;
-  padding-inline: var(--vkui_internal--safe_area_inset_left) var(--vkui_internal--safe_area_inset_right);
+  padding-inline: var(--vkui_internal--safe_area_inset_left)
+    var(--vkui_internal--safe_area_inset_right);
   padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
 }
 

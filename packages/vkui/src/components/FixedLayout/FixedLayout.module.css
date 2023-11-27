@@ -13,7 +13,8 @@
    */
   inset-inline-start: auto;
   z-index: var(--vkui_internal--z_index_fixed_layout);
-  padding-inline: var(--vkui_internal--safe_area_inset_left) var(--vkui_internal--safe_area_inset_right);
+  padding-inline: var(--vkui_internal--safe_area_inset_left)
+    var(--vkui_internal--safe_area_inset_right);
 }
 
 .FixedLayout--filled {
@@ -50,5 +51,7 @@
 :global(.vkuiInternalPanelHeader)
   ~ *
   .FixedLayout--vertical-top:not(:global(.vkuiInternalPanelHeader__fixed)) {
-  inset-block-start: calc(var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top));
+  inset-block-start: calc(
+    var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top)
+  );
 }

@@ -17,7 +17,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 4px var(--vkui--spacing_size_s);
+  padding-block: 4px;
+  padding-inline: var(--vkui--spacing_size_s);
 }
 
 .HorizontalCellShowMore--size-s .HorizontalCellShowMore__body {

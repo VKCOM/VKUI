@@ -40,7 +40,8 @@
 .CustomScrollView__trackerY {
   inline-size: 10px;
   box-sizing: border-box;
-  padding: 4px 4px 4px 0;
+  padding-block: 4px 4px;
+  padding-inline: 0 4px;
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;

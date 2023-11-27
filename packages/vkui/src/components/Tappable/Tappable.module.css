@@ -88,7 +88,8 @@ https://github.com/VKCOM/VKUI/pull/3641
   inset-inline-start: 0;
   inline-size: 24px;
   block-size: 24px;
-  margin: -12px 0 0 -12px;
+  margin-block: -12px 0;
+  margin-inline: -12px 0;
   opacity: 0;
   content: '';
   border-radius: 50%;

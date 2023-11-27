@@ -33,7 +33,8 @@
 .ModalCardBase__subheader {
   text-align: center;
   margin: 0;
-  padding: 0 8px;
+  padding-block: 0;
+  padding-inline: 8px;
   word-break: break-word;
 }
 
@@ -50,7 +51,8 @@
 }
 
 .ModalCardBase__icon {
-  margin: 8px auto 16px;
+  margin-block: 8px 16px;
+  margin-inline: auto;
   color: var(--vkui--color_icon_accent);
 }
 

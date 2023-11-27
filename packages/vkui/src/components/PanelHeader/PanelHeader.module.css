@@ -92,7 +92,8 @@
   flex-grow: 1;
   opacity: 1;
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
-  padding: 4px 0 4px 4px;
+  padding-block: 4px 4px;
+  padding-inline: 4px 0;
 }
 
 .PanelHeader--ios .PanelHeader__before .PanelHeaderButton + .PanelHeaderButton--primitive {
@@ -112,7 +113,8 @@
 
 /* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--ios .PanelHeader__content > * {
-  padding: 0 4px;
+  padding-block: 0;
+  padding-inline: 4px;
 }
 
 .PanelHeader--ios.PanelHeader--no-before .PanelHeader__content {
@@ -134,7 +136,8 @@
   flex-grow: 1;
   opacity: 1;
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
-  padding: 4px 4px 4px 0;
+  padding-block: 4px 4px;
+  padding-inline: 0 4px;
 }
 
 .View--ios .View__panel--prev .PanelHeader__before,
@@ -147,7 +150,8 @@
  * Android
  */
 .PanelHeader--android .PanelHeader__before:not(:empty) {
-  padding: 4px 0 4px 4px;
+  padding-block: 4px 4px;
+  padding-inline: 4px 0;
   margin-inline-end: -8px;
 }
 
@@ -163,7 +167,8 @@
 
 /* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--android .PanelHeader__content > * {
-  padding: 0 12px;
+  padding-block: 0;
+  padding-inline: 12px;
 }
 
 /**
@@ -247,7 +252,8 @@
 
 .PanelHeader--android .PanelHeader__after:not(:empty),
 .PanelHeader--vkcom .PanelHeader__after:not(:empty) {
-  padding: 4px 4px 4px 0;
+  padding-block: 4px 4px;
+  padding-inline: 0 4px;
 }
 
 /**
@@ -307,7 +313,8 @@
 }
 
 .PanelHeader--vkcom .PanelHeader__before:not(:empty) {
-  padding: 0 0 0 4px;
+  padding-block: 0 0;
+  padding-inline: 4px 0;
 }
 
 .PanelHeader--vkcom .PanelHeader__before,

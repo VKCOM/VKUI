@@ -63,7 +63,8 @@
 
 .WriteBar__textarea {
   block-size: 52px;
-  padding: 16px 12px;
+  padding-block: 16px;
+  padding-inline: 12px;
 }
 
 /**
@@ -75,7 +76,8 @@
 
 .WriteBar--ios .WriteBar__before,
 .WriteBar--ios .WriteBar__after {
-  padding: 0 4px;
+  padding-block: 0;
+  padding-inline: 4px;
 }
 
 .WriteBar--ios .WriteBar__formIn {
@@ -83,7 +85,8 @@
   background-color: var(--vkui--color_write_bar_input_background);
   border: var(--vkui--size_border--regular) solid var(--vkui--color_write_bar_input_border);
   border-radius: 18px;
-  margin: 8px 0;
+  margin-block: 8px;
+  margin-inline: 0;
 }
 
 .WriteBar--ios .WriteBar__formIn:first-child {
@@ -101,5 +104,6 @@
 
 .WriteBar--ios .WriteBar__textarea {
   block-size: 36px;
-  padding: 6px 0 6px 12px;
+  padding-block: 6px 6px;
+  padding-inline: 12px 0;
 }

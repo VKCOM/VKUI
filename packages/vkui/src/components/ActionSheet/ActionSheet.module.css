@@ -7,7 +7,8 @@
 }
 
 .ActionSheet__content-wrapper {
-  padding: 8px 0;
+  padding-block: 8px;
+  padding-inline: 0;
   overflow: hidden;
   border-radius: 12px;
   box-shadow: var(--vkui--elevation3);
@@ -16,7 +17,8 @@
 
 .ActionSheet__header {
   color: var(--vkui--color_text_subhead);
-  padding: 16px 20px;
+  padding-block: 16px;
+  padding-inline: 20px;
 }
 
 .ActionSheet--closing {
@@ -83,7 +85,8 @@
  */
 
 .ActionSheet--sizeY-compact .ActionSheet__header {
-  padding: 12px 20px;
+  padding-block: 12px;
+  padding-inline: 20px;
 }
 
 /**

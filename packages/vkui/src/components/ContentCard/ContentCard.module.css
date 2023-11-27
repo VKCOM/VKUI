@@ -3,8 +3,8 @@
 }
 
 .ContentCard__body {
-  padding: var(--vkui--size_base_padding_vertical--regular)
-    var(--vkui--size_base_padding_horizontal--regular);
+  padding-block: var(--vkui--size_base_padding_vertical--regular);
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .ContentCard__tappable {
@@ -17,8 +17,10 @@
 .ContentCard__img {
   object-fit: cover;
   display: block;
-  border-radius: var(--vkui--size_card_border_radius--regular)
-    var(--vkui--size_card_border_radius--regular) 0 0;
+  border-start-start-radius: var(--vkui--size_card_border_radius--regular);
+  border-start-end-radius: var(--vkui--size_card_border_radius--regular);
+  border-end-end-radius: 0;
+  border-end-start-radius: 0;
 }
 
 .ContentCard__text:not(:last-child) {

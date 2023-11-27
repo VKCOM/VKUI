@@ -4,7 +4,8 @@
   align-items: center;
   position: relative;
   box-sizing: border-box;
-  padding: 8px 12px;
+  padding-block: 8px;
+  padding-inline: 12px;
   user-select: none;
   cursor: pointer;
   color: var(--vkui--color_text_primary);

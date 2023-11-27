@@ -20,7 +20,8 @@
   justify-content: center;
   flex-direction: column;
   flex: 1;
-  margin: 2px 2px 2px 10px;
+  margin-block: 2px 2px;
+  margin-inline: 10px 2px;
 }
 
 .ChipsInputBase__el {

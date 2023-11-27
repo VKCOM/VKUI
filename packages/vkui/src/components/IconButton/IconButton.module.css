@@ -34,7 +34,8 @@
 }
 
 .IconButton :global(.vkuiIcon--16.vkuiIcon--w-8) {
-  padding: 16px 14px;
+  padding-block: 16px;
+  padding-inline: 14px;
 }
 
 .IconButton--sizeY-compact :global(.vkuiIcon--16),

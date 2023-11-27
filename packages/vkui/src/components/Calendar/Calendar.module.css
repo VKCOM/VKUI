@@ -12,8 +12,10 @@
 
 .Calendar__time {
   border-block-start: 1px solid var(--vkui--color_separator_primary);
-  margin: 12px -12px 0;
-  padding: 12px 12px 0;
+  margin-block: 12px 0;
+  margin-inline: -12px;
+  padding-block: 12px 0;
+  padding-inline: 12px;
 }
 
 .Calendar__header {

@@ -26,7 +26,8 @@
 }
 
 .CustomSelectDropdown__fetching {
-  padding: 12px 0;
+  padding-block: 12px;
+  padding-inline: 0;
 }
 
 .CustomSelectDropdown__in--withMaxHeight {

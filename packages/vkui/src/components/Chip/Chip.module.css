@@ -11,7 +11,8 @@
   position: relative;
   display: flex;
   block-size: 100%;
-  padding: 0 8px;
+  padding-block: 0;
+  padding-inline: 8px;
   align-items: center;
 }
 

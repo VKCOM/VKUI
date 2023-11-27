@@ -71,5 +71,6 @@
  * FormItem
  */
 :global(.vkuiInternalFormItem) > .Cell {
-  margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
+  margin-block: 0;
+  margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }

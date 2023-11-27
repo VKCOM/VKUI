@@ -4,7 +4,8 @@
   position: relative;
   min-inline-size: 280px;
   max-inline-size: 416px;
-  margin: auto 24px;
+  margin-block: auto;
+  margin-inline: 24px;
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius_paper--regular);
   animation: animation-android-alert-intro 0.2s var(--vkui--animation_easing_platform);
@@ -34,7 +35,8 @@
 
 .Alert__content {
   position: relative;
-  padding: 24px 24px 16px;
+  padding-block: 24px 16px;
+  padding-inline: 24px;
 }
 
 .Alert__content--withButton {
@@ -50,7 +52,8 @@
   display: flex;
   max-inline-size: 100%;
   position: relative;
-  padding: 0 12px 12px;
+  padding-block: 0 12px;
+  padding-inline: 12px;
 }
 
 .Alert__header {
@@ -113,7 +116,8 @@
 }
 
 .Alert--ios .Alert__content {
-  padding: 20px 16px;
+  padding-block: 20px;
+  padding-inline: 16px;
   text-align: center;
 }
 
@@ -151,7 +155,8 @@
   line-height: 44px;
   color: var(--vkui--color_text_accent);
   border: 0;
-  padding: 0 6px;
+  padding-block: 0;
+  padding-inline: 6px;
   margin: 0;
   block-size: 44px;
   display: block;
@@ -207,7 +212,10 @@
 }
 
 .Alert--ios .Alert__actions--direction-vertical .Alert__action:last-child {
-  border-radius: 0 0 12px 12px;
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 12px;
+  border-end-start-radius: 12px;
 }
 
 @media (min-resolution: 2dppx) {
@@ -253,7 +261,8 @@
 }
 
 .Alert--vkcom .Alert__actions {
-  padding: 0 20px 12px;
+  padding-block: 0 12px;
+  padding-inline: 20px;
 }
 
 .Alert--vkcom .Alert__button {

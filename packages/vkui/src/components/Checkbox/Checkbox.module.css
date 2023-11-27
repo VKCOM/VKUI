@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 var(--vkui--size_base_padding_horizontal--regular);
+  padding-block: 0;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   min-inline-size: var(--vkui--size_field_height--regular);
   min-block-size: var(--vkui--size_field_height--regular);
   font-family: var(--vkui--font_family_base);
@@ -15,7 +16,8 @@
 :global(.vkuiInternalFormItem) .Checkbox {
   inline-size: 100%;
   box-sizing: content-box;
-  margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
+  margin-block: 0;
+  margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .Checkbox__icon {

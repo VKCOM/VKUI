@@ -7,7 +7,8 @@
 }
 
 .Search--withPadding {
-  padding: 8px var(--vkui--size_base_padding_horizontal--regular);
+  padding-block: 8px;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 /*

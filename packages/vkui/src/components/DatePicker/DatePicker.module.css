@@ -18,7 +18,8 @@
   min-inline-size: 0;
   display: flex;
   flex: 1 0 0;
-  padding: 0 8px;
+  padding-block: 0;
+  padding-inline: 8px;
 }
 
 .DatePicker__year {

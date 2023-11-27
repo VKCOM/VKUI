@@ -3,7 +3,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 8px;
+  padding-block: 4px;
+  padding-inline: 8px;
   min-inline-size: 0;
   max-inline-size: 100%;
   min-block-size: 32px;
@@ -41,7 +42,8 @@
   flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 0;
-  padding: 12px 16px;
+  padding-block: 12px;
+  padding-inline: 16px;
   min-block-size: 48px;
 }
 

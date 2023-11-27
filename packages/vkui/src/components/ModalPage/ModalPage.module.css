@@ -38,7 +38,8 @@
 .ModalPage--desktop .ModalPage__in-wrap {
   position: relative;
   align-items: initial;
-  margin: 32px 56px;
+  margin-block: 32px;
+  margin-inline: 56px;
   block-size: auto;
   max-block-size: 640px;
   opacity: 0;
