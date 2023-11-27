@@ -10,10 +10,7 @@
 .Popover::before {
   content: '';
   position: absolute;
-  top: calc(-1 * var(--vkui_internal--popover_safe_zone_padding));
-  right: calc(-1 * var(--vkui_internal--popover_safe_zone_padding));
-  bottom: calc(-1 * var(--vkui_internal--popover_safe_zone_padding));
-  left: calc(-1 * var(--vkui_internal--popover_safe_zone_padding));
+  inset: calc(-1 * var(--vkui_internal--popover_safe_zone_padding));
 }
 
 .Popover__in {

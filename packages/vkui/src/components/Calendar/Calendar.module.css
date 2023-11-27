@@ -6,25 +6,27 @@
   box-sizing: border-box;
   box-shadow: var(--vkui--elevation1);
   border-radius: 8px;
-  width: 305px;
+  inline-size: 305px;
   padding: 12px;
 }
 
 .Calendar__time {
-  border-top: 1px solid var(--vkui--color_separator_primary);
-  margin: 12px -12px 0;
-  padding: 12px 12px 0;
+  border-block-start: 1px solid var(--vkui--color_separator_primary);
+  margin-block: 12px 0;
+  margin-inline: -12px;
+  padding-block: 12px 0;
+  padding-inline: 12px;
 }
 
 .Calendar__header {
-  margin-bottom: 4px;
+  margin-block-end: 4px;
 }
 
 .Calendar--size-s {
-  width: 220px;
+  inline-size: 220px;
   padding: 8px;
 }
 
 .Calendar--size-s .Calendar__header {
-  margin-bottom: 0;
+  margin-block-end: 0;
 }

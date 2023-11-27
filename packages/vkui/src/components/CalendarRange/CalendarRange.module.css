@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  width: 610px;
+  inline-size: 610px;
   background: var(--vkui--color_background_modal);
   border: 0.5px solid var(--vkui--color_separator_primary);
   box-sizing: border-box;
@@ -18,9 +18,9 @@
 }
 
 .CalendarRange__inner:not(:last-child) {
-  margin-right: 24px;
+  margin-inline-end: 24px;
 }
 
 .CalendarRange__header {
-  margin-bottom: 4px;
+  margin-block-end: 4px;
 }

@@ -1,6 +1,6 @@
 .Root {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   position: relative;
 }
 
@@ -9,21 +9,21 @@
 }
 
 .Root__view {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   position: relative;
 }
 
 .Root--transition .Root__view {
   position: fixed;
-  left: 0;
-  top: 0;
+  inset-inline-start: 0;
+  inset-block-start: 0;
   overflow: hidden;
 }
 
 .Root__scrollCompensation {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .Root__view--show-forward {
@@ -41,10 +41,10 @@
 .Root--ios .Root__view--show-back::after,
 .Root--ios .Root__view--hide-forward::after {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
   display: block;
   content: '';
   background-color: #000;

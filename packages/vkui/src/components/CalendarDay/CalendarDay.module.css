@@ -7,14 +7,14 @@
 
 .CalendarDay__hidden,
 .CalendarDay {
-  height: 36px;
+  block-size: 36px;
   flex-basis: calc(100% / 7);
   flex-grow: 0;
 }
 
 .CalendarDay__hidden--size-s,
 .CalendarDay--size-s {
-  height: 34px;
+  block-size: 34px;
 }
 
 .CalendarDay--disabled,
@@ -28,14 +28,14 @@
 
 .CalendarDay--selection-start.CalendarDay--selected,
 .CalendarDay__hinted--selection-start {
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-start-start-radius: 8px;
+  border-end-start-radius: 8px;
 }
 
 .CalendarDay--selection-end.CalendarDay--selected,
 .CalendarDay__hinted--selection-end {
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-start-end-radius: 8px;
+  border-end-end-radius: 8px;
 }
 
 .CalendarDay__day-number {
@@ -48,16 +48,16 @@
 
 .CalendarDay--today .CalendarDay__day-number::after {
   content: '';
-  border-bottom: 2px solid var(--vkui--color_stroke_accent);
-  width: 16px;
+  border-block-end: 2px solid var(--vkui--color_stroke_accent);
+  inline-size: 16px;
   display: block;
   position: relative;
-  left: 50%;
+  inset-inline-start: 50%;
   transform: translateX(-50%);
 }
 
 .CalendarDay--today .CalendarDay__inner--active .CalendarDay__day-number::after {
-  border-bottom-color: var(--vkui--color_stroke_contrast);
+  border-block-end-color: var(--vkui--color_stroke_contrast);
 }
 
 .CalendarDay__inner,
@@ -65,8 +65,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
+  block-size: 100%;
+  inline-size: 100%;
 }
 
 .CalendarDay__inner {

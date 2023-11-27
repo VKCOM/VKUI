@@ -1,11 +1,11 @@
 .ButtonGroup {
   display: inline-flex;
-  max-width: 100%; /* [Примечание 2] Чтобы блок не выходил за границы контейнера (связано с [Примечание 4]) */
+  max-inline-size: 100%; /* [Примечание 2] Чтобы блок не выходил за границы контейнера (связано с [Примечание 4]) */
 }
 
 .ButtonGroup--stretched {
   display: flex;
-  width: 100%;
+  inline-size: 100%;
 }
 
 .ButtonGroup--mode-vertical {
@@ -26,15 +26,15 @@
 
 /* "gap" для mode="vertical" */
 .ButtonGroup--mode-vertical.ButtonGroup--gap-space > *:not(:first-child) {
-  margin-top: var(--vkui--size_button_group_gap_space--regular);
+  margin-block-start: var(--vkui--size_button_group_gap_space--regular);
 }
 
 .ButtonGroup--mode-vertical.ButtonGroup--gap-s > *:not(:first-child) {
-  margin-top: var(--vkui--size_button_group_gap_small--regular);
+  margin-block-start: var(--vkui--size_button_group_gap_small--regular);
 }
 
 .ButtonGroup--mode-vertical.ButtonGroup--gap-m > *:not(:first-child) {
-  margin-top: var(--vkui--size_button_group_gap_medium--regular);
+  margin-block-start: var(--vkui--size_button_group_gap_medium--regular);
 }
 
 /* "gap" для mode="horizontal" */
@@ -47,19 +47,19 @@
    *
    * Подробности по ссылке https://stackoverflow.com/a/66689926/2903061
    */
-  min-width: 0;
+  min-inline-size: 0;
 }
 
 .ButtonGroup--mode-horizontal.ButtonGroup--gap-space > *:not(:last-child) {
-  margin-right: var(--vkui--size_button_group_gap_space--regular);
+  margin-inline-end: var(--vkui--size_button_group_gap_space--regular);
 }
 
 .ButtonGroup--mode-horizontal.ButtonGroup--gap-s > *:not(:last-child) {
-  margin-right: var(--vkui--size_button_group_gap_small--regular);
+  margin-inline-end: var(--vkui--size_button_group_gap_small--regular);
 }
 
 .ButtonGroup--mode-horizontal.ButtonGroup--gap-m > *:not(:last-child) {
-  margin-right: var(--vkui--size_button_group_gap_medium--regular);
+  margin-inline-end: var(--vkui--size_button_group_gap_medium--regular);
 }
 
 /* stylelint-enable @project-tools/stylelint-atomic, selector-max-universal */

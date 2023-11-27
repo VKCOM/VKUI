@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  min-height: 36px;
+  min-block-size: 36px;
 }
 
 .CalendarHeader__pickers {
@@ -13,7 +13,7 @@
 }
 
 .CalendarHeader__picker + .CalendarHeader__picker {
-  margin-left: 4px;
+  margin-inline-start: 4px;
 }
 
 .CalendarHeader__nav-icon {
@@ -29,11 +29,11 @@
 }
 
 .CalendarHeader__nav-icon-next {
-  right: 0;
+  inset-inline-end: 0;
 }
 
 .CalendarHeader__nav-icon-prev {
-  left: 0;
+  inset-inline-start: 0;
 }
 
 .CalendarHeader__month {

@@ -19,10 +19,10 @@
   pointer-events: none;
   position: absolute;
   z-index: var(--vkui_internal--z_index_image_base_border);
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   box-sizing: border-box;
   transform-origin: left top;
   border: var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha);
@@ -32,11 +32,11 @@
 .ImageBase__img {
   position: absolute;
   z-index: var(--vkui_internal--z_index_image_base_img);
-  top: 0;
-  left: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   display: block;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   border: 0;
   border-radius: inherit;
   object-fit: cover;
@@ -51,8 +51,8 @@
   position: absolute;
 
   /* Расcчитываем на центрирование через родительский `display: flex` */
-  top: auto;
-  left: auto;
+  inset-block-start: auto;
+  inset-inline-start: auto;
 }
 
 /**
@@ -60,9 +60,9 @@
  * PanelHeader
  */
 :global(.vkuiInternalPanelHeader__before) .ImageBase {
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }
 
 :global(.vkuiInternalPanelHeader__after) .ImageBase {
-  margin-right: 8px;
+  margin-inline-end: 8px;
 }

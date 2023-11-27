@@ -1,17 +1,17 @@
 .CustomScrollView {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   overflow: hidden;
   position: relative;
 }
 
 .CustomScrollView__box {
-  max-height: inherit;
-  width: 100%;
-  height: 100%;
+  max-block-size: inherit;
+  inline-size: 100%;
+  block-size: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding-right: 100px;
+  padding-inline-end: 100px;
   position: relative;
 
   /**
@@ -31,19 +31,20 @@
 
 .CustomScrollView__barY {
   position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 10px;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  block-size: 100%;
+  inline-size: 10px;
 }
 
 .CustomScrollView__trackerY {
-  width: 10px;
+  inline-size: 10px;
   box-sizing: border-box;
-  padding: 4px 4px 4px 0;
+  padding-block: 4px 4px;
+  padding-inline: 0 4px;
   position: absolute;
-  top: 0;
-  left: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   user-select: none;
 }
 
@@ -56,8 +57,8 @@
   content: '';
   opacity: 0.48;
   display: block;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   background-color: var(--vkui--color_icon_medium);
   border-radius: 12px;
   transition: transform 200ms, opacity 200ms;
@@ -74,9 +75,9 @@
  * CustomSelectDropdown
  */
 :global(.vkuiInternalCustomSelectDropdown) .CustomScrollView__box {
-  padding-right: 8px;
+  padding-inline-end: 8px;
 }
 
 :global(.vkuiInternalCustomSelectDropdown--wide) .CustomScrollView__box {
-  padding-right: 0;
+  padding-inline-end: 0;
 }

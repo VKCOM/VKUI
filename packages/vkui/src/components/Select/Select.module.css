@@ -10,10 +10,10 @@
   position: absolute;
   appearance: none;
   border: 0;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   opacity: 0;
   z-index: var(--vkui_internal--z_index_form_field_side);
   font-size: var(--vkui--font_paragraph--font_size--regular);
@@ -23,8 +23,7 @@
 .Select__container {
   flex-grow: 1;
   flex-shrink: 1;
-  padding-right: 0;
-  padding-left: 12px;
+  padding-inline: 12px 0;
   color: var(--vkui--color_text_primary);
   box-sizing: border-box;
   position: relative;
@@ -33,23 +32,20 @@
 }
 
 .Select--hasBefore .Select__container {
-  padding-left: 0;
+  padding-inline-start: 0;
 }
 
 .Select--multiline .Select__container {
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-block: 12px;
 }
 
 .Select--sizeY-compact.Select--multiline .Select__container {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-block: 8px;
 }
 
 @media (--sizeY-compact) {
   .Select--sizeY-none.Select--multiline .Select__container {
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-block: 8px;
   }
 }
 
@@ -68,7 +64,7 @@
 }
 
 .Select--align-right .Select__title {
-  text-align: right;
+  text-align: end;
 }
 
 .Select--align-center .Select__title {
@@ -80,5 +76,5 @@
  * CalendarHeader
  */
 :global(.vkuiInternalCalendarHeader__picker) .Select__container {
-  padding-right: 4px;
+  padding-inline-end: 4px;
 }

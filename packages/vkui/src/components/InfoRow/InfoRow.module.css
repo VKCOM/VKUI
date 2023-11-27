@@ -6,7 +6,7 @@
 
 .InfoRow__header {
   display: block;
-  margin-bottom: 2px;
+  margin-block-end: 2px;
   color: var(--vkui--color_text_subhead);
   overflow: hidden;
   text-overflow: ellipsis;

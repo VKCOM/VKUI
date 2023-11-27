@@ -15,9 +15,10 @@
 }
 
 .PanelHeaderButton--primitive {
-  height: 48px;
+  block-size: 48px;
   line-height: 48px;
-  padding: 0 10px;
+  padding-block: 0;
+  padding-inline: 10px;
 }
 
 /*
@@ -32,7 +33,7 @@
 }
 
 .PanelHeaderButton--ios.PanelHeaderButton--primitive {
-  height: 44px;
+  block-size: 44px;
   line-height: 44px;
 }
 
@@ -46,7 +47,7 @@
 
 /* stylelint-disable-next-line @project-tools/stylelint-atomic -- фикс для иконки назад */
 .PanelHeaderBack--ios :global(.vkuiIcon--w-20) {
-  padding-left: 4px;
+  padding-inline-start: 4px;
 }
 
 /*
@@ -90,12 +91,12 @@
 }
 
 .PanelHeaderBack--vkcom.PanelHeaderBack--has-label {
-  padding-right: 11px;
+  padding-inline-end: 11px;
 }
 
 @media (--sizeX-regular) {
   .PanelHeaderBack--ios.PanelHeaderBack--has-label:not(.PanelHeaderBack--sizeX-compact) {
-    padding-right: 8px;
+    padding-inline-end: 8px;
   }
 }
 

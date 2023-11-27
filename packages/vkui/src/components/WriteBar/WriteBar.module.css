@@ -14,28 +14,28 @@
 }
 
 .WriteBar__form {
-  min-height: 52px;
+  min-block-size: 52px;
 }
 
 .WriteBar__formIn {
   flex: 1;
-  min-width: 0;
+  min-inline-size: 0;
   display: flex;
   position: relative;
 }
 
 .WriteBar__textarea {
   box-sizing: border-box;
-  width: 100%;
+  inline-size: 100%;
   flex: 1;
-  min-width: 0;
+  min-inline-size: 0;
   margin: 0;
   background: transparent;
   border: 0;
   resize: none;
   color: var(--vkui--color_text_primary);
   -webkit-appearance: none;
-  max-height: 120px;
+  max-block-size: 120px;
 }
 
 .WriteBar__textarea::placeholder {
@@ -54,16 +54,17 @@
 }
 
 .WriteBar__before {
-  padding-left: 4px;
+  padding-inline-start: 4px;
 }
 
 .WriteBar__after {
-  padding-right: 4px;
+  padding-inline-end: 4px;
 }
 
 .WriteBar__textarea {
-  height: 52px;
-  padding: 16px 12px;
+  block-size: 52px;
+  padding-block: 16px;
+  padding-inline: 12px;
 }
 
 /**
@@ -75,7 +76,8 @@
 
 .WriteBar--ios .WriteBar__before,
 .WriteBar--ios .WriteBar__after {
-  padding: 0 4px;
+  padding-block: 0;
+  padding-inline: 4px;
 }
 
 .WriteBar--ios .WriteBar__formIn {
@@ -83,11 +85,12 @@
   background-color: var(--vkui--color_write_bar_input_background);
   border: var(--vkui--size_border--regular) solid var(--vkui--color_write_bar_input_border);
   border-radius: 18px;
-  margin: 8px 0;
+  margin-block: 8px;
+  margin-inline: 0;
 }
 
 .WriteBar--ios .WriteBar__formIn:first-child {
-  margin-left: 12px;
+  margin-inline-start: 12px;
 }
 
 .WriteBar--ios .WriteBar__inlineAfter {
@@ -95,12 +98,12 @@
   --vkui_internal--writebar-right-gap: calc(-1 * var(--vkui--size_border--regular));
   --vkui_internal--writebar-vertical-gap: calc(var(--vkui_internal--writebar-right-gap) - 8px);
 
-  margin-right: var(--vkui_internal--writebar-right-gap);
-  margin-top: var(--vkui_internal--writebar-vertical-gap);
-  margin-bottom: var(--vkui_internal--writebar-vertical-gap);
+  margin-inline-end: var(--vkui_internal--writebar-right-gap);
+  margin-block: var(--vkui_internal--writebar-vertical-gap);
 }
 
 .WriteBar--ios .WriteBar__textarea {
-  height: 36px;
-  padding: 6px 0 6px 12px;
+  block-size: 36px;
+  padding-block: 6px 6px;
+  padding-inline: 12px 0;
 }

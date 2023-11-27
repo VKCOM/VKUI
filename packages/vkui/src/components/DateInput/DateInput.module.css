@@ -1,7 +1,6 @@
 .DateInput__input {
   flex-grow: 1;
-  margin-left: 10px;
-  margin-right: 14px;
+  margin-inline: 10px 14px;
   z-index: var(--vkui_internal--z_index_form_field_element);
   cursor: text;
   white-space: nowrap;
@@ -15,11 +14,11 @@
 }
 
 .DateInput--sizeY-compact .DateInput__input {
-  margin-right: 22px;
+  margin-inline-end: 22px;
 }
 
 @media (--sizeY-compact) {
   .DateInput--sizeY-none .DateInput__input {
-    margin-right: 22px;
+    margin-inline-end: 22px;
   }
 }

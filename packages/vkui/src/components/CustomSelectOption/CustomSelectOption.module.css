@@ -1,10 +1,11 @@
 .CustomSelectOption {
-  width: 100%;
+  inline-size: 100%;
   display: flex;
   align-items: center;
   position: relative;
   box-sizing: border-box;
-  padding: 8px 12px;
+  padding-block: 8px;
+  padding-inline: 12px;
   user-select: none;
   cursor: pointer;
   color: var(--vkui--color_text_primary);
@@ -13,19 +14,19 @@
 .CustomSelectOption--hierarchy {
   --vkui_internal--custom_select_option_hierarchy_level: 0;
 
-  padding-left: calc(
+  padding-inline-start: calc(
     var(--vkui_internal--custom_select_option_hierarchy_level) *
       var(--vkui--size_option_hierarchy--regular)
   );
 }
 
 .CustomSelectOption--sizeY-regular {
-  min-height: 44px;
+  min-block-size: 44px;
 }
 
 @media (--sizeY-regular) {
   .CustomSelectOption--sizeY-none {
-    min-height: 44px;
+    min-block-size: 44px;
   }
 }
 
@@ -40,21 +41,21 @@
 
 .CustomSelectOption__before {
   flex-shrink: 0;
-  margin-right: 7px;
+  margin-inline-end: 7px;
 }
 
 .CustomSelectOption__main {
   flex-grow: 1;
-  max-width: 100%;
-  min-width: 0;
+  max-inline-size: 100%;
+  min-inline-size: 0;
 }
 
 .CustomSelectOption__children {
-  min-width: 0;
+  min-inline-size: 0;
 }
 
 .CustomSelectOption__after {
-  margin-left: 8px;
+  margin-inline-start: 8px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -69,5 +70,5 @@
 }
 
 .CustomSelectOption__selectedIcon:not(:first-child) {
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }

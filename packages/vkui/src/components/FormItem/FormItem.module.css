@@ -3,28 +3,26 @@
 }
 
 .FormItem--withPadding {
-  padding: var(--vkui--size_form_item_padding_vertical--regular)
-    var(--vkui--size_base_padding_horizontal--regular);
+  padding-block: var(--vkui--size_form_item_padding_vertical--regular);
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .FormItem--removable {
-  padding-left: 0;
-  padding-right: 0;
+  padding-inline: 0;
 }
 
 .FormItem__removable {
-  max-width: 100%;
+  max-inline-size: 100%;
   flex-grow: 1;
   flex-shrink: 0;
   flex-basis: 0;
   padding: 0;
-  min-width: 1px;
+  min-inline-size: 1px;
   overflow: hidden;
 }
 
 .FormItem__top {
-  padding-top: 2px;
-  padding-bottom: 8px;
+  padding-block: 2px 8px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -33,7 +31,7 @@
 
 .FormItem__bottom {
   color: var(--vkui--color_text_secondary);
-  padding-top: 8px;
+  padding-block-start: 8px;
 }
 
 .FormItem--status-error .FormItem__bottom {
@@ -50,20 +48,20 @@
  */
 
 .FormItem--sizeY-compact .FormItem__top {
-  padding-bottom: 6px;
+  padding-block-end: 6px;
 }
 
 .FormItem--sizeY-compact .FormItem__bottom {
-  padding-top: 6px;
+  padding-block-start: 6px;
 }
 
 @media (--sizeY-compact) {
   .FormItem--sizeY-none .FormItem__top {
-    padding-bottom: 6px;
+    padding-block-end: 6px;
   }
 
   .FormItem--sizeY-none .FormItem__bottom {
-    padding-top: 6px;
+    padding-block-start: 6px;
   }
 }
 
@@ -72,51 +70,51 @@
  * FormLayoutGroup
  */
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .FormItem {
-  max-width: 100%;
+  max-inline-size: 100%;
   flex-grow: 1;
   flex-shrink: 0;
   flex-basis: 0;
   padding: 0;
-  min-width: 1px;
+  min-inline-size: 1px;
 }
 
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal:not(.vkuiInternalFormLayoutGroup--segmented))
   .FormItem
   + .FormItem {
-  margin-left: 24px;
+  margin-inline-start: 24px;
 }
 
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal.vkuiInternalFormLayoutGroup--segmented)
   .FormItem
   + .FormItem {
-  margin-left: calc(-1 * var(--vkui--size_border--regular));
+  margin-inline-start: calc(-1 * var(--vkui--size_border--regular));
 }
 
 :global(.vkuiInternalFormLayoutGroup--mode-vertical.vkuiInternalFormLayoutGroup--segmented)
   .FormItem
   + .FormItem {
-  padding-top: 0;
-  margin-top: calc(-1 * var(--vkui--size_border--regular));
+  padding-block-start: 0;
+  margin-block-start: calc(-1 * var(--vkui--size_border--regular));
 }
 
 :global(.vkuiInternalFormLayoutGroup--mode-vertical.vkuiInternalFormLayoutGroup--segmented)
   .FormItem:not(:last-of-type) {
-  padding-bottom: 0;
+  padding-block-end: 0;
 }
 
 .FormItem--withTop .FormItem__removable,
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .FormItem--withTop {
-  margin-top: calc(-2px - var(--vkui--font_subhead--line_height--regular) - 8px);
+  margin-block-start: calc(-2px - var(--vkui--font_subhead--line_height--regular) - 8px);
 }
 
 .FormItem--sizeY-compact.FormItem--withTop .FormItem__removable,
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .FormItem--sizeY-compact.FormItem--withTop {
-  margin-top: calc(-2px - var(--vkui--font_subhead--line_height--compact) - 6px);
+  margin-block-start: calc(-2px - var(--vkui--font_subhead--line_height--compact) - 6px);
 }
 
 @media (--sizeY-compact) {
   .FormItem--sizeY-none.FormItem--withTop .FormItem__removable,
   :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .FormItem--sizeY-none.FormItem--withTop {
-    margin-top: calc(-2px - var(--vkui--font_subhead--line_height--compact) - 6px);
+    margin-block-start: calc(-2px - var(--vkui--font_subhead--line_height--compact) - 6px);
   }
 }

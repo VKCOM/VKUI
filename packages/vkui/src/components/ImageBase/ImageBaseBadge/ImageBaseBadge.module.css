@@ -1,8 +1,8 @@
 .ImageBaseBadge {
   position: absolute;
   z-index: var(--vkui_internal--z_index_image_base_badge);
-  right: 0;
-  bottom: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
   border-radius: 50%;
 
   /* Смещаем на `padding-top` и `padding-left`, чтобы не учитывать `padding` при позиционировании. */
@@ -18,10 +18,7 @@
 .ImageBaseBadge--background-shadow::before {
   content: '';
   position: absolute;
-  top: 2px;
-  right: 2px;
-  bottom: 2px;
-  left: 2px;
+  inset: 2px;
   margin: auto;
   border-radius: inherit;
   box-shadow: var(--vkui--elevation1);

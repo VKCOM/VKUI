@@ -9,20 +9,21 @@
 }
 
 .Input--align-right .Input__el {
-  text-align: right;
+  text-align: end;
 }
 
 .Input__el {
-  height: var(--vkui--size_field_height--regular);
+  block-size: var(--vkui--size_field_height--regular);
   margin: 0;
-  width: 100%;
+  inline-size: 100%;
   box-sizing: border-box;
   box-shadow: none;
   border: 0;
   border-radius: inherit;
   appearance: none;
   color: var(--vkui--color_text_primary);
-  padding: 0 12px;
+  padding-block: 0;
+  padding-inline: 12px;
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
   background: transparent;
@@ -43,21 +44,21 @@
 }
 
 .Input--sizeY-compact .Input__el {
-  height: var(--vkui--size_field_height--compact);
+  block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
   .Input--sizeY-none .Input__el {
-    height: var(--vkui--size_field_height--compact);
+    block-size: var(--vkui--size_field_height--compact);
   }
 }
 
 .Input--hasBefore .Input__el {
-  padding-left: 0;
+  padding-inline-start: 0;
 }
 
 .Input--hasAfter .Input__el {
-  padding-right: 0;
+  padding-inline-end: 0;
 }
 
 .Input__el:disabled {

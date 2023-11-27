@@ -3,7 +3,7 @@
 }
 
 .Separator__in {
-  height: var(--vkui--size_border--regular);
+  block-size: var(--vkui--size_border--regular);
   margin: 0;
   background: currentColor;
   color: inherit;
@@ -12,8 +12,7 @@
 }
 
 .Separator--padded .Separator__in {
-  margin-left: var(--vkui--size_base_padding_horizontal--regular);
-  margin-right: var(--vkui--size_base_padding_horizontal--regular);
+  margin-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 /*
@@ -21,14 +20,12 @@
  * ModalPage
  */
 :global(.vkuiInternalModalPage--sizeX-regular) .Separator--padded {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-inline: 8px;
 }
 
 /* FIXME: Мертвый код */
 @media (--sizeX-regular) {
   :global(.vkuiInternalModalPage--sizeX-none) .Separator--padded {
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-inline: 8px;
   }
 }

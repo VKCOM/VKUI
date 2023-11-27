@@ -1,6 +1,7 @@
 .MiniInfoCell {
   display: flex;
-  padding: 6px var(--vkui--size_base_padding_horizontal--regular);
+  padding-block: 6px;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   color: var(--vkui--color_text_subhead);
 }
 
@@ -9,13 +10,13 @@
 }
 
 .MiniInfoCell__before {
-  margin-right: 12px;
+  margin-inline-end: 12px;
   color: var(--vkui--color_icon_secondary);
 }
 
 .MiniInfoCell__middle {
   flex: 1;
-  min-width: 0;
+  min-inline-size: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -23,7 +24,7 @@
 
 .MiniInfoCell__content {
   flex: 1;
-  min-width: 0;
+  min-inline-size: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -33,7 +34,7 @@
 .MiniInfoCell--textWrap-short .MiniInfoCell__content {
   white-space: initial;
   display: -webkit-box;
-  max-height: 60px;
+  max-block-size: 60px;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
@@ -48,9 +49,8 @@
 }
 
 .MiniInfoCell__after {
-  margin-left: 12px;
-  margin-top: -2px;
-  margin-bottom: -2px;
+  margin-inline-start: 12px;
+  margin-block: -2px;
 }
 
 .MiniInfoCell--mode-add,
@@ -64,12 +64,11 @@
 }
 
 .MiniInfoCell--mode-more {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-block: 10px;
 }
 
 .MiniInfoCell__middle :global(.vkuiIcon) {
-  margin-left: 4px;
+  margin-inline-start: 4px;
   color: var(--vkui--color_text_accent);
 }
 

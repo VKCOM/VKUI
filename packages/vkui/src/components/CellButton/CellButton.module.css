@@ -4,11 +4,10 @@
   margin: 0;
   border: 0;
   cursor: pointer;
-  width: 100%;
+  inline-size: 100%;
   background: transparent;
-  text-align: left;
-  padding-top: 0;
-  padding-bottom: 0;
+  text-align: start;
+  padding-block: 0;
 }
 
 /**
@@ -16,9 +15,10 @@
  * FormItem
  */
 :global(.vkuiInternalFormItem) .CellButton {
-  width: 100%;
+  inline-size: 100%;
   box-sizing: content-box;
-  margin: 0 calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
+  margin-block: 0;
+  margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .CellButton[disabled] {
@@ -33,11 +33,11 @@
 /* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal -- отключаем растягивание элементов внутри */
 .CellButton--centered > * {
   flex-grow: initial;
-  max-width: initial;
+  max-inline-size: initial;
 }
 
 .CellButton--centered :global(.vkuiIcon) {
-  padding-right: 8px;
+  padding-inline-end: 8px;
 }
 
 .CellButton {

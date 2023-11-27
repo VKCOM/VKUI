@@ -17,8 +17,8 @@
 
 .ScreenSpinner__container {
   position: relative;
-  width: 88px;
-  height: 88px;
+  inline-size: 88px;
+  block-size: 88px;
   background: var(--vkui--color_background_modal);
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius--regular);
@@ -27,9 +27,9 @@
 
 .ScreenSpinner__icon {
   position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

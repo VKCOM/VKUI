@@ -1,7 +1,7 @@
 .View {
   position: relative;
-  height: 100%;
-  width: 100%;
+  block-size: 100%;
+  inline-size: 100%;
   word-wrap: break-word;
 }
 
@@ -18,37 +18,37 @@
 }
 
 .View__panels {
-  height: 100%;
-  width: 100%;
+  block-size: 100%;
+  inline-size: 100%;
 }
 
 .View__panel {
   position: relative;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   box-sizing: border-box;
   isolation: isolate;
 }
 
 .View__panel-in {
-  height: 100%;
+  block-size: 100%;
 }
 
 .View--animated .View__panel,
 .View--swiping-back .View__panel {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   overflow: hidden;
 }
 
 .View__panel-overlay {
   display: none;
   position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
   background-color: #000;
   pointer-events: none;
   z-index: var(--vkui_internal--z_index_panel_header_fade);

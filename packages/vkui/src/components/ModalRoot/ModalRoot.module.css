@@ -1,15 +1,15 @@
 .ModalRoot {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .ModalRoot__mask {
   opacity: 1;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   position: absolute;
-  left: 0;
-  top: 0;
+  inset-inline-start: 0;
+  inset-block-start: 0;
   background: rgba(0, 0, 0, 0.4);
   user-select: none;
   transition: opacity 167ms ease-out;
@@ -27,25 +27,24 @@
 
 .ModalRoot__viewport {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   pointer-events: none;
 }
 
 :not(.ModalRoot--desktop).ModalRoot .ModalRoot__viewport {
-  top: var(--vkui_internal--safe_area_inset_top);
+  inset-block-start: var(--vkui_internal--safe_area_inset_top);
 }
 
 :not(.ModalRoot--desktop).ModalRoot--hasCustomPanelHeaderAfterSlot .ModalRoot__viewport {
-  top: calc(var(--vkui_internal--safe_area_inset_top) + var(--vkui_internal--panel_header_height));
+  inset-block-start: calc(
+    var(--vkui_internal--safe_area_inset_top) + var(--vkui_internal--panel_header_height)
+  );
 }
 
 .ModalRoot__modal {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   box-sizing: border-box;
 }
 

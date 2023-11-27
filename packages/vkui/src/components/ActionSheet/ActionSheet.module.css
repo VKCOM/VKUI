@@ -1,13 +1,14 @@
 .ActionSheet {
-  width: 100%;
-  max-width: var(--vkui--size_popup_small--regular);
+  inline-size: 100%;
+  max-inline-size: var(--vkui--size_popup_small--regular);
   padding: 10px;
   box-sizing: border-box;
   animation: animation-actionsheet-intro 0.2s var(--vkui--animation_easing_platform);
 }
 
 .ActionSheet__content-wrapper {
-  padding: 8px 0;
+  padding-block: 8px;
+  padding-inline: 0;
   overflow: hidden;
   border-radius: 12px;
   box-shadow: var(--vkui--elevation3);
@@ -16,7 +17,8 @@
 
 .ActionSheet__header {
   color: var(--vkui--color_text_subhead);
-  padding: 16px 20px;
+  padding-block: 16px;
+  padding-inline: 20px;
 }
 
 .ActionSheet--closing {
@@ -25,7 +27,7 @@
 }
 
 .ActionSheet__title + .ActionSheet__text {
-  margin-top: 8px;
+  margin-block-start: 8px;
 }
 
 /**
@@ -43,8 +45,7 @@
 }
 
 .ActionSheet__close-item-wrapper--ios {
-  margin-top: 8px;
-  margin-bottom: var(--vkui_internal--safe_area_inset_bottom);
+  margin-block: 8px var(--vkui_internal--safe_area_inset_bottom);
   overflow: hidden;
   border-radius: 14px;
   box-shadow: var(--vkui--elevation3);
@@ -71,10 +72,10 @@
 
 .ActionSheet--ios .ActionSheet__header::before {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   background-color: var(--vkui--color_background_modal);
   content: '';
 }
@@ -84,7 +85,8 @@
  */
 
 .ActionSheet--sizeY-compact .ActionSheet__header {
-  padding: 12px 20px;
+  padding-block: 12px;
+  padding-inline: 20px;
 }
 
 /**
@@ -92,11 +94,11 @@
  */
 
 .ActionSheet--menu {
-  width: auto;
-  height: auto;
+  inline-size: auto;
+  block-size: auto;
   animation: none;
   padding: 0;
-  max-width: 100%;
+  max-inline-size: 100%;
 }
 
 .ActionSheet--menu.ActionSheet--ios .ActionSheet__content-wrapper {

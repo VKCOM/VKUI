@@ -15,7 +15,7 @@
  */
 
 .SubnavigationButton--size-s .SubnavigationButton__in {
-  height: var(--vkui--size_button_small_height--regular);
+  block-size: var(--vkui--size_button_small_height--regular);
 }
 
 /**
@@ -23,7 +23,7 @@
  */
 
 .SubnavigationButton--size-m .SubnavigationButton__in {
-  height: var(--vkui--size_button_medium_height--regular);
+  block-size: var(--vkui--size_button_medium_height--regular);
 }
 
 /**
@@ -31,40 +31,40 @@
  */
 
 .SubnavigationButton--size-l .SubnavigationButton__in {
-  height: var(--vkui--size_button_large_height--regular);
+  block-size: var(--vkui--size_button_large_height--regular);
 }
 
 /**
  * SizeY = compact
  */
 .SubnavigationButton--sizeY-compact.SubnavigationButton--size-s .SubnavigationButton__in {
-  height: var(--vkui--size_button_small_height--compact);
+  block-size: var(--vkui--size_button_small_height--compact);
 }
 
 .SubnavigationButton--sizeY-compact.SubnavigationButton--size-m .SubnavigationButton__in {
-  height: var(--vkui--size_button_medium_height--compact);
+  block-size: var(--vkui--size_button_medium_height--compact);
 }
 
 .SubnavigationButton--sizeY-compact.SubnavigationButton--size-l .SubnavigationButton__in {
-  height: var(--vkui--size_button_large_height--compact);
+  block-size: var(--vkui--size_button_large_height--compact);
 }
 
 @media (--sizeY-compact) {
   .SubnavigationButton--sizeY-none.SubnavigationButton--size-s .SubnavigationButton__in {
-    height: var(--vkui--size_button_small_height--compact);
+    block-size: var(--vkui--size_button_small_height--compact);
   }
 
   .SubnavigationButton--sizeY-none.SubnavigationButton--size-m .SubnavigationButton__in {
-    height: var(--vkui--size_button_medium_height--compact);
+    block-size: var(--vkui--size_button_medium_height--compact);
   }
 
   .SubnavigationButton--sizeY-none.SubnavigationButton--size-l .SubnavigationButton__in {
-    height: var(--vkui--size_button_large_height--compact);
+    block-size: var(--vkui--size_button_large_height--compact);
   }
 }
 
 .SubnavigationButton__before {
-  margin-right: 8px;
+  margin-inline-end: 8px;
   color: var(--vkui--color_icon_accent);
 }
 
@@ -76,24 +76,24 @@
 }
 
 .SubnavigationButton__after {
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }
 
 .SubnavigationButton__expandableIcon {
-  margin-left: 8px;
-  margin-top: 1px; /* Смещает иконку относительно текста */
+  margin-inline-start: 8px;
+  margin-block-start: 1px; /* Смещает иконку относительно текста */
   color: var(--vkui--color_icon_secondary);
 }
 
 .SubnavigationButton__before:first-child,
 .SubnavigationButton__label:first-child {
-  padding-left: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
+  padding-inline-start: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
 }
 
 .SubnavigationButton__after:last-child,
 .SubnavigationButton__label:last-child,
 .SubnavigationButton__expandableIcon {
-  padding-right: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
+  padding-inline-end: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
 }
 
 /**
@@ -170,5 +170,5 @@
 
 :global(.vkuiInternalSubnavigationBar--mode-fixed) .SubnavigationButton {
   flex: 1;
-  min-width: 0;
+  min-inline-size: 0;
 }

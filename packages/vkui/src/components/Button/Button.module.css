@@ -4,13 +4,13 @@
   box-sizing: border-box;
   text-decoration: none;
   border: 0;
-  min-height: var(--vkui--size_button_small_height--compact);
+  min-block-size: var(--vkui--size_button_small_height--compact);
   margin: 0;
   padding: 0;
   user-select: none;
   border-radius: var(--vkui--size_border_radius--regular);
-  max-width: 100%;
-  min-width: var(--vkui--size_button_minimum_width--regular);
+  max-inline-size: 100%;
+  min-inline-size: var(--vkui--size_button_minimum_width--regular);
 }
 
 .Button--rounded {
@@ -22,23 +22,23 @@
 }
 
 .Button--singleIcon {
-  width: var(--vkui--size_button_small_height--compact);
-  min-width: initial;
+  inline-size: var(--vkui--size_button_small_height--compact);
+  min-inline-size: initial;
 }
 
 .Button--sizeY-regular.Button--singleIcon {
-  width: var(--vkui--size_button_small_height--regular);
+  inline-size: var(--vkui--size_button_small_height--regular);
 }
 
 @media (--sizeY-regular) {
   .Button--sizeY-none.Button--singleIcon {
-    width: var(--vkui--size_button_small_height--regular);
+    inline-size: var(--vkui--size_button_small_height--regular);
   }
 }
 
 .Button--stretched {
   display: block;
-  width: 100%;
+  inline-size: 100%;
   flex-grow: 1;
   flex-basis: 0;
 }
@@ -47,15 +47,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  min-height: inherit;
+  inline-size: 100%;
+  min-block-size: inherit;
   text-align: center;
   box-sizing: border-box;
 }
 
 .Button--align-left .Button__in {
   justify-content: flex-start;
-  text-align: left;
+  text-align: start;
 }
 
 .Button--align-center {
@@ -63,7 +63,7 @@
 
 .Button--align-right .Button__in {
   justify-content: flex-end;
-  text-align: right;
+  text-align: end;
 }
 
 .Button[disabled] {
@@ -90,96 +90,94 @@
 }
 
 .Button--size-s .Button__content:first-child {
-  padding-left: var(--vkui--size_button_base_small_padding_horizontal--regular);
+  padding-inline-start: var(--vkui--size_button_base_small_padding_horizontal--regular);
 }
 
 .Button--size-s .Button__content:last-child,
 .Button--size-s .Button__after {
-  padding-right: var(--vkui--size_button_base_small_padding_horizontal--regular);
+  padding-inline-end: var(--vkui--size_button_base_small_padding_horizontal--regular);
 }
 
 .Button--size-m .Button__content:first-child {
-  padding-left: var(--vkui--size_button_base_medium_padding_horizontal--regular);
+  padding-inline-start: var(--vkui--size_button_base_medium_padding_horizontal--regular);
 }
 
 .Button--size-m .Button__content:last-child,
 .Button--size-m .Button__after {
-  padding-right: var(--vkui--size_button_base_medium_padding_horizontal--regular);
+  padding-inline-end: var(--vkui--size_button_base_medium_padding_horizontal--regular);
 }
 
 .Button--size-l .Button__content:first-child {
-  padding-left: var(--vkui--size_button_base_large_padding_horizontal--regular);
+  padding-inline-start: var(--vkui--size_button_base_large_padding_horizontal--regular);
 }
 
 .Button--size-l .Button__content:last-child,
 .Button--size-l .Button__after {
-  padding-right: var(--vkui--size_button_base_large_padding_horizontal--regular);
+  padding-inline-end: var(--vkui--size_button_base_large_padding_horizontal--regular);
 }
 
 .Button--size-s .Button__before {
-  padding-left: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
+  padding-inline-start: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
 }
 
 .Button--size-m .Button__before {
-  padding-left: var(--vkui--size_button_base_medium_padding_horizontal_icon--regular);
+  padding-inline-start: var(--vkui--size_button_base_medium_padding_horizontal_icon--regular);
 }
 
 .Button--size-l .Button__before {
-  padding-left: var(--vkui--size_button_base_large_padding_horizontal_icon--regular);
+  padding-inline-start: var(--vkui--size_button_base_large_padding_horizontal_icon--regular);
 }
 
 .Button--mode-tertiary.Button--size-s .Button__content:first-child {
-  padding-left: var(--vkui--size_button_tertiary_small_padding_horizontal--regular);
+  padding-inline-start: var(--vkui--size_button_tertiary_small_padding_horizontal--regular);
 }
 
 .Button--mode-tertiary.Button--size-s .Button__content:last-child,
 .Button--mode-tertiary.Button--size-s .Button__after {
-  padding-right: var(--vkui--size_button_tertiary_small_padding_horizontal--regular);
+  padding-inline-end: var(--vkui--size_button_tertiary_small_padding_horizontal--regular);
 }
 
 .Button--mode-tertiary.Button--size-m .Button__content:first-child {
-  padding-left: var(--vkui--size_button_tertiary_medium_padding_horizontal--regular);
+  padding-inline-start: var(--vkui--size_button_tertiary_medium_padding_horizontal--regular);
 }
 
 .Button--mode-tertiary.Button--size-m .Button__content:last-child,
 .Button--mode-tertiary.Button--size-m .Button__after {
-  padding-right: var(--vkui--size_button_tertiary_medium_padding_horizontal--regular);
+  padding-inline-end: var(--vkui--size_button_tertiary_medium_padding_horizontal--regular);
 }
 
 .Button--mode-tertiary.Button--size-l .Button__content:first-child {
-  padding-left: var(--vkui--size_button_tertiary_large_padding_horizontal--regular);
+  padding-inline-start: var(--vkui--size_button_tertiary_large_padding_horizontal--regular);
 }
 
 .Button--mode-tertiary.Button--size-l .Button__content:last-child,
 .Button--mode-tertiary.Button--size-l .Button__after {
-  padding-right: var(--vkui--size_button_tertiary_large_padding_horizontal--regular);
+  padding-inline-end: var(--vkui--size_button_tertiary_large_padding_horizontal--regular);
 }
 
 .Button--mode-tertiary.Button--size-s .Button__before {
-  padding-left: var(--vkui--size_button_tertiary_small_padding_horizontal_icon--regular);
+  padding-inline-start: var(--vkui--size_button_tertiary_small_padding_horizontal_icon--regular);
 }
 
 .Button--mode-tertiary.Button--size-m .Button__before {
-  padding-left: var(--vkui--size_button_tertiary_medium_padding_horizontal_icon--regular);
+  padding-inline-start: var(--vkui--size_button_tertiary_medium_padding_horizontal_icon--regular);
 }
 
 .Button--mode-tertiary.Button--size-l .Button__before {
-  padding-left: var(--vkui--size_button_tertiary_large_padding_horizontal_icon--regular);
+  padding-inline-start: var(--vkui--size_button_tertiary_large_padding_horizontal_icon--regular);
 }
 
 .Button--singleIcon .Button__after,
 .Button--singleIcon .Button__before,
 .Button--mode-tertiary.Button--singleIcon .Button__after,
 .Button--mode-tertiary.Button--singleIcon .Button__before {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 0;
-  padding-right: 0;
+  margin-inline: auto;
+  padding-inline: 0;
 }
 
 .Button--mode-link {
   background: none;
-  min-width: initial;
+  min-inline-size: initial;
 }
 
 .Button--mode-link .Button__after,
@@ -188,17 +186,13 @@
 .Button--mode-link .Button__content:last-child,
 .Button--stretched .Button__after:only-child,
 .Button--stretched .Button__before:only-child {
-  padding-left: 0;
-  padding-right: 0;
+  padding-inline: 0;
 }
 
 .Button__spinner {
   color: currentColor;
   position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
 }
 
 .Button__spinner + .Button__in {
@@ -454,19 +448,19 @@
 }
 
 .Button__before:not(:last-child) + .Button__content {
-  margin-left: 6px;
+  margin-inline-start: 6px;
 }
 
 .Button__after:not(:first-child) {
-  margin-left: 6px;
+  margin-inline-start: 6px;
 }
 
 .Button--size-l .Button__before:not(:last-child) + .Button__content {
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }
 
 .Button--size-l .Button__after:not(:first-child) {
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }
 
 /* Fonts sizes  */
@@ -546,68 +540,68 @@
 
 /* Sizes */
 .Button--size-m {
-  min-height: var(--vkui--size_button_medium_height--compact);
+  min-block-size: var(--vkui--size_button_medium_height--compact);
 }
 
 .Button--sizeY-regular.Button--size-m {
-  min-height: var(--vkui--size_button_medium_height--regular);
+  min-block-size: var(--vkui--size_button_medium_height--regular);
 }
 
 @media (--sizeY-regular) {
   .Button--sizeY-none.Button--size-m {
-    min-height: var(--vkui--size_button_medium_height--regular);
+    min-block-size: var(--vkui--size_button_medium_height--regular);
   }
 }
 
 .Button--size-m.Button--singleIcon {
-  width: var(--vkui--size_button_medium_height--compact);
+  inline-size: var(--vkui--size_button_medium_height--compact);
 }
 
 .Button--sizeY-regular.Button--size-m.Button--singleIcon {
-  width: var(--vkui--size_button_medium_height--regular);
+  inline-size: var(--vkui--size_button_medium_height--regular);
 }
 
 @media (--sizeY-regular) {
   .Button--sizeY-none.Button--size-m.Button--singleIcon {
-    width: var(--vkui--size_button_medium_height--regular);
+    inline-size: var(--vkui--size_button_medium_height--regular);
   }
 }
 
 .Button--size-l {
-  min-height: var(--vkui--size_button_large_height--compact);
+  min-block-size: var(--vkui--size_button_large_height--compact);
 }
 
 .Button--sizeY-regular.Button--size-l {
-  min-height: var(--vkui--size_button_large_height--regular);
+  min-block-size: var(--vkui--size_button_large_height--regular);
 }
 
 @media (--sizeY-regular) {
   .Button--sizeY-none.Button--size-l {
-    min-height: var(--vkui--size_button_large_height--regular);
+    min-block-size: var(--vkui--size_button_large_height--regular);
   }
 }
 
 .Button--size-l.Button--singleIcon {
-  width: var(--vkui--size_button_large_height--compact);
+  inline-size: var(--vkui--size_button_large_height--compact);
 }
 
 .Button--sizeY-regular.Button--size-l.Button--singleIcon {
-  width: var(--vkui--size_button_large_height--regular);
+  inline-size: var(--vkui--size_button_large_height--regular);
 }
 
 @media (--sizeY-regular) {
   .Button--sizeY-none.Button--size-l.Button--singleIcon {
-    width: var(--vkui--size_button_large_height--regular);
+    inline-size: var(--vkui--size_button_large_height--regular);
   }
 }
 
 .Button--sizeY-regular {
-  min-height: var(--vkui--size_button_small_height--regular);
+  min-block-size: var(--vkui--size_button_small_height--regular);
 }
 
 @media (--sizeY-regular) {
   .Button--sizeY-none {
-    min-height: var(--vkui--size_button_small_height--regular);
+    min-block-size: var(--vkui--size_button_small_height--regular);
   }
 }
 

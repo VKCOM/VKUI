@@ -27,7 +27,7 @@
 
 /* stylelint-disable-next-line @project-tools/stylelint-atomic */
 .Link :global(.vkuiIcon) {
-  margin-left: 4px;
+  margin-inline-start: 4px;
   display: inline-block;
   vertical-align: middle;
 }

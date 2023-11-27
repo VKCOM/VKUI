@@ -8,7 +8,7 @@
 }
 
 .PanelHeader:not(.PanelHeader--vis):not(.PanelHeader--fixed) {
-  height: 0;
+  block-size: 0;
   /* см. https://github.com/VKCOM/VKUI/issues/5571 */
   z-index: var(--vkui_internal--z_index_panel_header);
 }
@@ -66,8 +66,8 @@
 
 .PanelHeader::before,
 .PanelHeader__in {
-  height: var(--vkui_internal--panel_header_height);
-  padding-top: var(--vkui_internal--safe_area_inset_top);
+  block-size: var(--vkui_internal--panel_header_height);
+  padding-block-start: var(--vkui_internal--safe_area_inset_top);
 }
 
 .PanelHeader__after {
@@ -80,7 +80,7 @@
 
 /* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
 .PanelHeader__after > *:not(:last-child) {
-  margin-right: 4px;
+  margin-inline-end: 4px;
 }
 
 /**
@@ -92,12 +92,13 @@
   flex-grow: 1;
   opacity: 1;
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
-  padding: 4px 0 4px 4px;
+  padding-block: 4px 4px;
+  padding-inline: 4px 0;
 }
 
 .PanelHeader--ios .PanelHeader__before .PanelHeaderButton + .PanelHeaderButton--primitive {
-  margin-left: -6px;
-  padding-left: 0;
+  margin-inline-start: -6px;
+  padding-inline-start: 0;
 }
 
 .PanelHeader--ios .PanelHeader__content {
@@ -112,20 +113,21 @@
 
 /* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--ios .PanelHeader__content > * {
-  padding: 0 4px;
+  padding-block: 0;
+  padding-inline: 4px;
 }
 
 .PanelHeader--ios.PanelHeader--no-before .PanelHeader__content {
-  padding-left: 8px;
+  padding-inline-start: 8px;
 }
 
 /* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--ios.PanelHeader--no-after .PanelHeader__content > * {
-  padding-right: 0;
+  padding-inline-end: 0;
 }
 
 .PanelHeader--ios.PanelHeader--no-after .PanelHeader__content {
-  padding-right: 8px;
+  padding-inline-end: 8px;
 }
 
 .PanelHeader--ios .PanelHeader__after {
@@ -134,7 +136,8 @@
   flex-grow: 1;
   opacity: 1;
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
-  padding: 4px 4px 4px 0;
+  padding-block: 4px 4px;
+  padding-inline: 0 4px;
 }
 
 .View--ios .View__panel--prev .PanelHeader__before,
@@ -147,14 +150,15 @@
  * Android
  */
 .PanelHeader--android .PanelHeader__before:not(:empty) {
-  padding: 4px 0 4px 4px;
-  margin-right: -8px;
+  padding-block: 4px 4px;
+  padding-inline: 4px 0;
+  margin-inline-end: -8px;
 }
 
 .PanelHeader--android .PanelHeader__content {
   align-items: center;
   flex-grow: 1;
-  max-width: 100%;
+  max-inline-size: 100%;
 }
 
 .PanelHeader--android .PanelHeader__content-in {
@@ -163,7 +167,8 @@
 
 /* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--android .PanelHeader__content > * {
-  padding: 0 12px;
+  padding-block: 0;
+  padding-inline: 12px;
 }
 
 /**
@@ -186,7 +191,7 @@
 :global(.vkuiInternalSplitCol--spaced)
   .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
-  padding-left: 0;
+  padding-inline-start: 0;
 }
 
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(
@@ -194,7 +199,7 @@
   ):global(.vkuiInternalSplitCol--spaced-auto)
   .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
-  padding-left: 0;
+  padding-inline-start: 0;
 }
 
 @media (--viewWidth-smallTabletPlus) {
@@ -203,28 +208,28 @@
     )
     .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__content {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 }
 
 /* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--android.PanelHeader--no-after .PanelHeader__content > *,
 .PanelHeader--vkcom.PanelHeader--no-after .PanelHeader__content > * {
-  padding-right: 0;
+  padding-inline-end: 0;
 }
 
 .PanelHeader--android.PanelHeader--no-after .PanelHeader__content {
-  padding-right: 16px;
+  padding-inline-end: 16px;
 }
 
 .PanelHeader--android.PanelHeader--no-before .PanelHeader__content {
-  padding-left: 16px;
+  padding-inline-start: 16px;
 }
 
 :global(.vkuiInternalSplitCol--spaced)
   .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
-  padding-right: 0;
+  padding-inline-end: 0;
 }
 
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(
@@ -232,7 +237,7 @@
   ):global(.vkuiInternalSplitCol--spaced-auto)
   .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
-  padding-right: 0;
+  padding-inline-end: 0;
 }
 
 @media (--viewWidth-smallTabletPlus) {
@@ -241,13 +246,14 @@
     )
     .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__content {
-    padding-right: 0;
+    padding-inline-end: 0;
   }
 }
 
 .PanelHeader--android .PanelHeader__after:not(:empty),
 .PanelHeader--vkcom .PanelHeader__after:not(:empty) {
-  padding: 4px 4px 4px 0;
+  padding-block: 4px 4px;
+  padding-inline: 0 4px;
 }
 
 /**
@@ -263,10 +269,9 @@
   )
   .PanelHeader__in::after {
   position: absolute;
-  left: var(--vkui--size_border--regular);
-  right: var(--vkui--size_border--regular);
-  bottom: 0;
-  height: var(--vkui--size_border--regular);
+  inset-inline: var(--vkui--size_border--regular);
+  inset-block-end: 0;
+  block-size: var(--vkui--size_border--regular);
   background-color: var(--vkui--color_background_content);
   content: '';
 }
@@ -277,10 +282,9 @@
     )
     .PanelHeader__in::after {
     position: absolute;
-    left: var(--vkui--size_border--regular);
-    right: var(--vkui--size_border--regular);
-    bottom: 0;
-    height: var(--vkui--size_border--regular);
+    inset-inline: var(--vkui--size_border--regular);
+    inset-block-end: 0;
+    block-size: var(--vkui--size_border--regular);
     background-color: var(--vkui--color_background_content);
     content: '';
   }
@@ -288,19 +292,19 @@
 
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__in {
-  border-top-left-radius: var(--vkui--size_border_radius_paper--regular);
-  border-top-right-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
   box-shadow: 0 0 0 var(--vkui--size_border--regular) var(--vkui--color_field_border_alpha) inset;
-  border-bottom: 0;
+  border-block-end: 0;
 }
 
 @media (--sizeX-regular) {
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__in {
-    border-top-left-radius: var(--vkui--size_border_radius_paper--regular);
-    border-top-right-radius: var(--vkui--size_border_radius_paper--regular);
+    border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+    border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
     box-shadow: 0 0 0 var(--vkui--size_border--regular) var(--vkui--color_field_border_alpha) inset;
-    border-bottom: 0;
+    border-block-end: 0;
   }
 }
 
@@ -309,7 +313,8 @@
 }
 
 .PanelHeader--vkcom .PanelHeader__before:not(:empty) {
-  padding: 0 0 0 4px;
+  padding-block: 0 0;
+  padding-inline: 4px 0;
 }
 
 .PanelHeader--vkcom .PanelHeader__before,
@@ -320,12 +325,12 @@
 }
 
 .PanelHeader__separator {
-  margin-top: calc(-1 * var(--vkui--size_border--regular));
+  margin-block-start: calc(-1 * var(--vkui--size_border--regular));
 }
 
 /* stylelint-disable-next-line selector-max-universal */
 .PanelHeader--no-before .PanelHeader__content > * {
-  padding-left: 0;
+  padding-inline-start: 0;
 }
 
 /**
@@ -334,7 +339,7 @@
  */
 :global(.vkuiInternalPanel--centered) .PanelHeader {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
 }

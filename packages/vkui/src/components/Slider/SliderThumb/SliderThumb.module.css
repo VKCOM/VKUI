@@ -1,8 +1,8 @@
 .SliderThumb {
   position: absolute;
   z-index: 1;
-  width: var(--vkui_internal--slider_thumb_size);
-  height: var(--vkui_internal--slider_thumb_size);
+  inline-size: var(--vkui_internal--slider_thumb_size);
+  block-size: var(--vkui_internal--slider_thumb_size);
   border-radius: 50%;
   border: var(--vkui--size_border--regular) solid var(--vkui--color_separator_primary_alpha);
   background: var(--vkui--color_background_contrast);
@@ -22,8 +22,8 @@
 .SliderThumb__nativeInput {
   direction: ltr;
   position: absolute;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   margin: -1px;
   padding: 0;
   border: 0 none;

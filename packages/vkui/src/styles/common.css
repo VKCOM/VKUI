@@ -4,7 +4,7 @@
 .vkui__root {
   margin: 0;
   padding: 0;
-  height: 100%;
+  block-size: 100%;
 }
 
 /* stylelint-disable-next-line selector-max-type */

@@ -1,7 +1,7 @@
 .Slider {
   position: relative;
   cursor: pointer;
-  height: var(--vkui_internal--slider_thumb_size);
+  block-size: var(--vkui_internal--slider_thumb_size);
 }
 
 .Slider--disabled {
@@ -12,32 +12,31 @@
 .Slider__track,
 .Slider__track-fill {
   position: absolute;
-  top: 50%;
-  left: 0;
-  height: 2px;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  block-size: 2px;
   border-radius: 1px;
 }
 
 .Slider__track {
-  width: 100%;
+  inline-size: 100%;
   background-color: var(--vkui--color_track_background);
 }
 
 .Slider__track-fill {
-  width: auto;
+  inline-size: auto;
   background: var(--vkui--color_background_accent);
 }
 
 .Slider__thumbs {
   isolation: isolate;
   position: relative;
-  margin-right: calc(var(--vkui_internal--slider_thumb_size) / 2);
-  margin-left: calc(var(--vkui_internal--slider_thumb_size) / 2);
-  height: 100%;
+  margin-inline: calc(var(--vkui_internal--slider_thumb_size) / 2);
+  block-size: 100%;
 }
 
 .Slider__thumb {
-  top: 50%;
+  inset-block-start: 50%;
   transform: translate(-50%, -50%);
 }
 

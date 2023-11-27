@@ -1,5 +1,5 @@
 .SegmentedControlOption {
-  height: 100%;
+  block-size: 100%;
   border: 0;
   border-radius: inherit;
   background: transparent;
@@ -21,5 +21,5 @@
 }
 
 .SegmentedControlOption__before {
-  margin-right: 6px;
+  margin-inline-end: 6px;
 }

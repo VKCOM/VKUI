@@ -69,6 +69,16 @@
 > В VKUI есть [специальная сборка](https://vkcom.github.io/VKUI/#/CSS%20Modules)
 > в ESNext, которая позволяет уменьшить размер вашего приложения
 
+## CSS Logical для [специальной сборки](https://vkcom.github.io/VKUI/#/CSS%20Modules)
+
+> **Note**
+>
+> Данное изменение не влияет на обычную сборку
+
+Мы начинаем использовать [логические css свойства](https://www.w3.org/TR/css-logical-1/) вместо физических.
+Если вам требуется [широкая браузерная поддержка](https://caniuse.com/css-logical-props),
+рекомендуем воспользоваться [postcss-logical](https://www.npmjs.com/package/postcss-logical).
+
 ## Перечисления заменены на объекты
 
 Следующие перечисления были заменены на [объекты](https://www.typescriptlang.org/docs/handbook/enums.html#objects-vs-enums):

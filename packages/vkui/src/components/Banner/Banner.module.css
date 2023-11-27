@@ -5,8 +5,10 @@
 
 /* TODO [>=6]: удалить или прийти к padding*/
 .Banner--withPadding {
-  margin: 12px 0;
-  padding: 0 var(--vkui--size_base_padding_horizontal--regular);
+  margin-block: 12px;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .Banner__in {
@@ -23,11 +25,11 @@
 .Banner__in::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 0;
+  inset-inline-start: 0;
+  inset-block-start: 0;
   display: block;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   border: var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha);
   border-radius: inherit;
   pointer-events: none;
@@ -37,7 +39,7 @@
 
 .Banner__before {
   position: relative;
-  margin-right: 12px;
+  margin-inline-end: 12px;
   z-index: var(--vkui_internal--z_index_banner_content);
 }
 
@@ -47,7 +49,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  min-width: 0;
+  min-inline-size: 0;
   z-index: var(--vkui_internal--z_index_banner_content);
 }
 
@@ -58,16 +60,16 @@
 
 .Banner__bg {
   position: absolute;
-  left: 0;
-  top: 0;
+  inset-inline-start: 0;
+  inset-block-start: 0;
   z-index: var(--vkui_internal--z_index_banner_background);
 }
 
 /* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
 .Banner__bg,
 .Banner__bg > * {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .Banner__aside {
@@ -76,14 +78,14 @@
   align-content: center;
   align-items: center;
   justify-content: flex-end;
-  width: 28px;
+  inline-size: 28px;
   color: var(--vkui--color_icon_secondary);
 }
 
 .Banner__dismiss {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  inset-block-start: 2px;
+  inset-inline-end: 2px;
   display: flex;
   flex-flow: row nowrap;
   align-content: center;
@@ -94,12 +96,12 @@
 }
 
 .Banner__actions {
-  margin-top: 12px;
+  margin-block-start: 12px;
 }
 
 .Banner__subheader:not(:first-child),
 .Banner__text:not(:first-child) {
-  margin-top: 2px;
+  margin-block-start: 2px;
 }
 
 /**
@@ -129,7 +131,7 @@
 
 .Banner--size-m .Banner__subheader:not(:first-child),
 .Banner--size-m .Banner__text:not(:first-child) {
-  margin-top: 4px;
+  margin-block-start: 4px;
 }
 
 .Banner--ios .Banner__dismiss,

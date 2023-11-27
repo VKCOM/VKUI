@@ -1,18 +1,20 @@
 .SubnavigationBar__in {
   /* Отрицательный margin нужен, чтобы компенсировать увеличенный из-за тени padding (12px -> 20px) */
-  margin: -8px 0;
+  margin-block: -8px;
+  margin-inline: 0;
 }
 
 .SubnavigationBar__scrollIn {
   margin: 0;
-  padding: calc(var(--vkui--size_subnavigation_bar_padding_vertical--regular) + 8px) 0;
+  padding-block: calc(var(--vkui--size_subnavigation_bar_padding_vertical--regular) + 8px);
+  padding-inline: 0;
   display: flex;
 }
 
 .SubnavigationBar__scrollIn::before,
 .SubnavigationBar__scrollIn::after {
   content: '';
-  min-width: var(--vkui--size_base_padding_horizontal--regular);
+  min-inline-size: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .SubnavigationBar__item {
@@ -21,7 +23,7 @@
 }
 
 .SubnavigationBar__item + .SubnavigationBar__item {
-  margin-left: var(--vkui--size_subnavigation_bar_gap--regular);
+  margin-inline-start: var(--vkui--size_subnavigation_bar_gap--regular);
 }
 
 /**
@@ -31,5 +33,5 @@
 
 :global(.vkuiInternalSubnavigationBar--mode-fixed) .SubnavigationBar__item {
   flex: 1;
-  min-width: 0;
+  min-inline-size: 0;
 }

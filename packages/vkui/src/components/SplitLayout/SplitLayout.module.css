@@ -1,12 +1,12 @@
 .SplitLayout {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   position: relative;
 }
 
 .SplitLayout__inner {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   display: flex;
 }
 
@@ -15,13 +15,13 @@
 .SplitLayout__inner--header {
   position: relative;
   z-index: var(--vkui_internal--z_index_split_layout_panel_header);
-  margin-top: calc(
+  margin-block-start: calc(
     -1 * (var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top))
   );
 }
 
 .SplitLayout--ios .SplitLayout__inner--header {
-  margin-top: calc(
+  margin-block-start: calc(
     -1 * (var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top))
   );
 }
