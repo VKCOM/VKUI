@@ -264,7 +264,6 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/FormField/FormField.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/FormStatus/FormStatus.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Slider/Slider.tsx`,
-            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/RangeSlider/RangeSlider.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Radio/Radio.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/RadioGroup/RadioGroup.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Checkbox/Checkbox.tsx`,
