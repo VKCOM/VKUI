@@ -77,10 +77,6 @@ export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    * - `gap="m" mode="vertical" stretched`
    */
   actions?: React.ReactNode;
-  /**
-   * Удаляет отступы у компонента
-   */
-  noPadding?: boolean;
 }
 
 /**
@@ -100,7 +96,6 @@ export const Banner = ({
   actions,
   onDismiss,
   dismissLabel = 'Скрыть',
-  noPadding,
   ...restProps
 }: BannerProps) => {
   const platform = usePlatform();
@@ -149,7 +144,6 @@ export const Banner = ({
       {...restProps}
       baseClassName={classNames(
         styles['Banner'],
-        !noPadding && styles['Banner--withPadding'],
         platform === 'ios' && styles['Banner--ios'],
         mode === 'image' && styles['Banner--mode-image'],
         size === 'm' && styles['Banner--size-m'],
