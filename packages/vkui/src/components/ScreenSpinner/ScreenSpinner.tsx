@@ -20,8 +20,8 @@ export const ScreenSpinner = ({
   className,
   state = 'loading',
   size = 'large',
-  'aria-label': ariaLabel = 'Пожалуйста, подождите...',
   onClick,
+  children = 'Пожалуйста, подождите...',
   ...restProps
 }: ScreenSpinnerProps) => {
   const hideSpinner = state === 'done' || state === 'error';
@@ -52,9 +52,10 @@ export const ScreenSpinner = ({
             hideSpinner && styles['ScreenSpinner__spinner--hidden'],
           )}
           size={size}
-          aria-label={ariaLabel}
           {...restProps}
-        />
+        >
+          {children}
+        </Spinner>
         <div
           className={classNames(
             styles['ScreenSpinner__icon'],

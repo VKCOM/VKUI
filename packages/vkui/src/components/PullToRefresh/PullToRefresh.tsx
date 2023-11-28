@@ -257,6 +257,8 @@ export const PullToRefresh = ({
   return (
     <TouchRootContext.Provider value={true}>
       <Touch
+        aria-live="polite"
+        aria-busy={!!isFetching}
         {...restProps}
         onStart={onTouchStart}
         onMove={onTouchMove}
