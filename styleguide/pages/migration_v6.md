@@ -57,6 +57,8 @@
   - `webviewType={WebviewType.INTERNAL}` -> `hasCustomPanelHeaderAfter={false}`.
   - `webviewType={WebviewType.VKAPPS}` -> `hasCustomPanelHeaderAfter={true}`. При необходимости передайте `customPanelHeaderAfterMinWidth={<value>}` (по умолчанию `90`).
 
+<br/><br/>
+
 ## [AppearanceProvider](#/AppearanceProvider)
 
 По аналогии с остальными провайдерами свойство `appearance` заменено на `value`
@@ -66,9 +68,13 @@
 + <AppearanceProvider value={appearance}>...</AppearanceProvider>
 ```
 
+<br/><br/>
+
 ## ~`withInsets`~
 
 Используйте вместо него хук `useInsets()` из [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react).
+
+<br/><br/>
 
 ## Поддержка браузеров
 
@@ -77,6 +83,8 @@
 
 > В VKUI есть [специальная сборка](https://vkcom.github.io/VKUI/#/CSS%20Modules)
 > в ESNext, которая позволяет уменьшить размер вашего приложения
+
+<br/><br/>
 
 ## CSS Logical для [специальной сборки](https://vkcom.github.io/VKUI/#/CSS%20Modules)
 
@@ -87,6 +95,8 @@
 Мы начинаем использовать [логические css свойства](https://www.w3.org/TR/css-logical-1/) вместо физических.
 Если вам требуется [широкая браузерная поддержка](https://caniuse.com/css-logical-props),
 рекомендуем воспользоваться [postcss-logical](https://www.npmjs.com/package/postcss-logical).
+
+<br/><br/>
 
 ## Перечисления заменены на объекты
 
@@ -128,7 +138,7 @@
 
 ## [`ActionSheetItem`](#/ActionSheetItem)
 
-- Свойство `autoClose` удалено, теперь это поведение по-умолчанию
+- Свойство `autoClose` удалено, теперь это поведение по умолчанию
 
 ```diff
  <ActionSheet>
@@ -148,3 +158,12 @@
 - Удалено свойство `option` из `CustomSelectOption`
 
 <br/><br/>
+
+## [`VisuallyHiddenInput`](#/VisuallyHiddenInput)
+
+Устаревший компонент удален. Используйте [`VisuallyHidden`](#/VisuallyHidden)
+
+```diff
+- <VisuallyHiddenInput />
++ <VisuallyHidden Component="input" />
+```
