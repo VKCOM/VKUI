@@ -138,3 +138,13 @@
 +  <ActionSheetItem autoCloseDisabled>Закрепить запись</ActionSheetItem>
  </ActionSheet>
 ```
+
+<br/><br/>
+
+## [`CustomSelect`](#/CustomSelect)
+
+- Функция `onInputChange` больше не получает вторым параметром список опций, а также никак не обрабатывает
+  результат исполнения. Для фильтрации обновляйте `props.options` самостоятельно или используйте свойство `filterFn`
+- Удалено свойство `option` из `CustomSelectOption`
+
+<br/><br/>

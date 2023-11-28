@@ -421,7 +421,6 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
               return (
                 <React.Fragment key={`${typeof value}-${value}`}>
                   {renderOption!({
-                    option,
                     hovered: Boolean(hovered),
                     children: label,
                     selected: !!selected,
