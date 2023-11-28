@@ -33,6 +33,7 @@ function autoDetectAppearanceByBridge(
   }
 
   vkBridge.subscribe(bridgeListener);
+  // eslint-disable-next-line no-console
   vkBridge.send('VKWebAppGetConfig').then(updateAppearance).catch(console.error);
 
   return () => vkBridge.unsubscribe(bridgeListener);

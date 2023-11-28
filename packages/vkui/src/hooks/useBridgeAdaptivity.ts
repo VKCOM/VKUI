@@ -77,6 +77,7 @@ export function useBridgeAdaptivity(disable = false): BridgeAdaptivity {
     };
 
     vkBridge.subscribe(handleBridgeEvent);
+    // eslint-disable-next-line no-console
     vkBridge.send('VKWebAppGetConfig').then(updateAdaptivity).catch(console.error);
 
     return () => {

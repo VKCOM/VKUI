@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Icon20ArticleOutline, Icon20PlaceOutline, Icon20WorkOutline } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Avatar } from '../Avatar/Avatar';
 import { Link } from '../Link/Link';
@@ -39,21 +40,13 @@ export const MiniInfoCellPlayground = (props: ComponentPlaygroundProps) => {
         {
           before: [<Icon20WorkOutline key="icon" />],
           mode: ['add'],
-          onClick: [
-            () => {
-              console.log('hi');
-            },
-          ],
+          onClick: [noop],
           children: ['Укажите место учёбы или работы'],
         },
         {
           before: [<Icon20WorkOutline key="icon" />],
           mode: ['more'],
-          onClick: [
-            () => {
-              console.log('hi');
-            },
-          ],
+          onClick: [noop],
           children: ['Подробная информация'],
         },
         {

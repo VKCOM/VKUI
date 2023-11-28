@@ -2,6 +2,7 @@ import { warnOnce } from './warnOnce';
 
 describe('warnOnce', () => {
   afterAll(() => {
+    // eslint-disable-next-line no-console
     console.clear();
     jest.clearAllMocks();
   });

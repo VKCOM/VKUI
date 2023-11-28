@@ -35,6 +35,7 @@ export interface UseAdaptivityWithJSMediaQueries extends Required<BaseAdaptivity
  */
 export const useAdaptivityWithJSMediaQueries = (): UseAdaptivityWithJSMediaQueries => {
   if (!canUseDOM) {
+    // eslint-disable-next-line no-console
     console.error(`[useAdaptivityWithJSMediaQueries] Похоже, вы пытаетесь использовать хук вне браузера.
 
 Постарайтесь этого избегать, чтобы не было ошибок при гидратации: при SSR нет информации о размерах экрана.

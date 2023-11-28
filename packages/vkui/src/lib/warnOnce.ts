@@ -11,6 +11,7 @@ export function warnOnce(zone: string): WarnOnceHandler {
       const formattedMessage = `%c[VKUI/${zone}] ${message}`;
       const styles = type === 'log' ? 'color: steelblue; font-style: italic' : undefined;
 
+      // eslint-disable-next-line no-console
       console[type](formattedMessage, styles);
     }
   };

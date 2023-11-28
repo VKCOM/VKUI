@@ -68,6 +68,7 @@
     ],
     "curly": "error", // Enforce consistent brace style
     "eqeqeq": "error", // Only type-safe equality operators
-    "unicorn/expiring-todo-comments": ["error"]
+    "unicorn/expiring-todo-comments": ["error"],
+    "no-console": "error"
   }
 }
