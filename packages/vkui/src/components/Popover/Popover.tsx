@@ -72,7 +72,7 @@ export const Popover = ({
   children,
   style: styleProp,
   className,
-  getRef,
+  getRootRef,
   onShownChange,
   restoreFocus = true,
   ...restProps
@@ -86,7 +86,7 @@ export const Popover = ({
 
   const shown = typeof shownProp === 'boolean' ? shownProp : computedShown;
 
-  const patchedPopperRef = useExternRef<HTMLDivElement>(setPopperNode, getRef);
+  const patchedPopperRef = useExternRef<HTMLDivElement>(setPopperNode, getRootRef);
 
   const [childRef, child] = usePatchChildren(children);
 
@@ -174,7 +174,7 @@ export const Popover = ({
           {...restProps}
           className={classNames(styles['Popover'], className)}
           targetRef={childRef}
-          getRef={patchedPopperRef}
+          getRootRef={patchedPopperRef}
           offsetDistance={offsetDistance}
           style={
             // Reason: Typescript ругается на CSS Custom Properties в объекте

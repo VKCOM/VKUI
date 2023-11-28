@@ -76,7 +76,7 @@ export const ActionSheetDropdownMenu = ({
         className,
       )}
       style={style}
-      getRef={elementRef}
+      getRootRef={elementRef}
       forcePortal={false}
     >
       <FocusTrap onClose={onClose} {...restProps} onClick={onClick}>
