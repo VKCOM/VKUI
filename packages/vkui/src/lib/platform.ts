@@ -30,6 +30,7 @@ function getPlatformByQueryString(queryString: string): PlatformUnion | undefine
       ? PLATFORM_ALIAS[platformAliasByQuery]
       : undefined;
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.warn(e);
     return;
   }
