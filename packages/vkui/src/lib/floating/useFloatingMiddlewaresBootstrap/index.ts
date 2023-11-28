@@ -30,11 +30,11 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    */
   arrow?: boolean;
   /**
-   * Высота стрелки. Складывается с `mainAxis`, чтобы стрелка не залезала на якорный элемент..
+   * Высота стрелки. Складывается с `mainAxis`, чтобы стрелка не залезала на якорный элемент.
    */
   arrowHeight?: number;
   /**
-   * Безопасная зона вокруг стрелки, чтобы та не выходила за края контента..
+   * Безопасная зона вокруг стрелки, чтобы та не выходила за края контента.
    */
   arrowPadding?: number;
   /**
@@ -46,7 +46,7 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    */
   customMiddlewares?: UseFloatingMiddleware[];
   /**
-   * Принудительно скрывает компонет если целевой элемент исчез.
+   * Принудительно скрывает компонент если целевой элемент исчез.
    */
   hideWhenReferenceHidden?: boolean;
 }

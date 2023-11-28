@@ -192,11 +192,7 @@ describe(contains, () => {
     { args: [undefined, document.createElement('div')] },
     { args: [null, document.createElement('div')] },
   ])('should be always false ($args)', (props) => {
-    if (props.args.length === 0) {
-      expect(contains()).toBeFalsy();
-    } else {
-      expect(contains(...props.args)).toBeFalsy();
-    }
+    expect(contains(...props.args)).toBeFalsy();
   });
 
   it('should return true if parent contain child', () => {
