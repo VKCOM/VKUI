@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from '@vkontakte/icons';
-import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -11,7 +10,6 @@ export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
   disableAnimation?: boolean;
 }
 
-const warn = warnOnce('Spinner');
 /**
  * @see https://vkcom.github.io/VKUI/#/Spinner
  */
@@ -19,8 +17,6 @@ export const Spinner = React.memo(
   ({
     size = 'regular',
     children = 'Загружается...',
-    // TODO [>=6]: Удалить автоматическое приведение aria-label
-    'aria-label': ariaLabel = 'Загружается...',
     disableAnimation,
     ...restProps
   }: SpinnerProps) => {
@@ -37,15 +33,6 @@ export const Spinner = React.memo(
       medium: 16,
       large: 22,
     }[size];
-
-    // TODO [>=6]: Удалить варнинг
-    if (process.env.NODE_ENV === 'development') {
-      if (ariaLabel && !children) {
-        warn(
-          'a11y: Пожалуйста, передавайте ваш текст для ассистивных технологий в children вместо aria-label.',
-        );
-      }
-    }
 
     return (
       <RootComponent
@@ -69,7 +56,7 @@ export const Spinner = React.memo(
             />
           )}
         </SpinnerIcon>
-        <VisuallyHidden>{children ?? ariaLabel}</VisuallyHidden>
+        <VisuallyHidden>{children}</VisuallyHidden>
       </RootComponent>
     );
   },
