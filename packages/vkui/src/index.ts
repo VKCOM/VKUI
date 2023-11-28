@@ -334,7 +334,6 @@ export type { PlatformProviderProps } from './components/PlatformProvider/Platfo
 /**
  * HOCs
  */
-export { withInsets } from './hoc/withInsets';
 export { withPlatform } from './hoc/withPlatform';
 
 /**
