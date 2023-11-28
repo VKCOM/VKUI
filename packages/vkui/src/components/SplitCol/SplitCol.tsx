@@ -6,7 +6,6 @@ import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { ViewWidth, viewWidthToClassName } from '../../lib/adaptivity';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
-import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { SplitColContext } from './SplitColContext';
@@ -57,12 +56,6 @@ export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement>
    */
   animate?: boolean;
   /**
-   * Если true, то добавляются боковые отступы фиксированной величины
-   *
-   * @deprecated используйте autoSpaced
-   */
-  spaced?: boolean;
-  /**
    * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`
    */
   autoSpaced?: boolean;
@@ -73,8 +66,6 @@ export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   stretchedOnMobile?: boolean;
 }
 
-const warn = warnOnce('SplitCol');
-
 /**
  * @see https://vkcom.github.io/VKUI/#/SplitCol
  */
@@ -84,7 +75,6 @@ export const SplitCol = (props: SplitColProps) => {
     width,
     maxWidth,
     minWidth,
-    spaced,
     animate: animateProp,
     fixed,
     style,
@@ -102,11 +92,6 @@ export const SplitCol = (props: SplitColProps) => {
     animate,
   });
 
-  if (process.env.NODE_ENV === 'development' && spaced !== undefined) {
-    // TODO [>=6]: Удалить spaced
-    warn('Свойство spaced устарело и будет удалено в v6. Используйте autoSpaced');
-  }
-
   return (
     <RootComponent
       {...restProps}
@@ -120,9 +105,6 @@ export const SplitCol = (props: SplitColProps) => {
       baseClassName={classNames(
         styles['SplitCol'],
         viewWidthToClassName(breakpointClassNames, viewWidth),
-        spaced && classNames(styles['SplitCol--spaced'], 'vkuiInternalSplitCol--spaced'),
-        spaced === undefined &&
-          classNames(styles['SplitCol--spaced-none'], 'vkuiInternalSplitCol--spaced-none'),
         autoSpaced &&
           classNames(styles['SplitCol--spaced-auto'], 'vkuiInternalSplitCol--spaced-auto'),
         fixed && styles['SplitCol--fixed'],

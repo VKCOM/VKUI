@@ -188,24 +188,14 @@
  * CMP:
  * SplitCol
  */
-:global(.vkuiInternalSplitCol--spaced)
-  .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
-  .PanelHeader__content {
-  padding-inline-start: 0;
-}
-
-:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(
-    .vkuiInternalSplitCol--spaced-none
-  ):global(.vkuiInternalSplitCol--spaced-auto)
+:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
   .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
   padding-inline-start: 0;
 }
 
 @media (--viewWidth-smallTabletPlus) {
-  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-none):global(
-      .vkuiInternalSplitCol--spaced-auto
-    )
+  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
     .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__content {
     padding-inline-start: 0;
@@ -226,24 +216,14 @@
   padding-inline-start: 16px;
 }
 
-:global(.vkuiInternalSplitCol--spaced)
-  .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
-  .PanelHeader__content {
-  padding-inline-end: 0;
-}
-
-:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(
-    .vkuiInternalSplitCol--spaced-none
-  ):global(.vkuiInternalSplitCol--spaced-auto)
+:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
   .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
   padding-inline-end: 0;
 }
 
 @media (--viewWidth-smallTabletPlus) {
-  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-none):global(
-      .vkuiInternalSplitCol--spaced-auto
-    )
+  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
     .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__content {
     padding-inline-end: 0;

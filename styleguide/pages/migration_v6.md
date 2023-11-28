@@ -281,3 +281,14 @@ interface HasInsets {
 ```
 
 <br/><br/>
+
+## [`SplitCol`](#/SplitCol)
+
+- Свойство `spaced` удалено, используйте свойство `autoSpaced`
+
+```diff
+ <ActionSheet>
+-  <SplitCol spaced>Сохранить в закладках</SplitCol>
++  <SplitCol autoSpaced>Сохранить в закладках</SplitCol>
+ </ActionSheet>
+```

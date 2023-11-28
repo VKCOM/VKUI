@@ -20,12 +20,18 @@
  * CMP:
  * SplitCol
  */
-:global(.vkuiInternalSplitCol--spaced) .CardScroll--withSpaces .CardScroll {
-  margin-inline: -16px;
+:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
+  .CardScroll--withSpaces
+  .CardScroll__gap {
+  inline-size: 16px;
 }
 
-:global(.vkuiInternalSplitCol--spaced) .CardScroll--withSpaces .CardScroll__gap {
-  inline-size: 16px;
+@media (--viewWidth-smallTabletPlus) {
+  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
+    .CardScroll--withSpaces
+    .CardScroll__gap {
+    inline-size: 16px;
+  }
 }
 
 /**
