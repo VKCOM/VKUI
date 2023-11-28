@@ -159,7 +159,7 @@
 
 <br/><br/>
 
-## [`VisuallyHiddenInput`](#/VisuallyHiddenInput)
+## VisuallyHiddenInput
 
 Устаревший компонент удален. Используйте [`VisuallyHidden`](#/VisuallyHidden)
 
@@ -167,3 +167,16 @@
 - <VisuallyHiddenInput />
 + <VisuallyHidden Component="input" />
 ```
+
+<br/><br/>
+
+## RangeSlider
+
+Устаревший компонент удален. Используйте [`Slider`](#/Slider)
+
+```diff
+- <RangeSlider />
++ <Slider multiple />
+```
+
+<br/><br/>
