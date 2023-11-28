@@ -105,7 +105,6 @@ export const Alert = ({
     (item: AlertActionInterface) => {
       const { action, autoCloseDisabled = false } = item;
 
-      console.log(autoCloseDisabled);
       if (!autoCloseDisabled) {
         setClosing(true);
         waitTransitionFinish(
