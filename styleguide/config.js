@@ -300,10 +300,6 @@ const baseConfig = {
           ],
         },
         {
-          name: 'Advertisement',
-          components: () => [`../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/PromoBanner/PromoBanner.tsx`],
-        },
-        {
           name: 'Service',
           components: () => [
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/AppRoot/AppRoot.tsx`,

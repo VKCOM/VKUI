@@ -332,12 +332,6 @@ export { PlatformProvider } from './components/PlatformProvider/PlatformProvider
 export type { PlatformProviderProps } from './components/PlatformProvider/PlatformProvider';
 
 /**
- * Advertisement
- */
-export { PromoBanner } from './components/PromoBanner/PromoBanner';
-export type { PromoBannerProps } from './components/PromoBanner/PromoBanner';
-
-/**
  * HOCs
  */
 export { withInsets } from './hoc/withInsets';
