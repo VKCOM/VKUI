@@ -132,7 +132,7 @@
 
 ```diff
  <ActionSheet>
--  <ActionSheetItem autoСlose>Сохранить в закладках</ActionSheetItem>
+-  <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
 +  <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
 -  <ActionSheetItem autoСlose={false}>Закрепить запись</ActionSheetItem>
 +  <ActionSheetItem autoCloseDisabled>Закрепить запись</ActionSheetItem>
