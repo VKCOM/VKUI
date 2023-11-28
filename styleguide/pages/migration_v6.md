@@ -57,6 +57,15 @@
   - `webviewType={WebviewType.INTERNAL}` -> `hasCustomPanelHeaderAfter={false}`.
   - `webviewType={WebviewType.VKAPPS}` -> `hasCustomPanelHeaderAfter={true}`. При необходимости передайте `customPanelHeaderAfterMinWidth={<value>}` (по умолчанию `90`).
 
+## [AppearanceProvider](#/AppearanceProvider)
+
+По аналогии с остальными провайдерами свойство `appearance` заменено на `value`
+
+```diff
+- <AppearanceProvider appearance={appearance}>...</AppearanceProvider>
++ <AppearanceProvider value={appearance}>...</AppearanceProvider>
+```
+
 ## ~`withInsets`~
 
 Используйте вместо него хук `useInsets()` из [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react).

@@ -64,7 +64,7 @@
 Если вам необходимо переопределить тему для отдельных компонентов приложения, то это можно сделать через `AppearanceProvider`.
 
 ```jsx static
-<AppearanceProvider appearance="dark">
+<AppearanceProvider value="dark">
   <Snackbar action="Поделиться">Поделиться</Snackbar>
 </AppearanceProvider>
 ```
@@ -85,4 +85,4 @@ const appearance = useAppearance();
 <Div>{appearance === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
 ```
 
-Appearance можно пригодиться для замены изображений на инвертированную версию в темных темах.
+`Appearance` может пригодиться для замены изображений на инвертированную версию в темных темах.

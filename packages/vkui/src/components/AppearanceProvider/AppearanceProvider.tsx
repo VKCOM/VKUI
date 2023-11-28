@@ -5,19 +5,19 @@ import { TokensClassProvider } from '../../lib/tokensClassProvider';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface AppearanceProviderProps {
-  appearance: AppearanceType;
+  value: AppearanceType;
   children: React.ReactNode;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/AppearanceProvider
  */
-export const AppearanceProvider = ({ appearance, children }: AppearanceProviderProps) => {
+export const AppearanceProvider = ({ value, children }: AppearanceProviderProps) => {
   const platform = usePlatform();
 
   return (
-    <ConfigProviderOverride appearance={appearance}>
-      <TokensClassProvider platform={platform} appearance={appearance}>
+    <ConfigProviderOverride appearance={value}>
+      <TokensClassProvider platform={platform} appearance={value}>
         {children}
       </TokensClassProvider>
     </ConfigProviderOverride>
