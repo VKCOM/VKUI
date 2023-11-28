@@ -1,6 +1,10 @@
 Компонент для отрисовки счетчика в ячейках и кнопках.
 Принимает в качестве `children` число или строку с отформатированным числом по разрядам.
 
+## Цифровая доступность (a11y)
+
+Если для того, чтобы `Counter` был доступным для ассистивных технологий, нужен поясняющий текст, который сможет прочитать скринридер, вы можете передать его в `children` вместе с числом, предварительно обернув текст в компонент [VisuallyHidden](#/VisuallyHidden).
+
 ```jsx
 <View activePanel="counter-demo">
   <Panel id="counter-demo">
@@ -13,7 +17,14 @@
         <Cell before={<Icon28UsersOutline />} indicator={<Counter mode="primary">2</Counter>}>
           Группы
         </Cell>
-        <Cell before={<Icon28MessageOutline />} indicator={<Counter>224</Counter>}>
+        <Cell
+          before={<Icon28MessageOutline />}
+          indicator={
+            <Counter>
+              <VisuallyHidden>Новых:</VisuallyHidden> 224
+            </Counter>
+          }
+        >
           Сообщения
         </Cell>
         <Cell before={<Icon28FavoriteOutline />} indicator={<Counter mode="primary">1</Counter>}>
@@ -53,7 +64,7 @@
         <Header
           indicator={
             <Counter size="s" mode="prominent">
-              5
+              5 <VisuallyHidden>новых</VisuallyHidden>
             </Counter>
           }
           aside={<Link>Посмотреть все</Link>}
