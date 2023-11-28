@@ -18,7 +18,7 @@ const story: Meta<TabbarItemProps> = {
       options: ['None', 'Badge', 'Counter'],
       mapping: {
         None: null,
-        Badge: <Badge mode="prominent" />,
+        Badge: <Badge mode="prominent">Есть обновления</Badge>,
         Counter: (
           <Counter size="s" mode="prominent">
             3

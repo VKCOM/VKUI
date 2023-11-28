@@ -46,7 +46,7 @@ const Scrollable = ({ disabled }: { disabled?: boolean }) => {
         </TabsItem>
         <TabsItem
           before={beforeIconByMode}
-          status={<Badge mode="prominent" />}
+          status={<Badge mode="prominent">Есть новые</Badge>}
           after={<Icon16Dropdown />}
           disabled={disabled}
         >
@@ -89,8 +89,8 @@ export const TabsPlayground = (props: ComponentPlaygroundProps) => {
             <Unscrollable key="tabs">
               <TabsItem>Лента</TabsItem>
             </Unscrollable>,
-            <Unscrollable key="tabs" status={<Badge mode="prominent" />} />,
-            <Unscrollable key="tabs" status={<Badge mode="prominent" />}>
+            <Unscrollable key="tabs" status={<Badge mode="prominent">Есть обновления</Badge>} />,
+            <Unscrollable key="tabs" status={<Badge mode="prominent">Есть обновления</Badge>}>
               <TabsItem>Лента</TabsItem>
             </Unscrollable>,
             <Unscrollable

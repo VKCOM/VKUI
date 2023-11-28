@@ -162,7 +162,7 @@ const Scrollable = () => {
           </TabsItem>
           <TabsItem
             before={mode === 'default' ? <Icon24ThumbsUpOutline /> : <Icon20ThumbsUpOutline />}
-            status={<Badge mode="prominent" />}
+            status={<Badge mode="prominent">Есть новые</Badge>}
             after={<Icon16Dropdown />}
             selected={selected === 'recommendations'}
             disabled={disabled}

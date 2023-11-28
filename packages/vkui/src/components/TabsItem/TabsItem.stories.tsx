@@ -50,7 +50,7 @@ export const WithBadge: Story = {
     children: 'Рекомендации',
     before: <Icon20ThumbsUpOutline />,
     after: <Icon16Dropdown />,
-    status: <Badge mode="prominent" />,
+    status: <Badge mode="prominent">Есть обновления</Badge>,
   },
 };
 
