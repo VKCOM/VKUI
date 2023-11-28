@@ -48,9 +48,9 @@ describe('ActionSheet', () => {
       it.each([
         {},
         { selectable: true },
-        { autoClose: true },
-        { autoClose: true, selectable: true },
-        { autoClose: true, isCancelItem: true },
+        { autoCloseDisabled: true },
+        { autoCloseDisabled: true, selectable: true },
+        { isCancelItem: true },
       ])('when %s', async (props) => {
         const onCloseHandler = jest.fn();
         const handlers = { onClick: jest.fn(), onChange: jest.fn() };
@@ -72,12 +72,13 @@ describe('ActionSheet', () => {
         expect(handlers.onClick).toBeCalled();
         props.selectable && expect(handlers.onChange).toBeCalled();
 
-        if (!props.autoClose) {
+        if (props.autoCloseDisabled) {
           expect(onCloseHandler).not.toBeCalled();
-        } else if (props.autoClose && props.isCancelItem) {
+        } else if (!props.autoCloseDisabled && props.isCancelItem) {
           expect(onCloseHandler).toBeCalledWith({ closedBy: 'cancel-item' });
         } else {
-          props.autoClose && expect(onCloseHandler).toBeCalledWith({ closedBy: 'action-item' });
+          !props.autoCloseDisabled &&
+            expect(onCloseHandler).toBeCalledWith({ closedBy: 'action-item' });
         }
       });
     });
@@ -106,17 +107,6 @@ describe('ActionSheet', () => {
       render(<ActionSheetDesktop onClose={onClose} />);
       await waitForFloatingPosition();
       await userEvent.click(document.body);
-      expect(onClose).toBeCalledTimes(1);
-      expect(onClose).toBeCalledWith({ closedBy: 'other' });
-    });
-    it('closes on item click with autoClose', async () => {
-      const onClose = jest.fn();
-      render(<ActionSheetDesktop onClose={onClose} />);
-      await waitForFloatingPosition();
-      runAllTimers();
-      await userEvent.click(document.body);
-      runAllTimers();
-
       expect(onClose).toBeCalledTimes(1);
       expect(onClose).toBeCalledWith({ closedBy: 'other' });
     });

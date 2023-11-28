@@ -42,12 +42,10 @@ const Example = () => {
           {
             title: 'Лишить права',
             mode: 'destructive',
-            autoClose: true,
             action: () => addActionLogItem('Право на модерацию контента убрано.'),
           },
           {
             title: 'Отмена',
-            autoClose: true,
             mode: 'cancel',
           },
         ]}
@@ -65,12 +63,10 @@ const Example = () => {
         actions={[
           {
             title: 'Отмена',
-            autoClose: true,
             mode: 'cancel',
           },
           {
             title: 'Удалить',
-            autoClose: true,
             mode: 'destructive',
             action: () => addActionLogItem('Документ удален.'),
           },
@@ -132,11 +128,9 @@ const Example = () => {
           {
             title: 'Лишить права',
             mode: 'destructive',
-            autoClose: true,
           },
           {
             title: 'Отмена',
-            autoClose: true,
             mode: 'cancel',
           },
         ]}

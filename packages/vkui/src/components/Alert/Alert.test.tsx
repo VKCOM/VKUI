@@ -32,18 +32,24 @@ describe('Alert', () => {
   });
   describe('calls actions', () => {
     describe.each(['android', 'ios'])('on %s', (platform) => {
-      it('calls action', async () => {
+      it('calls action and do not calls onClose with autoCloseDisabled=true', async () => {
         const action = jest.fn();
         const onClose = jest.fn();
         render(
           <ConfigProvider platform={platform}>
-            <Alert onClose={onClose} actions={[{ action, title: '__action__', mode: 'default' }]} />
+            <Alert
+              onClose={onClose}
+              actions={[{ action, title: '__action__', autoCloseDisabled: true, mode: 'default' }]}
+            />
           </ConfigProvider>,
         );
         await userEvent.click(screen.getByText('__action__'));
         expect(action).toBeCalledTimes(1);
+        expect(onClose).not.toBeCalled();
+        runAllTimers();
+        expect(onClose).not.toBeCalled();
       });
-      it('calls action after close when autoClose=true', async () => {
+      it('calls action after close by default', async () => {
         const action = jest.fn();
         const onClose = jest.fn();
         render(
@@ -55,7 +61,6 @@ describe('Alert', () => {
                   action,
                   title: '__action__',
                   mode: 'default',
-                  autoClose: true,
                 },
               ]}
             />

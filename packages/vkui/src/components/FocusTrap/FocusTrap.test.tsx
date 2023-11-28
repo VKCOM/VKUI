@@ -20,7 +20,7 @@ import { View } from '../View/View';
 import { FocusTrap, FocusTrapProps } from './FocusTrap';
 
 const _children = ['first', 'middle', 'last'].map((item) => (
-  <ActionSheetItem key={item} autoClose data-testid={item}>
+  <ActionSheetItem key={item} data-testid={item}>
     {item} Item
   </ActionSheetItem>
 ));

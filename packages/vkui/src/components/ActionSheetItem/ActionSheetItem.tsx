@@ -19,7 +19,11 @@ export interface ActionSheetItemProps
   after?: React.ReactNode;
   meta?: React.ReactNode;
   subtitle?: React.ReactNode;
-  autoClose?: boolean;
+  /**
+   * По умолчанию клик на опцию вызывает переданную в `ActionSheet` функцию `onClose`, данное свойство
+   * позволяет отключить такое поведение
+   */
+  autoCloseDisabled?: boolean;
   selectable?: boolean;
   disabled?: boolean;
   /**
@@ -27,7 +31,7 @@ export interface ActionSheetItemProps
    */
   multiline?: boolean;
   /**
-   * Если autoClose === true, onClick будет вызван после завершения анимации скрытия и после вызова onClose.
+   * По умолчанию onClick будет вызван после завершения анимации скрытия и после вызова onClose.
    * Из этого следует, что в объекте события значения полей типа `currentTarget` будут не определены.
    * Если вам нужен объект события именно на момент клика, используйте `onImmediateClick`.
    */
@@ -49,7 +53,7 @@ export interface ActionSheetItemProps
  */
 export const ActionSheetItem = ({
   children,
-  autoClose,
+  autoCloseDisabled = false,
   mode = 'default',
   meta,
   subtitle,
@@ -93,7 +97,7 @@ export const ActionSheetItem = ({
           : onItemClick({
               action: onClick,
               immediateAction: onImmediateClick,
-              autoClose: Boolean(autoClose),
+              autoClose: !autoCloseDisabled,
               isCancelItem: Boolean(isCancelItem),
             })
       }
@@ -149,7 +153,7 @@ export const ActionSheetItem = ({
               onClick={onItemClick({
                 action: noop,
                 immediateAction: noop,
-                autoClose: Boolean(autoClose),
+                autoClose: !autoCloseDisabled,
                 isCancelItem: Boolean(isCancelItem),
               })}
               defaultChecked={defaultChecked}

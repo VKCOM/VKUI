@@ -25,7 +25,11 @@ export interface AlertActionInterface
     HasDataAttribute {
   title: string;
   action?: VoidFunction;
-  autoClose?: boolean;
+  /**
+   * По умолчанию клик на опцию вызывает переданную в `Alert` функцию `onClose`, данное свойство
+   * позволяет отключить такое поведение
+   */
+  autoCloseDisabled?: boolean;
   mode: AlertActionMode;
 }
 
@@ -99,9 +103,9 @@ export const Alert = ({
 
   const onItemClick = React.useCallback(
     (item: AlertActionInterface) => {
-      const { action, autoClose } = item;
+      const { action, autoCloseDisabled = false } = item;
 
-      if (autoClose) {
+      if (!autoCloseDisabled) {
         setClosing(true);
         waitTransitionFinish(
           elementRef.current,

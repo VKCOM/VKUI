@@ -97,3 +97,44 @@
 - `SizeType`
 - `ViewWidth`
 - `ViewHeight`
+
+<br/><br/>
+
+## [`Alert`](#/Alert)
+
+- Свойство `autoClose` удалено, теперь это поведение по-умолчанию
+
+```diff
+ <Alert
+   actions={[
+     {
+       title: "Лишить права",
+       mode: "destructive",
+-      autoClose: false,
++      autoCloseDisabled: true,
+     },
+     {
+       title: "Отмена",
+-      autoClose: true,
+       mode: "cancel",
+     },
+   ]}
+   header="Подтвердите действие"
+   text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+ />
+```
+
+<br/><br/>
+
+## [`ActionSheetItem`](#/ActionSheetItem)
+
+- Свойство `autoClose` удалено, теперь это поведение по-умолчанию
+
+```diff
+ <ActionSheet>
+-  <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
++  <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
+-  <ActionSheetItem autoClose={false}>Закрепить запись</ActionSheetItem>
++  <ActionSheetItem autoCloseDisabled>Закрепить запись</ActionSheetItem>
+ </ActionSheet>
+```
