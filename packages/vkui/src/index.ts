@@ -339,7 +339,6 @@ export { withPlatform } from './hoc/withPlatform';
 /**
  * Hooks
  */
-export { useInsets } from './hooks/useInsets';
 export { usePlatform } from './hooks/usePlatform';
 export { useAdaptivity } from './hooks/useAdaptivity';
 export {
