@@ -141,10 +141,9 @@ export interface SelectProps<
    */
   emptyText?: string;
   /**
-   * > ⚠️ В **v6** из возвращаемых типов будет удалён `CustomSelectOptionInterface[]`. Для кастомной фильтрации используйте
-   * > `filterFn`.
+   * Событие изменения текстового поля
    */
-  onInputChange?: (e: React.ChangeEvent, options: OptionInterfaceT[]) => void | OptionInterfaceT[];
+  onInputChange?: (e: React.ChangeEvent) => void;
   options: OptionInterfaceT[];
   /**
    * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
@@ -531,24 +530,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
-      // TODO [>=6]: удалить `onInputChangeProp`.
-      if (onInputChangeProp) {
-        const options = onInputChangeProp(e, optionsProp);
-        if (options) {
-          if (process.env.NODE_ENV === 'development') {
-            warn(
-              'Этот метод фильтрации устарел. Возвращаемое значение onInputChange будет ' +
-                'проигнорировано в v6.0.0. Для фильтрации обновляйте props.options самостоятельно или используйте свойство filterFn.',
-            );
-          }
-          setOptions(options);
-          setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue, allowClearButton));
-        }
-      } else {
-        const options = filter(optionsProp, e.target.value, filterFn);
-        setOptions(options);
-        setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue, allowClearButton));
-      }
+      onInputChangeProp && onInputChangeProp(e);
+
+      const options = filter(optionsProp, e.target.value, filterFn);
+      setOptions(options);
+      setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue, allowClearButton));
+
       setInputValue(e.target.value);
     },
     [filterFn, nativeSelectValue, onInputChangeProp, optionsProp, allowClearButton],
