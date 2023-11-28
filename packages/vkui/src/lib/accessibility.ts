@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { ValuesOfObject } from '../types';
+import { HasChildren, ValuesOfObject } from '../types';
+import { getTextFromChildren } from './children';
 
 export const FOCUSABLE_ELEMENTS_LIST = [
   'a[href]',
@@ -155,3 +156,28 @@ export const injectAriaExpandedPropByRole = (
       return props;
   }
 };
+
+interface HasAccessibleNameProps
+  extends Pick<React.AriaAttributes, 'aria-label' | 'aria-labelledby'>,
+    HasChildren {
+  title?: string;
+}
+
+export function hasAccessibleName({
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  title,
+  children,
+}: HasAccessibleNameProps) {
+  if (ariaLabel || ariaLabelledBy || title) {
+    return true;
+  }
+
+  const accessibleLabel = getTextFromChildren(children);
+
+  if (accessibleLabel.trim() !== '') {
+    return true;
+  }
+
+  return false;
+}
