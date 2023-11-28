@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
 import { ModalPageContext } from '../ModalPage/ModalPageContext';
@@ -21,7 +20,6 @@ export interface ModalPageHeaderProps
 export const ModalPageHeader = ({
   children,
   separator = true,
-  getRef, // TODO [>=6]: remove
   getRootRef,
   className,
   typographyProps,
@@ -31,7 +29,6 @@ export const ModalPageHeader = ({
   const hasSeparator = separator && platform === 'vkcom';
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const { labelId } = React.useContext(ModalPageContext);
-  const modalPageHeaderRef = useExternRef(getRef, getRootRef);
 
   return (
     <div
@@ -40,7 +37,7 @@ export const ModalPageHeader = ({
         platform !== 'vkcom' && styles['ModalPageHeader--withGaps'],
         isDesktop && styles['ModalPageHeader--desktop'],
       )}
-      ref={modalPageHeaderRef}
+      ref={getRootRef}
     >
       <PanelHeader
         className={classNames('vkuiInternalModalPageHeader__in', className)}
