@@ -325,7 +325,7 @@ export {
 } from './components/ConfigProvider/ConfigProviderContext';
 export { AppearanceProvider } from './components/AppearanceProvider/AppearanceProvider';
 export type { AppearanceProviderProps } from './components/AppearanceProvider/AppearanceProvider';
-export { Appearance } from './helpers/appearance';
+export { Appearance } from './lib/appearance';
 export { LocaleProvider } from './components/LocaleProvider/LocaleProvider';
 export type { LocaleProviderProps } from './components/LocaleProvider/LocaleProvider';
 export { PlatformProvider } from './components/PlatformProvider/PlatformProvider';
