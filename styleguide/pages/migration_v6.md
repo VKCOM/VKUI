@@ -134,7 +134,7 @@
  <ActionSheet>
 -  <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
 +  <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
--  <ActionSheetItem autoСlose={false}>Закрепить запись</ActionSheetItem>
+-  <ActionSheetItem autoClose={false}>Закрепить запись</ActionSheetItem>
 +  <ActionSheetItem autoCloseDisabled>Закрепить запись</ActionSheetItem>
  </ActionSheet>
 ```
