@@ -34,21 +34,21 @@ export const Example: Story = {
           <PanelHeader>More</PanelHeader>
           <Group>
             <Cell
-              expandable
+              expandable="auto"
               before={<Icon28UserOutline />}
               onClick={() => setActivePanel('panel2')}
             >
               Friends
             </Cell>
             <Cell
-              expandable
+              expandable="auto"
               before={<Icon28UsersOutline />}
               onClick={() => setActivePanel('panel2')}
             >
               Communities
             </Cell>
             <Cell
-              expandable
+              expandable="auto"
               before={<Icon28MusicOutline />}
               onClick={() => setActivePanel('panel2')}
             >

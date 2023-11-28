@@ -84,7 +84,7 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           children: ['Title'],
-          expandable: [true, 'auto', 'always'],
+          expandable: ['auto', 'always'],
         },
         {
           children: ['Title'],

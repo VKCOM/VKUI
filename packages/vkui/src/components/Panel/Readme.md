@@ -9,13 +9,25 @@ const Example = () => {
       <Panel id="panel1">
         <PanelHeader>More</PanelHeader>
         <Group>
-          <Cell expandable before={<Icon28UserOutline />} onClick={() => setActivePanel('panel2')}>
+          <Cell
+            expandable="auto"
+            before={<Icon28UserOutline />}
+            onClick={() => setActivePanel('panel2')}
+          >
             Friends
           </Cell>
-          <Cell expandable before={<Icon28UsersOutline />} onClick={() => setActivePanel('panel2')}>
+          <Cell
+            expandable="auto"
+            before={<Icon28UsersOutline />}
+            onClick={() => setActivePanel('panel2')}
+          >
             Communities
           </Cell>
-          <Cell expandable before={<Icon28MusicOutline />} onClick={() => setActivePanel('panel2')}>
+          <Cell
+            expandable="auto"
+            before={<Icon28MusicOutline />}
+            onClick={() => setActivePanel('panel2')}
+          >
             Music
           </Cell>
         </Group>
