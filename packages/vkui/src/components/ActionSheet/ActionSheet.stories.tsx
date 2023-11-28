@@ -39,7 +39,7 @@ export const Base: Story = {
     const popout = visible ? (
       <ActionSheet {...args} onClose={() => setVisible(false)} toggleRef={baseToggleRef}>
         {items.map(({ children, ...rest }, index) => (
-          <ActionSheetItem autoClose key={index} {...rest}>
+          <ActionSheetItem key={index} {...rest}>
             {children}
           </ActionSheetItem>
         ))}

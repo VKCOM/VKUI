@@ -63,12 +63,7 @@ export const Setting = ({
                   const option = isPrimitive ? item : item.value;
                   const title = isPrimitive ? item : item.title;
                   return (
-                    <ActionSheetItem
-                      autoClose
-                      key={option}
-                      value={option}
-                      onClick={() => onChange(option)}
-                    >
+                    <ActionSheetItem key={option} value={option} onClick={() => onChange(option)}>
                       {title}
                     </ActionSheetItem>
                   );
