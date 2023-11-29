@@ -54,7 +54,6 @@ describe(useFloatingWithInteractions, () => {
         const onShownChange = jest.fn();
         const { result } = renderHook(() =>
           useFloatingWithInteractions<HTMLButtonElement>({
-            id: 'some-floating-id',
             defaultShown: false,
             trigger: trigger,
             onShownChange,
@@ -109,7 +108,6 @@ describe(useFloatingWithInteractions, () => {
     it('should stayed shown if hover to floating element', async () => {
       const { result } = renderHook(() =>
         useFloatingWithInteractions<HTMLButtonElement>({
-          id: 'some-floating-id',
           defaultShown: false,
           hoverDelay: 0,
           trigger: 'hover',
@@ -139,7 +137,6 @@ describe(useFloatingWithInteractions, () => {
     it('should restore focus', async () => {
       const { result } = renderHook(() =>
         useFloatingWithInteractions<HTMLButtonElement>({
-          id: 'some-floating-id',
           defaultShown: false,
           trigger: 'focus',
         }),
@@ -173,7 +170,6 @@ describe(useFloatingWithInteractions, () => {
       async (eventName) => {
         const { result } = renderHook(() =>
           useFloatingWithInteractions<HTMLButtonElement>({
-            id: 'some-floating-id',
             defaultShown: false,
             trigger: ['focus', 'click', 'hover'],
           }),
@@ -191,13 +187,12 @@ describe(useFloatingWithInteractions, () => {
       const { result, rerender } = renderHook(
         (props) => useFloatingWithInteractions<HTMLButtonElement>(props),
         {
-          initialProps: { id: 'some-floating-id', shown: false, trigger: 'manual' as const },
+          initialProps: { shown: false, trigger: 'manual' as const },
         },
       );
       render(<TestComponent hookResultRef={result} />);
       expect(result.current.shown).toBeFalsy();
       rerender({
-        id: 'some-floating-id',
         shown: true,
         trigger: 'manual',
       });
@@ -207,7 +202,6 @@ describe(useFloatingWithInteractions, () => {
     it('should shown/hidden with animations', async () => {
       const { result } = renderHook(() =>
         useFloatingWithInteractions<HTMLButtonElement>({
-          id: 'some-floating-id',
           defaultShown: false,
           trigger: 'click',
         }),
@@ -250,7 +244,6 @@ describe(useFloatingWithInteractions, () => {
     it('should be hidden state', () => {
       const { result } = renderHook(() =>
         useFloatingWithInteractions({
-          id: 'some-floating-id',
           defaultShown: false,
           trigger: ['focus', 'click', 'hover'],
         }),
@@ -261,7 +254,6 @@ describe(useFloatingWithInteractions, () => {
     it('should be shown state', () => {
       const { result } = renderHook(() =>
         useFloatingWithInteractions({
-          id: 'some-floating-id',
           defaultShown: true,
           trigger: ['focus', 'click', 'hover'],
         }),
@@ -272,7 +264,6 @@ describe(useFloatingWithInteractions, () => {
     it('should be shown state with disabled interactive feature', () => {
       const { result } = renderHook(() =>
         useFloatingWithInteractions({
-          id: 'some-floating-id',
           defaultShown: true,
           trigger: ['focus', 'click', 'hover'],
           disableInteractive: true,
@@ -284,7 +275,6 @@ describe(useFloatingWithInteractions, () => {
     it('should be shown state with disabled close on esc key and click outside events', () => {
       const { result } = renderHook(() =>
         useFloatingWithInteractions({
-          id: 'some-floating-id',
           defaultShown: true,
           trigger: ['focus', 'click', 'hover'],
           disableCloseOnClickOutside: true,
