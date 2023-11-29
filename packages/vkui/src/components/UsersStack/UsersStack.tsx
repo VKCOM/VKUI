@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
@@ -28,12 +27,6 @@ export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElemen
    * Размер аватарок
    */
   size?: 's' | 'm' | 'l';
-  /**
-   * Вертикальный режим рекомендуется использовать с размером `m`
-   * TODO [>=6]: удалить
-   * @deprecated
-   */
-  layout?: 'vertical' | 'horizontal';
   /**
    * Количество аватарок, которые будут показаны.
    * Если в массиве `photos` больше элементов и используется размер `m`, то будет показано количество остальных элементов
@@ -120,8 +113,6 @@ const photoSizes: Record<NonNullable<UsersStackProps['size']>, PhotoSizeType> = 
   l: 32,
 };
 
-const warn = warnOnce('UsersStack');
-
 /**
  * @see https://vkcom.github.io/VKUI/#/UsersStack
  */
@@ -130,9 +121,8 @@ export const UsersStack = ({
   visibleCount = 3,
   count = Math.max(0, photos.length - visibleCount),
   size = 'm',
-  layout,
   children,
-  direction: directionProp = 'row',
+  direction = 'row',
   ...restProps
 }: UsersStackProps) => {
   const cmpId = React.useId();
@@ -181,13 +171,6 @@ export const UsersStack = ({
       +{count}
     </CounterTypography>
   ) : null;
-
-  if (process.env.NODE_ENV === 'development' && layout) {
-    // TODO [>=6]: Удалить layout
-    warn('Свойство "layout" будет удалено в v6. Используйте свойство "direction"');
-  }
-
-  const direction = (layout && (layout === 'vertical' ? 'column' : 'row')) || directionProp;
 
   return (
     <RootComponent

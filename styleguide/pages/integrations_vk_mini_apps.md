@@ -1,27 +1,3 @@
-<!-- TODO [>=6] Удалить Предисловие -->
-
-> **Предисловие**
->
-> Изначально **VKUI** разрабатывался как инструмент для быстрого создания клиентской части
-> [VK Mini Apps](https://vk.com/miniapps). В связи с этим **VKUI** глубоко интегрирован с
-> [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), благодаря которой
-> мини-приложения [VK Mini Apps](https://vk.com/miniapps) "общаются" с официальными клиентами
-> [ВКонтакте](https://vk.com).
->
-> Сегодня **VKUI** — больше, чем просто мини-приложения. Разработчики используют его, чтобы
-> создавать полноценные независимые приложения, которые никак не связаны с платформой
-> [VK Mini Apps](https://vk.com/miniapps). Но из-за интеграции они вынуждены иметь дело с этим
-> наследием.
->
-> Чтобы отделить **VKUI** от [VK Mini Apps](https://vk.com/miniapps), в следующей мажорной версии
-> библиотеки — **v6** — мы отказываемся от нативной интеграции с
-> [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge).
->
-> В рамках текущей версии (**v5**) мы добавляем советы по подготовке к этому обновлению. Они будут
-> попадаться вам как на других страницах документации, так и в предупреждениях в **DevTools**.
-> ☝️ Если вы не занимаетесь разработкой [VK Mini Apps](https://vk.com/miniapps), можете их просто
-> игнорировать.
-
 [VK Mini Apps](https://vk.com/miniapps) – это кроссплатформенные мини-приложения в экосистеме социальной сети [ВКонтакте](https://vk.com/).
 
 **VKUI** изначально создавался как библиотека компонентов для таких приложений. Несмотря на то, что
@@ -209,8 +185,6 @@ const SomeViews = () => {
 Виброотликом можно воспользоваться, например, при использовании компонента [PullToRefresh](https://vkcom.github.io/VKUI/#/PullToRefresh)
 на `onRefresh`.
 
-<!--TODO [>=6] Удалить в коде ниже возврат выполнения функции и комментарий про VKUI v5 -->
-
 ```tsx static
 import * as React from 'react';
 import { runTapticImpactOccurred } from '@vkontakte/vk-bridge-react';
@@ -224,9 +198,7 @@ const Users = () => {
   const onRefresh = React.useCallback(() => {
     setFetching(true);
     // Вызываем виброотклик
-    // > Note: в VKUI v5 необходимо возвращать результат выполнения, чтобы
-    // > чтобы избежать двойного вызова runTapticImpactOccurred()
-    return runTapticImpactOccurred('light');
+    runTapticImpactOccurred('light');
   }, []);
 
   return (

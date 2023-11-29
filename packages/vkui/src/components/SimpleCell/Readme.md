@@ -9,21 +9,21 @@ const Example = () => {
         <Group header={<Header mode="secondary">Меню</Header>}>
           <SimpleCell
             onClick={() => setActivePanel('nothing')}
-            expandable
+            expandable="auto"
             before={<Icon28UserOutline />}
           >
             Аккаунт
           </SimpleCell>
           <SimpleCell
             onClick={() => setActivePanel('nothing')}
-            expandable
+            expandable="auto"
             before={<Icon28PaletteOutline />}
           >
             Внешний вид
           </SimpleCell>
           <SimpleCell
             onClick={() => setActivePanel('nothing')}
-            expandable
+            expandable="auto"
             before={<Icon28SettingsOutline />}
           >
             Основные
@@ -38,12 +38,16 @@ const Example = () => {
           </SimpleCell>
         </Group>
         <Group header={<Header mode="secondary">Настройки системы</Header>}>
-          <SimpleCell onClick={() => setActivePanel('nothing')} expandable indicator="Русский">
+          <SimpleCell
+            onClick={() => setActivePanel('nothing')}
+            expandable="auto"
+            indicator="Русский"
+          >
             Язык
           </SimpleCell>
           <SimpleCell
             onClick={() => setActivePanel('nothing')}
-            expandable
+            expandable="auto"
             indicator="При использовании"
           >
             Геолокация

@@ -2,18 +2,14 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAppearance } from '../../hooks/useAppearance';
-import { useInsets } from '../../hooks/useInsets';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { SizeTypeValues } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { warnOnce } from '../../lib/warnOnce';
 import { AppRootContext } from './AppRootContext';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
 import styles from './AppRoot.module.css';
-
-const warn = warnOnce('AppRoot');
 
 export type SafeAreaInsets = {
   top?: number;
@@ -107,19 +103,9 @@ export const AppRoot = ({
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null);
   const { document } = useDOM();
-  const deprecatedInsetsDisabled = Boolean(safeAreaInsets);
-  const deprecatedInsets = useInsets(deprecatedInsetsDisabled);
-  const insets = safeAreaInsets ? safeAreaInsets : deprecatedInsets;
   const appearance = useAppearance();
 
   const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
-
-  if (process.env.NODE_ENV === 'development') {
-    if (!safeAreaInsets) {
-      // TODO [>=6]: удалить warn
-      warn("[@vkontakte/vk-bridge] Интеграция VKUI с @vkontakte/vk-bridge устарела и будет удалена в v6. Используйте хук `useInsets()` из @vkontakte/vk-bridge-react и результат передайте в параметр `safeAreaInsets` (см. https://github.com/VKCOM/VKUI/issues/5049)"); // prettier-ignore
-    }
-  }
 
   // setup portal
   useIsomorphicLayoutEffect(() => {
@@ -182,16 +168,16 @@ export const AppRoot = ({
 
   // setup insets
   useIsomorphicLayoutEffect(() => {
-    if (mode === 'partial' || !rootRef.current?.parentElement) {
-      return noop;
+    if (mode === 'partial' || !rootRef.current?.parentElement || !safeAreaInsets) {
+      return;
     }
 
     const parent = rootRef.current.parentElement;
 
     let key: keyof SafeAreaInsets;
-    for (key in insets) {
-      if (insets.hasOwnProperty(key) && typeof insets[key] === 'number') {
-        const inset = insets[key];
+    for (key in safeAreaInsets) {
+      if (safeAreaInsets.hasOwnProperty(key) && typeof safeAreaInsets[key] === 'number') {
+        const inset = safeAreaInsets[key];
         parent.style.setProperty(INSET_CUSTOM_PROPERTY_PREFIX + key, `${inset}px`);
         portalRoot &&
           portalRoot.style.setProperty(INSET_CUSTOM_PROPERTY_PREFIX + key, `${inset}px`);
@@ -199,15 +185,18 @@ export const AppRoot = ({
     }
 
     return () => {
+      if (!safeAreaInsets) {
+        return;
+      }
       let key: keyof SafeAreaInsets;
-      for (key in insets) {
-        if (insets.hasOwnProperty(key)) {
+      for (key in safeAreaInsets) {
+        if (safeAreaInsets.hasOwnProperty(key)) {
           parent.style.removeProperty(INSET_CUSTOM_PROPERTY_PREFIX + key);
           portalRoot && portalRoot.style.removeProperty(INSET_CUSTOM_PROPERTY_PREFIX + key);
         }
       }
     };
-  }, [insets, portalRoot]);
+  }, [safeAreaInsets, portalRoot]);
 
   // adaptivity handler
   useIsomorphicLayoutEffect(() => {

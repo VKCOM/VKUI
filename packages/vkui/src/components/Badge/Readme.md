@@ -7,7 +7,7 @@
 
     <Group header={<Header mode="secondary">В пунктах меню</Header>}>
       <Cell
-        expandable
+        expandable="auto"
         before={<Icon28Notifications />}
         badgeAfterTitle={<Badge aria-label="Есть новые" />}
       >

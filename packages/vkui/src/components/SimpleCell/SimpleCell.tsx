@@ -2,7 +2,6 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { warnOnce } from '../../lib/warnOnce';
 import { HasComponent } from '../../types';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -10,8 +9,6 @@ import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Chevron } from './Chevron/Chevron';
 import styles from './SimpleCell.module.css';
-
-const warn = warnOnce('SimpleCell');
 
 const sizeYClassNames = {
   none: styles['SimpleCell--sizeY-none'],
@@ -64,9 +61,10 @@ export interface SimpleCellOwnProps extends HasComponent {
    */
   disabled?: boolean;
   /**
-   * В iOS добавляет chevron справа. Передавать `true`, если предполагается переход при клике по ячейке.
+   * В режиме `auto` в iOS добавляет chevron справа.
+   * Передавать `always`, если предполагается переход при клике по ячейке.
    */
-  expandable?: boolean | 'auto' | 'always';
+  expandable?: 'auto' | 'always';
   /**
    * Размер chevron
    */
@@ -102,16 +100,7 @@ export const SimpleCell = ({
 }: SimpleCellProps) => {
   const platform = usePlatform();
 
-  if (process.env.NODE_ENV === 'development' && expandable === true) {
-    // TODO [>=6]: Обновить типизацию для expandable свойства
-    warn(
-      'Значение true свойства expandable устарело и будет удалено в v6. Используйте expandable="auto"',
-    );
-  }
-
-  const hasChevron =
-    expandable === 'always' ||
-    ((expandable === true || expandable === 'auto') && platform === 'ios');
+  const hasChevron = expandable === 'always' || (expandable === 'auto' && platform === 'ios');
 
   const hasAfter = hasReactNode(after) || hasChevron;
   const { sizeY = 'none' } = useAdaptivity();

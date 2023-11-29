@@ -12,7 +12,6 @@ import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { Text } from '../Typography/Text/Text';
-import { LegacyPanelHeaderContent } from './LegacyPanelHeaderContent';
 import styles from './PanelHeader.module.css';
 
 const platformClassNames = {
@@ -78,27 +77,16 @@ const PanelHeaderIn = ({
       : {
           style: { minWidth: customPanelHeaderAfterMinWidth },
         };
-  let typographyNode: React.ReactNode;
-
-  // TODO [>=6]: Удалить условие
-  if (
-    React.isValidElement(children) &&
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    (children as JSX.Element).type.displayName === LegacyPanelHeaderContent.displayName
-  ) {
-    typographyNode = children;
-  } else {
-    typographyNode =
-      platform === 'vkcom' ? (
-        <Text weight="2" Component={Component} {...restProps}>
-          {children}
-        </Text>
-      ) : (
-        <Component className={styles['PanelHeader__content-in']} {...restProps}>
-          {children}
-        </Component>
-      );
-  }
+  const typographyNode: React.ReactNode =
+    platform === 'vkcom' ? (
+      <Text weight="2" Component={Component} {...restProps}>
+        {children}
+      </Text>
+    ) : (
+      <Component className={styles['PanelHeader__content-in']} {...restProps}>
+        {children}
+      </Component>
+    );
 
   return (
     <React.Fragment>
@@ -203,5 +191,3 @@ export const PanelHeader = ({
     </RootComponent>
   );
 };
-
-PanelHeader.Content = LegacyPanelHeaderContent;

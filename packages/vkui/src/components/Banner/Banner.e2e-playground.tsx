@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
+import { Div } from '../Div/Div';
 import { Image } from '../Image/Image';
 import { Banner, type BannerProps } from './Banner';
 
@@ -64,14 +65,16 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
       ]}
     >
       {(props: BannerProps) => (
-        <Banner
-          before={<Image size={96} src="" />}
-          header="Баста в Ледовом"
-          subheader="Большой концерт"
-          asideMode="dismiss"
-          actions={<Button>Подробнее</Button>}
-          {...props}
-        />
+        <Div>
+          <Banner
+            before={<Image size={96} src="" />}
+            header="Баста в Ледовом"
+            subheader="Большой концерт"
+            asideMode="dismiss"
+            actions={<Button>Подробнее</Button>}
+            {...props}
+          />
+        </Div>
       )}
     </ComponentPlayground>
   );

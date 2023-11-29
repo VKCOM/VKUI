@@ -13,19 +13,3 @@
 .Gradient--mode-tint.Gradient--to-bottom {
   background: linear-gradient(to top, var(--vkui--gradient_tint));
 }
-
-.Gradient--mode-white {
-  background: linear-gradient(to bottom, var(--vkui--gradient_white));
-}
-
-.Gradient--mode-white.Gradient--to-bottom {
-  background: linear-gradient(to top, var(--vkui--gradient_white));
-}
-
-.Gradient--mode-black {
-  background: linear-gradient(to bottom, var(--vkui--gradient_black));
-}
-
-.Gradient--mode-black.Gradient--to-bottom {
-  background: linear-gradient(to top, var(--vkui--gradient_black));
-}

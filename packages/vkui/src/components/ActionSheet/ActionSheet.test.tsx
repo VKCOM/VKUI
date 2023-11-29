@@ -110,14 +110,6 @@ describe('ActionSheet', () => {
       expect(onClose).toBeCalledTimes(1);
       expect(onClose).toBeCalledWith({ closedBy: 'other' });
     });
-    it('calls popupDirection with element', async () => {
-      const popupDirection = jest.fn();
-      render(<ActionSheetDesktop popupDirection={popupDirection} />);
-      await waitForFloatingPosition();
-      expect(popupDirection).toBeCalledWith({
-        current: document.querySelector('.vkuiActionSheet'),
-      });
-    });
   });
 
   describe('mobile', () => {
@@ -143,7 +135,7 @@ describe('ActionSheet', () => {
     const { rerender } = render(
       <ConfigProvider platform="ios">
         <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
-          <ActionSheet onClose={jest.fn()} />
+          <ActionSheet toggleRef={toggle} onClose={jest.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -154,7 +146,7 @@ describe('ActionSheet', () => {
     rerender(
       <ConfigProvider platform="ios">
         <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-          <ActionSheet onClose={jest.fn()} />
+          <ActionSheet toggleRef={toggle} onClose={jest.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -165,7 +157,7 @@ describe('ActionSheet', () => {
     rerender(
       <ConfigProvider platform="android">
         <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
-          <ActionSheet onClose={jest.fn()} />
+          <ActionSheet toggleRef={toggle} onClose={jest.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -176,7 +168,7 @@ describe('ActionSheet', () => {
     rerender(
       <ConfigProvider platform="android">
         <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-          <ActionSheet onClose={jest.fn()} />
+          <ActionSheet toggleRef={toggle} onClose={jest.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );

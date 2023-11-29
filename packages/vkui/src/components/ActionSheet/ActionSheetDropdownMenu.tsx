@@ -21,12 +21,11 @@ export const ActionSheetDropdownMenu = ({
   children,
   toggleRef,
   closing,
-  popupDirection,
   onClose,
   className,
   style,
   popupOffsetDistance = 0,
-  placement: placementProp,
+  placement,
   ...restProps
 }: SharedDropdownProps) => {
   const { document } = useDOM();
@@ -40,15 +39,6 @@ export const ActionSheetDropdownMenu = ({
       warn(`Свойство "toggleRef" не передано`, 'error');
     }
   }, [toggleRef]);
-
-  const isPopupDirectionTop = React.useMemo(
-    () =>
-      popupDirection === 'top' ||
-      (typeof popupDirection === 'function' && popupDirection(elementRef) === 'top'),
-    [popupDirection, elementRef],
-  );
-
-  const placement = placementProp ?? (isPopupDirectionTop ? 'top-end' : 'bottom-end');
 
   const bodyClickListener = useEventListener('click', (e: MouseEvent) => {
     const dropdownElement = elementRef?.current;
@@ -86,7 +76,7 @@ export const ActionSheetDropdownMenu = ({
         className,
       )}
       style={style}
-      getRef={elementRef}
+      getRootRef={elementRef}
       forcePortal={false}
     >
       <FocusTrap onClose={onClose} {...restProps} onClick={onClick}>

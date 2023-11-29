@@ -323,28 +323,20 @@ export {
 } from './components/ConfigProvider/ConfigProviderContext';
 export { AppearanceProvider } from './components/AppearanceProvider/AppearanceProvider';
 export type { AppearanceProviderProps } from './components/AppearanceProvider/AppearanceProvider';
-export { Appearance } from './helpers/appearance';
+export { Appearance } from './lib/appearance';
 export { LocaleProvider } from './components/LocaleProvider/LocaleProvider';
 export type { LocaleProviderProps } from './components/LocaleProvider/LocaleProvider';
 export { PlatformProvider } from './components/PlatformProvider/PlatformProvider';
 export type { PlatformProviderProps } from './components/PlatformProvider/PlatformProvider';
 
 /**
- * Advertisement
- */
-export { PromoBanner } from './components/PromoBanner/PromoBanner';
-export type { PromoBannerProps } from './components/PromoBanner/PromoBanner';
-
-/**
  * HOCs
  */
-export { withInsets } from './hoc/withInsets';
 export { withPlatform } from './hoc/withPlatform';
 
 /**
  * Hooks
  */
-export { useInsets } from './hooks/useInsets';
 export { usePlatform } from './hooks/usePlatform';
 export { useAdaptivity } from './hooks/useAdaptivity';
 export {
@@ -383,7 +375,6 @@ export {
   getViewHeightByViewportHeight,
 } from './lib/adaptivity';
 export { type Placement as FloatingPlacement } from './lib/floating';
-export { getPlatformClassName } from './helpers/getPlatformClassName';
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';
 export { CustomScrollView } from './components/CustomScrollView/CustomScrollView';

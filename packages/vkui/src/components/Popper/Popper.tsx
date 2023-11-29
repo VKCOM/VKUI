@@ -18,7 +18,7 @@ import {
   type UseFloatingMiddleware,
 } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import {
   DEFAULT_ARROW_HEIGHT,
@@ -33,9 +33,7 @@ export interface PopperRenderContentProps {
   className: string;
 }
 
-export interface PopperCommonProps
-  extends HTMLAttributesWithRootRef<HTMLDivElement>,
-    HasRef<HTMLDivElement> {
+export interface PopperCommonProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
    */
@@ -122,7 +120,6 @@ export interface PopperProps extends PopperCommonProps {
 export const Popper = ({
   targetRef,
   children,
-  getRef,
   placement: placementProp = 'bottom-start',
   onPlacementChange,
   arrow,
@@ -228,8 +225,7 @@ export const Popper = ({
     },
   });
 
-  // TODO [>=6]: убрать getRef
-  const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRef, getRootRef);
+  const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRootRef);
 
   useIsomorphicLayoutEffect(() => {
     refs.setReference(targetRef.current);

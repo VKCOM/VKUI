@@ -51,28 +51,21 @@ export interface SliderProps extends SliderBaseProps {
   multiple?: false;
   value?: number;
   defaultValue?: number;
-  /**
-   * TODO [>=6]: Расширить тип `event` с `React.ChangeEvent`.
-   */
-  onChange?(value: number, event: TouchEvent): void;
+  onChange?(value: number, event: TouchEvent | React.ChangeEvent): void;
 }
 
 export interface SliderMultipleProps extends SliderBaseProps {
   multiple: true;
   value?: [number, number];
   defaultValue?: [number, number];
-  /**
-   * TODO [>=6]: Расширить тип `event` с `React.ChangeEvent`.
-   */
-  onChange?(value: [number, number], event: TouchEvent): void;
+  onChange?(value: [number, number], event: TouchEvent | React.ChangeEvent): void;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Slider
  */
 export const Slider = ({
-  // TODO [>=6]: Выставить 1 как значение по умолчанию, чтобы было как в браузерном <input type="range" />
-  step,
+  step = 1,
   min = 0,
   max = 100,
   value: valueProp,
@@ -116,7 +109,7 @@ export const Slider = ({
   const { ariaLabel, ariaValueText, ariaLabelledBy, ...restPropsWithoutAriaAttributes } =
     extractSliderAriaAttributesFromRestProps(restProps);
 
-  const changeValue = (nextValue: InternalValueState, event: TouchEvent) => {
+  const changeValue = (nextValue: InternalValueState, event: TouchEvent | React.ChangeEvent) => {
     if (disabled || (value[0] === nextValue[0] && value[1] === nextValue[1])) {
       return;
     }
@@ -205,7 +198,6 @@ export const Slider = ({
         Number(event.target.value),
         getDraggingTypeByTargetDataset(event.target),
       ),
-      // @ts-expect-error: TS2345 сейчас тип расширить не получится (см. TODO в описании `onChange`)
       event,
     );
   };

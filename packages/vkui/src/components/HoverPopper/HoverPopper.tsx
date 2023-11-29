@@ -33,7 +33,7 @@ export interface HoverPopperProps extends Omit<PopperCommonProps, 'content'> {
 }
 
 export const HoverPopper = ({
-  getRef,
+  getRootRef,
   content,
   children,
   onShownChange,
@@ -91,7 +91,7 @@ export const HoverPopper = ({
           {...restProps}
           onMouseOver={hideTimeout.clear}
           onMouseOut={onTargetLeave}
-          getRef={getRef}
+          getRootRef={getRootRef}
           targetRef={childRef}
         >
           {content}

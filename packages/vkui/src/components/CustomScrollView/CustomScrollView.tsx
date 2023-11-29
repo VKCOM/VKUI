@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
-import { DOMProps, useDOM } from '../../lib/dom';
+import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { stopPropagation } from '../../lib/utils';
 import type { HasRootRef } from '../../types';
@@ -11,7 +11,6 @@ import styles from './CustomScrollView.module.css';
 
 export interface CustomScrollViewProps
   extends React.AllHTMLAttributes<HTMLDivElement>,
-    DOMProps, // TODO [>=6]: remove
     HasRootRef<HTMLDivElement>,
     TrackerOptionsProps {
   windowResize?: boolean;

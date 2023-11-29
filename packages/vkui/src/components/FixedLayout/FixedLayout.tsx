@@ -4,7 +4,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
-import { HasRef, HTMLAttributesWithRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import styles from './FixedLayout.module.css';
@@ -17,9 +17,7 @@ const stylesVertical = {
   ),
 };
 
-export interface FixedLayoutProps
-  extends HTMLAttributesWithRootRef<HTMLDivElement>,
-    HasRef<HTMLDivElement> {
+export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   vertical?: 'top' | 'bottom';
   /**
    * Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.
@@ -48,14 +46,13 @@ export const FixedLayout = ({
   style,
   vertical,
   getRootRef,
-  getRef,
   filled,
   className,
   useParentWidth,
   ...restProps
 }: FixedLayoutProps) => {
   const platform = usePlatform();
-  const ref = useExternRef(getRootRef, getRef); // TODO [>=6]: удалить getRef
+  const ref = useExternRef(getRootRef);
   const [width, setWidth] = React.useState<string | undefined>(undefined);
   const { window } = useDOM();
   const { colRef } = React.useContext(SplitColContext);

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { noop } from '@vkontakte/vkjs';
 import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
 import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
@@ -11,24 +10,13 @@ import {
   excludeKeysWithUndefined,
   removeClassNameFromElement,
 } from '../../lib/utils';
-import { warnOnce } from '../../lib/warnOnce';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   useConfigProvider,
 } from './ConfigProviderContext';
 
-const warn = warnOnce('ConfigProvider');
-
 export interface ConfigProviderProps extends Partial<ConfigProviderContextInterface> {
-  /**
-   * > ⚠️ В **v6** метод будет удалён (см. https://github.com/VKCOM/VKUI/issues/5049).
-   * > Используйте хук `useAppearance()` из библиотеки `@vkontakte/vk-bridge-react`, если вам нужно
-   * > определять, что `appearance` был передан через VK Bridge.
-   *
-   * @deprecated v5.8.0
-   */
-  onDetectAppearanceByBridge?: () => void; // TODO [>=6]: удалить
   children: React.ReactNode;
 }
 
@@ -41,47 +29,19 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps) => {
 
   const {
     children,
-    webviewType,
-    hasCustomPanelHeaderAfter: hasCustomPanelHeaderAfterMerged,
+    hasCustomPanelHeaderAfter,
     customPanelHeaderAfterMinWidth,
     isWebView,
     transitionMotionEnabled,
     platform,
     locale,
     appearance: appearanceProp,
-    onDetectAppearanceByBridge = noop,
   } = {
     ...parentConfig,
     ...props,
   };
 
-  // TODO [>=6]: Удалить данный бэкпорт
-  const hasCustomPanelHeaderAfter =
-    props.webviewType && props.hasCustomPanelHeaderAfter === undefined
-      ? props.webviewType === 'vkapps'
-      : hasCustomPanelHeaderAfterMerged;
-
-  if (process.env.NODE_ENV === 'development') {
-    // TODO [>=6]: удалить warn
-    let webviewTypeRule = '';
-    if (props.webviewType) {
-      webviewTypeRule =
-        props.webviewType === 'internal'
-          ? '3. замените webviewType={WebviewType.INTERNAL} на hasCustomPanelHeaderAfterProp={false}'
-          : '3. замените webviewType={WebviewType.VKAPPS} на hasCustomPanelHeaderAfterProp={true}';
-    }
-    warn(`[@vkontakte/vk-bridge's deprecated] Если вы используете VK Bridge, то:
-
-1. используйте хук useAppearance() из @vkontakte/vk-bridge-react и результат передайте в параметр appearance;
-2. передайте bridge.isWebView() в параметр isWebView;
-${webviewTypeRule}
-
-Подробности см. https://github.com/VKCOM/VKUI/issues/5049
-`);
-  }
-
-  // TODO [>=6]: удалить использование хука
-  const appearance = useAutoDetectAppearance(appearanceProp, onDetectAppearanceByBridge);
+  const appearance = useAutoDetectAppearance(appearanceProp);
 
   const { document } = useDOM();
 
@@ -103,7 +63,6 @@ ${webviewTypeRule}
   );
 
   const configContext = useObjectMemo({
-    webviewType,
     hasCustomPanelHeaderAfter,
     customPanelHeaderAfterMinWidth,
     isWebView,

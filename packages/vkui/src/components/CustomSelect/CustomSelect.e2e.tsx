@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
-import { Appearance } from '../../helpers/appearance';
+import { Appearance } from '../../lib/appearance';
 import {
   CustomSelectNoMaxHeightPlayground,
   CustomSelectPlayground,
