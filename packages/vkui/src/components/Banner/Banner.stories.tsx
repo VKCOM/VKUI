@@ -4,6 +4,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { Button } from '../Button/Button';
+import { Div } from '../Div/Div';
 import { Group } from '../Group/Group';
 import { Image } from '../Image/Image';
 import { Banner, BannerProps } from './Banner';
@@ -34,7 +35,9 @@ export const Playground: Story = {
   decorators: [
     (Component, context) => (
       <Group>
-        <Component {...context.args} />
+        <Div>
+          <Component {...context.args} />
+        </Div>
       </Group>
     ),
     withCartesian,
