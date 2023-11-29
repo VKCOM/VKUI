@@ -28,6 +28,7 @@ export const WithSubtitle: Story = {
   args: {
     ...Playground.args,
     subtitle: 'SOHN — Conrad',
+    subtitleComponent: 'h3',
   },
 };
 
