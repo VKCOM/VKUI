@@ -35,12 +35,10 @@ exports[`useFloatingWithInteractions tests with snapshot should be hidden state 
 exports[`useFloatingWithInteractions tests with snapshot should be shown state 1`] = `
 {
   "floatingProps": {
-    "aria-modal": "true",
     "onAnimationEnd": [Function],
     "onAnimationStart": [Function],
     "onMouseLeave": [Function],
     "onMouseOver": [Function],
-    "role": "dialog",
     "style": {
       "bottom": "auto",
       "left": 0,
@@ -54,7 +52,6 @@ exports[`useFloatingWithInteractions tests with snapshot should be shown state 1
   "onRestoreFocus": [Function],
   "placement": "bottom",
   "referenceProps": {
-    "aria-labelledby": "some-floating-id",
     "onBlur": [Function],
     "onClick": [Function],
     "onFocus": [Function],
@@ -79,12 +76,10 @@ exports[`useFloatingWithInteractions tests with snapshot should be shown state 1
 exports[`useFloatingWithInteractions tests with snapshot should be shown state with disabled close on esc key and click outside events 1`] = `
 {
   "floatingProps": {
-    "aria-modal": "true",
     "onAnimationEnd": [Function],
     "onAnimationStart": [Function],
     "onMouseLeave": [Function],
     "onMouseOver": [Function],
-    "role": "dialog",
     "style": {
       "bottom": "auto",
       "left": 0,
@@ -98,7 +93,6 @@ exports[`useFloatingWithInteractions tests with snapshot should be shown state w
   "onRestoreFocus": [Function],
   "placement": "bottom",
   "referenceProps": {
-    "aria-labelledby": "some-floating-id",
     "onBlur": [Function],
     "onClick": [Function],
     "onFocus": [Function],
@@ -123,10 +117,8 @@ exports[`useFloatingWithInteractions tests with snapshot should be shown state w
 exports[`useFloatingWithInteractions tests with snapshot should be shown state with disabled interactive feature 1`] = `
 {
   "floatingProps": {
-    "aria-modal": "true",
     "onAnimationEnd": [Function],
     "onAnimationStart": [Function],
-    "role": "dialog",
     "style": {
       "bottom": "auto",
       "left": 0,
@@ -141,7 +133,6 @@ exports[`useFloatingWithInteractions tests with snapshot should be shown state w
   "onRestoreFocus": [Function],
   "placement": "bottom",
   "referenceProps": {
-    "aria-labelledby": "some-floating-id",
     "onBlur": [Function],
     "onClick": [Function],
     "onFocus": [Function],

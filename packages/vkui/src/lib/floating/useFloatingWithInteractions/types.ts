@@ -14,10 +14,6 @@ export interface UseFloatingWithInteractionsProps
     'placement' | 'offsetByMainAxis' | 'offsetByCrossAxis'
   > {
   /**
-   * Идентификатор всплывающего элемента для a11y.
-   */
-  id?: string;
-  /**
    * Механика вызова всплывающего окна.
    *
    * - `"click"` – показывается/скрывается только при нажатии.

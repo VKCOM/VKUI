@@ -26,7 +26,6 @@ const whileElementsMounted: UseFloatingOptions['whileElementsMounted'] = (...arg
  * @private
  */
 export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>({
-  id,
   trigger = DEFAULT_TRIGGER,
 
   // UseFloatingMiddlewaresBootstrapProps
@@ -256,9 +255,6 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const floatingPropsRef = React.useRef<FloatingProps>({ style: {} });
 
   if (shownFinalState) {
-    referencePropsRef.current['aria-labelledby'] = id;
-    floatingPropsRef.current['role'] = 'dialog';
-    floatingPropsRef.current['aria-modal'] = 'true';
     floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties(strategy, x, y);
 
     if (disableInteractive) {
