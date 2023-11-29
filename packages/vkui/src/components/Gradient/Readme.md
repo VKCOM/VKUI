@@ -15,12 +15,12 @@ const Example = () => {
       <Panel id="gradient">
         <PanelHeader>Gradient</PanelHeader>
         <FixedLayout vertical="bottom">
-          <Gradient mode="default" to="top" style={styles}>
+          <Gradient to="top" style={styles}>
             <Button>mode="default"</Button>
           </Gradient>
         </FixedLayout>
         <Group>
-          <Gradient to="top" style={styles}>
+          <Gradient mode="tint" to="top" style={styles}>
             <Avatar size={96} />
             <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="2">
               Алексей Мазелюк
@@ -45,7 +45,7 @@ const Example = () => {
           </Group>
         </Group>
         <Group mode="plain" header={<Header mode="secondary">Направление to="bottom"</Header>}>
-          <Gradient to="bottom">
+          <Gradient mode="tint" to="bottom">
             <Div>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a
               commodo sapien. Vivamus a urna leo. Integer iaculis dignissim urna, sit amet
