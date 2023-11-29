@@ -19,7 +19,9 @@ export const Playground: Story = {
   args: {
     style: { width: 450, marginBottom: 20 },
     header: 'Отправляйте деньги друзьям, используя банковскую карту',
+    headerComponent: 'h2',
     subheader: 'Номер карты получателя не нужен — он сам решит, куда зачислить средства.',
+    subheaderComponent: 'span',
     actions: (
       <Button size="l" mode="primary" stretched>
         Попробовать

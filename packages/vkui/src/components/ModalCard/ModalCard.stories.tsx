@@ -111,7 +111,9 @@ export const CardWithComplexContent: Story = {
         id={MODAL_CARD_CHAT_INVITE}
         icon={<Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />}
         header="Баскетбол на выходных"
+        headerComponent="h2"
         subheader="Приглашение в беседу"
+        subheaderComponent="span"
         actions={
           <ButtonGroup gap="s" mode="vertical" stretched>
             <Button key="join" size="l" mode="primary" stretched>

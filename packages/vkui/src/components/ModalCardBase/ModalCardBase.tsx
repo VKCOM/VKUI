@@ -23,11 +23,15 @@ export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivEle
    * Заголовок карточки
    */
   header?: React.ReactNode;
+  /* Позволяет помеять тег используемый для заголовка */
+  headerComponent?: React.ElementType;
 
   /**
    * Подзаголовок
    */
   subheader?: React.ReactNode;
+  /* Позволяет помеять тег используемый для подзаголовка */
+  subheaderComponent?: React.ElementType;
 
   /**
    * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button) с параметрами:
@@ -72,7 +76,9 @@ export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivEle
 export const ModalCardBase = ({
   icon,
   header,
+  headerComponent = 'span',
   subheader,
+  subheaderComponent = 'span',
   children,
   actions,
   onClose,
@@ -120,6 +126,7 @@ export const ModalCardBase = ({
               styles['ModalCardBase__header'],
               'vkuiInternalModalCardBase__header',
             )}
+            Component={headerComponent}
           >
             {header}
           </Title>
@@ -131,6 +138,7 @@ export const ModalCardBase = ({
                 styles['ModalCardBase__subheader'],
                 'vkuiInternalModalCardBase__subheader',
               )}
+              Component={subheaderComponent}
             >
               {subheader}
             </Subhead>
