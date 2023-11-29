@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { debounce, noop } from '@vkontakte/vkjs';
+import { debounce } from '@vkontakte/vkjs';
 import { getWindow, isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
@@ -16,8 +16,11 @@ import type {
   ReferenceProps,
   ShownChangeReason,
   UseFloatingWithInteractionsProps,
+  UseFloatingWithInteractionsReturn,
 } from './types';
 import { useResolveTriggerType } from './useResolveTriggerType';
+
+type LocalState = { shown: boolean; reason?: ShownChangeReason };
 
 const whileElementsMounted: UseFloatingOptions['whileElementsMounted'] = (...args) =>
   autoUpdateFloatingElement(...args, { elementResize: true });
@@ -45,17 +48,24 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   // controlled
   shown: shownProp,
-  onShownChange = noop,
-}: UseFloatingWithInteractionsProps) => {
-  const [willBeHide, setWillBeHide] = React.useState(false);
-  const [shownLocalState, setShownLocalState] = useCustomEnsuredControl({
-    value: shownProp,
+  onShownChange: onShownChangeProp,
+}: UseFloatingWithInteractionsProps): UseFloatingWithInteractionsReturn<T> => {
+  const memoizedValue = React.useMemo(
+    () => (shownProp !== undefined ? { shown: shownProp } : undefined),
+    [shownProp],
+  );
+  const [shownLocalState, setShownLocalState] = useCustomEnsuredControl<LocalState>({
+    value: memoizedValue,
     disabled,
-    defaultValue: defaultShown,
-    onChange: useStableCallback(onShownChange),
+    defaultValue: { shown: defaultShown },
+    onChange: useStableCallback(({ shown, reason }) => {
+      if (onShownChangeProp) {
+        onShownChangeProp(shown, reason);
+      }
+    }),
   });
-  const [shownFinalState, setShownFinalState] = React.useState(shownLocalState);
-  const wasShowBy = React.useRef<ShownChangeReason | null>(null);
+  const [shownFinalState, setShownFinalState] = React.useState(() => shownLocalState.shown);
+  const [willBeHide, setWillBeHide] = React.useState(false);
 
   const hasCSSAnimation = React.useRef(false);
 
@@ -63,7 +73,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const blurTimeoutRef = React.useRef<ReturnType<typeof setTimeout>>();
 
   const handleCloseOnReferenceClickOutsideDisabled =
-    disabled || disableCloseOnClickOutside || willBeHide || !shownLocalState;
+    disabled || disableCloseOnClickOutside || willBeHide || !shownLocalState.shown;
   const handleCloseOnFloatingClickOutsideDisabled =
     disableInteractive || handleCloseOnReferenceClickOutsideDisabled;
 
@@ -84,8 +94,15 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const commitShownLocalState = React.useCallback(
     (nextShown: boolean, reason: ShownChangeReason) => {
-      setShownLocalState(nextShown);
-      wasShowBy.current = nextShown ? reason : null;
+      setShownLocalState((prevState) => {
+        if (prevState.shown !== nextShown) {
+          return {
+            shown: nextShown,
+            reason,
+          };
+        }
+        return prevState;
+      });
     },
     [setShownLocalState],
   );
@@ -115,7 +132,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const handleBlurOnReference = useStableCallback((event: React.FocusEvent) => {
     blockFocusRef.current = false;
 
-    if (!shownLocalState) {
+    if (!shownLocalState.shown) {
       clearTimeout(blurTimeoutRef.current);
       return;
     }
@@ -140,14 +157,14 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   });
 
   const handleClickOnReference = useStableCallback(() => {
-    commitShownLocalState(!shownLocalState, 'click');
+    commitShownLocalState(!shownLocalState.shown, 'click');
   });
 
   const handleMouseEnterOnBoth = useStableCallback(() => {
     showWithDelay.cancel();
     hideWithDelay.cancel();
 
-    if (!shownLocalState) {
+    if (!shownLocalState.shown) {
       showWithDelay();
     }
   });
@@ -159,7 +176,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       showWithDelay.cancel();
       hideWithDelay.cancel();
 
-      if (wasShowBy.current !== 'focus' && wasShowBy.current !== 'click') {
+      if (shownLocalState.reason !== 'focus' && shownLocalState.reason !== 'click') {
         hideWithDelay();
       }
     }
@@ -175,6 +192,11 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       setWillBeHide(false);
     }
   };
+
+  const handleOnClose = React.useCallback(() => {
+    blockFocusRef.current = true;
+    commitShownLocalState(false, 'callback');
+  }, [commitShownLocalState]);
 
   const handleRestoreFocus = React.useCallback(
     () => (triggerOnFocus ? blockFocusRef.current : true),
@@ -213,7 +235,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       const handleGlobalBlur = () => {
         const reference = refs.reference.current;
         if (
-          !shownLocalState &&
+          !shownLocalState.shown &&
           isHTMLElement(reference) &&
           reference === getActiveElementByAnotherElement(reference)
         ) {
@@ -232,11 +254,11 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   useIsomorphicLayoutEffect(
     function resolveShownStates() {
-      if (willBeHide || shownLocalState === shownFinalState) {
+      if (willBeHide || shownLocalState.shown === shownFinalState) {
         return;
       }
 
-      if (shownLocalState) {
+      if (shownLocalState.shown) {
         setShownFinalState(true);
       } else if (hasCSSAnimation.current && !willBeHide) {
         setWillBeHide(true);
@@ -299,6 +321,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     refs,
     referenceProps: referencePropsRef.current,
     floatingProps: floatingPropsRef.current,
+    onClose: handleOnClose,
     // FocusTrap уже определяет нажатие на ESC, поэтому название события содержит конкретный код
     // кнопки вместо просто onKeyDown.
     onEscapeKeyDown: !shownFinalState || disableCloseOnEscKey ? undefined : handleEscapeKeyDown,

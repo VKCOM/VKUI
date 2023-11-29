@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { render, renderHook } from '@testing-library/react';
+import { act, render, renderHook } from '@testing-library/react';
 import { AppRootContext } from '../../../components/AppRoot/AppRootContext';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
 import { fireEventPatch, waitForFloatingPosition } from '../../../testing/utils';
+import { ShownChangeReason } from './types';
 import { useFloatingWithInteractions } from './useFloatingWithInteractions';
 
 const TestComponent = ({
@@ -68,12 +69,14 @@ describe(useFloatingWithInteractions, () => {
         rerender(<TestComponent hookResultRef={result} />);
         expect(result.current.shown).toBeTruthy();
         expect(onShownChange).toHaveBeenCalledTimes(1);
-        expect(onShownChange).toHaveBeenLastCalledWith(true);
+        expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
 
         let shouldCloseAfter = false;
+        let closeReason: ShownChangeReason = trigger;
         switch (closeEventName) {
           case 'keyDown':
             shouldCloseAfter = trigger === 'focus';
+            closeReason = 'escape-key';
             await fireEventPatch(document, closeEventName, {
               key: 'Escape',
               code: 'Escape',
@@ -82,6 +85,7 @@ describe(useFloatingWithInteractions, () => {
             break;
           case 'clickOutside':
             shouldCloseAfter = trigger === 'focus';
+            closeReason = 'click-outside';
             await fireEventPatch(document, 'click');
             break;
           default:
@@ -91,7 +95,7 @@ describe(useFloatingWithInteractions, () => {
         rerender(<TestComponent hookResultRef={result} />);
         expect(result.current.shown).toBeFalsy();
         expect(onShownChange).toHaveBeenCalledTimes(2);
-        expect(onShownChange).toHaveBeenLastCalledWith(false);
+        expect(onShownChange).toHaveBeenLastCalledWith(false, closeReason);
 
         if (shouldCloseAfter) {
           // иначе фокус не сбрасывается
@@ -101,7 +105,7 @@ describe(useFloatingWithInteractions, () => {
         rerender(<TestComponent hookResultRef={result} />);
         expect(result.current.shown).toBeTruthy();
         expect(onShownChange).toHaveBeenCalledTimes(3);
-        expect(onShownChange).toHaveBeenLastCalledWith(true);
+        expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
       },
     );
 
@@ -232,6 +236,20 @@ describe(useFloatingWithInteractions, () => {
       expect(onAnimationEnd).toHaveBeenCalledTimes(1);
       expect(result.current.willBeHide).toBeFalsy();
       expect(result.current.shown).toBeFalsy();
+    });
+
+    it('should close using the onClose()', () => {
+      const onShownChange = jest.fn();
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions({ defaultShown: true, onShownChange }),
+      );
+      expect(result.current.shown).toBeTruthy();
+      act(() => {
+        result.current.onClose();
+      });
+      expect(result.current.shown).toBeFalsy();
+      expect(onShownChange).toHaveBeenCalledTimes(1);
+      expect(onShownChange).toHaveBeenCalledWith(false, 'callback');
     });
   });
 
