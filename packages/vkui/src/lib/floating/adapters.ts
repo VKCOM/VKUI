@@ -4,6 +4,19 @@ import {
   type FloatingElement,
   type ReferenceType,
 } from '@vkontakte/vkui-floating-ui/react-dom';
+import { isHTMLElement } from '../dom';
+
+export {
+  useFloating,
+  offset as offsetMiddleware,
+  flip as flipMiddleware,
+  shift as shiftMiddleware,
+  autoPlacement as autoPlacementMiddleware,
+  arrow as arrowMiddleware,
+  size as sizeMiddleware,
+  hide as hideMiddleware,
+  getOverflowAncestors,
+} from '@vkontakte/vkui-floating-ui/react-dom';
 
 const defaultOptions = {
   ancestorScroll: true,
@@ -44,7 +57,7 @@ export function autoUpdateFloatingElement(
       initialUpdate = false;
     });
 
-    if (reference instanceof Element) {
+    if (isHTMLElement(reference)) {
       observer.observe(reference, {
         childList: true,
         subtree: true,

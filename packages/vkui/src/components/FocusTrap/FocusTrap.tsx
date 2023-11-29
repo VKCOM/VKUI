@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { useTimeout } from '../../hooks/useTimeout';
 import { FOCUSABLE_ELEMENTS_LIST, Keys, pressedKey } from '../../lib/accessibility';
-import { useDOM } from '../../lib/dom';
+import {
+  contains,
+  getActiveElementByAnotherElement,
+  getWindow,
+  isHTMLElement,
+} from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasComponent, HasRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
@@ -13,7 +16,8 @@ export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
   extends React.AllHTMLAttributes<T>,
     HasRootRef<T>,
     HasComponent {
-  restoreFocus?: boolean;
+  autoFocus?: boolean;
+  restoreFocus?: boolean | (() => boolean);
   timeout?: number;
   onClose?(): void;
 }
@@ -24,6 +28,7 @@ export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
 export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   Component = 'div',
   onClose,
+  autoFocus = true,
   restoreFocus = true,
   timeout = 0,
   getRootRef,
@@ -32,103 +37,142 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 }: FocusTrapProps<T>) => {
   const ref = useExternRef<T>(getRootRef);
 
-  const { document, window } = useDOM();
-
-  const [focusableNodes, setFocusableNodes] = React.useState<HTMLElement[] | null>(null);
-  const [restoreFocusTo, setRestoreFocusTo] = React.useState<HTMLElement | null>(null);
-
-  // HANDLE TRAP MOUNT
-
   const { keyboardInput } = React.useContext(AppRootContext);
-  const focusOnTrapMount = useTimeout(() => {
-    if (
-      keyboardInput &&
-      !ref.current?.contains(document!.activeElement) &&
-      focusableNodes?.length
-    ) {
-      focusableNodes[0].focus();
-    }
-  }, timeout);
-  useIsomorphicLayoutEffect(() => {
-    focusOnTrapMount.set();
-  }, []);
+  const focusableNodesRef = React.useRef<HTMLElement[]>([]);
 
-  // HANDLE FOCUSABLE NODES
+  useIsomorphicLayoutEffect(
+    function collectFocusableNodesRef() {
+      if (!ref.current) {
+        return;
+      }
+
+      const nodes: HTMLElement[] = [];
+      // eslint-disable-next-line no-restricted-properties
+      ref.current.querySelectorAll<HTMLElement>(FOCUSABLE_ELEMENTS).forEach((focusableEl) => {
+        const { display, visibility } = getComputedStyle(focusableEl);
+        if (display !== 'none' && visibility !== 'hidden') {
+          nodes.push(focusableEl);
+        }
+      });
+
+      if (nodes.length === 0) {
+        // Чтобы фокус был хотя бы на родителе
+        nodes.push(ref.current);
+      }
+
+      focusableNodesRef.current = nodes;
+    },
+    [children],
+  );
+
+  useIsomorphicLayoutEffect(
+    function tryToAutoFocusToFirstNode() {
+      if (!ref.current || !autoFocus || !keyboardInput) {
+        return;
+      }
+      const autoFocusToFirstNode = () => {
+        if (!ref.current || !focusableNodesRef.current.length) {
+          return;
+        }
+        const activeElement = getActiveElementByAnotherElement(ref.current);
+        if (!contains(ref.current, activeElement)) {
+          focusableNodesRef.current[0].focus();
+        }
+      };
+      const timeoutId = setTimeout(autoFocusToFirstNode, timeout);
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    },
+    [autoFocus, timeout, keyboardInput],
+  );
+
+  useIsomorphicLayoutEffect(
+    function tryToRestoreFocusOnUnmount() {
+      if (!ref.current || !restoreFocus) {
+        return;
+      }
+
+      const restoreFocusTo = getActiveElementByAnotherElement(ref.current);
+
+      return () => {
+        const shouldRestoreFocus =
+          typeof restoreFocus === 'function' ? restoreFocus() : restoreFocus;
+
+        if (!shouldRestoreFocus || !isHTMLElement(restoreFocusTo)) {
+          return;
+        }
+
+        const focusTo = () => {
+          if (restoreFocusTo) {
+            restoreFocusTo.focus();
+          }
+        };
+
+        // В Jest не срабатывает setTimeout из функции очистки эффекта, поэтому для тестов вызываем
+        // сразу (см. useFloatingWithInteractions())
+        if (process.env.NODE_ENV === 'test') {
+          focusTo();
+        }
+
+        setTimeout(focusTo, timeout);
+      };
+    },
+    [restoreFocus, timeout],
+  );
 
   useIsomorphicLayoutEffect(() => {
     if (!ref.current) {
       return;
     }
 
-    const nodes: HTMLElement[] = [];
-    Array.prototype.forEach.call(
-      // eslint-disable-next-line no-restricted-properties
-      ref.current.querySelectorAll(FOCUSABLE_ELEMENTS),
-      (focusableEl: Element) => {
-        const { display, visibility } = window!.getComputedStyle(focusableEl);
+    const onDocumentKeydown = (event: KeyboardEvent) => {
+      const pressedKeyResult = pressedKey(event);
 
-        if (display !== 'none' && visibility !== 'hidden') {
-          nodes.push(focusableEl as HTMLElement);
+      switch (pressedKeyResult) {
+        case Keys.TAB: {
+          if (!focusableNodesRef.current.length) {
+            return false;
+          }
+
+          const lastIdx = focusableNodesRef.current.length - 1;
+          const targetIdx = focusableNodesRef.current.findIndex((node) => node === event.target);
+
+          const shouldFocusFirstNode =
+            targetIdx === -1 || (targetIdx === lastIdx && !event.shiftKey);
+
+          if (shouldFocusFirstNode || (targetIdx === 0 && event.shiftKey)) {
+            event.preventDefault();
+
+            const node = focusableNodesRef.current[shouldFocusFirstNode ? 0 : lastIdx];
+
+            if (node !== getActiveElementByAnotherElement(node)) {
+              node.focus();
+            }
+
+            return false;
+          }
+
+          break;
         }
-      },
-    );
-
-    if (nodes.length === 0) {
-      // Чтобы фокус был хотя бы на родителе
-      nodes.push(ref.current);
-    }
-
-    setFocusableNodes(nodes);
-  }, [children]);
-
-  // HANDLE TRAP UNMOUNT
-
-  const focusOnTrapUnmount = useTimeout(() => {
-    if (restoreFocusTo) {
-      restoreFocusTo.focus();
-    }
-  }, timeout);
-  useIsomorphicLayoutEffect(() => {
-    if (restoreFocus && document!.activeElement) {
-      setRestoreFocusTo(document!.activeElement as HTMLElement);
-
-      return () => {
-        focusOnTrapUnmount.set();
-      };
-    }
-
-    return;
-  }, [restoreFocus]);
-
-  const onDocumentKeydown = (e: KeyboardEvent) => {
-    if (pressedKey(e) === Keys.TAB && focusableNodes?.length) {
-      const lastIdx = focusableNodes.length - 1;
-      const targetIdx = focusableNodes.findIndex((node) => node === e.target);
-
-      const shouldFocusFirstNode = targetIdx === -1 || (targetIdx === lastIdx && !e.shiftKey);
-
-      if (shouldFocusFirstNode || (targetIdx === 0 && e.shiftKey)) {
-        e.preventDefault();
-
-        const node = focusableNodes[shouldFocusFirstNode ? 0 : lastIdx];
-
-        if (node !== document!.activeElement) {
-          node.focus();
+        case Keys.ESCAPE: {
+          if (onClose) {
+            onClose();
+          }
         }
-
-        return false;
       }
-    }
 
-    if (onClose && pressedKey(e) === Keys.ESCAPE) {
-      onClose();
-    }
+      return true;
+    };
 
-    return true;
-  };
-  useGlobalEventListener(document, 'keydown', onDocumentKeydown, {
-    capture: true,
-  });
+    const doc = getWindow(ref.current).document;
+    doc.addEventListener('keydown', onDocumentKeydown, {
+      capture: true,
+    });
+    return () => {
+      doc.removeEventListener('keydown', onDocumentKeydown, true);
+    };
+  }, [onClose, ref]);
 
   return (
     <Component tabIndex={-1} ref={ref} {...restProps}>

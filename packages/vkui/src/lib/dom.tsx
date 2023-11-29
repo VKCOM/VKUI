@@ -8,7 +8,12 @@ import {
   isHTMLElement,
 } from '@vkontakte/vkui-floating-ui/utils/dom';
 
-export { getWindow, getNodeScroll, isElement } from '@vkontakte/vkui-floating-ui/utils/dom';
+export {
+  getWindow,
+  getNodeScroll,
+  isHTMLElement,
+  isElement,
+} from '@vkontakte/vkui-floating-ui/utils/dom';
 
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
 export interface DOMContextInterface {
@@ -143,3 +148,10 @@ export const getScrollRect = (node: Element | Window) => {
 };
 
 export const getDocumentBody = (node?: any) => getWindow(node).document.body;
+
+export const getActiveElementByAnotherElement = (el: Element | null) =>
+  el ? el.ownerDocument.activeElement : null;
+
+export const contains = (parent?: Element | null, child?: Element | null) => {
+  return parent && child ? parent.contains(child) : false;
+};

@@ -1,4 +1,6 @@
 import {
+  contains,
+  getActiveElementByAnotherElement,
   getBoundingClientRect,
   getDocumentBody,
   getScrollHeight,
@@ -155,5 +157,48 @@ describe(getDocumentBody, () => {
     const el = document.createElement('div');
     document.body.appendChild(el);
     expect(getDocumentBody(el)).toBe(document.body);
+  });
+});
+
+describe(getActiveElementByAnotherElement, () => {
+  it('should return null if the argument is null', () => {
+    expect(getActiveElementByAnotherElement(null)).toBeNull();
+  });
+
+  it('should return activeElement by another element', () => {
+    const [elFocused, elBase] = [document.createElement('input'), document.createElement('div')];
+    document.body.append(elFocused, elBase);
+
+    expect(getActiveElementByAnotherElement(elBase)).toBe(document.body);
+
+    elFocused.focus();
+    expect(getActiveElementByAnotherElement(elBase)).toBe(elFocused);
+  });
+});
+
+describe(contains, () => {
+  it.each([
+    { args: [] },
+    { args: [undefined] },
+    { args: [undefined, undefined] },
+    { args: [null] },
+    { args: [null, null] },
+    { args: [undefined, null] },
+    { args: [null, undefined] },
+    { args: [document.createElement('div')] },
+    { args: [document.createElement('div'), undefined] },
+    { args: [document.createElement('div'), null] },
+    { args: [document.createElement('div'), document.createElement('div')] },
+    { args: [undefined, document.createElement('div')] },
+    { args: [null, document.createElement('div')] },
+  ])('should be always false ($args)', (props) => {
+    expect(contains(...props.args)).toBeFalsy();
+  });
+
+  it('should return true if parent contain child', () => {
+    const [elParent, elChild] = [document.createElement('input'), document.createElement('div')];
+    elParent.append(elChild);
+    document.body.append(elParent);
+    expect(contains(elParent, elChild)).toBeTruthy();
   });
 });
