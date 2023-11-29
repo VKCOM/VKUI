@@ -23,14 +23,14 @@ export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivEle
    * Заголовок карточки
    */
   header?: React.ReactNode;
-  /* Позволяет помеять тег используемый для заголовка */
+  /* Позволяет поменять тег используемый для заголовка */
   headerComponent?: React.ElementType;
 
   /**
    * Подзаголовок
    */
   subheader?: React.ReactNode;
-  /* Позволяет помеять тег используемый для подзаголовка */
+  /* Позволяет поменять тег используемый для подзаголовка */
   subheaderComponent?: React.ElementType;
 
   /**
