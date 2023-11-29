@@ -21,14 +21,10 @@ export interface TitleProps extends TypographyProps {
 export const Title = ({
   className,
   level = '1',
-  Component,
+  Component = 'span',
   normalize = true,
   ...restProps
 }: TitleProps) => {
-  if (!Component) {
-    Component = ('h' + level) as React.ElementType;
-  }
-
   return (
     <Typography
       Component={Component}
