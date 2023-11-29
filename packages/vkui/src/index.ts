@@ -251,8 +251,6 @@ export { ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
 export { Slider } from './components/Slider/Slider';
 export type { SliderBaseProps, SliderProps, SliderMultipleProps } from './components/Slider/Slider';
-export { RangeSlider } from './components/RangeSlider/RangeSlider';
-export type { RangeSliderProps } from './components/RangeSlider/RangeSlider';
 export { Textarea } from './components/Textarea/Textarea';
 export type { TextareaProps } from './components/Textarea/Textarea';
 export { Radio } from './components/Radio/Radio';
