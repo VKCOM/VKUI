@@ -27,6 +27,7 @@ const Example = () => {
               </Link>
             }
             subtitle="SOHN — Conrad"
+            subtitleComponent="h3"
           >
             Плейлисты
           </Header>

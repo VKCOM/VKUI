@@ -85,7 +85,7 @@ describe('Header', () => {
     expect(screen.getByText('中國人').parentElement?.tagName.toLowerCase()).toMatch('h2');
   });
 
-  it('[typography] HeaderSubtitle is span regardless of mode', () => {
+  it('[typography] HeaderSubtitle is span by default regardless of mode', () => {
     render(
       <Fragment>
         <Header mode="primary" subtitle="Русский" />
@@ -96,6 +96,19 @@ describe('Header', () => {
     expect(getTypographyTagNameByText('Русский')).toMatch('span');
     expect(getTypographyTagNameByText('English')).toMatch('span');
     expect(getTypographyTagNameByText('Espanõl')).toMatch('span');
+  });
+
+  it('[typography] HeaderSubtitle is h3 with subtitleComponent prop regardless of mode', () => {
+    render(
+      <Fragment>
+        <Header mode="primary" subtitle="Русский" subtitleComponent="h3" />
+        <Header mode="secondary" subtitle="English" subtitleComponent="h3" />
+        <Header mode="tertiary" subtitle="Espanõl" subtitleComponent="h3" />
+      </Fragment>,
+    );
+    expect(getTypographyTagNameByText('Русский')).toMatch('h3');
+    expect(getTypographyTagNameByText('English')).toMatch('h3');
+    expect(getTypographyTagNameByText('Espanõl')).toMatch('h3');
   });
 
   it('[typography] HeaderAside is span regardless of platform', () => {
