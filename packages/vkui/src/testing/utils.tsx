@@ -293,7 +293,7 @@ export const requestAnimationFrameMock = {
 };
 
 /**
- * Эта функция собирает бойлеплейт по работе с fireEvent.
+ * Эта функция собирает бойлерплейт по работе с fireEvent.
  */
 export const fireEventPatch = async (
   el: Document | Element | Window | Node | null,

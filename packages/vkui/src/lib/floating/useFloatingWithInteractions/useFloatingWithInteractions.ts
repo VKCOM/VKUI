@@ -201,10 +201,10 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   useIsomorphicLayoutEffect(
     /**
      * Если пользователь покинул активное окно и:
-     * 1. целевой элемент был в состоянии сфокусирован;
+     * 1. целевой элемент был в состоянии фокуса;
      * 2. всплывающий элемент был закрытом состоянии;
      * то фокус должен быть заблокирован, когда пользователь вернётся обратно. Иначе покажется
-     * всплывающий.
+     * всплывающий элемент.
      */
     function setGlobalBlurForTriggerOnFocus() {
       if (!triggerOnFocus || !refs.reference.current) {
