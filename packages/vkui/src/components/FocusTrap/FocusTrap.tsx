@@ -103,19 +103,11 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
           return;
         }
 
-        const focusTo = () => {
+        setTimeout(() => {
           if (restoreFocusTo) {
             restoreFocusTo.focus();
           }
-        };
-
-        // В Jest не срабатывает setTimeout из функции очистки эффекта, поэтому для тестов вызываем
-        // сразу (см. useFloatingWithInteractions())
-        if (process.env.NODE_ENV === 'test') {
-          focusTo();
-        }
-
-        setTimeout(focusTo, timeout);
+        }, timeout);
       };
     },
     [restoreFocus, timeout],

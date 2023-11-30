@@ -1,3 +1,4 @@
+import type { Placement, UseFloatingRefs } from '../types';
 import type { UseFloatingMiddlewaresBootstrapOptions } from '../useFloatingMiddlewaresBootstrap';
 
 export type InteractiveTriggerType = 'click' | 'hover' | 'focus';
@@ -6,7 +7,15 @@ export type ManualTriggerType = 'manual';
 
 export type TriggerType = ManualTriggerType | InteractiveTriggerType | InteractiveTriggerType[];
 
-export type ShownChangeReason = 'click-outside' | 'escape-key' | 'click' | 'hover' | 'focus';
+export type ShownChangeReason =
+  | 'click-outside'
+  | 'escape-key'
+  | 'click'
+  | 'hover'
+  | 'focus'
+  | 'callback';
+
+export type OnShownChange = (shown: boolean, reason?: ShownChangeReason) => void;
 
 export interface UseFloatingWithInteractionsProps
   extends Pick<
@@ -36,10 +45,6 @@ export interface UseFloatingWithInteractionsProps
    */
   hoverDelay?: number | [number, number];
   /**
-   * Содержимое всплывающего окна.
-   */
-  content?: React.ReactNode;
-  /**
    * Блокирует изменение состояния.
    */
   disabled?: boolean;
@@ -66,7 +71,7 @@ export interface UseFloatingWithInteractionsProps
   /**
    * Вызывается при каждом изменении видимости всплывающего окна.
    */
-  onShownChange?(shown: boolean): void;
+  onShownChange?: OnShownChange;
 }
 
 export type ReferenceProps<T = HTMLElement> = Omit<
@@ -82,3 +87,15 @@ export type FloatingProps<T = HTMLElement> = Omit<
     React.DOMAttributes<T>,
     'onMouseOver' | 'onMouseLeave' | 'onClick' | 'onAnimationStart' | 'onAnimationEnd'
   >;
+
+export interface UseFloatingWithInteractionsReturn<T extends HTMLElement = HTMLElement> {
+  placement: Placement;
+  shown: boolean;
+  willBeHide: boolean;
+  refs: UseFloatingRefs<T>;
+  referenceProps: ReferenceProps<T>;
+  floatingProps: FloatingProps<T>;
+  onClose(this: void): void;
+  onEscapeKeyDown?(this: void): void;
+  onRestoreFocus(this: void): boolean;
+}

@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { render, renderHook } from '@testing-library/react';
+import { act, render, renderHook, waitFor } from '@testing-library/react';
 import { AppRootContext } from '../../../components/AppRoot/AppRootContext';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
-import { fireEventPatch, waitForFloatingPosition } from '../../../testing/utils';
+import { fireEventPatch, userEvent } from '../../../testing/utils';
+import { ShownChangeReason } from './types';
 import { useFloatingWithInteractions } from './useFloatingWithInteractions';
 
 const TestComponent = ({
+  restoreFocus,
   hookResultRef,
   keyboardInput,
 }: {
+  restoreFocus?: boolean;
   hookResultRef: {
     current: ReturnType<typeof useFloatingWithInteractions<HTMLButtonElement>>;
   };
@@ -25,7 +28,7 @@ const TestComponent = ({
         <span ref={refs.floating} {...floatingProps}>
           <FocusTrap
             autoFocus
-            restoreFocus={hookResultRef.current.onRestoreFocus}
+            restoreFocus={restoreFocus ? hookResultRef.current.onRestoreFocus : restoreFocus}
             onClose={hookResultRef.current.onEscapeKeyDown}
           >
             <input data-testid="focus-trap" type="text" defaultValue="Reference" />
@@ -39,18 +42,20 @@ const TestComponent = ({
 describe(useFloatingWithInteractions, () => {
   describe('test cases', () => {
     it.each([
-      { trigger: 'focus' as const, openEventName: 'focus' as const, closeEventName: 'blur' as const }, // prettier-ignore
-      { trigger: 'click' as const, openEventName: 'click' as const, closeEventName: 'click' as const }, // prettier-ignore
-      { trigger: 'hover' as const, openEventName: 'mouseOver' as const, closeEventName: 'mouseLeave' as const }, // prettier-ignore
-      { trigger: 'focus' as const, openEventName: 'focus' as const, closeEventName: 'keyDown' as const }, // prettier-ignore
-      { trigger: 'click' as const, openEventName: 'click' as const, closeEventName: 'keyDown' as const }, // prettier-ignore
-      { trigger: 'hover' as const, openEventName: 'mouseOver' as const, closeEventName: 'keyDown' as const }, // prettier-ignore
-      { trigger: 'focus' as const, openEventName: 'focus' as const, closeEventName: 'clickOutside' as const }, // prettier-ignore
-      { trigger: 'click' as const, openEventName: 'click' as const, closeEventName: 'clickOutside' as const }, // prettier-ignore
-      { trigger: 'hover' as const, openEventName: 'mouseOver' as const, closeEventName: 'clickOutside' as const }, // prettier-ignore
+      {
+        trigger: 'focus' as const,
+        openBy: 'focus' as const,
+        closeBy: 'blur' as const, // 'escape-key' и 'click-outside' для focus вынесены в отдельные тесты
+      },
+      { trigger: 'click' as const, openBy: 'click' as const, closeBy: 'click' as const },
+      { trigger: 'click' as const, openBy: 'click' as const, closeBy: 'escape-key' as const },
+      { trigger: 'click' as const, openBy: 'click' as const, closeBy: 'click-outside' as const },
+      { trigger: 'hover' as const, openBy: 'mouseOver' as const, closeBy: 'mouseLeave' as const },
+      { trigger: 'hover' as const, openBy: 'mouseOver' as const, closeBy: 'escape-key' as const },
+      { trigger: 'hover' as const, openBy: 'mouseOver' as const, closeBy: 'click-outside' as const }, // prettier-ignore
     ])(
-      'should shown by $openEventName event  and hidden by $closeEventName event (trigger: $trigger)',
-      async ({ trigger, openEventName, closeEventName }) => {
+      'should shown by $openBy event  and hidden by $closeBy event (trigger: $trigger)',
+      async ({ trigger, openBy, closeBy }) => {
         const onShownChange = jest.fn();
         const { result } = renderHook(() =>
           useFloatingWithInteractions<HTMLButtonElement>({
@@ -60,48 +65,145 @@ describe(useFloatingWithInteractions, () => {
           }),
         );
         const { rerender } = render(<TestComponent hookResultRef={result} />);
-        expect(result.current.shown).toBeFalsy();
-        expect(onShownChange).toHaveBeenCalledTimes(0);
-        expect(onShownChange).not.toHaveBeenCalled();
+        await waitFor(() => {
+          expect(result.current.shown).toBeFalsy();
+          expect(onShownChange).toHaveBeenCalledTimes(0);
+          expect(onShownChange).not.toHaveBeenCalled();
+        });
 
-        await fireEventPatch(result.current.refs.reference.current, openEventName);
+        await fireEventPatch(result.current.refs.reference.current, openBy);
         rerender(<TestComponent hookResultRef={result} />);
-        expect(result.current.shown).toBeTruthy();
-        expect(onShownChange).toHaveBeenCalledTimes(1);
-        expect(onShownChange).toHaveBeenLastCalledWith(true);
+        await waitFor(() => {
+          expect(result.current.shown).toBeTruthy();
+          expect(onShownChange).toHaveBeenCalledTimes(1);
+          expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
+        });
 
-        let shouldCloseAfter = false;
-        switch (closeEventName) {
-          case 'keyDown':
-            shouldCloseAfter = trigger === 'focus';
-            await fireEventPatch(document, closeEventName, {
-              key: 'Escape',
-              code: 'Escape',
-              charCode: 27,
+        let closeReason: ShownChangeReason = trigger;
+        switch (closeBy) {
+          case 'escape-key':
+            closeReason = closeBy;
+            jest.useFakeTimers();
+            await userEvent.keyboard('{Escape}');
+            act(() => {
+              jest.runOnlyPendingTimers();
+              jest.useRealTimers();
             });
             break;
-          case 'clickOutside':
-            shouldCloseAfter = trigger === 'focus';
-            await fireEventPatch(document, 'click');
+          case 'click-outside':
+            closeReason = closeBy;
+            jest.useFakeTimers();
+            await userEvent.click(document.body);
+            act(() => {
+              jest.runOnlyPendingTimers();
+              jest.useRealTimers();
+            });
             break;
           default:
-            await fireEventPatch(result.current.refs.reference.current, closeEventName);
-            await waitForFloatingPosition();
+            await fireEventPatch(result.current.refs.reference.current, closeBy);
         }
         rerender(<TestComponent hookResultRef={result} />);
-        expect(result.current.shown).toBeFalsy();
-        expect(onShownChange).toHaveBeenCalledTimes(2);
-        expect(onShownChange).toHaveBeenLastCalledWith(false);
+        await waitFor(() => {
+          expect(result.current.shown).toBeFalsy();
+          expect(onShownChange).toHaveBeenCalledTimes(2);
+          expect(onShownChange).toHaveBeenLastCalledWith(false, closeReason);
+        });
 
-        if (shouldCloseAfter) {
-          // иначе фокус не сбрасывается
-          await fireEventPatch(result.current.refs.reference.current, 'blur');
-        }
-        await fireEventPatch(result.current.refs.reference.current, openEventName);
+        await fireEventPatch(result.current.refs.reference.current, openBy);
         rerender(<TestComponent hookResultRef={result} />);
-        expect(result.current.shown).toBeTruthy();
-        expect(onShownChange).toHaveBeenCalledTimes(3);
-        expect(onShownChange).toHaveBeenLastCalledWith(true);
+        await waitFor(() => {
+          expect(result.current.shown).toBeTruthy();
+          expect(onShownChange).toHaveBeenCalledTimes(3);
+          expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
+        });
+      },
+    );
+
+    it.each([
+      { trigger: 'focus' as const, openBy: 'focus' as const, closeBy: 'escape-key' as const },
+      { trigger: 'focus' as const, openBy: 'focus' as const, closeBy: 'click-outside' as const },
+    ])(
+      'should shown by $openBy event  and hidden by $closeBy event (trigger: $trigger)',
+      async ({ trigger, openBy, closeBy }) => {
+        const shouldClosedByClickOutside = closeBy === 'click-outside';
+        const onShownChange = jest.fn();
+        const { result } = renderHook(() =>
+          useFloatingWithInteractions<HTMLButtonElement>({
+            defaultShown: false,
+            trigger: 'focus',
+            onShownChange,
+          }),
+        );
+        const { rerender } = render(<TestComponent hookResultRef={result} />);
+        await waitFor(() => {
+          expect(result.current.shown).toBeFalsy();
+          expect(onShownChange).toHaveBeenCalledTimes(0);
+          expect(onShownChange).not.toHaveBeenCalled();
+        });
+
+        await fireEventPatch(result.current.refs.reference.current, openBy);
+
+        rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => {
+          expect(result.current.shown).toBeTruthy();
+          expect(onShownChange).toHaveBeenCalledTimes(1);
+          expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
+        });
+
+        jest.useFakeTimers();
+        if (shouldClosedByClickOutside) {
+          await userEvent.click(document.body);
+        } else {
+          await userEvent.keyboard('{Escape}');
+        }
+        act(() => {
+          jest.runOnlyPendingTimers();
+          jest.useRealTimers();
+        });
+
+        rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => {
+          if (shouldClosedByClickOutside) {
+            expect(document.activeElement).toBe(result.current.refs.reference.current);
+          }
+          expect(result.current.shown).toBeFalsy();
+          expect(onShownChange).toHaveBeenCalledTimes(2);
+          expect(onShownChange).toHaveBeenLastCalledWith(false, closeBy);
+        });
+
+        if (shouldClosedByClickOutside) {
+          expect(document.activeElement).toBe(result.current.refs.reference.current);
+        }
+        // Если всплывающее окно закрылось из-за 'escape-key' или 'click-outside', то при
+        // возвращении фокуса оно не должно открыться повторно.
+        expect(onShownChange).toHaveBeenCalledTimes(2);
+        expect(result.current.shown).toBeFalsy();
+
+        await fireEventPatch(result.current.refs.reference.current, 'focus');
+
+        rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => {
+          expect(onShownChange).toHaveBeenCalledTimes(2);
+          expect(result.current.shown).toBeFalsy();
+        });
+
+        await fireEventPatch(result.current.refs.reference.current, 'blur'); // Сбрасываем блокировку фокуса
+
+        rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => {
+          expect(result.current.shown).toBeFalsy();
+          expect(onShownChange).toHaveBeenCalledTimes(2);
+          expect(onShownChange).toHaveBeenLastCalledWith(false, closeBy);
+        });
+
+        await fireEventPatch(result.current.refs.reference.current, openBy);
+
+        rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => {
+          expect(result.current.shown).toBeTruthy();
+          expect(onShownChange).toHaveBeenCalledTimes(3);
+          expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
+        });
       },
     );
 
@@ -114,55 +216,104 @@ describe(useFloatingWithInteractions, () => {
         }),
       );
       const { rerender } = render(<TestComponent hookResultRef={result} />);
-      expect(result.current.shown).toBeFalsy();
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       await fireEventPatch(result.current.refs.reference.current, 'mouseOver');
       rerender(<TestComponent hookResultRef={result} />);
-      expect(result.current.shown).toBeTruthy();
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       await fireEventPatch(result.current.refs.floating.current, 'mouseOver');
-      expect(result.current.shown).toBeTruthy();
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       await fireEventPatch(result.current.refs.reference.current, 'mouseOver');
-      expect(result.current.shown).toBeTruthy();
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       await fireEventPatch(result.current.refs.floating.current, 'mouseOver');
-      expect(result.current.shown).toBeTruthy();
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       await fireEventPatch(result.current.refs.floating.current, 'mouseLeave');
       rerender(<TestComponent hookResultRef={result} />);
-      expect(result.current.shown).toBeFalsy();
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
     });
 
-    it('should restore focus', async () => {
+    it.each([true, false])('should restore focus: %s', async (restoreFocus) => {
       const { result } = renderHook(() =>
         useFloatingWithInteractions<HTMLButtonElement>({
           defaultShown: false,
           trigger: 'focus',
         }),
       );
-      const testComponentRender = render(<TestComponent hookResultRef={result} keyboardInput />);
-      expect(result.current.shown).toBeFalsy();
+      const testComponentRender = render(
+        <TestComponent hookResultRef={result} restoreFocus={restoreFocus} keyboardInput />,
+      );
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       await fireEventPatch(result.current.refs.reference.current, 'focus');
-      testComponentRender.rerender(<TestComponent hookResultRef={result} keyboardInput />);
-      expect(result.current.shown).toBeTruthy();
+      testComponentRender.rerender(
+        <TestComponent hookResultRef={result} restoreFocus={restoreFocus} keyboardInput />,
+      );
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
-      await fireEventPatch(document, 'keyDown', {
-        key: 'Tab',
-        code: 'Tab',
-        charCode: 9,
+      jest.useFakeTimers();
+      await userEvent.keyboard('{Tab}');
+      act(() => {
+        jest.runOnlyPendingTimers();
+        jest.useRealTimers();
       });
-      expect(testComponentRender.getByTestId('focus-trap')).toHaveFocus();
+      await waitFor(() => expect(testComponentRender.getByTestId('focus-trap')).toHaveFocus());
 
-      await fireEventPatch(document, 'keyDown', {
-        key: 'Escape',
-        code: 'Escape',
-        charCode: 27,
+      jest.useFakeTimers();
+      await userEvent.keyboard('{Escape}');
+      act(() => {
+        jest.runOnlyPendingTimers();
+        jest.useRealTimers();
       });
-      testComponentRender.rerender(<TestComponent hookResultRef={result} keyboardInput />);
-      expect(result.current.shown).toBeFalsy();
-      expect(result.current.refs.reference.current).toHaveFocus();
+      testComponentRender.rerender(
+        <TestComponent hookResultRef={result} restoreFocus={restoreFocus} keyboardInput />,
+      );
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        if (restoreFocus) {
+          expect(result.current.refs.reference.current).toHaveFocus();
+        } else {
+          expect(document.body).toHaveFocus();
+        }
+      });
+    });
+
+    it('should block focus', async () => {
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'focus',
+        }),
+      );
+      const testComponentRender = render(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+      jest.useFakeTimers();
+      await userEvent.click(result.current.refs.reference.current!);
+      act(() => {
+        jest.runOnlyPendingTimers();
+        jest.useRealTimers();
+      });
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeTruthy();
+        expect(document.activeElement).toBe(result.current.refs.reference.current);
+      });
+
+      jest.useFakeTimers();
+      await userEvent.click(document.body);
+      act(() => {
+        jest.runOnlyPendingTimers();
+        jest.useRealTimers();
+      });
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => {
+        expect(document.activeElement).toBe(document.body);
+        expect(result.current.shown).toBeFalsy();
+      });
     });
 
     it.each(['focus' as const, 'click' as const])(
@@ -174,16 +325,39 @@ describe(useFloatingWithInteractions, () => {
             trigger: ['focus', 'click', 'hover'],
           }),
         );
-        render(<TestComponent hookResultRef={result} />);
-        expect(result.current.shown).toBeFalsy();
+        const testComponentRender = render(<TestComponent hookResultRef={result} />);
+        await waitFor(() => expect(result.current.shown).toBeFalsy());
+
         await fireEventPatch(result.current.refs.reference.current, eventName);
+        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => expect(result.current.shown).toBeTruthy());
+
         await fireEventPatch(result.current.refs.reference.current, 'mouseLeave');
+        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+        await fireEventPatch(
+          result.current.refs.reference.current,
+          eventName === 'focus' ? 'blur' : eventName,
+        );
+        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+        await fireEventPatch(result.current.refs.reference.current, eventName);
+        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+        await fireEventPatch(result.current.refs.floating.current, 'mouseOver');
+        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => expect(result.current.shown).toBeTruthy());
+
         await fireEventPatch(result.current.refs.floating.current, 'mouseLeave');
-        expect(result.current.shown).toBeTruthy();
+        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+        await waitFor(() => expect(result.current.shown).toBeTruthy());
       },
     );
 
-    it('should use manual state', () => {
+    it('should use manual state', async () => {
       const { result, rerender } = renderHook(
         (props) => useFloatingWithInteractions<HTMLButtonElement>(props),
         {
@@ -191,12 +365,10 @@ describe(useFloatingWithInteractions, () => {
         },
       );
       render(<TestComponent hookResultRef={result} />);
-      expect(result.current.shown).toBeFalsy();
-      rerender({
-        shown: true,
-        trigger: 'manual',
-      });
-      expect(result.current.shown).toBeTruthy();
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+
+      rerender({ shown: true, trigger: 'manual' });
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
     });
 
     it('should shown/hidden with animations', async () => {
@@ -207,31 +379,53 @@ describe(useFloatingWithInteractions, () => {
         }),
       );
       render(<TestComponent hookResultRef={result} />);
-      expect(result.current.shown).toBeFalsy();
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       // show
       await fireEventPatch(result.current.refs.reference.current, 'click');
-      expect(result.current.willBeHide).toBeFalsy();
-      expect(result.current.shown).toBeTruthy();
+      await waitFor(() => {
+        expect(result.current.willBeHide).toBeFalsy();
+        expect(result.current.shown).toBeTruthy();
+      });
 
       const onAnimationStart = jest.spyOn(result.current.floatingProps, 'onAnimationStart');
       render(<TestComponent hookResultRef={result} />);
 
       await fireEventPatch(result.current.refs.floating.current, 'animationStart');
-      expect(onAnimationStart).toHaveBeenCalledTimes(1);
+      await waitFor(() => expect(onAnimationStart).toHaveBeenCalledTimes(1));
 
       // hide
       await fireEventPatch(result.current.refs.reference.current, 'click');
-      expect(result.current.willBeHide).toBeTruthy();
-      expect(result.current.shown).toBeTruthy();
+      await waitFor(() => {
+        expect(result.current.willBeHide).toBeTruthy();
+        expect(result.current.shown).toBeTruthy();
+      });
 
       const onAnimationEnd = jest.spyOn(result.current.floatingProps, 'onAnimationEnd');
       render(<TestComponent hookResultRef={result} />);
 
       await fireEventPatch(result.current.refs.floating.current, 'animationEnd');
-      expect(onAnimationEnd).toHaveBeenCalledTimes(1);
-      expect(result.current.willBeHide).toBeFalsy();
-      expect(result.current.shown).toBeFalsy();
+      await waitFor(() => {
+        expect(onAnimationEnd).toHaveBeenCalledTimes(1);
+        expect(result.current.willBeHide).toBeFalsy();
+        expect(result.current.shown).toBeFalsy();
+      });
+    });
+
+    it('should close using the onClose()', async () => {
+      const onShownChange = jest.fn();
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions({ defaultShown: true, onShownChange }),
+      );
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+      act(() => {
+        result.current.onClose();
+      });
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).toHaveBeenCalledTimes(1);
+        expect(onShownChange).toHaveBeenCalledWith(false, 'callback');
+      });
     });
   });
 
