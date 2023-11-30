@@ -25,6 +25,12 @@ export interface FormItemProps
     HasComponent,
     RemovableProps {
   top?: React.ReactNode;
+  /**
+   * Позволяет поменять тег используемый для top
+   * Если оставить пустым, то тег top будет span.
+   * Если оставить пустым и использовать htmlFor, то тег top будет label.
+   */
+  topComponent?: React.ElementType;
   bottom?: React.ReactNode;
   /**
    * Передаётся при использовании `bottom`.
@@ -52,6 +58,7 @@ export interface FormItemProps
 export const FormItem = ({
   children,
   top,
+  topComponent: topComponentProp,
   bottom,
   status = 'default',
   removable,
@@ -66,14 +73,11 @@ export const FormItem = ({
   const rootEl = useExternRef(getRootRef);
   const { sizeY = 'none' } = useAdaptivity();
 
+  const topComponent = topComponentProp || (htmlFor && 'label') || 'span';
   const wrappedChildren = (
     <React.Fragment>
       {hasReactNode(top) && (
-        <Subhead
-          className={styles['FormItem__top']}
-          Component={htmlFor ? 'label' : 'h5'}
-          htmlFor={htmlFor}
-        >
+        <Subhead className={styles['FormItem__top']} Component={topComponent} htmlFor={htmlFor}>
           {top}
         </Subhead>
       )}
