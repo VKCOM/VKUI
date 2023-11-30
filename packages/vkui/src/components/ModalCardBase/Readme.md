@@ -13,7 +13,7 @@
           Попробовать
         </Button>
       }
-      icon={<Icon56MoneyTransferOutline key="icon" />}
+      icon={<Icon56MoneyTransferOutline />}
     />
   </AdaptivityProvider>
   <Text style={{ marginBottom: 10 }}>Мобильная версия</Text>
@@ -58,7 +58,7 @@
       style={{ width: 450, marginBottom: 20 }}
       header="Десктопная и планшетная версии с крестиком внутри"
       subheader="Безопасной зоны не будет, потому что есть иконка"
-      icon={<Icon56MoneyTransferOutline key="icon" />}
+      icon={<Icon56MoneyTransferOutline />}
     />
   </AdaptivityProvider>
   <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
