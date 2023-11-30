@@ -124,6 +124,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const handleFocusOnReference = useStableCallback(() => {
     if (blockFocusRef.current) {
+      /* istanbul ignore next: в Jest не воспроизводится баг на вебе (cм. onRestoreFocus) */
       blockFocusRef.current = false;
       return;
     }
