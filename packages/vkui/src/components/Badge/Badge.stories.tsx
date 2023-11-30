@@ -19,11 +19,13 @@ export const Playground: Story = {};
 export const NewMode: Story = {
   args: {
     mode: 'new',
+    children: 'Есть обновления',
   },
 };
 
 export const ProminentMode: Story = {
   args: {
     mode: 'prominent',
+    children: 'Новый раздел',
   },
 };
