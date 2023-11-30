@@ -1,202 +1,175 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useEventListener } from '../../hooks/useEventListener';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
-import { useTimeout } from '../../hooks/useTimeout';
-import { useDOM } from '../../lib/dom';
-import { FocusTrap, FocusTrapProps } from '../FocusTrap/FocusTrap';
-import { Popper, PopperCommonProps } from '../Popper/Popper';
+import { injectAriaExpandedPropByRole } from '../../lib/accessibility';
+import { createPortal } from '../../lib/createPortal';
+import { animationFadeClassNames, transformOriginClassNames } from '../../lib/cssAnimation';
+import { getDocumentBody } from '../../lib/dom';
+import {
+  type OnShownChange,
+  useFloatingWithInteractions,
+  type UseFloatingWithInteractionsProps,
+  type UseFloatingWithInteractionsReturn,
+} from '../../lib/floating';
+import type { HTMLAttributesWithRootRef } from '../../types';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import styles from './Popover.module.css';
 
+export type PopoverOnShownChange = OnShownChange;
+
+export type PopoverContentRenderProp = (
+  props: Pick<UseFloatingWithInteractionsReturn, 'onClose'>,
+) => React.ReactNode;
+
 export interface PopoverProps
-  extends Omit<
-      PopperCommonProps,
-      'arrow' | 'arrowClassName' | 'arrowHeight' | 'arrowPadding' | 'ArrowIcon' | 'content'
-    >,
-    Pick<FocusTrapProps, 'restoreFocus'> {
-  /**
-   * Механика вызова всплывающего окна.
-   *
-   * - `"click"` – показывается/скрывается только при нажатии.
-   * - `"hover"` – помимо нажатия, будет показываться/скрывается при наведении/отведении мыши.
-   *
-   * > ⚠️`"hover"` на тач-устройствах будет работать как `"click"`, с одним лишь нюансом, что не будет закрываться
-   * > при повторном нажатии на целевой элемент. Для закрытия необходимо нажать на область вне целевого элемента
-   * > и выпадающего окна.
-   */
-  action?: 'click' | 'hover';
-  /**
-   * Если передан, то всплывающее окно будет показано/скрыто в зависимости от значения свойства.
-   */
-  shown?: boolean;
-  /**
-   * Количество миллисекунд, после которых произойдёт показ всплывающего окна.
-   *
-   * > Используется только для `action="hover"` при наведении/отведении мыши.
-   */
-  showDelay?: number;
-  /**
-   * Количество миллисекунд, после которых произойдёт скрытие всплывающего окна.
-   *
-   * > Используется только для `action="hover"` при наведении/отведении мыши.
-   */
-  hideDelay?: number;
+  extends UseFloatingWithInteractionsProps,
+    Omit<
+      HTMLAttributesWithRootRef<HTMLDivElement>,
+      keyof UseFloatingWithInteractionsProps | 'content'
+    > {
   /**
    * Содержимое всплывающего окна.
+   *
+   * При передаче контента в виде [render prop](https://react.dev/reference/react/cloneElement#passing-data-with-a-render-prop),
+   * в аргументе функции можно получить метод `onClose`, с помощью которого можно программно закрывать
+   * всплывающее окно.
    */
-  content?: React.ReactNode;
+  content?: React.ReactNode | PopoverContentRenderProp;
   /**
    * Целевой элемент. Всплывающее окно появится возле него.
    *
-   * > ⚠️ Если это пользовательский компонент, то он должен предоставлять параметры либо `getRootRef`, либо `ref` для получения ссылки на DOM-узел.
+   * > ⚠️ Если это пользовательский компонент, то он должен:
+   * > 1. предоставлять параметры либо `getRootRef`, либо `ref` (cм. `React.forwardRef()`) для получения ссылки на DOM-узел;
+   * > 2. принимать DOM атрибуты и события.
    */
   children?: React.ReactElement;
   /**
-   * Вызывается при каждом изменении видимости всплывающего окна.
+   * Нужно ли при навигации с клавиатуры авто-фокусироваться на всплывающий элемент.
    */
-  onShownChange?(shown: boolean): void;
+  autoFocus?: boolean;
+  /**
+   * Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент.
+   */
+  restoreFocus?: boolean;
+  /**
+   * Отключает у всплывающего элемента стилизацию по умолчанию, а именно:
+   * - background
+   * - border-radius
+   * - box-shadow
+   *
+   * Используется в случае, если необходимо стилизовать по своему.
+   */
+  noStyling?: boolean;
+  /**
+   * Перебивает zIndex заданный по умолчанию.
+   */
+  zIndex?: number | string;
+  /**
+   * По умолчанию используется document.body.
+   */
+  usePortal?: boolean | Element | DocumentFragment;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Popover
  */
 export const Popover = ({
-  action = 'click',
-  shown: shownProp,
-  showDelay = 150,
-  hideDelay = 150,
-  offsetDistance = 8,
+  // UsePopoverProps
+  placement: expectedPlacement = 'bottom-start',
+  trigger = 'click',
   content,
-  children,
-  style: styleProp,
-  className,
-  getRootRef,
+  hoverDelay = 150,
+  offsetByMainAxis = 8,
+  offsetByCrossAxis = 0,
+  disabled,
+  disableInteractive,
+  disableCloseOnClickOutside,
+  disableCloseOnEscKey,
+  // uncontrolled
+  defaultShown = false,
+  // controlled
+  shown: shownProp,
   onShownChange,
+
+  // Для createPortal
+  usePortal = true,
+
+  // FocusTrapProps
+  autoFocus = true,
   restoreFocus = true,
-  ...restProps
+  className,
+  children,
+  noStyling = false,
+  zIndex = 'var(--vkui--z_index_popout)',
+  // a11y
+  role,
+  ...restPopoverProps
 }: PopoverProps) => {
-  const { document } = useDOM();
-
-  const hoverable = action === 'hover';
-  const hovered = React.useRef(false);
-  const [computedShown, setComputedShown] = React.useState(shownProp || false);
-  const [dropdownNode, setPopperNode] = React.useState<HTMLElement | null>(null);
-
-  const shown = typeof shownProp === 'boolean' ? shownProp : computedShown;
-
-  const patchedPopperRef = useExternRef<HTMLDivElement>(setPopperNode, getRootRef);
-
-  const [childRef, child] = usePatchChildren(children);
-
-  const setShown = (value: boolean) => {
-    if (typeof shownProp !== 'boolean') {
-      setComputedShown(value);
-    }
-    typeof onShownChange === 'function' && onShownChange(value);
-  };
-
-  const showTimeout = useTimeout(() => setShown(true), showDelay);
-
-  const hideTimeout = useTimeout(() => setShown(false), hideDelay);
-
-  const handleTargetEnter = () => {
-    hovered.current = true;
-    hideTimeout.clear();
-    showTimeout.set();
-  };
-
-  const handleTargetClick = () => {
-    if (hovered.current && shown) {
-      return;
-    }
-    setShown(!shown);
-  };
-
-  const handleTargetLeave = () => {
-    hovered.current = false;
-    showTimeout.clear();
-    hideTimeout.set();
-  };
-
-  const handleContentKeyDownEscape = () => {
-    setShown(false);
-  };
-
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (
-      dropdownNode &&
-      !childRef.current?.contains(e.target as Node) &&
-      !dropdownNode.contains(e.target as Node)
-    ) {
-      setShown(false);
-    }
-  };
-
-  useGlobalEventListener(document, 'click', handleOutsideClick, {
-    capture: true,
-    passive: true,
+  const {
+    placement,
+    shown,
+    willBeHide,
+    refs,
+    referenceProps,
+    floatingProps,
+    onClose,
+    onRestoreFocus,
+    onEscapeKeyDown,
+  } = useFloatingWithInteractions({
+    placement: expectedPlacement,
+    trigger,
+    hoverDelay,
+    offsetByMainAxis,
+    offsetByCrossAxis,
+    disabled,
+    disableInteractive,
+    disableCloseOnClickOutside,
+    disableCloseOnEscKey,
+    defaultShown,
+    shown: shownProp,
+    onShownChange,
   });
-  const targetEnterListener = useEventListener('mouseenter', handleTargetEnter);
-  const targetClickEvent = useEventListener('click', handleTargetClick);
-  const targetLeaveListener = useEventListener('mouseleave', handleTargetLeave);
 
-  React.useEffect(() => {
-    if (!childRef.current) {
-      return;
-    }
+  const [childRef, child] = usePatchChildren<HTMLDivElement>(
+    children,
+    injectAriaExpandedPropByRole(referenceProps, shown, role),
+    refs.setReference,
+  );
 
-    targetClickEvent.add(childRef.current);
-  }, [childRef, targetClickEvent]);
-
-  React.useEffect(() => {
-    if (!childRef.current) {
-      return;
-    }
-
-    if (hoverable) {
-      targetEnterListener.add(childRef.current);
-      targetLeaveListener.add(childRef.current);
-    }
-
-    return () => {
-      targetEnterListener.remove();
-      targetLeaveListener.remove();
-    };
-  }, [childRef, hoverable, targetEnterListener, targetLeaveListener]);
+  let popover: React.ReactNode = null;
+  if (shown) {
+    floatingProps.style.zIndex = String(zIndex);
+    popover = (
+      <div ref={refs.setFloating} className={styles['Popover']} {...floatingProps}>
+        <FocusTrap
+          {...restPopoverProps}
+          role={role}
+          className={classNames(
+            styles['Popover__in'],
+            noStyling ? undefined : styles['Popover__in--withStyling'],
+            willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
+            transformOriginClassNames[placement],
+            className,
+          )}
+          autoFocus={disableInteractive ? false : autoFocus}
+          restoreFocus={restoreFocus ? onRestoreFocus : false}
+          onClose={onEscapeKeyDown}
+        >
+          {typeof content === 'function' ? content({ onClose }) : content}
+        </FocusTrap>
+      </div>
+    );
+  }
 
   return (
     <React.Fragment>
       {child}
-      {shown && (
-        <Popper
-          {...restProps}
-          className={classNames(styles['Popover'], className)}
-          targetRef={childRef}
-          getRootRef={patchedPopperRef}
-          offsetDistance={offsetDistance}
-          style={
-            // Reason: Typescript ругается на CSS Custom Properties в объекте
-            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-            {
-              ...styleProp,
-              '--vkui_internal--popover_safe_zone_padding': `${offsetDistance}px`,
-            } as React.CSSProperties
-          }
-          renderContent={({ className: wrapperClassName }) => (
-            <FocusTrap
-              className={classNames(styles['Popover__in'], wrapperClassName)}
-              onClose={handleContentKeyDownEscape}
-              restoreFocus={restoreFocus}
-            >
-              {content}
-            </FocusTrap>
-          )}
-          onMouseOver={hoverable ? hideTimeout.clear : undefined}
-          onMouseOut={hoverable ? handleTargetLeave : undefined}
-        />
-      )}
+      {usePortal && popover
+        ? createPortal(
+            popover,
+            typeof usePortal !== 'boolean' ? usePortal : getDocumentBody(childRef.current),
+          )
+        : popover}
     </React.Fragment>
   );
 };

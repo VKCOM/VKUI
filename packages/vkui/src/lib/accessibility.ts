@@ -120,7 +120,7 @@ export function shouldTriggerClickOnEnterOrSpace(
     el.isContentEditable !== true &&
     tagName !== 'INPUT' &&
     tagName !== 'TEXTAREA' &&
-    (role === 'button' || role === 'link');
+    (role === 'button' || role === 'link' || role === 'menuitem');
 
   const isNativeAnchorEl = tagName === 'A' && el.hasAttribute('href');
   const keyPressed = pressedKey(e);
@@ -133,3 +133,25 @@ export function shouldTriggerClickOnEnterOrSpace(
       (keyPressed === Keys.ENTER && !isNativeAnchorEl))
   );
 }
+
+/**
+ * @see https://doka.guide/a11y/aria-expanded/
+ */
+export const injectAriaExpandedPropByRole = (
+  props: React.ComponentProps<any>,
+  state: boolean,
+  role?: React.AriaRole,
+) => {
+  switch (role) {
+    case 'menu':
+    case 'application':
+    case 'tab':
+    case 'menuitem':
+    case 'treeitem':
+    case 'gridcell':
+      props['aria-expanded'] = state;
+      return props;
+    default:
+      return props;
+  }
+};
