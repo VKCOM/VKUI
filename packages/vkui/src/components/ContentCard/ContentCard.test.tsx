@@ -34,7 +34,7 @@ describe('ContentCard', () => {
     const refCallback = jest.fn();
     render(<ContentCardTest src="/image.png" getRef={refCallback} />);
 
-    expect(refCallback).toBeCalled();
+    expect(refCallback).toHaveBeenCalled();
   });
 
   it('[img] passes all img attributes to img', () => {
@@ -50,5 +50,15 @@ describe('ContentCard', () => {
     const tappable = screen.getByRole('button');
 
     expect(tappable).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('changes header tag with headerComponent prop', () => {
+    const { rerender } = render(<ContentCardTest />);
+
+    // по умолчанию span
+    expect(screen.getByText('ContentCard example').tagName.toLowerCase()).toMatch('span');
+
+    rerender(<ContentCardTest headerComponent="h4" />);
+    expect(screen.getByText('ContentCard example').tagName.toLowerCase()).toMatch('h4');
   });
 });

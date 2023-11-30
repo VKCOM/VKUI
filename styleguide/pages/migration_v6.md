@@ -242,6 +242,17 @@ interface HasInsets {
 
 <br/><br/>
 
+## ContentCard
+
+Изменён тeг (с `h4` на `span`), в котором `header` компонента рендерится по умолчанию.
+Переопределить тег по умолчанию можно с помощью свойства `headerComponent`.
+
+```jsx static
+<ContentCard Component="h4" />
+```
+
+<br/><br/>
+
 ## Header
 
 Теперь для подзаголовка `subtitle` можно задать тип тэга с помощью свойства `subtitleComponent`.

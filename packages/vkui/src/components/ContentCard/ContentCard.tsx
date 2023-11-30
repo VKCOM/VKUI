@@ -23,6 +23,10 @@ export interface ContentCardProps
    */
   header?: React.ReactNode;
   /**
+   Позволяет поменять тег используемый для заголовка
+   */
+  headerComponent?: React.ElementType;
+  /**
    Текст
    */
   text?: React.ReactNode;
@@ -43,6 +47,7 @@ export interface ContentCardProps
 export const ContentCard = ({
   subtitle,
   header,
+  headerComponent = 'span',
   text,
   caption,
   // card props
@@ -112,7 +117,12 @@ export const ContentCard = ({
             </Caption>
           )}
           {hasReactNode(header) && (
-            <Headline className={styles['ContentCard__text']} weight="2" level="1">
+            <Headline
+              className={styles['ContentCard__text']}
+              weight="2"
+              level="1"
+              Component={headerComponent}
+            >
               {header}
             </Headline>
           )}
