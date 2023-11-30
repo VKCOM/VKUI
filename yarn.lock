@@ -5434,13 +5434,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/vk-bridge@npm:^2.1.3":
-  version: 2.12.2
-  resolution: "@vkontakte/vk-bridge@npm:2.12.2"
-  checksum: c43bc8f7ff7357e9fca591e796d7cf7ad8bd713c5aadca904e686152061b349d36784a4fc716be388117d2d4e0dbd2cdf63fb420506275bce9b66405513d9437
-  languageName: node
-  linkType: hard
-
 "@vkontakte/vkjs@npm:^1.1.1":
   version: 1.1.1
   resolution: "@vkontakte/vkjs@npm:1.1.1"
@@ -5510,7 +5503,6 @@ __metadata:
     "@vkontakte/eslint-plugin": ^1.1.1
     "@vkontakte/prettier-config": ^0.1.0
     "@vkontakte/stylelint-config": 3.5.3
-    "@vkontakte/vk-bridge": ^2.1.3
     "@vkontakte/vkui-tokens": 4.41.2
     autoprefixer: ^10.4.16
     concurrently: ^8.2.2
@@ -5614,7 +5606,6 @@ __metadata:
     mitt: ^3.0.1
     storybook: 7.5.3
   peerDependencies:
-    "@vkontakte/vk-bridge": ^2.4.9
     react: ^18.2.0
     react-dom: ^18.2.0
   languageName: unknown

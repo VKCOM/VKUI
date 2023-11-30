@@ -71,7 +71,7 @@
 
 ### Откуда взять значение темы при встраивании?
 
-`ConfigProvider` умеет сам определять тему из [vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge).
+`ConfigProvider` умеет сам определять тему ориентируясь на CSS медиа выражение [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
 
 ### Использование темы в коде
 

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import vkBridge from '@vkontakte/vk-bridge';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUsers } from '../../testing/mock';
 import { Alert } from '../Alert/Alert';
@@ -119,7 +118,6 @@ export const SwipeBlockExample: Story = {
   render: function Render() {
     const [history, setHistory] = React.useState(['main']);
     const activePanel = history[history.length - 1];
-    const isFirst = history.length === 1;
 
     const go = React.useCallback((panel: string) => {
       setHistory((prevHistory) => [...prevHistory, panel]);
@@ -130,13 +128,6 @@ export const SwipeBlockExample: Story = {
 
     const handleProfileClick = React.useCallback(() => go('profile'), [go]);
     const handleSettingsClick = React.useCallback(() => go('settings'), [go]);
-
-    React.useEffect(() => {
-      // В стандартных мини-приложениях делайте так:
-      void vkBridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
-      // В мини-приложениях `'internal'` делайте так:
-      void vkBridge.send(isFirst ? 'VKWebAppEnableSwipeBack' : 'VKWebAppDisableSwipeBack');
-    }, [isFirst]);
 
     const [userName, setUserName] = React.useState('');
     const [popoutWithRestriction, setPopoutWithRestriction] =
