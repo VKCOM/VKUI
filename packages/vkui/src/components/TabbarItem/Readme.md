@@ -62,7 +62,7 @@ const [indicator, setIndicator] = useState('one');
       <TabbarItem
         selected={indicator === 'one'}
         onClick={() => setIndicator('one')}
-        indicator={<Badge mode="prominent" />}
+        indicator={<Badge mode="prominent">Есть обновления</Badge>}
         text="Новости"
       >
         <Icon28NewsfeedOutline />

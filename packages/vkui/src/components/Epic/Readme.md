@@ -134,7 +134,7 @@ const Example = () => {
                   onClick={onStoryChange}
                   selected={activeStory === 'profile'}
                   data-story="profile"
-                  indicator={<Badge mode="prominent" />}
+                  indicator={<Badge mode="prominent">Есть обновления</Badge>}
                   text="Профиль"
                 >
                   <Icon28UserCircleOutline />

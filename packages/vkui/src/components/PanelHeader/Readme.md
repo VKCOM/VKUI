@@ -48,7 +48,8 @@ const Example = () => {
               <PanelHeaderButton
                 aria-label="Изображения"
                 label={
-                  <Counter size="s" mode="prominent" aria-label="Обновлений: ">
+                  <Counter size="s" mode="prominent">
+                    <VisuallyHidden>Обновлений: </VisuallyHidden>
                     21
                   </Counter>
                 }
@@ -74,8 +75,8 @@ const Example = () => {
                 <PanelHeaderButton
                   aria-label="Настройки"
                   label={
-                    <Counter size="s" mode="prominent" aria-label="Новые настройки: ">
-                      3
+                    <Counter size="s" mode="prominent">
+                      <VisuallyHidden>Новых: </VisuallyHidden>3
                     </Counter>
                   }
                 >
@@ -87,7 +88,7 @@ const Example = () => {
                 <PanelHeaderButton
                   aria-label="Уведомления"
                   label={
-                    <Counter size="s" mode="prominent" aria-label="Уведомлений: ">
+                    <Counter size="s" mode="prominent">
                       2
                     </Counter>
                   }

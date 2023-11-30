@@ -145,7 +145,14 @@ const SubnavigationBarExample = () => {
                   before={<Icon24Filter />}
                   selected={filtersCount > 0}
                   expandable
-                  after={filtersCount > 0 && <Counter size="s">{filtersCount}</Counter>}
+                  after={
+                    filtersCount > 0 && (
+                      <Counter size="s">
+                        <VisuallyHidden>Применено: </VisuallyHidden>
+                        {filtersCount}
+                      </Counter>
+                    )
+                  }
                   onClick={openModal}
                 >
                   Фильтры
