@@ -84,6 +84,7 @@ export function mountTest(Component: React.ComponentType<any>) {
 export function a11yTest(Component: React.ComponentType<any>) {
   it('a11y: has no violations', async () => {
     const { container } = render(<Component />);
+    await waitForFloatingPosition();
 
     jest.useRealTimers();
     const results = await axe(container, {});
