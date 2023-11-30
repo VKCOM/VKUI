@@ -23,6 +23,7 @@ import { useResolveTriggerType } from './useResolveTriggerType';
 type LocalState = { shown: boolean; reason?: ShownChangeReason };
 
 const whileElementsMounted: UseFloatingOptions['whileElementsMounted'] = (...args) =>
+  /* istanbul ignore next: не знаю как проверить */
   autoUpdateFloatingElement(...args, { elementResize: true });
 
 /**
@@ -101,6 +102,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
             reason,
           };
         }
+        /* istanbul ignore next: страховка, если вдруг на момент вызова обновления состояния, оно уже будет актуальным */
         return prevState;
       });
     },
@@ -142,7 +144,9 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       const reference = refs.reference.current;
       // Если пользователь покинул текущее окно в открытом состоянии, то
       // не закрываем всплывающий элемент.
+      /* istanbul ignore if: не умеем симулировать уход из текущего окна */
       if (!relatedTarget && getActiveElementByAnotherElement(reference) === reference) {
+        /* istanbul ignore next */
         return;
       }
 
@@ -233,12 +237,15 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       }
 
       const handleGlobalBlur = () => {
+        /* istanbul ignore next */
         const reference = refs.reference.current;
+        /* istanbul ignore if: не умеем симулировать уход из текущего окна */
         if (
           !shownLocalState.shown &&
           isHTMLElement(reference) &&
           reference === getActiveElementByAnotherElement(reference)
         ) {
+          /* istanbul ignore next */
           blockFocusRef.current = true;
         }
       };

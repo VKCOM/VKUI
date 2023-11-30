@@ -71,11 +71,11 @@ describe(useFloatingWithInteractions, () => {
         expect(onShownChange).toHaveBeenCalledTimes(1);
         expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
 
-        let shouldCloseAfter = false;
+        let shouldCloseAfterBecauseFocused = false;
         let closeReason: ShownChangeReason = trigger;
         switch (closeEventName) {
           case 'keyDown':
-            shouldCloseAfter = trigger === 'focus';
+            shouldCloseAfterBecauseFocused = trigger === 'focus';
             closeReason = 'escape-key';
             await fireEventPatch(document, closeEventName, {
               key: 'Escape',
@@ -84,7 +84,7 @@ describe(useFloatingWithInteractions, () => {
             });
             break;
           case 'clickOutside':
-            shouldCloseAfter = trigger === 'focus';
+            shouldCloseAfterBecauseFocused = trigger === 'focus';
             closeReason = 'click-outside';
             await fireEventPatch(document, 'click');
             break;
@@ -97,9 +97,12 @@ describe(useFloatingWithInteractions, () => {
         expect(onShownChange).toHaveBeenCalledTimes(2);
         expect(onShownChange).toHaveBeenLastCalledWith(false, closeReason);
 
-        if (shouldCloseAfter) {
-          // иначе фокус не сбрасывается
-          await fireEventPatch(result.current.refs.reference.current, 'blur');
+        if (shouldCloseAfterBecauseFocused) {
+          // Если всплывающее окно закрылось из-за 'escape-key' или 'click-outside', то при
+          // возвращении фокуса оно не должно открыться повторно.
+          await fireEventPatch(result.current.refs.reference.current, 'focus');
+          expect(result.current.shown).toBeFalsy();
+          await fireEventPatch(result.current.refs.reference.current, 'blur'); // Сбрасываем блокировку фокуса
         }
         await fireEventPatch(result.current.refs.reference.current, openEventName);
         rerender(<TestComponent hookResultRef={result} />);
