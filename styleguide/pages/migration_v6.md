@@ -230,6 +230,18 @@ interface HasInsets {
 
 <br/><br/>
 
+## FormItem
+
+Изменён тeг (с `h5` на `span`), в котором значение `top` рендерится по умолчанию, если не указано свойство `htmlFor`.
+Если свойство `htmlFor` указано, но тег будет `label`.
+Переопределить тeг по умолчанию можно с помощью свойства `topComponent`.
+
+```jsx static
+<FormItem top="Имя topComponent="h5" />
+```
+
+<br/><br/>
+
 ## Header
 
 Теперь для подзаголовка `subtitle` можно задать тип тэга с помощью свойства `subtitleComponent`.
