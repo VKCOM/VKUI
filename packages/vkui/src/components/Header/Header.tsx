@@ -14,6 +14,8 @@ export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, Has
   mode?: 'primary' | 'secondary' | 'tertiary';
   size?: 'regular' | 'large';
   subtitle?: React.ReactNode;
+  /* Позволяет задать тип элемента в который будет обёрнут subtitle */
+  subtitleComponent?: React.ElementType;
   /**
    * Допускаются иконки, текст, Link
    */
@@ -77,6 +79,7 @@ export const Header = ({
   Component = 'h2',
   children,
   subtitle,
+  subtitleComponent = 'span',
   indicator,
   aside,
   multiline,
@@ -121,7 +124,7 @@ export const Header = ({
               styles['Header__subtitle'],
               multiline && styles['Header__content--multiline'],
             )}
-            Component="span"
+            Component={subtitleComponent}
           >
             {subtitle}
           </Subhead>

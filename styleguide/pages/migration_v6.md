@@ -229,3 +229,15 @@ interface HasInsets {
 ```
 
 <br/><br/>
+
+## Header
+
+Теперь для подзаголовка `subtitle` можно задать тип тэга с помощью свойства `subtitleComponent`.
+
+```jsx static
+<Header subtitle="SOHN — Conrad" subtitleComponent="h3">
+  Плейлисты
+</Header>
+```
+
+<br/><br/>
