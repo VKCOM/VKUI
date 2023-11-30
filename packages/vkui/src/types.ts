@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Insets } from '@vkontakte/vk-bridge';
 import { PlatformType } from './lib/platform';
 
 export type AnyFunction = (...args: any[]) => any;
@@ -36,13 +35,6 @@ export interface HasPlatform {
    * @ignore
    */
   platform?: PlatformType;
-}
-
-export interface HasInsets {
-  /**
-   * @ignore
-   */
-  insets?: Partial<Insets>;
 }
 
 export interface Version {

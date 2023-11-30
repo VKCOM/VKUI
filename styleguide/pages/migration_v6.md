@@ -74,6 +74,21 @@
 
 Используйте вместо него хук `useInsets()` из [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react).
 
+## Тип ~`HasInsets`~
+
+Используйте вместо него `SafeAreaInsets`.
+
+Если вы используете [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), то
+вы можете объявить тип у себя следующим образом:
+
+```ts
+import type { Insets } form '@vkontakte/vk-brige';
+
+interface HasInsets {
+  insets?: Partial<Insets>;
+}
+```
+
 <br/><br/>
 
 ## Поддержка браузеров

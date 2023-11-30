@@ -15,16 +15,12 @@
 
 ```shell static
 # npm
-npm i --save @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
+npm i --save @vkontakte/vkui
 # yarn
-yarn add @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
+yarn add @vkontakte/vkui
 # or pnpm
-pnpm add @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
+pnpm add @vkontakte/vkui
 ```
-
-- `@vkontakte/icons` — это наши иконки, которые напрямую используются в некоторых компонентах VKUI.
-- `@vkontakte/vk-bridge` необходима для интеграции в клиенты VK (она обеспечит корректные отступы на мобильных
-  устройствах, свайпы, определение темы и тд).
 
 ## Шаг 3
 

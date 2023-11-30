@@ -92,8 +92,6 @@ const App = () => {
 ```
 
 ```jsx
-import vkBridge from '@vkontakte/vk-bridge';
-
 const App = () => {
   const [history, setHistory] = useState(['main']);
   const activePanel = history[history.length - 1];

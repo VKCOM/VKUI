@@ -62,7 +62,6 @@
     "generate:css-custom-medias": "node scripts/generateCSSCustomMedias.js"
   },
   "peerDependencies": {
-    "@vkontakte/vk-bridge": "^2.4.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
