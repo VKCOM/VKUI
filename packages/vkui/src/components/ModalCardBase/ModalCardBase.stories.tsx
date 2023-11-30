@@ -25,6 +25,6 @@ export const Playground: Story = {
         Попробовать
       </Button>
     ),
-    icon: <Icon56MoneyTransferOutline key="icon" />,
+    icon: <Icon56MoneyTransferOutline />,
   },
 };
