@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './PullToRefresh.module.css';
 
 function calcStrokeDashOffset(value: number, radius: number) {
@@ -21,7 +22,7 @@ export const PullToRefreshSpinner = ({
   size = 24,
   strokeWidth = 2.5,
   progress = 0,
-  'aria-label': ariaLabel = 'Пожалуйста, подождите...',
+  children = 'Пожалуйста, подождите...',
   ...restProps
 }: PullToRefreshSpinnerProps) => {
   const radius = 0.5 * size - 0.5 * strokeWidth;
@@ -36,9 +37,9 @@ export const PullToRefreshSpinner = ({
         styles['PullToRefresh__spinner'],
         on && styles['PullToRefresh__spinner--on'],
       )}
-      aria-label={on ? ariaLabel : undefined}
       {...restProps}
     >
+      {on && <VisuallyHidden>{children}</VisuallyHidden>}
       <svg
         role="presentation"
         className={styles['PullToRefresh__spinner-self']}

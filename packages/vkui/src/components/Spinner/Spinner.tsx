@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from '@vkontakte/icons';
+import { hasReactNode } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -56,7 +57,7 @@ export const Spinner = React.memo(
             />
           )}
         </SpinnerIcon>
-        <VisuallyHidden>{children}</VisuallyHidden>
+        {hasReactNode(children) && <VisuallyHidden>{children}</VisuallyHidden>}
       </RootComponent>
     );
   },
