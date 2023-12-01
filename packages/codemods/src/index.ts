@@ -76,8 +76,6 @@ async function verifyConfiguration(workingDirectory: string, codemodName?: strin
 const run = async () => {
   const { flags, codemodName } = await runCli();
 
-  console.log(flags, codemodName);
-
   if (codemodName && flags.glob) {
     const codemodes = getAvailableCodemods();
     if (codemodes.includes(codemodName)) {
@@ -111,5 +109,5 @@ const run = async () => {
 };
 
 run().catch((error) => {
-  console.log(error);
+  logger.error(error);
 });

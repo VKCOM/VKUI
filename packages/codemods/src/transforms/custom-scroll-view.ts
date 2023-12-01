@@ -19,7 +19,7 @@ export default function transformer(file: FileInfo, api: API) {
 
   if (unusedProps.size() > 0) {
     api.report(
-      `: "window" nad "document" props in CustomScrollView component are no longer available. Manual changes required.`,
+      `: "window" and "document" props in CustomScrollView component are no longer available. Manual changes required.`,
     );
   }
 
