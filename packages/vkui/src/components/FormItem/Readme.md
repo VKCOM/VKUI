@@ -15,7 +15,7 @@
 
 Пример рекомендуемого использования:
 
-```js static
+```jsx static
 <FormItem top="Имя" htmlFor="name">
   <input id="name" type="text" placeholder="Семён" />
 </FormItem>

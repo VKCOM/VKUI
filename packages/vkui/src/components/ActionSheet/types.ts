@@ -2,10 +2,6 @@ import * as React from 'react';
 import type { PlacementWithAuto } from '../../lib/floating/types';
 import { FocusTrapProps } from '../FocusTrap/FocusTrap';
 
-export type PopupDirection =
-  | 'top'
-  | 'bottom'
-  | ((elRef: React.RefObject<HTMLDivElement>) => 'top' | 'bottom');
 export type ToggleRef = Element | null | undefined | React.RefObject<Element>;
 
 export interface SharedDropdownProps extends FocusTrapProps {
