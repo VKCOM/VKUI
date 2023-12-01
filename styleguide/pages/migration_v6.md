@@ -49,39 +49,18 @@
 Пример представлен на странице [Интеграция с VK Mini Apps](https://vkcom.github.io/VKUI/#/integrations-vk-mini-apps)
 под заголовком **Виброотклик (Taptic Engine)**.
 
-<br/><br/>
-
-## [ConfigProvider](#/ConfigProvider)
-
-- `webviewType` заменён на `hasCustomPanelHeaderAfter`
-  - `webviewType={WebviewType.INTERNAL}` -> `hasCustomPanelHeaderAfter={false}`.
-  - `webviewType={WebviewType.VKAPPS}` -> `hasCustomPanelHeaderAfter={true}`. При необходимости передайте `customPanelHeaderAfterMinWidth={<value>}` (по умолчанию `90`).
-
-<br/><br/>
-
-## [AppearanceProvider](#/AppearanceProvider)
-
-По аналогии с остальными провайдерами свойство `appearance` заменено на `value`
-
-```diff
-- <AppearanceProvider appearance={appearance}>...</AppearanceProvider>
-+ <AppearanceProvider value={appearance}>...</AppearanceProvider>
-```
-
-<br/><br/>
-
-## ~`withInsets`~
+### ~~`withInsets`~~
 
 Используйте вместо него хук `useInsets()` из [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react).
 
-## Тип ~`HasInsets`~
+### ~~`HasInsets`~~
 
 Используйте вместо него `SafeAreaInsets`.
 
 Если вы используете [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), то
 вы можете объявить тип у себя следующим образом:
 
-```ts
+```ts static
 import type { Insets } form '@vkontakte/vk-brige';
 
 interface HasInsets {
@@ -98,6 +77,42 @@ interface HasInsets {
 
 > В VKUI есть [специальная сборка](https://vkcom.github.io/VKUI/#/CSS%20Modules)
 > в ESNext, которая позволяет уменьшить размер вашего приложения
+
+<br/><br/>
+
+## [ConfigProvider](#/ConfigProvider)
+
+- `hasCustomPanelHeaderAfter` теперь по умолчанию `false`.
+- <!--чтобы сработало перечёркивание-->~~`onDetectAppearanceByBridge`~~ используйте хук `useAppearance()` из библиотеки
+  [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react), если вам
+  нужно определять, что `appearance` был передан через VK Bridge.
+- <!--чтобы сработало перечёркивание-->~~`webviewType`~~ заменён на `hasCustomPanelHeaderAfter`
+
+  ```diff
+  <ConfigProvider
+  -  webviewType={WebviewType.INTERNAL}
+  +  hasCustomPanelHeaderAfter={false}
+  />
+  ```
+
+  ```diff
+  <ConfigProvider
+  -  webviewType={WebviewType.VKAPPS}
+  +  hasCustomPanelHeaderAfter
+  +  customPanelHeaderAfterMinWidth={<value>} // при необходимости (по умолчанию 90)
+  />
+  ```
+
+<br/><br/>
+
+## [AppearanceProvider](#/AppearanceProvider)
+
+По аналогии с остальными провайдерами свойство `appearance` заменено на `value`
+
+```diff
+- <AppearanceProvider appearance={appearance}>...</AppearanceProvider>
++ <AppearanceProvider value={appearance}>...</AppearanceProvider>
+```
 
 <br/><br/>
 
