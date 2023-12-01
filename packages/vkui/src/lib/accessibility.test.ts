@@ -9,7 +9,7 @@ describe(injectAriaExpandedPropByRole, () => {
     },
   );
 
-  it('should nit injects aria-expanded attribute to props', () => {
+  it('should not injects aria-expanded attribute to props', () => {
     expect(injectAriaExpandedPropByRole({}, true)).toEqual({});
     expect(injectAriaExpandedPropByRole({}, false)).toEqual({});
     expect(injectAriaExpandedPropByRole({}, true, 'alert')).toEqual({});

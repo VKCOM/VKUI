@@ -12,7 +12,7 @@
 
 ## Цифровая доступность (a11y)
 
-Старайтесь сопровождать элемент текстовым описанием, для корректной работы скринридеров. Для этого
+Старайтесь сопровождать элемент текстовым описанием для корректной работы скринридеров. Для этого
 необходимо вручную передавать некоторые параметры.
 <br />
 
@@ -58,7 +58,13 @@ const PopoverWithTriggerClick = () => {
       role="menu"
       aria-labelledby="menubutton"
       content={({ onClose }) => (
-        <Group>
+        <div
+          style={{
+            backgroundColor: 'aquamarine',
+            borderRadius: 8,
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+          }}
+        >
           <CellButton role="menuitem" before={<Icon28AddOutline />} onClick={onClose}>
             Добавить
           </CellButton>
@@ -70,7 +76,7 @@ const PopoverWithTriggerClick = () => {
           >
             Удалить
           </CellButton>
-        </Group>
+        </div>
       )}
     >
       <Button id="menubutton" aria-controls="menupopup" aria-haspopup="true" mode="outline">
