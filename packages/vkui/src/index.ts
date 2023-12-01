@@ -2,6 +2,8 @@ import './styles/constants.css';
 import './styles/adaptivity.module.css';
 import './styles/dynamicTokens.css';
 import './styles/focusVisible.module.css';
+import './styles/animationFades.module.css';
+import './styles/transformOriginByPlacement.module.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
 export type { AppRootProps, SafeAreaInsets } from './components/AppRoot/AppRoot';
@@ -328,6 +330,12 @@ export { LocaleProvider } from './components/LocaleProvider/LocaleProvider';
 export type { LocaleProviderProps } from './components/LocaleProvider/LocaleProvider';
 export { PlatformProvider } from './components/PlatformProvider/PlatformProvider';
 export type { PlatformProviderProps } from './components/PlatformProvider/PlatformProvider';
+export { Popover } from './components/Popover/Popover';
+export type {
+  PopoverProps,
+  PopoverOnShownChange,
+  PopoverContentRenderProp,
+} from './components/Popover/Popover';
 
 /**
  * HOCs
@@ -392,9 +400,6 @@ export type { TransitionContextProps } from './components/NavTransitionContext/N
  */
 export { ChipsSelect as unstable_ChipsSelect } from './components/ChipsSelect/ChipsSelect';
 export type { ChipsSelectProps as unstable_ChipsSelectProps } from './components/ChipsSelect/ChipsSelect';
-
-export { Popover as unstable_Popover } from './components/Popover/Popover';
-export type { PopoverProps as unstable_PopoverProps } from './components/Popover/Popover';
 
 export { TextTooltip as unstable_TextTooltip } from './components/TextTooltip/TextTooltip';
 export type { TextTooltipProps as unstable_TextTooltipProps } from './components/TextTooltip/TextTooltip';
