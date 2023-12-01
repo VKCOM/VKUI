@@ -55,26 +55,16 @@
 Бойлерплейт для **VK Mini Apps** представлен на странице [Интеграция с VK Mini Apps](https://vkcom.github.io/VKUI/#/integrations-vk-mini-apps)
 под заголовком **Конфигурация VKUI**.
 
-### [PullToRefresh](#/PullToRefresh)
-
-До этого `runTapticImpactOccurred()` вызывался внутри компонента после вызова обработчика `onRefresh`.
-Сам `runTapticImpactOccurred()` через `vkBridge.send` вызывает событие `VKWebAppTapticImpactOccurred`.
-В виду отказа от [VK Bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), мы удалили вызов
-`runTapticImpactOccurred()` на стороне **VKUI**.
-
-Пример представлен на странице [Интеграция с VK Mini Apps](https://vkcom.github.io/VKUI/#/integrations-vk-mini-apps)
-под заголовком **Виброотклик (Taptic Engine)**.
-
 ### ~~`withInsets`~~
 
-Используйте вместо него хук `useInsets()` из [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react).
+- Используйте вместо него хук `useInsets()` из [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react).
 
 ### ~~`HasInsets`~~
 
-Используйте вместо него `SafeAreaInsets`.
+- Используйте вместо него `SafeAreaInsets`.
 
-Если вы используете [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), то
-вы можете объявить тип у себя следующим образом:
+- Если вы используете [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), то
+  вы можете объявить тип у себя следующим образом:
 
 ```ts static
 import type { Insets } form '@vkontakte/vk-brige';
@@ -86,73 +76,44 @@ interface HasInsets {
 
 <br/><br/>
 
-## ~~`VisuallyHiddenInput`~~
-
-Устаревший компонент удален. Используйте [`VisuallyHidden`](#/VisuallyHidden)
-
-```diff
-- <VisuallyHiddenInput />
-+ <VisuallyHidden Component="input" />
-```
-
-<br/><br/>
-
-## ~~`RangeSlider`~~
-
-Устаревший компонент удален. Используйте [`Slider`](#/Slider)
-
-```diff
-- <RangeSlider />
-+ <Slider multiple />
-```
-
-<br/><br/>
-
-## [ConfigProvider](#/ConfigProvider)
-
-- `hasCustomPanelHeaderAfter` теперь по умолчанию `false`.
-- <!--чтобы сработало перечёркивание-->~~`onDetectAppearanceByBridge`~~ используйте хук `useAppearance()` из библиотеки
-  [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react), если вам
-  нужно определять, что `appearance` был передан через VK Bridge.
-- <!--чтобы сработало перечёркивание-->~~`webviewType`~~ заменён на `hasCustomPanelHeaderAfter`
-
-  ```diff
-  <ConfigProvider
-  -  webviewType={WebviewType.INTERNAL}
-  +  hasCustomPanelHeaderAfter={false}
-  />
-  ```
-
-  ```diff
-  <ConfigProvider
-  -  webviewType={WebviewType.VKAPPS}
-  +  hasCustomPanelHeaderAfter
-  +  customPanelHeaderAfterMinWidth={<value>} // при необходимости (по умолчанию 90)
-  />
-  ```
-
-<br/><br/>
-
-## [AppearanceProvider](#/AppearanceProvider)
-
-По аналогии с остальными провайдерами свойство `appearance` заменено на `value`
-
-```diff
-- <AppearanceProvider appearance={appearance}>...</AppearanceProvider>
-+ <AppearanceProvider value={appearance}>...</AppearanceProvider>
-```
-
-<br/><br/>
-
 ## CSS Logical для [специальной сборки](https://vkcom.github.io/VKUI/#/CSS%20Modules)
 
 > **Note**
 >
 > Данное изменение не влияет на обычную сборку
 
-Мы начинаем использовать [логические css свойства](https://www.w3.org/TR/css-logical-1/) вместо физических.
-Если вам требуется [широкая браузерная поддержка](https://caniuse.com/css-logical-props),
-рекомендуем воспользоваться [postcss-logical](https://www.npmjs.com/package/postcss-logical).
+- Мы начинаем использовать [логические css свойства](https://www.w3.org/TR/css-logical-1/) вместо физических.
+  Если вам требуется [широкая браузерная поддержка](https://caniuse.com/css-logical-props),
+  рекомендуем воспользоваться [postcss-logical](https://www.npmjs.com/package/postcss-logical).
+
+<br/><br/>
+
+## [`ActionSheet`](#/ActionSheet)
+
+- Свойство `toggleRef` теперь обязательно
+- Свойство `popupDirection` удалено, используйте `placement`
+
+```diff
+- <ActionSheet popupDirection="top">
++ <ActionSheet toggleRef={getRef} placement="top">
+  <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
+ </ActionSheet>
+```
+
+<br/><br/>
+
+## [`ActionSheetItem`](#/ActionSheetItem)
+
+- Свойство `autoClose` удалено, теперь это поведение по умолчанию
+
+```diff
+ <ActionSheet>
+-  <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
++  <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
+-  <ActionSheetItem autoClose={false}>Закрепить запись</ActionSheetItem>
++  <ActionSheetItem autoCloseDisabled>Закрепить запись</ActionSheetItem>
+ </ActionSheet>
+```
 
 <br/><br/>
 
@@ -182,18 +143,76 @@ interface HasInsets {
 
 <br/><br/>
 
-## [`ActionSheetItem`](#/ActionSheetItem)
+## [AppearanceProvider](#/AppearanceProvider)
 
-- Свойство `autoClose` удалено, теперь это поведение по умолчанию
+- По аналогии с остальными провайдерами свойство `appearance` заменено на `value`
 
 ```diff
- <ActionSheet>
--  <ActionSheetItem autoClose>Сохранить в закладках</ActionSheetItem>
-+  <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
--  <ActionSheetItem autoClose={false}>Закрепить запись</ActionSheetItem>
-+  <ActionSheetItem autoCloseDisabled>Закрепить запись</ActionSheetItem>
- </ActionSheet>
+- <AppearanceProvider appearance={appearance}>...</AppearanceProvider>
++ <AppearanceProvider value={appearance}>...</AppearanceProvider>
 ```
+
+<br/><br/>
+
+## [`Banner`](#/Banner)
+
+- Убрали установку внешних отступов. Теперь, при необходимости, следует их добавлять самостоятельно. Соответственно, параметр `noPadding` удалён.
+
+```diff
+- <Banner noPadding />
++ <Banner />
+```
+
+- Внешний отступ можно задать через layout-компонент [Div](#/Div)
+
+```diff
+- <Banner />
++ <Div>
++  <Banner />
++ </Div>
+```
+
+<br/><br/>
+
+## [ConfigProvider](#/ConfigProvider)
+
+- `hasCustomPanelHeaderAfter` теперь по умолчанию `false`.
+- <!--чтобы сработало перечёркивание-->~~`onDetectAppearanceByBridge`~~ удален, используйте хук `useAppearance()` из библиотеки
+  [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react), если вам
+  нужно определять, что `appearance` был передан через VK Bridge.
+- <!--чтобы сработало перечёркивание-->~~`webviewType`~~ заменён на `hasCustomPanelHeaderAfter`
+
+  ```diff
+  <ConfigProvider
+  -  webviewType={WebviewType.INTERNAL}
+  +  hasCustomPanelHeaderAfter={false}
+  />
+  ```
+
+  ```diff
+  <ConfigProvider
+  -  webviewType={WebviewType.VKAPPS}
+  +  hasCustomPanelHeaderAfter
+  +  customPanelHeaderAfterMinWidth={<value>} // при необходимости (по умолчанию 90)
+  />
+  ```
+
+<br/><br/>
+
+## [`ContentCard`](#/ContentCard)
+
+- Изменён тeг (с `h4` на `span`), в котором `header` компонента рендерится по умолчанию.
+  Переопределить тег по умолчанию можно с помощью свойства `headerComponent`.
+
+```jsx static
+<ContentCard Component="h4" />
+```
+
+<br/><br/>
+
+## [`CustomScrollView`](#/CustomScrollView)
+
+- Компонент больше не принимает свойства `window`/`document`
 
 <br/><br/>
 
@@ -205,69 +224,58 @@ interface HasInsets {
 
 <br/><br/>
 
-## [`Title`](#/Title)
+## [`FixedLayout`](#/FixedLayout)
 
-По умолчанию тeг в котором рендерится компонент теперь `span` и он больше не привязан к значению
-свойства `level`.
+- Свойство `getRef` удалено, используйте `getRootRef`
 
-Переопределить тeг по умолчанию можно с помощью свойства `Component`.
-
-```jsx static
-<Title Component="h1" />
+```diff
+- <FixedLayout getRef={ref}>...</FixedLayout>
++ <FixedLayout getRootRef={ref}>...</FixedLayout>
 ```
 
 <br/><br/>
 
-## [`Headline`](#/Headline)
+## [`Footer`](#/Footer)
 
-Изменён тeг (с `h4` на `span`), в котором компонент рендерится по умолчанию.
-Переопределить тeг по умолчанию можно с помощью свойства `Component`.
-
-```jsx static
-<Headline Component="h4" />
-```
-
-<br/><br/>
-
-## [`Subhead`](#/Subhead)
-
-Изменён тeг (с `h5` на `span`), в котором компонент рендерится по умолчанию.
-Переопределить тeг по умолчанию можно с помощью свойства `Component`.
-
-```jsx static
-<Subhead Component="h5" />
-```
+- Вертикальный отступ теперь задаётся через `padding`, вместо `margin`, поэтому схлопывание `margin` будет исключено.
 
 <br/><br/>
 
 ## [`FormItem`](#/FormItem)
 
-Изменён тeг (с `h5` на `span`), в котором значение `top` рендерится по умолчанию, если не указано свойство `htmlFor`.
-Если свойство `htmlFor` указано, но тег будет `label`.
-Переопределить тeг по умолчанию можно с помощью свойства `topComponent`.
+- Изменён тeг (с `h5` на `span`), в котором значение `top` рендерится по умолчанию, если не указано свойство `htmlFor`.
+  Если свойство `htmlFor` указано, но тег будет `label`.
+- Переопределить тeг по умолчанию можно с помощью свойства `topComponent`.
 
 ```jsx static
-<FormItem top="Имя topComponent="h5" />
+<FormItem top="Имя" topComponent="h5" />
 ```
 
 <br/><br/>
 
-## [`ContentCard`](#/ContentCard)
+## [`Gradient`](#/Gradient)
 
-Изменён тeг (с `h4` на `span`), в котором `header` компонента рендерится по умолчанию.
-Переопределить тег по умолчанию можно с помощью свойства `headerComponent`.
+- У параметра `mode` были удалены значения `black` и `white`, используйте `tint` или `default`. `default` теперь значение по умолчанию
+
+<br/><br/>
+
+## [`Header`](#/Header)
+
+- Теперь для подзаголовка `subtitle` можно задать тип тэга с помощью свойства `subtitleComponent`.
 
 ```jsx static
-<ContentCard Component="h4" />
+<Header subtitle="SOHN — Conrad" subtitleComponent="h3">
+  Плейлисты
+</Header>
 ```
 
 <br/><br/>
 
 ## [`ModalCard`](#/ModalCard) и [`ModaCardBase`](#/ModaCardBase)
 
-Тeг, в котором значение `header` рендерится по умолчанию, изменён с `h2` на `span`.
-Тег, в котором значение `subheader` рендерится по умолчанию, изменён с `h5` на `span`.
-Поменять теги по умолчанию можно с помощью свойств `headerComponent` и `subheaderComponent`.
+- Тeг, в котором значение `header` рендерится по умолчанию, изменён с `h2` на `span`.
+- Тег, в котором значение `subheader` рендерится по умолчанию, изменён с `h5` на `span`.
+- Поменять теги по умолчанию можно с помощью свойств `headerComponent` и `subheaderComponent`.
 
 ```jsx static
 <ModalCard
@@ -280,14 +288,138 @@ interface HasInsets {
 
 <br/><br/>
 
-## [`Header`](#/Header)
+## [`ModalPageHeader`](#/ModalPageHeader)
 
-Теперь для подзаголовка `subtitle` можно задать тип тэга с помощью свойства `subtitleComponent`.
+- Свойство `getRef` удалено, используйте `getRootRef`
+
+```diff
+- <ModalPageHeader getRef={ref}>...</ModalPageHeader>
++ <ModalPageHeader getRootRef={ref}>...</ModalPageHeader>
+```
+
+<br/><br/>
+
+## ~~PanelHeader.Content~~
+
+- Данный компонент удален, используйте вместо него `typographyProps` у [PanelHeader](#/PanelHeader).
+
+<br/><br/>
+
+## [`PromoBanner`](#/PromoBanner)
+
+- Компонент удален, используйте событие [VKWebAppShowBannerAd](https://dev.vk.com/mini-apps/monetization/ad/banners)
+
+<br/><br/>
+
+## [PullToRefresh](#/PullToRefresh)
+
+- До этого `runTapticImpactOccurred()` вызывался внутри компонента после вызова обработчика `onRefresh`.
+  Сам `runTapticImpactOccurred()` через `vkBridge.send` вызывает событие `VKWebAppTapticImpactOccurred`.
+  В виду отказа от [VK Bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), мы удалили вызов
+  `runTapticImpactOccurred()` на стороне **VKUI**.
+
+- Пример представлен на странице [Интеграция с VK Mini Apps](https://vkcom.github.io/VKUI/#/integrations-vk-mini-apps)
+  под заголовком **Виброотклик (Taptic Engine)**.
+
+<br/><br/>
+
+## ~~RangeSlider~~
+
+- Компонент удален, используйте [`Slider`](#/Slider)
+
+```diff
+- <RangeSlider />
++ <Slider multiple />
+```
+
+<br/><br/>
+
+## [`SimpleCell`](#/SimpleCell)
+
+- Свойство `expandable` теперь не принимает значения типа `boolean`
+
+```diff
+- <SimpleCell expandable={true}>...</SimpleCell>
++ <SimpleCell expandable="auto">...</SimpleCell>
+
+- <SimpleCell expandable={false}>...</SimpleCell>
++ <SimpleCell>...</SimpleCell>
+```
+
+<br/><br/>
+
+## [`Slider`](#/Slider)
+
+- Свойство `step` теперь принимает значение `1` по умолчанию
+- Функция `onChange` вторым параметром теперь дополнительно расширяется типом `React.ChangeEvent`
+
+<br/><br/>
+
+## [`Spinner`](#/Spinner)
+
+- У параметра `aria-label` теперь отсутствует значение по умолчанию, для доступности воспользуйтесь параметром `children`
+
+<br/><br/>
+
+# Typography
+
+<br/><br/>
+
+## [`Title`](#/Title)
+
+- По умолчанию тeг в котором рендерится компонент теперь `span` и он больше не привязан к значению свойства `level`.
+
+- Переопределить тeг по умолчанию можно с помощью свойства `Component`.
 
 ```jsx static
-<Header subtitle="SOHN — Conrad" subtitleComponent="h3">
-  Плейлисты
-</Header>
+<Title Component="h1" />
+```
+
+<br/><br/>
+
+## [`Headline`](#/Headline)
+
+- Изменён тeг (с `h4` на `span`), в котором компонент рендерится по умолчанию.
+- Переопределить тeг по умолчанию можно с помощью свойства `Component`.
+
+```jsx static
+<Headline Component="h4" />
+```
+
+<br/><br/>
+
+## [`Subhead`](#/Subhead)
+
+- Изменён тeг (с `h5` на `span`), в котором компонент рендерится по умолчанию.
+- Переопределить тeг по умолчанию можно с помощью свойства `Component`.
+
+```jsx static
+<Subhead Component="h5" />
+```
+
+<br/><br/>
+
+## [`UsersStack`](#/UsersStack)
+
+- Свойство `layout` удалено, используйте `direction`
+
+```diff
+- <UsersStack layout="vertical">...</UsersStack>
++ <UsersStack direction="column">...</UsersStack>
+
+- <UsersStack layout="horizontal">...</UsersStack>
++ <UsersStack direction="row">...</UsersStack>
+```
+
+<br/><br/>
+
+## ~~VisuallyHiddenInput~~
+
+- Компонент удален, используйте [`VisuallyHidden`](#/VisuallyHidden)
+
+```diff
+- <VisuallyHiddenInput />
++ <VisuallyHidden Component="input" />
 ```
 
 <br/><br/>
