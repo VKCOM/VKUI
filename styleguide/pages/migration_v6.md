@@ -1,10 +1,26 @@
 Документацию по миграции с v4 на v5 можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v5.0.1).
 
-<br/><br/>
-
 ## Обновление React
 
 - Минимальная поддерживаемая версия **React** увеличена до v18.2.0
+
+## Поддержка браузеров
+
+Библиотека по умолчанию компилируется в [ES2015 (ES6)](https://262.ecma-international.org/6.0/).
+Список поддерживаемых браузеров находится в [.browserslistrc](https://github.com/VKCOM/VKUI/blob/v6.0.0/.browserslistrc)
+
+> В VKUI есть [специальная сборка](https://vkcom.github.io/VKUI/#/CSS%20Modules)
+> в ESNext, которая позволяет уменьшить размер вашего приложения
+
+## Перечисления заменены на объекты
+
+Следующие перечисления были заменены на [объекты](https://www.typescriptlang.org/docs/handbook/enums.html#objects-vs-enums):
+
+- `Platform`
+- `Appearance`
+- `SizeType`
+- `ViewWidth`
+- `ViewHeight`
 
 ## Удалили интеграцию с [VK Mini Apps](https://vk.com/miniapps) и [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge)
 
@@ -70,13 +86,25 @@ interface HasInsets {
 
 <br/><br/>
 
-## Поддержка браузеров
+## ~~`VisuallyHiddenInput`~~
 
-Библиотека по умолчанию компилируется в [ES2015 (ES6)](https://262.ecma-international.org/6.0/).
-Список поддерживаемых браузеров находится в [.browserslistrc](https://github.com/VKCOM/VKUI/blob/v6.0.0/.browserslistrc)
+Устаревший компонент удален. Используйте [`VisuallyHidden`](#/VisuallyHidden)
 
-> В VKUI есть [специальная сборка](https://vkcom.github.io/VKUI/#/CSS%20Modules)
-> в ESNext, которая позволяет уменьшить размер вашего приложения
+```diff
+- <VisuallyHiddenInput />
++ <VisuallyHidden Component="input" />
+```
+
+<br/><br/>
+
+## ~~`RangeSlider`~~
+
+Устаревший компонент удален. Используйте [`Slider`](#/Slider)
+
+```diff
+- <RangeSlider />
++ <Slider multiple />
+```
 
 <br/><br/>
 
@@ -125,18 +153,6 @@ interface HasInsets {
 Мы начинаем использовать [логические css свойства](https://www.w3.org/TR/css-logical-1/) вместо физических.
 Если вам требуется [широкая браузерная поддержка](https://caniuse.com/css-logical-props),
 рекомендуем воспользоваться [postcss-logical](https://www.npmjs.com/package/postcss-logical).
-
-<br/><br/>
-
-## Перечисления заменены на объекты
-
-Следующие перечисления были заменены на [объекты](https://www.typescriptlang.org/docs/handbook/enums.html#objects-vs-enums):
-
-- `Platform`
-- `Appearance`
-- `SizeType`
-- `ViewWidth`
-- `ViewHeight`
 
 <br/><br/>
 
@@ -189,31 +205,10 @@ interface HasInsets {
 
 <br/><br/>
 
-## VisuallyHiddenInput
+## [`Title`](#/Title);
 
-Устаревший компонент удален. Используйте [`VisuallyHidden`](#/VisuallyHidden)
-
-```diff
-- <VisuallyHiddenInput />
-+ <VisuallyHidden Component="input" />
-```
-
-<br/><br/>
-
-## RangeSlider
-
-Устаревший компонент удален. Используйте [`Slider`](#/Slider)
-
-```diff
-- <RangeSlider />
-+ <Slider multiple />
-```
-
-<br/><br/>
-
-## Title
-
-По умолчанию тeг в котором рендерится компонент теперь `span` и он больше не привязан к значению свойства `level`.
+По умолчанию тeг в котором рендерится компонент теперь `span` и он больше не привязан к значению
+свойства `level`.
 
 Переопределить тeг по умолчанию можно с помощью свойства `Component`.
 
@@ -223,7 +218,7 @@ interface HasInsets {
 
 <br/><br/>
 
-## Headline
+## [`Headline`](#/Headline)
 
 Изменён тeг (с `h4` на `span`), в котором компонент рендерится по умолчанию.
 Переопределить тeг по умолчанию можно с помощью свойства `Component`.
@@ -234,7 +229,7 @@ interface HasInsets {
 
 <br/><br/>
 
-## Subhead
+## [`Subhead`](#/Subhead)
 
 Изменён тeг (с `h5` на `span`), в котором компонент рендерится по умолчанию.
 Переопределить тeг по умолчанию можно с помощью свойства `Component`.
@@ -245,7 +240,7 @@ interface HasInsets {
 
 <br/><br/>
 
-## FormItem
+## [`FormItem`](#/FormItem)
 
 Изменён тeг (с `h5` на `span`), в котором значение `top` рендерится по умолчанию, если не указано свойство `htmlFor`.
 Если свойство `htmlFor` указано, но тег будет `label`.
@@ -257,7 +252,7 @@ interface HasInsets {
 
 <br/><br/>
 
-## ContentCard
+## [`ContentCard`](#/ContentCard)
 
 Изменён тeг (с `h4` на `span`), в котором `header` компонента рендерится по умолчанию.
 Переопределить тег по умолчанию можно с помощью свойства `headerComponent`.
@@ -268,10 +263,10 @@ interface HasInsets {
 
 <br/><br/>
 
-## ModalCard и ModaCardBase
+## [`ModalCard`](#/ModalCard) и [`ModaCardBase`](#/ModaCardBase)
 
-Тeг в котором значение `header` рендерится по умолчанию изменён с `h2` на `span`.
-Тег в котором значение `subheader` рендерится по умолчанию изменён с `h5` на `span`.
+Тeг, в котором значение `header` рендерится по умолчанию, изменён с `h2` на `span`.
+Тег, в котором значение `subheader` рендерится по умолчанию, изменён с `h5` на `span`.
 Поменять теги по умолчанию можно с помощью свойств `headerComponent` и `subheaderComponent`.
 
 ```jsx static
@@ -285,7 +280,7 @@ interface HasInsets {
 
 <br/><br/>
 
-## Header
+## [`Header`](#/Header)
 
 Теперь для подзаголовка `subtitle` можно задать тип тэга с помощью свойства `subtitleComponent`.
 
