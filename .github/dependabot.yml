@@ -76,11 +76,6 @@ updates:
           - '@vkontakte/prettier-config'
     versioning-strategy: increase
     open-pull-requests-limit: 20
-    labels:
-      - 'javascript'
-      - 'dependencies'
-      # По умолчанию должно отправляться в ветку с v5
-      - 'v5'
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
@@ -93,11 +88,6 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
-    labels:
-      - 'github_actions'
-      - 'dependencies'
-      # По умолчанию должно отправляться в ветку с v5
-      - 'v5'
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
