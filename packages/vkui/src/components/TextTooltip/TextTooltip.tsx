@@ -46,7 +46,7 @@ export const TextTooltip = ({
         className,
       )}
       arrow
-      arrowClassName={styles['TextTooltip__arrow']}
+      arrowProps={{ iconClassName: styles['TextTooltip__arrow'] }}
       content={
         <React.Fragment>
           {hasReactNode(header) && <Subhead weight="2">{header}</Subhead>}

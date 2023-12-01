@@ -9,6 +9,7 @@ export type AutoPlacementType = 'auto' | 'auto-start' | 'auto-end';
 export type PlacementWithAuto = AutoPlacementType | Placement;
 
 export type {
+  VirtualElement,
   UseFloatingOptions,
   ReferenceType,
   ArrowOptions,

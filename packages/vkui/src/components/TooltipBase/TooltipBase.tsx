@@ -95,7 +95,7 @@ export const TooltipBase = ({
           <PopperArrow
             coords={arrowCoords}
             placement={arrowPlacement}
-            arrowClassName={styles['TooltipBase__arrow']}
+            iconClassName={styles['TooltipBase__arrow']}
             getRootRef={getArrowRef}
             Icon={ArrowIcon}
           />

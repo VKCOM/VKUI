@@ -1,6 +1,7 @@
 export type {
   UseFloatingOptions,
   Placement,
+  VirtualElement,
   PlacementWithAuto,
   AutoPlacementType,
   UseFloatingMiddleware,

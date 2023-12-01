@@ -1,21 +1,13 @@
 import * as React from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
 import {
-  arrowMiddleware,
-  autoPlacementMiddleware,
   autoUpdateFloatingElement,
-  checkIsNotAutoPlacement,
   convertFloatingDataToReactCSSProperties,
-  flipMiddleware,
-  getAutoPlacementAlign,
-  hideMiddleware,
-  offsetMiddleware,
   type Placement,
-  type PlacementWithAuto,
-  shiftMiddleware,
-  sizeMiddleware,
   useFloating,
-  type UseFloatingMiddleware,
+  useFloatingMiddlewaresBootstrap,
+  type UseFloatingMiddlewaresBootstrapOptions,
+  type VirtualElement,
 } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -25,7 +17,10 @@ import {
   DEFAULT_ARROW_PADDING,
   DefaultIcon,
 } from '../PopperArrow/DefaultIcon';
-import { PopperArrow, type PopperArrowProps } from '../PopperArrow/PopperArrow';
+import {
+  PopperArrow,
+  type PopperArrowProps as PopperArrowPropsPrivate,
+} from '../PopperArrow/PopperArrow';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Popper.module.css';
 
@@ -33,35 +28,30 @@ export interface PopperRenderContentProps {
   className: string;
 }
 
-export interface PopperCommonProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export type PopperArrowProps = Omit<
+  PopperArrowPropsPrivate,
+  'getRootRef' | 'coords' | 'placement' | 'Icon'
+>;
+
+export interface PopperCommonProps
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
+    Pick<
+      UseFloatingMiddlewaresBootstrapOptions,
+      | 'placement'
+      | 'sameWidth'
+      | 'hideWhenReferenceHidden'
+      | 'offsetByMainAxis'
+      | 'offsetByCrossAxis'
+      | 'arrow'
+      | 'arrowRef'
+      | 'arrowPadding'
+      | 'arrowHeight'
+      | 'customMiddlewares'
+    > {
   /**
-   * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
+   * Позволяет набросить на стрелку пользовательские атрибуты.
    */
-  placement?: PlacementWithAuto;
-  /**
-   * Отступ по вспомогательной оси
-   */
-  offsetSkidding?: number;
-  /**
-   * Отступ по главной оси
-   */
-  offsetDistance?: number;
-  /**
-   * Отображать ли стрелку, указывающую на якорный элемент
-   */
-  arrow?: boolean;
-  /**
-   * Высота стрелки. Складывается с `offsetDistance`, чтобы стрелка не залезала на якорный элемент.
-   */
-  arrowHeight?: number;
-  /**
-   * Безопасная зона вокруг стрелки, чтобы та не выходила за края контента.
-   */
-  arrowPadding?: number;
-  /**
-   * Стиль стрелки.
-   */
-  arrowClassName?: string;
+  arrowProps?: PopperArrowProps;
   /**
    * Пользовательская SVG иконка.
    *
@@ -75,11 +65,10 @@ export interface PopperCommonProps extends HTMLAttributesWithRootRef<HTMLDivElem
    * 4. Убедитесь, что компонент принимает все валидные для SVG параметры.
    * 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
    */
-  ArrowIcon?: PopperArrowProps['Icon'];
+  ArrowIcon?: PopperArrowPropsPrivate['Icon'];
   /**
-   * Выставлять ширину равной target элементу
+   * Использовать ли принудительно использовать портал.
    */
-  sameWidth?: boolean;
   forcePortal?: boolean;
   /**
    * Кастомный root-элемент портала.
@@ -92,121 +81,62 @@ export interface PopperCommonProps extends HTMLAttributesWithRootRef<HTMLDivElem
    */
   autoUpdateOnTargetResize?: boolean;
   /**
-   * Массив кастомных модификаторов для Popper (необходимо мемоизировать)
+   * В зависимости от области видимости, позиция может смениться на более оптимальную,
+   * чтобы Popper вмешался в эту область видимости.
    */
-  customMiddlewares?: UseFloatingMiddleware[];
-  /**
-   * При передаче содержимого в `children`, он будет обёрнут во внутренний контейнер.
-   *
-   * Если хочется управлять этим контейнером, то используйте данную функцию.
-   *
-   * > ⚠️ Параметр `children` будет проигнорирован.
-   */
-  renderContent?(props: PopperRenderContentProps): React.ReactNode;
-  onPlacementChange?(data: { placement?: Placement }): void;
-  /**
-   * Принудительно скрывает компонет если целевой элемент исчез
-   */
-  hideWhenReferenceHidden?: boolean;
+  onPlacementChange?(placement: Placement): void;
 }
 
 export interface PopperProps extends PopperCommonProps {
-  targetRef: React.RefObject<HTMLElement>;
+  targetRef: React.RefObject<HTMLElement> | VirtualElement;
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Popper
  */
 export const Popper = ({
-  targetRef,
-  children,
+  // UseFloatingMiddlewaresBootstrapProps
   placement: placementProp = 'bottom-start',
-  onPlacementChange,
+  sameWidth,
+  hideWhenReferenceHidden,
+  offsetByMainAxis = 8,
+  offsetByCrossAxis = 0,
   arrow,
   arrowHeight = DEFAULT_ARROW_HEIGHT,
   arrowPadding = DEFAULT_ARROW_PADDING,
-  arrowClassName,
-  ArrowIcon = DefaultIcon,
-  sameWidth,
-  offsetDistance = 8,
-  offsetSkidding = 0,
-  forcePortal = true,
-  portalRoot,
-  autoUpdateOnTargetResize = false,
-  style: styleProp,
   customMiddlewares,
-  renderContent,
+
+  // UseFloatingProps
+  autoUpdateOnTargetResize = false,
+
+  // ArrowProps
+  arrowProps,
+  ArrowIcon = DefaultIcon,
+
+  // rest
+  targetRef,
   getRootRef,
-  hideWhenReferenceHidden,
+  children,
+  portalRoot,
+  forcePortal = true,
+  style: styleProp,
+  onPlacementChange,
   ...restProps
 }: PopperProps) => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
-  const isNotAutoPlacement = checkIsNotAutoPlacement(placementProp);
-
-  const memoizedMiddlewares = React.useMemo(() => {
-    const middlewares: UseFloatingMiddleware[] = [
-      offsetMiddleware({
-        crossAxis: offsetSkidding,
-        mainAxis: arrow ? offsetDistance + arrowHeight : offsetDistance,
-      }),
-    ];
-
-    // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
-    if (isNotAutoPlacement) {
-      middlewares.push(flipMiddleware());
-    } else {
-      middlewares.push(
-        autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placementProp) }),
-      );
-    }
-
-    middlewares.push(shiftMiddleware());
-
-    if (sameWidth) {
-      middlewares.push(
-        sizeMiddleware({
-          apply({ rects, elements }) {
-            Object.assign(elements.floating.style, {
-              width: `${rects.reference.width}px`,
-            });
-          },
-        }),
-      );
-    }
-
-    if (customMiddlewares) {
-      middlewares.push(...customMiddlewares);
-    }
-
-    // см. https://floating-ui.com/docs/arrow#order
-    if (arrow) {
-      middlewares.push(
-        arrowMiddleware({
-          element: arrowRef,
-          padding: arrowPadding,
-        }),
-      );
-    }
-
-    if (hideWhenReferenceHidden) {
-      middlewares.push(hideMiddleware());
-    }
-
-    return middlewares;
-  }, [
-    offsetSkidding,
-    arrowRef,
+  const { strictPlacement, middlewares } = useFloatingMiddlewaresBootstrap({
+    placement: placementProp,
+    sameWidth,
     arrow,
+    arrowRef,
     arrowHeight,
     arrowPadding,
-    offsetDistance,
-    isNotAutoPlacement,
-    sameWidth,
-    customMiddlewares,
-    placementProp,
+    offsetByMainAxis,
+    offsetByCrossAxis,
     hideWhenReferenceHidden,
-  ]);
+    customMiddlewares,
+  });
 
   const {
     x: floatingDataX,
@@ -214,28 +144,30 @@ export const Popper = ({
     strategy: floatingPositionStrategy,
     placement: resolvedPlacement,
     refs,
-    middlewareData: { arrow: arrowCoords, hide },
+    middlewareData,
   } = useFloating({
-    placement: isNotAutoPlacement ? placementProp : undefined,
-    middleware: memoizedMiddlewares,
+    placement: strictPlacement,
+    middleware: middlewares,
     whileElementsMounted(...args) {
+      /* istanbul ignore next: не знаю как проверить */
       return autoUpdateFloatingElement(...args, {
         elementResize: autoUpdateOnTargetResize,
       });
     },
   });
+  const { arrow: arrowCoords } = middlewareData;
 
   const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRootRef);
 
   useIsomorphicLayoutEffect(() => {
-    refs.setReference(targetRef.current);
-  }, [refs, targetRef]);
+    refs.setReference('current' in targetRef ? targetRef.current : targetRef);
+  }, [refs.setReference, targetRef]);
 
   useIsomorphicLayoutEffect(() => {
-    if (resolvedPlacement && onPlacementChange) {
-      onPlacementChange({ placement: resolvedPlacement });
+    if (placementProp !== resolvedPlacement && onPlacementChange) {
+      onPlacementChange(resolvedPlacement);
     }
-  }, [onPlacementChange, resolvedPlacement]);
+  }, [onPlacementChange, resolvedPlacement, placementProp]);
 
   const dropdown = (
     <RootComponent
@@ -249,22 +181,20 @@ export const Popper = ({
           floatingDataX,
           floatingDataY,
           sameWidth ? null : undefined,
+          middlewareData,
         ),
-        ...(hide?.referenceHidden && {
-          visibility: 'hidden',
-        }),
       }}
     >
       {arrow && (
         <PopperArrow
+          {...arrowProps}
           coords={arrowCoords}
           placement={resolvedPlacement}
-          arrowClassName={arrowClassName}
           getRootRef={setArrowRef}
           Icon={ArrowIcon}
         />
       )}
-      {renderContent ? renderContent({ className: '' }) : children}
+      {children}
     </RootComponent>
   );
 

@@ -317,7 +317,7 @@ export const DateRangeInput = ({
         />
       </Text>
       {open && !disableCalendar && (
-        <Popper targetRef={rootRef} offsetDistance={8} placement={calendarPlacement}>
+        <Popper targetRef={rootRef} offsetByMainAxis={8} placement={calendarPlacement}>
           <CalendarRange
             value={value}
             onChange={onCalendarChange}

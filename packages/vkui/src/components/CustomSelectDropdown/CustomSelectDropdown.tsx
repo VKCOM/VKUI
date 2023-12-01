@@ -46,7 +46,7 @@ export const CustomSelectDropdown = ({
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
 
   const onPlacementChange = React.useCallback(
-    ({ placement }: { placement?: Placement }) => {
+    (placement: Placement) => {
       setIsTop(calcIsTop(placement));
       parentOnPlacementChange?.(placement);
     },
@@ -56,7 +56,7 @@ export const CustomSelectDropdown = ({
   return (
     <Popper
       targetRef={targetRef}
-      offsetDistance={offsetDistance}
+      offsetByMainAxis={offsetDistance}
       sameWidth={sameWidth}
       onPlacementChange={onPlacementChange}
       placement={placement}
