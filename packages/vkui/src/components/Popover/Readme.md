@@ -60,7 +60,7 @@ const PopoverWithTriggerClick = () => {
       content={({ onClose }) => (
         <div
           style={{
-            backgroundColor: 'aquamarine',
+            backgroundColor: 'var(--vkui--color_background_modal_inverse)',
             borderRadius: 8,
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
           }}
