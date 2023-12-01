@@ -1,0 +1,44 @@
+{
+  "name": "@vkontakte/vkui-codemods",
+  "version": "0.0.0",
+  "description": "Codemods for automatic VKUI major version upgrade",
+  "repository": "https://github.com/VKCOM/VKUI",
+  "homepage": "https://vkcom.github.io/VKUI/",
+  "license": "MIT",
+  "bin": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "yarn": "^1.21.1",
+    "node": ">16.0.0"
+  },
+  "dependencies": {
+    "chalk": "4.1.2",
+    "commander": "^11.0.0",
+    "cross-spawn": "^7.0.3",
+    "jscodeshift": "0.13.1",
+    "prompts": "^2.4.2",
+    "typescript": "^5.3.2"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.3.100",
+    "@swc/jest": "^0.2.29",
+    "@types/cross-spawn": "^6.0.6",
+    "@types/jest": "^29.5.10",
+    "@types/jscodeshift": "^0.11.11",
+    "@types/node": "^20.10.0",
+    "@types/prompts": "^2.4.2",
+    "jest": "^29.7.0",
+    "ts-node": "^10.9.1"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:ci": "yarn test",
+    "migrate": "jscodeshift"
+  },
+  "publishConfig": {
+    "provenance": true
+  }
+}

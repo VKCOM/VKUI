@@ -1,0 +1,38 @@
+import { ActionSheet, ActionSheetItem } from '@vkontakte/vkui';
+import React from 'react';
+import '@vkontakte/vkui/dist/vkui.css';
+
+const App = () => {
+  const action = [
+    {
+      title: 'Лишить права',
+      mode: 'destructive',
+      autoCloseDisabled: true
+    },
+    {
+      title: 'Отмена',
+      mode: 'cancel'
+    },
+  ];
+
+  return (
+    <React.Fragment>
+      <Alert
+        actions={[
+          {
+            title: 'Лишить права',
+            mode: 'destructive',
+            autoCloseDisabled: true
+          },
+          {
+            title: 'Отмена',
+            mode: 'cancel'
+          },
+        ]}
+        header="Подтвердите действие"
+        text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+      />
+      <Alert actions={action} />
+    </React.Fragment>
+  );
+};
