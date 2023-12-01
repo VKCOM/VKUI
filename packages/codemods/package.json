@@ -14,10 +14,10 @@
     "node": ">16.0.0"
   },
   "dependencies": {
-    "chalk": "4.1.2",
+    "chalk": "^4.1.2",
     "commander": "^11.0.0",
     "cross-spawn": "^7.0.3",
-    "jscodeshift": "0.13.1",
+    "jscodeshift": "^0.13.1",
     "prompts": "^2.4.2",
     "typescript": "^5.3.2"
   },
