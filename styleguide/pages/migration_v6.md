@@ -49,8 +49,8 @@
 
 Первые три пункта перенесли в библиотеку [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react).
 
-Помимо **VK Bridge**, была завязка на мини-приложения в параметре `webviewType` за счёт свойства
-`"vkapps"`. Теперь это параметр `hasCustomPanelHeaderAfter`, который по умолчанию `false`.
+Помимо **VK Bridge**, была завязка на мини-приложения в свойстве `webviewType` за счёт свойства
+`"vkapps"`. Теперь это свойство `hasCustomPanelHeaderAfter`, который по умолчанию `false`.
 
 Бойлерплейт для **VK Mini Apps** представлен на странице [Интеграция с VK Mini Apps](https://vkcom.github.io/VKUI/#/integrations-vk-mini-apps)
 под заголовком **Конфигурация VKUI**.
