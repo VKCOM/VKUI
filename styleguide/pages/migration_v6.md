@@ -361,6 +361,17 @@ interface HasInsets {
 
 <br/><br/>
 
+## [`SplitCol`](#/SplitCol)
+
+- Свойство `spaced` удалено, используйте свойство `autoSpaced`
+
+```diff
+ <ActionSheet>
+-  <SplitCol spaced>Сохранить в закладках</SplitCol>
++  <SplitCol autoSpaced>Сохранить в закладках</SplitCol>
+ </ActionSheet>
+```
+
 # Typography
 
 <br/><br/>
@@ -463,14 +474,3 @@ interface HasInsets {
 - `noStyling` – убирает стилизацию по умолчанию.
 - `usePortal` – рендерить ли всплывающий элемент в портале. Вместо `boolean`, можно передать
   контейнер, куда должен отрендериться всплывающий элемент.
-
-## [`SplitCol`](#/SplitCol)
-
-- Свойство `spaced` удалено, используйте свойство `autoSpaced`
-
-```diff
- <ActionSheet>
--  <SplitCol spaced>Сохранить в закладках</SplitCol>
-+  <SplitCol autoSpaced>Сохранить в закладках</SplitCol>
- </ActionSheet>
-```
