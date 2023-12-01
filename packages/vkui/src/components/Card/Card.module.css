@@ -63,16 +63,36 @@
  * SplitCol
  */
 :global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .Card,
-:global(.vkuiInternalSplitCol--spaced) :global(.vkuiInternalCardScroll--size-l) .Card {
+:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
+  :global(.vkuiInternalCardScroll--size-l)
+  .Card {
   inline-size: calc(100% - 32px);
   margin-inline-end: 16px;
 }
 
+@media (--viewWidth-smallTabletPlus) {
+  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
+    :global(.vkuiInternalCardScroll--size-l)
+    .Card {
+    inline-size: calc(100% - 32px);
+    margin-inline-end: 16px;
+  }
+}
+
 :global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .Card:last-of-type,
-:global(.vkuiInternalSplitCol--spaced) :global(.vkuiInternalCardScroll--size-l) .Card:last-of-type {
+:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
+  :global(.vkuiInternalCardScroll--size-l)
+  .Card:last-of-type {
   margin-inline-end: 0;
 }
 
+@media (--viewWidth-smallTabletPlus) {
+  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
+    :global(.vkuiInternalCardScroll--size-l)
+    .Card:last-of-type {
+    margin-inline-end: 0;
+  }
+}
 @media (--sizeX-regular) {
   :global(.vkuiInternalGroup--mode-none)
     :global(.vkuiInternalCardScroll--size-l)
