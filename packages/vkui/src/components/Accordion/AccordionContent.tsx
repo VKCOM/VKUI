@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useDOM } from '../../lib/dom';
 import { HasRef, HasRootRef } from '../../types';
 import { AccordionContext } from './AccordionContext';
 import styles from './Accordion.module.css';
@@ -38,11 +38,8 @@ function useResizeContent(expanded: boolean, inRef: React.MutableRefObject<HTMLD
     inRef.current!.style.marginTop = calcMarginTop(expanded, inRef.current);
   };
 
-  const resizeHandler = useEventListener('resize', resize);
-
-  useIsomorphicLayoutEffect(() => {
-    resizeHandler.add(inRef.current!);
-  }, []);
+  const { window } = useDOM();
+  useGlobalEventListener(window, 'resize', resize);
 }
 
 /**
