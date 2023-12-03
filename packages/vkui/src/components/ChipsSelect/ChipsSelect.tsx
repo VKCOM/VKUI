@@ -18,6 +18,10 @@ import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { Footnote } from '../Typography/Footnote/Footnote';
+import {
+  ChipsSelectClearButton,
+  ChipsSelectClearButtonProps,
+} from './ChipsSelectClearButton/ChipsSelectClearButton';
 import styles from './ChipsSelect.module.css';
 
 export interface ChipsSelectProps<Option extends ChipOption>
@@ -56,6 +60,11 @@ export interface ChipsSelectProps<Option extends ChipOption>
    * Событие срабатывающее перед onChange
    */
   onChangeStart?: (e: React.MouseEvent | React.KeyboardEvent, option: Option) => void;
+  /**
+   * Кастомная кнопка для очистки значения.
+   * Должна принимать обязательное свойство `onClick`
+   */
+  ClearButton?: React.ComponentType<ChipsSelectClearButtonProps>;
   /**
    * Закрытие выпадающего списка после выбора элемента
    */
@@ -128,12 +137,14 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     creatableText,
     closeAfterSelect,
     onChangeStart,
+    onChange,
     before,
     icon,
     options,
     fixDropdownWidth,
     forceDropdownPortal,
     noMaxHeight = false,
+    ClearButton = ChipsSelectClearButton,
     ...restProps
   } = propsWithDefault;
 
@@ -240,6 +251,16 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     focusOptionByIndex(index, focusedOptionIndex);
   };
 
+  const clearButtonShown = !opened && selectedOptions.length;
+  const clearButton = React.useMemo(() => {
+    if (!clearButtonShown) {
+      return null;
+    }
+    return (
+      <ClearButton className={styles['CustomSelect--clear-icon']} onClick={() => onChange!([])} />
+    );
+  }, [clearButtonShown, ClearButton, onChange]);
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown!(e);
 
@@ -336,6 +357,22 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     setOpened((prevOpened) => !prevOpened);
   };
 
+  const afterIcons = (
+    <React.Fragment>
+      {clearButton}
+      <IconButton
+        className={styles['ChipsSelect__dropdown']}
+        activeMode=""
+        hoverMode=""
+        // TODO [>=6]: add label customization
+        aria-label={opened ? 'Скрыть' : 'Развернуть'}
+        onClick={toggleOpened}
+      >
+        {icon ?? <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />}
+      </IconButton>
+    </React.Fragment>
+  );
+
   return (
     <>
       <FormField
@@ -353,18 +390,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
         role="application"
         aria-disabled={disabled}
         aria-readonly={restProps.readOnly}
-        after={
-          <IconButton
-            className={styles['ChipsSelect__dropdown']}
-            activeMode=""
-            hoverMode=""
-            // TODO [>=6]: add label customization
-            aria-label={opened ? 'Скрыть' : 'Развернуть'}
-            onClick={toggleOpened}
-          >
-            {icon ?? <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />}
-          </IconButton>
-        }
+        after={afterIcons}
         before={before}
       >
         <ChipsInputBase
