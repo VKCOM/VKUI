@@ -29,7 +29,7 @@ export const Playground: Story = {
     ),
     badgeAfterTitle: <Icon12Verified />,
     after: (
-      <IconButton>
+      <IconButton label="Написать сообщение">
         <Icon28MessageOutline />
       </IconButton>
     ),

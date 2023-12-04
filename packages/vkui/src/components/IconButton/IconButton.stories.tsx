@@ -16,6 +16,7 @@ type Story = StoryObj<IconButtonProps>;
 
 export const Playground: Story = {
   args: {
+    label: 'Удалить',
     children: <Icon16Delete />,
   },
 };

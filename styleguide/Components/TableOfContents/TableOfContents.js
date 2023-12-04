@@ -15,6 +15,7 @@ import {
   Separator,
   SimpleCell,
   useAdaptivityWithJSMediaQueries,
+  VisuallyHidden,
 } from '@vkui';
 import { unstable } from '../../unstable';
 import { getDeprecatedFromComponentTags } from '../../utils';
@@ -243,9 +244,15 @@ class TableOfContents extends React.PureComponent {
                 (section.sections.length > 0 && (
                   <IconButton onClick={this.onExpandIconClick} data-section-name={section.name}>
                     {expanded ? (
-                      <Icon28ChevronUpOutline fill="var(--vkui--color_text_tertiary)" />
+                      <>
+                        <VisuallyHidden>Скрыть</VisuallyHidden>
+                        <Icon28ChevronUpOutline fill="var(--vkui--color_text_tertiary)" />
+                      </>
                     ) : (
-                      <Icon28ChevronDownOutline fill="var(--vkui--color_text_tertiary)" />
+                      <>
+                        <VisuallyHidden>Развернуть</VisuallyHidden>
+                        <Icon28ChevronDownOutline fill="var(--vkui--color_text_tertiary)" />
+                      </>
                     )}
                   </IconButton>
                 )) ||

@@ -1,6 +1,14 @@
 import * as React from 'react';
 import { Icon16Dropdown, Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
-import { IconButton, Link, SplitCol, SplitLayout, Tappable, useAppearance } from '@vkui';
+import {
+  IconButton,
+  Link,
+  SplitCol,
+  SplitLayout,
+  Tappable,
+  useAppearance,
+  VisuallyHidden,
+} from '@vkui';
 import { VKUI_PACKAGE } from '../../../shared';
 import { Logo } from '../Logo/Logo';
 import { StyleGuideContext } from './StyleGuideRenderer';
@@ -81,7 +89,8 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
               ))}
             </div>
             <div className="StyleGuideHeader__aside">
-              <IconButton aria-label="Сменить тему" onClick={switchStyleGuideAppearance}>
+              <IconButton onClick={switchStyleGuideAppearance}>
+                <VisuallyHidden>Сменить тему</VisuallyHidden>
                 {appearance === 'dark' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
               </IconButton>
             </div>

@@ -50,7 +50,12 @@ describe('Cell', () => {
       const clickStub = jest.fn();
 
       const { rerender } = render(
-        <Cell mode="removable" onRemove={removeStub} onClick={clickStub}>
+        <Cell
+          mode="removable"
+          onRemove={removeStub}
+          onClick={clickStub}
+          removeButtonTestId="removeButtonTestId"
+        >
           Саша Колобов
         </Cell>,
       );
@@ -60,7 +65,7 @@ describe('Cell', () => {
         'true',
       );
 
-      fireEvent.click(screen.getByLabelText('Удалить'));
+      fireEvent.click(screen.getByTestId('removeButtonTestId'));
       expect(removeStub).toHaveBeenCalledTimes(1);
       expect(clickStub).not.toHaveBeenCalled();
 
@@ -90,7 +95,12 @@ describe('Cell', () => {
 
       render(
         <ConfigProvider platform="ios">
-          <Cell mode="removable" onRemove={removeStub} onClick={clickStub}>
+          <Cell
+            mode="removable"
+            onRemove={removeStub}
+            onClick={clickStub}
+            toggleButtonTestId="toggleButtonTestId"
+          >
             Саша Колобов
           </Cell>
         </ConfigProvider>,
@@ -105,7 +115,7 @@ describe('Cell', () => {
       Object.defineProperty(removeActionButton, 'offsetWidth', { value: 12 });
 
       // transition to removing state
-      fireEvent.click(screen.getByLabelText('Удалить'));
+      fireEvent.click(screen.getByTestId('toggleButtonTestId'));
       expect(removeStub).not.toHaveBeenCalled();
       expect(clickStub).not.toHaveBeenCalled();
 

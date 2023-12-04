@@ -88,11 +88,11 @@ const SharedContent = () => {
         <SimpleCell
           after={
             platform === 'ios' ? (
-              <IconButton aria-label="Подробнее">
+              <IconButton label="Подробнее">
                 <Icon16MoreHorizontal />
               </IconButton>
             ) : (
-              <IconButton aria-label="Подробнее">
+              <IconButton label="Подробнее">
                 <Icon16MoreVertical />
               </IconButton>
             )
@@ -105,11 +105,11 @@ const SharedContent = () => {
         <SimpleCell
           after={
             platform === 'ios' ? (
-              <IconButton aria-label="Подробнее">
+              <IconButton label="Подробнее">
                 <Icon16MoreHorizontal />
               </IconButton>
             ) : (
-              <IconButton aria-label="Подробнее">
+              <IconButton label="Подробнее">
                 <Icon16MoreVertical />
               </IconButton>
             )

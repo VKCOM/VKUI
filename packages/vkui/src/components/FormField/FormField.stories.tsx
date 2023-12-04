@@ -40,12 +40,12 @@ export const Playground: Story = {
   ),
   args: {
     before: (
-      <IconButton>
+      <IconButton label="Сообщения">
         <Icon28MessageOutline />
       </IconButton>
     ),
     after: (
-      <IconButton>
+      <IconButton label="Очистить">
         <Icon16Clear />
       </IconButton>
     ),
