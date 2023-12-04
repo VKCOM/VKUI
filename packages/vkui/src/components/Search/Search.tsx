@@ -13,6 +13,7 @@ import { Button } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
 import { TouchEvent } from '../Touch/Touch';
 import { Headline } from '../Typography/Headline/Headline';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Search.module.css';
 
 export interface SearchProps
@@ -27,8 +28,8 @@ export interface SearchProps
   icon?: React.ReactNode;
   onIconClick?(e: VKUITouchEvent): void;
   defaultValue?: string;
-  iconAriaLabel?: string;
-  clearAriaLabel?: string;
+  iconLabel?: string;
+  clearLabel?: string;
   /**
    * Удаляет отступы у компонента
    */
@@ -60,8 +61,8 @@ export const Search = ({
   autoComplete = 'off',
   onChange: onChangeProp,
   value: valueProp,
-  iconAriaLabel,
-  clearAriaLabel = 'Очистить',
+  iconLabel,
+  clearLabel = 'Очистить',
   noPadding,
   getRootRef,
   findButtonText = 'Найти',
@@ -173,8 +174,8 @@ export const Search = ({
               className={styles['Search__icon']}
               onFocus={setFocusedTrue}
               onBlur={setFocusedFalse}
-              label={iconAriaLabel}
             >
+              <VisuallyHidden>{iconLabel}</VisuallyHidden>
               {icon}
             </IconButton>
           )}
@@ -183,9 +184,9 @@ export const Search = ({
             onStart={onIconCancelClickStart}
             onClick={onCancel}
             className={styles['Search__icon']}
-            label={clearAriaLabel}
             tabIndex={value ? undefined : -1}
           >
+            <VisuallyHidden>{clearLabel}</VisuallyHidden>
             {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
           </IconButton>
           {adaptiveSizeY.compact && onFindButtonClick && (
