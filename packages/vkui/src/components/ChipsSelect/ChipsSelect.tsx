@@ -104,7 +104,7 @@ export const ChipsSelect = <Option extends ChipOption>({
 
   // CustomSelectDropdownProps
   presets: presetsProp,
-  placement: placementProp,
+  placement: placementProp = 'bottom',
   closeAfterSelect = true,
   selectedBehavior = DEFAULT_SELECTED_BEHAVIOR,
   emptyText = DEFAULT_EMPTY_TEXT,
@@ -189,7 +189,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   // Связано с CustomSelectDropdownProps
   const [dropdownVerticalPlacement, setDropdownVerticalPlacement] = React.useState<
     Extract<Placement, 'top' | 'bottom'> | undefined
-  >(undefined);
+  >(placementProp);
   const dropdownAriaId = React.useId();
   const dropdownScrollBoxRef = React.useRef<HTMLDivElement>(null);
 
@@ -339,13 +339,12 @@ export const ChipsSelect = <Option extends ChipOption>({
     }
   }, [presets, focusedOptionIndex, setFocusedOption]);
 
-  const onDropdownPlacementChange = React.useCallback((placement?: Placement) => {
-    if (placement) {
-      if (placement.startsWith('top')) {
-        setDropdownVerticalPlacement('top');
-      } else if (placement.startsWith('bottom')) {
-        setDropdownVerticalPlacement('bottom');
-      }
+  const onDropdownPlacementChange = React.useCallback((placement: Placement) => {
+    // console.log(placement);
+    if (placement.startsWith('top')) {
+      setDropdownVerticalPlacement('top');
+    } else if (placement.startsWith('bottom')) {
+      setDropdownVerticalPlacement('bottom');
     }
   }, []);
 

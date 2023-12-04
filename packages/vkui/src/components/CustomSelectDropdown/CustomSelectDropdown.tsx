@@ -18,20 +18,20 @@ export interface CustomSelectDropdownProps
   offsetDistance?: number;
   sameWidth?: boolean;
   forcePortal?: boolean;
-  onPlacementChange?: (placement?: Placement) => void;
+  onPlacementChange?(placement: Placement): void;
   /**
    * Отключает максимальную высоту по умолчанию
    */
   noMaxHeight?: boolean;
 }
 
-const calcIsTop = (placement?: Placement) => placement?.includes('top');
+const calcIsTop = (placement: Placement) => placement.startsWith('top');
 
 export const CustomSelectDropdown = ({
   children,
   targetRef,
   scrollBoxRef,
-  placement,
+  placement = 'bottom',
   fetching,
   onPlacementChange: parentOnPlacementChange,
   offsetDistance = 0,
@@ -48,9 +48,11 @@ export const CustomSelectDropdown = ({
   const onPlacementChange = React.useCallback(
     (placement: Placement) => {
       setIsTop(calcIsTop(placement));
-      parentOnPlacementChange?.(placement);
+      if (parentOnPlacementChange) {
+        parentOnPlacementChange(placement);
+      }
     },
-    [parentOnPlacementChange, setIsTop],
+    [parentOnPlacementChange],
   );
 
   return (
