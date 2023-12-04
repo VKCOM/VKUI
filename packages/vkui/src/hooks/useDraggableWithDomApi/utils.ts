@@ -63,6 +63,9 @@ export const unsetInitialDraggingItemStyles = ({ el }: DraggingItem) => {
 };
 
 export const setInitialPlaceholderItemStyles = ({ el, draggingElRect }: PlaceholderItem) => {
+  if (el.firstElementChild) {
+    return;
+  }
   const { width, height } = draggingElRect;
   const node = el.cloneNode() as HTMLElement;
   node.style.setProperty('display', 'block');
