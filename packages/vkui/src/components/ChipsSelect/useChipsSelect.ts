@@ -22,9 +22,9 @@ export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
   extends UseChipsInputProps<O> {
   presets?: O[];
   /**
-   * Возможность создавать чипы которых нет в спискеЖ
-   * - `true` – по кнопки Enter
-   * - `string` – через кнопку в пункте меню.
+   * Возможность создавать чипы которых нет в списке:
+   * - `true` – добавление по кнопке Enter;
+   * - `<текст>` – помимо возможности добавления через Enter, в пункте меню появится кнопка с текстом.
    * Текст для пункта создающего чипы при клике, так же отвечает за то будет ли показан этот пункт (показывается после того как в списке не останется опций).
    */
   creatable?: boolean | string;
@@ -200,8 +200,8 @@ function transformPresets<O extends ChipOption>({
     : presetsProp;
 
   if (filteredPresetsProp.length === 0) {
-    if (inputValue !== DEFAULT_INPUT_VALUE && creatable) {
-      return [{ actionText: typeof creatable === 'string' ? creatable : '' }];
+    if (inputValue !== DEFAULT_INPUT_VALUE && typeof creatable === 'string') {
+      return [{ actionText: creatable }];
     }
     return [{ placeholder: emptyText }];
   }

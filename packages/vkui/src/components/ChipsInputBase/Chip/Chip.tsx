@@ -34,8 +34,7 @@ export const Chip = ({
   ...restProps
 }: ChipProps) => {
   const { sizeY = 'none' } = useAdaptivity();
-  // const [focusVisible, setFocusVisible] = React.useState(false);
-  const { focusVisible, onFocus, onBlur } = useFocusVisible(true);
+  const { focusVisible, onFocus, onBlur } = useFocusVisible();
   const focusVisibleClassName = useFocusVisibleClassName({ focusVisible });
   const removeLabel = `${removeAriaLabel} ${getTitleFromChildren(children)}`;
 
