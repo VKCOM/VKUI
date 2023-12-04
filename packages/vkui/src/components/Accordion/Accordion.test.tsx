@@ -3,29 +3,27 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { Accordion } from './Accordion';
 
-describe('Accordion', () => {
-  baselineComponent((props) => (
-    <Accordion {...props}>
-      <Accordion.Summary>Title</Accordion.Summary>
-      Content
-    </Accordion>
-  ));
+describe(Accordion, () => {
+  baselineComponent(Accordion.Content);
+  baselineComponent(Accordion.Summary, { a11y: false });
 
   it('toggles on click', () => {
     render(
-      <Accordion data-testid="details">
-        <Accordion.Summary data-testid="summary">Title</Accordion.Summary>
-        Content
+      <Accordion>
+        <Accordion.Summary iconPosition="before" data-testid="summary">
+          Title
+        </Accordion.Summary>
+        <Accordion.Content data-testid="content">Content</Accordion.Content>
       </Accordion>,
     );
-    const details = screen.getByTestId<HTMLDetailsElement>('details');
+    const content = screen.getByTestId<HTMLDivElement>('content');
     const summary = screen.getByTestId('summary');
-    expect(details.open).toBeFalsy();
+    expect(content.getAttribute('aria-hidden')).toBe('true');
 
     fireEvent.click(summary);
-    expect(details.open).toBeTruthy();
+    expect(content.getAttribute('aria-hidden')).toBe('false');
 
     fireEvent.click(summary);
-    expect(details.open).toBeFalsy();
+    expect(content.getAttribute('aria-hidden')).toBe('true');
   });
 });

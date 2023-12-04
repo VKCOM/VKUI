@@ -23,12 +23,18 @@ const AccordionVKID = () => {
     },
   ];
 
-  const [openId, setOpenId] = React.useState(null);
+  const [openId, setOpenId] = React.useState(2);
 
   return data.map(({ id, title, detail }) => (
-    <Accordion key={id} open={openId === id} onToggle={(e) => e.target.open && setOpenId(id)}>
+    <Accordion
+      key={id}
+      expanded={openId === id}
+      onChange={(e) => (e ? setOpenId(id) : setOpenId(null))}
+    >
       <Accordion.Summary>{title}</Accordion.Summary>
-      <Div style={infoStyle}>{detail}</Div>
+      <Accordion.Content>
+        <Div style={infoStyle}>{detail}</Div>
+      </Accordion.Content>
     </Accordion>
   ));
 };
@@ -60,7 +66,9 @@ const AccordionCombo = () => {
       <Accordion.Summary ExpandIcon={Icon24AddOutline} CollapseIcon={Icon24MinusOutline}>
         {title}
       </Accordion.Summary>
-      <Div style={infoStyle}>{detail}</Div>
+      <Accordion.Content>
+        <Div style={infoStyle}>{detail}</Div>
+      </Accordion.Content>
     </Accordion>
   ));
 };
@@ -77,19 +85,24 @@ const AccordionCombo = () => {
     <Group>
       <Accordion open>
         <Accordion.Summary iconPosition="before">Новый дизайн профиля</Accordion.Summary>
-        <Div style={infoStyle}>
-          Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже
-          не получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
-          формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
-        </Div>
+        <Accordion.Content>
+          <Div style={infoStyle}>
+            Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже
+            не получится. В центре внимания нового дизайна — личность человека и его увлечения.
+            Новый формат профиля особенно удобен для авторов контента и станет для них цифровой
+            визиткой.
+          </Div>
+        </Accordion.Content>
       </Accordion>
       <Accordion>
         <Accordion.Summary iconPosition="before">Что такое VK Pay?</Accordion.Summary>
-        <Div style={infoStyle}>
-          VK Pay — это онлайн-сервис для оплаты товаров и услуг. Храните все банковские карты под
-          рукой, покупайте в онлайн-магазинах, получайте персональные скидки и спецпредложения,
-          оплачивайте ежедневные услуги и переводите деньги друзьям.
-        </Div>
+        <Accordion.Content>
+          <Div style={infoStyle}>
+            VK Pay — это онлайн-сервис для оплаты товаров и услуг. Храните все банковские карты под
+            рукой, покупайте в онлайн-магазинах, получайте персональные скидки и спецпредложения,
+            оплачивайте ежедневные услуги и переводите деньги друзьям.
+          </Div>
+        </Accordion.Content>
       </Accordion>
     </Group>
   </Panel>

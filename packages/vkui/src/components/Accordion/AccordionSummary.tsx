@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Icon24ChevronDown, Icon24ChevronUp } from '@vkontakte/icons';
-import { classNames } from '@vkontakte/vkjs';
+import { callMultiple } from '../../lib/callMultiple';
 import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
+import { AccordionContext } from './AccordionContext';
 import styles from './Accordion.module.css';
 
 export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'expandable'> {
@@ -19,55 +20,45 @@ export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'expandable
   iconPosition?: 'before' | 'after';
 }
 
-/**
- * Обертка над summary.
- *
- * @since 5.3.0
- * @see  https://vkcom.github.io/VKUI/#/Accordion
- */
 export const AccordionSummary = ({
-  className,
   after,
   before,
   ExpandIcon = Icon24ChevronDown,
   CollapseIcon = Icon24ChevronUp,
   iconPosition = 'after',
+  onClick,
   children,
   ...restProps
 }: AccordionSummaryProps) => {
-  const accordionIcon = (
+  const { expanded, labelId, contentId, onChange } = React.useContext(AccordionContext);
+
+  const Icon = expanded ? CollapseIcon : ExpandIcon;
+
+  const icon = (
     // Обертка нужна для правильной работы с отступами в SimpleCell
-    // Без обертки на AccordionSummary__icon--collapse не будет действовать правило `last-child`
     <span className="vkuiIcon">
-      <ExpandIcon
-        className={classNames(
-          styles['AccordionSummary__icon'],
-          styles['AccordionSummary__icon--expand'],
-        )}
-      />
-      <CollapseIcon
-        className={classNames(
-          styles['AccordionSummary__icon'],
-          styles['AccordionSummary__icon--collapse'],
-        )}
-      />
+      <Icon className={styles['AccordionSummary__icon']} />
     </span>
   );
 
+  const toggle = () => onChange(!expanded);
+
   return (
     <SimpleCell
-      className={classNames(styles['AccordionSummary'], className)}
-      Component="summary"
+      id={labelId}
+      aria-expanded={expanded}
+      aria-controls={contentId}
+      onClick={callMultiple(toggle, onClick)}
       before={
         <>
-          {iconPosition === 'before' && accordionIcon}
+          {iconPosition === 'before' && icon}
           {before}
         </>
       }
       after={
         <>
           {after}
-          {iconPosition === 'after' && accordionIcon}
+          {iconPosition === 'after' && icon}
         </>
       }
       {...restProps}

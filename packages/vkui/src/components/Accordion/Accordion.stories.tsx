@@ -17,7 +17,9 @@ export const Playground: StoryObj<AccordionProps> = {
   render: (args) => (
     <Accordion {...args}>
       <Accordion.Summary>Title</Accordion.Summary>
-      <Div>Content</Div>
+      <Accordion.Content>
+        <Div>Content</Div>
+      </Accordion.Content>
     </Accordion>
   ),
   decorators: [
