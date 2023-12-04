@@ -67,7 +67,7 @@ export interface PopperCommonProps
    */
   ArrowIcon?: PopperArrowPropsPrivate['Icon'];
   /**
-   * Использовать ли принудительно использовать портал.
+   * Принудительно использовать портал.
    */
   forcePortal?: boolean;
   /**
@@ -82,7 +82,7 @@ export interface PopperCommonProps
   autoUpdateOnTargetResize?: boolean;
   /**
    * В зависимости от области видимости, позиция может смениться на более оптимальную,
-   * чтобы Popper вмешался в эту область видимости.
+   * чтобы Popper вместился в эту область видимости.
    */
   onPlacementChange?(placement: Placement): void;
 }
