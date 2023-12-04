@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SelectType } from '../components/Select/Select';
-import { getTitleFromChildren } from './utils';
+import { getTextFromChildren } from './children';
 
 type Option = {
   label?: React.ReactElement | string;
@@ -28,7 +28,8 @@ try {
 
 type GetOptionLabel<T> = (option: Partial<T>) => string | undefined;
 
-const _getOptionLabel: GetOptionLabel<Option> = (option) => getTitleFromChildren(option.label);
+const _getOptionLabel: GetOptionLabel<Option> = ({ label }) =>
+  typeof label === 'string' ? label : getTextFromChildren(label);
 
 export const defaultFilterFn = <T>(
   query = '',
