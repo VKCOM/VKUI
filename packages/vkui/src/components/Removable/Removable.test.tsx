@@ -15,13 +15,17 @@ describe('Removable', () => {
 
     render(
       <ConfigProvider platform="ios">
-        <Removable onClick={onClick}>
+        <Removable
+          onClick={onClick}
+          toggleButtonTestId="toggleButtonTestId"
+          removeButtonTestId="removeButtonTestId"
+        >
           <div data-testid="content">Контент для удаления</div>
         </Removable>
       </ConfigProvider>,
     );
 
-    await userEvent.click(screen.getByLabelText('Удалить'));
+    await userEvent.click(screen.getByTestId('toggleButtonTestId'));
     expect(eventListener).not.toHaveBeenCalled();
 
     await userEvent.click(screen.getByTestId('content'));
@@ -31,7 +35,7 @@ describe('Removable', () => {
   it('[iOS] render prop isRemoving is true when toggle button is clicked ', async () => {
     render(
       <ConfigProvider platform="ios">
-        <Removable>
+        <Removable toggleButtonTestId="toggleButtonTestId" removeButtonTestId="removeButtonTestId">
           {({ isRemoving }) => (
             <div data-testid="content">Контент для удаления {isRemoving && 'сдвинут'}</div>
           )}
@@ -49,7 +53,7 @@ describe('Removable', () => {
 
     expect(screen.queryByText(/сдвинут/)).toBeFalsy();
 
-    await userEvent.click(screen.getByLabelText('Удалить'));
+    await userEvent.click(screen.getByTestId('toggleButtonTestId'));
 
     await screen.findByText(/сдвинут/);
 

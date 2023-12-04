@@ -9,6 +9,7 @@ import { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Removable.module.css';
 
 export interface RemovableProps {
@@ -20,6 +21,14 @@ export interface RemovableProps {
    * Коллбэк срабатывает при клике на контрол удаления.
    */
   onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement | null) => void;
+  /**
+   * (test) iOS only. testId кнопки, которая активирует кнопку удаления
+   */
+  toggleButtonTestId?: string;
+  /**
+   * (test) testId кнопки удаления
+   */
+  removeButtonTestId?: string;
 }
 
 interface RemovableIosOwnProps extends RemovableProps {
@@ -35,6 +44,8 @@ const RemovableIos = ({
   removePlaceholder,
   removePlaceholderString,
   children: childrenProp,
+  toggleButtonTestId,
+  removeButtonTestId,
 }: RemovableIosOwnProps) => {
   const { window } = useDOM();
 
@@ -80,7 +91,6 @@ const RemovableIos = ({
       <IconButton
         hasActive={false}
         hasHover={false}
-        label={removePlaceholderString}
         className={classNames(
           styles['Removable__action'],
           styles['Removable__toggle'],
@@ -88,7 +98,9 @@ const RemovableIos = ({
         )}
         onClick={onRemoveActivateClick}
         disabled={removeOffset > 0}
+        data-testid={toggleButtonTestId}
       >
+        <VisuallyHidden>{removePlaceholderString}</VisuallyHidden>
         <i className={styles['Removable__toggle-in']} role="presentation" />
       </IconButton>
       {typeof childrenProp === 'function'
@@ -105,6 +117,7 @@ const RemovableIos = ({
         getRootRef={removeButtonRef}
         className={styles['Removable__remove']}
         onClick={onRemove}
+        data-testid={removeButtonTestId}
       >
         <span className={styles['Removable__remove-in']}>{removePlaceholder}</span>
       </Tappable>
@@ -146,6 +159,8 @@ export const Removable = ({
   removePlaceholder = 'Удалить',
   align = 'center',
   indent = false,
+  toggleButtonTestId,
+  removeButtonTestId,
   ...restProps
 }: RemovableOwnProps) => {
   const platform = usePlatform();
@@ -176,6 +191,7 @@ export const Removable = ({
             className={classNames(styles['Removable__action'], 'vkuiInternalRemovable__action')}
             onClick={onRemoveClick}
             label={removePlaceholderString}
+            data-testid={removeButtonTestId}
           >
             <Icon24Cancel role="presentation" />
           </IconButton>
@@ -189,6 +205,8 @@ export const Removable = ({
           onRemove={onRemoveClick}
           removePlaceholder={removePlaceholder}
           removePlaceholderString={removePlaceholderString}
+          toggleButtonTestId={toggleButtonTestId}
+          removeButtonTestId={removeButtonTestId}
         >
           {children}
         </RemovableIos>

@@ -67,6 +67,8 @@ export const Cell = ({
   draggerLabel = DEFAULT_DRAGGABLE_LABEL,
   className,
   style,
+  toggleButtonTestId,
+  removeButtonTestId,
   ...restProps
 }: CellProps) => {
   const [dragging, setDragging] = React.useState(false);
@@ -145,6 +147,8 @@ export const Cell = ({
         getRootRef={rootElRef}
         removePlaceholder={removePlaceholder}
         onRemove={(e) => onRemove(e, rootElRef.current)}
+        toggleButtonTestId={toggleButtonTestId}
+        removeButtonTestId={removeButtonTestId}
       >
         {platform === 'ios' ? (
           ({ isRemoving }) => (
