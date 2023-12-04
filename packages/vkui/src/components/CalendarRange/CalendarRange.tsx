@@ -106,7 +106,8 @@ export const CalendarRange = ({
 
   const getNewValue = React.useCallback(
     (date: Date) => {
-      if (!value) {
+      const isValueEmpty = !value || (value[0] === null && value[1] === null);
+      if (isValueEmpty) {
         return [date, null];
       }
 
