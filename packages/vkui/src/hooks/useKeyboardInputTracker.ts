@@ -1,53 +1,72 @@
 import * as React from 'react';
-import { Keys, pressedKey } from '../lib/accessibility';
+import { isKeyboardFocusingStarted } from '../lib/accessibility';
 import { useDOM } from '../lib/dom';
-import { useGlobalEventListener } from './useGlobalEventListener';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 export const ENABLE_KEYBOARD_INPUT_EVENT_NAME = 'enableKeyboardInput';
 export const DISABLE_KEYBOARD_INPUT_EVENT_NAME = 'disableKeyboardInput';
 
-export function useKeyboardInputTracker(): boolean {
+const EVENT_OPTIONS = {
+  passive: true,
+  capture: true,
+};
+
+/**
+ * Чтобы оптимизировать рендер, сохраняем в ref.
+ *
+ * В контекст можно передать через getter, подробнее в примере ниже.
+ *
+ * ```tsx
+ * const keyboardInputTrackerRef = useKeyboardInputTracker();
+ * <SomeContext.Provider value={{
+ *  get keyboardInput() {
+ *    return keyboardInputTrackerRef.current;
+ *  }
+ * }}>
+ *  {children}
+ * </SomeContext.Provider>
+ * ```
+ *
+ * @private
+ */
+export function useKeyboardInputTracker(): React.MutableRefObject<boolean> {
   const { document } = useDOM();
+  const keyboardFocusingStartedRef = React.useRef(false);
 
-  const [isKeyboardInputActive, toggleKeyboardInput] = React.useState<boolean>(false);
+  useIsomorphicLayoutEffect(() => {
+    /* istanbul ignore if: невозможный кейс, т.к. в SSR эффекты не вызываются. Проверка на будущее, если вдруг эффект будет вызываться. */
+    if (!document) {
+      return;
+    }
 
-  const enableKeyboardInput = React.useCallback(() => {
-    toggleKeyboardInput(true);
-  }, []);
-
-  const handleKeydown = React.useCallback(
-    (e: KeyboardEvent) => {
-      if (pressedKey(e) === Keys.TAB) {
-        enableKeyboardInput();
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (isKeyboardFocusingStarted(event)) {
+        keyboardFocusingStartedRef.current = true;
       }
-    },
-    [enableKeyboardInput],
-  );
+    };
 
-  const disableKeyboardInput = React.useCallback(() => {
-    toggleKeyboardInput(false);
-  }, []);
+    const handleCustomEnableKeyboardEvent = () => {
+      keyboardFocusingStartedRef.current = true;
+    };
 
-  const eventOptions = {
-    passive: true,
-    capture: true,
-  };
+    const handleCustomDisableKeyboardEvent = () => {
+      keyboardFocusingStartedRef.current = false;
+    };
 
-  useGlobalEventListener(document, 'keydown', handleKeydown, eventOptions);
-  useGlobalEventListener(document, 'mousedown', disableKeyboardInput, eventOptions);
-  useGlobalEventListener(document, 'touchstart', disableKeyboardInput, eventOptions);
-  useGlobalEventListener(
-    document,
-    ENABLE_KEYBOARD_INPUT_EVENT_NAME,
-    enableKeyboardInput,
-    eventOptions,
-  );
-  useGlobalEventListener(
-    document,
-    DISABLE_KEYBOARD_INPUT_EVENT_NAME,
-    disableKeyboardInput,
-    eventOptions,
-  );
+    document.addEventListener('keydown', handleKeydown, EVENT_OPTIONS);
+    document.addEventListener(ENABLE_KEYBOARD_INPUT_EVENT_NAME, handleCustomEnableKeyboardEvent, EVENT_OPTIONS); // prettier-ignore
+    document.addEventListener(DISABLE_KEYBOARD_INPUT_EVENT_NAME, handleCustomDisableKeyboardEvent, EVENT_OPTIONS); // prettier-ignore
+    document.addEventListener('mousedown', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
+    document.addEventListener('touchstart', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
 
-  return isKeyboardInputActive;
+    return () => {
+      document.removeEventListener('keydown', handleKeydown, EVENT_OPTIONS);
+      document.removeEventListener(ENABLE_KEYBOARD_INPUT_EVENT_NAME, handleCustomEnableKeyboardEvent, EVENT_OPTIONS); // prettier-ignore
+      document.removeEventListener(DISABLE_KEYBOARD_INPUT_EVENT_NAME, handleCustomDisableKeyboardEvent, EVENT_OPTIONS); // prettier-ignore
+      document.removeEventListener('mousedown', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
+      document.removeEventListener('touchstart', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
+    };
+  }, [document]);
+
+  return keyboardFocusingStartedRef;
 }
