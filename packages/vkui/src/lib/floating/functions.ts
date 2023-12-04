@@ -26,6 +26,7 @@ export function convertFloatingDataToReactCSSProperties(
   x: UseFloatingData['x'],
   y: UseFloatingData['y'],
   initialWidth: React.CSSProperties['width'] | null = 'max-content',
+  middlewareData?: UseFloatingData['middlewareData'],
 ): React.CSSProperties {
   const styles: React.CSSProperties = {
     position: strategy,
@@ -36,6 +37,12 @@ export function convertFloatingDataToReactCSSProperties(
   };
   if (initialWidth !== null) {
     styles.width = initialWidth;
+  }
+  if (middlewareData) {
+    const hide = middlewareData.hide;
+    if (hide && hide.referenceHidden) {
+      styles['visibility'] = 'hidden';
+    }
   }
   return styles;
 }

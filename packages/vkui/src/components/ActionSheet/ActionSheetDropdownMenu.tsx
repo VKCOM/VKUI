@@ -66,7 +66,7 @@ export const ActionSheetDropdownMenu = ({
   return (
     <Popper
       targetRef={targetRef}
-      offsetDistance={popupOffsetDistance}
+      offsetByMainAxis={popupOffsetDistance}
       placement={placement}
       className={classNames(
         styles['ActionSheet'],

@@ -35,7 +35,7 @@ export const RichTooltip = ({
         className,
       )}
       arrow={arrow}
-      arrowClassName={styles['RichTooltip__arrow']}
+      arrowProps={{ iconClassName: styles['RichTooltip__arrow'] }}
       {...popperProps}
     >
       {children}

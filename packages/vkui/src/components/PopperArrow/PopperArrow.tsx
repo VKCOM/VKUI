@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
-import type { HasRootRef } from '../../types';
+import type { HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
 import { DefaultIcon } from './DefaultIcon';
 import styles from './PopperArrow.module.css';
 
@@ -16,19 +16,24 @@ const placementClassNames = {
   left: styles['PopperArrow--placement-left'],
 };
 
-export interface PopperArrowProps extends HasRootRef<HTMLDivElement> {
+export interface PopperArrowProps
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
+    HasDataAttribute {
   coords?: Coords;
   placement: Placement;
-  arrowClassName?: string;
+  iconStyle?: React.CSSProperties;
+  iconClassName?: string;
   Icon?: React.ComponentType<React.SVGAttributes<SVGSVGElement>>;
 }
 
 export const PopperArrow = ({
   coords,
-  arrowClassName,
+  iconStyle,
+  iconClassName,
   placement,
   getRootRef,
   Icon = DefaultIcon,
+  ...restProps
 }: PopperArrowProps) => {
   const [arrowPlacement, arrowStyles] = getArrowPositionData(placement, coords);
 
@@ -40,8 +45,9 @@ export const PopperArrow = ({
         styles['PopperArrow'],
         arrowPlacement && placementClassNames[arrowPlacement],
       )}
+      {...restProps}
     >
-      <Icon className={classNames(styles['PopperArrow__in'], arrowClassName)} />
+      <Icon className={classNames(styles['PopperArrow__in'], iconClassName)} style={iconStyle} />
     </div>
   );
 };
