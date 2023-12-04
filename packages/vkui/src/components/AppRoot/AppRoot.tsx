@@ -99,7 +99,7 @@ export const AppRoot = ({
   layout,
   ...props
 }: AppRootProps) => {
-  const isKeyboardInputActive = useKeyboardInputTracker();
+  const isKeyboardInputActiveRef = useKeyboardInputTracker();
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null);
   const { document } = useDOM();
@@ -238,10 +238,12 @@ export const AppRoot = ({
         appRoot: rootRef,
         portalRoot,
         embedded: mode === 'embedded',
-        keyboardInput: isKeyboardInputActive,
         mode,
         disablePortal,
         layout,
+        get keyboardInput() {
+          return isKeyboardInputActiveRef.current;
+        },
       }}
     >
       <ScrollController elRef={rootRef}>{children}</ScrollController>

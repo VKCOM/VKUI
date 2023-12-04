@@ -32,80 +32,38 @@ export const Keys = {
 
 export type KeysValues = ValuesOfObject<typeof Keys>;
 
-interface AccessibleKey {
-  code: KeysValues;
-  key: string[];
-  keyCode: number;
+const EVENT_KEY_TO_COMMON_KEY_MAP = new Map([
+  ['Enter', Keys.ENTER],
+  ['Space', Keys.SPACE],
+  ['Spacebar', Keys.SPACE],
+  [' ', Keys.SPACE],
+  ['Tab', Keys.TAB],
+  ['Escape', Keys.ESCAPE],
+  ['Home', Keys.HOME],
+  ['End', Keys.END],
+  ['ArrowLeft', Keys.ARROW_LEFT],
+  ['ArrowRight', Keys.ARROW_RIGHT],
+  ['ArrowUp', Keys.ARROW_UP],
+  ['ArrowDown', Keys.ARROW_DOWN],
+  ['PageUp', Keys.PAGE_UP],
+  ['PageDown', Keys.PAGE_DOWN],
+]);
+
+export function pressedKey<T extends KeyboardEvent | React.KeyboardEvent>(event: T) {
+  const foundKey = EVENT_KEY_TO_COMMON_KEY_MAP.get(event.key);
+  return foundKey ? foundKey : null;
 }
 
-const ACCESSIBLE_KEYS: AccessibleKey[] = [
-  {
-    code: Keys.ENTER,
-    key: ['Enter'],
-    keyCode: 13,
-  },
-  {
-    code: Keys.SPACE,
-    key: ['Space', 'Spacebar', ' '],
-    keyCode: 32,
-  },
-  {
-    code: Keys.TAB,
-    key: ['Tab'],
-    keyCode: 9,
-  },
-  {
-    code: Keys.ESCAPE,
-    key: ['Escape'],
-    keyCode: 27,
-  },
-  {
-    code: Keys.HOME,
-    key: ['Home'],
-    keyCode: 36,
-  },
-  {
-    code: Keys.END,
-    key: ['End'],
-    keyCode: 35,
-  },
-  {
-    code: Keys.ARROW_LEFT,
-    key: ['ArrowLeft'],
-    keyCode: 37,
-  },
-  {
-    code: Keys.ARROW_RIGHT,
-    key: ['ArrowRight'],
-    keyCode: 39,
-  },
-  {
-    code: Keys.ARROW_UP,
-    key: ['ArrowUp'],
-    keyCode: 40,
-  },
-  {
-    code: Keys.ARROW_DOWN,
-    key: ['ArrowDown'],
-    keyCode: 40,
-  },
-  {
-    code: Keys.PAGE_UP,
-    key: ['PageUp'],
-    keyCode: 40,
-  },
-  {
-    code: Keys.PAGE_DOWN,
-    key: ['PageDown'],
-    keyCode: 40,
-  },
-];
+export const FOCUS_ALLOW_LIST_KEYS = new Set<string>([
+  Keys.TAB,
+  Keys.ARROW_LEFT,
+  Keys.ARROW_RIGHT,
+  Keys.ARROW_UP,
+  Keys.ARROW_DOWN,
+]);
 
-export function pressedKey(e: KeyboardEvent | React.KeyboardEvent<HTMLElement>) {
-  return (
-    ACCESSIBLE_KEYS.find(({ key, keyCode }) => key.includes(e.key) || keyCode === e.keyCode)
-      ?.code || null
-  );
+export function isKeyboardFocusingStarted<T extends KeyboardEvent | React.KeyboardEvent>(event: T) {
+  return FOCUS_ALLOW_LIST_KEYS.has(event.key);
 }
 
 export function shouldTriggerClickOnEnterOrSpace(
