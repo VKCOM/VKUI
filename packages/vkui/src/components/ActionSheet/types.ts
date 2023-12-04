@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { PlacementWithAuto } from '../../lib/floating/types';
+import type { PlacementWithAuto } from '../../lib/floating/types/common';
 import { FocusTrapProps } from '../FocusTrap/FocusTrap';
 
 export type ToggleRef = Element | null | undefined | React.RefObject<Element>;

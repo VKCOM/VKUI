@@ -9,7 +9,7 @@ import {
   sizeMiddleware,
 } from '../adapters';
 import { checkIsNotAutoPlacement, getAutoPlacementAlign } from '../functions';
-import type { ArrowOptions, PlacementWithAuto, UseFloatingMiddleware } from '../types';
+import type { ArrowOptions, PlacementWithAuto, UseFloatingMiddleware } from '../types/common';
 
 export interface UseFloatingMiddlewaresBootstrapOptions {
   /**
@@ -46,7 +46,7 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    */
   customMiddlewares?: UseFloatingMiddleware[];
   /**
-   * Принудительно скрывает компонент если целевой элемент исчез.
+   * Принудительно скрывает компонент если целевой элемент вышел за область видимости.
    */
   hideWhenReferenceHidden?: boolean;
 }

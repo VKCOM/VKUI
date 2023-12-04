@@ -5,12 +5,15 @@ export type {
   PlacementWithAuto,
   AutoPlacementType,
   UseFloatingMiddleware,
-} from './types';
+} from './types/common';
+
+export type { FloatingComponentProps, FloatingContentRenderProp } from './types/component';
 
 export {
   checkIsNotAutoPlacement,
   getAutoPlacementAlign,
   convertFloatingDataToReactCSSProperties,
+  getArrowCoordsByMiddlewareData,
 } from './functions';
 
 export {

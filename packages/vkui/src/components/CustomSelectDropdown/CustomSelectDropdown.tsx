@@ -74,7 +74,7 @@ export const CustomSelectDropdown = ({
           ),
         className,
       )}
-      forcePortal={forcePortal}
+      usePortal={forcePortal}
       autoUpdateOnTargetResize
       {...restProps}
     >

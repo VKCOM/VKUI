@@ -5,8 +5,8 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { HTMLAttributesWithRootRef } from '../../types';
+import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { SplitColContext } from '../SplitCol/SplitColContext';
-import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import styles from './FixedLayout.module.css';
 
 const stylesVertical = {
@@ -79,7 +79,7 @@ export const FixedLayout = ({
   useGlobalEventListener(window, 'resize', doResize);
 
   return (
-    <TooltipContainer
+    <OnboardingTooltipContainer
       {...restProps}
       fixed
       ref={ref}
@@ -93,6 +93,6 @@ export const FixedLayout = ({
       style={{ ...style, width }}
     >
       {children}
-    </TooltipContainer>
+    </OnboardingTooltipContainer>
   );
 };

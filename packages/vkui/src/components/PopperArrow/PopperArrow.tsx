@@ -20,17 +20,20 @@ export interface PopperArrowProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasDataAttribute {
   coords?: Coords;
-  placement: Placement;
+  placement?: Placement;
   iconStyle?: React.CSSProperties;
   iconClassName?: string;
   Icon?: React.ComponentType<React.SVGAttributes<SVGSVGElement>>;
 }
 
+/**
+ * TODO [>=6.1.0] Переименовать в FloatingArrow
+ */
 export const PopperArrow = ({
   coords,
   iconStyle,
   iconClassName,
-  placement,
+  placement = 'bottom',
   getRootRef,
   Icon = DefaultIcon,
   ...restProps

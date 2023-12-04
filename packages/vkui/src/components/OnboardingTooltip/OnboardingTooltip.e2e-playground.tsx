@@ -4,10 +4,10 @@ import {
   type ComponentPlaygroundProps,
   TEST_CLASS_NAMES,
 } from '@vkui-e2e/playground-helpers';
-import { Tooltip, type TooltipProps } from './Tooltip';
-import { TooltipContainer } from './TooltipContainer';
+import { OnboardingTooltip, type OnboardingTooltipProps } from './OnboardingTooltip';
+import { OnboardingTooltipContainer } from './OnboardingTooltipContainer';
 
-export const TooltipPlayground = (props: ComponentPlaygroundProps) => {
+export const OnboardingTooltipPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
@@ -16,39 +16,36 @@ export const TooltipPlayground = (props: ComponentPlaygroundProps) => {
           header: [undefined, 'header'],
         },
         {
-          alignX: ['left', 'right'],
-          alignY: ['top', 'bottom'],
+          placement: ['top-start', 'top-end', 'bottom-start', 'bottom-end'],
         },
         {
-          alignX: ['left'],
-          alignY: ['top'],
-          cornerOffset: [5, -5],
+          placement: ['top-start'],
+          arrowCornerOffset: [5, -5],
         },
         {
-          alignX: ['left'],
-          alignY: ['top'],
-          cornerAbsoluteOffset: [10, -1],
+          placement: ['top-start'],
+          arrowCornerAbsoluteOffset: [10, -1],
         },
       ]}
     >
-      {(props: TooltipProps) => (
-        <TooltipContainer
+      {(props: OnboardingTooltipProps) => (
+        <OnboardingTooltipContainer
           style={{
             minWidth: '300px',
             height: '100px',
             position: 'relative',
             display: 'flex',
             border: '1px solid #eee',
-            alignItems: props.alignY === 'top' ? 'flex-end' : 'flex-start',
+            alignItems: props.placement?.startsWith('top') ? 'flex-end' : 'flex-start',
             justifyContent: 'center',
           }}
         >
-          <Tooltip text="text" {...props}>
+          <OnboardingTooltip text="text" {...props}>
             <div className={TEST_CLASS_NAMES.CONTENT} style={{ display: 'flex' }}>
               Tooltip target
             </div>
-          </Tooltip>
-        </TooltipContainer>
+          </OnboardingTooltip>
+        </OnboardingTooltipContainer>
       )}
     </ComponentPlayground>
   );

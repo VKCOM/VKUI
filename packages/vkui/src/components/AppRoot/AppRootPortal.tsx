@@ -1,29 +1,21 @@
 import * as React from 'react';
-import { createPortal } from 'react-dom';
 import { useAppearance } from '../../hooks/useAppearance';
 import { useIsClient } from '../../hooks/useIsClient';
+import { createPortal } from '../../lib/createPortal';
 import { isRefObject } from '../../lib/isRefObject';
 import { HasChildren } from '../../types';
 import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
-import { AppRootContext } from './AppRootContext';
+import { AppRootContext, type AppRootContextInterface } from './AppRootContext';
 
 export interface AppRootPortalProps extends HasChildren {
-  className?: string;
-  forcePortal?: boolean;
   /**
-   * Кастомный root-элемент портала.
-   * При передаче вместе с `forcePorta=true` игнорируется `portalRoot` и `disablePortal`
-   * из контекста `AppRoot`.
+   * - При передаче `true` будет использовать `portalRoot` из контекста `AppRoot`.
+   * - При передаче элемента будут игнорироваться `portalRoot` и `disablePortal` из контекста `AppRoot`.
    */
-  portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
+  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null;
 }
 
-export const AppRootPortal = ({
-  children,
-  className,
-  forcePortal: forcePortalProp,
-  portalRoot: portalRootProp = null,
-}: AppRootPortalProps) => {
+export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps) => {
   const { portalRoot, mode, disablePortal } = React.useContext(AppRootContext);
   const appearance = useAppearance();
 
@@ -32,40 +24,39 @@ export const AppRootPortal = ({
     return null;
   }
 
-  const forcePortal = forcePortalProp ?? mode !== 'full';
+  const portalContainer = resolvePortalContainer(usePortal, portalRoot);
+  if (!portalContainer || shouldDisablePortal(usePortal, mode, Boolean(disablePortal))) {
+    return children;
+  }
 
-  const portalContainer = getPortalContainer(portalRootProp, portalRoot);
-
-  const ignoreDisablePortalFlagFromContext = portalRootProp && forcePortal;
-  const shouldUsePortal = ignoreDisablePortalFlagFromContext
-    ? true
-    : !disablePortal && portalContainer && forcePortal;
-
-  return shouldUsePortal && portalContainer ? (
-    createPortal(
-      <AppearanceProvider value={appearance}>
-        <div className={className}>{children}</div>
-      </AppearanceProvider>,
-      portalContainer,
-    )
-  ) : (
-    <React.Fragment>{children}</React.Fragment>
+  return createPortal(
+    <AppearanceProvider value={appearance}>{children}</AppearanceProvider>,
+    portalContainer,
   );
 };
 
-/**
- * Получает из кастомного пропа `partialRootProp` и `partialRoot` контекста
- * контейнер-элемент для портала.
- * `partialRootProp` может быть ref элементом.
- *
- */
-function getPortalContainer(
-  portalRootProp?: HTMLElement | React.RefObject<HTMLElement> | null,
-  portalRoot?: HTMLElement | null,
+function shouldDisablePortal(
+  usePortal: AppRootPortalProps['usePortal'],
+  mode: AppRootContextInterface['mode'],
+  disablePortal: boolean,
 ) {
-  if (!portalRootProp) {
-    return portalRoot;
+  if (usePortal !== undefined) {
+    if (typeof usePortal !== 'boolean') {
+      return false;
+    }
+    return disablePortal || usePortal !== true;
+  }
+  // fallback
+  return disablePortal || mode !== 'full';
+}
+
+function resolvePortalContainer<PortalRootFromContext extends HTMLElement | null | undefined>(
+  usePortal: AppRootPortalProps['usePortal'],
+  portalRootFromContext: PortalRootFromContext,
+) {
+  if (usePortal === true || !usePortal) {
+    return portalRootFromContext ? portalRootFromContext : null;
   }
 
-  return isRefObject(portalRootProp) ? portalRootProp.current : portalRootProp;
+  return isRefObject(usePortal) ? usePortal.current : usePortal;
 }

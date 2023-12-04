@@ -1,5 +1,9 @@
-import type { Placement, UseFloatingRefs } from '../types';
-import type { UseFloatingMiddlewaresBootstrapOptions } from '../useFloatingMiddlewaresBootstrap';
+import type {
+  Placement,
+  UseFloatingData,
+  UseFloatingMiddleware,
+  UseFloatingRefs,
+} from '../types/common';
 
 export type InteractiveTriggerType = 'click' | 'hover' | 'focus';
 
@@ -17,11 +21,9 @@ export type ShownChangeReason =
 
 export type OnShownChange = (shown: boolean, reason?: ShownChangeReason) => void;
 
-export interface UseFloatingWithInteractionsProps
-  extends Pick<
-    UseFloatingMiddlewaresBootstrapOptions,
-    'placement' | 'offsetByMainAxis' | 'offsetByCrossAxis'
-  > {
+export interface UseFloatingWithInteractionsProps {
+  placement?: Placement;
+  middlewares?: UseFloatingMiddleware[];
   /**
    * Механика вызова всплывающего элемента.
    *
@@ -46,6 +48,10 @@ export interface UseFloatingWithInteractionsProps
    * > Используется только для `trigger="hover"`.
    */
   hoverDelay?: number | [number, number];
+  /**
+   * При `trigger="hover"` закрывает всплывающий элемент при нажатии на целевой элемент.
+   */
+  closeAfterClick?: boolean;
   /**
    * Блокирует изменение состояния.
    */
@@ -97,6 +103,7 @@ export interface UseFloatingWithInteractionsReturn<T extends HTMLElement = HTMLE
   refs: UseFloatingRefs<T>;
   referenceProps: ReferenceProps<T>;
   floatingProps: FloatingProps<T>;
+  middlewareData: UseFloatingData['middlewareData'];
   onClose(this: void): void;
   onEscapeKeyDown?(this: void): void;
   onRestoreFocus(this: void): boolean;

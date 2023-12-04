@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { Icon16ErrorCircleOutline } from '@vkontakte/icons';
-import {
-  classNames,
-  Text,
-  unstable_TextTooltip as TextTooltip,
-  useAdaptivityConditionalRender,
-} from '@vkui';
+import { classNames, Text, Tooltip, useAdaptivityConditionalRender } from '@vkui';
 import TypeRenderer from '../Type/TypeRenderer';
 import './ComplexType.css';
 
@@ -16,7 +11,7 @@ export const ComplexTypeRenderer = ({ name, raw }) => {
     <React.Fragment>
       {sizeX.compact && <TypeRenderer className={sizeX.compact.className}>{raw}</TypeRenderer>}
       {sizeX.regular && (
-        <TextTooltip
+        <Tooltip
           className={classNames('ComplexTypeDropdown', sizeX.regular.className)}
           placement="right"
           text={raw}
@@ -25,7 +20,7 @@ export const ComplexTypeRenderer = ({ name, raw }) => {
             <span className="ComplexType__name">{name}</span>
             <Icon16ErrorCircleOutline className="ComplexType__icon" />
           </Text>
-        </TextTooltip>
+        </Tooltip>
       )}
     </React.Fragment>
   );

@@ -5,7 +5,7 @@ import type {
   Placement,
   PlacementWithAuto,
   UseFloatingData,
-} from './types';
+} from './types/common';
 
 export function checkIsNotAutoPlacement(placement: PlacementWithAuto): placement is Placement {
   return !placement.startsWith('auto');
@@ -46,3 +46,15 @@ export function convertFloatingDataToReactCSSProperties(
   }
   return styles;
 }
+
+export const getArrowCoordsByMiddlewareData = (
+  middlewareData: UseFloatingData['middlewareData'],
+) => {
+  const coords = { x: 0, y: 0 };
+  if (middlewareData.arrow) {
+    const { x = 0, y = 0 } = middlewareData.arrow;
+    coords.x = x;
+    coords.y = y;
+  }
+  return coords;
+};

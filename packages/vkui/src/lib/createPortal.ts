@@ -1,9 +1,9 @@
 import * as ReactDOM from 'react-dom';
 import { getDocumentBody } from './dom';
 
-export const createPortal = (
+export const createPortal = <T extends Element | DocumentFragment | null>(
   children: React.ReactNode,
-  container?: Element | DocumentFragment,
+  container?: T,
   key?: null | string,
 ) => {
   const resolvedContainer = container ? container : getDocumentBody();

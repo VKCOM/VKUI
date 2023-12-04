@@ -2,55 +2,62 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { injectAriaExpandedPropByRole } from '../../lib/accessibility';
-import { createPortal } from '../../lib/createPortal';
 import { animationFadeClassNames, transformOriginClassNames } from '../../lib/cssAnimation';
-import { getDocumentBody } from '../../lib/dom';
 import {
+  type FloatingComponentProps,
+  type FloatingContentRenderProp,
   type OnShownChange,
+  useFloatingMiddlewaresBootstrap,
   useFloatingWithInteractions,
-  type UseFloatingWithInteractionsProps,
-  type UseFloatingWithInteractionsReturn,
 } from '../../lib/floating';
 import type { HTMLAttributesWithRootRef } from '../../types';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import styles from './Popover.module.css';
 
+/**
+ * @alias
+ * @public
+ */
 export type PopoverOnShownChange = OnShownChange;
 
-export type PopoverContentRenderProp = (
-  props: Pick<UseFloatingWithInteractionsReturn, 'onClose'>,
-) => React.ReactNode;
+/**
+ * @alias
+ * @public
+ */
+export type PopoverContentRenderProp = FloatingContentRenderProp;
 
+type AllowedFloatingComponentProps = Pick<
+  FloatingComponentProps,
+  | 'placement'
+  | 'trigger'
+  | 'content'
+  | 'hoverDelay'
+  | 'closeAfterClick'
+  | 'offsetByMainAxis'
+  | 'offsetByCrossAxis'
+  | 'defaultShown'
+  | 'shown'
+  | 'onShownChange'
+  | 'usePortal'
+  | 'sameWidth'
+  | 'hideWhenReferenceHidden'
+  | 'disabled'
+  | 'disableInteractive'
+  | 'disableCloseOnClickOutside'
+  | 'disableCloseOnEscKey'
+  | 'autoFocus'
+  | 'restoreFocus'
+  | 'children'
+  | 'zIndex'
+>;
+
+/**
+ * @public
+ */
 export interface PopoverProps
-  extends UseFloatingWithInteractionsProps,
-    Omit<
-      HTMLAttributesWithRootRef<HTMLDivElement>,
-      keyof UseFloatingWithInteractionsProps | 'content'
-    > {
-  /**
-   * Содержимое всплывающего окна.
-   *
-   * При передаче контента в виде [render prop](https://react.dev/reference/react/cloneElement#passing-data-with-a-render-prop),
-   * в аргументе функции можно получить метод `onClose`, с помощью которого можно программно закрывать
-   * всплывающее окно.
-   */
-  content?: React.ReactNode | PopoverContentRenderProp;
-  /**
-   * Целевой элемент. Всплывающее окно появится возле него.
-   *
-   * > ⚠️ Если это пользовательский компонент, то он должен:
-   * > 1. предоставлять параметры либо `getRootRef`, либо `ref` (cм. `React.forwardRef()`) для получения ссылки на DOM-узел;
-   * > 2. принимать DOM атрибуты и события.
-   */
-  children?: React.ReactElement;
-  /**
-   * Нужно ли при навигации с клавиатуры авто-фокусироваться на всплывающий элемент.
-   */
-  autoFocus?: boolean;
-  /**
-   * Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент.
-   */
-  restoreFocus?: boolean;
+  extends AllowedFloatingComponentProps,
+    Omit<HTMLAttributesWithRootRef<HTMLDivElement>, keyof FloatingComponentProps> {
   /**
    * Отключает у всплывающего элемента стилизацию по умолчанию, а именно:
    * - background
@@ -60,14 +67,6 @@ export interface PopoverProps
    * Используется в случае, если необходимо стилизовать по своему.
    */
   noStyling?: boolean;
-  /**
-   * Перебивает zIndex заданный по умолчанию.
-   */
-  zIndex?: number | string;
-  /**
-   * По умолчанию используется document.body.
-   */
-  usePortal?: boolean | Element | DocumentFragment;
 }
 
 /**
@@ -79,8 +78,11 @@ export const Popover = ({
   trigger = 'click',
   content,
   hoverDelay = 150,
+  closeAfterClick,
   offsetByMainAxis = 8,
   offsetByCrossAxis = 0,
+  sameWidth,
+  hideWhenReferenceHidden,
   disabled,
   disableInteractive,
   disableCloseOnClickOutside,
@@ -91,7 +93,7 @@ export const Popover = ({
   shown: shownProp,
   onShownChange,
 
-  // Для createPortal
+  // Для AppRootPortal
   usePortal = true,
 
   // FocusTrapProps
@@ -105,6 +107,13 @@ export const Popover = ({
   role,
   ...restPopoverProps
 }: PopoverProps) => {
+  const { middlewares, strictPlacement } = useFloatingMiddlewaresBootstrap({
+    placement: expectedPlacement,
+    offsetByMainAxis,
+    offsetByCrossAxis,
+    sameWidth,
+    hideWhenReferenceHidden,
+  });
   const {
     placement,
     shown,
@@ -116,11 +125,11 @@ export const Popover = ({
     onRestoreFocus,
     onEscapeKeyDown,
   } = useFloatingWithInteractions({
-    placement: expectedPlacement,
+    middlewares,
+    placement: strictPlacement,
     trigger,
     hoverDelay,
-    offsetByMainAxis,
-    offsetByCrossAxis,
+    closeAfterClick,
     disabled,
     disableInteractive,
     disableCloseOnClickOutside,
@@ -130,7 +139,7 @@ export const Popover = ({
     onShownChange,
   });
 
-  const [childRef, child] = usePatchChildren<HTMLDivElement>(
+  const [, child] = usePatchChildren<HTMLDivElement>(
     children,
     injectAriaExpandedPropByRole(referenceProps, shown, role),
     refs.setReference,
@@ -140,36 +149,33 @@ export const Popover = ({
   if (shown) {
     floatingProps.style.zIndex = String(zIndex);
     popover = (
-      <div ref={refs.setFloating} className={styles['Popover']} {...floatingProps}>
-        <FocusTrap
-          {...restPopoverProps}
-          role={role}
-          className={classNames(
-            styles['Popover__in'],
-            noStyling ? undefined : styles['Popover__in--withStyling'],
-            willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
-            transformOriginClassNames[placement],
-            className,
-          )}
-          autoFocus={disableInteractive ? false : autoFocus}
-          restoreFocus={restoreFocus ? onRestoreFocus : false}
-          onClose={onEscapeKeyDown}
-        >
-          {typeof content === 'function' ? content({ onClose }) : content}
-        </FocusTrap>
-      </div>
+      <AppRootPortal usePortal={usePortal}>
+        <div ref={refs.setFloating} className={styles['Popover']} {...floatingProps}>
+          <FocusTrap
+            {...restPopoverProps}
+            role={role}
+            className={classNames(
+              styles['Popover__in'],
+              noStyling ? undefined : styles['Popover__in--withStyling'],
+              willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
+              transformOriginClassNames[placement],
+              className,
+            )}
+            autoFocus={disableInteractive ? false : autoFocus}
+            restoreFocus={restoreFocus ? onRestoreFocus : false}
+            onClose={onEscapeKeyDown}
+          >
+            {typeof content === 'function' ? content({ onClose }) : content}
+          </FocusTrap>
+        </div>
+      </AppRootPortal>
     );
   }
 
   return (
     <React.Fragment>
       {child}
-      {usePortal && popover
-        ? createPortal(
-            popover,
-            typeof usePortal !== 'boolean' ? usePortal : getDocumentBody(childRef.current),
-          )
-        : popover}
+      {popover}
     </React.Fragment>
   );
 };
