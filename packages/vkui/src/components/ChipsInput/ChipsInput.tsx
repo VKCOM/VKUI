@@ -1,42 +1,80 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { ChipOption } from '../Chip/Chip';
-import { ChipsInputBase, ChipsInputBaseProps } from '../ChipsInputBase/ChipsInputBase';
-import { FormField, FormFieldProps } from '../FormField/FormField';
-import styles from './ChipsInput.module.css';
+import { useExternRef } from '../../hooks/useExternRef';
+import { ChipsInputBase } from '../ChipsInputBase/ChipsInputBase';
+import {
+  getNewOptionDataDefault,
+  getOptionLabelDefault,
+  getOptionValueDefault,
+} from '../ChipsInputBase/constants';
+import type { ChipOption, ChipsInputBaseProps } from '../ChipsInputBase/types';
+import type { FormFieldProps } from '../FormField/FormField';
+import { useChipsInput, type UseChipsInputProps } from './useChipsInput';
 
 export interface ChipsInputProps<Option extends ChipOption>
   extends ChipsInputBaseProps<Option>,
-    FormFieldProps {}
+    UseChipsInputProps<Option>,
+    Pick<FormFieldProps, 'status' | 'mode' | 'before' | 'after'> {}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ChipsInput
  */
 export const ChipsInput = <Option extends ChipOption>({
-  style,
-  className,
-  getRootRef,
-  before,
-  after,
-  status,
-  mode,
+  // option
+  value: valueProp,
+  defaultValue,
+  onChange,
+
+  // input
+  getRef,
+  inputValue: inputValueProp,
+  defaultInputValue: inputDefaultValueProp,
+  onInputChange: onInputChangeProp,
+  getOptionValue = getOptionValueDefault,
+  getOptionLabel = getOptionLabelDefault,
+  getNewOptionData = getNewOptionDataDefault,
+
+  // other
+  disabled,
   ...restProps
 }: ChipsInputProps<Option>) => {
+  const {
+    value,
+    addOptionFromInput,
+    removeOption,
+
+    // input
+    inputRef: inputRefHook,
+    inputValue,
+    onInputChange,
+  } = useChipsInput({
+    // option
+    value: valueProp,
+    defaultValue,
+    onChange,
+    getOptionLabel,
+    getOptionValue,
+    getNewOptionData,
+
+    // input
+    inputValue: inputValueProp,
+    defaultInputValue: inputDefaultValueProp,
+    onInputChange: onInputChangeProp,
+
+    // other
+    disabled,
+  });
+  const inputRef = useExternRef(getRef, inputRefHook);
+
   return (
-    <FormField
-      getRootRef={getRootRef}
-      className={classNames(styles['ChipsInput'], 'vkuiInternalChipsInput', className)}
-      style={style}
-      disabled={restProps.disabled}
-      before={before}
-      after={after}
-      role="application"
-      aria-disabled={restProps.disabled}
-      aria-readonly={restProps.readOnly}
-      status={status}
-      mode={mode}
-    >
-      <ChipsInputBase {...restProps} />
-    </FormField>
+    <ChipsInputBase
+      {...restProps}
+      disabled={disabled}
+      value={value}
+      onAddChipOption={addOptionFromInput}
+      onRemoveChipOption={removeOption}
+      getRef={inputRef}
+      inputValue={inputValue}
+      onInputChange={onInputChange}
+    />
   );
 };

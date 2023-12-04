@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon12Download } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { ChipOption } from '../Chip/Chip';
+import type { ChipOption } from '../ChipsInputBase/types';
 import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
 
 const story: Meta<ChipsSelectProps<ChipOption>> = {
@@ -32,6 +32,6 @@ const groups = [
 
 export const Playground: Story = {
   args: {
-    options: groups,
+    presets: groups,
   },
 };

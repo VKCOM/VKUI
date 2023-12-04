@@ -1,63 +1,65 @@
-import * as React from 'react';
-import { SelectType } from '../components/Select/Select';
+import type { SelectType } from '../components/Select/Select';
 import { getTitleFromChildren } from './utils';
 
-type Option = {
-  label?: React.ReactElement | string;
+export type Option = {
+  label?: React.ReactElement | string | number;
   [index: string]: any;
 };
 
+export type GetOptionLabel<T extends Option> = (option: T) => string | undefined;
+
+export type FilterFn<T extends Option> = (
+  inputValue: string,
+  option: T,
+  getOptionsLabel?: GetOptionLabel<T>,
+) => boolean;
+
+function getOptionLabelDefault<T extends Option>(option: T): string | undefined {
+  return getTitleFromChildren(option.label);
+}
+
 const findAllIncludes = (target = '', search = '') => {
   const includes = [];
-
   let i = target.indexOf(search);
   while (i !== -1) {
     includes.push(i);
     i = target.indexOf(search, i + 1);
   }
-
   return includes;
 };
 
-let letterRegexp: RegExp;
+export function defaultFilterFn<T extends Option>(
+  ...args: Parameters<FilterFn<T>>
+): ReturnType<FilterFn<T>> {
+  const [rawValue = '', option, getOptionLabel] = args;
+  const foundRawLabel = getOptionLabel ? getOptionLabel(option) : getOptionLabelDefault(option);
 
-// На момент написания флаг u не поддерживался рядом браузеров, поэтому добавили фоллбэк.
-try {
-  letterRegexp = new RegExp('\\p{L}', 'u');
-} catch (e) {}
+  if (foundRawLabel === undefined) {
+    return false;
+  }
 
-type GetOptionLabel<T> = (option: Partial<T>) => string | undefined;
+  const value = rawValue.toLocaleLowerCase();
+  const label = foundRawLabel.toLocaleLowerCase();
 
-const _getOptionLabel: GetOptionLabel<Option> = (option) => getTitleFromChildren(option.label);
-
-export const defaultFilterFn = <T>(
-  query = '',
-  option: T,
-  getOptionLabel: GetOptionLabel<T> = _getOptionLabel,
-) => {
-  query = query.toLocaleLowerCase();
-  let label = getOptionLabel(option)?.toLocaleLowerCase();
-
-  if (label?.startsWith(query)) {
+  if (label.startsWith(value)) {
     return true;
   }
 
-  const includes = findAllIncludes(label, query);
+  const includes = findAllIncludes(label, value);
 
   // Ищем вхождение перед началом которого не буква
-  if (letterRegexp && label) {
+  if (label) {
+    const letterRegexp = new RegExp('\\p{L}', 'u');
+
     for (const index of includes) {
       if (!letterRegexp.test(label[index - 1])) {
         return true;
       }
     }
-  } else {
-    // если regexp не поддерживается, то ищем любое вхождение
-    return includes.length > 0;
   }
 
   return false;
-};
+}
 
 export const getFormFieldModeFromSelectType = (selectType: SelectType = 'default') => {
   return selectType === 'default' ? 'default' : 'plain';

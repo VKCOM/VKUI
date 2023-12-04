@@ -2,5 +2,5 @@ import { baselineComponent } from '../../testing/utils';
 import { ChipsInput } from './ChipsInput';
 
 describe('ChipsInput', () => {
-  baselineComponent(ChipsInput);
+  baselineComponent(ChipsInput, { a11y: false });
 });

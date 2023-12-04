@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { getIconArgBySize, getIconComponent, IconName } from '../../storybook/Icons';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getAvatarUrl } from '../../testing/mock';
-import { Avatar } from '../Avatar/Avatar';
-import { Chip, ChipProps } from './Chip';
+import { getIconArgBySize, getIconComponent, IconName } from '../../../storybook/Icons';
+import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
+import { getAvatarUrl } from '../../../testing/mock';
+import { Avatar } from '../../Avatar/Avatar';
+import type { ChipProps } from '../types';
+import { Chip } from './Chip';
 
 const IconArg = getIconArgBySize(/^Icon16/);
 

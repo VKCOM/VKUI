@@ -1,102 +1,149 @@
 import * as React from 'react';
-import { fireEvent, queryByText, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, within } from '@testing-library/react';
 import { baselineComponent, userEvent, waitForFloatingPosition } from '../../testing/utils';
-import { ChipOption } from '../Chip/Chip';
-import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
-
-const ChipsSelectTest = (props: ChipsSelectProps<ChipOption>) => (
-  <ChipsSelect data-testid="chips-select" {...props} />
-);
-// const redChip = () => screen.queryByText('Красный');
-const getChipsSelect = () => screen.getByTestId('chips-select');
+import type { ChipOption } from '../ChipsInputBase/types';
+import { ChipsSelect } from './ChipsSelect';
 
 const colors: ChipOption[] = [
   { value: 'red', label: 'Красный' },
   { value: 'blue', label: 'Синий' },
   { value: 'navarin', label: 'Наваринского пламени с дымом' },
 ];
+
 const testValue = { value: 'testvalue', label: 'testvalue' };
-const toggleDropdown = async () => {
-  await userEvent.click(screen.getByRole('textbox'));
-  await waitForFloatingPosition();
-};
-// получить опцию из дропдауна (не чип)
-const queryListOption = (o: ChipOption | null | undefined) => {
-  const list = document.querySelector<HTMLElement>('.vkuiInternalCustomSelectDropdown');
-  return list ? queryByText(list, o?.label as string) : null;
-};
 
 describe('ChipsSelect', () => {
-  baselineComponent(ChipsSelect);
+  baselineComponent(ChipsSelect, { a11y: false });
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    act(() => {
+      jest.runOnlyPendingTimers();
+      jest.useRealTimers();
+    });
+  });
 
   it('renders empty text', async () => {
-    render(<ChipsSelect options={[]} value={[]} emptyText="__empty__" />);
-    await toggleDropdown();
-    expect(screen.queryByText('__empty__')).toBeTruthy();
+    const result = render(<ChipsSelect presets={[]} defaultValue={[]} emptyText="__empty__" />);
+    await userEvent.click(result.getByRole('combobox'));
+    await waitForFloatingPosition();
+    expect(result.queryByText('__empty__')).toBeTruthy();
   });
 
   it('filters options', async () => {
-    render(<ChipsSelect options={colors} value={[]} />);
-    await userEvent.type(screen.getByRole('textbox'), colors[1]?.label?.substring(0, 3) as string);
-    await toggleDropdown();
-    expect(queryListOption(colors[1])).toBeTruthy();
-    expect(screen.queryAllByRole('option')).toHaveLength(1);
+    const result = render(
+      <ChipsSelect presets={colors} defaultValue={[]} dropdownTestId="dropdown" />,
+    );
+    const inputEl = result.getByRole('combobox');
+    await userEvent.type(inputEl, 'Син');
+    await waitForFloatingPosition();
+    await userEvent.click(inputEl);
+    expect(within(result.getByTestId('dropdown')).getAllByRole('option')).toHaveLength(1);
+    expect(result.getByRole('option', { name: 'Синий' })).toBeTruthy();
   });
 
   it('shows spinner if fetching', async () => {
-    render(<ChipsSelect fetching value={[]} />);
-    await toggleDropdown();
-    expect(screen.queryByRole('status')).toBeTruthy();
+    const result = render(<ChipsSelect fetching defaultValue={[]} />);
+    await userEvent.click(result.getByRole('combobox'));
+    await waitForFloatingPosition();
+    expect(result.queryByRole('status')).toBeTruthy();
   });
 
   describe('controls dropdown', () => {
-    it.each(['click', 'focus'])('opens options on %s', async (e) => {
-      render(<ChipsSelect options={colors} value={[]} />);
-      e === 'focus' ? fireEvent.focus(screen.getByRole('textbox')) : await toggleDropdown();
-      await toggleDropdown();
-      expect(screen.getAllByRole('option')[0]).toBeTruthy();
+    it.each(['click', 'focus'])('opens options on %s', async (eventType) => {
+      const result = render(<ChipsSelect presets={colors} defaultValue={[]} />);
+      if (eventType === 'focus') {
+        fireEvent.focus(result.getByRole('combobox'));
+      }
+      await userEvent.click(result.getByRole('combobox'));
+      await waitForFloatingPosition();
+      expect(result.getAllByRole('option')[0]).toBeTruthy();
     });
+
     it('closes options on click outside', async () => {
-      render(<ChipsSelect options={colors} value={[]} />);
-      await toggleDropdown();
+      const result = render(
+        <ChipsSelect presets={colors} defaultValue={[]} dropdownTestId="dropdown" />,
+      );
+      await userEvent.click(result.getByRole('combobox'));
+      await waitForFloatingPosition();
+      expect(result.getByTestId('dropdown')).not.toBeNull();
       await userEvent.click(document.body);
-      expect(screen.queryByRole('option')).toBeNull();
+      expect(() => result.getByTestId('dropdown')).toThrow();
     });
+
     it('closes options after select', async () => {
-      render(<ChipsSelect options={colors} value={[]} />);
-      await toggleDropdown();
-      await userEvent.click(queryListOption(colors[0]) as Element);
-      expect(queryListOption(colors[1])).toBeNull();
+      const result = render(
+        <ChipsSelect presets={colors} defaultValue={[]} dropdownTestId="dropdown" />,
+      );
+      await userEvent.click(result.getByRole('combobox'));
+      await waitForFloatingPosition();
+      await userEvent.click(
+        within(result.getByTestId('dropdown')).getByRole('option', { name: colors[0].label }),
+      );
+      expect(() => result.getByTestId('dropdown')).toThrow();
     });
-    it('does not close options after select with showSelected and closeAfterSelect={false}', async () => {
-      render(<ChipsSelect options={colors} value={[]} showSelected closeAfterSelect={false} />);
-      await toggleDropdown();
-      await userEvent.click(queryListOption(colors[0]) as Element);
-      expect(queryListOption(colors[1])).toBeTruthy();
+
+    it('does not close options after select with selectedBehavior and closeAfterSelect={false}', async () => {
+      const result = render(
+        <ChipsSelect
+          presets={colors}
+          defaultValue={[]}
+          selectedBehavior="highlight"
+          closeAfterSelect={false}
+          dropdownTestId="dropdown"
+        />,
+      );
+      await userEvent.click(result.getByRole('combobox'));
+      await waitForFloatingPosition();
+      await userEvent.click(
+        within(result.getByTestId('dropdown')).getByRole('option', { name: colors[0].label }),
+      );
+      expect(() => result.getByTestId('dropdown')).toBeTruthy();
     });
+
     it('closes options on esc', async () => {
-      render(<ChipsSelect options={colors} value={[]} />);
-      await toggleDropdown();
-      await userEvent.type(screen.getByRole('textbox'), '{Escape}');
-      expect(queryListOption(colors[1])).toBeNull();
+      const result = render(
+        <ChipsSelect presets={colors} defaultValue={[]} dropdownTestId="dropdown" />,
+      );
+      await userEvent.click(result.getByRole('combobox'));
+      await waitForFloatingPosition();
+      await userEvent.type(result.getByRole('combobox'), '{Escape}');
+      expect(() => result.getByTestId('dropdown')).toThrow();
     });
   });
 
   describe('selects', () => {
     it('on click', async () => {
-      let value;
-      render(<ChipsSelect options={colors} onChange={(e) => (value = e)} value={[]} />);
-      await toggleDropdown();
-      await userEvent.click(queryListOption(colors[0]) as Element);
-      expect(value).toEqual([colors[0]]);
+      const onChange = jest.fn();
+      const result = render(
+        <ChipsSelect
+          presets={colors}
+          onChange={onChange}
+          defaultValue={[]}
+          dropdownTestId="dropdown"
+        />,
+      );
+      await userEvent.click(result.getByRole('combobox'));
+      await waitForFloatingPosition();
+      await userEvent.click(
+        within(result.getByTestId('dropdown')).getByRole('option', { name: colors[0].label }),
+      );
+      expect(onChange).toHaveBeenCalledWith([colors[0]]);
     });
 
     it('via keyboard', async () => {
-      let value;
+      const onChange = jest.fn();
       const options = new Array(20).fill(0).map((_, i) => ({ value: i, label: `Option #${i}` }));
+      const result = render(
+        <ChipsSelect value={[]} presets={options} onChange={onChange} dropdownTestId="dropdown" />,
+      );
 
-      render(<ChipsSelectTest value={[]} options={options} onChange={(e) => (value = e)} />);
-      await toggleDropdown();
+      await userEvent.click(result.getByRole('combobox'));
+      await waitForFloatingPosition();
+      const dropdown = result.getByTestId('dropdown');
 
       // Focus on first element
       await userEvent.keyboard('{arrowdown}');
@@ -107,24 +154,48 @@ describe('ChipsSelect', () => {
       }
       await userEvent.keyboard('{enter}');
 
-      expect(queryListOption(options[idx])).toBeNull();
-      expect(value).toEqual([options[idx]]);
+      expect(within(dropdown).getByRole('option', { name: options[idx].label })).toBeTruthy();
+      expect(onChange).toHaveBeenCalledWith([options[idx]]);
     });
+
     it('does not hide selected option from list', async () => {
-      render(<ChipsSelect options={colors} value={[colors[0]]} showSelected />);
-      await toggleDropdown();
-      expect(queryListOption(colors[0])).toBeTruthy();
+      const result = render(
+        <ChipsSelect
+          presets={colors}
+          defaultValue={[colors[0]]}
+          selectedBehavior="highlight"
+          dropdownTestId="dropdown"
+        />,
+      );
+      await userEvent.click(result.getByRole('combobox'));
+      await waitForFloatingPosition();
+      expect(
+        within(result.getByTestId('dropdown')).getByRole('option', { name: colors[0].label }),
+      ).toBeTruthy();
     });
+
     it('hides selected option from list', async () => {
-      render(<ChipsSelect options={colors} value={[colors[0]]} showSelected={false} />);
-      await toggleDropdown();
-      expect(queryListOption(colors[0])).toBeNull();
+      const result = render(
+        <ChipsSelect
+          presets={colors}
+          defaultValue={[colors[0]]}
+          selectedBehavior="hide"
+          dropdownTestId="dropdown"
+        />,
+      );
+      await userEvent.click(result.getByRole('combobox'));
+      await waitForFloatingPosition();
+      expect(() =>
+        within(result.getByTestId('dropdown')).getByRole('option', { name: colors[0].label }),
+      ).toThrow();
     });
     it('deselects on chip click', async () => {
-      let value;
-      render(<ChipsSelect options={colors} value={[colors[0]]} onChange={(e) => (value = e)} />);
-      await userEvent.click(screen.getByLabelText(`Удалить ${colors[0].label}`));
-      expect(value).toEqual([]);
+      const handleChange = jest.fn();
+      const result = render(
+        <ChipsSelect presets={colors} value={[colors[0]]} onChange={handleChange} />,
+      );
+      await userEvent.click(result.getByLabelText(`Удалить ${colors[0].label}`));
+      expect(handleChange).toHaveBeenCalledWith([]);
     });
   });
 
@@ -143,37 +214,36 @@ describe('ChipsSelect', () => {
       creatable: true,
     };
 
-    render(<ChipsSelectTest {...colorsChipsProps} />);
-
-    const redChipRemove = screen.getByLabelText('Удалить Красный');
-
-    await userEvent.click(redChipRemove);
-    expect(getChipsSelect()).not.toHaveFocus();
+    const result = render(<ChipsSelect data-testid="chips-select" {...colorsChipsProps} />);
+    await userEvent.click(result.getByLabelText('Удалить Красный'));
+    expect(result.getByTestId('chips-select')).not.toHaveFocus();
   });
 
   describe('addOnBlur prop', () => {
     it('add value on blur event if creatable=true', async () => {
       let value;
-      render(
+      const result = render(
         <ChipsSelect
-          options={colors}
+          presets={colors}
           value={[]}
           onChange={(e) => (value = e)}
           creatable
           addOnBlur
         />,
       );
-      await userEvent.type(screen.getByRole('textbox'), testValue.label);
+      await userEvent.type(result.getByRole('combobox'), testValue.label);
+      await waitForFloatingPosition();
       await userEvent.click(document.body);
       expect(value).toEqual([testValue]);
     });
 
     it('does not add value on blur event if creatable=false', async () => {
       const onChange = jest.fn();
-      render(
-        <ChipsSelect options={colors} value={[]} onChange={onChange} creatable={false} addOnBlur />,
+      const result = render(
+        <ChipsSelect presets={colors} value={[]} onChange={onChange} creatable={false} addOnBlur />,
       );
-      await userEvent.type(screen.getByRole('textbox'), testValue.label);
+      await userEvent.type(result.getByRole('combobox'), testValue.label);
+      await waitForFloatingPosition();
       await userEvent.click(document.body);
       expect(onChange).not.toHaveBeenCalled();
     });

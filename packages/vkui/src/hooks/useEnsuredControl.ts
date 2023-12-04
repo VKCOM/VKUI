@@ -13,7 +13,7 @@ export function useEnsuredControl<V, E extends React.ChangeEvent<any>>({
   onChange: onChangeProp,
   disabled,
   ...props
-}: UseEnsuredControlProps<V, E>): [V | undefined, (e: E) => any] {
+}: UseEnsuredControlProps<V, E>): [V, (e: E) => any] {
   const [value, onChangeValue] = useCustomEnsuredControl(props);
 
   const onChange = React.useCallback(
