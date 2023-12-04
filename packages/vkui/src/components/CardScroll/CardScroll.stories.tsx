@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { isArray } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Card as BasicCard } from '../Card/Card';
@@ -48,6 +49,6 @@ export const InsideGroup: Story = {
         <Component {...context.args} />
       </Group>
     ),
-    ...(Playground.decorators || []),
+    ...(isArray(Playground.decorators) ? Playground.decorators : []),
   ],
 };
