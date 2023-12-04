@@ -180,7 +180,7 @@ export const Alert = ({
           onItemClick={onItemClick}
         />
         {isDismissButtonVisible && dismissButtonMode === 'outside' && (
-          <ModalDismissButton onClick={close} aria-label={dismissLabel} />
+          <ModalDismissButton onClick={close}>{dismissLabel}</ModalDismissButton>
         )}
       </FocusTrap>
     </PopoutWrapper>

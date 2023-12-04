@@ -1,6 +1,10 @@
 Кнопка для закрытия модальных окон на широком экране.
 Для правильной отрисовки нужно расположить в контейнере с `position: "relative"` и отображать при достаточной ширине экрана (от `ViewWidth.SMALL_TABLET`)
 
+## Цифровая доступность (a11y)
+
+Чтобы кнопка была доступной для ассистивных технологий, мы передаем в нее скрытый визуально текст, который сможет прочитать скринридер. Сейчас по умолчанию это — "Закрыть". Чтобы заменить текст, передайте его в `children`.
+
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const CustomPopout = ({ onClose }) => {
   const { sizeX } = useAdaptivityConditionalRender();
@@ -17,7 +21,9 @@ const CustomPopout = ({ onClose }) => {
         <h4>Кастомное модальное окно</h4>
 
         {sizeX.regular && (
-          <ModalDismissButton className={sizeX.regular.className} onClick={onClose} />
+          <ModalDismissButton className={sizeX.regular.className} onClick={onClose}>
+            Закрыть кастомное модальное окно
+          </ModalDismissButton>
         )}
       </div>
     </PopoutWrapper>
