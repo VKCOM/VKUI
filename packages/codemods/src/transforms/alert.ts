@@ -23,10 +23,11 @@ function replaceInArrayExpression(j: JSCodeshift, path: ASTPath) {
     });
 }
 
-export default function transformer(file: FileInfo, api: API) {
+export default function transformer(file: FileInfo, api: API, options: JSCodeshift) {
+  const { alias } = options;
   const j = api.jscodeshift;
   const source = j(file.source);
-  const { localName } = getImportInfo(j, file, 'Alert');
+  const { localName } = getImportInfo(j, file, 'Alert', alias);
 
   source
     .find(j.JSXOpeningElement)

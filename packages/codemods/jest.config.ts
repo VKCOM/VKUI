@@ -6,6 +6,9 @@ const config: Config = {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
   testEnvironment: 'node',
+  globals: {
+    TRANSFORM_OPTIONS: { alias: '@vkontakte/vkui' },
+  },
 };
 
 export default config;

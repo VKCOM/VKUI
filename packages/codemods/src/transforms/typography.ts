@@ -1,12 +1,14 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../codemod-helpers';
+import { JSCodeShiftOptions } from '../types';
 
-export default function transformer(file: FileInfo, api: API) {
+export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {
+  const { alias } = options;
   const j = api.jscodeshift;
   const source = j(file.source);
 
   const componentLocalNames = ['Title', 'Headline', 'Subhead'].map((name) => {
-    const { localName } = getImportInfo(j, file, name);
+    const { localName } = getImportInfo(j, file, name, alias);
     return localName;
   });
 

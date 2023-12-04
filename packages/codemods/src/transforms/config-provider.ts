@@ -9,7 +9,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const j = api.jscodeshift;
   const source = j(file.source);
   let changed = false;
-  const { localName } = getImportInfo(j, file, 'ConfigProvider');
+  const { localName } = getImportInfo(j, file, 'ConfigProvider', alias);
 
   source
     .find(j.JSXOpeningElement)
