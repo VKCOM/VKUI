@@ -386,6 +386,8 @@ export { type Placement as FloatingPlacement } from './lib/floating';
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';
 export { CustomScrollView } from './components/CustomScrollView/CustomScrollView';
+export { Popper } from './components/Popper/Popper';
+export type { PopperProps } from './components/Popper/Popper';
 
 /**
  * Types
@@ -406,9 +408,6 @@ export type { TextTooltipProps as unstable_TextTooltipProps } from './components
 
 export { RichTooltip as unstable_RichTooltip } from './components/RichTooltip/RichTooltip';
 export type { RichTooltipProps as unstable_RichTooltipProps } from './components/RichTooltip/RichTooltip';
-
-export { Popper as unstable_Popper } from './components/Popper/Popper';
-export type { PopperProps as unstable_PopperProps } from './components/Popper/Popper';
 
 export { ViewInfinite as unstable_ViewInfinite } from './components/View/ViewInfinite';
 export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from './components/View/ViewInfinite';
