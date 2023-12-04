@@ -40,7 +40,7 @@ export interface CellProps
    */
   onDragFinish?(swappedItemRange: SwappedItemRange): void;
   /**
-   * aria-label для кнопки перетаскивания ячейки
+   * Текст для кнопки перетаскивания ячейки
    */
   draggerLabel?: string;
 }
@@ -84,11 +84,12 @@ export const Cell = ({
     <CellDragger
       elRef={rootElRef}
       className={styles['Cell__dragger']}
-      aria-label={draggerLabel}
       disabled={disabled}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
-    />
+    >
+      {draggerLabel}
+    </CellDragger>
   ) : null;
 
   let checkbox;
