@@ -26,6 +26,7 @@ export const IconButtonPlayground = (props: ComponentPlaygroundProps) => {
     >
       {(props: IconButtonProps) => (
         <IconButton
+          label="Тест-кнопка"
           style={{ backgroundColor: 'var(--vkui--color_transparent--active)' }}
           {...props}
         />

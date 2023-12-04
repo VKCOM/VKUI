@@ -5,14 +5,14 @@ import { baselineComponent } from '../../testing/utils';
 import { IconButton, IconButtonProps } from './IconButton';
 
 const IconButtonTest = (props: IconButtonProps) => (
-  <IconButton data-testid="button" aria-label="Тестовая кнопка" {...props}>
+  <IconButton data-testid="button" label="Тестовая кнопка" {...props}>
     <Icon28VoiceOutline />
   </IconButton>
 );
 const button = () => screen.getByTestId('button');
 
 describe('IconButton', () => {
-  baselineComponent((props) => <IconButton {...props} aria-label="IconButton" />);
+  baselineComponent((props) => <IconButton {...props} label="IconButton" />);
 
   it('Component: default IconButton is a button', () => {
     render(<IconButtonTest />);
