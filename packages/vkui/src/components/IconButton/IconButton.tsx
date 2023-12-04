@@ -10,8 +10,8 @@ import styles from './IconButton.module.css';
 
 const sizeYClassNames = {
   none: styles['IconButton--sizeY-none'],
-  ['compact']: styles['IconButton--sizeY-compact'],
-};
+  compact: styles['IconButton--sizeY-compact'],
+} as const;
 
 export interface IconButtonProps extends TappableProps {
   /**
