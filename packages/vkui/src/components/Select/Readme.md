@@ -17,7 +17,7 @@
 
 - вместе с `label`
 
-```js static
+```jsx static
 <label htmlFor="select-id">Администратор</label>
 <CustomSelect
   id="select-id"
@@ -28,7 +28,7 @@
 
 - вместе с [FormItem](#!/FormItem)
 
-```js static
+```jsx static
 <FormItem top="Администратор" htmlFor="select-id">
   <CustomSelect id="select-id" placeholder="Не выбран" options={users} />
 </FormItem>
@@ -36,7 +36,7 @@
 
 - вместе с [VisuallyHidden](#!/VisuallyHidden) (используя `label` и `htmlFor`)
 
-```js static
+```jsx static
 <VisuallyHidden Component="label" htmlFor="select-id">Администратор</VisuallyHidden>
 <CustomSelect
   id="select-id"
@@ -47,7 +47,7 @@
 
 - вместе с [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)
 
-```js static
+```jsx static
 <span id="select-label-id">Администратор</span>
 <CustomSelect
   aria-labelledby="select-label-id"
@@ -58,7 +58,7 @@
 
 - вместе с [VisuallyHidden](#!/VisuallyHidden) (используя [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby))
 
-```js static
+```jsx static
 <VisuallyHidden Component="span" id="select-label-id">Администратор</VisuallyHidden>
 <CustomSelect
   aria-labelledby="select-label-id"
@@ -69,7 +69,7 @@
 
 - вместе с [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)
 
-```js static
+```jsx static
 <CustomSelect aria-label="Администратор" placeholder="Не выбран" options={users} />
 ```
 
