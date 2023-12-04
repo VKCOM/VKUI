@@ -37,18 +37,16 @@ const WriteBarTestComponent = ({ value, ...restProps }: WriteBarProps) => {
       before={<WriteBarIcon mode="attach" count={5} />}
       inlineAfter={
         stringValue.length > 0 && (
-          <WriteBarIcon aria-label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+          <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
         )
       }
       after={
         <>
           {stringValue.length === 0 && (
-            <WriteBarIcon aria-label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+            <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
           )}
           {stringValue.length === 0 && (
-            <WriteBarIcon aria-label="Записать голосовое сообщение">
-              {VoiceOutlineIcon}
-            </WriteBarIcon>
+            <WriteBarIcon label="Записать голосовое сообщение">{VoiceOutlineIcon}</WriteBarIcon>
           )}
           {stringValue.length > 0 && <WriteBarIcon mode="send" />}
         </>
@@ -77,7 +75,7 @@ export const WriteBarPlayground = (props: ComponentPlaygroundProps) => {
 };
 
 const WriteBarIosSmileIcon = (
-  <WriteBarIcon aria-label="Смайлы и стикеры">
+  <WriteBarIcon label="Смайлы и стикеры">
     <Icon28SmileOutline />
   </WriteBarIcon>
 );

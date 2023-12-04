@@ -20,7 +20,7 @@ export const Playground: Story = {
     before: <WriteBarIcon count={10} mode="attach" />,
     placeholder: 'Сообщение',
     inlineAfter: (
-      <WriteBarIcon aria-label="Смайлы и стикеры">
+      <WriteBarIcon label="Смайлы и стикеры">
         <Icon28SmileOutline />
       </WriteBarIcon>
     ),
