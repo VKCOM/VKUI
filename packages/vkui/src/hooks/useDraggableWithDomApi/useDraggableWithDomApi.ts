@@ -218,7 +218,7 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
       }
     } else {
       setDragging((prevDragging) => {
-        // На случай, если onDragMove успеет вызываться ещё раз до того, как `dragging` выставится в
+        // На случай, если onDragMove успеет вызваться ещё раз до того, как `dragging` выставится в
         // `true`
         if (prevDragging) {
           return prevDragging;
