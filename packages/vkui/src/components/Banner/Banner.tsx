@@ -169,7 +169,7 @@ export const Banner = ({
           {asideMode === 'dismiss' && (
             <div className={styles['Banner__aside']}>
               <IconButton
-                aria-label={dismissLabel}
+                label={dismissLabel}
                 className={styles['Banner__dismiss']}
                 onClick={onDismiss}
                 hoverMode="opacity"

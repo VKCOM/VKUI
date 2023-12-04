@@ -359,7 +359,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
             activeMode=""
             hoverMode=""
             // TODO [>=6]: add label customization
-            aria-label={opened ? 'Скрыть' : 'Развернуть'}
+            label={opened ? 'Скрыть' : 'Развернуть'}
             onClick={toggleOpened}
           >
             {icon ?? <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />}

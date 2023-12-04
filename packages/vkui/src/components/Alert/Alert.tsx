@@ -162,7 +162,7 @@ export const Alert = ({
           {children}
           {isDismissButtonVisible && dismissButtonMode === 'inside' && (
             <IconButton
-              aria-label={dismissLabel}
+              label={dismissLabel}
               className={classNames(styles['Alert__dismiss'], 'vkuiInternalAlert__dismiss')}
               onClick={close}
               hoverMode="opacity"

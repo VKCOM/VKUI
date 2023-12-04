@@ -173,7 +173,7 @@ export const Search = ({
               className={styles['Search__icon']}
               onFocus={setFocusedTrue}
               onBlur={setFocusedFalse}
-              aria-label={iconAriaLabel}
+              label={iconAriaLabel}
             >
               {icon}
             </IconButton>
@@ -183,7 +183,7 @@ export const Search = ({
             onStart={onIconCancelClickStart}
             onClick={onCancel}
             className={styles['Search__icon']}
-            aria-label={clearAriaLabel}
+            label={clearAriaLabel}
             tabIndex={value ? undefined : -1}
           >
             {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}

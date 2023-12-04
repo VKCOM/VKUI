@@ -80,7 +80,7 @@ const RemovableIos = ({
       <IconButton
         hasActive={false}
         hasHover={false}
-        aria-label={removePlaceholderString}
+        label={removePlaceholderString}
         className={classNames(
           styles['Removable__action'],
           styles['Removable__toggle'],
@@ -175,7 +175,7 @@ export const Removable = ({
             hoverMode="opacity"
             className={classNames(styles['Removable__action'], 'vkuiInternalRemovable__action')}
             onClick={onRemoveClick}
-            aria-label={removePlaceholderString}
+            label={removePlaceholderString}
           >
             <Icon24Cancel role="presentation" />
           </IconButton>

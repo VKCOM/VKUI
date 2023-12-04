@@ -18,7 +18,7 @@ export const CustomSelectClearButton = ({
   return (
     <IconButton
       Component="div"
-      aria-label="Очистить поле"
+      label="Очистить поле"
       onKeyDown={stopPropagation}
       role="button"
       activeMode="opacity"
