@@ -57,7 +57,7 @@ const Example = () => {
           <SimpleCell
             before={<Avatar size={40} src={getAvatarUrl('user_xyz')} />}
             after={
-              <IconButton>
+              <IconButton label="Написать сообщение">
                 <Icon28MessageOutline />
               </IconButton>
             }
@@ -67,7 +67,7 @@ const Example = () => {
           <SimpleCell
             before={<Avatar size={40} src={getAvatarUrl('user_arthurstam')} />}
             after={
-              <IconButton>
+              <IconButton label="Написать сообщение">
                 <Icon28MessageOutline />
               </IconButton>
             }
@@ -80,7 +80,7 @@ const Example = () => {
             before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />}
             badgeAfterTitle={<Icon12Verified />}
             after={
-              <IconButton>
+              <IconButton label="Написать сообщение">
                 <Icon28MessageOutline />
               </IconButton>
             }
@@ -91,7 +91,7 @@ const Example = () => {
           <SimpleCell
             before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />}
             after={
-              <IconButton>
+              <IconButton label="Написать сообщение">
                 <Icon28MessageOutline />
               </IconButton>
             }

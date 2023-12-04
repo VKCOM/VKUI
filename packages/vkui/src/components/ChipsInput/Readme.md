@@ -34,7 +34,7 @@ const Example = () => {
               id="color"
               value={colors}
               after={
-                <IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={onClick}>
+                <IconButton hoverMode="opacity" label="Очистить поле" onClick={onClick}>
                   <Icon16Clear />
                 </IconButton>
               }

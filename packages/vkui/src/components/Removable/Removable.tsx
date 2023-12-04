@@ -13,7 +13,7 @@ import styles from './Removable.module.css';
 
 export interface RemovableProps {
   /**
-   * iOS only. Текст в выезжающей кнопке для удаления ячейки.
+   * Текст кнопки удаления ячейки. Визуально скрыт везде, кроме iOS. На iOS появляется в выезжающей кнопке для удаления ячейки.
    */
   removePlaceholder?: React.ReactNode;
   /**

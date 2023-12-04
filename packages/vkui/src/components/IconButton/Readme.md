@@ -1,11 +1,21 @@
-Обёртка для иконки, если требуется сделать её интерактивной.
+Обертка-кнопка для интерактивной иконки.
+
+## Цифровая доступность (a11y)
+
+Чтобы `IconButton` была доступной для ассистивных технологий, у нее должен быть текст, который сможет прочитать скринридер. Лучше всего передать этот текст в кастомное свойство `label`.
+
+Как еще можно это сделать:
+
+- Передать в `children` одновременно с иконкой текст, обернутый в компонент [VisuallyHidden](#!/VisuallyHidden).
+- Передать `aria-label` или `title`.
+- Создать отдельный элемент с текстом и передать его `id` в `aria-labelledby` кнопки.
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const Example = () => {
   return (
     <div style={rowStyles}>
       <div>
-        <IconButton>
+        <IconButton label="Удалить">
           <Icon16Delete />
         </IconButton>
         <Footnote style={captionStyles}>16</Footnote>
@@ -13,23 +23,34 @@ const Example = () => {
 
       <div>
         <IconButton>
+          <VisuallyHidden>Меню</VisuallyHidden>
           <Icon16MoreVertical />
         </IconButton>
         <Footnote style={captionStyles}>8x16</Footnote>
       </div>
 
       <div>
-        <IconButton>
+        <IconButton aria-label="Удалить 24">
           <Icon24Delete />
         </IconButton>
         <Footnote style={captionStyles}>24</Footnote>
       </div>
 
       <div>
-        <IconButton>
+        <IconButton aria-labelledby="icon-28-label">
           <Icon28Delete />
         </IconButton>
-        <Footnote style={captionStyles}>28</Footnote>
+        <Footnote id="icon-28-label" style={captionStyles}>
+          <VisuallyHidden>Удалить</VisuallyHidden>
+          28
+        </Footnote>
+      </div>
+
+      <div>
+        <IconButton title="Удалить 36">
+          <Icon36Delete />
+        </IconButton>
+        <Footnote style={captionStyles}>36</Footnote>
       </div>
     </div>
   );

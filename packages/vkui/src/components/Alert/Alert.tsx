@@ -41,9 +41,8 @@ export interface AlertProps extends React.HTMLAttributes<HTMLElement>, HasRootRe
   header?: React.ReactNode;
   text?: React.ReactNode;
   onClose: VoidFunction;
-
   /**
-   * `aria-label` для кнопки закрытия. Необходим, чтобы кнопка была доступной.
+   * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий
    */
   dismissLabel?: string;
   /**

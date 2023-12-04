@@ -30,7 +30,7 @@ export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    */
   onDismiss?: React.MouseEventHandler<HTMLButtonElement>;
   /**
-   * `aria-label` для кнопки при `asideMode="dismiss". Необходим, чтобы кнопка была доступной.
+   * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий
    */
   dismissLabel?: string;
   /**

@@ -72,7 +72,7 @@ const ExampleWithIcon = ({ formItemStatus }) => {
           placeholder="Ну ведь брокколи это вкусно и полезно 😢"
           defaultValue="Брокколи 🥦"
           after={
-            <IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={clear}>
+            <IconButton hoverMode="opacity" label="Очистить поле" onClick={clear}>
               <Icon16Clear />
             </IconButton>
           }
