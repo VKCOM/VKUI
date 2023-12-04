@@ -309,6 +309,7 @@ export type { PanelHeaderEditProps } from './components/PanelHeaderEdit/PanelHea
 export { ModalCardBase } from './components/ModalCardBase/ModalCardBase';
 export type { ModalCardBaseProps } from './components/ModalCardBase/ModalCardBase';
 export { VisuallyHidden } from './components/VisuallyHidden/VisuallyHidden';
+export type { VisuallyHiddenProps } from './components/VisuallyHidden/VisuallyHidden';
 export { AdaptiveIconRenderer } from './components/AdaptiveIconRenderer/AdaptiveIconRenderer';
 export type { AdaptiveIconRendererProps } from './components/AdaptiveIconRenderer/AdaptiveIconRenderer';
 
