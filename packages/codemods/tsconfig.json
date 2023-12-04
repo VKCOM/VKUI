@@ -3,10 +3,11 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": false,
     "isolatedModules": true,
     "strict": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.json"],
-  "exclude": ["**/__testfixtures__", "**/__tests__", "node_modules"]
+  "exclude": ["**/__testfixtures__", "**/__tests__", "node_modules"],
+  "files": ["./typings.d.ts"]
 }

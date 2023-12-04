@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import prompts from 'prompts';
 import getAvailableCodemods from './getAvailableCodemods.js';
 import logger from './helpers/logger.js';
+import pkg from '../package.json';
 
 export interface CliOptions {
   list: boolean;
@@ -11,6 +12,7 @@ export interface CliOptions {
   ignoreConfig: string;
   debug: boolean;
   all: boolean;
+  alias: string;
 }
 
 export interface Cli {
@@ -42,7 +44,7 @@ const promptAvailableCodemods = async (codemods: string[]): Promise<string> => {
 
 export const runCli = async (): Promise<Cli> => {
   const program = new Command('@vkontakte/vkui-codemod')
-    .version('0.0.1')
+    .version(pkg.version || 'unknown')
     .argument('[codemod-name]', 'which codemod should be applied', trimStringValue)
     .usage(`${chalk.green('[codemod-name]')}`)
     .option('-l --list', 'list available codemods')
@@ -54,6 +56,7 @@ export const runCli = async (): Promise<Cli> => {
       'ignore files if they match patterns sourced from a configuration file (e.g. a .gitignore)',
     )
     .option('--debug', `all logs are shown`)
+    .option('--alias <alias>', `in case you have adapter over original library`, '@vkontakte/vkui')
     .configureOutput({
       writeErr: (str) => logger.info(`${chalk.red(str)}`),
     })

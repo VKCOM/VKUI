@@ -1,9 +1,11 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../codemod-helpers';
+import { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';
 
-export default function transformer(file: FileInfo, api: API) {
+export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {
+  const { alias } = options;
   const j = api.jscodeshift;
   const source = j(file.source);
   let changed = false;
@@ -66,7 +68,7 @@ export default function transformer(file: FileInfo, api: API) {
   if (changed) {
     source
       .find(j.ImportDeclaration)
-      .filter((path) => path.node.source.value === '@vkontakte/vkui')
+      .filter((path) => path.node.source.value === alias)
       .find(j.ImportSpecifier)
       .filter((path) => path.node.imported.name === 'WebviewType')
       .remove();

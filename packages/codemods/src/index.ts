@@ -8,7 +8,7 @@ import getAvailableCodemods, { TRANSFORM_DIR } from './getAvailableCodemods.js';
 import logger from './helpers/logger.js';
 
 function runJSCodeShift(codemodName: string, flags: CliOptions) {
-  const args = ['--parser=tsx', '--extensions=tsx,ts'];
+  const args = ['--parser=tsx', '--extensions=tsx,ts', `--alias=${flags.alias}`];
   if (flags.dryRun) {
     args.push('--dry');
   }
@@ -86,6 +86,7 @@ const run = async () => {
       logger.error(
         `Codemod ${codemodName} doesn't exist. Please check the available codemods by running with --list option`,
       );
+      process.exit(0);
     }
   }
   if (flags.all && flags.glob) {

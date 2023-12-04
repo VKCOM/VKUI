@@ -1,8 +1,10 @@
 import { API, FileInfo } from 'jscodeshift';
+import { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';
 
-export default function transformer(file: FileInfo, api: API) {
+export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {
+  const { alias } = options;
   const j = api.jscodeshift;
   const source = j(file.source);
   let localImportName = 'VisuallyHiddenInput';
@@ -10,7 +12,7 @@ export default function transformer(file: FileInfo, api: API) {
 
   const componentImport = source
     .find(j.ImportDeclaration)
-    .filter((path) => path.node.source.value === '@vkontakte/vkui')
+    .filter((path) => path.node.source.value === alias)
     .find(j.ImportSpecifier)
     .filter((path) => path.node.imported.name === 'VisuallyHiddenInput')
     .at(0);
