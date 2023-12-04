@@ -12,11 +12,12 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { PlatformType } from '../../lib/platform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from '../PanelHeaderButton/PanelHeaderButton.module.css';
 
-export type PanelHeaderBackProps = PanelHeaderButtonProps & {
-  'aria-label'?: string;
-};
+export interface PanelHeaderBackProps extends Omit<PanelHeaderButtonProps, 'children'> {
+  children?: string;
+}
 
 const getBackIcon = (platform: PlatformType) => {
   switch (platform) {
@@ -44,13 +45,13 @@ const getBackIcon = (platform: PlatformType) => {
  */
 export const PanelHeaderBack = ({
   label,
-  'aria-label': ariaLabel = 'Назад',
   className,
+  children = 'Назад',
   ...restProps
 }: PanelHeaderButtonProps) => {
   const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
-  // так-же label нужно скрывать при platform === 'ios' && sizeX === regular
+  // также label нужно скрывать при platform === 'ios' && sizeX === regular
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
   const showLabel = platform === 'vkcom' || platform === 'ios';
 
@@ -65,8 +66,8 @@ export const PanelHeaderBack = ({
         className,
       )}
       label={showLabel && label}
-      aria-label={ariaLabel}
     >
+      {children && <VisuallyHidden>{children}</VisuallyHidden>}
       {getBackIcon(platform)}
     </PanelHeaderButton>
   );

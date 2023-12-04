@@ -23,6 +23,7 @@ import { Search } from '../Search/Search';
 import { Tabs } from '../Tabs/Tabs';
 import { TabsItem } from '../TabsItem/TabsItem';
 import { View } from '../View/View';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { PanelHeader, PanelHeaderProps } from './PanelHeader';
 
 const story: Meta<PanelHeaderProps> = {
@@ -59,13 +60,14 @@ export const PanelHeaderWithCounter: Story = {
             before={<PanelHeaderBack label={platform === 'vkcom' ? 'Назад' : undefined} />}
             after={
               <PanelHeaderButton
-                aria-label="Изображения"
                 label={
-                  <Counter size="s" mode="prominent" aria-label="Обновлений: ">
+                  <Counter size="s" mode="prominent">
+                    <VisuallyHidden>Новых: </VisuallyHidden>
                     21
                   </Counter>
                 }
               >
+                <VisuallyHidden>Изображения</VisuallyHidden>
                 <AdaptiveIconRenderer
                   IconCompact={Icon24PictureOutline}
                   IconRegular={Icon28PictureOutline}
@@ -91,26 +93,26 @@ export const PanelHeaderWithMultipleIcons: Story = {
           after={
             <React.Fragment>
               <PanelHeaderButton
-                aria-label="Настройки"
                 label={
-                  <Counter size="s" mode="prominent" aria-label="Новые настройки: ">
-                    3
+                  <Counter size="s" mode="prominent">
+                    <VisuallyHidden>Новых: </VisuallyHidden>3
                   </Counter>
                 }
               >
+                <VisuallyHidden>Настройки</VisuallyHidden>
                 <AdaptiveIconRenderer
                   IconCompact={Icon24GearOutline}
                   IconRegular={Icon28SettingsOutline}
                 />
               </PanelHeaderButton>
               <PanelHeaderButton
-                aria-label="Уведомления"
                 label={
-                  <Counter size="s" mode="prominent" aria-label="Уведомлений: ">
+                  <Counter size="s" mode="prominent">
                     2
                   </Counter>
                 }
               >
+                <VisuallyHidden>Уведомления</VisuallyHidden>
                 <AdaptiveIconRenderer
                   IconCompact={Icon24NotificationOutline}
                   IconRegular={Icon28Notifications}

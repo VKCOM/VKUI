@@ -46,7 +46,8 @@ const SimpleSearch = ({ goHeaderSearch }) => {
     <React.Fragment>
       <PanelHeader
         after={
-          <PanelHeaderButton aria-label="Добавить" onClick={goHeaderSearch}>
+          <PanelHeaderButton onClick={goHeaderSearch}>
+            <VisuallyHidden>Добавить</VisuallyHidden>
             <Icon28AddOutline />
           </PanelHeaderButton>
         }
@@ -131,14 +132,22 @@ const SearchExample = () => {
               <ModalPageHeader
                 before={
                   platform === 'android' && (
-                    <PanelHeaderButton aria-label="Отмена" onClick={hideModal}>
+                    <PanelHeaderButton onClick={hideModal}>
+                      <VisuallyHidden>Отмена</VisuallyHidden>
                       <Icon24Cancel />
                     </PanelHeaderButton>
                   )
                 }
                 after={
-                  <PanelHeaderButton aria-label="Готово" onClick={hideModal}>
-                    {platform === 'ios' ? 'Готово' : <Icon24Done />}
+                  <PanelHeaderButton onClick={hideModal}>
+                    {platform === 'ios' ? (
+                      'Готово'
+                    ) : (
+                      <>
+                        <VisuallyHidden>Готово</VisuallyHidden>
+                        <Icon24Done />
+                      </>
+                    )}
                   </PanelHeaderButton>
                 }
               >

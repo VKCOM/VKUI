@@ -9,6 +9,7 @@ import {
   SplitLayout,
   useAppearance,
   View,
+  VisuallyHidden,
 } from '@vkui';
 import { Logo } from '../Logo/Logo';
 import { StyleGuideModal } from './StyleGuideModal';
@@ -21,8 +22,18 @@ const StyleGuideMobileHeader = ({ before, switchStyleGuideAppearance }) => {
     <PanelHeader
       before={before}
       after={
-        <PanelHeaderButton onClick={switchStyleGuideAppearance} aria-label="Сменить тему">
-          {appearance === 'dark' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
+        <PanelHeaderButton onClick={switchStyleGuideAppearance}>
+          {appearance === 'dark' ? (
+            <>
+              <VisuallyHidden>Переключить на светлую тему</VisuallyHidden>
+              <Icon28SunOutline />
+            </>
+          ) : (
+            <>
+              <VisuallyHidden>Переключить на темную тему</VisuallyHidden>
+              <Icon28MoonOutline />
+            </>
+          )}
         </PanelHeaderButton>
       }
     >
@@ -60,10 +71,8 @@ export const StyleGuideMobile = (props) => {
               <StyleGuideMobileHeader
                 switchStyleGuideAppearance={props.switchStyleGuideAppearance}
                 before={
-                  <PanelHeaderButton
-                    aria-label="Показать меню"
-                    onClick={() => setActivePanel('menu')}
-                  >
+                  <PanelHeaderButton onClick={() => setActivePanel('menu')}>
+                    <VisuallyHidden>Показать меню</VisuallyHidden>
                     <Icon28MenuOutline />
                   </PanelHeaderButton>
                 }
@@ -74,10 +83,9 @@ export const StyleGuideMobile = (props) => {
               <StyleGuideMobileHeader
                 switchStyleGuideAppearance={props.switchStyleGuideAppearance}
                 before={
-                  <PanelHeaderClose
-                    aria-label="Скрыть меню"
-                    onClick={() => setActivePanel('content')}
-                  />
+                  <PanelHeaderClose onClick={() => setActivePanel('content')}>
+                    Скрыть меню
+                  </PanelHeaderClose>
                 }
               />
               {props.toc}
