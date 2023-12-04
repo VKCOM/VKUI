@@ -1,9 +1,8 @@
 class Logger {
   private quiet: boolean;
-  queue: string[];
+
   constructor() {
     this.quiet = false;
-    this.queue = [];
   }
 
   setQuietMode() {
