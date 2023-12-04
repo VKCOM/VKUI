@@ -3,8 +3,8 @@ import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
+import { getTextFromChildren } from '../../lib/children';
 import { useDOM } from '../../lib/dom';
-import { getTitleFromChildren } from '../../lib/utils';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -170,7 +170,7 @@ export const Removable = ({
     onRemove(e);
   };
 
-  const removePlaceholderString: string = getTitleFromChildren(removePlaceholder);
+  const removePlaceholderString: string = getTextFromChildren(removePlaceholder);
 
   return (
     <RootComponent
