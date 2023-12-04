@@ -47,4 +47,12 @@ export interface BaseGalleryProps
   showArrows?: boolean;
   hasPointer?: boolean;
   arrowSize?: ScrollArrowProps['size'];
+  /**
+   * Текст для кнопки-стрелки влево (назад). Делает ее доступной для ассистивных технологий
+   */
+  arrowPrevLabel?: string;
+  /**
+   * Текст для кнопки-стрелки вправо (вперед). Делает ее доступной для ассистивных технологий
+   */
+  arrowNextLabel?: string;
 }

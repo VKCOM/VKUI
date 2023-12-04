@@ -3,6 +3,7 @@ import { Icon16Chevron, Icon24Chevron } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './ScrollArrow.module.css';
 
 const stylesSize = {
@@ -15,6 +16,13 @@ const stylesDirection = {
   right: styles['ScrollArrow--direction-right'],
   down: styles['ScrollArrow--direction-down'],
   left: styles['ScrollArrow--direction-left'],
+};
+
+const labelDirection = {
+  up: 'Назад',
+  right: 'Вперед',
+  down: 'Вперед',
+  left: 'Назад',
 };
 
 const ArrowIcon = ({ size }: Pick<ScrollArrowProps, 'size'>) => {
@@ -41,10 +49,11 @@ export interface ScrollArrowProps
    * Смещает иконку кнопки навигации по вертикали.
    */
   offsetY?: number | string;
+  label?: string;
 }
 
 /**
- * Компонент стрелки из HorizontalScroll
+ * Компонент стрелки. Используется в [HorizontalScroll](#/HorizontalScroll) и [Gallery](#/Gallery).
  *
  * @since 5.4.0
  * @see https://vkcom.github.io/VKUI/#/ScrollArrow
@@ -53,9 +62,12 @@ export const ScrollArrow = ({
   size = 'l',
   offsetY,
   direction,
+  label: labelProp,
   children = <ArrowIcon size={size} />,
   ...restProps
 }: ScrollArrowProps) => {
+  const label = labelProp ?? labelDirection[direction];
+
   return (
     <RootComponent
       Component="button"
@@ -67,6 +79,7 @@ export const ScrollArrow = ({
       )}
       {...restProps}
     >
+      {label && <VisuallyHidden>{label}</VisuallyHidden>}
       <span className={styles['ScrollArrow__icon']} style={offsetY ? { top: offsetY } : undefined}>
         {children}
       </span>
