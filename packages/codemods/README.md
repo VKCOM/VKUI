@@ -31,7 +31,8 @@ Options:
  -g --glob <glob>          glob for files upon which to apply the codemods (default: "**/*.tsx?")
  --dry-run                 no changes are made to files
  --ignore-config <config>  ignore files if they match patterns sourced from a configuration file (e.g. a .gitignore)
- -q --quiet                all logs are suppressed
+ --debug                   all logs are shown
+ --alias <alias>           in case you have adapter over original library (default: "@vkontakte/vkui")
  -h, --help                display help for command
 ```
 
@@ -44,7 +45,7 @@ npx @vkontakte/vkui-codemods --all
 Если вы хотите исключить некоторые файлы или директории из обработки, то временно создайте файл (по примеру .gitignore) с перечисленными исключениями:
 
 ```shell
-npx @vkontakte/vkui-codemods --all --glob "./examples"  --ignore-config "./.codemodignore"
+npx @vkontakte/vkui-codemods --all --glob "./examples" --ignore-config "./.codemodignore"
 ```
 
 ```
@@ -54,3 +55,9 @@ directoryToIgnore/
 ```
 
 Приведенная выше команда применит все codemods в директории `examples` (находится в корне текущей директории), игонорируя файл `MyBeautifulComponentToIgnore.tsx` и директорию `directoryToIgnore`, указанные в `.codemodignore` (находится в корне текущей директории)
+
+> Обратите внимание, если вы используете собственный адаптер над библиотекой `VKUI` и делаете ре-экспорт существующих компонентов, то можете воспользоваться опцией `--alias` для указания правильного пути.
+
+```shell
+npx @vkontakte/vkui-codemods --all --alias "@myscope/VKUIFake"
+```
