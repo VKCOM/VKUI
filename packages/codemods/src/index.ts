@@ -64,7 +64,7 @@ async function promptConfirmation(): Promise<boolean> {
 async function verifyConfiguration(workingDirectory: string, codemodName?: string) {
   logger.info(`Please ${chalk.cyan('verify')} the following information:
         working directory: ${workingDirectory}
-        codemod to apply: ${codemodName ? chalk.red('all') : codemodName}
+        codemod to apply: ${codemodName ? codemodName : chalk.red('all')}
       `);
   const confirmed = await promptConfirmation();
   if (!confirmed) {
