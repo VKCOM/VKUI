@@ -8,8 +8,8 @@ import styles from './CalendarTime.module.css';
 export interface CalendarTimeProps {
   value: Date;
   doneButtonText?: string;
-  changeHoursAriaLabel?: string;
-  changeMinutesAriaLabel?: string;
+  changeHoursLabel?: string;
+  changeMinutesLabel?: string;
   onChange?(value: Date): void;
   onClose?(): void;
   isDayDisabled?(day: Date, withTime?: boolean): boolean;
@@ -36,8 +36,8 @@ export const CalendarTime = ({
   doneButtonText = 'Готово',
   onChange,
   onClose,
-  changeHoursAriaLabel = 'Изменить час',
-  changeMinutesAriaLabel = 'Изменить минуту',
+  changeHoursLabel,
+  changeMinutesLabel,
   isDayDisabled,
 }: CalendarTimeProps) => {
   const localHours = isDayDisabled
@@ -72,7 +72,7 @@ export const CalendarTime = ({
             options={localHours}
             onChange={onHoursChange}
             forceDropdownPortal={false}
-            aria-label={changeHoursAriaLabel}
+            aria-label={changeHoursLabel}
           />
         </AdaptivityProvider>
       </div>
@@ -84,13 +84,13 @@ export const CalendarTime = ({
             options={localMinutes}
             onChange={onMinutesChange}
             forceDropdownPortal={false}
-            aria-label={changeMinutesAriaLabel}
+            aria-label={changeMinutesLabel}
           />
         </AdaptivityProvider>
       </div>
       <div className={styles['CalendarTime__button']}>
         <AdaptivityProvider sizeY="compact">
-          <Button mode="secondary" onClick={onClose} size="l" aria-label={doneButtonText}>
+          <Button mode="secondary" onClick={onClose} size="l">
             {doneButtonText}
           </Button>
         </AdaptivityProvider>

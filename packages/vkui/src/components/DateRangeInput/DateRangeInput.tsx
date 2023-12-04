@@ -15,6 +15,7 @@ import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
 import { Popper } from '../Popper/Popper';
 import { Text } from '../Typography/Text/Text';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './DateRangeInput.module.css';
 import dateInputStyles from '../DateInput/DateInput.module.css';
 
@@ -34,11 +35,11 @@ export interface DateRangeInputProps
       | 'value'
       | 'weekStartsOn'
       | 'disablePickers'
-      | 'prevMonthAriaLabel'
-      | 'nextMonthAriaLabel'
-      | 'changeMonthAriaLabel'
-      | 'changeYearAriaLabel'
-      | 'changeDayAriaLabel'
+      | 'prevMonthLabel'
+      | 'nextMonthLabel'
+      | 'changeMonthLabel'
+      | 'changeYearLabel'
+      | 'changeDayLabel'
       | 'prevMonthIcon'
       | 'nextMonthIcon'
     >,
@@ -46,14 +47,14 @@ export interface DateRangeInputProps
     FormFieldProps {
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
-  clearFieldAriaLabel?: string;
-  showCalendarAriaLabel?: string;
-  changeStartDayAriaLabel?: string;
-  changeStartMonthAriaLabel?: string;
-  changeStartYearAriaLabel?: string;
-  changeEndDayAriaLabel?: string;
-  changeEndMonthAriaLabel?: string;
-  changeEndYearAriaLabel?: string;
+  clearFieldLabel?: string;
+  showCalendarLabel?: string;
+  changeStartDayLabel?: string;
+  changeStartMonthLabel?: string;
+  changeStartYearLabel?: string;
+  changeEndDayLabel?: string;
+  changeEndMonthLabel?: string;
+  changeEndYearLabel?: string;
   disableCalendar?: boolean;
 }
 
@@ -117,19 +118,19 @@ export const DateRangeInput = ({
   disabled,
   onClick,
   onFocus,
-  prevMonthAriaLabel,
-  nextMonthAriaLabel,
-  changeDayAriaLabel,
-  changeMonthAriaLabel,
-  changeYearAriaLabel,
-  changeStartDayAriaLabel = 'Изменить день начала',
-  changeStartMonthAriaLabel = 'Изменить месяц начала',
-  changeStartYearAriaLabel = 'Изменить год начала',
-  changeEndDayAriaLabel = 'Изменить день окончания',
-  changeEndMonthAriaLabel = 'Изменить месяц окончания',
-  changeEndYearAriaLabel = 'Изменить год окончания',
-  clearFieldAriaLabel = 'Очистить поле',
-  showCalendarAriaLabel = 'Показать календарь',
+  prevMonthLabel = 'Предыдущий месяц',
+  nextMonthLabel = 'Следующий месяц',
+  changeDayLabel = 'Изменить день',
+  changeMonthLabel = 'Изменить месяц',
+  changeYearLabel = 'Изменить год',
+  changeStartDayLabel = 'Изменить день начала',
+  changeStartMonthLabel = 'Изменить месяц начала',
+  changeStartYearLabel = 'Изменить год начала',
+  changeEndDayLabel = 'Изменить день окончания',
+  changeEndMonthLabel = 'Изменить месяц окончания',
+  changeEndYearLabel = 'Изменить год окончания',
+  clearFieldLabel = 'Очистить поле',
+  showCalendarLabel = 'Показать календарь',
   prevMonthIcon,
   nextMonthIcon,
   disableCalendar = false,
@@ -236,11 +237,13 @@ export const DateRangeInput = ({
       getRootRef={handleRootRef}
       after={
         value ? (
-          <IconButton hoverMode="opacity" aria-label={clearFieldAriaLabel} onClick={clear}>
+          <IconButton hoverMode="opacity" onClick={clear}>
+            <VisuallyHidden>{clearFieldLabel}</VisuallyHidden>
             <Icon16Clear />
           </IconButton>
         ) : (
-          <IconButton hoverMode="opacity" aria-label={showCalendarAriaLabel} onClick={openCalendar}>
+          <IconButton hoverMode="opacity" onClick={openCalendar}>
+            <VisuallyHidden>{showCalendarLabel}</VisuallyHidden>
             <Icon20CalendarOutline />
           </IconButton>
         )
@@ -268,7 +271,7 @@ export const DateRangeInput = ({
           index={0}
           onElementSelect={setFocusedElement}
           value={internalValue[0]}
-          aria-label={changeStartDayAriaLabel}
+          label={changeStartDayLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -277,7 +280,7 @@ export const DateRangeInput = ({
           index={1}
           onElementSelect={setFocusedElement}
           value={internalValue[1]}
-          aria-label={changeStartMonthAriaLabel}
+          label={changeStartMonthLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -286,7 +289,7 @@ export const DateRangeInput = ({
           index={2}
           onElementSelect={setFocusedElement}
           value={internalValue[2]}
-          aria-label={changeStartYearAriaLabel}
+          label={changeStartYearLabel}
         />
         <InputLikeDivider>{' — '}</InputLikeDivider>
         <InputLike
@@ -295,7 +298,7 @@ export const DateRangeInput = ({
           index={3}
           onElementSelect={setFocusedElement}
           value={internalValue[3]}
-          aria-label={changeEndDayAriaLabel}
+          label={changeEndDayLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -304,7 +307,7 @@ export const DateRangeInput = ({
           index={4}
           onElementSelect={setFocusedElement}
           value={internalValue[4]}
-          aria-label={changeEndMonthAriaLabel}
+          label={changeEndMonthLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -313,7 +316,7 @@ export const DateRangeInput = ({
           index={5}
           onElementSelect={setFocusedElement}
           value={internalValue[5]}
-          aria-label={changeEndYearAriaLabel}
+          label={changeEndYearLabel}
         />
       </Text>
       {open && !disableCalendar && (
@@ -327,11 +330,11 @@ export const DateRangeInput = ({
             onClose={closeCalendar}
             getRootRef={calendarRef}
             disablePickers={disablePickers}
-            prevMonthAriaLabel={prevMonthAriaLabel}
-            nextMonthAriaLabel={nextMonthAriaLabel}
-            changeMonthAriaLabel={changeMonthAriaLabel}
-            changeYearAriaLabel={changeYearAriaLabel}
-            changeDayAriaLabel={changeDayAriaLabel}
+            prevMonthLabel={prevMonthLabel}
+            nextMonthLabel={nextMonthLabel}
+            changeMonthLabel={changeMonthLabel}
+            changeYearLabel={changeYearLabel}
+            changeDayLabel={changeDayLabel}
             prevMonthIcon={prevMonthIcon}
             nextMonthIcon={nextMonthIcon}
           />

@@ -14,13 +14,13 @@ import styles from './Calendar.module.css';
 
 export interface CalendarProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
-    Pick<CalendarTimeProps, 'changeHoursAriaLabel' | 'changeMinutesAriaLabel'>,
+    Pick<CalendarTimeProps, 'changeHoursLabel' | 'changeMinutesLabel'>,
     Pick<
       CalendarHeaderProps,
-      | 'prevMonthAriaLabel'
-      | 'nextMonthAriaLabel'
-      | 'changeMonthAriaLabel'
-      | 'changeYearAriaLabel'
+      | 'prevMonthLabel'
+      | 'nextMonthLabel'
+      | 'changeMonthLabel'
+      | 'changeYearLabel'
       | 'onNextMonth'
       | 'onPrevMonth'
       | 'prevMonthIcon'
@@ -35,7 +35,7 @@ export interface CalendarProps
   enableTime?: boolean;
   disablePickers?: boolean;
   doneButtonText?: string;
-  changeDayAriaLabel?: string;
+  changeDayLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   showNeighboringMonth?: boolean;
   size?: 's' | 'm';
@@ -77,14 +77,14 @@ export const Calendar = ({
   doneButtonText,
   weekStartsOn = 1,
   disablePickers,
-  changeHoursAriaLabel,
-  changeMinutesAriaLabel,
-  prevMonthAriaLabel,
-  nextMonthAriaLabel,
-  changeMonthAriaLabel,
-  changeYearAriaLabel,
+  changeHoursLabel = 'Изменить час',
+  changeMinutesLabel = 'Изменить минуту',
+  prevMonthLabel = 'Предыдущий месяц',
+  nextMonthLabel = 'Следующий месяц',
+  changeMonthLabel = 'Изменить месяц',
+  changeYearLabel = 'Изменить год',
   showNeighboringMonth,
-  changeDayAriaLabel = 'Изменить день',
+  changeDayLabel = 'Изменить день',
   size = 'm',
   viewDate: externalViewDate,
   onHeaderChange,
@@ -180,10 +180,10 @@ export const Calendar = ({
         onPrevMonth={setPrevMonth}
         disablePickers={disablePickers || size === 's'}
         className={styles['Calendar__header']}
-        prevMonthAriaLabel={prevMonthAriaLabel}
-        nextMonthAriaLabel={nextMonthAriaLabel}
-        changeMonthAriaLabel={changeMonthAriaLabel}
-        changeYearAriaLabel={changeYearAriaLabel}
+        prevMonthLabel={prevMonthLabel}
+        nextMonthLabel={nextMonthLabel}
+        changeMonthLabel={changeMonthLabel}
+        changeYearLabel={changeYearLabel}
         prevMonthIcon={prevMonthIcon}
         nextMonthIcon={nextMonthIcon}
         prevMonthProps={prevMonthProps}
@@ -195,7 +195,7 @@ export const Calendar = ({
         weekStartsOn={weekStartsOn}
         isDayFocused={isDayFocused}
         tabIndex={0}
-        aria-label={changeDayAriaLabel}
+        aria-label={changeDayLabel}
         onKeyDown={handleKeyDown}
         onDayChange={onDayChange}
         isDayActive={isDayActive}
@@ -215,8 +215,8 @@ export const Calendar = ({
             onChange={onChange}
             onClose={onClose}
             doneButtonText={doneButtonText}
-            changeHoursAriaLabel={changeHoursAriaLabel}
-            changeMinutesAriaLabel={changeMinutesAriaLabel}
+            changeHoursLabel={changeHoursLabel}
+            changeMinutesLabel={changeMinutesLabel}
             isDayDisabled={minDateTime || maxDateTime ? isDayDisabled : undefined}
           />
         </div>
