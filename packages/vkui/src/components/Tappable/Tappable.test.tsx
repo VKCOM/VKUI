@@ -8,9 +8,7 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Tappable, TappableProps } from './Tappable';
 import styles from './Tappable.module.css';
 
-const TappableTest = (props: TappableProps) => (
-  <Tappable activeClassName="Tappable--active" data-testid="tappable" {...props} />
-);
+const TappableTest = (props: TappableProps) => <Tappable data-testid="tappable" {...props} />;
 
 const tappable = () => screen.getByTestId('tappable');
 
@@ -206,7 +204,7 @@ describe('Tappable', () => {
       e.classList.contains(styles['Tappable--activated-background']);
 
     // TODO (@SevereCloud): пофиксить тест
-    it.skip('activates on click', async () => {
+    it('activates on click', async () => {
       render(<TappableTest onClick={noop} />);
       await userEvent.click(tappable());
       await waitFor(() => expect(isActive()).toBe(true));
@@ -227,8 +225,7 @@ describe('Tappable', () => {
       expect(isActive()).toBe(true);
     });
 
-    // TODO (@SevereCloud): пофиксить тест
-    it.skip('does not activate on child Tappable click', async () => {
+    it('does not activate on child Tappable click', async () => {
       render(
         <Tappable onClick={noop} data-testid="parent">
           <TappableTest onClick={noop} data-testid="child" />
