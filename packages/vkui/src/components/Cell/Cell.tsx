@@ -118,12 +118,11 @@ export const Cell = ({
     disabled && styles['Cell--disabled'],
   );
 
-  const simpleCellProps = {
+  const simpleCellProps: SimpleCellProps = {
     hasActive: hasActive,
     hasHover: hasActive && !removable,
     ...restProps,
     className: styles['Cell__content'],
-    ...(restProps.onClick && { disabled: simpleCellDisabled }),
     Component: Component,
     before: (
       <React.Fragment>
@@ -139,6 +138,10 @@ export const Cell = ({
       </React.Fragment>
     ),
   };
+
+  if (restProps.onClick) {
+    simpleCellProps.disabled = simpleCellDisabled;
+  }
 
   if (removable) {
     return (
