@@ -29,11 +29,12 @@ const predefinedLabel = {
 export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Предустановленные типы кнопок в WriteBar для отрисовки иконки и установки текста кнопки в зависимости от платформы.
-   * Если передать валидное значение для этого свойства, `children` и `label` игнорируются.
+   * Если передать валидное значение для этого свойства, `children` игнорируются, а для `label` по умолчанию используется текст на "ru_RU".
    *
-   * - `attach` – иконка прикрепления.
-   * - `send` – иконка отправки.
-   * - `done` – иконка отправки в режиме редактирования.
+   * Валидные значения:
+   * - `attach` – иконка прикрепления, текст по умолчанию — "Прикрепить файл";
+   * - `send` – иконка отправки, текст по умолчанию — "Отправить";
+   * - `done` – иконка отправки в режиме редактирования, текст по умолчанию — "Готово";
    */
   mode?: 'attach' | 'send' | 'done';
   /**
@@ -89,7 +90,7 @@ export const WriteBarIcon = ({
       break;
   }
 
-  const label = mode ? predefinedLabel[mode] : labelProp;
+  const label = labelProp ?? (mode && predefinedLabel[mode]);
 
   if (process.env.NODE_ENV === 'development') {
     /* istanbul ignore next: проверка в dev mode, тест на hasAccessibleName() есть в lib/accessibility.test.tsx */
