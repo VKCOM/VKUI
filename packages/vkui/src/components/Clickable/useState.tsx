@@ -79,6 +79,10 @@ function useActive({
   hasActive = true,
 }: StateProps) {
   const [activatedState, setActivated] = useStateWithDelay(false);
+  const [] = useStateWithDelay(false);
+
+  // Список нажатий которые не требуется отменять
+  const pointersUp = React.useMemo(() => new Set<number>(), []);
 
   const active = hasActive
     ? activated || activatedState
@@ -87,9 +91,17 @@ function useActive({
     : undefined;
 
   const onPointerDown = () => setActivated(true, ACTIVE_DELAY);
-  const onPointerCancel = () => setActivated(false);
+  const onPointerCancel: React.PointerEventHandler = (e) => {
+    if (pointersUp.has(e.pointerId)) {
+      pointersUp.delete(e.pointerId);
+      return;
+    }
 
-  const onPointerUp = () => {
+    setActivated(false);
+  };
+
+  const onPointerUp: React.PointerEventHandler = (e) => {
+    pointersUp.add(e.pointerId);
     setActivated(true);
     setActivated(false, activeEffectDelay);
   };
