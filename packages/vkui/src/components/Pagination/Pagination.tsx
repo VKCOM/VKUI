@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 import { PaginationPageType, usePagination } from '../../hooks/usePagination';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { PaginationPageButton } from './PaginationPage/PaginationPageButton';
 import { PaginationPageEllipsis } from './PaginationPage/PaginationPageEllipsis';
-import { getPageAriaLabelDefault } from './utils';
+import { getPageLabelDefault } from './utils';
 import styles from './Pagination.module.css';
 
 export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElement>, 'onChange'> {
@@ -31,20 +32,26 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    */
   disabled?: boolean;
   /**
-   * Переопределение `aria-label` для кнопки навигации назад.
+   * Переопределение текста для обозначения блока навигации.
    * По умолчанию используется текст на "ru_RU".
    */
-  prevButtonAriaLabel?: string;
+  navigationLabel?: string;
+  navigationLabelComponent?: HasComponent['Component'];
   /**
-   * Переопределение `aria-label` для кнопки навигации вперёд.
+   * Переопределение текста для кнопки навигации назад.
    * По умолчанию используется текст на "ru_RU".
    */
-  nextButtonAriaLabel?: string;
+  prevButtonLabel?: string;
   /**
-   * Функция для переопределения и/или локализации `aria-label` атрибута.
+   * Переопределение текста для кнопки навигации вперёд.
    * По умолчанию используется текст на "ru_RU".
    */
-  getPageAriaLabel?(page: number, isCurrent: boolean): string;
+  nextButtonLabel?: string;
+  /**
+   * Функция для переопределения и/или локализации текста кнопки страницы.
+   * По умолчанию используется текст на "ru_RU".
+   */
+  getPageLabel?(isCurrent: boolean): string;
   onChange?(page: number): void;
 }
 
@@ -57,9 +64,11 @@ export const Pagination = ({
   boundaryCount = 1,
   totalPages = 1,
   disabled,
-  getPageAriaLabel = getPageAriaLabelDefault,
-  prevButtonAriaLabel = 'Перейти на предыдущую страницу',
-  nextButtonAriaLabel = 'Перейти на следующую страницу',
+  getPageLabel = getPageLabelDefault,
+  navigationLabel = 'Навигация по страницам',
+  navigationLabelComponent = 'h2',
+  prevButtonLabel = 'Перейти на предыдущую страницу',
+  nextButtonLabel = 'Перейти на следующую страницу',
   onChange,
   ...resetProps
 }: PaginationProps) => {
@@ -107,7 +116,7 @@ export const Pagination = ({
           return (
             <li key={page}>
               <PaginationPageButton
-                getPageAriaLabel={getPageAriaLabel}
+                getPageLabel={getPageLabel}
                 isCurrent={isCurrent}
                 onClick={handleClick}
                 disabled={disabled}
@@ -119,25 +128,25 @@ export const Pagination = ({
         }
       }
     },
-    [currentPage, disabled, getPageAriaLabel, handleClick],
+    [currentPage, disabled, getPageLabel, handleClick],
   );
 
   return (
-    <RootComponent
-      Component="nav"
-      role="navigation"
-      aria-label="Навигация по страницам"
-      {...resetProps}
-    >
+    <RootComponent Component="nav" role="navigation" {...resetProps}>
+      <VisuallyHidden Component={navigationLabelComponent}>{navigationLabel}</VisuallyHidden>
       <ul className={styles['Pagination__list']}>
         <li className={styles['Pagination__prevButtonContainer']}>
           <Button
             size="l"
-            before={<Icon24ChevronCompactLeft width={24} />}
+            before={
+              <>
+                <VisuallyHidden>{prevButtonLabel}</VisuallyHidden>{' '}
+                <Icon24ChevronCompactLeft width={24} />
+              </>
+            }
             appearance="accent"
             mode="tertiary"
             disabled={isFirstPage || disabled}
-            aria-label={prevButtonAriaLabel}
             onClick={handlePrevClick}
           />
         </li>
@@ -145,11 +154,15 @@ export const Pagination = ({
         <li className={styles['Pagination__nextButtonContainer']}>
           <Button
             size="l"
-            after={<Icon24ChevronCompactRight width={24} />}
+            after={
+              <>
+                <VisuallyHidden>{nextButtonLabel}</VisuallyHidden>
+                <Icon24ChevronCompactRight width={24} />
+              </>
+            }
             appearance="accent"
             mode="tertiary"
             disabled={isLastPage || disabled}
-            aria-label={nextButtonAriaLabel}
             onClick={handleNextClick}
           />
         </li>
