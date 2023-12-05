@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { ChipOption } from '../Chip/Chip';
+import type { ChipOption } from '../ChipsInputBase/types';
 import { ChipsInput, ChipsInputProps } from './ChipsInput';
 
 const story: Meta<ChipsInputProps<ChipOption>> = {

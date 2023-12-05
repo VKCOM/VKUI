@@ -5,7 +5,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
-import { defaultFilterFn } from '../../lib/select';
+import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { debounce } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
@@ -105,12 +105,6 @@ const filter = <T extends CustomSelectOptionInterface>(
 };
 
 const defaultOptions: CustomSelectOptionInterface[] = [];
-
-type FilterFn<T> = (
-  value: string,
-  option: T,
-  getOptionLabel?: (option: Partial<T>) => string,
-) => boolean;
 
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
 

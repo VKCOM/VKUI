@@ -155,3 +155,24 @@ export const getActiveElementByAnotherElement = (el: Element | null) =>
 export const contains = (parent?: Element | null, child?: Element | null) => {
   return parent && child ? parent.contains(child) : false;
 };
+
+export const getHTMLElementByChildren = (children: HTMLCollection, index: number) => {
+  const foundEl = children[index];
+  return isHTMLElement(foundEl) ? foundEl : null;
+};
+
+export const getHTMLElementSiblingByDirection = <T extends Element>(
+  el: T,
+  direction: 'left' | 'right',
+) => {
+  let siblingEl: Element | null = null;
+  switch (direction) {
+    case 'left':
+      siblingEl = el.previousElementSibling;
+      break;
+    case 'right':
+      siblingEl = el.nextElementSibling;
+      break;
+  }
+  return isHTMLElement(siblingEl) ? siblingEl : null;
+};

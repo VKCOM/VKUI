@@ -23,6 +23,7 @@ export const Keys = {
   ESCAPE: 'Escape',
   HOME: 'Home',
   END: 'End',
+  BACKSPACE: 'Backspace',
   ARROW_LEFT: 'ArrowLeft',
   ARROW_RIGHT: 'ArrowRight',
   ARROW_UP: 'ArrowUp',
@@ -139,3 +140,19 @@ export function hasAccessibleName({
 
   return false;
 }
+
+/**
+ * @private
+ */
+export const getHorizontalFocusGoTo = (
+  keys: Extract<KeysValues, 'ArrowUp' | 'ArrowLeft' | 'ArrowDown' | 'ArrowRight'>,
+) => {
+  switch (keys) {
+    case Keys.ARROW_UP:
+    case Keys.ARROW_LEFT:
+      return 'left';
+    case Keys.ARROW_DOWN:
+    case Keys.ARROW_RIGHT:
+      return 'right';
+  }
+};

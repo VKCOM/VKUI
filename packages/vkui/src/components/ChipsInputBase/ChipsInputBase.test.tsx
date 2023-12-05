@@ -1,116 +1,120 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { baselineComponent, userEvent } from '../../testing/utils';
-import { ChipOption } from '../Chip/Chip';
-import { ChipsInputBase, ChipsInputBaseProps } from './ChipsInputBase';
+import { ChipsInputBase } from './ChipsInputBase';
+import type { ChipOption, ChipsInputBasePrivateProps } from './types';
 
-const ChipsInputBaseTest = (props: ChipsInputBaseProps<ChipOption>) => (
+const ChipsInputBaseTest = (props: ChipsInputBasePrivateProps) => (
   <ChipsInputBase data-testid="chips-input" {...props} />
 );
 
-const chipsInputValue: ChipOption[] = [{ value: 'red', label: 'Красный' }];
-const redChip = () => screen.queryByText('Красный');
-const getChipsInputBase = () => screen.getByTestId('chips-input');
+const testOption = { value: 'red', label: 'Красный' };
+const chipsInputValue: ChipOption[] = [testOption];
 
 describe('ChipsInputBase', () => {
-  baselineComponent(ChipsInputBase);
+  baselineComponent(ChipsInputBase, {
+    // доступность должна быть реализована в обёртках над ChipsInputBase
+    a11y: false,
+  });
+
+  const onAddChipOption = jest.fn();
+  const onRemoveChipOption = jest.fn();
+
+  beforeEach(() => {
+    onAddChipOption.mockClear();
+    onRemoveChipOption.mockClear();
+
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+  });
 
   it('renders values passed to it', () => {
-    render(<ChipsInputBaseTest value={chipsInputValue} />);
-
-    expect(redChip()).not.toBeNull();
+    const result = render(
+      <ChipsInputBaseTest
+        value={chipsInputValue}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+      />,
+    );
+    expect(result.queryByText('Красный')).not.toBeNull();
   });
 
   it('adds chips', async () => {
-    let value;
-
-    render(<ChipsInputBaseTest value={[]} onChange={(changedValue) => (value = changedValue)} />);
-
-    await userEvent.type(getChipsInputBase(), 'Красный{enter}');
-
-    expect(value).toEqual([{ value: 'Красный', label: 'Красный' }]);
-  });
-
-  it('does not lose data when adding an already existing chip', async () => {
-    let value: ChipOption[] | undefined = undefined;
-
-    render(
+    const result = render(
       <ChipsInputBaseTest
-        value={[
-          { value: 'Красный', label: 'Красный' },
-          { value: 'Синий', label: 'Синий' },
-        ]}
-        onChange={(changedValue) => (value = changedValue)}
+        value={[]}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
       />,
     );
-
-    await userEvent.type(getChipsInputBase(), 'Красный{enter}');
-
-    expect(value).toEqual([
-      { value: 'Синий', label: 'Синий' },
-      { value: 'Красный', label: 'Красный' },
-    ]);
+    await userEvent.type(result.getByTestId('chips-input'), 'Красный{enter}');
+    expect(onAddChipOption).toHaveBeenCalledWith('Красный');
   });
 
   it('removes chip on hitting backspace', async () => {
-    let value: ChipOption[] | undefined = undefined;
-
-    render(
+    const result = render(
       <ChipsInputBaseTest
         value={chipsInputValue}
-        onChange={(changedValue) => (value = changedValue)}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
       />,
     );
-
-    await userEvent.type(getChipsInputBase(), '{backspace}');
-
-    expect(value).toEqual([]);
+    await userEvent.type(result.getByTestId('chips-input'), '{backspace}');
+    expect(onRemoveChipOption).toHaveBeenCalledWith(testOption);
   });
 
   it('does not delete chips on hitting backspace in readonly mode', async () => {
-    let value: ChipOption[] = [...chipsInputValue];
-
-    render(
+    const result = render(
       <ChipsInputBaseTest
         readOnly
-        value={value}
-        onChange={(changedValue) => (value = changedValue)}
+        value={chipsInputValue}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
       />,
     );
-
-    await userEvent.type(getChipsInputBase(), '{backspace}');
-
-    expect(value).toEqual(chipsInputValue);
+    await userEvent.type(result.getByTestId('chips-input'), '{backspace}');
+    expect(onRemoveChipOption).not.toHaveBeenCalled();
   });
 
   it('focuses ChipsInputBase on surrounding container click', async () => {
-    render(<ChipsInputBaseTest value={chipsInputValue} />);
-
-    await userEvent.click(document.querySelector('.vkuiChipsInputBase') as Element);
-    expect(getChipsInputBase()).toHaveFocus();
+    const result = render(
+      <ChipsInputBaseTest
+        value={chipsInputValue}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+      />,
+    );
+    await userEvent.click(result.getByTestId('chips-input'));
+    expect(result.getByTestId('chips-input')).toHaveFocus();
   });
 
   it('focuses ChipsInputBase on chip click', async () => {
-    render(<ChipsInputBaseTest value={chipsInputValue} />);
-
-    await userEvent.click(redChip() as HTMLElement);
-    expect(getChipsInputBase()).toHaveFocus();
+    const result = render(
+      <ChipsInputBaseTest
+        value={chipsInputValue}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+      />,
+    );
+    await userEvent.click(result.queryByText('Красный')!);
+    expect(result.getByTestId('chips-input')).toHaveFocus();
   });
 
   it('add value on blur event if addOnBlur=true', async () => {
-    let value;
-
-    render(
+    const result = render(
       <ChipsInputBaseTest
         addOnBlur
         value={[]}
-        onChange={(changedValue) => (value = changedValue)}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
       />,
     );
-
-    await userEvent.type(getChipsInputBase(), 'Красный');
+    await userEvent.type(result.getByTestId('chips-input'), 'Красный');
     await userEvent.click(document.body);
-
-    expect(value).toEqual([{ value: 'Красный', label: 'Красный' }]);
+    expect(onAddChipOption).toHaveBeenCalledWith('Красный');
   });
 });
