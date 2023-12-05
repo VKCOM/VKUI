@@ -7,7 +7,7 @@ import type { Placement } from '../../lib/floating';
 import { defaultFilterFn } from '../../lib/select';
 import { ChipsInputBase } from '../ChipsInputBase/ChipsInputBase';
 import {
-  DEFAULT_INPUT_ARIA_LABEL,
+  DEFAULT_INPUT_LABEL,
   getNewOptionDataDefault,
   getOptionLabelDefault,
   getOptionValueDefault,
@@ -122,7 +122,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   defaultValue,
   inputValue: inputValueProp,
   defaultInputValue,
-  inputAriaLabel = DEFAULT_INPUT_ARIA_LABEL,
+  inputLabel = DEFAULT_INPUT_LABEL,
   disabled,
   getOptionValue = getOptionValueDefault,
   getOptionLabel = getOptionLabelDefault,
@@ -400,7 +400,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         renderChip={renderChip}
         // input
         getRef={inputRef}
-        inputAriaLabel={inputAriaLabel}
+        inputLabel={inputLabel}
         inputValue={inputValue}
         onInputChange={onInputChange}
         onFocus={handleFocus}

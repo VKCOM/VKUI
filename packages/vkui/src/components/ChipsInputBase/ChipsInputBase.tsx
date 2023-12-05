@@ -7,8 +7,9 @@ import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
 import { getHTMLElementByChildren, getHTMLElementSiblingByDirection } from '../../lib/dom';
 import { FormField } from '../FormField/FormField';
 import { Text } from '../Typography/Text/Text';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import {
-  DEFAULT_INPUT_ARIA_LABEL,
+  DEFAULT_INPUT_LABEL,
   DEFAULT_INPUT_VALUE,
   DEFAULT_VALUE,
   renderChipDefault,
@@ -52,7 +53,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   getRef,
   id: idProp,
   inputValue,
-  inputAriaLabel = DEFAULT_INPUT_ARIA_LABEL,
+  inputLabel = DEFAULT_INPUT_LABEL,
   placeholder,
   disabled,
   readOnly,
@@ -213,6 +214,7 @@ export const ChipsInputBase = <O extends ChipOption>({
           </React.Fragment>
         ))}
         <div role="option" className={styles['ChipsInputBase__label']}>
+          {inputLabel && <VisuallyHidden>{inputLabel}</VisuallyHidden>}
           <Text
             aria-autocomplete="list"
             autoCapitalize="none"
@@ -220,7 +222,6 @@ export const ChipsInputBase = <O extends ChipOption>({
             autoCorrect="off"
             spellCheck={false}
             {...restProps}
-            aria-label={inputAriaLabel}
             Component="input"
             type="text"
             id={inputId}

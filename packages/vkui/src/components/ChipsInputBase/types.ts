@@ -23,7 +23,7 @@ export interface ChipProps
   value?: ChipValue;
   removable?: boolean;
   disabled?: boolean;
-  removeAriaLabel?: string;
+  removeLabel?: string;
   before?: React.ReactNode;
   after?: React.ReactNode;
   onRemove?(event: React.MouseEvent, value: ChipValue): void;
@@ -87,7 +87,7 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
     HasAlign {
   getRootRef?: React.Ref<HTMLDivElement>;
 
-  inputAriaLabel?: string;
+  inputLabel?: string;
   /**
    * Добавляет значение в список на событие `onBlur`
    */

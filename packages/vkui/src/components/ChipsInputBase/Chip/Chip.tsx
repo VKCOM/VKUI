@@ -23,7 +23,7 @@ export const Chip = ({
   value = '',
   removable = true,
   onRemove = noop,
-  removeAriaLabel = 'Удалить',
+  removeLabel = 'Удалить',
   before,
   after,
   disabled,
