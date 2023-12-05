@@ -474,3 +474,31 @@ interface HasInsets {
 - `noStyling` – убирает стилизацию по умолчанию.
 - `usePortal` – рендерить ли всплывающий элемент в портале. Вместо `boolean`, можно передать
   контейнер, куда должен отрендериться всплывающий элемент.
+
+<br/><br/>
+
+## [`Accordion`](#/Accordion)
+
+Accordion избавился от нативного элемента `detail`, теперь для компонента стали доступны анимации.
+
+На замену свойств `open` и `onToggle` пришли свойства `expanded`, `defaultExpanded`, `onChange`
+
+```diff
+ <Accordion
+-     open={openId === id}
++     expanded={openId === id}
+-     onToggle={(e) => e.target.open && setOpenId(id)}
++     onChange={(open) => open && setOpenId(id)}
+ >
+```
+
+Контент должен быть обернут в `<Accordion.Content>`
+
+```diff
+  <Accordion expanded={open}>
+    <Accordion.Summary>Title</Accordion.Summary>
++   <Accordion.Content>
+        <Div>Content</Div>
++    </Accordion.Content>
+  </Accordion>
+```
