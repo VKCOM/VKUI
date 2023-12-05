@@ -406,9 +406,6 @@ export type { ChipsSelectProps as unstable_ChipsSelectProps } from './components
 export { TextTooltip as unstable_TextTooltip } from './components/TextTooltip/TextTooltip';
 export type { TextTooltipProps as unstable_TextTooltipProps } from './components/TextTooltip/TextTooltip';
 
-export { RichTooltip as unstable_RichTooltip } from './components/RichTooltip/RichTooltip';
-export type { RichTooltipProps as unstable_RichTooltipProps } from './components/RichTooltip/RichTooltip';
-
 export { ViewInfinite as unstable_ViewInfinite } from './components/View/ViewInfinite';
 export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from './components/View/ViewInfinite';
 

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { Icon16Dropdown } from '@vkontakte/icons';
 import { ActionSheet, ActionSheetItem, classNames, Headline, Link } from '@vkui';
 import './Setting.css';
-import { RichTooltip } from '@vkui/components/RichTooltip/RichTooltip';
+import { Popover } from '@vkui/components/Popover/Popover';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 
 export const Setting = ({
@@ -41,12 +41,13 @@ export const Setting = ({
       weight="3"
     >
       {hint ? (
-        <RichTooltip
+        <Popover
           placement="top"
+          trigger="hover"
           content={<div style={{ padding: '8px 12px 9px' }}>{hint}</div>}
         >
           {labelJsx}
-        </RichTooltip>
+        </Popover>
       ) : (
         labelJsx
       )}
