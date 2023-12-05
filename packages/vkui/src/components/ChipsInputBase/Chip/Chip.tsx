@@ -4,9 +4,10 @@ import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
-import { getTitleFromChildren } from '../../../lib/utils';
+import { getTextFromChildren } from '../../../lib/children';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { Footnote } from '../../Typography/Footnote/Footnote';
+import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import type { ChipProps } from '../types';
 import styles from './Chip.module.css';
 
@@ -36,7 +37,7 @@ export const Chip = ({
   const { sizeY = 'none' } = useAdaptivity();
   const { focusVisible, onFocus, onBlur } = useFocusVisible();
   const focusVisibleClassName = useFocusVisibleClassName({ focusVisible });
-  const removeLabel = `${removeAriaLabel} ${getTitleFromChildren(children)}`;
+  const title = getTextFromChildren(children);
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     onFocus(event);
@@ -69,7 +70,7 @@ export const Chip = ({
         focusVisibleClassName,
         className,
       )}
-      tabIndex={-1} // [reason]: чтобы можно было выставлять состояние фокуса, только программно через `*.focus()`
+      tabIndex={-1} // [reason]: чтобы можно было выставлять состояние фокуса только программно через `*.focus()`
       aria-disabled={disabled}
       onFocus={disabled ? undefined : handleFocus}
       onBlur={disabled ? undefined : handleBlur}
@@ -82,13 +83,15 @@ export const Chip = ({
       {removable && (
         <div className={styles['Chip__removable']}>
           <button
-            tabIndex={-1} // [reason]: чтобы можно было выставлять состояние фокуса, только программно через `*.focus()`
+            tabIndex={-1} // [reason]: чтобы можно было выставлять состояние фокуса только программно через `*.focus()`
             disabled={disabled}
             className={styles['Chip__remove']}
-            aria-label={removeLabel}
             onClick={disabled ? undefined : onRemoveWrapper}
           >
-            <Icon16Cancel aria-hidden />
+            <VisuallyHidden>
+              {removeLabel} {title}
+            </VisuallyHidden>
+            <Icon16Cancel />
           </button>
         </div>
       )}
