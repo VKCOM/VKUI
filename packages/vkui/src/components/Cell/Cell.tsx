@@ -152,12 +152,12 @@ export const Cell = ({
         removeButtonTestId={removeButtonTestId}
       >
         {platform === 'ios' ? (
-          ({ isRemoving }) => (
-            <SimpleCell
-              {...simpleCellProps}
-              {...(simpleCellProps.onClick && { disabled: simpleCellProps.disabled || isRemoving })}
-            />
-          )
+          ({ isRemoving }) => {
+            if (simpleCellProps.onClick && !simpleCellProps.disabled) {
+              simpleCellProps.disabled = isRemoving;
+            }
+            return <SimpleCell {...simpleCellProps} />;
+          }
         ) : (
           <SimpleCell {...simpleCellProps} />
         )}
