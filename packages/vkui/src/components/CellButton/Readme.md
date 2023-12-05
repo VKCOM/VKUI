@@ -3,17 +3,22 @@
   <Panel id="button">
     <PanelHeader>CellButton</PanelHeader>
     <Group header={<Header mode="secondary">Базовый пример</Header>}>
-      <CellButton>Добавить новую школу</CellButton>
-      <CellButton mode="danger">Удалить беседу</CellButton>
+      <CellButton onClick={() => {}}>Добавить новую школу</CellButton>
+      <CellButton onClick={() => {}} mode="danger">
+        Удалить беседу
+      </CellButton>
     </Group>
     <Group header={<Header mode="secondary">Иконки</Header>}>
-      <CellButton before={<Icon28AddOutline />}>Добавить родственника</CellButton>
-      <CellButton before={<Icon28DeleteOutline />} mode="danger">
+      <CellButton onClick={() => {}} before={<Icon28AddOutline />}>
+        Добавить родственника
+      </CellButton>
+      <CellButton onClick={() => {}} before={<Icon28DeleteOutline />} mode="danger">
         Удалить беседу
       </CellButton>
     </Group>
     <Group header={<Header mode="secondary">Аватарки</Header>}>
       <CellButton
+        onClick={() => {}}
         before={
           <Avatar withBorder={false} size={40}>
             <Icon24Add />
@@ -23,6 +28,7 @@
         Добавить участников
       </CellButton>
       <CellButton
+        onClick={() => {}}
         before={
           <Avatar withBorder={false} size={48}>
             <Icon28AddOutline />
@@ -32,6 +38,7 @@
         Создать беседу
       </CellButton>
       <CellButton
+        onClick={() => {}}
         before={
           <Image withBorder={false} size={72}>
             <Icon28AddOutline />
@@ -42,7 +49,7 @@
       </CellButton>
     </Group>
     <Group header={<Header mode="secondary">Центрирование</Header>}>
-      <CellButton centered before={<Icon24Add />}>
+      <CellButton onClick={() => {}} centered before={<Icon24Add />}>
         Создать беседу
       </CellButton>
     </Group>

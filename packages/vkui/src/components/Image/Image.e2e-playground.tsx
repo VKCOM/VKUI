@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
@@ -97,7 +98,7 @@ export const ImageFocusVisiblePlayground = (props: ComponentPlaygroundProps) => 
       },
     ]}
   >
-    {(props: ImageProps) => <Image onClick={() => null} {...props} />}
+    {(props: ImageProps) => <Image onClick={noop} {...props} />}
   </ComponentPlayground>
 );
 
@@ -110,7 +111,7 @@ export const ImageFocusVisibleOverlayPlayground = (props: ComponentPlaygroundPro
         src: [base64Image],
         children: [
           <React.Fragment key="overlay-base">
-            <Image.Overlay theme="light" visibility="always">
+            <Image.Overlay theme="light" visibility="always" onClick={noop}>
               <IconExampleForOverlayBasedOnImageBaseSize />
             </Image.Overlay>
           </React.Fragment>,

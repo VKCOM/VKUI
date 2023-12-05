@@ -47,9 +47,12 @@ describe('ContentCard', () => {
 
   it('[onClick] is disabled when there is no onClick', () => {
     render(<ContentCardTest />);
-    const tappable = screen.getByRole('button');
+    const el = screen.getByTestId('card');
 
-    expect(tappable).toHaveAttribute('aria-disabled', 'true');
+    expect(el.tagName.toLowerCase()).toBe('div');
+    expect(el.role).toBeUndefined();
+    expect(el.getAttribute('disabled')).toBeNull();
+    expect(el.getAttribute('aria-disabled')).toBeNull();
   });
 
   it('changes header tag with headerComponent prop', () => {

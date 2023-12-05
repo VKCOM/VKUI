@@ -82,7 +82,6 @@ export const ContentCard = ({
     >
       <Tappable
         {...restProps}
-        disabled={restProps.disabled || (!restProps.onClick && !restProps.href)}
         hasHover={hasHover}
         hasActive={hasActive}
         className={styles['ContentCard__tappable']}

@@ -118,12 +118,11 @@ export const Cell = ({
     disabled && styles['Cell--disabled'],
   );
 
-  const simpleCellProps = {
+  const simpleCellProps: SimpleCellProps = {
     hasActive: hasActive,
     hasHover: hasActive && !removable,
     ...restProps,
     className: styles['Cell__content'],
-    disabled: simpleCellDisabled,
     Component: Component,
     before: (
       <React.Fragment>
@@ -140,6 +139,10 @@ export const Cell = ({
     ),
   };
 
+  if (restProps.onClick) {
+    simpleCellProps.disabled = simpleCellDisabled;
+  }
+
   if (removable) {
     return (
       <Removable
@@ -152,9 +155,12 @@ export const Cell = ({
         removeButtonTestId={removeButtonTestId}
       >
         {platform === 'ios' ? (
-          ({ isRemoving }) => (
-            <SimpleCell {...simpleCellProps} disabled={simpleCellProps.disabled || isRemoving} />
-          )
+          ({ isRemoving }) => {
+            if (simpleCellProps.onClick) {
+              simpleCellProps.disabled = isRemoving || !simpleCellProps.disabled;
+            }
+            return <SimpleCell {...simpleCellProps} />;
+          }
         ) : (
           <SimpleCell {...simpleCellProps} />
         )}

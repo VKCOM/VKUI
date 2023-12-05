@@ -59,14 +59,14 @@ const Example = () => {
           <HorizontalScroll>
             <div style={{ display: 'flex' }}>
               <div style={{ display: 'flex' }}>
-                <HorizontalCell size="m" header="Warma-geddon">
+                <HorizontalCell onClick={() => {}} size="m" header="Warma-geddon">
                   <Image
                     size={88}
                     borderRadius="l"
                     src={'https://sun9-45.userapi.com/c846418/v846418215/5cf20/Gd9mQ6dVXTw.jpg'}
                   />
                 </HorizontalCell>
-                <HorizontalCell size="m" header="Golden Valley">
+                <HorizontalCell onClick={() => {}} size="m" header="Golden Valley">
                   <Image
                     size={88}
                     borderRadius="l"
@@ -113,7 +113,13 @@ const largeImageStyles = {
 
 const AlbumItems = () => {
   return getAlbumItems().map(({ id, title, size, thumb_src }) => (
-    <HorizontalCell key={id} size="l" header={title} subtitle={`${size} фотографии`}>
+    <HorizontalCell
+      onClick={() => {}}
+      key={id}
+      size="l"
+      header={title}
+      subtitle={`${size} фотографии`}
+    >
       <img style={largeImageStyles} src={thumb_src} />
     </HorizontalCell>
   ));
@@ -123,7 +129,7 @@ const usersList = getRandomUsers(3);
 
 const RandomUsers = () => {
   return usersList.map((user) => (
-    <HorizontalCell key={user.id} size="s" header={user.first_name}>
+    <HorizontalCell onClick={() => {}} key={user.id} size="s" header={user.first_name}>
       <Avatar size={56} src={user.photo_100} />
     </HorizontalCell>
   ));

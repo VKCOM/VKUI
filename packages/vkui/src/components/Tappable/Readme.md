@@ -11,7 +11,8 @@ const Example = () => {
   return (
     <div style={gaps}>
       <Tappable
-      // поиграйся с моими параметрами :) доступный список параметров см. в конце страницы
+        onClick={console.log}
+        // поиграйся с моими параметрами :) доступный список параметров см. в конце страницы
       >
         <Text style={gaps}>Наведи и нажми на меня</Text>
       </Tappable>
@@ -36,7 +37,7 @@ const Example = () => {
     <div style={gaps}>
       <PlatformProvider value="android">
         <AdaptivityProvider hasPointer={false}>
-          <Tappable activeMode="background" hasActive>
+          <Tappable onClick={console.log} activeMode="background" hasActive>
             <Text style={gaps}>Нажми на меня</Text>
           </Tappable>
         </AdaptivityProvider>

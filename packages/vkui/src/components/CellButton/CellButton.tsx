@@ -19,7 +19,6 @@ export const CellButton = ({
 }: CellButtonProps) => {
   return (
     <SimpleCell
-      stopPropagation={true}
       {...restProps}
       className={classNames(
         styles['CellButton'],

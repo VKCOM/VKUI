@@ -7,11 +7,10 @@ import { useBooleanState } from '../../hooks/useBooleanState';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
-import { touchEnabled, VKUITouchEvent } from '../../lib/touch';
+import { touchEnabled } from '../../lib/touch';
 import { HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
-import { TouchEvent } from '../Touch/Touch';
 import { Headline } from '../Typography/Headline/Headline';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Search.module.css';
@@ -26,7 +25,7 @@ export interface SearchProps
   after?: React.ReactNode;
   before?: React.ReactNode;
   icon?: React.ReactNode;
-  onIconClick?(e: VKUITouchEvent): void;
+  onIconClick?: React.PointerEventHandler<HTMLElement>;
   defaultValue?: string;
   iconLabel?: string;
   clearLabel?: string;
@@ -109,14 +108,14 @@ export const Search = ({
     inputRef.current?.dispatchEvent(ev2);
   }, [inputRef]);
 
-  const onIconClickStart = React.useCallback(
-    (e: TouchEvent) => onIconClick(e.originalEvent),
+  const onIconClickStart: React.PointerEventHandler<HTMLElement> = React.useCallback(
+    (e) => onIconClick(e),
     [onIconClick],
   );
 
-  const onIconCancelClickStart = React.useCallback(
-    (e: TouchEvent) => {
-      e.originalEvent.preventDefault();
+  const onIconCancelClickStart: React.PointerEventHandler<HTMLElement> = React.useCallback(
+    (e) => {
+      e.preventDefault();
       inputRef.current?.focus();
       if (touchEnabled()) {
         onCancel();
@@ -170,7 +169,7 @@ export const Search = ({
           {icon && (
             <IconButton
               hoverMode="opacity"
-              onStart={onIconClickStart}
+              onPointerDown={onIconClickStart}
               className={styles['Search__icon']}
               onFocus={setFocusedTrue}
               onBlur={setFocusedFalse}
@@ -181,7 +180,7 @@ export const Search = ({
           )}
           <IconButton
             hoverMode="opacity"
-            onStart={onIconCancelClickStart}
+            onPointerDown={onIconCancelClickStart}
             onClick={onCancel}
             className={styles['Search__icon']}
             tabIndex={value ? undefined : -1}

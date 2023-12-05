@@ -13,7 +13,8 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRef, HasRootRef } from '../../types';
-import { ACTIVE_EFFECT_DELAY, Tappable, type TappableProps } from '../Tappable/Tappable';
+import { DEFAULT_ACTIVE_EFFECT_DELAY } from '../Clickable/useState';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -117,7 +118,7 @@ export const Checkbox = ({
       )}
       style={style}
       disabled={restProps.disabled}
-      activeEffectDelay={platform === 'ios' ? 100 : ACTIVE_EFFECT_DELAY}
+      activeEffectDelay={platform === 'ios' ? 100 : DEFAULT_ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
       hoverMode={hoverMode}
       activeMode={activeMode}

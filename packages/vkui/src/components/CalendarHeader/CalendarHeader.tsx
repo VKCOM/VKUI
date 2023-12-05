@@ -12,12 +12,12 @@ import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { Tappable, TappableElementProps } from '../Tappable/Tappable';
+import { Tappable } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CalendarHeader.module.css';
 
-type ArrowMonthProps = Omit<TappableElementProps, 'onClick' | 'aria-label'>;
+type ArrowMonthProps = Omit<React.AllHTMLAttributes<HTMLElement>, 'onClick' | 'aria-label'>;
 
 export interface CalendarHeaderProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {

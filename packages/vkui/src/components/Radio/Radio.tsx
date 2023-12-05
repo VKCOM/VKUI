@@ -3,7 +3,8 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasDataAttribute, HasRef, HasRootRef } from '../../types';
-import { ACTIVE_EFFECT_DELAY, Tappable } from '../Tappable/Tappable';
+import { DEFAULT_ACTIVE_EFFECT_DELAY } from '../Clickable/useState';
+import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -61,7 +62,7 @@ export const Radio = ({
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
-      activeEffectDelay={platform === 'ios' ? 100 : ACTIVE_EFFECT_DELAY}
+      activeEffectDelay={platform === 'ios' ? 100 : DEFAULT_ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
       {...labelProps}

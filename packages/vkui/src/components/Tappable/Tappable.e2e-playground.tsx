@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { type FocusVisibleMode } from '../../hooks/useFocusVisibleClassName';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -24,7 +25,7 @@ export const TappablePlayground = (props: ComponentPlaygroundProps) => {
     >
       {(props: TappableProps) => (
         <AdaptivityProvider hasHover>
-          <Tappable {...props} />
+          <Tappable onClick={noop} {...props} />
         </AdaptivityProvider>
       )}
     </ComponentPlayground>
@@ -37,7 +38,7 @@ interface TappableFocusVisiblePlaygroundProps extends ComponentPlaygroundProps {
 
 const TappableFocusVisible = (props: TappableProps) => (
   <div style={{ padding: 10 }}>
-    <Tappable id="playwright-test" style={{ border: '1px dashed red' }} {...props}>
+    <Tappable id="playwright-test" style={{ border: '1px dashed red' }} onClick={noop} {...props}>
       Tappable:focus-visible
     </Tappable>
   </div>

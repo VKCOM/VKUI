@@ -2,16 +2,24 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import {
-  type FocusVisibleModeProps,
+  FocusVisibleModeProps,
   useFocusVisibleClassName,
 } from '../../hooks/useFocusVisibleClassName';
-import { callMultiple } from '../../lib/callMultiple';
+import { mergeCalls } from '../../lib/mergeCalls';
 import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
+import { useKeyboard } from './useKeyboard';
+import {
+  ClickableLockStateContext,
+  DEFAULT_ACTIVE_EFFECT_DELAY,
+  StateProps,
+  useState,
+} from './useState';
 import styles from './Clickable.module.css';
 
-export interface ClickableProps<T> extends RootComponentProps<T>, FocusVisibleModeProps {
-  baseClassName?: string;
-}
+export interface ClickableProps<T = HTMLElement>
+  extends RootComponentProps<T>,
+    FocusVisibleModeProps,
+    StateProps {}
 
 /**
  * Некликабельный компонент. Отключаем возможность нажимать на компонент.
@@ -20,8 +28,11 @@ const NonClickable = <T,>({
   href,
   onClick,
   onClickCapture,
+  activeClassName,
+  hoverClassName,
+  activeEffectDelay,
   ...restProps
-}: RootComponentProps<T>) => <RootComponent {...restProps} />;
+}: ClickableProps<T>) => <RootComponent {...restProps} />;
 
 /**
  * Кликабельный компонент. Добавляем кучу обвесов
@@ -30,19 +41,63 @@ const RealClickable = <T,>({
   baseClassName,
   children,
   focusVisibleMode = 'inside',
+  activeClassName,
+  hoverClassName,
+  activeEffectDelay = DEFAULT_ACTIVE_EFFECT_DELAY,
+  hasHover = true,
+  hasActive = true,
+  hovered,
+  activated,
+  onPointerEnter,
+  onPointerLeave,
+  onPointerDown,
+  onPointerCancel,
+  onPointerUp,
+  onBlur,
+  onFocus,
+  onKeyDown,
   ...restProps
 }: ClickableProps<T>) => {
-  const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const { focusVisible, ...focusEvents } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: focusVisibleMode });
+
+  const { stateClassName, setLockBubblingImmediate, ...stateEvents } = useState({
+    activeClassName,
+    hoverClassName,
+    activeEffectDelay,
+    hasHover,
+    hasActive,
+    hovered,
+    activated,
+  });
+
+  const keyboardHandlers = useKeyboard();
+
+  const handlers = mergeCalls(focusEvents, stateEvents, keyboardHandlers, {
+    onPointerEnter,
+    onPointerLeave,
+    onPointerDown,
+    onPointerCancel,
+    onPointerUp,
+    onBlur,
+    onFocus,
+    onKeyDown,
+  });
 
   return (
     <RootComponent
-      baseClassName={classNames(baseClassName, focusVisibleClassNames, styles['Clickable__host'])}
-      onBlur={callMultiple(onBlur, restProps.onBlur)}
-      onFocus={callMultiple(onFocus, restProps.onFocus)}
+      baseClassName={classNames(
+        baseClassName,
+        styles['Clickable__realClickable'],
+        focusVisibleClassNames,
+        stateClassName,
+      )}
+      {...handlers}
       {...restProps}
     >
-      {children}
+      <ClickableLockStateContext.Provider value={setLockBubblingImmediate}>
+        {children}
+      </ClickableLockStateContext.Provider>
     </RootComponent>
   );
 };
@@ -50,11 +105,12 @@ const RealClickable = <T,>({
 /**
  * Проверяем, является ли компонент кликабельным
  */
-function checkClickable<T>(props: ClickableProps<T>): boolean {
+export function checkClickable<T>(props: ClickableProps<T>): boolean {
   return (
     (props.href !== undefined ||
       props.onClick !== undefined ||
-      props.onClickCapture !== undefined) &&
+      props.onClickCapture !== undefined ||
+      props.Component === 'label') &&
     !props.disabled
   );
 }
@@ -77,7 +133,7 @@ function component<T>({
   if (Component !== undefined) {
     return { Component };
   } else if (href !== undefined) {
-    return { 'Component': 'a', 'role': 'link', 'aria-disabled': disabled };
+    return { 'Component': 'a', 'aria-disabled': disabled };
   } else if (onClick !== undefined || onClickCapture !== undefined) {
     return {
       'Component': 'div',
@@ -96,14 +152,31 @@ function component<T>({
  * - при передаче `href` превратится в `a`,
  * - при передаче `onClick` превратится в `div` c `role="button"` и `tabIndex="0"`.
  * - иначе используется `div`.
+ *
+ * Отвечает за:
+ *
+ * - стейты наведения и нажатия
+ * - a11y компонентов
  */
-export const Clickable = <T,>({ focusVisibleMode = 'inside', ...restProps }: ClickableProps<T>) => {
+export const Clickable = <T,>({
+  focusVisibleMode = 'inside',
+  baseClassName: baseClassNameProp,
+  ...restProps
+}: ClickableProps<T>) => {
   const commonProps = component(restProps);
   const isClickable = checkClickable(restProps);
+  const baseClassName = classNames(baseClassNameProp, styles['Clickable__host']);
 
   if (isClickable) {
-    return <RealClickable focusVisibleMode={focusVisibleMode} {...commonProps} {...restProps} />;
+    return (
+      <RealClickable
+        baseClassName={baseClassName}
+        focusVisibleMode={focusVisibleMode}
+        {...commonProps}
+        {...restProps}
+      />
+    );
   }
 
-  return <NonClickable {...commonProps} {...restProps} />;
+  return <NonClickable baseClassName={baseClassName} {...commonProps} {...restProps} />;
 };
