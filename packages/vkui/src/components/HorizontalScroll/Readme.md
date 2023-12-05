@@ -27,7 +27,7 @@ const HorizontalScrollExample = () => {
             <div style={{ display: 'flex' }}>
               {recentFriends.map((item) => {
                 return (
-                  <HorizontalCell key={item.id} header={item.first_name}>
+                  <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
                     <Avatar size={56} src={item.photo_200} />
                   </HorizontalCell>
                 );
@@ -49,7 +49,7 @@ const HorizontalScrollExample = () => {
                 <Fragment>
                   {commonFriends.map((item) => {
                     return (
-                      <HorizontalCell key={item.id} header={item.first_name}>
+                      <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
                         <Avatar size={56} src={item.photo_200} />
                       </HorizontalCell>
                     );

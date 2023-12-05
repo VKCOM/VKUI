@@ -83,17 +83,17 @@ const ExampleUseCases = () => {
       </Div>
       <Div>
         <ButtonGroup mode="vertical" gap="m" style={{ minWidth: 328 }}>
-          <Button size="l" appearance="accent" stretched>
+          <Button onClick={() => {}} size="l" appearance="accent" stretched>
             Разрешить
           </Button>
-          <Button size="l" appearance="accent" stretched>
+          <Button onClick={() => {}} size="l" appearance="accent" stretched>
             Завершить
           </Button>
           <ButtonGroup mode="horizontal" gap="m" stretched>
-            <Button size="l" appearance="negative" stretched>
+            <Button onClick={() => {}} size="l" appearance="negative" stretched>
               Не сейчас
             </Button>
-            <Button size="l" appearance="positive" stretched>
+            <Button onClick={() => {}} size="l" appearance="positive" stretched>
               Продолжить
             </Button>
           </ButtonGroup>
@@ -102,13 +102,13 @@ const ExampleUseCases = () => {
       <br />
       <Div>
         <ButtonGroup mode="vertical" gap="m" style={{ minWidth: 328 }}>
-          <Button size="l" appearance="accent" stretched>
+          <Button onClick={() => {}} size="l" appearance="accent" stretched>
             Разрешить
           </Button>
-          <Button size="l" appearance="accent" mode="secondary" stretched>
+          <Button onClick={() => {}} size="l" appearance="accent" mode="secondary" stretched>
             Завершить
           </Button>
-          <Button size="l" appearance="accent" mode="tertiary" stretched>
+          <Button onClick={() => {}} size="l" appearance="accent" mode="tertiary" stretched>
             Не сейчас
           </Button>
         </ButtonGroup>
@@ -116,7 +116,13 @@ const ExampleUseCases = () => {
       <br />
       <Div>
         <ButtonGroup mode="horizontal" gap="space" stretched>
-          <Button size="l" appearance="accent" mode="tertiary" before={<Icon24Attach />}>
+          <Button
+            onClick={() => {}}
+            size="l"
+            appearance="accent"
+            mode="tertiary"
+            before={<Icon24Attach />}
+          >
             Прикрепить файл
           </Button>
           <Button
@@ -128,7 +134,13 @@ const ExampleUseCases = () => {
           >
             Создать
           </Button>
-          <Button size="l" appearance="accent" mode="tertiary" before={<Icon24Send />}>
+          <Button
+            onClick={() => {}}
+            size="l"
+            appearance="accent"
+            mode="tertiary"
+            before={<Icon24Send />}
+          >
             Отправить
           </Button>
         </ButtonGroup>

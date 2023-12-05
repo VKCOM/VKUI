@@ -16,7 +16,7 @@ const largeImageStyles = {
 
 const UserItems = () => {
   return getRandomUsers(15).map((user) => (
-    <HorizontalCell key={user.id} size="s" header={user.first_name}>
+    <HorizontalCell onClick={() => {}} key={user.id} size="s" header={user.first_name}>
       <Avatar size={56} src={user.photo_100} />
     </HorizontalCell>
   ));
@@ -47,7 +47,7 @@ const miniApps = [
 
 const MiniAppItems = () => {
   return miniApps.map(({ id, title, icon_139 }) => (
-    <HorizontalCell key={id} size="s" header={title}>
+    <HorizontalCell onClick={() => {}} key={id} size="s" header={title}>
       <Image size={56} borderRadius="m" src={icon_139} />
     </HorizontalCell>
   ));
@@ -73,7 +73,7 @@ const gamesItems = [
 
 const GamesItems = () => {
   return gamesItems.map(({ id, title, icon_139 }) => (
-    <HorizontalCell key={id} size="m" header={title}>
+    <HorizontalCell onClick={() => {}} key={id} size="m" header={title}>
       <Image size={88} borderRadius="l" src={icon_139} />
     </HorizontalCell>
   ));
@@ -102,7 +102,7 @@ const playlistItems = [
 
 const PlaylistItems = () => {
   return playlistItems.map(({ id, title, description, photo_300 }) => (
-    <HorizontalCell key={id} size="l" header={title} subtitle={description}>
+    <HorizontalCell onClick={() => {}} key={id} size="l" header={title} subtitle={description}>
       <Image size={128} src={photo_300} />
     </HorizontalCell>
   ));
@@ -131,7 +131,13 @@ const albumItems = [
 
 const AlbumItems = () => {
   return albumItems.map(({ id, title, size, thumb_src }) => (
-    <HorizontalCell key={id} size="l" header={title} subtitle={`${size} фотографии`}>
+    <HorizontalCell
+      onClick={() => {}}
+      key={id}
+      size="l"
+      header={title}
+      subtitle={`${size} фотографии`}
+    >
       <img style={largeImageStyles} src={thumb_src} />
     </HorizontalCell>
   ));
