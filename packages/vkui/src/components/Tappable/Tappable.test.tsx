@@ -204,6 +204,8 @@ describe('Tappable', () => {
     });
     const isActive = (e = tappable()) =>
       e.classList.contains(styles['Tappable--activated-background']);
+
+    // TODO (@SevereCloud): пофиксить тест
     it.skip('activates on click', async () => {
       render(<TappableTest onClick={noop} />);
       await userEvent.click(tappable());
@@ -213,6 +215,8 @@ describe('Tappable', () => {
       });
       expect(isActive()).toBe(false);
     });
+
+    // TODO (@SevereCloud): пофиксить тест
     it.skip('activates during longtap', async () => {
       render(<TappableTest onClick={noop} />);
       fireEvent.mouseDown(tappable());
@@ -222,6 +226,8 @@ describe('Tappable', () => {
       fireEvent.mouseUp(tappable());
       expect(isActive()).toBe(true);
     });
+
+    // TODO (@SevereCloud): пофиксить тест
     it.skip('does not activate on child Tappable click', async () => {
       render(
         <Tappable onClick={noop} data-testid="parent">

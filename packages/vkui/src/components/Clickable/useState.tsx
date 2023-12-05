@@ -48,7 +48,7 @@ export const ACTIVE_DELAY = 70;
 function useHover({ hovered, hoverClassName, hasHover = true }: StateProps) {
   const [hoveredState, setHover] = React.useState(false);
 
-  const hover = hasHover ? (hovered || hoveredState ? hoverClassName : undefined) : undefined;
+  const hover = hasHover && (hovered || hoveredState) ? hoverClassName : undefined;
 
   const onPointerEnter: React.PointerEventHandler<any> = (e) => {
     if (e.pointerType === 'touch') {
@@ -84,11 +84,7 @@ function useActive({
   // Список нажатий которые не требуется отменять
   const pointersUp = React.useMemo(() => new Set<number>(), []);
 
-  const active = hasActive
-    ? activated || activatedState
-      ? activeClassName
-      : undefined
-    : undefined;
+  const active = hasActive && (activated || activatedState) ? activeClassName : undefined;
 
   const onPointerDown = () => setActivated(true, ACTIVE_DELAY);
   const onPointerCancel: React.PointerEventHandler = (e) => {
