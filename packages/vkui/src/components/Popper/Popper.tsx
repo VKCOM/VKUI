@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
+import { usePrevious } from '../../hooks/usePrevious';
 import {
   autoUpdateFloatingElement,
   convertFloatingDataToReactCSSProperties,
@@ -163,11 +164,15 @@ export const Popper = ({
     refs.setReference('current' in targetRef ? targetRef.current : targetRef);
   }, [refs.setReference, targetRef]);
 
+  const prevResolvedPlacement = usePrevious(resolvedPlacement);
   useIsomorphicLayoutEffect(() => {
-    if (placementProp !== resolvedPlacement && onPlacementChange) {
+    if (prevResolvedPlacement === undefined || !onPlacementChange) {
+      return;
+    }
+    if (prevResolvedPlacement !== resolvedPlacement) {
       onPlacementChange(resolvedPlacement);
     }
-  }, [onPlacementChange, resolvedPlacement, placementProp]);
+  }, [prevResolvedPlacement, resolvedPlacement, onPlacementChange]);
 
   const dropdown = (
     <RootComponent
