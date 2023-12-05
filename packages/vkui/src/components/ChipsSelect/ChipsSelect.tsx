@@ -28,7 +28,7 @@ import {
   DEFAULT_SELECTED_BEHAVIOR,
   FOCUS_ACTION_NEXT,
   FOCUS_ACTION_PREV,
-  getExpandedAriaLabelDefault,
+  getIconLabelDefault,
   isCreateNewOptionPreset,
   isEmptyOptionPreset,
   isNotServicePreset,
@@ -72,7 +72,10 @@ export interface ChipsSelectProps<O extends ChipOption>
    * Иконка раскрывающегося списка
    */
   icon?: React.ReactNode;
-  getExpandedAriaLabel?(opened: boolean): string;
+  /**
+   * Функция должна возвращать человекочитаемый текст для открытого/закрытого состояния dropdown'а.
+   */
+  getIconLabel?(opened: boolean): string;
   /**
    * Добавляет значение в список на событие `onBlur` (использовать вместе с `creatable`)
    */
@@ -99,7 +102,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   status = 'default',
   before,
   icon,
-  getExpandedAriaLabel = getExpandedAriaLabelDefault,
+  getIconLabel = getIconLabelDefault,
   onChangeStart,
 
   // CustomSelectDropdownProps
@@ -387,7 +390,7 @@ export const ChipsSelect = <Option extends ChipOption>({
             className={styles['ChipsSelect__dropdown']}
             activeMode=""
             hoverMode=""
-            label={getExpandedAriaLabel(opened)}
+            label={getIconLabel(opened)}
             onClick={toggleOpened}
           >
             {icon ?? <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />}
