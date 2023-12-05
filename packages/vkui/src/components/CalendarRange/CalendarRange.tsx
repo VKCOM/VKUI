@@ -21,10 +21,10 @@ export interface CalendarRangeProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
     Pick<
       CalendarHeaderProps,
-      | 'prevMonthAriaLabel'
-      | 'nextMonthAriaLabel'
-      | 'changeMonthAriaLabel'
-      | 'changeYearAriaLabel'
+      | 'prevMonthLabel'
+      | 'nextMonthLabel'
+      | 'changeMonthLabel'
+      | 'changeYearLabel'
       | 'prevMonthIcon'
       | 'nextMonthIcon'
     >,
@@ -33,7 +33,7 @@ export interface CalendarRangeProps
   disablePast?: boolean;
   disableFuture?: boolean;
   disablePickers?: boolean;
-  changeDayAriaLabel?: string;
+  changeDayLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onChange?(value?: Array<Date | null>): void;
   shouldDisableDate?(value: Date): boolean;
@@ -60,11 +60,11 @@ export const CalendarRange = ({
   onClose,
   weekStartsOn = 1,
   disablePickers,
-  prevMonthAriaLabel,
-  nextMonthAriaLabel,
-  changeMonthAriaLabel,
-  changeYearAriaLabel,
-  changeDayAriaLabel = 'Изменить день',
+  prevMonthLabel = 'Предыдущий месяц',
+  nextMonthLabel = 'Следующий месяц',
+  changeMonthLabel = 'Изменить месяц',
+  changeYearLabel = 'Изменить год',
+  changeDayLabel = 'Изменить день',
   prevMonthIcon,
   nextMonthIcon,
   listenDayChangesForUpdate,
@@ -187,10 +187,10 @@ export const CalendarRange = ({
           onPrevMonth={setPrevMonth}
           disablePickers={disablePickers}
           className={styles['CalendarRange__header']}
-          prevMonthAriaLabel={prevMonthAriaLabel}
-          nextMonthAriaLabel={nextMonthAriaLabel}
-          changeMonthAriaLabel={changeMonthAriaLabel}
-          changeYearAriaLabel={changeYearAriaLabel}
+          prevMonthLabel={prevMonthLabel}
+          nextMonthLabel={nextMonthLabel}
+          changeMonthLabel={changeMonthLabel}
+          changeYearLabel={changeYearLabel}
           prevMonthIcon={prevMonthIcon}
         />
         <CalendarDays
@@ -211,7 +211,7 @@ export const CalendarRange = ({
           isHintedDaySelectionStart={isHintedDaySelectionStart}
           isDayDisabled={isDayDisabled}
           listenDayChangesForUpdate={listenDayChangesForUpdate}
-          aria-label={changeDayAriaLabel}
+          aria-label={changeDayLabel}
         />
       </div>
       <div className={styles['CalendarRange__inner']}>
@@ -222,17 +222,17 @@ export const CalendarRange = ({
           onNextMonth={setNextMonth}
           disablePickers={disablePickers}
           className={styles['CalendarRange__header']}
-          prevMonthAriaLabel={prevMonthAriaLabel}
-          nextMonthAriaLabel={nextMonthAriaLabel}
-          changeMonthAriaLabel={changeMonthAriaLabel}
-          changeYearAriaLabel={changeYearAriaLabel}
+          prevMonthLabel={prevMonthLabel}
+          nextMonthLabel={nextMonthLabel}
+          changeMonthLabel={changeMonthLabel}
+          changeYearLabel={changeYearLabel}
           nextMonthIcon={nextMonthIcon}
         />
         <CalendarDays
           viewDate={secondViewDate}
           value={value}
           weekStartsOn={weekStartsOn}
-          aria-label={changeDayAriaLabel}
+          aria-label={changeDayLabel}
           onKeyDown={handleKeyDown}
           isDayFocused={isDayFocused}
           onDayChange={onDayChange}

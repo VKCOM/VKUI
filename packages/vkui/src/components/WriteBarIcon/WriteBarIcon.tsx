@@ -12,26 +12,39 @@ import {
 } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
+import { hasAccessibleName } from '../../lib/accessibility';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { Counter } from '../Counter/Counter';
 import { Tappable } from '../Tappable/Tappable';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './WriteBarIcon.module.css';
+
+const predefinedLabel = {
+  attach: 'Прикрепить файл',
+  send: 'Отправить',
+  done: 'Готово',
+};
 
 export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
-   * Предустановленные типы кнопок в WriteBar для отрисовки иконки в зависимости от платформы.
-   * Если передать валидное значение для этого свойства, `children` игнорируется.
+   * Предустановленные типы кнопок в WriteBar для отрисовки иконки и установки текста кнопки в зависимости от платформы.
+   * Если передать валидное значение для этого свойства, `children` игнорируются, а для `label` по умолчанию используется текст на "ru_RU".
    *
-   * - `attach` – иконка прикрепления.
-   * - `send` – иконка отправки.
-   * - `done` – иконка отправки в режиме редактирования.
+   * Валидные значения:
+   * - `attach` – иконка прикрепления, текст по умолчанию — "Прикрепить файл";
+   * - `send` – иконка отправки, текст по умолчанию — "Отправить";
+   * - `done` – иконка отправки в режиме редактирования, текст по умолчанию — "Готово";
    */
   mode?: 'attach' | 'send' | 'done';
   /**
    * Значение счётчика для кнопки. Например, для количества прикреплённых файлов.
    */
   count?: number;
+  /**
+   * Текст кнопки. Необходим для ассистивных технологий.
+   */
+  label?: string;
 }
 
 const warn = warnOnce('WriteBarIcon');
@@ -44,19 +57,19 @@ export const WriteBarIcon = ({
   children,
   count,
   className,
+  label: labelProp,
   ...restProps
 }: WriteBarIconProps) => {
   const platform = usePlatform();
-  let modeLabel: string | undefined = undefined;
 
   let predefinedIcons;
+
   switch (mode) {
     case 'attach':
       predefinedIcons = {
         IconCompact: platform === 'ios' ? Icon28AddCircleOutline : Icon24Attach,
         IconRegular: platform === 'ios' ? Icon28AddCircleOutline : Icon28AttachOutline,
       };
-      modeLabel = 'Прикрепить файл';
       break;
 
     case 'send':
@@ -64,7 +77,6 @@ export const WriteBarIcon = ({
         IconCompact: platform === 'ios' ? Icon48WritebarSend : Icon24Send,
         IconRegular: platform === 'ios' ? Icon48WritebarSend : Icon28Send,
       };
-      modeLabel = 'Отправить';
       break;
 
     case 'done':
@@ -72,15 +84,20 @@ export const WriteBarIcon = ({
         IconCompact: platform === 'ios' ? Icon48WritebarDone : Icon24CheckCircleOutline,
         IconRegular: platform === 'ios' ? Icon48WritebarDone : Icon28CheckCircleOutline,
       };
-      modeLabel = 'Готово';
       break;
 
     default:
       break;
   }
 
+  const label = labelProp ?? (mode && predefinedLabel[mode]);
+
   if (process.env.NODE_ENV === 'development') {
-    const isAccessible = !modeLabel && (!restProps['aria-label'] || restProps['aria-labelledby']);
+    /* istanbul ignore next: проверка в dev mode, тест на hasAccessibleName() есть в lib/accessibility.test.tsx */
+    const isAccessible = hasAccessibleName({
+      children: [children, label],
+      ...restProps,
+    });
 
     if (!isAccessible) {
       warn(COMMON_WARNINGS.a11y['button-name'], 'error');
@@ -89,7 +106,6 @@ export const WriteBarIcon = ({
 
   return (
     <Tappable
-      aria-label={modeLabel}
       {...restProps}
       Component="button"
       hasHover={false}
@@ -103,6 +119,7 @@ export const WriteBarIcon = ({
       )}
     >
       <span className={styles['WriteBarIcon__in']}>
+        {label && <VisuallyHidden>{label}</VisuallyHidden>}
         {predefinedIcons ? <AdaptiveIconRenderer {...predefinedIcons} /> : children}
       </span>
       {hasReactNode(count) && (

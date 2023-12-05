@@ -4,12 +4,19 @@ import { baselineComponent } from '../../testing/utils';
 import { WriteBarIcon } from './WriteBarIcon';
 
 describe('WriteBarIcon', () => {
-  baselineComponent((props) => <WriteBarIcon aria-label="WriteBarIcon" {...props} />);
+  baselineComponent((props) => <WriteBarIcon label="WriteBarIcon" {...props} />);
 
-  it('a11y: adds default aria-label for assigned mode', () => {
+  it('adds default text context for assigned mode', () => {
     render(<WriteBarIcon data-testid="button" mode="send" />);
 
-    expect(screen.getByTestId('button')).toHaveAttribute('aria-label', 'Отправить');
+    expect(screen.getByTestId('button')).toHaveTextContent('Отправить');
+  });
+
+  it('overrides mode default text content when label is provided', () => {
+    const label = 'Send Message';
+    render(<WriteBarIcon data-testid="button" mode="send" label={label} />);
+
+    expect(screen.getByTestId('button')).toHaveTextContent(label);
   });
 
   it('shows counter when count={0} is provided', () => {

@@ -46,7 +46,6 @@ const Example = () => {
             }
             after={
               <PanelHeaderButton
-                aria-label="Изображения"
                 label={
                   <Counter size="s" mode="prominent">
                     <VisuallyHidden>Обновлений: </VisuallyHidden>
@@ -54,6 +53,7 @@ const Example = () => {
                   </Counter>
                 }
               >
+                <VisuallyHidden>Изображения</VisuallyHidden>
                 <AdaptiveIconRenderer
                   IconCompact={Icon24PictureOutline}
                   IconRegular={Icon28PictureOutline}
@@ -73,20 +73,19 @@ const Example = () => {
             after={
               <React.Fragment>
                 <PanelHeaderButton
-                  aria-label="Настройки"
                   label={
                     <Counter size="s" mode="prominent">
                       <VisuallyHidden>Новых: </VisuallyHidden>3
                     </Counter>
                   }
                 >
+                  <VisuallyHidden>Настройки</VisuallyHidden>
                   <AdaptiveIconRenderer
                     IconCompact={Icon24GearOutline}
                     IconRegular={Icon28SettingsOutline}
                   />
                 </PanelHeaderButton>
                 <PanelHeaderButton
-                  aria-label="Уведомления"
                   label={
                     <Counter size="s" mode="prominent">
                       2
@@ -97,6 +96,7 @@ const Example = () => {
                     IconCompact={Icon24NotificationOutline}
                     IconRegular={Icon28Notifications}
                   />
+                  <VisuallyHidden>Уведомления</VisuallyHidden>
                 </PanelHeaderButton>
               </React.Fragment>
             }

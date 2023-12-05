@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Icon24DoneOutline, Icon28DoneOutline } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
-import { getTitleFromChildren } from '../../lib/utils';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
@@ -15,11 +15,14 @@ export const PanelHeaderSubmit = ({
   const platform = usePlatform();
 
   return (
-    <PanelHeaderButton aria-label={getTitleFromChildren(children)} primary {...restProps}>
+    <PanelHeaderButton primary {...restProps}>
       {platform === 'ios' ? (
         children
       ) : (
-        <AdaptiveIconRenderer IconCompact={Icon24DoneOutline} IconRegular={Icon28DoneOutline} />
+        <>
+          <VisuallyHidden>{children}</VisuallyHidden>
+          <AdaptiveIconRenderer IconCompact={Icon24DoneOutline} IconRegular={Icon28DoneOutline} />
+        </>
       )}
     </PanelHeaderButton>
   );

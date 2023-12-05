@@ -44,11 +44,16 @@
 Согласно нашим дизайн-гайдам, `dismissButtonMode=outside` отображается только для `compact`-режима (десктопная и планшетные версии).
 Для `iOS` всегда будет применяться `dismissButtonMode=inside` в `regular`-режиме (мобильная версия).
 
+## Цифровая доступность (a11y)
+
+Чтобы кнопка для закрытия была доступной для ассистивных технологий, мы передаем в нее скрытый визуально текст, который сможет прочитать скринридер. Чтобы заменить текст, передайте его в `dismissLabel`.
+
 ```jsx { "props": { "layout": false, "iframe": false } }
 <div style={{ margin: 20 }}>
   <AdaptivityProvider viewWidth={ViewWidth.TABLET}>
     <ModalCardBase
       dismissButtonMode="inside"
+      dismissLabel="Закрыть"
       style={{ width: 450, marginBottom: 20 }}
       header="Десктопная и планшетная версии с крестиком внутри"
       subheader="Сверху будет безопасный отступ до иконки"

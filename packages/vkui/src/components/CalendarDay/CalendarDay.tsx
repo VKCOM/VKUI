@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { Tappable, TappableElementProps } from '../Tappable/Tappable';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CalendarDay.module.css';
 
 export type CalendarDayElementProps = Omit<
@@ -50,13 +51,21 @@ export const CalendarDay = React.memo(
     sameMonth,
     size,
     className,
-    ...props
+    children,
+    ...restProps
   }: CalendarDayProps) => {
     const { locale } = useConfigProvider();
     const ref = React.useRef<HTMLElement>(null);
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
     const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
     const handleLeave = React.useCallback(() => onLeave?.(day), [day, onLeave]);
+
+    const label = new Intl.DateTimeFormat(locale, {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }).format(day);
 
     React.useEffect(() => {
       if (focused && ref.current) {
@@ -66,7 +75,7 @@ export const CalendarDay = React.memo(
     }, [focused]);
 
     if (hidden) {
-      return <div className={styles['CalendarDay__hidden']}></div>;
+      return <div className={styles['CalendarDay__hidden']} />;
     }
 
     return (
@@ -86,18 +95,12 @@ export const CalendarDay = React.memo(
         hasActive={false}
         onClick={onClick}
         disabled={disabled}
-        aria-label={new Intl.DateTimeFormat(locale, {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        }).format(day)}
         tabIndex={-1}
         getRootRef={ref}
         focusVisibleMode={active ? 'outside' : 'inside'}
         onEnter={handleEnter}
         onLeave={handleLeave}
-        {...props}
+        {...restProps}
       >
         <div
           className={classNames(
@@ -113,7 +116,10 @@ export const CalendarDay = React.memo(
               active && !disabled && styles['CalendarDay__inner--active'],
             )}
           >
-            <div className={styles['CalendarDay__day-number']}>{day.getDate()}</div>
+            <div className={styles['CalendarDay__day-number']}>
+              <VisuallyHidden>{children ?? label}</VisuallyHidden>
+              <span aria-hidden>{day.getDate()}</span>
+            </div>
           </div>
         </div>
       </Tappable>

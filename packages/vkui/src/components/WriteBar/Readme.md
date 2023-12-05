@@ -72,15 +72,11 @@ const WriteBarExample = (props) => {
             before={<WriteBarIcon mode="attach" />}
             after={
               <>
-                <WriteBarIcon aria-label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
 
-                <WriteBarIcon aria-label="Записать видео-сообщение">
-                  {CameraOutlineIcon}
-                </WriteBarIcon>
+                <WriteBarIcon label="Записать видео-сообщение">{CameraOutlineIcon}</WriteBarIcon>
 
-                <WriteBarIcon aria-label="Записать голосовое сообщение">
-                  {VoiceOutlineIcon}
-                </WriteBarIcon>
+                <WriteBarIcon label="Записать голосовое сообщение">{VoiceOutlineIcon}</WriteBarIcon>
               </>
             }
             placeholder="Сообщение"
@@ -95,22 +91,20 @@ const WriteBarExample = (props) => {
             inlineAfter={
               <>
                 {text2.length === 0 && (
-                  <WriteBarIcon aria-label="Открыть меню бота">
-                    {KeyboardBotsOutlineIcon}
-                  </WriteBarIcon>
+                  <WriteBarIcon label="Открыть меню бота">{KeyboardBotsOutlineIcon}</WriteBarIcon>
                 )}
                 {text2.length > 0 && (
-                  <WriteBarIcon aria-label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
                 )}
               </>
             }
             after={
               <>
                 {text2.length === 0 && (
-                  <WriteBarIcon aria-label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
                 )}
                 {text2.length === 0 && (
-                  <WriteBarIcon aria-label="Записать голосовое сообщение">
+                  <WriteBarIcon label="Записать голосовое сообщение">
                     {VoiceOutlineIcon}
                   </WriteBarIcon>
                 )}
@@ -128,13 +122,13 @@ const WriteBarExample = (props) => {
             before={<WriteBarIcon mode="attach" />}
             inlineAfter={
               text3.length > 0 && (
-                <WriteBarIcon aria-label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
               )
             }
             after={
               <>
                 {text3.length === 0 && (
-                  <WriteBarIcon aria-label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
                 )}
                 <WriteBarIcon mode="send" disabled={text3.length === 0} />
               </>
@@ -150,13 +144,13 @@ const WriteBarExample = (props) => {
             before={<WriteBarIcon mode="attach" />}
             inlineAfter={
               text4.length > 0 && (
-                <WriteBarIcon aria-label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
               )
             }
             after={
               <>
                 {text4.length === 0 && (
-                  <WriteBarIcon aria-label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
                 )}
                 <WriteBarIcon mode="done" disabled={text4.length === 0} />
               </>
@@ -188,16 +182,16 @@ const WriteBarExample = (props) => {
               }
               inlineAfter={
                 text.length > 0 && (
-                  <WriteBarIcon aria-label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
                 )
               }
               after={
                 <>
                   {text.length === 0 && (
-                    <WriteBarIcon aria-label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                    <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
                   )}
                   {text.length === 0 && (
-                    <WriteBarIcon aria-label="Записать голосовое сообщение">
+                    <WriteBarIcon label="Записать голосовое сообщение">
                       {VoiceOutlineIcon}
                     </WriteBarIcon>
                   )}

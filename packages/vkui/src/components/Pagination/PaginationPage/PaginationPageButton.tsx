@@ -3,25 +3,23 @@ import { classNames } from '@vkontakte/vkjs';
 import type { HasRootRef } from '../../../types';
 import { Tappable } from '../../Tappable/Tappable';
 import { Text } from '../../Typography/Text/Text';
-import { getPageAriaLabelDefault } from '../utils';
+import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
+import { PaginationProps } from '../Pagination';
+import { getPageLabelDefault } from '../utils';
 import { usePaginationPageClassNames } from './usePaginationPageClasses';
 import styles from './PaginationPage.module.css';
 
 export interface PaginationPageButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HasRootRef<HTMLButtonElement> {
+    HasRootRef<HTMLButtonElement>,
+    Pick<PaginationProps, 'getPageLabel'> {
   isCurrent?: boolean;
-  /**
-   * Функция для переопределения и/или локализации `aria-label` атрибута.
-   * По умолчанию используется текст на "ru_RU".
-   */
-  getPageAriaLabel?(page: number, isCurrent: boolean): string;
   children: number;
 }
 
 export const PaginationPageButton = ({
   isCurrent = false,
-  getPageAriaLabel = getPageAriaLabelDefault,
+  getPageLabel = getPageLabelDefault,
   children,
   className,
   disabled,
@@ -39,11 +37,13 @@ export const PaginationPageButton = ({
       focusVisibleMode="outside"
       data-page={children}
       aria-current={isCurrent ? true : undefined}
-      aria-label={getPageAriaLabel(children, isCurrent)}
       disabled={disabled}
       {...restProps}
     >
-      <Text normalize={false}>{children}</Text>
+      <Text normalize={false}>
+        <VisuallyHidden>{getPageLabel(isCurrent)} </VisuallyHidden>
+        {children}
+      </Text>
     </Tappable>
   );
 };

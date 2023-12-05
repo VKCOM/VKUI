@@ -8,6 +8,7 @@ import {
 import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 
 export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
   /**
@@ -15,11 +16,11 @@ export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
    */
   isActive?: boolean;
   /**
-   * iOS only. Текст кнопки, когда режим редактирования не активен
+   * Текст кнопки, когда режим редактирования не активен. Визуально скрыт везде, кроме iOS
    */
   editLabel?: string;
   /**
-   * iOS only. Текст кнопки при активном режиме редактирования для выхода из него
+   * Текст кнопки при активном режиме редактирования для выхода из него. Визуально скрыт везде, кроме iOS
    */
   doneLabel?: string;
 }
@@ -33,18 +34,21 @@ export const PanelHeaderEdit = ({
   doneLabel = 'Готово',
   ...restProps
 }: PanelHeaderEditProps) => {
-  const iOSText = isActive ? doneLabel : editLabel;
   const platform = usePlatform();
+  const label = isActive ? doneLabel : editLabel;
 
   return (
-    <PanelHeaderButton aria-label={iOSText} {...restProps}>
+    <PanelHeaderButton {...restProps}>
       {platform === 'ios' ? (
-        iOSText
+        label
       ) : (
-        <AdaptiveIconRenderer
-          IconCompact={isActive ? Icon24DoneOutline : Icon24PenOutline}
-          IconRegular={isActive ? Icon28DoneOutline : Icon28EditOutline}
-        />
+        <>
+          <VisuallyHidden>{label}</VisuallyHidden>
+          <AdaptiveIconRenderer
+            IconCompact={isActive ? Icon24DoneOutline : Icon24PenOutline}
+            IconRegular={isActive ? Icon28DoneOutline : Icon28EditOutline}
+          />
+        </>
       )}
     </PanelHeaderButton>
   );

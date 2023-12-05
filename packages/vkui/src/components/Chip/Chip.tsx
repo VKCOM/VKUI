@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { getTitleFromChildren } from '../../lib/utils';
+import { getTextFromChildren } from '../../lib/children';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
@@ -58,7 +58,7 @@ export const Chip = ({
     },
     [onRemove, value],
   );
-  const title = getTitleFromChildren(children);
+  const title = getTextFromChildren(children);
 
   return (
     <RootComponent

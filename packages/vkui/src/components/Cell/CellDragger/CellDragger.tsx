@@ -10,6 +10,7 @@ import { usePlatform } from '../../../hooks/usePlatform';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { HTMLAttributesWithRootRef } from '../../../types';
 import { Touch } from '../../Touch/Touch';
+import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CellDragger.module.css';
 
 interface CellDraggerProps
@@ -25,6 +26,7 @@ export const CellDragger = ({
   className,
   onDragStateChange,
   onDragFinish,
+  children,
   ...restProps
 }: CellDraggerProps) => {
   const platform = usePlatform();
@@ -49,6 +51,7 @@ export const CellDragger = ({
       onEnd={disabled ? undefined : onDragEnd}
       {...restProps}
     >
+      {children && <VisuallyHidden>{children}</VisuallyHidden>}
       <Icon className={styles['CellDragger__icon']} />
     </Touch>
   );

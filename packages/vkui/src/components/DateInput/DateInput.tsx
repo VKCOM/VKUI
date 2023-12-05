@@ -36,13 +36,13 @@ export interface DateInputProps
       | 'doneButtonText'
       | 'weekStartsOn'
       | 'disablePickers'
-      | 'changeHoursAriaLabel'
-      | 'changeMinutesAriaLabel'
-      | 'prevMonthAriaLabel'
-      | 'nextMonthAriaLabel'
-      | 'changeMonthAriaLabel'
-      | 'changeYearAriaLabel'
-      | 'changeDayAriaLabel'
+      | 'changeHoursLabel'
+      | 'changeMinutesLabel'
+      | 'prevMonthLabel'
+      | 'nextMonthLabel'
+      | 'changeMonthLabel'
+      | 'changeYearLabel'
+      | 'changeDayLabel'
       | 'showNeighboringMonth'
       | 'size'
       | 'viewDate'
@@ -56,8 +56,8 @@ export interface DateInputProps
     FormFieldProps {
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
-  clearFieldAriaLabel?: string;
-  showCalendarAriaLabel?: string;
+  clearFieldLabel?: string;
+  showCalendarLabel?: string;
   disableCalendar?: boolean;
 }
 
@@ -123,17 +123,17 @@ export const DateInput = ({
   disabled,
   onClick,
   onFocus,
-  prevMonthAriaLabel,
-  nextMonthAriaLabel,
+  prevMonthLabel = 'Предыдущий месяц',
+  nextMonthLabel = 'Следующий месяц',
   showNeighboringMonth,
   size,
-  changeMonthAriaLabel = 'Изменить месяц',
-  changeYearAriaLabel = 'Изменить год',
-  changeDayAriaLabel = 'Изменить день',
-  changeHoursAriaLabel = 'Изменить час',
-  changeMinutesAriaLabel = 'Изменить минуту',
-  clearFieldAriaLabel = 'Очистить поле',
-  showCalendarAriaLabel = 'Показать календарь',
+  changeMonthLabel = 'Изменить месяц',
+  changeYearLabel = 'Изменить год',
+  changeDayLabel = 'Изменить день',
+  changeHoursLabel = 'Изменить час',
+  changeMinutesLabel = 'Изменить минуту',
+  clearFieldLabel = 'Очистить поле',
+  showCalendarLabel = 'Показать календарь',
   viewDate,
   onHeaderChange,
   onNextMonth,
@@ -223,11 +223,11 @@ export const DateInput = ({
       getRootRef={handleRootRef}
       after={
         value ? (
-          <IconButton hoverMode="opacity" aria-label={clearFieldAriaLabel} onClick={clear}>
+          <IconButton hoverMode="opacity" label={clearFieldLabel} onClick={clear}>
             <Icon16Clear />
           </IconButton>
         ) : (
-          <IconButton hoverMode="opacity" aria-label={showCalendarAriaLabel} onClick={openCalendar}>
+          <IconButton hoverMode="opacity" label={showCalendarLabel} onClick={openCalendar}>
             <Icon20CalendarOutline />
           </IconButton>
         )
@@ -249,7 +249,7 @@ export const DateInput = ({
           index={0}
           onElementSelect={setFocusedElement}
           value={internalValue[0]}
-          aria-label={changeDayAriaLabel}
+          label={changeDayLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -258,7 +258,7 @@ export const DateInput = ({
           index={1}
           onElementSelect={setFocusedElement}
           value={internalValue[1]}
-          aria-label={changeMonthAriaLabel}
+          label={changeMonthLabel}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -267,7 +267,7 @@ export const DateInput = ({
           index={2}
           onElementSelect={setFocusedElement}
           value={internalValue[2]}
-          aria-label={changeYearAriaLabel}
+          label={changeYearLabel}
         />
         {enableTime && (
           <React.Fragment>
@@ -280,7 +280,7 @@ export const DateInput = ({
               index={3}
               onElementSelect={setFocusedElement}
               value={internalValue[3]}
-              aria-label={changeHoursAriaLabel}
+              label={changeHoursLabel}
             />
             <InputLikeDivider>:</InputLikeDivider>
             <InputLike
@@ -289,7 +289,7 @@ export const DateInput = ({
               index={4}
               onElementSelect={setFocusedElement}
               value={internalValue[4]}
-              aria-label={changeMinutesAriaLabel}
+              label={changeMinutesLabel}
             />
           </React.Fragment>
         )}
@@ -307,13 +307,13 @@ export const DateInput = ({
             getRootRef={calendarRef}
             doneButtonText={doneButtonText}
             disablePickers={disablePickers}
-            changeHoursAriaLabel={changeHoursAriaLabel}
-            changeMinutesAriaLabel={changeMinutesAriaLabel}
-            prevMonthAriaLabel={prevMonthAriaLabel}
-            nextMonthAriaLabel={nextMonthAriaLabel}
-            changeMonthAriaLabel={changeMonthAriaLabel}
-            changeYearAriaLabel={changeYearAriaLabel}
-            changeDayAriaLabel={changeDayAriaLabel}
+            changeHoursLabel={changeHoursLabel}
+            changeMinutesLabel={changeMinutesLabel}
+            prevMonthLabel={prevMonthLabel}
+            nextMonthLabel={nextMonthLabel}
+            changeMonthLabel={changeMonthLabel}
+            changeYearLabel={changeYearLabel}
+            changeDayLabel={changeDayLabel}
             showNeighboringMonth={showNeighboringMonth}
             size={size}
             viewDate={viewDate}

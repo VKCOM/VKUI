@@ -49,7 +49,7 @@ export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivEle
   onClose?: VoidFunction;
 
   /**
-   * `aria-label` для кнопки закрытия. Необходим, чтобы кнопка была доступной.
+   * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий
    */
   dismissLabel?: string;
 
@@ -150,11 +150,12 @@ export const ModalCardBase = ({
         {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
 
         <ModalCardBaseCloseButton
-          aria-label={dismissLabel}
           testId={modalDismissButtonTestId}
           onClose={onClose}
           mode={dismissButtonMode}
-        />
+        >
+          {dismissLabel}
+        </ModalCardBaseCloseButton>
       </div>
     </RootComponent>
   );

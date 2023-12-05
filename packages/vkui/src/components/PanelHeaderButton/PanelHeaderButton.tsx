@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { getTitleFromChildren } from '../../lib/utils';
-import { warnOnce } from '../../lib/warnOnce';
+import { hasAccessibleName } from '../../lib/accessibility';
+import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
@@ -71,18 +71,14 @@ export const PanelHeaderButton = ({
   }
 
   if (process.env.NODE_ENV === 'development') {
-    const hasAccessibleName = Boolean(
-      getTitleFromChildren(children) ||
-        getTitleFromChildren(label) ||
-        restProps['aria-label'] ||
-        restProps['aria-labelledby'],
-    );
+    /* istanbul ignore next: проверка в dev mode, тест на hasAccessibleName() есть в lib/accessibility.test.tsx */
+    const isAccessible = hasAccessibleName({
+      children: [children, label],
+      ...restProps,
+    });
 
-    if (!hasAccessibleName) {
-      warn(
-        'a11y: У кнопки нет названия, которое может прочитать скринридер, и она недоступна для части пользователей. Замените содержимое на текст или добавьте описание действия с помощью пропа aria-label.',
-        'error',
-      );
+    if (!isAccessible) {
+      warn(COMMON_WARNINGS.a11y[restProps.href ? 'link-name' : 'button-name'], 'error');
     }
   }
 

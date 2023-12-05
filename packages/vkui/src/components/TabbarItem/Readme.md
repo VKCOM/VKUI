@@ -1,5 +1,14 @@
 Элемент [Tabbar](#!/Tabbar). В качестве `children` рекомендуется использовать [иконку](https://vkcom.github.io/icons) 28 размера.
 
+## Цифровая доступность (a11y)
+
+Чтобы `TabbarItem` был доступным для ассистивных технологий, у него должен быть текст, который сможет прочитать скринридер. Если вы не передаете `text`, то передайте одновременно с иконкой текст, обернутый в компонент [VisuallyHidden](#!/VisuallyHidden).
+
+Как еще можно это сделать:
+
+- Передать `aria-label` или `title`.
+- Создать отдельный элемент с текстом и передать его `id` в `aria-labelledby` кнопки.
+
 ```jsx { "props": { "layout": false, "iframe": false } }
 const [simple, setSimple] = useState('one');
 const [text, setText] = useState('one');
@@ -14,10 +23,12 @@ const [indicator, setIndicator] = useState('one');
 >
   <div style={{ maxWidth: 768, margin: 'auto' }}>
     <Tabbar style={{ position: 'static', margin: '0 0 10px' }}>
-      <TabbarItem selected={simple === 'one'} onClick={() => setSimple('one')} aria-label="Новости">
+      <TabbarItem selected={simple === 'one'} onClick={() => setSimple('one')}>
+        <VisuallyHidden>Новости</VisuallyHidden>
         <Icon28NewsfeedOutline />
       </TabbarItem>
-      <TabbarItem selected={simple === 'two'} onClick={() => setSimple('two')} aria-label="Профиль">
+      <TabbarItem selected={simple === 'two'} onClick={() => setSimple('two')}>
+        <VisuallyHidden>Профиль</VisuallyHidden>
         <Icon28UserCircleOutline />
       </TabbarItem>
     </Tabbar>

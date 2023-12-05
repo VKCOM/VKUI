@@ -14,6 +14,7 @@ import { CustomSelect } from '../CustomSelect/CustomSelect';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable, TappableElementProps } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CalendarHeader.module.css';
 
 type ArrowMonthProps = Omit<TappableElementProps, 'onClick' | 'aria-label'>;
@@ -24,10 +25,10 @@ export interface CalendarHeaderProps
   prevMonth?: boolean;
   nextMonth?: boolean;
   disablePickers?: boolean;
-  prevMonthAriaLabel?: string;
-  nextMonthAriaLabel?: string;
-  changeMonthAriaLabel?: string;
-  changeYearAriaLabel?: string;
+  prevMonthLabel?: string;
+  nextMonthLabel?: string;
+  changeMonthLabel?: string;
+  changeYearLabel?: string;
   prevMonthIcon?: React.ReactNode;
   nextMonthIcon?: React.ReactNode;
   prevMonthProps?: ArrowMonthProps;
@@ -53,10 +54,10 @@ export const CalendarHeader = ({
   onPrevMonth,
   prevMonthProps = {},
   nextMonthProps = {},
-  prevMonthAriaLabel = 'Предыдущий месяц',
-  nextMonthAriaLabel = 'Следующий месяц',
-  changeMonthAriaLabel = 'Изменить месяц',
-  changeYearAriaLabel = 'Изменить год',
+  prevMonthLabel = 'Предыдущий месяц',
+  nextMonthLabel = 'Следующий месяц',
+  changeMonthLabel = 'Изменить месяц',
+  changeYearLabel = 'Изменить год',
   prevMonthIcon = (
     <Icon20ChevronLeftOutline
       className={styles['CalendarHeader__nav-icon--accent']}
@@ -117,9 +118,11 @@ export const CalendarHeader = ({
               prevMonthClassName,
             )}
             onClick={onPrevMonth}
-            aria-label={`${prevMonthAriaLabel}, ${formatter.format(subMonths(viewDate, 1))}`}
             {...restPrevMonthProps}
           >
+            <VisuallyHidden>
+              {prevMonthLabel}, {formatter.format(subMonths(viewDate, 1))}
+            </VisuallyHidden>
             {prevMonthIcon}
           </Tappable>
         </AdaptivityProvider>
@@ -163,7 +166,7 @@ export const CalendarHeader = ({
               onChange={onMonthsChange}
               forceDropdownPortal={false}
               selectType="accent"
-              aria-label={changeMonthAriaLabel}
+              aria-label={changeMonthLabel}
             />
             <CustomSelect
               className={classNames(
@@ -178,7 +181,7 @@ export const CalendarHeader = ({
               onChange={onYearChange}
               forceDropdownPortal={false}
               selectType="accent"
-              aria-label={changeYearAriaLabel}
+              aria-label={changeYearLabel}
             />
           </div>
         </AdaptivityProvider>
@@ -192,9 +195,11 @@ export const CalendarHeader = ({
               nextMonthClassName,
             )}
             onClick={onNextMonth}
-            aria-label={`${nextMonthAriaLabel}, ${formatter.format(addMonths(viewDate, 1))}`}
             {...restNextMonthProps}
           >
+            <VisuallyHidden>
+              {nextMonthLabel}, {formatter.format(addMonths(viewDate, 1))}
+            </VisuallyHidden>
             {nextMonthIcon}
           </Tappable>
         </AdaptivityProvider>
