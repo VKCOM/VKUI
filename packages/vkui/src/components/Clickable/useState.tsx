@@ -79,7 +79,6 @@ function useActive({
   hasActive = true,
 }: StateProps) {
   const [activatedState, setActivated] = useStateWithDelay(false);
-  const [] = useStateWithDelay(false);
 
   // Список нажатий которые не требуется отменять
   const pointersUp = React.useMemo(() => new Set<number>(), []);
