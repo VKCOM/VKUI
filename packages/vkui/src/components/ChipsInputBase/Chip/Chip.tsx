@@ -12,8 +12,8 @@ import styles from './Chip.module.css';
 
 const sizeYClassNames = {
   none: styles['Chip--sizeY-none'],
-  ['compact']: styles['Chip--sizeY-compact'],
-};
+  compact: styles['Chip--sizeY-compact'],
+} as const;
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Chip
