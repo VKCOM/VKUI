@@ -88,7 +88,7 @@ const RealClickable = <T,>({
     <RootComponent
       baseClassName={classNames(
         baseClassName,
-        styles['Clickable__host'],
+        styles['Clickable__realClickable'],
         focusVisibleClassNames,
         stateClassName,
       )}
@@ -158,13 +158,25 @@ function component<T>({
  * - стейты наведения и нажатия
  * - a11y компонентов
  */
-export const Clickable = <T,>({ focusVisibleMode = 'inside', ...restProps }: ClickableProps<T>) => {
+export const Clickable = <T,>({
+  focusVisibleMode = 'inside',
+  baseClassName: baseClassNameProp,
+  ...restProps
+}: ClickableProps<T>) => {
   const commonProps = component(restProps);
   const isClickable = checkClickable(restProps);
+  const baseClassName = classNames(baseClassNameProp, styles['Clickable__host']);
 
   if (isClickable) {
-    return <RealClickable focusVisibleMode={focusVisibleMode} {...commonProps} {...restProps} />;
+    return (
+      <RealClickable
+        baseClassName={baseClassName}
+        focusVisibleMode={focusVisibleMode}
+        {...commonProps}
+        {...restProps}
+      />
+    );
   }
 
-  return <NonClickable {...commonProps} {...restProps} />;
+  return <NonClickable baseClassName={baseClassName} {...commonProps} {...restProps} />;
 };

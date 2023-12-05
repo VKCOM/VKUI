@@ -1,7 +1,10 @@
 .Clickable__host {
-  cursor: pointer;
   isolation: isolate;
   position: relative;
+}
+
+.Clickable__realClickable {
+  cursor: pointer;
   transition: background-color 0.15s ease-out, opacity 0.15s ease-out;
 }
 
