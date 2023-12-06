@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../types';
-import { DefaultIcon } from '../PopperArrow/DefaultIcon';
-import { PopperArrow, type PopperArrowProps } from '../PopperArrow/PopperArrow';
+import type { HTMLAttributesWithRootRef } from '../../types';
+import { DefaultIcon } from '../FloatingArrow/DefaultIcon';
+import { FloatingArrow, type FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './TooltipBase.module.css';
@@ -16,7 +16,8 @@ const stylesAppearance = {
   inversion: styles['TooltipBase--appearance-inversion'],
 };
 
-export interface TooltipBaseProps extends HasRootRef<HTMLDivElement> {
+export interface TooltipBaseProps
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children'> {
   /**
    * Стиль отображения подсказки
    */
@@ -30,12 +31,9 @@ export interface TooltipBaseProps extends HasRootRef<HTMLDivElement> {
    */
   header?: React.ReactNode;
   /**
-   * Отображать ли стрелку, указывающую на якорный элемент
+   * Для показа указателя, требуется передать хотя бы `coords` и `placement`.
    */
-  withArrow?: boolean;
-  arrowCoords?: PopperArrowProps['coords'];
-  arrowPlacement?: PopperArrowProps['placement'];
-  getArrowRef?: PopperArrowProps['getRootRef'];
+  arrowProps?: Omit<FloatingArrowProps, 'Icon'>;
   /**
    * Пользовательская SVG иконка.
    *
@@ -47,9 +45,9 @@ export interface TooltipBaseProps extends HasRootRef<HTMLDivElement> {
    *    (см. https://github.com/VKCOM/VKUI/pull/4496).
    * 3. Убедитесь, что компонент принимает все валидные для SVG параметры.
    * 4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
-   * 5. Если стрелка наезжает на якорный элемент, то увеличьте значение параметра `offsetY`.
+   * 5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами.
    */
-  ArrowIcon?: PopperArrowProps['Icon'];
+  ArrowIcon?: FloatingArrowProps['Icon'];
   /**
    * Пользовательские css-классы, будут добавлены на root-элемент
    */
@@ -60,26 +58,22 @@ export interface TooltipBaseProps extends HasRootRef<HTMLDivElement> {
    * Передача `null` полностью сбрасывает установку `max-width` на элемент.
    */
   maxWidth?: number | string | null;
-  floatingStyle?: React.CSSProperties;
 }
 
 /**
  * Низкоуровневый компонент для отрисовки тултипа.
  * Примеры использования и Readme можно найти в документации Tooltip
  * @see https://vkcom.github.io/VKUI/#/Tooltip
+ * @private
  */
 export const TooltipBase = ({
   appearance = 'accent',
-  withArrow = true,
-  arrowCoords,
-  arrowPlacement = 'top',
-  getArrowRef,
-  getRootRef,
-  floatingStyle,
+  arrowProps,
   ArrowIcon = DefaultIcon,
   text,
   header,
   maxWidth = TOOLTIP_MAX_WIDTH,
+  className,
   ...restProps
 }: TooltipBaseProps) => {
   return (
@@ -88,25 +82,23 @@ export const TooltipBase = ({
       baseClassName={classNames(
         styles['TooltipBase'],
         appearance !== 'neutral' && stylesAppearance[appearance],
+        className,
       )}
+      role="tooltip"
     >
-      <div ref={getRootRef} style={floatingStyle}>
-        {withArrow && (
-          <PopperArrow
-            coords={arrowCoords}
-            placement={arrowPlacement}
-            iconClassName={styles['TooltipBase__arrow']}
-            getRootRef={getArrowRef}
-            Icon={ArrowIcon}
-          />
-        )}
-        <div
-          className={styles['TooltipBase__content']}
-          style={maxWidth !== null ? { maxWidth } : undefined}
-        >
-          {header && <Subhead weight="2">{header}</Subhead>}
-          {text && <Subhead>{text}</Subhead>}
-        </div>
+      {arrowProps && (
+        <FloatingArrow
+          {...arrowProps}
+          iconClassName={classNames(styles['TooltipBase__arrow'], arrowProps.iconClassName)}
+          Icon={ArrowIcon}
+        />
+      )}
+      <div
+        className={styles['TooltipBase__content']}
+        style={maxWidth !== null ? { maxWidth } : undefined}
+      >
+        {header && <Subhead weight="2">{header}</Subhead>}
+        {text && <Subhead>{text}</Subhead>}
       </div>
     </RootComponent>
   );

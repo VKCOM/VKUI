@@ -26,7 +26,7 @@ export const Playground: Story = {
           {shown ? 'Закрыть' : 'Открыть'}
         </Button>
         {shown && (
-          <Popper forcePortal={false} offsetByMainAxis={8} {...args} targetRef={buttonRef}>
+          <Popper usePortal={false} offsetByMainAxis={8} {...args} targetRef={buttonRef}>
             <Div>Привет</Div>
           </Popper>
         )}

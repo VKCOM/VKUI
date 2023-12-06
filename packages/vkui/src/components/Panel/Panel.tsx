@@ -5,8 +5,8 @@ import { NavIdProps } from '../../lib/getNavId';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 import { NavPanelIdContext } from '../NavIdContext/NavIdContext';
+import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { Touch } from '../Touch/Touch';
 import styles from './Panel.module.css';
 
@@ -39,7 +39,7 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
         )}
       >
         <Touch
-          Component={TooltipContainer}
+          Component={OnboardingTooltipContainer}
           className={classNames(styles['Panel__in'], 'vkuiInternalPanel__in')}
         >
           <div className={styles['Panel__in-before']} />

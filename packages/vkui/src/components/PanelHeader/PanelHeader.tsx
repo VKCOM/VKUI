@@ -7,10 +7,10 @@ import { HasComponent, HasDataAttribute, HasRef, HTMLAttributesWithRootRef } fro
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
 import { Spacing } from '../Spacing/Spacing';
-import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeader.module.css';
 
@@ -90,7 +90,7 @@ const PanelHeaderIn = ({
 
   return (
     <React.Fragment>
-      <TooltipContainer fixed className={styles['PanelHeader__in']}>
+      <OnboardingTooltipContainer fixed className={styles['PanelHeader__in']}>
         <div
           className={classNames(styles['PanelHeader__before'], 'vkuiInternalPanelHeader__before')}
         >
@@ -101,7 +101,7 @@ const PanelHeaderIn = ({
           className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}
           {...afterSlotProps}
         />
-      </TooltipContainer>
+      </OnboardingTooltipContainer>
       {separator && platform === 'vkcom' && (
         <Separator className={styles['PanelHeader__separator']} wide />
       )}

@@ -8,8 +8,7 @@ import { contains, getActiveElementByAnotherElement } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
 import { autoUpdateFloatingElement, useFloating } from '../adapters';
 import { convertFloatingDataToReactCSSProperties } from '../functions';
-import { type UseFloatingOptions } from '../types';
-import { useFloatingMiddlewaresBootstrap } from '../useFloatingMiddlewaresBootstrap';
+import { type UseFloatingOptions } from '../types/common';
 import { DEFAULT_TRIGGER } from './constants';
 import type {
   FloatingProps,
@@ -32,11 +31,11 @@ const whileElementsMounted: UseFloatingOptions['whileElementsMounted'] = (...arg
 export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>({
   trigger = DEFAULT_TRIGGER,
 
-  // UseFloatingMiddlewaresBootstrapProps
-  placement: expectedPlacement = 'bottom',
-  offsetByMainAxis = 0,
-  offsetByCrossAxis = 0,
+  // UseFloating
+  placement: placementProp = 'bottom',
+  middlewares,
   hoverDelay = 0,
+  closeAfterClick = false,
 
   // disables
   disabled = false,
@@ -70,6 +69,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const hasCSSAnimation = React.useRef(false);
 
+  const blockMouseEnterRef = React.useRef(false);
   const blockFocusRef = React.useRef(false);
   const blurTimeoutRef = React.useRef<ReturnType<typeof setTimeout>>();
 
@@ -81,14 +81,9 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const { triggerOnFocus, triggerOnClick, triggerOnHover } = useResolveTriggerType(trigger);
 
   // Библиотека `floating-ui`
-  const { middlewares, strictPlacement } = useFloatingMiddlewaresBootstrap({
-    placement: expectedPlacement,
-    offsetByMainAxis,
-    offsetByCrossAxis,
-  });
-  const { placement, x, y, strategy, refs } = useFloating<T>({
+  const { placement, x, y, strategy, refs, middlewareData } = useFloating<T>({
     strategy: 'fixed',
-    placement: strictPlacement,
+    placement: placementProp,
     middleware: middlewares,
     whileElementsMounted,
   });
@@ -134,6 +129,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const handleBlurOnReference = useStableCallback((event: React.FocusEvent) => {
     blockFocusRef.current = false;
+    blockMouseEnterRef.current = false;
 
     if (!shownLocalState.shown) {
       clearTimeout(blurTimeoutRef.current);
@@ -165,17 +161,23 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     commitShownLocalState(!shownLocalState.shown, 'click');
   });
 
+  const handleClickOnReferenceForOnlyClose = useStableCallback(() => {
+    blockMouseEnterRef.current = true;
+    commitShownLocalState(false, 'click');
+  });
+
   const handleMouseEnterOnBoth = useStableCallback(() => {
     showWithDelay.cancel();
     hideWithDelay.cancel();
 
-    if (!shownLocalState.shown) {
+    if (!blockMouseEnterRef.current && !shownLocalState.shown) {
       showWithDelay();
     }
   });
 
   const handleMouseLeaveOnBothForHoverAndFocusStates = useStableCallback(() => {
     blockFocusRef.current = false;
+    blockMouseEnterRef.current = false;
 
     if (triggerOnHover) {
       showWithDelay.cancel();
@@ -285,7 +287,13 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const floatingPropsRef = React.useRef<FloatingProps>({ style: {} });
 
   if (shownFinalState) {
-    floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties(strategy, x, y);
+    floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties(
+      strategy,
+      x,
+      y,
+      undefined,
+      middlewareData,
+    );
 
     if (disableInteractive) {
       floatingPropsRef.current.style.pointerEvents = 'none';
@@ -303,6 +311,10 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   if (triggerOnHover) {
     referencePropsRef.current.onMouseOver = handleMouseEnterOnBoth;
+
+    if (closeAfterClick && !triggerOnClick) {
+      referencePropsRef.current.onClick = handleClickOnReferenceForOnlyClose;
+    }
 
     if (!disableInteractive) {
       floatingPropsRef.current.onMouseOver = handleMouseEnterOnBoth;
@@ -329,6 +341,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     refs,
     referenceProps: referencePropsRef.current,
     floatingProps: floatingPropsRef.current,
+    middlewareData,
     onClose: handleOnClose,
     // FocusTrap уже определяет нажатие на ESC, поэтому название события содержит конкретный код
     // кнопки вместо просто onKeyDown.

@@ -183,8 +183,8 @@ const baseConfig = {
           name: 'Poppers',
           components: () => [
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Popover/Popover.tsx`,
-            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/TextTooltip/TextTooltip.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Tooltip/Tooltip.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/OnboardingTooltip/OnboardingTooltip.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Popper/Popper.tsx`,
           ],
         },

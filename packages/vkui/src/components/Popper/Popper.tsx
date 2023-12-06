@@ -4,10 +4,10 @@ import { usePrevious } from '../../hooks/usePrevious';
 import {
   autoUpdateFloatingElement,
   convertFloatingDataToReactCSSProperties,
+  type FloatingComponentProps,
   type Placement,
   useFloating,
   useFloatingMiddlewaresBootstrap,
-  type UseFloatingMiddlewaresBootstrapOptions,
   type VirtualElement,
 } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -17,42 +17,46 @@ import {
   DEFAULT_ARROW_HEIGHT,
   DEFAULT_ARROW_PADDING,
   DefaultIcon,
-} from '../PopperArrow/DefaultIcon';
+} from '../FloatingArrow/DefaultIcon';
 import {
-  PopperArrow,
-  type PopperArrowProps as PopperArrowPropsPrivate,
-} from '../PopperArrow/PopperArrow';
+  FloatingArrow,
+  type FloatingArrowProps as FloatingArrowPropsPrivate,
+} from '../FloatingArrow/FloatingArrow';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Popper.module.css';
 
-export interface PopperRenderContentProps {
-  className: string;
-}
-
-export type PopperArrowProps = Omit<
-  PopperArrowPropsPrivate,
+export type FloatingArrowProps = Omit<
+  FloatingArrowPropsPrivate,
   'getRootRef' | 'coords' | 'placement' | 'Icon'
 >;
 
+type AllowedFloatingComponentProps = Pick<
+  FloatingComponentProps,
+  | 'arrow'
+  | 'arrowRef'
+  | 'arrowHeight'
+  | 'arrowPadding'
+  | 'hoverDelay'
+  | 'placement'
+  | 'offsetByMainAxis'
+  | 'offsetByCrossAxis'
+  | 'shown'
+  | 'onShownChange'
+  | 'defaultShown'
+  | 'hideWhenReferenceHidden'
+  | 'sameWidth'
+  | 'zIndex'
+  | 'usePortal'
+  | 'customMiddlewares'
+>;
+
 export interface PopperCommonProps
-  extends HTMLAttributesWithRootRef<HTMLDivElement>,
-    Pick<
-      UseFloatingMiddlewaresBootstrapOptions,
-      | 'placement'
-      | 'sameWidth'
-      | 'hideWhenReferenceHidden'
-      | 'offsetByMainAxis'
-      | 'offsetByCrossAxis'
-      | 'arrow'
-      | 'arrowRef'
-      | 'arrowPadding'
-      | 'arrowHeight'
-      | 'customMiddlewares'
-    > {
+  extends AllowedFloatingComponentProps,
+    Omit<HTMLAttributesWithRootRef<HTMLDivElement>, keyof AllowedFloatingComponentProps> {
   /**
    * Позволяет набросить на стрелку пользовательские атрибуты.
    */
-  arrowProps?: PopperArrowProps;
+  arrowProps?: FloatingArrowProps;
   /**
    * Пользовательская SVG иконка.
    *
@@ -66,17 +70,7 @@ export interface PopperCommonProps
    * 4. Убедитесь, что компонент принимает все валидные для SVG параметры.
    * 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
    */
-  ArrowIcon?: PopperArrowPropsPrivate['Icon'];
-  /**
-   * Принудительно использовать портал.
-   */
-  forcePortal?: boolean;
-  /**
-   * Кастомный root-элемент портала.
-   * При передаче вместе с `forcePorta=true` игнорируется `portalRoot` и `disablePortal`
-   * из контекста `AppRoot`.
-   */
-  portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
+  ArrowIcon?: FloatingArrowPropsPrivate['Icon'];
   /**
    * Подписывается на изменение геометрии `targetRef`, чтобы пересчитать свою позицию.
    */
@@ -118,8 +112,7 @@ export const Popper = ({
   targetRef,
   getRootRef,
   children,
-  portalRoot,
-  forcePortal = true,
+  usePortal = true,
   style: styleProp,
   onPlacementChange,
   ...restProps
@@ -191,7 +184,7 @@ export const Popper = ({
       }}
     >
       {arrow && (
-        <PopperArrow
+        <FloatingArrow
           {...arrowProps}
           coords={arrowCoords}
           placement={resolvedPlacement}
@@ -203,9 +196,5 @@ export const Popper = ({
     </RootComponent>
   );
 
-  return (
-    <AppRootPortal forcePortal={forcePortal} portalRoot={portalRoot}>
-      {dropdown}
-    </AppRootPortal>
-  );
+  return <AppRootPortal usePortal={usePortal}>{dropdown}</AppRootPortal>;
 };

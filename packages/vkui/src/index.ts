@@ -108,6 +108,8 @@ export { ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
 export { Snackbar } from './components/Snackbar/Snackbar';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
+export { Tooltip } from './components/Tooltip/Tooltip';
+export type { TooltipProps } from './components/Tooltip/Tooltip';
 
 /**
  * Modals
@@ -190,9 +192,9 @@ export { PullToRefresh } from './components/PullToRefresh/PullToRefresh';
 export type { PullToRefreshProps } from './components/PullToRefresh/PullToRefresh';
 export { Link } from './components/Link/Link';
 export type { LinkProps } from './components/Link/Link';
-export { Tooltip } from './components/Tooltip/Tooltip';
-export type { TooltipProps } from './components/Tooltip/Tooltip';
-export { TooltipContainer } from './components/Tooltip/TooltipContainer';
+export { OnboardingTooltip } from './components/OnboardingTooltip/OnboardingTooltip';
+export type { OnboardingTooltipProps } from './components/OnboardingTooltip/OnboardingTooltip';
+export { OnboardingTooltipContainer } from './components/OnboardingTooltip/OnboardingTooltipContainer';
 export { Counter } from './components/Counter/Counter';
 export type { CounterProps } from './components/Counter/Counter';
 export { UsersStack } from './components/UsersStack/UsersStack';
@@ -403,9 +405,6 @@ export type { TransitionContextProps } from './components/NavTransitionContext/N
 /**
  * Unstable
  */
-export { TextTooltip as unstable_TextTooltip } from './components/TextTooltip/TextTooltip';
-export type { TextTooltipProps as unstable_TextTooltipProps } from './components/TextTooltip/TextTooltip';
-
 export { ViewInfinite as unstable_ViewInfinite } from './components/View/ViewInfinite';
 export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from './components/View/ViewInfinite';
 
