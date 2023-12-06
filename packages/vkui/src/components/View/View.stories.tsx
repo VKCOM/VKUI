@@ -7,6 +7,7 @@ import { Avatar } from '../Avatar/Avatar';
 import { CellButton } from '../CellButton/CellButton';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 import { Div } from '../Div/Div';
+import { Flex } from '../Flex/Flex';
 import { FormItem } from '../FormItem/FormItem';
 import { Gallery } from '../Gallery/Gallery';
 import { Group } from '../Group/Group';
@@ -77,13 +78,13 @@ const ProfilePanelContent = ({
         description="Свайпбэк срабатывает либо если мы тянем за левый край экрана, либо если позиция горизонтального скролла равна нулю"
       >
         <HorizontalScroll>
-          <div style={{ display: 'flex' }}>
+          <Flex noWrap>
             {getRandomUsers(15).map((user) => (
               <HorizontalCell key={user.id} size="s" header={user.first_name}>
                 <Avatar size={56} src={user.photo_100} />
               </HorizontalCell>
             ))}
-          </div>
+          </Flex>
         </HorizontalScroll>
       </Group>
     </React.Fragment>
