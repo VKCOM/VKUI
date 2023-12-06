@@ -6,7 +6,7 @@ import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
-import type { SelectType } from '../Select/Select';
+import type { SelectType } from '../SelectConditionalRender/SelectConditionalRender';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import { Text } from '../Typography/Text/Text';
 import styles from './CustomSelectInput.module.css';

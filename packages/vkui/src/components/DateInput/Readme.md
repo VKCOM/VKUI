@@ -64,7 +64,7 @@ const Example = () => {
           </Checkbox>
         </FormItem>
         <FormItem top="Локаль">
-          <Select
+          <SelectConditionalRenderRender
             style={{ width: 100 }}
             value={locale}
             onChange={(e) => setLocale(e.target.value)}

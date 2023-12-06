@@ -13,13 +13,13 @@
 
 Старайтесь сопровождать элемент плейсхолдером.
 
-Пример рекомендуемого использования компонента `Select` с текстовым описанием:
+Пример рекомендуемого использования компонента `SelectConditionalRender` с текстовым описанием:
 
 - вместе с `label`
 
 ```jsx static
 <label htmlFor="select-id">Администратор</label>
-<CustomSelect
+<SelectConditionalRender
   id="select-id"
   placeholder="Не выбран"
   options={users}
@@ -30,7 +30,7 @@
 
 ```jsx static
 <FormItem top="Администратор" htmlFor="select-id">
-  <CustomSelect id="select-id" placeholder="Не выбран" options={users} />
+  <SelectConditionalRender id="select-id" placeholder="Не выбран" options={users} />
 </FormItem>
 ```
 
@@ -38,7 +38,7 @@
 
 ```jsx static
 <VisuallyHidden Component="label" htmlFor="select-id">Администратор</VisuallyHidden>
-<CustomSelect
+<SelectConditionalRender
   id="select-id"
   placeholder="Не выбран"
   options={users}
@@ -49,7 +49,7 @@
 
 ```jsx static
 <span id="select-label-id">Администратор</span>
-<CustomSelect
+<SelectConditionalRender
   aria-labelledby="select-label-id"
   placeholder="Не выбран"
   options={users}
@@ -60,7 +60,7 @@
 
 ```jsx static
 <VisuallyHidden Component="span" id="select-label-id">Администратор</VisuallyHidden>
-<CustomSelect
+<SelectConditionalRender
   aria-labelledby="select-label-id"
   placeholder="Не выбран"
   options={users}
@@ -70,13 +70,13 @@
 - вместе с [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)
 
 ```jsx static
-<CustomSelect aria-label="Администратор" placeholder="Не выбран" options={users} />
+<SelectConditionalRender aria-label="Администратор" placeholder="Не выбран" options={users} />
 ```
 
 ## Тестирование (e2e)
 
-Если `Select` отрисовывает [NativeSelect](#!/NativeSelect), то достаточно передать `testId` через `data-*` аттрибут для поиска элемента на странице.
-Если `Select` отрисовывает [CustomSelect](#!/CustomSelect), то следуйте рекомендациям из раздела "Тестирование (e2e)" компонента [CustomSelect](#!/CustomSelect).
+- Если `SelectConditionalRender` отрисовывает [NativeSelect](#!/NativeSelect), то достаточно передать `testId` через `data-*` аттрибут для поиска элемента на странице.
+- Если `SelectConditionalRender` отрисовывает [CustomSelect](#!/CustomSelect), то следуйте рекомендациям из раздела "Тестирование (e2e)" компонента [CustomSelect](#!/CustomSelect).
 
 ```jsx
 <View activePanel="select">
@@ -88,7 +88,7 @@
         htmlFor="select-id"
         bottom="Пример использования Select для выбора администратора из списка"
       >
-        <Select
+        <SelectConditionalRender
           id="select-id"
           placeholder="Не выбран"
           options={getRandomUsers(10).map((user) => ({

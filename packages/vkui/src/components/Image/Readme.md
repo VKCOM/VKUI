@@ -115,7 +115,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
   return (
     <React.Fragment>
       <FormItem top="borderRadius">
-        <Select
+        <SelectConditionalRenderRender
           options={[
             { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
             { label: 's', value: 's' },
@@ -134,7 +134,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
           </Checkbox>
         </FormItem>
         <FormItem top="Image.Badge[background]">
-          <Select
+          <SelectConditionalRenderRender
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
               { label: 'stroke', value: 'stroke' },
@@ -157,7 +157,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
 
       <FormLayoutGroup mode="horizontal">
         <FormItem top="Image.Overlay[theme]">
-          <Select
+          <SelectConditionalRenderRender
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
               { label: 'light', value: 'light' },
@@ -169,7 +169,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
           />
         </FormItem>
         <FormItem top="Image.Overlay[visibility]">
-          <Select
+          <SelectConditionalRenderRender
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
               { label: 'on-hover', value: 'on-hover' },

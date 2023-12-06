@@ -168,7 +168,7 @@ const AvatarPropsForm = ({
         top="gradientColor"
         bottom="Используйте инициалы вместо изображения, чтобы увидеть градиент"
       >
-        <Select
+        <SelectConditionalRenderRender
           options={[
             { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
             { label: '1. red', value: 'red' },
@@ -186,7 +186,7 @@ const AvatarPropsForm = ({
 
       <FormLayoutGroup mode="horizontal">
         <FormItem top="Avatar.Badge or Avatar.BadgeWithPreset">
-          <Select
+          <SelectConditionalRenderRender
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
               { label: '📝 Avatar.Badge', value: 'header-1', disabled: true },
@@ -207,7 +207,7 @@ const AvatarPropsForm = ({
           />
         </FormItem>
         <FormItem top="Avatar.Badge[background]">
-          <Select
+          <SelectConditionalRenderRender
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
               { label: 'stroke', value: 'stroke' },
@@ -230,7 +230,7 @@ const AvatarPropsForm = ({
 
       <FormLayoutGroup mode="horizontal">
         <FormItem top="Avatar.Overlay[theme]">
-          <Select
+          <SelectConditionalRenderRender
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
               { label: 'light', value: 'light' },
@@ -242,7 +242,7 @@ const AvatarPropsForm = ({
           />
         </FormItem>
         <FormItem top="Avatar.Overlay[visibility]">
-          <Select
+          <SelectConditionalRenderRender
             options={[
               { label: DEFAULT_VALUE, value: DEFAULT_VALUE },
               { label: 'on-hover', value: 'on-hover' },

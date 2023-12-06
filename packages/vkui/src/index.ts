@@ -265,7 +265,7 @@ export { RadioGroup } from './components/RadioGroup/RadioGroup';
 export type { RadioGroupProps } from './components/RadioGroup/RadioGroup';
 export { Checkbox } from './components/Checkbox/Checkbox';
 export type { CheckboxProps } from './components/Checkbox/Checkbox';
-export { Select } from './components/Select/Select';
+export { SelectConditionalRender } from './components/SelectConditionalRender/SelectConditionalRender';
 export { SelectMimicry } from './components/SelectMimicry/SelectMimicry';
 export type { SelectMimicryProps } from './components/SelectMimicry/SelectMimicry';
 export { NativeSelect } from './components/NativeSelect/NativeSelect';

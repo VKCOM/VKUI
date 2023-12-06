@@ -125,7 +125,7 @@ const Example = () => {
             )}
 
             <FormItem top="Пол" htmlFor="gender-select-id">
-              <Select
+              <SelectConditionalRenderRender
                 id="gender-select-id"
                 placeholder="Выберите пол"
                 options={[
@@ -169,7 +169,7 @@ const Example = () => {
               bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'}
               status={purpose ? 'valid' : 'error'}
             >
-              <Select
+              <SelectConditionalRenderRender
                 id="purpose-of-the-trip-select-id"
                 placeholder="Выберите цель поездки"
                 onChange={onChange}

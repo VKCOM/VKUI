@@ -8,13 +8,13 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, FormFieldProps } from '../FormField/FormField';
-import type { SelectType } from '../Select/Select';
+import type { SelectType } from '../SelectConditionalRender/SelectConditionalRender';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
-import styles from '../Select/Select.module.css';
+import styles from '../SelectConditionalRenderRender/SelectConditionalRenderRender.module.css';
 
 const sizeYClassNames = {
-  none: styles['Select--sizeY-none'],
-  ['compact']: styles['Select--sizeY-compact'],
+  none: styles['SelectConditionalRenderRender--sizeY-none'],
+  compact: styles['SelectConditionalRenderRender--sizeY-compact'],
 };
 
 export interface NativeSelectProps
@@ -83,13 +83,13 @@ const NativeSelect = ({
     <FormField
       Component="div"
       className={classNames(
-        styles['Select'],
+        styles['SelectConditionalRenderRender'],
         'vkuiInternalNativeSelect',
-        before && styles['Select--hasBefore'],
-        empty && styles['Select--empty'],
-        multiline && styles['Select--multiline'],
-        align === 'center' && styles['Select--align-center'],
-        align === 'right' && styles['Select--align-right'],
+        before && styles['SelectConditionalRenderRender--hasBefore'],
+        empty && styles['SelectConditionalRenderRender--empty'],
+        multiline && styles['SelectConditionalRenderRender--multiline'],
+        align === 'center' && styles['SelectConditionalRenderRender--align-center'],
+        align === 'right' && styles['SelectConditionalRenderRender--align-right'],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
@@ -104,7 +104,7 @@ const NativeSelect = ({
       <select
         {...restProps}
         disabled={disabled}
-        className={styles['Select__el']}
+        className={styles['SelectConditionalRenderRender__el']}
         onChange={onChange}
         value={value}
         ref={selectRef}
@@ -112,8 +112,11 @@ const NativeSelect = ({
         {placeholder && <option value="">{placeholder}</option>}
         {children}
       </select>
-      <div className={styles['Select__container']} aria-hidden>
-        <SelectTypography className={styles['Select__title']} selectType={selectType}>
+      <div className={styles['SelectConditionalRenderRender__container']} aria-hidden>
+        <SelectTypography
+          className={styles['SelectConditionalRenderRender__title']}
+          selectType={selectType}
+        >
           {title}
         </SelectTypography>
       </div>

@@ -269,7 +269,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Input/Input.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ChipInputBase/Chip/Chip.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ChipsInput/ChipsInput.tsx`,
-            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Select/Select.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/AdaptiveSelectRender/AdaptiveSelectRender.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/NativeSelect/NativeSelect.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/SelectMimicry/SelectMimicry.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/CustomSelect/CustomSelect.tsx`,

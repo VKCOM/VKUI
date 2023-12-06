@@ -63,7 +63,7 @@ const Example = () => {
             />
           </FormItem>
           <FormItem>
-            <Select
+            <SelectConditionalRenderRender
               value={String(valueStep)}
               options={options()}
               onChange={(e) => setValueStep(e.target.value)}

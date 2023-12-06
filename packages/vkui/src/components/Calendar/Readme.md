@@ -58,7 +58,7 @@ const Example = () => {
           </Checkbox>
         </FormItem>
         <FormItem top="Локаль">
-          <Select
+          <SelectConditionalRenderRender
             style={{ width: 100 }}
             value={locale}
             onChange={(e) => setLocale(e.target.value)}
@@ -83,7 +83,7 @@ const Example = () => {
           />
         </FormItem>
         <FormItem top="Размер">
-          <Select
+          <SelectConditionalRenderRender
             style={{ width: 100 }}
             value={size}
             onChange={(e) => setSize(e.target.value)}

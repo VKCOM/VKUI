@@ -18,7 +18,7 @@ import {
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormFieldProps } from '../FormField/FormField';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
-import { SelectType } from '../Select/Select';
+import { SelectType } from '../SelectConditionalRender/SelectConditionalRender';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { CustomSelectClearButton, CustomSelectClearButtonProps } from './CustomSelectClearButton';

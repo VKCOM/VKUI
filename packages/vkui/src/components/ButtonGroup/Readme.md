@@ -30,7 +30,7 @@ const ButtonGroupPropsForm = ({
     <React.Fragment>
       {showMode && (
         <FormItem top="mode">
-          <Select
+          <SelectConditionalRenderRender
             value={mode}
             onChange={(e) => handleChange('mode', e.target.value)}
             options={[
@@ -41,7 +41,7 @@ const ButtonGroupPropsForm = ({
         </FormItem>
       )}
       <FormItem top="gap">
-        <Select
+        <SelectConditionalRenderRender
           value={gap}
           onChange={(e) => handleChange('gap', e.target.value)}
           options={[
@@ -53,7 +53,7 @@ const ButtonGroupPropsForm = ({
         />
       </FormItem>
       <FormItem top="align">
-        <Select
+        <SelectConditionalRenderRender
           value={align}
           onChange={(e) => handleChange('align', e.target.value)}
           options={[
@@ -353,7 +353,7 @@ const Example = () => {
       </AdaptivityProvider>
       <div style={{ minWidth: 200 }}>
         <FormItem top="sizeY">
-          <Select
+          <SelectConditionalRenderRender
             value={sizeY}
             onChange={(e) => setSizeY(e.target.value)}
             options={[

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SelectType } from '../components/Select/Select';
+import { SelectType } from '../components/SelectConditionalRender/SelectConditionalRender';
 import { getTextFromChildren } from './children';
 
 export type Option = {

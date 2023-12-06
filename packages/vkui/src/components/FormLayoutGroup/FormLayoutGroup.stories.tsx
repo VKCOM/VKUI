@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { FormItem } from '../FormItem/FormItem';
 import { Input } from '../Input/Input';
-import { Select } from '../Select/Select';
+import { SelectConditionalRender } from '../SelectConditionalRender/SelectConditionalRender';
 import { FormLayoutGroup, FormLayoutGroupProps } from './FormLayoutGroup';
 
 const story: Meta<FormLayoutGroupProps> = {
@@ -23,7 +23,7 @@ export const Playground: Story = {
         <Input id="name" />
       </FormItem>
       <FormItem>
-        <Select
+        <SelectConditionalRender
           options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map((i) => ({
             label: i,
             value: i,

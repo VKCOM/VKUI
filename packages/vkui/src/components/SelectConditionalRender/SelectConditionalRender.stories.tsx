@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { SelectProps } from '../CustomSelect/CustomSelect';
-import { Select } from './Select';
+import { SelectConditionalRender } from './SelectConditionalRender';
 
 const story: Meta<SelectProps> = {
-  title: 'Forms/Select',
-  component: Select,
+  title: 'Forms/SelectConditionalRenderRender',
+  component: SelectConditionalRender,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 

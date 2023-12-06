@@ -74,7 +74,7 @@ const Example = () => {
       </AdaptivityProvider>
       <div style={{ minWidth: 200 }}>
         <FormItem top="appearance">
-          <Select
+          <SelectConditionalRenderRender
             value={appearance}
             onChange={(e) => setAppearance(e.target.value)}
             options={[
@@ -88,7 +88,7 @@ const Example = () => {
           />
         </FormItem>
         <FormItem top="size">
-          <Select
+          <SelectConditionalRenderRender
             value={size}
             onChange={(e) => setSize(e.target.value)}
             options={[
@@ -99,7 +99,7 @@ const Example = () => {
           />
         </FormItem>
         <FormItem top="align">
-          <Select
+          <SelectConditionalRenderRender
             value={align}
             onChange={(e) => setAlign(e.target.value)}
             options={[
@@ -110,7 +110,7 @@ const Example = () => {
           />
         </FormItem>
         <FormItem top="sizeY">
-          <Select
+          <SelectConditionalRenderRender
             value={sizeY}
             onChange={(e) => setSizeY(e.target.value)}
             options={[

@@ -39,7 +39,7 @@ const Example = () => {
       </AdaptivityProvider>
       <div style={propsContainerStyles}>
         <FormItem top="sizeY">
-          <Select
+          <SelectConditionalRenderRender
             value={sizeY}
             onChange={(e) => setSizeY(e.target.value)}
             options={[

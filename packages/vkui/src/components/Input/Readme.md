@@ -10,7 +10,7 @@ const ExampleBase = ({ formItemStatus }) => {
   return (
     <FormLayout>
       <FormItem top="align">
-        <Select
+        <SelectConditionalRenderRender
           value={align}
           onChange={(e) => setAlign(e.target.value)}
           options={[
@@ -99,7 +99,7 @@ const Example = () => {
 
         <div style={propsContainerStyles}>
           <FormItem top="AdaptivityProvider[sizeY]">
-            <Select
+            <SelectConditionalRenderRender
               value={sizeY}
               onChange={(e) => setSizeY(e.target.value)}
               options={[
@@ -109,7 +109,7 @@ const Example = () => {
             />
           </FormItem>
           <FormItem top="FormItem[status]">
-            <Select
+            <SelectConditionalRenderRender
               value={formItemStatus}
               onChange={(e) => setFormItemStatus(e.target.value)}
               options={[

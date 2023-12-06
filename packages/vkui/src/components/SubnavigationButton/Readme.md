@@ -71,7 +71,7 @@ const SubnavigationButtonExample = () => {
           />
         </FormItem>
         <FormItem top="size">
-          <Select
+          <SelectConditionalRenderRender
             value={size}
             onChange={(e) => setSize(e.target.value)}
             options={[
@@ -82,7 +82,7 @@ const SubnavigationButtonExample = () => {
           />
         </FormItem>
         <FormItem top="sizeY">
-          <Select
+          <SelectConditionalRenderRender
             value={sizeY}
             onChange={(e) => setSizeY(e.target.value)}
             options={[

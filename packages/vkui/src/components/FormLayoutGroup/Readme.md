@@ -28,7 +28,7 @@ const Example = () => {
                 <Input id="email" />
               </FormItem>
               <FormItem>
-                <Select
+                <SelectConditionalRenderRender
                   options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map(
                     (i) => ({
                       label: i,
@@ -42,7 +42,7 @@ const Example = () => {
 
             <FormLayoutGroup mode="vertical" segmented>
               <FormItem htmlFor="doctype" top="Документ, удостоверяющий личность">
-                <Select
+                <SelectConditionalRenderRender
                   id="doctype"
                   options={['Паспорт гражданина РФ', 'Загранпаспорт'].map((i) => ({
                     label: i,

@@ -8,7 +8,7 @@ import { DatePicker } from '../DatePicker/DatePicker';
 import { FormItem } from '../FormItem/FormItem';
 import { Input } from '../Input/Input';
 import { NativeSelect } from '../NativeSelect/NativeSelect';
-import { Select } from '../Select/Select';
+import { SelectConditionalRender } from '../SelectConditionalRender/SelectConditionalRender';
 import { FormLayoutGroup, type FormLayoutGroupProps } from './FormLayoutGroup';
 
 const chips = [
@@ -135,13 +135,13 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
             </React.Fragment>,
             <React.Fragment key="kids">
               <FormItem>
-                <Select options={[]} placeholder="День" />
+                <SelectConditionalRender options={[]} placeholder="День" />
               </FormItem>
               <FormItem>
-                <Select options={[]} placeholder="Месяц" />
+                <SelectConditionalRender options={[]} placeholder="Месяц" />
               </FormItem>
               <FormItem>
-                <Select options={[]} placeholder="Год" />
+                <SelectConditionalRender options={[]} placeholder="Год" />
               </FormItem>
             </React.Fragment>,
             <React.Fragment key="kids">

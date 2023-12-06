@@ -1,11 +1,11 @@
-.Select {
+.SelectConditionalRender {
   position: relative;
   cursor: pointer;
   box-sizing: border-box;
   font-family: var(--vkui--font_family_base);
 }
 
-.Select__el {
+.SelectConditionalRender__el {
   display: block;
   position: absolute;
   appearance: none;
@@ -20,7 +20,7 @@
   font-family: inherit;
 }
 
-.Select__container {
+.SelectConditionalRender__container {
   flex-grow: 1;
   flex-shrink: 1;
   padding-inline: 12px 0;
@@ -31,43 +31,45 @@
   overflow: hidden;
 }
 
-.Select--hasBefore .Select__container {
+.SelectConditionalRender--hasBefore .SelectConditionalRender__container {
   padding-inline-start: 0;
 }
 
-.Select--multiline .Select__container {
+.SelectConditionalRender--multiline .SelectConditionalRender__container {
   padding-block: 12px;
 }
 
-.Select--sizeY-compact.Select--multiline .Select__container {
+.SelectConditionalRender--sizeY-compact.SelectConditionalRender--multiline
+  .SelectConditionalRender__container {
   padding-block: 8px;
 }
 
 @media (--sizeY-compact) {
-  .Select--sizeY-none.Select--multiline .Select__container {
+  .SelectConditionalRender--sizeY-none.SelectConditionalRender--multiline
+    .SelectConditionalRender__container {
     padding-block: 8px;
   }
 }
 
-.Select__title {
+.SelectConditionalRender__title {
   display: block;
 }
 
-.Select:not(.Select--multiline) .Select__title {
+.SelectConditionalRender:not(.SelectConditionalRender--multiline) .SelectConditionalRender__title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.Select--empty .Select__title {
+.SelectConditionalRender--empty .SelectConditionalRender__title {
   color: var(--vkui--color_text_secondary);
 }
 
-.Select--align-right .Select__title {
+.SelectConditionalRender--align-right .SelectConditionalRender__title {
   text-align: end;
 }
 
-.Select--align-center .Select__title {
+.SelectConditionalRender--align-center .SelectConditionalRender__title {
   text-align: center;
 }
 
@@ -75,6 +77,6 @@
  * CMP:
  * CalendarHeader
  */
-:global(.vkuiInternalCalendarHeader__picker) .Select__container {
+:global(.vkuiInternalCalendarHeader__picker) .SelectConditionalRender__container {
   padding-inline-end: 4px;
 }
