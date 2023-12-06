@@ -41,7 +41,7 @@ const Example = () => {
           <HorizontalScroll>
             <div style={{ display: 'flex' }}>
               <AlbumItems />
-              <HorizontalCellShowMore size="l" height={124} />
+              <HorizontalCellShowMore onClick={() => {}} size="l" height={124} />
             </div>
           </HorizontalScroll>
         </Group>
@@ -51,7 +51,12 @@ const Example = () => {
               <div style={{ display: 'flex' }}>
                 <RandomUsers />
               </div>
-              <HorizontalCellShowMore compensateLastCellIndent size="s" height={56} />
+              <HorizontalCellShowMore
+                onClick={() => {}}
+                compensateLastCellIndent
+                size="s"
+                height={56}
+              />
             </div>
           </HorizontalScroll>
         </Group>
@@ -74,7 +79,12 @@ const Example = () => {
                   />
                 </HorizontalCell>
               </div>
-              <HorizontalCellShowMore compensateLastCellIndent size="m" height={88} />
+              <HorizontalCellShowMore
+                onClick={() => {}}
+                compensateLastCellIndent
+                size="m"
+                height={88}
+              />
             </div>
           </HorizontalScroll>
         </Group>
