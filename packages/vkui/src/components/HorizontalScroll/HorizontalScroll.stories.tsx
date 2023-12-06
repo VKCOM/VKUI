@@ -5,6 +5,7 @@ import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators'
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUsers, UserExtendedInterface } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
+import { Flex } from '../Flex/Flex';
 import { Group } from '../Group/Group';
 import { Header } from '../Header/Header';
 import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
@@ -52,7 +53,7 @@ export const Playground: Story = {
 
     return (
       <HorizontalScroll {...args}>
-        <div style={{ display: 'flex' }}>
+        <Flex>
           {commonFriends.length === 0 && <PanelSpinner />}
           {commonFriends.length > 0 && (
             <React.Fragment>
@@ -65,7 +66,7 @@ export const Playground: Story = {
               })}
             </React.Fragment>
           )}
-        </div>
+        </Flex>
       </HorizontalScroll>
     );
   },

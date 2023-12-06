@@ -4,6 +4,7 @@ import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators'
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
+import { Flex } from '../Flex/Flex';
 import { Group } from '../Group/Group';
 import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
 import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
@@ -80,7 +81,7 @@ export const Playground: Story = {
       return (
         <Group>
           <HorizontalScroll>
-            <div style={{ display: 'flex' }}>
+            <Flex>
               {CELL_ITEMS.map((element) => (
                 <HorizontalCell key={element.id} size={args.size} header={element.title}>
                   <Avatar
@@ -91,7 +92,7 @@ export const Playground: Story = {
                 </HorizontalCell>
               ))}
               <Component {...args} />
-            </div>
+            </Flex>
           </HorizontalScroll>
         </Group>
       );
