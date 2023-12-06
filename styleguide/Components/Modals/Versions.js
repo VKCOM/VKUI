@@ -8,7 +8,12 @@ const MINIMUM_VERSION = '3.12.4';
 const filterPrereleaseVersion = (version) => !version.includes('-');
 
 export function Versions({ id }) {
-  const { data: dataRaw, error } = useFetch('https://registry.npmjs.org/@vkontakte/vkui');
+  const { data: dataRaw, error } = useFetch('https://registry.npmjs.org/@vkontakte/vkui', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/vnd.npm.install-v1+json',
+    },
+  });
   const data = React.useMemo(() => {
     if (!dataRaw) {
       return null;
