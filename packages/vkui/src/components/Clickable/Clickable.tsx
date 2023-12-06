@@ -30,6 +30,10 @@ const NonClickable = <T,>({
   onClickCapture,
   activeClassName,
   hoverClassName,
+  hasActive,
+  hasHover,
+  hovered,
+  activated,
   activeEffectDelay,
   ...restProps
 }: ClickableProps<T>) => <RootComponent {...restProps} />;
