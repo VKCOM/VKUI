@@ -24,6 +24,10 @@ import type { FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import {
+  ChipsSelectClearButton,
+  ChipsSelectClearButtonProps,
+} from './ChipsSelectClearButton/ChipsSelectClearButton';
+import {
   DEFAULT_EMPTY_TEXT,
   DEFAULT_SELECTED_BEHAVIOR,
   FOCUS_ACTION_NEXT,
@@ -52,6 +56,23 @@ export interface ChipsSelectProps<O extends ChipOption>
    * Отрисовка Spinner вместо списка опций в выпадающем списке
    */
   fetching?: boolean;
+  /**
+   * Показывать или скрывать уже выбранные опции
+   */
+  showSelected?: boolean;
+  /**
+   * Текст для пункта создающего чипы при клике, так же отвечает за то будет ли показан этот пункт (показывается после того как в списке не отсанется опций)
+   */
+  creatableText?: string;
+  /**
+   * Текст который показывается если список опций пуст
+   */
+  emptyText?: string;
+  /**
+   * Кастомная кнопка для очистки значения.
+   * Должна принимать обязательное свойство `onClick`
+   */
+  ClearButton?: React.ComponentType<ChipsSelectClearButtonProps>;
   /**
    * Закрытие выпадающего списка после выбора элемента
    */
@@ -137,6 +158,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   onInputChange: onInputChangeProp,
   onBlur,
   onKeyDown,
+  ClearButton = ChipsSelectClearButton,
   ...restProps
 }: ChipsSelectProps<Option>) => {
   const {
@@ -269,6 +291,16 @@ export const ChipsSelect = <Option extends ChipOption>({
     focusOptionByIndex(index, focusedOptionIndex);
   };
 
+  const clearButtonShown = !opened && value.length;
+  const clearButton = React.useMemo(() => {
+    if (!clearButtonShown) {
+      return null;
+    }
+    return (
+      <ClearButton className={styles['CustomSelect--clear-icon']} onClick={() => onChange!([])} />
+    );
+  }, [clearButtonShown, ClearButton, onChange]);
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (onKeyDown) {
       onKeyDown(event);
@@ -369,6 +401,21 @@ export const ChipsSelect = <Option extends ChipOption>({
     opened ? dropdownScrollBoxRef : null,
   );
 
+  const afterIcons = (
+    <React.Fragment>
+      {clearButton}
+      <IconButton
+        className={styles['ChipsSelect__dropdown']}
+        activeMode=""
+        hoverMode=""
+        label={getIconLabel(opened)}
+        onClick={toggleOpened}
+      >
+        {icon ?? <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />}
+      </IconButton>
+    </React.Fragment>
+  );
+
   return (
     <>
       <ChipsInputBase
@@ -385,17 +432,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         )}
         status={status}
         before={before}
-        after={
-          <IconButton
-            className={styles['ChipsSelect__dropdown']}
-            activeMode=""
-            hoverMode=""
-            label={getIconLabel(opened)}
-            onClick={toggleOpened}
-          >
-            {icon ?? <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />}
-          </IconButton>
-        }
+        after={afterIcons}
         // option
         value={value}
         onAddChipOption={addOptionFromInput}
