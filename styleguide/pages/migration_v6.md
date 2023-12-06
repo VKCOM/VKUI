@@ -605,8 +605,29 @@ interface HasInsets {
 
 ## [`Tappable`](#/Tappable)
 
-- `Tappable` избавился от свойств `onEnter`, `onLeave`, `onStart`, `onEnd`, `onMove` и `stopPropagation`.
-  Используйте вместо них [нативные свойства](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#event_types_and_global_event_handlers).
+Свойства `onEnter`, `onLeave`, `onStart`, `onEnd`, `onMove` и `stopPropagation` удалены.
+Используйте вместо них [нативные свойства](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#event_types_and_global_event_handlers).
+
+```diff
+<Tappable
+- stopPropagation
+
+- onEnter
++ onPointerEnter
+
+- onLeave
++ onPointerLeave
+
+- onStart
++ onPointerDown
+
+- onEnd
++ onPointerUp
+
+- onMove
++ onPointerMove
+/>
+```
 
 ### Улучшение доступности
 
