@@ -7,16 +7,12 @@
 Чтобы заменить текст, который прочитает скринридер, передайте его в `children`. Он будет скрыт визуально, но останется доступным для ассистивных технологий.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-<div
-  aria-busy={true}
-  aria-live="polite"
-  style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}
->
-  <Spinner size="large" style={{ margin: '20px 0' }} />
-  <Spinner size="medium" style={{ margin: '20px 0' }} />
-  <Spinner size="regular" style={{ margin: '20px 0' }} />
-  <Spinner size="small" style={{ margin: '20px 0' }}>
+<Flex aria-busy={true} aria-live="polite" direction="column" gap={32} margin="auto">
+  <Spinner size="large" />
+  <Spinner size="medium" />
+  <Spinner size="regular" />
+  <Spinner size="small">
     Кастомный текст вместо "Загружается...", который озвучит скринридер
   </Spinner>
-</div>
+</Flex>
 ```

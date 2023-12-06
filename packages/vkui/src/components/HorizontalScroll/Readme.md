@@ -24,7 +24,7 @@ const HorizontalScrollExample = () => {
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
           >
-            <div style={{ display: 'flex' }}>
+            <Flex noWrap>
               {recentFriends.map((item) => {
                 return (
                   <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
@@ -32,7 +32,7 @@ const HorizontalScrollExample = () => {
                   </HorizontalCell>
                 );
               })}
-            </div>
+            </Flex>
           </HorizontalScroll>
         </Group>
 
@@ -43,7 +43,7 @@ const HorizontalScrollExample = () => {
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
           >
-            <div style={{ display: 'flex' }}>
+            <Flex noWrap>
               {commonFriends.length === 0 && <PanelSpinner />}
               {commonFriends.length > 0 && (
                 <Fragment>
@@ -56,7 +56,7 @@ const HorizontalScrollExample = () => {
                   })}
                 </Fragment>
               )}
-            </div>
+            </Flex>
           </HorizontalScroll>
         </Group>
       </Panel>

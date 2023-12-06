@@ -167,7 +167,7 @@ const PopoverWithTriggerManual = () => {
       role="dialog"
       aria-describedby="dialog-3"
       content={({ onClose }) => (
-        <div style={{ display: 'flex', position: 'relative', width: 180, height: 100 }}>
+        <Flex style={{ position: 'relative', width: 180, height: 100 }}>
           <div style={{ position: 'absolute', top: 0, right: 0 }}>
             <IconButton onClick={onClose}>
               <Icon16Clear />
@@ -179,7 +179,7 @@ const PopoverWithTriggerManual = () => {
             is
             <br />a lie
           </div>
-        </div>
+        </Flex>
       )}
       onShownChange={handleShownChange}
     >
@@ -192,21 +192,13 @@ const PopoverWithTriggerManual = () => {
 
 const Playground = () => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        padding: 16,
-        gap: 16,
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-      }}
-    >
+    <Flex margin="auto" direction="column" align="start" gap={16}>
       <PopoverWithTriggerHover />
       <PopoverWithTriggerClick />
       <PopoverWithTriggerFocus />
       <PopoverWithAllTriggers />
       <PopoverWithTriggerManual />
-    </div>
+    </Flex>
   );
 };
 

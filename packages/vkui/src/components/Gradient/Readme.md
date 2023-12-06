@@ -1,41 +1,29 @@
 ```jsx
-const styles = {
-  margin: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  textAlign: 'center',
-  padding: 32,
-};
-
 const Example = () => {
   return (
     <View activePanel="gradient">
       <Panel id="gradient">
         <PanelHeader>Gradient</PanelHeader>
         <FixedLayout vertical="bottom">
-          <Gradient to="top" style={styles}>
-            <Button>mode="default"</Button>
+          <Gradient to="top">
+            <Flex justify="center" style={{ padding: 32 }}>
+              <Button>mode="default"</Button>
+            </Flex>
           </Gradient>
         </FixedLayout>
         <Group>
-          <Gradient mode="tint" to="top" style={styles}>
-            <Avatar size={96} />
-            <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="2">
-              Алексей Мазелюк
-            </Title>
-            <Text
-              style={{
-                marginBottom: 24,
-                color: 'var(--vkui--color_text_secondary)',
-              }}
+          <Gradient mode="tint" to="top">
+            <Placeholder
+              icon={<Avatar size={96} />}
+              header="Алексей Мазелюк"
+              action={
+                <Button size="m" mode="secondary">
+                  Редактировать
+                </Button>
+              }
             >
               Учащийся
-            </Text>
-            <Button size="m" mode="secondary">
-              Редактировать
-            </Button>
+            </Placeholder>
           </Gradient>
           <Group mode="plain" header={<Header>Учебные заведения и классы</Header>}>
             <SimpleCell before={<Icon28SchoolOutline />} subtitle="Екатеринбург">

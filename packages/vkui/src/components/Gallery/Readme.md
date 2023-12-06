@@ -1,13 +1,8 @@
 ```jsx
-const slideStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '72px',
-};
-
 const Slide = ({ children, width, backgroundColor }) => (
-  <div style={{ ...slideStyle, width, backgroundColor }}>{children}</div>
+  <Flex justify="center" align="center" style={{ fontSize: '72px', width, backgroundColor }}>
+    {children}
+  </Flex>
 );
 
 const Example = () => {

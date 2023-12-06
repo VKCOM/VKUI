@@ -13,16 +13,16 @@
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const Example = () => {
   return (
-    <div style={rowStyles}>
+    <Flex justify="center" gap={16} margin="auto">
       <div>
-        <IconButton label="Удалить">
+        <IconButton onClick={() => {}} label="Удалить">
           <Icon16Delete />
         </IconButton>
         <Footnote style={captionStyles}>16</Footnote>
       </div>
 
       <div>
-        <IconButton>
+        <IconButton onClick={() => {}}>
           <VisuallyHidden>Меню</VisuallyHidden>
           <Icon16MoreVertical />
         </IconButton>
@@ -30,14 +30,14 @@ const Example = () => {
       </div>
 
       <div>
-        <IconButton aria-label="Удалить 24">
+        <IconButton onClick={() => {}} aria-label="Удалить 24">
           <Icon24Delete />
         </IconButton>
         <Footnote style={captionStyles}>24</Footnote>
       </div>
 
       <div>
-        <IconButton aria-labelledby="icon-28-label">
+        <IconButton onClick={() => {}} aria-labelledby="icon-28-label">
           <Icon28Delete />
         </IconButton>
         <Footnote id="icon-28-label" style={captionStyles}>
@@ -47,20 +47,13 @@ const Example = () => {
       </div>
 
       <div>
-        <IconButton title="Удалить 36">
+        <IconButton onClick={() => {}} title="Удалить 36">
           <Icon36Delete />
         </IconButton>
         <Footnote style={captionStyles}>36</Footnote>
       </div>
-    </div>
+    </Flex>
   );
-};
-
-const rowStyles = {
-  display: 'flex',
-  justifyContent: 'center',
-  gap: 16,
-  padding: 16,
 };
 
 const captionStyles = {

@@ -24,9 +24,9 @@ const Example = () => {
   }, []);
 
   return (
-    <div style={rootContainerStyles}>
-      <AdaptivityProvider sizeY={sizeY}>
-        <div style={demoContainerStyles}>
+    <Flex reverse justify="end" align="center" margin="auto">
+      <Flex.Item>
+        <AdaptivityProvider sizeY={sizeY}>
           <Pagination
             currentPage={currentPage}
             siblingCount={siblingCount}
@@ -35,9 +35,9 @@ const Example = () => {
             disabled={disabled}
             onChange={handleChange}
           />
-        </div>
-      </AdaptivityProvider>
-      <div style={propsContainerStyles}>
+        </AdaptivityProvider>
+      </Flex.Item>
+      <Flex.Item>
         <FormItem top="sizeY">
           <Select
             value={sizeY}
@@ -81,25 +81,10 @@ const Example = () => {
             disabled
           </Checkbox>
         </FormItem>
-      </div>
-    </div>
+      </Flex.Item>
+    </Flex>
   );
 };
-
-const rootContainerStyles = {
-  display: 'flex',
-  flexDirection: 'row-reverse',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-};
-
-const demoContainerStyles = {
-  flexGrow: 2,
-  paddingTop: 24,
-  paddingBottom: 24,
-};
-
-const propsContainerStyles = { minWidth: 200 };
 
 <Example />;
 ```

@@ -6,7 +6,7 @@
 
 Moжно вкладывать напрямую в того же родителя в котором лежат остальные `HorizontalCell` внутри `HorizontalScroll`.
 
-```html
+```jsx static
 <HorizontalScroll>
   <ListWrapper>
     <HorizontalCell>1</HorizontalCell>
@@ -20,7 +20,7 @@ Moжно вкладывать напрямую в того же родителя
 Или как последний элемент `HorizontalScroll`, но тогда надо компенсировать
 отступы высталяемые `HorizontalCell` с помощью пропа `compensateLastCellIndent`.
 
-```html
+```jsx static
 <HorizontalScroll>
   <ListWrapper>
     <HorizontalCell>1</HorizontalCell>
@@ -39,31 +39,31 @@ const Example = () => {
         <PanelHeader>HorizontalCellShowMore</PanelHeader>
         <Group header={<Header>Альбомы</Header>}>
           <HorizontalScroll>
-            <div style={{ display: 'flex' }}>
+            <Flex noWrap>
               <AlbumItems />
               <HorizontalCellShowMore onClick={() => {}} size="l" height={124} />
-            </div>
+            </Flex>
           </HorizontalScroll>
         </Group>
         <Group header={<Header>Возможные друзья</Header>}>
           <HorizontalScroll>
-            <div style={{ display: 'flex' }}>
-              <div style={{ display: 'flex' }}>
+            <Flex noWrap>
+              <Flex noWrap>
                 <RandomUsers />
-              </div>
+              </Flex>
               <HorizontalCellShowMore
                 onClick={() => {}}
                 compensateLastCellIndent
                 size="s"
                 height={56}
               />
-            </div>
+            </Flex>
           </HorizontalScroll>
         </Group>
         <Group header={<Header>Игры</Header>}>
           <HorizontalScroll>
-            <div style={{ display: 'flex' }}>
-              <div style={{ display: 'flex' }}>
+            <Flex noWrap>
+              <Flex noWrap>
                 <HorizontalCell onClick={() => {}} size="m" header="Warma-geddon">
                   <Image
                     size={88}
@@ -78,14 +78,14 @@ const Example = () => {
                     src={'https://sun9-71.userapi.com/c849220/v849220453/147ade/0MtQXKEVsiQ.jpg'}
                   />
                 </HorizontalCell>
-              </div>
+              </Flex>
               <HorizontalCellShowMore
                 onClick={() => {}}
                 compensateLastCellIndent
                 size="m"
                 height={88}
               />
-            </div>
+            </Flex>
           </HorizontalScroll>
         </Group>
       </Panel>
