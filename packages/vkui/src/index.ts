@@ -247,10 +247,12 @@ export { File } from './components/File/File';
 export type { FileProps } from './components/File/File';
 export { Input } from './components/Input/Input';
 export type { InputProps } from './components/Input/Input';
-export { Chip } from './components/Chip/Chip';
-export type { ChipProps, ChipOption, RenderChip } from './components/Chip/Chip';
+export { Chip } from './components/ChipsInputBase/Chip/Chip';
+export type { ChipProps, ChipOption, RenderChipProps } from './components/ChipsInputBase/types';
 export { ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
+export { ChipsSelect } from './components/ChipsSelect/ChipsSelect';
+export type { ChipsSelectProps } from './components/ChipsSelect/ChipsSelect';
 export { Slider } from './components/Slider/Slider';
 export type { SliderBaseProps, SliderProps, SliderMultipleProps } from './components/Slider/Slider';
 export { Textarea } from './components/Textarea/Textarea';
@@ -401,9 +403,6 @@ export type { TransitionContextProps } from './components/NavTransitionContext/N
 /**
  * Unstable
  */
-export { ChipsSelect as unstable_ChipsSelect } from './components/ChipsSelect/ChipsSelect';
-export type { ChipsSelectProps as unstable_ChipsSelectProps } from './components/ChipsSelect/ChipsSelect';
-
 export { TextTooltip as unstable_TextTooltip } from './components/TextTooltip/TextTooltip';
 export type { TextTooltipProps as unstable_TextTooltipProps } from './components/TextTooltip/TextTooltip';
 

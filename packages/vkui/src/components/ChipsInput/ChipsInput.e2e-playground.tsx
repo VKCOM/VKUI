@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Icon16Clear } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import type { ChipOption } from '../ChipsInputBase/types';
 import { ChipsInput, type ChipsInputProps } from './ChipsInput';
 
 export const ChipsInputPlayground = (props: ComponentPlaygroundProps) => {
@@ -27,7 +28,7 @@ export const ChipsInputPlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: ChipsInputProps<Record<string, string>>) => (
+      {(props: ChipsInputProps<ChipOption>) => (
         <ChipsInput {...props} placeholder="Введите название и нажмите Enter" />
       )}
     </ComponentPlayground>

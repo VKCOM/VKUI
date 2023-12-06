@@ -1,25 +1,8 @@
-Представляет собой маленький кусочек информации. С помощью свойств `removable` и `onRemove` можно управлять удалением.
-Используется внутри [ChipsInput](#!/ChipsInput) и [ChipsSelect](#!/ChipsSelect)
+Представляет собой маленький кусочек информации. С помощью свойств `removable` и `onRemove` можно
+управлять удалением. Используется внутри [ChipsInput](#!/ChipsInput) и [ChipsSelect](#!/ChipsSelect).
 
 ```jsx
-const colors = [
-  { value: '1', label: 'Красный' },
-  { value: '2', label: 'Синий' },
-];
-
 const Example = () => {
-  const [selectedColors, setSelectedColors] = React.useState([{ value: '1', label: 'Красный' }]);
-
-  const colorsChipsProps = {
-    value: selectedColors,
-    onChange: setSelectedColors,
-    options: colors,
-    top: 'Выберите или добавьте цвета',
-    placeholder: 'Не выбраны',
-    creatable: true,
-    creatableText: 'Создать значение',
-  };
-
   return (
     <View activePanel="panel">
       <Panel id="panel">
@@ -28,7 +11,7 @@ const Example = () => {
           <FormItem htmlFor="favoriteGroups" top="Любимые группы">
             <ChipsInput
               id="favoriteGroups"
-              value={[
+              defaultValue={[
                 {
                   value: '1',
                   label: 'Arctic Monkeys',
@@ -65,7 +48,17 @@ const Example = () => {
             />
           </FormItem>
           <FormItem htmlFor="colors" top="Выберите или добавьте цвета">
-            <ChipsSelect id="colors" {...colorsChipsProps} />
+            <ChipsSelect
+              id="colors"
+              defaultValue={[{ value: '1', label: 'Красный' }]}
+              option={[
+                { value: '1', label: 'Красный' },
+                { value: '2', label: 'Синий' },
+              ]}
+              top="Выберите или добавьте цвета"
+              placeholder="Не выбраны"
+              creatable="Создать значение"
+            />
           </FormItem>
         </Group>
       </Panel>
@@ -73,5 +66,5 @@ const Example = () => {
   );
 };
 
-return <Example />;
+<Example />;
 ```

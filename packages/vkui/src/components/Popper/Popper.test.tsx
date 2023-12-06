@@ -42,7 +42,7 @@ describe('Popper', () => {
     result.rerender(<TestComponent placement="auto" onPlacementChange={onPlacementChange} />);
     await waitForFloatingPosition();
 
-    expect(onPlacementChange).toHaveBeenCalledWith('bottom');
+    expect(onPlacementChange).toHaveBeenCalledWith('top');
   });
 
   it('should use same width', async () => {

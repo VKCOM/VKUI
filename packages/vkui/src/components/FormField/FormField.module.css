@@ -150,14 +150,6 @@
 
 /**
  * CMP:
- * ChipsInput
- */
-:global(.vkuiInternalChipsInput) .FormField__after {
-  z-index: var(--vkui_internal--z_index_form_field_side);
-}
-
-/**
- * CMP:
  * FormLayoutGroup
  */
 :global(.vkuiInternalFormLayoutGroup--segmented) .FormField {

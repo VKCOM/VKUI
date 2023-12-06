@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { Chip, type ChipProps } from './Chip';
+import type { ChipProps } from '../types';
+import { Chip } from './Chip';
 
 export const ChipPlayground = (props: ComponentPlaygroundProps) => {
   return (
