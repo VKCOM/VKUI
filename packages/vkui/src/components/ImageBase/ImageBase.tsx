@@ -46,11 +46,11 @@ export interface ImageBaseProps
    */
   size?: LiteralUnion<ImageBaseSize, number>;
   /**
-   * Высота изображения
+   * Ширина изображения
    */
   widthSize?: number;
   /**
-   * Ширина изображения
+   * Высота изображения
    */
   heightSize?: number;
   /**
