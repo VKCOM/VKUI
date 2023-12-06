@@ -1,4 +1,6 @@
+import chalk from 'chalk';
 import { API, FileInfo } from 'jscodeshift';
+import { report } from '../report';
 import { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';
@@ -18,9 +20,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
           path.value.imported.name,
         )
       ) {
-        api.report(
-          `: import of ${path.value.imported.name} are forbidden, advise the migration guide.`,
-        );
+        report(api, `: import of ${chalk.white.bgBlue(path.value.imported.name)} are forbidden.`);
       }
     });
 

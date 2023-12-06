@@ -4,11 +4,15 @@ import { getImportInfo } from '../codemod-helpers';
 import { report } from '../report';
 import { JSCodeShiftOptions } from '../types';
 
+export const parser = 'tsx';
+
+const REMOVED_PROPS = ['onEnter', 'onLeave', 'onStart', 'onEnd', 'onMove', 'stopPropagation'];
+
 export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {
   const { alias } = options;
   const j = api.jscodeshift;
   const source = j(file.source);
-  const { localName } = getImportInfo(j, file, 'Gradient', alias);
+  const { localName } = getImportInfo(j, file, 'Tappable', alias);
 
   source
     .find(j.JSXOpeningElement)
@@ -16,20 +20,18 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === localName,
     )
     .find(j.JSXAttribute)
-    .filter((attribute) => attribute.node.name.name === 'mode')
+    .filter(
+      (attribute) =>
+        typeof attribute.node.name.name === 'string' &&
+        REMOVED_PROPS.includes(attribute.node.name.name),
+    )
     .forEach((attribute) => {
-      const node = attribute.node;
-
-      if (node.value && node.value.type === 'StringLiteral') {
-        if (node.value.value === 'black' || node.value.value === 'white') {
-          report(
-            api,
-            `: value ${chalk.white.bgBlue(node.value.value)} in "mode" prop in ${chalk.white.bgBlue(
-              'Gradient',
-            )} component is no longer available. Manual changes required.`,
-          );
-        }
-      }
+      report(
+        api,
+        `: ${chalk.white.bgBlue(attribute.node.name.name)} prop in ${chalk.white.bgBlue(
+          'Tappable',
+        )} component is no longer available. Manual changes required.`,
+      );
     });
 
   return source.toSource();

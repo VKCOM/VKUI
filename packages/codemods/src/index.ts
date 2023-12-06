@@ -105,7 +105,7 @@ const run = async () => {
     `
     All done! Please check if everything is applied correctly. 
     If it's not the case - feel free to contact VKUI Team. 
-    Happy coding with ${chalk.green('v6')}!`,
+    Happy coding with ${chalk.green.bold('v6')}!`,
   );
 };
 

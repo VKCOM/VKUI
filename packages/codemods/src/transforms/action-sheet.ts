@@ -1,5 +1,7 @@
+import chalk from 'chalk';
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../codemod-helpers';
+import { report } from '../report';
 import { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';
@@ -30,14 +32,24 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
             if (attr.value.type === 'StringLiteral') {
               attr.name.name = 'placement';
             } else {
-              api.report(`: prop "popupDirection" in "ActionSheet" must be replaced manually`);
+              report(
+                api,
+                `: prop ${chalk.white.bgBlue('popupDirection')} in ${chalk.white.bgBlue(
+                  'ActionSheet',
+                )} must be replaced manually.`,
+              );
             }
           }
         }
       });
     }
     if (noRequiredProp) {
-      api.report(`: prop "toggleRef" in "ActionSheet" is required`);
+      report(
+        api,
+        `: prop ${chalk.white.bgBlue('toggleRef')} in ${chalk.white.bgBlue(
+          'ActionSheet',
+        )} is required.`,
+      );
     }
   });
 

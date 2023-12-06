@@ -9,6 +9,9 @@ const config: Config = {
   globals: {
     TRANSFORM_OPTIONS: { alias: '@vkontakte/vkui' },
   },
+  moduleNameMapper: {
+    '../report': '<rootDir>/src',
+  },
 };
 
 export default config;
