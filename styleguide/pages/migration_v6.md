@@ -62,7 +62,6 @@
 ### ~~`HasInsets`~~
 
 - Используйте вместо него `SafeAreaInsets`.
-
 - Если вы используете [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), то
   вы можете объявить тип у себя следующим образом:
 
@@ -625,6 +624,38 @@ interface HasInsets {
 
 <br/><br/>
 
+### ~~`Tooltip`~~ -> [`OnboardingTooltip`](#/OnboardingTooltip)
+
+- Стал доступнее за счёт `role="tooltip"` и `aria-describedby`.
+
+```diff
+- <Tooltip>
++ <OnboardingTooltip
+- isShown
++ isShown
+
+- alignX="bottom"
+- alignY="left"
++ placement="bottom-start"
+
+- offsetX={0}
++ offsetByCrossAxis={0}
+
+- offsetY={0}
++ offsetByMainAxis={0}
+
+- cornerOffset={0}
++ arrowOffset={0}
+
+- cornerAbsoluteOffset={0}
++ arrowOffset={0}
++ isStaticArrowOffset
+>
+  <div>Target</div>
+- </Tooltip>
++ </OnboardingTooltip>
+```
+
 ## Typography
 
 ### [`Title`](#/Title)
@@ -684,8 +715,7 @@ interface HasInsets {
 
 ### 🎉 ~~`unstable_ChipsSelect`~~ -> [`ChipsSelect`](#/ChipsSelect)
 
-Теперь экспортируется как стабильный 🎉
-
+- Теперь экспортируется как стабильный.
 - Компонент теперь может быть контролируемым и неконтролируемым.
 - `creatable` – может быть всё ещё `boolean`, при этом теперь можно передать и текст, чтобы
   переопределить текст по умолчанию.
@@ -720,6 +750,7 @@ interface HasInsets {
 
 ### 🎉 ~~`unstable_Popover`~~ -> [`Popover`](#/Popover)
 
+- Теперь экспортируется как стабильный.
 - `trigger` – помимо `"click"` и `"hover"`, теперь принимает `"focus"` или комбинацию этих событий.
   Также можно передать `"manual"`, что сделает компонент полностью контролируемым, в `onShownChange`
   будет вызываться при нажатии за пределы целевого и всплывающего элементов, по кнопке ESC или при
@@ -763,6 +794,7 @@ interface HasInsets {
 
 ### 🎉 ~~`unstable_Popper`~~ -> [`Popper`](#/Popper)
 
+- Теперь экспортируется как стабильный.
 - `targetRef` теперь умеет принимать `VirtualElement`.
 - `renderContent` удалён в пользу `children`. Раньше из `renderContent` можно было получить
   `className`, который задаёт `Popper`, сейчас этот `className` пустой.
@@ -796,40 +828,9 @@ interface HasInsets {
 </Popper>
 ```
 
-### 🎉 ~~`unstable_Tooltip`~~ -> [`OnboardingTooltip`](#/OnboardingTooltip)
-
-- Стал доступнее за счёт `role="tooltip"` и `aria-describedby`.
-
-```diff
-- <Tooltip>
-+ <OnboardingTooltip
-- isShown
-+ isShown
-
-- alignX="bottom"
-- alignY="left"
-+ placement="bottom-start"
-
-- offsetX={0}
-+ offsetByCrossAxis={0}
-
-- offsetY={0}
-+ offsetByMainAxis={0}
-
-- cornerOffset={0}
-+ arrowOffset={0}
-
-- cornerAbsoluteOffset={0}
-+ arrowOffset={0}
-+ isStaticArrowOffset
->
-  <div>Target</div>
-- </Tooltip>
-+ </OnboardingTooltip>
-```
-
 ### 🎉 ~~`unstable_TextTooltip`~~ -> [`Tooltip`](#/Tooltip)
 
+- Теперь экспортируется как стабильный.
 - Компонент теперь может быть контролируемым и неконтролируемым.
 - Помимо `hover`, теперь реагирует и на `focus`.
 - Стал доступнее за счёт `role="tooltip"` и `aria-describedby`.
