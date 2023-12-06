@@ -29,14 +29,7 @@ const OthersFeatures = () => {
         onBadgeChange={setBadge}
         onOverlayChange={setOverlay}
       />
-      <div
-        style={{
-          display: 'flex',
-          padding: 12,
-          gap: 8,
-          flexFlow: 'row wrap',
-        }}
-      >
+      <Flex margin="auto" gap={[8, 16]}>
         {[16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map((size) => (
           <Image
             key={size}
@@ -57,7 +50,7 @@ const OthersFeatures = () => {
             )}
           </Image>
         ))}
-      </div>
+      </Flex>
     </Group>
   );
 };

@@ -85,7 +85,7 @@ const Example = () => {
         />
       </FormItem>
       <FormItem>
-        <div style={{ display: 'flex' }}>
+        <Flex>
           <LocaleProvider value={locale}>
             <DateInput
               value={value}
@@ -99,7 +99,7 @@ const Example = () => {
               disableCalendar={disableCalendar}
             />
           </LocaleProvider>
-        </div>
+        </Flex>
       </FormItem>
     </FormLayoutGroup>
   );

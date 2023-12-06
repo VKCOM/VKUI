@@ -13,7 +13,7 @@
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const Example = () => {
   return (
-    <div style={rowStyles}>
+    <Flex justify="center" gap={16} margin="auto">
       <div>
         <IconButton label="Удалить" onClick={noop}>
           <Icon16Delete />
@@ -52,15 +52,8 @@ const Example = () => {
         </IconButton>
         <Footnote style={captionStyles}>36</Footnote>
       </div>
-    </div>
+    </Flex>
   );
-};
-
-const rowStyles = {
-  display: 'flex',
-  justifyContent: 'center',
-  gap: 16,
-  padding: 16,
 };
 
 const captionStyles = {

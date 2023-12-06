@@ -386,26 +386,19 @@ const ExampleNested = () => {
   );
 };
 
-const containerStyles = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  width: '100%',
-};
-
 const Example = () => {
   const [sizeY, setSizeY] = useState('compact');
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+    <Flex reverse justify="end">
       <AdaptivityProvider sizeY={sizeY}>
-        <div style={containerStyles}>
+        <Flex direction="column">
           <ExampleUseCases />
           <ExampleBase />
           <ExampleNested />
-        </div>
+        </Flex>
       </AdaptivityProvider>
-      <div style={{ minWidth: 200 }}>
+      <Flex.Item flexBasis={200}>
         <FormItem top="sizeY">
           <Select
             value={sizeY}
@@ -416,8 +409,8 @@ const Example = () => {
             ]}
           />
         </FormItem>
-      </div>
-    </div>
+      </Flex.Item>
+    </Flex>
   );
 };
 

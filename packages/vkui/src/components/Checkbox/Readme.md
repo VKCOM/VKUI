@@ -18,20 +18,11 @@
 ```
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-<div
-  style={{
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'row',
-    padding: '24px 16px',
-    background: 'white',
-    gap: 20,
-  }}
->
+<Flex gap={16} margin="auto">
   <Checkbox defaultChecked />
   <Checkbox />
   <Checkbox defaultChecked />
   <Checkbox indeterminate />
   <Checkbox defaultIndeterminate />
-</div>
+</Flex>
 ```

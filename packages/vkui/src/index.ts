@@ -103,6 +103,8 @@ export { HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll
 export type { HorizontalScrollProps } from './components/HorizontalScroll/HorizontalScroll';
 export { AspectRatio } from './components/AspectRatio/AspectRatio';
 export type { AspectRatioProps } from './components/AspectRatio/AspectRatio';
+export { Flex } from './components/Flex/Flex';
+export type { FlexProps } from './components/Flex/Flex';
 
 /**
  * Popouts
