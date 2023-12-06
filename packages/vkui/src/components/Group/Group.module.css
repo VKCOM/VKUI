@@ -1,6 +1,10 @@
 .Group {
   color: var(--vkui--color_text_primary);
-  padding-block: 8px;
+  padding-block: var(--vkui_dynamic--group_padding_block);
+  padding-inline: var(--vkui_dynamic--group_padding_inline);
+
+  --vkui_dynamic--group_padding_block: 8px;
+  --vkui_dynamic--group_padding_inline: 0;
 }
 
 .Group__header:empty {
@@ -70,34 +74,38 @@
 }
 
 .Group--mode-card.Group--padding-s {
-  padding: 4px;
+  --vkui_dynamic--group_padding_block: 4px;
+  --vkui_dynamic--group_padding_inline: 4px;
 }
 
 .Group--mode-card.Group--padding-m {
-  padding: 8px;
+  --vkui_dynamic--group_padding_block: 8px;
+  --vkui_dynamic--group_padding_inline: 8px;
 }
 
 @media (--sizeX-regular) {
   .Group--sizeX-none.Group--inside-modal.Group--padding-s,
   .Group--sizeX-none.Group--mode-none.Group--padding-s {
-    padding: 4px;
+    --vkui_dynamic--group_padding_block: 4px;
+    --vkui_dynamic--group_padding_inline: 4px;
   }
 
   .Group--sizeX-none.Group--inside-modal.Group--padding-m,
   .Group--sizeX-none.Group--mode-none.Group--padding-m {
-    padding: 8px;
+    --vkui_dynamic--group_padding_block: 8px;
+    --vkui_dynamic--group_padding_inline: 8px;
   }
 }
 
 .Group--sizeX-compact,
 .Group--sizeX-compact.Group--mode-card {
-  padding-inline: 0;
+  --vkui_dynamic--group_padding_inline: 0;
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none,
   .Group--sizeX-none.Group--mode-card {
-    padding-inline: 0;
+    --vkui_dynamic--group_padding_inline: 0;
   }
 }
 
