@@ -36,10 +36,10 @@ type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
 
 export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTooltipBaseProps {
   /**
-   * Если передан, то тултип перейдёт контролируемый компонент.
-   * Используйте совместно с `onShawnChange`.
+   * Передача `boolean` позволяет контролировать состояния показа и скрытия вручную. Используйте
+   * совместно с `onShawnChange`.
    *
-   * > Если нужно показать тултип лишь при первом рендере, то лучше используйте `defaultShown`.
+   * > Если нужно разово инициировать показ тултипа при первом рендере, то используйте `defaultShown`.
    */
   shown?: boolean;
   /**
@@ -127,7 +127,7 @@ export const Tooltip = ({
     shown: shownProp,
     onShownChange,
     placement: strictPlacement,
-    trigger: shownProp !== undefined ? 'manual' : ['hover', 'focus'],
+    trigger: ['hover', 'focus'],
     hoverDelay,
     closeAfterClick: !disableCloseAfterClick,
     disableInteractive: !enableInteractive,
