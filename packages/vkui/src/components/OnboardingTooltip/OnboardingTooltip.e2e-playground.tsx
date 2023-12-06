@@ -19,12 +19,13 @@ export const OnboardingTooltipPlayground = (props: ComponentPlaygroundProps) => 
           placement: ['top-start', 'top-end', 'bottom-start', 'bottom-end'],
         },
         {
-          placement: ['top-start'],
-          arrowCornerOffset: [5, -5],
+          placement: ['top'],
+          arrowOffset: [15, -15],
         },
         {
-          placement: ['top-start'],
-          arrowCornerAbsoluteOffset: [10, -1],
+          placement: ['top'],
+          arrowOffset: [10, -1],
+          isStaticArrowOffset: [true],
         },
       ]}
     >
@@ -40,7 +41,7 @@ export const OnboardingTooltipPlayground = (props: ComponentPlaygroundProps) => 
             justifyContent: 'center',
           }}
         >
-          <OnboardingTooltip text="text" {...props}>
+          <OnboardingTooltip text="onboarding tooltip" {...props}>
             <div className={TEST_CLASS_NAMES.CONTENT} style={{ display: 'flex' }}>
               Tooltip target
             </div>

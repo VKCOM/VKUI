@@ -7,15 +7,14 @@ import {
   autoUpdateFloatingElement,
   convertFloatingDataToReactCSSProperties,
   type FloatingComponentProps,
-  type PlacementWithAuto,
   useFloating,
-  type UseFloatingMiddleware,
   useFloatingMiddlewaresBootstrap,
 } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
+import { DEFAULT_ARROW_HEIGHT, DEFAULT_ARROW_PADDING } from '../FloatingArrow/DefaultIcon';
+import { FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
-import { DEFAULT_ARROW_HEIGHT, DEFAULT_ARROW_PADDING } from '../PopperArrow/DefaultIcon';
 import { TOOLTIP_MAX_WIDTH, TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { onboardingTooltipContainerAttr } from './OnboardingTooltipContainer';
 import styles from './OnboardingTooltip.module.css';
@@ -36,17 +35,21 @@ type AllowedFloatingComponentProps = Pick<
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
 
+type AllowedFloatingArrowProps = {
+  /**
+   * Сдвиг стрелки относительно текущих координат.
+   */
+  arrowOffset?: FloatingArrowProps['offset'];
+  /**
+   * Включает абсолютное смещение по `arrowOffset`.
+   */
+  isStaticArrowOffset?: FloatingArrowProps['isStaticOffset'];
+};
+
 export interface OnboardingTooltipProps
   extends AllowedFloatingComponentProps,
-    AllowedTooltipBaseProps {
-  /**
-   * Сдвиг стрелочки относительно центра дочернего элемента.
-   */
-  arrowCornerOffset?: number;
-  /**
-   * Сдвиг стрелочки относительно ширины тултипа
-   */
-  arrowCornerAbsoluteOffset?: number;
+    AllowedTooltipBaseProps,
+    AllowedFloatingArrowProps {
   /**
    * Callback, который вызывается при клике по любому месту в пределах экрана.
    */
@@ -64,8 +67,8 @@ export const OnboardingTooltip = ({
   arrowHeight = DEFAULT_ARROW_HEIGHT,
   offsetByMainAxis = 0,
   offsetByCrossAxis = 0,
-  arrowCornerOffset = 0,
-  arrowCornerAbsoluteOffset,
+  arrowOffset = 0,
+  isStaticArrowOffset = false,
   onClose,
   placement: placementProp = 'bottom-start',
   maxWidth = TOOLTIP_MAX_WIDTH,
@@ -82,10 +85,6 @@ export const OnboardingTooltip = ({
   const [positionStrategy, setPositionStrategy] = React.useState<'fixed' | 'absolute'>('absolute');
   const shown = shownProp && tooltipContainer && !entering;
 
-  const customMiddlewares = React.useMemo(
-    () => [getArrowOffsetMiddleware(arrowCornerOffset, arrowCornerAbsoluteOffset)],
-    [arrowCornerAbsoluteOffset, arrowCornerOffset],
-  );
   const { middlewares, strictPlacement } = useFloatingMiddlewaresBootstrap({
     placement: placementProp,
     offsetByMainAxis,
@@ -94,7 +93,6 @@ export const OnboardingTooltip = ({
     arrow: true,
     arrowHeight,
     arrowPadding,
-    customMiddlewares,
   });
   const {
     x: floatingDataX,
@@ -134,6 +132,8 @@ export const OnboardingTooltip = ({
           style={floatingStyle}
           maxWidth={maxWidth}
           arrowProps={{
+            offset: arrowOffset,
+            isStaticOffset: isStaticArrowOffset,
             coords: arrowCoords,
             placement: resolvedPlacement,
             getRootRef: setArrowRef,
@@ -187,35 +187,3 @@ export const OnboardingTooltip = ({
     </React.Fragment>
   );
 };
-
-function getArrowOffsetMiddleware(
-  cornerOffset: number,
-  cornerAbsoluteOffset?: number,
-): UseFloatingMiddleware {
-  return {
-    name: 'arrowOffset',
-    fn({ placement, middlewareData }) {
-      if (!middlewareData.arrow) {
-        return Promise.resolve({});
-      }
-
-      const isVerticalPlacement = (placement: PlacementWithAuto) =>
-        placement.startsWith('top') || placement.startsWith('bottom');
-
-      if (isVerticalPlacement(placement)) {
-        if (cornerAbsoluteOffset !== undefined) {
-          middlewareData.arrow.x = cornerAbsoluteOffset;
-        } else if (middlewareData.arrow.x !== undefined) {
-          middlewareData.arrow.x += cornerOffset;
-        }
-      } else {
-        if (cornerAbsoluteOffset !== undefined) {
-          middlewareData.arrow.y = cornerAbsoluteOffset;
-        } else if (middlewareData.arrow.y !== undefined) {
-          middlewareData.arrow.y += cornerOffset;
-        }
-      }
-      return Promise.resolve({});
-    },
-  };
-}

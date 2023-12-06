@@ -17,16 +17,16 @@ import {
   DEFAULT_ARROW_HEIGHT,
   DEFAULT_ARROW_PADDING,
   DefaultIcon,
-} from '../PopperArrow/DefaultIcon';
+} from '../FloatingArrow/DefaultIcon';
 import {
-  PopperArrow,
-  type PopperArrowProps as PopperArrowPropsPrivate,
-} from '../PopperArrow/PopperArrow';
+  FloatingArrow,
+  type FloatingArrowProps as FloatingArrowPropsPrivate,
+} from '../FloatingArrow/FloatingArrow';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Popper.module.css';
 
-export type PopperArrowProps = Omit<
-  PopperArrowPropsPrivate,
+export type FloatingArrowProps = Omit<
+  FloatingArrowPropsPrivate,
   'getRootRef' | 'coords' | 'placement' | 'Icon'
 >;
 
@@ -56,7 +56,7 @@ export interface PopperCommonProps
   /**
    * Позволяет набросить на стрелку пользовательские атрибуты.
    */
-  arrowProps?: PopperArrowProps;
+  arrowProps?: FloatingArrowProps;
   /**
    * Пользовательская SVG иконка.
    *
@@ -70,7 +70,7 @@ export interface PopperCommonProps
    * 4. Убедитесь, что компонент принимает все валидные для SVG параметры.
    * 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
    */
-  ArrowIcon?: PopperArrowPropsPrivate['Icon'];
+  ArrowIcon?: FloatingArrowPropsPrivate['Icon'];
   /**
    * Подписывается на изменение геометрии `targetRef`, чтобы пересчитать свою позицию.
    */
@@ -184,7 +184,7 @@ export const Popper = ({
       }}
     >
       {arrow && (
-        <PopperArrow
+        <FloatingArrow
           {...arrowProps}
           coords={arrowCoords}
           placement={resolvedPlacement}

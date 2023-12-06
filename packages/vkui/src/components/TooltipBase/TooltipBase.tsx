@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { DefaultIcon } from '../PopperArrow/DefaultIcon';
-import { PopperArrow, type PopperArrowProps } from '../PopperArrow/PopperArrow';
+import { DefaultIcon } from '../FloatingArrow/DefaultIcon';
+import { FloatingArrow, type FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './TooltipBase.module.css';
@@ -33,7 +33,7 @@ export interface TooltipBaseProps
   /**
    * Для показа указателя, требуется передать хотя бы `coords` и `placement`.
    */
-  arrowProps?: Omit<PopperArrowProps, 'Icon'>;
+  arrowProps?: Omit<FloatingArrowProps, 'Icon'>;
   /**
    * Пользовательская SVG иконка.
    *
@@ -47,7 +47,7 @@ export interface TooltipBaseProps
    * 4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
    * 5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами.
    */
-  ArrowIcon?: PopperArrowProps['Icon'];
+  ArrowIcon?: FloatingArrowProps['Icon'];
   /**
    * Пользовательские css-классы, будут добавлены на root-элемент
    */
@@ -87,7 +87,7 @@ export const TooltipBase = ({
       role="tooltip"
     >
       {arrowProps && (
-        <PopperArrow
+        <FloatingArrow
           {...arrowProps}
           iconClassName={classNames(styles['TooltipBase__arrow'], arrowProps.iconClassName)}
           Icon={ArrowIcon}

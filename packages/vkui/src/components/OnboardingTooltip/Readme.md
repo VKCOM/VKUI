@@ -90,7 +90,7 @@ const Example = () => {
                   text="Теперь у нас появились аватарки в списках. Правда круто?"
                   shown={tooltip3}
                   onClose={() => setTooltip3(false)}
-                  arrowCornerOffset={-6}
+                  arrowOffset={-6}
                 >
                   <Avatar />
                 </OnboardingTooltip>
@@ -142,7 +142,7 @@ const Example = () => {
         <Avatar />
       </div>
     </OnboardingTooltip>
-    <OnboardingTooltip text="Двигаем стрелочку" arrowCornerOffset={20}>
+    <OnboardingTooltip text="Двигаем стрелочку" arrowOffset={20}>
       <div style={{ display: 'inline-block', marginLeft: 100 }}>
         <Avatar />
       </div>
