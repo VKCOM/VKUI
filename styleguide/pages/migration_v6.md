@@ -206,23 +206,53 @@ interface HasInsets {
 
 ## [`Calendar`](#/Calendar)
 
-- Свойство `prevMonthAriaLabel` переименовано в `prevMonthLabel`.
-- Свойство `nextMonthAriaLabel` переименовано в `nextMonthLabel`.
-- Свойство `changeDayAriaLabel` переименовано в `changeDayLabel`.
-- Свойство `changeMonthAriaLabel` переименовано в `changeMonthLabel`.
-- Свойство `changeYearAriaLabel` переименовано в `changeYearLabel`.
-- Свойство `changeMinutesAriaLabel` переименовано в `changeMinutesLabel`.
-- Свойство `changeHoursAriaLabel` переименовано в `changeHoursLabel`.
+```diff
+<Calendar
+- prevMonthAriaLabel=""
++ prevMonthLabel=""
+
+- nextMonthAriaLabel=""
++ nextMonthLabel=""
+
+- changeDayAriaLabel=""
++ changeDayLabel=""
+
+- changeMonthAriaLabel=""
++ changeMonthLabel=""
+
+- changeYearAriaLabel=""
++ changeYearLabel=""
+
+- changeMinutesAriaLabel=""
++ changeMinutesLabel=""
+
+- changeHoursAriaLabel=""
++ changeHoursLabel=""
+/>
+```
 
 <br/><br/>
 
 ## [`CalendarRange`](#/CalendarRange)
 
-- Свойство `prevMonthAriaLabel` переименовано в `prevMonthLabel`.
-- Свойство `nextMonthAriaLabel` переименовано в `nextMonthLabel`.
-- Свойство `changeDayAriaLabel` переименовано в `changeDayLabel`.
-- Свойство `changeMonthAriaLabel` переименовано в `changeMonthLabel`.
-- Свойство `changeYearAriaLabel` переименовано в `changeYearLabel`.
+```diff
+<CalendarRange
+- prevMonthAriaLabel=""
++ prevMonthLabel=""
+
+- nextMonthAriaLabel=""
++ nextMonthLabel=""
+
+- changeDayAriaLabel=""
++ changeDayLabel=""
+
+- changeMonthAriaLabel=""
++ changeMonthLabel=""
+
+- changeYearAriaLabel=""
++ changeYearLabel=""
+/>
+```
 
 <br/><br/>
 
@@ -253,8 +283,6 @@ interface HasInsets {
 
 ## [`Chip`](#/ChipsInput)
 
-- Свойство `removeAriaLabel` переименовано в `removeLabel`.
-
 ```diff
 <Chip
   value="Чип"
@@ -270,30 +298,9 @@ interface HasInsets {
 
 ## [`ChipsInput`](#/ChipsInput)
 
-- Свойство `inputAriaLabel` переименовано в `inputLabel`.
-
-```diff
-<ChipsInput
--  inputAriaLabel="Введите название цвета"
-+  inputLabel="Введите название цвета"
-  id="color"
-  value={colors}
-  after={
-    <IconButton hoverMode="opacity" label="Очистить поле" onClick={onClick}>
-      <Icon16Clear />
-    </IconButton>
-  }
-/>
-```
-
-<br/><br/>
-
-## [`ChipsInput`](#/ChipsInput)
-
 - Компонент теперь может быть контролируемым и неконтролируемым.
 - `getOptionValue`, `getOptionLabel`, `getNewOptionData` – все аргументы функции теперь обязательны.
 - `renderChip` – вторым аргументов приходит `option`.
-- Свойство `inputAriaLabel` переименовано в `inputLabel`.
 
 ```diff
 <ChipsInput
@@ -327,7 +334,7 @@ interface HasInsets {
 
 ## [`CustomScrollView`](#/CustomScrollView)
 
-- Компонент больше не принимает свойства `window`/`document`
+- Компонент больше не принимает свойства `window`/`document`.
 
 <br/><br/>
 
@@ -342,39 +349,87 @@ interface HasInsets {
 
 ## [`DateInput`](#/DateInput)
 
-- Свойство `prevMonthAriaLabel` переименовано в `prevMonthLabel`.
-- Свойство `nextMonthAriaLabel` переименовано в `nextMonthLabel`.
-- Свойство `changeMinutesAriaLabel` переименовано в `changeMinutesLabel`.
-- Свойство `changeHoursAriaLabel` переименовано в `changeHoursLabel`.
-- Свойство `changeDayAriaLabel` переименовано в `changeDayLabel`.
-- Свойство `changeMonthAriaLabel` переименовано в `changeMonthLabel`.
-- Свойство `changeYearAriaLabel` переименовано в `changeYearLabel`.
-- Свойство `clearFieldAriaLabel` переименовано в `clearFieldLabel`.
-- Свойство `showCalendarAriaLabel` переименовано в `showCalendarLabel`.
+```diff
+<DateInput
+- prevMonthAriaLabel=""
++ prevMonthLabel=""
+
+- nextMonthAriaLabel=""
++ nextMonthLabel=""
+
+- changeMinutesAriaLabel=""
++ changeMinutesLabel=""
+
+- changeHoursAriaLabel=""
++ changeHoursLabel=""
+
+- changeDayAriaLabel=""
++ changeDayLabel=""
+
+- changeMonthAriaLabel=""
++ changeMonthLabel=""
+
+- changeYearAriaLabel=""
++ changeYearLabel=""
+
+- clearFieldAriaLabel=""
++ clearFieldLabel=""
+
+- showCalendarAriaLabel=""
++ showCalendarLabel=""
+/>
+```
 
 <br/><br/>
 
 ## [`DateRangeInput`](#/DateInputRange)
 
-- Свойство `prevMonthAriaLabel` переименовано в `prevMonthLabel`.
-- Свойство `nextMonthAriaLabel` переименовано в `nextMonthLabel`.
-- Свойство `changeDayAriaLabel` переименовано в `changeDayLabel`.
-- Свойство `changeMonthAriaLabel` переименовано в `changeMonthLabel`.
-- Свойство `changeYearAriaLabel` переименовано в `changeYearLabel`.
-- Свойство `changeStartDayAriaLabel` переименовано в `changeStartDayLabel`.
-- Свойство `changeStartMonthAriaLabel` переименовано в `changeStartMonthLabel`.
-- Свойство `changeStartYearAriaLabel` переименовано в `changeStartYearLabel`.
-- Свойство `changeEndDayAriaLabel` переименовано в `changeEndDayLabel`.
-- Свойство `changeEndMonthAriaLabel` переименовано в `changeEndMonthLabel`.
-- Свойство `changeEndYearAriaLabel` переименовано в `changeEndYearLabel`.
-- Свойство `clearFieldAriaLabel` переименовано в `clearFieldLabel`.
-- Свойство `showCalendarAriaLabel` переименовано в `showCalendarLabel`.
+```diff
+<DateRangeInput
+- prevMonthAriaLabel=""
++ prevMonthLabel=""
+
+- nextMonthAriaLabel=""
++ nextMonthLabel=""
+
+- changeDayAriaLabel=""
++ changeDayLabel=""
+
+- changeMonthAriaLabel=""
++ changeMonthLabel=""
+
+- changeYearAriaLabel=""
++ changeYearLabel=""
+
+- changeStartDayAriaLabel=""
++ changeStartDayLabel=""
+
+- changeStartMonthAriaLabel=""
++ changeStartMonthLabel=""
+
+- changeStartYearAriaLabel=""
++ changeStartYearLabel=""
+
+- changeEndDayAriaLabel=""
++ changeEndDayLabel=""
+
+- changeEndMonthAriaLabel=""
++ changeEndMonthLabel=""
+
+- changeEndYearAriaLabel=""
++ changeEndYearLabel=""
+
+- clearFieldAriaLabel=""
++ clearFieldLabel=""
+
+- showCalendarAriaLabel=""
++ showCalendarLabel=""
+/>
+```
 
 <br/><br/>
 
 ## [`FixedLayout`](#/FixedLayout)
-
-- Свойство `getRef` удалено, используйте `getRootRef`.
 
 ```diff
 - <FixedLayout getRef={ref}>...</FixedLayout>
@@ -440,8 +495,6 @@ interface HasInsets {
 
 ## [`ModalPageHeader`](#/ModalPageHeader)
 
-- Свойство `getRef` удалено, используйте `getRootRef`.
-
 ```diff
 - <ModalPageHeader getRef={ref}>...</ModalPageHeader>
 + <ModalPageHeader getRootRef={ref}>...</ModalPageHeader>
@@ -451,8 +504,6 @@ interface HasInsets {
 
 ## [`Pagination`](#/Pagination)
 
-- Свойство `prevButtonAriaLabel` переименовано в `prevButtonLabel`.
-- Свойство `nextButtonAriaLabel` переименовано в `nextButtonLabel`.
 - Свойство `getPageAriaLabel` переименовано в `getPageLabel` и обновлено: теперь оно принимает
   только `(isCurrent: boolean)` и не нуждается в номере страницы. Возвращайте текст с учетом того,
   что номер страницы добавится автоматически через пробел **в конце**.
@@ -474,7 +525,7 @@ interface HasInsets {
 
 ## ~~`PanelHeader.Content`~~
 
-- Данный компонент удален, используйте вместо него `typographyProps` у [`PanelHeader`](#/PanelHeader).
+- Подкомпонент удален, используйте вместо него `typographyProps` у [`PanelHeader`](#/PanelHeader).
 
 <br/><br/>
 
@@ -498,7 +549,7 @@ interface HasInsets {
 
 ## ~~`RangeSlider`~~
 
-- Компонент удален, используйте [`Slider`](#/Slider)
+- Компонент удален, используйте [`Slider`](#/Slider).
 
 ```diff
 - <RangeSlider />
@@ -544,8 +595,6 @@ interface HasInsets {
 
 ## [`SplitCol`](#/SplitCol)
 
-- Свойство `spaced` удалено, используйте свойство `autoSpaced`.
-
 ```diff
  <ActionSheet>
 -  <SplitCol spaced>Сохранить в закладках</SplitCol>
@@ -557,18 +606,18 @@ interface HasInsets {
 
 ## [`Tappable`](#/Tappable)
 
-`Tappable` избавился от свойств `onEnter`, `onLeave`, `onStart`, `onEnd`, `onMove` и `stopPropagation`.
-Используйте вместо них [нативные свойства](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#event_types_and_global_event_handlers).
+- `Tappable` избавился от свойств `onEnter`, `onLeave`, `onStart`, `onEnd`, `onMove` и `stopPropagation`.
+  Используйте вместо них [нативные свойства](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#event_types_and_global_event_handlers).
 
 ### Улучшение доступности
 
-Теперь если в кликабельный компонент не был передано свойство onClick или href, то у такого
-компонента будут отключены состояния наведения, активирования и ripple эффекты. Если вы использовали
-`disable` для отключения состояний, рекомендуем удалить это свойство.
+Теперь если в кликабельный компонент не был передано свойство `onClick` или `href`, то у такого
+компонента будут отключены состояния наведения, активирования и ripple-эффекты. Если вы использовали
+`disabled` для отключения состояний, рекомендуем удалить это свойство.
 
 ```diff
 <SimpleCell
-- disable
+- disabled
  >
   Информационный текст
 </SimpleCell>
@@ -610,8 +659,6 @@ interface HasInsets {
 
 ## [`UsersStack`](#/UsersStack)
 
-- Свойство `layout` удалено, используйте `direction`
-
 ```diff
 - <UsersStack layout="vertical">...</UsersStack>
 + <UsersStack direction="column">...</UsersStack>
@@ -624,7 +671,7 @@ interface HasInsets {
 
 ## ~~`VisuallyHiddenInput`~~
 
-- Компонент удален, используйте [`VisuallyHidden`](#/VisuallyHidden)
+- Компонент удален, используйте [`VisuallyHidden`](#/VisuallyHidden).
 
 ```diff
 - <VisuallyHiddenInput />
@@ -716,9 +763,9 @@ interface HasInsets {
 
 ### 🎉 ~~`unstable_Popper`~~ -> [`Popper`](#/Popper)
 
+- `targetRef` теперь умеет принимать `VirtualElement`.
 - `renderContent` удалён в пользу `children`. Раньше из `renderContent` можно было получить
   `className`, который задаёт `Popper`, сейчас этот `className` пустой.
-- `targetRef` теперь умеет принимать `VirtualElement`.
 - `arrowProps` принимает атрибуты `HTMLDivElement`, а также `iconStyle` и `iconClassName`.
 - `onPlacementChange` теперь вызывается только в случае, если `Popper` подобрал оптимальный
   `placement` вместо пользовательского.
@@ -827,7 +874,7 @@ interface HasInsets {
 
 ### ~~`RichTooltip`~~ -> 🗑️
 
-Используйте вместо него обычный [`Tooltip`](#/Tooltip).
+- Компонент удален, используйте [`Tooltip`](#/Tooltip).
 
 ```diff
 - <RichTooltip style={{maxWidth: 320}} content={
