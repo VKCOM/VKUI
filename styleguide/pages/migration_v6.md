@@ -1,16 +1,16 @@
-Документацию по миграции с v4 на v5 можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v5.0.1).
+> Документацию по миграции с **v4** на **v5** можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v5.0.1).
 
 ## Обновление React
 
-- Минимальная поддерживаемая версия **React** увеличена до v18.2.0
+- Минимальная поддерживаемая версия **React** увеличена до `v18.2.0`.
 
 ## Поддержка браузеров
 
 Библиотека по умолчанию компилируется в [ES2015 (ES6)](https://262.ecma-international.org/6.0/).
-Список поддерживаемых браузеров находится в [.browserslistrc](https://github.com/VKCOM/VKUI/blob/v6.0.0/.browserslistrc)
+Список поддерживаемых браузеров находится в [.browserslistrc](https://github.com/VKCOM/VKUI/blob/v6.0.0/.browserslistrc).
 
-> В VKUI есть [специальная сборка](https://vkcom.github.io/VKUI/#/CSS%20Modules)
-> в ESNext, которая позволяет уменьшить размер вашего приложения
+> В VKUI есть [специальная сборка](https://vkcom.github.io/VKUI/#/CSS%20Modules) в ESNext, которая
+> позволяет уменьшить размер вашего приложения.
 
 ## Перечисления заменены на объекты
 
@@ -82,16 +82,45 @@ interface HasInsets {
 >
 > Данное изменение не влияет на обычную сборку
 
-- Мы начинаем использовать [логические css свойства](https://www.w3.org/TR/css-logical-1/) вместо физических.
-  Если вам требуется [широкая браузерная поддержка](https://caniuse.com/css-logical-props),
+- Мы начинаем использовать [логические css свойства](https://www.w3.org/TR/css-logical-1/) вместо
+  физических. Если вам требуется [широкая браузерная поддержка](https://caniuse.com/css-logical-props),
   рекомендуем воспользоваться [postcss-logical](https://www.npmjs.com/package/postcss-logical).
+
+<br/><br/>
+
+## [`Accordion`](#/Accordion)
+
+`Accordion` избавился от нативного элемента `detail`, теперь для компонента стали доступны анимации.
+
+На замену свойств `open` и `onToggle` пришли свойства `expanded`, `defaultExpanded`, `onChange`.
+
+```diff
+<Accordion
+- open={openId === id}
++ expanded={openId === id}
+
+- onToggle={(e) => e.target.open && setOpenId(id)}
++ onChange={(open) => open && setOpenId(id)}
+>
+```
+
+Контент должен быть обернут в `<Accordion.Content>`.
+
+```diff
+<Accordion expanded={open}>
+  <Accordion.Summary>Title</Accordion.Summary>
++   <Accordion.Content>
+      <Div>Content</Div>
++   </Accordion.Content>
+</Accordion>
+```
 
 <br/><br/>
 
 ## [`ActionSheet`](#/ActionSheet)
 
-- Свойство `toggleRef` теперь обязательно
-- Свойство `popupDirection` удалено, используйте `placement`
+- Свойство `toggleRef` теперь обязательно.
+- Свойство `popupDirection` удалено, используйте `placement`.
 
 ```diff
 - <ActionSheet popupDirection="top">
@@ -104,7 +133,7 @@ interface HasInsets {
 
 ## [`ActionSheetItem`](#/ActionSheetItem)
 
-- Свойство `autoClose` удалено, теперь это поведение по умолчанию
+- Свойство `autoClose` удалено, теперь это поведение по умолчанию.
 
 ```diff
  <ActionSheet>
@@ -119,7 +148,7 @@ interface HasInsets {
 
 ## [`Alert`](#/Alert)
 
-- Свойство `autoClose` удалено, теперь это поведение по-умолчанию
+- Свойство `autoClose` удалено, теперь это поведение по-умолчанию.
 
 ```diff
  <Alert
@@ -143,9 +172,9 @@ interface HasInsets {
 
 <br/><br/>
 
-## [AppearanceProvider](#/AppearanceProvider)
+## [`AppearanceProvider`](#/AppearanceProvider)
 
-- По аналогии с остальными провайдерами свойство `appearance` заменено на `value`
+- По аналогии с остальными провайдерами свойство `appearance` заменено на `value`.
 
 ```diff
 - <AppearanceProvider appearance={appearance}>...</AppearanceProvider>
@@ -156,14 +185,15 @@ interface HasInsets {
 
 ## [`Banner`](#/Banner)
 
-- Убрали установку внешних отступов. Теперь, при необходимости, следует их добавлять самостоятельно. Соответственно, параметр `noPadding` удалён.
+- Убрали установку внешних отступов. Теперь, при необходимости, следует их добавлять самостоятельно.
+  Соответственно, параметр `noPadding` удалён.
 
 ```diff
 - <Banner noPadding />
 + <Banner />
 ```
 
-- Внешний отступ можно задать через layout-компонент [Div](#/Div)
+- Внешний отступ можно задать через layout-компонент [Div](#/Div).
 
 ```diff
 - <Banner />
@@ -174,13 +204,35 @@ interface HasInsets {
 
 <br/><br/>
 
-## [ConfigProvider](#/ConfigProvider)
+## [`Calendar`](#/Calendar)
+
+- Свойство `prevMonthAriaLabel` переименовано в `prevMonthLabel`.
+- Свойство `nextMonthAriaLabel` переименовано в `nextMonthLabel`.
+- Свойство `changeDayAriaLabel` переименовано в `changeDayLabel`.
+- Свойство `changeMonthAriaLabel` переименовано в `changeMonthLabel`.
+- Свойство `changeYearAriaLabel` переименовано в `changeYearLabel`.
+- Свойство `changeMinutesAriaLabel` переименовано в `changeMinutesLabel`.
+- Свойство `changeHoursAriaLabel` переименовано в `changeHoursLabel`.
+
+<br/><br/>
+
+## [`CalendarRange`](#/CalendarRange)
+
+- Свойство `prevMonthAriaLabel` переименовано в `prevMonthLabel`.
+- Свойство `nextMonthAriaLabel` переименовано в `nextMonthLabel`.
+- Свойство `changeDayAriaLabel` переименовано в `changeDayLabel`.
+- Свойство `changeMonthAriaLabel` переименовано в `changeMonthLabel`.
+- Свойство `changeYearAriaLabel` переименовано в `changeYearLabel`.
+
+<br/><br/>
+
+## [`ConfigProvider`](#/ConfigProvider)
 
 - `hasCustomPanelHeaderAfter` теперь по умолчанию `false`.
 - <!--чтобы сработало перечёркивание-->~~`onDetectAppearanceByBridge`~~ удален, используйте хук `useAppearance()` из библиотеки
   [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react), если вам
   нужно определять, что `appearance` был передан через VK Bridge.
-- <!--чтобы сработало перечёркивание-->~~`webviewType`~~ заменён на `hasCustomPanelHeaderAfter`
+- <!--чтобы сработало перечёркивание-->~~`webviewType`~~ заменён на `hasCustomPanelHeaderAfter`.
 
   ```diff
   <ConfigProvider
@@ -196,6 +248,69 @@ interface HasInsets {
   +  customPanelHeaderAfterMinWidth={<value>} // при необходимости (по умолчанию 90)
   />
   ```
+
+<br/><br/>
+
+## [`Chip`](#/ChipsInput)
+
+- Свойство `removeAriaLabel` переименовано в `removeLabel`.
+
+```diff
+<Chip
+  value="Чип"
+  removable={true}
+- removeAriaLabel="Удалить"
++ removeLabel="Удалить"
+>
+  Чип
+</Chip>
+```
+
+<br/><br/>
+
+## [`ChipsInput`](#/ChipsInput)
+
+- Свойство `inputAriaLabel` переименовано в `inputLabel`.
+
+```diff
+<ChipsInput
+-  inputAriaLabel="Введите название цвета"
++  inputLabel="Введите название цвета"
+  id="color"
+  value={colors}
+  after={
+    <IconButton hoverMode="opacity" label="Очистить поле" onClick={onClick}>
+      <Icon16Clear />
+    </IconButton>
+  }
+/>
+```
+
+<br/><br/>
+
+## [`ChipsInput`](#/ChipsInput)
+
+- Компонент теперь может быть контролируемым и неконтролируемым.
+- `getOptionValue`, `getOptionLabel`, `getNewOptionData` – все аргументы функции теперь обязательны.
+- `renderChip` – вторым аргументов приходит `option`.
+- Свойство `inputAriaLabel` переименовано в `inputLabel`.
+
+```diff
+<ChipsInput
+-  value={[]}
++  defaultValue={[]}
+
+-  value={[]}
++  value={[]}
++  onChange={[]}
+
+-  inputValue=""
++  defaultInputValue=""
+
+-  inputAriaLabel="Введите название цвета"
++  inputLabel="Введите название цвета"
+/>
+```
 
 <br/><br/>
 
@@ -218,15 +333,48 @@ interface HasInsets {
 
 ## [`CustomSelect`](#/CustomSelect)
 
-- Функция `onInputChange` больше не получает вторым параметром список опций, а также никак не обрабатывает
-  результат исполнения. Для фильтрации обновляйте `props.options` самостоятельно или используйте свойство `filterFn`
-- Удалено свойство `option` из `CustomSelectOption`
+- Функция `onInputChange` больше не получает вторым параметром список опций, а также никак
+  не обрабатывает результат исполнения. Для фильтрации обновляйте `props.options` самостоятельно или
+  используйте свойство `filterFn`.
+- Удалено свойство `option` из `CustomSelectOption`.
+
+<br/><br/>
+
+## [`DateInput`](#/DateInput)
+
+- Свойство `prevMonthAriaLabel` переименовано в `prevMonthLabel`.
+- Свойство `nextMonthAriaLabel` переименовано в `nextMonthLabel`.
+- Свойство `changeMinutesAriaLabel` переименовано в `changeMinutesLabel`.
+- Свойство `changeHoursAriaLabel` переименовано в `changeHoursLabel`.
+- Свойство `changeDayAriaLabel` переименовано в `changeDayLabel`.
+- Свойство `changeMonthAriaLabel` переименовано в `changeMonthLabel`.
+- Свойство `changeYearAriaLabel` переименовано в `changeYearLabel`.
+- Свойство `clearFieldAriaLabel` переименовано в `clearFieldLabel`.
+- Свойство `showCalendarAriaLabel` переименовано в `showCalendarLabel`.
+
+<br/><br/>
+
+## [`DateRangeInput`](#/DateInputRange)
+
+- Свойство `prevMonthAriaLabel` переименовано в `prevMonthLabel`.
+- Свойство `nextMonthAriaLabel` переименовано в `nextMonthLabel`.
+- Свойство `changeDayAriaLabel` переименовано в `changeDayLabel`.
+- Свойство `changeMonthAriaLabel` переименовано в `changeMonthLabel`.
+- Свойство `changeYearAriaLabel` переименовано в `changeYearLabel`.
+- Свойство `changeStartDayAriaLabel` переименовано в `changeStartDayLabel`.
+- Свойство `changeStartMonthAriaLabel` переименовано в `changeStartMonthLabel`.
+- Свойство `changeStartYearAriaLabel` переименовано в `changeStartYearLabel`.
+- Свойство `changeEndDayAriaLabel` переименовано в `changeEndDayLabel`.
+- Свойство `changeEndMonthAriaLabel` переименовано в `changeEndMonthLabel`.
+- Свойство `changeEndYearAriaLabel` переименовано в `changeEndYearLabel`.
+- Свойство `clearFieldAriaLabel` переименовано в `clearFieldLabel`.
+- Свойство `showCalendarAriaLabel` переименовано в `showCalendarLabel`.
 
 <br/><br/>
 
 ## [`FixedLayout`](#/FixedLayout)
 
-- Свойство `getRef` удалено, используйте `getRootRef`
+- Свойство `getRef` удалено, используйте `getRootRef`.
 
 ```diff
 - <FixedLayout getRef={ref}>...</FixedLayout>
@@ -237,14 +385,15 @@ interface HasInsets {
 
 ## [`Footer`](#/Footer)
 
-- Вертикальный отступ теперь задаётся через `padding`, вместо `margin`, поэтому схлопывание `margin` будет исключено.
+- Вертикальный отступ теперь задаётся через `padding`, вместо `margin`, поэтому схлопывание `margin`
+  будет исключено.
 
 <br/><br/>
 
 ## [`FormItem`](#/FormItem)
 
-- Изменён тeг (с `h5` на `span`), в котором значение `top` рендерится по умолчанию, если не указано свойство `htmlFor`.
-  Если свойство `htmlFor` указано, но тег будет `label`.
+- Изменён тeг (с `h5` на `span`), в котором значение `top` рендерится по умолчанию, если не указано
+  свойство `htmlFor`. Если свойство `htmlFor` указано, но тег будет `label`.
 - Переопределить тeг по умолчанию можно с помощью свойства `topComponent`.
 
 ```jsx static
@@ -255,7 +404,8 @@ interface HasInsets {
 
 ## [`Gradient`](#/Gradient)
 
-- У параметра `mode` были удалены значения `black` и `white`, используйте `tint` или `default`. `default` теперь значение по умолчанию
+- У параметра `mode` были удалены значения `black` и `white`, используйте `tint` или `default`.
+  `default` теперь значение по умолчанию.
 
 <br/><br/>
 
@@ -290,7 +440,7 @@ interface HasInsets {
 
 ## [`ModalPageHeader`](#/ModalPageHeader)
 
-- Свойство `getRef` удалено, используйте `getRootRef`
+- Свойство `getRef` удалено, используйте `getRootRef`.
 
 ```diff
 - <ModalPageHeader getRef={ref}>...</ModalPageHeader>
@@ -299,31 +449,54 @@ interface HasInsets {
 
 <br/><br/>
 
-## ~~PanelHeader.Content~~
+## [`Pagination`](#/Pagination)
 
-- Данный компонент удален, используйте вместо него `typographyProps` у [PanelHeader](#/PanelHeader).
+- Свойство `prevButtonAriaLabel` переименовано в `prevButtonLabel`.
+- Свойство `nextButtonAriaLabel` переименовано в `nextButtonLabel`.
+- Свойство `getPageAriaLabel` переименовано в `getPageLabel` и обновлено: теперь оно принимает
+  только `(isCurrent: boolean)` и не нуждается в номере страницы. Возвращайте текст с учетом того,
+  что номер страницы добавится автоматически через пробел **в конце**.
+
+```diff
+ <Pagination
+- prevButtonAriaLabel="На предыдущую"
++ prevButtonLabel="На предыдущую"
+
+- nextButtonAriaLabel="На следующую"
++ nextButtonLabel="На следующую"
+
+- getPageAriaLabel={(page, isCurrent) => { isCurrent ? `${page} страница` : `Го на ${page} страницу` }}
++ getPageLabel={(isCurrent) => { isCurrent ? "Стр." : "Го на страницу" }}
+/>
+```
 
 <br/><br/>
 
-## [`PromoBanner`](#/PromoBanner)
+## ~~`PanelHeader.Content`~~
 
-- Компонент удален, используйте событие [VKWebAppShowBannerAd](https://dev.vk.com/mini-apps/monetization/ad/banners)
+- Данный компонент удален, используйте вместо него `typographyProps` у [`PanelHeader`](#/PanelHeader).
 
 <br/><br/>
 
-## [PullToRefresh](#/PullToRefresh)
+## ~~`PromoBanner`~~
+
+- Компонент удален.
+- Для своей реализации, используйте событие [`VKWebAppShowBannerAd`](https://dev.vk.com/mini-apps/monetization/ad/banners).
+
+<br/><br/>
+
+## [`PullToRefresh`](#/PullToRefresh)
 
 - До этого `runTapticImpactOccurred()` вызывался внутри компонента после вызова обработчика `onRefresh`.
   Сам `runTapticImpactOccurred()` через `vkBridge.send` вызывает событие `VKWebAppTapticImpactOccurred`.
   В виду отказа от [VK Bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), мы удалили вызов
   `runTapticImpactOccurred()` на стороне **VKUI**.
-
 - Пример представлен на странице [Интеграция с VK Mini Apps](https://vkcom.github.io/VKUI/#/integrations-vk-mini-apps)
   под заголовком **Виброотклик (Taptic Engine)**.
 
 <br/><br/>
 
-## ~~RangeSlider~~
+## ~~`RangeSlider`~~
 
 - Компонент удален, используйте [`Slider`](#/Slider)
 
@@ -334,9 +507,16 @@ interface HasInsets {
 
 <br/><br/>
 
+## [`Search`](#/Search)
+
+- Свойство `iconAriaLabel` переименовано в `iconLabel`.
+- Свойство `clearAriaLabel` переименовано в `clearLabel`.
+
+<br/><br/>
+
 ## [`SimpleCell`](#/SimpleCell)
 
-- Свойство `expandable` теперь не принимает значения типа `boolean`
+- Свойство `expandable` теперь не принимает значения типа `boolean`.
 
 ```diff
 - <SimpleCell expandable={true}>...</SimpleCell>
@@ -350,20 +530,21 @@ interface HasInsets {
 
 ## [`Slider`](#/Slider)
 
-- Свойство `step` теперь принимает значение `1` по умолчанию
-- Функция `onChange` вторым параметром теперь дополнительно расширяется типом `React.ChangeEvent`
+- Свойство `step` теперь принимает значение `1` по умолчанию.
+- Функция `onChange` вторым параметром теперь дополнительно расширяется типом `React.ChangeEvent`.
 
 <br/><br/>
 
 ## [`Spinner`](#/Spinner)
 
-- У параметра `aria-label` теперь отсутствует значение по умолчанию, для доступности воспользуйтесь параметром `children`
+- У параметра `aria-label` теперь отсутствует значение по умолчанию, для доступности воспользуйтесь
+  параметром `children`.
 
 <br/><br/>
 
 ## [`SplitCol`](#/SplitCol)
 
-- Свойство `spaced` удалено, используйте свойство `autoSpaced`
+- Свойство `spaced` удалено, используйте свойство `autoSpaced`.
 
 ```diff
  <ActionSheet>
@@ -372,23 +553,42 @@ interface HasInsets {
  </ActionSheet>
 ```
 
-# Typography
+<br/><br/>
+
+## [`Tappable`](#/Tappable)
+
+`Tappable` избавился от свойств `onEnter`, `onLeave`, `onStart`, `onEnd`, `onMove` и `stopPropagation`.
+Используйте вместо них [нативные свойства](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#event_types_and_global_event_handlers).
+
+### Улучшение доступности
+
+Теперь если в кликабельный компонент не был передано свойство onClick или href, то у такого
+компонента будут отключены состояния наведения, активирования и ripple эффекты. Если вы использовали
+`disable` для отключения состояний, рекомендуем удалить это свойство.
+
+```diff
+<SimpleCell
+- disable
+ >
+  Информационный текст
+</SimpleCell>
+```
 
 <br/><br/>
 
-## [`Title`](#/Title)
+## Typography
 
-- По умолчанию тeг в котором рендерится компонент теперь `span` и он больше не привязан к значению свойства `level`.
+### [`Title`](#/Title)
 
+- По умолчанию тeг в котором рендерится компонент теперь `span` и он больше не привязан к значению
+  свойства `level`.
 - Переопределить тeг по умолчанию можно с помощью свойства `Component`.
 
 ```jsx static
 <Title Component="h1" />
 ```
 
-<br/><br/>
-
-## [`Headline`](#/Headline)
+### [`Headline`](#/Headline)
 
 - Изменён тeг (с `h4` на `span`), в котором компонент рендерится по умолчанию.
 - Переопределить тeг по умолчанию можно с помощью свойства `Component`.
@@ -397,9 +597,7 @@ interface HasInsets {
 <Headline Component="h4" />
 ```
 
-<br/><br/>
-
-## [`Subhead`](#/Subhead)
+### [`Subhead`](#/Subhead)
 
 - Изменён тeг (с `h5` на `span`), в котором компонент рендерится по умолчанию.
 - Переопределить тeг по умолчанию можно с помощью свойства `Component`.
@@ -424,7 +622,7 @@ interface HasInsets {
 
 <br/><br/>
 
-## ~~VisuallyHiddenInput~~
+## ~~`VisuallyHiddenInput`~~
 
 - Компонент удален, используйте [`VisuallyHidden`](#/VisuallyHidden)
 
@@ -435,29 +633,45 @@ interface HasInsets {
 
 <br/><br/>
 
-## Unstable -> Stable
+## Unstable
 
-Следующие компоненты теперь экспортируется как стабильные 🎉
+### 🎉 ~~`unstable_ChipsSelect`~~ -> [`ChipsSelect`](#/ChipsSelect)
 
-> При выводе из unstable API компонентов был изменён.
+Теперь экспортируется как стабильный 🎉
 
-### Popover
+- Компонент теперь может быть контролируемым и неконтролируемым.
+- `creatable` – может быть всё ещё `boolean`, при этом теперь можно передать и текст, чтобы
+  переопределить текст по умолчанию.
+- `getOptionValue`, `getOptionLabel`, `getNewOptionData` – все аргументы функции теперь обязательны.
+- `renderChip` – вторым аргументов приходит `option`.
 
 ```diff
-<Popover
-- action="hover"
-+ trigger="hover"
-- offsetDistance={0}
-+ offsetByMainAxis={0}
-- offsetSkidding={0}
-+ offsetByCrossAxis={0}
-- shownDelay={0}
-- hideDelay={10}
-+ hoverDelay={[0, 10]}
->
-  <div>Target</div>
-</Popover>
+<ChipsSelect
+-  value={[]}
++  defaultValue={[]}
+
+-  value={[]}
++  value={[]}
++  onChange={[]}
+
+-  inputValue=""
++  defaultInputValue=""
+
+-  popupDirection="bottom"
++  placement="bottom"
+
+-  showSelected={true}
++  selectedBehavior="highlight"
+
+-  showSelected={false}
++  selectedBehavior="hide"
+
+-  creatableText="Lorem Ipsum"
++  creatable="Lorem Ipsum"
+/>
 ```
+
+### 🎉 ~~`unstable_Popover`~~ -> [`Popover`](#/Popover)
 
 - `trigger` – помимо `"click"` и `"hover"`, теперь принимает `"focus"` или комбинацию этих событий.
   Также можно передать `"manual"`, что сделает компонент полностью контролируемым, в `onShownChange`
@@ -475,30 +689,154 @@ interface HasInsets {
 - `usePortal` – рендерить ли всплывающий элемент в портале. Вместо `boolean`, можно передать
   контейнер, куда должен отрендериться всплывающий элемент.
 
-<br/><br/>
-
-## [`Accordion`](#/Accordion)
-
-Accordion избавился от нативного элемента `detail`, теперь для компонента стали доступны анимации.
-
-На замену свойств `open` и `onToggle` пришли свойства `expanded`, `defaultExpanded`, `onChange`
-
 ```diff
- <Accordion
--     open={openId === id}
-+     expanded={openId === id}
--     onToggle={(e) => e.target.open && setOpenId(id)}
-+     onChange={(open) => open && setOpenId(id)}
- >
+<Popover
+- action="hover"
++ trigger="hover"
+
+- offsetDistance={0}
++ offsetByMainAxis={0}
+
+- offsetSkidding={0}
++ offsetByCrossAxis={0}
+
+- shownDelay={2}
++ hoverDelay={2}
+
+- hideDelay={10}
++ hoverDelay={[0, 10]}
+
+- shownDelay={5}
+- hideDelay={10}
++ hoverDelay={[5 10]}
+>
+  <div>Target</div>
+</Popover>
 ```
 
-Контент должен быть обернут в `<Accordion.Content>`
+### 🎉 ~~`unstable_Popper`~~ -> [`Popper`](#/Popper)
+
+- `renderContent` удалён в пользу `children`. Раньше из `renderContent` можно было получить
+  `className`, который задаёт `Popper`, сейчас этот `className` пустой.
+- `targetRef` теперь умеет принимать `VirtualElement`.
+- `arrowProps` принимает атрибуты `HTMLDivElement`, а также `iconStyle` и `iconClassName`.
+- `onPlacementChange` теперь вызывается только в случае, если `Popper` подобрал оптимальный
+  `placement` вместо пользовательского.
 
 ```diff
-  <Accordion expanded={open}>
-    <Accordion.Summary>Title</Accordion.Summary>
-+   <Accordion.Content>
-        <Div>Content</Div>
-+    </Accordion.Content>
-  </Accordion>
+<Popper
+- renderContent
+
+- arrowClassName=""
++ arrowProps={{ iconClassName: "" }}
+
+- offsetDistance={0}
++ offsetByMainAxis={0}
+
+- offsetSkidding={0}
++ offsetByCrossAxis={0}
+
+- onPlacementChange={({ placement }) => {}}
++ onPlacementChange={(placement) => {}}
+
+- forcePortal
++ usePortal
+
+- portalRoot={someHTMLElement}
++ usePortal={someHTMLElement}
+/>
+  <div>Target</div>
+</Popper>
+```
+
+### 🎉 ~~`unstable_Tooltip`~~ -> [`OnboardingTooltip`](#/OnboardingTooltip)
+
+- Стал доступнее за счёт `role="tooltip"` и `aria-describedby`.
+
+```diff
+- <Tooltip>
++ <OnboardingTooltip
+- isShown
++ isShown
+
+- alignX="bottom"
+- alignY="left"
++ placement="bottom-start"
+
+- offsetX={0}
++ offsetByCrossAxis={0}
+
+- offsetY={0}
++ offsetByMainAxis={0}
+
+- cornerOffset={0}
++ arrowOffset={0}
+
+- cornerAbsoluteOffset={0}
++ arrowOffset={0}
++ isStaticArrowOffset
+>
+  <div>Target</div>
+- </Tooltip>
++ </OnboardingTooltip>
+```
+
+### 🎉 ~~`unstable_TextTooltip`~~ -> [`Tooltip`](#/Tooltip)
+
+- Компонент теперь может быть контролируемым и неконтролируемым.
+- Помимо `hover`, теперь реагирует и на `focus`.
+- Стал доступнее за счёт `role="tooltip"` и `aria-describedby`.
+- Может закрываться по кнопке **ESC**.
+- ⚠️ Наведение на сам тултип теперь по умолчанию отключено. Используйте `enableInteractive`, чтобы
+  включить эту возможность.
+
+```diff
+- <TextTooltip
++ <Tooltip
+- autoUpdateOnTargetResize
+- customMiddlewares
+- renderContent
+- getRef
+
+- offsetSkidding={0}
++ offsetByCrossAxis={0}
+
+- offsetDistance={0}
++ offsetByMainAxis={0}
+
+- shownDelay={2}
++ hoverDelay={2}
+
+- hideDelay={10}
++ hoverDelay={[0, 10]}
+
+- shownDelay={5}
+- hideDelay={10}
++ hoverDelay={[5 10]}
+
+- forcePortal
++ usePortal
+
+- portalRoot={someHTMLElement}
++ usePortal={someHTMLElement}
+>
+  <div>Target</div>
+- </TextTooltip>
++ </Tooltip>
+```
+
+### ~~`RichTooltip`~~ -> 🗑️
+
+Используйте вместо него обычный [`Tooltip`](#/Tooltip).
+
+```diff
+- <RichTooltip style={{maxWidth: 320}} content={
++ <Tooltip maxWidth={320} placement="bottom-start" enableInteractive text={
+  <RichCell>
+    Lorem
+  </RichCell>
+}>
+  <Link style={{display: 'inline-block', margin: 20, userSelect: 'none'}}>Илья Гришин</Link>
+- </RichTooltip>
++ </Tooltip>
 ```
