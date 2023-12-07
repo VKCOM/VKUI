@@ -6,11 +6,6 @@ import { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';
 
-const RENAME_MAP = {
-  prevButtonAriaLabel: 'prevButtonLabel',
-  nextButtonAriaLabel: 'nextButtonLabel',
-};
-
 export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {
   const { alias } = options;
   const j = api.jscodeshift;
@@ -26,12 +21,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     );
 
   if (accordionComponents.length > 0) {
-    report(
-      api,
-      `: ${chalk.white.bgBlue('getPageAriaLabel')} prop in ${chalk.white.bgBlue(
-        'Pagination',
-      )} component is no longer available. Manual changes required.`,
-    );
+    report(api, `: ${chalk.white.bgBlue('Accordion')} has been changed. Manual changes required.`);
   }
 
   return source.toSource();
