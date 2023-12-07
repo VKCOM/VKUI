@@ -17,6 +17,8 @@ import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarH
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CalendarRange.module.css';
 
+export type DateRangeType = [Date | null, Date | null];
+
 export interface CalendarRangeProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
     Pick<
@@ -29,18 +31,18 @@ export interface CalendarRangeProps
       | 'nextMonthIcon'
     >,
     Pick<CalendarDaysProps, 'listenDayChangesForUpdate'> {
-  value?: Array<Date | null>;
+  value?: DateRangeType;
   disablePast?: boolean;
   disableFuture?: boolean;
   disablePickers?: boolean;
   changeDayLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  onChange?(value?: Array<Date | null>): void;
+  onChange?(value?: DateRangeType): void;
   shouldDisableDate?(value: Date): boolean;
   onClose?(): void;
 }
 
-const getIsDaySelected = (day: Date, value?: Array<Date | null>) => {
+const getIsDaySelected = (day: Date, value?: DateRangeType) => {
   if (!value?.[0] || !value[1]) {
     return false;
   }
@@ -81,7 +83,7 @@ export const CalendarRange = ({
     isDayDisabled,
     resetSelectedDay,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
-  const [hintedDate, setHintedDate] = React.useState<Array<Date | null>>();
+  const [hintedDate, setHintedDate] = React.useState<DateRangeType>();
   const secondViewDate = addMonths(viewDate, 1);
 
   const handleKeyDown = React.useCallback(
@@ -105,8 +107,9 @@ export const CalendarRange = ({
   );
 
   const getNewValue = React.useCallback(
-    (date: Date) => {
-      if (!value) {
+    (date: Date): DateRangeType => {
+      const isValueEmpty = !value || (value[0] === null && value[1] === null);
+      if (isValueEmpty) {
         return [date, null];
       }
 
