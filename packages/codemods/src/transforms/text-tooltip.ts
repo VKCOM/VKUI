@@ -116,7 +116,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         }
       });
 
-    // разрешаем arrowOffsets
+    // разрешаем hoverDelay
     const [shownDelayAttr, hideDelayAttr] = [
       j(element).find(
         j.JSXAttribute,

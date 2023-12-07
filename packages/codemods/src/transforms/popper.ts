@@ -68,12 +68,9 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     .filter(
       (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === localName,
     )
-    .find(j.JSXAttribute, (attribute) =>
-      typeof attribute.name.name === 'string' ? attributeReplacer.has(attribute.name.name) : false,
-    )
+    .find(j.JSXAttribute, (attribute) => attributeReplacer.has(attribute.name.name))
     .forEach((attribute) => {
-      const attributeName = attribute.node.name.name as string;
-      const foundFix = attributeReplacer.getReplacers(attributeName);
+      const foundFix = attributeReplacer.getReplacers(attribute.node.name.name);
       if (foundFix && foundFix.action !== 'remove') {
         const value = attribute.node.value;
         j(attribute).replaceWith(
@@ -85,13 +82,9 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const complexAttributeReplacer = createAttributeManipulator(COMPLEX_ATTRIBUTE_MANIPULATOR, api);
   source.findJSXElements(localName).forEach((element) => {
     j(element)
-      .find(j.JSXAttribute, (attribute) =>
-        typeof attribute.name.name === 'string'
-          ? complexAttributeReplacer.has(attribute.name.name)
-          : false,
-      )
+      .find(j.JSXAttribute, (attribute) => complexAttributeReplacer.has(attribute.name.name))
       .forEach((attribute, _, attributes) => {
-        const attributeName = attribute.node.name.name as string;
+        const attributeName = attribute.node.name.name;
         if (attributes.length === 2 && attributeName === FORCE_PORTAL) {
           j(attribute).remove();
         } else {
