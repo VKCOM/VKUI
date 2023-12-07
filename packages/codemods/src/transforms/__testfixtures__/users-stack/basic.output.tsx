@@ -7,7 +7,6 @@ const App = () => {
     <React.Fragment>
       <UsersStack direction="column">...</UsersStack>
       <UsersStack direction="row">...</UsersStack>
-      <UsersStack layout={layout} gfdg>...</UsersStack>
     </React.Fragment>
   );
 };

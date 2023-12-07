@@ -10,15 +10,13 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'Banner', alias);
 
-  const unusedProps = source
+  const bannerComponent = source
     .find(j.JSXOpeningElement)
     .filter(
       (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === localName,
-    )
-    .find(j.JSXAttribute)
-    .filter((attribute) => attribute.node.name.name === 'noPadding');
+    );
 
-  if (unusedProps.size() > 0) {
+  if (bannerComponent.length > 0) {
     report(
       api,
       `: ${chalk.white.bgBlue('noPadding')} prop in ${chalk.white.bgBlue(
