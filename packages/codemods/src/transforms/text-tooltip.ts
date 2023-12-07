@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import type { API, FileInfo } from 'jscodeshift';
+import type { API, Collection, FileInfo, JSXAttribute } from 'jscodeshift';
 import {
   type AttributeManipulator,
   createAttributeManipulator,
@@ -49,6 +49,10 @@ const COMPLEX_ATTRIBUTE_MANIPULATOR: AttributeManipulator = {
     keyTo: 'usePortal',
   },
 };
+
+const LEGACY_SHOWN_DELAY_PROP = 'shownDelay';
+const LEGACY_HIDE_DELAY_PROP = 'hideDelay';
+const NEW_HOVER_DELAY_PROP = 'hoverDelay';
 
 export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {
   const { alias } = options;
@@ -111,6 +115,65 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
           }
         }
       });
+
+    // разрешаем arrowOffsets
+    const [shownDelayAttr, hideDelayAttr] = [
+      j(element).find(
+        j.JSXAttribute,
+        (attribute) => attribute.name.name === LEGACY_SHOWN_DELAY_PROP,
+      ),
+      j(element).find(
+        j.JSXAttribute,
+        (attribute) => attribute.name.name === LEGACY_HIDE_DELAY_PROP,
+      ),
+    ];
+
+    const getNumericLiteral = (attributeCollection: Collection<JSXAttribute>) => {
+      let val;
+      attributeCollection.find(j.NumericLiteral).forEach((attribute) => {
+        val = attribute.node;
+      });
+      return val ? val : j.numericLiteral(0);
+    };
+
+    if (shownDelayAttr.length === 1 && hideDelayAttr.length === 0) {
+      shownDelayAttr.forEach((attribute) => {
+        j(attribute).replaceWith(
+          j.jsxAttribute(
+            j.jsxIdentifier(NEW_HOVER_DELAY_PROP),
+            j.jsxExpressionContainer(getNumericLiteral(shownDelayAttr)),
+          ),
+        );
+      });
+    } else if (shownDelayAttr.length === 0 && hideDelayAttr.length === 1) {
+      hideDelayAttr.forEach((attribute) => {
+        j(attribute).replaceWith(
+          j.jsxAttribute(
+            j.jsxIdentifier(NEW_HOVER_DELAY_PROP),
+            j.jsxExpressionContainer(
+              j.arrayExpression([j.numericLiteral(0), getNumericLiteral(hideDelayAttr)]),
+            ),
+          ),
+        );
+      });
+    } else if (shownDelayAttr.length === 1 && hideDelayAttr.length === 1) {
+      shownDelayAttr.forEach((attribute) => {
+        j(attribute).replaceWith(
+          j.jsxAttribute(
+            j.jsxIdentifier(NEW_HOVER_DELAY_PROP),
+            j.jsxExpressionContainer(
+              j.arrayExpression([
+                getNumericLiteral(shownDelayAttr),
+                getNumericLiteral(hideDelayAttr),
+              ]),
+            ),
+          ),
+        );
+      });
+      hideDelayAttr.forEach((attribute) => {
+        j(attribute).remove();
+      });
+    }
   });
 
   return source.toSource();

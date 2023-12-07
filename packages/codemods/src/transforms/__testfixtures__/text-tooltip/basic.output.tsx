@@ -8,9 +8,14 @@ const App = () => {
         offsetByCrossAxis={0}
         offsetByMainAxis={0}
         usePortal={someHTMLElement}
-        getRootRef={getRef}>
+        getRootRef={getRef}
+        hoverDelay={[5, 10]}>
         123
       </TextTooltip>
+
+      <TextTooltip hoverDelay={5}>123</TextTooltip>
+
+      <TextTooltip hoverDelay={[0, 5]}>123</TextTooltip>
     </React.Fragment>
   );
 };

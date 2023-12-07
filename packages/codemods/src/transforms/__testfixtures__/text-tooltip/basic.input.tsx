@@ -11,9 +11,15 @@ const App = () => {
         forcePortal
         portalRoot={someHTMLElement}
         getRef={getRef}
+        shownDelay={5}
+        hideDelay={10}
       >
         123
       </TextTooltip>
+
+      <TextTooltip shownDelay={5}>123</TextTooltip>
+
+      <TextTooltip hideDelay={5}>123</TextTooltip>
     </React.Fragment>
   );
 };
