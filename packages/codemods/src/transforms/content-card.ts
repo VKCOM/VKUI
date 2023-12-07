@@ -1,7 +1,5 @@
-import chalk from 'chalk';
-import { API, ASTPath, FileInfo, JSXAttribute } from 'jscodeshift';
+import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../codemod-helpers';
-import { report } from '../report';
 import { JSCodeShiftOptions } from '../types';
 
 export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {

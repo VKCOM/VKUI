@@ -1,5 +1,4 @@
-import chalk from 'chalk';
-import { API, ASTPath, FileInfo, JSXAttribute } from 'jscodeshift';
+import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../codemod-helpers';
 import { JSCodeShiftOptions } from '../types';
 
