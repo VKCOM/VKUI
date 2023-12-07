@@ -663,7 +663,7 @@ interface HasInsets {
 - <Tooltip>
 + <OnboardingTooltip
 - isShown
-+ isShown
++ shown
 
 - alignX="bottom"
 - alignY="left"
@@ -782,7 +782,7 @@ interface HasInsets {
 ### 🎉 ~~`unstable_Popover`~~ -> [`Popover`](#/Popover)
 
 - Теперь экспортируется как стабильный.
-- `trigger` – помимо `"click"` и `"hover"`, теперь принимает `"focus"` или комбинацию этих событий.
+- <!--чтобы сработало перечёркивание-->~~`action`~~ -> `trigger` – помимо `"click"` и `"hover"`, теперь принимает `"focus"` или комбинацию этих событий.
   Также можно передать `"manual"`, что сделает компонент полностью контролируемым, в `onShownChange`
   будет вызываться при нажатии за пределы целевого и всплывающего элементов, по кнопке ESC или при
   вызове `onClose` из свойства `content`.
@@ -855,7 +855,7 @@ interface HasInsets {
 - portalRoot={someHTMLElement}
 + usePortal={someHTMLElement}
 />
-  <div>Target</div>
+  Content
 </Popper>
 ```
 
@@ -875,7 +875,9 @@ interface HasInsets {
 - autoUpdateOnTargetResize
 - customMiddlewares
 - renderContent
+
 - getRef
++ getRootRef
 
 - offsetSkidding={0}
 + offsetByCrossAxis={0}
@@ -903,6 +905,10 @@ interface HasInsets {
 - </TextTooltip>
 + </Tooltip>
 ```
+
+### 🎉 ~~`unstable_HorizontalCellShowMore`~~ -> [`HorizontalCellShowMore`](#/HorizontalCellShowMore)
+
+- Теперь экспортируется как стабильный.
 
 ### ~~`RichTooltip`~~ -> 🗑️
 
