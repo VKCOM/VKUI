@@ -1,4 +1,11 @@
-import type { API, Collection, FileInfo, JSCodeshift, JSXAttribute } from 'jscodeshift';
+import type {
+  API,
+  Collection,
+  FileInfo,
+  JSCodeshift,
+  JSXAttribute,
+  JSXIdentifier,
+} from 'jscodeshift';
 
 export function getImportInfo(
   j: JSCodeshift,
@@ -63,11 +70,13 @@ export const createAttributeReplacer = (props: Record<string, AttributeReplacerA
   const map = new Map<string, AttributeReplacerAPI>(Object.entries(props));
 
   return {
-    has(attributeKey: string) {
-      return map.has(attributeKey);
+    has(attributeKey: string | JSXIdentifier) {
+      return typeof attributeKey === 'string' ? map.has(attributeKey) : false;
     },
-    getReplacers(attributeKey: string) {
+    getReplacers(attributeKeyProp: string | JSXIdentifier) {
+      const attributeKey = typeof attributeKeyProp === 'string' ? attributeKeyProp : '';
       const found = map.get(attributeKey);
+
       if (found && found.reportText) {
         const text = typeof found.reportText === 'function' ? found.reportText() : found.reportText;
         try {
