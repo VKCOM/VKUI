@@ -4,7 +4,7 @@ import { ViewWidth } from '../../lib/adaptivity';
 import { baselineComponent, fakeTimers, runAllTimers, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { Alert } from './Alert';
+import { Alert, type AlertProps } from './Alert';
 
 describe('Alert', () => {
   fakeTimers();
@@ -25,9 +25,9 @@ describe('Alert', () => {
         trigger === 'overlay' ? '.vkuiPopoutWrapper__overlay' : '.vkuiModalDismissButton';
 
       await userEvent.click(document.querySelector(target) as Element);
-      expect(onClose).not.toBeCalled();
+      expect(onClose).not.toHaveBeenCalled();
       runAllTimers();
-      expect(onClose).toBeCalledTimes(1);
+      expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
   describe('calls actions', () => {
@@ -44,10 +44,10 @@ describe('Alert', () => {
           </ConfigProvider>,
         );
         await userEvent.click(screen.getByText('__action__'));
-        expect(action).toBeCalledTimes(1);
-        expect(onClose).not.toBeCalled();
+        expect(action).toHaveBeenCalledTimes(1);
+        expect(onClose).not.toHaveBeenCalled();
         runAllTimers();
-        expect(onClose).not.toBeCalled();
+        expect(onClose).not.toHaveBeenCalled();
       });
       it('calls action after close by default', async () => {
         const action = jest.fn();
@@ -67,11 +67,11 @@ describe('Alert', () => {
           </ConfigProvider>,
         );
         await userEvent.click(screen.getByText('__action__'));
-        expect(action).not.toBeCalled();
-        expect(onClose).not.toBeCalled();
+        expect(action).not.toHaveBeenCalled();
+        expect(onClose).not.toHaveBeenCalled();
         runAllTimers();
-        expect(action).toBeCalledTimes(1);
-        expect(onClose).toBeCalledTimes(1);
+        expect(action).toHaveBeenCalledTimes(1);
+        expect(onClose).toHaveBeenCalledTimes(1);
       });
     });
   });
@@ -90,4 +90,24 @@ describe('Alert', () => {
     expect(screen.getByTestId('allow-test-id')).toHaveTextContent('Allow');
     expect(screen.getByTestId('deny-test-id')).toHaveTextContent('Deny');
   });
+
+  it.each<AlertProps['dismissButtonMode']>(['outside', 'inside'])(
+    'passes data-testid to dismiss button in %s dismissButtonMode',
+    (dismissButtonMode) => {
+      render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
+          <Alert
+            onClose={jest.fn()}
+            dismissLabel="Закрыть предупреждение"
+            dismissButtonTestId="dismiss-button-test-id"
+            dismissButtonMode={dismissButtonMode}
+          />
+        </AdaptivityProvider>,
+      );
+
+      expect(screen.getByTestId('dismiss-button-test-id')).toHaveTextContent(
+        'Закрыть предупреждение',
+      );
+    },
+  );
 });
