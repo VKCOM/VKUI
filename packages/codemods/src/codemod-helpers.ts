@@ -1,4 +1,4 @@
-import { Collection, FileInfo, JSCodeshift } from 'jscodeshift';
+import type { API, Collection, FileInfo, JSCodeshift, JSXAttribute } from 'jscodeshift';
 
 export function getImportInfo(
   j: JSCodeshift,
@@ -31,7 +31,7 @@ export function renameProp(
   renameMap: { [x: string]: string },
 ) {
   const from = Object.keys(renameMap);
-  source
+  return source
     .find(j.JSXOpeningElement)
     .filter(
       (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === componentName,
@@ -50,3 +50,52 @@ export function renameProp(
       );
     });
 }
+
+type AttributeReplacerAPI = {
+  keyTo: string | ((k?: string) => string);
+  valueTo?(v: JSXAttribute['value'], api: API): JSXAttribute['value'];
+  reportText?: string | (() => string);
+};
+
+export type AttributeReplacer = Record<string, AttributeReplacerAPI>;
+
+export const createAttributeReplacer = (props: Record<string, AttributeReplacerAPI>, api: API) => {
+  const map = new Map<string, AttributeReplacerAPI>(Object.entries(props));
+
+  return {
+    has(attributeKey: string) {
+      return map.has(attributeKey);
+    },
+    getReplacers(attributeKey: string) {
+      const found = map.get(attributeKey);
+      if (found && found.reportText) {
+        const text = typeof found.reportText === 'function' ? found.reportText() : found.reportText;
+        try {
+          api.report(text);
+        } catch {
+          console.warn(text);
+        }
+      }
+      return {
+        keyTo() {
+          if (!found) {
+            return attributeKey;
+          }
+          if (typeof found.keyTo === 'string') {
+            return found.keyTo;
+          }
+          return found.keyTo(attributeKey);
+        },
+        valueTo(attributeKeyValue: JSXAttribute['value']) {
+          if (!found || !found.valueTo) {
+            return attributeKeyValue;
+          }
+          if (typeof found.valueTo === 'string') {
+            return found.valueTo;
+          }
+          return found.valueTo(attributeKeyValue, api);
+        },
+      };
+    },
+  };
+};
