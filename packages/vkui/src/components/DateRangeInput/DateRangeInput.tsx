@@ -8,7 +8,7 @@ import { callMultiple } from '../../lib/callMultiple';
 import { format, isAfter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { HasRootRef } from '../../types';
-import { CalendarRange, CalendarRangeProps } from '../CalendarRange/CalendarRange';
+import { CalendarRange, CalendarRangeProps, DateRangeType } from '../CalendarRange/CalendarRange';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
@@ -221,7 +221,7 @@ export const DateRangeInput = ({
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
   const onCalendarChange = React.useCallback(
-    (newValue?: Array<Date | null> | undefined) => {
+    (newValue?: DateRangeType) => {
       onChange?.(newValue);
       if (closeOnChange && newValue?.[1] && newValue[1] !== value?.[1]) {
         removeFocusFromField();
