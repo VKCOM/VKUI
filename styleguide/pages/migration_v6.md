@@ -332,7 +332,7 @@ interface HasInsets {
   Переопределить тег по умолчанию можно с помощью свойства `headerComponent`.
 
 ```jsx static
-<ContentCard Component="h4" />
+<ContentCard headerComponent="h4" />
 ```
 
 <br/><br/>
