@@ -58,16 +58,29 @@ export function renameProp(
     });
 }
 
-type AttributeReplacerAPI = {
-  keyTo: string | ((k?: string) => string);
-  valueTo?(v: JSXAttribute['value'], api: API): JSXAttribute['value'];
+interface AttributeManipulatorAPICommon {
   reportText?: string | (() => string);
-};
+}
 
-export type AttributeReplacer = Record<string, AttributeReplacerAPI>;
+type AttributeManipulatorAPICondition =
+  | {
+      keyTo: string | ((k?: string) => string);
+      valueTo?(v: JSXAttribute['value'], api: API): JSXAttribute['value'];
+      action?: 'rename';
+    }
+  | {
+      action: 'remove';
+    };
 
-export const createAttributeReplacer = (props: Record<string, AttributeReplacerAPI>, api: API) => {
-  const map = new Map<string, AttributeReplacerAPI>(Object.entries(props));
+type AttributeManipulatorAPI = AttributeManipulatorAPICommon & AttributeManipulatorAPICondition;
+
+export type AttributeManipulator = Record<string, AttributeManipulatorAPI>;
+
+export const createAttributeManipulator = (
+  props: Record<string, AttributeManipulatorAPI>,
+  api: API,
+) => {
+  const map = new Map<string, AttributeManipulatorAPI>(Object.entries(props));
 
   return {
     has(attributeKey: string | JSXIdentifier) {
@@ -85,26 +98,32 @@ export const createAttributeReplacer = (props: Record<string, AttributeReplacerA
           console.warn(text);
         }
       }
-      return {
-        keyTo() {
-          if (!found) {
-            return attributeKey;
-          }
-          if (typeof found.keyTo === 'string') {
-            return found.keyTo;
-          }
-          return found.keyTo(attributeKey);
-        },
-        valueTo(attributeKeyValue: JSXAttribute['value']) {
-          if (!found || !found.valueTo) {
-            return attributeKeyValue;
-          }
-          if (typeof found.valueTo === 'string') {
-            return found.valueTo;
-          }
-          return found.valueTo(attributeKeyValue, api);
-        },
-      };
+
+      if (found?.action === 'remove') {
+        return { action: found.action };
+      } else {
+        return {
+          action: found && found.action,
+          keyTo() {
+            if (!found) {
+              return attributeKey;
+            }
+            if (typeof found.keyTo === 'string') {
+              return found.keyTo;
+            }
+            return found.keyTo(attributeKey);
+          },
+          valueTo(attributeKeyValue: JSXAttribute['value']) {
+            if (!found || !found.valueTo) {
+              return attributeKeyValue;
+            }
+            if (typeof found.valueTo === 'string') {
+              return found.valueTo;
+            }
+            return found.valueTo(attributeKeyValue, api);
+          },
+        };
+      }
     },
   };
 };

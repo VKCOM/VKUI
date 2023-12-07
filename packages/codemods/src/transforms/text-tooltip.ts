@@ -5,36 +5,36 @@ import {
   createAttributeManipulator,
   getImportInfo,
 } from '../codemod-helpers';
+import { report } from '../report';
 import type { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';
 
-const componentName = 'unstable_Popper';
+const componentName = 'unstable_TextTooltip';
 
 const ATTRIBUTE_MANIPULATOR: AttributeManipulator = {
+  offsetSkidding: {
+    keyTo: 'offsetByCrossAxis',
+  },
   offsetDistance: {
     keyTo: 'offsetByMainAxis',
   },
-  offsetSkidding: {
-    keyTo: 'offsetByCrossAxis',
+  autoUpdateOnTargetResize: {
+    action: 'remove',
   },
   renderContent: {
     keyTo: 'children',
     reportText: () =>
       `: ${chalk.white.bgBlue('children')} prop in ${chalk.white.bgBlue(
-        'Popper',
+        'TextTooltip',
       )}. You should unwraps function manually`,
   },
-  arrowClassName: {
-    keyTo: 'arrowProps',
-    valueTo: (v, api) =>
-      v
-        ? api.jscodeshift.jsxExpressionContainer(
-            api.jscodeshift.objectExpression([
-              api.jscodeshift.property('init', api.jscodeshift.identifier('iconClassName'), v),
-            ]),
-          )
-        : v,
+  customMiddlewares: {
+    keyTo: 'unknown',
+    reportText: () =>
+      `: ${chalk.white.bgBlue('customMiddlewares')} prop in ${chalk.white.bgBlue(
+        'TextTooltip',
+      )}. You should unwraps function manually`,
   },
 };
 
@@ -60,7 +60,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     .filter((path) => path.node.source.value === alias)
     .find(j.ImportSpecifier, { imported: { name: componentName } })
     .forEach((path) =>
-      j(path).replaceWith((path) => j.importSpecifier(j.identifier('Popper'), path.node.local)),
+      j(path).replaceWith((path) => j.importSpecifier(j.identifier('Tooltip'), path.node.local)),
     );
 
   source
@@ -74,11 +74,16 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     .forEach((attribute) => {
       const attributeName = attribute.node.name.name as string;
       const foundFix = attributeReplacer.getReplacers(attributeName);
-      if (foundFix && foundFix.action !== 'remove') {
-        const value = attribute.node.value;
-        j(attribute).replaceWith(
-          j.jsxAttribute(j.jsxIdentifier(foundFix.keyTo()), foundFix.valueTo(value)),
-        );
+      if (foundFix) {
+        if (foundFix.action === 'remove') {
+          j(attribute).remove();
+        } else {
+          const value = attribute.node.value;
+
+          j(attribute).replaceWith(
+            j.jsxAttribute(j.jsxIdentifier(foundFix.keyTo()), foundFix.valueTo(value)),
+          );
+        }
       }
     });
 
