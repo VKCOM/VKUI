@@ -161,6 +161,8 @@ export { CellButton } from './components/CellButton/CellButton';
 export type { CellButtonProps } from './components/CellButton/CellButton';
 export { HorizontalCell } from './components/HorizontalCell/HorizontalCell';
 export type { HorizontalCellProps } from './components/HorizontalCell/HorizontalCell';
+export { HorizontalCellShowMore } from './components/HorizontalScroll/HorizontalCellShowMore/HorizontalCellShowMore';
+export type { HorizontalCellShowMoreProps } from './components/HorizontalScroll/HorizontalCellShowMore/HorizontalCellShowMore';
 export { Footer } from './components/Footer/Footer';
 export type { FooterProps } from './components/Footer/Footer';
 export { InfoRow } from './components/InfoRow/InfoRow';
@@ -407,8 +409,5 @@ export type { TransitionContextProps } from './components/NavTransitionContext/N
  */
 export { ViewInfinite as unstable_ViewInfinite } from './components/View/ViewInfinite';
 export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from './components/View/ViewInfinite';
-
-export { HorizontalCellShowMore as unstable_HorizontalCellShowMore } from './components/HorizontalCellShowMore/HorizontalCellShowMore';
-export type { HorizontalCellShowMoreProps as unstable_HorizontalCellShowMoreProps } from './components/HorizontalCellShowMore/HorizontalCellShowMore';
 
 import './styles/common.css';

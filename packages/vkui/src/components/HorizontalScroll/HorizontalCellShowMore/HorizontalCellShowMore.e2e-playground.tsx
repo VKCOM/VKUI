@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { Avatar } from '../Avatar/Avatar';
-import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
-import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
+import { Avatar } from '../../Avatar/Avatar';
+import { HorizontalCell } from '../../HorizontalCell/HorizontalCell';
+import { HorizontalScroll } from '../HorizontalScroll';
 import { HorizontalCellShowMore, type HorizontalCellShowMoreProps } from './HorizontalCellShowMore';
 
 export const HorizontalCellShowMorePlayground = (props: ComponentPlaygroundProps) => {
