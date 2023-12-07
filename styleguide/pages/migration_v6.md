@@ -89,9 +89,9 @@ interface HasInsets {
 
 ## [`Accordion`](#/Accordion)
 
-`Accordion` избавился от нативного элемента `detail`, теперь для компонента стали доступны анимации.
+- `Accordion` избавился от нативного элемента `detail`, теперь для компонента стали доступны анимации.
 
-На замену свойств `open` и `onToggle` пришли свойства `expanded`, `defaultExpanded`, `onChange`.
+- На замену свойств `open` и `onToggle` пришли свойства `expanded`, `defaultExpanded`, `onChange`.
 
 ```diff
 <Accordion
@@ -185,7 +185,7 @@ interface HasInsets {
 ## [`Banner`](#/Banner)
 
 - Убрали установку внешних отступов. Теперь, при необходимости, следует их добавлять самостоятельно.
-  Соответственно, параметр `noPadding` удалён.
+  Соответственно, свойство `noPadding` удалёно.
 
 ```diff
 - <Banner noPadding />
@@ -204,6 +204,8 @@ interface HasInsets {
 <br/><br/>
 
 ## [`Calendar`](#/Calendar)
+
+- Изменены a11y-свойства
 
 ```diff
 <Calendar
@@ -233,6 +235,8 @@ interface HasInsets {
 <br/><br/>
 
 ## [`CalendarRange`](#/CalendarRange)
+
+- Изменены a11y-свойства
 
 ```diff
 <CalendarRange
@@ -281,6 +285,8 @@ interface HasInsets {
 <br/><br/>
 
 ## [`Chip`](#/ChipsInput)
+
+- Изменено a11y-свойство
 
 ```diff
 <Chip
@@ -348,6 +354,8 @@ interface HasInsets {
 
 ## [`DateInput`](#/DateInput)
 
+- Изменены a11y-свойства
+
 ```diff
 <DateInput
 - prevMonthAriaLabel=""
@@ -382,6 +390,8 @@ interface HasInsets {
 <br/><br/>
 
 ## [`DateRangeInput`](#/DateInputRange)
+
+- Изменены a11y-свойства
 
 ```diff
 <DateRangeInput
@@ -458,7 +468,7 @@ interface HasInsets {
 
 ## [`Gradient`](#/Gradient)
 
-- У параметра `mode` были удалены значения `black` и `white`, используйте `tint` или `default`.
+- У свойства `mode` были удалены значения `black` и `white`, используйте `tint` или `default`.
   `default` теперь значение по умолчанию.
 
 <br/><br/>
@@ -587,8 +597,8 @@ interface HasInsets {
 
 ## [`Spinner`](#/Spinner)
 
-- У параметра `aria-label` теперь отсутствует значение по умолчанию, для доступности воспользуйтесь
-  параметром `children`.
+- У свойства `aria-label` теперь отсутствует значение по умолчанию, для доступности воспользуйтесь
+  свойством `children`.
 
 <br/><br/>
 
