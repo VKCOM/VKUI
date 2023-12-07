@@ -36,6 +36,13 @@ const ATTRIBUTE_MANIPULATOR: AttributeManipulator = {
           )
         : v,
   },
+  onPlacementChange: {
+    keyTo: 'onPlacementChange',
+    reportText: () =>
+      `: ${chalk.white.bgBlue('onPlacementChange')} prop in ${chalk.white.bgBlue(
+        'Popper',
+      )}. You should move function params from object to array arguments manually.`,
+  },
 };
 
 const FORCE_PORTAL = 'forcePortal';
