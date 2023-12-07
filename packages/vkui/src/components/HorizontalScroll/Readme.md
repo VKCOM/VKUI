@@ -206,7 +206,7 @@ const RandomUsers = () => {
 ```
 
 Или как последний элемент `HorizontalScroll`, но тогда надо компенсировать отступы высталяемые
-`HorizontalCell` с помощью пропа `compensateLastCellIndent`.
+`HorizontalCell` с помощью свойства `compensateLastCellIndent`.
 
 ```tsx static
 <HorizontalScroll>
