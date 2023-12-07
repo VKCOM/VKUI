@@ -49,6 +49,10 @@ export interface AlertProps extends React.HTMLAttributes<HTMLElement>, HasRootRe
    * Доступно только в `compact`-режиме, не отображается на `iOS`
    */
   dismissButtonMode?: 'inside' | 'outside';
+  /**
+   * `data-testid` для кнопки закрытия
+   */
+  dismissButtonTestId?: string;
 }
 
 /**
@@ -67,6 +71,7 @@ export const Alert = ({
   renderAction,
   actionsAlign,
   dismissButtonMode = 'outside',
+  dismissButtonTestId,
   getRootRef,
   ...restProps
 }: AlertProps) => {
@@ -166,6 +171,7 @@ export const Alert = ({
               onClick={close}
               hoverMode="opacity"
               activeMode="opacity"
+              data-testid={dismissButtonTestId}
             >
               <Icon20Cancel />
             </IconButton>
@@ -179,7 +185,11 @@ export const Alert = ({
           onItemClick={onItemClick}
         />
         {isDismissButtonVisible && dismissButtonMode === 'outside' && (
-          <ModalDismissButton onClick={close} aria-label={dismissLabel} />
+          <ModalDismissButton
+            onClick={close}
+            aria-label={dismissLabel}
+            data-testid={dismissButtonTestId}
+          />
         )}
       </FocusTrap>
     </PopoutWrapper>
