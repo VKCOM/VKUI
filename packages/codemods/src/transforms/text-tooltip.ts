@@ -5,7 +5,6 @@ import {
   createAttributeManipulator,
   getImportInfo,
 } from '../codemod-helpers';
-import { report } from '../report';
 import type { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';
