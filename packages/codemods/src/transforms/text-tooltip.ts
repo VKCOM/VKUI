@@ -21,6 +21,9 @@ const ATTRIBUTE_MANIPULATOR: AttributeManipulator = {
   autoUpdateOnTargetResize: {
     action: 'remove',
   },
+  getRef: {
+    keyTo: 'getRootRef',
+  },
   renderContent: {
     keyTo: 'children',
     reportText: () =>

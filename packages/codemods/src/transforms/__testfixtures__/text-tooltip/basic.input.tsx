@@ -10,6 +10,7 @@ const App = () => {
         offsetDistance={0}
         forcePortal
         portalRoot={someHTMLElement}
+        getRef={getRef}
       >
         123
       </TextTooltip>
