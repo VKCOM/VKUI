@@ -46,28 +46,18 @@
   color: var(--vkui--color_text_subhead);
 }
 
-.ModalCardBase__header + .ModalCardBase__subheader {
-  margin-block-start: 8px;
-}
-
 .ModalCardBase__icon {
   margin-block: 8px 16px;
   margin-inline: auto;
   color: var(--vkui--color_icon_accent);
 }
 
+:global(.vkuiInternalUsersStack) + .ModalCardBase__actions-spacing {
+  margin-block-start: 8px;
+}
+
 .ModalCardBase__actions {
   display: flex;
-  margin-block-start: 16px;
-}
-
-:global(.vkuiInternalUsersStack) + .ModalCardBase__actions {
-  margin-block-start: 24px;
-}
-
-.ModalCardBase__header + .ModalCardBase__actions,
-.ModalCardBase__subheader + .ModalCardBase__actions {
-  margin-block-start: 32px;
 }
 
 .ModalCardBase__dismiss {

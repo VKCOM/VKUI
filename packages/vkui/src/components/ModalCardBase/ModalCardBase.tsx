@@ -6,6 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { Spacing } from '../Spacing/Spacing';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
 import { ModalCardBaseCloseButton } from './ModalCardBaseCloseButton';
@@ -97,6 +98,9 @@ export const ModalCardBase = ({
   const withSafeZone =
     !icon && (dismissButtonMode === 'inside' || (platform === 'ios' && !isDesktop));
 
+  const hasHeader = hasReactNode(header);
+  const hasSubheader = hasReactNode(subheader);
+  const hasChildren = hasReactNode(children);
   return (
     <RootComponent
       {...restProps}
@@ -131,6 +135,7 @@ export const ModalCardBase = ({
             {header}
           </Title>
         )}
+        {hasHeader && hasSubheader && <Spacing size={8} />}
         {hasReactNode(subheader) && (
           <AdaptivityContext.Provider value={{ sizeY: 'regular' }}>
             <Subhead
@@ -147,7 +152,15 @@ export const ModalCardBase = ({
 
         {children}
 
-        {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
+        {hasReactNode(actions) && (
+          <React.Fragment>
+            <Spacing
+              className={styles['ModalCardBase__actions-spacing']}
+              size={(hasHeader || hasSubheader) && !hasChildren ? 32 : 16}
+            />
+            <div className={styles['ModalCardBase__actions']}>{actions}</div>
+          </React.Fragment>
+        )}
 
         <ModalCardBaseCloseButton
           testId={modalDismissButtonTestId}

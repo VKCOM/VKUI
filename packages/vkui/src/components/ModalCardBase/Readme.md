@@ -16,7 +16,8 @@
       icon={<Icon56MoneyTransferOutline />}
     />
   </AdaptivityProvider>
-  <Text style={{ marginBottom: 10 }}>Мобильная версия</Text>
+  <Text>Мобильная версия</Text>
+  <Spacing size={10} />
   <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
     <ModalCardBase
       style={{ width: 320 }}
@@ -34,6 +35,31 @@
         </ButtonGroup>
       }
     />
+  </AdaptivityProvider>
+  <Spacing size={30} />
+  <Text>С UserStack в качестве children (имеет особенный отступ c actions)</Text>
+  <Spacing size={10} />
+  <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
+    <ModalCardBase
+      style={{ width: 320 }}
+      icon={<Image borderRadius="l" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
+      header="Добавить игру «Загадки детства» в меню?"
+      subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
+      actions={
+        <ButtonGroup mode="horizontal" gap="s" stretched>
+          <Button size="l" mode="primary" stretched>
+            Да
+          </Button>
+          <Button size="l" mode="secondary" stretched>
+            Позже
+          </Button>
+        </ButtonGroup>
+      }
+    >
+      <UsersStack photos={[getAvatarUrl('user_lihachyov')]}>
+        Понравилось Муртолу Левзачеву
+      </UsersStack>
+    </ModalCardBase>
   </AdaptivityProvider>
 </div>
 ```
