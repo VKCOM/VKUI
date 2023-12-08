@@ -37,8 +37,5 @@
     "test": "jest",
     "test:ci": "yarn test",
     "migrate": "jscodeshift"
-  },
-  "publishConfig": {
-    "provenance": true
   }
 }
