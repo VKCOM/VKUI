@@ -26,5 +26,12 @@
       "@vkui-e2e/utils": ["./packages/vkui/src/testing/e2e/utils"]
     }
   },
-  "exclude": ["**/node_modules", "**/dist", "**/coverage/**", "**/storybook-static"]
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "**/coverage/**",
+    "**/storybook-static",
+    "**/__testfixtures__",
+    "**/__tests__"
+  ]
 }
