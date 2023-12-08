@@ -37,5 +37,8 @@
     "test": "jest",
     "test:ci": "yarn test",
     "migrate": "jscodeshift"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
