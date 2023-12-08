@@ -88,6 +88,8 @@ export { HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll
 export type { HorizontalScrollProps } from './components/HorizontalScroll/HorizontalScroll';
 export { AspectRatio } from './components/AspectRatio/AspectRatio';
 export type { AspectRatioProps } from './components/AspectRatio/AspectRatio';
+export { SimpleGrid } from './components/SimpleGrid/SimpleGrid';
+export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
 
 /**
  * Popouts
