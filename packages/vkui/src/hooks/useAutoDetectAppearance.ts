@@ -11,13 +11,12 @@ import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 export const useAutoDetectAppearance = (appearanceProp?: AppearanceType): AppearanceType => {
   const { window } = useDOM();
 
-  const [appearance, setAppearance] = React.useState<AppearanceType>(() => {
-    if (appearanceProp) {
+  const [appearance, setAppearance] = React.useState<AppearanceType>(
+    // @ts-expect-error: TS2345 Из-за SSR мы не можем определять значение по умолчанию, чтобы не было ошибки при гидрации.
+    () => {
       return appearanceProp;
-    }
-    // eslint-disable-next-line no-restricted-properties
-    return window!.matchMedia('(prefers-color-scheme: dark)')?.matches ? 'dark' : 'light';
-  });
+    },
+  );
 
   useIsomorphicLayoutEffect(() => {
     if (appearanceProp) {
@@ -25,7 +24,7 @@ export const useAutoDetectAppearance = (appearanceProp?: AppearanceType): Appear
       return noop;
     }
 
-    const mediaQuery = window!.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery = window ? window.matchMedia('(prefers-color-scheme: dark)') : undefined;
 
     if (!mediaQuery) {
       return noop;
