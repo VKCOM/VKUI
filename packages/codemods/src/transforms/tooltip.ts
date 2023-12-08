@@ -1,11 +1,9 @@
-import chalk from 'chalk';
 import type { API, ASTPath, FileInfo, JSXAttribute, StringLiteral } from 'jscodeshift';
 import {
   type AttributeManipulator,
   createAttributeManipulator,
   getImportInfo,
 } from '../codemod-helpers';
-import { report } from '../report';
 import type { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';

@@ -1,5 +1,4 @@
-import chalk from 'chalk';
-import type { API, FileInfo } from 'jscodeshift';
+import type { API, Collection, FileInfo, JSXAttribute } from 'jscodeshift';
 import {
   type AttributeManipulator,
   createAttributeManipulator,
