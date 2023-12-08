@@ -8,6 +8,7 @@
 - <a href="{{anchor}}">Константы</a>
 - <a href="{{anchor}}">Компоненты</a>
 - <a href="{{anchor}}">`unstable_` компоненты</a>
+- <a href="{{anchor}}">Интеграция с VK Mini Apps</a>
 
 <br/>
 <hr/>
