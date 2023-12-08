@@ -544,11 +544,15 @@ npx @vkontakte/vkui-codemods --help
 />
 ```
 
-## ~~`PanelHeader.Content`~~
+<br/>
+
+### ~~`PanelHeader.Content`~~
 
 - Подкомпонент удален, используйте вместо него `typographyProps` у [`PanelHeader`](#/PanelHeader).
 
-## ~~`PromoBanner`~~
+<br/>
+
+### ~~`PromoBanner`~~
 
 - Компонент удален.
 - Для своей реализации, используйте событие [`VKWebAppShowBannerAd`](https://dev.vk.com/mini-apps/monetization/ad/banners).
@@ -564,7 +568,9 @@ npx @vkontakte/vkui-codemods --help
 - Пример представлен на странице [Интеграция с VK Mini Apps](https://vkcom.github.io/VKUI/#/integrations-vk-mini-apps)
   под заголовком **Виброотклик (Taptic Engine)**.
 
-## ~~`RangeSlider`~~
+<br/>
+
+### ~~`RangeSlider`~~
 
 - Компонент удален, используйте [`Slider`](#/Slider).
 
