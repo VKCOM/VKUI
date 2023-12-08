@@ -106,6 +106,8 @@ export { AspectRatio } from './components/AspectRatio/AspectRatio';
 export type { AspectRatioProps } from './components/AspectRatio/AspectRatio';
 export { Flex } from './components/Flex/Flex';
 export type { FlexProps } from './components/Flex/Flex';
+export { SimpleGrid } from './components/SimpleGrid/SimpleGrid';
+export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
 
 /**
  * Popouts
