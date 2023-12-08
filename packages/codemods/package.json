@@ -39,6 +39,7 @@
     "migrate": "jscodeshift"
   },
   "publishConfig": {
+    "provenance": true,
     "access": "public"
   }
 }
