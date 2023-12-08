@@ -2,10 +2,15 @@
   "name": "@vkontakte/vkui-token-translator",
   "version": "0.0.4",
   "description": "Tools for translate Appearance to vkui-tokens",
-  "repository": "https://github.com/VKCOM/VKUI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VKCOM/VKUI.git"
+  },
   "homepage": "https://vkcom.github.io/VKUI/",
   "license": "MIT",
-  "bin": "./dist/index.js",
+  "bin": {
+    "vkui-token-translator": "dist/index.js"
+  },
   "files": [
     "dist"
   ],

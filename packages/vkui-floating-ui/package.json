@@ -5,7 +5,7 @@
   "bugs": "https://github.com/VKCOM/VKUI",
   "repository": {
     "type": "git",
-    "url": "https://github.com/VKCOM/VKUI.git",
+    "url": "git+https://github.com/VKCOM/VKUI.git",
     "directory": "packages/vkui-floating-ui"
   },
   "files": [
