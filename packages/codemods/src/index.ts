@@ -7,7 +7,7 @@ import { CliOptions, runCli } from './cli.js';
 import getAvailableCodemods, { TRANSFORM_DIR } from './getAvailableCodemods.js';
 import logger from './helpers/logger.js';
 
-function runJSCodeShift(codemodName: string, flags: CliOptions) {
+function runJSCodeShift(codemodName: string, workingDirectory: string, flags: CliOptions) {
   const args = ['--parser=tsx', '--extensions=tsx,ts', `--alias=${flags.alias}`];
   if (flags.dryRun) {
     args.push('--dry');
@@ -27,7 +27,7 @@ function runJSCodeShift(codemodName: string, flags: CliOptions) {
       '-t',
       `${TRANSFORM_DIR}/${codemodName}.js`,
       ...args,
-      flags.glob,
+      workingDirectory,
     ],
     {
       stdio: 'inherit',
@@ -76,12 +76,13 @@ async function verifyConfiguration(workingDirectory: string, codemodName?: strin
 const run = async () => {
   const { flags, codemodName } = await runCli();
 
-  if (codemodName && flags.glob) {
+  const workingDirectory = flags.path ? flags.path : process.cwd();
+  if (codemodName && workingDirectory) {
     const codemodes = getAvailableCodemods();
     if (codemodes.includes(codemodName)) {
-      await verifyConfiguration(flags.glob, codemodName);
+      await verifyConfiguration(workingDirectory, codemodName);
       logger.info("\n 🚀 Let's go!");
-      runJSCodeShift(codemodName, flags);
+      runJSCodeShift(codemodName, workingDirectory, flags);
     } else {
       logger.error(
         `Codemod ${codemodName} doesn't exist. Please check the available codemods by running with --list option`,
@@ -89,15 +90,13 @@ const run = async () => {
       process.exit(0);
     }
   }
-  if (flags.all && flags.glob) {
-    await verifyConfiguration(flags.glob);
+  if (flags.all && workingDirectory) {
+    await verifyConfiguration(workingDirectory);
     logger.info("\n 🚀 Let's go!");
     const codemodes = getAvailableCodemods();
     codemodes.forEach((codemod) => {
-      if (flags.debug) {
-        logger.info(`Codemod ${codemod} in process...`);
-      }
-      runJSCodeShift(codemod, flags);
+      logger.info(`Codemod ${codemod} in process...`);
+      runJSCodeShift(codemod, workingDirectory, flags);
     });
   }
 

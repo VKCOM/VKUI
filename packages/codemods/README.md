@@ -28,7 +28,7 @@ Options:
  -V, --version             output the version number
  -l --list                 list available codemods
  --all                     apply all available codemods
- -g --glob <glob>          glob for files upon which to apply the codemods (default: "**/*.tsx?")
+ -p --path <paths>         path to files in which to apply the codemods (default: current directory)
  --dry-run                 no changes are made to files
  --ignore-config <config>  ignore files if they match patterns sourced from a configuration file (e.g. a .gitignore)
  --debug                   all logs are shown
@@ -45,7 +45,7 @@ npx @vkontakte/vkui-codemods --all
 Если вы хотите исключить некоторые файлы или директории из обработки, то временно создайте файл (по примеру .gitignore) с перечисленными исключениями:
 
 ```shell
-npx @vkontakte/vkui-codemods --all --glob "./examples" --ignore-config "./.codemodignore"
+npx @vkontakte/vkui-codemods --all --path "./examples" --ignore-config "./.codemodignore"
 ```
 
 ```

@@ -7,7 +7,7 @@ import pkg from '../package.json';
 
 export interface CliOptions {
   list: boolean;
-  glob: string;
+  path: string;
   dryRun: boolean;
   ignoreConfig: string;
   debug: boolean;
@@ -49,7 +49,7 @@ export const runCli = async (): Promise<Cli> => {
     .usage(`${chalk.green('[codemod-name]')}`)
     .option('-l --list', 'list available codemods')
     .option('--all', 'apply all available codemods')
-    .option('-g --glob <glob>', 'glob for files upon which to apply the codemods', '**/*.tsx?')
+    .option('-p --path <paths>', 'path to files in which to apply the codemods')
     .option('--dry-run', 'no changes are made to files')
     .option(
       '--ignore-config <config>',
