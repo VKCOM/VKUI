@@ -164,8 +164,16 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Tabbar/Tabbar.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/TabbarItem/TabbarItem.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/FixedLayout/FixedLayout.tsx`,
-            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/HorizontalScroll/HorizontalScroll.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/AspectRatio/AspectRatio.tsx`,
+          ],
+          sections: [
+            {
+              name: 'HorizontalScroll',
+              components: [
+                `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/HorizontalScroll/HorizontalScroll.tsx`,
+                `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/HorizontalScroll/HorizontalCellShowMore/HorizontalCellShowMore.tsx`,
+              ],
+            },
           ],
         },
         {
@@ -220,7 +228,6 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Cell/Cell.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Accordion/Accordion.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/HorizontalCell/HorizontalCell.tsx`,
-            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/HorizontalCellShowMore/HorizontalCellShowMore.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/RichCell/RichCell.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/List/List.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Footer/Footer.tsx`,

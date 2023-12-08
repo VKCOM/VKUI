@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
-import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { getAvatarUrl } from '../../testing/mock';
-import { Avatar } from '../Avatar/Avatar';
-import { Group } from '../Group/Group';
-import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
-import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
+import { withSinglePanel, withVKUILayout } from '../../../storybook/VKUIDecorators';
+import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../../storybook/constants';
+import { getAvatarUrl } from '../../../testing/mock';
+import { Avatar } from '../../Avatar/Avatar';
+import { Group } from '../../Group/Group';
+import { HorizontalCell } from '../../HorizontalCell/HorizontalCell';
+import { HorizontalScroll } from '../HorizontalScroll';
 import { HorizontalCellShowMore, HorizontalCellShowMoreProps } from './HorizontalCellShowMore';
 
 const story: Meta<HorizontalCellShowMoreProps> = {

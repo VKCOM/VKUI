@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Icon28ChevronRightCircle } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { HasRef, HasRootRef, LiteralUnion } from '../../types';
-import type { ImageBaseSize } from '../ImageBase/ImageBase';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
-import { Subhead, SubheadProps } from '../Typography/Subhead/Subhead';
+import { HasRef, HasRootRef, LiteralUnion } from '../../../types';
+import type { ImageBaseSize } from '../../ImageBase/ImageBase';
+import { Tappable, TappableProps } from '../../Tappable/Tappable';
+import { Subhead, SubheadProps } from '../../Typography/Subhead/Subhead';
 import styles from './HorizontalCellShowMore.module.css';
 
 const sizeClassNames = {

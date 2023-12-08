@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent } from '../../../testing/utils';
 import { HorizontalCellShowMore } from './HorizontalCellShowMore';
 
 describe('HorizontalCellShowMore', () => {
