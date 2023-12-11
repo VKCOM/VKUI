@@ -24,7 +24,7 @@ const Example = () => {
   const [itemsCount, setItemsCount] = useState(5);
   const [margin, setMargin] = useState('none');
   const [complexGap, setComplexGap] = useState(false);
-  const [align, setAlign] = useState(undefined);
+  const [align, setAlign] = useState('stretch');
   const platform = usePlatform();
 
   return (
