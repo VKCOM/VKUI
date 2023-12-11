@@ -12,6 +12,14 @@ const marginClassNames = {
   'auto-block': styles['SimpleGrid--margin-auto-block'],
 };
 
+const alignClassNames = {
+  start: styles['SimpleGrid--align-start'],
+  end: styles['SimpleGrid--align-end'],
+  center: styles['SimpleGrid--align-center'],
+  stretch: styles['SimpleGrid--align-stretch'],
+  baseline: styles['SimpleGrid--align-baseline'],
+};
+
 export interface SimpleGridProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Количество колонок
@@ -34,6 +42,10 @@ export interface SimpleGridProps extends HTMLAttributesWithRootRef<HTMLDivElemen
    * Вместо задания количества колонок, можно указать минимальную ширину элементов
    */
   minColWidth?: number;
+  /**
+   * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`
+   */
+  align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
 }
 
 export const SimpleGrid = ({
@@ -42,6 +54,7 @@ export const SimpleGrid = ({
   style: styleProp,
   margin = 'none',
   minColWidth,
+  align,
   ...props
 }: SimpleGridProps) => {
   const style: CSSCustomProperties = {};
@@ -63,6 +76,7 @@ export const SimpleGrid = ({
       baseClassName={classNames(
         styles.SimpleGrid,
         margin !== 'none' && marginClassNames[margin],
+        align && alignClassNames[align],
         minColWidth && styles['SimpleGrid--with-min-width'],
       )}
       style={{ ...styleProp, ...style }}

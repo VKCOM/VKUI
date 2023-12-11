@@ -25,3 +25,23 @@
 .SimpleGrid--with-min-width {
   grid-template-columns: repeat(auto-fit, minmax(var(--vkui_internal--min_col_width), 1fr));
 }
+
+.SimpleGrid--align-start {
+  align-items: flex-start;
+}
+
+.SimpleGrid--align-end {
+  align-items: flex-end;
+}
+
+.SimpleGrid--align-center {
+  align-items: center;
+}
+
+.SimpleGrid--align-stretch {
+  align-items: stretch;
+}
+
+.SimpleGrid--align-baseline {
+  align-items: baseline;
+}
