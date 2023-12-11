@@ -100,7 +100,6 @@ export const ModalCardBase = ({
 
   const hasHeader = hasReactNode(header);
   const hasSubheader = hasReactNode(subheader);
-  const hasChildren = hasReactNode(children);
   return (
     <RootComponent
       {...restProps}
@@ -126,25 +125,16 @@ export const ModalCardBase = ({
           <Title
             level="2"
             weight="2"
-            className={classNames(
-              styles['ModalCardBase__header'],
-              'vkuiInternalModalCardBase__header',
-            )}
+            className={styles['ModalCardBase__header']}
             Component={headerComponent}
           >
             {header}
           </Title>
         )}
         {hasHeader && hasSubheader && <Spacing size={8} />}
-        {hasReactNode(subheader) && (
+        {hasSubheader && (
           <AdaptivityContext.Provider value={{ sizeY: 'regular' }}>
-            <Subhead
-              className={classNames(
-                styles['ModalCardBase__subheader'],
-                'vkuiInternalModalCardBase__subheader',
-              )}
-              Component={subheaderComponent}
-            >
+            <Subhead className={styles['ModalCardBase__subheader']} Component={subheaderComponent}>
               {subheader}
             </Subhead>
           </AdaptivityContext.Provider>
@@ -152,15 +142,7 @@ export const ModalCardBase = ({
 
         {children}
 
-        {hasReactNode(actions) && (
-          <React.Fragment>
-            <Spacing
-              className={styles['ModalCardBase__actions-spacing']}
-              size={(hasHeader || hasSubheader) && !hasChildren ? 32 : 16}
-            />
-            <div className={styles['ModalCardBase__actions']}>{actions}</div>
-          </React.Fragment>
-        )}
+        {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
 
         <ModalCardBaseCloseButton
           testId={modalDismissButtonTestId}

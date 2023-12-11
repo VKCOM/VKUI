@@ -14,7 +14,9 @@
         </Button>
       }
       icon={<Icon56MoneyTransferOutline />}
-    />
+    >
+      <Spacing size={16} />
+    </ModalCardBase>
   </AdaptivityProvider>
   <Text>Мобильная версия</Text>
   <Spacing size={10} />
@@ -34,7 +36,9 @@
           </Button>
         </ButtonGroup>
       }
-    />
+    >
+      <Spacing size={16} />
+    </ModalCardBase>
   </AdaptivityProvider>
   <Spacing size={30} />
   <Text>С UserStack в качестве children (имеет особенный отступ c actions)</Text>
@@ -47,6 +51,7 @@
       subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
       actions={
         <ButtonGroup mode="horizontal" gap="s" stretched>
+          <Spacing size={20} />
           <Button size="l" mode="primary" stretched>
             Да
           </Button>
@@ -56,9 +61,13 @@
         </ButtonGroup>
       }
     >
-      <UsersStack photos={[getAvatarUrl('user_lihachyov')]}>
-        Понравилось Муртолу Левзачеву
-      </UsersStack>
+      <React.Fragment>
+        <Spacing size={20} />
+        <UsersStack photos={[getAvatarUrl('user_lihachyov')]}>
+          Понравилось Муртолу Левзачеву
+        </UsersStack>
+        <Spacing size={8} />
+      </React.Fragment>
     </ModalCardBase>
   </AdaptivityProvider>
 </div>
@@ -69,6 +78,23 @@
 Через свойство `dismissButtonMode=inside|outside` можно задать вид кнопки закрытия.
 Согласно нашим дизайн-гайдам, `dismissButtonMode=outside` отображается только для `compact`-режима (десктопная и планшетные версии).
 Для `iOS` всегда будет применяться `dismissButtonMode=inside` в `regular`-режиме (мобильная версия).
+
+## Отступы между контентом и кнопками действий (`actions`)
+
+По умолчанию верхний отступ от кнопок действий `actions` равняется `16px`. Согласно дизайн-системе отступ может быть больше в зависимости от того какие данные отображаются внутри `ModalCardBase`.
+Если необходимо увеличить отступ, то передавайте в `children` компонент [Spacing](#/Spacing).
+
+```jsx static
+<ModalCardBase
+  dismissButtonMode="inside"
+  dismissLabel="Закрыть"
+  style={{ width: 450, marginBottom: 20 }}
+  header="Десктопная и планшетная версии с крестиком внутри"
+  subheader="Сверху будет безопасный отступ до иконки"
+>
+  <Spacing size={16} />
+</ModalCardBase>
+```
 
 ## Цифровая доступность (a11y)
 
@@ -83,14 +109,18 @@
       style={{ width: 450, marginBottom: 20 }}
       header="Десктопная и планшетная версии с крестиком внутри"
       subheader="Сверху будет безопасный отступ до иконки"
-    />
+    >
+      <Spacing size={16} />
+    </ModalCardBase>
     <ModalCardBase
       dismissButtonMode="inside"
       style={{ width: 450, marginBottom: 20 }}
       header="Десктопная и планшетная версии с крестиком внутри"
       subheader="Безопасной зоны не будет, потому что есть иконка"
       icon={<Icon56MoneyTransferOutline />}
-    />
+    >
+      <Spacing size={16} />
+    </ModalCardBase>
   </AdaptivityProvider>
   <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
     <ModalCardBase
@@ -98,14 +128,18 @@
       dismissButtonMode="inside"
       header="Мобильная версия с крестиком внутри"
       subheader="Сверху будет безопасный отступ до иконки"
-    />
+    >
+      <Spacing size={16} />
+    </ModalCardBase>
     <ModalCardBase
       style={{ width: 320 }}
       dismissButtonMode="inside"
       icon={<Image borderRadius="l" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
       header="Мобильная версия с крестиком внутри"
       subheader="Безопасной зоны не будет, потому что есть иконка"
-    />
+    >
+      <Spacing size={16} />
+    </ModalCardBase>
   </AdaptivityProvider>
 </div>
 ```

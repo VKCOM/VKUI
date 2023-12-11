@@ -388,7 +388,9 @@ const App = () => {
             Попробовать
           </Button>
         }
-      ></ModalCard>
+      >
+        <Spacing size={16} />
+      </ModalCard>
 
       <ModalCard
         id={MODAL_CARD_APP_TO_MENU}
@@ -406,7 +408,9 @@ const App = () => {
             Добавить в меню
           </Button>
         }
-      />
+      >
+        <Spacing size={16} />
+      </ModalCard>
 
       <ModalCard
         id={MODAL_CARD_ABOUT}
@@ -453,7 +457,9 @@ const App = () => {
             </Button>
           </ButtonGroup>
         }
-      />
+      >
+        <Spacing size={16} />
+      </ModalCard>
 
       <ModalCard
         id={MODAL_CARD_CHAT_INVITE}
@@ -484,22 +490,26 @@ const App = () => {
           </ButtonGroup>
         }
       >
-        <UsersStack
-          photos={[
-            getAvatarUrl('user_mm'),
-            getAvatarUrl('user_ilyagrshn'),
-            getAvatarUrl('user_lihachyov'),
-            getAvatarUrl('user_wayshev'),
-            getAvatarUrl('user_arthurstam'),
-            getAvatarUrl('user_xyz'),
-          ]}
-          size="l"
-          visibleCount={3}
-          layout="vertical"
-        >
-          Алексей, Илья, Михаил
-          <br />и ещё 3 человека
-        </UsersStack>
+        <React.Fragment>
+          <Spacing size={20} />
+          <UsersStack
+            photos={[
+              getAvatarUrl('user_mm'),
+              getAvatarUrl('user_ilyagrshn'),
+              getAvatarUrl('user_lihachyov'),
+              getAvatarUrl('user_wayshev'),
+              getAvatarUrl('user_arthurstam'),
+              getAvatarUrl('user_xyz'),
+            ]}
+            size="l"
+            visibleCount={3}
+            layout="vertical"
+          >
+            Алексей, Илья, Михаил
+            <br />и ещё 3 человека
+          </UsersStack>
+          <Spacing size={8} />
+        </React.Fragment>
       </ModalCard>
     </ModalRoot>
   );

@@ -561,6 +561,89 @@ npx @vkontakte/vkui-codemods --help
 />
 ```
 
+<br />
+
+Отступ перед кнопками действий (`actions`) больше автоматически не меняется в зависимости от контента.
+Отступ теперь всегда равен `16px`.
+Согласно дизайн-системе отступ может быть и больше в зависимости от свойств и контента компонента.
+Для того, чтобы увеличить отступ используйте компонент [Spacing](#/Spacing).
+Ниже приведёны ситуации в которых точно нужно использовать [Spacing](#/Spacing), чтобы продолжать следовать дизайн-системе.
+
+- `ModalCard` или `ModalCardBase` содержит `actions` и `header` или `subheader`, но не содержит `children`.
+
+```diff
+    <ModalCard header="Добавить игру «Загадки детства» в меню?"
+      actions={
+        <ButtonGroup mode="horizontal" gap="s" stretched>
+          <Button size="l" mode="primary" stretched>
+            Да
+          </Button>
+          <Button size="l" mode="secondary" stretched>
+            Позже
+          </Button>
+        </ButtonGroup>
+      }
+-    />
++    >
++      <Spacing size={16} />
++    </ModalCardBase>
+```
+
+- `ModalCard` или `ModalCardBase` содержит `actions`, а внутрь `children` передан [UsersStack](#/UsersStack).
+
+```diff
+    <ModalCard header="Добавить игру «Загадки детства» в меню?"
+      actions={
+        <ButtonGroup mode="horizontal" gap="s" stretched>
+          <Button size="l" mode="primary" stretched>
+            Да
+          </Button>
+          <Button size="l" mode="secondary" stretched>
+            Позже
+          </Button>
+        </ButtonGroup>
+      }
+    >
+-      <UsersStack photos={[getAvatarUrl('user_lihachyov')]}>
+-        Понравилось Муртолу Левзачеву
+-      </UsersStack>
++      <React.Fragment>
++        <Spacing size={20} />
++        <UsersStack photos={[getAvatarUrl('user_lihachyov')]}>
++          Понравилось Муртолу Левзачеву
++        </UsersStack>
++        <Spacing size={8} />
++      </React.Fragment>
+     </ModalCardBase>
+```
+
+- `ModalCard` или `ModalCardBase` содержит `actions`, а внутрь `children` передан [FormField](#/FormField).
+
+```diff
+    <ModalCard header="Добавить игру «Загадки детства» в меню?"
+      actions={
+        <ButtonGroup mode="horizontal" gap="s" stretched>
+          <Button size="l" mode="primary" stretched>
+            Да
+          </Button>
+          <Button size="l" mode="secondary" stretched>
+            Позже
+          </Button>
+        </ButtonGroup>
+      }
+    >
+-      <FormField>
+-        <CustomInput />
+-      </FormField>
++      <React.Fragment>
++        <Spacing size={16} />
++        <FormField>
++          <CustomInput />
++        </FormField>
++      </React.Fragment>
+     </ModalCardBase>
+```
+
 <br/>
 
 ### [`ModalPageHeader`](#/ModalPageHeader)

@@ -52,12 +52,9 @@
   color: var(--vkui--color_icon_accent);
 }
 
-:global(.vkuiInternalUsersStack) + .ModalCardBase__actions-spacing {
-  margin-block-start: 8px;
-}
-
 .ModalCardBase__actions {
   display: flex;
+  margin-block-start: 16px;
 }
 
 .ModalCardBase__dismiss {
