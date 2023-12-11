@@ -4,7 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAutoFocus } from '../../hooks/useAutoFocus';
 import { useExternRef } from '../../hooks/useExternRef';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
-import { HasAlign, HTMLAttributesWithRootRef } from '../../types';
+import { HasAlign, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import type { SelectType } from '../Select/Select';
@@ -17,7 +17,8 @@ const sizeYClassNames = {
 };
 
 export interface SelectMimicryProps
-  extends HTMLAttributesWithRootRef<HTMLElement>,
+  extends React.AllHTMLAttributes<HTMLElement>,
+    HasRootRef<HTMLElement>,
     HasAlign,
     Pick<FormFieldProps, 'before' | 'after' | 'status'> {
   multiline?: boolean;
