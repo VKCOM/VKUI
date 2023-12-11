@@ -54,7 +54,7 @@ export const SimpleGrid = ({
   style: styleProp,
   margin = 'none',
   minColWidth,
-  align,
+  align = 'stretch',
   ...props
 }: SimpleGridProps) => {
   const style: CSSCustomProperties = {};
@@ -76,7 +76,7 @@ export const SimpleGrid = ({
       baseClassName={classNames(
         styles.SimpleGrid,
         margin !== 'none' && marginClassNames[margin],
-        align && alignClassNames[align],
+        alignClassNames[align],
         minColWidth && styles['SimpleGrid--with-min-width'],
       )}
       style={{ ...styleProp, ...style }}
