@@ -5412,7 +5412,7 @@ __metadata:
     lint-staged: ^15.2.0
     mini-css-extract-plugin: ^2.7.6
     postcss: ^8.4.32
-    postcss-cli: ^10.0.0
+    postcss-cli: ^11.0.0
     postcss-custom-media: ^10.0.2
     postcss-gap-properties: ^5.0.0
     postcss-import: ^15.0.0
@@ -10587,7 +10587,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:^13.0.0, globby@npm:^13.1.1":
+"globby@npm:^13.1.1":
   version: 13.2.2
   resolution: "globby@npm:13.2.2"
   dependencies:
@@ -14990,17 +14990,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-cli@npm:^10.0.0":
-  version: 10.1.0
-  resolution: "postcss-cli@npm:10.1.0"
+"postcss-cli@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "postcss-cli@npm:11.0.0"
   dependencies:
     chokidar: ^3.3.0
     dependency-graph: ^0.11.0
     fs-extra: ^11.0.0
     get-stdin: ^9.0.0
-    globby: ^13.0.0
+    globby: ^14.0.0
     picocolors: ^1.0.0
-    postcss-load-config: ^4.0.0
+    postcss-load-config: ^5.0.0
     postcss-reporter: ^7.0.0
     pretty-hrtime: ^1.0.3
     read-cache: ^1.0.0
@@ -15010,7 +15010,7 @@ __metadata:
     postcss: ^8.0.0
   bin:
     postcss: index.js
-  checksum: c900cc48cb15f7b08d96e73faaf08be13e8fee0228411c581f09c319222b399a4a1f04a1b12de1fd94ae361e0e548bdbeaeab7bb789778b88ddd7587aa482a54
+  checksum: 93f49c45988d02375a7eec593e99576bfc3cea9180ba5b3a42efe850954112d91afa0c2bc65b3102b99b5b871650250040c88ada6d97e2708b160fced2efb369
   languageName: node
   linkType: hard
 
@@ -15139,21 +15139,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-load-config@npm:^4.0.0":
-  version: 4.0.2
-  resolution: "postcss-load-config@npm:4.0.2"
+"postcss-load-config@npm:^5.0.0":
+  version: 5.0.2
+  resolution: "postcss-load-config@npm:5.0.2"
   dependencies:
     lilconfig: ^3.0.0
     yaml: ^2.3.4
   peerDependencies:
+    jiti: ">=1.21.0"
     postcss: ">=8.0.9"
-    ts-node: ">=9.0.0"
   peerDependenciesMeta:
+    jiti:
+      optional: true
     postcss:
       optional: true
-    ts-node:
-      optional: true
-  checksum: 7c27dd3801db4eae207a5116fed2db6b1ebb780b40c3dd62a3e57e087093a8e6a14ee17ada729fee903152d6ef4826c6339eb135bee6208e0f3140d7e8090185
+  checksum: 681ef82c33a586ac566da85b3cdaab61568ef273f78bc4d3ee83eb847b582665362c8973f7d277447d405ce965fe3a4585ab72bf3f49cb400c94c640ada923e3
   languageName: node
   linkType: hard
 
