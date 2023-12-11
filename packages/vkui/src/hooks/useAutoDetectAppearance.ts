@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
-import type { AppearanceType } from '../lib/appearance';
+import { Appearance, type AppearanceType } from '../lib/appearance';
 import { useDOM } from '../lib/dom';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
@@ -11,13 +11,9 @@ import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 export const useAutoDetectAppearance = (appearanceProp?: AppearanceType): AppearanceType => {
   const { window } = useDOM();
 
-  const [appearance, setAppearance] = React.useState<AppearanceType>(() => {
-    if (appearanceProp) {
-      return appearanceProp;
-    }
-    // eslint-disable-next-line no-restricted-properties
-    return window!.matchMedia('(prefers-color-scheme: dark)')?.matches ? 'dark' : 'light';
-  });
+  const [appearance, setAppearance] = React.useState<AppearanceType>(
+    appearanceProp || Appearance.LIGHT,
+  );
 
   useIsomorphicLayoutEffect(() => {
     if (appearanceProp) {
@@ -25,7 +21,7 @@ export const useAutoDetectAppearance = (appearanceProp?: AppearanceType): Appear
       return noop;
     }
 
-    const mediaQuery = window!.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery = window ? window.matchMedia('(prefers-color-scheme: dark)') : undefined;
 
     if (!mediaQuery) {
       return noop;
@@ -33,7 +29,7 @@ export const useAutoDetectAppearance = (appearanceProp?: AppearanceType): Appear
 
     const check = (event: MediaQueryList | MediaQueryListEvent) => {
       // eslint-disable-next-line no-restricted-properties
-      setAppearance(event.matches ? 'dark' : 'light');
+      setAppearance(event.matches ? Appearance.DARK : Appearance.LIGHT);
     };
     check(mediaQuery);
     matchMediaListAddListener(mediaQuery, check);
