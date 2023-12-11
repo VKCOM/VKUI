@@ -37,13 +37,13 @@ yarn add @vkontakte/vkui
 pnpm add @vkontakte/vkui
 ```
 
-> _Обратите внимание_: мы поддерживаем [react](https://www.npmjs.com/package/react) и [react-dom](https://www.npmjs.com/package/react-dom) `^17.0.0` и `^18.1.0`
+> _Обратите внимание_: мы поддерживаем [react](https://www.npmjs.com/package/react) и [react-dom](https://www.npmjs.com/package/react-dom) версии `^18.2.0`
 
 ## Hello World
 
 ```jsx static
 import * as React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   AdaptivityProvider,
   ConfigProvider,
@@ -79,28 +79,20 @@ const Example = () => {
   );
 };
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(
   <ConfigProvider>
     <AdaptivityProvider>
       <Example />
     </AdaptivityProvider>
   </ConfigProvider>,
-  document.getElementById('root'),
 );
 ```
 
 ## Браузеры
 
-На данный момент мы поддерживаем WebView следующих операционных систем:
-
-- Android >= 5
-- iOS >= 9
-
-Иными словами, мы поддерживаем браузеры следующих версий:
-
-- Safari для iOS >= 9
-- Android Browser >= 5 (Chrome 36)
-- Chrome для Android, начиная с Android 5.0 (Chrome 36)
+С подробным списком можно ознакомиться в файле [.browserslistrc](https://github.com/VKCOM/VKUI/blob/master/.browserslistrc)
 
 ## Тестирование
 
