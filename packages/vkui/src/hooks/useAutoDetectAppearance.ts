@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
-import type { AppearanceType } from '../lib/appearance';
+import { Appearance, type AppearanceType } from '../lib/appearance';
 import { useDOM } from '../lib/dom';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
@@ -12,10 +12,7 @@ export const useAutoDetectAppearance = (appearanceProp?: AppearanceType): Appear
   const { window } = useDOM();
 
   const [appearance, setAppearance] = React.useState<AppearanceType>(
-    // @ts-expect-error: TS2345 Из-за SSR мы не можем определять значение по умолчанию, чтобы не было ошибки при гидрации.
-    () => {
-      return appearanceProp;
-    },
+    appearanceProp || Appearance.LIGHT,
   );
 
   useIsomorphicLayoutEffect(() => {
@@ -32,7 +29,7 @@ export const useAutoDetectAppearance = (appearanceProp?: AppearanceType): Appear
 
     const check = (event: MediaQueryList | MediaQueryListEvent) => {
       // eslint-disable-next-line no-restricted-properties
-      setAppearance(event.matches ? 'dark' : 'light');
+      setAppearance(event.matches ? Appearance.DARK : Appearance.LIGHT);
     };
     check(mediaQuery);
     matchMediaListAddListener(mediaQuery, check);
