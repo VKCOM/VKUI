@@ -1,10 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { Appearance } from '../lib/appearance';
 import * as LibDOM from '../lib/dom';
 import { useAutoDetectAppearance } from './useAutoDetectAppearance';
-
-const LIGHT = 'light' as const;
-const DARK = 'dark' as const;
 
 jest.mock('../lib/dom', () => {
   return {
@@ -15,20 +13,35 @@ jest.mock('../lib/dom', () => {
 
 describe(useAutoDetectAppearance, () => {
   describe('client', () => {
-    it.each([LIGHT, DARK])('should return appearance by property (%s)', (appearanceProp) => {
-      const { result } = renderHook(() => useAutoDetectAppearance(appearanceProp));
-      expect(result.current).toBe(appearanceProp);
-    });
+    it.each([Appearance.LIGHT, Appearance.DARK])(
+      'should return appearance by property (%s)',
+      (appearanceProp) => {
+        const { result } = renderHook(() => useAutoDetectAppearance(appearanceProp));
+        expect(result.current).toBe(appearanceProp);
+      },
+    );
 
     it.each([
       {
         initialMatches: false,
         listenerMatches: false,
-        appearance: { before: LIGHT, after: LIGHT },
+        appearance: { before: Appearance.LIGHT, after: Appearance.LIGHT },
       },
-      { initialMatches: true, listenerMatches: true, appearance: { before: DARK, after: DARK } },
-      { initialMatches: false, listenerMatches: true, appearance: { before: LIGHT, after: DARK } },
-      { initialMatches: true, listenerMatches: false, appearance: { before: DARK, after: LIGHT } },
+      {
+        initialMatches: true,
+        listenerMatches: true,
+        appearance: { before: Appearance.DARK, after: Appearance.DARK },
+      },
+      {
+        initialMatches: false,
+        listenerMatches: true,
+        appearance: { before: Appearance.LIGHT, after: Appearance.DARK },
+      },
+      {
+        initialMatches: true,
+        listenerMatches: false,
+        appearance: { before: Appearance.DARK, after: Appearance.LIGHT },
+      },
     ])(
       'should auto detect appearance (initialMatches is $initialMatches, listenerMatches is $listenerMatches, appearance is $appearance)',
       ({ initialMatches, listenerMatches, appearance }) => {
@@ -70,7 +83,7 @@ describe(useAutoDetectAppearance, () => {
         };
       });
       const { result } = renderHook(() => useAutoDetectAppearance());
-      expect(result.current).toBeUndefined();
+      expect(result.current).toBe(Appearance.LIGHT);
     });
   });
 });
