@@ -2,6 +2,20 @@
 Построен на базе `grid layout`. Можно указать либо `columns` (тогда пространство будет поделено на заданное количество колонок), либо `minColWidth` (тогда пространство будет распределено с учетом минимальной ширины колонки)
 
 ```jsx { "props": { "layout": false, "iframe": false } }
+const halsey = {
+  subtitle: 'ALBUM',
+  header: 'Halsey – Badlands⁣',
+  caption: 'Blue Vinyl · EU · 2015⁣',
+  text: 'Badlands is the story about dreams and cruel reality...',
+};
+
+const lorde = {
+  subtitle: 'ALBUM',
+  header: 'Lorde – Melodrama',
+  caption: 'Blue Vinyl · EU · 2018⁣',
+  text: 'Lorde captures emotions like none other. Her second album is a masterful study of being a young woman, a sleek and humid pop record full of grief and hedonism, crafted with the utmost care and wisdom.',
+};
+
 const Example = () => {
   const [gap, setGap] = useState(8);
   const [rowGap, setRowGap] = useState(8);
@@ -10,21 +24,20 @@ const Example = () => {
   const [itemsCount, setItemsCount] = useState(5);
   const [margin, setMargin] = useState('none');
   const [complexGap, setComplexGap] = useState(false);
+  const [align, setAlign] = useState(undefined);
   const platform = usePlatform();
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'flex-end' }}>
       <div>
-        <SimpleGrid columns={columns} gap={complexGap ? [rowGap, columnGap] : gap} margin={margin}>
+        <SimpleGrid
+          align={align}
+          columns={columns}
+          gap={complexGap ? [rowGap, columnGap] : gap}
+          margin={margin}
+        >
           {Array.from({ length: itemsCount }, (item, index) => {
-            return (
-              <ContentCard
-                subtitle="ALBUM"
-                header="Halsey – Badlands⁣"
-                caption="Blue Vinyl · EU · 2015⁣"
-                text="Badlands is the story about dreams and cruel reality..."
-              />
-            );
+            return <ContentCard {...(index % 2 === 0 ? lorde : halsey)} />;
           })}
         </SimpleGrid>
       </div>
@@ -82,6 +95,21 @@ const Example = () => {
               auto-block
             </Radio>
           </RadioGroup>
+        </FormItem>
+        <FormItem top="align">
+          <Select
+            value={align}
+            onChange={(e) => setAlign(e.target.value)}
+            placeholder="Не выбрано"
+            options={[
+              { label: 'start', value: 'start' },
+              { label: 'end', value: 'end' },
+              { label: 'center', value: 'center' },
+              { label: 'stretch', value: 'stretch' },
+              { label: 'baseline', value: 'baseline' },
+            ]}
+            allowClearButton
+          />
         </FormItem>
         {!complexGap && (
           <FormItem top="gap">
