@@ -63,6 +63,7 @@ export const Tool = () => {
         />
       )}
     >
+      {/* @ts-expect-error: TS2741 Подождем, пока обновят типы */}
       <IconButton>
         <Icons icon="grid" />
         &nbsp; cartesian
