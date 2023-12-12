@@ -10,6 +10,7 @@ import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Image } from '../Image/Image';
 import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
+import { Spacing } from '../Spacing/Spacing';
 import { Textarea } from '../Textarea/Textarea';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { ModalCard, type ModalCardProps } from './ModalCard';
@@ -35,6 +36,7 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
               Попробовать
             </Button>,
           ],
+          children: [<Spacing size={16} key="spacing" />],
         },
         {
           nav: ['2'],
@@ -54,16 +56,14 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
             </ButtonGroup>,
           ],
           children: [
-            <UsersStack
-              photos={['', '', '', '']}
-              size="l"
-              visibleCount={3}
-              key="usersstack"
-              direction="column"
-            >
-              Алексей, Илья, Михаил
-              <br />и ещё 3 человека
-            </UsersStack>,
+            <React.Fragment key="userstack">
+              <Spacing size={20} />
+              <UsersStack photos={['', '', '', '']} size="l" visibleCount={3} direction="column">
+                Алексей, Илья, Михаил
+                <br />и ещё 3 человека
+              </UsersStack>
+              <Spacing size={8} />
+            </React.Fragment>,
           ],
         },
         {
@@ -74,7 +74,12 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
               Сохранить
             </Button>,
           ],
-          children: [<Textarea key="textarea" defaultValue="В Грузии" />],
+          children: [
+            <React.Fragment key="textarea">
+              <Spacing size={16} />
+              <Textarea defaultValue="В Грузии" />
+            </React.Fragment>,
+          ],
         },
         {
           nav: ['4'],
@@ -92,6 +97,7 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
               </Button>
             </ButtonGroup>,
           ],
+          children: [<Spacing size={16} key="spacing" />],
         },
         {
           nav: ['4'],
@@ -102,6 +108,7 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
             </Button>,
           ],
           dismissButtonMode: ['inside', 'outside'],
+          children: [<Spacing size={16} key="spacing" />],
         },
       ]}
       AppWrapper={AppWrapper}
