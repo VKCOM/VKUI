@@ -19,10 +19,27 @@ const stylesAlignY = {
 };
 
 export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Если `true`, то при первом монтировании оверлей появится через fade-in анимацию.
+   */
   hasMask?: boolean;
+  /**
+   * Включает фиксированное позиционирование.
+   *
+   * По умолчанию у компонента не задан никакой `position`.
+   */
   fixed?: boolean;
-  alignY?: 'top' | 'center' | 'bottom';
+  /**
+   * Выравнивает контент по горизонтали.
+   */
   alignX?: 'left' | 'center' | 'right';
+  /**
+   * Выравнивает контент по вертикали.
+   */
+  alignY?: 'top' | 'center' | 'bottom';
+  /**
+   * Спрячет компонент через fade-out анимацию.
+   */
   closing?: boolean;
 }
 
