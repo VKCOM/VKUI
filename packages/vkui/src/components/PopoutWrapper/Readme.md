@@ -2,7 +2,7 @@
 > который уже оборачивает в `PopoutWrapper`.
 >
 > Компоненты [`Alert`](#/Alert), [`ActionSheet`](#/ActionSheet)
-> и [`ScreenSpinner`](#/.ScreenSpinner) также уже используют этот компонент.
+> и [`ScreenSpinner`](#/ScreenSpinner) также уже используют этот компонент.
 >
 > Если всё же есть потребность использовать компонент отдельно, то ориентируетесь на пример ниже.
 
@@ -21,8 +21,8 @@ const App = () => {
 
   return (
     <div>
-      <h1>Me Awesome App</h1>
-      <labe htmlFor="toggle">Toggle popout</label>
+      <h1>My Awesome App</h1>
+      <label htmlFor="toggle">Toggle popout</label>
       <input id="toggle" checked={opened} onChange={(event) => setOpened(event.checked)} />
       {popout}
     </div>
