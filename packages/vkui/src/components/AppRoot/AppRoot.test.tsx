@@ -83,7 +83,7 @@ describe('AppRoot', () => {
 
   describe('portalRoot in mode="embedded"', () => {
     it.each(['embedded', 'partial'] as const)(
-      'should creates and inject portal in %s mode',
+      'should create and inject portal in %s mode',
       (mode) => {
         let portalRoot: React.RefObject<HTMLElement | null> = React.createRef();
         const contextCallback = jest.fn().mockImplementation((ctx) => {
