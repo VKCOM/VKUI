@@ -101,7 +101,7 @@ describe('AppRoot', () => {
       },
     );
 
-    it('should not removes external portalRoot provided as prop', () => {
+    it('should not remove external portalRoot provided as prop', () => {
       const TestComponent = () => {
         const [shouldMount, setShouldMount] = React.useState(false);
         const portalRootRef = React.useRef<HTMLDivElement | null>(null);
