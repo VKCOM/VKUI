@@ -74,6 +74,10 @@ export interface ChipsSelectProps<O extends ChipOption>
    */
   ClearButton?: React.ComponentType<ChipsSelectClearButtonProps>;
   /**
+   * Если `true`, то справа будет отображаться кнопка для очистки значения
+   */
+  allowClearButton?: boolean;
+  /**
    * Закрытие выпадающего списка после выбора элемента
    */
   closeAfterSelect?: boolean;
@@ -158,7 +162,9 @@ export const ChipsSelect = <Option extends ChipOption>({
   onInputChange: onInputChangeProp,
   onBlur,
   onKeyDown,
+
   ClearButton = ChipsSelectClearButton,
+  allowClearButton,
   ...restProps
 }: ChipsSelectProps<Option>) => {
   const {
@@ -291,13 +297,13 @@ export const ChipsSelect = <Option extends ChipOption>({
     focusOptionByIndex(index, focusedOptionIndex);
   };
 
-  const clearButtonShown = !opened && value.length;
+  const clearButtonShown = allowClearButton && !opened && value.length;
   const clearButton = React.useMemo(() => {
     if (!clearButtonShown) {
       return null;
     }
     return (
-      <ClearButton className={styles['CustomSelect--clear-icon']} onClick={() => onChange!([])} />
+      <ClearButton className={styles['ChipsSelect--clear-icon']} onClick={() => onChange?.([])} />
     );
   }, [clearButtonShown, ClearButton, onChange]);
 
@@ -375,7 +381,6 @@ export const ChipsSelect = <Option extends ChipOption>({
   }, [options, focusedOptionIndex, setFocusedOption]);
 
   const onDropdownPlacementChange = React.useCallback((placement: Placement) => {
-    // console.log(placement);
     if (placement.startsWith('top')) {
       setDropdownVerticalPlacement('top');
     } else if (placement.startsWith('bottom')) {

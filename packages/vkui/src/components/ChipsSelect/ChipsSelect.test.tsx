@@ -208,10 +208,17 @@ describe('ChipsSelect', () => {
       await userEvent.click(result.getByText(`Удалить ${colors[0].label}`).closest('button')!);
       expect(handleChange).toHaveBeenCalledWith([]);
     });
-    it('clear all selected chips', () => {
+    it('clear all selected chips', async () => {
       let value = [...colors];
-      render(<ChipsSelect options={colors} value={colors} onChange={(e) => (value = e)} />);
-      userEvent.click(screen.getByLabelText('Очистить поле'));
+      const result = render(
+        <ChipsSelect
+          options={colors}
+          value={colors}
+          onChange={(e) => (value = e)}
+          allowClearButton
+        />,
+      );
+      await userEvent.click(result.getByLabelText('Очистить поле'));
       expect(value).toEqual([]);
     });
   });
