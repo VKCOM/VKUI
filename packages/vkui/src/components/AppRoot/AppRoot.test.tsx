@@ -4,13 +4,33 @@ import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensCla
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { AppRoot } from './AppRoot';
+import { AppRoot, AppRootProps } from './AppRoot';
 import { AppRootContext } from './AppRootContext';
+import { useScrollLock } from './ScrollContext';
+import { CUSTOM_PROPERTY_INSET_PREFIX } from './helpers';
+import styles from './AppRoot.module.css';
 
 describe('AppRoot', () => {
   baselineComponent(AppRoot, { getRootRef: false });
 
-  it('should returns expected context', () => {
+  it('should setup pointer class by hasPointer from AdaptivityProvider', () => {
+    const Template = (props: { hasPointer?: boolean }) => (
+      <AdaptivityProvider {...props}>
+        <AppRoot mode="full" data-testid="app-root" />
+      </AdaptivityProvider>
+    );
+    const result = render(<Template />);
+    expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-none']);
+    result.rerender(<Template hasPointer={false} />);
+    expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-has-not']);
+    result.rerender(<Template hasPointer={true} />);
+    expect(result.getByTestId('app-root')).not.toHaveClass(
+      styles['AppRoot--pointer-none'],
+      styles['AppRoot--pointer-has-not'],
+    );
+  });
+
+  it('should return expected context', () => {
     let portalRoot: React.RefObject<HTMLElement | null> = React.createRef();
     const contextCallback = jest.fn().mockImplementation((ctx) => {
       portalRoot = ctx.portalRoot;
@@ -30,6 +50,35 @@ describe('AppRoot', () => {
       layout: undefined,
       keyboardInput: false,
     });
+  });
+
+  it('should toggle scroll container', () => {
+    const ScrollToggler = () => {
+      const [enable, setEnable] = React.useState(true);
+      useScrollLock(enable);
+      return (
+        <input
+          type="checkbox"
+          checked={enable}
+          onChange={(event) => setEnable(Boolean(event.target.checked))}
+        />
+      );
+    };
+    const Template = (props: Pick<AppRootProps, 'scroll'>) => (
+      <AppRoot mode="full" data-testid="app-root" {...props}>
+        <ScrollToggler />
+      </AppRoot>
+    );
+
+    const result = render(<Template />);
+    expect(document.body).toHaveStyle('position: fixed');
+    fireEvent.click(result.getByRole('checkbox'));
+    expect(document.body).not.toHaveStyle('position: fixed');
+
+    result.rerender(<Template scroll="contain" />);
+    expect(result.getByTestId('app-root')).toHaveStyle('position: absolute');
+    fireEvent.click(result.getByRole('checkbox'));
+    expect(result.getByTestId('app-root')).not.toHaveStyle('position: absolute');
   });
 
   describe('portalRoot in mode="embedded"', () => {
@@ -76,7 +125,7 @@ describe('AppRoot', () => {
       expect(screen.queryByTestId('portal-root')).toBeTruthy();
     });
 
-    it('should supports multi-instance mode', () => {
+    it('should support multi-instance mode', () => {
       let portalRoot: React.RefObject<HTMLElement | null> = React.createRef();
       const contextCallback = jest.fn().mockImplementation((ctx) => {
         portalRoot = ctx.portalRoot ?? null;
@@ -91,7 +140,7 @@ describe('AppRoot', () => {
       expect(document.body).toContainElement(portalRoot.current);
     });
 
-    it('should accepts custom portal root', () => {
+    it('should accept custom portal root', () => {
       const customPortalRoot = document.createElement('div');
       let portalRoot: React.RefObject<HTMLElement | null> = React.createRef();
       const contextCallback = jest.fn().mockImplementation((ctx) => {
@@ -108,43 +157,58 @@ describe('AppRoot', () => {
   });
 
   describe('Setup containers', () => {
-    it('should adds class="vkui" to html element in full mode', () => {
+    it('should add class="vkui" to html element in full mode', () => {
       const { unmount } = render(<AppRoot />);
       expect(document.documentElement).toHaveClass('vkui');
       unmount();
       expect(document.documentElement).not.toHaveClass('vkui');
     });
 
-    it('should adds nothing when "partial" mode', () => {
-      const { unmount, container } = render(<AppRoot mode="partial" />);
+    it('should add nothing when "partial" mode', () => {
+      const result = render(<AppRoot mode="partial" data-testid="app-root" />);
       expect(document.documentElement).not.toHaveClass();
       expect(document.body).not.toHaveClass();
-      expect(container).not.toHaveClass();
-      unmount();
-      expect(document.documentElement).not.toHaveClass();
-      expect(document.body).not.toHaveClass();
-      expect(container).not.toHaveClass();
+      expect(result.queryByTestId('app-root')).toBeNull();
     });
 
-    it('should adds "embedded" mode class to container', () => {
-      const { unmount, container } = render(<AppRoot mode="embedded" />);
-      expect(container).toHaveClass('vkui__root--embedded');
+    it('should add "embedded" mode class to container', () => {
+      const { unmount, container: parentElement } = render(<AppRoot mode="embedded" />);
+      expect(parentElement).toHaveClass('vkui__root--embedded');
       unmount();
-      expect(container).not.toHaveClass();
+      expect(parentElement).not.toHaveClass();
     });
 
-    it.each(['embedded', 'full'] as const)('should adds adaptivity classes in %s mode', (mode) => {
-      const { unmount, container, rerender } = render(<AppRoot mode={mode} />);
-      const adaptiveTarget = mode === 'embedded' ? container : document.body;
-      expect(adaptiveTarget).not.toHaveClass('vkui--sizeX-regular');
+    it.each(['embedded', 'full'] as const)('should add adaptivity classes in %s mode', (mode) => {
+      const { unmount, rerender, container } = render(<AppRoot mode={mode} />);
+      const parentElement = mode === 'embedded' ? container : document.body;
+      expect(parentElement).not.toHaveClass('vkui--sizeX-regular');
       rerender(
         <AdaptivityProvider sizeX="regular">
           <AppRoot mode={mode} />
         </AdaptivityProvider>,
       );
-      expect(adaptiveTarget).toHaveClass('vkui--sizeX-regular');
+      expect(parentElement).toHaveClass('vkui--sizeX-regular');
       unmount();
-      expect(adaptiveTarget).not.toHaveClass();
+      expect(parentElement).not.toHaveClass();
+    });
+
+    it.each(['embedded', 'full'] as const)('should add safe area insets in %s mode', (mode) => {
+      const CUSTOM_PROPERTY_INSET_TOP = `${CUSTOM_PROPERTY_INSET_PREFIX}top: 0px`;
+      const CUSTOM_PROPERTY_INSET_BOTTOM = `${CUSTOM_PROPERTY_INSET_PREFIX}bottom: 0px`;
+      const CUSTOM_PROPERTY_INSETS = `${CUSTOM_PROPERTY_INSET_TOP}; ${CUSTOM_PROPERTY_INSET_BOTTOM}`;
+
+      const { unmount, rerender, container } = render(
+        <AppRoot mode={mode} safeAreaInsets={{ top: 0 }} />,
+      );
+      const parentElement = mode === 'embedded' ? container : document.body;
+      expect(parentElement).toHaveStyle(CUSTOM_PROPERTY_INSET_TOP);
+
+      rerender(<AppRoot mode={mode} safeAreaInsets={{ top: 0, bottom: 0 }} />);
+      expect(parentElement).toHaveStyle(CUSTOM_PROPERTY_INSETS);
+
+      unmount();
+
+      expect(parentElement).not.toHaveStyle(CUSTOM_PROPERTY_INSETS);
     });
 
     it.each([
@@ -174,7 +238,7 @@ describe('AppRoot', () => {
       expect(conditionalContainer).not.toHaveClass(className);
     });
 
-    it('should adds VKUITokenClassName to document.body on mount and removes on unmount', async () => {
+    it('should add VKUITokenClassName to document.body on mount and removes on unmount', async () => {
       const config = { appearance: 'light', platform: 'vkcom' } as const;
       const vkuiTokenClassName = generateVKUITokensClassName(config.platform, config.appearance);
       const { unmount } = render(
@@ -187,7 +251,7 @@ describe('AppRoot', () => {
       expect(document.body).not.toHaveClass(vkuiTokenClassName);
     });
 
-    it('should adds VKUITokenClassName to embedded element of AppRoot inner full AppRoot and removes on unmount', async () => {
+    it('should add VKUITokenClassName to embedded element of AppRoot inner full AppRoot and removes on unmount', async () => {
       const configForFullMode = { appearance: 'light', platform: 'vkcom' } as const;
       const vkuiTokenModeClassNameForFullMode = generateVKUITokensClassName(
         configForFullMode.platform,
@@ -210,7 +274,6 @@ describe('AppRoot', () => {
 
       const TestComponent = () => {
         const [isMounted, setIsMounted] = React.useState(true);
-
         return (
           <ConfigProvider {...configForFullMode}>
             <AppRoot>
@@ -231,7 +294,7 @@ describe('AppRoot', () => {
       fireEvent.click(screen.getByRole('button'));
 
       expect(document.body).toHaveClass(vkuiTokenModeClassNameForFullMode);
-      expect(() => result.getByTestId('app-root-embedded')).toThrow();
+      expect(result.queryByTestId('app-root-embedded')).toBeNull();
 
       result.unmount();
 
@@ -241,10 +304,10 @@ describe('AppRoot', () => {
 
   describe('Workarounds', () => {
     it('should disable CSS transform on parent for mode="embedded"', () => {
-      const { rerender, container } = render(<AppRoot mode="embedded" />);
-      expect(container.style.transform).toBe('translate3d(0, 0, 0)');
+      const { rerender, container: parentElement } = render(<AppRoot mode="embedded" />);
+      expect(parentElement).toHaveStyle('transform: translate3d(0, 0, 0)');
       rerender(<AppRoot mode="embedded" disableParentTransformForPositionFixedElements />);
-      expect(container.style.transform).toBe('');
+      expect(parentElement).not.toHaveStyle('transform: translate3d(0, 0, 0)');
     });
   });
 });

@@ -54,6 +54,8 @@ export const extractPortalRootByProp = (
   portalRootProp: HTMLElement | React.RefObject<HTMLElement>,
 ) => (isRefObject(portalRootProp) ? portalRootProp.current : portalRootProp);
 
+export const CUSTOM_PROPERTY_INSET_PREFIX = `--vkui_internal--safe_area_inset_`;
+
 export const setSafeAreaInsets = (
   safeAreaInsets: SafeAreaInsets | undefined,
   rootContainer: HTMLElement,
@@ -63,11 +65,9 @@ export const setSafeAreaInsets = (
     return () => void 0;
   }
 
-  const INSET_CUSTOM_PROPERTY_PREFIX = `--vkui_internal--safe_area_inset_`;
-
   for (const key in safeAreaInsets) {
     if (safeAreaInsets.hasOwnProperty(key) && typeof safeAreaInsets[key] === 'number') {
-      const propertyKey = `${INSET_CUSTOM_PROPERTY_PREFIX}${key}`;
+      const propertyKey = `${CUSTOM_PROPERTY_INSET_PREFIX}${key}`;
       const propertyValue = safeAreaInsets[key];
       rootContainer.style.setProperty(propertyKey, `${propertyValue}px`);
       if (portalContainer) {
@@ -79,7 +79,7 @@ export const setSafeAreaInsets = (
   return function unset() {
     for (const key in safeAreaInsets) {
       if (safeAreaInsets.hasOwnProperty(key)) {
-        const propertyKey = `${INSET_CUSTOM_PROPERTY_PREFIX}${key}`;
+        const propertyKey = `${CUSTOM_PROPERTY_INSET_PREFIX}${key}`;
         rootContainer.style.removeProperty(propertyKey);
         if (portalContainer) {
           portalContainer.style.removeProperty(propertyKey);

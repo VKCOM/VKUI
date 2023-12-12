@@ -10,6 +10,11 @@ export interface AppRootContextInterface {
   layout?: 'card' | 'plain';
 }
 
+/**
+ * Вынесен в константу, чтобы можно было в тестах создавать свой контекст и сливать перед этим значения по-умолчанию
+ *
+ * > Note: не смог убрать из покрытия через 'istanbul ignore next'.
+ */
 export const DEFAULT_APP_ROOT_CONTEXT_VALUE: AppRootContextInterface = {
   appRoot: React.createRef(),
   mode: 'full',

@@ -156,8 +156,8 @@ export const AppRoot = ({
           /* istanbul ignore next: node.parentElement может быть null, но такой кейс в теории невозможен */
           return;
         }
+        /* istanbul ignore next: не покрывается за счёт теста на <AppRoot mode="partial" /> */
         case 'partial': {
-          /* istanbul ignore next: не покрывается за счёт теста на <AppRoot mode="partial" /> */
           return;
         }
       }
