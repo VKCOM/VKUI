@@ -24,7 +24,7 @@ export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElem
    * Иконка слева.<br />
    * Рекомендуется использовать иконки размера 20.
    */
-  before: React.ReactNode;
+  before?: React.ReactNode;
 
   /**
    * Содержимое справа.<br />
