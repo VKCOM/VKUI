@@ -221,6 +221,12 @@ describe('ChipsSelect', () => {
       await userEvent.click(result.getByLabelText('Очистить поле'));
       expect(value).toEqual([]);
     });
+    it('clear all selected chips', () => {
+      let value = [...colors];
+      render(<ChipsSelect options={colors} value={colors} onChange={(e) => (value = e)} />);
+      userEvent.click(screen.getByLabelText('Очистить поле'));
+      expect(value).toEqual([]);
+    });
   });
 
   it('does not focus ChipsSelect on chip click', async () => {
