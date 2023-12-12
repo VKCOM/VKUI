@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
-import { useDOM } from '../../lib/dom';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutWrapper.module.css';
@@ -53,11 +51,6 @@ export const PopoutWrapper = ({
   React.useEffect(() => {
     !opened && animationFinishFallback.set();
   }, [animationFinishFallback, opened]);
-
-  const { window } = useDOM();
-  useGlobalEventListener(window, 'touchmove', (e) => e.preventDefault(), {
-    passive: false,
-  });
 
   return (
     <RootComponent
