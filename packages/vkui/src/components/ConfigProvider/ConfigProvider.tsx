@@ -1,15 +1,8 @@
 import * as React from 'react';
-import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
 import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { useDOM } from '../../lib/dom';
 import { TokensClassProvider } from '../../lib/tokensClassProvider';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import {
-  addClassNameToElement,
-  excludeKeysWithUndefined,
-  removeClassNameFromElement,
-} from '../../lib/utils';
+import { excludeKeysWithUndefined } from '../../lib/utils';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
@@ -42,25 +35,6 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps) => {
   };
 
   const appearance = useAutoDetectAppearance(appearanceProp);
-
-  const { document } = useDOM();
-
-  // TODO [>=6]: переместить хук в AppRoot (см. https://github.com/VKCOM/VKUI/issues/4810).
-  useIsomorphicLayoutEffect(
-    function attachVKUITokensClassNameToBody() {
-      if (!document) {
-        return;
-      }
-
-      const VKUITokensClassName = generateVKUITokensClassName(platform, appearance);
-
-      addClassNameToElement(document.body, VKUITokensClassName);
-      return () => {
-        removeClassNameFromElement(document.body, VKUITokensClassName);
-      };
-    },
-    [platform, appearance],
-  );
 
   const configContext = useObjectMemo({
     hasCustomPanelHeaderAfter,

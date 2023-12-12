@@ -24,7 +24,7 @@ export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps) => {
     return null;
   }
 
-  const portalContainer = resolvePortalContainer(usePortal, portalRoot);
+  const portalContainer = resolvePortalContainer(usePortal, portalRoot.current);
   if (!portalContainer || shouldDisablePortal(usePortal, mode, Boolean(disablePortal))) {
     return children;
   }

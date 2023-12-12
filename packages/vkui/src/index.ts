@@ -6,7 +6,8 @@ import './styles/animationFades.module.css';
 import './styles/transformOriginByPlacement.module.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
-export type { AppRootProps, SafeAreaInsets } from './components/AppRoot/AppRoot';
+export type { AppRootProps } from './components/AppRoot/AppRoot';
+export type { SafeAreaInsets } from './components/AppRoot/types';
 
 /**
  * Typography

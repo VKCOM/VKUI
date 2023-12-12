@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { act, renderHook } from '@testing-library/react';
-import { AppRootContext } from '../components/AppRoot/AppRootContext';
+import {
+  AppRootContext,
+  DEFAULT_APP_ROOT_CONTEXT_VALUE,
+} from '../components/AppRoot/AppRootContext';
 import { useFocusVisible } from './useFocusVisible';
 
 const wrapper =
@@ -9,6 +12,7 @@ const wrapper =
     (
       <AppRootContext.Provider
         value={{
+          ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
           keyboardInput,
         }}
       >

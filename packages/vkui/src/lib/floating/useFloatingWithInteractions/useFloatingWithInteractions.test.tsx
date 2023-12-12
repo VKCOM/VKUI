@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { act, render, renderHook, waitFor } from '@testing-library/react';
-import { AppRootContext } from '../../../components/AppRoot/AppRootContext';
+import {
+  AppRootContext,
+  DEFAULT_APP_ROOT_CONTEXT_VALUE,
+} from '../../../components/AppRoot/AppRootContext';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
 import { fireEventPatch, userEvent } from '../../../testing/utils';
 import { ShownChangeReason } from './types';
@@ -9,7 +12,7 @@ import { useFloatingWithInteractions } from './useFloatingWithInteractions';
 const TestComponent = ({
   restoreFocus,
   hookResultRef,
-  keyboardInput,
+  keyboardInput = false,
 }: {
   restoreFocus?: boolean;
   hookResultRef: {
@@ -20,7 +23,7 @@ const TestComponent = ({
   const { shown, refs, referenceProps, floatingProps } = hookResultRef.current;
 
   return (
-    <AppRootContext.Provider value={{ keyboardInput }}>
+    <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput }}>
       <button ref={refs.reference} {...referenceProps}>
         Reference
       </button>

@@ -96,13 +96,13 @@
   -webkit-font-smoothing: antialiased !important;
 }
 
-[class$='--light'] {
+[class*='--light'] {
   --playwright-background: white;
   --playwright-border: gray;
   --playwright-text: black;
 }
 
-[class$='--dark'] {
+[class*='--dark'] {
   --playwright-background: black;
   --playwright-border: gray;
   --playwright-text: white;
