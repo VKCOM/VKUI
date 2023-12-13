@@ -130,7 +130,7 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
-#### [`ActionSheet`](#/ActionSheet)
+### [`ActionSheet`](#/ActionSheet)
 
 - Свойство `toggleRef` теперь обязательно.
 - Свойство `popupDirection` удалено, используйте `placement`.
