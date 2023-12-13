@@ -92,16 +92,17 @@ export const CustomSelectInput = ({
           </SelectTypography>
         </div>
         <Text
+          type="text"
           {...restProps}
           disabled={disabled && !fetching}
           readOnly={restProps.readOnly || (disabled && fetching)}
           Component="input"
           normalize={false}
-          type="text"
           className={classNames(
             styles['CustomSelectInput__el'],
             (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) &&
               styles['CustomSelectInput__el--cursor-pointer'],
+            restProps.readOnly && styles['CustomSelectInput__el--no-pointer-events'],
           )}
           getRootRef={getRef}
           placeholder={children ? '' : placeholder}

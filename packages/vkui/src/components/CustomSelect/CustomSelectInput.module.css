@@ -26,6 +26,18 @@
   cursor: pointer;
 }
 
+/* Чтобы отключить autosuggestion в iOS, тултипы которого начинают всплывать даже когда input
+ * в режиме readonly.
+ * Происходит это при каждом клике на input
+ * смотри: https://github.com/VKCOM/VKUI/issues/6205
+ * Достаточно не дать пользователю кликнуть по инпуту.
+ * Делаем это только для режима read-only. Потому что проблема именно в режиме read-only.
+ * Обертка вокруг инпута обрабатывает клики и передаёт фокус, так что на взаимодействии с инпутом это никак не скажется.
+ * */
+.CustomSelectInput__el--no-pointer-events {
+  pointer-events: none;
+}
+
 .CustomSelectInput--sizeY-compact .CustomSelectInput__el {
   block-size: var(--vkui--size_field_height--compact);
 }
