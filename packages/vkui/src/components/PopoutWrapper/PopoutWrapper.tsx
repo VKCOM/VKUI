@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
-import { useDOM } from '../../lib/dom';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutWrapper.module.css';
@@ -21,10 +19,27 @@ const stylesAlignY = {
 };
 
 export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Если `true`, то при первом монтировании оверлей появится через fade-in анимацию.
+   */
   hasMask?: boolean;
+  /**
+   * Включает фиксированное позиционирование.
+   *
+   * По умолчанию у компонента не задан никакой `position`.
+   */
   fixed?: boolean;
-  alignY?: 'top' | 'center' | 'bottom';
+  /**
+   * Выравнивает контент по горизонтали.
+   */
   alignX?: 'left' | 'center' | 'right';
+  /**
+   * Выравнивает контент по вертикали.
+   */
+  alignY?: 'top' | 'center' | 'bottom';
+  /**
+   * Спрячет компонент через fade-out анимацию.
+   */
   closing?: boolean;
 }
 
@@ -53,11 +68,6 @@ export const PopoutWrapper = ({
   React.useEffect(() => {
     !opened && animationFinishFallback.set();
   }, [animationFinishFallback, opened]);
-
-  const { window } = useDOM();
-  useGlobalEventListener(window, 'touchmove', (e) => e.preventDefault(), {
-    passive: false,
-  });
 
   return (
     <RootComponent

@@ -559,6 +559,12 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
+### [`PopoutWrapper`](#/PopoutWrapper)
+
+- Теперь, при использовании компонента напрямую, необходимо самостоятельно импортировать и вызывать `useScrollLock()` (см. [issue #4314](https://github.com/VKCOM/VKUI/issues/4314)).
+
+<br/>
+
 ### [`PullToRefresh`](#/PullToRefresh)
 
 - До этого `runTapticImpactOccurred()` вызывался внутри компонента после вызова обработчика `onRefresh`.
