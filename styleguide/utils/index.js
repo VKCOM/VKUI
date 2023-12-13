@@ -1,5 +1,5 @@
-import { kebabCase } from './third-party/lodash';
-import { getTextFromChildren } from './third-party/react-children-utils';
+import kebabCase from 'lodash/kebabCase';
+import { onlyText } from 'react-children-utilities';
 
 export const perfLogger = {
   _isEnabled: localStorage.getItem('vkui:perf-logging') === 'true',
@@ -34,7 +34,7 @@ export const getDeprecatedFromComponentTags = (component) => {
 export * from './useViewPortSize';
 
 export const generateIdByReactNode = (children) => {
-  const text = getTextFromChildren(children);
+  const text = onlyText(children);
   if (typeof text === 'string') {
     return kebabCase(text);
   }
