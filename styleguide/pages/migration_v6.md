@@ -7,7 +7,54 @@
 - <a href="{{anchor}}">Сборка</a>
 - <a href="{{anchor}}">Константы</a>
 - <a href="{{anchor}}">Компоненты</a>
+  - <a href="{{anchor}}">`Accordion`</a>
+  - <a href="{{anchor}}">`ActionSheet`</a>
+  - <a href="{{anchor}}">`ActionSheetItem`</a>
+  - <a href="{{anchor}}">`Alert`</a>
+  - <a href="{{anchor}}">`AppearanceProvider`</a>
+  - <a href="{{anchor}}">`Banner`</a>
+  - <a href="{{anchor}}">`Calendar`</a>
+  - <a href="{{anchor}}">`CalendarRange`</a>
+  - <a href="{{anchor}}">`ConfigProvider`</a>
+  - <a href="{{anchor}}">`Chip`</a>
+  - <a href="{{anchor}}">`ChipsInput`</a>
+  - <a href="{{anchor}}">`ContentCard`</a>
+  - <a href="{{anchor}}">`CustomScrollView`</a>
+  - <a href="{{anchor}}">`CustomSelect`</a>
+  - <a href="{{anchor}}">`DateInput`</a>
+  - <a href="{{anchor}}">`DateRangeInput`</a>
+  - <a href="{{anchor}}">`FixedLayout`</a>
+  - <a href="{{anchor}}">`Footer`</a>
+  - <a href="{{anchor}}">`FormItem`</a>
+  - <a href="{{anchor}}">`Gradient`</a>
+  - <a href="{{anchor}}">`Header`</a>
+  - <a href="{{anchor}}">`ModalCard` и `ModaCardBase`</a>
+  - <a href="{{anchor}}">`ModalPageHeader`</a>
+  - <a href="{{anchor}}">`Pagination`</a>
+  - <a href="{{anchor}}">🗑️ ~~`PanelHeader.Content`~~</a>
+  - <a href="{{anchor}}">🗑️ ~~`PromoBanner`~~</a>
+  - <a href="{{anchor}}">`PopoutWrapper`</a>
+  - <a href="{{anchor}}">`PullToRefresh`</a>
+  - <a href="{{anchor}}">🗑️ ~~`RangeSlider`~~</a>
+  - <a href="{{anchor}}">`Search`</a>
+  - <a href="{{anchor}}">`SimpleCell`</a>
+  - <a href="{{anchor}}">`Slider`</a>
+  - <a href="{{anchor}}">`Spinner`</a>
+  - <a href="{{anchor}}">`SplitCol`</a>
+  - <a href="{{anchor}}">`Tappable`</a>
+  - <a href="{{anchor}}">~~`Tooltip`~~ -> `OnboardingTooltip`</a>
+  - <a href="{{anchor}}">`Typography/Title`</a>
+  - <a href="{{anchor}}">`Typography/Headline`</a>
+  - <a href="{{anchor}}">`Typography/Subhead`</a>
+  - <a href="{{anchor}}">`UsersStack`</a>
+  - <a href="{{anchor}}">🗑️ ~~`VisuallyHiddenInput`~~</a>
 - <a href="{{anchor}}">`unstable_` компоненты</a>
+  - <a href="{{anchor}}">🎉 ~~`unstable_ChipsSelect`~~ -> `ChipsSelect`</a>
+  - <a href="{{anchor}}">🎉 ~~`unstable_Popover`~~ -> `Popover`</a>
+  - <a href="{{anchor}}">🎉 ~~`unstable_Popper`~~ -> `Popper`</a>
+  - <a href="{{anchor}}">🎉 ~~`unstable_TextTooltip`~~ -> `Tooltip`</a>
+  - <a href="{{anchor}}">🎉 ~~`unstable_HorizontalCellShowMore`~~ -> `HorizontalCellShowMore`</a>
+  - <a href="{{anchor}}">🗑️ ~~`RichTooltip`~~</a>
 - <a href="{{anchor}}">Интеграция с VK Mini Apps</a>
 
 <br/>
@@ -546,13 +593,13 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
-### ~~`PanelHeader.Content`~~
+### 🗑️ ~~`PanelHeader.Content`~~
 
 - Подкомпонент удален, используйте вместо него `typographyProps` у [`PanelHeader`](#/PanelHeader).
 
 <br/>
 
-### ~~`PromoBanner`~~
+### 🗑️ ~~`PromoBanner`~~
 
 - Компонент удален.
 - Для своей реализации, используйте событие [`VKWebAppShowBannerAd`](https://dev.vk.com/mini-apps/monetization/ad/banners).
@@ -576,7 +623,7 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
-### ~~`RangeSlider`~~
+### 🗑️ ~~`RangeSlider`~~
 
 - Компонент удален, используйте [`Slider`](#/Slider).
 
@@ -751,7 +798,7 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
-### ~~`VisuallyHiddenInput`~~
+### 🗑️ ~~`VisuallyHiddenInput`~~
 
 - Компонент удален, используйте [`VisuallyHidden`](#/VisuallyHidden).
 
@@ -942,7 +989,7 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
-### ~~`RichTooltip`~~ -> 🗑️
+### 🗑️ ~~`RichTooltip`~~
 
 - Компонент удален, используйте [`Tooltip`](#/Tooltip).
 
@@ -991,11 +1038,11 @@ npx @vkontakte/vkui-codemods --help
 Бойлерплейт для **VK Mini Apps** представлен на странице [Интеграция с VK Mini Apps](https://vkcom.github.io/VKUI/#/integrations-vk-mini-apps)
 под заголовком **Конфигурация VKUI**.
 
-### ~~`withInsets`~~
+### 🗑️ ~~`withInsets`~~
 
 - Используйте вместо него хук `useInsets()` из [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge-react).
 
-### ~~`HasInsets`~~
+### 🗑️ ~~`HasInsets`~~
 
 - Используйте вместо него `SafeAreaInsets`.
 - Если вы используете [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), то
