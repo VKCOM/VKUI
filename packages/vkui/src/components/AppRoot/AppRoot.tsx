@@ -1,70 +1,36 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAppearance } from '../../hooks/useAppearance';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
-import { SizeTypeValues } from '../../lib/adaptivity';
-import { useDOM } from '../../lib/dom';
-import { isRefObject } from '../../lib/isRefObject';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getDocumentBody } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AppRootContext } from './AppRootContext';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
+import {
+  extractPortalRootByProp,
+  getClassNamesByMode,
+  getParentElement,
+  setSafeAreaInsets,
+} from './helpers';
+import type { AppRootLayout, AppRootMode, AppRootScroll, SafeAreaInsets } from './types';
 import styles from './AppRoot.module.css';
-
-export type SafeAreaInsets = {
-  top?: number;
-  right?: number;
-  bottom?: number;
-  left?: number;
-};
-
-const vkuiSizeXClassNames = {
-  none: 'vkui--sizeX-none',
-  ['regular']: 'vkui--sizeX-regular',
-};
-
-const vkuiSizeYClassNames = {
-  none: 'vkui--sizeY-none',
-  ['compact']: 'vkui--sizeY-compact',
-};
-
-const vkuiLayoutClassNames = {
-  card: 'vkui--layout-card',
-  plain: 'vkui--layout-plain',
-};
-
-function containerClassNames(
-  layout: AppRootProps['layout'],
-  sizeX: SizeTypeValues | 'none',
-  sizeY: SizeTypeValues | 'none',
-): string[] {
-  const classNames: string[] = [];
-
-  if (layout) {
-    classNames.push(vkuiLayoutClassNames[layout]);
-  }
-
-  if (sizeX !== 'compact') {
-    classNames.push(vkuiSizeXClassNames[sizeX]);
-  }
-
-  if (sizeY !== 'regular') {
-    classNames.push(vkuiSizeYClassNames[sizeY]);
-  }
-
-  return classNames;
-}
-
-const INSET_CUSTOM_PROPERTY_PREFIX = `--vkui_internal--safe_area_inset_`;
-
-// Используйте classList, но будьте осторожны
-/* eslint-disable no-restricted-properties */
 
 export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Режим встраивания */
-  mode?: 'partial' | 'embedded' | 'full';
-  window?: Window;
-  scroll?: 'global' | 'contain';
+  mode?: AppRootMode;
+  /**
+   * - `global` (по умолчанию) — VKUI-приложение скроллится вместе со страницей.
+   * - `contain` — VKUI-приложение живет в отдельной зоне и скроллится независимо внутри `AppRoot` (например, в модалке).
+   *
+   * Полезно при использовании `mode="embedded"`.
+   */
+  scroll?: AppRootScroll;
+  /**
+   * см. документацию [mdn web docs | env#values](https://developer.mozilla.org/en-US/docs/Web/CSS/env#values).
+   */
   safeAreaInsets?: SafeAreaInsets;
   /**
    * Кастомный root-элемент портала
@@ -81,7 +47,11 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * Это поведение можно отключить с помощью этого параметра.
    */
   disableParentTransformForPositionFixedElements?: boolean;
-  layout?: 'card' | 'plain';
+  /**
+   * Глобально задаёт тип оформления макета для компонентов
+   * [Panel](https://vkcom.github.io/VKUI/#/Panel) и [Group](https://vkcom.github.io/VKUI/#/Group).
+   */
+  layout?: AppRootLayout;
 }
 
 /**
@@ -92,140 +62,118 @@ export const AppRoot = ({
   mode = 'full',
   scroll = 'global',
   portalRoot: portalRootProp = null,
-  disablePortal,
+  disablePortal = false,
   disableParentTransformForPositionFixedElements,
   className,
-  safeAreaInsets,
+  safeAreaInsets: safeAreaInsetsProp,
   layout,
   ...props
 }: AppRootProps) => {
-  const isKeyboardInputActiveRef = useKeyboardInputTracker();
-  const rootRef = React.useRef<HTMLDivElement | null>(null);
-  const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null);
-  const { document } = useDOM();
+  const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
+  const platform = usePlatform();
   const appearance = useAppearance();
 
-  const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
+  const safeAreaInsets = useObjectMemo(safeAreaInsetsProp);
+  const isKeyboardInputActiveRef = useKeyboardInputTracker();
+  const appRootRef = React.useRef<HTMLDivElement | null>(null);
+  const portalRootRef = React.useRef<HTMLElement | null>(null);
 
-  // setup portal
-  useIsomorphicLayoutEffect(() => {
-    let portal: HTMLElement | null = null;
-    if (portalRootProp) {
-      if (isRefObject(portalRootProp)) {
-        portal = portalRootProp.current;
-      } else {
-        portal = portalRootProp;
+  useIsomorphicLayoutEffect(
+    function setupPortalRoot() {
+      const portalByProp = portalRootProp ? extractPortalRootByProp(portalRootProp) : null;
+
+      if (portalByProp) {
+        portalRootRef.current = portalByProp;
+        return function cleanup() {
+          portalRootRef.current = null;
+        };
       }
-    }
-    if (!portal) {
-      portal = document!.createElement('div');
-      document!.body.appendChild(portal);
-    }
-    setPortalRoot(portal);
-    return () => {
-      if (!portalRootProp) {
-        portal?.parentElement?.removeChild(portal);
-      }
-    };
-  }, [portalRootProp]);
 
-  // setup root classes
-  useIsomorphicLayoutEffect(() => {
-    if (mode === 'partial') {
-      return noop;
-    }
-
-    const parent = rootRef.current?.parentElement;
-    const classes = ['vkui__root'].concat(mode === 'embedded' ? 'vkui__root--embedded' : []);
-    if (parent) {
-      if (mode === 'embedded' && !disableParentTransformForPositionFixedElements) {
-        parent.style.transform = 'translate3d(0, 0, 0)';
-      }
-      parent.classList.add(...classes);
-    }
-
-    return () => {
-      if (parent) {
-        if (mode === 'embedded' && !disableParentTransformForPositionFixedElements) {
-          parent.style.transform = '';
-        }
-        parent.classList.remove(...classes);
-      }
-    };
-  }, [disableParentTransformForPositionFixedElements]);
-
-  useIsomorphicLayoutEffect(() => {
-    if (mode === 'full') {
-      document!.documentElement.classList.add('vkui');
-
-      return () => {
-        document!.documentElement.classList.remove('vkui');
+      const documentBody = getDocumentBody(appRootRef.current);
+      const portal = documentBody.ownerDocument.createElement('div');
+      documentBody.appendChild(portal);
+      portalRootRef.current = portal;
+      return function cleanup() {
+        documentBody.removeChild(portal);
+        portalRootRef.current = null;
       };
-    }
+    },
+    [portalRootProp],
+  );
 
-    return undefined;
-  }, [document, mode]);
-
-  // setup insets
-  useIsomorphicLayoutEffect(() => {
-    if (mode === 'partial' || !rootRef.current?.parentElement || !safeAreaInsets) {
-      return;
-    }
-
-    const parent = rootRef.current.parentElement;
-
-    let key: keyof SafeAreaInsets;
-    for (key in safeAreaInsets) {
-      if (safeAreaInsets.hasOwnProperty(key) && typeof safeAreaInsets[key] === 'number') {
-        const inset = safeAreaInsets[key];
-        parent.style.setProperty(INSET_CUSTOM_PROPERTY_PREFIX + key, `${inset}px`);
-        portalRoot &&
-          portalRoot.style.setProperty(INSET_CUSTOM_PROPERTY_PREFIX + key, `${inset}px`);
-      }
-    }
-
-    return () => {
-      if (!safeAreaInsets) {
+  useIsomorphicLayoutEffect(
+    function setupContainers() {
+      if (!appRootRef.current || !portalRootRef.current) {
         return;
       }
-      let key: keyof SafeAreaInsets;
-      for (key in safeAreaInsets) {
-        if (safeAreaInsets.hasOwnProperty(key)) {
-          parent.style.removeProperty(INSET_CUSTOM_PROPERTY_PREFIX + key);
-          portalRoot && portalRoot.style.removeProperty(INSET_CUSTOM_PROPERTY_PREFIX + key);
+
+      const parentElement = getParentElement(appRootRef.current);
+      const documentBody = getDocumentBody(appRootRef.current);
+      const documentElement = documentBody.ownerDocument.documentElement;
+
+      const [baseClassNames, stylesClassNames] = getClassNamesByMode({
+        mode,
+        layout,
+        platform,
+        appearance,
+        sizeX,
+        sizeY,
+      });
+
+      /* eslint-disable no-restricted-properties */
+      switch (mode) {
+        case 'full': {
+          if (parentElement) {
+            parentElement.classList.add(...baseClassNames);
+          }
+          documentBody.classList.add(...stylesClassNames);
+          const unsetSafeAreaInsets = setSafeAreaInsets(safeAreaInsets, documentBody);
+          documentElement.classList.add('vkui');
+          return function cleanup() {
+            if (parentElement) {
+              parentElement.classList.remove(...baseClassNames);
+            }
+            documentBody.classList.remove(...stylesClassNames);
+            unsetSafeAreaInsets();
+            documentElement.classList.remove('vkui');
+          };
+        }
+        case 'embedded': {
+          if (parentElement) {
+            parentElement.classList.add(...baseClassNames, ...stylesClassNames);
+            if (!disableParentTransformForPositionFixedElements) {
+              parentElement.style.setProperty('transform', 'translate3d(0, 0, 0)');
+            }
+            const unsetSafeAreaInsets = setSafeAreaInsets(safeAreaInsets, parentElement, portalRootRef.current); // prettier-ignore
+            return function cleanup() {
+              parentElement.classList.remove(...baseClassNames, ...stylesClassNames);
+              if (!disableParentTransformForPositionFixedElements) {
+                parentElement.style.removeProperty('transform');
+              }
+              unsetSafeAreaInsets();
+            };
+          }
+          /* istanbul ignore next: node.parentElement может быть null, но такой кейс в теории невозможен */
+          return;
+        }
+        /* istanbul ignore next: не покрывается за счёт теста на <AppRoot mode="partial" /> */
+        case 'partial': {
+          return;
         }
       }
-    };
-  }, [safeAreaInsets, portalRoot]);
-
-  // adaptivity handler
-  useIsomorphicLayoutEffect(() => {
-    if (mode === 'partial') {
-      return noop;
-    }
-
-    const classNames = containerClassNames(layout, sizeX, sizeY);
-
-    const container = mode === 'embedded' ? rootRef.current?.parentElement : document!.body;
-
-    if (!classNames.length || !container) {
-      return noop;
-    }
-
-    container.classList.add(...classNames);
-    return () => {
-      container.classList.remove(...classNames);
-    };
-  }, [sizeX, sizeY, layout]);
-
-  useIsomorphicLayoutEffect(() => {
-    if (mode !== 'full' || appearance === undefined) {
-      return noop;
-    }
-    document!.documentElement.style.setProperty('color-scheme', appearance);
-
-    return () => document!.documentElement.style.removeProperty('color-scheme');
-  }, [appearance]);
+      /* eslint-enable no-restricted-properties */
+    },
+    [
+      mode,
+      layout,
+      disableParentTransformForPositionFixedElements,
+      platform,
+      appearance,
+      sizeX,
+      sizeY,
+      safeAreaInsets,
+    ],
+  );
 
   const ScrollController = React.useMemo(
     () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
@@ -235,8 +183,8 @@ export const AppRoot = ({
   const content = (
     <AppRootContext.Provider
       value={{
-        appRoot: rootRef,
-        portalRoot,
+        appRoot: appRootRef,
+        portalRoot: portalRootRef,
         embedded: mode === 'embedded',
         mode,
         disablePortal,
@@ -246,7 +194,7 @@ export const AppRoot = ({
         },
       }}
     >
-      <ScrollController elRef={rootRef}>{children}</ScrollController>
+      <ScrollController elRef={appRootRef}>{children}</ScrollController>
     </AppRootContext.Provider>
   );
 
@@ -254,7 +202,7 @@ export const AppRoot = ({
     content
   ) : (
     <div
-      ref={rootRef}
+      ref={appRootRef}
       className={classNames(
         styles['AppRoot'],
         hasPointer === undefined

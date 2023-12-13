@@ -43,3 +43,13 @@ Object.defineProperty(global, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
+
+Object.defineProperty(global, 'scrollTo', {
+  writable: true,
+  value: jest.fn(),
+});
+
+/**
+ * @see https://github.com/vuejs/vue-test-utils/issues/319#issuecomment-354667621
+ */
+Element.prototype.scrollTo = jest.fn();
