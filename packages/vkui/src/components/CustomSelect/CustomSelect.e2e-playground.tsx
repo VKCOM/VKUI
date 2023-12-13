@@ -56,7 +56,7 @@ export const CustomSelectNoMaxHeightPlayground = (props: ComponentPlaygroundProp
         >
           <CustomSelect
             placeholder="Не выбрана"
-            labelTextTestId="target-select"
+            data-testid="target-select"
             {...props}
             options={[
               { value: 1, label: 'Гарри Поттер и философский камень' },

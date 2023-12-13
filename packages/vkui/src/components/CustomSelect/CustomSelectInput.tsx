@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
+import { usePlatform } from '../../hooks/usePlatform';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
@@ -78,6 +79,7 @@ export const CustomSelectInput = ({
     />
   );
 
+  const platform = usePlatform();
   return (
     <FormField
       Component="div"
@@ -115,11 +117,16 @@ export const CustomSelectInput = ({
          * в режиме readonly, мы оборачиваем инпут в VisuallyHidden.
          * Тултипы появляются при каждом клике на input.
          * смотри: https://github.com/VKCOM/VKUI/issues/6205
+         *
          * Достаточно не дать пользователю кликнуть по инпуту.
          * Делаем это только для режима read-only. Потому что проблема именно в режиме read-only.
          * Обертка вокруг инпута обрабатывает клики и передаёт фокус, так что на взаимодействии с инпутом это никак не скажется.
          **/}
-        {restProps.readOnly ? <VisuallyHidden>{input}</VisuallyHidden> : input}
+        {restProps.readOnly && platform === 'ios' ? (
+          <VisuallyHidden>{input}</VisuallyHidden>
+        ) : (
+          input
+        )}
       </div>
     </FormField>
   );
