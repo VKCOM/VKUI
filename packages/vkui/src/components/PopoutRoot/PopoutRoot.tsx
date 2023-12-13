@@ -1,24 +1,29 @@
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { blurActiveElement, useDOM } from '../../lib/dom';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutRoot.module.css';
 
-interface PopoutRootPopoutProps {
-  children: React.ReactNode;
-}
-
-const PopoutRootPopout = (props: PopoutRootPopoutProps) => (
-  <div className={styles['PopoutRoot__popout']} {...props} />
+/**
+ * @private
+ */
+export const PopoutRootPopout = ({
+  className,
+  ...restProps
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={classNames(styles['PopoutRoot__popout'], className)} {...restProps} />
 );
 
-interface PopoutRootModalProps {
-  children: React.ReactNode;
-}
-
-const PopoutRootModal = (props: PopoutRootModalProps) => (
-  <div className={styles['PopoutRoot__modal']} {...props} />
+/**
+ * @private
+ */
+export const PopoutRootModal = ({
+  className,
+  ...restProps
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={classNames(styles['PopoutRoot__modal'], className)} {...restProps} />
 );
 
 export interface PopoutRootProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -26,6 +31,9 @@ export interface PopoutRootProps extends HTMLAttributesWithRootRef<HTMLDivElemen
   modal?: React.ReactNode;
 }
 
+/**
+ * @private
+ */
 export const PopoutRoot = ({ popout, modal, children, ...restProps }: PopoutRootProps) => {
   const { document } = useDOM();
 
