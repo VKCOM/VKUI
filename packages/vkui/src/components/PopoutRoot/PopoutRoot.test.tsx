@@ -6,9 +6,9 @@ describe(PopoutRoot, () => {
 });
 
 describe(PopoutRootModal, () => {
-  baselineComponent(PopoutRootModal);
+  baselineComponent(PopoutRootModal, { getRootRef: false });
 });
 
 describe(PopoutRootPopout, () => {
-  baselineComponent(PopoutRootPopout);
+  baselineComponent(PopoutRootPopout, { getRootRef: false });
 });
