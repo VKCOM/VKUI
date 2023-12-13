@@ -22,7 +22,7 @@
 >
 > В примере навигация между панелями будет в порядке 1 -> 2 -> 3.
 
-Чтобы понять, был это переход вперёд или назад, можно воспользоваться хуком [`useNavDirection()`](#/View?id=usenavdirection_example). Этот хук работает, даже если анимации выключены (`<ConfigProvider transitionMotionEnabled={false}>`).
+Чтобы понять, был это переход вперёд или назад, можно воспользоваться хуком <a href="{{anchor}}">useNavDirection</a>. Этот хук работает, даже если анимации выключены (`<ConfigProvider transitionMotionEnabled={false}>`).
 
 ```jsx
 const [activePanel, setActivePanel] = useState('panel1');
@@ -57,7 +57,7 @@ const [activePanel, setActivePanel] = useState('panel1');
 
 <br />
 
-## <a id="/View?id=iosswipeback" style="position: relative; top: -100px;"></a>[iOS Swipe Back](https://vkcom.github.io/VKUI/#/View?id=iosswipeback)
+## iOS Swipe Back
 
 В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы
 повторить такое поведение в VKUI, нужно:
@@ -160,9 +160,7 @@ const MainPanelContent = ({ onProfileClick }) => {
       <PanelHeader>Main</PanelHeader>
       <Group>
         <div style={{ height: 200 }} />
-        <CellButton stopPropagation={false} onClick={onProfileClick}>
-          Профиль
-        </CellButton>
+        <CellButton onClick={onProfileClick}>Профиль</CellButton>
         <div style={{ height: 600 }} />
       </Group>
     </React.Fragment>
@@ -180,9 +178,7 @@ const ProfilePanelContent = ({ onSettingsClick }) => {
         </Div>
       </Group>
       <Group>
-        <CellButton stopPropagation={false} onClick={onSettingsClick}>
-          Настройки
-        </CellButton>
+        <CellButton onClick={onSettingsClick}>Настройки</CellButton>
       </Group>
       <Group
         header={<Header>Gallery</Header>}
@@ -240,7 +236,9 @@ const SettingsPanelContent = ({ name, onChangeName }) => {
 
 <br />
 
-## <a id="usenavdirection_example" style="position: relative; top: -100px;"></a>[useNavDirection(): определение типа перехода (вперёд/назад), с которым была отрисована панель.](#/View?id=usenavdirection_example)
+## useNavDirection
+
+### Определение типа перехода (вперёд/назад), с которым была отрисована панель.
 
 Хук `useNavDirection()` возвращает одно из трёх значений:
 
@@ -256,7 +254,7 @@ Xук возвращает правильное значение даже есл
 
 <br />
 
-Хук также работает в режиме [iOS Swipe Back](#/View?id=iosswipeback). Тип перехода известен как только пользователь начал движение.
+Хук также работает в режиме <a href="{{anchor}}">iOS Swipe Back</a>. Тип перехода известен как только пользователь начал движение.
 
 <br />
 
@@ -457,6 +455,7 @@ function NavigationButtons({ activePanel, activeView, setActiveView, setActivePa
           <>
             {Array.from({ length: 3 }, (_, index) => (
               <PanelNavigationButton
+                key={index}
                 viewNumber={1}
                 panelNumber={index + 1}
                 activePanel={activePanel}
@@ -468,6 +467,7 @@ function NavigationButtons({ activePanel, activeView, setActiveView, setActivePa
           <>
             {Array.from({ length: 3 }, (_, index) => (
               <PanelNavigationButton
+                key={index}
                 viewNumber={2}
                 panelNumber={index + 1}
                 activePanel={activePanel}
