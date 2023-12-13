@@ -6,18 +6,34 @@ import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutRoot.module.css';
 
-const PopoutRootPopout = ({
+/**
+ * @private
+ */
+export const PopoutRootPopout = ({
   className,
+  getRootRef,
   ...restProps
 }: HTMLAttributesWithRootRef<HTMLDivElement>) => (
-  <div className={classNames(styles['PopoutRoot__popout'], className)} {...restProps} />
+  <div
+    ref={getRootRef}
+    className={classNames(styles['PopoutRoot__popout'], className)}
+    {...restProps}
+  />
 );
 
-const PopoutRootModal = ({
+/**
+ * @private
+ */
+export const PopoutRootModal = ({
   className,
+  getRootRef,
   ...restProps
 }: HTMLAttributesWithRootRef<HTMLDivElement>) => (
-  <div className={classNames(styles['PopoutRoot__modal'], className)} {...restProps} />
+  <div
+    ref={getRootRef}
+    className={classNames(styles['PopoutRoot__modal'], className)}
+    {...restProps}
+  />
 );
 
 export interface PopoutRootProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -25,6 +41,9 @@ export interface PopoutRootProps extends HTMLAttributesWithRootRef<HTMLDivElemen
   modal?: React.ReactNode;
 }
 
+/**
+ * @private
+ */
 export const PopoutRoot = ({ popout, modal, children, ...restProps }: PopoutRootProps) => {
   const { document } = useDOM();
 
