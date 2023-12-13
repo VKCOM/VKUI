@@ -103,7 +103,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### [`Accordion`](#/Accordion)
 
-- `Accordion` избавился от нативного элемента `detail`, теперь для компонента стали доступны анимации.
+- Отказались от нативного элемента `detail`, т.к. из-за неё некорректно работала анимация.
 
 - На замену свойств `open` и `onToggle` пришли свойства `expanded`, `defaultExpanded`, `onChange`.
 

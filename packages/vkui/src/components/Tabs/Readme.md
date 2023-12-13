@@ -12,7 +12,7 @@
 Контролировать горизонтально выравнивание при прокрутке к выбранной вкладке поможет свойство `scrollBehaviorToSelectedTab`.
 Значения `scrollBehaviorToSelectedTab` соответствуют опциям метода [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView).
 
-#### Особенности
+### Особенности
 
 - Так как для скролла мы используем [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView),
   то кроме горизонтального скролла, при выборе вкладки также может происходить вертикальный скролл, если вкладка вертикально полностью не видна.

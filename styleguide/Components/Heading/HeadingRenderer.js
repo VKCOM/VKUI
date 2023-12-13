@@ -29,14 +29,26 @@ const HeadingRenderer = ({ level, children, className }) => {
           {children}
         </Title>
       );
+    case 3:
+      return (
+        <Title
+          id={id}
+          className={classNames('Heading', 'Heading--3', className)}
+          weight="1"
+          level="3"
+          Component="h3"
+        >
+          {children}
+        </Title>
+      );
     default:
       return (
         <Headline
           id={id}
-          className={classNames('Heading', 'Heading--3', className)}
+          className={classNames('Heading', 'Heading--4', className)}
           weight="1"
           level="1"
-          Component="h3"
+          Component="h4"
         >
           {children}
         </Headline>

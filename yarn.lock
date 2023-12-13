@@ -2520,8 +2520,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@project-docs/styleguide@workspace:styleguide"
   dependencies:
+    lodash: ^4.17.21
     prop-types: ^15.8.1
     react: "*"
+    react-children-utilities: ^2.9.0
     react-docgen-typescript: ^2.2.2
     react-dom: "*"
     react-frame-component: ^5.2.6
@@ -15887,6 +15889,15 @@ __metadata:
     iconv-lite: 0.4.24
     unpipe: 1.0.0
   checksum: 5362adff1575d691bb3f75998803a0ffed8c64eabeaa06e54b4ada25a0cd1b2ae7f4f5ec46565d1bec337e08b5ac90c76eaa0758de6f72a633f025d754dec29e
+  languageName: node
+  linkType: hard
+
+"react-children-utilities@npm:^2.9.0":
+  version: 2.9.0
+  resolution: "react-children-utilities@npm:2.9.0"
+  peerDependencies:
+    react: 18 || 17 || 16 || 15
+  checksum: fda25c582ab31c9d3cfa65bbd738cb731c43fa2af6bc78210e355c2b7849483b68fcec80f704bb7e9beae61421c9c5e24be356d558ab5f535a83b34f1c107075
   languageName: node
   linkType: hard
 
