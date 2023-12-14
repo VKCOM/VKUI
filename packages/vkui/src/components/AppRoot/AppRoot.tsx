@@ -129,6 +129,7 @@ export const AppRoot = ({
           documentBody.classList.add(...stylesClassNames);
           const unsetSafeAreaInsets = setSafeAreaInsets(safeAreaInsets, documentBody);
           documentElement.classList.add('vkui');
+          documentElement.style.setProperty('color-scheme', appearance);
           return function cleanup() {
             if (parentElement) {
               parentElement.classList.remove(...baseClassNames);
@@ -136,6 +137,7 @@ export const AppRoot = ({
             documentBody.classList.remove(...stylesClassNames);
             unsetSafeAreaInsets();
             documentElement.classList.remove('vkui');
+            documentElement.style.removeProperty('color-scheme');
           };
         }
         case 'embedded': {
