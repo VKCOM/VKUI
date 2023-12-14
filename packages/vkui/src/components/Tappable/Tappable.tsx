@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+import '../Clickable/Clickable.module.css'; // eslint-disable-line import/order
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -6,7 +8,6 @@ import { mergeCalls } from '../../lib/mergeCalls';
 import { checkClickable, Clickable, ClickableProps } from '../Clickable/Clickable';
 import { Ripple, useMaybeNeedRipple, useRipple } from './Ripple';
 import { activeClass, DEFAULT_STATE_MODE, hoverClass, StateProps } from './state';
-import '../Clickable/Clickable.module.css'; // Reorder css
 import styles from './Tappable.module.css';
 
 const sizeXClassNames = {
