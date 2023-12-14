@@ -6,7 +6,7 @@ export interface RootComponentProps<T>
   extends React.AllHTMLAttributes<T>,
     HasRootRef<T>,
     HasComponent {
-  baseClassName?: string;
+  baseClassName?: string | false;
 }
 
 /**

@@ -26,12 +26,7 @@
   margin-inline-start: var(--vkui--size_subnavigation_bar_gap--regular);
 }
 
-/**
- * CMP:
- * SubnavigationBar
- */
-
-:global(.vkuiInternalSubnavigationBar--mode-fixed) .SubnavigationBar__item {
+.SubnavigationBar--mode-fixed .SubnavigationBar__item {
   flex: 1;
   min-inline-size: 0;
 }

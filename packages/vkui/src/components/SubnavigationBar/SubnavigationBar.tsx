@@ -50,12 +50,7 @@ export const SubnavigationBar = ({
 
   return (
     <RootComponent
-      // TODO: [>=6]
-      // Заменить у SubnavigationButton `display: inline-block` на `width: 100%`
-      // и удалить применение селектора в `SubnavigationButton.module.css`.
-      // 2. Заменить глобальный селектор на CSS Modules `styles['SubnavigationBar--mode-fixed']`
-      // mode !== 'fixed' && classNames('vkuiInternalSubnavigationBar--mode-fixed')
-      baseClassName={mode === 'fixed' ? 'vkuiInternalSubnavigationBar--mode-fixed' : undefined}
+      baseClassName={mode === 'fixed' && styles['SubnavigationBar--mode-fixed']}
       {...restProps}
     >
       <ScrollWrapper className={styles['SubnavigationBar__in']} {...scrollWrapperProps}>

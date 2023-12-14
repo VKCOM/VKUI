@@ -26,6 +26,7 @@
   - <a href="{{anchor}}">`FixedLayout`</a>
   - <a href="{{anchor}}">`Footer`</a>
   - <a href="{{anchor}}">`FormItem`</a>
+  - <a href="{{anchor}}">`FormLayout`</a>
   - <a href="{{anchor}}">`Gradient`</a>
   - <a href="{{anchor}}">`Header`</a>
   - <a href="{{anchor}}">`ModalCard` и `ModaCardBase`</a>
@@ -523,6 +524,15 @@ npx @vkontakte/vkui-codemods --help
 
 ```jsx static
 <FormItem top="Имя" topComponent="h5" />
+```
+
+<br/>
+
+### [`FormLayout`](#/FormLayout)
+
+```diff
+- <FormLayout getRef={ref}>...</FormLayout>
++ <FormLayout getRootRef={ref}>...</FormLayout>
 ```
 
 <br/>
