@@ -645,16 +645,11 @@ npx @vkontakte/vkui-codemods --help
         </ButtonGroup>
       }
     >
--      <FormField>
--        <CustomInput />
--      </FormField>
-+      <React.Fragment>
-+        <Spacing size={16} />
-+        <FormField>
-+          <CustomInput />
-+        </FormField>
-+      </React.Fragment>
-     </ModalCar>
++    <Spacing size={16} />
+      <FormField>
+        <CustomInput />
+      </FormField>
+    </ModalCar>
 ```
 
 <br/>
