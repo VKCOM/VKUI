@@ -126,18 +126,17 @@ export const AppRoot = ({
           if (parentElement) {
             parentElement.classList.add(...baseClassNames);
           }
-          documentBody.classList.add(...stylesClassNames);
+
+          documentElement.classList.add(...stylesClassNames, 'vkui');
           const unsetSafeAreaInsets = setSafeAreaInsets(safeAreaInsets, documentBody);
-          documentElement.classList.add('vkui');
-          documentElement.style.setProperty('color-scheme', appearance);
+
           return function cleanup() {
             if (parentElement) {
               parentElement.classList.remove(...baseClassNames);
             }
-            documentBody.classList.remove(...stylesClassNames);
+
+            documentElement.classList.remove(...stylesClassNames, 'vkui');
             unsetSafeAreaInsets();
-            documentElement.classList.remove('vkui');
-            documentElement.style.removeProperty('color-scheme');
           };
         }
         case 'embedded': {

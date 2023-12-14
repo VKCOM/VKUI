@@ -1,3 +1,4 @@
+import '../packages/vkui/src/styles/constants.css';
 import '../packages/vkui/src/styles/themes.css';
 import '../packages/vkui/src/styles/common.css';
 
