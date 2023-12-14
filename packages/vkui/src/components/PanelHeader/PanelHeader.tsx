@@ -41,10 +41,14 @@ export interface PanelHeaderProps
    */
   after?: React.ReactNode;
   /**
-   * - значение `auto` после шапки будет сепаратор в `vkcom` и `android`/`iOS` в `compact`-режиме, в `android`/`iOS` отступ в `regular`-режиме
-   * - значение `none` отключает все разделители
-   * - значение `separator` включает только сепараторы по условиям из `auto`
-   * - значение `spacing` включает только отступ по условиям из `auto`
+   * Тип разделителя под шапкой.
+   *
+   * - `"none"` означает, что разделитель не нужен
+   * - `"separator"` включает сепаратор при условии, что это:
+   *      - либо платформа `vkcom`
+   *      - либо платформа `android`/`ios` при `<AdaptivityProvider sizeX="compact" />`
+   * - `"spacing"` включает отступ, если это платформа `android`/`ios` при `<AdaptivityProvider sizeX="regular" />`
+   * - `"auto"` автоматически подбирает либо `"separator"`, либо `"spacing"` по их условиям
    */
   delimiter?: 'auto' | 'none' | 'separator' | 'spacing';
   transparent?: boolean;
@@ -129,7 +133,8 @@ export const PanelHeader = ({
   const platform = usePlatform();
   const { sizeX = 'none', sizeY = 'none' } = useAdaptivity();
   const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
-  const isFixed = fixed !== undefined ? fixed : platform !== 'vkcom';
+  const isVKCOM = platform !== 'vkcom';
+  const isFixed = fixed !== undefined ? fixed : isVKCOM;
   const separatorVisible = delimiter === 'auto' || delimiter === 'separator';
   const visorSeparatorVisible = !noVisor && separatorVisible;
   const visorSpacingVisible = !noVisor && (delimiter === 'auto' || delimiter === 'spacing');
@@ -172,7 +177,7 @@ export const PanelHeader = ({
           {children}
         </PanelHeaderIn>
       )}
-      {platform !== 'vkcom' && (
+      {!isVKCOM && (
         <>
           {visorSeparatorVisible && adaptiveSizeX.compact && (
             <Separator className={adaptiveSizeX.compact.className} />
@@ -182,7 +187,7 @@ export const PanelHeader = ({
           )}
         </>
       )}
-      {separatorVisible && platform === 'vkcom' && (
+      {separatorVisible && isVKCOM && (
         <Separator className={styles['PanelHeader__separator']} wide />
       )}
     </RootComponent>
