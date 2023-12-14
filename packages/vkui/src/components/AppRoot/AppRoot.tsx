@@ -128,7 +128,7 @@ export const AppRoot = ({
           }
 
           documentElement.classList.add(...stylesClassNames, 'vkui');
-          const unsetSafeAreaInsets = setSafeAreaInsets(safeAreaInsets, documentBody);
+          const unsetSafeAreaInsets = setSafeAreaInsets(safeAreaInsets, documentElement);
 
           return function cleanup() {
             if (parentElement) {
