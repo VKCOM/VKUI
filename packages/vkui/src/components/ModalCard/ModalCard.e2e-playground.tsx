@@ -32,11 +32,13 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
           header: ['Отправляйте деньги друзьям, используя банковскую карту'],
           subheader: ['Номер карты получателя не нужен — он сам решит, куда зачислить средства.'],
           actions: [
-            <Button size="l" mode="primary" stretched key="button">
-              Попробовать
-            </Button>,
+            <React.Fragment key="actions">
+              <Spacing size={16} />
+              <Button size="l" mode="primary" stretched>
+                Попробовать
+              </Button>
+            </React.Fragment>,
           ],
-          children: [<Spacing size={16} key="spacing" />],
         },
         {
           nav: ['2'],
@@ -46,14 +48,17 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
             'Игра появится под списком разделов на экране меню и будет всегда под рукой.',
           ],
           actions: [
-            <ButtonGroup mode="vertical" gap="m" stretched key="buttons">
-              <Button size="l" mode="primary" stretched>
-                Присоединиться
-              </Button>
-              <Button size="l" mode="secondary" stretched>
-                Скопировать приглашение
-              </Button>
-            </ButtonGroup>,
+            <React.Fragment key="actions">
+              <Spacing size={8} />
+              <ButtonGroup mode="vertical" gap="m" stretched>
+                <Button size="l" mode="primary" stretched>
+                  Присоединиться
+                </Button>
+                <Button size="l" mode="secondary" stretched>
+                  Скопировать приглашение
+                </Button>
+              </ButtonGroup>
+            </React.Fragment>,
           ],
           children: [
             <React.Fragment key="userstack">
@@ -62,7 +67,6 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
                 Алексей, Илья, Михаил
                 <br />и ещё 3 человека
               </UsersStack>
-              <Spacing size={8} />
             </React.Fragment>,
           ],
         },
@@ -88,27 +92,31 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
             'Гиппопотомомонстросесквиппедалиофобия — боязнь длинных слов, таких как метоксихлордиэтиламинометилбутиламиноакридин',
           ],
           actions: [
-            <ButtonGroup mode="horizontal" gap="s" stretched key="buttons">
-              <Button size="l" mode="primary" stretched>
-                Гиппопотомомонстросесквиппедалиофобия
-              </Button>
-              <Button size="l" mode="primary" stretched>
-                Метоксихлордиэтиламинометилбутиламиноакридин
-              </Button>
-            </ButtonGroup>,
+            <React.Fragment key="actions">
+              <Spacing size={16} />
+              <ButtonGroup mode="horizontal" gap="s" stretched>
+                <Button size="l" mode="primary" stretched>
+                  Гиппопотомомонстросесквиппедалиофобия
+                </Button>
+                <Button size="l" mode="primary" stretched>
+                  Метоксихлордиэтиламинометилбутиламиноакридин
+                </Button>
+              </ButtonGroup>
+            </React.Fragment>,
           ],
-          children: [<Spacing size={16} key="spacing" />],
         },
         {
           nav: ['4'],
           header: ['Расскажите о себе'],
           actions: [
-            <Button size="l" mode="primary" stretched key="button">
-              Сохранить
-            </Button>,
+            <React.Fragment key="actions">
+              <Spacing size={16} />
+              <Button size="l" mode="primary" stretched>
+                Сохранить
+              </Button>
+            </React.Fragment>,
           ],
           dismissButtonMode: ['inside', 'outside'],
-          children: [<Spacing size={16} key="spacing" />],
         },
       ]}
       AppWrapper={AppWrapper}
