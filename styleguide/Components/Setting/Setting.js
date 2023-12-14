@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { Icon16Dropdown } from '@vkontakte/icons';
+import { Icon12InfoCircle, Icon16Dropdown } from '@vkontakte/icons';
 import { ActionSheet, ActionSheetItem, classNames, Headline, Link } from '@vkui';
 import './Setting.css';
 import { Tooltip } from '@vkui/components/Tooltip/Tooltip';
@@ -13,6 +13,7 @@ export const Setting = ({
   children,
   disabled,
   hint,
+  hintMaxWidth,
   className,
 }) => {
   const { setPopout } = useContext(StyleGuideContext);
@@ -33,19 +34,20 @@ export const Setting = ({
       return option.value === value;
     })?.title || value;
 
-  const labelJsx = <span className="Setting__label">{label}:&nbsp;</span>;
-
   return (
     <Headline
       className={classNames('Setting', className, disabled && 'Setting--disabled')}
       weight="3"
     >
       {hint ? (
-        <Tooltip placement="top" enableInteractive text={hint}>
-          {labelJsx}
+        <Tooltip placement="top" enableInteractive text={hint} maxWidth={hintMaxWidth}>
+          <span className="Setting__label Setting__label--has-hint">
+            {label} <Icon12InfoCircle className="Setting__labelHint" />
+            :&nbsp;
+          </span>
         </Tooltip>
       ) : (
-        labelJsx
+        <span className="Setting__label">{label}:&nbsp;</span>
       )}
       {Array.isArray(options) && (
         <Link
@@ -59,8 +61,15 @@ export const Setting = ({
                   const isPrimitive = typeof item === 'string' || typeof item === 'number';
                   const option = isPrimitive ? item : item.value;
                   const title = isPrimitive ? item : item.title;
+                  const disabled = isPrimitive ? false : item.disabled;
+
                   return (
-                    <ActionSheetItem key={option} value={option} onClick={() => onChange(option)}>
+                    <ActionSheetItem
+                      key={option}
+                      value={option}
+                      disabled={disabled}
+                      onClick={() => onChange(option)}
+                    >
                       {title}
                     </ActionSheetItem>
                   );

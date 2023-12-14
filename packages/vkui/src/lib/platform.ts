@@ -1,7 +1,4 @@
-import { LiteralUnion } from '../types';
 import { BrowserInfo, computeBrowserInfo } from './browser';
-
-type PlatformUnion = 'android' | 'ios' | 'vkcom';
 
 export const Platform = {
   ANDROID: 'android',
@@ -9,9 +6,12 @@ export const Platform = {
   VKCOM: 'vkcom',
 } as const;
 
-export type PlatformType = LiteralUnion<PlatformUnion, string>;
+/**
+ * TODO [>=7]: Переименовать 'vkcom' в 'web' и заменить в DEFAULT_TOKENS_CLASS_NAMES тему по умолчанию
+ */
+export type PlatformType = 'android' | 'ios' | 'vkcom';
 
-export function platform(browserInfo?: BrowserInfo): PlatformUnion {
+export function platform(browserInfo?: BrowserInfo): PlatformType {
   if (!browserInfo) {
     browserInfo = computeBrowserInfo();
   }

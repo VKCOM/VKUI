@@ -105,9 +105,11 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
   ],
 });
 
-// 2. Ре-экспортируем из Playwright нужные модули и типы.
+// 2. Ре-экспортируем нужные модули, типы и константы.
 export { expect, defineConfig, devices } from '@playwright/experimental-ct-react';
 export type { PlaywrightTestConfig, ReporterDescription } from '@playwright/test';
+export { Appearance } from '../../lib/appearance';
+export { Platform } from '../../lib/platform';
 
 // 3. Вычленяем типы, которые не экспортируются самим Playwright.
 export type TestProject = Exclude<PlaywrightTestConfig<VKUITestOptions>['projects'], undefined>;

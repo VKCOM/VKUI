@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import ReactFrame, { useFrame } from 'react-frame-component';
 import { PanelSpinner } from '@vkui';
 import { DOMContext } from '@vkui/lib/dom';
-import { usePlatformStyle } from './usePlatformStyle';
+import { useLoadThemeTokens } from '../../lib/theme/useLoadThemeTokens';
 import './Frame.css';
 
-const FrameDomProvider = ({ platform, children }) => {
+const FrameDomProvider = ({ platform, appearanceOptions, themeName, children }) => {
   const [ready, setReady] = React.useState(false);
   const frame = useFrame();
 
-  const loaded = usePlatformStyle(platform, frame.document);
+  const loaded = useLoadThemeTokens(themeName, appearanceOptions, frame.document);
 
   React.useEffect(() => {
     // Пихаем в iFrame с примером спрайты для иконок
@@ -72,7 +72,7 @@ const initialFrameContent = `
 </html>
 `;
 
-export const Frame = ({ children, style, appearance, platform }) => {
+export const Frame = ({ children, style, appearanceOptions, platform, themeName }) => {
   return (
     <ReactFrame
       mountTarget="body"
@@ -80,7 +80,13 @@ export const Frame = ({ children, style, appearance, platform }) => {
       style={style}
       initialContent={initialFrameContent}
     >
-      <FrameDomProvider platform={platform}>{children}</FrameDomProvider>
+      <FrameDomProvider
+        platform={platform}
+        appearanceOptions={appearanceOptions}
+        themeName={themeName}
+      >
+        {children}
+      </FrameDomProvider>
     </ReactFrame>
   );
 };

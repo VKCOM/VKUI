@@ -1,14 +1,11 @@
-import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
 import type { SizeTypeValues } from '../../lib/adaptivity';
-import type { AppearanceType } from '../../lib/appearance';
 import { isRefObject } from '../../lib/isRefObject';
 import type { AppRootLayout, AppRootMode, SafeAreaInsets } from './types';
 
 type ContainerClassNamesProps = {
   mode: AppRootMode;
   layout?: AppRootLayout;
-  platform: string;
-  appearance: AppearanceType;
+  tokensClassName: string;
   sizeX: SizeTypeValues | 'none';
   sizeY: SizeTypeValues | 'none';
 };
@@ -16,13 +13,12 @@ type ContainerClassNamesProps = {
 export function getClassNamesByMode({
   mode,
   layout,
-  platform,
-  appearance,
+  tokensClassName,
   sizeX,
   sizeY,
 }: ContainerClassNamesProps): [string[], string[]] {
   const baseClassNames: string[] = ['vkui__root'];
-  const stylesClassNames: string[] = [generateVKUITokensClassName(platform, appearance)];
+  const stylesClassNames: string[] = [tokensClassName];
 
   if (mode === 'full' || mode === 'embedded') {
     if (layout) {

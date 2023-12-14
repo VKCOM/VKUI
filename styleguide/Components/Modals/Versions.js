@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Semver from 'semver';
 import { Div, ModalPage, ModalPageHeader, PanelSpinner, SimpleCell } from '@vkui';
-import { useFetch } from './useFetch';
+import { useFetch } from '../../utils/useFetch';
 
 const MINIMUM_VERSION = '3.12.4';
 

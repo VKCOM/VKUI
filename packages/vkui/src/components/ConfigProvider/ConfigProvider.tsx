@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { TokensClassProvider } from '../../lib/tokensClassProvider';
+import { TokensClassProvider } from '../../lib/tokens';
 import { excludeKeysWithUndefined } from '../../lib/utils';
 import {
   ConfigProviderContext,
-  ConfigProviderContextInterface,
+  type ConfigProviderContextInterface,
   useConfigProvider,
 } from './ConfigProviderContext';
 
@@ -29,6 +29,7 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps) => {
     platform,
     locale,
     appearance: appearanceProp,
+    tokensClassNames,
   } = {
     ...parentConfig,
     ...props,
@@ -43,14 +44,13 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps) => {
     transitionMotionEnabled,
     platform,
     locale,
+    tokensClassNames,
     appearance,
   });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <TokensClassProvider platform={platform} appearance={appearance}>
-        {children}
-      </TokensClassProvider>
+      <TokensClassProvider>{children}</TokensClassProvider>
     </ConfigProviderContext.Provider>
   );
 };

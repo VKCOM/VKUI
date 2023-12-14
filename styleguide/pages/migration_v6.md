@@ -344,6 +344,21 @@ npx @vkontakte/vkui-codemods --help
   />
   ```
 
+- `platform` теперь принимает только **union** `'android' | 'ios' | 'vkcom'`. Раньше можно было
+  передать любое значение, чтобы можно было перебить токены по умолчанию. Если вам это необходимо,
+  то используйте свойство `tokensClassNames`. Подробнее читайте на странице [Кастомизация](#/Customize).
+  Ниже представлен код на примере `paradigmBase` из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens).
+
+  ```diff
+  <ConfigProvider
+  -  platform="paradigmBase"
+  +  tokensClassNames={{
+  +   light: 'vkui--paradigmBase--light',
+  +   dark: 'vkui--paradigmBase--dark',
+  +  }}
+  />
+  ```
+
 <br/>
 
 ### [`Chip`](#/ChipsInput)

@@ -6,6 +6,7 @@ import { HasCustomPanelHeaderAfter } from './HasCustomPanelHeaderAfter';
 import { HasPointerCheckbox } from './HasPointerCheckbox';
 import { LayoutSelect } from './LayoutSelect';
 import { PlatformSelect } from './PlatformSelect';
+import { ThemeName } from './ThemeName';
 import { ViewHeightSelect } from './ViewHeightSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
 import './Settings.css';
@@ -23,9 +24,12 @@ export const Settings = ({ adaptivity, showCustomPanelHeaderAfterProps, showLayo
                 value={context.platform}
               />
               <AppearanceSelect
+                disabled={context.appearanceDisabled}
                 onChange={(appearance) => context.setContext({ appearance })}
                 value={context.appearance}
+                options={context.appearanceOptions}
               />
+              <ThemeName />
               {showCustomPanelHeaderAfterProps && (
                 <HasCustomPanelHeaderAfter
                   onChange={(v) => context.setContext({ hasCustomPanelHeaderAfter: v })}
