@@ -265,6 +265,7 @@ class ModalRootTouchComponent extends React.Component<
       this.setMaskOpacity(prevModalState, 0);
       this.setState({ modalOpenedLog: [] });
       prevModalState.translateY = undefined;
+      prevModalState.expandable = undefined;
     } else if (nextModalState.id && !this.state.modalOpenedLog.includes(nextModalState.id)) {
       nextModalState.translateY = undefined;
       this.setState((prevState) => ({
