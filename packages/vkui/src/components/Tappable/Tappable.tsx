@@ -6,6 +6,7 @@ import { mergeCalls } from '../../lib/mergeCalls';
 import { checkClickable, Clickable, ClickableProps } from '../Clickable/Clickable';
 import { Ripple, useMaybeNeedRipple, useRipple } from './Ripple';
 import { activeClass, DEFAULT_STATE_MODE, hoverClass, StateProps } from './state';
+import '../Clickable/Clickable.module.css'; // Reorder css
 import styles from './Tappable.module.css';
 
 const sizeXClassNames = {
