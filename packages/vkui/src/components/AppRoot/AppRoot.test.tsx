@@ -180,7 +180,7 @@ describe('AppRoot', () => {
 
     it.each(['embedded', 'full'] as const)('should add adaptivity classes in %s mode', (mode) => {
       const { unmount, rerender, container } = render(<AppRoot mode={mode} />);
-      const parentElement = mode === 'embedded' ? container : document.body;
+      const parentElement = mode === 'embedded' ? container : document.documentElement;
       expect(parentElement).not.toHaveClass('vkui--sizeX-regular');
       rerender(
         <AdaptivityProvider sizeX="regular">
@@ -200,7 +200,7 @@ describe('AppRoot', () => {
       const { unmount, rerender, container } = render(
         <AppRoot mode={mode} safeAreaInsets={{ top: 0 }} />,
       );
-      const parentElement = mode === 'embedded' ? container : document.body;
+      const parentElement = mode === 'embedded' ? container : document.documentElement;
       expect(parentElement).toHaveStyle(CUSTOM_PROPERTY_INSET_TOP);
 
       rerender(<AppRoot mode={mode} safeAreaInsets={{ top: 0, bottom: 0 }} />);
@@ -220,7 +220,7 @@ describe('AppRoot', () => {
       { mode: 'partial', layout: 'plain' },
     ] as const)('should resolve "$layout" layout prop (mode="$mode")', ({ mode, layout }) => {
       const { unmount, container, rerender } = render(<AppRoot mode={mode} />);
-      const conditionalContainer = mode === 'full' ? document.body : container;
+      const conditionalContainer = mode === 'full' ? document.documentElement : container;
       const className = layout === 'card' ? 'vkui--layout-card' : 'vkui--layout-plain';
 
       expect(conditionalContainer).not.toHaveClass(className);
@@ -238,7 +238,7 @@ describe('AppRoot', () => {
       expect(conditionalContainer).not.toHaveClass(className);
     });
 
-    it('should add VKUITokenClassName to document.body on mount and removes on unmount', async () => {
+    it('should add VKUITokenClassName to html tag on mount and removes on unmount', async () => {
       const config = { appearance: 'light', platform: 'vkcom' } as const;
       const vkuiTokenClassName = generateVKUITokensClassName(config.platform, config.appearance);
       const { unmount } = render(
@@ -246,9 +246,9 @@ describe('AppRoot', () => {
           <AppRoot />
         </ConfigProvider>,
       );
-      expect(document.body).toHaveClass(vkuiTokenClassName);
+      expect(document.documentElement).toHaveClass(vkuiTokenClassName);
       unmount();
-      expect(document.body).not.toHaveClass(vkuiTokenClassName);
+      expect(document.documentElement).not.toHaveClass(vkuiTokenClassName);
     });
 
     it('should add VKUITokenClassName to embedded element of AppRoot inner full AppRoot and removes on unmount', async () => {
@@ -286,19 +286,19 @@ describe('AppRoot', () => {
 
       const result = render(<TestComponent />);
 
-      expect(document.body).toHaveClass(vkuiTokenModeClassNameForFullMode);
+      expect(document.documentElement).toHaveClass(vkuiTokenModeClassNameForFullMode);
       expect(result.getByTestId('app-root-embedded')).toHaveClass(
         vkuiTokenModeClassNameForEmbeddedMode,
       );
 
       fireEvent.click(screen.getByRole('button'));
 
-      expect(document.body).toHaveClass(vkuiTokenModeClassNameForFullMode);
+      expect(document.documentElement).toHaveClass(vkuiTokenModeClassNameForFullMode);
       expect(result.queryByTestId('app-root-embedded')).toBeNull();
 
       result.unmount();
 
-      expect(document.body).not.toHaveClass(vkuiTokenModeClassNameForFullMode);
+      expect(document.documentElement).not.toHaveClass(vkuiTokenModeClassNameForFullMode);
     });
   });
 

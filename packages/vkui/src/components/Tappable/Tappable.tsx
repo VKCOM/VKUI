@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+import '../Clickable/Clickable.module.css'; // eslint-disable-line import/order
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
