@@ -28,7 +28,7 @@ const Layout = ({ children }) => {
 
   return (
     <SplitLayout
-      header={platform !== 'vkcom' && <PanelHeader className="Layout__header" separator={false} />}
+      header={platform !== 'vkcom' && <PanelHeader className="Layout__header" delimiter="none" />}
     >
       <SplitCol autoSpaced={platform !== 'vkcom'}>{children}</SplitCol>
     </SplitLayout>

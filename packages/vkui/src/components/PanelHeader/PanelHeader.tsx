@@ -15,8 +15,8 @@ import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeader.module.css';
 
 const platformClassNames = {
-  ios: classNames(styles['PanelHeader--ios'], 'vkuiInternalPanelHeader--ios'),
-  android: classNames(styles['PanelHeader--android'], 'vkuiInternalPanelHeader--android'),
+  ios: styles['PanelHeader--ios'],
+  android: styles['PanelHeader--android'],
   vkcom: classNames(styles['PanelHeader--vkcom'], 'vkuiInternalPanelHeader--vkcom'),
 };
 
@@ -40,13 +40,19 @@ export interface PanelHeaderProps
    * При передаче нескольких элементов, расставляет отступы между ними.
    */
   after?: React.ReactNode;
-  separator?: boolean;
+  /**
+   * - значение `auto` после шапки будет сепаратор в `vkcom` и `android`/`iOS` в `compact`-режиме, в `android`/`iOS` отступ в `regular`-режиме
+   * - значение `none` отключает все разделители
+   * - значение `separator` включает только сепараторы по условиям из `auto`
+   * - значение `spacing` включает только отступ по условиям из `auto`
+   */
+  delimiter?: 'auto' | 'none' | 'separator' | 'spacing';
   transparent?: boolean;
   shadow?: boolean;
   /**
-   * Если `false`, то шапка будет нулевой высоты и контент панели "залезет" под неё
+   * Позволяет задать шапку нулевой высоты (контент панели не будет её учитывать)
    */
-  visor?: boolean;
+  noVisor?: boolean;
   /**
    * Если `false`, то шапка будет в потоке. По умолчанию `true`, но если платформа vkcom, то по умолчанию `false`.
    */
@@ -57,13 +63,14 @@ export interface PanelHeaderProps
   typographyProps?: HasComponent & React.HTMLAttributes<HTMLElement> & HasDataAttribute;
 }
 
-const PanelHeaderIn = ({
-  before,
-  after,
-  separator,
-  children,
-  typographyProps = {},
-}: PanelHeaderProps) => {
+interface PanelHeaderInProps {
+  before?: PanelHeaderProps['before'];
+  after?: PanelHeaderProps['after'];
+  children?: PanelHeaderProps['children'];
+  typographyProps?: PanelHeaderProps['typographyProps'];
+}
+
+const PanelHeaderIn = ({ before, after, children, typographyProps = {} }: PanelHeaderInProps) => {
   const { Component = 'span', ...restProps } = typographyProps;
   const { hasCustomPanelHeaderAfter, customPanelHeaderAfterMinWidth } = useConfigProvider();
   const { isInsideModal } = React.useContext(ModalRootContext);
@@ -89,23 +96,16 @@ const PanelHeaderIn = ({
     );
 
   return (
-    <React.Fragment>
-      <OnboardingTooltipContainer fixed className={styles['PanelHeader__in']}>
-        <div
-          className={classNames(styles['PanelHeader__before'], 'vkuiInternalPanelHeader__before')}
-        >
-          {before}
-        </div>
-        <div className={styles['PanelHeader__content']}>{typographyNode}</div>
-        <div
-          className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}
-          {...afterSlotProps}
-        />
-      </OnboardingTooltipContainer>
-      {separator && platform === 'vkcom' && (
-        <Separator className={styles['PanelHeader__separator']} wide />
-      )}
-    </React.Fragment>
+    <OnboardingTooltipContainer fixed className={styles['PanelHeader__in']}>
+      <div className={classNames(styles['PanelHeader__before'], 'vkuiInternalPanelHeader__before')}>
+        {before}
+      </div>
+      <div className={styles['PanelHeader__content']}>{typographyNode}</div>
+      <div
+        className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}
+        {...afterSlotProps}
+      />
+    </OnboardingTooltipContainer>
   );
 };
 
@@ -116,9 +116,9 @@ export const PanelHeader = ({
   before,
   children,
   after,
-  separator = true,
-  visor = true,
+  noVisor = false,
   transparent = false,
+  delimiter = 'auto',
   shadow,
   getRef,
   getRootRef,
@@ -129,7 +129,10 @@ export const PanelHeader = ({
   const platform = usePlatform();
   const { sizeX = 'none', sizeY = 'none' } = useAdaptivity();
   const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
-  let isFixed = fixed !== undefined ? fixed : platform !== 'vkcom';
+  const isFixed = fixed !== undefined ? fixed : platform !== 'vkcom';
+  const separatorVisible = delimiter === 'auto' || delimiter === 'separator';
+  const visorSeparatorVisible = !noVisor && separatorVisible;
+  const visorSpacingVisible = !noVisor && (delimiter === 'auto' || delimiter === 'spacing');
 
   return (
     <RootComponent
@@ -142,9 +145,8 @@ export const PanelHeader = ({
           : platformClassNames.android,
         transparent && styles['PanelHeader--trnsp'],
         shadow && styles['PanelHeader--shadow'],
-        visor && classNames(styles['PanelHeader--vis'], 'vkuiInternalPanelHeader--vis'),
-        separator &&
-          visor &&
+        !noVisor && classNames(styles['PanelHeader--vis'], 'vkuiInternalPanelHeader--vis'),
+        visorSeparatorVisible &&
           classNames(styles['PanelHeader--sep'], 'vkuiInternalPanelHeader--sep'),
         !before &&
           classNames(styles['PanelHeader--no-before'], 'vkuiInternalPanelHeader--no-before'),
@@ -161,32 +163,27 @@ export const PanelHeader = ({
           vertical="top"
           getRootRef={getRef}
         >
-          <PanelHeaderIn
-            before={before}
-            after={after}
-            separator={separator}
-            typographyProps={typographyProps}
-          >
+          <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
             {children}
           </PanelHeaderIn>
         </FixedLayout>
       ) : (
-        <PanelHeaderIn
-          before={before}
-          after={after}
-          separator={separator}
-          typographyProps={typographyProps}
-        >
+        <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
           {children}
         </PanelHeaderIn>
       )}
-      {separator && visor && platform !== 'vkcom' && (
-        <React.Fragment>
-          {adaptiveSizeX.compact && <Separator className={adaptiveSizeX.compact.className} />}
-          {adaptiveSizeX.regular && (
+      {platform !== 'vkcom' && (
+        <>
+          {visorSeparatorVisible && adaptiveSizeX.compact && (
+            <Separator className={adaptiveSizeX.compact.className} />
+          )}
+          {visorSpacingVisible && adaptiveSizeX.regular && (
             <Spacing className={adaptiveSizeX.regular.className} size={16} />
           )}
-        </React.Fragment>
+        </>
+      )}
+      {separatorVisible && platform === 'vkcom' && (
+        <Separator className={styles['PanelHeader__separator']} wide />
       )}
     </RootComponent>
   );

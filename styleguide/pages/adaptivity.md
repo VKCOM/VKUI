@@ -82,7 +82,7 @@ function App() {
 
   // ...
 
-  <SplitLayout header={!isVKCOM && <PanelHeader separator={false} />}>
+  <SplitLayout header={!isVKCOM && <PanelHeader delimiter="none" />}>
     {viewWidth.tabletPlus && (
       <SplitCol width={280} className={viewWidth.tabletPlus.className}>
         <Panel id="nav">Navigation</Panel>

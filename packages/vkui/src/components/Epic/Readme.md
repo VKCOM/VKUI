@@ -29,7 +29,7 @@ const Example = () => {
 
   return (
     <SplitLayout
-      header={hasHeader && <PanelHeader separator={false} />}
+      header={hasHeader && <PanelHeader delimiter="none" />}
       style={{ justifyContent: 'center' }}
     >
       {viewWidth.tabletPlus && (

@@ -51,6 +51,7 @@ const SimpleSearch = ({ goHeaderSearch }) => {
             <Icon28AddOutline />
           </PanelHeaderButton>
         }
+        delimiter="spacing"
       >
         Выбор тематики
       </PanelHeader>
@@ -79,7 +80,10 @@ const HeaderSearch = ({ goSearch, onFiltersClick }) => {
 
   return (
     <React.Fragment>
-      <PanelHeader before={platform !== 'vkcom' && <PanelHeaderBack onClick={goSearch} />}>
+      <PanelHeader
+        delimiter="spacing"
+        before={platform !== 'vkcom' && <PanelHeaderBack onClick={goSearch} />}
+      >
         <Search
           value={search}
           onChange={onChange}
@@ -122,7 +126,7 @@ const SearchExample = () => {
 
   return (
     <SplitLayout
-      header={!isVKCOM && <PanelHeader separator={false} />}
+      header={!isVKCOM && <PanelHeader delimiter="none" />}
       modal={
         <ModalRoot activeModal={activeModal}>
           <ModalPage
@@ -225,7 +229,7 @@ const App = () => {
           ></ModalCard>
         </ModalRoot>
       }
-      header={!isVKCOM && <PanelHeader separator={false} />}
+      header={!isVKCOM && <PanelHeader delimiter="none" />}
     >
       <SplitCol>
         <View activePanel="find">

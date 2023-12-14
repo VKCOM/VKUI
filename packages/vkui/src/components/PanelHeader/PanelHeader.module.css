@@ -30,12 +30,12 @@
   background: transparent;
 }
 
-.PanelHeader--sizeX-regular .PanelHeader--shadow .PanelHeader__in {
+.PanelHeader--sizeX-regular.PanelHeader--shadow .PanelHeader__in {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
 }
 
 @media (--sizeX-regular) {
-  .PanelHeader--sizeX-none .PanelHeader--shadow .PanelHeader__in {
+  .PanelHeader--sizeX-none.PanelHeader--shadow .PanelHeader__in {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
   }
 }

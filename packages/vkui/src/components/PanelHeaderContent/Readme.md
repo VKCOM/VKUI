@@ -2,10 +2,8 @@
 
 > **Важно**
 >
-> Правая часть шапки скрыта по умолчанию. Если хотите ее показать, передайте в
-> [`ConfigProvider`](#/ConfigProvider) свойство `hasCustomPanelHeaderAfter={false}`.
->
-> ⚠️ В v6 значение по умолчанию будет изменено на `false` (см. https://github.com/VKCOM/VKUI/issues/5049).
+> Правая часть шапки доступна по умолчанию. Если вы разрабатываете мини-приложение и хотите ее скрыть, передайте в
+> [`ConfigProvider`](#/ConfigProvider) свойство `hasCustomPanelHeaderAfter`.
 
 ```jsx { "props": { "showCustomPanelHeaderAfterProps": true } }
 const Example = () => {

@@ -1,5 +1,25 @@
 > Документацию по миграции с **v4** на **v5** можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v5.0.1).
 
+## [`PanelHeader`](#/PanelHeader)
+
+- Свойство `visor` удалено, используйте свойство `noVisor`
+
+```diff
+-  <PanelHeader visor />
++  <PanelHeader />
+-  <PanelHeader visor={false} />
++  <PanelHeader noVisor />
+```
+
+- Свойство `separator` удалено, используйте свойство `delimiter`
+
+```diff
+-  <PanelHeader separator />
++  <PanelHeader />
+-  <PanelHeader separator={false} />
++  <PanelHeader delimiter="none" />
+```
+
 ## Содержание
 
 - <a href="{{anchor}}">Автоматизация обновления до v6</a>
