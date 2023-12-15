@@ -278,7 +278,7 @@ export const ModalSheet = ({
    *
    * - `closes` При закрытии, snap может остановить scrollTo
    */
-  const disableSnap = fullOpen || endScroll || isSoftwareKeyboardOpened || closing;
+  const disableSnap = endScroll || isSoftwareKeyboardOpened || closing;
 
   return (
     <FocusTrap

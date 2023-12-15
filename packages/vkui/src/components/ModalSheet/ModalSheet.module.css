@@ -55,6 +55,7 @@
   margin-inline: auto;
   transition: border-radius 0.1s var(--vkui--animation_easing_platform);
   inline-size: 100%;
+  scroll-snap-stop: always;
 }
 
 .ModalSheet--size-s {
