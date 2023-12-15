@@ -425,19 +425,6 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
-## [`ChipsSelect`](#/ChipsSelect)
-
-- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`.
-
-```diff
--  <ChipsSelect fixDropdownWidth>...</ChipsSelect>
-+  <ChipsSelect>...</ChipsSelect>
--  <ChipsSelect fixDropdownWidth={false}>...</ChipsSelect>
-+  <ChipsSelect dropdownAutoWidth>...</ChipsSelect>
-```
-
-<br/>
-
 ### [`ContentCard`](#/ContentCard)
 
 - Изменён тeг (с `h4` на `span`), в котором `header` компонента рендерится по умолчанию.
@@ -1093,7 +1080,14 @@ npx @vkontakte/vkui-codemods --help
   переопределить текст по умолчанию.
 - `getOptionValue`, `getOptionLabel`, `getNewOptionData` – все аргументы функции теперь обязательны.
 - `renderChip` – вторым аргументов приходит `option`.
-- Cвойство `fixDropdownWidth` удалено.
+- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`.
+
+```diff
+-  <ChipsSelect fixDropdownWidth>...</ChipsSelect>
++  <ChipsSelect>...</ChipsSelect>
+-  <ChipsSelect fixDropdownWidth={false}>...</ChipsSelect>
++  <ChipsSelect dropdownAutoWidth>...</ChipsSelect>
+```
 
 ```diff
 <ChipsSelect
