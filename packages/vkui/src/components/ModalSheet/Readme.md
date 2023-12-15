@@ -7,10 +7,7 @@ const ModalFirst = (props) => (
 
     <ModalSheet.Content>
       <FormItem top="Страна">
-        <SelectMimicry
-          placeholder="Выбрать страну"
-          onClick={() => changeActiveModal(MODAL_PAGE_COUNTRIES)}
-        />
+        <SelectMimicry placeholder="Выбрать страну" />
       </FormItem>
       <FormItem top="Город">
         <SelectMimicry placeholder="Выбрать город" disabled />
