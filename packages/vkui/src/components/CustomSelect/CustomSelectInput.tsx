@@ -72,7 +72,6 @@ export const CustomSelectInput = ({
         styles['CustomSelectInput__el'],
         (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) &&
           styles['CustomSelectInput__el--cursor-pointer'],
-        restProps.readOnly && styles['CustomSelectInput__el--no-pointer-events'],
       )}
       getRootRef={getRef}
       placeholder={children ? '' : placeholder}
