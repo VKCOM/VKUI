@@ -22,8 +22,14 @@ type ArrowMonthProps = Omit<React.AllHTMLAttributes<HTMLElement>, 'onClick' | 'a
 export interface CalendarHeaderProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
   viewDate: Date;
-  prevMonth?: boolean;
-  nextMonth?: boolean;
+  /**
+   * Скрывает иконку для переключения на предыдущий месяц
+   */
+  prevMonthHidden?: boolean;
+  /**
+   * Скрывает иконку для переключения на следующий месяц
+   */
+  nextMonthHidden?: boolean;
   disablePickers?: boolean;
   prevMonthLabel?: string;
   nextMonthLabel?: string;
@@ -47,8 +53,8 @@ export interface CalendarHeaderProps
 export const CalendarHeader = ({
   viewDate,
   onChange,
-  prevMonth = true,
-  nextMonth = true,
+  prevMonthHidden = false,
+  nextMonthHidden = false,
   disablePickers = false,
   onNextMonth,
   onPrevMonth,
@@ -109,7 +115,7 @@ export const CalendarHeader = ({
 
   return (
     <RootComponent baseClassName={styles['CalendarHeader']} {...restProps}>
-      {prevMonth && (
+      {!prevMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
             className={classNames(
@@ -161,7 +167,7 @@ export const CalendarHeader = ({
               value={viewDate.getMonth()}
               options={months}
               dropdownOffsetDistance={4}
-              fixDropdownWidth={false}
+              dropdownAutoWidth
               icon={<Icon12Dropdown />}
               onChange={onMonthsChange}
               forceDropdownPortal={false}
@@ -176,7 +182,7 @@ export const CalendarHeader = ({
               value={viewDate.getFullYear()}
               options={years}
               dropdownOffsetDistance={4}
-              fixDropdownWidth={false}
+              dropdownAutoWidth
               icon={<Icon12Dropdown />}
               onChange={onYearChange}
               forceDropdownPortal={false}
@@ -186,7 +192,7 @@ export const CalendarHeader = ({
           </div>
         </AdaptivityProvider>
       )}
-      {nextMonth && (
+      {!nextMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
             className={classNames(

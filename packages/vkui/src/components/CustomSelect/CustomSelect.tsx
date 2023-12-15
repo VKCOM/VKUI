@@ -187,7 +187,10 @@ export interface SelectProps<
    */
   clearButtonTestId?: string;
   dropdownOffsetDistance?: number;
-  fixDropdownWidth?: boolean;
+  /**
+   * Ширина раскрывающегося списка зависит от контента
+   */
+  dropdownAutoWidth?: boolean;
   forceDropdownPortal?: boolean;
   selectType?: SelectType;
   /**
@@ -238,7 +241,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     ClearButton = CustomSelectClearButton,
     allowClearButton = false,
     dropdownOffsetDistance = 0,
-    fixDropdownWidth = true,
+    dropdownAutoWidth = false,
     noMaxHeight = false,
     ['aria-labelledby']: ariaLabelledBy,
     clearButtonTestId,
@@ -884,7 +887,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           onMouseLeave={resetFocusedOption}
           fetching={fetching}
           offsetDistance={dropdownOffsetDistance}
-          sameWidth={fixDropdownWidth}
+          autoWidth={dropdownAutoWidth}
           forcePortal={forceDropdownPortal}
           autoHideScrollbar={autoHideScrollbar}
           autoHideScrollbarDelay={autoHideScrollbarDelay}

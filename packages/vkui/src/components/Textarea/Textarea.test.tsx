@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import { Textarea } from './Textarea';
+import { Textarea, TextareaProps } from './Textarea';
 
 const getInput = () => screen.getByRole('textbox');
 
@@ -84,6 +84,12 @@ describe('Textarea', () => {
           <Textarea value="\n\n\n\n" onResize={onResize} />
         </div>,
       );
+      expect(onResize).not.toHaveBeenCalled();
+    });
+    it("wont't resize with heightByRows", () => {
+      const onResize = jest.fn();
+      const props: TextareaProps = { rows: 1, heightByRows: true, onResize };
+      render(<Textarea value="" {...props} />).rerender(<Textarea value="\n\n\n\n" {...props} />);
       expect(onResize).not.toHaveBeenCalled();
     });
   });

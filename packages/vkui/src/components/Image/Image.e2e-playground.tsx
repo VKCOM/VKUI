@@ -29,7 +29,7 @@ export const ImagePlayground = (props: ComponentPlaygroundProps) => {
           ],
         },
         {
-          withBorder: [undefined, false],
+          noBorder: [undefined, true],
         },
         {
           withTransparentBackground: [undefined, true],

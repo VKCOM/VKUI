@@ -12,7 +12,7 @@ const Slide = ({ children, width, backgroundColor }) => (
 
 const Example = () => {
   const [slideIndex, setSlideIndex] = useState(0);
-  const [isDraggable, setIsDraggable] = useState(true);
+  const [dragDisabled, setDragDisabled] = useState(false);
   const [showArrows, setShowArrows] = useState(true);
 
   return (
@@ -87,7 +87,7 @@ const Example = () => {
             style={{ height: 150 }}
             slideIndex={slideIndex}
             onChange={setSlideIndex}
-            isDraggable={isDraggable}
+            dragDisabled={dragDisabled}
             showArrows={showArrows}
           >
             <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
@@ -96,8 +96,8 @@ const Example = () => {
           </Gallery>
 
           <FormItem>
-            <Checkbox checked={isDraggable} onChange={(e) => setIsDraggable(e.target.checked)}>
-              isDraggable
+            <Checkbox checked={dragDisabled} onChange={(e) => setDragDisabled(e.target.checked)}>
+              dragDisabled
             </Checkbox>
             <Checkbox checked={showArrows} onChange={(e) => setShowArrows(e.target.checked)}>
               showArrows

@@ -145,7 +145,6 @@ export const ActionSheet = ({
       className={className}
       style={style}
       onClick={onClose}
-      hasMask
       fixed
     >
       {actionSheet}

@@ -1,5 +1,185 @@
 > Документацию по миграции с **v4** на **v5** можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v5.0.1).
 
+## [`CardScroll`](#/CardScroll)
+
+- Свойство `isDraggable` удалено, используйте свойство `dragDisabled`
+
+```diff
+-  <CardScroll withSpaces />
++  <CardScroll />
+-  <CardScroll withSpaces={false} />
++  <CardScroll noSpaces />
+```
+
+<br/><br/>
+
+## [`Gallery`](#/Gallery)
+
+- Свойство `isDraggable` удалено, используйте свойство `dragDisabled`
+
+```diff
+-  <Gallery isDraggable />
++  <Gallery />
+-  <Gallery isDraggable={false} />
++  <Gallery dragDisabled />
+```
+
+<br/><br/>
+
+## [`Textarea`](#/Textarea)
+
+- Свойство `grow` удалено, используйте свойство `heightByRows`
+
+```diff
+-  <Textarea grow />
++  <Textarea />
+-  <Textarea grow={false} rows={3} />
++  <Textarea heightByRows rows={3} />
+```
+
+<br/><br/>
+
+## [`Tabbar`](#/Tabbar)
+
+- Свойство `shadow` удалено, используйте свойство `plain`
+
+```diff
+-  <Tabbar shadow>...</Tabbar>
++  <Tabbar>...</Tabbar>
+-  <Tabbar shadow={false}>...</Tabbar>
++  <Tabbar plain>...</Tabbar>
+```
+
+<br/><br/>
+
+## [`PopoutWrapper`](#/PopoutWrapper)
+
+- Свойство `hasMask` удалено, используйте свойство `noBackground`
+
+```diff
+-  <PopoutWrapper hasMask>...</PopoutWrapper>
++  <PopoutWrapper>...</Tabbar>
+-  <PopoutWrapper hasMask={false}>...</PopoutWrapper>
++  <PopoutWrapper noBackground>...</PopoutWrapper>
+```
+
+<br/><br/>
+
+## [`Placeholder`](#/Placeholder)
+
+- Свойство `withPadding` удалено, используйте свойство `noPadding`
+
+```diff
+-  <Placeholder withPadding>...</Placeholder>
++  <Placeholder>...</Placeholder>
+-  <Placeholder withPadding={false}>...</Placeholder>
++  <Placeholder noPadding>...</Placeholder>
+```
+
+<br/><br/>
+
+## [`ChipsSelect`](#/ChipsSelect)
+
+- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`
+
+```diff
+-  <ChipsSelect fixDropdownWidth>...</ChipsSelect>
++  <ChipsSelect>...</ChipsSelect>
+-  <ChipsSelect fixDropdownWidth={false}>...</ChipsSelect>
++  <ChipsSelect dropdownAutoWidth>...</ChipsSelect>
+```
+
+<br/><br/>
+
+## [`CustomSelect`](#/CustomSelect)
+
+- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`
+
+```diff
+-  <CustomSelect fixDropdownWidth>...</CustomSelect>
++  <CustomSelect>...</CustomSelect>
+-  <CustomSelect fixDropdownWidth={false}>...</CustomSelect>
++  <CustomSelect dropdownAutoWidth>...</CustomSelect>
+```
+
+<br/><br/>
+
+## [`Select`](#/Select)
+
+- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`
+
+```diff
+-  <Select fixDropdownWidth>...</Select>
++  <Select>...</Select>
+-  <Select fixDropdownWidth={false}>...</Select>
++  <Select dropdownAutoWidth>...</Select>
+```
+
+<br/><br/>
+
+## [`ImageBase`](#/ImageBase)
+
+- Свойство `withBorder` удалено, используйте свойство `noBorder`
+
+```diff
+-  <ImageBase withBorder>...</ImageBase>
++  <ImageBase>...</ImageBase>
+-  <ImageBase withBorder={false}>...</ImageBase>
++  <ImageBase noBorder>...</ImageBase>
+```
+
+<br/><br/>
+
+## [`ImageBase`](#/ImageBase)
+
+- Свойство `withBorder` удалено, используйте свойство `noBorder`
+
+```diff
+-  <ImageBase withBorder>...</ImageBase>
++  <ImageBase>...</ImageBase>
+-  <ImageBase withBorder={false}>...</ImageBase>
++  <ImageBase noBorder>...</ImageBase>
+```
+
+<br/><br/>
+
+## [`Image`](#/Image)
+
+- Свойство `withBorder` удалено, используйте свойство `noBorder`
+
+```diff
+-  <Image withBorder>...</Image>
++  <Image>...</Image>
+-  <Image withBorder={false}>...</Image>
++  <Image noBorder>...</Image>
+```
+
+<br/><br/>
+
+## [`Avatar`](#/Avatar)
+
+- Свойство `withBorder` удалено, используйте свойство `noBorder`
+
+```diff
+-  <Avatar withBorder>...</Avatar>
++  <Avatar>...</Avatar>
+-  <Avatar withBorder={false}>...</Avatar>
++  <Avatar noBorder>...</Avatar>
+```
+
+<br/><br/>
+
+## [`GridAvatar`](#/GridAvatar)
+
+- Свойство `withBorder` удалено, используйте свойство `noBorder`
+
+```diff
+-  <GridAvatar withBorder>...</GridAvatar>
++  <GridAvatar>...</GridAvatar>
+-  <GridAvatar withBorder={false}>...</GridAvatar>
++  <GridAvatar noBorder>...</GridAvatar>
+```
+
 ## Содержание
 
 - <a href="{{anchor}}">Автоматизация обновления до v6</a>
@@ -411,6 +591,7 @@ npx @vkontakte/vkui-codemods --help
   не обрабатывает результат исполнения. Для фильтрации обновляйте `props.options` самостоятельно или
   используйте свойство `filterFn`.
 - Удалено свойство `option` из `CustomSelectOption`.
+- Cвойство `fixDropdownWidth` удалено.
 
 <br/>
 
@@ -920,6 +1101,7 @@ npx @vkontakte/vkui-codemods --help
   переопределить текст по умолчанию.
 - `getOptionValue`, `getOptionLabel`, `getNewOptionData` – все аргументы функции теперь обязательны.
 - `renderChip` – вторым аргументов приходит `option`.
+- Cвойство `fixDropdownWidth` удалено.
 
 ```diff
 <ChipsSelect

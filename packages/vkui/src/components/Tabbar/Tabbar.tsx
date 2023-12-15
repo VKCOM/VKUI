@@ -7,9 +7,9 @@ import styles from './Tabbar.module.css';
 
 export interface TabbarProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Флаг для показа/скрытия верхней тени (Android) или границы (iOS)
+   * Флаг, который скрывает тень (Android) или границы (iOS)
    */
-  shadow?: boolean;
+  plain?: boolean;
   /**
    * Задает расположение элементов (вертикальное/горизонтальное)
    */
@@ -35,7 +35,7 @@ const getItemsLayoutClassName = (
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabbar
  */
-export const Tabbar = ({ shadow = true, mode, ...restProps }: TabbarProps) => {
+export const Tabbar = ({ plain = false, mode, ...restProps }: TabbarProps) => {
   const platform = usePlatform();
 
   return (
@@ -45,7 +45,7 @@ export const Tabbar = ({ shadow = true, mode, ...restProps }: TabbarProps) => {
         styles['Tabbar'],
         platform === 'ios' && styles['Tabbar--ios'],
         getItemsLayoutClassName(mode, restProps.children),
-        shadow && styles['Tabbar--shadow'],
+        !plain && styles['Tabbar--shadow'],
       )}
       {...restProps}
     />

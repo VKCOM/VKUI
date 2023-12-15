@@ -37,7 +37,7 @@ export const ScreenSpinner = ({
 
   return (
     <PopoutWrapper
-      hasMask={false}
+      noBackground
       className={classNames(
         styles['ScreenSpinner'],
         state === 'cancelable' && styles['ScreenSpinner--clickable'],

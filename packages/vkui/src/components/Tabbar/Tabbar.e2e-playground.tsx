@@ -40,7 +40,7 @@ export const TabbarPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           children: [tabs2],
-          shadow: [false],
+          plain: [true],
         },
         {
           children: [longTabs],

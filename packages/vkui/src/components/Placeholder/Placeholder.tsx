@@ -12,21 +12,21 @@ export interface PlaceholderContainerProps extends HTMLAttributesWithRootRef<HTM
    */
   stretched?: boolean;
   /**
-   * Добавляет отступы к компоненту
+   * Убирает отступы у компонента
    */
-  withPadding?: boolean;
+  noPadding?: boolean;
 }
 
 const PlaceholderContainer = ({
   stretched,
-  withPadding = true,
+  noPadding = false,
   ...restProps
 }: PlaceholderContainerProps) => (
   <RootComponent
     baseClassName={classNames(
       styles['Placeholder'],
       stretched && styles['Placeholder--stretched'],
-      withPadding && styles['Placeholder--withPadding'],
+      !noPadding && styles['Placeholder--withPadding'],
     )}
     {...restProps}
   />
@@ -88,10 +88,10 @@ export const Placeholder = ({
   header,
   children,
   action,
-  withPadding = true,
+  noPadding = false,
   ...restProps
 }: PlaceholderProps) => (
-  <PlaceholderContainer withPadding={withPadding} {...restProps}>
+  <PlaceholderContainer noPadding={noPadding} {...restProps}>
     {hasReactNode(icon) && <PlaceholderIcon>{icon}</PlaceholderIcon>}
     {hasReactNode(header) && <PlaceholderHeader>{header}</PlaceholderHeader>}
     {hasReactNode(children) && <PlaceholderText>{children}</PlaceholderText>}

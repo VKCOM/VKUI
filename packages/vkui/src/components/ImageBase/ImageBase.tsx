@@ -54,9 +54,9 @@ export interface ImageBaseProps
    */
   heightSize?: number;
   /**
-   * Включает или отключает обводку.
+   * Отключает обводку.
    */
-  withBorder?: boolean;
+  noBorder?: boolean;
   /**
    * Фолбек на случай, если картинка не прогрузилась.
    *
@@ -98,7 +98,7 @@ export const ImageBase = ({
   widthSize,
   heightSize,
   style,
-  withBorder = true,
+  noBorder = false,
   fallbackIcon: fallbackIconProp,
   children,
   onLoad,
@@ -191,7 +191,7 @@ export const ImageBase = ({
         )}
         {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
         {children}
-        {withBorder && <div aria-hidden className={styles['ImageBase__border']} />}
+        {!noBorder && <div aria-hidden className={styles['ImageBase__border']} />}
       </Clickable>
     </ImageBaseContext.Provider>
   );
