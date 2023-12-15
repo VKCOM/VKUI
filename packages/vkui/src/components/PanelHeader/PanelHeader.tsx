@@ -133,8 +133,8 @@ export const PanelHeader = ({
   const platform = usePlatform();
   const { sizeX = 'none', sizeY = 'none' } = useAdaptivity();
   const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
-  const isVKCOM = platform !== 'vkcom';
-  const isFixed = fixed !== undefined ? fixed : isVKCOM;
+  const isVKCOM = platform === 'vkcom';
+  const isFixed = fixed !== undefined ? fixed : !isVKCOM;
   const separatorVisible = delimiter === 'auto' || delimiter === 'separator';
   const visorSeparatorVisible = !noVisor && separatorVisible;
   const visorSpacingVisible = !noVisor && (delimiter === 'auto' || delimiter === 'spacing');
