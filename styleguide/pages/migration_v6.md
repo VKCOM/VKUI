@@ -2,13 +2,13 @@
 
 ## [`PanelHeader`](#/PanelHeader)
 
-- Свойство `visor` удалено, используйте свойство `noVisor`
+- Свойство `visor` удалено, используйте свойство `float`
 
 ```diff
 -  <PanelHeader visor />
 +  <PanelHeader />
 -  <PanelHeader visor={false} />
-+  <PanelHeader noVisor />
++  <PanelHeader float />
 ```
 
 - Свойство `separator` удалено, используйте свойство `delimiter`

@@ -54,9 +54,9 @@ export interface PanelHeaderProps
   transparent?: boolean;
   shadow?: boolean;
   /**
-   * Позволяет задать шапку нулевой высоты (контент панели не будет её учитывать)
+   * Высота шапки будет игнорироваться контентом панели
    */
-  noVisor?: boolean;
+  float?: boolean;
   /**
    * Если `false`, то шапка будет в потоке. По умолчанию `true`, но если платформа vkcom, то по умолчанию `false`.
    */
@@ -120,7 +120,7 @@ export const PanelHeader = ({
   before,
   children,
   after,
-  noVisor = false,
+  float = false,
   transparent = false,
   delimiter = 'auto',
   shadow,
@@ -136,8 +136,8 @@ export const PanelHeader = ({
   const isVKCOM = platform === 'vkcom';
   const isFixed = fixed !== undefined ? fixed : !isVKCOM;
   const separatorVisible = delimiter === 'auto' || delimiter === 'separator';
-  const visorSeparatorVisible = !noVisor && separatorVisible;
-  const visorSpacingVisible = !noVisor && (delimiter === 'auto' || delimiter === 'spacing');
+  const staticSeparatorVisible = !float && separatorVisible;
+  const staticSpacingVisible = !float && (delimiter === 'auto' || delimiter === 'spacing');
 
   return (
     <RootComponent
@@ -150,8 +150,8 @@ export const PanelHeader = ({
           : platformClassNames.android,
         transparent && styles['PanelHeader--trnsp'],
         shadow && styles['PanelHeader--shadow'],
-        !noVisor && classNames(styles['PanelHeader--vis'], 'vkuiInternalPanelHeader--vis'),
-        visorSeparatorVisible &&
+        !float && classNames(styles['PanelHeader--static'], 'vkuiInternalPanelHeader--static'),
+        staticSeparatorVisible &&
           classNames(styles['PanelHeader--sep'], 'vkuiInternalPanelHeader--sep'),
         !before &&
           classNames(styles['PanelHeader--no-before'], 'vkuiInternalPanelHeader--no-before'),
@@ -179,10 +179,10 @@ export const PanelHeader = ({
       )}
       {!isVKCOM && (
         <>
-          {visorSeparatorVisible && adaptiveSizeX.compact && (
+          {staticSeparatorVisible && adaptiveSizeX.compact && (
             <Separator className={adaptiveSizeX.compact.className} />
           )}
-          {visorSpacingVisible && adaptiveSizeX.regular && (
+          {staticSpacingVisible && adaptiveSizeX.regular && (
             <Spacing className={adaptiveSizeX.regular.className} size={16} />
           )}
         </>

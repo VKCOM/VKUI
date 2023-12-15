@@ -33,8 +33,7 @@
 
 /* stylelint-disable selector-max-universal */
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Panel__centered :global(.vkuiInternalPanelHeader--vis) + * {
+.Panel__centered :global(.vkuiInternalPanelHeader--static) + * {
   margin-block-start: var(--vkui_internal--panel_header_height);
 }
 
