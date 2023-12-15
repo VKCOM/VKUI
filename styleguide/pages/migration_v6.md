@@ -1,185 +1,5 @@
 > Документацию по миграции с **v4** на **v5** можно найти [здесь](https://github.com/VKCOM/VKUI/releases/tag/v5.0.1).
 
-## [`CardScroll`](#/CardScroll)
-
-- Свойство `isDraggable` удалено, используйте свойство `dragDisabled`
-
-```diff
--  <CardScroll withSpaces />
-+  <CardScroll />
--  <CardScroll withSpaces={false} />
-+  <CardScroll noSpaces />
-```
-
-<br/><br/>
-
-## [`Gallery`](#/Gallery)
-
-- Свойство `isDraggable` удалено, используйте свойство `dragDisabled`
-
-```diff
--  <Gallery isDraggable />
-+  <Gallery />
--  <Gallery isDraggable={false} />
-+  <Gallery dragDisabled />
-```
-
-<br/><br/>
-
-## [`Textarea`](#/Textarea)
-
-- Свойство `grow` удалено, используйте свойство `heightByRows`
-
-```diff
--  <Textarea grow />
-+  <Textarea />
--  <Textarea grow={false} rows={3} />
-+  <Textarea heightByRows rows={3} />
-```
-
-<br/><br/>
-
-## [`Tabbar`](#/Tabbar)
-
-- Свойство `shadow` удалено, используйте свойство `plain`
-
-```diff
--  <Tabbar shadow>...</Tabbar>
-+  <Tabbar>...</Tabbar>
--  <Tabbar shadow={false}>...</Tabbar>
-+  <Tabbar plain>...</Tabbar>
-```
-
-<br/><br/>
-
-## [`PopoutWrapper`](#/PopoutWrapper)
-
-- Свойство `hasMask` удалено, используйте свойство `noBackground`
-
-```diff
--  <PopoutWrapper hasMask>...</PopoutWrapper>
-+  <PopoutWrapper>...</Tabbar>
--  <PopoutWrapper hasMask={false}>...</PopoutWrapper>
-+  <PopoutWrapper noBackground>...</PopoutWrapper>
-```
-
-<br/><br/>
-
-## [`Placeholder`](#/Placeholder)
-
-- Свойство `withPadding` удалено, используйте свойство `noPadding`
-
-```diff
--  <Placeholder withPadding>...</Placeholder>
-+  <Placeholder>...</Placeholder>
--  <Placeholder withPadding={false}>...</Placeholder>
-+  <Placeholder noPadding>...</Placeholder>
-```
-
-<br/><br/>
-
-## [`ChipsSelect`](#/ChipsSelect)
-
-- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`
-
-```diff
--  <ChipsSelect fixDropdownWidth>...</ChipsSelect>
-+  <ChipsSelect>...</ChipsSelect>
--  <ChipsSelect fixDropdownWidth={false}>...</ChipsSelect>
-+  <ChipsSelect dropdownAutoWidth>...</ChipsSelect>
-```
-
-<br/><br/>
-
-## [`CustomSelect`](#/CustomSelect)
-
-- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`
-
-```diff
--  <CustomSelect fixDropdownWidth>...</CustomSelect>
-+  <CustomSelect>...</CustomSelect>
--  <CustomSelect fixDropdownWidth={false}>...</CustomSelect>
-+  <CustomSelect dropdownAutoWidth>...</CustomSelect>
-```
-
-<br/><br/>
-
-## [`Select`](#/Select)
-
-- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`
-
-```diff
--  <Select fixDropdownWidth>...</Select>
-+  <Select>...</Select>
--  <Select fixDropdownWidth={false}>...</Select>
-+  <Select dropdownAutoWidth>...</Select>
-```
-
-<br/><br/>
-
-## [`ImageBase`](#/ImageBase)
-
-- Свойство `withBorder` удалено, используйте свойство `noBorder`
-
-```diff
--  <ImageBase withBorder>...</ImageBase>
-+  <ImageBase>...</ImageBase>
--  <ImageBase withBorder={false}>...</ImageBase>
-+  <ImageBase noBorder>...</ImageBase>
-```
-
-<br/><br/>
-
-## [`ImageBase`](#/ImageBase)
-
-- Свойство `withBorder` удалено, используйте свойство `noBorder`
-
-```diff
--  <ImageBase withBorder>...</ImageBase>
-+  <ImageBase>...</ImageBase>
--  <ImageBase withBorder={false}>...</ImageBase>
-+  <ImageBase noBorder>...</ImageBase>
-```
-
-<br/><br/>
-
-## [`Image`](#/Image)
-
-- Свойство `withBorder` удалено, используйте свойство `noBorder`
-
-```diff
--  <Image withBorder>...</Image>
-+  <Image>...</Image>
--  <Image withBorder={false}>...</Image>
-+  <Image noBorder>...</Image>
-```
-
-<br/><br/>
-
-## [`Avatar`](#/Avatar)
-
-- Свойство `withBorder` удалено, используйте свойство `noBorder`
-
-```diff
--  <Avatar withBorder>...</Avatar>
-+  <Avatar>...</Avatar>
--  <Avatar withBorder={false}>...</Avatar>
-+  <Avatar noBorder>...</Avatar>
-```
-
-<br/><br/>
-
-## [`GridAvatar`](#/GridAvatar)
-
-- Свойство `withBorder` удалено, используйте свойство `noBorder`
-
-```diff
--  <GridAvatar withBorder>...</GridAvatar>
-+  <GridAvatar>...</GridAvatar>
--  <GridAvatar withBorder={false}>...</GridAvatar>
-+  <GridAvatar noBorder>...</GridAvatar>
-```
-
 ## Содержание
 
 - <a href="{{anchor}}">Автоматизация обновления до v6</a>
@@ -192,37 +12,48 @@
   - <a href="{{anchor}}">`ActionSheetItem`</a>
   - <a href="{{anchor}}">`Alert`</a>
   - <a href="{{anchor}}">`AppearanceProvider`</a>
+  - <a href="{{anchor}}">`Avatar`</a>
   - <a href="{{anchor}}">`Banner`</a>
   - <a href="{{anchor}}">`Calendar`</a>
   - <a href="{{anchor}}">`CalendarRange`</a>
+  - <a href="{{anchor}}">`CardScroll`</a>
   - <a href="{{anchor}}">`ConfigProvider`</a>
   - <a href="{{anchor}}">`Chip`</a>
   - <a href="{{anchor}}">`ChipsInput`</a>
+  - <a href="{{anchor}}">`ChipsSelect`</a>
   - <a href="{{anchor}}">`ContentCard`</a>
   - <a href="{{anchor}}">`CustomScrollView`</a>
   - <a href="{{anchor}}">`CustomSelect`</a>
   - <a href="{{anchor}}">`DateInput`</a>
   - <a href="{{anchor}}">`DateRangeInput`</a>
+  - <a href="{{anchor}}">`Image`</a>
+  - <a href="{{anchor}}">`ImageBase`</a>
   - <a href="{{anchor}}">`FixedLayout`</a>
   - <a href="{{anchor}}">`Footer`</a>
   - <a href="{{anchor}}">`FormItem`</a>
   - <a href="{{anchor}}">🗑️ ~~`FormLayout`~~</a>
+  - <a href="{{anchor}}">`Gallery`</a>
   - <a href="{{anchor}}">`Gradient`</a>
+  - <a href="{{anchor}}">`GridAvatar`</a>
   - <a href="{{anchor}}">`Header`</a>
   - <a href="{{anchor}}">`ModalCard` и `ModaCardBase`</a>
   - <a href="{{anchor}}">`ModalPageHeader`</a>
   - <a href="{{anchor}}">`Pagination`</a>
   - <a href="{{anchor}}">🗑️ ~~`PanelHeader.Content`~~</a>
+  - <a href="{{anchor}}">`Placeholder`</a>
   - <a href="{{anchor}}">🗑️ ~~`PromoBanner`~~</a>
   - <a href="{{anchor}}">`PopoutWrapper`</a>
   - <a href="{{anchor}}">`PullToRefresh`</a>
   - <a href="{{anchor}}">🗑️ ~~`RangeSlider`~~</a>
   - <a href="{{anchor}}">`Search`</a>
+  - <a href="{{anchor}}">`Select`</a>
   - <a href="{{anchor}}">`SimpleCell`</a>
   - <a href="{{anchor}}">`Slider`</a>
   - <a href="{{anchor}}">`Spinner`</a>
   - <a href="{{anchor}}">`SplitCol`</a>
+  - <a href="{{anchor}}">`Tabbar`</a>
   - <a href="{{anchor}}">`Tappable`</a>
+  - <a href="{{anchor}}">`Textarea`</a>
   - <a href="{{anchor}}">~~`Tooltip`~~ -> `OnboardingTooltip`</a>
   - <a href="{{anchor}}">`Typography/Title`</a>
   - <a href="{{anchor}}">`Typography/Headline`</a>
@@ -424,6 +255,19 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
+## [`Avatar`](#/Avatar)
+
+- Свойство `withBorder` удалено, используйте свойство `noBorder`.
+
+```diff
+-  <Avatar withBorder>...</Avatar>
++  <Avatar>...</Avatar>
+-  <Avatar withBorder={false}>...</Avatar>
++  <Avatar noBorder>...</Avatar>
+```
+
+<br/>
+
 ### [`Banner`](#/Banner)
 
 - Убрали установку внешних отступов. Теперь, при необходимости, следует их добавлять самостоятельно.
@@ -501,6 +345,19 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
+## [`CardScroll`](#/CardScroll)
+
+- Свойство `isDraggable` удалено, используйте свойство `dragDisabled`.
+
+```diff
+-  <CardScroll withSpaces />
++  <CardScroll />
+-  <CardScroll withSpaces={false} />
++  <CardScroll noSpaces />
+```
+
+<br/>
+
 ### [`ConfigProvider`](#/ConfigProvider)
 
 - `hasCustomPanelHeaderAfter` теперь по умолчанию `false`.
@@ -568,6 +425,19 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
+## [`ChipsSelect`](#/ChipsSelect)
+
+- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`.
+
+```diff
+-  <ChipsSelect fixDropdownWidth>...</ChipsSelect>
++  <ChipsSelect>...</ChipsSelect>
+-  <ChipsSelect fixDropdownWidth={false}>...</ChipsSelect>
++  <ChipsSelect dropdownAutoWidth>...</ChipsSelect>
+```
+
+<br/>
+
 ### [`ContentCard`](#/ContentCard)
 
 - Изменён тeг (с `h4` на `span`), в котором `header` компонента рендерится по умолчанию.
@@ -591,7 +461,14 @@ npx @vkontakte/vkui-codemods --help
   не обрабатывает результат исполнения. Для фильтрации обновляйте `props.options` самостоятельно или
   используйте свойство `filterFn`.
 - Удалено свойство `option` из `CustomSelectOption`.
-- Cвойство `fixDropdownWidth` удалено.
+- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`.
+
+```diff
+-  <CustomSelect fixDropdownWidth>...</CustomSelect>
++  <CustomSelect>...</CustomSelect>
+-  <CustomSelect fixDropdownWidth={false}>...</CustomSelect>
++  <CustomSelect dropdownAutoWidth>...</CustomSelect>
+```
 
 <br/>
 
@@ -681,6 +558,32 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
+## [`Image`](#/Image)
+
+- Свойство `withBorder` удалено, используйте свойство `noBorder`.
+
+```diff
+-  <Image withBorder>...</Image>
++  <Image>...</Image>
+-  <Image withBorder={false}>...</Image>
++  <Image noBorder>...</Image>
+```
+
+<br/>
+
+## [`ImageBase`](#/ImageBase)
+
+- Свойство `withBorder` удалено, используйте свойство `noBorder`.
+
+```diff
+-  <ImageBase withBorder>...</ImageBase>
++  <ImageBase>...</ImageBase>
+-  <ImageBase withBorder={false}>...</ImageBase>
++  <ImageBase noBorder>...</ImageBase>
+```
+
+<br/>
+
 ### [`FixedLayout`](#/FixedLayout)
 
 ```diff
@@ -714,6 +617,19 @@ npx @vkontakte/vkui-codemods --help
 - Компонент удален.
 - Используйте нативный тег `form`
 
+<br />
+
+## [`Gallery`](#/Gallery)
+
+- Свойство `isDraggable` удалено, используйте свойство `dragDisabled`.
+
+```diff
+-  <Gallery isDraggable />
++  <Gallery />
+-  <Gallery isDraggable={false} />
++  <Gallery dragDisabled />
+```
+
 <br/>
 
 ### [`Gradient`](#/Gradient)
@@ -722,6 +638,19 @@ npx @vkontakte/vkui-codemods --help
   `default` теперь значение по умолчанию.
 
 <br/>
+
+## [`GridAvatar`](#/GridAvatar)
+
+- Свойство `withBorder` удалено, используйте свойство `noBorder`.
+
+```diff
+-  <GridAvatar withBorder>...</GridAvatar>
++  <GridAvatar>...</GridAvatar>
+-  <GridAvatar withBorder={false}>...</GridAvatar>
++  <GridAvatar noBorder>...</GridAvatar>
+```
+
+<br />
 
 ### [`Header`](#/Header)
 
@@ -879,6 +808,19 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
+## [`Placeholder`](#/Placeholder)
+
+- Свойство `withPadding` удалено, используйте свойство `noPadding`.
+
+```diff
+-  <Placeholder withPadding>...</Placeholder>
++  <Placeholder>...</Placeholder>
+-  <Placeholder withPadding={false}>...</Placeholder>
++  <Placeholder noPadding>...</Placeholder>
+```
+
+<br/>
+
 ### 🗑️ ~~`PromoBanner`~~
 
 - Компонент удален.
@@ -889,6 +831,15 @@ npx @vkontakte/vkui-codemods --help
 ### [`PopoutWrapper`](#/PopoutWrapper)
 
 - Теперь, при использовании компонента напрямую, необходимо самостоятельно импортировать и вызывать `useScrollLock()` (см. [issue #4314](https://github.com/VKCOM/VKUI/issues/4314)).
+
+- Свойство `hasMask` удалено, используйте свойство `noBackground`.
+
+```diff
+-  <PopoutWrapper hasMask>...</PopoutWrapper>
++  <PopoutWrapper>...</Tabbar>
+-  <PopoutWrapper hasMask={false}>...</PopoutWrapper>
++  <PopoutWrapper noBackground>...</PopoutWrapper>
+```
 
 <br/>
 
@@ -918,6 +869,19 @@ npx @vkontakte/vkui-codemods --help
 
 - Свойство `iconAriaLabel` переименовано в `iconLabel`.
 - Свойство `clearAriaLabel` переименовано в `clearLabel`.
+
+<br/>
+
+## [`Select`](#/Select)
+
+- Свойство `fixDropdownWidth` удалено, используйте свойство `dropdownAutoWidth`.
+
+```diff
+-  <Select fixDropdownWidth>...</Select>
++  <Select>...</Select>
+-  <Select fixDropdownWidth={false}>...</Select>
++  <Select dropdownAutoWidth>...</Select>
+```
 
 <br/>
 
@@ -960,6 +924,19 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
+## [`Tabbar`](#/Tabbar)
+
+- Свойство `shadow` удалено, используйте свойство `plain`.
+
+```diff
+-  <Tabbar shadow>...</Tabbar>
++  <Tabbar>...</Tabbar>
+-  <Tabbar shadow={false}>...</Tabbar>
++  <Tabbar plain>...</Tabbar>
+```
+
+<br/>
+
 ### [`Tappable`](#/Tappable)
 
 - Свойства `onEnter`, `onLeave`, `onStart`, `onEnd`, `onMove` и `stopPropagation` удалены.
@@ -997,6 +974,21 @@ npx @vkontakte/vkui-codemods --help
   Информационный текст
 </SimpleCell>
 ```
+
+<br/>
+
+## [`Textarea`](#/Textarea)
+
+- Свойство `grow` удалено, используйте свойство `heightByRows`.
+
+```diff
+-  <Textarea grow />
++  <Textarea />
+-  <Textarea grow={false} rows={3} />
++  <Textarea heightByRows rows={3} />
+```
+
+<br/><br/>
 
 ### ~~`Tooltip`~~ -> [`OnboardingTooltip`](#/OnboardingTooltip)
 
