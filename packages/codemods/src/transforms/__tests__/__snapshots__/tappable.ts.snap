@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tappable transforms correctly 1`] = `
+"import { } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    <React.Fragment>
+      
+    </React.Fragment>
+  );
+};"
+`;

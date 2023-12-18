@@ -1,14 +1,12 @@
 jest.autoMockOff();
 
-import { defineTest } from 'jscodeshift/dist/testUtils';
+import { defineSnapshotTestFromFixture } from '../../testHelpers/testHelper';
 
 const name = 'simple-cell';
 const fixtures = ['basic'] as const;
 
 describe(name, () => {
   fixtures.forEach((test) =>
-    defineTest(__dirname, name, global.TRANSFORM_OPTIONS, `${name}/${test}`, {
-      parser: 'tsx',
-    }),
+    defineSnapshotTestFromFixture(__dirname, name, global.TRANSFORM_OPTIONS, `${name}/${test}`),
   );
 });
