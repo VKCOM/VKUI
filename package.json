@@ -85,7 +85,7 @@
     "stylelint-value-no-unknown-custom-properties": "^5.0.0",
     "swc-loader": "^0.2.3",
     "swc-plugin-css-modules": "0.1.6",
-    "swc-plugin-transform-remove-imports": "1.9.0",
+    "swc-plugin-transform-remove-imports": "1.10.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "typescript-plugin-css-modules": "^5.0.2",
