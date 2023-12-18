@@ -187,6 +187,7 @@
 .ActionSheetItem--menu {
   inline-size: auto;
   cursor: pointer;
+  border-radius: 0;
 }
 
 /**
