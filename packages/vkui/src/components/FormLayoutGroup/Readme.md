@@ -13,7 +13,7 @@ const Example = () => {
       <Panel id="FormLayoutGroup">
         <PanelHeader>FormLayoutGroup</PanelHeader>
         <Group>
-          <FormLayout>
+          <FormLayoutGroup>
             <FormLayoutGroup mode="vertical">
               <FormItem htmlFor="name" top="Имя">
                 <Input id="name" />
@@ -68,7 +68,7 @@ const Example = () => {
                 </FormItem>
               </FormLayoutGroup>
             )}
-          </FormLayout>
+          </FormLayoutGroup>
         </Group>
       </Panel>
     </View>

@@ -5,7 +5,7 @@
   <Panel id="panel">
     <PanelHeader>RadioGroup</PanelHeader>
     <Group header={<Header>Внутри FormItem</Header>}>
-      <FormLayout>
+      <FormLayoutGroup>
         <FormItem top="Выберите посадку">
           <RadioGroup>
             <Radio name="fit" value="classic" defaultChecked>
@@ -29,10 +29,10 @@
             </Radio>
           </RadioGroup>
         </FormItem>
-      </FormLayout>
+      </FormLayoutGroup>
     </Group>
     <Group header={<Header>Без FormItem</Header>}>
-      <FormLayout>
+      <FormLayoutGroup>
         <RadioGroup mode="horizontal">
           <Radio name="pay" value="cash">
             Оплата наличными
@@ -49,7 +49,7 @@
             Доставка в пункт выдачи заказов
           </Radio>
         </RadioGroup>
-      </FormLayout>
+      </FormLayoutGroup>
     </Group>
   </Panel>
 </View>

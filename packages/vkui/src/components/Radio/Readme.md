@@ -5,7 +5,7 @@
   <Panel id="panel">
     <PanelHeader>Radio</PanelHeader>
     <Group>
-      <FormLayout>
+      <FormLayoutGroup>
         <FormItem top="Откуда списать">
           <Radio name="radio" value="1" description="Баланс 7 320 ₽" defaultChecked>
             VK Pay
@@ -23,7 +23,7 @@
             Visa **** 4321
           </Radio>
         </FormItem>
-      </FormLayout>
+      </FormLayoutGroup>
     </Group>
   </Panel>
 </View>
