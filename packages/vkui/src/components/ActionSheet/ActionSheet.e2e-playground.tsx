@@ -73,7 +73,13 @@ const propSets = [
         <ActionSheetItem key="8" subtitle="Есть подзаголовок" meta="Meta">
           Восьмой элемент
         </ActionSheetItem>,
-        <ActionSheetItem key="9" subtitle="Meta прижата справа" meta="Meta" multiline>
+        <ActionSheetItem
+          key="9"
+          subtitle="Meta прижата справа"
+          meta="Meta"
+          multiline
+          data-testid="last-item-test-id"
+        >
           Девятый элемент
         </ActionSheetItem>,
       ],

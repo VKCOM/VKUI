@@ -13,10 +13,15 @@ test.describe('ActionSheet', () => {
   });
   test('ViewWidth.MOBILE sizeY=regular', async ({
     mount,
+    page,
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
     await mount(<ActionSheetPlayground {...componentPlaygroundProps} />);
+
+    const item = page.getByTestId('last-item-test-id');
+    await item.hover();
+
     await expectScreenshotClippedToContent();
   });
 });
@@ -34,10 +39,15 @@ test.describe('ActionSheet', () => {
   });
   test('ViewWidth.DESKTOP sizeY=regular', async ({
     mount,
+    page,
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
     await mount(<ActionSheetPlayground {...componentPlaygroundProps} />);
+
+    const item = page.getByTestId('last-item-test-id');
+    await item.hover();
+
     await expectScreenshotClippedToContent();
   });
 });
