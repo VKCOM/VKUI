@@ -80,7 +80,7 @@ jobs:
     name: Report unit test results
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: test-output
 
@@ -112,7 +112,7 @@ jobs:
         run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Download Playwright blob reports from GitHub Actions Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: all-blob-reports
           path: all-blob-reports
@@ -121,7 +121,7 @@ jobs:
         run: yarn run playwright:cmd:merge-reports --reporter html ./all-blob-reports
 
       - name: Upload Playwright HTML report to GitHub Actions Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: playwright-report
           path: playwright-report
@@ -182,7 +182,7 @@ jobs:
         run: yarn run docs:styleguide:build
 
       - name: Upload dist
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: styleguide-dist
           path: styleguide/dist
@@ -209,7 +209,7 @@ jobs:
         run: yarn docs:storybook:build
 
       - name: Upload dist
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: storybook-dist
           path: packages/vkui/storybook-static
