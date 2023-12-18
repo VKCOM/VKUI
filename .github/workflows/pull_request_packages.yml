@@ -114,8 +114,19 @@ jobs:
       - name: Download Playwright blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: all-blob-reports
-          path: all-blob-reports
+          path: packages/vkui/artifacts
+
+      - name: Prepare downloaded Playwright blob reports for merging
+        run: |
+          mkdir all-blob-reports
+          if [ -d packages/vkui/artifacts ]; then
+            for i in {1..10}
+            do
+              mv packages/vkui/artifacts/all-blob-reports-$i-10/* all-blob-reports/
+            done
+          fi
+          rm -r packages/vkui/artifacts
+        shell: bash
 
       - name: Merge Playwright blob reports into HTML Report
         run: yarn run playwright:cmd:merge-reports --reporter html ./all-blob-reports
