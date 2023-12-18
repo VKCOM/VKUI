@@ -34,6 +34,7 @@ const config: StorybookConfig = {
     options: {
       fastRefresh: true,
       builder: {
+        useSWC: true,
         fsCache: true,
       },
     },
