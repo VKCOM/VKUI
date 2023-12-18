@@ -323,6 +323,7 @@ export const ModalSheet = ({
             <div className={styles['ModalSheet__content']}>{children}</div>
           </ModalRootContext.Provider>
         </ModalPageContext.Provider>
+        <div className={styles['ModalSheet__endAnchor']} />
         <DismissButton className={styles['ModalSheet__dismissButton']} onClick={close} />
       </div>
     </FocusTrap>

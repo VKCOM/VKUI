@@ -38,6 +38,16 @@
 /* stylelint-disable-next-line selector-max-universal, @project-tools/stylelint-atomic */
 .ModalSheet__container > * {
   scroll-snap-align: start;
+  overflow-anchor: none;
+}
+
+/**
+ * Якорь для прилипания скролла к концу модалки.
+ */
+.ModalSheet__endAnchor {
+  overflow-anchor: auto;
+  block-size: 1px;
+  margin-block-start: -1px;
 }
 
 .ModalSheet__container::-webkit-scrollbar {
