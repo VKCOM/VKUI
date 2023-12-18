@@ -27,7 +27,13 @@ test.describe('CustomSelect', () => {
   }) => {
     await mount(<CustomSelectNoMaxHeightPlayground {...componentPlaygroundProps} />);
 
-    await page.getByTestId('target-select').click();
+    await page
+      .getByTestId('target-select')
+      /*
+       * Используем force, потому что на платформе ios у селекта в обычном режиме (не searchable)
+       * спрятан инпут, чтобы не появлялся тултип autosuggestion на iOS при клике на инпут.
+       **/
+      .click({ force: componentPlaygroundProps.platform === 'ios' });
 
     await expectScreenshotClippedToContent();
   });

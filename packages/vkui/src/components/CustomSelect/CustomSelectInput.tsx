@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
+import { usePlatform } from '../../hooks/usePlatform';
 import { SizeType } from '../../lib/adaptivity';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
@@ -10,6 +11,7 @@ import { FormField, FormFieldProps } from '../FormField/FormField';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import { Text } from '../Typography/Text/Text';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CustomSelectInput.module.css';
 
 const sizeYClassNames = {
@@ -59,6 +61,25 @@ export const CustomSelectInput = ({
   const handleRootRef = useExternRef(getRootRef);
   const focusWithin = useFocusWithin(handleRootRef);
 
+  const input = (
+    <Text
+      type="text"
+      {...restProps}
+      disabled={disabled && !fetching}
+      readOnly={restProps.readOnly || (disabled && fetching)}
+      Component="input"
+      normalize={false}
+      className={classNames(
+        styles['CustomSelectInput__el'],
+        (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) &&
+          styles['CustomSelectInput__el--cursor-pointer'],
+      )}
+      getRootRef={getRef}
+      placeholder={children ? '' : placeholder}
+    />
+  );
+
+  const platform = usePlatform();
   return (
     <FormField
       Component="div"
@@ -92,21 +113,20 @@ export const CustomSelectInput = ({
             {showLabelOrPlaceholder && title}
           </SelectTypography>
         </div>
-        <Text
-          {...restProps}
-          disabled={disabled && !fetching}
-          readOnly={restProps.readOnly || (disabled && fetching)}
-          Component="input"
-          normalize={false}
-          type="text"
-          className={classNames(
-            styles['CustomSelectInput__el'],
-            (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) &&
-              styles['CustomSelectInput__el--cursor-pointer'],
-          )}
-          getRootRef={getRef}
-          placeholder={children ? '' : placeholder}
-        />
+        {/* Чтобы отключить autosuggestion в iOS, тултипы которого начинают всплывать даже когда input
+         * в режиме readonly, мы оборачиваем инпут в VisuallyHidden.
+         * Тултипы появляются при каждом клике на input.
+         * смотри: https://github.com/VKCOM/VKUI/issues/6205
+         *
+         * Достаточно не дать пользователю кликнуть по инпуту.
+         * Делаем это только для режима read-only. Потому что проблема именно в режиме read-only.
+         * Обертка вокруг инпута обрабатывает клики и передаёт фокус, так что на взаимодействии с инпутом это никак не скажется.
+         **/}
+        {restProps.readOnly && platform === 'ios' ? (
+          <VisuallyHidden>{input}</VisuallyHidden>
+        ) : (
+          input
+        )}
       </div>
     </FormField>
   );
