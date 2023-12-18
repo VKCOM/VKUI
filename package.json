@@ -84,7 +84,7 @@
     "stylelint-use-logical": "^2.1.0",
     "stylelint-value-no-unknown-custom-properties": "^5.0.0",
     "swc-loader": "^0.2.3",
-    "swc-plugin-css-modules": "0.1.6",
+    "swc-plugin-css-modules": "0.1.7",
     "swc-plugin-transform-remove-imports": "1.10.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
