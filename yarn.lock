@@ -1661,12 +1661,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/postcss-global-data@npm:2.1.0":
-  version: 2.1.0
-  resolution: "@csstools/postcss-global-data@npm:2.1.0"
+"@csstools/postcss-global-data@npm:2.1.1":
+  version: 2.1.1
+  resolution: "@csstools/postcss-global-data@npm:2.1.1"
   peerDependencies:
     postcss: ^8.4
-  checksum: f0fb93188c41ca376cdc686b8da5402a032e422e64820e6fdc8a207cabf38a4149468b88dc66045dff42bab69fc88f6a5f7afeb084e430acd6f02e9ce155b7a1
+  checksum: 8330c831d3da5b83ba1b91bfc5bf66ac87aa7736891330a747d2cab4b7cb64a2fe9528c34500e62846edc3453cd94398a66b4542891cb99d37349c7acece12cf
   languageName: node
   linkType: hard
 
@@ -5378,7 +5378,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-monorepo@workspace:."
   dependencies:
-    "@csstools/postcss-global-data": 2.1.0
+    "@csstools/postcss-global-data": 2.1.1
     "@playwright/experimental-ct-react": 1.40.1
     "@playwright/test": 1.40.1
     "@project-docs/styleguide": "workspace:1.0.0"
@@ -5436,10 +5436,10 @@ __metadata:
     postcss: ^8.4.32
     postcss-cli: ^11.0.0
     postcss-custom-media: ^10.0.2
-    postcss-gap-properties: ^5.0.0
+    postcss-gap-properties: ^5.0.1
     postcss-import: ^15.0.0
     postcss-loader: ^7.3.3
-    postcss-logical: ^7.0.0
+    postcss-logical: ^7.0.1
     postcss-modules: ^6.0.0
     postcss-value-parser: ^4.2.0
     prettier: ^2.8.8
@@ -15112,12 +15112,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-gap-properties@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "postcss-gap-properties@npm:5.0.0"
+"postcss-gap-properties@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "postcss-gap-properties@npm:5.0.1"
   peerDependencies:
     postcss: ^8.4
-  checksum: 42481ce5f272e722ce623c8aa21f2d18b5da250c8fa18ddbb72725c8c158f2894e3f682c7adfb2451ba01bc07fbc5168182e021d779d96e64f7b1604149db6e5
+  checksum: 82d3cee4d21220cb20201b4d9f15dedbcdc16bd108ce259bf8c848a0b3bd34fb88d1cf8e5e7799ca7afe136579270cc0af9a0883927c4809c9139b4cd969e0d0
   languageName: node
   linkType: hard
 
@@ -15193,14 +15193,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-logical@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "postcss-logical@npm:7.0.0"
+"postcss-logical@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "postcss-logical@npm:7.0.1"
   dependencies:
     postcss-value-parser: ^4.2.0
   peerDependencies:
     postcss: ^8.4
-  checksum: 1d8c0f97dfc4ab3fed5f9dd6718f52e35ac00f3612ddf477771a4a0e2027f92be69f97d4dcdde275bcef680c2ac9af9dce455b87b82639926ff4a731c31986f8
+  checksum: 9edf10519e216f9cbe18dc16760a2e52ec28f69228410d200a8ec89271d58cc2b25c09db33f5c2d2511ea4d6bb4275cfc981610973f1f5093e35783c5d7e5ea5
   languageName: node
   linkType: hard
 
