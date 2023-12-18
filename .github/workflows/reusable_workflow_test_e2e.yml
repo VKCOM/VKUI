@@ -67,6 +67,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: all-blob-reports
+          name: all-blob-reports-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
           path: packages/vkui/blob-report
           retention-days: 1
