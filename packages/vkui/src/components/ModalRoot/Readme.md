@@ -379,16 +379,19 @@ const App = () => {
         header="Отправляйте деньги друзьям, используя банковскую карту"
         subheader="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
         actions={
-          <Button
-            size="l"
-            mode="primary"
-            stretched
-            onClick={() => changeActiveModal(MODAL_CARD_APP_TO_MENU)}
-          >
-            Попробовать
-          </Button>
+          <React.Fragment>
+            <Spacing size={16} />
+            <Button
+              size="l"
+              mode="primary"
+              stretched
+              onClick={() => changeActiveModal(MODAL_CARD_APP_TO_MENU)}
+            >
+              Попробовать
+            </Button>
+          </React.Fragment>
         }
-      ></ModalCard>
+      />
 
       <ModalCard
         id={MODAL_CARD_APP_TO_MENU}
@@ -397,14 +400,17 @@ const App = () => {
         header="Добавить игру «Загадки детства» в меню?"
         subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
         actions={
-          <Button
-            size="l"
-            mode="primary"
-            stretched
-            onClick={() => changeActiveModal(MODAL_CARD_ABOUT)}
-          >
-            Добавить в меню
-          </Button>
+          <React.Fragment>
+            <Spacing size={16} />
+            <Button
+              size="l"
+              mode="primary"
+              stretched
+              onClick={() => changeActiveModal(MODAL_CARD_ABOUT)}
+            >
+              Добавить в меню
+            </Button>
+          </React.Fragment>
         }
       />
 
@@ -423,6 +429,7 @@ const App = () => {
           </Button>
         }
       >
+        <Spacing size={16} />
         <Textarea defaultValue="В Грузии" />
       </ModalCard>
 
@@ -432,26 +439,29 @@ const App = () => {
         icon={<Icon56NotificationOutline />}
         header="Приложение запрашивает разрешение на отправку Вам уведомлений"
         actions={
-          <ButtonGroup size="s" stretched>
-            <Button
-              key="deny"
-              size="l"
-              mode="secondary"
-              stretched
-              onClick={() => changeActiveModal(MODAL_CARD_CHAT_INVITE)}
-            >
-              Запретить
-            </Button>
-            <Button
-              key="allow"
-              size="l"
-              mode="primary"
-              stretched
-              onClick={() => changeActiveModal(MODAL_CARD_CHAT_INVITE)}
-            >
-              Разрешить
-            </Button>
-          </ButtonGroup>
+          <React.Fragment>
+            <Spacing size={16} />
+            <ButtonGroup size="s" stretched>
+              <Button
+                key="deny"
+                size="l"
+                mode="secondary"
+                stretched
+                onClick={() => changeActiveModal(MODAL_CARD_CHAT_INVITE)}
+              >
+                Запретить
+              </Button>
+              <Button
+                key="allow"
+                size="l"
+                mode="primary"
+                stretched
+                onClick={() => changeActiveModal(MODAL_CARD_CHAT_INVITE)}
+              >
+                Разрешить
+              </Button>
+            </ButtonGroup>
+          </React.Fragment>
         }
       />
 
@@ -462,28 +472,32 @@ const App = () => {
         header="Баскетбол на выходных"
         subheader="Приглашение в беседу"
         actions={
-          <ButtonGroup size="l" mode="vertical" stretched>
-            <Button
-              key="join"
-              size="l"
-              mode="primary"
-              stretched
-              onClick={() => changeActiveModal(null)}
-            >
-              Присоединиться
-            </Button>
-            <Button
-              key="copy"
-              size="l"
-              mode="secondary"
-              stretched
-              onClick={() => changeActiveModal(null)}
-            >
-              Скопировать приглашение
-            </Button>
-          </ButtonGroup>
+          <React.Fragment>
+            <Spacing size={8} />
+            <ButtonGroup size="l" mode="vertical" stretched>
+              <Button
+                key="join"
+                size="l"
+                mode="primary"
+                stretched
+                onClick={() => changeActiveModal(null)}
+              >
+                Присоединиться
+              </Button>
+              <Button
+                key="copy"
+                size="l"
+                mode="secondary"
+                stretched
+                onClick={() => changeActiveModal(null)}
+              >
+                Скопировать приглашение
+              </Button>
+            </ButtonGroup>
+          </React.Fragment>
         }
       >
+        <Spacing size={20} />
         <UsersStack
           photos={[
             getAvatarUrl('user_mm'),

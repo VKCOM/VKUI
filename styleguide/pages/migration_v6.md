@@ -571,6 +571,97 @@ npx @vkontakte/vkui-codemods --help
 />
 ```
 
+<br />
+
+Отступ перед кнопками действий (`actions`) больше автоматически не меняется в зависимости от контента.
+Отступ теперь всегда равен `16px`.
+Также автоматически больше не проставляются отступы, если внутрь переданы следующие компоненты: [UserStack](#/UserStack), [FormField](#/FormField).
+Согласно дизайн-системе отступ может быть и больше в зависимости от свойств и контента компонента.
+Для того, чтобы увеличить отступ используйте компонент [Spacing](#/Spacing).
+Ниже приведёны ситуации в которых точно нужно использовать [Spacing](#/Spacing), чтобы продолжать следовать дизайн-системе.
+
+- `ModalCard` или `ModalCardBase` содержит `actions` и `header` или `subheader`, но не содержит `children`. Отступ в сумме с тем что идёт по умолчанию должен быть `32px`.
+
+```diff
+    <ModalCard header="Добавить игру «Загадки детства» в меню?"
+      actions={
+-       <ButtonGroup mode="horizontal" gap="s" stretched>
+-         <Button size="l" mode="primary" stretched>
+-           Да
+-         </Button>
+-         <Button size="l" mode="secondary" stretched>
+-           Позже
+-         </Button>
+-       </ButtonGroup>
++       <React.Fragment>
++         <Spacing size={16} />
++         <ButtonGroup mode="horizontal" gap="s" stretched>
++           <Button size="l" mode="primary" stretched>
++             Да
++           </Button>
++           <Button size="l" mode="secondary" stretched>
++             Позже
++           </Button>
++         </ButtonGroup>
++       </React.Fragment>
+    />
+```
+
+- `ModalCard` или `ModalCardBase` содержит `actions`, а внутрь `children` передан [UsersStack](#/UsersStack). Перед `UserStack` должен быть отступ в `20px`, а между `UserStack` и `actions` отступ должен быть в сумме `24px` (включая отступ по умолчанию `16px`).
+
+```diff
+    <ModalCard header="Добавить игру «Загадки детства» в меню?"
+      actions={
+-       <ButtonGroup mode="horizontal" gap="s" stretched>
+-         <Button size="l" mode="primary" stretched>
+-           Да
+-         </Button>
+-         <Button size="l" mode="secondary" stretched>
+-           Позже
+-         </Button>
+-       </ButtonGroup>
++       <React.Fragment>
++         <Spacing size={8} />
++         <ButtonGroup mode="horizontal" gap="s" stretched>
++           <Button size="l" mode="primary" stretched>
++             Да
++           </Button>
++           <Button size="l" mode="secondary" stretched>
++             Позже
++           </Button>
++         </ButtonGroup>
++       </React.Fragment>
+      }
+    >
++     <Spacing size={20} />
+      <UsersStack photos={[getAvatarUrl('user_lihachyov')]}>
+        Понравилось Муртолу Левзачеву
+      </UsersStack>
+    </ModalCard>
+```
+
+- `ModalCard` или `ModalCardBase` содержит `header` или `subheader`, а внутрь `children` передан [FormField](#/FormField). Отступ между `header` или `subheader` и `FormField` должен быть `16px`.
+
+```diff
+    <ModalCard header="Добавить игру «Загадки детства» в меню?"
+      actions={
+        <ButtonGroup mode="horizontal" gap="s" stretched>
+          <Button size="l" mode="primary" stretched>
+            Да
+          </Button>
+          <Button size="l" mode="secondary" stretched>
+            Позже
+          </Button>
+        </ButtonGroup>
+      }
+    >
++    <Spacing size={16} />
+      <FormField>
+        <CustomInput />
+      </FormField>
+    </ModalCar>
+```
+
 <br/>
 
 ### [`ModalPageHeader`](#/ModalPageHeader)

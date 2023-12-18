@@ -9,14 +9,18 @@
       header="Отправляйте деньги друзьям, используя банковскую карту"
       subheader="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
       actions={
-        <Button size="l" mode="primary" stretched>
-          Попробовать
-        </Button>
+        <React.Fragment>
+          <Spacing size={16} />
+          <Button size="l" mode="primary" stretched>
+            Попробовать
+          </Button>
+        </React.Fragment>
       }
       icon={<Icon56MoneyTransferOutline />}
     />
   </AdaptivityProvider>
-  <Text style={{ marginBottom: 10 }}>Мобильная версия</Text>
+  <Text>Мобильная версия</Text>
+  <Spacing size={10} />
   <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
     <ModalCardBase
       style={{ width: 320 }}
@@ -24,16 +28,48 @@
       header="Добавить игру «Загадки детства» в меню?"
       subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
       actions={
-        <ButtonGroup mode="horizontal" gap="s" stretched>
-          <Button size="l" mode="primary" stretched>
-            Да
-          </Button>
-          <Button size="l" mode="secondary" stretched>
-            Позже
-          </Button>
-        </ButtonGroup>
+        <React.Fragment>
+          <Spacing size={16} />
+          <ButtonGroup mode="horizontal" gap="s" stretched>
+            <Button size="l" mode="primary" stretched>
+              Да
+            </Button>
+            <Button size="l" mode="secondary" stretched>
+              Позже
+            </Button>
+          </ButtonGroup>
+        </React.Fragment>
       }
     />
+  </AdaptivityProvider>
+  <Spacing size={30} />
+  <Text>С UserStack в качестве children (имеет особенный отступ c actions)</Text>
+  <Spacing size={10} />
+  <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
+    <ModalCardBase
+      style={{ width: 320 }}
+      icon={<Image borderRadius="l" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
+      header="Добавить игру «Загадки детства» в меню?"
+      subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
+      actions={
+        <React.Fragment>
+          <Spacing size={8} />
+          <ButtonGroup mode="horizontal" gap="s" stretched>
+            <Button size="l" mode="primary" stretched>
+              Да
+            </Button>
+            <Button size="l" mode="secondary" stretched>
+              Позже
+            </Button>
+          </ButtonGroup>
+        </React.Fragment>
+      }
+    >
+      <Spacing size={20} />
+      <UsersStack photos={[getAvatarUrl('user_lihachyov')]}>
+        Понравилось Муртолу Левзачеву
+      </UsersStack>
+    </ModalCardBase>
   </AdaptivityProvider>
 </div>
 ```
@@ -43,6 +79,29 @@
 Через свойство `dismissButtonMode=inside|outside` можно задать вид кнопки закрытия.
 Согласно нашим дизайн-гайдам, `dismissButtonMode=outside` отображается только для `compact`-режима (десктопная и планшетные версии).
 Для `iOS` всегда будет применяться `dismissButtonMode=inside` в `regular`-режиме (мобильная версия).
+
+## Отступы между контентом и кнопками действий (`actions`)
+
+По умолчанию верхний отступ от кнопок действий `actions` равняется `16px`. Согласно дизайн-системе отступ может быть больше в зависимости от того какие данные отображаются внутри `ModalCardBase`.
+Если необходимо увеличить отступ, то передавайте в `actions` компонент [Spacing](#/Spacing).
+
+```jsx static
+<ModalCardBase
+  dismissButtonMode="inside"
+  dismissLabel="Закрыть"
+  style={{ width: 450, marginBottom: 20 }}
+  header="Десктопная и планшетная версии с крестиком внутри"
+  subheader="Сверху будет безопасный отступ до иконки"
+  actions={
+    <React.Fragment>
+      <Spacing size={16} />
+      <Button size="l" mode="primary" stretched>
+        Некая кнопка
+      </Button>
+    </React.Fragment>
+  }
+/>
+```
 
 ## Цифровая доступность (a11y)
 

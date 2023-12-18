@@ -66,11 +66,3 @@
 .UsersStack--direction-row-reverse .UsersStack__text {
   margin-inline-end: 8px;
 }
-
-/**
- * CMP:
- * ModalCardBase
- */
-:global(.vkuiInternalModalCardBase) .UsersStack {
-  margin-block-start: 20px;
-}

@@ -124,15 +124,6 @@
 
 /**
  * CMP:
- * ModalCardBase
- */
-:global(.vkuiInternalModalCardBase__header) + .FormField,
-:global(.vkuiInternalModalCardBase__subheader) + .FormField {
-  margin-block-start: 16px;
-}
-
-/**
- * CMP:
  * NativeSelect
  */
 :global(.vkuiInternalNativeSelect) .FormField__after {

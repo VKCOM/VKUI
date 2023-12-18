@@ -6,6 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { Spacing } from '../Spacing/Spacing';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
 import { ModalCardBaseCloseButton } from './ModalCardBaseCloseButton';
@@ -97,6 +98,8 @@ export const ModalCardBase = ({
   const withSafeZone =
     !icon && (dismissButtonMode === 'inside' || (platform === 'ios' && !isDesktop));
 
+  const hasHeader = hasReactNode(header);
+  const hasSubheader = hasReactNode(subheader);
   return (
     <RootComponent
       {...restProps}
@@ -122,24 +125,16 @@ export const ModalCardBase = ({
           <Title
             level="2"
             weight="2"
-            className={classNames(
-              styles['ModalCardBase__header'],
-              'vkuiInternalModalCardBase__header',
-            )}
+            className={styles['ModalCardBase__header']}
             Component={headerComponent}
           >
             {header}
           </Title>
         )}
-        {hasReactNode(subheader) && (
+        {hasHeader && hasSubheader && <Spacing size={8} />}
+        {hasSubheader && (
           <AdaptivityContext.Provider value={{ sizeY: 'regular' }}>
-            <Subhead
-              className={classNames(
-                styles['ModalCardBase__subheader'],
-                'vkuiInternalModalCardBase__subheader',
-              )}
-              Component={subheaderComponent}
-            >
+            <Subhead className={styles['ModalCardBase__subheader']} Component={subheaderComponent}>
               {subheader}
             </Subhead>
           </AdaptivityContext.Provider>
