@@ -9,7 +9,7 @@ import { CellButton } from '../CellButton/CellButton';
 import { Checkbox } from '../Checkbox/Checkbox';
 import { Div } from '../Div/Div';
 import { FormItem } from '../FormItem/FormItem';
-import { FormLayout } from '../FormLayout/FormLayout';
+import { FormLayoutGroup } from '../FormLayoutGroup/FormLayoutGroup';
 import { Group } from '../Group/Group';
 import { IconButton } from '../IconButton/IconButton';
 import { Input } from '../Input/Input';
@@ -107,7 +107,7 @@ export const Example: Story = {
           role="dialog"
           aria-describedby="dialog-2"
           content={({ onClose }) => (
-            <FormLayout>
+            <FormLayoutGroup>
               <FormItem top="Имя">
                 <Input />
               </FormItem>
@@ -120,7 +120,7 @@ export const Example: Story = {
               <FormItem>
                 <Button onClick={onClose}>Отправить</Button>
               </FormItem>
-            </FormLayout>
+            </FormLayoutGroup>
           )}
         >
           <Button id="dialog-2" mode="outline">

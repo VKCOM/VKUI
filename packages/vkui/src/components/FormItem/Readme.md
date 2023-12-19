@@ -65,7 +65,7 @@ const Example = () => {
       <Panel id="new-user">
         <PanelHeader>Регистрация</PanelHeader>
         <Group>
-          <FormLayout>
+          <form onSubmit={(e) => e.preventDefault()}>
             <FormItem
               htmlFor="email"
               top="E-mail"
@@ -81,6 +81,7 @@ const Example = () => {
                 type="email"
                 name="email"
                 value={email}
+                required
                 onChange={onChange}
               />
             </FormItem>
@@ -175,6 +176,7 @@ const Example = () => {
                 onChange={onChange}
                 value={purpose}
                 name="purpose"
+                required
                 options={[
                   {
                     value: '0',
@@ -202,7 +204,7 @@ const Example = () => {
                 Зарегистрироваться
               </Button>
             </FormItem>
-          </FormLayout>
+          </form>
         </Group>
       </Panel>
     </View>

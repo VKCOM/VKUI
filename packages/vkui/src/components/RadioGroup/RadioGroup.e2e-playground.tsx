@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { FormItem } from '../FormItem/FormItem';
-import { FormLayout } from '../FormLayout/FormLayout';
+import { FormLayoutGroup } from '../FormLayoutGroup/FormLayoutGroup';
 import { Radio } from '../Radio/Radio';
 import { RadioGroup, type RadioGroupProps } from './RadioGroup';
 
@@ -38,11 +38,11 @@ export const RadioGroupPlayground = (props: ComponentPlaygroundProps) => {
         }
 
         return (
-          <FormLayout>
+          <FormLayoutGroup>
             <RadioGroupWrapper>
               <RadioGroup {...restProps} />
             </RadioGroupWrapper>
-          </FormLayout>
+          </FormLayoutGroup>
         );
       }}
     </ComponentPlayground>

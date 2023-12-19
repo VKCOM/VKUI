@@ -264,7 +264,6 @@ const baseConfig = {
         {
           name: 'Forms',
           components: () => [
-            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/FormLayout/FormLayout.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/FormItem/FormItem.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/FormLayoutGroup/FormLayoutGroup.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/FormField/FormField.tsx`,

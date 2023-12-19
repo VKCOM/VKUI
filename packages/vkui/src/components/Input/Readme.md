@@ -8,7 +8,7 @@ const ExampleBase = ({ formItemStatus }) => {
   const [disabled, setDisabled] = useState(false);
 
   return (
-    <FormLayout>
+    <FormLayoutGroup>
       <FormItem top="align">
         <Select
           value={align}
@@ -50,7 +50,7 @@ const ExampleBase = ({ formItemStatus }) => {
           disabled={disabled}
         />
       </FormItem>
-    </FormLayout>
+    </FormLayoutGroup>
   );
 };
 
@@ -59,7 +59,7 @@ const ExampleWithIcon = ({ formItemStatus }) => {
   const clear = () => (textInput.current.value = '');
 
   return (
-    <FormLayout>
+    <FormLayoutGroup>
       <FormItem
         htmlFor="exampleClickable"
         top="📝 Пример с кликабельной иконкой"
@@ -78,7 +78,7 @@ const ExampleWithIcon = ({ formItemStatus }) => {
           }
         />
       </FormItem>
-    </FormLayout>
+    </FormLayoutGroup>
   );
 };
 

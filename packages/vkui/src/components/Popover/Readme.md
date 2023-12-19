@@ -93,7 +93,7 @@ const PopoverWithTriggerFocus = () => {
       role="dialog"
       aria-describedby="dialog-2"
       content={({ onClose }) => (
-        <FormLayout>
+        <FormLayoutGroup>
           <FormItem top="Имя">
             <Input />
           </FormItem>
@@ -106,7 +106,7 @@ const PopoverWithTriggerFocus = () => {
           <FormItem>
             <Button onClick={onClose}>Отправить</Button>
           </FormItem>
-        </FormLayout>
+        </FormLayoutGroup>
       )}
     >
       <Button id="dialog-2" mode="outline">

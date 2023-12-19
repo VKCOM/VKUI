@@ -236,8 +236,6 @@ export type { AccordionSummaryProps } from './components/Accordion/AccordionSumm
 /**
  * Forms
  */
-export { FormLayout } from './components/FormLayout/FormLayout';
-export type { FormLayoutProps } from './components/FormLayout/FormLayout';
 export { FormItem } from './components/FormItem/FormItem';
 export type { FormItemProps } from './components/FormItem/FormItem';
 export { FormField } from './components/FormField/FormField';
