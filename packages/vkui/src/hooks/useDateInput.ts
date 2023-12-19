@@ -39,13 +39,13 @@ export function useDateInput<T extends HTMLElement, D>({
   const { window } = useDOM();
 
   const removeFocusFromField = React.useCallback(() => {
-    if (open) {
+    if (focusedElement) {
       setFocusedElement(null);
       closeCalendar();
       window!.getSelection()?.removeAllRanges();
       setInternalValue(getInternalValue(value));
     }
-  }, [closeCalendar, getInternalValue, open, value, window]);
+  }, [focusedElement, closeCalendar, getInternalValue, value, window]);
 
   const handleClickOutside = React.useCallback(
     (e: MouseEvent) => {
@@ -77,25 +77,28 @@ export function useDateInput<T extends HTMLElement, D>({
     }
   }, [autoFocus, selectFirst]);
 
-  React.useEffect(() => {
-    if (disabled || focusedElement === null) {
-      return;
-    }
+  React.useEffect(
+    function focusActiveElement() {
+      if (disabled || focusedElement === null) {
+        return;
+      }
 
-    const range = window!.document.createRange();
+      const range = window!.document.createRange();
 
-    let element = refs[focusedElement].current;
+      let element = refs[focusedElement].current;
 
-    if (element) {
-      element.focus();
-      openCalendar();
-      range.selectNodeContents(element as Node);
+      if (element) {
+        element.focus();
+        openCalendar();
+        range.selectNodeContents(element as Node);
 
-      const selection = window!.getSelection();
-      selection?.removeAllRanges();
-      selection?.addRange(range);
-    }
-  }, [disabled, focusedElement, openCalendar, refs, window]);
+        const selection = window!.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+      }
+    },
+    [disabled, focusedElement, openCalendar, refs, window],
+  );
 
   const clear = React.useCallback(() => {
     onChange?.(undefined);
