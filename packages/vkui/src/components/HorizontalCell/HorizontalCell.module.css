@@ -65,7 +65,7 @@
 .HorizontalCell--size-m {
   --vkui_internal--side_cell_width: calc(100px + var(--vkui_internal--side_cell_gap));
 
-  inline-size: 100px;
+  max-inline-size: 100px;
 }
 
 .HorizontalCell--size-l {
@@ -85,5 +85,5 @@
 
 .HorizontalCell--size-m:first-child,
 .HorizontalCell--size-m:last-child {
-  inline-size: var(--vkui_internal--side_cell_width);
+  max-inline-size: var(--vkui_internal--side_cell_width);
 }
