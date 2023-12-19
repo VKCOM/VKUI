@@ -4,6 +4,8 @@ import { getImportInfo } from '../codemod-helpers';
 import { report } from '../report';
 import { JSCodeShiftOptions } from '../types';
 
+export const parser = 'tsx';
+
 export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {
   const { alias } = options;
   const j = api.jscodeshift;

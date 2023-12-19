@@ -3,15 +3,13 @@ to: src/transforms/__tests__/<%= name %>.ts
 ---
 jest.autoMockOff();
 
-import { defineTest } from 'jscodeshift/dist/testUtils';
+import { defineSnapshotTestFromFixture } from '../../testHelpers/testHelper';
 
 const name = '<%= name %>';
 const fixtures = ['basic'] as const;
 
 describe(name, () => {
   fixtures.forEach((test) =>
-    defineTest(__dirname, name, global.TRANSFORM_OPTIONS, `${name}/${test}`, {
-      parser: 'tsx',
-    }),
+    defineSnapshotTestFromFixture(__dirname, name, global.TRANSFORM_OPTIONS, `${name}/${test}`),
   );
 });

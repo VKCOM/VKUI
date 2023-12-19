@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`action-sheet transforms correctly 1`] = `
+"import { ActionSheet, ActionSheetItem } from '@vkontakte/vkui';
+import React from 'react';
+import '@vkontakte/vkui/dist/vkui.css';
+
+const App = () => {
+  return (
+    <React.Fragment>
+      <ActionSheet toggleRef={ref} placement="top">
+        <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
+      </ActionSheet>
+    </React.Fragment>
+  );
+};"
+`;
