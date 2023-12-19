@@ -39,7 +39,7 @@ export function useDateInput<T extends HTMLElement, D>({
   const { window } = useDOM();
 
   const removeFocusFromField = React.useCallback(() => {
-    if (focusedElement) {
+    if (focusedElement !== null) {
       setFocusedElement(null);
       closeCalendar();
       window!.getSelection()?.removeAllRanges();
