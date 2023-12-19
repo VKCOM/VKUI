@@ -6,6 +6,7 @@ import type {
   JSXAttribute,
   JSXIdentifier,
 } from 'jscodeshift';
+import { report } from './report';
 
 export function getImportInfo(
   j: JSCodeshift,
@@ -83,11 +84,8 @@ export const createAttributeManipulator = (
 
       if (found && found.reportText) {
         const text = typeof found.reportText === 'function' ? found.reportText() : found.reportText;
-        try {
-          api.report(text);
-        } catch {
-          console.warn(text);
-        }
+
+        report(api, text);
       }
 
       return {
