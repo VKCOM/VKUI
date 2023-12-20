@@ -227,7 +227,7 @@ jobs:
           path: packages/vkui/storybook-static
 
   docs_beta_upload:
-    if: ${{ needs.changed_files.outputs.docs_docusaurus == 'true' }}
+    if: ${{ needs.changed_files.outputs.docs_beta == 'true' }}
     needs: changed_files
     runs-on: ubuntu-latest
     name: Upload docs dist artifact (beta)
