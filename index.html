@@ -118,7 +118,8 @@
     <script src="build/bundle.141e554c.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function handleLoad() {
-        var isShown = localStorage.getItem("announcement-shown");
+        var storageKey = "announcement-shown-beta-2";
+        var isShown = localStorage.getItem(storageKey);
         if (Boolean(isShown)) {
           return;
         }
@@ -127,7 +128,7 @@
         var announcementElBtn = document.getElementById("js-announcement-close-btn");
 
         announcementElBtn.onclick = function handleClick() {
-          localStorage.setItem("announcement-shown", true);
+          localStorage.setItem(storageKey, true);
           announcementEl.dataset.opened = "false";
           announcementEl.tabIndex = "-1";
         };
