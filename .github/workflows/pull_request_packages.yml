@@ -261,15 +261,7 @@ jobs:
     outputs:
       url: ${{ steps.url.outputs.value }}
     steps:
-      - name: Download dist artifact
-        id: artifact
-        uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
-        with:
-          name: docs-beta-dist
-          path: docs-beta-dist/
-
       - name: Upload
-        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
         id: deploy
         uses: VKCOM/gh-actions/VKUI/s3@main
         with:
@@ -278,7 +270,7 @@ jobs:
           awsBucket: ${{ vars.AWS_BUCKET }}
           awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
           command: upload
-          commandUploadSrc: docs-beta-dist/
+          commandUploadSrc: docs-beta/build/
           commandUploadDist: pull/${{ github.event.pull_request.number }}/${{ github.ref }}/docs-beta
 
       - name: Create doc url
