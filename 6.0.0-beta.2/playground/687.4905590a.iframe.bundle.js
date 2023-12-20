@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_vkontakte_vkui=self.webpackChunk_vkontakte_vkui||[]).push([[687],{"../../node_modules/@storybook/components/dist/syntaxhighlighter-V7JZZA35.mjs":(o,t,e)=>{e.r(t),e.d(t,{SyntaxHighlighter:()=>s.d3,createCopyToClipboardFunction:()=>s.xV,default:()=>s.qG});var s=e("../../node_modules/@storybook/components/dist/chunk-ELLS3HSY.mjs")}}]);
