@@ -253,35 +253,9 @@ jobs:
           name: docs-beta-dist
           path: docs-beta/build
 
-  upload_pr_workflow_payload:
-    # Дожидаемся выгрузки артефактов, на случай если вокрфлоу будет отменён или перезапушен
-    needs:
-      [
-        test,
-        test_e2e_prepare_and_upload_report,
-        docs_styleguide_upload,
-        docs_storybook_upload,
-        docs_beta_upload,
-      ]
-    # Не используем always(), т.к. он не учитывает отмену воркфлоу
-    # см. https://github.com/orgs/community/discussions/26303
-    if: ${{ !cancelled() }}
-    name: Call reusable workflow
-    uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
-    with:
-      action: upload
-
-  pr_workflow_payload:
-    needs: upload_pr_workflow_payload
-    if: ${{ !cancelled() }}
-    name: Call reusable workflow
-    uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
-    with:
-      action: download
-
   deploy_docs_beta:
-    needs: pr_workflow_payload
-    if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
+    needs: docs_beta_upload
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     name: Deploy docs (beta)
     outputs:
@@ -305,17 +279,16 @@ jobs:
           awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
           command: upload
           commandUploadSrc: docs-beta-dist/
-          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ github.ref }}/docs-beta
+          commandUploadDist: pull/${{ github.event.pull_request.number }}/${{ github.ref }}/docs-beta
 
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "value=https://${{ vars.AWS_BUCKET }}.${{ vars.AWS_ENDPOINT }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ github.ref }}/docs-beta/index.html" >> $GITHUB_OUTPUT
+        run: echo "value=https://${{ vars.AWS_BUCKET }}.${{ vars.AWS_ENDPOINT }}/pull/${{ github.event.pull_request.number }}/${{ github.ref }}/docs-beta/index.html" >> $GITHUB_OUTPUT
 
   docs_comment:
     needs:
       - deploy_docs_beta
-      - pr_workflow_payload
     if: ${{ needs.deploy_docs_beta.outputs.url != '' }}
     runs-on: ubuntu-latest
     name: Docs comment
