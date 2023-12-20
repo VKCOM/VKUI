@@ -273,6 +273,7 @@ jobs:
 
   pr_workflow_payload:
     needs: upload_pr_workflow_payload
+    if: ${{ !cancelled() }}
     name: Call reusable workflow
     uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
