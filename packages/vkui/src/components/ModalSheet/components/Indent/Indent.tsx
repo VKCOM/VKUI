@@ -9,8 +9,6 @@ import styles from './Indent.module.css';
 function useIndents(settlingHeight: number) {
   const { document, window } = useDOM();
 
-  const indent1Ref = React.useRef<HTMLDivElement>(null);
-  const indent2Ref = React.useRef<HTMLDivElement>(null);
   const [indents, setIndents] = React.useState<[string, string]>([
     `${settlingHeight}%`,
     `${100 - settlingHeight}%`,
@@ -21,10 +19,6 @@ function useIndents(settlingHeight: number) {
     const indent1Height = (clientHeight * settlingHeight) / 100;
     const indent2Height = clientHeight - indent1Height;
 
-    if (!indent1Ref.current || !indent2Ref.current) {
-      return;
-    }
-
     setIndents([`${indent1Height}px`, `${indent2Height}px`]);
   };
 
@@ -32,7 +26,7 @@ function useIndents(settlingHeight: number) {
 
   useIsomorphicLayoutEffect(indentCalculate, [settlingHeight]);
 
-  return [indent1Ref, indent2Ref, indents] as const;
+  return indents;
 }
 
 interface IndentProps {
@@ -41,7 +35,7 @@ interface IndentProps {
 }
 
 export const Indent = ({ settlingHeight, onClick }: IndentProps) => {
-  const [indent1Ref, indent2Ref, indents] = useIndents(settlingHeight);
+  const indents = useIndents(settlingHeight);
   const { sizeX } = useAdaptivity();
 
   if (sizeX === 'regular') {
@@ -53,13 +47,11 @@ export const Indent = ({ settlingHeight, onClick }: IndentProps) => {
       <div
         className={styles['ModalSheetIndent']}
         style={{ height: indents[0] }}
-        ref={indent1Ref}
         onClick={onClick}
       />
       <div
         className={styles['ModalSheetIndent']}
         style={{ height: indents[1] }}
-        ref={indent2Ref}
         onClick={onClick}
       />
     </>
