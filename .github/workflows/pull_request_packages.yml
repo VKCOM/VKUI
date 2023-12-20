@@ -268,7 +268,7 @@ jobs:
           name: docs-beta-dist
 
       - name: Unzip blob report
-        run: unzip docs-beta-dist.zip -d docs-beta-dist
+        run: unzip docs-beta-dist -d docs-beta-dist
         shell: bash
 
       - name: Upload
