@@ -283,7 +283,7 @@ jobs:
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "value=https://${{ vars.AWS_BUCKET }}.${{ vars.AWS_ENDPOINT }}/pull/${{ github.event.pull_request.number }}/${{ github.ref }}/docs-beta/index.html" >> $GITHUB_OUTPUT
+        run: echo "value=https://${{ vars.AWS_BUCKET }}.${{ vars.AWS_ENDPOINT }}/pull/${{ github.event.pull_request.number }}/test1/docs-beta/index.html" >> $GITHUB_OUTPUT
 
   docs_comment:
     needs:
@@ -296,7 +296,7 @@ jobs:
         uses: peter-evans/find-comment@v2
         id: find_url_comment
         with:
-          issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+          issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body-includes: <!-- beta_docs_urls -->
 
@@ -304,7 +304,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v3
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
-          issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+          issue-number: ${{ github.event.pull_request.number }}
           body: |
             <!-- beta_docs_urls -->
             ## 👀 Beta Docs deployed
