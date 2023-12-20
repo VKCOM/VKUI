@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
