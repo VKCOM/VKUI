@@ -278,12 +278,12 @@ jobs:
           awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
           command: upload
           commandUploadSrc: docs-beta-dist/
-          commandUploadDist: pull/${{ github.event.pull_request.number }}/test1/docs-beta
+          commandUploadDist: pull/${{ github.event.pull_request.number }}/test2/docs-beta
 
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "value=https://${{ vars.AWS_BUCKET }}.${{ vars.AWS_ENDPOINT }}/pull/${{ github.event.pull_request.number }}/test1/docs-beta/index.html" >> $GITHUB_OUTPUT
+        run: echo "value=https://${{ vars.AWS_BUCKET }}.${{ vars.AWS_ENDPOINT }}/pull/${{ github.event.pull_request.number }}/test2/docs-beta/index.html" >> $GITHUB_OUTPUT
 
   docs_comment:
     needs:
