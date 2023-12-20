@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form-layout transforms correctly 1`] = `
+"import { FormLayout } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    <React.Fragment>
+      <FormLayout />
+    </React.Fragment>
+  );
+};"
+`;
