@@ -13,13 +13,11 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: none;
-
   /**
    * Для удаление скролла в Firefox.
    * В версии ниже 64 будет виден скролл, но это не ломает функциональность.
    */
   scrollbar-width: none;
-
   /**
    * В старых браузерах не работает, но это не ломает функциональность.
    */
@@ -156,7 +154,6 @@
     overflow-y: auto;
   }
 }
-
 
 .ModalSheet--sizeX-regular .ModalSheet__container {
   max-block-size: calc(100% - 32px * 2);

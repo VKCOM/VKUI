@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames, isIOS, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useEventListener } from '../../hooks/useEventListener';
@@ -93,6 +93,7 @@ function useMobileOverlay(container: React.RefObject<HTMLDivElement>, settlingHe
 function useMobileScroll(container: React.RefObject<HTMLDivElement>) {
   const [fullOpen, setFullOpen] = React.useState(false);
   const [endScroll, setEndScroll] = React.useState(false);
+  const { sizeX: jsSizeX } = useAdaptivityWithJSMediaQueries();
 
   const scroll = () => {
     const el = container.current!;
@@ -105,6 +106,34 @@ function useMobileScroll(container: React.RefObject<HTMLDivElement>) {
   };
 
   useGlobalEventListener(container.current, 'scroll', scroll);
+
+  /**
+   * Костыль для прилипания к низу в сафари
+   *
+   * https://caniuse.com/css-overflow-anchor
+   */
+  useIsomorphicLayoutEffect(() => {
+    if (!endScroll || !isIOS || jsSizeX === 'regular' || !container.current) {
+      return;
+    }
+
+    const el = container.current;
+
+    const observer = new MutationObserver(() => {
+      el.scrollTo({
+        top: el.scrollHeight,
+        behavior: 'smooth',
+      });
+    });
+
+    observer.observe(container.current, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
+  }, [endScroll]);
 
   return { fullOpen, endScroll };
 }
