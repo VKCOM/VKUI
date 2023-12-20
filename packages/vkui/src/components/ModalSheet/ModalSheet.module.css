@@ -157,15 +157,6 @@
   }
 }
 
-.ModalSheet--sizeX-regular .ModalSheet__indent {
-  display: none;
-}
-
-@media (--sizeX-regular) {
-  .ModalSheet--sizeX-none .ModalSheet__indent {
-    display: none;
-  }
-}
 
 .ModalSheet--sizeX-regular .ModalSheet__container {
   max-block-size: calc(100% - 32px * 2);
