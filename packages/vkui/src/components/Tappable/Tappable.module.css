@@ -1,5 +1,22 @@
 .Tappable {
+  isolation: isolate;
+  position: relative;
   border-radius: var(--vkui--size_border_radius--regular);
+}
+
+/*
+Просто поменять местами элементы внутри Tappable нельзя:
+
+- некоторые элементы завязаны на :last-child и :first-child
+- необходимо чтобы все элементы были позиционированные
+
+https://developer.mozilla.org/ru/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Stacking_without_z-index
+https://github.com/VKCOM/VKUI/pull/3641
+*/
+/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
+.Tappable > * {
+  position: relative;
+  z-index: var(--vkui_internal--z_index_tappable_element);
 }
 
 /**
