@@ -20,6 +20,7 @@ import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { Radio } from '../Radio/Radio';
+import { Select } from '../Select/Select';
 import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Title } from '../Typography/Title/Title';
@@ -43,11 +44,14 @@ const ModalFirst = (props: ModalSheetProps) => (
     </ModalSheet.Header>
 
     <ModalSheet.Content>
-      <FormItem top="Страна">
-        <SelectMimicry placeholder="Выбрать страну" />
-      </FormItem>
       <FormItem top="Город">
-        <SelectMimicry placeholder="Выбрать город" disabled />
+        <Select
+          options={['Архангельск', 'Новосибирск', 'Санкт-Петербург'].map((value) => ({
+            label: value,
+            value,
+          }))}
+          placeholder="Выбрать город"
+        />
       </FormItem>
 
       <FormItem top="Пол">

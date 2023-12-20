@@ -31,14 +31,8 @@
   scroll-snap-type: none;
 }
 
-.ModalSheet--closes {
+.ModalSheet--closing {
   pointer-events: none;
-}
-
-/* stylelint-disable-next-line selector-max-universal, @project-tools/stylelint-atomic */
-.ModalSheet__container > * {
-  scroll-snap-align: start;
-  overflow-anchor: none;
 }
 
 /**
@@ -66,6 +60,8 @@
   transition: border-radius 0.1s var(--vkui--animation_easing_platform);
   inline-size: 100%;
   scroll-snap-stop: always;
+  scroll-snap-align: start;
+  overflow-anchor: none;
 }
 
 .ModalSheet--size-s {

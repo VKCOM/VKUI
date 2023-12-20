@@ -7,9 +7,8 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useVirtualKeyboard } from '../../hooks/useKeyboard';
 import { useTimeout } from '../../hooks/useTimeout';
 import { callMultiple } from '../../lib/callMultiple';
-import { NavIdProps } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
@@ -45,7 +44,7 @@ function useId(idProp: string | undefined) {
 function useMobileFirstOpen(container: React.RefObject<HTMLDivElement>, settlingHeight: number) {
   const { sizeX: jsSizeX } = useAdaptivityWithJSMediaQueries();
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (jsSizeX === 'regular') {
       return;
     }
@@ -184,7 +183,7 @@ function useOpeningClosing(
   };
 }
 
-export interface ModalSheetProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
+export interface ModalSheetProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Задаёт контенту максимальную ширину для десктопной версии.
    */

@@ -6,11 +6,14 @@ const ModalFirst = (props) => (
     </ModalSheet.Header>
 
     <ModalSheet.Content>
-      <FormItem top="Страна">
-        <SelectMimicry placeholder="Выбрать страну" />
-      </FormItem>
       <FormItem top="Город">
-        <SelectMimicry placeholder="Выбрать город" disabled />
+        <Select
+          options={['Архангельск', 'Новосибирск', 'Санкт-Петербург'].map((value) => ({
+            label: value,
+            value,
+          }))}
+          placeholder="Выбрать город"
+        />
       </FormItem>
 
       <FormItem top="Пол">
@@ -26,10 +29,26 @@ const ModalFirst = (props) => (
       </FormItem>
 
       <FormItem top="Школа">
-        <SelectMimicry placeholder="Выбрать школу" disabled />
+        <Select
+          options={getRandomUsers(10).map((user) => ({
+            label: user.name,
+            value: user.id,
+            avatar: user.photo_100,
+          }))}
+          placeholder="Выбрать школу"
+          disabled
+        />
       </FormItem>
       <FormItem top="Университет">
-        <SelectMimicry placeholder="Выбрать университет" disabled />
+        <Select
+          options={getRandomUsers(10).map((user) => ({
+            label: user.name,
+            value: user.id,
+            avatar: user.photo_100,
+          }))}
+          placeholder="Выбрать университет"
+          disabled
+        />
       </FormItem>
 
       <FormItem top="Дополнительно">

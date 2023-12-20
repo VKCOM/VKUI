@@ -59,6 +59,7 @@ export function useKeyboard(): SoftwareKeyboardState {
   return { isOpened };
 }
 
+const minKeyboardHeight = 30;
 /**
  * Проверяет изменение визуального окна.
  *
@@ -75,7 +76,7 @@ export function useVirtualKeyboard() {
     }
 
     const calcIsOpen =
-      window.visualViewport.height * window.visualViewport.scale + 30 <
+      window.visualViewport.height * window.visualViewport.scale + minKeyboardHeight <
       document.scrollingElement.clientHeight;
 
     if (isOpened !== calcIsOpen) {
