@@ -266,10 +266,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: docs-beta-dist
-
-      - name: Unzip blob report
-        run: unzip docs-beta-dist -d docs-beta-dist
-        shell: bash
+          path: docs-beta-dist
 
       - name: Upload
         id: deploy
