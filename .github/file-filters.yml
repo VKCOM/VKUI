@@ -33,3 +33,7 @@ docs_storybook:
   - 'packages/vkui/storybook/**'
   - 'packages/vkui/src/**/*.stories.*'
   - 'tools/storybook-*/**'
+
+docs_beta:
+  - *package_vkui
+  - 'docs-beta'
