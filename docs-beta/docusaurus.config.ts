@@ -17,7 +17,7 @@ const config: Config = {
   url: 'https://vkcom.github.io/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/pull/6317/test1/docs-beta/',
+  baseUrl: '/pull/6317/test2/docs-beta/',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
