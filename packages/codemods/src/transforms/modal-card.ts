@@ -48,7 +48,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       api,
       `: ${chalk.white.bgBlue('ModalCard')} and ${chalk.white.bgBlue(
         'ModalCardBase',
-      )} might have 'Spacing' now. Manual changes required.`,
+      )} might need 'Spacing' now. Manual changes required.`,
     );
   }
 
