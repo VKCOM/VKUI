@@ -34,3 +34,7 @@ docs_storybook:
   - 'packages/vkui/src/**/*.stories.*'
   - 'packages/vkui/src/**/*.mdx'
   - 'tools/storybook-*/**'
+
+docs_beta:
+  - *package_vkui
+  - 'docs-beta'
