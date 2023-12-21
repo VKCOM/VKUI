@@ -479,6 +479,7 @@ export const View = ({
         prevSwipeBackResult === 'fail' && !swipeBackResult;
       const swipeBackCancelledByMovingPanelBackToInitialPoint =
         prevSwipingBack && !swipingBack && prevSwipeBackShift === 0;
+
       if (
         (swipeBackCancelledInTheMiddleOfAction ||
           swipeBackCancelledByMovingPanelBackToInitialPoint) &&
