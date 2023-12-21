@@ -218,7 +218,7 @@
  * CMP:
  * PanelHeader
  */
-/* stylelint-disable-next-line selector-max-universal */
+/* stylelint-disable-next-line selector-max-universal, selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader--vkcom) ~ .Group:first-of-type,
 :global(.vkuiInternalPanelHeader--vkcom) + * .Group:first-of-type {
   position: relative;

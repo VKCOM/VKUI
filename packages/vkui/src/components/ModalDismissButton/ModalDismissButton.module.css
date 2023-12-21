@@ -20,7 +20,7 @@
   position: absolute;
 }
 
-/* fixes icon misplacement on Safari in some cases */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- fixes icon misplacement on Safari in some cases */
 .ModalDismissButton :global(.vkuiIcon) {
   transform: translateX(0);
 }

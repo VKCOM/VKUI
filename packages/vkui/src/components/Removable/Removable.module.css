@@ -104,6 +104,7 @@
  * FormLayoutGroup
  * FormItem
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable) .Removable__content,
 :global(.vkuiInternalFormLayoutGroup--removable) .Removable__content {
   flex-wrap: wrap;
@@ -114,6 +115,7 @@
   display: none;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--withTop)
   :global(.vkuiInternalFormItem__removable)
   ~ .Removable__offset,
@@ -126,6 +128,7 @@
   block-size: calc(2px + var(--vkui--font_subhead--line_height--regular) + 8px);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--sizeY-compact):global(.vkuiInternalFormItem--withTop)
   :global(.vkuiInternalFormItem__removable)
   ~ .Removable__offset,
@@ -136,6 +139,7 @@
 }
 
 @media (--sizeY-compact) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalFormItem--sizeY-none):global(.vkuiInternalFormItem--withTop)
     :global(.vkuiInternalFormItem__removable)
     ~ .Removable__offset,

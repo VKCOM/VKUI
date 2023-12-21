@@ -63,25 +63,27 @@
   white-space: nowrap;
 }
 
-/* stylelint-disable @project-tools/stylelint-atomic, selector-max-universal */
+/* stylelint-disable selector-max-universal */
 .Header__aside.Header__aside > * {
   margin-block: 13px 7px;
   margin-inline-start: 12px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .Header__aside > :global(.vkuiIcon) {
   position: relative;
   color: var(--vkui--color_icon_secondary);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .Header__aside > :global(.vkuiIcon--24) {
   margin-block: 11px 5px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .Header__aside > :global(.vkuiIcon--16) {
   margin-block: 15px 9px;
 }
-/* stylelint-enable @project-tools/stylelint-atomic */
 
 .Header--mode-primary {
   padding-block: 3px 1px;
@@ -122,6 +124,7 @@
  *
  * TODO: Переделать отрицательные отступы https://github.com/VKCOM/VKUI/issues/3508
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup--mode-plain):not(:first-of-type) > .Header:first-child,
 :global(.vkuiInternalGroup--mode-plain):not(:first-of-type)
   > :global(.vkuiInternalTappable):first-child
@@ -130,6 +133,7 @@
 }
 
 @media (--sizeX-compact) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
     > .Header:first-child,
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
@@ -139,6 +143,7 @@
   }
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup--mode-card) > .Header:not(.Header--mode-tertiary):first-child,
 :global(.vkuiInternalGroup--mode-card)
   > :global(.vkuiInternalTappable):first-child
@@ -147,6 +152,7 @@
 }
 
 @media (--sizeX-regular) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
     > .Header:not(.Header--mode-tertiary):first-child,
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)

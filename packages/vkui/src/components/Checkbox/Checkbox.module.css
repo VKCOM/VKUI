@@ -13,6 +13,7 @@
  * CMP:
  * FormItem
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem) .Checkbox {
   inline-size: 100%;
   box-sizing: content-box;

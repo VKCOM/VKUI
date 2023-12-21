@@ -67,11 +67,13 @@
   padding-block: 10px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .MiniInfoCell__middle :global(.vkuiIcon) {
   margin-inline-start: 4px;
   color: var(--vkui--color_text_accent);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .MiniInfoCell--mode-add .MiniInfoCell__middle :global(.vkuiIcon),
 .MiniInfoCell--mode-more .MiniInfoCell__middle :global(.vkuiIcon) {
   color: var(--vkui--color_icon_accent_themed);

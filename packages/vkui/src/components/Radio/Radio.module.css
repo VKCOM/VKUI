@@ -9,6 +9,7 @@
  * CMP:
  * FormItem
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem) .Radio {
   inline-size: 100%;
   box-sizing: content-box;
@@ -132,6 +133,7 @@
  * CMP:
  * RadioGroup
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalRadioGroup) .Radio {
   flex: 1;
   margin: 0;

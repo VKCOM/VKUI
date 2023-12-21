@@ -112,12 +112,14 @@
   box-sizing: border-box;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .ModalPage--desktop .ModalPage__content,
 :global(.vkuiInternalModalRoot__modal--expandable) .ModalPage__content {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .ModalPage--desktop .ModalPage__content-in,
 :global(.vkuiInternalModalRoot__modal--expandable) .ModalPage__content-in {
   block-size: 100%;
@@ -138,14 +140,17 @@
  *
  * [дополнительно] также ищи в файле `ModalRoot__modal--expandable`
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalModalRoot--touched) .ModalPage__in-wrap {
   transition: none;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalModalRoot--switching) .ModalPage__in-wrap {
   pointer-events: none;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalModalRoot__modal--collapsed) .ModalPage__content,
 :global(.vkuiInternalModalRoot__modal--dragging) .ModalPage__content {
   overflow: hidden;

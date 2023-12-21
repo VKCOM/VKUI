@@ -6,7 +6,6 @@ module.exports = {
   plugins: [
     'stylelint-value-no-unknown-custom-properties',
     'stylelint-media-use-custom-media',
-    '@project-tools/stylelint-atomic',
     '@project-tools/stylelint-bad-multiplication',
     'stylelint-use-logical',
   ],
@@ -70,13 +69,7 @@ module.exports = {
         importFrom: path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS),
       },
     ],
-    // Skip reporting in pprecommit run, highlight in editor
-    '@project-tools/stylelint-atomic': [
-      process.env.LINT_PRECOMMIT_RUN ? null : true,
-      {
-        severity: 'warning',
-      },
-    ],
+    'selector-pseudo-class-disallowed-list': ['global'],
     '@project-tools/stylelint-bad-multiplication': true,
     'import-notation': null,
     'plugin/vkui': null,

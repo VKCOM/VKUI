@@ -29,11 +29,12 @@
   padding-inline-end: 44px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .Cell--removable :global(.vkuiInternalRemovable__content) {
   padding-inline-start: 0;
 }
 
-/* для того чтобы активная область Cell распространялась и на область removable */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- для того чтобы активная область Cell распространялась и на область removable */
 .Cell--removable :global(.vkuiInternalRemovable__action) {
   position: absolute;
   inset-inline-end: 0;
@@ -57,11 +58,13 @@
   /* правый паддинг от removable который мы обнулили ниже */
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .Cell--ios.Cell--removable :global(.vkuiInternalRemovable__action) {
   inset-inline: 0 auto;
   z-index: 1;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .Cell--ios.Cell--removable :global(.vkuiInternalRemovable__content) {
   padding-inline-end: 0;
 }
@@ -70,6 +73,7 @@
  * CMP:
  * FormItem
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem) > .Cell {
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));

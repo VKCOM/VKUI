@@ -51,6 +51,7 @@
  * CMP:
  * PanelHeaderButton
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeaderButton) .Counter {
   position: absolute;
   padding: 0;
@@ -62,6 +63,7 @@
  * CMP:
  * TabbarItem
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabbarItem__label) .Counter {
   position: absolute;
   inset-block-start: -2px;

@@ -11,11 +11,13 @@
  * CMP:
  * PanelHeader
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader) .Tabs {
   overflow: hidden;
   font-family: var(--vkui--font_family_base);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader) .Tabs::after {
   display: block;
   inline-size: 1000px;
@@ -26,10 +28,12 @@
  * CMP:
  * Group
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup--mode-plain) > .Tabs--mode-default:first-child {
   margin-block-start: -8px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup--mode-card) > .Tabs--mode-default:first-child {
   margin-block-start: -4px;
 }
@@ -39,7 +43,7 @@
  * FixedLayout
  */
 
-/* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
 :global(.vkuiInternalFixedLayout--ios):global(.vkuiInternalFixedLayout--vertical-bottom)
   .Tabs::after {
   position: absolute;
@@ -51,6 +55,7 @@
   background: var(--vkui--color_background_content);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFixedLayout--ios):global(.vkuiInternalFixedLayout--vertical-bottom) .Tabs__in,
 :global(.vkuiInternalFixedLayout--ios):global(.vkuiInternalFixedLayout--vertical-bottom)
   .Separator {

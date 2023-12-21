@@ -38,6 +38,7 @@
  * CMP:
  * CalendarHeader
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalCalendarHeader__pickers) .CustomSelectDropdown__in--withMaxHeight {
   max-block-size: 184px;
 }

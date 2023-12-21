@@ -78,7 +78,7 @@
   color: var(--vkui--color_icon_accent_themed);
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
+/* stylelint-disable-next-line selector-max-universal */
 .PanelHeader__after > *:not(:last-child) {
   margin-inline-end: 4px;
 }
@@ -188,6 +188,7 @@
  * CMP:
  * SplitCol
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
   .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
@@ -195,6 +196,7 @@
 }
 
 @media (--viewWidth-smallTabletPlus) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
     .PanelHeader--android.PanelHeader--no-before:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__content {
@@ -216,6 +218,7 @@
   padding-inline-start: 16px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
   .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__content {
@@ -223,6 +226,7 @@
 }
 
 @media (--viewWidth-smallTabletPlus) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
     .PanelHeader--android.PanelHeader--no-after:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__content {
@@ -244,6 +248,7 @@
   z-index: var(--vkui_internal--z_index_panel_header);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(:global(.vkuiInternalModalPageHeader__in)):not(
     .PanelHeader--sep
   )
@@ -257,6 +262,7 @@
 }
 
 @media (--sizeX-regular) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(:global(.vkuiInternalModalPageHeader__in)):not(
       .PanelHeader--sep
     )
@@ -270,6 +276,7 @@
   }
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .PanelHeader--vkcom.PanelHeader--sizeX-regular:not(:global(.vkuiInternalModalPageHeader__in))
   .PanelHeader__in {
   border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
@@ -279,6 +286,7 @@
 }
 
 @media (--sizeX-regular) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .PanelHeader--vkcom.PanelHeader--sizeX-none:not(:global(.vkuiInternalModalPageHeader__in))
     .PanelHeader__in {
     border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
@@ -317,6 +325,7 @@
  * CMP:
  * Panel
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanel--centered) .PanelHeader {
   position: absolute;
   inset-inline-start: 0;

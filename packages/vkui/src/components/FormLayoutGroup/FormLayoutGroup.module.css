@@ -16,6 +16,7 @@
   display: none;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .FormLayoutGroup--mode-horizontal
   :global(.vkuiInternalFormItem--withTop)
   ~ .FormLayoutGroup__offset {
@@ -25,6 +26,7 @@
   block-size: calc(2px + var(--vkui--font_subhead--line_height--regular) + 8px);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .FormLayoutGroup--sizeY-compact.FormLayoutGroup--mode-horizontal
   :global(.vkuiInternalFormItem--withTop)
   ~ .FormLayoutGroup__offset {
@@ -32,6 +34,7 @@
 }
 
 @media (--sizeY-compact) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .FormLayoutGroup--sizeY-none.FormLayoutGroup--mode-horizontal
     :global(.vkuiInternalFormItem--withTop)
     ~ .FormLayoutGroup__offset {

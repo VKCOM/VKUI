@@ -35,11 +35,12 @@
   justify-content: center;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .ScreenSpinner__icon :global(.vkuiIcon) {
   animation: screen-spinner-intro 0.2s ease;
 }
 
-/* stylelint-disable-next-line selector-max-type */
+/* stylelint-disable-next-line selector-max-type, selector-pseudo-class-disallowed-list */
 .ScreenSpinner__icon--state-done :global(.vkuiIcon) path {
   stroke-dasharray: 50;
   stroke-dashoffset: 50;

@@ -24,7 +24,7 @@
   color: var(--vkui_internal--icon_color, var(--vkui--color_icon_accent));
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic -- добиваем отступ до 16px */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .SimpleCell__before > :global(.vkuiIcon) {
   padding-inline-end: 4px;
 }
@@ -44,7 +44,7 @@
   overflow: hidden;
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal -- gap: 2px */
+/* stylelint-disable-next-line selector-max-universal -- gap: 2px */
 .SimpleCell__middle > *:not(:first-child) {
   margin-block-start: 2px;
 }
@@ -94,7 +94,7 @@
   color: var(--vkui--color_icon_accent);
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal -- gap: 4px */
+/* stylelint-disable-next-line selector-max-universal -- gap: 4px */
 .SimpleCell__content > *:not(:last-child) {
   margin-inline-end: 4px;
 }
@@ -115,10 +115,12 @@
   color: var(--vkui_internal--icon_color, var(--vkui--color_icon_accent));
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .SimpleCell__after > :global(.vkuiIcon) {
   padding-inline-start: 8px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .SimpleCell__after > :global(.vkuiIcon):last-child {
   padding-inline-end: 2px;
 }
@@ -154,6 +156,7 @@
  * CMP:
  * FormItem
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem) > .SimpleCell {
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));

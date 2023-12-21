@@ -1,6 +1,6 @@
 /* stylelint-disable color-named */
 /* stylelint-disable declaration-property-value-disallowed-list */
-/* stylelint-disable @project-tools/stylelint-atomic, declaration-no-important */
+/* stylelint-disable declaration-no-important */
 /* stylelint-disable selector-max-id, selector-max-universal */
 
 /* Глобальные стили, которые не импортируются самими компонентами. */

@@ -19,13 +19,13 @@
   inset-inline-start: 0;
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
+/* stylelint-disable-next-line selector-max-universal */
 .AspectRatio--mode-stretch > * {
   inline-size: 100%;
   block-size: 100%;
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-type */
+/* stylelint-disable-next-line selector-max-type */
 .AspectRatio--mode-stretch > img,
 .AspectRatio--mode-stretch > video {
   object-fit: cover;

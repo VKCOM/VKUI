@@ -24,6 +24,7 @@
   }
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkui__root--embedded) .AppRoot {
   overflow: auto;
 }

@@ -6,7 +6,7 @@
   --vkui_internal--outline_width: 2px;
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
+/* stylelint-disable-next-line selector-max-universal */
 .-focus-visible:focus,
 .-focus-visible:focus-visible,
 .-focus-visible *:focus,

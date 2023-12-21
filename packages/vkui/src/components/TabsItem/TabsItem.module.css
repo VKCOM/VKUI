@@ -187,12 +187,14 @@
  * CMP:
  * Tabs
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs--vkcom) .TabsItem {
   flex-grow: 0;
   min-inline-size: auto;
   padding-inline: 10px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs--vkcom) .TabsItem__underline {
   inset-inline: 2px;
   inset-block-end: 0;
@@ -202,6 +204,7 @@
  * CMP:
  * HorizontalScroll
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalHorizontalScroll) .TabsItem {
   min-inline-size: 64px;
   flex-basis: auto;

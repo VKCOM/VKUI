@@ -19,12 +19,14 @@
  * CMP:
  * ModalPage
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalModalPage--sizeX-regular) .Separator--padded {
   padding-inline: 8px;
 }
 
 /* FIXME: Мертвый код */
 @media (--sizeX-regular) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalModalPage--sizeX-none) .Separator--padded {
     padding-inline: 8px;
   }

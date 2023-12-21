@@ -69,6 +69,7 @@
  * CMP:
  * FormLayoutGroup
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .FormItem {
   max-inline-size: 100%;
   flex-grow: 1;
@@ -78,18 +79,21 @@
   min-inline-size: 1px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal:not(.vkuiInternalFormLayoutGroup--segmented))
   .FormItem
   + .FormItem {
   margin-inline-start: 24px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal.vkuiInternalFormLayoutGroup--segmented)
   .FormItem
   + .FormItem {
   margin-inline-start: calc(-1 * var(--vkui--size_border--regular));
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--mode-vertical.vkuiInternalFormLayoutGroup--segmented)
   .FormItem
   + .FormItem {
@@ -97,22 +101,26 @@
   margin-block-start: calc(-1 * var(--vkui--size_border--regular));
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--mode-vertical.vkuiInternalFormLayoutGroup--segmented)
   .FormItem:not(:last-of-type) {
   padding-block-end: 0;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .FormItem--withTop .FormItem__removable,
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .FormItem--withTop {
   margin-block-start: calc(-2px - var(--vkui--font_subhead--line_height--regular) - 8px);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .FormItem--sizeY-compact.FormItem--withTop .FormItem__removable,
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .FormItem--sizeY-compact.FormItem--withTop {
   margin-block-start: calc(-2px - var(--vkui--font_subhead--line_height--compact) - 6px);
 }
 
 @media (--sizeY-compact) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .FormItem--sizeY-none.FormItem--withTop .FormItem__removable,
   :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .FormItem--sizeY-none.FormItem--withTop {
     margin-block-start: calc(-2px - var(--vkui--font_subhead--line_height--compact) - 6px);

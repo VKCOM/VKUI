@@ -12,6 +12,7 @@
   position: relative;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabbar) .TabbarItem {
   flex-shrink: 0;
   max-inline-size: 100%;
@@ -41,10 +42,12 @@
   box-sizing: border-box;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabbar--layout-vertical) .TabbarItem__in {
   flex-direction: column;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabbar--layout-horizontal) .TabbarItem__in {
   flex-direction: row;
 }
@@ -65,6 +68,7 @@
   text-overflow: ellipsis;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabbar--layout-vertical) .TabbarItem__text {
   --vkui--font_footnote--font_size--regular: 10px;
   --vkui--font_footnote--line_height--regular: 12px;
@@ -72,6 +76,7 @@
   margin-block-start: 2px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabbar--layout-horizontal) .TabbarItem__text {
   margin-inline-start: 8px;
 }

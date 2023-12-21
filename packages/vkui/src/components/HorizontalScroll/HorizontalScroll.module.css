@@ -57,15 +57,18 @@
  * CMP:
  * Tabs
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs) .HorizontalScroll {
   min-inline-size: 100%;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs) .HorizontalScroll__in-wrapper {
   display: flex;
   align-items: stretch;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs--withGaps) .HorizontalScroll__in-wrapper::after,
 :global(.vkuiInternalTabs--withGaps) .HorizontalScroll__in-wrapper::before {
   display: block;

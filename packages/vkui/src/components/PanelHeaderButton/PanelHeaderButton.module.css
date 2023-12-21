@@ -37,15 +37,17 @@
   line-height: 44px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .PanelHeaderButton--ios :global(.vkuiIcon--24) {
   padding: 10px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .PanelHeaderButton--ios :global(.vkuiIcon--28) {
   padding: 8px;
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic -- фикс для иконки назад */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .PanelHeaderBack--ios :global(.vkuiIcon--w-20) {
   padding-inline-start: 4px;
 }
@@ -58,6 +60,7 @@
   border-radius: 50%;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .PanelHeaderButton--android :global(.vkuiIcon--24),
 .PanelHeaderButton--android :global(.vkuiIcon--28) {
   padding: 10px;
@@ -70,11 +73,13 @@
   color: var(--vkui--color_text_secondary);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .PanelHeaderButton--vkcom > :not(:global(.vkuiInternalCounter)) {
   transition: opacity 0.3s;
   opacity: 0.7;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .PanelHeaderButton--vkcom.PanelHeaderButton--hover > :not(:global(.vkuiInternalCounter)),
 .PanelHeaderButton--vkcom.PanelHeaderButton--active > :not(:global(.vkuiInternalCounter)) {
   opacity: 1;
