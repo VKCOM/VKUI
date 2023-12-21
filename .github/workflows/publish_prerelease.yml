@@ -24,11 +24,6 @@ on:
       custom_version:
         description: 'custom version: x.y.z-beta.0 (without "v")'
         required: false
-      close_milestone:
-        description: 'whether to close associated milestone after publish'
-        required: true
-        type: boolean
-        default: true
 
 run-name: Publish pre-release ${{ inputs.type }} ${{ inputs.custom_version }} (tag ${{ inputs.tag }})
 
@@ -123,15 +118,3 @@ jobs:
           folder: styleguide/dist
           clean: false
           force: false
-
-  close_milestone:
-    needs: ['publish']
-    if: ${{ github.event.inputs.close_milestone == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Close milestone, comment on issues and release notes
-        uses: VKCOM/gh-actions/VKUI/complete-publish@main
-        with:
-          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          releaseTag: ${{ needs.publish.outputs.release_tag }}
-          latest: false
