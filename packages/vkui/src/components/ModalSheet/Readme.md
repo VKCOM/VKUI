@@ -85,8 +85,16 @@ const ModalFirst = (props) => (
 );
 
 const ModalFull = (props) => {
-  const [randomUser] = useState(() => getRandomUser());
-  const [users] = useState(() =>
+  const [close, setClose] = React.useState(false);
+  const platform = usePlatform();
+  const { sizeX } = useAdaptivityConditionalRender();
+
+  const closeModal = () => {
+    setClose(true);
+  };
+
+  const [randomUser] = React.useState(() => getRandomUser());
+  const [users] = React.useState(() =>
     'k'
       .repeat(25)
       .split('')
@@ -96,9 +104,26 @@ const ModalFull = (props) => {
   );
 
   return (
-    <ModalSheet settlingHeight={100} {...props}>
+    <ModalSheet settlingHeight={100} close={close} {...props}>
       <ModalSheet.Header>
-        <ModalPageHeader>@{randomUser.screen_name}</ModalPageHeader>
+        <ModalPageHeader
+          before={
+            sizeX.compact &&
+            platform === 'android' && (
+              <PanelHeaderClose className={sizeX.compact.className} onClick={closeModal} />
+            )
+          }
+          after={
+            sizeX.compact &&
+            platform === 'ios' && (
+              <PanelHeaderButton className={sizeX.compact.className} onClick={closeModal}>
+                <Icon24Dismiss />
+              </PanelHeaderButton>
+            )
+          }
+        >
+          @{randomUser.screen_name}
+        </ModalPageHeader>
       </ModalSheet.Header>
 
       <ModalSheet.Content>

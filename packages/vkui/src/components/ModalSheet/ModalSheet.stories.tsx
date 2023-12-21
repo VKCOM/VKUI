@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { Icon24Dismiss } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
+import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import { usePlatform } from '../../hooks/usePlatform';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUser } from '../../testing/mock';
@@ -19,6 +22,8 @@ import { Input } from '../Input/Input';
 import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
+import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
 import { Radio } from '../Radio/Radio';
 import { Select } from '../Select/Select';
 import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
@@ -107,6 +112,14 @@ const ModalFirst = (props: ModalSheetProps) => (
 );
 
 const ModalFull = (props: ModalSheetProps) => {
+  const [close, setClose] = React.useState(false);
+  const platform = usePlatform();
+  const { sizeX } = useAdaptivityConditionalRender();
+
+  const closeModal = () => {
+    setClose(true);
+  };
+
   const [randomUser] = React.useState(() => getRandomUser());
   const [users] = React.useState(() =>
     'k'
@@ -118,9 +131,26 @@ const ModalFull = (props: ModalSheetProps) => {
   );
 
   return (
-    <ModalSheet settlingHeight={100} {...props}>
+    <ModalSheet settlingHeight={100} close={close} {...props}>
       <ModalSheet.Header>
-        <ModalPageHeader>@{randomUser.screen_name}</ModalPageHeader>
+        <ModalPageHeader
+          before={
+            sizeX.compact &&
+            platform === 'android' && (
+              <PanelHeaderClose className={sizeX.compact.className} onClick={closeModal} />
+            )
+          }
+          after={
+            sizeX.compact &&
+            platform === 'ios' && (
+              <PanelHeaderButton className={sizeX.compact.className} onClick={closeModal}>
+                <Icon24Dismiss />
+              </PanelHeaderButton>
+            )
+          }
+        >
+          @{randomUser.screen_name}
+        </ModalPageHeader>
       </ModalSheet.Header>
 
       <ModalSheet.Content>

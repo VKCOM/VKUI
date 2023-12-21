@@ -145,6 +145,7 @@ function useOpeningClosing(
   onClosed: VoidFunction | undefined,
   onOpen: VoidFunction | undefined,
   onClose: VoidFunction | undefined,
+  closeProp: boolean,
 ) {
   useMobileFirstOpen(containerRef, settlingHeight);
 
@@ -172,7 +173,7 @@ function useOpeningClosing(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const close = () => {
+  const close = React.useCallback(() => {
     setCloses(true);
     onClose && onClose();
 
@@ -184,7 +185,7 @@ function useOpeningClosing(
     } else {
       animationFallback.set();
     }
-  };
+  }, [animationFallback, containerRef, jsSizeX, onClose]);
 
   // Проверяем прокрутку для мобильной версии
   const onScroll = React.useCallback(() => {
@@ -202,6 +203,13 @@ function useOpeningClosing(
       onClosed && onClosed();
     }
   }, [jsSizeX, containerRef, opening, settlingHeight, onOpened, onClosed]);
+
+  // Закрываем модальное окно при передаче closeProp
+  React.useEffect(() => {
+    if (closeProp) {
+      close();
+    }
+  }, [close, closeProp]);
 
   return {
     opening,
@@ -240,6 +248,10 @@ export interface ModalSheetProps extends HTMLAttributesWithRootRef<HTMLDivElemen
    * Будет вызвано при окончательном закрытии модалки.
    */
   onClosed?: VoidFunction;
+  /**
+   * Передайте true, чтобы начать закрытие модального окна
+   */
+  close?: boolean;
 
   /**
    * Процент, на который изначально будет открыта модальная страница.
@@ -266,6 +278,7 @@ export const ModalSheet = ({
   onOpened,
   onClose,
   onClosed,
+  close: closeProp = false,
   settlingHeight = 75,
   disableOverlay,
   onAnimationEnd,
@@ -293,6 +306,7 @@ export const ModalSheet = ({
     onClosed,
     onOpen,
     onClose,
+    closeProp,
   );
 
   useScrollLock();
