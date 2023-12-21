@@ -6,6 +6,7 @@
  * CMP:
  * FormItem
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem) .RadioGroup {
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));

@@ -29,20 +29,24 @@
  * Group
  */
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup--mode-card) .CardGrid {
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 @media (--sizeX-regular) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--mode-none) .CardGrid {
     padding-inline: 8px;
   }
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup) .CardGrid:first-child {
   margin-block-start: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup) .CardGrid:last-child {
   margin-block-end: var(--vkui--size_cardgrid_padding_vertical--regular);
 }

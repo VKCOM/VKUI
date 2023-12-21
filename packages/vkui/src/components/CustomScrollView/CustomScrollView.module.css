@@ -74,10 +74,12 @@
  * CMP:
  * CustomSelectDropdown
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalCustomSelectDropdown) .CustomScrollView__box {
   padding-inline-end: 8px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalCustomSelectDropdown--wide) .CustomScrollView__box {
   padding-inline-end: 0;
 }

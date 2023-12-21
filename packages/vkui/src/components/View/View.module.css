@@ -160,6 +160,7 @@
   display: none;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .View--ios.View--no-motion .View__panel,
 .View--ios.View--no-motion .View__panel :global(.vkuiInternalPanel__in) {
   animation: none;

@@ -11,7 +11,7 @@
  * CMP:
  * PanelHeader
  */
-
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader) .Spinner {
   color: currentColor;
 }

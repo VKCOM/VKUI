@@ -91,6 +91,7 @@
 /**
  * VKCOM
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader--no-before) .PanelHeaderContent--vkcom {
   padding-inline-start: 16px;
 }

@@ -13,7 +13,7 @@
 https://developer.mozilla.org/ru/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Stacking_without_z-index
 https://github.com/VKCOM/VKUI/pull/3641
 */
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
+/* stylelint-disable-next-line selector-max-universal */
 .Tappable > * {
   position: relative;
   z-index: var(--vkui_internal--z_index_tappable_element);

@@ -190,6 +190,7 @@
  * CMP:
  * SimpleCell
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSimpleCell__after) > .Switch {
   margin-inline-start: 12px;
 }

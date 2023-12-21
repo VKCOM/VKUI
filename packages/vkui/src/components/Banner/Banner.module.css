@@ -57,7 +57,7 @@
   z-index: var(--vkui_internal--z_index_banner_background);
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
+/* stylelint-disable-next-line selector-max-universal */
 .Banner__bg,
 .Banner__bg > * {
   inline-size: 100%;
@@ -135,14 +135,17 @@
  * CMP:
  * FormStatus
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormStatus) .Banner__in::before {
   border: 0;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormStatus--mode-error) .Banner__in {
   background-color: var(--vkui--color_background_negative_tint);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormStatus--mode-error) .Banner__subheader {
   color: var(--vkui--color_background_negative);
 }

@@ -20,7 +20,7 @@
   }
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
+/* stylelint-disable-next-line selector-max-universal */
 .FormField > * {
   border-radius: inherit;
   z-index: var(--vkui_internal--z_index_form_field_element);
@@ -89,17 +89,20 @@
  * FormItem
  * [start]
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-error) .FormField__border,
 .FormField--status-error .FormField__border {
   border-color: var(--vkui--color_stroke_negative);
   z-index: var(--vkui_internal--z_index_form_field_status);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-error) .FormField,
 .FormField--status-error {
   background-color: var(--vkui--color_background_negative_tint);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-valid) .FormField__border,
 .FormField--status-valid .FormField__border {
   border-color: var(--vkui--color_stroke_positive);
@@ -126,6 +129,7 @@
  * CMP:
  * NativeSelect
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalNativeSelect) .FormField__after {
   pointer-events: none;
 }
@@ -134,6 +138,7 @@
  * CMP:
  * CalendarHeader
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalCalendarHeader__picker) .FormField__after {
   min-inline-size: 12px;
   padding-inline-end: 8px;
@@ -143,12 +148,14 @@
  * CMP:
  * FormLayoutGroup
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--segmented) .FormField {
   z-index: auto;
   isolation: auto;
   border-radius: 0;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-horizontal
       .vkuiInternalFormItem
@@ -158,6 +165,7 @@
   border-end-start-radius: var(--vkui--size_border_radius--regular);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-horizontal
       .vkuiInternalFormItem
@@ -167,6 +175,7 @@
   border-end-end-radius: var(--vkui--size_border_radius--regular);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-vertical
       .vkuiInternalFormItem
@@ -176,6 +185,7 @@
   border-start-end-radius: var(--vkui--size_border_radius--regular);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-vertical
       .vkuiInternalFormItem

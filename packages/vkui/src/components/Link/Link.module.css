@@ -25,7 +25,7 @@
   color: var(--vkui--color_text_link_visited);
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .Link :global(.vkuiIcon) {
   margin-inline-start: 4px;
   display: inline-block;

@@ -78,7 +78,7 @@
   align-items: flex-end;
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
+/* stylelint-disable-next-line selector-max-universal */
 .Alert__actions > * {
   margin: 4px;
 }

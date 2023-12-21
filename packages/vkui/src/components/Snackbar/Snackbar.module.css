@@ -14,6 +14,7 @@
  * CMP:
  * Epic
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalEpic--hasTabbar) .Snackbar {
   padding-block-end: calc(
     var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)

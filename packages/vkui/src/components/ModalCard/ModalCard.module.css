@@ -59,6 +59,7 @@
  * CMP:
  * ModalRoot
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalModalRoot--touched) .ModalCard__in {
   transition: none;
 }

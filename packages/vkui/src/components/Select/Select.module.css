@@ -75,6 +75,7 @@
  * CMP:
  * CalendarHeader
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalCalendarHeader__picker) .Select__container {
   padding-inline-end: 4px;
 }

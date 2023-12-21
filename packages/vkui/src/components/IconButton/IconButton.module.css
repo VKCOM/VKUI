@@ -29,32 +29,39 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .IconButton :global(.vkuiIcon--16) {
   padding: 16px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .IconButton :global(.vkuiIcon--16.vkuiIcon--w-8) {
   padding-block: 16px;
   padding-inline: 14px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .IconButton--sizeY-compact :global(.vkuiIcon--16),
 .IconButton--sizeY-compact :global(.vkuiIcon--16.vkuiIcon--w-8) {
   padding: 14px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .IconButton :global(.vkuiIcon--24) {
   padding: 12px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .IconButton--sizeY-compact :global(.vkuiIcon--24) {
   padding: 10px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .IconButton :global(.vkuiIcon--28) {
   padding: 10px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .IconButton--sizeY-compact :global(.vkuiIcon--28) {
   padding: 8px;
 }
@@ -64,15 +71,18 @@
     block-size: 44px;
   }
 
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .IconButton--sizeY-none :global(.vkuiIcon--16),
   .IconButton--sizeY-none :global(.vkuiIcon--16.vkuiIcon--w-8) {
     padding: 14px;
   }
 
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .IconButton--sizeY-none :global(.vkuiIcon--24) {
     padding: 10px;
   }
 
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .IconButton--sizeY-none :global(.vkuiIcon--28) {
     padding: 8px;
   }
@@ -84,6 +94,7 @@
  * - FormLayoutGroup
  * - FormField
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable) :global(.vkuiInternalRemovable__content) > .IconButton,
 :global(.vkuiInternalFormLayoutGroup--removable)
   :global(.vkuiInternalRemovable__content)
@@ -98,17 +109,20 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormField__after)
   .IconButton
   :global(.vkuiIcon):global(.vkuiIcon):global(.vkuiIcon) {
   padding: 0;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormField__after) .IconButton--sizeY-compact {
   inline-size: var(--vkui--size_field_height--compact);
   block-size: var(--vkui--size_field_height--compact);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable)
   :global(.vkuiInternalRemovable__content)
   > .IconButton--sizeY-compact,
@@ -119,11 +133,13 @@
 }
 
 @media (--sizeY-compact) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalFormField__after) .IconButton--sizeY-none {
     inline-size: var(--vkui--size_field_height--compact);
     block-size: var(--vkui--size_field_height--compact);
   }
 
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalFormItem--removable)
     :global(.vkuiInternalRemovable__content)
     > .IconButton--sizeY-none,
@@ -138,10 +154,12 @@
  * CMP:
  * SimpleCell
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSimpleCell__after) .IconButton:last-child {
   margin-inline-end: -12px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSimpleCell__after) .IconButton--ios:last-child {
   margin-inline-end: -9px;
 }
@@ -150,6 +168,7 @@
  * CMP:
  * Alert
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalAlert__dismiss).IconButton {
   block-size: 36px;
   padding: 8px;

@@ -13,6 +13,7 @@
  * CMP:
  * FormItem
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem) .CellButton {
   inline-size: 100%;
   box-sizing: content-box;
@@ -29,12 +30,13 @@
   text-align: center;
 }
 
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal -- отключаем растягивание элементов внутри */
+/* stylelint-disable-next-line selector-max-universal -- отключаем растягивание элементов внутри */
 .CellButton--centered > * {
   flex-grow: initial;
   max-inline-size: initial;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .CellButton--centered :global(.vkuiIcon) {
   padding-inline-end: 8px;
 }
