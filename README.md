@@ -1,5 +1,7 @@
+<!-- TODO [>=6] Удалить пути до 6.0.0-beta.3  -->
+
 <h1 align="center">
-  <a href="https://vkcom.github.io/VKUI/">
+  <a href="https://vkcom.github.io/VKUI/6.0.0-beta.3/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/VKCOM/VKUI/d72dcc219bc4b441b2740b69d9343aea14d66c7f/docs/assets/vkui-logo-light.svg">
       <img src="https://raw.githubusercontent.com/VKCOM/VKUI/d72dcc219bc4b441b2740b69d9343aea14d66c7f/docs/assets/vkui-logo-dark.svg" width="150" alt="VKUI logo" />
@@ -12,9 +14,9 @@
 </p>
 <p align="center">
 VKUI — это библиотека адаптивных React-компонентов<br> для создания веб-приложений.<br>
-Библиотека основана на <a href="https://www.figma.com/@vk">дизайн-системе ВКонтакте</a> и реализует её интерфейсы для различных платформ.<br>
+Библиотека основана на <a href="https://www.figma.com/@vk">дизайн-системе VK</a> и реализует её интерфейсы для различных платформ.<br>
 Релизы: <a href="https://github.com/VKCOM/VKUI/releases">https://github.com/VKCOM/VKUI/releases</a>.<br>
-Гайд по миграции <a href="https://vkcom.github.io/VKUI/#/Migration">на версию 5</a>.
+Гайд по миграции <a href="https://vkcom.github.io/VKUI/6.0.0-beta.3/#/Migrations">на версию 6</a>.
 </p>
 
 ## Установка
@@ -100,7 +102,7 @@ root.render(
 
 ## Документация
 
-В [документации](https://vkcom.github.io/VKUI/) вы сможете найти информацию об использовании компонентов и утилит.
+В [документации](https://vkcom.github.io/VKUI/6.0.0-beta.3/) вы сможете найти информацию об использовании компонентов и утилит.
 
 ## Сообщить о проблеме
 
