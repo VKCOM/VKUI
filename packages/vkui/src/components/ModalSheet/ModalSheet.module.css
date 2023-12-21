@@ -156,6 +156,8 @@
 }
 
 .ModalSheet--sizeX-regular .ModalSheet__container {
+  display: flex;
+  block-size: initial;
   max-block-size: calc(100% - 32px * 2);
   margin-block: 32px;
   margin-inline: 56px;
@@ -165,6 +167,8 @@
 
 @media (--sizeX-regular) {
   .ModalSheet--sizeX-none .ModalSheet__container {
+    display: flex;
+    block-size: initial;
     max-block-size: calc(100% - 32px * 2);
     margin-block: 32px;
     margin-inline: 56px;
