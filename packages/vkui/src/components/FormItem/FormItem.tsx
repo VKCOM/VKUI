@@ -50,6 +50,18 @@ export interface FormItemProps
    * @since 5.8.0
    */
   noPadding?: boolean;
+  /**
+   * Помечает поле как обязательное.
+   *
+   * По умолчанию рисуется `*`, изменить можно через свойство `requiredIndicator`
+   * @since 6.0.0
+   */
+  required?: boolean;
+  /**
+   * Кастомный индикатор обязательности поля
+   * @since 6.0.0
+   */
+  requiredIndicator?: React.ReactNode;
 }
 
 /**
@@ -68,6 +80,8 @@ export const FormItem = ({
   htmlFor,
   bottomId,
   noPadding,
+  required,
+  requiredIndicator = '*',
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
@@ -79,6 +93,11 @@ export const FormItem = ({
       {hasReactNode(top) && (
         <Subhead className={styles['FormItem__top']} Component={topComponent} htmlFor={htmlFor}>
           {top}
+          {required && (
+            <span className={styles['FormItem__top--required']} aria-hidden>
+              {requiredIndicator}
+            </span>
+          )}
         </Subhead>
       )}
       {children}

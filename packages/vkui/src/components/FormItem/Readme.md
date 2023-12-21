@@ -74,6 +74,7 @@ const Example = () => {
                 email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'
               }
               bottomId="email-type"
+              required
             >
               <Input
                 aria-labelledby="email-type"
@@ -169,6 +170,7 @@ const Example = () => {
               htmlFor="purpose-of-the-trip-select-id"
               bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'}
               status={purpose ? 'valid' : 'error'}
+              required
             >
               <Select
                 id="purpose-of-the-trip-select-id"
