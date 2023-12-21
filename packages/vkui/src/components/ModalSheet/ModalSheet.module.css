@@ -133,7 +133,7 @@
 
 .ModalSheet--sizeX-regular .ModalSheet__content {
   border-radius: var(--vkui--size_border_radius_paper--regular);
-  block-size: 100%;
+  max-block-size: 100%;
 }
 
 @media (--sizeX-regular) {
