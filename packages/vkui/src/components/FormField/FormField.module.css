@@ -146,6 +146,17 @@
 
 /**
  * CMP:
+ * Textarea
+ */
+:global(.vkuiInternalTextarea) .FormField__after {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  block-size: initial;
+}
+
+/**
+ * CMP:
  * FormLayoutGroup
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
