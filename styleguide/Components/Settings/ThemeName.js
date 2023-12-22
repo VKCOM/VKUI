@@ -29,7 +29,7 @@ const Hint = () => {
           {arr.length - 1 !== index ? 'или' : null}
         </React.Fragment>
       ))}
-      см. <Link href="#/Customize">Кастомизация</Link>
+      см. страницу <Link href="#/Customize">Кастомизация</Link>
     </React.Fragment>
   );
 };
