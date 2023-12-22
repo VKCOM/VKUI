@@ -5,6 +5,8 @@ import { baselineComponent, fakeTimers, runAllTimers, userEvent } from '../../te
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Alert, type AlertProps } from './Alert';
+import modalStyles from '../ModalDismissButton/ModalDismissButton.module.css';
+import styles from '../PopoutWrapper/PopoutWrapper.module.css';
 
 describe('Alert', () => {
   fakeTimers();
@@ -21,10 +23,9 @@ describe('Alert', () => {
           <Alert onClose={onClose} />
         </AdaptivityProvider>,
       );
-      const target =
-        trigger === 'overlay' ? '.vkuiPopoutWrapper__overlay' : '.vkuiModalDismissButton';
+      const target = trigger === 'overlay' ? styles.overlay : modalStyles.host;
 
-      await userEvent.click(document.querySelector(target) as Element);
+      await userEvent.click(document.querySelector('.' + target) as Element);
       expect(onClose).not.toHaveBeenCalled();
       runAllTimers();
       expect(onClose).toHaveBeenCalledTimes(1);

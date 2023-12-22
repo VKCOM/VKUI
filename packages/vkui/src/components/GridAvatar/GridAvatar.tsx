@@ -37,15 +37,11 @@ export const GridAvatar = ({
   }
 
   return (
-    <ImageBase {...restProps} size={size} className={classNames(styles['GridAvatar'], className)}>
-      <div className={styles['GridAvatar__in']} aria-hidden>
+    <ImageBase {...restProps} size={size} className={classNames(styles.host, className)}>
+      <div className={styles.in} aria-hidden>
         {src.map((url, index) =>
           index < MAX_GRID_LENGTH ? (
-            <div
-              key={url}
-              className={styles['GridAvatar__item']}
-              style={{ backgroundImage: `url(${url})` }}
-            />
+            <div key={url} className={styles.item} style={{ backgroundImage: `url(${url})` }} />
           ) : null,
         )}
       </div>

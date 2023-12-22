@@ -128,25 +128,25 @@ export const Search = ({
     <div
       className={classNames(
         'vkuiInternalSearch',
-        styles['Search'],
-        sizeY === 'none' && styles['Search--sizeY-none'],
-        sizeY === 'compact' && styles['Search--sizeY-compact'],
-        isFocused && styles['Search--focused'],
-        value && styles['Search--has-value'],
-        after && styles['Search--has-after'],
-        icon && styles['Search--has-icon'],
-        inputProps.disabled && styles['Search--disabled'],
-        !noPadding && styles['Search--withPadding'],
+        styles.host,
+        sizeY === 'none' && styles.hostSizeYNone,
+        sizeY === 'compact' && styles.hostSizeYCompact,
+        isFocused && styles.hostFocused,
+        value && styles.hostHasValue,
+        after && styles.hostHasAfter,
+        icon && styles.hostHasIcon,
+        inputProps.disabled && styles.hostDisabled,
+        !noPadding && styles.hostWithPadding,
         className,
       )}
       ref={getRootRef}
       style={style}
     >
-      <div className={styles['Search__field']}>
-        <label htmlFor={inputId} className={styles['Search__label']}>
+      <div className={styles.field}>
+        <label htmlFor={inputId} className={styles.label}>
           {placeholder}
         </label>
-        <div className={styles['Search__input']}>
+        <div className={styles.input}>
           {before}
           <Headline
             Component="input"
@@ -158,19 +158,19 @@ export const Search = ({
             placeholder={placeholder}
             autoComplete={autoComplete}
             getRootRef={inputRef}
-            className={styles['Search__nativeInput']}
+            className={styles.nativeInput}
             onFocus={onFocus}
             onBlur={onBlur}
             onChange={onChange}
             value={value}
           />
         </div>
-        <div className={styles['Search__controls']}>
+        <div className={styles.controls}>
           {icon && (
             <IconButton
               hoverMode="opacity"
               onPointerDown={onIconClickStart}
-              className={styles['Search__icon']}
+              className={styles.icon}
               onFocus={setFocusedTrue}
               onBlur={setFocusedFalse}
             >
@@ -182,7 +182,7 @@ export const Search = ({
             hoverMode="opacity"
             onPointerDown={onIconCancelClickStart}
             onClick={onCancel}
-            className={styles['Search__icon']}
+            className={styles.icon}
             tabIndex={value ? undefined : -1}
           >
             <VisuallyHidden>{clearLabel}</VisuallyHidden>
@@ -192,7 +192,7 @@ export const Search = ({
             <Button
               mode="primary"
               size="m"
-              className={classNames(styles['Search__findButton'], adaptiveSizeY.compact.className)}
+              className={classNames(styles.findButton, adaptiveSizeY.compact.className)}
               focusVisibleMode="inside"
               onClick={onFindButtonClick}
               tabIndex={value ? undefined : -1}
@@ -206,13 +206,13 @@ export const Search = ({
         <Button
           mode="tertiary"
           size="m"
-          className={styles['Search__after']}
+          className={styles.after}
           focusVisibleMode="inside"
           onClick={onCancel}
           onFocus={setFocusedTrue}
           onBlur={setFocusedFalse}
         >
-          <span className={styles['Search__afterText']}>{after}</span>
+          <span className={styles.afterText}>{after}</span>
         </Button>
       )}
     </div>

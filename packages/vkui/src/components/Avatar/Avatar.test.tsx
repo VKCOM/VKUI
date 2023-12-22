@@ -65,7 +65,7 @@ describe(Avatar.Badge, () => {
       </AvatarTest>,
     );
 
-    expect(getAvatarBadgeEl()).toHaveClass(avatarBadgeStyles['AvatarBadge--shifted']);
+    expect(getAvatarBadgeEl()).toHaveClass(avatarBadgeStyles.hostShifted);
   });
 });
 
@@ -77,7 +77,7 @@ describe(Avatar.BadgeWithPreset, () => {
       </AvatarTest>,
     );
 
-    expect(getAvatarBadgeEl()).toHaveClass(avatarBadgeStyles['AvatarBadge--preset-online']);
+    expect(getAvatarBadgeEl()).toHaveClass(avatarBadgeStyles.hostPresetOnline);
   });
 
   it("should renders 'online-mobile' badge", () => {
@@ -87,6 +87,6 @@ describe(Avatar.BadgeWithPreset, () => {
       </AvatarTest>,
     );
 
-    expect(getAvatarBadgeEl()).toHaveClass(avatarBadgeStyles['AvatarBadge--preset-onlineMobile']);
+    expect(getAvatarBadgeEl()).toHaveClass(avatarBadgeStyles.hostPresetOnlineMobile);
   });
 });

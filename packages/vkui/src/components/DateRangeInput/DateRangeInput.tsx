@@ -20,8 +20,8 @@ import styles from './DateRangeInput.module.css';
 import dateInputStyles from '../DateInput/DateInput.module.css';
 
 const sizeYClassNames = {
-  none: styles['DateRangeInput--sizeY-none'],
-  ['compact']: styles['DateRangeInput--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 export interface DateRangeInputProps
@@ -264,7 +264,7 @@ export const DateRangeInput = ({
             : ''
         }
       />
-      <Text className={dateInputStyles['DateInput__input']} onKeyDown={handleKeyDown}>
+      <Text className={dateInputStyles.input} onKeyDown={handleKeyDown}>
         <InputLike
           length={2}
           getRootRef={daysStartRef}

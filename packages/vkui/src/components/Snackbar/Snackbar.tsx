@@ -175,23 +175,23 @@ export const Snackbar = ({
       <RootComponent
         {...restProps}
         baseClassName={classNames(
-          styles['Snackbar'],
-          platform === 'ios' && styles['Snackbar--ios'],
-          closing && styles['Snackbar--closing'],
-          touched && styles['Snackbar--touched'],
-          isDesktop && styles['Snackbar--desktop'],
+          styles.host,
+          platform === 'ios' && styles.hostIos,
+          closing && styles.hostClosing,
+          touched && styles.hostTouched,
+          isDesktop && styles.hostDesktop,
         )}
         style={offsetY ? { ...style, bottom: offsetY } : style}
       >
         <Touch
-          className={styles['Snackbar__in']}
+          className={styles.in}
           getRootRef={innerElRef}
           onStart={onTouchStart}
           onMoveX={onTouchMoveX}
           onEnd={onTouchEnd}
         >
           <Basic
-            className={styles['Snackbar__snackbar']}
+            className={styles.snackbar}
             getRootRef={bodyElRef}
             layout={layout}
             mode={mode}

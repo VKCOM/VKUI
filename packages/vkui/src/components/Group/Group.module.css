@@ -1,121 +1,121 @@
-.Group {
+.host {
   color: var(--vkui--color_text_primary);
   padding-block: 8px;
 }
 
-.Group__header:empty {
+.header:empty {
   display: none;
 }
 
-.Group--mode-plain:not(:first-of-type) > .Group__header {
+.hostModePlain:not(:first-of-type) > .header {
   margin-block-start: -8px;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none:not(:first-of-type) > .Group__header {
+  .hostSizeXNone.hostModeNone:not(:first-of-type) > .header {
     margin-block-start: -8px;
   }
 }
 
-.Group--mode-card > .Group__header {
+.hostModeCard > .header {
   margin-block-start: -4px;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none > .Group__header {
+  .hostSizeXNone.hostModeNone > .header {
     margin-block-start: -4px;
   }
 }
 
-.Group__separator--spacing,
-.Group__separator--separator {
+.separatorSpacing,
+.separatorSeparator {
   display: none;
 }
 
 /* stylelint-disable-next-line selector-max-universal */
-.Group--mode-plain + * + .Group__separator--separator {
+.hostModePlain + * + .separatorSeparator {
   display: block;
 }
 
 @media (--sizeX-compact) {
   /* stylelint-disable-next-line selector-max-universal */
-  .Group--sizeX-none.Group--mode-none + * + .Group__separator--separator {
+  .hostSizeXNone.hostModeNone + * + .separatorSeparator {
     display: block;
   }
 }
 
-.Group--mode-card + .Group__separator--spacing {
+.hostModeCard + .separatorSpacing {
   display: block;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none + .Group__separator--spacing {
+  .hostSizeXNone.hostModeNone + .separatorSpacing {
     display: block;
   }
 }
 
-.Group:last-of-type ~ .Group__separator {
+.host:last-of-type ~ .separator {
   display: none;
 }
 
-.Group:last-of-type ~ .Group__separator--force,
-.Group--mode-card:last-of-type + .Group__separator--spacing {
+.host:last-of-type ~ .separatorForce,
+.hostModeCard:last-of-type + .separatorSpacing {
   display: block;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none:last-of-type + .Group__separator--spacing {
+  .hostSizeXNone.hostModeNone:last-of-type + .separatorSpacing {
     display: block;
   }
 }
 
-.Group--mode-card.Group--padding-s {
+.hostModeCard.hostPaddingS {
   padding: 4px;
 }
 
-.Group--mode-card.Group--padding-m {
+.hostModeCard.hostPaddingM {
   padding: 8px;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--inside-modal.Group--padding-s,
-  .Group--sizeX-none.Group--mode-none.Group--padding-s {
+  .hostSizeXNone.hostInsideModal.hostPaddingS,
+  .hostSizeXNone.hostModeNone.hostPaddingS {
     padding: 4px;
   }
 
-  .Group--sizeX-none.Group--inside-modal.Group--padding-m,
-  .Group--sizeX-none.Group--mode-none.Group--padding-m {
+  .hostSizeXNone.hostInsideModal.hostPaddingM,
+  .hostSizeXNone.hostModeNone.hostPaddingM {
     padding: 8px;
   }
 }
 
-.Group--sizeX-compact,
-.Group--sizeX-compact.Group--mode-card {
+.hostSizeXCompact,
+.hostSizeXCompact.hostModeCard {
   padding-inline: 0;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none,
-  .Group--sizeX-none.Group--mode-card {
+  .hostSizeXNone,
+  .hostSizeXNone.hostModeCard {
     padding-inline: 0;
   }
 }
 
-.Group--mode-card {
+.hostModeCard {
   background: var(--vkui--color_background_content);
   border-radius: var(--vkui--size_border_radius_paper--regular);
   position: relative;
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none {
+  .hostSizeXNone.hostModeNone {
     background: var(--vkui--color_background_content);
     border-radius: var(--vkui--size_border_radius_paper--regular);
     position: relative;
   }
 }
 
-.Group--sizeX-compact.Group--mode-card:first-of-type {
+.hostSizeXCompact.hostModeCard:first-of-type {
   border-start-start-radius: 0;
   border-start-end-radius: 0;
   border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
@@ -123,7 +123,7 @@
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-card:first-of-type {
+  .hostSizeXNone.hostModeCard:first-of-type {
     border-start-start-radius: 0;
     border-start-end-radius: 0;
     border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
@@ -138,7 +138,7 @@
  * например поверх Tooltip
  * См. пример: Slider c пропом withTooltip
  */
-.Group--mode-card::before {
+.hostModeCard::before {
   content: '';
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -151,7 +151,7 @@
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none::before {
+  .hostSizeXNone.hostModeNone::before {
     content: '';
     inset-inline-start: 0;
     inset-block-start: 0;
@@ -164,52 +164,52 @@
   }
 }
 
-.Group--sizeX-compact.Group--mode-card::before {
+.hostSizeXCompact.hostModeCard::before {
   box-shadow: none;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-card::before {
+  .hostSizeXNone.hostModeCard::before {
     box-shadow: none;
   }
 }
 
-.Group--mode-plain + .Group__separator,
-.Group--mode-plain + .Group__separator + .Group__separator {
+.hostModePlain + .separator,
+.hostModePlain + .separator + .separator {
   padding-block: 8px;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none + .Group__separator,
-  .Group--sizeX-none.Group--mode-none + .Group__separator + .Group__separator {
+  .hostSizeXNone.hostModeNone + .separator,
+  .hostSizeXNone.hostModeNone + .separator + .separator {
     padding-block: 8px;
   }
 }
 
-.Group__description {
+.description {
   display: block;
   padding-block: 4px 16px;
   padding-inline: 16px;
   color: var(--vkui--color_text_secondary);
 }
 
-.Group .Group,
-.Group .Group + .Group__separator {
+.host .host,
+.host .host + .separator {
   padding-inline: 0;
 }
 
-.Group .Group:first-of-type {
+.host .host:first-of-type {
   padding-block-start: 0;
 }
 
-.Group .Group:last-of-type {
+.host .host:last-of-type {
   padding-block-end: 0;
 }
 
 /**
  * iOS
  */
-.Group--ios .Group__description {
+.hostIos .description {
   padding-block: 4px 16px;
   padding-inline: 12px;
 }
@@ -219,8 +219,8 @@
  * PanelHeader
  */
 /* stylelint-disable-next-line selector-max-universal, selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader--vkcom) ~ .Group:first-of-type,
-:global(.vkuiInternalPanelHeader--vkcom) + * .Group:first-of-type {
+:global(.vkuiInternalPanelHeaderVkcom) ~ .host:first-of-type,
+:global(.vkuiInternalPanelHeaderVkcom) + * .host:first-of-type {
   position: relative;
   inset-block-start: -1px;
   border-start-end-radius: 0;

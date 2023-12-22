@@ -10,11 +10,7 @@ export const GridAvatarBadge = ({ className, ...restProps }: GridAvatarBadgeProp
   return (
     <ImageBase.Badge
       {...restProps}
-      className={classNames(
-        styles['GridAvatarBadge'],
-        size < 96 && styles['GridAvatarBadge--shifted'],
-        className,
-      )}
+      className={classNames(styles.host, size < 96 && styles.hostShifted, className)}
     />
   );
 };

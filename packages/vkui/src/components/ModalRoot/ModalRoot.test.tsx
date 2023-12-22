@@ -7,8 +7,7 @@ import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
 import styles from './ModalRoot.module.css';
 
-const clickFade = async () =>
-  await userEvent.click(document.querySelector(`.${styles.ModalRoot__mask}`)!);
+const clickFade = async () => await userEvent.click(document.querySelector(`.${styles.mask}`)!);
 let rafSpies: jest.SpyInstance[];
 
 describe.each([
@@ -137,9 +136,7 @@ describe.each([
     runAllTimers();
 
     // check if mask is present
-    expect(document.querySelector<HTMLElement>(`.${styles.ModalRoot__mask}`)?.style.opacity).toBe(
-      '1',
-    );
+    expect(document.querySelector<HTMLElement>(`.${styles.mask}`)?.style.opacity).toBe('1');
 
     // onClose is working
     await clickFade();
@@ -154,21 +151,21 @@ describe.each([
     });
     runAllTimers();
 
-    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+    expect(document.querySelector('.vkuiDisableOverscrollBehavior')).toBeFalsy();
 
     component.rerender(<ModalRoot activeModal="m">{modals}</ModalRoot>);
     runAllTimers();
 
     if (name === 'ModalRootTouch') {
-      expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
+      expect(document.querySelector('.vkuiDisableOverscrollBehavior')).toBeTruthy();
     } else {
-      expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+      expect(document.querySelector('.vkuiDisableOverscrollBehavior')).toBeFalsy();
     }
 
     component.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
     runAllTimers();
 
-    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+    expect(document.querySelector('.vkuiDisableOverscrollBehavior')).toBeFalsy();
   });
 
   it('modalOverlayTestId for ModalRoot', () => {

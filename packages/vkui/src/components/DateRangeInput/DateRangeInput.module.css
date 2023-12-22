@@ -1,4 +1,4 @@
-.DateRangeInput__input {
+.input {
   flex-grow: 1;
   margin-inline: 10px 14px;
   z-index: var(--vkui_internal--z_index_form_field_element);
@@ -8,12 +8,12 @@
   font-variant-numeric: tabular-nums;
 }
 
-.DateRangeInput--sizeY-compact .DateRangeInput__input {
+.hostSizeYCompact .input {
   margin-inline-end: 22px;
 }
 
 @media (--sizeY-compact) {
-  .DateRangeInput--sizeY-none .DateRangeInput__input {
+  .hostSizeYNone .input {
     margin-inline-end: 22px;
   }
 }

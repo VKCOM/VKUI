@@ -17,10 +17,10 @@ export const ModalDismissButton = ({
 }: ModalDismissButtonProps) => {
   return (
     <Tappable
-      className={classNames(styles['ModalDismissButton'], className)}
+      className={classNames(styles.host, className)}
       {...restProps}
-      activeMode={styles['ModalDismissButton--active']}
-      hoverMode={styles['ModalDismissButton--hover']}
+      activeMode={styles.hostActive}
+      hoverMode={styles.hostHover}
     >
       {children && <VisuallyHidden>{children}</VisuallyHidden>}
       <Icon20Cancel />

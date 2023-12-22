@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { HorizontalCell } from './HorizontalCell';
-import styles from './HorizontaCell.module.css';
+import styles from './HorizontalCell.module.css';
 
 describe('HorizontalCell', () => {
   baselineComponent((props) => <HorizontalCell {...props}>HorizontalCell</HorizontalCell>);
@@ -15,7 +15,7 @@ describe('HorizontalCell', () => {
     );
 
     expect(screen.queryByText('Children data')).toBeTruthy();
-    expect(document.querySelector(`.${styles.HorizontalCell__content}`)).toBeNull();
+    expect(document.querySelector(`.${styles.content}`)).toBeNull();
 
     rerender(
       <HorizontalCell size="s" header="Author name">
@@ -23,6 +23,6 @@ describe('HorizontalCell', () => {
       </HorizontalCell>,
     );
 
-    expect(document.querySelector(`.${styles.HorizontalCell__content}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.content}`)).not.toBeNull();
   });
 });

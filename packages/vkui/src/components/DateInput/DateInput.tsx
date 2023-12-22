@@ -19,8 +19,8 @@ import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 
 const sizeYClassNames = {
-  none: styles['DateInput--sizeY-none'],
-  ['compact']: styles['DateInput--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 export interface DateInputProps
@@ -242,7 +242,7 @@ export const DateInput = ({
         name={name}
         value={value ? format(value, enableTime ? 'DD.MM.YYYYTHH:mm' : 'DD.MM.YYYY') : ''}
       />
-      <Text className={styles['DateInput__input']} onKeyDown={handleKeyDown}>
+      <Text className={styles.input} onKeyDown={handleKeyDown}>
         <InputLike
           length={2}
           getRootRef={daysRef}
@@ -271,9 +271,7 @@ export const DateInput = ({
         />
         {enableTime && (
           <React.Fragment>
-            <InputLikeDivider className={styles['DateInput__input--time-divider']}>
-              {' '}
-            </InputLikeDivider>
+            <InputLikeDivider className={styles.inputTimeDivider}> </InputLikeDivider>
             <InputLike
               length={2}
               getRootRef={hoursRef}

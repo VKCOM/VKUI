@@ -7,8 +7,8 @@ import { Text } from '../Typography/Text/Text';
 import styles from './Input.module.css';
 
 const sizeYClassNames = {
-  none: styles['Input--sizeY-none'],
-  ['compact']: styles['Input--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 export interface InputProps
@@ -40,12 +40,12 @@ export const Input = ({
     <FormField
       style={style}
       className={classNames(
-        styles['Input'],
-        align === 'right' && styles['Input--align-right'],
-        align === 'center' && styles['Input--align-center'],
+        styles.host,
+        align === 'right' && styles.hostAlignRight,
+        align === 'center' && styles.hostAlignCenter,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        before && styles['Input--hasBefore'],
-        after && styles['Input--hasAfter'],
+        before && styles.hostHasBefore,
+        after && styles.hostHasAfter,
         className,
       )}
       getRootRef={getRootRef}
@@ -60,7 +60,7 @@ export const Input = ({
         Component="input"
         normalize={false}
         type={type}
-        className={styles['Input__el']}
+        className={styles.el}
         getRootRef={getRef}
       />
     </FormField>

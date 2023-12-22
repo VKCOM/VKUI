@@ -189,18 +189,18 @@ export const ModalRootDesktop = ({
     <ModalRootContext.Provider value={modalRootContext}>
       <div
         className={classNames(
-          styles['ModalRoot'],
-          hasCustomPanelHeaderAfter && styles['ModalRoot--hasCustomPanelHeaderAfterSlot'],
-          styles['ModalRoot--desktop'],
+          styles.host,
+          hasCustomPanelHeaderAfter && styles.hostHasCustomPanelHeaderAfterSlot,
+          styles.hostDesktop,
         )}
       >
         <div
           data-testid={modalOverlayTestId}
-          className={styles['ModalRoot__mask']}
+          className={styles.mask}
           ref={maskElementRef}
           onClick={onExit}
         />
-        <div className={styles['ModalRoot__viewport']}>
+        <div className={styles.viewport}>
           {modals.map((Modal: React.ReactElement) => {
             const modalId = getNavId(Modal.props, warn);
             if (modalId !== activeModal && modalId !== exitingModal) {
@@ -215,7 +215,7 @@ export const ModalRootDesktop = ({
                 onClose={onExit}
                 timeout={timeout}
                 key={key}
-                className={styles['ModalRoot__modal']}
+                className={styles.modal}
               >
                 {Modal}
               </FocusTrap>

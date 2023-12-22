@@ -14,9 +14,9 @@ export interface RadioGroupProps extends HTMLAttributesWithRootRef<HTMLDivElemen
 export const RadioGroup = ({ mode = 'vertical', ...restProps }: RadioGroupProps) => (
   <RootComponent
     baseClassName={classNames(
-      styles['RadioGroup'],
+      styles.host,
       'vkuiInternalRadioGroup',
-      mode === 'horizontal' && styles['RadioGroup--mode-horizontal'],
+      mode === 'horizontal' && styles.hostModeHorizontal,
     )}
     {...restProps}
   />

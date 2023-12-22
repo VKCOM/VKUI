@@ -10,11 +10,7 @@ export const ImageBadge = ({ className, ...restProps }: ImageBadgeProps) => {
   return (
     <ImageBase.Badge
       {...restProps}
-      className={classNames(
-        styles['ImageBadge'],
-        size < 96 && styles['ImageBadge--shifted'],
-        className,
-      )}
+      className={classNames(styles.host, size < 96 && styles.hostShifted, className)}
     />
   );
 };

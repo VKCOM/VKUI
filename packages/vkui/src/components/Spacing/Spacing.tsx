@@ -20,5 +20,5 @@ export const Spacing = ({ size = 8, style: styleProp, ...restProps }: SpacingPro
     ...styleProp,
   };
 
-  return <RootComponent {...restProps} baseClassName={styles['Spacing']} style={style} />;
+  return <RootComponent {...restProps} baseClassName={styles.host} style={style} />;
 };

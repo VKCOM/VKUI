@@ -102,9 +102,9 @@ const DatePickerCustom = ({
     value: value,
   }));
   return (
-    <RootComponent baseClassName={styles['DatePicker']} {...restProps}>
-      <div className={styles['DatePicker__container']}>
-        <div className={styles['DatePicker__day']}>
+    <RootComponent baseClassName={styles.host} {...restProps}>
+      <div className={styles.container}>
+        <div className={styles.day}>
           <CustomSelect
             name="day"
             value={day}
@@ -115,9 +115,9 @@ const DatePickerCustom = ({
             disabled={disabled}
           />
         </div>
-        <div className={styles['DatePicker__month']}>
+        <div className={styles.month}>
           <CustomSelect
-            className={styles['DatePicker__monthSelect']}
+            className={styles.monthSelect}
             name="month"
             value={month}
             options={monthOptions}
@@ -127,7 +127,7 @@ const DatePickerCustom = ({
             disabled={disabled}
           />
         </div>
-        <div className={styles['DatePicker__year']}>
+        <div className={styles.year}>
           <CustomSelect
             name="year"
             value={year}

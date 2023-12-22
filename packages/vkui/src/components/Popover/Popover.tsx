@@ -150,13 +150,13 @@ export const Popover = ({
     floatingProps.style.zIndex = String(zIndex);
     popover = (
       <AppRootPortal usePortal={usePortal}>
-        <div ref={refs.setFloating} className={styles['Popover']} {...floatingProps}>
+        <div ref={refs.setFloating} className={styles.host} {...floatingProps}>
           <FocusTrap
             {...restPopoverProps}
             role={role}
             className={classNames(
-              styles['Popover__in'],
-              noStyling ? undefined : styles['Popover__in--withStyling'],
+              styles.in,
+              noStyling ? undefined : styles.inWithStyling,
               willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
               transformOriginClassNames[placement],
               className,

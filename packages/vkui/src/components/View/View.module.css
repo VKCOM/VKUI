@@ -1,28 +1,28 @@
-.View {
+.host {
   position: relative;
   block-size: 100%;
   inline-size: 100%;
   word-wrap: break-word;
 }
 
-.View--animated,
-.View--swiping-back {
+.hostAnimated,
+.hostSwipingBack {
   overflow: hidden;
 }
 
-.View--animated .View__panel,
-.View--animated .View__header,
-.View--swiping-back .View__panel,
-.View--swiping-back .View__header {
+.hostAnimated .panel,
+.hostAnimated .header,
+.hostSwipingBack .panel,
+.hostSwipingBack .header {
   pointer-events: none;
 }
 
-.View__panels {
+.panels {
   block-size: 100%;
   inline-size: 100%;
 }
 
-.View__panel {
+.panel {
   position: relative;
   inline-size: 100%;
   block-size: 100%;
@@ -30,19 +30,19 @@
   isolation: isolate;
 }
 
-.View__panel-in {
+.panelIn {
   block-size: 100%;
 }
 
-.View--animated .View__panel,
-.View--swiping-back .View__panel {
+.hostAnimated .panel,
+.hostSwipingBack .panel {
   position: fixed;
   inset-block-start: 0;
   inset-inline-start: 0;
   overflow: hidden;
 }
 
-.View__panel-overlay {
+.panelOverlay {
   display: none;
   position: absolute;
   inline-size: 100%;
@@ -58,32 +58,32 @@
  * Panel swipe back
  */
 
-.View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-success {
+.hostIos .panelSwipeBackPrev.panelSwipeBackSuccess {
   transition: transform 0.3s var(--vkui--animation_easing_platform);
   transform: translate3d(100%, 0, 0);
 }
 
-.View--ios .View__panel--swipe-back-next.View__panel--swipe-back-success {
+.hostIos .panelSwipeBackNext.panelSwipeBackSuccess {
   transition: transform 0.3s var(--vkui--animation_easing_platform);
   transform: translate3d(0, 0, 0);
 }
 
-.View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-failed {
+.hostIos .panelSwipeBackPrev.panelSwipeBackFailed {
   transition: transform 0.3s var(--vkui--animation_easing_platform);
   transform: translate3d(0, 0, 0);
 }
 
-.View--ios .View__panel--swipe-back-next.View__panel--swipe-back-failed {
+.hostIos .panelSwipeBackNext.panelSwipeBackFailed {
   transition: transform 0.3s var(--vkui--animation_easing_platform);
   transform: translate3d(-50%, 0, 0);
 }
 
-.View--ios .View__panel--swipe-back-next .View__panel-overlay {
+.hostIos .panelSwipeBackNext .panelOverlay {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.View--ios .View__panel--swipe-back-next.View__panel--swipe-back-success .View__panel-overlay,
-.View--ios .View__panel--swipe-back-next.View__panel--swipe-back-failed .View__panel-overlay {
+.hostIos .panelSwipeBackNext.panelSwipeBackSuccess .panelOverlay,
+.hostIos .panelSwipeBackNext.panelSwipeBackFailed .panelOverlay {
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
 }
 
@@ -91,15 +91,15 @@
  * Panel transition
  */
 
-.View__panel--next ~ .View__panel--prev {
+.panelNext ~ .panelPrev {
   animation: animation-view-prev-back 0.3s var(--vkui--animation_easing_platform) forwards;
 }
 
-.View__panel--prev ~ .View__panel--next {
+.panelPrev ~ .panelNext {
   animation: animation-view-next-forward 0.3s var(--vkui--animation_easing_platform);
 }
 
-.View--no-motion .View__panel {
+.hostNoMotion .panel {
   animation: none;
 }
 
@@ -126,50 +126,50 @@
   }
 }
 
-.View--ios .View__panel--prev {
+.hostIos .panelPrev {
   animation: animation-ios-prev-forward 0.6s var(--vkui--animation_easing_platform);
 }
 
-.View--ios .View__panel--next {
+.hostIos .panelNext {
   animation: animation-ios-next-back 0.6s var(--vkui--animation_easing_platform);
 }
 
-.View--ios .View__panel--prev ~ .View__panel--next {
+.hostIos .panelPrev ~ .panelNext {
   animation: animation-ios-next-forward 0.6s var(--vkui--animation_easing_platform);
 }
 
-.View--ios .View__panel--next ~ .View__panel--prev {
+.hostIos .panelNext ~ .panelPrev {
   animation: animation-ios-prev-back 0.6s var(--vkui--animation_easing_platform) forwards;
 }
 
-.View--ios .View__panel--prev .View__panel-overlay,
-.View--ios .View__panel--next .View__panel-overlay {
+.hostIos .panelPrev .panelOverlay,
+.hostIos .panelNext .panelOverlay {
   display: block;
 }
 
-.View--ios .View__panel--prev .View__panel-overlay {
+.hostIos .panelPrev .panelOverlay {
   animation: animation-ios-fade-in 0.6s var(--vkui--animation_easing_platform);
 }
 
-.View--ios .View__panel--next .View__panel-overlay {
+.hostIos .panelNext .panelOverlay {
   animation: animation-ios-fade-out 0.6s var(--vkui--animation_easing_platform) forwards;
 }
 
-.View--ios .View__panel--prev ~ .View__panel--next .View__panel-overlay,
-.View--ios .View__panel--next ~ .View__panel--prev .View__panel-overlay {
+.hostIos .panelPrev ~ .panelNext .panelOverlay,
+.hostIos .panelNext ~ .panelPrev .panelOverlay {
   display: none;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.View--ios.View--no-motion .View__panel,
-.View--ios.View--no-motion .View__panel :global(.vkuiInternalPanel__in) {
+.hostIos.hostNoMotion .panel,
+.hostIos.hostNoMotion .panel :global(.vkuiInternalPanelIn) {
   animation: none;
 }
 
 /**
  * Active panel
  */
-.View--ios .View__panel--active .View__panel-overlay {
+.hostIos .panelActive .panelOverlay {
   display: none;
 }
 

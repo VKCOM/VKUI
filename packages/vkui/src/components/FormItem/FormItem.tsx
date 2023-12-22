@@ -10,13 +10,13 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './FormItem.module.css';
 
 const sizeYClassNames = {
-  none: classNames(styles['FormItem--sizeY-none'], 'vkuiInternalFormItem--sizeY-none'),
-  ['compact']: classNames(styles['FormItem--sizeY-compact'], 'vkuiInternalFormItem--sizeY-compact'),
+  none: classNames(styles.hostSizeYNone, 'vkuiInternalFormItemSizeYNone'),
+  ['compact']: classNames(styles.hostSizeYCompact, 'vkuiInternalFormItemSizeYCompact'),
 };
 
 const stylesStatus = {
-  error: classNames(styles['FormItem--status-error'], 'vkuiInternalFormItem--status-error'),
-  valid: classNames(styles['FormItem--status-valid'], 'vkuiInternalFormItem--status-valid'),
+  error: classNames(styles.hostStatusError, 'vkuiInternalFormItemStatusError'),
+  valid: classNames(styles.hostStatusValid, 'vkuiInternalFormItemStatusValid'),
 };
 
 export interface FormItemProps
@@ -77,14 +77,14 @@ export const FormItem = ({
   const wrappedChildren = (
     <React.Fragment>
       {hasReactNode(top) && (
-        <Subhead className={styles['FormItem__top']} Component={topComponent} htmlFor={htmlFor}>
+        <Subhead className={styles.top} Component={topComponent} htmlFor={htmlFor}>
           {top}
         </Subhead>
       )}
       {children}
       {hasReactNode(bottom) && (
         <Footnote
-          className={styles['FormItem__bottom']}
+          className={styles.bottom}
           id={bottomId}
           role={status === 'error' ? 'alert' : undefined}
         >
@@ -99,14 +99,13 @@ export const FormItem = ({
       {...restProps}
       getRootRef={rootEl}
       baseClassName={classNames(
-        styles['FormItem'],
-        !noPadding && styles['FormItem--withPadding'],
+        styles.host,
+        !noPadding && styles.hostWithPadding,
         'vkuiInternalFormItem',
         status !== 'default' && stylesStatus[status],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        hasReactNode(top) &&
-          classNames(styles['FormItem--withTop'], 'vkuiInternalFormItem--withTop'),
-        removable && classNames(styles['FormItem--removable'], 'vkuiInternalFormItem--removable'),
+        hasReactNode(top) && classNames(styles.hostWithTop, 'vkuiInternalFormItemWithTop'),
+        removable && classNames(styles.hostRemovable, 'vkuiInternalFormItemRemovable'),
       )}
     >
       {removable ? (
@@ -120,9 +119,7 @@ export const FormItem = ({
           removePlaceholder={removePlaceholder}
           indent={removable === 'indent'}
         >
-          <div
-            className={classNames(styles['FormItem__removable'], 'vkuiInternalFormItem__removable')}
-          >
+          <div className={classNames(styles.removable, 'vkuiInternalFormItemRemovable')}>
             {wrappedChildren}
           </div>
         </Removable>

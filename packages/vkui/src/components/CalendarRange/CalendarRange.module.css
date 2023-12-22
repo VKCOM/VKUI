@@ -1,4 +1,4 @@
-.CalendarRange {
+.host {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -11,16 +11,16 @@
   padding: 12px;
 }
 
-.CalendarRange__inner {
+.inner {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-.CalendarRange__inner:not(:last-child) {
+.inner:not(:last-child) {
   margin-inline-end: 24px;
 }
 
-.CalendarRange__header {
+.header {
   margin-block-end: 4px;
 }

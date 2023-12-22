@@ -1,4 +1,4 @@
-.ModalDismissButton {
+.host {
   position: absolute;
   justify-content: center;
   inset-block-start: 0;
@@ -11,7 +11,7 @@
   transition: opacity 0.15s ease-out;
 }
 
-.ModalDismissButton::before {
+.host::before {
   display: block;
   content: '';
   inset: 14px;
@@ -21,14 +21,14 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- fixes icon misplacement on Safari in some cases */
-.ModalDismissButton :global(.vkuiIcon) {
+.host :global(.vkuiIcon) {
   transform: translateX(0);
 }
 
-.ModalDismissButton--hover.ModalDismissButton::before {
+.hostHover.host::before {
   background: var(--vkui--color_overlay_primary--hover);
 }
 
-.ModalDismissButton--active.ModalDismissButton::before {
+.hostActive.host::before {
   background: var(--vkui--color_overlay_primary--active);
 }

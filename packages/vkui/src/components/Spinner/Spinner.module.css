@@ -1,4 +1,4 @@
-.Spinner {
+.host {
   inline-size: 100%;
   block-size: 100%;
   display: flex;
@@ -12,6 +12,6 @@
  * PanelHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader) .Spinner {
+:global(.vkuiInternalPanelHeader) .host {
   color: currentColor;
 }

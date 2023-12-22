@@ -1,4 +1,4 @@
-.ModalPage {
+.host {
   inline-size: 100%;
   block-size: 100%;
   overflow: hidden;
@@ -7,17 +7,17 @@
   pointer-events: none;
 }
 
-.ModalPage:focus {
+.host:focus {
   outline: none;
 }
 
-.ModalPage--desktop {
+.hostDesktop {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.ModalPage__in-wrap {
+.inWrap {
   inline-size: 100%;
   block-size: 100%;
   position: absolute;
@@ -31,11 +31,11 @@
   transition: transform 320ms var(--vkui--animation_easing_platform);
 }
 
-.ModalPage--ios .ModalPage__in-wrap {
+.hostIos .inWrap {
   transition: transform 400ms var(--vkui--animation_easing_platform);
 }
 
-.ModalPage--desktop .ModalPage__in-wrap {
+.hostDesktop .inWrap {
   position: relative;
   align-items: initial;
   margin-block: 32px;
@@ -48,24 +48,24 @@
 }
 
 @media (max-height: 672px) {
-  .ModalPage--desktop .ModalPage__in-wrap {
+  .hostDesktop .inWrap {
     max-block-size: calc(100% - 32px * 2);
   }
 }
 
-.ModalPage--size-s .ModalPage__in-wrap {
+.hostSizeS .inWrap {
   max-inline-size: var(--vkui--size_popup_small--regular);
 }
 
-.ModalPage--size-m .ModalPage__in-wrap {
+.hostSizeM .inWrap {
   max-inline-size: var(--vkui--size_popup_medium--regular);
 }
 
-.ModalPage--size-l .ModalPage__in-wrap {
+.hostSizeL .inWrap {
   max-inline-size: var(--vkui--size_popup_large--regular);
 }
 
-.ModalPage__in {
+.in {
   background-color: var(--vkui--color_background_modal);
   overflow: visible;
   position: relative;
@@ -80,18 +80,18 @@
   --vkui_internal--background: var(--vkui--color_background_modal);
 }
 
-.ModalPage--desktop .ModalPage__in {
+.hostDesktop .in {
   block-size: auto;
   box-shadow: var(--vkui--elevation3);
   border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
   border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
-.ModalPage__header {
+.header {
   inline-size: 100%;
 }
 
-.ModalPage__content-wrap {
+.contentWrap {
   position: relative;
   display: flex;
   block-size: 100%;
@@ -101,11 +101,11 @@
   border-end-end-radius: inherit;
 }
 
-.ModalPage__header:empty + .ModalPage__content-wrap {
+.header:empty + .contentWrap {
   border-radius: inherit;
 }
 
-.ModalPage__content {
+.content {
   block-size: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
@@ -113,15 +113,15 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.ModalPage--desktop .ModalPage__content,
-:global(.vkuiInternalModalRoot__modal--expandable) .ModalPage__content {
+.hostDesktop .content,
+:global(.vkuiInternalModalRootModalExpandable) .content {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.ModalPage--desktop .ModalPage__content-in,
-:global(.vkuiInternalModalRoot__modal--expandable) .ModalPage__content-in {
+.hostDesktop .contentIn,
+:global(.vkuiInternalModalRootModalExpandable) .contentIn {
   block-size: 100%;
 }
 
@@ -129,7 +129,7 @@
  * чтобы поднять ModalPage не только на высоту контента, но и на высоту bottom-inset
  * особенно важно для ModalPage c динамической высотой
  */
-.ModalPage__bottom-inset {
+.bottomInset {
   block-size: var(--vkui_internal--safe_area_inset_bottom);
   flex-shrink: 0;
 }
@@ -141,18 +141,18 @@
  * [дополнительно] также ищи в файле `ModalRoot__modal--expandable`
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot--touched) .ModalPage__in-wrap {
+:global(.vkuiInternalModalRootTouched) .inWrap {
   transition: none;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot--switching) .ModalPage__in-wrap {
+:global(.vkuiInternalModalRootSwitching) .inWrap {
   pointer-events: none;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot__modal--collapsed) .ModalPage__content,
-:global(.vkuiInternalModalRoot__modal--dragging) .ModalPage__content {
+:global(.vkuiInternalModalRootModalCollapsed) .content,
+:global(.vkuiInternalModalRootModalDragging) .content {
   overflow: hidden;
   touch-action: pan-y;
 }

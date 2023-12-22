@@ -38,30 +38,18 @@ export const ScreenSpinner = ({
   return (
     <PopoutWrapper
       hasMask={false}
-      className={classNames(
-        styles['ScreenSpinner'],
-        state === 'cancelable' && styles['ScreenSpinner--clickable'],
-        className,
-      )}
+      className={classNames(styles.host, state === 'cancelable' && styles.hostClickable, className)}
       style={style}
     >
-      <div className={styles['ScreenSpinner__container']} onClick={onClick}>
+      <div className={styles.container} onClick={onClick}>
         <Spinner
-          className={classNames(
-            styles['ScreenSpinner__spinner'],
-            hideSpinner && styles['ScreenSpinner__spinner--hidden'],
-          )}
+          className={classNames(styles.spinner, hideSpinner && styles.spinnerHidden)}
           size={size}
           {...restProps}
         >
           {children}
         </Spinner>
-        <div
-          className={classNames(
-            styles['ScreenSpinner__icon'],
-            state === 'done' && styles['ScreenSpinner__icon--state-done'],
-          )}
-        >
+        <div className={classNames(styles.icon, state === 'done' && styles.iconStateDone)}>
           <Icon />
         </div>
       </div>

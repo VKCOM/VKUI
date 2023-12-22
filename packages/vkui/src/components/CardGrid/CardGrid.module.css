@@ -1,26 +1,26 @@
-.CardGrid {
+.host {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
 
-.CardGrid--spaced {
+.hostSpaced {
   padding-block: var(--vkui--size_base_padding_vertical--regular);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-.CardGrid--sizeX-compact {
+.hostSizeXCompact {
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 @media (--sizeX-compact) {
-  .CardGrid--sizeX-none {
+  .hostSizeXNone {
     padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   }
 }
 
-.CardGrid + .CardGrid {
+.host + .host {
   margin-block-start: calc(var(--vkui--size_cardgrid_padding_vertical--regular) * 2);
 }
 
@@ -30,23 +30,23 @@
  */
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-card) .CardGrid {
+:global(.vkuiInternalGroupModeCard) .host {
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 @media (--sizeX-regular) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalGroup--mode-none) .CardGrid {
+  :global(.vkuiInternalGroupModeNone) .host {
     padding-inline: 8px;
   }
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup) .CardGrid:first-child {
+:global(.vkuiInternalGroup) .host:first-child {
   margin-block-start: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup) .CardGrid:last-child {
+:global(.vkuiInternalGroup) .host:last-child {
   margin-block-end: var(--vkui--size_cardgrid_padding_vertical--regular);
 }

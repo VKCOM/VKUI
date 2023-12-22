@@ -8,8 +8,8 @@ import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './CustomSelectOption.module.css';
 
 const sizeYClassNames = {
-  none: styles['CustomSelectOption--sizeY-none'],
-  ['regular']: styles['CustomSelectOption--sizeY-regular'],
+  none: styles.hostSizeYNone,
+  ['regular']: styles.hostSizeYRegular,
 };
 
 export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -93,25 +93,25 @@ export const CustomSelectOption = ({
       aria-disabled={disabled}
       aria-selected={selected}
       className={classNames(
-        styles['CustomSelectOption'],
+        styles.host,
         sizeY !== 'compact' && sizeYClassNames[sizeY],
-        hovered && !disabled && styles['CustomSelectOption--hover'],
-        disabled && styles['CustomSelectOption--disabled'],
-        hierarchy > 0 && styles['CustomSelectOption--hierarchy'],
+        hovered && !disabled && styles.hostHover,
+        disabled && styles.hostDisabled,
+        hierarchy > 0 && styles.hostHierarchy,
         className,
       )}
       style={style}
     >
-      {hasReactNode(before) && <div className={styles['CustomSelectOption__before']}>{before}</div>}
-      <div className={styles['CustomSelectOption__main']}>
-        <div className={styles['CustomSelectOption__children']}>{children}</div>
+      {hasReactNode(before) && <div className={styles.before}>{before}</div>}
+      <div className={styles.main}>
+        <div className={styles.children}>{children}</div>
         {hasReactNode(description) && (
-          <Footnote className={styles['CustomSelectOption__description']}>{description}</Footnote>
+          <Footnote className={styles.description}>{description}</Footnote>
         )}
       </div>
-      <div className={styles['CustomSelectOption__after']}>
+      <div className={styles.after}>
         {hasReactNode(after) && <div>{after}</div>}
-        {selected && <Icon16Done className={styles['CustomSelectOption__selectedIcon']} />}
+        {selected && <Icon16Done className={styles.selectedIcon} />}
       </div>
     </Paragraph>
   );

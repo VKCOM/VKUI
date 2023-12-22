@@ -1,4 +1,4 @@
-.Tappable {
+.host {
   isolation: isolate;
   position: relative;
   border-radius: var(--vkui--size_border_radius--regular);
@@ -14,7 +14,7 @@ https://developer.mozilla.org/ru/docs/Web/CSS/CSS_Positioning/Understanding_z_in
 https://github.com/VKCOM/VKUI/pull/3641
 */
 /* stylelint-disable-next-line selector-max-universal */
-.Tappable > * {
+.host > * {
   position: relative;
   z-index: var(--vkui_internal--z_index_tappable_element);
 }
@@ -22,24 +22,24 @@ https://github.com/VKCOM/VKUI/pull/3641
 /**
  * overrides
  */
-.Tappable--sizeX-compact {
+.hostSizeXCompact {
   border-radius: 0;
 }
 
 @media (--sizeX-compact) {
-  .Tappable--sizeX-none {
+  .hostSizeXNone {
     border-radius: 0;
   }
 }
 
-.Tappable.Tappable--borderRadiusInherit {
+.host.hostBorderRadiusInherit {
   border-radius: inherit;
 }
 
 /**
  * hover & active state
  */
-.Tappable__stateLayer {
+.stateLayer {
   z-index: var(--vkui_internal--z_index_tappable_state);
   position: absolute;
   inset: 0;
@@ -53,38 +53,38 @@ https://github.com/VKCOM/VKUI/pull/3641
 /**
  * Задерживаем отрисовку background-color
  */
-.Tappable--hasPointer-false .Tappable__ripple {
+.hostHasPointerFalse .ripple {
   transition: background-color 0.15s 0.15s ease-out;
 }
 
 @media (--pointer-has-not) {
-  .Tappable--hasPointer-none .Tappable__ripple {
+  .hostHasPointerNone .ripple {
     transition: background-color 0.15s 0.15s ease-out;
   }
 }
 
-.Tappable--hovered-background > .Tappable__stateLayer {
+.hostHoveredBackground > .stateLayer {
   background-color: var(--vkui--color_transparent--hover);
 }
 
-.Tappable--activated-background > .Tappable__stateLayer {
+.hostActivatedBackground > .stateLayer {
   background-color: var(--vkui--color_transparent--active);
 }
 
-.Tappable--hovered-opacity,
-.Tappable--activated-opacity {
+.hostHoveredOpacity,
+.hostActivatedOpacity {
   transition: opacity 0.15s ease-out;
 }
 
-.Tappable--hovered-opacity {
+.hostHoveredOpacity {
   opacity: 0.8;
 }
 
-.Tappable--activated-opacity {
+.hostActivatedOpacity {
   opacity: 0.7;
 }
 
-.Tappable__wave {
+.wave {
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;

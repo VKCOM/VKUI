@@ -1,4 +1,4 @@
-.SliderThumb {
+.host {
   position: absolute;
   z-index: 1;
   inline-size: var(--vkui_internal--slider_thumb_size);
@@ -10,7 +10,7 @@
   user-select: none;
 }
 
-.SliderThumb--focus-visible {
+.hostFocusVisible {
   outline: var(--vkui_internal--outline);
   outline-offset: calc(-1 * var(--vkui--size_border--regular));
   z-index: 2;
@@ -19,7 +19,7 @@
 /**
  * Задаём ширину и высоту родителя, чтобы скринридер правильно выделял элемент (скопировано с MUI).
  */
-.SliderThumb__nativeInput {
+.nativeInput {
   direction: ltr;
   position: absolute;
   inline-size: 100%;

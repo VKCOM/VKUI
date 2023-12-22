@@ -13,8 +13,8 @@ import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
 
 const sizeYClassNames = {
-  none: styles['Select--sizeY-none'],
-  ['compact']: styles['Select--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 export interface NativeSelectProps
@@ -83,13 +83,13 @@ const NativeSelect = ({
     <FormField
       Component="div"
       className={classNames(
-        styles['Select'],
+        styles.host,
         'vkuiInternalNativeSelect',
-        before && styles['Select--hasBefore'],
-        empty && styles['Select--empty'],
-        multiline && styles['Select--multiline'],
-        align === 'center' && styles['Select--align-center'],
-        align === 'right' && styles['Select--align-right'],
+        before && styles.hostHasBefore,
+        empty && styles.hostEmpty,
+        multiline && styles.hostMultiline,
+        align === 'center' && styles.hostAlignCenter,
+        align === 'right' && styles.hostAlignRight,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
@@ -104,7 +104,7 @@ const NativeSelect = ({
       <select
         {...restProps}
         disabled={disabled}
-        className={styles['Select__el']}
+        className={styles.el}
         onChange={onChange}
         value={value}
         ref={selectRef}
@@ -112,8 +112,8 @@ const NativeSelect = ({
         {placeholder && <option value="">{placeholder}</option>}
         {children}
       </select>
-      <div className={styles['Select__container']} aria-hidden>
-        <SelectTypography className={styles['Select__title']} selectType={selectType}>
+      <div className={styles.container} aria-hidden>
+        <SelectTypography className={styles.title} selectType={selectType}>
           {title}
         </SelectTypography>
       </div>

@@ -12,6 +12,7 @@ import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ActionSheet, ActionSheetProps } from './ActionSheet';
+import styles from '../PopoutWrapper/PopoutWrapper.module.css';
 
 describe('ActionSheet', () => {
   fakeTimers();
@@ -118,7 +119,7 @@ describe('ActionSheet', () => {
       render(<ActionSheetMobile onClose={onClose} />);
       await waitForFloatingPosition();
       runAllTimers();
-      await userEvent.click(document.querySelector('.vkuiPopoutWrapper__overlay') as Element);
+      await userEvent.click(document.querySelector('.' + styles.overlay) as Element);
       runAllTimers();
       expect(onClose).toBeCalledTimes(1);
       expect(onClose).toBeCalledWith({ closedBy: 'other' });

@@ -1,4 +1,4 @@
-.Switch {
+.host {
   user-select: none;
   position: relative;
   display: block;
@@ -10,25 +10,25 @@
   );
 }
 
-.Switch--sizeY-compact {
+.hostSizeYCompact {
   padding: calc(
     (var(--vkui--size_switch_pin--compact) - var(--vkui--size_switch_height--compact)) / 2
   );
 }
 
 @media (--sizeY-compact) {
-  .Switch--sizeY-none {
+  .hostSizeYNone {
     padding: calc(
       (var(--vkui--size_switch_pin--compact) - var(--vkui--size_switch_height--compact)) / 2
     );
   }
 }
 
-.Switch--disabled {
+.hostDisabled {
   cursor: default;
 }
 
-.Switch__pseudo {
+.pseudo {
   position: relative;
   display: block;
   box-sizing: border-box;
@@ -39,7 +39,7 @@
 /**
  * Пин
  */
-.Switch__pseudo::before {
+.pseudo::before {
   position: absolute;
   content: '';
   border-radius: 50%;
@@ -58,7 +58,7 @@
   block-size: var(--vkui--size_switch_pin--regular);
 }
 
-.Switch--sizeY-compact .Switch__pseudo::before {
+.hostSizeYCompact .pseudo::before {
   inset-block-start: calc(
     (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
   );
@@ -70,7 +70,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Switch--sizeY-none .Switch__pseudo::before {
+  .hostSizeYNone .pseudo::before {
     inset-block-start: calc(
       (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
     );
@@ -82,7 +82,7 @@
   }
 }
 
-.Switch__self:checked + .Switch__pseudo::before {
+.self:checked + .pseudo::before {
   background: var(--vkui--color_icon_accent);
   transform: translateX(
     calc(var(--vkui--size_switch_width--regular) - var(--vkui--size_switch_height--regular))
@@ -92,7 +92,7 @@
 /**
  * Трек
  */
-.Switch__pseudo::after {
+.pseudo::after {
   content: '';
   display: block;
   background: var(--vkui--color_icon_tertiary_alpha);
@@ -101,64 +101,64 @@
   block-size: var(--vkui--size_switch_height--regular);
 }
 
-.Switch--sizeY-compact .Switch__pseudo::after {
+.hostSizeYCompact .pseudo::after {
   border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
   inline-size: var(--vkui--size_switch_width--compact);
   block-size: var(--vkui--size_switch_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .Switch--sizeY-none .Switch__pseudo::after {
+  .hostSizeYNone .pseudo::after {
     border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
     inline-size: var(--vkui--size_switch_width--compact);
     block-size: var(--vkui--size_switch_height--compact);
   }
 }
 
-.Switch__self:checked + .Switch__pseudo::after {
+.self:checked + .pseudo::after {
   opacity: 0.48;
   background: var(--vkui--color_icon_accent);
 }
 
-.Switch--sizeY-compact .Switch__self:checked + .Switch__pseudo::before {
+.hostSizeYCompact .self:checked + .pseudo::before {
   transform: translateX(
     calc(var(--vkui--size_switch_width--compact) - var(--vkui--size_switch_height--compact))
   );
 }
 
 @media (--sizeY-compact) {
-  .Switch--sizeY-none .Switch__self:checked + .Switch__pseudo::before {
+  .hostSizeYNone .self:checked + .pseudo::before {
     transform: translateX(
       calc(var(--vkui--size_switch_width--compact) - var(--vkui--size_switch_height--compact))
     );
   }
 }
 
-.Switch__self[disabled] + .Switch__pseudo {
+.self[disabled] + .pseudo {
   opacity: var(--vkui--opacity_disable);
 }
 
 /**
  * Пин
  */
-.Switch--ios .Switch__pseudo::before {
+.hostIos .pseudo::before {
   background: var(--vkui_internal--white);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06),
     inset 0 0 0 0.5px rgba(0, 0, 0, 0.04);
 }
 
-.Switch--ios .Switch__self:checked + .Switch__pseudo::before {
+.hostIos .self:checked + .pseudo::before {
   background: var(--vkui_internal--white);
 }
 
 /**
  * Трек
  */
-.Switch--ios .Switch__pseudo::after {
+.hostIos .pseudo::after {
   background: var(--vkui--color_track_background);
 }
 
-.Switch--ios .Switch__self:checked + .Switch__pseudo::after {
+.hostIos .self:checked + .pseudo::after {
   opacity: 1;
 }
 
@@ -169,19 +169,19 @@
  * navigating accessible vkui apps via keyboard
  */
 @media (prefers-reduced-motion: no-preference) {
-  .Switch__pseudo::after {
+  .pseudo::after {
     transition: background-color 0.1s ease;
   }
 
-  .Switch__pseudo::before {
+  .pseudo::before {
     transition: transform 0.1s ease;
   }
 
-  .Switch--ios .Switch__pseudo::after {
+  .hostIos .pseudo::after {
     transition: background-color 0.2s ease;
   }
 
-  .Switch--ios .Switch__pseudo::before {
+  .hostIos .pseudo::before {
     transition: transform 0.2s cubic-bezier(0.36, -0.24, 0.26, 1.32);
   }
 }
@@ -191,6 +191,6 @@
  * SimpleCell
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalSimpleCell__after) > .Switch {
+:global(.vkuiInternalSimpleCellAfter) > .host {
   margin-inline-start: 12px;
 }

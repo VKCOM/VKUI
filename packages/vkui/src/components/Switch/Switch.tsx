@@ -10,8 +10,8 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 
 const sizeYClassNames = {
-  none: styles['Switch--sizeY-none'],
-  ['compact']: styles['Switch--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 export interface SwitchProps
@@ -31,10 +31,10 @@ export const Switch = ({ style, className, getRootRef, getRef, ...restProps }: S
   return (
     <label
       className={classNames(
-        styles['Switch'],
-        platform === 'ios' && styles['Switch--ios'],
+        styles.host,
+        platform === 'ios' && styles.hostIos,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        restProps.disabled && styles['Switch--disabled'],
+        restProps.disabled && styles.hostDisabled,
         focusVisibleClassNames,
         className,
       )}
@@ -48,9 +48,9 @@ export const Switch = ({ style, className, getRootRef, getRef, ...restProps }: S
         Component="input"
         getRootRef={getRef}
         type="checkbox"
-        className={styles['Switch__self']}
+        className={styles.self}
       />
-      <span aria-hidden className={styles['Switch__pseudo']} />
+      <span aria-hidden className={styles.pseudo} />
     </label>
   );
 };

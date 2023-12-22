@@ -7,15 +7,15 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutWrapper.module.css';
 
 const stylesAlignX = {
-  center: styles['PopoutWrapper--alignX-center'],
-  left: styles['PopoutWrapper--alignX-left'],
-  right: styles['PopoutWrapper--alignX-right'],
+  center: styles.hostAlignXCenter,
+  left: styles.hostAlignXLeft,
+  right: styles.hostAlignXRight,
 };
 
 const stylesAlignY = {
-  center: styles['PopoutWrapper--alignY-center'],
-  top: styles['PopoutWrapper--alignY-top'],
-  bottom: styles['PopoutWrapper--alignY-bottom'],
+  center: styles.hostAlignYCenter,
+  top: styles.hostAlignYTop,
+  bottom: styles.hostAlignYBottom,
 };
 
 export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -60,7 +60,7 @@ export const PopoutWrapper = ({
   const [opened, setOpened] = React.useState(!hasMask);
 
   const onFadeInEnd = (e?: React.AnimationEvent) => {
-    if (!e || e.animationName === styles['animation-full-fade-in']) {
+    if (!e || e.animationName === styles.animationFullFadeIn) {
       setOpened(true);
     }
   };
@@ -73,19 +73,19 @@ export const PopoutWrapper = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['PopoutWrapper'],
+        styles.host,
         stylesAlignY[alignY],
         stylesAlignX[alignX],
-        closing && styles['PopoutWrapper--closing'],
-        opened && styles['PopoutWrapper--opened'],
-        fixed && styles['PopoutWrapper--fixed'],
-        hasMask && styles['PopoutWrapper--masked'],
+        closing && styles.hostClosing,
+        opened && styles.hostOpened,
+        fixed && styles.hostFixed,
+        hasMask && styles.hostMasked,
       )}
       onAnimationEnd={opened ? undefined : onFadeInEnd}
     >
-      <div className={styles['PopoutWrapper__container']}>
-        <div className={styles['PopoutWrapper__overlay']} onClick={onClick} />
-        <div className={styles['PopoutWrapper__content']}>{children}</div>
+      <div className={styles.container}>
+        <div className={styles.overlay} onClick={onClick} />
+        <div className={styles.content}>{children}</div>
       </div>
     </RootComponent>
   );

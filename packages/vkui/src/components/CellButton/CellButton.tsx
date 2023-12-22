@@ -21,9 +21,9 @@ export const CellButton = ({
     <SimpleCell
       {...restProps}
       className={classNames(
-        styles['CellButton'],
-        mode === 'danger' && styles['CellButton--mode-danger'],
-        centered && styles['CellButton--centered'],
+        styles.host,
+        mode === 'danger' && styles.hostModeDanger,
+        centered && styles.hostCentered,
         className,
       )}
     />

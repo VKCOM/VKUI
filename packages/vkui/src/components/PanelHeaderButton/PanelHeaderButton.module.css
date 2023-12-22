@@ -1,4 +1,4 @@
-.PanelHeaderButton {
+.host {
   appearance: none;
   background: none;
   border: 0;
@@ -10,11 +10,11 @@
   position: relative;
 }
 
-.PanelHeaderButton[disabled] {
+.host[disabled] {
   opacity: 0.6;
 }
 
-.PanelHeaderButton--primitive {
+.hostPrimitive {
   block-size: 48px;
   line-height: 48px;
   padding-block: 0;
@@ -25,30 +25,30 @@
  * iOS
  */
 
-.PanelHeaderButton--ios {
+.hostIos {
   position: relative;
   display: flex;
   align-items: center;
   font-size: 17px;
 }
 
-.PanelHeaderButton--ios.PanelHeaderButton--primitive {
+.hostIos.hostPrimitive {
   block-size: 44px;
   line-height: 44px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.PanelHeaderButton--ios :global(.vkuiIcon--24) {
+.hostIos :global(.vkuiIcon--24) {
   padding: 10px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.PanelHeaderButton--ios :global(.vkuiIcon--28) {
+.hostIos :global(.vkuiIcon--28) {
   padding: 8px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.PanelHeaderBack--ios :global(.vkuiIcon--w-20) {
+.hostIos :global(.vkuiIcon--w-20) {
   padding-inline-start: 4px;
 }
 
@@ -56,61 +56,61 @@
  * Android
  */
 
-.PanelHeaderButton--android.PanelHeaderButton--notPrimitive {
+.hostAndroid.hostNotPrimitive {
   border-radius: 50%;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.PanelHeaderButton--android :global(.vkuiIcon--24),
-.PanelHeaderButton--android :global(.vkuiIcon--28) {
+.hostAndroid :global(.vkuiIcon--24),
+.hostAndroid :global(.vkuiIcon--28) {
   padding: 10px;
 }
 
 /**
 * VKCOM
 */
-.PanelHeaderButton--vkcom {
+.hostVkcom {
   color: var(--vkui--color_text_secondary);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.PanelHeaderButton--vkcom > :not(:global(.vkuiInternalCounter)) {
+.hostVkcom > :not(:global(.vkuiInternalCounter)) {
   transition: opacity 0.3s;
   opacity: 0.7;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.PanelHeaderButton--vkcom.PanelHeaderButton--hover > :not(:global(.vkuiInternalCounter)),
-.PanelHeaderButton--vkcom.PanelHeaderButton--active > :not(:global(.vkuiInternalCounter)) {
+.hostVkcom.hostHover > :not(:global(.vkuiInternalCounter)),
+.hostVkcom.hostActive > :not(:global(.vkuiInternalCounter)) {
   opacity: 1;
 }
 
-.PanelHeaderButton--vkcom {
+.hostVkcom {
   display: flex;
   align-items: center;
   padding: 10px;
 }
 
-.PanelHeaderButton--vkcom.PanelHeaderButton--notPrimitive {
+.hostVkcom.hostNotPrimitive {
   border-radius: 50%;
 }
 
-.PanelHeaderBack--vkcom.PanelHeaderBack--has-label {
+.hostVkcom.hostHasLabel {
   padding-inline-end: 11px;
 }
 
 @media (--sizeX-regular) {
-  .PanelHeaderBack--ios.PanelHeaderBack--has-label:not(.PanelHeaderBack--sizeX-compact) {
+  .hostIos.hostHasLabel:not(.hostSizeXCompact) {
     padding-inline-end: 8px;
   }
 }
 
-.PanelHeaderBack--sizeX-compact.PanelHeaderBack--ios .PanelHeaderButton__label {
+.hostSizeXCompact.hostIos .label {
   display: none;
 }
 
 @media (--sizeX-compact) {
-  .PanelHeaderBack--sizeX-none.PanelHeaderBack--ios .PanelHeaderButton__label {
+  .hostSizeXNone.hostIos .label {
     display: none;
   }
 }

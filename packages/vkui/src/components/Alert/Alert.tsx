@@ -145,11 +145,11 @@ export const Alert = ({
         onClose={close}
         timeout={timeout}
         className={classNames(
-          styles['Alert'],
-          platform === 'ios' && styles['Alert--ios'],
-          platform === 'vkcom' && styles['Alert--vkcom'],
-          closing && styles['Alert--closing'],
-          isDesktop && styles['Alert--desktop'],
+          styles.host,
+          platform === 'ios' && styles.hostIos,
+          platform === 'vkcom' && styles.hostVkcom,
+          closing && styles.hostClosing,
+          isDesktop && styles.hostDesktop,
         )}
         role="alertdialog"
         aria-modal
@@ -158,8 +158,8 @@ export const Alert = ({
       >
         <div
           className={classNames(
-            styles['Alert__content'],
-            dismissButtonMode === 'inside' && styles['Alert__content--withButton'],
+            styles.content,
+            dismissButtonMode === 'inside' && styles.contentWithButton,
           )}
         >
           {hasReactNode(header) && <AlertHeader id={headerId}>{header}</AlertHeader>}
@@ -168,7 +168,7 @@ export const Alert = ({
           {isDismissButtonVisible && dismissButtonMode === 'inside' && (
             <IconButton
               label={dismissLabel}
-              className={classNames(styles['Alert__dismiss'], 'vkuiInternalAlert__dismiss')}
+              className={classNames(styles.dismiss, 'vkuiInternalAlertDismiss')}
               onClick={close}
               hoverMode="opacity"
               activeMode="opacity"

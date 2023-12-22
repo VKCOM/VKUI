@@ -7,8 +7,8 @@ import { Subhead } from '../../../Typography/Subhead/Subhead';
 import styles from './Basic.module.css';
 
 const stylesLayout = {
-  vertical: styles['Snackbar--layout-vertical'],
-  horizontal: styles['Snackbar--layout-horizontal'],
+  vertical: styles.hostLayoutVertical,
+  horizontal: styles.hostLayoutHorizontal,
 };
 
 export interface BasicProps {
@@ -66,24 +66,22 @@ export function Basic({
   return (
     <RootComponent
       baseClassName={classNames(
-        styles['Snackbar__body'],
+        styles.body,
         stylesLayout[layout],
-        mode === 'dark' && styles['Snackbar--mode-dark'],
+        mode === 'dark' && styles.hostModeDark,
       )}
       {...restProps}
     >
-      {before && <div className={styles['Snackbar__before']}>{before}</div>}
+      {before && <div className={styles.before}>{before}</div>}
 
-      <div className={styles['Snackbar__content']}>
-        <Paragraph className={styles['Snackbar__content-text']}>{children}</Paragraph>
-        {subtitle && !action && (
-          <Subhead className={styles['Snackbar__content-subtitle']}>{subtitle}</Subhead>
-        )}
+      <div className={styles.content}>
+        <Paragraph className={styles.contentText}>{children}</Paragraph>
+        {subtitle && !action && <Subhead className={styles.contentSubtitle}>{subtitle}</Subhead>}
 
-        {action && !subtitle && <div className={styles['Snackbar__action']}>{action}</div>}
+        {action && !subtitle && <div className={styles.action}>{action}</div>}
       </div>
 
-      {after && <div className={styles['Snackbar__after']}>{after}</div>}
+      {after && <div className={styles.after}>{after}</div>}
     </RootComponent>
   );
 }

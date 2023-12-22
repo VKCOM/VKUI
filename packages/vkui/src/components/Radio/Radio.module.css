@@ -1,4 +1,4 @@
-.Radio {
+.host {
   display: block;
   padding-block: 0;
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
@@ -10,24 +10,24 @@
  * FormItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem) .Radio {
+:global(.vkuiInternalFormItem) .host {
   inline-size: 100%;
   box-sizing: content-box;
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
-.Radio__container {
+.container {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
-.Radio__input:disabled ~ .Radio__container {
+.input:disabled ~ .container {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.Radio__icon {
+.icon {
   flex-shrink: 0;
   inline-size: 22px;
   block-size: 22px;
@@ -36,45 +36,45 @@
   transition: color 0.15s var(--vkui--animation_easing_platform);
 }
 
-.Radio__input:checked ~ .Radio__container .Radio__icon {
+.input:checked ~ .container .icon {
   color: var(--vkui--color_icon_accent);
 }
 
-.Radio__icon .Radio__pin {
+.icon .pin {
   transform-origin: 12px 12px;
   transform: scale(0);
   transition: transform 0.15s var(--vkui--animation_easing_platform);
 }
 
-.Radio__input:checked ~ .Radio__container .Radio__icon .Radio__pin {
+.input:checked ~ .container .icon .pin {
   transform: none;
 }
 
-.Radio__content {
+.content {
   display: block;
   flex-grow: 1;
   max-inline-size: 100%;
   color: var(--vkui--color_text_primary);
 }
 
-.Radio__description {
+.description {
   display: block;
   color: var(--vkui--color_text_secondary);
   margin-block: 2px 12px;
 }
 
-.Radio__title {
+.title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-block-start: 12px;
 }
 
-.Radio__title:last-child {
+.title:last-child {
   margin-block-end: 12px;
 }
 
-.Radio__titleAfter {
+.titleAfter {
   margin-inline-start: 4px;
   color: var(--vkui--color_icon_tertiary);
 }
@@ -83,47 +83,47 @@
  * sizeY COMPACT
  */
 
-.Radio--sizeY-compact .Radio__title {
+.hostSizeYCompact .title {
   margin-block-start: 8px;
 }
 
-.Radio--sizeY-compact .Radio__title:last-child {
+.hostSizeYCompact .title:last-child {
   margin-block-end: 8px;
 }
 
-.Radio--sizeY-compact .Radio__description {
+.hostSizeYCompact .description {
   margin-block-end: 7px;
 }
 
-.Radio--sizeY-compact .Radio__icon {
+.hostSizeYCompact .icon {
   inline-size: 18px;
   block-size: 18px;
 }
 
-.Radio--sizeY-compact .Radio__icon::after {
+.hostSizeYCompact .icon::after {
   inline-size: 12px;
   block-size: 12px;
 }
 
 @media (--sizeY-compact) {
-  .Radio--sizeY-none .Radio__title {
+  .hostSizeYNone .title {
     margin-block-start: 8px;
   }
 
-  .Radio--sizeY-none .Radio__title:last-child {
+  .hostSizeYNone .title:last-child {
     margin-block-end: 8px;
   }
 
-  .Radio--sizeY-none .Radio__description {
+  .hostSizeYNone .description {
     margin-block-end: 7px;
   }
 
-  .Radio--sizeY-none .Radio__icon {
+  .hostSizeYNone .icon {
     inline-size: 18px;
     block-size: 18px;
   }
 
-  .Radio--sizeY-none .Radio__icon::after {
+  .hostSizeYNone .icon::after {
     inline-size: 12px;
     block-size: 12px;
   }
@@ -134,7 +134,7 @@
  * RadioGroup
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalRadioGroup) .Radio {
+:global(.vkuiInternalRadioGroup) .host {
   flex: 1;
   margin: 0;
   box-sizing: border-box;

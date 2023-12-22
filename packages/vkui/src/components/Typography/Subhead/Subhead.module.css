@@ -1,17 +1,17 @@
-.Subhead {
+.host {
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
   font-weight: var(--vkui--font_subhead--font_weight--regular);
   font-family: var(--vkui--font_subhead--font_family--regular);
 }
 
-.Subhead--sizeY-compact {
+.hostSizeYCompact {
   font-size: var(--vkui--font_subhead--font_size--compact);
   line-height: var(--vkui--font_subhead--line_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .Subhead--sizeY-none {
+  .hostSizeYNone {
     font-size: var(--vkui--font_subhead--font_size--compact);
     line-height: var(--vkui--font_subhead--line_height--compact);
   }

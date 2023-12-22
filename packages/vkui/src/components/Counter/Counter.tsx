@@ -6,16 +6,16 @@ import { Headline } from '../Typography/Headline/Headline';
 import styles from './Counter.module.css';
 
 const modeClassNames = {
-  secondary: styles['Counter--mode-secondary'],
-  primary: styles['Counter--mode-primary'],
-  prominent: styles['Counter--mode-prominent'],
-  contrast: styles['Counter--mode-contrast'],
-  inherit: styles['Counter--mode-inherit'],
+  secondary: styles.hostModeSecondary,
+  primary: styles.hostModePrimary,
+  prominent: styles.hostModeProminent,
+  contrast: styles.hostModeContrast,
+  inherit: styles.hostModeInherit,
 };
 
 const sizeClassNames = {
-  s: styles['Counter--size-s'],
-  m: styles['Counter--size-m'],
+  s: styles.hostSizeS,
+  m: styles.hostSizeM,
 };
 
 export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
@@ -51,7 +51,7 @@ export const Counter = ({
       Component="span"
       className={classNames(
         'vkuiInternalCounter',
-        styles['Counter'],
+        styles.host,
         modeClassNames[mode],
         sizeClassNames[size],
         className,

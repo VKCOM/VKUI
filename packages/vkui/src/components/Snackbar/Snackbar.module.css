@@ -1,4 +1,4 @@
-.Snackbar {
+.host {
   user-select: none;
   z-index: var(--vkui--z_index_popout);
   position: fixed;
@@ -15,33 +15,33 @@
  * Epic
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalEpic--hasTabbar) .Snackbar {
+:global(.vkuiInternalEpicHasTabbar) .host {
   padding-block-end: calc(
     var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
   );
 }
 
-.Snackbar__in,
-.Snackbar__snackbar {
+.in,
+.snackbar {
   transition: transform 320ms var(--vkui--animation_easing_platform);
 }
 
-.Snackbar__in {
+.in {
   padding: 8px;
   animation: animation-snackbar-intro-vertical 340ms var(--vkui--animation_easing_platform);
 }
 
-.Snackbar--closing .Snackbar__in {
+.hostClosing .in {
   transform: translate3d(0, 140%, 0);
 }
 
-.ModalRoot .Snackbar {
+.host .host {
   padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
 }
 
 /* iOS */
-.Snackbar--ios .Snackbar__in,
-.Snackbar--ios .Snackbar__snackbar {
+.hostIos .in,
+.hostIos .snackbar {
   transition: transform 400ms var(--vkui--animation_easing_platform);
 }
 
@@ -49,25 +49,25 @@
  * Desktop
  */
 
-.Snackbar--desktop {
+.hostDesktop {
   max-inline-size: 351px;
   inset-inline-start: 0;
   inset-block-end: 0;
 }
 
-.Snackbar--desktop .Snackbar__in {
+.hostDesktop .in {
   padding: 12px;
   animation-name: animation-snackbar-intro-horizontal;
 }
 
-.Snackbar--desktop.Snackbar--closing .Snackbar__in {
+.hostDesktop.hostClosing .in {
   transform: translate3d(-140%, 0, 0);
 }
 
 /**
  * Touch-interaction
  */
-.Snackbar--touched .Snackbar__snackbar {
+.hostTouched .snackbar {
   transition: none;
 }
 

@@ -1,17 +1,17 @@
-.Text {
+.host {
   font-size: var(--vkui--font_text--font_size--regular);
   line-height: var(--vkui--font_text--line_height--regular);
   font-weight: var(--vkui--font_text--font_weight--regular);
   font-family: var(--vkui--font_text--font_family--regular);
 }
 
-.Text--sizeY-compact {
+.hostSizeYCompact {
   font-size: var(--vkui--font_text--font_size--compact);
   line-height: var(--vkui--font_text--line_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .Text--sizeY-none {
+  .hostSizeYNone {
     font-size: var(--vkui--font_text--font_size--compact);
     line-height: var(--vkui--font_text--line_height--compact);
   }

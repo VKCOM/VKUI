@@ -14,19 +14,19 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Group.module.css';
 
 const sizeXClassNames = {
-  none: classNames(styles['Group--sizeX-none'], 'vkuiInternalGroup--sizeX-none'),
-  ['compact']: styles['Group--sizeX-compact'],
+  none: classNames(styles.hostSizeXNone, 'vkuiInternalGroupSizeXNone'),
+  ['compact']: styles.hostSizeXCompact,
 };
 
 const stylesMode = {
-  none: classNames(styles['Group--mode-none'], 'vkuiInternalGroup--mode-none'),
-  plain: classNames(styles['Group--mode-plain'], 'vkuiInternalGroup--mode-plain'),
-  card: classNames(styles['Group--mode-card'], 'vkuiInternalGroup--mode-card'),
+  none: classNames(styles.hostModeNone, 'vkuiInternalGroupModeNone'),
+  plain: classNames(styles.hostModePlain, 'vkuiInternalGroupModePlain'),
+  card: classNames(styles.hostModeCard, 'vkuiInternalGroupModeCard'),
 };
 
 const stylesPadding = {
-  s: styles['Group--padding-s'],
-  m: styles['Group--padding-m'],
+  s: styles.hostPaddingS,
+  m: styles.hostPaddingM,
 };
 
 /**
@@ -122,32 +122,29 @@ export const Group = ({
         tabIndex={tabIndex}
         baseClassName={classNames(
           'vkuiInternalGroup',
-          styles['Group'],
-          isInsideModal && styles['Group--inside-modal'],
-          platform === 'ios' && styles['Group--ios'],
+          styles.host,
+          isInsideModal && styles.hostInsideModal,
+          platform === 'ios' && styles.hostIos,
           sizeX !== 'regular' && sizeXClassNames[sizeX],
           mode && stylesMode[mode],
           stylesPadding[padding],
         )}
       >
-        {hasReactNode(header) && <div className={styles['Group__header']}>{header}</div>}
+        {hasReactNode(header) && <div className={styles.header}>{header}</div>}
         {children}
         {hasReactNode(description) && (
-          <Footnote className={styles['Group__description']}>{description}</Footnote>
+          <Footnote className={styles.description}>{description}</Footnote>
         )}
       </RootComponent>
 
       {separator !== 'hide' && (
         <React.Fragment>
-          <Spacing
-            className={classNames(styles['Group__separator'], styles['Group__separator--spacing'])}
-            size={16}
-          />
+          <Spacing className={classNames(styles.separator, styles.separatorSpacing)} size={16} />
           <Separator
             className={classNames(
-              styles['Group__separator'],
-              styles['Group__separator--separator'],
-              separator === 'show' && styles['Group__separator--force'],
+              styles.separator,
+              styles.separatorSeparator,
+              separator === 'show' && styles.separatorForce,
             )}
           />
         </React.Fragment>

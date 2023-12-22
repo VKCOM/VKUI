@@ -1,11 +1,11 @@
-.AspectRatio {
+.host {
   --vkui_internal--aspect_ratio: 1;
 
   position: relative;
   max-inline-size: 100%;
 }
 
-.AspectRatio::before {
+.host::before {
   content: '';
   block-size: 0;
   display: block;
@@ -13,20 +13,20 @@
 }
 
 /* stylelint-disable-next-line selector-max-universal */
-.AspectRatio > * {
+.host > * {
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;
 }
 
 /* stylelint-disable-next-line selector-max-universal */
-.AspectRatio--mode-stretch > * {
+.hostModeStretch > * {
   inline-size: 100%;
   block-size: 100%;
 }
 
 /* stylelint-disable-next-line selector-max-type */
-.AspectRatio--mode-stretch > img,
-.AspectRatio--mode-stretch > video {
+.hostModeStretch > img,
+.hostModeStretch > video {
   object-fit: cover;
 }

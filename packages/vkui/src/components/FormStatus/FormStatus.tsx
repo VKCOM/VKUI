@@ -19,8 +19,7 @@ export const FormStatus = ({ mode, children, className, ...restProps }: FormStat
       subheader={children}
       className={classNames(
         'vkuiInternalFormStatus',
-        mode === 'error' &&
-          classNames(styles['FormStatus--mode-error'], 'vkuiInternalFormStatus--mode-error'),
+        mode === 'error' && classNames(styles.hostModeError, 'vkuiInternalFormStatusModeError'),
         className,
       )}
     />

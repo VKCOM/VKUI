@@ -1,41 +1,41 @@
-.Cell {
+.host {
   position: relative;
 }
 
-.Cell--dragging {
+.hostDragging {
   background-color: var(--vkui--color_background_secondary);
   box-shadow: var(--vkui--elevation3);
 }
 
-.Cell--selectable.Cell--disabled {
+.hostSelectable.hostDisabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.Cell__checkbox,
-.Cell__dragger {
+.checkbox,
+.dragger {
   position: relative;
   flex-shrink: 0;
   margin-inline-end: 16px;
 }
 
-.Cell__content {
+.content {
   max-inline-size: 100%;
   min-inline-size: 0;
 }
 
-.Cell--removable .Cell__content {
+.hostRemovable .content {
   flex-grow: 1;
   /* размер removable icon */
   padding-inline-end: 44px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Cell--removable :global(.vkuiInternalRemovable__content) {
+.hostRemovable :global(.vkuiInternalRemovableContent) {
   padding-inline-start: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- для того чтобы активная область Cell распространялась и на область removable */
-.Cell--removable :global(.vkuiInternalRemovable__action) {
+.hostRemovable :global(.vkuiInternalRemovableAction) {
   position: absolute;
   inset-inline-end: 0;
   padding-inline-start: 0;
@@ -44,28 +44,28 @@
 /**
  * iOS
  */
-.Cell--ios .Cell__dragger {
+.hostIos .dragger {
   margin-inline: 12px 0;
 }
 
-.Cell--ios .Cell__checkbox {
+.hostIos .checkbox {
   margin-inline-end: 12px;
 }
 
-.Cell--ios.Cell--removable .Cell__content {
+.hostIos.hostRemovable .content {
   /* размер removable icon + icon margins*/
   padding-inline: 48px var(--vkui--size_base_padding_horizontal--regular);
   /* правый паддинг от removable который мы обнулили ниже */
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Cell--ios.Cell--removable :global(.vkuiInternalRemovable__action) {
+.hostIos.hostRemovable :global(.vkuiInternalRemovableAction) {
   inset-inline: 0 auto;
   z-index: 1;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Cell--ios.Cell--removable :global(.vkuiInternalRemovable__content) {
+.hostIos.hostRemovable :global(.vkuiInternalRemovableContent) {
   padding-inline-end: 0;
 }
 
@@ -74,7 +74,7 @@
  * FormItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem) > .Cell {
+:global(.vkuiInternalFormItem) > .host {
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }

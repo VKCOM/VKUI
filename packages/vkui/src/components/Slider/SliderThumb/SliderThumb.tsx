@@ -35,7 +35,7 @@ export const SliderThumb = ({
   const { focusVisible, onBlur, onFocus } = useFocusVisible(false);
   const focusVisibleClassNames = useFocusVisibleClassName({
     focusVisible,
-    mode: styles['SliderThumb--focus-visible'],
+    mode: styles.hostFocusVisible,
   });
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
@@ -93,12 +93,12 @@ export const SliderThumb = ({
         ref={handleRootRef}
         onMouseEnter={setHoveredTrue}
         onMouseLeave={setHoveredFalse}
-        className={classNames(styles['SliderThumb'], focusVisibleClassNames, className)}
+        className={classNames(styles.host, focusVisibleClassNames, className)}
       >
         <input
           {...inputProps}
           type="range"
-          className={styles['SliderThumb__nativeInput']}
+          className={styles.nativeInput}
           aria-orientation="horizontal"
           onBlur={onBlur}
           onFocus={onFocus}

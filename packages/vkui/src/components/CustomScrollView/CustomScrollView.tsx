@@ -180,21 +180,14 @@ export const CustomScrollView = ({
   };
 
   return (
-    <div
-      className={classNames(styles['CustomScrollView'], className)}
-      ref={getRootRef}
-      {...restProps}
-    >
-      <div className={styles['CustomScrollView__box']} tabIndex={-1} ref={boxRef} onScroll={scroll}>
+    <div className={classNames(styles.host, className)} ref={getRootRef} {...restProps}>
+      <div className={styles.box} tabIndex={-1} ref={boxRef} onScroll={scroll}>
         {children}
       </div>
 
-      <div className={styles['CustomScrollView__barY']} ref={barY} onClick={stopPropagation}>
+      <div className={styles.barY} ref={barY} onClick={stopPropagation}>
         <div
-          className={classNames(
-            styles['CustomScrollView__trackerY'],
-            !trackerVisible && styles['CustomScrollView__trackerY--hidden'],
-          )}
+          className={classNames(styles.trackerY, !trackerVisible && styles.trackerYHidden)}
           onMouseEnter={autoHideScrollbar ? onTrackerMouseEnter : undefined}
           onMouseLeave={autoHideScrollbar ? onTrackerMouseLeave : undefined}
           ref={trackerY}

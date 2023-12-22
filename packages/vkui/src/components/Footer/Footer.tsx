@@ -11,7 +11,7 @@ export type FooterProps = React.AllHTMLAttributes<HTMLElement> & HasComponent;
  */
 export const Footer = ({ children, className, ...restProps }: FooterProps) => {
   return (
-    <Footnote Component="footer" {...restProps} className={classNames(styles['Footer'], className)}>
+    <Footnote Component="footer" {...restProps} className={classNames(styles.host, className)}>
       {children}
     </Footnote>
   );

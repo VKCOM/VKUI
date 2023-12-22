@@ -26,17 +26,17 @@ export function getClassNamesByMode({
 
   if (mode === 'full' || mode === 'embedded') {
     if (layout) {
-      const vkuiLayoutClassNames = { card: 'vkui--layout-card', plain: 'vkui--layout-plain' };
+      const vkuiLayoutClassNames = { card: 'vkuiLayoutCard', plain: 'vkuiLayoutPlain' };
       stylesClassNames.push(vkuiLayoutClassNames[layout]);
     }
 
     if (sizeX !== 'compact') {
-      const vkuiSizeXClassNames = { none: 'vkui--sizeX-none', regular: 'vkui--sizeX-regular' };
+      const vkuiSizeXClassNames = { none: 'vkuiSizeXNone', regular: 'vkuiSizeXRegular' };
       stylesClassNames.push(vkuiSizeXClassNames[sizeX]);
     }
 
     if (sizeY !== 'regular') {
-      const vkuiSizeYClassNames = { none: 'vkui--sizeY-none', compact: 'vkui--sizeY-compact' };
+      const vkuiSizeYClassNames = { none: 'vkuiSizeYNone', compact: 'vkuiSizeYCompact' };
       stylesClassNames.push(vkuiSizeYClassNames[sizeY]);
     }
 

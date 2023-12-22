@@ -12,9 +12,9 @@ import { FixedLayout } from '../FixedLayout/FixedLayout';
 import styles from './PanelHeaderContext.module.css';
 
 const sizeXClassNames = {
-  none: styles['PanelHeaderContext--sizeX-none'],
-  ['compact']: styles['PanelHeaderContext--sizeX-compact'],
-  ['regular']: styles['PanelHeaderContext--sizeX-regular'],
+  none: styles.hostSizeXNone,
+  ['compact']: styles.hostSizeXCompact,
+  ['regular']: styles.hostSizeXRegular,
 };
 
 export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -72,10 +72,10 @@ export const PanelHeaderContext = ({
     <FixedLayout
       {...restProps}
       className={classNames(
-        styles['PanelHeaderContext'],
-        platform === 'ios' && styles['PanelHeaderContext--ios'],
-        opened && styles['PanelHeaderContext--opened'],
-        closing && styles['PanelHeaderContext--closing'],
+        styles.host,
+        platform === 'ios' && styles.hostIos,
+        opened && styles.hostOpened,
+        closing && styles.hostClosing,
         sizeXClassNames[sizeX],
         className,
       )}
@@ -87,15 +87,15 @@ export const PanelHeaderContext = ({
             event.stopPropagation();
             onClose();
           }}
-          className={styles['PanelHeaderContext__fade']}
+          className={styles.fade}
         />
       )}
       <div
-        className={styles['PanelHeaderContext__in']}
+        className={styles.in}
         ref={elementRef}
         onAnimationEnd={closing ? onAnimationEnd : undefined}
       >
-        {visible && <div className={styles['PanelHeaderContext__content']}>{children}</div>}
+        {visible && <div className={styles.content}>{children}</div>}
       </div>
     </FixedLayout>
   );

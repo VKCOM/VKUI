@@ -4,9 +4,9 @@ import { HasCaps, Typography, TypographyProps } from '../Typography';
 import styles from './Caption.module.css';
 
 const stylesLevel = {
-  '1': styles['Caption--level-1'],
-  '2': styles['Caption--level-2'],
-  '3': styles['Caption--level-3'],
+  '1': styles.hostLevel1,
+  '2': styles.hostLevel2,
+  '3': styles.hostLevel3,
 };
 
 export interface CaptionProps extends TypographyProps, HasCaps {
@@ -30,7 +30,7 @@ export const Caption = ({
     <Typography
       Component={Component}
       normalize={normalize}
-      className={classNames(className, caps && styles['Caption--caps'], stylesLevel[level])}
+      className={classNames(className, caps && styles.hostCaps, stylesLevel[level])}
       {...restProps}
     />
   );

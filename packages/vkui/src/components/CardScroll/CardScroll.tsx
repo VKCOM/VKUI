@@ -7,9 +7,9 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardScroll.module.css';
 
 const stylesSize = {
-  s: 'vkuiInternalCardScroll--size-s',
-  m: 'vkuiInternalCardScroll--size-m',
-  l: 'vkuiInternalCardScroll--size-l',
+  s: 'vkuiInternalCardScrollSizeS',
+  m: 'vkuiInternalCardScrollSizeM',
+  l: 'vkuiInternalCardScrollSizeL',
 };
 
 export interface CardScrollProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -92,10 +92,10 @@ export const CardScroll = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['CardScroll'],
+        styles.host,
         'vkuiInternalCardScroll',
         size !== false && stylesSize[size],
-        withSpaces && styles['CardScroll--withSpaces'],
+        withSpaces && styles.hostWithSpaces,
       )}
     >
       <HorizontalScroll
@@ -103,10 +103,10 @@ export const CardScroll = ({
         getScrollToRight={getScrollToRight}
         showArrows={showArrows}
       >
-        <div className={styles['CardScroll__in']} ref={refContainer}>
-          <span className={styles['CardScroll__gap']} ref={gapRef} />
+        <div className={styles.in} ref={refContainer}>
+          <span className={styles.gap} ref={gapRef} />
           {children}
-          <span className={styles['CardScroll__gap']} />
+          <span className={styles.gap} />
         </div>
       </HorizontalScroll>
     </RootComponent>

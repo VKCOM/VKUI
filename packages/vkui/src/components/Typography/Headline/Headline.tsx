@@ -5,13 +5,13 @@ import { Typography, TypographyProps } from '../Typography';
 import styles from './Headline.module.css';
 
 const stylesLevel = {
-  '1': styles['Headline--level-1'],
-  '2': styles['Headline--level-2'],
+  '1': styles.hostLevel1,
+  '2': styles.hostLevel2,
 };
 
 const sizeYClassNames = {
-  none: styles['Headline--sizeY-none'],
-  ['compact']: styles['Headline--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 export interface HeadlineProps extends TypographyProps {

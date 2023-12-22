@@ -33,8 +33,8 @@ export const SegmentedControlOption = ({
   return (
     <label
       className={classNames(
-        styles['SegmentedControlOption'],
-        restProps.checked && styles['SegmentedControlOption--checked'],
+        styles.host,
+        restProps.checked && styles.hostChecked,
         focusVisibleClassNames,
         className,
       )}
@@ -49,9 +49,7 @@ export const SegmentedControlOption = ({
         onBlur={callMultiple(onBlur, restProps.onBlur)}
         onFocus={callMultiple(onFocus, restProps.onFocus)}
       />
-      {hasReactNode(before) && (
-        <div className={styles['SegmentedControlOption__before']}>{before}</div>
-      )}
+      {hasReactNode(before) && <div className={styles.before}>{before}</div>}
       <Headline level="2" weight="2">
         {children}
       </Headline>

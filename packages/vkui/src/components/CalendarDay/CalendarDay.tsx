@@ -75,23 +75,23 @@ export const CalendarDay = React.memo(
     }, [focused]);
 
     if (hidden) {
-      return <div className={styles['CalendarDay__hidden']} />;
+      return <div className={styles.hidden} />;
     }
 
     return (
       <Tappable
         className={classNames(
-          styles['CalendarDay'],
-          size === 's' && styles['CalendarDay--size-s'],
-          today && styles['CalendarDay--today'],
-          selected && !disabled && styles['CalendarDay--selected'],
-          selectionStart && styles['CalendarDay--selection-start'],
-          selectionEnd && styles['CalendarDay--selection-end'],
-          disabled && styles['CalendarDay--disabled'],
-          !sameMonth && styles['CalendarDay--not-same-month'],
+          styles.host,
+          size === 's' && styles.hostSizeS,
+          today && styles.hostToday,
+          selected && !disabled && styles.hostSelected,
+          selectionStart && styles.hostSelectionStart,
+          selectionEnd && styles.hostSelectionEnd,
+          disabled && styles.hostDisabled,
+          !sameMonth && styles.hostNotSameMonth,
           className,
         )}
-        hoverMode={active ? '' : styles['CalendarDay--hover']}
+        hoverMode={active ? '' : styles.hostHover}
         hasActive={false}
         onClick={onClick}
         disabled={disabled}
@@ -104,19 +104,14 @@ export const CalendarDay = React.memo(
       >
         <div
           className={classNames(
-            styles['CalendarDay__hinted'],
-            hinted && styles['CalendarDay__hinted--active'],
-            hintedSelectionStart && styles['CalendarDay__hinted--selection-start'],
-            hintedSelectionEnd && styles['CalendarDay__hinted--selection-end'],
+            styles.hinted,
+            hinted && styles.hintedActive,
+            hintedSelectionStart && styles.hintedSelectionStart,
+            hintedSelectionEnd && styles.hintedSelectionEnd,
           )}
         >
-          <div
-            className={classNames(
-              styles['CalendarDay__inner'],
-              active && !disabled && styles['CalendarDay__inner--active'],
-            )}
-          >
-            <div className={styles['CalendarDay__day-number']}>
+          <div className={classNames(styles.inner, active && !disabled && styles.innerActive)}>
+            <div className={styles.dayNumber}>
               <VisuallyHidden>{children ?? label}</VisuallyHidden>
               <span aria-hidden>{day.getDate()}</span>
             </div>

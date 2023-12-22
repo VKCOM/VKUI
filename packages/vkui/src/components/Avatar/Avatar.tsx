@@ -37,13 +37,13 @@ export type InitialsAvatarTextGradients =
   | 'blue';
 
 const gradientStyles = {
-  'red': styles['Avatar--gradient-red'],
-  'orange': styles['Avatar--gradient-orange'],
-  'yellow': styles['Avatar--gradient-yellow'],
-  'green': styles['Avatar--gradient-green'],
-  'blue': styles['Avatar--gradient-blue'],
-  'l-blue': styles['Avatar--gradient-l-blue'],
-  'violet': styles['Avatar--gradient-violet'],
+  'red': styles.hostGradientRed,
+  'orange': styles.hostGradientOrange,
+  'yellow': styles.hostGradientYellow,
+  'green': styles.hostGradientGreen,
+  'blue': styles.hostGradientBlue,
+  'l-blue': styles.hostGradientLBlue,
+  'violet': styles.hostGradientViolet,
 };
 
 export interface AvatarProps extends Omit<ImageBaseProps, 'widthSize' | 'heightSize'> {
@@ -91,7 +91,7 @@ export const Avatar = ({
 
   const fallbackIcon = initials ? (
     <div
-      className={styles['Avatar__initials']}
+      className={styles.initials}
       style={{
         fontSize: getInitialsFontSize(size),
       }}
@@ -108,8 +108,8 @@ export const Avatar = ({
       size={size}
       fallbackIcon={fallbackIcon}
       className={classNames(
-        styles['Avatar'],
-        gradientName && styles['Avatar--has-gradient'],
+        styles.host,
+        gradientName && styles.hostHasGradient,
         isGradientNotCustom && gradientStyles[gradientName],
         className,
       )}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { fakeTimers, userEvent } from '../../testing/utils';
 import { CalendarDay, CalendarDayProps } from './CalendarDay';
+import styles from './CalendarDay.module.css';
 
 const day = new Date('1970-01-01');
 const onChange = jest.fn();
@@ -22,6 +23,6 @@ describe('CalendarDay', () => {
   it('renders hidden div', () => {
     render(<CalendarDayTest hidden />);
 
-    expect(document.querySelector('.vkuiCalendarDay__hidden')).toBeInTheDocument();
+    expect(document.querySelector('.' + styles.hidden)).toBeInTheDocument();
   });
 });

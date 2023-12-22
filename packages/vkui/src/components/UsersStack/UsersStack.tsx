@@ -7,15 +7,15 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './UsersStack.module.css';
 
 const stylesSize = {
-  s: styles['UsersStack--size-s'],
-  m: styles['UsersStack--size-m'],
-  l: styles['UsersStack--size-l'],
+  s: styles.hostSizeS,
+  m: styles.hostSizeM,
+  l: styles.hostSizeL,
 };
 
 const stylesDirection = {
-  'row': styles['UsersStack--direction-row'],
-  'row-reverse': styles['UsersStack--direction-row-reverse'],
-  'column': styles['UsersStack--direction-column'],
+  'row': styles.hostDirectionRow,
+  'row-reverse': styles.hostDirectionRowReverse,
+  'column': styles.hostDirectionColumn,
 };
 
 export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -141,12 +141,7 @@ export const UsersStack = ({
     const maskID = `UsersStackMask${cmpId}${i}`;
 
     return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className={styles['UsersStack__photo']}
-        key={i}
-        aria-hidden
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" className={styles.photo} key={i} aria-hidden>
         <defs>
           <PathElement id={id} direction={direction} photoSize={photoSize} />
         </defs>
@@ -154,7 +149,7 @@ export const UsersStack = ({
           <use href={hrefID} />
         </clipPath>
         <g clipPath={`url(#${maskID})`}>
-          <use href={hrefID} className={styles['UsersStack__fill']} />
+          <use href={hrefID} className={styles.fill} />
           <image href={photo} width={photoSize} height={photoSize} />
           <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
         </g>
@@ -163,11 +158,7 @@ export const UsersStack = ({
   });
 
   const othersElement = canShowOthers ? (
-    <CounterTypography
-      caps
-      weight="1"
-      className={classNames(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
-    >
+    <CounterTypography caps weight="1" className={classNames(styles.photo, styles.photoOthers)}>
       +{count}
     </CounterTypography>
   ) : null;
@@ -175,17 +166,15 @@ export const UsersStack = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles['UsersStack'], stylesSize[size], stylesDirection[direction])}
+      baseClassName={classNames(styles.host, stylesSize[size], stylesDirection[direction])}
     >
       {(photosElements.length > 0 || othersElement) && (
-        <div className={styles['UsersStack__photos']} aria-hidden>
+        <div className={styles.photos} aria-hidden>
           {photosElements}
           {othersElement}
         </div>
       )}
-      {hasReactNode(children) && (
-        <Footnote className={styles['UsersStack__text']}>{children}</Footnote>
-      )}
+      {hasReactNode(children) && <Footnote className={styles.text}>{children}</Footnote>}
     </RootComponent>
   );
 };

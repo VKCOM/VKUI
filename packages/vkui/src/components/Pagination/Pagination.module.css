@@ -1,14 +1,14 @@
-.Pagination__list {
+.list {
   display: flex;
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.Pagination__prevButtonContainer {
+.prevButtonContainer {
   margin-inline-end: 8px;
 }
 
-.Pagination__nextButtonContainer {
+.nextButtonContainer {
   margin-inline-start: 8px;
 }

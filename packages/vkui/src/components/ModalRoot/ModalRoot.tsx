@@ -148,7 +148,7 @@ class ModalRootTouchComponent extends React.Component<
     if (enabled) {
       // восстанавливаем значение overscroll behavior
       // eslint-disable-next-line no-restricted-properties
-      this.document.documentElement.classList.remove('vkui--disable-overscroll-behavior');
+      this.document.documentElement.classList.remove('vkuiDisableOverscrollBehavior');
 
       // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
       // https://github.com/VKCOM/VKUI/issues/444
@@ -160,7 +160,7 @@ class ModalRootTouchComponent extends React.Component<
       // отключаем нативный pull-to-refresh при открытом модальном окне
       // чтобы он не срабатывал при закрытии модалки смахиванием вниз
       // eslint-disable-next-line no-restricted-properties
-      this.document.documentElement.classList.add('vkui--disable-overscroll-behavior');
+      this.document.documentElement.classList.add('vkuiDisableOverscrollBehavior');
 
       this.window.addEventListener('touchmove', this.preventTouch, {
         passive: false,
@@ -579,13 +579,12 @@ class ModalRootTouchComponent extends React.Component<
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
             className={classNames(
-              styles['ModalRoot'],
+              styles.host,
               this.props.configProvider?.hasCustomPanelHeaderAfter &&
-                styles['ModalRoot--hasCustomPanelHeaderAfterSlot'],
-              touchDown &&
-                classNames(styles['ModalRoot--touched'], 'vkuiInternalModalRoot--touched'),
+                styles.hostHasCustomPanelHeaderAfterSlot,
+              touchDown && classNames(styles.hostTouched, 'vkuiInternalModalRootTouched'),
               !!(enteringModal || exitingModal) &&
-                classNames(styles['ModalRoot--switching'], 'vkuiInternalModalRoot--switching'),
+                classNames(styles.hostSwitching, 'vkuiInternalModalRootSwitching'),
             )}
             onMove={this.onTouchMove}
             onEnd={this.onTouchEnd}
@@ -593,11 +592,11 @@ class ModalRootTouchComponent extends React.Component<
           >
             <div
               data-testid={modalOverlayTestId}
-              className={styles['ModalRoot__mask']}
+              className={styles.mask}
               onClick={this.props.onExit}
               ref={this.maskElementRef}
             />
-            <div className={styles['ModalRoot__viewport']} ref={this.viewportRef}>
+            <div className={styles.viewport} ref={this.viewportRef}>
               {this.getModals().map((Modal) => {
                 const modalId = getNavId(Modal.props, warn);
                 const _modalState = this.props.getModalState(modalId);
@@ -615,12 +614,12 @@ class ModalRootTouchComponent extends React.Component<
                     onClose={this.props.onExit}
                     timeout={this.timeout}
                     className={classNames(
-                      styles['ModalRoot__modal'],
+                      styles.modal,
 
-                      dragging && 'vkuiInternalModalRoot__modal--dragging',
+                      dragging && 'vkuiInternalModalRootModalDragging',
 
-                      isPage && modalState.expandable && 'vkuiInternalModalRoot__modal--expandable',
-                      isPage && modalState.collapsed && 'vkuiInternalModalRoot__modal--collapsed',
+                      isPage && modalState.expandable && 'vkuiInternalModalRootModalExpandable',
+                      isPage && modalState.collapsed && 'vkuiInternalModalRootModalCollapsed',
                     )}
                     restoreFocus={false}
                   >

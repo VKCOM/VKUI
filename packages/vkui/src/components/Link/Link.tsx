@@ -18,7 +18,7 @@ export const Link = ({ hasVisited, children, className, ...restProps }: LinkProp
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
       {...restProps}
-      className={classNames(styles['Link'], hasVisited && styles['Link--has-visited'], className)}
+      className={classNames(styles.host, hasVisited && styles.hostHasVisited, className)}
       hasHover={false}
       activeMode="opacity"
       focusVisibleMode="outside"

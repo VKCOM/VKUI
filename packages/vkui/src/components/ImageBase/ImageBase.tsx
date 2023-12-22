@@ -164,9 +164,9 @@ export const ImageBase = ({
       <Clickable
         style={{ width, height, ...style }}
         baseClassName={classNames(
-          styles['ImageBase'],
-          loaded && styles['ImageBase--loaded'],
-          withTransparentBackground && styles['ImageBase--transparent-background'],
+          styles.host,
+          loaded && styles.hostLoaded,
+          withTransparentBackground && styles.hostTransparentBackground,
         )}
         {...restProps}
       >
@@ -174,7 +174,7 @@ export const ImageBase = ({
           <img
             ref={imgRef}
             alt={alt}
-            className={styles['ImageBase__img']}
+            className={styles.img}
             crossOrigin={crossOrigin}
             decoding={decoding}
             loading={loading}
@@ -189,9 +189,9 @@ export const ImageBase = ({
             onError={handleImageError}
           />
         )}
-        {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
+        {fallbackIcon && <div className={styles.fallback}>{fallbackIcon}</div>}
         {children}
-        {withBorder && <div aria-hidden className={styles['ImageBase__border']} />}
+        {withBorder && <div aria-hidden className={styles.border} />}
       </Clickable>
     </ImageBaseContext.Provider>
   );

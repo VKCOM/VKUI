@@ -1,4 +1,4 @@
-.IconButton {
+.host {
   appearance: none;
   background: none;
   border: 0;
@@ -17,73 +17,73 @@
   border-radius: 9999px;
 }
 
-.IconButton--sizeY-compact {
+.hostSizeYCompact {
   block-size: 44px;
 }
 
-.IconButton[disabled] {
+.host[disabled] {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.IconButton--ios {
+.hostIos {
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.IconButton :global(.vkuiIcon--16) {
+.host :global(.vkuiIcon--16) {
   padding: 16px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.IconButton :global(.vkuiIcon--16.vkuiIcon--w-8) {
+.host :global(.vkuiIcon--16.vkuiIcon--w-8) {
   padding-block: 16px;
   padding-inline: 14px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.IconButton--sizeY-compact :global(.vkuiIcon--16),
-.IconButton--sizeY-compact :global(.vkuiIcon--16.vkuiIcon--w-8) {
+.hostSizeYCompact :global(.vkuiIcon--16),
+.hostSizeYCompact :global(.vkuiIcon--16.vkuiIcon--w-8) {
   padding: 14px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.IconButton :global(.vkuiIcon--24) {
+.host :global(.vkuiIcon--24) {
   padding: 12px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.IconButton--sizeY-compact :global(.vkuiIcon--24) {
+.hostSizeYCompact :global(.vkuiIcon--24) {
   padding: 10px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.IconButton :global(.vkuiIcon--28) {
+.host :global(.vkuiIcon--28) {
   padding: 10px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.IconButton--sizeY-compact :global(.vkuiIcon--28) {
+.hostSizeYCompact :global(.vkuiIcon--28) {
   padding: 8px;
 }
 
 @media (--sizeY-compact) {
-  .IconButton--sizeY-none {
+  .hostSizeYNone {
     block-size: 44px;
   }
 
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .IconButton--sizeY-none :global(.vkuiIcon--16),
-  .IconButton--sizeY-none :global(.vkuiIcon--16.vkuiIcon--w-8) {
+  .hostSizeYNone :global(.vkuiIcon--16),
+  .hostSizeYNone :global(.vkuiIcon--16.vkuiIcon--w-8) {
     padding: 14px;
   }
 
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .IconButton--sizeY-none :global(.vkuiIcon--24) {
+  .hostSizeYNone :global(.vkuiIcon--24) {
     padding: 10px;
   }
 
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .IconButton--sizeY-none :global(.vkuiIcon--28) {
+  .hostSizeYNone :global(.vkuiIcon--28) {
     padding: 8px;
   }
 }
@@ -95,11 +95,9 @@
  * - FormField
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--removable) :global(.vkuiInternalRemovable__content) > .IconButton,
-:global(.vkuiInternalFormLayoutGroup--removable)
-  :global(.vkuiInternalRemovable__content)
-  > .IconButton,
-:global(.vkuiInternalFormField__after) .IconButton {
+:global(.vkuiInternalFormItemRemovable) :global(.vkuiInternalRemovableContent) > .host,
+:global(.vkuiInternalFormLayoutGroupRemovable) :global(.vkuiInternalRemovableContent) > .host,
+:global(.vkuiInternalFormFieldAfter) .host {
   display: flex;
   align-items: center;
   align-content: center;
@@ -110,42 +108,36 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormField__after)
-  .IconButton
-  :global(.vkuiIcon):global(.vkuiIcon):global(.vkuiIcon) {
+:global(.vkuiInternalFormFieldAfter) .host :global(.vkuiIcon):global(.vkuiIcon):global(.vkuiIcon) {
   padding: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormField__after) .IconButton--sizeY-compact {
+:global(.vkuiInternalFormFieldAfter) .hostSizeYCompact {
   inline-size: var(--vkui--size_field_height--compact);
   block-size: var(--vkui--size_field_height--compact);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--removable)
-  :global(.vkuiInternalRemovable__content)
-  > .IconButton--sizeY-compact,
-:global(.vkuiInternalFormLayoutGroup--removable)
-  :global(.vkuiInternalRemovable__content)
-  > .IconButton--sizeY-compact {
+:global(.vkuiInternalFormItemRemovable) :global(.vkuiInternalRemovableContent) > .hostSizeYCompact,
+:global(.vkuiInternalFormLayoutGroupRemovable)
+  :global(.vkuiInternalRemovableContent)
+  > .hostSizeYCompact {
   block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalFormField__after) .IconButton--sizeY-none {
+  :global(.vkuiInternalFormFieldAfter) .hostSizeYNone {
     inline-size: var(--vkui--size_field_height--compact);
     block-size: var(--vkui--size_field_height--compact);
   }
 
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalFormItem--removable)
-    :global(.vkuiInternalRemovable__content)
-    > .IconButton--sizeY-none,
-  :global(.vkuiInternalFormLayoutGroup--removable)
-    :global(.vkuiInternalRemovable__content)
-    > .IconButton--sizeY-none {
+  :global(.vkuiInternalFormItemRemovable) :global(.vkuiInternalRemovableContent) > .hostSizeYNone,
+  :global(.vkuiInternalFormLayoutGroupRemovable)
+    :global(.vkuiInternalRemovableContent)
+    > .hostSizeYNone {
     block-size: var(--vkui--size_field_height--compact);
   }
 }
@@ -155,12 +147,12 @@
  * SimpleCell
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalSimpleCell__after) .IconButton:last-child {
+:global(.vkuiInternalSimpleCellAfter) .host:last-child {
   margin-inline-end: -12px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalSimpleCell__after) .IconButton--ios:last-child {
+:global(.vkuiInternalSimpleCellAfter) .hostIos:last-child {
   margin-inline-end: -9px;
 }
 
@@ -169,7 +161,7 @@
  * Alert
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalAlert__dismiss).IconButton {
+:global(.vkuiInternalAlertDismiss).host {
   block-size: 36px;
   padding: 8px;
 }

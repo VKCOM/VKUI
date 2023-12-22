@@ -36,12 +36,7 @@ export const Spinner = React.memo(
     }[size];
 
     return (
-      <RootComponent
-        Component="span"
-        role="status"
-        {...restProps}
-        baseClassName={styles['Spinner']}
-      >
+      <RootComponent Component="span" role="status" {...restProps} baseClassName={styles.host}>
         <SpinnerIcon>
           {!disableAnimation && (
             // TODO [a11y]: use reduced motion hook?

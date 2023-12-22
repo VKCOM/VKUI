@@ -1,4 +1,4 @@
-.Counter {
+.host {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,39 +7,39 @@
   box-sizing: border-box;
 }
 
-.Counter--mode-primary {
+.hostModePrimary {
   background: var(--vkui--color_background_accent);
   color: var(--vkui--color_text_contrast);
 }
 
-.Counter--mode-secondary {
+.hostModeSecondary {
   background: var(--vkui--color_icon_secondary);
   color: var(--vkui--color_text_contrast_themed);
 }
 
-.Counter--mode-prominent {
+.hostModeProminent {
   background: var(--vkui--color_accent_red);
   color: var(--vkui--color_text_contrast);
 }
 
-.Counter--mode-contrast {
+.hostModeContrast {
   background: var(--vkui--color_background_content);
   color: var(--vkui--color_text_accent_themed);
 }
 
-.Counter--size-m {
+.hostSizeM {
   block-size: 24px;
   min-inline-size: 24px;
   border-radius: 12px;
 }
 
-.Counter--size-s {
+.hostSizeS {
   block-size: 18px;
   min-inline-size: 18px;
   border-radius: 9px;
 }
 
-.Counter--mode-inherit {
+.hostModeInherit {
   background-color: var(
     --vkui_internal--counter_inherit_background,
     var(--vkui--color_icon_secondary)
@@ -52,7 +52,7 @@
  * PanelHeaderButton
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeaderButton) .Counter {
+:global(.vkuiInternalPanelHeaderButton) .host {
   position: absolute;
   padding: 0;
   inset-block-start: 8px;
@@ -64,7 +64,7 @@
  * TabbarItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabbarItem__label) .Counter {
+:global(.vkuiInternalTabbarItemLabel) .host {
   position: absolute;
   inset-block-start: -2px;
   inset-inline-end: -9px;

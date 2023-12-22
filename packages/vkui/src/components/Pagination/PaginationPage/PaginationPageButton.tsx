@@ -30,8 +30,8 @@ export const PaginationPageButton = ({
   return (
     <Tappable
       className={classNames(paginationClassNames, className)}
-      activeMode={styles['PaginationPage--state-active']}
-      hoverMode={styles['PaginationPage--state-hover']}
+      activeMode={styles.hostStateActive}
+      hoverMode={styles.hostStateHover}
       hasActive={!isCurrent}
       hasHover={!isCurrent}
       focusVisibleMode="outside"

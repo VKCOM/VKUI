@@ -27,6 +27,6 @@ describe(Image.Badge, () => {
       </ImageTest>,
     );
 
-    expect(getImageBadgeEl()).toHaveClass(imageBadgeStyles['ImageBadge--shifted']);
+    expect(getImageBadgeEl()).toHaveClass(imageBadgeStyles.hostShifted);
   });
 });

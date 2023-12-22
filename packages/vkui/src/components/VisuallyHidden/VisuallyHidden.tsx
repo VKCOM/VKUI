@@ -15,5 +15,5 @@ export const VisuallyHidden = <T,>({
   Component = 'span',
   ...restProps
 }: VisuallyHiddenProps<T>) => (
-  <RootComponent Component={Component} {...restProps} baseClassName={styles['VisuallyHidden']} />
+  <RootComponent Component={Component} {...restProps} baseClassName={styles.host} />
 );

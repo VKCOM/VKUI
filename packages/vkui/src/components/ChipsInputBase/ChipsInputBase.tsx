@@ -29,8 +29,8 @@ const getValueOptionByHTMLElement = <O extends ChipOption>(value: O[], el: HTMLE
 };
 
 const sizeYClassNames = {
-  none: styles['ChipsInputBase--sizeY-none'],
-  compact: styles['ChipsInputBase--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  compact: styles.hostSizeYCompact,
 } as const;
 
 export const ChipsInputBase = <O extends ChipOption>({
@@ -179,9 +179,9 @@ export const ChipsInputBase = <O extends ChipOption>({
     >
       <div
         className={classNames(
-          styles['ChipsInputBase'],
+          styles.host,
           sizeY !== 'regular' && sizeYClassNames[sizeY],
-          withPlaceholder && styles['ChipsInputBase--hasPlaceholder'],
+          withPlaceholder && styles.hostHasPlaceholder,
         )}
         onClick={isDisabled ? undefined : handleClick}
         // для a11y
@@ -200,7 +200,7 @@ export const ChipsInputBase = <O extends ChipOption>({
                 'value': option.value,
                 'label': option.label,
                 'disabled': disabled,
-                'className': styles['ChipsInputBase__chip'],
+                'className': styles.chip,
                 'onRemove': handleChipRemove,
                 // для a11y
                 'role': 'option',
@@ -212,7 +212,7 @@ export const ChipsInputBase = <O extends ChipOption>({
             )}
           </React.Fragment>
         ))}
-        <div role="option" className={styles['ChipsInputBase__label']}>
+        <div role="option" className={styles.label}>
           {inputLabel && <VisuallyHidden>{inputLabel}</VisuallyHidden>}
           <Text
             aria-autocomplete="list"
@@ -225,7 +225,7 @@ export const ChipsInputBase = <O extends ChipOption>({
             type="text"
             id={inputId}
             getRootRef={inputRef}
-            className={styles['ChipsInputBase__el']}
+            className={styles.el}
             disabled={disabled}
             readOnly={readOnly}
             placeholder={withPlaceholder ? placeholder : undefined}

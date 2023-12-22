@@ -97,49 +97,39 @@ export const ActionSheetItem = ({
               isCancelItem: Boolean(isCancelItem),
             })
       }
-      activeMode={platform === 'ios' ? styles['ActionSheetItem--active'] : undefined}
+      activeMode={platform === 'ios' ? styles.hostActive : undefined}
       className={classNames(
-        styles['ActionSheetItem'],
-        platform === 'ios' && styles['ActionSheetItem--ios'],
-        mode === 'cancel' && styles['ActionSheetItem--mode-cancel'],
-        mode === 'destructive' && styles['ActionSheetItem--mode-destructive'],
-        sizeY === 'compact' && styles['ActionSheetItem--sizeY-compact'],
-        isRich && styles['ActionSheetItem--rich'],
-        actionSheetMode === 'menu' && styles['ActionSheetItem--menu'],
-        selectable && styles['ActionSheetItem--selectable'],
+        styles.host,
+        platform === 'ios' && styles.hostIos,
+        mode === 'cancel' && styles.hostModeCancel,
+        mode === 'destructive' && styles.hostModeDestructive,
+        sizeY === 'compact' && styles.hostSizeYCompact,
+        isRich && styles.hostRich,
+        actionSheetMode === 'menu' && styles.hostMenu,
+        selectable && styles.hostSelectable,
         className,
       )}
     >
-      {before && <div className={styles['ActionSheetItem__before']}>{before}</div>}
-      <div
-        className={classNames(
-          styles['ActionSheetItem__container'],
-          !multiline && styles['ActionSheetItem--ellipsis'],
-        )}
-      >
-        <div
-          className={classNames(
-            styles['ActionSheetItem__content'],
-            isCentered && styles['ActionSheetItem--centered'],
-          )}
-        >
+      {before && <div className={styles.before}>{before}</div>}
+      <div className={classNames(styles.container, !multiline && styles.hostEllipsis)}>
+        <div className={classNames(styles.content, isCentered && styles.hostCentered)}>
           {platform === 'ios' ? (
             <Title
-              className={styles['ActionSheetItem__children']}
+              className={styles.children}
               weight={mode === 'cancel' ? '2' : '3'}
               level={isCentered ? '2' : '3'}
             >
               {children}
             </Title>
           ) : (
-            <Text className={styles['ActionSheetItem__children']}>{children}</Text>
+            <Text className={styles.children}>{children}</Text>
           )}
-          {meta && <Text className={styles['ActionSheetItem__meta']}>{meta}</Text>}
+          {meta && <Text className={styles.meta}>{meta}</Text>}
         </div>
-        {subtitle && <Subhead className={styles['ActionSheetItem__subtitle']}>{subtitle}</Subhead>}
+        {subtitle && <Subhead className={styles.subtitle}>{subtitle}</Subhead>}
       </div>
       {(selectable || after) && (
-        <div className={styles['ActionSheetItem__after']}>
+        <div className={styles.after}>
           {after}
           {selectable && (
             <Radio

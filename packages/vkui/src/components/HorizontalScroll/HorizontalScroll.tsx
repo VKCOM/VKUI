@@ -280,9 +280,9 @@ export const HorizontalScroll = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['HorizontalScroll'],
+        styles.host,
         'vkuiInternalHorizontalScroll',
-        showArrows === 'always' && styles['HorizontalScroll--withConstArrows'],
+        showArrows === 'always' && styles.hostWithConstArrows,
       )}
       onMouseEnter={calculateArrowsVisibility}
     >
@@ -293,10 +293,7 @@ export const HorizontalScroll = ({
           offsetY={arrowOffsetY}
           direction="left"
           aria-hidden
-          className={classNames(
-            styles['HorizontalScroll__arrow'],
-            styles['HorizontalScroll__arrowLeft'],
-          )}
+          className={classNames(styles.arrow, styles.arrowLeft)}
           onClick={scrollToLeft}
         />
       )}
@@ -307,15 +304,12 @@ export const HorizontalScroll = ({
           offsetY={arrowOffsetY}
           direction="right"
           aria-hidden
-          className={classNames(
-            styles['HorizontalScroll__arrow'],
-            styles['HorizontalScroll__arrowRight'],
-          )}
+          className={classNames(styles.arrow, styles.arrowRight)}
           onClick={scrollToRight}
         />
       )}
-      <div className={styles['HorizontalScroll__in']} ref={scrollerRef}>
-        <div className={styles['HorizontalScroll__in-wrapper']}>{children}</div>
+      <div className={styles.in} ref={scrollerRef}>
+        <div className={styles.inWrapper}>{children}</div>
       </div>
     </RootComponent>
   );

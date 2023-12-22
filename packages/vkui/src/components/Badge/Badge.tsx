@@ -5,8 +5,8 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Badge.module.css';
 
 const stylesMode = {
-  new: styles['Badge--mode-new'],
-  prominent: styles['Badge--mode-prominent'],
+  new: styles.hostModeNew,
+  prominent: styles.hostModeProminent,
 };
 
 export interface BadgeProps extends RootComponentProps<HTMLSpanElement> {
@@ -19,7 +19,7 @@ export interface BadgeProps extends RootComponentProps<HTMLSpanElement> {
 export const Badge = ({ mode = 'new', children, ...restProps }: BadgeProps) => (
   <RootComponent
     Component="span"
-    baseClassName={classNames(styles['Badge'], stylesMode[mode])}
+    baseClassName={classNames(styles.host, stylesMode[mode])}
     {...restProps}
   >
     {children && <VisuallyHidden>{children}</VisuallyHidden>}

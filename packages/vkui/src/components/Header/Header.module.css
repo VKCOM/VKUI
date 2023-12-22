@@ -1,4 +1,4 @@
-.Header {
+.host {
   display: flex;
   align-items: flex-start;
   padding: 0;
@@ -7,114 +7,114 @@
   font-family: var(--vkui--font_family_base);
 }
 
-.Header__main {
+.main {
   flex: 1 0 0;
   min-inline-size: 0;
   color: var(--vkui--color_text_primary);
 }
 
-.Header__content {
+.content {
   display: flex;
   align-items: center;
 }
 
-.Header__content-in,
-.Header__subtitle {
+.contentIn,
+.subtitle {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.Header__content--multiline {
+.contentMultiline {
   white-space: initial;
   word-break: break-word;
 }
 
-.Header__subtitle {
+.subtitle {
   display: block;
   color: var(--vkui--color_text_secondary);
 }
 
-.Header--mode-secondary:not(.Header--pi):not(.Header--with-subtitle) .Header__main,
-.Header--mode-tertiary .Header__main {
+.hostModeSecondary:not(.hostPi):not(.hostWithSubtitle) .main,
+.hostModeTertiary .main {
   color: var(--vkui--color_text_secondary);
 }
 
-.Header__indicator {
+.indicator {
   color: var(--vkui--color_text_secondary);
   margin-inline-start: 6px;
   flex-shrink: 0;
 }
 
-.Header--mode-primary .Header__indicator {
+.hostModePrimary .indicator {
   color: var(--vkui--color_text_subhead);
 }
 
-.Header:not(.Header--pi) .Header__indicator {
+.host:not(.hostPi) .indicator {
   align-self: center;
 }
 
-.Header--mode-secondary .Header__indicator {
+.hostModeSecondary .indicator {
   margin-inline-start: 8px;
 }
 
-.Header__aside {
+.aside {
   display: flex;
   white-space: nowrap;
 }
 
 /* stylelint-disable selector-max-universal */
-.Header__aside.Header__aside > * {
+.aside.aside > * {
   margin-block: 13px 7px;
   margin-inline-start: 12px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Header__aside > :global(.vkuiIcon) {
+.aside > :global(.vkuiIcon) {
   position: relative;
   color: var(--vkui--color_icon_secondary);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Header__aside > :global(.vkuiIcon--24) {
+.aside > :global(.vkuiIcon--24) {
   margin-block: 11px 5px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Header__aside > :global(.vkuiIcon--16) {
+.aside > :global(.vkuiIcon--16) {
   margin-block: 15px 9px;
 }
 
-.Header--mode-primary {
+.hostModePrimary {
   padding-block: 3px 1px;
 }
 
-.Header__content {
+.content {
   margin-block-start: 12px;
 }
 
-.Header__content:last-child {
+.content:last-child {
   margin-block-end: 8px;
 }
 
-.Header--mode-tertiary .Header__content {
+.hostModeTertiary .content {
   margin-block-start: 15px;
 }
 
-.Header--mode-tertiary .Header__content:last-child {
+.hostModeTertiary .content:last-child {
   margin-block-end: 9px;
 }
 
-.Header__subtitle {
+.subtitle {
   margin-block-end: 7px;
 }
 
-/* Компенсируем 1 пиксель из-за паддинга в .Header--mode-primary */
-.Header--mode-primary .Header__subtitle {
+/* Компенсируем 1 пиксель из-за паддинга в .hostModePrimary */
+.hostModePrimary .subtitle {
   margin-block-end: 6px;
 }
 
-.Header--large .Header__content {
+.hostLarge .content {
   margin-block: 10px 6px;
 }
 
@@ -125,39 +125,39 @@
  * TODO: Переделать отрицательные отступы https://github.com/VKCOM/VKUI/issues/3508
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-plain):not(:first-of-type) > .Header:first-child,
-:global(.vkuiInternalGroup--mode-plain):not(:first-of-type)
+:global(.vkuiInternalGroupModePlain):not(:first-of-type) > .host:first-child,
+:global(.vkuiInternalGroupModePlain):not(:first-of-type)
   > :global(.vkuiInternalTappable):first-child
-  > .Header {
+  > .host {
   margin-block-start: -16px;
 }
 
 @media (--sizeX-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
-    > .Header:first-child,
-  :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
+  :global(.vkuiInternalGroupSizeXNone.vkuiInternalGroupModeNone):not(:first-of-type)
+    > .host:first-child,
+  :global(.vkuiInternalGroupSizeXNone.vkuiInternalGroupModeNone):not(:first-of-type)
     > :global(.vkuiInternalTappable):first-child
-    > .Header {
+    > .host {
     margin-block-start: -16px;
   }
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-card) > .Header:not(.Header--mode-tertiary):first-child,
-:global(.vkuiInternalGroup--mode-card)
+:global(.vkuiInternalGroupModeCard) > .host:not(.hostModeTertiary):first-child,
+:global(.vkuiInternalGroupModeCard)
   > :global(.vkuiInternalTappable):first-child
-  > .Header:not(.Header--mode-tertiary) {
+  > .host:not(.hostModeTertiary) {
   margin-block-start: -4px;
 }
 
 @media (--sizeX-regular) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
-    > .Header:not(.Header--mode-tertiary):first-child,
-  :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
+  :global(.vkuiInternalGroupSizeXNone.vkuiInternalGroupModeNone)
+    > .host:not(.hostModeTertiary):first-child,
+  :global(.vkuiInternalGroupSizeXNone.vkuiInternalGroupModeNone)
     > :global(.vkuiInternalTappable):first-child
-    > .Header:not(.Header--mode-tertiary) {
+    > .host:not(.hostModeTertiary) {
     margin-block-start: -4px;
   }
 }
@@ -166,6 +166,6 @@
  * Impact:
  * Link
  */
-.Header__aside {
+.aside {
   --vkui_internal--link-color: var(--vkui--color_text_accent);
 }

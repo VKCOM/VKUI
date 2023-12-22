@@ -205,10 +205,8 @@ export const AppRoot = ({
     <div
       ref={appRootRef}
       className={classNames(
-        styles['AppRoot'],
-        hasPointer === undefined
-          ? styles['AppRoot--pointer-none']
-          : !hasPointer && styles['AppRoot--pointer-has-not'],
+        styles.host,
+        hasPointer === undefined ? styles.hostPointerNone : !hasPointer && styles.hostPointerHasNot,
         className,
       )}
       {...props}

@@ -33,14 +33,14 @@ export const ModalPageHeader = ({
   return (
     <div
       className={classNames(
-        styles['ModalPageHeader'],
-        platform !== 'vkcom' && styles['ModalPageHeader--withGaps'],
-        isDesktop && styles['ModalPageHeader--desktop'],
+        styles.host,
+        platform !== 'vkcom' && styles.hostWithGaps,
+        isDesktop && styles.hostDesktop,
       )}
       ref={getRootRef}
     >
       <PanelHeader
-        className={classNames('vkuiInternalModalPageHeader__in', className)}
+        className={classNames('vkuiInternalModalPageHeaderIn', className)}
         typographyProps={{
           Component: 'h2',
           id: labelId,

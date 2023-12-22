@@ -20,8 +20,8 @@ import type { InternalGestureRef, InternalValueState } from './types';
 import styles from './Slider.module.css';
 
 const sizeYClassNames = {
-  none: styles['Slider--sizeY-none'],
-  ['compact']: styles['Slider--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 export interface SliderBaseProps
@@ -207,8 +207,8 @@ export const Slider = ({
       data-value={multiple ? `${startValue},${endValue}` : startValue}
       {...restPropsWithoutAriaAttributes}
       className={classNames(
-        styles['Slider'],
-        disabled && styles['Slider--disabled'],
+        styles.host,
+        disabled && styles.hostDisabled,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
@@ -216,19 +216,19 @@ export const Slider = ({
       onMove={disabled ? undefined : handlePointerMove}
       onEnd={disabled ? undefined : handlePointerEnd}
     >
-      <div className={styles['Slider__track']} />
+      <div className={styles.track} />
       <div
-        className={styles['Slider__track-fill']}
+        className={styles.trackFill}
         style={
           multiple
             ? { left: `${startValueInPercent}%`, right: `${100 - endReversedValueInPercent}%` }
             : { width: `${startValueInPercent}%` }
         }
       />
-      <div ref={thumbsContainerRef} className={styles['Slider__thumbs']}>
+      <div ref={thumbsContainerRef} className={styles.thumbs}>
         <SliderThumb
           data-type="start"
-          className={styles['Slider__thumb']}
+          className={styles.thumb}
           style={{
             left: `${startValueInPercent}%`,
             // Меняем местами порядок слоёв, иначе, при достижении `start` и `end` 100%, `end` будет перекрывать `start`.
@@ -252,7 +252,7 @@ export const Slider = ({
         {multiple && (
           <SliderThumb
             data-type="end"
-            className={styles['Slider__thumb']}
+            className={styles.thumb}
             style={{ left: `${endReversedValueInPercent}%` }}
             withTooltip={withTooltip}
             inputProps={{

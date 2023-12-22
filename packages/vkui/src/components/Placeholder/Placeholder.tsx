@@ -24,9 +24,9 @@ const PlaceholderContainer = ({
 }: PlaceholderContainerProps) => (
   <RootComponent
     baseClassName={classNames(
-      styles['Placeholder'],
-      stretched && styles['Placeholder--stretched'],
-      withPadding && styles['Placeholder--withPadding'],
+      styles.host,
+      stretched && styles.hostStretched,
+      withPadding && styles.hostWithPadding,
     )}
     {...restProps}
   />
@@ -35,34 +35,25 @@ const PlaceholderContainer = ({
 export type PlaceholderIconProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
 const PlaceholderIcon = (props: PlaceholderIconProps) => (
-  <RootComponent baseClassName={styles['Placeholder__icon']} {...props} />
+  <RootComponent baseClassName={styles.icon} {...props} />
 );
 
 export type PlaceholderHeaderProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
 
 const PlaceholderHeader = ({ className, ...restProps }: PlaceholderHeaderProps) => (
-  <Title
-    level="2"
-    weight="2"
-    className={classNames(className, styles['Placeholder__header'])}
-    {...restProps}
-  />
+  <Title level="2" weight="2" className={classNames(className, styles.header)} {...restProps} />
 );
 
 export type PlaceholderTextProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
 
 const PlaceholderText = ({ className, ...restProps }: PlaceholderTextProps) => (
-  <Headline
-    weight="3"
-    className={classNames(className, styles['Placeholder__text'])}
-    {...restProps}
-  />
+  <Headline weight="3" className={classNames(className, styles.text)} {...restProps} />
 );
 
 export type PlaceholderActionsProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
 const PlaceholderActions = (props: PlaceholderActionsProps) => (
-  <RootComponent baseClassName={styles['Placeholder__action']} {...props} />
+  <RootComponent baseClassName={styles.action} {...props} />
 );
 
 export interface PlaceholderProps extends PlaceholderContainerProps {

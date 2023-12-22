@@ -69,10 +69,10 @@ export const ActionSheetDropdownMenu = ({
       offsetByMainAxis={popupOffsetDistance}
       placement={placement}
       className={classNames(
-        styles['ActionSheet'],
-        platform === 'ios' && styles['ActionSheet--ios'],
-        styles['ActionSheet--menu'],
-        sizeY === 'compact' && styles['ActionSheet--sizeY-compact'],
+        styles.host,
+        platform === 'ios' && styles.hostIos,
+        styles.hostMenu,
+        sizeY === 'compact' && styles.hostSizeYCompact,
         className,
       )}
       style={style}

@@ -33,8 +33,8 @@ const SHIFT_DEFAULT_STATE = {
 };
 
 const stylesBullets = {
-  dark: styles['BaseGallery__bullets--dark'],
-  light: styles['BaseGallery__bullets--light'],
+  dark: styles.bulletsDark,
+  light: styles.bulletsLight,
 };
 export const BaseGallery = ({
   bullets = false,
@@ -315,15 +315,15 @@ export const BaseGallery = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['BaseGallery'],
-        align === 'center' && styles['BaseGallery--align-center'],
-        slideWidth === 'custom' && styles['BaseGallery--custom-width'],
-        isDraggable && styles['BaseGallery--draggable'],
+        styles.host,
+        align === 'center' && styles.hostAlignCenter,
+        slideWidth === 'custom' && styles.hostCustomWidth,
+        isDraggable && styles.hostDraggable,
       )}
       getRootRef={rootRef}
     >
       <Touch
-        className={styles['BaseGallery__viewport']}
+        className={styles.viewport}
         onStartX={onStart}
         onMoveX={onMoveX}
         onEnd={onEnd}
@@ -331,13 +331,9 @@ export const BaseGallery = ({
         getRootRef={viewportRef}
         noSlideClick
       >
-        <div className={styles['BaseGallery__layer']} style={layerStyle}>
+        <div className={styles.layer} style={layerStyle}>
           {React.Children.map(children, (item: React.ReactNode, i: number) => (
-            <div
-              className={styles['BaseGallery__slide']}
-              key={`slide-${i}`}
-              ref={(el) => setSlideRef(el, i)}
-            >
+            <div className={styles.slide} key={`slide-${i}`} ref={(el) => setSlideRef(el, i)}>
               {item}
             </div>
           ))}
@@ -345,16 +341,10 @@ export const BaseGallery = ({
       </Touch>
 
       {bullets && (
-        <div
-          aria-hidden
-          className={classNames(styles['BaseGallery__bullets'], stylesBullets[bullets])}
-        >
+        <div aria-hidden className={classNames(styles.bullets, stylesBullets[bullets])}>
           {React.Children.map(children, (_item: React.ReactNode, index: number) => (
             <div
-              className={classNames(
-                styles['BaseGallery__bullet'],
-                index === slideIndex && styles['BaseGallery__bullet--active'],
-              )}
+              className={classNames(styles.bullet, index === slideIndex && styles.bulletActive)}
               key={index}
             />
           ))}
@@ -363,7 +353,7 @@ export const BaseGallery = ({
 
       {showArrows && hasPointer && canSlideLeft && (
         <ScrollArrow
-          className={styles['BaseGallery__arrow']}
+          className={styles.arrow}
           direction="left"
           onClick={slideLeft}
           size={arrowSize}
@@ -371,7 +361,7 @@ export const BaseGallery = ({
       )}
       {showArrows && hasPointer && canSlideRight && (
         <ScrollArrow
-          className={styles['BaseGallery__arrow']}
+          className={styles.arrow}
           direction="right"
           onClick={slideRight}
           size={arrowSize}

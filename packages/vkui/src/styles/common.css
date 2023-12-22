@@ -25,36 +25,36 @@
   color: var(--vkui--color_text_primary);
 }
 
-.vkui--sizeX-regular {
+.vkuiSizeXRegular {
   background: var(--vkui--color_background);
 }
 
 @media (--sizeX-regular) {
-  .vkui--sizeX-none {
+  .vkuiSizeXNone {
     background: var(--vkui--color_background);
   }
 }
 
-.vkui--sizeY-compact {
+.vkuiSizeYCompact {
   --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .vkui--sizeY-none {
+  .vkuiSizeYNone {
     --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--compact);
   }
 }
 
-.vkui--layout-card {
+.vkuiLayoutCard {
   background: var(--vkui--color_background);
 }
 
-.vkui--layout-plain {
+.vkuiLayoutPlain {
   background: var(--vkui--color_background_content);
 }
 
 /* отключаем нативный pull-to-refresh при взаимодействии с компонентом
  * PullToRefresh или при открывании модалки */
-.vkui--disable-overscroll-behavior {
+.vkuiDisableOverscrollBehavior {
   overscroll-behavior-y: none;
 }

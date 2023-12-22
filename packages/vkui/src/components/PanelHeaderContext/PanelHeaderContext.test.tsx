@@ -5,6 +5,7 @@ import { ViewWidth } from '../../lib/adaptivity';
 import { baselineComponent, fakeTimers, runAllTimers, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { PanelHeaderContext } from './PanelHeaderContext';
+import styles from './PanelHeaderContext.module.css';
 
 describe('PanelHeaderContext', () => {
   baselineComponent(PanelHeaderContext);
@@ -34,7 +35,7 @@ describe('PanelHeaderContext', () => {
     it('on mobile fade click', async () => {
       const onClose = jest.fn();
       render(<PanelHeaderContext opened onClose={onClose} />);
-      await userEvent.click(document.querySelector('.vkuiPanelHeaderContext__fade') as Element);
+      await userEvent.click(document.querySelector('.' + styles.fade) as Element);
       expect(onClose).toBeCalledTimes(1);
     });
 

@@ -39,8 +39,8 @@ import { useChipsSelect, type UseChipsSelectProps } from './useChipsSelect';
 import styles from './ChipsSelect.module.css';
 
 const stylesDropdownVerticalPlacement = {
-  top: styles['ChipsSelect--pop-up'],
-  bottom: styles['ChipsSelect--pop-down'],
+  top: styles.hostPopUp,
+  bottom: styles.hostPopDown,
 } as const;
 
 export interface ChipsSelectProps<O extends ChipOption>
@@ -377,7 +377,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         // FormFieldProps
         getRootRef={rootRef}
         className={classNames(
-          styles['ChipsSelect'],
+          styles.host,
           opened &&
             dropdownVerticalPlacement &&
             stylesDropdownVerticalPlacement[dropdownVerticalPlacement],
@@ -387,13 +387,13 @@ export const ChipsSelect = <Option extends ChipOption>({
         before={before}
         after={
           <IconButton
-            className={styles['ChipsSelect__dropdown']}
+            className={styles.dropdown}
             activeMode=""
             hoverMode=""
             label={getIconLabel(opened)}
             onClick={toggleOpened}
           >
-            {icon ?? <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />}
+            {icon ?? <DropdownIcon className={styles.icon} opened={opened} />}
           </IconButton>
         }
         // option
@@ -434,7 +434,7 @@ export const ChipsSelect = <Option extends ChipOption>({
           {options.map((option, index) => {
             if (isEmptyOptionPreset(option)) {
               return (
-                <Footnote key="empty-text" className={styles['ChipsSelect__empty']}>
+                <Footnote key="empty-text" className={styles.empty}>
                   {option.placeholder}
                 </Footnote>
               );

@@ -29,7 +29,7 @@ export const Epic = ({ activeStory, tabbar, children, ...restProps }: EpicProps)
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles['Epic'], tabbar && 'vkuiInternalEpic--hasTabbar')}
+      baseClassName={classNames(styles.host, tabbar && 'vkuiInternalEpicHasTabbar')}
     >
       <ScrollSaver
         key={activeStory}

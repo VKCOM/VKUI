@@ -5,20 +5,20 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './ButtonGroup.module.css';
 
 const stylesMode = {
-  vertical: styles['ButtonGroup--mode-vertical'],
-  horizontal: styles['ButtonGroup--mode-horizontal'],
+  vertical: styles.hostModeVertical,
+  horizontal: styles.hostModeHorizontal,
 };
 
 const stylesGap = {
-  space: styles['ButtonGroup--gap-space'],
-  s: styles['ButtonGroup--gap-s'],
-  m: styles['ButtonGroup--gap-m'],
+  space: styles.hostGapSpace,
+  s: styles.hostGapS,
+  m: styles.hostGapM,
 };
 
 const stylesAlign = {
-  left: styles['ButtonGroup--align-left'],
-  center: styles['ButtonGroup--align-center'],
-  right: styles['ButtonGroup--align-right'],
+  left: styles.hostAlignLeft,
+  center: styles.hostAlignCenter,
+  right: styles.hostAlignRight,
 };
 
 export interface ButtonGroupProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -55,10 +55,10 @@ export const ButtonGroup = ({
   return (
     <RootComponent
       baseClassName={classNames(
-        styles.ButtonGroup,
+        styles.host,
         stylesMode[mode],
         gap !== 'none' && stylesGap[gap],
-        stretched && styles['ButtonGroup--stretched'],
+        stretched && styles.hostStretched,
         stylesAlign[align],
       )}
       role="group"

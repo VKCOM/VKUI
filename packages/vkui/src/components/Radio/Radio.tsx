@@ -11,15 +11,15 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Radio.module.css';
 
 const sizeYClassNames = {
-  none: styles['Radio--sizeY-none'],
-  ['compact']: styles['Radio--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden {...props}>
       <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2" fill="none" />
-      <circle cx="12" cy="12" r="7.5" className={styles['Radio__pin']} fill="currentColor" />
+      <circle cx="12" cy="12" r="7.5" className={styles.pin} fill="currentColor" />
     </svg>
   );
 };
@@ -57,11 +57,7 @@ export const Radio = ({
     <Tappable
       Component="label"
       style={style}
-      className={classNames(
-        styles['Radio'],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-        className,
-      )}
+      className={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
       activeEffectDelay={platform === 'ios' ? 100 : DEFAULT_ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
@@ -72,17 +68,17 @@ export const Radio = ({
         Component="input"
         type="radio"
         getRootRef={getRef}
-        className={styles['Radio__input']}
+        className={styles.input}
       />
-      <div className={styles['Radio__container']}>
-        <RadioIcon className={styles['Radio__icon']} />
-        <div className={styles['Radio__content']}>
-          <div className={styles['Radio__title']}>
+      <div className={styles.container}>
+        <RadioIcon className={styles.icon} />
+        <div className={styles.content}>
+          <div className={styles.title}>
             <Text>{children}</Text>
-            <div className={styles['Radio__titleAfter']}>{titleAfter}</div>
+            <div className={styles.titleAfter}>{titleAfter}</div>
           </div>
           {hasReactNode(description) && (
-            <Footnote className={styles['Radio__description']}>{description}</Footnote>
+            <Footnote className={styles.description}>{description}</Footnote>
           )}
         </div>
       </div>

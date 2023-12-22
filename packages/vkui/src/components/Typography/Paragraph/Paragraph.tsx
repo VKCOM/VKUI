@@ -20,7 +20,7 @@ export const Paragraph = ({
     <Typography
       Component={Component}
       normalize={normalize}
-      className={classNames(className, styles['Paragraph'])}
+      className={classNames(className, styles.host)}
       {...restProps}
     />
   );

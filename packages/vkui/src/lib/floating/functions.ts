@@ -41,7 +41,7 @@ export function convertFloatingDataToReactCSSProperties(
   if (middlewareData) {
     const hide = middlewareData.hide;
     if (hide && hide.referenceHidden) {
-      styles['visibility'] = 'hidden';
+      styles.visibility = 'hidden';
     }
   }
   return styles;

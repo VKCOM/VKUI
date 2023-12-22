@@ -81,10 +81,10 @@ export const AccordionContent = ({
       role="region"
       aria-labelledby={labelId}
       aria-hidden={!expanded}
-      className={classNames(styles['AccordionContent'], className)}
+      className={classNames(styles.host, className)}
       {...restProps}
     >
-      <div ref={inRef} className={styles['AccordionContent__in']} style={inStyle}>
+      <div ref={inRef} className={styles.in} style={inStyle}>
         {children}
       </div>
     </div>

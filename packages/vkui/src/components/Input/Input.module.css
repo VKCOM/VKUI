@@ -1,18 +1,18 @@
-.Input {
+.host {
   position: relative;
   line-height: 20px;
   font-size: 16px;
 }
 
-.Input--align-center .Input__el {
+.hostAlignCenter .el {
   text-align: center;
 }
 
-.Input--align-right .Input__el {
+.hostAlignRight .el {
   text-align: end;
 }
 
-.Input__el {
+.el {
   block-size: var(--vkui--size_field_height--regular);
   margin: 0;
   inline-size: 100%;
@@ -34,43 +34,43 @@
  *
  * см. https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
  */
-.Input__el::-webkit-outer-spin-button,
-.Input__el::-webkit-inner-spin-button {
+.el::-webkit-outer-spin-button,
+.el::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-.Input__el[type='number'] {
+.el[type='number'] {
   -moz-appearance: textfield;
 }
 
-.Input--sizeY-compact .Input__el {
+.hostSizeYCompact .el {
   block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .Input--sizeY-none .Input__el {
+  .hostSizeYNone .el {
     block-size: var(--vkui--size_field_height--compact);
   }
 }
 
-.Input--hasBefore .Input__el {
+.hostHasBefore .el {
   padding-inline-start: 0;
 }
 
-.Input--hasAfter .Input__el {
+.hostHasAfter .el {
   padding-inline-end: 0;
 }
 
-.Input__el:disabled {
+.el:disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.Input__el::placeholder {
+.el::placeholder {
   color: var(--vkui--color_text_secondary);
   /* Для Firefox */
   opacity: 1;
 }
 
-.Input__el:disabled::placeholder {
+.el:disabled::placeholder {
   color: var(--vkui--color_text_secondary);
 }

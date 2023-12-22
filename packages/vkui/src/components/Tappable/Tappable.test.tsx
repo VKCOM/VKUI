@@ -180,7 +180,7 @@ describe('Tappable', () => {
   describe('active', () => {
     afterEach(() => jest.clearAllMocks());
     it('shows waves on android', async () => {
-      const waveCount = () => document.querySelectorAll(`.${styles.Tappable__wave}`).length;
+      const waveCount = () => document.querySelectorAll(`.${styles.wave}`).length;
       render(
         <AdaptivityProvider hasPointer={false}>
           <ConfigProvider platform="android">
@@ -200,8 +200,7 @@ describe('Tappable', () => {
       // removes waves
       expect(waveCount()).toBe(0);
     });
-    const isActive = (e = tappable()) =>
-      e.classList.contains(styles['Tappable--activated-background']);
+    const isActive = (e = tappable()) => e.classList.contains(styles.hostActivatedBackground);
 
     // TODO (@SevereCloud): пофиксить тест
     it('activates on click', async () => {
@@ -294,7 +293,7 @@ describe('Tappable', () => {
 
   describe('hover', () => {
     const isHovered = (testId = 'x') =>
-      screen.getByTestId(testId).classList.contains(styles['Tappable--hovered-background']);
+      screen.getByTestId(testId).classList.contains(styles.hostHoveredBackground);
 
     it('is not hovered by default', () => {
       render(<Tappable onClick={noop} data-testid="x" />);

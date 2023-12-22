@@ -12,10 +12,10 @@ import { SplitColContext } from './SplitColContext';
 import styles from './SplitCol.module.css';
 
 const breakpointClassNames = {
-  none: classNames(styles['SplitCol--viewWidth-none'], 'vkuiInternalSplitCol--viewWidth-none'),
-  tabletMinus: styles['SplitCol--viewWidth-tabletMinus'],
-  smallTabletPlus: styles['SplitCol--viewWidth-smallTabletPlus'],
-  tabletPlus: 'vkuiInternalSplitCol--viewWidth-tabletPlus',
+  none: classNames(styles.hostViewWidthNone, 'vkuiInternalSplitColViewWidthNone'),
+  tabletMinus: styles.hostViewWidthTabletMinus,
+  smallTabletPlus: styles.hostViewWidthSmallTabletPlus,
+  tabletPlus: 'vkuiInternalSplitColViewWidthTabletPlus',
 };
 
 function useTransitionAnimate(animateProp?: boolean) {
@@ -103,16 +103,15 @@ export const SplitCol = (props: SplitColProps) => {
       }}
       getRootRef={baseRef}
       baseClassName={classNames(
-        styles['SplitCol'],
+        styles.host,
         viewWidthToClassName(breakpointClassNames, viewWidth),
-        autoSpaced &&
-          classNames(styles['SplitCol--spaced-auto'], 'vkuiInternalSplitCol--spaced-auto'),
-        fixed && styles['SplitCol--fixed'],
-        stretchedOnMobile && styles['SplitCol--stretched-on-mobile'],
+        autoSpaced && classNames(styles.hostSpacedAuto, 'vkuiInternalSplitColSpacedAuto'),
+        fixed && styles.hostFixed,
+        stretchedOnMobile && styles.hostStretchedOnMobile,
       )}
     >
       <SplitColContext.Provider value={contextValue}>
-        {fixed ? <div className={styles['SplitCol__fixedInner']}>{children}</div> : children}
+        {fixed ? <div className={styles.fixedInner}>{children}</div> : children}
       </SplitColContext.Provider>
     </RootComponent>
   );

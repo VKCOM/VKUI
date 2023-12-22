@@ -1,9 +1,9 @@
-.Tabs__in {
+.in {
   display: flex;
   align-items: stretch;
 }
 
-.Tabs--withGaps {
+.hostWithGaps {
   justify-content: flex-start;
 }
 
@@ -12,13 +12,13 @@
  * PanelHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader) .Tabs {
+:global(.vkuiInternalPanelHeader) .host {
   overflow: hidden;
   font-family: var(--vkui--font_family_base);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader) .Tabs::after {
+:global(.vkuiInternalPanelHeader) .host::after {
   display: block;
   inline-size: 1000px;
   content: '';
@@ -29,12 +29,12 @@
  * Group
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-plain) > .Tabs--mode-default:first-child {
+:global(.vkuiInternalGroupModePlain) > .hostModeDefault:first-child {
   margin-block-start: -8px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-card) > .Tabs--mode-default:first-child {
+:global(.vkuiInternalGroupModeCard) > .hostModeDefault:first-child {
   margin-block-start: -4px;
 }
 
@@ -44,8 +44,7 @@
  */
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
-:global(.vkuiInternalFixedLayout--ios):global(.vkuiInternalFixedLayout--vertical-bottom)
-  .Tabs::after {
+:global(.vkuiInternalFixedLayoutIos):global(.vkuiInternalFixedLayoutVerticalBottom) .host::after {
   position: absolute;
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -56,9 +55,8 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFixedLayout--ios):global(.vkuiInternalFixedLayout--vertical-bottom) .Tabs__in,
-:global(.vkuiInternalFixedLayout--ios):global(.vkuiInternalFixedLayout--vertical-bottom)
-  .Separator {
+:global(.vkuiInternalFixedLayoutIos):global(.vkuiInternalFixedLayoutVerticalBottom) .in,
+:global(.vkuiInternalFixedLayoutIos):global(.vkuiInternalFixedLayoutVerticalBottom) .host {
   position: relative;
   z-index: var(--vkui_internal--z_index_tabs);
 }

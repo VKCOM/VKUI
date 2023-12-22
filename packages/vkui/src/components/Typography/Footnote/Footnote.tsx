@@ -20,7 +20,7 @@ export const Footnote = ({
   <Typography
     Component={Component}
     normalize={normalize}
-    className={classNames(className, styles['Footnote'], caps && styles['Footnote--caps'])}
+    className={classNames(className, styles.host, caps && styles.hostCaps)}
     {...restProps}
   />
 );

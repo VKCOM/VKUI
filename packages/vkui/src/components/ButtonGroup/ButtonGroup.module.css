@@ -1,18 +1,18 @@
-.ButtonGroup {
+.host {
   display: inline-flex;
   max-inline-size: 100%; /* [Примечание 2] Чтобы блок не выходил за границы контейнера (связано с [Примечание 4]) */
 }
 
-.ButtonGroup--stretched {
+.hostStretched {
   display: flex;
   inline-size: 100%;
 }
 
-.ButtonGroup--mode-vertical {
+.hostModeVertical {
   flex-direction: column;
 }
 
-.ButtonGroup--mode-horizontal {
+.hostModeHorizontal {
   flex-direction: row;
   /* чтобы блоки не растягивались на всю высоту контейнера */
   align-items: flex-start;
@@ -25,20 +25,20 @@
  */
 
 /* "gap" для mode="vertical" */
-.ButtonGroup--mode-vertical.ButtonGroup--gap-space > *:not(:first-child) {
+.hostModeVertical.hostGapSpace > *:not(:first-child) {
   margin-block-start: var(--vkui--size_button_group_gap_space--regular);
 }
 
-.ButtonGroup--mode-vertical.ButtonGroup--gap-s > *:not(:first-child) {
+.hostModeVertical.hostGapS > *:not(:first-child) {
   margin-block-start: var(--vkui--size_button_group_gap_small--regular);
 }
 
-.ButtonGroup--mode-vertical.ButtonGroup--gap-m > *:not(:first-child) {
+.hostModeVertical.hostGapM > *:not(:first-child) {
   margin-block-start: var(--vkui--size_button_group_gap_medium--regular);
 }
 
 /* "gap" для mode="horizontal" */
-.ButtonGroup--mode-horizontal > *:not(.ButtonGroup) {
+.hostModeHorizontal > *:not(.host) {
   /**
    * [Примечание 4]
    *
@@ -50,40 +50,40 @@
   min-inline-size: 0;
 }
 
-.ButtonGroup--mode-horizontal.ButtonGroup--gap-space > *:not(:last-child) {
+.hostModeHorizontal.hostGapSpace > *:not(:last-child) {
   margin-inline-end: var(--vkui--size_button_group_gap_space--regular);
 }
 
-.ButtonGroup--mode-horizontal.ButtonGroup--gap-s > *:not(:last-child) {
+.hostModeHorizontal.hostGapS > *:not(:last-child) {
   margin-inline-end: var(--vkui--size_button_group_gap_small--regular);
 }
 
-.ButtonGroup--mode-horizontal.ButtonGroup--gap-m > *:not(:last-child) {
+.hostModeHorizontal.hostGapM > *:not(:last-child) {
   margin-inline-end: var(--vkui--size_button_group_gap_medium--regular);
 }
 
 /* stylelint-enable selector-max-universal */
 
-.ButtonGroup--mode-vertical.ButtonGroup--align-left {
+.hostModeVertical.hostAlignLeft {
   align-items: flex-start;
 }
 
-.ButtonGroup--mode-vertical.ButtonGroup--align-center {
+.hostModeVertical.hostAlignCenter {
   align-items: center;
 }
 
-.ButtonGroup--mode-vertical.ButtonGroup--align-right {
+.hostModeVertical.hostAlignRight {
   align-items: flex-end;
 }
 
-.ButtonGroup--mode-horizontal.ButtonGroup--align-left {
+.hostModeHorizontal.hostAlignLeft {
   justify-content: flex-start;
 }
 
-.ButtonGroup--mode-horizontal.ButtonGroup--align-center {
+.hostModeHorizontal.hostAlignCenter {
   justify-content: center;
 }
 
-.ButtonGroup--mode-horizontal.ButtonGroup--align-right {
+.hostModeHorizontal.hostAlignRight {
   justify-content: flex-end;
 }

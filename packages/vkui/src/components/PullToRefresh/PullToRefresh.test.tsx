@@ -4,8 +4,9 @@ import { noop } from '@vkontakte/vkjs';
 import { baselineComponent, fakeTimers, runAllTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
+import styles from './PullToRefresh.module.css';
 
-const hasSpinner = () => !!document.querySelector('.vkuiPullToRefresh__spinner--on');
+const hasSpinner = () => !!document.querySelector('.' + styles.spinnerOn);
 
 function firePull(el: HTMLElement, { end = true } = {}) {
   fireEvent.mouseDown(el, { clientY: 0 });
@@ -151,14 +152,14 @@ describe('PullToRefresh', () => {
       { baseElement: document.documentElement },
     );
 
-    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+    expect(document.querySelector('.vkuiDisableOverscrollBehavior')).toBeFalsy();
 
     // класс присутствует пока пуллим
     firePull(component.getByTestId('xxx'), { end: false });
-    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
+    expect(document.querySelector('.vkuiDisableOverscrollBehavior')).toBeTruthy();
 
     // класс удаляется когда отпускаем
     fireEvent.mouseUp(component.getByTestId('xxx'), { clientY: 500 });
-    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+    expect(document.querySelector('.vkuiDisableOverscrollBehavior')).toBeFalsy();
   });
 });

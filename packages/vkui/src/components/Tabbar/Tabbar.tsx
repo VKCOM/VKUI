@@ -22,9 +22,9 @@ const getItemsLayoutClassName = (
 ): string => {
   switch (itemsLayout) {
     case 'horizontal':
-      return 'vkuiInternalTabbar--layout-horizontal';
+      return 'vkuiInternalTabbarLayoutHorizontal';
     case 'vertical':
-      return 'vkuiInternalTabbar--layout-vertical';
+      return 'vkuiInternalTabbarLayoutVertical';
     default:
       return React.Children.count(children) > 2
         ? getItemsLayoutClassName('vertical', [])
@@ -42,10 +42,10 @@ export const Tabbar = ({ shadow = true, mode, ...restProps }: TabbarProps) => {
     <RootComponent
       baseClassName={classNames(
         'vkuiInternalTabbar',
-        styles['Tabbar'],
-        platform === 'ios' && styles['Tabbar--ios'],
+        styles.host,
+        platform === 'ios' && styles.hostIos,
         getItemsLayoutClassName(mode, restProps.children),
-        shadow && styles['Tabbar--shadow'],
+        shadow && styles.hostShadow,
       )}
       {...restProps}
     />

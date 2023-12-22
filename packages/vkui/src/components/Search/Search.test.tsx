@@ -5,8 +5,8 @@ import { Search } from './Search';
 import styles from './Search.module.css';
 
 const getInput = () => screen.getByRole('searchbox');
-const getClearIcon = () => document.querySelector(`.${styles.Search__icon}`)!;
-const getFindButton = () => document.querySelector(`.${styles.Search__findButton}`)!;
+const getClearIcon = () => document.querySelector(`.${styles.icon}`)!;
+const getFindButton = () => document.querySelector(`.${styles.findButton}`)!;
 
 describe('Search', () => {
   fakeTimers();

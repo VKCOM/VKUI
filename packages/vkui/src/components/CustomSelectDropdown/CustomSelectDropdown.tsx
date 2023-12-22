@@ -63,15 +63,10 @@ export const CustomSelectDropdown = ({
       onPlacementChange={onPlacementChange}
       placement={placement}
       className={classNames(
-        styles['CustomSelectDropdown'],
+        styles.host,
         'vkuiInternalCustomSelectDropdown',
-        offsetDistance === 0 &&
-          (isTop ? styles['CustomSelectDropdown--top'] : styles['CustomSelectDropdown--bottom']),
-        sameWidth &&
-          classNames(
-            styles['CustomSelectDropdown--wide'],
-            'vkuiInternalCustomSelectDropdown--wide',
-          ),
+        offsetDistance === 0 && (isTop ? styles.hostTop : styles.hostBottom),
+        sameWidth && classNames(styles.hostWide, 'vkuiInternalCustomSelectDropdownWide'),
         className,
       )}
       usePortal={forcePortal}
@@ -80,12 +75,12 @@ export const CustomSelectDropdown = ({
     >
       <CustomScrollView
         boxRef={scrollBoxRef}
-        className={noMaxHeight ? undefined : styles['CustomSelectDropdown__in--withMaxHeight']}
+        className={noMaxHeight ? undefined : styles.inWithMaxHeight}
         autoHideScrollbar={autoHideScrollbar}
         autoHideScrollbarDelay={autoHideScrollbarDelay}
       >
         {fetching ? (
-          <div className={styles['CustomSelectDropdown__fetching']}>
+          <div className={styles.fetching}>
             <Spinner size="small" />
           </div>
         ) : (

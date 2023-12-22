@@ -92,7 +92,7 @@ const RealClickable = <T,>({
     <RootComponent
       baseClassName={classNames(
         baseClassName,
-        styles['Clickable__realClickable'],
+        styles.realClickable,
         focusVisibleClassNames,
         stateClassName,
       )}
@@ -169,7 +169,7 @@ export const Clickable = <T,>({
 }: ClickableProps<T>) => {
   const commonProps = component(restProps);
   const isClickable = checkClickable(restProps);
-  const baseClassName = classNames(baseClassNameProp, styles['Clickable__host']);
+  const baseClassName = classNames(baseClassNameProp, styles.host);
 
   if (isClickable) {
     return (

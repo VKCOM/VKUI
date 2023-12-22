@@ -170,7 +170,7 @@ export const Popper = ({
   const dropdown = (
     <RootComponent
       {...restProps}
-      baseClassName={styles['Popper']}
+      baseClassName={styles.host}
       getRootRef={handleRootRef}
       style={{
         ...styleProp,

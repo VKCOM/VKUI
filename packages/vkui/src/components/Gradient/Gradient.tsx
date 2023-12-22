@@ -24,9 +24,9 @@ export const Gradient = ({ mode = 'default', to = 'top', ...restProps }: Gradien
       role="presentation"
       {...restProps}
       baseClassName={classNames(
-        styles['Gradient'],
-        mode !== 'default' && styles['Gradient--mode-tint'],
-        to === 'bottom' && styles['Gradient--to-bottom'],
+        styles.host,
+        mode !== 'default' && styles.hostModeTint,
+        to === 'bottom' && styles.hostToBottom,
       )}
     />
   );

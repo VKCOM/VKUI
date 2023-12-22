@@ -1,15 +1,15 @@
-.Gradient {
+.host {
   background: linear-gradient(to bottom, var(--vkui--gradient));
 }
 
-.Gradient.Gradient--to-bottom {
+.host.hostToBottom {
   background: linear-gradient(to top, var(--vkui--gradient));
 }
 
-.Gradient--mode-tint {
+.hostModeTint {
   background: linear-gradient(to bottom, var(--vkui--gradient_tint));
 }
 
-.Gradient--mode-tint.Gradient--to-bottom {
+.hostModeTint.hostToBottom {
   background: linear-gradient(to top, var(--vkui--gradient_tint));
 }

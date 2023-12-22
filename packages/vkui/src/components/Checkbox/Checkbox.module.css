@@ -1,4 +1,4 @@
-.Checkbox {
+.host {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -14,86 +14,86 @@
  * FormItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem) .Checkbox {
+:global(.vkuiInternalFormItem) .host {
   inline-size: 100%;
   box-sizing: content-box;
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
-.Checkbox__icon {
+.icon {
   flex-shrink: 0;
   margin-inline-end: 12px;
 }
 
-.Checkbox__icon--on {
+.iconOn {
   color: var(--vkui--color_icon_accent);
   display: none;
 }
 
-.Checkbox__icon--indeterminate {
+.iconIndeterminate {
   color: var(--vkui--color_icon_accent);
   display: none;
 }
 
-.Checkbox__icon--off {
+.iconOff {
   color: var(--vkui--color_icon_tertiary);
 }
 
-.Checkbox__content {
+.content {
   flex-grow: 1;
   color: var(--vkui--color_text_primary);
   min-inline-size: 0; /* см. https://github.com/VKCOM/VKUI/issues/5687 */
   word-break: break-word;
 }
 
-.Checkbox__description {
+.description {
   color: var(--vkui--color_text_secondary);
   display: block;
   margin-block: 2px 12px;
 }
 
-.Checkbox__title {
+.title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-block-start: 12px;
 }
 
-.Checkbox__title:last-child {
+.title:last-child {
   margin-block-end: 12px;
 }
 
-.Checkbox__titleBefore {
+.titleBefore {
   min-inline-size: 0; /* см. https://github.com/VKCOM/VKUI/issues/5687 */
 }
 
-.Checkbox__titleAfter {
+.titleAfter {
   margin-inline-start: 4px;
   flex-shrink: 0;
   color: var(--vkui--color_icon_tertiary);
 }
 
-.Checkbox__input:checked ~ .Checkbox__icon--on {
+.input:checked ~ .iconOn {
   display: flex;
 }
 
-.Checkbox__input:indeterminate ~ .Checkbox__icon--indeterminate,
-.Checkbox__input:checked ~ .Checkbox__icon--off {
+.input:indeterminate ~ .iconIndeterminate,
+.input:checked ~ .iconOff {
   display: none;
 }
 
-.Checkbox__input:indeterminate ~ .Checkbox__icon--indeterminate {
+.input:indeterminate ~ .iconIndeterminate {
   display: flex;
 }
 
-.Checkbox__input:indeterminate ~ .Checkbox__icon--on,
-.Checkbox__input:indeterminate ~ .Checkbox__icon--off {
+.input:indeterminate ~ .iconOn,
+.input:indeterminate ~ .iconOff {
   display: none;
 }
 
 /* stylelint-disable-next-line selector-max-universal */
-.Checkbox__input[disabled] ~ * {
+.input[disabled] ~ * {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
@@ -101,7 +101,7 @@
  * simple
  */
 
-.Checkbox--simple {
+.hostSimple {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,11 +111,11 @@
   block-size: var(--vkui--size_field_height--regular);
 }
 
-.Checkbox--simple .Checkbox__content {
+.hostSimple .content {
   display: none;
 }
 
-.Checkbox--simple .Checkbox__icon {
+.hostSimple .icon {
   margin: 0;
 }
 
@@ -123,48 +123,48 @@
  * sizeY COMPACT
  */
 
-.Checkbox--sizeY-compact {
+.hostSizeYCompact {
   min-inline-size: var(--vkui--size_field_height--compact);
   min-block-size: var(--vkui--size_field_height--compact);
 }
 
-.Checkbox--sizeY-compact.Checkbox--simple {
+.hostSizeYCompact.hostSimple {
   inline-size: var(--vkui--size_field_height--compact);
   block-size: var(--vkui--size_field_height--compact);
 }
 
-.Checkbox--sizeY-compact .Checkbox__title {
+.hostSizeYCompact .title {
   margin-block-start: 8px;
 }
 
-.Checkbox--sizeY-compact .Checkbox__title:last-child {
+.hostSizeYCompact .title:last-child {
   margin-block-end: 8px;
 }
 
-.Checkbox--sizeY-compact .Checkbox__description {
+.hostSizeYCompact .description {
   margin-block-end: 8px;
 }
 
 @media (--sizeY-compact) {
-  .Checkbox--sizeY-none {
+  .hostSizeYNone {
     min-inline-size: var(--vkui--size_field_height--compact);
     min-block-size: var(--vkui--size_field_height--compact);
   }
 
-  .Checkbox--sizeY-none.Checkbox--simple {
+  .hostSizeYNone.hostSimple {
     inline-size: var(--vkui--size_field_height--compact);
     block-size: var(--vkui--size_field_height--compact);
   }
 
-  .Checkbox--sizeY-none .Checkbox__title {
+  .hostSizeYNone .title {
     margin-block-start: 8px;
   }
 
-  .Checkbox--sizeY-none .Checkbox__title:last-child {
+  .hostSizeYNone .title:last-child {
     margin-block-end: 8px;
   }
 
-  .Checkbox--sizeY-none .Checkbox__description {
+  .hostSizeYNone .description {
     margin-block-end: 8px;
   }
 }

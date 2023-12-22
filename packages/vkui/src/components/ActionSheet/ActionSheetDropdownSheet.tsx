@@ -29,10 +29,10 @@ export const ActionSheetDropdownSheet = ({
       {...restProps}
       onClick={stopPropagation}
       className={classNames(
-        styles['ActionSheet'],
-        platform === 'ios' && styles['ActionSheet--ios'],
-        closing && styles['ActionSheet--closing'],
-        sizeY === 'compact' && styles['ActionSheet--sizeY-compact'],
+        styles.host,
+        platform === 'ios' && styles.hostIos,
+        closing && styles.hostClosing,
+        sizeY === 'compact' && styles.hostSizeYCompact,
         className,
       )}
     >

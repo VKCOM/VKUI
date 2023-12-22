@@ -59,10 +59,10 @@ export const PanelHeaderBack = ({
     <PanelHeaderButton
       {...restProps}
       className={classNames(
-        sizeX === 'compact' && styles['PanelHeaderBack--sizeX-compact'],
-        platform === 'ios' && styles['PanelHeaderBack--ios'],
-        platform === 'vkcom' && styles['PanelHeaderBack--vkcom'],
-        showLabel && !!label && styles['PanelHeaderBack--has-label'],
+        sizeX === 'compact' && styles.hostSizeXCompact,
+        platform === 'ios' && styles.hostIos,
+        platform === 'vkcom' && styles.hostVkcom,
+        showLabel && !!label && styles.hostHasLabel,
         className,
       )}
       label={showLabel && label}

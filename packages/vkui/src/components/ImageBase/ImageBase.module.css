@@ -1,4 +1,4 @@
-.ImageBase {
+.host {
   position: relative;
   display: flex;
   align-items: center;
@@ -11,11 +11,11 @@
   isolation: isolate;
 }
 
-.ImageBase--transparent-background {
+.hostTransparentBackground {
   background-color: transparent;
 }
 
-.ImageBase__border {
+.border {
   pointer-events: none;
   position: absolute;
   z-index: var(--vkui_internal--z_index_image_base_border);
@@ -29,7 +29,7 @@
   border-radius: inherit;
 }
 
-.ImageBase__img {
+.img {
   position: absolute;
   z-index: var(--vkui_internal--z_index_image_base_img);
   inset-block-start: 0;
@@ -43,11 +43,11 @@
   visibility: hidden;
 }
 
-.ImageBase--loaded .ImageBase__img {
+.hostLoaded .img {
   visibility: visible;
 }
 
-.ImageBase__fallback {
+.fallback {
   position: absolute;
 
   /* Расcчитываем на центрирование через родительский `display: flex` */
@@ -60,11 +60,11 @@
  * PanelHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader__before) .ImageBase {
+:global(.vkuiInternalPanelHeaderBefore) .host {
   margin-inline-start: 8px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader__after) .ImageBase {
+:global(.vkuiInternalPanelHeaderAfter) .host {
   margin-inline-end: 8px;
 }

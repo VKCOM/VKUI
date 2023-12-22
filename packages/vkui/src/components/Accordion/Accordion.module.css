@@ -1,12 +1,12 @@
-.AccordionSummary__icon {
+.icon {
   color: var(--vkui--color_icon_secondary);
 }
 
-.AccordionContent {
+.host {
   overflow: hidden;
 }
 
-.AccordionContent__in {
+.in {
   margin-block-start: -100%;
   transition: margin-top 100ms ease-in-out;
 }

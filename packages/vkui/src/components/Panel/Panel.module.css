@@ -1,10 +1,10 @@
-.Panel {
+.host {
   position: relative;
   inline-size: 100%;
   block-size: 100%;
 }
 
-.Panel::before {
+.host::before {
   position: absolute;
   inline-size: 100%;
   block-size: 100%;
@@ -13,7 +13,7 @@
   content: '';
 }
 
-.Panel__in {
+.in {
   position: relative;
   box-sizing: border-box;
   inline-size: 100%;
@@ -22,7 +22,7 @@
   flex-direction: column;
 }
 
-.Panel__centered {
+.centered {
   display: flex;
   flex: 1 0;
   flex-direction: column;
@@ -34,106 +34,106 @@
 /* stylelint-disable selector-max-universal */
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Panel__centered :global(.vkuiInternalPanelHeader--vis) + * {
+.centered :global(.vkuiInternalPanelHeaderVis) + * {
   margin-block-start: var(--vkui_internal--panel_header_height);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Panel__centered :global(.vkuiInternalPanelHeader--ios):global(.vkuiInternalPanelHeader--vis) + * {
+.centered :global(.vkuiInternalPanelHeaderIos):global(.vkuiInternalPanelHeaderVis) + * {
   margin-block-start: var(--vkui_internal--panel_header_height);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Panel--sizeX-compact .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
+.hostSizeXCompact .centered :global(.vkuiInternalPanelHeaderSep) + * {
   margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
 }
 
 @media (--sizeX-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .Panel--sizeX-none .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
+  .hostSizeXNone .centered :global(.vkuiInternalPanelHeaderSep) + * {
     margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
   }
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Panel--sizeX-compact
-  .Panel__centered
-  :global(.vkuiInternalPanelHeader--ios):global(.vkuiInternalPanelHeader--sep)
+.hostSizeXCompact
+  .centered
+  :global(.vkuiInternalPanelHeaderIos):global(.vkuiInternalPanelHeaderSep)
   + * {
   margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
 }
 
 @media (--sizeX-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .Panel--sizeX-none
-    .Panel__centered
-    :global(.vkuiInternalPanelHeader--ios):global(.vkuiInternalPanelHeader--sep)
+  .hostSizeXNone
+    .centered
+    :global(.vkuiInternalPanelHeaderIos):global(.vkuiInternalPanelHeaderSep)
     + * {
     margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
   }
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Panel--sizeX-compact
-  .Panel__centered
-  :global(.vkuiInternalPanelHeader--vkcom):global(.vkuiInternalPanelHeader--sep)
+.hostSizeXCompact
+  .centered
+  :global(.vkuiInternalPanelHeaderVkcom):global(.vkuiInternalPanelHeaderSep)
   + * {
   margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
 }
 
 @media (--sizeX-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .Panel--sizeX-none
-    .Panel__centered
-    :global(.vkuiInternalPanelHeader--vkcom):global(.vkuiInternalPanelHeader--sep)
+  .hostSizeXNone
+    .centered
+    :global(.vkuiInternalPanelHeaderVkcom):global(.vkuiInternalPanelHeaderSep)
     + * {
     margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
   }
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Panel--sizeX-regular .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
+.hostSizeXRegular .centered :global(.vkuiInternalPanelHeaderSep) + * {
   margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
 }
 
 @media (--sizeX-regular) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .Panel--sizeX-none .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
+  .hostSizeXNone .centered :global(.vkuiInternalPanelHeaderSep) + * {
     margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
   }
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Panel--sizeX-regular
-  .Panel__centered
-  :global(.vkuiInternalPanelHeader--ios):global(.vkuiInternalPanelHeader--sep)
+.hostSizeXRegular
+  .centered
+  :global(.vkuiInternalPanelHeaderIos):global(.vkuiInternalPanelHeaderSep)
   + * {
   margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
 }
 
 @media (--sizeX-regular) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .Panel--sizeX-none
-    .Panel__centered
-    :global(.vkuiInternalPanelHeader--ios):global(.vkuiInternalPanelHeader--sep)
+  .hostSizeXNone
+    .centered
+    :global(.vkuiInternalPanelHeaderIos):global(.vkuiInternalPanelHeaderSep)
     + * {
     margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
   }
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Panel--sizeX-regular
-  .Panel__centered
-  :global(.vkuiInternalPanelHeader--vkcom):global(.vkuiInternalPanelHeader--sep)
+.hostSizeXRegular
+  .centered
+  :global(.vkuiInternalPanelHeaderVkcom):global(.vkuiInternalPanelHeaderSep)
   + * {
   margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
 }
 
 @media (--sizeX-regular) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .Panel--sizeX-none
-    .Panel__centered
-    :global(.vkuiInternalPanelHeader--vkcom):global(.vkuiInternalPanelHeader--sep)
+  .hostSizeXNone
+    .centered
+    :global(.vkuiInternalPanelHeaderVkcom):global(.vkuiInternalPanelHeaderSep)
     + * {
     margin-block-start: calc(var(--vkui_internal--panel_header_height) + 16px);
   }
@@ -146,12 +146,12 @@
  * View
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalView--ios) .Panel__in {
+:global(.vkuiInternalViewIos) .in {
   padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalView--ios) .Panel__in {
+:global(.vkuiInternalViewIos) .in {
   padding-block: 0 var(--vkui_internal--safe_area_inset_bottom);
   padding-inline: var(--vkui_internal--safe_area_inset_left)
     var(--vkui_internal--safe_area_inset_right);
@@ -162,41 +162,41 @@
  * Epic
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalEpic--hasTabbar) .Panel__in {
+:global(.vkuiInternalEpicHasTabbar) .in {
   padding-block-end: var(--vkui_internal--tabbar_height);
   padding-block-end: calc(
     var(--vkui_internal--safe_area_inset_bottom) + var(--vkui_internal--tabbar_height)
   );
 }
 
-.Panel__in-before {
+.inBefore {
   block-size: 1px;
   margin-block-end: -1px;
 }
 
-.Panel__in-after {
+.inAfter {
   block-size: 1px;
   margin-block-start: -1px;
 }
 
-.Panel .Panel__in,
-.Panel::before {
+.host .in,
+.host::before {
   background-color: var(--vkui--color_background_content);
 }
 
-.Panel--layout-card .Panel__in,
-.Panel--layout-card::before {
+.hostLayoutCard .in,
+.hostLayoutCard::before {
   background-color: var(--vkui--color_background);
 }
 
-.Panel--sizeX-regular .Panel__in,
-.Panel--sizeX-regular::before {
+.hostSizeXRegular .in,
+.hostSizeXRegular::before {
   background-color: transparent;
 }
 
 @media (--sizeX-regular) {
-  .Panel--sizeX-none .Panel__in,
-  .Panel--sizeX-none::before {
+  .hostSizeXNone .in,
+  .hostSizeXNone::before {
     background-color: transparent;
   }
 }

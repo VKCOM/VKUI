@@ -1,26 +1,26 @@
-.PanelHeaderContext {
+.host {
   z-index: var(--vkui_internal--z_index_panel_header_context);
 }
 
-.PanelHeaderContext--opened,
-.PanelHeaderContext--closing {
+.hostOpened,
+.hostClosing {
   inline-size: 100%;
   block-size: 100%;
 }
 
-.PanelHeaderContext--sizeX-regular.PanelHeaderContext--opened,
-.PanelHeaderContext--sizeX-regular.PanelHeaderContext--closing {
+.hostSizeXRegular.hostOpened,
+.hostSizeXRegular.hostClosing {
   block-size: auto;
 }
 
 @media (--sizeX-regular) {
-  .PanelHeaderContext--sizeX-none.PanelHeaderContext--opened,
-  .PanelHeaderContext--sizeX-none.PanelHeaderContext--closing {
+  .hostSizeXNone.hostOpened,
+  .hostSizeXNone.hostClosing {
     block-size: auto;
   }
 }
 
-.PanelHeaderContext__in {
+.in {
   position: absolute;
   inset-inline-start: 0;
   inline-size: 100%;
@@ -29,7 +29,7 @@
   pointer-events: none;
 }
 
-.PanelHeaderContext__fade {
+.fade {
   display: none;
   position: absolute;
   inline-size: 100%;
@@ -39,39 +39,39 @@
   background: rgba(0, 0, 0, 0.4);
 }
 
-.PanelHeaderContext--sizeX-compact .PanelHeaderContext__fade {
+.hostSizeXCompact .fade {
   display: block;
 }
 
 @media (--sizeX-compact) {
-  .PanelHeaderContext--sizeX-none .PanelHeaderContext__fade {
+  .hostSizeXNone .fade {
     display: block;
   }
 }
 
-.PanelHeaderContext--opened .PanelHeaderContext__fade {
+.hostOpened .fade {
   animation: animation-panelheadercontext-fade-in 0.2s ease;
 }
 
-.PanelHeaderContext--closing .PanelHeaderContext__fade {
+.hostClosing .fade {
   animation: animation-panelheadercontext-fade-out 0.2s ease;
 }
 
-.PanelHeaderContext--opened .PanelHeaderContext__in {
+.hostOpened .in {
   pointer-events: auto;
   animation: animation-panelheadercontext-translate-in 0.2s ease;
 }
 
-.PanelHeaderContext--closing .PanelHeaderContext__in {
+.hostClosing .in {
   animation: animation-panelheadercontext-translate-out 0.2s ease;
 }
 
-.PanelHeaderContext__content {
+.content {
   overflow: hidden;
   background: var(--vkui--color_background_content);
 }
 
-.PanelHeaderContext--ios .PanelHeaderContext__in {
+.hostIos .in {
   padding: 0;
 }
 
@@ -80,15 +80,15 @@
  * platform !== 'ios' ||
  * (platform === 'ios' && isDesktop)
  */
-.PanelHeaderContext:not(.PanelHeaderContext--ios) .PanelHeaderContext__content,
-.PanelHeaderContext--sizeX-regular.PanelHeaderContext--ios .PanelHeaderContext__content {
+.host:not(.hostIos) .content,
+.hostSizeXRegular.hostIos .content {
   border-radius: 12px;
   padding-block: 8px;
   padding-inline: 0;
 }
 
 @media (--sizeX-regular) {
-  .PanelHeaderContext--sizeX-none.PanelHeaderContext--ios .PanelHeaderContext__content {
+  .hostSizeXNone.hostIos .content {
     border-radius: 12px;
     padding-block: 8px;
     padding-inline: 0;
@@ -99,30 +99,30 @@
  Desktop
  */
 
-.PanelHeaderContext--sizeX-regular .PanelHeaderContext__in {
+.hostSizeXRegular .in {
   padding-block: 12px;
   padding-inline: 8px;
 }
 
-.PanelHeaderContext--sizeX-regular .PanelHeaderContext__content {
+.hostSizeXRegular .content {
   border-radius: 12px;
 }
 
-.PanelHeaderContext--sizeX-regular .PanelHeaderContext__content {
+.hostSizeXRegular .content {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(0, 0, 0, 0.16);
 }
 
 @media (--sizeX-regular) {
-  .PanelHeaderContext--sizeX-none .PanelHeaderContext__in {
+  .hostSizeXNone .in {
     padding-block: 12px;
     padding-inline: 8px;
   }
 
-  .PanelHeaderContext--sizeX-none .PanelHeaderContext__content {
+  .hostSizeXNone .content {
     border-radius: 12px;
   }
 
-  .PanelHeaderContext--sizeX-none .PanelHeaderContext__content {
+  .hostSizeXNone .content {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(0, 0, 0, 0.16);
   }
 }

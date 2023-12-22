@@ -8,13 +8,13 @@ import { HasComponent, HasRootRef } from '../../types';
 import styles from './FormField.module.css';
 
 const sizeYClassNames = {
-  none: styles['FormField--sizeY-none'],
-  ['compact']: styles['FormField--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 const stylesStatus = {
-  error: styles['FormField--status-error'],
-  valid: styles['FormField--status-valid'],
+  error: styles.hostStatusError,
+  valid: styles.hostStatusValid,
 };
 
 export interface FormFieldProps {
@@ -70,7 +70,7 @@ export const FormField = ({
   const focusWithin = useFocusWithin(elRef);
   const focusVisibleClassNames = useFocusVisibleClassName({
     focusVisible: focusWithin,
-    mode: styles['FormField--focus-visible'],
+    mode: styles.hostFocusVisible,
   });
 
   const handleMouseEnter = (e: MouseEvent) => {
@@ -90,24 +90,22 @@ export const FormField = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={classNames(
-        styles['FormField'],
-        mode === 'default' && styles['FormField--mode-default'],
+        styles.host,
+        mode === 'default' && styles.hostModeDefault,
         status !== 'default' && stylesStatus[status],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        disabled && styles['FormField--disabled'],
-        !disabled && hover && styles['FormField--hover'],
+        disabled && styles.hostDisabled,
+        !disabled && hover && styles.hostHover,
         focusVisibleClassNames,
         className,
       )}
     >
-      {before && <span className={styles['FormField__before']}>{before}</span>}
+      {before && <span className={styles.before}>{before}</span>}
       {children}
       {after && (
-        <span className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}>
-          {after}
-        </span>
+        <span className={classNames(styles.after, 'vkuiInternalFormFieldAfter')}>{after}</span>
       )}
-      <span aria-hidden className={styles['FormField__border']} />
+      <span aria-hidden className={styles.border} />
     </Component>
   );
 };

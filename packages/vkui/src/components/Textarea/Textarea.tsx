@@ -9,8 +9,8 @@ import { Text } from '../Typography/Text/Text';
 import styles from './Textarea.module.css';
 
 const sizeYClassNames = {
-  none: styles['Textarea--sizeY-none'],
-  ['compact']: styles['Textarea--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 export interface TextareaProps
@@ -68,11 +68,7 @@ export const Textarea = ({
 
   return (
     <FormField
-      className={classNames(
-        styles['Textarea'],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-        className,
-      )}
+      className={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}
@@ -84,7 +80,7 @@ export const Textarea = ({
         normalize={false}
         style={{ maxHeight }}
         rows={rows}
-        className={styles['Textarea__el']}
+        className={styles.el}
         value={value}
         onChange={onChange}
         getRootRef={elementRef}

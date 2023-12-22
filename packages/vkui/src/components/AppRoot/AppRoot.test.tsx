@@ -20,13 +20,13 @@ describe('AppRoot', () => {
       </AdaptivityProvider>
     );
     const result = render(<Template />);
-    expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-none']);
+    expect(result.getByTestId('app-root')).toHaveClass(styles.hostPointerNone);
     result.rerender(<Template hasPointer={false} />);
-    expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-has-not']);
+    expect(result.getByTestId('app-root')).toHaveClass(styles.hostPointerHasNot);
     result.rerender(<Template hasPointer={true} />);
     expect(result.getByTestId('app-root')).not.toHaveClass(
-      styles['AppRoot--pointer-none'],
-      styles['AppRoot--pointer-has-not'],
+      styles.hostPointerNone,
+      styles.hostPointerHasNot,
     );
   });
 
@@ -181,13 +181,13 @@ describe('AppRoot', () => {
     it.each(['embedded', 'full'] as const)('should add adaptivity classes in %s mode', (mode) => {
       const { unmount, rerender, container } = render(<AppRoot mode={mode} />);
       const parentElement = mode === 'embedded' ? container : document.documentElement;
-      expect(parentElement).not.toHaveClass('vkui--sizeX-regular');
+      expect(parentElement).not.toHaveClass('vkuiSizeXRegular');
       rerender(
         <AdaptivityProvider sizeX="regular">
           <AppRoot mode={mode} />
         </AdaptivityProvider>,
       );
-      expect(parentElement).toHaveClass('vkui--sizeX-regular');
+      expect(parentElement).toHaveClass('vkuiSizeXRegular');
       unmount();
       expect(parentElement).not.toHaveClass();
     });
@@ -221,7 +221,7 @@ describe('AppRoot', () => {
     ] as const)('should resolve "$layout" layout prop (mode="$mode")', ({ mode, layout }) => {
       const { unmount, container, rerender } = render(<AppRoot mode={mode} />);
       const conditionalContainer = mode === 'full' ? document.documentElement : container;
-      const className = layout === 'card' ? 'vkui--layout-card' : 'vkui--layout-plain';
+      const className = layout === 'card' ? 'vkuiLayoutCard' : 'vkuiLayoutPlain';
 
       expect(conditionalContainer).not.toHaveClass(className);
 

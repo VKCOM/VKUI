@@ -1,21 +1,21 @@
-.ScreenSpinner {
+.host {
   animation: screen-spinner-intro 0.3s ease;
 }
 
-.ScreenSpinner--clickable {
+.hostClickable {
   cursor: pointer;
 }
 
-.ScreenSpinner__spinner {
+.spinner {
   opacity: 1;
   transition: opacity 0.1s ease;
 }
 
-.ScreenSpinner__spinner--hidden {
+.spinnerHidden {
   opacity: 0;
 }
 
-.ScreenSpinner__container {
+.container {
   position: relative;
   inline-size: 88px;
   block-size: 88px;
@@ -25,7 +25,7 @@
   color: var(--vkui--color_icon_medium);
 }
 
-.ScreenSpinner__icon {
+.icon {
   position: absolute;
   inset-block-start: 0;
   inline-size: 100%;
@@ -36,12 +36,12 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.ScreenSpinner__icon :global(.vkuiIcon) {
+.icon :global(.vkuiIcon) {
   animation: screen-spinner-intro 0.2s ease;
 }
 
 /* stylelint-disable-next-line selector-max-type, selector-pseudo-class-disallowed-list */
-.ScreenSpinner__icon--state-done :global(.vkuiIcon) path {
+.iconStateDone :global(.vkuiIcon) path {
   stroke-dasharray: 50;
   stroke-dashoffset: 50;
   animation: screen-spinner-icon-done 0.6s 0.3s var(--vkui--animation_easing_platform) forwards;

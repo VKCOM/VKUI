@@ -4,9 +4,9 @@ import { Typography, TypographyProps } from '../Typography';
 import styles from './Title.module.css';
 
 const stylesLevel = {
-  '1': styles['Title--level-1'],
-  '2': styles['Title--level-2'],
-  '3': styles['Title--level-3'],
+  '1': styles.hostLevel1,
+  '2': styles.hostLevel2,
+  '3': styles.hostLevel3,
 };
 
 export interface TitleProps extends TypographyProps {

@@ -10,10 +10,10 @@ import styles from './TooltipBase.module.css';
 export const TOOLTIP_MAX_WIDTH = 220;
 
 const stylesAppearance = {
-  accent: styles['TooltipBase--appearance-accent'],
-  white: styles['TooltipBase--appearance-white'],
-  black: styles['TooltipBase--appearance-black'],
-  inversion: styles['TooltipBase--appearance-inversion'],
+  accent: styles.hostAppearanceAccent,
+  white: styles.hostAppearanceWhite,
+  black: styles.hostAppearanceBlack,
+  inversion: styles.hostAppearanceInversion,
 };
 
 export interface TooltipBaseProps
@@ -80,7 +80,7 @@ export const TooltipBase = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['TooltipBase'],
+        styles.host,
         appearance !== 'neutral' && stylesAppearance[appearance],
         className,
       )}
@@ -89,14 +89,11 @@ export const TooltipBase = ({
       {arrowProps && (
         <FloatingArrow
           {...arrowProps}
-          iconClassName={classNames(styles['TooltipBase__arrow'], arrowProps.iconClassName)}
+          iconClassName={classNames(styles.arrow, arrowProps.iconClassName)}
           Icon={ArrowIcon}
         />
       )}
-      <div
-        className={styles['TooltipBase__content']}
-        style={maxWidth !== null ? { maxWidth } : undefined}
-      >
+      <div className={styles.content} style={maxWidth !== null ? { maxWidth } : undefined}>
         {header && <Subhead weight="2">{header}</Subhead>}
         {text && <Subhead>{text}</Subhead>}
       </div>

@@ -14,10 +14,10 @@ export function usePaginationPageClassNames({
   const { sizeY = 'none' } = useAdaptivity();
 
   return classNames(
-    styles['PaginationPage'],
-    sizeY === 'none' && styles['PaginationPage--sizeY-none'],
-    sizeY === 'compact' && styles['PaginationPage--sizeY-compact'],
-    isCurrent && styles['PaginationPage--current'],
-    disabled && styles['PaginationPage--disabled'],
+    styles.host,
+    sizeY === 'none' && styles.hostSizeYNone,
+    sizeY === 'compact' && styles.hostSizeYCompact,
+    isCurrent && styles.hostCurrent,
+    disabled && styles.hostDisabled,
   );
 }

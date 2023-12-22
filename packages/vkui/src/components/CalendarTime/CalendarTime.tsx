@@ -64,8 +64,8 @@ export const CalendarTime = ({
   );
 
   return (
-    <div className={styles['CalendarTime']}>
-      <div className={styles['CalendarTime__picker']}>
+    <div className={styles.host}>
+      <div className={styles.picker}>
         <AdaptivityProvider sizeY="compact">
           <CustomSelect
             value={value.getHours()}
@@ -76,8 +76,8 @@ export const CalendarTime = ({
           />
         </AdaptivityProvider>
       </div>
-      <div className={styles['CalendarTime__divider']}>:</div>
-      <div className={styles['CalendarTime__picker']}>
+      <div className={styles.divider}>:</div>
+      <div className={styles.picker}>
         <AdaptivityProvider sizeY="compact">
           <CustomSelect
             value={value.getMinutes()}
@@ -88,7 +88,7 @@ export const CalendarTime = ({
           />
         </AdaptivityProvider>
       </div>
-      <div className={styles['CalendarTime__button']}>
+      <div className={styles.button}>
         <AdaptivityProvider sizeY="compact">
           <Button mode="secondary" onClick={onClose} size="l">
             {doneButtonText}

@@ -369,10 +369,10 @@ class ViewInfiniteComponent extends React.Component<
     if (
       (!e ||
         [
-          styles['animation-ios-next-forward'],
-          styles['animation-ios-prev-back'],
-          styles['animation-view-next-forward'],
-          styles['animation-view-prev-back'],
+          styles.animationIosNextForward,
+          styles.animationIosPrevBack,
+          styles.animationViewNextForward,
+          styles.animationViewPrevBack,
         ].includes(e.animationName)) &&
       this.state.prevPanel !== null
     ) {
@@ -617,11 +617,11 @@ class ViewInfiniteComponent extends React.Component<
           Component="section"
           {...restProps}
           className={classNames(
-            styles['View'],
-            platform === 'ios' && classNames(styles['View--ios'], 'vkuiInternalView--ios'),
-            !disableAnimation && this.state.animated && styles['View--animated'],
-            !disableAnimation && this.state.swipingBack && styles['View--swiping-back'],
-            disableAnimation && styles['View--no-motion'],
+            styles.host,
+            platform === 'ios' && classNames(styles.hostIos, 'vkuiInternalViewIos'),
+            !disableAnimation && this.state.animated && styles.hostAnimated,
+            !disableAnimation && this.state.swipingBack && styles.hostSwipingBack,
+            disableAnimation && styles.hostNoMotion,
             className,
           )}
           onMoveX={
@@ -635,7 +635,7 @@ class ViewInfiniteComponent extends React.Component<
             iOSSwipeBackSimulationEnabled ? this.handleTouchEndForIOSSwipeBackSimulation : undefined
           }
         >
-          <div className={styles['View__panels']}>
+          <div className={styles.panels}>
             {panels.map((panel: React.ReactElement) => {
               const panelId = getNavId(panel.props, warn);
               const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
@@ -648,14 +648,14 @@ class ViewInfiniteComponent extends React.Component<
               return (
                 <div
                   className={classNames(
-                    styles['View__panel'],
-                    panelId === activePanel && styles['View__panel--active'],
-                    panelId === prevPanel && styles['View__panel--prev'],
-                    panelId === nextPanel && styles['View__panel--next'],
-                    panelId === swipeBackPrevPanel && styles['View__panel--swipe-back-prev'],
-                    panelId === swipeBackNextPanel && styles['View__panel--swipe-back-next'],
-                    swipeBackResult === 'success' && styles['View__panel--swipe-back-success'],
-                    swipeBackResult === 'fail' && styles['View__panel--swipe-back-failed'],
+                    styles.panel,
+                    panelId === activePanel && styles.panelActive,
+                    panelId === prevPanel && styles.panelPrev,
+                    panelId === nextPanel && styles.panelNext,
+                    panelId === swipeBackPrevPanel && styles.panelSwipeBackPrev,
+                    panelId === swipeBackNextPanel && styles.panelSwipeBackNext,
+                    swipeBackResult === 'success' && styles.panelSwipeBackSuccess,
+                    swipeBackResult === 'fail' && styles.panelSwipeBackFailed,
                   )}
                   onAnimationEnd={isTransitionTarget ? this.transitionEndHandler : undefined}
                   ref={(el) => panelId !== undefined && (this.panelNodes[panelId] = el)}
@@ -663,7 +663,7 @@ class ViewInfiniteComponent extends React.Component<
                   key={panelId}
                 >
                   <div
-                    className={styles['View__panel-in']}
+                    className={styles.panelIn}
                     style={{ marginTop: compensateScroll ? -scroll : undefined }}
                   >
                     <NavTransitionDirectionProvider isBack={swipingBack || isBack}>

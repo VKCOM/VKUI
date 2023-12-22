@@ -10,11 +10,8 @@ import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './FixedLayout.module.css';
 
 const stylesVertical = {
-  top: styles['FixedLayout--vertical-top'],
-  bottom: classNames(
-    styles['FixedLayout--vertical-bottom'],
-    'vkuiInternalFixedLayout--vertical-bottom',
-  ),
+  top: styles.hostVerticalTop,
+  bottom: classNames(styles.hostVerticalBottom, 'vkuiInternalFixedLayoutVerticalBottom'),
 };
 
 export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -84,9 +81,9 @@ export const FixedLayout = ({
       fixed
       ref={ref}
       className={classNames(
-        styles['FixedLayout'],
-        platform === 'ios' && 'vkuiInternalFixedLayout--ios',
-        filled && styles['FixedLayout--filled'],
+        styles.host,
+        platform === 'ios' && 'vkuiInternalFixedLayoutIos',
+        filled && styles.hostFilled,
         vertical && stylesVertical[vertical],
         className,
       )}

@@ -1,8 +1,8 @@
-.Separator {
+.host {
   color: var(--vkui--color_separator_primary);
 }
 
-.Separator__in {
+.in {
   block-size: var(--vkui--size_border--regular);
   margin: 0;
   background: currentColor;
@@ -11,7 +11,7 @@
   transform-origin: center top;
 }
 
-.Separator--padded .Separator__in {
+.hostPadded .in {
   margin-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
@@ -20,14 +20,14 @@
  * ModalPage
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalPage--sizeX-regular) .Separator--padded {
+:global(.vkuiInternalModalPageSizeXRegular) .hostPadded {
   padding-inline: 8px;
 }
 
 /* FIXME: Мертвый код */
 @media (--sizeX-regular) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalModalPage--sizeX-none) .Separator--padded {
+  :global(.vkuiInternalModalPageSizeXNone) .hostPadded {
     padding-inline: 8px;
   }
 }

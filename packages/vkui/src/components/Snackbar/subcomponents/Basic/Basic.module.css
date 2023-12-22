@@ -1,4 +1,4 @@
-.Snackbar__body {
+.body {
   box-sizing: border-box;
   padding: 12px;
   min-block-size: 56px;
@@ -9,31 +9,31 @@
   border-radius: var(--vkui--size_card_border_radius--regular);
 }
 
-.Snackbar--mode-dark {
+.hostModeDark {
   background: var(--vkui--color_background_contrast_inverse);
 }
 
-.Snackbar__before {
+.before {
   margin-inline-end: 12px;
 }
 
-.Snackbar__after {
+.after {
   margin-inline-start: 12px;
 }
 
-.Snackbar__content {
+.content {
   flex: 1;
   display: flex;
   align-items: center;
   overflow: hidden;
 }
 
-.Snackbar--layout-vertical .Snackbar__content {
+.hostLayoutVertical .content {
   flex-direction: column;
   align-items: flex-start;
 }
 
-.Snackbar__content-text {
+.contentText {
   flex: 1;
   color: var(--vkui--color_text_primary);
   inline-size: 100%;
@@ -43,21 +43,21 @@
   overflow: hidden;
 }
 
-.Snackbar__content-subtitle {
+.contentSubtitle {
   color: var(--vkui--color_text_subhead);
   margin-block-start: 2px;
 }
 
-.Snackbar--mode-dark .Snackbar__content-text {
+.hostModeDark .contentText {
   color: var(--vkui--color_text_contrast);
 }
 
-.Snackbar--layout-horizontal .Snackbar__action {
+.hostLayoutHorizontal .action {
   margin-inline-start: 12px;
   position: relative;
 }
 
-.Snackbar--layout-vertical .Snackbar__action {
+.hostLayoutVertical .action {
   margin-block-start: 2px;
   min-block-size: initial;
 }

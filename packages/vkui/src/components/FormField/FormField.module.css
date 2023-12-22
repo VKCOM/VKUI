@@ -1,4 +1,4 @@
-.FormField {
+.host {
   position: relative;
   display: flex;
   align-items: center;
@@ -10,24 +10,24 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-.FormField--sizeY-compact {
+.hostSizeYCompact {
   min-block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .FormField--sizeY-none {
+  .hostSizeYNone {
     min-block-size: var(--vkui--size_field_height--compact);
   }
 }
 
 /* stylelint-disable-next-line selector-max-universal */
-.FormField > * {
+.host > * {
   border-radius: inherit;
   z-index: var(--vkui_internal--z_index_form_field_element);
 }
 
-.FormField__before,
-.FormField__after {
+.before,
+.after {
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_side);
   display: flex;
@@ -40,29 +40,29 @@
   color: var(--vkui--color_icon_secondary);
 }
 
-.FormField--sizeY-compact .FormField__before,
-.FormField--sizeY-compact .FormField__after {
+.hostSizeYCompact .before,
+.hostSizeYCompact .after {
   min-inline-size: var(--vkui--size_field_height--compact);
   block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .FormField--sizeY-none .FormField__before,
-  .FormField--sizeY-none .FormField__after {
+  .hostSizeYNone .before,
+  .hostSizeYNone .after {
     min-inline-size: var(--vkui--size_field_height--compact);
     block-size: var(--vkui--size_field_height--compact);
   }
 }
 
-.FormField__before {
+.before {
   color: var(--vkui--color_icon_accent);
 }
 
-.FormField__after {
+.after {
   color: var(--vkui--color_icon_secondary);
 }
 
-.FormField__border {
+.border {
   pointer-events: none;
   position: absolute;
   z-index: var(--vkui_internal--z_index_form_field_border);
@@ -76,11 +76,11 @@
   border-radius: inherit;
 }
 
-.FormField--mode-default .FormField__border {
+.hostModeDefault .border {
   border-color: var(--vkui--color_field_border_alpha);
 }
 
-.FormField--mode-default {
+.hostModeDefault {
   background-color: var(--vkui--color_field_background);
 }
 
@@ -90,37 +90,37 @@
  * [start]
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--status-error) .FormField__border,
-.FormField--status-error .FormField__border {
+:global(.vkuiInternalFormItemStatusError) .border,
+.hostStatusError .border {
   border-color: var(--vkui--color_stroke_negative);
   z-index: var(--vkui_internal--z_index_form_field_status);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--status-error) .FormField,
-.FormField--status-error {
+:global(.vkuiInternalFormItemStatusError) .host,
+.hostStatusError {
   background-color: var(--vkui--color_background_negative_tint);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--status-valid) .FormField__border,
-.FormField--status-valid .FormField__border {
+:global(.vkuiInternalFormItemStatusValid) .border,
+.hostStatusValid .border {
   border-color: var(--vkui--color_stroke_positive);
   z-index: var(--vkui_internal--z_index_form_field_status);
 }
 /* [end] */
 
-.FormField--disabled {
+.hostDisabled {
   opacity: var(--vkui--opacity_disable_accessibility);
   cursor: default;
   pointer-events: none;
 }
 
-.FormField--hover {
+.hostHover {
   background-color: var(--vkui--color_field_background);
 }
 
-.FormField--mode-default.FormField--hover .FormField__border {
+.hostModeDefault.hostHover .border {
   border-color: var(--vkui--color_field_border_alpha--hover);
   z-index: var(--vkui_internal--z_index_form_field_border_hover);
 }
@@ -130,7 +130,7 @@
  * NativeSelect
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalNativeSelect) .FormField__after {
+:global(.vkuiInternalNativeSelect) .after {
   pointer-events: none;
 }
 
@@ -139,7 +139,7 @@
  * CalendarHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCalendarHeader__picker) .FormField__after {
+:global(.vkuiInternalCalendarHeaderPicker) .after {
   min-inline-size: 12px;
   padding-inline-end: 8px;
 }
@@ -149,7 +149,7 @@
  * FormLayoutGroup
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormLayoutGroup--segmented) .FormField {
+:global(.vkuiInternalFormLayoutGroupSegmented) .host {
   z-index: auto;
   isolation: auto;
   border-radius: 0;
@@ -157,40 +157,40 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
-    .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-horizontal
+    .vkuiInternalFormLayoutGroupSegmented.vkuiInternalFormLayoutGroupModeHorizontal
       .vkuiInternalFormItem
   ):first-of-type
-  .FormField {
+  .host {
   border-start-start-radius: var(--vkui--size_border_radius--regular);
   border-end-start-radius: var(--vkui--size_border_radius--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
-    .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-horizontal
+    .vkuiInternalFormLayoutGroupSegmented.vkuiInternalFormLayoutGroupModeHorizontal
       .vkuiInternalFormItem
   ):last-of-type
-  .FormField {
+  .host {
   border-start-end-radius: var(--vkui--size_border_radius--regular);
   border-end-end-radius: var(--vkui--size_border_radius--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
-    .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-vertical
+    .vkuiInternalFormLayoutGroupSegmented.vkuiInternalFormLayoutGroupModeVertical
       .vkuiInternalFormItem
   ):first-of-type
-  .FormField {
+  .host {
   border-start-start-radius: var(--vkui--size_border_radius--regular);
   border-start-end-radius: var(--vkui--size_border_radius--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
-    .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-vertical
+    .vkuiInternalFormLayoutGroupSegmented.vkuiInternalFormLayoutGroupModeVertical
       .vkuiInternalFormItem
   ):last-of-type
-  .FormField {
+  .host {
   border-end-start-radius: var(--vkui--size_border_radius--regular);
   border-end-end-radius: var(--vkui--size_border_radius--regular);
 }
@@ -199,7 +199,7 @@
  * useFocusVisibleClassName()
  */
 /* increase specificity for selects */
-.FormField--focus-visible.FormField--focus-visible.FormField--focus-visible {
+.hostFocusVisible.hostFocusVisible.hostFocusVisible {
   outline: var(--vkui_internal--outline);
   outline-width: var(--vkui--size_border--regular);
   outline-offset: calc(-1 * var(--vkui--size_border--regular));

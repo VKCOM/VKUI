@@ -83,7 +83,7 @@ export const Cell = ({
   const dragger = draggable ? (
     <CellDragger
       elRef={rootElRef}
-      className={styles['Cell__dragger']}
+      className={styles.dragger}
       disabled={disabled}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
@@ -102,7 +102,7 @@ export const Cell = ({
       disabled,
       onChange,
     };
-    checkbox = <CellCheckbox className={styles['Cell__checkbox']} {...checkboxProps} />;
+    checkbox = <CellCheckbox className={styles.checkbox} {...checkboxProps} />;
   }
 
   const simpleCellDisabled =
@@ -110,19 +110,19 @@ export const Cell = ({
   const hasActive = !simpleCellDisabled && !dragging;
 
   const cellClasses = classNames(
-    styles['Cell'],
-    dragging && styles['Cell--dragging'],
-    platform === 'ios' && styles['Cell--ios'],
-    removable && styles['Cell--removable'],
-    Component === 'label' && styles['Cell--selectable'],
-    disabled && styles['Cell--disabled'],
+    styles.host,
+    dragging && styles.hostDragging,
+    platform === 'ios' && styles.hostIos,
+    removable && styles.hostRemovable,
+    Component === 'label' && styles.hostSelectable,
+    disabled && styles.hostDisabled,
   );
 
   const simpleCellProps: SimpleCellProps = {
     hasActive: hasActive,
     hasHover: hasActive && !removable,
     ...restProps,
-    className: styles['Cell__content'],
+    className: styles.content,
     Component: Component,
     before: (
       <React.Fragment>

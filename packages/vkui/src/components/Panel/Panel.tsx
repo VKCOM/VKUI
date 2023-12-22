@@ -11,9 +11,9 @@ import { Touch } from '../Touch/Touch';
 import styles from './Panel.module.css';
 
 const sizeXClassNames = {
-  none: styles['Panel--sizeX-none'],
-  ['compact']: styles['Panel--sizeX-compact'],
-  ['regular']: styles['Panel--sizeX-regular'],
+  none: styles.hostSizeXNone,
+  ['compact']: styles.hostSizeXCompact,
+  ['regular']: styles.hostSizeXRegular,
 };
 
 export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
@@ -32,19 +32,19 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
       <RootComponent
         {...restProps}
         baseClassName={classNames(
-          styles['Panel'],
+          styles.host,
           sizeXClassNames[sizeX],
-          centered && 'vkuiInternalPanel--centered',
-          layout === 'card' && styles['Panel--layout-card'],
+          centered && 'vkuiInternalPanelCentered',
+          layout === 'card' && styles.hostLayoutCard,
         )}
       >
         <Touch
           Component={OnboardingTooltipContainer}
-          className={classNames(styles['Panel__in'], 'vkuiInternalPanel__in')}
+          className={classNames(styles.in, 'vkuiInternalPanelIn')}
         >
-          <div className={styles['Panel__in-before']} />
-          {centered ? <div className={styles['Panel__centered']}>{children}</div> : children}
-          <div className={styles['Panel__in-after']} />
+          <div className={styles.inBefore} />
+          {centered ? <div className={styles.centered}>{children}</div> : children}
+          <div className={styles.inAfter} />
         </Touch>
       </RootComponent>
     </NavPanelIdContext.Provider>

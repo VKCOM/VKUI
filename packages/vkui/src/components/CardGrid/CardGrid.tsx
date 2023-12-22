@@ -6,14 +6,14 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardGrid.module.css';
 
 const sizeXClassNames = {
-  none: styles['CardGrid--sizeX-none'],
-  ['compact']: styles['CardGrid--sizeX-compact'],
+  none: styles.hostSizeXNone,
+  ['compact']: styles.hostSizeXCompact,
 };
 
 const stylesSize = {
-  s: 'vkuiInternalCardGrid--size-s',
-  m: 'vkuiInternalCardGrid--size-m',
-  l: 'vkuiInternalCardGrid--size-l',
+  s: 'vkuiInternalCardGridSizeS',
+  m: 'vkuiInternalCardGridSizeM',
+  l: 'vkuiInternalCardGridSizeL',
 };
 
 export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -34,9 +34,9 @@ export const CardGrid = ({ size = 's', spaced = false, ...restProps }: CardGridP
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['CardGrid'],
+        styles.host,
         'vkuiInternalCardGrid',
-        spaced && styles['CardGrid--spaced'],
+        spaced && styles.hostSpaced,
         stylesSize[size],
         sizeX !== 'regular' && sizeXClassNames[sizeX],
       )}

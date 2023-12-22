@@ -175,10 +175,10 @@ export const View = ({
       if (
         (!e ||
           [
-            styles['animation-ios-next-forward'],
-            styles['animation-ios-prev-back'],
-            styles['animation-view-next-forward'],
-            styles['animation-view-prev-back'],
+            styles.animationIosNextForward,
+            styles.animationIosPrevBack,
+            styles.animationViewNextForward,
+            styles.animationViewPrevBack,
           ].includes(e.animationName)) &&
         prevPanel !== null
       ) {
@@ -482,11 +482,11 @@ export const View = ({
         Component="section"
         {...restProps}
         className={classNames(
-          styles['View'],
-          platform === 'ios' && classNames(styles['View--ios'], 'vkuiInternalView--ios'),
-          !disableAnimation && animated && styles['View--animated'],
-          !disableAnimation && swipingBack && styles['View--swiping-back'],
-          disableAnimation && styles['View--no-motion'],
+          styles.host,
+          platform === 'ios' && classNames(styles.hostIos, 'vkuiInternalViewIos'),
+          !disableAnimation && animated && styles.hostAnimated,
+          !disableAnimation && swipingBack && styles.hostSwipingBack,
+          disableAnimation && styles.hostNoMotion,
           className,
         )}
         onMoveX={
@@ -498,7 +498,7 @@ export const View = ({
         }
         onEnd={iOSSwipeBackSimulationEnabled ? handleTouchEndForIOSSwipeBackSimulation : undefined}
       >
-        <div className={styles['View__panels']}>
+        <div className={styles.panels}>
           {panels.map((panel: React.ReactElement) => {
             const panelId = getNavId(panel.props, warn);
             const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
@@ -509,14 +509,14 @@ export const View = ({
             return (
               <div
                 className={classNames(
-                  styles['View__panel'],
-                  panelId === activePanel && styles['View__panel--active'],
-                  panelId === prevPanel && styles['View__panel--prev'],
-                  panelId === nextPanel && styles['View__panel--next'],
-                  panelId === swipeBackPrevPanel && styles['View__panel--swipe-back-prev'],
-                  panelId === swipeBackNextPanel && styles['View__panel--swipe-back-next'],
-                  swipeBackResult === 'success' && styles['View__panel--swipe-back-success'],
-                  swipeBackResult === 'fail' && styles['View__panel--swipe-back-failed'],
+                  styles.panel,
+                  panelId === activePanel && styles.panelActive,
+                  panelId === prevPanel && styles.panelPrev,
+                  panelId === nextPanel && styles.panelNext,
+                  panelId === swipeBackPrevPanel && styles.panelSwipeBackPrev,
+                  panelId === swipeBackNextPanel && styles.panelSwipeBackNext,
+                  swipeBackResult === 'success' && styles.panelSwipeBackSuccess,
+                  swipeBackResult === 'fail' && styles.panelSwipeBackFailed,
                 )}
                 onAnimationEnd={isTransitionTarget ? transitionEndHandler : undefined}
                 ref={(el) => panelId !== undefined && (panelNodes.current[panelId] = el)}
@@ -525,12 +525,12 @@ export const View = ({
               >
                 {platform === 'ios' && (
                   <div
-                    className={styles['View__panel-overlay']}
+                    className={styles.panelOverlay}
                     style={calcPanelSwipeBackOverlayStyles(panelId)}
                   />
                 )}
                 <div
-                  className={styles['View__panel-in']}
+                  className={styles.panelIn}
                   style={{
                     marginTop: compensateScroll ? -(scrolls.current[panelId] ?? 0) : undefined,
                   }}

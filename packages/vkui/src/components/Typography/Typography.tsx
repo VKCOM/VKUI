@@ -5,9 +5,9 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Typography.module.css';
 
 const stylesWeight = {
-  '1': styles['Typography--weight-1'],
-  '2': styles['Typography--weight-2'],
-  '3': styles['Typography--weight-3'],
+  '1': styles.hostWeight1,
+  '2': styles.hostWeight2,
+  '3': styles.hostWeight3,
 };
 
 export interface HasCaps {
@@ -37,8 +37,8 @@ export const Typography = ({
   <RootComponent
     Component={Component}
     baseClassName={classNames(
-      styles['Typography'],
-      normalize && styles['Typography--normalize'],
+      styles.host,
+      normalize && styles.hostNormalize,
       weight && stylesWeight[weight],
     )}
     {...restProps}

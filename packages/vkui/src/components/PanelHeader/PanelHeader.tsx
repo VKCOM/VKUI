@@ -15,19 +15,19 @@ import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeader.module.css';
 
 const platformClassNames = {
-  ios: classNames(styles['PanelHeader--ios'], 'vkuiInternalPanelHeader--ios'),
-  android: classNames(styles['PanelHeader--android'], 'vkuiInternalPanelHeader--android'),
-  vkcom: classNames(styles['PanelHeader--vkcom'], 'vkuiInternalPanelHeader--vkcom'),
+  ios: classNames(styles.hostIos, 'vkuiInternalPanelHeaderIos'),
+  android: classNames(styles.hostAndroid, 'vkuiInternalPanelHeaderAndroid'),
+  vkcom: classNames(styles.hostVkcom, 'vkuiInternalPanelHeaderVkcom'),
 };
 
 const sizeXClassNames = {
-  none: styles['PanelHeader--sizeX-none'],
-  regular: styles['PanelHeader--sizeX-regular'],
+  none: styles.hostSizeXNone,
+  regular: styles.hostSizeXRegular,
 };
 
 const sizeYClassNames = {
-  none: styles['PanelHeader--sizeY-none'],
-  compact: styles['PanelHeader--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  compact: styles.hostSizeYCompact,
 };
 
 export interface PanelHeaderProps
@@ -83,28 +83,22 @@ const PanelHeaderIn = ({
         {children}
       </Text>
     ) : (
-      <Component className={styles['PanelHeader__content-in']} {...restProps}>
+      <Component className={styles.contentIn} {...restProps}>
         {children}
       </Component>
     );
 
   return (
     <React.Fragment>
-      <OnboardingTooltipContainer fixed className={styles['PanelHeader__in']}>
+      <OnboardingTooltipContainer fixed className={styles.in}>
+        <div className={classNames(styles.before, 'vkuiInternalPanelHeaderBefore')}>{before}</div>
+        <div className={styles.content}>{typographyNode}</div>
         <div
-          className={classNames(styles['PanelHeader__before'], 'vkuiInternalPanelHeader__before')}
-        >
-          {before}
-        </div>
-        <div className={styles['PanelHeader__content']}>{typographyNode}</div>
-        <div
-          className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}
+          className={classNames(styles.after, 'vkuiInternalPanelHeaderAfter')}
           {...afterSlotProps}
         />
       </OnboardingTooltipContainer>
-      {separator && platform === 'vkcom' && (
-        <Separator className={styles['PanelHeader__separator']} wide />
-      )}
+      {separator && platform === 'vkcom' && <Separator className={styles.separator} wide />}
     </React.Fragment>
   );
 };
@@ -135,21 +129,18 @@ export const PanelHeader = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['PanelHeader'],
+        styles.host,
         'vkuiInternalPanelHeader',
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        transparent && styles['PanelHeader--trnsp'],
-        shadow && styles['PanelHeader--shadow'],
-        visor && classNames(styles['PanelHeader--vis'], 'vkuiInternalPanelHeader--vis'),
-        separator &&
-          visor &&
-          classNames(styles['PanelHeader--sep'], 'vkuiInternalPanelHeader--sep'),
-        !before &&
-          classNames(styles['PanelHeader--no-before'], 'vkuiInternalPanelHeader--no-before'),
-        !after && styles['PanelHeader--no-after'],
-        isFixed && styles['PanelHeader--fixed'],
+        transparent && styles.hostTrnsp,
+        shadow && styles.hostShadow,
+        visor && classNames(styles.hostVis, 'vkuiInternalPanelHeaderVis'),
+        separator && visor && classNames(styles.hostSep, 'vkuiInternalPanelHeaderSep'),
+        !before && classNames(styles.hostNoBefore, 'vkuiInternalPanelHeaderNoBefore'),
+        !after && styles.hostNoAfter,
+        isFixed && styles.hostFixed,
         sizeX !== 'compact' && sizeXClassNames[sizeX],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
@@ -157,7 +148,7 @@ export const PanelHeader = ({
     >
       {isFixed ? (
         <FixedLayout
-          className={classNames(styles['PanelHeader__fixed'], 'vkuiInternalPanelHeader__fixed')}
+          className={classNames(styles.fixed, 'vkuiInternalPanelHeaderFixed')}
           vertical="top"
           getRootRef={getRef}
         >

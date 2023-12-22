@@ -15,10 +15,7 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
  * @see https://vkcom.github.io/VKUI/#/Separator
  */
 export const Separator = ({ wide, ...restProps }: SeparatorProps) => (
-  <RootComponent
-    {...restProps}
-    baseClassName={classNames(styles['Separator'], !wide && styles['Separator--padded'])}
-  >
-    <hr className={styles['Separator__in']} />
+  <RootComponent {...restProps} baseClassName={classNames(styles.host, !wide && styles.hostPadded)}>
+    <hr className={styles.in} />
   </RootComponent>
 );

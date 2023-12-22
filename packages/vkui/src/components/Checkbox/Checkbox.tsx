@@ -21,8 +21,8 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Checkbox.module.css';
 
 const sizeYClassNames = {
-  none: styles['Checkbox--sizeY-none'],
-  ['compact']: styles['Checkbox--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 export interface CheckboxProps
@@ -111,9 +111,9 @@ export const Checkbox = ({
     <Tappable
       Component="label"
       className={classNames(
-        styles['Checkbox'],
+        styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        !(hasReactNode(children) || hasReactNode(description)) && styles['Checkbox--simple'],
+        !(hasReactNode(children) || hasReactNode(description)) && styles.hostSimple,
         className,
       )}
       style={style}
@@ -131,10 +131,10 @@ export const Checkbox = ({
         Component="input"
         type="checkbox"
         onChange={handleChange}
-        className={styles['Checkbox__input']}
+        className={styles.input}
         getRootRef={inputRef}
       />
-      <div className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--on'])}>
+      <div className={classNames(styles.icon, styles.iconOn)}>
         {platform === 'vkcom' ? (
           <Icon20CheckBoxOn />
         ) : (
@@ -148,7 +148,7 @@ export const Checkbox = ({
           </React.Fragment>
         )}
       </div>
-      <div className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--off'])}>
+      <div className={classNames(styles.icon, styles.iconOff)}>
         {platform === 'vkcom' ? (
           <Icon20CheckBoxOff />
         ) : (
@@ -162,9 +162,7 @@ export const Checkbox = ({
           </React.Fragment>
         )}
       </div>
-      <div
-        className={classNames(styles['Checkbox__icon'], styles['Checkbox__icon--indeterminate'])}
-      >
+      <div className={classNames(styles.icon, styles.iconIndeterminate)}>
         {platform === 'vkcom' ? (
           <Icon20CheckBoxIndetermanate width={20} height={20} />
         ) : (
@@ -186,13 +184,13 @@ export const Checkbox = ({
           </React.Fragment>
         )}
       </div>
-      <div className={styles['Checkbox__content']}>
-        <div className={styles['Checkbox__title']}>
-          <Text className={styles['Checkbox__titleBefore']}>{children}</Text>
-          <div className={styles['Checkbox__titleAfter']}>{titleAfter}</div>
+      <div className={styles.content}>
+        <div className={styles.title}>
+          <Text className={styles.titleBefore}>{children}</Text>
+          <div className={styles.titleAfter}>{titleAfter}</div>
         </div>
         {hasReactNode(description) && (
-          <Footnote className={styles['Checkbox__description']}>{description}</Footnote>
+          <Footnote className={styles.description}>{description}</Footnote>
         )}
       </div>
     </Tappable>

@@ -17,11 +17,11 @@ export const InfoRow = ({ header, children, className, ...restProps }: InfoRowPr
   <Headline
     {...restProps}
     Component="span"
-    className={classNames(styles['InfoRow'], className)}
+    className={classNames(styles.host, className)}
     weight="3"
   >
     {hasReactNode(header) && (
-      <Subhead Component="strong" className={styles['InfoRow__header']}>
+      <Subhead Component="strong" className={styles.header}>
         {header}
         <VisuallyHidden>&nbsp;</VisuallyHidden>
       </Subhead>

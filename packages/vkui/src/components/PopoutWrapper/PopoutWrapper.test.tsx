@@ -12,15 +12,15 @@ describe(PopoutWrapper, () => {
 
     it('should be opened immediately if no mask', () => {
       const result = render(<PopoutWrapper data-testid="popout-wrapper" hasMask={false} />);
-      expect(result.getByTestId('popout-wrapper')).toHaveClass(styles['PopoutWrapper--opened']);
+      expect(result.getByTestId('popout-wrapper')).toHaveClass(styles.hostOpened);
     });
 
     it('should be opened after animation if has mask', () => {
       const result = render(<PopoutWrapper data-testid="popout-wrapper" hasMask />);
       const locator = result.getByTestId('popout-wrapper');
-      expect(locator).not.toHaveClass(styles['PopoutWrapper--opened']);
+      expect(locator).not.toHaveClass(styles.hostOpened);
       runAllTimers();
-      expect(locator).toHaveClass(styles['PopoutWrapper--opened']);
+      expect(locator).toHaveClass(styles.hostOpened);
     });
   });
 });

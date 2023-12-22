@@ -8,8 +8,8 @@ import { validateBadgeIcon } from '../validators';
 import styles from './ImageBaseBadge.module.css';
 
 const backgroundStyles = {
-  stroke: styles['ImageBaseBadge--background-stroke'],
-  shadow: styles['ImageBaseBadge--background-shadow'],
+  stroke: styles.hostBackgroundStroke,
+  shadow: styles.hostBackgroundShadow,
 };
 
 export interface ImageBaseBadgeProps extends React.AriaAttributes, HasRootRef<HTMLDivElement> {
@@ -52,7 +52,7 @@ export const ImageBaseBadge = ({ background = 'shadow', ...restProps }: ImageBas
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles['ImageBaseBadge'], backgroundStyles[background])}
+      baseClassName={classNames(styles.host, backgroundStyles[background])}
     />
   );
 };

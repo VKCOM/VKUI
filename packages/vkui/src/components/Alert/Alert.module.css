@@ -1,4 +1,4 @@
-.Alert {
+.host {
   user-select: none;
   color: var(--vkui--color_text_primary);
   position: relative;
@@ -11,18 +11,18 @@
   animation: animation-android-alert-intro 0.2s var(--vkui--animation_easing_platform);
 }
 
-.Alert--desktop {
+.hostDesktop {
   inline-size: 100%;
 }
 
-.Alert--closing {
+.hostClosing {
   transform: scale(0.95);
   opacity: 0;
   transition: transform 0.2s var(--vkui--animation_easing_platform),
     opacity 0.2s var(--vkui--animation_easing_platform);
 }
 
-.Alert::before {
+.host::before {
   position: absolute;
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -33,22 +33,22 @@
   border-radius: inherit;
 }
 
-.Alert__content {
+.content {
   position: relative;
   padding-block: 24px 16px;
   padding-inline: 24px;
 }
 
-.Alert__content--withButton {
+.contentWithButton {
   padding-inline-end: 52px;
 }
 
-.Alert__action {
+.action {
   white-space: nowrap;
   background: transparent;
 }
 
-.Alert__actions {
+.actions {
   display: flex;
   max-inline-size: 100%;
   position: relative;
@@ -56,44 +56,44 @@
   padding-inline: 12px;
 }
 
-.Alert__header {
+.header {
   margin-block-end: 8px;
 }
 
-.Alert__text {
+.text {
   color: var(--vkui--color_text_secondary);
 }
 
-.Alert__header,
-.Alert__text {
+.header,
+.text {
   word-break: break-word;
 }
 
-.Alert__actions--direction-horizontal {
+.actionsDirectionHorizontal {
   justify-content: flex-end;
 }
 
-.Alert__actions--direction-vertical {
+.actionsDirectionVertical {
   flex-direction: column;
   align-items: flex-end;
 }
 
 /* stylelint-disable-next-line selector-max-universal */
-.Alert__actions > * {
+.actions > * {
   margin: 4px;
 }
 
-.Alert__actions--align-left {
+.actionsAlignLeft {
   justify-content: flex-start;
   align-items: flex-start;
 }
 
-.Alert__actions--align-center {
+.actionsAlignCenter {
   justify-content: center;
   align-items: center;
 }
 
-.Alert__actions--align-right {
+.actionsAlignRight {
   justify-content: flex-end;
   align-items: flex-end;
 }
@@ -101,7 +101,7 @@
 /**
  * iOS version
  */
-.Alert--ios {
+.hostIos {
   inline-size: 270px;
   min-inline-size: 270px;
   overflow: hidden;
@@ -109,27 +109,27 @@
   box-shadow: none;
 }
 
-.Alert--ios.Alert--closing {
+.hostIos.hostClosing {
   transform: none;
   opacity: 0;
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
 }
 
-.Alert--ios .Alert__content {
+.hostIos .content {
   padding-block: 20px;
   padding-inline: 16px;
   text-align: center;
 }
 
-.Alert--ios .Alert__header:not(:last-child) {
+.hostIos .header:not(:last-child) {
   margin-block-end: 7px;
 }
 
-.Alert--ios .Alert__text {
+.hostIos .text {
   color: inherit;
 }
 
-.Alert--ios .Alert__content::after {
+.hostIos .content::after {
   content: '';
   position: absolute;
   inset-block-end: 0;
@@ -139,16 +139,16 @@
   transform-origin: center bottom;
 }
 
-.Alert--ios .Alert__actions {
+.hostIos .actions {
   padding: initial;
 }
 
-.Alert--ios .Alert__actions--direction-vertical {
+.hostIos .actionsDirectionVertical {
   flex-direction: column;
   align-items: initial;
 }
 
-.Alert--ios .Alert__action {
+.hostIos .action {
   font-family: var(--vkui--font_family_base);
   position: relative;
   font-size: 17px;
@@ -167,13 +167,13 @@
   border-radius: 0;
 }
 
-.Alert--ios .Alert__action::after {
+.hostIos .action::after {
   content: '';
   position: absolute;
   background: var(--vkui--color_separator_primary_alpha);
 }
 
-.Alert--ios .Alert__actions--direction-horizontal .Alert__action::after {
+.hostIos .actionsDirectionHorizontal .action::after {
   inset-block-start: 0;
   inset-inline-end: 0;
   inline-size: 1px;
@@ -181,25 +181,25 @@
   transform-origin: right center;
 }
 
-.Alert--ios .Alert__actions--direction-horizontal .Alert__action:last-child::after {
+.hostIos .actionsDirectionHorizontal .action:last-child::after {
   content: none;
 }
 
-.Alert--ios .Alert__actions--direction-horizontal .Alert__action {
+.hostIos .actionsDirectionHorizontal .action {
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 0;
 }
 
-.Alert--ios .Alert__actions--direction-horizontal .Alert__action:first-child {
+.hostIos .actionsDirectionHorizontal .action:first-child {
   border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
-.Alert--ios .Alert__actions--direction-horizontal .Alert__action:last-child {
+.hostIos .actionsDirectionHorizontal .action:last-child {
   border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
-.Alert--ios .Alert__actions--direction-vertical .Alert__action::after {
+.hostIos .actionsDirectionVertical .action::after {
   inset-inline-start: 0;
   inset-block-end: 0;
   inline-size: 100%;
@@ -207,11 +207,11 @@
   transform-origin: center bottom;
 }
 
-.Alert--ios .Alert__actions--direction-vertical .Alert__action:last-child::after {
+.hostIos .actionsDirectionVertical .action:last-child::after {
   content: none;
 }
 
-.Alert--ios .Alert__actions--direction-vertical .Alert__action:last-child {
+.hostIos .actionsDirectionVertical .action:last-child {
   border-start-start-radius: 0;
   border-start-end-radius: 0;
   border-end-end-radius: 12px;
@@ -219,31 +219,31 @@
 }
 
 @media (min-resolution: 2dppx) {
-  .Alert--ios .Alert__content::after,
-  .Alert--ios .Alert__actions--direction-vertical .Alert__action::after {
+  .hostIos .content::after,
+  .hostIos .actionsDirectionVertical .action::after {
     transform: scaleY(0.5);
   }
 
-  .Alert--ios .Alert__actions--direction-horizontal .Alert__action::after {
+  .hostIos .actionsDirectionHorizontal .action::after {
     transform: scaleX(0.5);
   }
 }
 @media (min-resolution: 3dppx) {
-  .Alert--ios .Alert__content::after,
-  .Alert--ios .Alert__actions--direction-vertical .Alert__action::after {
+  .hostIos .content::after,
+  .hostIos .actionsDirectionVertical .action::after {
     transform: scaleY(0.33);
   }
 
-  .Alert--ios .Alert__actions--direction-horizontal .Alert__action::after {
+  .hostIos .actionsDirectionHorizontal .action::after {
     transform: scaleX(0.33);
   }
 }
 
-.Alert--ios .Alert__action--mode-cancel {
+.hostIos .actionModeCancel {
   font-weight: 600;
 }
 
-.Alert--ios .Alert__action--mode-destructive {
+.hostIos .actionModeDestructive {
   color: var(--vkui--color_text_negative);
 }
 
@@ -251,29 +251,29 @@
  * VKCOM
  */
 
-.Alert--vkcom {
+.hostVkcom {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 0 96px rgba(0, 0, 0, 0.16);
   inline-size: 400px;
 }
 
-.Alert--vkcom .Alert__content {
+.hostVkcom .content {
   padding-block-end: 20px;
 }
 
-.Alert--vkcom .Alert__actions {
+.hostVkcom .actions {
   padding-block: 0 12px;
   padding-inline: 20px;
 }
 
-.Alert--vkcom .Alert__button {
+.hostVkcom .button {
   order: 2;
 }
 
-.Alert--vkcom .Alert__button--mode-cancel {
+.hostVkcom .buttonModeCancel {
   order: 1;
 }
 
-.Alert__dismiss {
+.dismiss {
   position: absolute;
   color: var(--vkui--color_icon_secondary);
   inset-block-start: 8px;

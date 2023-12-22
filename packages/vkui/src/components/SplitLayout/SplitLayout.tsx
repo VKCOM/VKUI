@@ -36,10 +36,7 @@ export const SplitLayout = ({
 
   return (
     <PopoutRoot
-      className={classNames(
-        styles['SplitLayout'],
-        platform === 'ios' && styles['SplitLayout--ios'],
-      )}
+      className={classNames(styles.host, platform === 'ios' && styles.hostIos)}
       popout={popout}
       modal={modal}
       getRootRef={getRootRef}
@@ -48,11 +45,7 @@ export const SplitLayout = ({
       <div
         {...restProps}
         ref={getRef}
-        className={classNames(
-          styles['SplitLayout__inner'],
-          !!header && styles['SplitLayout__inner--header'],
-          className,
-        )}
+        className={classNames(styles.inner, !!header && styles.innerHeader, className)}
       >
         {children}
       </div>

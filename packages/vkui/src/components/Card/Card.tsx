@@ -17,10 +17,10 @@ export const Card = ({ mode = 'tint', ...restProps }: CardProps) => {
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['Card'],
-        mode === 'outline' && styles['Card--mode-outline'],
-        mode === 'shadow' && styles['Card--mode-shadow'],
-        withBorder && styles['Card--withBorder'],
+        styles.host,
+        mode === 'outline' && styles.hostModeOutline,
+        mode === 'shadow' && styles.hostModeShadow,
+        withBorder && styles.hostWithBorder,
       )}
     />
   );

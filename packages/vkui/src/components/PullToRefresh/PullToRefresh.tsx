@@ -169,7 +169,7 @@ export const PullToRefresh = ({
 
     if (document) {
       // eslint-disable-next-line no-restricted-properties
-      document.documentElement.classList.add('vkui--disable-overscroll-behavior');
+      document.documentElement.classList.add('vkuiDisableOverscrollBehavior');
     }
   };
 
@@ -241,7 +241,7 @@ export const PullToRefresh = ({
     // восстанавливаем overscroll behavior
     if (document) {
       // eslint-disable-next-line no-restricted-properties
-      document.documentElement.classList.remove('vkui--disable-overscroll-behavior');
+      document.documentElement.classList.remove('vkuiDisableOverscrollBehavior');
     }
   };
 
@@ -264,14 +264,14 @@ export const PullToRefresh = ({
         onMove={onTouchMove}
         onEnd={onTouchEnd}
         className={classNames(
-          styles['PullToRefresh'],
-          platform === 'ios' && styles['PullToRefresh--ios'],
-          watching && styles['PullToRefresh--watching'],
-          refreshing && styles['PullToRefresh--refreshing'],
+          styles.host,
+          platform === 'ios' && styles.hostIos,
+          watching && styles.hostWatching,
+          refreshing && styles.hostRefreshing,
           className,
         )}
       >
-        <FixedLayout className={styles['PullToRefresh__controls']} useParentWidth>
+        <FixedLayout className={styles.controls} useParentWidth>
           <PullToRefreshSpinner
             style={{
               transform: spinnerTransform,
@@ -284,7 +284,7 @@ export const PullToRefresh = ({
         </FixedLayout>
 
         <div
-          className={styles['PullToRefresh__content']}
+          className={styles.content}
           style={{
             transform: contentTransform,
             WebkitTransform: contentTransform,

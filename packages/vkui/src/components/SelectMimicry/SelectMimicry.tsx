@@ -12,8 +12,8 @@ import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
 
 const sizeYClassNames = {
-  none: styles['Select--sizeY-none'],
-  ['compact']: styles['Select--sizeY-compact'],
+  none: styles.hostSizeYNone,
+  ['compact']: styles.hostSizeYCompact,
 };
 
 export interface SelectMimicryProps
@@ -58,13 +58,13 @@ export const SelectMimicry = ({
       {...restProps}
       tabIndex={disabled ? undefined : tabIndex}
       className={classNames(
-        styles['Select'],
+        styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        !children && styles['Select--empty'],
-        multiline && styles['Select--multiline'],
-        align === 'center' && styles['Select--align-center'],
-        align === 'right' && styles['Select--align-right'],
-        before && styles['Select--hasBefore'],
+        !children && styles.hostEmpty,
+        multiline && styles.hostMultiline,
+        align === 'center' && styles.hostAlignCenter,
+        align === 'right' && styles.hostAlignRight,
+        before && styles.hostHasBefore,
         className,
       )}
       getRootRef={rootRef}
@@ -75,8 +75,8 @@ export const SelectMimicry = ({
       mode={getFormFieldModeFromSelectType(selectType)}
       status={status}
     >
-      <div className={styles['Select__container']}>
-        <SelectTypography selectType={selectType} className={styles['Select__title']}>
+      <div className={styles.container}>
+        <SelectTypography selectType={selectType} className={styles.title}>
           {title}
         </SelectTypography>
       </div>

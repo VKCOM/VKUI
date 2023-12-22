@@ -43,12 +43,12 @@
   > Не используем композицию, т.к. в ней нет необходимости,
   > а также в будущем она может усложнить переход на другое решение.
 
-- CSS-классы названы по БЭМ: `.Component__element-name--modificator`. [Гайд по написанию стилей](https://github.com/VKCOM/VKUI/blob/master/docs/CSS_GUIDE.md)
+- CSS-классы должны быть в формате camelCase: `elementNameModificator`. [Гайд по написанию стилей](https://github.com/VKCOM/VKUI/blob/master/docs/CSS_GUIDE.md)
 - Свойства `className` и `style` навешиваются на корневой элемент компонента
 - Свойства, не используемые в коде компонента, навешиваются на **главный** элемент компонента. По умолчанию главным является корневой элемент:
 
   ```jsx
-  const Component = (props) => <div {...props} className={styles.Component} />;
+  const Component = (props) => <div {...props} className={styles.host} />;
   ```
 
   Бывают случаи, например, поле ввода, когда главным является именно `input`, а не обёртка:
@@ -61,8 +61,8 @@
       <div
         className={classNames(
           className,
-          styles.Input,
-          mode === 'default' && styles['Input--mode-default'],
+          styles.input,
+          mode === 'default' && styles.hostModeDefault,
         )}
         style={style}
       >
@@ -82,7 +82,7 @@
       className={classNames(
         className,
         styles.Component,
-        mode === 'default' && styles['Component--mode-default'],
+        mode === 'default' && styles.hostModeDefault,
       )}
       {...restProps}
     />

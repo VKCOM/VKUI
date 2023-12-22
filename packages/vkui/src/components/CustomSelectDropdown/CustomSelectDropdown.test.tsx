@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { CustomSelectDropdown } from './CustomSelectDropdown';
+import styles from './CustomSelectDropdown.module.css';
 
 describe('CustomSelectDropdown', () => {
   it('Displays only spinner if fetching: true', () => {
@@ -9,7 +10,7 @@ describe('CustomSelectDropdown', () => {
         <div data-testid="test-content">test</div>
       </CustomSelectDropdown>,
     );
-    expect(document.querySelector('.vkuiCustomSelectDropdown__fetching')).not.toBeNull();
+    expect(document.querySelector('.' + styles.fetching)).not.toBeNull();
   });
 
   it('Displays children if fetching: false', () => {

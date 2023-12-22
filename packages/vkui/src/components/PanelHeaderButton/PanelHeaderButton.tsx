@@ -9,9 +9,9 @@ import { Title } from '../Typography/Title/Title';
 import styles from './PanelHeaderButton.module.css';
 
 const platformClassNames = {
-  ios: styles['PanelHeaderButton--ios'],
-  android: styles['PanelHeaderButton--android'],
-  vkcom: styles['PanelHeaderButton--vkcom'],
+  ios: styles.hostIos,
+  android: styles.hostAndroid,
+  vkcom: styles.hostVkcom,
 };
 
 export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
@@ -62,8 +62,8 @@ export const PanelHeaderButton = ({
       activeMode = 'opacity';
       break;
     case 'vkcom':
-      hoverMode = styles['PanelHeaderButton--hover'];
-      activeMode = styles['PanelHeaderButton--active'];
+      hoverMode = styles.hostHover;
+      activeMode = styles.hostActive;
       break;
     default:
       hoverMode = 'background';
@@ -91,18 +91,18 @@ export const PanelHeaderButton = ({
       activeMode={activeMode}
       className={classNames(
         'vkuiInternalPanelHeaderButton',
-        styles['PanelHeaderButton'],
+        styles.host,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        isPrimitive && styles['PanelHeaderButton--primitive'],
-        !isPrimitive && !isPrimitiveLabel && styles['PanelHeaderButton--notPrimitive'],
+        isPrimitive && styles.hostPrimitive,
+        !isPrimitive && !isPrimitiveLabel && styles.hostNotPrimitive,
         className,
       )}
     >
       {isPrimitive ? <ButtonTypography primary={primary}>{children}</ButtonTypography> : children}
       {isPrimitiveLabel ? (
-        <ButtonTypography primary={primary} className={styles['PanelHeaderButton__label']}>
+        <ButtonTypography primary={primary} className={styles.label}>
           {label}
         </ButtonTypography>
       ) : (

@@ -70,18 +70,15 @@ export const ImageBaseOverlay = ({
     <Tappable
       {...restProps}
       className={classNames(
-        styles['ImageBaseOverlay'],
-        visibility === 'always' && styles['ImageBaseOverlay--visible'],
-        theme === 'light' && styles['ImageBaseOverlay--theme-light'],
-        theme === 'dark' && styles['ImageBaseOverlay--theme-dark'],
+        styles.host,
+        visibility === 'always' && styles.hostVisible,
+        theme === 'light' && styles.hostThemeLight,
+        theme === 'dark' && styles.hostThemeDark,
         className,
       )}
       hasHover={visibility === 'on-hover'}
-      hoverMode={visibility === 'on-hover' ? styles['ImageBaseOverlay--visible'] : undefined}
-      focusVisibleMode={classNames(
-        focusVisiblePresetModeClassNames['inside'],
-        styles['ImageBaseOverlay--visible'],
-      )}
+      hoverMode={visibility === 'on-hover' ? styles.hostVisible : undefined}
+      focusVisibleMode={classNames(focusVisiblePresetModeClassNames['inside'], styles.hostVisible)}
       hasActive={false}
       onClick={onClick}
     >
