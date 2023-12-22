@@ -32,7 +32,7 @@ export function Themes({ id }) {
         </Link>
         .
         <Blockquote>
-          Про их подключение можно ознакомиться на странице{' '}
+          Узнать, как их подключить, можно на странице{' '}
           <Link href="#/Customize" onClick={() => setActiveModal(null)}>
             Кастомизация
           </Link>
