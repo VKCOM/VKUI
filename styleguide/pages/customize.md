@@ -8,34 +8,33 @@
 > измениться в любой момент без предупреждения. Не привязывайтесь к ней, если хотите сохранить
 > возможность без проблем обновляться на новые версии библиотеки.
 
-Для возможности переопределения цветов, размеров, отступов, типографии, скруглений и теней, **VKUI**
+Чтобы переопределять цвета, размеры, отступы, типографию, скругления и тени, **VKUI**  
 предоставляет два API:
 
-1. передача свойств в сами компоненты (например, `size`, `appearance`, `borderRadius` и т.п.);
-2. переопределение значений CSS переменных из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens).
+1. свойства отдельных компонентов (например, `size`, `appearance`, `borderRadius` и т.п.);
+2. переопределение темы — или значений CSS-переменных из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens).
 
-Использование первого способа предполагает изучение страниц нужного компонента, поэтому здесь мы
-рассмотрим второй способ.
+Здесь мы рассматриваем второй способ.
 
 ## Использование своей темы
 
-В первую очередь, необходимо поправить импорт стилей:
+В первую очередь вам нужно поправить импорт стилей:
 
 ```diff
 - import '@vkontakte/vkui/dist/vkui.css';
 + import '@vkontakte/vkui/dist/components.css';
 ```
 
-Так мы отключим подключение тем по умолчанию из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens).
+Так вы отключите подключение тем по умолчанию из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens).
 
-Далее ищем в [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens) иную желаемую тему или
-определяем свою. CSS класс, где будут собраны токены, необходимо будет передать в свойство
-`tokensClassNames` компонента [ConfigProvider](#/ConfigProvider). Переопределить тему можно либо
-<a href="{{anchor}}">глобально</a>, либо <a href="{{anchor}}">для конкретной платформы</a>.
+Далее находите в [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens) нужную вам тему или
+создаете свою. CSS-класс, под которым будут собраны токены, передайте в свойство `tokensClassNames`
+компонента [ConfigProvider](#/ConfigProvider). Переопределить тему можно либо <a href="{{anchor}}">глобально</a>,  
+либо <a href="{{anchor}}">для конкретной платформы</a>.
 
 ### Глобально
 
-Если выбрали что-то из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens):
+Если выбрали тему из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens):
 
 ```jsx static
 import { ConfigProvider, AppRoot, Button } from '@vkontakte/vkui';
@@ -58,7 +57,7 @@ ReactDOM.render(
 );
 ```
 
-Или, если хотим задать свою тему:
+Если у вас своя тема:
 
 ```jsx static
 import { ConfigProvider, AppRoot, Button } from '@vkontakte/vkui';
@@ -83,7 +82,7 @@ ReactDOM.render(
 
 ### Для конкретной платформы
 
-Если выбрали что-то из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens):
+Если выбрали тему из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens):
 
 ```jsx static
 import { ConfigProvider, AppRoot, Button } from '@vkontakte/vkui';
@@ -112,7 +111,7 @@ ReactDOM.render(
 );
 ```
 
-Или, если хотим задать свою тему:
+Если у вас своя тема:
 
 ```jsx static
 import { ConfigProvider, AppRoot, Button } from '@vkontakte/vkui';
