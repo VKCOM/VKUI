@@ -1,6 +1,5 @@
-Как уже было сказано ранее, **VKUI** может мимикрировать под дизайны разных платформ. Благодаря этой
-особенности, у вас есть возможность расширять функционал интерфейсами, которые неотличимы от нативных
-разделов.
+Одна из особенностей **VKUI** — это способность мимикрировать под дизайны и поведение разных
+платформ. Благодаря ей вы можете расширять функционал интерфейсами, которые неотличимы от нативных.
 
 ## Содержание
 
@@ -18,21 +17,21 @@
 Передавать платформу в `ConfigProvider` необязательно, т.к. она по умолчанию определяется
 автоматически.
 
-Для ручного определения, достаточно передать в компонент [`ConfigProvider`](https://vkcom.github.io/VKUI/#/ConfigProvider)
-свойство `platform` с нужной платформой. Пример:
+Для ручного определения вы можете передать в компонент [`ConfigProvider`](#/ConfigProvider) свойство
+`platform` с нужной платформой. Пример:
 
 ```jsx static
 <ConfigProvider platform="ios">
   <AdaptivityProvider>
     <AppRoot>
-      <SimpleCell>Эта ячейка будет иметь поведение и стилизация как в iOS</SimpleCell>
+      <SimpleCell>Эта ячейка будет иметь поведение и стилизацию как в iOS</SimpleCell>
     </AppRoot>
   </AdaptivityProvider>
 </ConfigProvider>
 ```
 
 Или, если вам необходимо переопределить платформу точечно для отдельных компонентов приложения, то
-это можно сделать через `PlatformProvider`.
+вы можете сделать это с помощью `PlatformProvider`.
 
 ```jsx static
 <PlatformProvider value="ios">
@@ -40,8 +39,8 @@
 </PlatformProvider>
 ```
 
-Чтобы получить значение текущей платформы используйте хук `usePlatform` или HOC `withPlatform`.
-Подробнее об этих инструментах можно познакомиться на странице [Утилиты](https://vkcom.github.io/VKUI/#/Utils).
+Чтобы получить значение текущей платформы, используйте хук `usePlatform` или HOC `withPlatform`.
+Подробнее об этих инструментах можно прочитать на странице [Утилиты](#/Utils).
 
 <br/>
 
@@ -56,8 +55,8 @@
 
 ## Темы
 
-Тема в библиотеке представляет из себя набор [дизайн токенов](https://foundation.mozilla.org/en/docs/design/websites/design-tokens/)
-в виде [CSS переменных](https://developer.mozilla.org/en-US/docs/Web/CSS/--*). Вот как это может
+Тема в библиотеке представляет из себя набор [дизайн-токенов](https://foundation.mozilla.org/en/docs/design/websites/design-tokens/)
+в виде [CSS-переменных](https://developer.mozilla.org/en-US/docs/Web/CSS/--*). Вот как это может
 выглядеть:
 
 ```css static
@@ -74,7 +73,7 @@
 
 ### [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens)
 
-**VKUI** использует пакет `@vkontakte/vkui-tokens`, который предоставляет готовые наборы **дизайн токенов**.
+**VKUI** использует пакет `@vkontakte/vkui-tokens`, который предоставляет готовые наборы **дизайн-токенов**.
 
 Каждый набор объявлен в классе формата `vkui--<themeName>--<appearance>`. На примере светлой темы
 с названием `vkBase` класс будет выглядеть так – `vkui--vkBase--light` ([ссылка на сам CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css)).
@@ -113,7 +112,7 @@ ReactDOM.render(
   <ConfigProvider appearance="dark">
     <AdaptivityProvider>
       <AppRoot>
-        <SimpleCell>Темны темно</SimpleCell>
+        <SimpleCell>Темным-темно</SimpleCell>
       </AppRoot>
     </AdaptivityProvider>
   </ConfigProvider>,
@@ -121,8 +120,8 @@ ReactDOM.render(
 );
 ```
 
-Или, если вам необходимо переопределить режим для отдельных компонентов приложения, то это можно
-сделать через `AppearanceProvider`.
+Если вы хотите переопределить режим для отдельных компонентов приложения, воспользуйтесь
+`AppearanceProvider`.
 
 ```jsx static
 <AppearanceProvider value="dark">
@@ -130,7 +129,7 @@ ReactDOM.render(
 </AppearanceProvider>
 ```
 
-Чтобы получить значение текущего режима используйте хук `useAppearance`. Может пригодиться для
+Чтобы получить значение текущего режима, используйте хук `useAppearance`. Может пригодиться для
 замены изображений на инвертированную версию в темных темах. Пример:
 
 ```jsx static
@@ -140,4 +139,4 @@ const appearance = useAppearance();
 
 ### Переопределение темы
 
-Про использование своей темы смотрите на странице [Кастомизация](#/Customize).
+См. страницу [Кастомизация](#/Customize).
