@@ -2620,7 +2620,7 @@ __metadata:
     lodash: ^4.17.21
     prop-types: ^15.8.1
     react: "*"
-    react-children-utilities: ^2.9.0
+    react-children-utilities: ^2.10.0
     react-docgen-typescript: ^2.2.2
     react-dom: "*"
     react-frame-component: ^5.2.6
@@ -16142,12 +16142,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-children-utilities@npm:^2.9.0":
-  version: 2.9.0
-  resolution: "react-children-utilities@npm:2.9.0"
+"react-children-utilities@npm:^2.10.0":
+  version: 2.10.0
+  resolution: "react-children-utilities@npm:2.10.0"
   peerDependencies:
-    react: 18 || 17 || 16 || 15
-  checksum: fda25c582ab31c9d3cfa65bbd738cb731c43fa2af6bc78210e355c2b7849483b68fcec80f704bb7e9beae61421c9c5e24be356d558ab5f535a83b34f1c107075
+    react: ">=15"
+  checksum: 0f2ba80f78354dc8291a5d3752c532d137d398adfee6c9105ea00e7c7fea91198b44c7c38d504205f7fcfee9472bbba917aa500c0fdd46fec72141aad8ed7f3d
   languageName: node
   linkType: hard
 
