@@ -13,7 +13,7 @@
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react": "*",
-    "react-children-utilities": "^2.9.0",
+    "react-children-utilities": "^2.10.0",
     "react-docgen-typescript": "^2.2.2",
     "react-dom": "*",
     "react-frame-component": "^5.2.6",
