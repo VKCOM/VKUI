@@ -28,7 +28,6 @@ export const Gallery = ({
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
   const isControlled = typeof props.slideIndex === 'number';
   const slideIndex = isControlled ? props.slideIndex ?? 0 : localSlideIndex;
-  const isDraggable = !isControlled || Boolean(onChange);
   const slides = React.useMemo(
     () => React.Children.toArray(children).filter((item) => Boolean(item)),
     [children],
@@ -68,7 +67,7 @@ export const Gallery = ({
 
   return (
     <Component
-      isDraggable={isDraggable}
+      dragDisabled={isControlled && !onChange}
       {...props}
       bullets={childCount > 0 && bullets}
       slideIndex={safeSlideIndex}

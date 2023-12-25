@@ -186,7 +186,7 @@ export const CalendarRange = ({
         <CalendarHeader
           viewDate={viewDate}
           onChange={setViewDate}
-          nextMonth={false}
+          nextMonthHidden
           onPrevMonth={setPrevMonth}
           disablePickers={disablePickers}
           className={styles['CalendarRange__header']}
@@ -221,7 +221,7 @@ export const CalendarRange = ({
         <CalendarHeader
           viewDate={secondViewDate}
           onChange={setViewDate}
-          prevMonth={false}
+          prevMonthHidden
           onNextMonth={setNextMonth}
           disablePickers={disablePickers}
           className={styles['CalendarRange__header']}

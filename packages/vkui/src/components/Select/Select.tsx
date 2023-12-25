@@ -32,7 +32,7 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     ClearButton,
     allowClearButton,
     dropdownOffsetDistance,
-    fixDropdownWidth,
+    dropdownAutoWidth,
     forceDropdownPortal,
     selectType,
     autoHideScrollbar,

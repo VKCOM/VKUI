@@ -42,7 +42,7 @@ export const BaseGallery = ({
   children,
   slideWidth = '100%',
   slideIndex = 0,
-  isDraggable: isDraggableProp = true,
+  dragDisabled = false,
   onDragStart,
   onDragEnd,
   onChange,
@@ -236,14 +236,18 @@ export const BaseGallery = ({
     return targetIndex;
   };
 
+  const isDraggable = !dragDisabled && !layoutState.current.isFullyVisible;
+
   const onStart = (e: TouchEvent) => {
     e.originalEvent.stopPropagation();
-    onDragStart?.(e);
-    setShiftState((prevState) => ({ ...prevState, animation: false }));
+    if (isDraggable) {
+      onDragStart?.(e);
+      setShiftState((prevState) => ({ ...prevState, animation: false }));
+    }
   };
 
   const onMoveX = (e: TouchEvent) => {
-    if (isDraggableProp && !layoutState.current.isFullyVisible) {
+    if (isDraggable) {
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
@@ -259,24 +263,26 @@ export const BaseGallery = ({
   };
 
   const onEnd = (e: TouchEvent) => {
-    const targetIndex = e.isSlide ? getTarget(e) : slideIndex ?? 0;
-    onDragEnd?.(e, targetIndex);
+    if (isDraggable) {
+      const targetIndex = e.isSlide ? getTarget(e) : slideIndex ?? 0;
+      onDragEnd?.(e, targetIndex);
 
-    const nextShiftState: Partial<ShiftingState> = {
-      animation: true,
-      dragging: false,
-      deltaX: 0,
-    };
+      const nextShiftState: Partial<ShiftingState> = {
+        animation: true,
+        dragging: false,
+        deltaX: 0,
+      };
 
-    const shiftXStick = calculateDragIndent();
-    if (targetIndex !== slideIndex) {
-      // Сохраняем сдвиг слайда в том положении, в каком его оставили после драга (fix issue #2185)
-      nextShiftState.shiftX = shiftXStick;
-    }
+      const shiftXStick = calculateDragIndent();
+      if (targetIndex !== slideIndex) {
+        // Сохраняем сдвиг слайда в том положении, в каком его оставили после драга (fix issue #2185)
+        nextShiftState.shiftX = shiftXStick;
+      }
 
-    setShiftState((prevState) => ({ ...prevState, ...nextShiftState }));
-    if (targetIndex !== slideIndex) {
-      onChange?.(targetIndex);
+      setShiftState((prevState) => ({ ...prevState, ...nextShiftState }));
+      if (targetIndex !== slideIndex) {
+        onChange?.(targetIndex);
+      }
     }
   };
 
@@ -308,8 +314,6 @@ export const BaseGallery = ({
         (layoutState.current.layerWidth ?? 0)) ||
       // otherwise we need to check current slide index (align = right or align = center)
       (align !== 'left' && slideIndex < layoutState.current.slides.length - 1));
-
-  const isDraggable = isDraggableProp && !layoutState.current.isFullyVisible;
 
   return (
     <RootComponent

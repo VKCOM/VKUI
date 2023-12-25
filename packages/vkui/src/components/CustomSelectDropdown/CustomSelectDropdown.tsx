@@ -16,7 +16,10 @@ export interface CustomSelectDropdownProps
   scrollBoxRef?: React.Ref<HTMLDivElement>;
   fetching?: boolean;
   offsetDistance?: number;
-  sameWidth?: boolean;
+  /**
+   * Ширина раскрывающегося списка зависит от контента
+   */
+  autoWidth?: boolean;
   forcePortal?: boolean;
   onPlacementChange?(placement: Placement): void;
   /**
@@ -35,7 +38,7 @@ export const CustomSelectDropdown = ({
   fetching,
   onPlacementChange: parentOnPlacementChange,
   offsetDistance = 0,
-  sameWidth = true,
+  autoWidth = false,
   forcePortal = true,
   autoHideScrollbar,
   autoHideScrollbarDelay,
@@ -59,7 +62,7 @@ export const CustomSelectDropdown = ({
     <Popper
       targetRef={targetRef}
       offsetByMainAxis={offsetDistance}
-      sameWidth={sameWidth}
+      sameWidth={!autoWidth}
       onPlacementChange={onPlacementChange}
       placement={placement}
       className={classNames(
@@ -67,7 +70,7 @@ export const CustomSelectDropdown = ({
         'vkuiInternalCustomSelectDropdown',
         offsetDistance === 0 &&
           (isTop ? styles['CustomSelectDropdown--top'] : styles['CustomSelectDropdown--bottom']),
-        sameWidth &&
+        autoWidth &&
           classNames(
             styles['CustomSelectDropdown--wide'],
             'vkuiInternalCustomSelectDropdown--wide',

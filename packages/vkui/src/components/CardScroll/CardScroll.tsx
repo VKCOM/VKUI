@@ -18,7 +18,7 @@ export interface CardScrollProps extends HTMLAttributesWithRootRef<HTMLDivElemen
    */
   size?: 's' | 'm' | 'l' | false;
   showArrows?: HorizontalScrollProps['showArrows'];
-  withSpaces?: boolean;
+  noSpaces?: boolean;
 }
 
 /**
@@ -28,7 +28,7 @@ export const CardScroll = ({
   children,
   size = 's',
   showArrows = true,
-  withSpaces = true,
+  noSpaces = false,
   ...restProps
 }: CardScrollProps) => {
   const refContainer = React.useRef<HTMLDivElement>(null);
@@ -95,7 +95,7 @@ export const CardScroll = ({
         styles['CardScroll'],
         'vkuiInternalCardScroll',
         size !== false && stylesSize[size],
-        withSpaces && styles['CardScroll--withSpaces'],
+        !noSpaces && styles['CardScroll--withSpaces'],
       )}
     >
       <HorizontalScroll

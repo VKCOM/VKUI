@@ -29,7 +29,7 @@ export const CarouselBase = ({
   children,
   slideWidth = '100%',
   slideIndex = 0,
-  isDraggable: isDraggableProp = true,
+  dragDisabled = false,
   onDragStart,
   onDragEnd,
   onChange,
@@ -159,7 +159,7 @@ export const CarouselBase = ({
     setControlElementsState({
       canSlideLeft: !slidesManager.current.isFullyVisible,
       canSlideRight: !slidesManager.current.isFullyVisible,
-      isDraggable: isDraggableProp && !slidesManager.current.isFullyVisible,
+      isDraggable: !(dragDisabled || slidesManager.current.isFullyVisible),
     });
 
     shiftXCurrentRef.current = snaps[slideIndex];
@@ -266,13 +266,15 @@ export const CarouselBase = ({
 
   const onStart = (e: TouchEvent) => {
     e.originalEvent.stopPropagation();
-    onDragStart?.(e);
-    shiftXCurrentRef.current = slidesManager.current.snaps[slideIndex];
-    shiftXDeltaRef.current = 0;
+    if (controlElementsState.isDraggable) {
+      onDragStart?.(e);
+      shiftXCurrentRef.current = slidesManager.current.snaps[slideIndex];
+      shiftXDeltaRef.current = 0;
+    }
   };
 
   const onMoveX = (e: TouchEvent) => {
-    if (isDraggableProp && !slidesManager.current.isFullyVisible) {
+    if (controlElementsState.isDraggable) {
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
@@ -285,23 +287,25 @@ export const CarouselBase = ({
   };
 
   const onEnd = (e: TouchEvent) => {
-    let targetIndex = slideIndex;
-    if (e.isSlide) {
-      targetIndex = getTargetIndex(
-        slidesManager.current.slides,
-        slideIndex,
-        shiftXCurrentRef.current,
-        shiftXDeltaRef.current,
-      );
-    }
-    onDragEnd?.(e, targetIndex);
+    if (controlElementsState.isDraggable) {
+      let targetIndex = slideIndex;
+      if (e.isSlide) {
+        targetIndex = getTargetIndex(
+          slidesManager.current.slides,
+          slideIndex,
+          shiftXCurrentRef.current,
+          shiftXDeltaRef.current,
+        );
+      }
+      onDragEnd?.(e, targetIndex);
 
-    if (targetIndex !== slideIndex) {
-      shiftXCurrentRef.current = shiftXCurrentRef.current + shiftXDeltaRef.current;
-      onChange?.(targetIndex);
-    } else {
-      const initialShiftX = slidesManager.current.snaps[targetIndex];
-      requestTransform(initialShiftX, true);
+      if (targetIndex !== slideIndex) {
+        shiftXCurrentRef.current = shiftXCurrentRef.current + shiftXDeltaRef.current;
+        onChange?.(targetIndex);
+      } else {
+        const initialShiftX = slidesManager.current.snaps[targetIndex];
+        requestTransform(initialShiftX, true);
+      }
     }
   };
 

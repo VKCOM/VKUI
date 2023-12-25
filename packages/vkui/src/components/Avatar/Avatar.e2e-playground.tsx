@@ -35,7 +35,7 @@ export const AvatarPlayground = (props: ComponentPlaygroundProps) => {
           fallbackIcon: [<IconExampleForFallbackBasedOnImageBaseSize key="icon-fallback" />],
         },
         {
-          withBorder: [undefined, false],
+          noBorder: [undefined, true],
         },
         {
           gradientColor: [1, 2, 3, 5, 6, 'blue'],

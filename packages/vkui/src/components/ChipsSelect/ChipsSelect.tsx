@@ -57,9 +57,9 @@ export interface ChipsSelectProps<O extends ChipOption>
    */
   closeAfterSelect?: boolean;
   /**
-   * Изменение ширины по умолчанию.
+   * Ширина раскрывающегося списка зависит от контента
    */
-  fixDropdownWidth?: boolean;
+  dropdownAutoWidth?: boolean;
   /**
    * Принудительно использовать портал.
    */
@@ -113,7 +113,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   emptyText = DEFAULT_EMPTY_TEXT,
   creatable = false,
   fetching = false,
-  fixDropdownWidth,
+  dropdownAutoWidth,
   forceDropdownPortal,
   noMaxHeight = false,
   filterFn = defaultFilterFn,
@@ -424,7 +424,7 @@ export const ChipsSelect = <Option extends ChipOption>({
           onPlacementChange={onDropdownPlacementChange}
           onMouseLeave={onDropdownMouseLeave}
           fetching={fetching}
-          sameWidth={fixDropdownWidth}
+          autoWidth={dropdownAutoWidth}
           forcePortal={forceDropdownPortal}
           noMaxHeight={noMaxHeight}
           // a11y

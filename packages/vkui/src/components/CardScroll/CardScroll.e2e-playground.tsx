@@ -21,7 +21,7 @@ export const CardScrollPlayground = (props: ComponentPlaygroundProps) => {
           showArrows: [true, false, 'always'],
         },
         {
-          withSpaces: [true, false],
+          noSpaces: [false, true],
         },
       ]}
     >

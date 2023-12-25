@@ -43,7 +43,10 @@ export interface BaseGalleryProps
    */
   onNextClick?(event: React.MouseEvent): void;
   bullets?: 'dark' | 'light' | false;
-  isDraggable?: boolean;
+  /**
+   * Позволяет отключить реагирование на тач-события
+   */
+  dragDisabled?: boolean;
   showArrows?: boolean;
   hasPointer?: boolean;
   arrowSize?: ScrollArrowProps['size'];

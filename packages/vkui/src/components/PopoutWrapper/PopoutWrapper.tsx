@@ -20,9 +20,9 @@ const stylesAlignY = {
 
 export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Если `true`, то при первом монтировании оверлей появится через fade-in анимацию.
+   * Позволяет сделать прозрачную подложку
    */
-  hasMask?: boolean;
+  noBackground?: boolean;
   /**
    * Включает фиксированное позиционирование.
    *
@@ -50,14 +50,14 @@ export const PopoutWrapper = ({
   alignY = 'center',
   alignX = 'center',
   closing = false,
-  hasMask = true,
+  noBackground = false,
   fixed = true,
   children,
   onClick,
   ...restProps
 }: PopoutWrapperProps) => {
   const platform = usePlatform();
-  const [opened, setOpened] = React.useState(!hasMask);
+  const [opened, setOpened] = React.useState(noBackground);
 
   const onFadeInEnd = (e?: React.AnimationEvent) => {
     if (!e || e.animationName === styles['animation-full-fade-in']) {
@@ -79,7 +79,7 @@ export const PopoutWrapper = ({
         closing && styles['PopoutWrapper--closing'],
         opened && styles['PopoutWrapper--opened'],
         fixed && styles['PopoutWrapper--fixed'],
-        hasMask && styles['PopoutWrapper--masked'],
+        !noBackground && styles['PopoutWrapper--masked'],
       )}
       onAnimationEnd={opened ? undefined : onFadeInEnd}
     >
