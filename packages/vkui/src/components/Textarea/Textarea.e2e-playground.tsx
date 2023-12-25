@@ -22,7 +22,7 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
           $adaptivity: 'y',
         },
         {
-          heightByRows: [true],
+          grow: [false],
           value: ['1\n2\n3\n4\n5'],
         },
         {

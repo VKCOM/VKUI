@@ -53,7 +53,6 @@
   - <a href="{{anchor}}">`SplitCol`</a>
   - <a href="{{anchor}}">`Tabbar`</a>
   - <a href="{{anchor}}">`Tappable`</a>
-  - <a href="{{anchor}}">`Textarea`</a>
   - <a href="{{anchor}}">~~`Tooltip`~~ -> `OnboardingTooltip`</a>
   - <a href="{{anchor}}">`Typography/Title`</a>
   - <a href="{{anchor}}">`Typography/Headline`</a>
@@ -960,19 +959,6 @@ npx @vkontakte/vkui-codemods --help
  >
   Информационный текст
 </SimpleCell>
-```
-
-<br/>
-
-## [`Textarea`](#/Textarea)
-
-- Свойство `grow` удалено, используйте свойство `heightByRows`.
-
-```diff
--  <Textarea grow />
-+  <Textarea />
--  <Textarea grow={false} rows={3} />
-+  <Textarea heightByRows rows={3} />
 ```
 
 <br/><br/>

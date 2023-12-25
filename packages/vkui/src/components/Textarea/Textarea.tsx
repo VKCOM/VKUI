@@ -19,12 +19,9 @@ export interface TextareaProps
     HasRootRef<HTMLElement>,
     Pick<React.CSSProperties, 'maxHeight'>,
     Pick<FormFieldProps, 'status'> {
+  grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   defaultValue?: string;
-  /**
-   * Высота элемента ориентируется на значение `rows`
-   */
-  heightByRows?: boolean;
 }
 
 /**
@@ -32,7 +29,7 @@ export interface TextareaProps
  */
 export const Textarea = ({
   defaultValue = '',
-  heightByRows = false,
+  grow = true,
   style,
   onResize,
   className,
@@ -58,7 +55,7 @@ export const Textarea = ({
   React.useEffect(() => {
     const el = elementRef.current;
 
-    if (!heightByRows && el?.offsetParent) {
+    if (grow && el?.offsetParent) {
       el.style.height = '';
       el.style.height = `${el.scrollHeight}px`;
 
@@ -67,7 +64,7 @@ export const Textarea = ({
         currentScrollHeight.current = el.scrollHeight;
       }
     }
-  }, [heightByRows, value, sizeY, elementRef, onResize]);
+  }, [grow, value, sizeY, elementRef, onResize]);
 
   return (
     <FormField
