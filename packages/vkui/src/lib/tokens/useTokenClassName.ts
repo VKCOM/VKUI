@@ -1,12 +1,30 @@
 import * as React from 'react';
 import { ConfigProviderContext } from '../../components/ConfigProvider/ConfigProviderContext';
-import { DEFAULT_APPEARANCE } from '../appearance';
+import { type AppearanceType, DEFAULT_APPEARANCE } from '../appearance';
+import { Platform, type PlatformType } from '../platform';
 import { DEFAULT_TOKENS_CLASS_NAMES } from './constants';
-import {
-  getAppearanceTokenClassNameByPlatform,
-  getTokenClassNameByAppearance,
-  isTokensClassNamesForPlatforms,
-} from './functions';
+import type {
+  TokensClassNames,
+  TokensClassNamesByAppearances,
+  TokensClassNamesByPlatforms,
+} from './types';
+
+const isTokensClassNamesForPlatforms = (
+  tokensClassNames: TokensClassNames,
+): tokensClassNames is TokensClassNamesByPlatforms =>
+  Platform.ANDROID in tokensClassNames ||
+  Platform.IOS in tokensClassNames ||
+  Platform.VKCOM in tokensClassNames;
+
+const getTokenClassNameByAppearance = (
+  appearance: AppearanceType,
+  tokensClassNames?: TokensClassNamesByAppearances,
+) => (tokensClassNames ? tokensClassNames[appearance] : undefined);
+
+const getAppearanceTokenClassNameByPlatform = (
+  platform: PlatformType,
+  tokensClassNames?: TokensClassNamesByPlatforms,
+) => (tokensClassNames ? tokensClassNames[platform] : undefined);
 
 /**
  * @private
