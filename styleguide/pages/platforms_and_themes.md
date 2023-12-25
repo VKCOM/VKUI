@@ -66,41 +66,13 @@
 }
 ```
 
-Каждая тема обычно поддерживает как <u title='англ. "light"'>светлый</u>, так и
-<u title='англ. "dark"'>тёмный</u> режим (см. <a href="{{anchor}}">Режимы</a>).
-
-<br/>
-
-### [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens)
-
-**VKUI** использует пакет `@vkontakte/vkui-tokens`, который предоставляет готовые наборы **дизайн-токенов**.
-
-Каждый набор объявлен в классе формата `vkui--<themeName>--<appearance>`. На примере светлой темы
-с названием `vkBase` класс будет выглядеть так – `vkui--vkBase--light` ([ссылка на сам CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css)).
-Подобный класс выставляется на контейнер приложения.
-
-> В **VKUI** контейнер зависит от свойства `mode` в [AppRoot](#/AppRoot).
-
-В стили библиотеки, которые подключаются через `import '@vkontakte/vkui/dist/vkui.css'`, встроены 3
-темы в зависимости от платформы и режима:
-
-- `android` (используется по умолчанию)
-  - `light` – `vkBase` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css))
-  - `dark` – `vkBaseDark` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css))
-- `ios`
-  - `light` – `vkIOS` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css))
-  - `dark` – `vkIOSDark` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css))
-- `vkcom` (см. <a href={{anchor}}>О `vkcom`</a>)
-  - `light` – `vkCom` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css))
-  - `dark` – `vkComDark` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css))
-
 <br/>
 
 ### Режимы
 
-За <u title='англ. "light"'>светлый</u> и <u title='англ. "dark"'>тёмный</u> режим отвечает свойство
-`appearance`, и также как `platform`, по умолчанию, определяется автоматически за счёт CSS медиа
-выражения [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
+Каждая тема обычно поддерживает как <i>светлый (англ. `light`)</i>, так и <i>тёмный (англ. `dark`)</i> режим.
+За его определение отвечает свойство `appearance`, и также как `platform`, по умолчанию, определяется
+автоматически за счёт CSS медиа выражения [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
 
 Ручное определение будет выглядеть так:
 
@@ -136,6 +108,31 @@ ReactDOM.render(
 const appearance = useAppearance();
 <Div>{appearance === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
 ```
+
+<br/>
+
+### [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens)
+
+**VKUI** использует пакет `@vkontakte/vkui-tokens`, который предоставляет готовые наборы **дизайн-токенов**.
+
+Каждый набор объявлен в классе формата `vkui--<themeName>--<appearance>`. На примере светлой темы
+с названием `vkBase` класс будет выглядеть так – `vkui--vkBase--light` ([ссылка на сам CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css)).
+Подобный класс выставляется на контейнер приложения.
+
+> В **VKUI** контейнер зависит от свойства `mode` в [AppRoot](#/AppRoot).
+
+В стили библиотеки, которые подключаются через `import '@vkontakte/vkui/dist/vkui.css'`, встроены 3
+темы в зависимости от платформы и режима:
+
+- `android` (используется по умолчанию)
+  - `light` – `vkBase` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css))
+  - `dark` – `vkBaseDark` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css))
+- `ios`
+  - `light` – `vkIOS` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css))
+  - `dark` – `vkIOSDark` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css))
+- `vkcom` (см. <a href={{anchor}}>О `vkcom`</a>)
+  - `light` – `vkCom` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css))
+  - `dark` – `vkComDark` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css))
 
 ### Переопределение темы
 
