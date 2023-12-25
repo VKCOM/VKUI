@@ -347,7 +347,7 @@ npx @vkontakte/vkui-codemods --help
 
 ## [`CardScroll`](#/CardScroll)
 
-- Свойство `isDraggable` удалено, используйте свойство `dragDisabled`.
+- Свойство `withSpaces` удалено, используйте свойство `noSpaces`.
 
 ```diff
 -  <CardScroll withSpaces />
