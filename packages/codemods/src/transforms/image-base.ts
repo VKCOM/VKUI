@@ -1,7 +1,5 @@
-import chalk from 'chalk';
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../codemod-helpers';
-import { report } from '../report';
 import { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';
@@ -10,24 +8,18 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { alias } = options;
   const j = api.jscodeshift;
   const source = j(file.source);
-  const { localName } = getImportInfo(j, file, 'PopoutWrapper', alias);
+  const { localName: imageBaseLocalName } = getImportInfo(j, file, 'ImageBase', alias);
+  const { localName: imageLocalName } = getImportInfo(j, file, 'Image', alias);
+  const { localName: avatarLocalName } = getImportInfo(j, file, 'Avatar', alias);
 
-  const components = source.find(
-    j.JSXOpeningElement,
-    (element) => element.name.type === 'JSXIdentifier' && element.name.name === localName,
-  );
-
-  if (components.size() > 0) {
-    report(
-      api,
-      `: When using ${chalk.white.bgBlue(
-        'PopoutWrapper',
-      )} you might need to apply useScrollLock() hook manually.`,
-    );
-  }
-
-  components
-    .find(j.JSXAttribute, (attribute) => attribute.name.name === 'hasMask')
+  source
+    .find(
+      j.JSXOpeningElement,
+      (element) =>
+        element.name.type === 'JSXIdentifier' &&
+        [imageBaseLocalName, imageLocalName, avatarLocalName].includes(element.name.name),
+    )
+    .find(j.JSXAttribute, (attribute) => attribute.name.name === 'withBorder')
     .forEach((attribute) => {
       const node = attribute.node;
 
@@ -40,7 +32,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         if (node.value.expression.value) {
           j(attribute).remove();
         } else {
-          j(attribute).replaceWith(j.jsxAttribute(j.jsxIdentifier('noBackground')));
+          j(attribute).replaceWith(j.jsxAttribute(j.jsxIdentifier('noBorder')));
         }
       }
     });

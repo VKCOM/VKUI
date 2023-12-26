@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`select transforms correctly 1`] = `
+"import { ChipsSelect, CustomSelect, Select as VKUISelect } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    <React.Fragment>
+      <VKUISelect options={options} />
+      <CustomSelect dropdownAutoWidth options={options} />
+      <ChipsSelect options={options} />
+    </React.Fragment>
+  );
+};"
+`;
