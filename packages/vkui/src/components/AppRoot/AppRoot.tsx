@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useAppearance } from '../../hooks/useAppearance';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { usePlatform } from '../../hooks/usePlatform';
 import { getDocumentBody } from '../../lib/dom';
+import { useTokensClassName } from '../../lib/tokens';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AppRootContext } from './AppRootContext';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
@@ -70,8 +69,7 @@ export const AppRoot = ({
   ...props
 }: AppRootProps) => {
   const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
-  const platform = usePlatform();
-  const appearance = useAppearance();
+  const tokensClassName = useTokensClassName();
 
   const safeAreaInsets = useObjectMemo(safeAreaInsetsProp);
   const isKeyboardInputActiveRef = useKeyboardInputTracker();
@@ -114,8 +112,7 @@ export const AppRoot = ({
       const [baseClassNames, stylesClassNames] = getClassNamesByMode({
         mode,
         layout,
-        platform,
-        appearance,
+        tokensClassName,
         sizeX,
         sizeY,
       });
@@ -168,8 +165,7 @@ export const AppRoot = ({
       mode,
       layout,
       disableParentTransformForPositionFixedElements,
-      platform,
-      appearance,
+      tokensClassName,
       sizeX,
       sizeY,
       safeAreaInsets,

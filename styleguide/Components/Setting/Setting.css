@@ -23,6 +23,21 @@
   cursor: pointer;
 }
 
+.Setting__label {
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.Setting__label--has-hint {
+  cursor: help;
+}
+
+.Setting__labelHint {
+  margin-left: 2px;
+  color: var(--vkui--color_icon_secondary);
+}
+
 .Setting__value {
   display: flex;
   align-items: center;

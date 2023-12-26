@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type { AppearanceType } from '../../lib/appearance';
-import { platform, PlatformType } from '../../lib/platform';
+import { platform, type PlatformType } from '../../lib/platform';
+import { DEFAULT_TOKENS_CLASS_NAMES, type TokensClassNames } from '../../lib/tokens';
 
 export interface ConfigProviderContextInterface {
   /**
@@ -43,6 +44,29 @@ export interface ConfigProviderContextInterface {
    */
   platform: PlatformType;
   /**
+   * CSS классы, определяющие набор токенов.
+   *
+   * - Используйте `{ light?: '<css_class>', dark?: '<css_class>' }`, чтобы задать для всех платформ одинаковый набор токенов для светлой и/или тёмной тем.
+   * - Используйте `{ [key in 'android' | 'ios' | 'vkcom']?: '<css_class>' }`, чтобы задать для одной или нескольких платформ свой набор токенов.
+   *
+   * @default
+   * {
+   *   android: {
+   *     light: 'vkui--vkBase--light',
+   *     dark: 'vkui--vkBase--dark',
+   *   },
+   *   ios: {
+   *     light: 'vkui--vkIOS--light',
+   *     dark: 'vkui--vkIOS--dark',
+   *   },
+   *   vkcom: {
+   *     light: 'vkui--vkCom--light',
+   *     dark: 'vkui--vkCom--dark',
+   *   }
+   * }
+   */
+  tokensClassNames: TokensClassNames;
+  /**
    * Строка с языковой меткой BCP 47
    */
   locale: string;
@@ -55,6 +79,7 @@ export const ConfigProviderContext = React.createContext<ConfigProviderContextIn
   transitionMotionEnabled: true,
   platform: platform(),
   appearance: undefined, // undefined обозначает что тема должна определиться автоматически
+  tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
   locale: 'ru',
 });
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { Platform, type PlatformType } from '../../lib/platform';
 import { baselineComponent, fakeTimers, runAllTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
@@ -26,7 +27,11 @@ function Refresher(props: any) {
   );
 }
 
-function renderRefresher({ platform = 'android' as string } = {}) {
+function renderRefresher(
+  { platform }: { platform: PlatformType } = {
+    platform: Platform.ANDROID,
+  },
+) {
   let controller: (v: boolean) => void;
   const setFetching = (v: boolean) => act(() => controller(v));
   const handle = render(
@@ -78,7 +83,7 @@ describe('PullToRefresh', () => {
       expect(hasSpinner()).toBe(false);
     });
     it('until touch release after isFetching=false on iOS', () => {
-      const { setFetching } = renderRefresher({ platform: 'ios' });
+      const { setFetching } = renderRefresher({ platform: Platform.IOS });
       firePull(screen.getByTestId('xxx'), { end: false });
       setFetching(false);
       expect(hasSpinner()).toBe(true);

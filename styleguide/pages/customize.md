@@ -1,36 +1,54 @@
-> ⚠ Внутренняя реализация компонентов, включая их классы — не публичное API VKUI и может измениться в любой момент без предупреждения. Не привязывайтесь к ней, если хотите сохранить возможность без проблем обновляться на новые версии библиотеки.
+> Прежде чем изучать этот документ, убедитесь, что вы были ознакомлены со страницей [Платформы и темы](#/PlatformsAndThemes).
 
-Все цвета, используемые в библиотеке, занесены в [css-custom-properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*).
-Чтобы использовать цвета в своем коде, достаточно посмотреть на список доступных цветов и применить их, используя
-синтаксис css-custom-properties:
+<hr/>
 
-```css static
-.MyBlock {
-  background: var(--vkui--color_background_content);
-  color: var(--vkui--color_text_primary);
-}
+> ⚠ Дисклеймер
+>
+> Внутренняя реализация компонентов, включая их классы — не публичное API **VKUI** и может
+> измениться в любой момент без предупреждения. Не привязывайтесь к ней, если хотите сохранить
+> возможность без проблем обновляться на новые версии библиотеки.
+
+Чтобы переопределять цвета, размеры, отступы, типографию, скругления и тени, **VKUI** предоставляет
+два API:
+
+1. свойства отдельных компонентов (например, `size`, `appearance`, `borderRadius` и т.п.);
+2. переопределение темы — или значений CSS-переменных из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens).
+
+Здесь мы рассматриваем второй способ.
+
+## Использование своей темы
+
+В первую очередь вам нужно поправить импорт стилей:
+
+```diff
+- import '@vkontakte/vkui/dist/vkui.css';
++ import '@vkontakte/vkui/dist/components.css';
 ```
 
-Доступные цвета находятся [тут](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariables.css)
+Так вы отключите подключение тем по умолчанию из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens).
 
-## Платформы и темы
+Далее находите в [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens) нужную вам тему или
+создаете свою. CSS-класс, под которым будут собраны токены, передайте в свойство `tokensClassNames`
+компонента [ConfigProvider](#/ConfigProvider). Переопределить тему можно либо <a href="{{anchor}}">глобально</a>,
+либо <a href="{{anchor}}">для конкретной платформы</a>.
 
-В стили библиотеки встроены стили для 3 платформ:
+### Глобально
 
-- `vkcom` — стиль сайта [vk.com](https://vk.com);
-- `ios` — стиль мобильного приложения ВКонтакте под iOS;
-- `android` — стиль мобильного приложения ВКонтакте под Android. Этот стиль является дефолтным.
-
-Каждая платформа доступна в светлом и темном вариантах.
-
-Пример использования:
+Если выбрали тему из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens):
 
 ```jsx static
-import { AppRoot, ConfigProvider, Button } from '@vkontakte/vkui';
-import '@vkontakte/vkui/dist/vkui.css';
+import { ConfigProvider, AppRoot, Button } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/components.css';
+import '@vkontakte/vkui-tokens/themes/paradigmBase/cssVars/declarations/onlyVariables.css';
+import '@vkontakte/vkui-tokens/themes/paradigmBaseDark/cssVars/declarations/onlyVariablesLocal.css';
 
 ReactDOM.render(
-  <ConfigProvider platform="vkcom" appearance="light">
+  <ConfigProvider
+    tokensClassNames={{
+      light: 'vkui--paradigmBase--light',
+      dark: 'vkui--paradigmBase--dark',
+    }}
+  >
     <AppRoot>
       <Button />
     </AppRoot>
@@ -39,27 +57,81 @@ ReactDOM.render(
 );
 ```
 
-## Текущие способы кастомизации
-
-Мы поддерживаем [новую систему токенов](https://github.com/VKCOM/vkui-tokens), которая
-позволяет кастомизировать не только цвета, но и скругления, размеры, отступы и тени. Полный список доступных
-токенов можно найти на [сайте с документацией](https://vkcom.github.io/vkui-tokens/).
-
-Пример использования:
+Если у вас своя тема:
 
 ```jsx static
-import { AppRoot, ConfigProvider, Button } from '@vkontakte/vkui';
-/*
- * В components.css уже нет значений токенов из Appearance. Предполагается, что
- * если разработчик использует vkui-tokens, то файлы со значениями он подключает
- * самостоятельно.
- */
+import { ConfigProvider, AppRoot, Button } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/components.css';
-import '@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariables.css';
-import '@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css';
+// тут предполагается, что светлый и тёмный режимы определены в одном файле
+import './myCustomThemeTokens.css';
 
 ReactDOM.render(
-  <ConfigProvider platform="vkcom" appearance="light">
+  <ConfigProvider
+    tokensClassNames={{
+      light: 'myCustomThemeTokens--light',
+      dark: 'myCustomThemeTokens--dark',
+    }}
+  >
+    <AppRoot>
+      <Button />
+    </AppRoot>
+  </ConfigProvider>,
+  root,
+);
+```
+
+### Для конкретной платформы
+
+Если выбрали тему из [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens):
+
+```jsx static
+import { ConfigProvider, AppRoot, Button } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/components.css';
+import '@vkontakte/vkui-tokens/themes/paradigmBase/cssVars/declarations/onlyVariables.css';
+import '@vkontakte/vkui-tokens/themes/paradigmBaseDark/cssVars/declarations/onlyVariablesLocal.css';
+
+// раз iOS мы не затрагиваем, то необходимо подключить стили по умолчанию
+import '@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariables.css';
+import '@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css';
+
+ReactDOM.render(
+  <ConfigProvider
+    tokensClassNames={{
+      android: {
+        light: 'myCustomThemeTokens--appearance-light',
+        dark: 'myCustomThemeTokens--appearance-dark',
+      },
+    }}
+  >
+    <AppRoot>
+      <Button />
+    </AppRoot>
+  </ConfigProvider>,
+  root,
+);
+```
+
+Если у вас своя тема:
+
+```jsx static
+import { ConfigProvider, AppRoot, Button } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/components.css';
+// тут предполагается, что светлый и тёмный режимы определены в одном файле
+import './myCustomThemeTokens.css';
+
+// раз iOS мы не затрагиваем, то необходимо подключить стили по умолчанию
+import '@vkontakte/vkui-tokens/themes/myCustomIOS/cssVars/declarations/onlyVariables.css';
+import '@vkontakte/vkui-tokens/themes/myCustomIOSDark/cssVars/declarations/onlyVariablesLocal.css';
+
+ReactDOM.render(
+  <ConfigProvider
+    tokensClassNames={{
+      android: {
+        light: 'myCustomThemeTokens--appearance-light',
+        dark: 'myCustomThemeTokens--appearance-dark',
+      },
+    }}
+  >
     <AppRoot>
       <Button />
     </AppRoot>

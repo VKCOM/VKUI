@@ -1,9 +1,11 @@
 /* eslint no-console: 0 */
 import path from 'path';
 import {
+  Appearance,
   defineConfig,
   type DeviceKey,
   devices,
+  Platform,
   type ReporterDescription,
   type TestProject,
   type VKUITestOptions,
@@ -122,7 +124,7 @@ function generateProjects(): TestProject {
     return restProps;
   };
 
-  const appearances = ['light', 'dark'] as const;
+  const appearances = [Appearance.LIGHT, Appearance.DARK];
   const projects = appearances
     .map((appearance) => [
       {
@@ -130,7 +132,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Pixel 5'),
           appearance,
-          platform: 'android',
+          platform: Platform.ANDROID,
         },
       },
 
@@ -139,7 +141,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('iPhone XR'),
           appearance,
-          platform: 'ios',
+          platform: Platform.IOS,
         },
       },
 
@@ -148,7 +150,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Chrome'),
           appearance,
-          platform: 'vkcom',
+          platform: Platform.VKCOM,
         },
       },
 
@@ -157,7 +159,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Firefox'),
           appearance,
-          platform: 'vkcom',
+          platform: Platform.VKCOM,
         },
       },
 
@@ -166,7 +168,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Safari'),
           appearance,
-          platform: 'vkcom',
+          platform: Platform.VKCOM,
         },
       },
     ])

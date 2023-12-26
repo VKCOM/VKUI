@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from '@vkui';
 import { Setting } from '../Setting/Setting';
 
-export const AppearanceSelect = ({ onChange, value, ...restProps }) => {
+export const AppearanceSelect = ({ onChange, value, options, ...restProps }) => {
   return (
     <Setting
       {...restProps}
@@ -12,10 +12,7 @@ export const AppearanceSelect = ({ onChange, value, ...restProps }) => {
         </React.Fragment>
       }
       label="appearance"
-      options={[
-        { value: 'light', title: 'light' },
-        { value: 'dark', title: 'dark' },
-      ]}
+      options={options}
       onChange={onChange}
       value={value}
     />

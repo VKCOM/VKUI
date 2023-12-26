@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { generateVKUITokensClassName } from '../../helpers/generateVKUITokensClassName';
+import { Appearance } from '../../lib/appearance';
+import { Platform } from '../../lib/platform';
+import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
@@ -238,68 +240,83 @@ describe('AppRoot', () => {
       expect(conditionalContainer).not.toHaveClass(className);
     });
 
-    it('should add VKUITokenClassName to html tag on mount and removes on unmount', async () => {
-      const config = { appearance: 'light', platform: 'vkcom' } as const;
-      const vkuiTokenClassName = generateVKUITokensClassName(config.platform, config.appearance);
-      const { unmount } = render(
-        <ConfigProvider {...config}>
-          <AppRoot />
-        </ConfigProvider>,
-      );
-      expect(document.documentElement).toHaveClass(vkuiTokenClassName);
-      unmount();
-      expect(document.documentElement).not.toHaveClass(vkuiTokenClassName);
-    });
+    const CUSTOM_TOKEN_CLASS_NAME = 'myClassName';
 
-    it('should add VKUITokenClassName to embedded element of AppRoot inner full AppRoot and removes on unmount', async () => {
-      const configForFullMode = { appearance: 'light', platform: 'vkcom' } as const;
-      const vkuiTokenModeClassNameForFullMode = generateVKUITokensClassName(
-        configForFullMode.platform,
-        configForFullMode.appearance,
-      );
-
-      const configForEmbeddedMode = { appearance: 'dark', platform: 'vkcom' } as const;
-      const vkuiTokenModeClassNameForEmbeddedMode = generateVKUITokensClassName(
-        configForEmbeddedMode.platform,
-        configForEmbeddedMode.appearance,
-      );
-
-      const ConfigUserWithOwnProvider = () => {
-        return (
-          <ConfigProvider {...configForEmbeddedMode}>
-            <AppRoot mode="embedded" data-testid="app-root-embedded"></AppRoot>
-          </ConfigProvider>
+    it.each([
+      ['default', Platform.IOS, Appearance.LIGHT, undefined],
+      ['default', Platform.IOS, Appearance.LIGHT, {}],
+      ['default', Platform.IOS, Appearance.DARK, DEFAULT_TOKENS_CLASS_NAMES],
+      ['default', Platform.IOS, Appearance.LIGHT, { dark: CUSTOM_TOKEN_CLASS_NAME }],
+      ['default', Platform.IOS, Appearance.LIGHT, { android: { dark: CUSTOM_TOKEN_CLASS_NAME } }],
+      ['custom', Platform.IOS, Appearance.DARK, { dark: CUSTOM_TOKEN_CLASS_NAME }],
+      ['custom', Platform.ANDROID, Appearance.DARK, { android: { dark: CUSTOM_TOKEN_CLASS_NAME } }],
+    ])(
+      'should use %s tokensClassName if platform="%s" appearance="%s" tokensClassNames={%o}',
+      (type, platform, appearance, tokensClassNames) => {
+        const { unmount } = render(
+          <ConfigProvider
+            platform={platform}
+            appearance={appearance}
+            tokensClassNames={tokensClassNames}
+          >
+            <AppRoot />
+          </ConfigProvider>,
         );
-      };
+        const tokensClassName =
+          type === 'default'
+            ? DEFAULT_TOKENS_CLASS_NAMES[platform][appearance]
+            : CUSTOM_TOKEN_CLASS_NAME;
+        expect(document.documentElement).toHaveClass(tokensClassName);
+        unmount();
+        expect(document.documentElement).not.toHaveClass(tokensClassName);
+      },
+    );
+  });
 
-      const TestComponent = () => {
-        const [isMounted, setIsMounted] = React.useState(true);
-        return (
-          <ConfigProvider {...configForFullMode}>
-            <AppRoot>
-              <button onClick={() => setIsMounted(false)}>Unmount child context</button>
-              {isMounted && <ConfigUserWithOwnProvider />}
-            </AppRoot>
-          </ConfigProvider>
-        );
-      };
+  it('should add tokensClassName to embedded element of AppRoot inner full AppRoot and removes on unmount', async () => {
+    const configForFullMode = { appearance: Appearance.LIGHT, platform: Platform.VKCOM };
+    const vkuiTokenModeClassNameForFullMode =
+      DEFAULT_TOKENS_CLASS_NAMES[configForFullMode.platform][configForFullMode.appearance];
 
-      const result = render(<TestComponent />);
+    const configForEmbeddedMode = { appearance: Appearance.DARK, platform: Platform.VKCOM };
+    const vkuiTokenModeClassNameForEmbeddedMode =
+      DEFAULT_TOKENS_CLASS_NAMES[configForEmbeddedMode.platform][configForEmbeddedMode.appearance];
 
-      expect(document.documentElement).toHaveClass(vkuiTokenModeClassNameForFullMode);
-      expect(result.getByTestId('app-root-embedded')).toHaveClass(
-        vkuiTokenModeClassNameForEmbeddedMode,
+    const ConfigUserWithOwnProvider = () => {
+      return (
+        <ConfigProvider {...configForEmbeddedMode}>
+          <AppRoot mode="embedded" data-testid="app-root-embedded"></AppRoot>
+        </ConfigProvider>
       );
+    };
 
-      fireEvent.click(screen.getByRole('button'));
+    const TestComponent = () => {
+      const [isMounted, setIsMounted] = React.useState(true);
+      return (
+        <ConfigProvider {...configForFullMode}>
+          <AppRoot>
+            <button onClick={() => setIsMounted(false)}>Unmount child context</button>
+            {isMounted && <ConfigUserWithOwnProvider />}
+          </AppRoot>
+        </ConfigProvider>
+      );
+    };
 
-      expect(document.documentElement).toHaveClass(vkuiTokenModeClassNameForFullMode);
-      expect(result.queryByTestId('app-root-embedded')).toBeNull();
+    const result = render(<TestComponent />);
 
-      result.unmount();
+    expect(document.documentElement).toHaveClass(vkuiTokenModeClassNameForFullMode);
+    expect(result.getByTestId('app-root-embedded')).toHaveClass(
+      vkuiTokenModeClassNameForEmbeddedMode,
+    );
 
-      expect(document.documentElement).not.toHaveClass(vkuiTokenModeClassNameForFullMode);
-    });
+    fireEvent.click(screen.getByRole('button'));
+
+    expect(document.documentElement).toHaveClass(vkuiTokenModeClassNameForFullMode);
+    expect(result.queryByTestId('app-root-embedded')).toBeNull();
+
+    result.unmount();
+
+    expect(document.documentElement).not.toHaveClass(vkuiTokenModeClassNameForFullMode);
   });
 
   describe('Workarounds', () => {

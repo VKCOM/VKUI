@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useAppearance } from '../../hooks/useAppearance';
 import { PlatformType } from '../../lib/platform';
-import { TokensClassProvider } from '../../lib/tokensClassProvider';
+import { TokensClassProvider } from '../../lib/tokens';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface PlatformProviderProps {
@@ -19,13 +18,9 @@ export interface PlatformProviderProps {
  * @see https://vkcom.github.io/VKUI/#/PlatformProvider
  */
 export function PlatformProvider({ value, children }: PlatformProviderProps) {
-  const appearance = useAppearance();
-
   return (
     <ConfigProviderOverride platform={value}>
-      <TokensClassProvider platform={value} appearance={appearance}>
-        {children}
-      </TokensClassProvider>
+      <TokensClassProvider>{children}</TokensClassProvider>
     </ConfigProviderOverride>
   );
 }
