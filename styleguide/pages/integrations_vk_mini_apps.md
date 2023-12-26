@@ -8,13 +8,13 @@
 
 ## Конфигурация VKUI
 
-> Советуем использовать шаблон [@vkontakte/create-vk-mini-app](https://github.com/VKCOM/create-vk-mini-app).
+> Советуем использовать шаблон [`@vkontakte/create-vk-mini-app`](https://github.com/VKCOM/create-vk-mini-app).
 > В нем конфигурация, описанная ниже, есть по умолчанию.
 
 Для начала устанавливаем библиотеки:
 
-- [@vkontakte/vk-bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge) **>= 2.9.0**
-- [@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge) **>= 1.0.0**
+- [`@vkontakte/vk-bridge`](https://www.npmjs.com/package/@vkontakte/vk-bridge) **>= 2.9.0**
+- [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge) **>= 1.0.0**
 
 ```sh
 # для примера используется пакетный менеджер yarn
@@ -22,7 +22,7 @@ yarn add @vkontakte/vk-bridge @vkontakte/vk-bridge-react
 ```
 
 Далее подписываемся на изменения из **VK Bridge**. Для этого используем готовые хуки из
-[@vkontakte/vk-bridge-react](https://www.npmjs.com/package/@vkontakte/vk-bridge).
+[`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge).
 
 ```tsx static
 import * as React from 'react';
@@ -104,34 +104,34 @@ export const transformVKBridgeAdaptivity = ({
 
 ## Навигация
 
-### [PanelHeader](https://vkcom.github.io/VKUI/#/PanelHeader)
+### [`PanelHeader`](#/PanelHeader)
 
 Мини-приложению доступна почти вся площадь экрана, поэтому для корректной работы навигации
-необходимо использовать компонент [PanelHeader](https://vkcom.github.io/VKUI/#/PanelHeader) на каждом
+необходимо использовать компонент [`PanelHeader`](#/PanelHeader) на каждом
 экране приложения. Он должен содержать название приложения и значок **Назад** (см.
-[PanelHeaderBack](https://vkcom.github.io/VKUI/#/PanelHeaderBack)) на тех экранах, где тот
+[`PanelHeaderBack`](#/PanelHeaderBack)) на тех экранах, где тот
 требуется.
 
-> _Правый верхний угол_ [PanelHeader](https://vkcom.github.io/VKUI/#/PanelHeader) зарезервирован для
+> _Правый верхний угол_ [`PanelHeader`](#/PanelHeader) зарезервирован для
 > нативного бара с кнопками управления мини-приложением, поэтому не рекомендуем использовать
 > параметр `after`.
 >
-> Чтобы автоматически скрывать `after` у [PanelHeader](https://vkcom.github.io/VKUI/#/PanelHeader),
-> в [ConfigProvider](https://vkcom.github.io/VKUI/#/ConfigProvider) есть параметр
+> Чтобы автоматически скрывать `after` у [`PanelHeader`](#/PanelHeader),
+> в [`ConfigProvider`](#/ConfigProvider) есть параметр
 > `hasCustomPanelHeaderAfter`.
 
-### [View](https://vkcom.github.io/VKUI/#/View)
+### [`View`](#/View)
 
 На стартовой странице мини-приложения вы должны включить свайпбек нативного клиента, чтобы
 пользователь смог выйти из мини-приложения. Для этого нужно вызывать определенные методы
 **VK Bridge** в зависимости от типа мини-приложения:
 
 - Если вы делаете _стандартное_ мини-приложение ВКонтакте, то при переходах отправляйте
-  [VKWebAppSetSwipeSettings](https://dev.vk.com/bridge/VKWebAppSetSwipeSettings) с `history: true`
+  [`VKWebAppSetSwipeSettings`](https://dev.vk.com/bridge/VKWebAppSetSwipeSettings) с `history: true`
   на первой панели и `history: false` на других.
 - Если вы делаете _внутреннее_ мини-приложения ВКонтакте, то отправляйте событие
-  [VKWebAppEnableSwipeBack](https://dev.vk.com/bridge/VKWebAppEnableSwipeBack) при переходе на
-  первую панель и событие [VKWebAppDisableSwipeBack](https://dev.vk.com/bridge/VKWebAppDisableSwipeBack)
+  [`VKWebAppEnableSwipeBack`](https://dev.vk.com/bridge/VKWebAppEnableSwipeBack) при переходе на
+  первую панель и событие [`VKWebAppDisableSwipeBack`](https://dev.vk.com/bridge/VKWebAppDisableSwipeBack)
   при переходе на любую другую.
 
 ```tsx static
@@ -182,7 +182,7 @@ const SomeViews = () => {
 функцию `runTapticImpactOccurred`, которая отправляет событие [VKWebAppTapticImpactOccurred](https://dev.vk.com/bridge/VKWebAppTapticImpactOccurred),
 как раз заранее проверяя, что возможность вызова вибрации доступна на устройстве.
 
-Виброотликом можно воспользоваться, например, при использовании компонента [PullToRefresh](https://vkcom.github.io/VKUI/#/PullToRefresh)
+Виброотликом можно воспользоваться, например, при использовании компонента [`PullToRefresh`](#/PullToRefresh)
 на `onRefresh`.
 
 ```tsx static

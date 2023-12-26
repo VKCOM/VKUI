@@ -1,4 +1,4 @@
-Низкоуровневый компонент для отрисовки карточки со сложным содержимым. Используется внутри [ModalCard](https://vkcom.github.io/VKUI/#/ModalCard).
+Низкоуровневый компонент для отрисовки карточки со сложным содержимым. Используется внутри [`ModalCard`](#/ModalCard).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 <div style={{ margin: 20 }}>
