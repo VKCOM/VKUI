@@ -1636,28 +1636,28 @@ __metadata:
   linkType: hard
 
 "@csstools/css-parser-algorithms@npm:^2.3.1, @csstools/css-parser-algorithms@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@csstools/css-parser-algorithms@npm:2.3.2"
+  version: 2.4.0
+  resolution: "@csstools/css-parser-algorithms@npm:2.4.0"
   peerDependencies:
-    "@csstools/css-tokenizer": ^2.2.1
-  checksum: 71663a00369014727ac89ae738f0acd1341b2dc1474ff16799a6f4d24674c55c3ddb89d70c8f1ffc4e03508b18a621830f8f8a51707fda6cc5ea48f1a53cc559
+    "@csstools/css-tokenizer": ^2.2.2
+  checksum: 6a12040d405fd54c3bf8dee3b49dad796acaad5bcedbf0596270554526cd7889d6f75251f2205d2124ef8fb11fe78a10174d4a3d4abc48fd9e880f847841aceb
   languageName: node
   linkType: hard
 
 "@csstools/css-tokenizer@npm:^2.2.0, @csstools/css-tokenizer@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "@csstools/css-tokenizer@npm:2.2.1"
-  checksum: ebd9f65b253037d3a575ded45dbe41c12e71d83d6aa8a6a3a9fc2427862a805678df2a825cd19cf36b587be93f5cb1bd0932bb5c362d227ed9533db35b1fc6fa
+  version: 2.2.2
+  resolution: "@csstools/css-tokenizer@npm:2.2.2"
+  checksum: 8004469314460d300a7df9ca366c5fec96609c63b1e62259c9cc9f5d30fc29ace9865c21d44df721eaf8463f6e7a2de30014a21553a359cdce56f953ce4c83dd
   languageName: node
   linkType: hard
 
 "@csstools/media-query-list-parser@npm:^2.1.4, @csstools/media-query-list-parser@npm:^2.1.5":
-  version: 2.1.5
-  resolution: "@csstools/media-query-list-parser@npm:2.1.5"
+  version: 2.1.6
+  resolution: "@csstools/media-query-list-parser@npm:2.1.6"
   peerDependencies:
-    "@csstools/css-parser-algorithms": ^2.3.2
-    "@csstools/css-tokenizer": ^2.2.1
-  checksum: 119c27951377781c06c0b68ee6f7815c71d7623e439da0d5009f2101a6cd996f60b3fd60466d7059b8f7a936fbc9fbd2306ba953fa2daf9728a710881971ab08
+    "@csstools/css-parser-algorithms": ^2.4.0
+    "@csstools/css-tokenizer": ^2.2.2
+  checksum: 7f9fca67812fc20db4a0b93ef1ee17ce4fb69fd01abc88e5bc74bd50b1cfc3fd1dfaa9dfff213c7ff55cf6d61897e097ddfc484afba4562ca18bb408fedac5dd
   languageName: node
   linkType: hard
 
@@ -1671,11 +1671,11 @@ __metadata:
   linkType: hard
 
 "@csstools/selector-specificity@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@csstools/selector-specificity@npm:3.0.0"
+  version: 3.0.1
+  resolution: "@csstools/selector-specificity@npm:3.0.1"
   peerDependencies:
     postcss-selector-parser: ^6.0.13
-  checksum: 4a2dfe69998a499155d9dab4c2a0e7ae7594d8db98bb8a487d2d5347c0c501655051eb5eacad3fe323c86b0ba8212fe092c27fc883621e6ac2a27662edfc3528
+  checksum: e4b5aac3bd3ca1f824cb9578f52b16046a519aa8050ce291da37e611976a83cd3b2b2f908d2678dd4cbbe00bbde8ec28c34fffc40dbbf9a13608dfcaf382ee80
   languageName: node
   linkType: hard
 
@@ -5285,17 +5285,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/stylelint-config@npm:3.5.4":
-  version: 3.5.4
-  resolution: "@vkontakte/stylelint-config@npm:3.5.4"
+"@vkontakte/stylelint-config@npm:^4.0.0-beta.4":
+  version: 4.0.0-beta.4
+  resolution: "@vkontakte/stylelint-config@npm:4.0.0-beta.4"
   dependencies:
     micromatch: ^4.0.5
     postcss-value-parser: ^4.2.0
   peerDependencies:
     postcss: ^8.4.16
-    stylelint: ^14.11.0
-    stylelint-declaration-strict-value: ^1.9.0
-  checksum: c9637b085db8f9e6cbbbcd514f209900510a498083b9b24e6f9bdd8ae7915232928856260c4ad91a3b9d49d77bc839c1ebfe9f946eeaf5267a28d72f105ad829
+    stylelint: ^15.11.0 || ^16.1.0
+  checksum: 92a04b9716607c6805a89e421cca4941f32c882cebcf408f58204d61ca65eaa95a43c055c62e331c720c1592a2e6dd23d3d4510f5564538bffe430d8f2e9c696
   languageName: node
   linkType: hard
 
@@ -5390,7 +5389,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.61.0
     "@vkontakte/eslint-plugin": ^1.1.1
     "@vkontakte/prettier-config": ^0.1.0
-    "@vkontakte/stylelint-config": 3.5.4
+    "@vkontakte/stylelint-config": ^4.0.0-beta.4
     "@vkontakte/vkui-tokens": 4.41.4
     autoprefixer: ^10.4.16
     concurrently: ^8.2.2
@@ -5413,7 +5412,7 @@ __metadata:
     jest-axe: ^8.0.0
     jest-environment-jsdom: ^29.7.0
     jest-environment-node: ^29.7.0
-    jest-preset-stylelint: ^6.3.2
+    jest-preset-stylelint: ^7.0.0
     lint-staged: ^15.2.0
     mini-css-extract-plugin: ^2.7.6
     postcss: ^8.4.32
@@ -5433,10 +5432,9 @@ __metadata:
     shx: ^0.3.2
     size-limit: ^11.0.1
     style-loader: ^3.3.3
-    stylelint: ^15.11.0
-    stylelint-config-standard: ^34.0.0
-    stylelint-declaration-strict-value: ^1.9.2
-    stylelint-media-use-custom-media: ^2.0.0
+    stylelint: ^16.1.0
+    stylelint-config-standard: ^36.0.0
+    stylelint-media-use-custom-media: ^4.0.0
     stylelint-use-logical: ^2.1.0
     stylelint-value-no-unknown-custom-properties: ^5.0.0
     swc-loader: ^0.2.3
@@ -7775,13 +7773,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-color-names@npm:0.0.4":
-  version: 0.0.4
-  resolution: "css-color-names@npm:0.0.4"
-  checksum: 9c6106320430a9da3a13daab8d8b4def39113edbfb68042444585d9a214af5fd5cb384b9be45124bc75f88261d461b517e00e278f4d2e0ab5a619b182f9f0e2d
-  languageName: node
-  linkType: hard
-
 "css-declaration-sorter@npm:^7.0.0":
   version: 7.1.1
   resolution: "css-declaration-sorter@npm:7.1.1"
@@ -7878,13 +7869,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-shorthand-properties@npm:^1.0.0":
-  version: 1.1.1
-  resolution: "css-shorthand-properties@npm:1.1.1"
-  checksum: 014b48e9fda528da7155cdf41e4ad9a0079ace4890e853d1d3ce4e41c2bb38c19e627d0be93dafe8b202c3a9fe83a6120b684e1405ee79b69ea8e248bd8833e9
-  languageName: node
-  linkType: hard
-
 "css-tree@npm:^2.2.1, css-tree@npm:^2.3.1":
   version: 2.3.1
   resolution: "css-tree@npm:2.3.1"
@@ -7902,17 +7886,6 @@ __metadata:
     mdn-data: 2.0.28
     source-map-js: ^1.0.1
   checksum: b94aa8cc2f09e6f66c91548411fcf74badcbad3e150345074715012d16333ce573596ff5dfca03c2a87edf1924716db765120f94247e919d72753628ba3aba27
-  languageName: node
-  linkType: hard
-
-"css-values@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "css-values@npm:0.1.0"
-  dependencies:
-    css-color-names: 0.0.4
-    ends-with: ^0.2.0
-    postcss-value-parser: ^3.3.0
-  checksum: c9d8d6e99d92e5078ae91fd96d5f80c9c387c214c408647a90acb33ec37b2ea77f923326b43d8bde4cba7a7b3821bd2ad0531540fe1a58551dad301a08b1e54a
   languageName: node
   linkType: hard
 
@@ -8730,13 +8703,6 @@ __metadata:
     fast-json-parse: ^1.0.3
     objectorarray: ^1.0.5
   checksum: c352831088fce745a39ddbd5f87a17e073ea6556e7e96e9010d945a3f3020f836b9a84657123fa01e897db9216f4b080d950b5ded9bf3a8227f14a34efaaaf7c
-  languageName: node
-  linkType: hard
-
-"ends-with@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "ends-with@npm:0.2.0"
-  checksum: 62efccbbb8286bdaac765ef67007d9667095020d5207fd55cb3a1939f1f3347769ed092fa8a8ff67640ac6b985c9d7efe47be4658172863c7d255666b92a3f45
   languageName: node
   linkType: hard
 
@@ -12351,12 +12317,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-preset-stylelint@npm:^6.3.2":
-  version: 6.3.2
-  resolution: "jest-preset-stylelint@npm:6.3.2"
+"jest-preset-stylelint@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "jest-preset-stylelint@npm:7.0.0"
   peerDependencies:
     jest: ^29.0.2
-  checksum: 45843d08047aa5ca03aaa4622386a9b666d2d2983c21f74464e6770e0f33fc6ec7f3322dd7c5fcc541f2373bc44f236c91eca32d00fa701be3a71a59637efa92
+  checksum: 77ea1f224cdfa20bd003d9035b3a82c8b0edcb0d12b6063c482c498eb78e09861bbe8f3636f94995b2d3e8eb85428e535a9664173b3d7840844ed6b9ab87b6b9
   languageName: node
   linkType: hard
 
@@ -15526,13 +15492,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-value-parser@npm:^3.3.0":
-  version: 3.3.1
-  resolution: "postcss-value-parser@npm:3.3.1"
-  checksum: 62cd26e1cdbcf2dcc6bcedf3d9b409c9027bc57a367ae20d31dd99da4e206f730689471fd70a2abe866332af83f54dc1fa444c589e2381bf7f8054c46209ce16
-  languageName: node
-  linkType: hard
-
 "postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.1.0, postcss-value-parser@npm:^4.2.0":
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
@@ -17283,15 +17242,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shortcss@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "shortcss@npm:0.1.3"
-  dependencies:
-    css-shorthand-properties: ^1.0.0
-  checksum: eb4a0d5dce2dd536576e66843583d509b3cf07cb7d4927bbe881654ab8497a811a5741306b2e79a7321f894152e5e880f97047c9cbf58fe8c4a5c09362114c2c
-  languageName: node
-  linkType: hard
-
 "shx@npm:^0.3.2":
   version: 0.3.4
   resolution: "shx@npm:0.3.4"
@@ -18067,7 +18017,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-standard@npm:^34.0.0":
+"stylelint-config-standard@npm:34.0.0":
   version: 34.0.0
   resolution: "stylelint-config-standard@npm:34.0.0"
   dependencies:
@@ -18078,24 +18028,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-declaration-strict-value@npm:^1.9.2":
-  version: 1.9.2
-  resolution: "stylelint-declaration-strict-value@npm:1.9.2"
-  dependencies:
-    css-values: ^0.1.0
-    shortcss: ^0.1.3
+"stylelint-media-use-custom-media@npm:3.0.0":
+  version: 3.0.0
+  resolution: "stylelint-media-use-custom-media@npm:3.0.0"
   peerDependencies:
-    stylelint: ">=7 <=15"
-  checksum: 514d582599d740744e246843b392e823191b37940481edfb90a51c0ddf93aa93907d856732fc30ae74c57088da07ed4e155a8708cdc7da508cf763c3adcdd408
-  languageName: node
-  linkType: hard
-
-"stylelint-media-use-custom-media@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "stylelint-media-use-custom-media@npm:2.0.1"
-  peerDependencies:
-    stylelint: 10 - 14
-  checksum: cf096050290127621e5b162da5ea18d0aa211c339061be88b9dbd585a0d7750b08ec1eb57530db0b315255e9cbb7f93fbaa961d6a92f3c57eac934206388588d
+    stylelint: 10 - 15
+  checksum: 2027cba3427e79214f67d21f8dea5db357d9eae5c6e9de48fb9edf000ccfcb50eb6c05c46840ab7761bd6520d7dd786b4310b3ac579fae36adbe5f8780fd3350
   languageName: node
   linkType: hard
 
@@ -18120,7 +18058,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^15.11.0":
+"stylelint@npm:15.11.0":
   version: 15.11.0
   resolution: "stylelint@npm:15.11.0"
   dependencies:

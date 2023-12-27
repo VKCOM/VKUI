@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "echo no build",
-    "test": "yarn run --top-level jest",
+    "test": "NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" yarn run --top-level jest --runInBand",
     "test:ci": "yarn test"
   }
 }
