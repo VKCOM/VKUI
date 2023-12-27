@@ -29,6 +29,9 @@ const App = () => {
       <ConfigProvider {...configProviderProps}>
         <App />
       </ConfigProvider>
+      <ConfigProvider platform="someAnotherPlatform">
+        <App />
+      </ConfigProvider>
     </React.Fragment>
   );
 };
