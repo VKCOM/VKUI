@@ -4,9 +4,9 @@ const { VKUI_PACKAGE } = require('./shared');
 module.exports = {
   extends: ['stylelint-config-standard', '@vkontakte/stylelint-config'],
   plugins: [
-    'stylelint-value-no-unknown-custom-properties',
-    'stylelint-media-use-custom-media',
     '@project-tools/stylelint-bad-multiplication',
+    'stylelint-media-use-custom-media',
+    'stylelint-value-no-unknown-custom-properties',
     'stylelint-use-logical',
   ],
   rules: {

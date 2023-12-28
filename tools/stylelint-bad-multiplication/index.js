@@ -32,7 +32,7 @@ const searchBadMultiplication = (node) => {
   });
 };
 
-module.exports = stylelint.createPlugin(ruleName, function () {
+const ruleFunction = function () {
   /**
    * @param {import('postcss').Root} root
    */
@@ -60,8 +60,10 @@ module.exports = stylelint.createPlugin(ruleName, function () {
   }
 
   return stylelintRule;
-});
+};
 
-module.exports.ruleName = ruleName;
-module.exports.messages = messages;
-module.exports.meta = meta;
+ruleFunction.ruleName = ruleName;
+ruleFunction.messages = messages;
+ruleFunction.meta = meta;
+
+module.exports = stylelint.createPlugin(ruleName, ruleFunction);
