@@ -33,7 +33,7 @@
     "@typescript-eslint/parser": "^5.61.0",
     "@vkontakte/eslint-plugin": "^1.1.1",
     "@vkontakte/prettier-config": "^0.1.0",
-    "@vkontakte/stylelint-config": "^4.0.0-beta.4",
+    "@vkontakte/stylelint-config": "^4.0.1",
     "@vkontakte/vkui-tokens": "4.41.4",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.2",
