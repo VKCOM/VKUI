@@ -1,5 +1,9 @@
 Практически всегда содержимое панели должно начинаться с [`Separator`](#!/Separator),
-поэтому он рисуется в `PanelHeader` по-умолчанию.
+поэтому его поведение в `PanelHeader` по-умолчанию следующее:
+
+- на платформе `vkcom` отрисовывается сепаратор;
+- на платформах `android`/`ios` при `<AdaptivityProvider sizeX="compact" />` отрисовывается разделитель;
+- на платформах `android`/`ios` в `<AdaptivityProvider sizeX="regular" />` добавляется отступ после шапки.
 
 Исключения, в которых разделитель в начале панели не нужен:
 
@@ -8,14 +12,12 @@
 - После `PanelHeader` рисуется [`Banner`](#!/Banner).
 - В `PanelHeader` рисуются [`Tabs`](#!/Tabs).
 
-В таких случаях передавайте в `PanelHeader` свойство `separator={false}`.
+В таких случаях передавайте в `PanelHeader` свойство `delimiter="spacing"`.
 
 > **Важно**
 >
-> Правая часть шапки скрыта по умолчанию. Если хотите ее показать, передайте в
-> [`ConfigProvider`](#/ConfigProvider) свойство `hasCustomPanelHeaderAfter={false}`.
->
-> ⚠️ В v6 значение по умолчанию будет изменено на `false` (см. https://github.com/VKCOM/VKUI/issues/5049).
+> Правая часть шапки доступна по умолчанию. Если вы разрабатываете мини-приложение и хотите ее скрыть, передайте в
+> [`ConfigProvider`](#/ConfigProvider) свойство `hasCustomPanelHeaderAfter`.
 
 ```jsx { "props": { "showCustomPanelHeaderAfterProps": true } }
 const Example = () => {
@@ -145,6 +147,7 @@ const Example = () => {
         </Panel>
         <Panel id="modal-panel3">
           <PanelHeader
+            delimiter="spacing"
             before={
               platform !== 'vkcom' && (
                 <PanelHeaderBack onClick={() => setModalPanel('modal-panel2')} />
@@ -161,7 +164,10 @@ const Example = () => {
           </Group>
         </Panel>
         <Panel id="modal-panel4">
-          <PanelHeader before={<PanelHeaderBack onClick={() => setModalPanel('modal-panel3')} />}>
+          <PanelHeader
+            delimiter="spacing"
+            before={<PanelHeaderBack onClick={() => setModalPanel('modal-panel3')} />}
+          >
             <Tabs>
               <TabsItem selected>Новости</TabsItem>
               <TabsItem>Интересное</TabsItem>

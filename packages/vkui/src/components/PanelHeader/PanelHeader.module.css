@@ -2,12 +2,12 @@
   position: relative;
 }
 
-.PanelHeader--vis.PanelHeader--fixed::before {
+.PanelHeader--static.PanelHeader--fixed::before {
   display: block;
   content: '';
 }
 
-.PanelHeader:not(.PanelHeader--vis):not(.PanelHeader--fixed) {
+.PanelHeader:not(.PanelHeader--static):not(.PanelHeader--fixed) {
   block-size: 0;
   /* см. https://github.com/VKCOM/VKUI/issues/5571 */
   z-index: var(--vkui_internal--z_index_panel_header);
@@ -30,12 +30,12 @@
   background: transparent;
 }
 
-.PanelHeader--sizeX-regular .PanelHeader--shadow .PanelHeader__in {
+.PanelHeader--sizeX-regular.PanelHeader--shadow .PanelHeader__in {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
 }
 
 @media (--sizeX-regular) {
-  .PanelHeader--sizeX-none .PanelHeader--shadow .PanelHeader__in {
+  .PanelHeader--sizeX-none.PanelHeader--shadow .PanelHeader__in {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
   }
 }

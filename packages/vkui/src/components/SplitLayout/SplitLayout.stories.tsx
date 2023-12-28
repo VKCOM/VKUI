@@ -74,7 +74,7 @@ export const Example: Story = {
     return (
       <SplitLayout
         style={{ justifyContent: 'center' }}
-        header={!isVKCOM && <PanelHeader separator={false} />}
+        header={!isVKCOM && <PanelHeader delimiter="none" />}
         popout={popout}
         modal={modalRoot}
       >

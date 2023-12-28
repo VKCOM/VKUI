@@ -39,7 +39,7 @@ export const ComponentPlayground = <
 }: InternalComponentPlaygroundProps<Props>) => {
   const isVKCOM = platform === 'vkcom';
   const adaptivityProviderProps: AdaptivityProps = Object.assign(
-    isVKCOM ? { sizeX: 'compact', sizeY: 'compact' } : {},
+    isVKCOM ? { sizeX: 'regular', sizeY: 'compact' } : {},
     adaptivityProviderPropsProp,
   );
 

@@ -18,7 +18,7 @@ const Example = () => {
   return (
     <SplitLayout
       style={{ justifyContent: 'center' }}
-      header={hasHeader && <PanelHeader separator={false} />}
+      header={hasHeader && <PanelHeader delimiter="none" />}
     >
       <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
         <View activePanel="context2">

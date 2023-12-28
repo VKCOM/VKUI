@@ -10,23 +10,24 @@ import styles from './ModalPageHeader.module.css';
 
 export interface ModalPageHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    Omit<PanelHeaderProps, 'fixed' | 'shadow'>,
+    Omit<PanelHeaderProps, 'fixed' | 'shadow' | 'delimiter'>,
     HasRef<HTMLDivElement>,
-    HasRootRef<HTMLDivElement> {}
+    HasRootRef<HTMLDivElement> {
+  noSeparator?: boolean;
+}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalPageHeader
  */
 export const ModalPageHeader = ({
   children,
-  separator = true,
+  noSeparator = false,
   getRootRef,
   className,
   typographyProps,
   ...restProps
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const hasSeparator = separator && platform === 'vkcom';
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const { labelId } = React.useContext(ModalPageContext);
 
@@ -48,12 +49,12 @@ export const ModalPageHeader = ({
         }}
         {...restProps}
         fixed={false}
-        separator={false}
+        delimiter="none"
         transparent
       >
         {children}
       </PanelHeader>
-      {hasSeparator && <Separator wide />}
+      {!noSeparator && <Separator wide />}
     </div>
   );
 };

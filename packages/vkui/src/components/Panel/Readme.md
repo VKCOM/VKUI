@@ -34,7 +34,7 @@ const Example = () => {
       </Panel>
       <Panel id="panel2">
         <PanelHeader
-          separator={false}
+          delimiter="spacing"
           before={<PanelHeaderBack onClick={() => setActivePanel('panel1')} />}
         >
           Communities

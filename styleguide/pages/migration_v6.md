@@ -39,6 +39,7 @@
   - <a href="{{anchor}}">`ModalCard` и `ModaCardBase`</a>
   - <a href="{{anchor}}">`ModalPageHeader`</a>
   - <a href="{{anchor}}">`Pagination`</a>
+  - <a href="{{anchor}}">`PanelHeader`</a>
   - <a href="{{anchor}}">🗑️ ~~`PanelHeader.Content`~~</a>
   - <a href="{{anchor}}">`Placeholder`</a>
   - <a href="{{anchor}}">🗑️ ~~`PromoBanner`~~</a>
@@ -799,6 +800,28 @@ npx @vkontakte/vkui-codemods --help
 - getPageAriaLabel={(page, isCurrent) => { isCurrent ? `${page} страница` : `Го на ${page} страницу` }}
 + getPageLabel={(isCurrent) => { isCurrent ? "Стр." : "Го на страницу" }}
 />
+```
+
+<br/>
+
+## [`PanelHeader`](#/PanelHeader)
+
+- Свойство `visor` удалено, используйте свойство `float`.
+
+```diff
+-  <PanelHeader visor />
++  <PanelHeader />
+-  <PanelHeader visor={false} />
++  <PanelHeader float />
+```
+
+- Свойство `separator` удалено, используйте свойство `delimiter`.
+
+```diff
+-  <PanelHeader separator />
++  <PanelHeader />
+-  <PanelHeader separator={false} />
++  <PanelHeader delimiter="none" />
 ```
 
 <br/>
