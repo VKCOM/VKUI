@@ -1,5 +1,5 @@
 import { API, FileInfo } from 'jscodeshift';
-import { getImportInfo } from '../codemod-helpers';
+import { getImportInfo, swapBooleanValue } from '../codemod-helpers';
 import { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';
@@ -10,28 +10,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'CardScroll', alias);
 
-  source
-    .find(
-      j.JSXOpeningElement,
-      (element) => element.name.type === 'JSXIdentifier' && element.name.name === localName,
-    )
-    .find(j.JSXAttribute, (attribute) => attribute.name.name === 'withSpaces')
-    .forEach((attribute) => {
-      const node = attribute.node;
-
-      if (!node.value) {
-        j(attribute).remove();
-      } else if (
-        node.value.type === 'JSXExpressionContainer' &&
-        node.value.expression.type === 'BooleanLiteral'
-      ) {
-        if (node.value.expression.value) {
-          j(attribute).remove();
-        } else {
-          j(attribute).replaceWith(j.jsxAttribute(j.jsxIdentifier('noSpaces')));
-        }
-      }
-    });
+  swapBooleanValue(api, source, localName, 'withSpaces', 'noSpaces');
 
   return source.toSource();
 }

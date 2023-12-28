@@ -780,6 +780,13 @@ npx @vkontakte/vkui-codemods --help
 + <ModalPageHeader getRootRef={ref}>...</ModalPageHeader>
 ```
 
+```diff
+- <ModalPageHeader separator>...</ModalPageHeader>
++ <ModalPageHeader>...</ModalPageHeader>
+- <ModalPageHeader separator={false}>...</ModalPageHeader>
++ <ModalPageHeader noSeparator>...</ModalPageHeader>
+```
+
 <br/>
 
 ### [`Pagination`](#/Pagination)

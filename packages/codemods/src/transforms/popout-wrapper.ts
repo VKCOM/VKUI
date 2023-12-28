@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { API, FileInfo } from 'jscodeshift';
-import { getImportInfo } from '../codemod-helpers';
+import { getImportInfo, swapBooleanValue } from '../codemod-helpers';
 import { report } from '../report';
 import { JSCodeShiftOptions } from '../types';
 
@@ -26,24 +26,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     );
   }
 
-  components
-    .find(j.JSXAttribute, (attribute) => attribute.name.name === 'hasMask')
-    .forEach((attribute) => {
-      const node = attribute.node;
-
-      if (!node.value) {
-        j(attribute).remove();
-      } else if (
-        node.value.type === 'JSXExpressionContainer' &&
-        node.value.expression.type === 'BooleanLiteral'
-      ) {
-        if (node.value.expression.value) {
-          j(attribute).remove();
-        } else {
-          j(attribute).replaceWith(j.jsxAttribute(j.jsxIdentifier('noBackground')));
-        }
-      }
-    });
+  swapBooleanValue(api, source, localName, 'hasMask', 'noBackground');
 
   return source.toSource();
 }
