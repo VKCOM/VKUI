@@ -33,10 +33,12 @@
 
 /* stylelint-disable selector-max-universal */
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .Panel__centered :global(.vkuiInternalPanelHeader--static) + * {
   margin-block-start: var(--vkui_internal--panel_header_height);
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .Panel--sizeX-compact .Panel__centered :global(.vkuiInternalPanelHeader--sep) + * {
   margin-block-start: calc(var(--vkui_internal--panel_header_height) + 5px);
 }
@@ -66,6 +68,7 @@
  * CMP:
  * View
  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalView--ios) .Panel__in {
   padding-block: 0 var(--vkui_internal--safe_area_inset_bottom);
   padding-inline: var(--vkui_internal--safe_area_inset_left)
