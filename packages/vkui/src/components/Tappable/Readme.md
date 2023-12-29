@@ -2,9 +2,9 @@
 
 - вид курсора
 - цвет фона в зависимости от состояния
-- ripple-эффект при нажатии, если это платформа `ANDROID`
+- <a href="{{anchor}}">ripple-эффект</a> при нажатии, если это платформа `ANDROID`
 
-Используется внутри всех контролов. Например, [Button](https://vkcom.github.io/VKUI/#/Button), [Cell](https://vkcom.github.io/VKUI/#/Cell), [ActionSheetItem](https://vkcom.github.io/VKUI/#/ActionSheetItem) и т.п.
+Используется внутри всех контролов. Например, [`Button`](#/Button), [`Cell`](#/Cell), [`ActionSheetItem`](#/ActionSheetItem) и т.п.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const Example = () => {

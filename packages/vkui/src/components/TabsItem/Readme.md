@@ -1,1 +1,1 @@
-Элемент компонента [`Tabs`](https://vkcom.github.io/VKUI/#/Tabs). Наследует `mode` из контекста `Tabs`.
+Элемент компонента [`Tabs`](#/Tabs). Наследует `mode` из контекста `Tabs`.

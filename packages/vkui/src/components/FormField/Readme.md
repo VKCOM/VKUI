@@ -1,4 +1,4 @@
-Компонент-оболочка для элементов форм ([Input](https://vkcom.github.io/VKUI/#/Input), [Select](https://vkcom.github.io/VKUI/#/Select), [Textarea](https://vkcom.github.io/VKUI/#/Textarea) и другие).
+Компонент-оболочка для элементов форм ([`Input`](#/Input), [`Select`](#/Select), [`Textarea`](#/Textarea) и другие).
 
 ```jsx
 const Example = () => {

@@ -134,11 +134,9 @@ npx @vkontakte/vkui-codemods --help
   + Samsung >= 7.2
   ```
 
-- В [специальной сборке](https://vkcom.github.io/VKUI/#/CSS%20Modules) теперь используется [CSS Logical](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_logical_properties_and_values).
+- В [специальной сборке](#/CSS%20Modules) теперь используется [CSS Logical](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_logical_properties_and_values).
 
-  > Если вы используете [специальную сборку](https://vkcom.github.io/VKUI/#/CSS%20Modules) и вам
-  > требуется [широкая браузерная поддержка](https://caniuse.com/css-logical-props), рекомендуем
-  > воспользоваться [postcss-logical](https://www.npmjs.com/package/postcss-logical).
+  > Если вы используете [специальную сборку](#/CSS%20Modules) и вам требуется [широкая браузерная поддержка](https://caniuse.com/css-logical-props), рекомендуем воспользоваться [postcss-logical](https://www.npmjs.com/package/postcss-logical).
 
 <br/><br/><hr/><br/>
 
@@ -880,7 +878,7 @@ npx @vkontakte/vkui-codemods --help
   Сам `runTapticImpactOccurred()` через `vkBridge.send` вызывает событие `VKWebAppTapticImpactOccurred`.
   В виду отказа от [VK Bridge](https://www.npmjs.com/package/@vkontakte/vk-bridge), мы удалили вызов
   `runTapticImpactOccurred()` на стороне **VKUI**.
-- Пример представлен на странице [Интеграция с VK Mini Apps](https://vkcom.github.io/VKUI/#/integrations-vk-mini-apps)
+- Пример представлен на странице [Интеграция с VK Mini Apps](#/integrations-vk-mini-apps)
   под заголовком **Виброотклик (Taptic Engine)**.
 
 <br/>
@@ -1333,7 +1331,7 @@ npx @vkontakte/vkui-codemods --help
 Помимо **VK Bridge**, была завязка на мини-приложения в свойстве `webviewType` за счёт свойства
 `"vkapps"`. Теперь это свойство `hasCustomPanelHeaderAfter`, который по умолчанию `false`.
 
-Бойлерплейт для **VK Mini Apps** представлен на странице [Интеграция с VK Mini Apps](https://vkcom.github.io/VKUI/#/integrations-vk-mini-apps)
+Бойлерплейт для **VK Mini Apps** представлен на странице [Интеграция с VK Mini Apps](#/integrations-vk-mini-apps)
 под заголовком **Конфигурация VKUI**.
 
 ### 🗑️ ~~`withInsets`~~
