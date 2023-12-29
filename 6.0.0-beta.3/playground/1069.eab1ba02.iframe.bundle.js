@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_vkontakte_vkui=self.webpackChunk_vkontakte_vkui||[]).push([[1069],{"../../node_modules/@storybook/components/dist/WithTooltip-V3YHNWJZ.mjs":(o,t,e)=>{e.r(t),e.d(t,{WithToolTipState:()=>s.WA,WithTooltip:()=>s.WA,WithTooltipPure:()=>s.DG});var s=e("../../node_modules/@storybook/components/dist/chunk-NE5YGCQB.mjs")}}]);
