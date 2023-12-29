@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gallery transforms correctly 1`] = `
+"import { Gallery } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    <React.Fragment>
+      <Gallery>{slides}</Gallery>
+      <Gallery dragDisabled>{slides}</Gallery>
+    </React.Fragment>
+  );
+};"
+`;

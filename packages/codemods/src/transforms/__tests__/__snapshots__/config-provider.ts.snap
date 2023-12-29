@@ -32,6 +32,12 @@ const App = () => {
       <ConfigProvider {...configProviderProps}>
         <App />
       </ConfigProvider>
+      <ConfigProvider tokensClassNames={{
+        light: "vkui--someAnotherPlatform--light",
+        dark: "vkui--someAnotherPlatform--dark"
+      }}>
+        <App />
+      </ConfigProvider>
     </React.Fragment>
   );
 };"

@@ -1,5 +1,5 @@
 import { API, FileInfo } from 'jscodeshift';
-import { getImportInfo } from '../codemod-helpers';
+import { getImportInfo, swapBooleanValue } from '../codemod-helpers';
 import { JSCodeShiftOptions } from '../types';
 
 export const parser = 'tsx';
@@ -11,9 +11,9 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { localName } = getImportInfo(j, file, 'ModalPageHeader', alias);
 
   source
-    .find(j.JSXOpeningElement)
-    .filter(
-      (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === localName,
+    .find(
+      j.JSXOpeningElement,
+      (element) => element.name.type === 'JSXIdentifier' && element.name.name === localName,
     )
     .forEach((element) => {
       const attributes = element.value.attributes;
@@ -38,6 +38,8 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         }
       }
     });
+
+  swapBooleanValue(api, source, localName, 'separator', 'noSeparator');
 
   return source.toSource();
 }

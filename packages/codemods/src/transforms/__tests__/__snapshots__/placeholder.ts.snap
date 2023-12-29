@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`placeholder transforms correctly 1`] = `
+"import { Placeholder } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    <React.Fragment>
+      <Placeholder>Placeholder</Placeholder>
+      <Placeholder>Placeholder</Placeholder>
+      <Placeholder noPadding>Placeholder</Placeholder>
+    </React.Fragment>
+  );
+};"
+`;

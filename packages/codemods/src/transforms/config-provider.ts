@@ -2,6 +2,13 @@ import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../codemod-helpers';
 import { JSCodeShiftOptions } from '../types';
 
+const ALLOWED_PLATFORM_LIST = ['android', 'ios', 'vkcom'];
+
+const wrapUnknownPlatformToVKUITokensClassName = (
+  unknownPlatform: string,
+  appearance: 'light' | 'dark',
+) => `vkui--${unknownPlatform}--${appearance}`;
+
 export const parser = 'tsx';
 
 export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {
@@ -11,12 +18,14 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   let changed = false;
   const { localName } = getImportInfo(j, file, 'ConfigProvider', alias);
 
-  source
+  const attributes = source
     .find(j.JSXOpeningElement)
     .filter(
       (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === localName,
     )
-    .find(j.JSXAttribute)
+    .find(j.JSXAttribute);
+
+  attributes
     .filter((attribute) => attribute.node.name.name === 'webviewType')
     .forEach((attribute) => {
       const node = attribute.node.value;
@@ -61,6 +70,41 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
             j(attribute).replaceWith(j.jsxAttribute(j.jsxIdentifier('hasCustomPanelHeaderAfter')));
             changed = true;
           }
+        }
+      }
+    });
+
+  attributes
+    .filter((attribute) => attribute.node.name.name === 'platform')
+    .forEach((attribute) => {
+      const node = attribute.node.value;
+
+      if (!node) {
+        return;
+      }
+
+      if (
+        (node.type === 'Literal' || node.type === 'StringLiteral') &&
+        typeof node.value === 'string'
+      ) {
+        if (!ALLOWED_PLATFORM_LIST.includes(node.value)) {
+          j(attribute).replaceWith(
+            j.jsxAttribute(
+              j.jsxIdentifier('tokensClassNames'),
+              j.jsxExpressionContainer(
+                j.objectExpression([
+                  j.objectProperty(
+                    j.jsxIdentifier('light'),
+                    j.stringLiteral(wrapUnknownPlatformToVKUITokensClassName(node.value, 'light')),
+                  ),
+                  j.objectProperty(
+                    j.jsxIdentifier('dark'),
+                    j.stringLiteral(wrapUnknownPlatformToVKUITokensClassName(node.value, 'dark')),
+                  ),
+                ]),
+              ),
+            ),
+          );
         }
       }
     });

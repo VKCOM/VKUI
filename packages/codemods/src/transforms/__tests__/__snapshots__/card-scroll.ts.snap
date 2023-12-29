@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`card-scroll transforms correctly 1`] = `
+"import { CardScroll } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    <React.Fragment>
+      <CardScroll>{cards}</CardScroll>
+      <CardScroll noSpaces>{cards}</CardScroll>
+      <CardScroll withSpaces={withSpaces}>{cards}</CardScroll>
+    </React.Fragment>
+  );
+};"
+`;

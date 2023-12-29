@@ -59,6 +59,40 @@ export function renameProp(
     });
 }
 
+export function swapBooleanValue(
+  api: API,
+  source: Collection,
+  componentName: string,
+  previousPropName: string,
+  currentPropName: string,
+) {
+  const j = api.jscodeshift;
+  source
+    .find(
+      j.JSXOpeningElement,
+      (element) => element.name.type === 'JSXIdentifier' && element.name.name === componentName,
+    )
+    .find(j.JSXAttribute, (attribute) => attribute.name.name === previousPropName)
+    .forEach((attribute) => {
+      const node = attribute.node;
+
+      if (!node.value) {
+        j(attribute).remove();
+      } else if (
+        node.value.type === 'JSXExpressionContainer' &&
+        node.value.expression.type === 'BooleanLiteral'
+      ) {
+        if (node.value.expression.value) {
+          j(attribute).remove();
+        } else {
+          j(attribute).replaceWith(j.jsxAttribute(j.jsxIdentifier(currentPropName)));
+        }
+      } else {
+        report(api, `Manual changes required for ${componentName}'s ${previousPropName} prop.`);
+      }
+    });
+}
+
 interface AttributeManipulatorAPI {
   keyTo?: string | ((k?: string) => string);
   reportText?: string | (() => string);

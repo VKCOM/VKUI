@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { API, FileInfo } from 'jscodeshift';
-import { getImportInfo } from '../codemod-helpers';
+import { getImportInfo, swapBooleanValue } from '../codemod-helpers';
 import { report } from '../report';
 import { JSCodeShiftOptions } from '../types';
 
@@ -12,11 +12,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'PopoutWrapper', alias);
 
-  const components = source
-    .find(j.JSXOpeningElement)
-    .filter(
-      (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === localName,
-    );
+  const components = source.find(
+    j.JSXOpeningElement,
+    (element) => element.name.type === 'JSXIdentifier' && element.name.name === localName,
+  );
 
   if (components.size() > 0) {
     report(
@@ -26,6 +25,8 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       )} you might need to apply useScrollLock() hook manually.`,
     );
   }
+
+  swapBooleanValue(api, source, localName, 'hasMask', 'noBackground');
 
   return source.toSource();
 }

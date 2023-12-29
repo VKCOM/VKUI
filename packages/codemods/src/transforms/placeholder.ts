@@ -8,9 +8,9 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { alias } = options;
   const j = api.jscodeshift;
   const source = j(file.source);
-  const { localName } = getImportInfo(j, file, 'ActionSheetItem', alias);
+  const { localName } = getImportInfo(j, file, 'Placeholder', alias);
 
-  swapBooleanValue(api, source, localName, 'autoClose', 'autoCloseDisabled');
+  swapBooleanValue(api, source, localName, 'withPadding', 'noPadding');
 
   return source.toSource();
 }
