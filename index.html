@@ -24,6 +24,12 @@
         width: 100%;
       }
 
+      @media (max-width: 479px) {
+        .announcement {
+          font-size: 14px;
+        }
+      }
+
       .announcement[hidden] {
         visibility: hidden;
       }
@@ -103,7 +109,7 @@
   <body>
     <div role="banner" class="announcement" id="js-announcement" hidden>
       <span>
-        🎉 <b><a href="https://github.com/VKCOM/VKUI/releases/tag/v6.0.0-beta.2" target="_blank" class="announcement__link">VKUI v6 Beta</a></b> уже доступна! (v6.0.0-beta.2)
+        🎉 <b><a href="https://github.com/VKCOM/VKUI/releases/tag/v6.0.0-beta.3" target="_blank" class="announcement__link">VKUI v6 Beta</a></b> уже доступна! (v6.0.0-beta.3)
       </span>
       <button id="js-announcement-close-btn" type="button" aria-label="Закрыть баннер с анонсом" class="announcement__close-btn">
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" display="block">
@@ -118,7 +124,7 @@
     <script src="build/bundle.141e554c.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function handleLoad() {
-        var storageKey = "announcement-shown-beta-2";
+        var storageKey = "announcement-shown-beta-3";
         var isShown = localStorage.getItem(storageKey);
         if (Boolean(isShown)) {
           return;
