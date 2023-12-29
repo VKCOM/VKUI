@@ -55,8 +55,13 @@ const ExampleBase = ({ formItemStatus }) => {
 };
 
 const ExampleWithIcon = ({ formItemStatus }) => {
-  const textInput = React.createRef();
-  const clear = () => (textInput.current.value = '');
+  const textInput = React.useRef();
+  const clear = () => {
+    if (textInput.current) {
+      textInput.current.value = '';
+      textInput.current.focus();
+    }
+  };
 
   return (
     <FormLayoutGroup>
