@@ -4928,7 +4928,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:>=16, @types/react@npm:^18.2.45":
+"@types/react@npm:*, @types/react@npm:>=16":
   version: 18.2.45
   resolution: "@types/react@npm:18.2.45"
   dependencies:
@@ -4936,6 +4936,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 40b256bdce67b026348022b4f8616a693afdad88cf493b77f7b4e6c5f4b0e4ba13a6068e690b9b94572920840ff30d501ea3d8518e1f21cc8fb8204d4b140c8a
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.2.46":
+  version: 18.2.46
+  resolution: "@types/react@npm:18.2.46"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: cb0e4dc7f41988a059e1246a19ec377101f5b16097ec4bf7000ef3c431ec0c8c873f40e95075821f908db1f4e3352775f0f18cea53dcad14dce67c0f5110f2bd
   languageName: node
   linkType: hard
 
@@ -5382,7 +5393,7 @@ __metadata:
     "@types/jest": ^29.5.10
     "@types/jest-axe": ^3.5.9
     "@types/node": ^20.10.5
-    "@types/react": ^18.2.45
+    "@types/react": ^18.2.46
     "@types/react-dom": ^18.2.18
     "@types/webpack": ^5.28.5
     "@typescript-eslint/eslint-plugin": ^5.61.0
