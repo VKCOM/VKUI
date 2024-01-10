@@ -6,7 +6,6 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { HasRef, HasRootRef } from '../../types';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 
 const sizeYClassNames = {
@@ -22,12 +21,37 @@ export interface SwitchProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Switch
  */
-export const Switch = ({ style, className, getRootRef, getRef, ...restProps }: SwitchProps) => {
+export const Switch = ({
+  style,
+  className,
+  getRootRef,
+  getRef,
+  checked: checkedProp,
+  ...restProps
+}: SwitchProps) => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'outside' });
 
+  const [localUncontrolledChecked, setLocalUncontrolledChecked] = React.useState(
+    restProps.defaultChecked,
+  );
+  const isControlled = checkedProp !== undefined;
+
+  const syncUncontrolledCheckedStateOnClick = React.useCallback(
+    (e: React.MouseEvent<HTMLInputElement>) => {
+      if (isControlled) {
+        return;
+      }
+
+      const switchTarget = e.target as HTMLInputElement;
+      setLocalUncontrolledChecked(switchTarget.checked);
+    },
+    [isControlled],
+  );
+
+  const checkedState = isControlled ? checkedProp : localUncontrolledChecked;
   return (
     <label
       className={classNames(
@@ -43,11 +67,14 @@ export const Switch = ({ style, className, getRootRef, getRef, ...restProps }: S
       onBlur={callMultiple(onBlur, restProps.onBlur)}
       onFocus={callMultiple(onFocus, restProps.onFocus)}
     >
-      <VisuallyHidden
+      <input
         {...restProps}
-        Component="input"
-        getRootRef={getRef}
+        checked={checkedState}
+        onClick={callMultiple(syncUncontrolledCheckedStateOnClick, restProps.onClick)}
+        ref={getRef}
         type="checkbox"
+        role="switch"
+        aria-checked={checkedState ? 'true' : 'false'}
         className={styles['Switch__self']}
       />
       <span aria-hidden className={styles['Switch__pseudo']} />
