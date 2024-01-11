@@ -134,19 +134,6 @@
   }
 }
 
-.Switch__self {
-  position: absolute;
-  inset-inline-start: 0;
-  inset-block-start: 0;
-  inline-size: 100%;
-  block-size: 100%;
-  opacity: 0;
-  z-index: -1;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
 .Switch__self[disabled] + .Switch__pseudo {
   opacity: var(--vkui--opacity_disable);
 }

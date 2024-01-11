@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './VisuallyHidden.module.css';
 
@@ -15,5 +16,12 @@ export const VisuallyHidden = <T,>({
   Component = 'span',
   ...restProps
 }: VisuallyHiddenProps<T>) => (
-  <RootComponent Component={Component} {...restProps} baseClassName={styles['VisuallyHidden']} />
+  <RootComponent
+    Component={Component}
+    {...restProps}
+    baseClassName={classNames(
+      styles['VisuallyHidden'],
+      Component === 'input' && styles['VisuallyHidden--focusable-input'],
+    )}
+  />
 );

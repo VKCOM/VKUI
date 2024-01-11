@@ -12,4 +12,15 @@
   border: 0 !important;
   opacity: 0;
 }
+
+/* Чтобы input на который попадает фокус скринридера был виден.
+ * Особенно актуально для Android TalkBack */
+.VisuallyHidden--focusable-input {
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  block-size: 100% !important;
+  inline-size: 100% !important;
+  clip: auto !important;
+  clip-path: none !important;
+}
 /* stylelint-enable declaration-no-important */

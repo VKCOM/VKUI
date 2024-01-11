@@ -6,6 +6,7 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { HasRef, HasRootRef } from '../../types';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 
 const sizeYClassNames = {
@@ -67,11 +68,12 @@ export const Switch = ({
       onBlur={callMultiple(onBlur, restProps.onBlur)}
       onFocus={callMultiple(onFocus, restProps.onFocus)}
     >
-      <input
+      <VisuallyHidden
         {...restProps}
         {...(isControlled && { checked: checkedProp })}
+        Component="input"
+        getRootRef={getRef}
         onClick={callMultiple(syncUncontrolledCheckedStateOnClick, restProps.onClick)}
-        ref={getRef}
         type="checkbox"
         role="switch"
         aria-checked={ariaCheckedState ? 'true' : 'false'}
