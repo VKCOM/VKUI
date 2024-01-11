@@ -160,7 +160,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### [`Accordion`](#/Accordion)
 
-- Отказались от нативного элемента `detail`, т.к. из-за неё некорректно работала анимация.
+- Отказались от нативного элемента `detail`, т.к. из-за него некорректно работала анимация.
 
 - На замену свойств `open` и `onToggle` пришли свойства `expanded`, `defaultExpanded`, `onChange`.
 
@@ -170,7 +170,7 @@ npx @vkontakte/vkui-codemods --help
 + expanded={openId === id}
 
 - onToggle={(e) => e.target.open && setOpenId(id)}
-+ onChange={(open) => open && setOpenId(id)}
++ onChange={(open) => (open ? setOpenId(id) : setOpenId(null)}
 >
 ```
 
