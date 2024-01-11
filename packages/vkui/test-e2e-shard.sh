@@ -8,3 +8,4 @@ do
   yarn run -T cross-env SHARD=$n/10 docker compose --env-file tmp/.env up --abort-on-container-exit
   rm tmp/.env
 done
+yarn run test:e2e-merge-sharded-a11y-reports
