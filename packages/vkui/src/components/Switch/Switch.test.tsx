@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Switch } from './Switch';
 
@@ -14,7 +14,7 @@ describe('Switch', () => {
     </>
   ));
 
-  it('(Uncontrolled) shows checked state', () => {
+  it('(Uncontrolled) shows checked state', async () => {
     const { rerender } = render(<Switch data-testid="switch" />);
 
     const component = screen.getByRole<HTMLInputElement>('switch');
@@ -44,6 +44,21 @@ describe('Switch', () => {
 
     expect(defaultCheckedComponent.checked).toBeFalsy();
     expect(defaultCheckedComponent.getAttribute('aria-checked')).toBe('false');
+
+    rerender(<Switch data-testid="switch" disabled />);
+
+    const disabledSwitch = screen.getByTestId<HTMLInputElement>('switch');
+    if (!disabledSwitch) {
+      throw new Error('Can not find component');
+    }
+    expect(disabledSwitch.checked).toBeFalsy();
+    expect(disabledSwitch.getAttribute('aria-checked')).toBe('false');
+
+    jest.useFakeTimers();
+    await userEvent.click(disabledSwitch);
+
+    expect(disabledSwitch.checked).toBeFalsy();
+    expect(disabledSwitch.getAttribute('aria-checked')).toBe('false');
   });
 
   it('(Controlled) shows checked state', () => {
