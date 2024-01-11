@@ -1,11 +1,13 @@
+/* eslint-disable no-console */
 import { promises as fs } from 'fs';
+import { FullConfig } from '@playwright/test';
 import axe from 'axe-core';
 import { createHtmlReport } from 'axe-html-reporter';
 import { AxeResultsPartial } from './types';
 // import { generateA11yTargetFromSubDirName } from './utils';
 
 // eslint-disable-next-line import/no-default-export
-export default async function globalTeardown() {
+export default async function globalTeardown(config: FullConfig) {
   try {
     let violations: axe.Result[] = [];
     let violationIds: string[] = [];
@@ -36,7 +38,6 @@ export default async function globalTeardown() {
         const currentViolationNodes = currentViolation.nodes?.map((node) =>
           Object.assign({}, node, {
             target: [SUB_DIR],
-            // target: generateA11yTargetFromSubDirName(SUB_DIR),
           }),
         );
 
@@ -62,21 +63,37 @@ export default async function globalTeardown() {
       }
     }
 
-    createHtmlReport({
-      results: { violations },
-      options: {
-        outputDir: 'axe-report',
-        reportFileName: 'index.html',
-      },
-    });
-
     const a11yResults = {
       count: violationsCount,
       violations,
     };
-    await fs.writeFile(`a11y-results.json`, JSON.stringify(a11yResults, null, 2), 'utf8');
 
-    console.info(`axe core found ${violationsCount} accessibility violations`);
+    const resultsFileName = 'a11y-results';
+    const violationsMessage = `axe core found ${violationsCount} accessibility violations`;
+
+    if (config.shard?.current) {
+      const { current, total } = config.shard;
+
+      await fs.writeFile(
+        `${resultsFileName}-${current}-${total}.json`,
+        JSON.stringify(a11yResults, null, 2),
+        'utf8',
+      );
+
+      console.info(`shard ${current}/${total}: ${violationsMessage}`);
+    } else {
+      createHtmlReport({
+        results: { violations },
+        options: {
+          outputDir: 'axe-report',
+          reportFileName: 'index.html',
+        },
+      });
+
+      await fs.writeFile(`${resultsFileName}.json`, JSON.stringify(a11yResults, null, 2), 'utf8');
+
+      console.info(violationsMessage);
+    }
   } catch (error) {
     console.error(error);
   }
