@@ -5,7 +5,6 @@ import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassNam
 import { callMultiple } from '../../../lib/callMultiple';
 import { HasRef, HasRootRef } from '../../../types';
 import { Headline } from '../../Typography/Headline/Headline';
-import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './SegmentedControlOption.module.css';
 
 export interface SegmentedControlOptionProps
@@ -41,10 +40,10 @@ export const SegmentedControlOption = ({
       ref={getRootRef}
       style={style}
     >
-      <VisuallyHidden
+      <input
         {...restProps}
-        Component="input"
-        getRootRef={getRef}
+        className={styles['SegmentedControlOption__input']}
+        ref={getRef}
         type="radio"
         onBlur={callMultiple(onBlur, restProps.onBlur)}
         onFocus={callMultiple(onFocus, restProps.onFocus)}
