@@ -1,5 +1,5 @@
 import type { PlaywrightWorkerOptions } from '@playwright/test';
-import axe from 'axe-core';
+import type { Result as AxeResult, AxeResults as AxeResults } from 'axe-core';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import type { AppearanceType } from '../../lib/appearance';
 import { PlatformType } from '../../lib/platform';
@@ -32,6 +32,6 @@ export interface VKUITestHelpers {
   _skipByOnlyForProps: void;
 }
 
-export interface AxeResultsPartial extends Partial<axe.AxeResults> {
-  violations: axe.Result[];
+export interface AxeResultsPartial extends Partial<AxeResults> {
+  violations: AxeResult[];
 }
