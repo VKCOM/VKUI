@@ -105,6 +105,7 @@
     "test": "yarn workspaces foreach run test",
     "test:ci": "yarn workspaces foreach run test:ci",
     "test:e2e": "yarn workspace @vkontakte/vkui run test:e2e",
+    "test:e2e-shard": "yarn workspace @vkontakte/vkui run test:e2e-shard",
     "test:e2e-update": "yarn workspace @vkontakte/vkui run test:e2e-update",
     "test:e2e:ci": "yarn workspace @vkontakte/vkui run test:e2e:ci",
     "test:e2e-update:ci": "yarn workspace @vkontakte/vkui run test:e2e-update:ci",

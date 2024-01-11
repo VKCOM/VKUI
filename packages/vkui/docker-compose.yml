@@ -7,7 +7,7 @@ services:
     working_dir: /repo/packages/vkui
     command: sh -c "
       YARN_ENABLE_SCRIPTS=false yarn install --immutable &&
-      yarn run test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG:-}
+      yarn run test:e2e:ci --shard=${SHARD:-} ${UPDATE_SNAPSHOTS_FLAG:-}
       "
     volumes:
       - ../../:/repo
