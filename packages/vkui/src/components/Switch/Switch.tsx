@@ -35,7 +35,7 @@ export const Switch = ({
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'outside' });
 
   const [localUncontrolledChecked, setLocalUncontrolledChecked] = React.useState(
-    restProps.defaultChecked,
+    Boolean(restProps.defaultChecked),
   );
   const isControlled = checkedProp !== undefined;
 
@@ -51,7 +51,7 @@ export const Switch = ({
     [isControlled],
   );
 
-  const checkedState = isControlled ? checkedProp : localUncontrolledChecked;
+  const ariaCheckedState = isControlled ? checkedProp : localUncontrolledChecked;
   return (
     <label
       className={classNames(
@@ -69,12 +69,12 @@ export const Switch = ({
     >
       <input
         {...restProps}
-        checked={checkedState}
+        {...(isControlled && { checked: checkedProp })}
         onClick={callMultiple(syncUncontrolledCheckedStateOnClick, restProps.onClick)}
         ref={getRef}
         type="checkbox"
         role="switch"
-        aria-checked={checkedState ? 'true' : 'false'}
+        aria-checked={ariaCheckedState ? 'true' : 'false'}
         className={styles['Switch__self']}
       />
       <span aria-hidden className={styles['Switch__pseudo']} />
