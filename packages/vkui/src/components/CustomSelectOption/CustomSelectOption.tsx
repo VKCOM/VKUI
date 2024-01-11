@@ -70,7 +70,6 @@ export const CustomSelectOption = ({
   onClick,
   ...restProps
 }: CustomSelectOptionProps) => {
-  const title = typeof children === 'string' ? children : undefined;
   const { sizeY = 'none' } = useAdaptivity();
   const style = React.useMemo(
     () =>
@@ -89,7 +88,6 @@ export const CustomSelectOption = ({
       onClick={disabled ? undefined : onClick}
       Component="div"
       role="option"
-      title={title}
       aria-disabled={disabled}
       aria-selected={selected}
       className={classNames(

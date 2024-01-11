@@ -4,29 +4,19 @@ import { isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
-import { getHTMLElementByChildren, getHTMLElementSiblingByDirection } from '../../lib/dom';
+import { contains as checkTargetIsInputEl } from '../../lib/dom';
 import { FormField } from '../FormField/FormField';
 import { Text } from '../Typography/Text/Text';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+import { DEFAULT_INPUT_VALUE, DEFAULT_VALUE, renderChipDefault } from './constants';
 import {
-  DEFAULT_INPUT_LABEL,
-  DEFAULT_INPUT_VALUE,
-  DEFAULT_VALUE,
-  renderChipDefault,
-} from './constants';
+  getChipOptionIndexByHTMLElement,
+  getChipOptionIndexByValueProp,
+  getChipOptionValueByHTMLElement,
+  isInputValueEmpty,
+  resolveNextChipOptionIndex,
+} from './helpers';
 import type { ChipOption, ChipOptionValue, ChipsInputBasePrivateProps } from './types';
 import styles from './ChipsInputBase.module.css';
-
-const getValueOptionByIndex = <O extends ChipOption>(value: O[], index: number) => {
-  const foundOption = value[index];
-  return foundOption ? foundOption : null;
-};
-
-const getValueOptionByHTMLElement = <O extends ChipOption>(value: O[], el: HTMLElement) => {
-  const ariaLabel = el.getAttribute('aria-label');
-  const foundOption = value.find((v) => v.label === ariaLabel);
-  return foundOption ? foundOption : null;
-};
 
 const sizeYClassNames = {
   none: styles['ChipsInputBase--sizeY-none'],
@@ -46,65 +36,109 @@ export const ChipsInputBase = <O extends ChipOption>({
   // option
   value = DEFAULT_VALUE,
   onAddChipOption,
-  onRemoveChipOption,
+  onRemoveChipOption: onRemoveChipOptionProp,
   renderChip = renderChipDefault,
 
   // input
   getRef,
   id: idProp,
-  inputValue,
-  inputLabel = DEFAULT_INPUT_LABEL,
+  inputValue = DEFAULT_INPUT_VALUE,
   placeholder,
   disabled,
   readOnly,
   addOnBlur,
   onBlur,
-  onFocus,
   onInputChange,
   ...restProps
 }: ChipsInputBasePrivateProps<O>) => {
   const { sizeY = 'none' } = useAdaptivity();
   const idGenerated = React.useId();
-  const inputId = idProp || `chips-input-base-generated-id-${idGenerated}`;
   const inputRef = useExternRef(getRef);
   const listboxRef = React.useRef<HTMLDivElement>(null);
 
-  const [focused, setFocused] = React.useState(false);
   const valueLength = value.length;
   const withPlaceholder = valueLength === 0;
   const isDisabled = disabled || readOnly;
+  const [chipFocusedIndex, setChipFocusedIndex] = React.useState(0);
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const targetEl = event.target;
-    if (event.defaultPrevented || !inputRef.current || !isHTMLElement(targetEl)) {
+  const resetChipOptionFocusToInputEl = (inputEl: HTMLInputElement) => {
+    setChipFocusedIndex(0);
+    inputEl.focus();
+  };
+
+  const moveFocusToChipOption = (
+    currentIndex: number,
+    nextIndex: 'first' | 'prev' | 'next' | 'last',
+    listboxEl: HTMLElement,
+  ) => {
+    const index = resolveNextChipOptionIndex(currentIndex, nextIndex, valueLength);
+    // eslint-disable-next-line no-restricted-properties
+    const foundEl = listboxEl.querySelector<HTMLElement>(`[data-index="${index}"]`);
+
+    if (foundEl) {
+      setChipFocusedIndex(index);
+      foundEl.focus();
+    } else {
+      setChipFocusedIndex(0);
+    }
+  };
+
+  const removeChipOption = (o: O | ChipOptionValue, index: number) => {
+    if (!inputRef.current || !listboxRef.current) {
       return;
     }
 
-    const lastOptionIndex = valueLength - 1;
+    if (valueLength > 1) {
+      if (index === valueLength - 1) {
+        moveFocusToChipOption(index, 'prev', listboxRef.current);
+      } else {
+        moveFocusToChipOption(index, 'next', listboxRef.current);
+      }
+    } else {
+      resetChipOptionFocusToInputEl(inputRef.current);
+    }
 
-    const nextInputValue = inputRef.current.value;
-    const isInputEl = targetEl === inputRef.current;
-    const isInputValueEmpty = nextInputValue === DEFAULT_INPUT_VALUE;
+    onRemoveChipOptionProp(o);
+  };
+
+  const handleListboxKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const targetEl = event.target;
+    if (
+      event.defaultPrevented ||
+      !inputRef.current ||
+      !listboxRef.current ||
+      !isHTMLElement(targetEl)
+    ) {
+      return;
+    }
 
     switch (event.key) {
       case Keys.ENTER: {
-        if (isInputEl && !isInputValueEmpty) {
+        if (
+          checkTargetIsInputEl(targetEl, inputRef.current) &&
+          !isInputValueEmpty(inputRef.current.value)
+        ) {
           event.preventDefault();
-          onAddChipOption(nextInputValue);
+          onAddChipOption(inputRef.current.value);
         }
         break;
       }
+      case Keys.DELETE:
       case Keys.BACKSPACE: {
-        if (valueLength) {
-          const option =
-            isInputEl && isInputValueEmpty
-              ? getValueOptionByIndex(value, lastOptionIndex)
-              : getValueOptionByHTMLElement(value, targetEl);
-
-          if (option) {
+        if (valueLength > 0) {
+          if (!checkTargetIsInputEl(targetEl, inputRef.current)) {
             event.preventDefault();
-            inputRef.current.focus();
-            onRemoveChipOption(option);
+            removeChipOption(
+              getChipOptionValueByHTMLElement(targetEl),
+              getChipOptionIndexByHTMLElement(targetEl),
+            );
+          } else if (event.key === Keys.BACKSPACE && isInputValueEmpty(inputRef.current.value)) {
+            event.preventDefault();
+            moveFocusToChipOption(
+              getChipOptionIndexByHTMLElement(targetEl),
+              'last',
+              listboxRef.current,
+            );
           }
         }
         break;
@@ -113,27 +147,20 @@ export const ChipsInputBase = <O extends ChipOption>({
       case Keys.ARROW_LEFT:
       case Keys.ARROW_DOWN:
       case Keys.ARROW_RIGHT: {
-        event.preventDefault();
-
-        if (valueLength && isInputValueEmpty && listboxRef.current) {
-          const foundEl =
-            isInputEl && (event.key === Keys.ARROW_UP || event.key === Keys.ARROW_LEFT)
-              ? getHTMLElementByChildren(listboxRef.current.children, lastOptionIndex)
-              : getHTMLElementSiblingByDirection(targetEl, getHorizontalFocusGoTo(event.key));
-
-          if (foundEl) {
-            foundEl.focus();
-          }
+        if (valueLength !== 0 && !checkTargetIsInputEl(targetEl, inputRef.current)) {
+          event.preventDefault();
+          moveFocusToChipOption(
+            getChipOptionIndexByHTMLElement(targetEl),
+            getHorizontalFocusGoTo(event.key),
+            listboxRef.current,
+          );
         }
+        break;
       }
     }
   };
 
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (focused) {
-      setFocused(false);
-    }
-
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (onBlur) {
       onBlur(event);
     }
@@ -143,26 +170,10 @@ export const ChipsInputBase = <O extends ChipOption>({
     }
   };
 
-  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (!focused) {
-      setFocused(true);
-    }
-
-    if (onFocus) {
-      onFocus(event);
-    }
-  };
-
-  const handleChipRemove = (event: React.MouseEvent, value: ChipOptionValue) => {
+  const handleChipRemove = (event: React.MouseEvent, v: ChipOptionValue) => {
     event.preventDefault();
     event.stopPropagation();
-    onRemoveChipOption(value);
-  };
-
-  const handleClick = () => {
-    if (!focused && inputRef.current) {
-      inputRef.current.focus();
-    }
+    removeChipOption(v, getChipOptionIndexByValueProp(v, value));
   };
 
   return (
@@ -183,14 +194,13 @@ export const ChipsInputBase = <O extends ChipOption>({
           sizeY !== 'regular' && sizeYClassNames[sizeY],
           withPlaceholder && styles['ChipsInputBase--hasPlaceholder'],
         )}
-        onClick={isDisabled ? undefined : handleClick}
         // для a11y
         ref={listboxRef}
         role="listbox"
         aria-orientation="horizontal"
         aria-disabled={disabled}
         aria-readonly={readOnly}
-        onKeyDown={isDisabled ? undefined : handleKeyDown}
+        onKeyDown={isDisabled ? undefined : handleListboxKeyDown}
       >
         {value.map((option, index) => (
           <React.Fragment key={`${typeof option.value}-${option.label}`}>
@@ -202,7 +212,11 @@ export const ChipsInputBase = <O extends ChipOption>({
                 'disabled': disabled,
                 'className': styles['ChipsInputBase__chip'],
                 'onRemove': handleChipRemove,
+                // чтобы можно было легче найти этот чип в DOM
+                'data-index': index,
+                'data-value': option.value,
                 // для a11y
+                'tabIndex': chipFocusedIndex === index ? 0 : -1,
                 'role': 'option',
                 'aria-selected': true,
                 'aria-posinset': index + 1,
@@ -212,29 +226,24 @@ export const ChipsInputBase = <O extends ChipOption>({
             )}
           </React.Fragment>
         ))}
-        <div role="option" className={styles['ChipsInputBase__label']}>
-          {inputLabel && <VisuallyHidden>{inputLabel}</VisuallyHidden>}
-          <Text
-            aria-autocomplete="list"
-            autoCapitalize="none"
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck={false}
-            {...restProps}
-            Component="input"
-            type="text"
-            id={inputId}
-            getRootRef={inputRef}
-            className={styles['ChipsInputBase__el']}
-            disabled={disabled}
-            readOnly={readOnly}
-            placeholder={withPlaceholder ? placeholder : undefined}
-            value={inputValue}
-            onChange={onInputChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
-        </div>
+        <Text
+          autoCapitalize="none"
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck={false}
+          {...restProps}
+          Component="input"
+          type="text"
+          id={idProp || `chips-input-base-generated-id-${idGenerated}`}
+          getRootRef={inputRef}
+          className={styles['ChipsInputBase__el']}
+          disabled={disabled}
+          readOnly={readOnly}
+          placeholder={withPlaceholder ? placeholder : undefined}
+          value={inputValue}
+          onChange={onInputChange}
+          onBlur={handleInputBlur}
+        />
       </div>
     </FormField>
   );

@@ -19,8 +19,6 @@ export const FOCUS_ACTION_NEXT: FocusActionType = 'next';
 
 export const FOCUS_ACTION_PREV: FocusActionType = 'prev';
 
-export const getIconLabelDefault = (opened: boolean) => (opened ? 'Скрыть' : 'Развернуть');
-
 export const renderOptionDefault = (props: CustomSelectOptionProps) => (
   <CustomSelectOption {...props} />
 );

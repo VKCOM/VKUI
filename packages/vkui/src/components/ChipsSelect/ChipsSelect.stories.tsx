@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Icon12Download } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import type { ChipOption } from '../ChipsInputBase/types';
+import { FormItem } from '../FormItem/FormItem';
 import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
 
 const story: Meta<ChipsSelectProps<ChipOption>> = {
@@ -31,6 +32,11 @@ const groups = [
 ];
 
 export const Playground: Story = {
+  render: (args) => (
+    <FormItem top="Выберите музыкальные группы" htmlFor="chips-select" style={{ width: 320 }}>
+      <ChipsSelect {...args} id="chips-select" />
+    </FormItem>
+  ),
   args: {
     options: groups,
   },

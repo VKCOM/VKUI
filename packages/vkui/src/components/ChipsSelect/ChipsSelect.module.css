@@ -2,14 +2,6 @@
   position: relative;
 }
 
-.ChipsSelect__dropdown {
-  cursor: pointer;
-}
-
-.ChipsSelect__icon {
-  pointer-events: none;
-}
-
 .ChipsSelect__empty {
   padding-block: 12px;
   padding-inline: 0;

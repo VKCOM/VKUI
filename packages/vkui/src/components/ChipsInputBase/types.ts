@@ -88,8 +88,6 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
     HasRef<HTMLInputElement>,
     HasAlign {
   getRootRef?: React.Ref<HTMLDivElement>;
-
-  inputLabel?: string;
   /**
    * Добавляет значение в список на событие `onBlur`
    */
