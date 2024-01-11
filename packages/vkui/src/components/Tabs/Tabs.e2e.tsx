@@ -3,9 +3,14 @@ import { test } from '@vkui-e2e/test';
 import { Appearance } from '../../lib/appearance';
 import { TabsItemsFlexModePlayground, TabsPlayground } from './Tabs.e2e-playground';
 
-test('Tabs', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+test('Tabs', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  expectA11yScanResults,
+  componentPlaygroundProps,
+}) => {
   await mount(<TabsPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });
 
 test.describe('Tabs', () => {

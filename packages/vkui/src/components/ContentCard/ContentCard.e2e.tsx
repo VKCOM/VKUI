@@ -5,8 +5,9 @@ import { ContentCardPlayground } from './ContentCard.e2e-playground';
 test('ContentCard', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<ContentCardPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

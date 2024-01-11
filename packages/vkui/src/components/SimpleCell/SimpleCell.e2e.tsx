@@ -5,8 +5,9 @@ import { SimpleCellPlayground } from './SimpleCell.e2e-playground';
 test('SimpleCell', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<SimpleCellPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

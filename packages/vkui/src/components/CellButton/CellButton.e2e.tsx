@@ -5,8 +5,9 @@ import { CellButtonPlayground } from './CellButton.e2e-playground';
 test('CellButton', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<CellButtonPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

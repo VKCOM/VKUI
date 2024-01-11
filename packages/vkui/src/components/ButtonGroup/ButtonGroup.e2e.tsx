@@ -9,10 +9,11 @@ import {
 test('ButtonGroup', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<ButtonGroupPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });
 
 test.describe('ButtonGroup', () => {

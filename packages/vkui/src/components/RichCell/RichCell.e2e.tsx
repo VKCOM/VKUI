@@ -4,7 +4,12 @@ import { RichCellPlayground } from './RichCell.e2e-playground';
 
 test.use({ toMatchSnapshot: { threshold: 0.03 } });
 
-test('RichCell', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+test('RichCell', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  expectA11yScanResults,
+  componentPlaygroundProps,
+}) => {
   await mount(<RichCellPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

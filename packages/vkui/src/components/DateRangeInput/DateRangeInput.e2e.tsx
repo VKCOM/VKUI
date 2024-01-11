@@ -5,8 +5,9 @@ import { DateRangeInputPlayground } from './DateRangeInput.e2e-playground';
 test('DateRangeInput', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<DateRangeInputPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

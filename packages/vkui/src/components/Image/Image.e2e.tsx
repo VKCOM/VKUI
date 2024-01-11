@@ -7,9 +7,14 @@ import {
   ImagePlayground,
 } from './Image.e2e-playground';
 
-test('Image', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+test('Image', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  expectA11yScanResults,
+  componentPlaygroundProps,
+}) => {
   await mount(<ImagePlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });
 
 test.describe('Image', () => {

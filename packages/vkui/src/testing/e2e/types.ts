@@ -1,4 +1,5 @@
 import type { PlaywrightWorkerOptions } from '@playwright/test';
+import type { Result as AxeResult, AxeResults as AxeResults } from 'axe-core';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import type { AppearanceType } from '../../lib/appearance';
 import { PlatformType } from '../../lib/platform';
@@ -24,8 +25,13 @@ export interface ScreenshotWithClipToContentOptions {
 }
 
 export interface VKUITestHelpers {
+  expectA11yScanResults(): Promise<void>;
   componentPlaygroundProps: ComponentPlaygroundProps;
   expectScreenshotClippedToContent(options?: ScreenshotWithClipToContentOptions): Promise<void>;
   /** @private  */
   _skipByOnlyForProps: void;
+}
+
+export interface AxeResultsPartial extends Partial<AxeResults> {
+  violations: AxeResult[];
 }

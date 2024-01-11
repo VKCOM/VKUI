@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "name": "@vkontakte/vkui-monorepo",
   "dependencies": {
+    "@axe-core/playwright": "^4.8.2",
     "@project-docs/styleguide": "workspace:1.0.0",
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0",
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0",
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0",
-    "@project-tools/stylelint-bad-multiplication": "workspace:1.0.0"
+    "@project-tools/stylelint-bad-multiplication": "workspace:1.0.0",
+    "axe-html-reporter": "^2.2.3"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "2.1.1",
@@ -103,6 +105,7 @@
     "test": "yarn workspaces foreach run test",
     "test:ci": "yarn workspaces foreach run test:ci",
     "test:e2e": "yarn workspace @vkontakte/vkui run test:e2e",
+    "test:e2e-shard": "yarn workspace @vkontakte/vkui run test:e2e-shard",
     "test:e2e-update": "yarn workspace @vkontakte/vkui run test:e2e-update",
     "test:e2e:ci": "yarn workspace @vkontakte/vkui run test:e2e:ci",
     "test:e2e-update:ci": "yarn workspace @vkontakte/vkui run test:e2e-update:ci",

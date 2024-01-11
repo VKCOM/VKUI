@@ -19,10 +19,11 @@ test.describe('HorizontalScroll', () => {
   test('ViewWidth.SMALL_TABLET hasPointer=true', async ({
     mount,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<HorizontalScrollSmallTabletPlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });
 
@@ -37,10 +38,11 @@ test.describe('HorizontalScroll', () => {
   test('ViewWidth.MOBILE hasPointer=false', async ({
     mount,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(<HorizontalScrollMobilePlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
+    await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
   });
 });
 
@@ -52,6 +54,7 @@ test.describe('HorizontalScroll', () => {
     mount,
     page,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(
@@ -63,15 +66,19 @@ test.describe('HorizontalScroll', () => {
 
     await page.hover(CUSTOM_ROOT_SELECTOR);
 
-    await expectScreenshotClippedToContent({
-      cropToContentSelector: CUSTOM_ROOT_SELECTOR,
-    });
+    await Promise.all([
+      expectScreenshotClippedToContent({
+        cropToContentSelector: CUSTOM_ROOT_SELECTOR,
+      }),
+      expectA11yScanResults(),
+    ]).catch((error) => console.error(error));
   });
 
   test('does not have arrows without mouse', async ({
     mount,
     page,
     expectScreenshotClippedToContent,
+    expectA11yScanResults,
     componentPlaygroundProps,
   }) => {
     await mount(
@@ -83,8 +90,11 @@ test.describe('HorizontalScroll', () => {
 
     await page.hover(CUSTOM_ROOT_SELECTOR);
 
-    await expectScreenshotClippedToContent({
-      cropToContentSelector: CUSTOM_ROOT_SELECTOR,
-    });
+    await Promise.all([
+      expectScreenshotClippedToContent({
+        cropToContentSelector: CUSTOM_ROOT_SELECTOR,
+      }),
+      expectA11yScanResults(),
+    ]).catch((error) => console.error(error));
   });
 });

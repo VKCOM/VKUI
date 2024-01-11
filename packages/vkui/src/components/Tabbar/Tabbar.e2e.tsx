@@ -4,7 +4,12 @@ import { TabbarPlayground } from './Tabbar.e2e-playground';
 
 test.use({ onlyForPlatforms: ['android', 'ios'] });
 
-test('Tabbar', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+test('Tabbar', async ({
+  mount,
+  expectScreenshotClippedToContent,
+  expectA11yScanResults,
+  componentPlaygroundProps,
+}) => {
   await mount(<TabbarPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

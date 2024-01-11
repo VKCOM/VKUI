@@ -5,8 +5,9 @@ import { RadioGroupPlayground } from './RadioGroup.e2e-playground';
 test('RadioGroup', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<RadioGroupPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

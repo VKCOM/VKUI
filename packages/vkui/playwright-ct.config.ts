@@ -31,6 +31,8 @@ const DEFAULT_REPORTERS: ReporterDescription[] = [['json', { outputFile: 'e2e-re
  */
 // eslint-disable-next-line import/no-default-export
 export default defineConfig<VKUITestOptions>({
+  globalTeardown: path.join(__dirname, './src/testing/e2e/global-teardown'),
+
   testDir: path.join(__dirname, './src'),
   testMatch: generateTestMatch(),
 
@@ -39,15 +41,18 @@ export default defineConfig<VKUITestOptions>({
   snapshotPathTemplate: '{testDir}/{testFileDir}/__image_snapshots__/{arg}{ext}',
   updateSnapshots: 'none',
 
-  /* Maximum time one test can run for. */
-  timeout: 30 * 1000,
+  /* Maximum time one test can run for.
+   * Current time: 3 minutes
+   */
+  timeout: 3 * 60 * 1000,
 
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
+     * Current time: 3 minutes
      */
-    timeout: 5000,
+    timeout: 3 * 60 * 1000,
   },
   /* Run tests in files in parallel */
   fullyParallel: true,

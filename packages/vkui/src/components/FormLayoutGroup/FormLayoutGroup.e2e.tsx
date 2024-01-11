@@ -5,8 +5,9 @@ import { FormLayoutGroupPlayground } from './FormLayoutGroup.e2e-playground';
 test('FormLayoutGroup', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<FormLayoutGroupPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

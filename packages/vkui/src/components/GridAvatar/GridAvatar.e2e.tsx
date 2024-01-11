@@ -5,8 +5,9 @@ import { GridAvatarPlayground } from './GridAvatar.e2e-playground';
 test('GridAvatar', async ({
   mount,
   expectScreenshotClippedToContent,
+  expectA11yScanResults,
   componentPlaygroundProps,
 }) => {
   await mount(<GridAvatarPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await Promise.all([expectScreenshotClippedToContent(), expectA11yScanResults()]);
 });

@@ -99,7 +99,7 @@ export function prettyProps(props: any) {
     .join(' ');
 }
 
-type GenerateCustomScreenshotNameOptions = {
+type GenerateCustomNameOptions = {
   platform: string;
   browserName: string;
   appearance: string;
@@ -108,7 +108,7 @@ type GenerateCustomScreenshotNameOptions = {
 
 export function generateCustomScreenshotName(
   testTitlePath: string[],
-  options: GenerateCustomScreenshotNameOptions,
+  options: GenerateCustomNameOptions,
   expectCallCount: number,
 ) {
   const { platform, browserName, appearance } = options;
@@ -140,3 +140,24 @@ export const getLocatorMouseCoords = async (locator: Locator): Promise<[number, 
     ? [boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height / 2]
     : [0, 0];
 };
+
+// export function generateA11yTargetFromSubDirName(subdir: string) {
+//   const ext = '.e2e.tsx';
+
+//   const [_filePath, testParams] = subdir.split(`${ext}-`);
+
+//   const [mainTestTitle, ...restTestTitles] = testParams.split('-');
+//   const [platform, browserName, dot, appearance] = restTestTitles.splice(-4);
+
+//   const filePath = _filePath.split('-').join('/');
+
+//   return [
+//     `[${platform} (${browserName}) ${dot} ${appearance}]`,
+//     '›',
+//     `${filePath}${ext}`,
+//     '›',
+//     mainTestTitle,
+//     '›',
+//     ...restTestTitles,
+//   ];
+// }
