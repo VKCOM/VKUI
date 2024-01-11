@@ -70,3 +70,11 @@ jobs:
           name: all-blob-reports-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
           path: packages/vkui/blob-report
           retention-days: 1
+
+      - name: Upload @axe-core/playwright json report to GitHub Actions Artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: a11y-output-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
+          path: packages/vkui/a11y-results-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}.json
+          retention-days: 1
