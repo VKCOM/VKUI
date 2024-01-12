@@ -247,6 +247,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     clearButtonTestId,
     nativeSelectTestId,
     defaultValue,
+    required,
     ...restProps
   } = props;
 
@@ -872,6 +873,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         aria-hidden
         className={styles['CustomSelect__control']}
         data-testid={nativeSelectTestId}
+        required={required}
       >
         {allowClearButton && <option key="" value="" />}
         {optionsProp.map((item) => (
