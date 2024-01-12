@@ -218,7 +218,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### [`Alert`](#/Alert)
 
-- Свойство `autoClose` удалено, теперь это поведение по-умолчанию.
+- Свойство `autoClose` удалено, теперь это поведение по умолчанию.
 
 ```diff
  <Alert
