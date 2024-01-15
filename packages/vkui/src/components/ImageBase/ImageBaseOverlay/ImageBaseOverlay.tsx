@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useAppearance } from '../../../hooks/useAppearance';
 import { focusVisiblePresetModeClassNames } from '../../../hooks/useFocusVisibleClassName';
@@ -50,7 +50,7 @@ export const ImageBaseOverlay = ({
   theme: themeProp,
   visibility: visibilityProp,
   children,
-  onClick,
+  onClick = noop,
   ...restProps
 }: ImageBaseOverlayProps) => {
   const appearance = useAppearance();
