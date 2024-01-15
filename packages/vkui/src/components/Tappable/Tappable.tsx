@@ -54,6 +54,8 @@ export const Tappable = ({
     onPointerCancel,
   });
 
+  const typeProps = restProps.Component === 'button' ? { type: 'button' } : {};
+
   return (
     <Clickable
       baseClassName={classNames(
@@ -65,6 +67,7 @@ export const Tappable = ({
       )}
       hoverClassName={hoverClass(hoverMode)}
       activeClassName={activeClass(activeMode)}
+      {...typeProps}
       {...handlers}
       {...restProps}
     >
