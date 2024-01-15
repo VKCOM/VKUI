@@ -5650,11 +5650,11 @@ __metadata:
     jest-preset-stylelint: ^7.0.0
     lint-staged: ^15.2.0
     mini-css-extract-plugin: ^2.7.7
-    postcss: ^8.4.32
+    postcss: ^8.4.33
     postcss-cli: ^11.0.0
     postcss-custom-media: ^10.0.2
     postcss-gap-properties: ^5.0.1
-    postcss-import: ^15.0.0
+    postcss-import: ^16.0.0
     postcss-loader: ^7.3.4
     postcss-logical: ^7.0.1
     postcss-modules: ^6.0.0
@@ -5695,7 +5695,7 @@ __metadata:
     "@types/node": ^20.11.1
     "@types/postcss-less": ^4.0.6
     jest: ^29.7.0
-    postcss: ^8.4.32
+    postcss: ^8.4.33
     postcss-less: ^6.0.0
     postcss-scss: ^4.0.9
     postcss-value-parser: ^4.2.0
@@ -15407,16 +15407,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-import@npm:^15.0.0":
-  version: 15.1.0
-  resolution: "postcss-import@npm:15.1.0"
+"postcss-import@npm:^16.0.0":
+  version: 16.0.0
+  resolution: "postcss-import@npm:16.0.0"
   dependencies:
     postcss-value-parser: ^4.0.0
     read-cache: ^1.0.0
     resolve: ^1.1.7
   peerDependencies:
     postcss: ^8.0.0
-  checksum: 7bd04bd8f0235429009d0022cbf00faebc885de1d017f6d12ccb1b021265882efc9302006ba700af6cab24c46bfa2f3bc590be3f9aee89d064944f171b04e2a3
+  checksum: dd25ec2c8da949ec8c271581491888938b4fb1e9777bf248a089e64446f34e62366a266cf33777f9184184afbdf22a95e39ec53a1e090fd2539be04f23eeee83
   languageName: node
   linkType: hard
 
@@ -15954,7 +15954,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.0, postcss@npm:^8.1.2, postcss@npm:^8.4.21, postcss@npm:^8.4.24, postcss@npm:^8.4.27, postcss@npm:^8.4.28, postcss@npm:^8.4.32":
+"postcss@npm:^8.0.0, postcss@npm:^8.1.2, postcss@npm:^8.4.21, postcss@npm:^8.4.24, postcss@npm:^8.4.27, postcss@npm:^8.4.28":
   version: 8.4.32
   resolution: "postcss@npm:8.4.32"
   dependencies:
@@ -15965,7 +15965,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.31":
+"postcss@npm:^8.4.31, postcss@npm:^8.4.33":
   version: 8.4.33
   resolution: "postcss@npm:8.4.33"
   dependencies:
