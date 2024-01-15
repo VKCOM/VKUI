@@ -50,7 +50,7 @@ export const ImageBaseOverlay = ({
   theme: themeProp,
   visibility: visibilityProp,
   children,
-  onClick = noop,
+  onClick: onClickProp,
   ...restProps
 }: ImageBaseOverlayProps) => {
   const appearance = useAppearance();
@@ -65,6 +65,8 @@ export const ImageBaseOverlay = ({
       validateOverlayIcon(size, { name: 'children', value: children });
     }
   }
+
+  const onClick = onClickProp ?? visibility === 'on-hover' ? noop : undefined;
 
   return (
     <Tappable
