@@ -20,7 +20,6 @@
   - <a href="{{anchor}}">`ConfigProvider`</a>
   - <a href="{{anchor}}">`Chip`</a>
   - <a href="{{anchor}}">`ChipsInput`</a>
-  - <a href="{{anchor}}">`ChipsSelect`</a>
   - <a href="{{anchor}}">`ContentCard`</a>
   - <a href="{{anchor}}">`CustomScrollView`</a>
   - <a href="{{anchor}}">`CustomSelect`</a>
@@ -396,7 +395,7 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
-### [`Chip`](#/ChipsInput)
+### [`Chip`](#/Chip)
 
 - Изменено a11y-свойство
 
