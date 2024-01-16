@@ -620,8 +620,8 @@ describe('CustomSelect', () => {
     );
 
     fireEvent.click(screen.getByTestId('inputTextId'));
-    fireEvent.mouseEnter(screen.getByTitle('Mike'));
-    fireEvent.click(screen.getByTitle('Mike'));
+    fireEvent.mouseEnter(screen.getByRole('option', { name: 'Mike' }));
+    fireEvent.click(screen.getByRole('option', { name: 'Mike' }));
 
     expect(screen.queryByRole('button', { hidden: true })).toBeFalsy();
   });

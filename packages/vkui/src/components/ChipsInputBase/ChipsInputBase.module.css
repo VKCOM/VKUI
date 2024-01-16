@@ -19,19 +19,12 @@
   margin: 2px;
 }
 
-.ChipsInputBase__label {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  flex: 1;
-  margin-block: 2px 2px;
-  margin-inline: 10px 2px;
-}
-
 .ChipsInputBase__el {
+  flex: 1;
   position: relative;
   inline-size: 100%;
-  margin-block-end: 2px;
+  margin-block: 2px 4px;
+  margin-inline: 10px 2px;
   padding: 0;
   color: var(--vkui--color_text_primary);
   background: transparent;
@@ -66,13 +59,10 @@
   cursor: default;
 }
 
-.ChipsInputBase--hasPlaceholder .ChipsInputBase__label {
-  margin-inline: calc(12px - var(--vkui_internal--chips_input_base_container_gap)) 0;
-}
-
 .ChipsInputBase--hasPlaceholder .ChipsInputBase__el {
   white-space: nowrap;
   text-overflow: ellipsis;
+  margin-inline: calc(12px - var(--vkui_internal--chips_input_base_container_gap)) 0;
 }
 
 /**

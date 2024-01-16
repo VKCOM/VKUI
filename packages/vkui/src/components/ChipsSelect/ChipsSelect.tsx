@@ -7,7 +7,6 @@ import type { Placement } from '../../lib/floating';
 import { defaultFilterFn } from '../../lib/select';
 import { ChipsInputBase } from '../ChipsInputBase/ChipsInputBase';
 import {
-  DEFAULT_INPUT_LABEL,
   getNewOptionDataDefault,
   getOptionLabelDefault,
   getOptionValueDefault,
@@ -21,14 +20,12 @@ import {
 } from '../CustomSelectOption/CustomSelectOption';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import type { FormFieldProps } from '../FormField/FormField';
-import { IconButton } from '../IconButton/IconButton';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import {
   DEFAULT_EMPTY_TEXT,
   DEFAULT_SELECTED_BEHAVIOR,
   FOCUS_ACTION_NEXT,
   FOCUS_ACTION_PREV,
-  getIconLabelDefault,
   isCreateNewOptionPreset,
   isEmptyOptionPreset,
   isNotServicePreset,
@@ -73,10 +70,6 @@ export interface ChipsSelectProps<O extends ChipOption>
    */
   icon?: React.ReactNode;
   /**
-   * Функция должна возвращать человекочитаемый текст для открытого/закрытого состояния dropdown'а.
-   */
-  getIconLabel?(opened: boolean): string;
-  /**
    * Добавляет значение в список на событие `onBlur` (использовать вместе с `creatable`)
    */
   addOnBlur?: boolean;
@@ -97,12 +90,11 @@ export interface ChipsSelectProps<O extends ChipOption>
  */
 export const ChipsSelect = <Option extends ChipOption>({
   // FormFieldProps
+  id: labelledbyId,
   getRootRef,
   className,
   status = 'default',
-  before,
-  icon,
-  getIconLabel = getIconLabelDefault,
+  icon: dropdownIconProp,
   onChangeStart,
 
   // CustomSelectDropdownProps
@@ -125,7 +117,6 @@ export const ChipsSelect = <Option extends ChipOption>({
   defaultValue,
   inputValue: inputValueProp,
   defaultInputValue,
-  inputLabel = DEFAULT_INPUT_LABEL,
   disabled,
   getOptionValue = getOptionValueDefault,
   getOptionLabel = getOptionLabelDefault,
@@ -193,7 +184,9 @@ export const ChipsSelect = <Option extends ChipOption>({
   const [dropdownVerticalPlacement, setDropdownVerticalPlacement] = React.useState<
     Extract<Placement, 'top' | 'bottom'> | undefined
   >(placementProp);
-  const dropdownAriaId = React.useId();
+  const dropdownId = React.useId();
+  const dropdownCurrentItemId =
+    focusedOptionIndex !== null ? `${dropdownId}-${focusedOptionIndex}` : undefined;
   const dropdownScrollBoxRef = React.useRef<HTMLDivElement>(null);
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -355,10 +348,6 @@ export const ChipsSelect = <Option extends ChipOption>({
     setFocusedOptionIndex(null);
   }, [setFocusedOptionIndex]);
 
-  const toggleOpened = () => {
-    setOpened((prevOpened) => !prevOpened);
-  };
-
   const handleClickOutside = React.useCallback(() => {
     setOpened(false);
   }, [setOpened]);
@@ -375,6 +364,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         {...restProps}
         disabled={disabled}
         // FormFieldProps
+        id={labelledbyId}
         getRootRef={rootRef}
         className={classNames(
           styles['ChipsSelect'],
@@ -384,18 +374,7 @@ export const ChipsSelect = <Option extends ChipOption>({
           className,
         )}
         status={status}
-        before={before}
-        after={
-          <IconButton
-            className={styles['ChipsSelect__dropdown']}
-            activeMode=""
-            hoverMode=""
-            label={getIconLabel(opened)}
-            onClick={toggleOpened}
-          >
-            {icon ?? <DropdownIcon className={styles['ChipsSelect__icon']} opened={opened} />}
-          </IconButton>
-        }
+        after={dropdownIconProp || <DropdownIcon opened={opened} />}
         // option
         value={value}
         onAddChipOption={addOptionFromInput}
@@ -403,7 +382,6 @@ export const ChipsSelect = <Option extends ChipOption>({
         renderChip={renderChip}
         // input
         getRef={inputRef}
-        inputLabel={inputLabel}
         inputValue={inputValue}
         onInputChange={onInputChange}
         onFocus={handleFocus}
@@ -412,7 +390,9 @@ export const ChipsSelect = <Option extends ChipOption>({
         // a11y
         role="combobox"
         aria-expanded={opened}
-        aria-controls={dropdownAriaId}
+        aria-autocomplete="list"
+        aria-controls={opened ? dropdownId : undefined}
+        aria-activedescendant={opened ? dropdownCurrentItemId : undefined}
         aria-haspopup="listbox"
       />
       {opened && (
@@ -428,10 +408,13 @@ export const ChipsSelect = <Option extends ChipOption>({
           forcePortal={forceDropdownPortal}
           noMaxHeight={noMaxHeight}
           // a11y
-          id={dropdownAriaId}
+          id={dropdownId}
           role="listbox"
+          aria-labelledby={labelledbyId}
         >
           {options.map((option, index) => {
+            const dropdownItemId = `${dropdownId}-${index}`;
+
             if (isEmptyOptionPreset(option)) {
               return (
                 <Footnote key="empty-text" className={styles['ChipsSelect__empty']}>
@@ -443,6 +426,7 @@ export const ChipsSelect = <Option extends ChipOption>({
               return (
                 <CustomSelectOption
                   key="create-new-option"
+                  id={dropdownItemId}
                   hovered={focusedOptionIndex === index}
                   onMouseDown={() => addOptionFromInput(inputValue)}
                   onMouseEnter={() => setFocusedOptionIndex(index)}
@@ -455,6 +439,7 @@ export const ChipsSelect = <Option extends ChipOption>({
               <React.Fragment key={`${typeof option.value}-${option.label}`}>
                 {renderOption(
                   {
+                    id: dropdownItemId,
                     hovered: focusedOption
                       ? getOptionValue(option) === getOptionValue(focusedOption)
                       : false,

@@ -6,8 +6,6 @@ export const DEFAULT_VALUE = [];
 
 export const DEFAULT_INPUT_VALUE = '';
 
-export const DEFAULT_INPUT_LABEL = 'Введите ваше значение...';
-
 export function getOptionValueDefault<O extends ChipOption>(option: O) {
   return option.value;
 }

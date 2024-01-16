@@ -1,15 +1,22 @@
 import * as React from 'react';
 import { act, fireEvent, render, within } from '@testing-library/react';
 import { getTextFromChildren } from '../../lib/children';
-import { baselineComponent, userEvent, waitForFloatingPosition } from '../../testing/utils';
+import {
+  baselineComponent,
+  userEvent,
+  waitForFloatingPosition,
+  withRegExp,
+} from '../../testing/utils';
 import type { ChipOption } from '../ChipsInputBase/types';
 import { ChipsSelect } from './ChipsSelect';
 
-const colors: ChipOption[] = [
-  { value: 'red', label: 'Красный' },
-  { value: 'blue', label: 'Синий' },
-  { value: 'navarin', label: 'Наваринского пламени с дымом' },
-];
+const FIRST_OPTION = { value: 'red', label: 'Красный' };
+
+const SECOND_OPTION = { value: 'blue', label: 'Синий' };
+
+const THIRD_OPTION = { value: 'navarin', label: 'Наваринского пламени с дымом' };
+
+const colors: ChipOption[] = [FIRST_OPTION, SECOND_OPTION, THIRD_OPTION];
 
 const testValue = { value: 'testvalue', label: 'testvalue' };
 
@@ -83,7 +90,7 @@ describe('ChipsSelect', () => {
       await waitForFloatingPosition();
       await userEvent.click(
         within(result.getByTestId('dropdown')).getByRole('option', {
-          name: getTextFromChildren(colors[0].label),
+          name: getTextFromChildren(FIRST_OPTION.label),
         }),
       );
       expect(() => result.getByTestId('dropdown')).toThrow();
@@ -103,7 +110,7 @@ describe('ChipsSelect', () => {
       await waitForFloatingPosition();
       await userEvent.click(
         within(result.getByTestId('dropdown')).getByRole('option', {
-          name: getTextFromChildren(colors[0].label),
+          name: getTextFromChildren(FIRST_OPTION.label),
         }),
       );
       expect(() => result.getByTestId('dropdown')).toBeTruthy();
@@ -135,10 +142,10 @@ describe('ChipsSelect', () => {
       await waitForFloatingPosition();
       await userEvent.click(
         within(result.getByTestId('dropdown')).getByRole('option', {
-          name: getTextFromChildren(colors[0].label),
+          name: getTextFromChildren(FIRST_OPTION.label),
         }),
       );
-      expect(onChange).toHaveBeenCalledWith([colors[0]]);
+      expect(onChange).toHaveBeenCalledWith([FIRST_OPTION]);
     });
 
     it('via keyboard', async () => {
@@ -169,7 +176,7 @@ describe('ChipsSelect', () => {
       const result = render(
         <ChipsSelect
           options={colors}
-          defaultValue={[colors[0]]}
+          defaultValue={[FIRST_OPTION]}
           selectedBehavior="highlight"
           dropdownTestId="dropdown"
         />,
@@ -178,7 +185,7 @@ describe('ChipsSelect', () => {
       await waitForFloatingPosition();
       expect(
         within(result.getByTestId('dropdown')).getByRole('option', {
-          name: getTextFromChildren(colors[0].label),
+          name: getTextFromChildren(FIRST_OPTION.label),
         }),
       ).toBeTruthy();
     });
@@ -187,7 +194,7 @@ describe('ChipsSelect', () => {
       const result = render(
         <ChipsSelect
           options={colors}
-          defaultValue={[colors[0]]}
+          defaultValue={[FIRST_OPTION]}
           selectedBehavior="hide"
           dropdownTestId="dropdown"
         />,
@@ -196,22 +203,22 @@ describe('ChipsSelect', () => {
       await waitForFloatingPosition();
       expect(() =>
         within(result.getByTestId('dropdown')).getByRole('option', {
-          name: getTextFromChildren(colors[0].label),
+          name: getTextFromChildren(FIRST_OPTION.label),
         }),
       ).toThrow();
     });
     it('deselects on chip click', async () => {
       const handleChange = jest.fn();
       const result = render(
-        <ChipsSelect options={colors} value={[colors[0]]} onChange={handleChange} />,
+        <ChipsSelect options={colors} value={[FIRST_OPTION]} onChange={handleChange} />,
       );
-      await userEvent.click(result.getByText(`Удалить ${colors[0].label}`).closest('button')!);
+      await userEvent.click(result.getByText(`Удалить ${FIRST_OPTION.label}`).closest('button')!);
       expect(handleChange).toHaveBeenCalledWith([]);
     });
   });
 
   it('does not focus ChipsSelect on chip click', async () => {
-    let selectedColors: ChipOption[] = [{ value: 'red', label: 'Красный' }];
+    let selectedColors: ChipOption[] = [FIRST_OPTION, SECOND_OPTION];
     const setSelectedColors = (updatedColors: ChipOption[]) => {
       selectedColors = [...updatedColors];
     };
@@ -226,7 +233,8 @@ describe('ChipsSelect', () => {
     };
 
     const result = render(<ChipsSelect data-testid="chips-select" {...colorsChipsProps} />);
-    await userEvent.click(result.getByText('Удалить Красный').closest('button')!);
+    const chipEl = result.getByRole('option', { name: withRegExp(FIRST_OPTION.label) });
+    await userEvent.click(within(chipEl).getByRole('button'));
     expect(result.getByTestId('chips-select')).not.toHaveFocus();
   });
 

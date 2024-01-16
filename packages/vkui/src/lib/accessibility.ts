@@ -23,6 +23,7 @@ export const Keys = {
   ESCAPE: 'Escape',
   HOME: 'Home',
   END: 'End',
+  DELETE: 'Delete',
   BACKSPACE: 'Backspace',
   ARROW_LEFT: 'ArrowLeft',
   ARROW_RIGHT: 'ArrowRight',
@@ -62,6 +63,8 @@ export const FOCUS_ALLOW_LIST_KEYS = new Set<string>([
   Keys.ARROW_RIGHT,
   Keys.ARROW_UP,
   Keys.ARROW_DOWN,
+  Keys.BACKSPACE,
+  Keys.DELETE,
 ]);
 
 export function isKeyboardFocusingStarted<T extends KeyboardEvent | React.KeyboardEvent>(event: T) {
@@ -150,9 +153,9 @@ export const getHorizontalFocusGoTo = (
   switch (keys) {
     case Keys.ARROW_UP:
     case Keys.ARROW_LEFT:
-      return 'left';
+      return 'prev';
     case Keys.ARROW_DOWN:
     case Keys.ARROW_RIGHT:
-      return 'right';
+      return 'next';
   }
 };

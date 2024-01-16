@@ -8,6 +8,7 @@ import {
   getOptionLabelDefault,
   getOptionValueDefault,
 } from '../ChipsInputBase/constants';
+import { isValueLikeChipOptionObject } from '../ChipsInputBase/helpers';
 import type {
   ChipOption,
   ChipOptionValue,
@@ -16,9 +17,6 @@ import type {
   GetOptionValue,
   UseChipsInputBaseProps,
 } from '../ChipsInputBase/types';
-
-const isValueLikeOption = <O extends ChipOption>(value: O | ChipOptionValue): value is O =>
-  typeof value === 'object' && 'value' in value;
 
 export const transformValue = <O extends ChipOption>(
   value: O[],
@@ -87,14 +85,16 @@ export const useChipsInput = <O extends ChipOption>({
   const toggleOption: ToggleOption<O> = React.useCallback(
     (nextValueProp: O | ChipOptionValue, isNewValue: boolean) => {
       setValue((prevValue) => {
-        const isLikeOption = isValueLikeOption(nextValueProp);
-        const resolvedOption = isLikeOption
+        const isLikeObjectOption = isValueLikeChipOptionObject(nextValueProp);
+        const resolvedOption = isLikeObjectOption
           ? getNewOptionData(nextValueProp.value, nextValueProp.label)
           : getNewOptionData(nextValueProp, typeof nextValueProp === 'string' ? nextValueProp : '');
         const nextValue = prevValue.filter((option: O) => resolvedOption.value !== option.value);
 
         if (isNewValue === true) {
-          nextValue.push(isLikeOption ? { ...nextValueProp, ...resolvedOption } : resolvedOption);
+          nextValue.push(
+            isLikeObjectOption ? { ...nextValueProp, ...resolvedOption } : resolvedOption,
+          );
         }
 
         return nextValue;

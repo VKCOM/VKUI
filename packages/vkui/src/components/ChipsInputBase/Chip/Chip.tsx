@@ -68,7 +68,6 @@ export const Chip = ({
         focusVisibleClassName,
         className,
       )}
-      tabIndex={-1} // [reason]: чтобы можно было выставлять состояние фокуса только программно через `*.focus()`
       aria-disabled={disabled}
       onFocus={disabled ? undefined : handleFocus}
       onBlur={disabled ? undefined : handleBlur}
