@@ -330,4 +330,4 @@ export const fireEventPatch = async (
   });
 };
 
-export const withRexExp = (v: string) => new RegExp(v);
+export const withRegExp = (v: string) => new RegExp(v);

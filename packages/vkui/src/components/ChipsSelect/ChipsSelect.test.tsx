@@ -5,7 +5,7 @@ import {
   baselineComponent,
   userEvent,
   waitForFloatingPosition,
-  withRexExp,
+  withRegExp,
 } from '../../testing/utils';
 import type { ChipOption } from '../ChipsInputBase/types';
 import { ChipsSelect } from './ChipsSelect';
@@ -233,7 +233,7 @@ describe('ChipsSelect', () => {
     };
 
     const result = render(<ChipsSelect data-testid="chips-select" {...colorsChipsProps} />);
-    const chipEl = result.getByRole('option', { name: withRexExp(FIRST_OPTION.label) });
+    const chipEl = result.getByRole('option', { name: withRegExp(FIRST_OPTION.label) });
     await userEvent.click(within(chipEl).getByRole('button'));
     expect(result.getByTestId('chips-select')).not.toHaveFocus();
   });

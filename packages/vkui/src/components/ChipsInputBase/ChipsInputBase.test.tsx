@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
-import { baselineComponent, userEvent, withRexExp } from '../../testing/utils';
+import { baselineComponent, userEvent, withRegExp } from '../../testing/utils';
 import { ChipsInputBase } from './ChipsInputBase';
 import type { ChipOption, ChipsInputBasePrivateProps } from './types';
 
@@ -96,7 +96,7 @@ describe('ChipsInputBase', () => {
           onRemoveChipOption={onRemoveChipOption}
         />,
       );
-      const chipEl = result.getByRole('option', { name: withRexExp(TEST_OPTION.label) });
+      const chipEl = result.getByRole('option', { name: withRegExp(TEST_OPTION.label) });
       await userEvent.click(chipEl);
       await userEvent.type(chipEl, `{${type}}`);
       expect(onRemoveChipOption).not.toHaveBeenCalled();
@@ -123,7 +123,7 @@ describe('ChipsInputBase', () => {
         onRemoveChipOption={onRemoveChipOption}
       />,
     );
-    const chipEl = result.getByRole('option', { name: withRexExp(TEST_OPTION.label) });
+    const chipEl = result.getByRole('option', { name: withRegExp(TEST_OPTION.label) });
     await userEvent.click(chipEl);
     expect(chipEl).toHaveFocus();
   });
