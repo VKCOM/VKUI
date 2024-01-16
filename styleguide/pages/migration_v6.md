@@ -833,7 +833,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### 🗑️ ~~`PanelHeader.Content`~~
 
-- Подкомпонент удален, используйте вместо него `typographyProps` у [`PanelHeader`](#/PanelHeader).
+- Подкомпонент удалён, используйте вместо него `typographyProps` у [`PanelHeader`](#/PanelHeader).
 
 <br/>
 
@@ -852,7 +852,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### 🗑️ ~~`PromoBanner`~~
 
-- Компонент удален.
+- Компонент удалён.
 - Для своей реализации, используйте событие [`VKWebAppShowBannerAd`](https://dev.vk.com/mini-apps/monetization/ad/banners).
 
 <br/>
@@ -885,7 +885,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### 🗑️ ~~`RangeSlider`~~
 
-- Компонент удален, используйте [`Slider`](#/Slider).
+- Компонент удалён, используйте [`Slider`](#/Slider).
 
 ```diff
 - <RangeSlider />
@@ -1088,7 +1088,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### 🗑️ ~~`VisuallyHiddenInput`~~
 
-- Компонент удален, используйте [`VisuallyHidden`](#/VisuallyHidden).
+- Компонент удалён, используйте [`VisuallyHidden`](#/VisuallyHidden).
 
 ```diff
 - <VisuallyHiddenInput />
@@ -1287,7 +1287,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### 🗑️ ~~`RichTooltip`~~
 
-- Компонент удален, используйте [`Tooltip`](#/Tooltip).
+- Компонент удалён, используйте [`Tooltip`](#/Tooltip).
 
 ```diff
 - <RichTooltip style={{maxWidth: 320}} content={
