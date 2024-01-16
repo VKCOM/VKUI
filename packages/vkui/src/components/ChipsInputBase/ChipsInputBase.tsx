@@ -12,10 +12,10 @@ import {
   getChipOptionIndexByHTMLElement,
   getChipOptionIndexByValueProp,
   getChipOptionValueByHTMLElement,
+  getNextChipOptionIndexByNavigateToProp,
   isInputValueEmpty,
-  resolveNextChipOptionIndex,
 } from './helpers';
-import type { ChipOption, ChipOptionValue, ChipsInputBasePrivateProps } from './types';
+import type { ChipOption, ChipOptionValue, ChipsInputBasePrivateProps, NavigateTo } from './types';
 import styles from './ChipsInputBase.module.css';
 
 const sizeYClassNames = {
@@ -68,10 +68,10 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const moveFocusToChipOption = (
     currentIndex: number,
-    nextIndex: 'first' | 'prev' | 'next' | 'last',
+    navigateTo: NavigateTo,
     listboxEl: HTMLElement,
   ) => {
-    const index = resolveNextChipOptionIndex(currentIndex, nextIndex, valueLength);
+    const index = getNextChipOptionIndexByNavigateToProp(currentIndex, navigateTo, valueLength);
     // eslint-disable-next-line no-restricted-properties
     const foundEl = listboxEl.querySelector<HTMLElement>(`[data-index="${index}"]`);
 

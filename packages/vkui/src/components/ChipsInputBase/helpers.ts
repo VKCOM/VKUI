@@ -1,5 +1,5 @@
 import { DEFAULT_INPUT_VALUE } from './constants';
-import type { ChipOption, ChipOptionValue } from './types';
+import type { ChipOption, ChipOptionValue, NavigateTo } from './types';
 
 /**
  * @private
@@ -16,11 +16,11 @@ export const isInputValueEmpty = (value: string) => value === DEFAULT_INPUT_VALU
  * @private
  */
 export const getChipOptionIndexByValueProp = <O extends ChipOption>(
-  v: O | ChipOptionValue,
+  optionProp: O | ChipOptionValue,
   valueProp: O[],
 ) => {
-  const value = isValueLikeChipOptionObject(v) ? v.value : v;
-  return valueProp.findIndex((o) => o.value === value);
+  const value = isValueLikeChipOptionObject(optionProp) ? optionProp.value : optionProp;
+  return valueProp.findIndex((option) => option.value === value);
 };
 
 /**
@@ -42,12 +42,12 @@ export const getChipOptionValueByHTMLElement = (el: HTMLElement | null) => {
 /**
  * @private
  */
-export const resolveNextChipOptionIndex = (
+export const getNextChipOptionIndexByNavigateToProp = (
   currentIndex: number,
-  nextIndex: 'first' | 'prev' | 'next' | 'last',
+  navigateTo: NavigateTo,
   length: number,
 ) => {
-  switch (nextIndex) {
+  switch (navigateTo) {
     case 'first':
       return 0;
     case 'prev':
