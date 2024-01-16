@@ -27,7 +27,6 @@
             </Button>
           </ButtonGroup>
         }
-        disabled
       >
         Children
       </RichCell>
@@ -57,7 +56,6 @@
             </Button>
           </ButtonGroup>
         }
-        disabled
       >
         Илья Гришин
       </RichCell>
@@ -89,7 +87,6 @@
             </Button>
           </ButtonGroup>
         }
-        disabled
       >
         Ром Захаров
       </RichCell>
@@ -112,7 +109,6 @@
           </ButtonGroup>
         }
         multiline
-        disabled
       >
         Тарас Иванов{' '}
         <Icon16Verified

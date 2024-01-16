@@ -47,7 +47,7 @@ const OthersFeatures = () => {
               </Image.Badge>
             )}
             {overlay && (
-              <Image.Overlay {...overlay} onClick={() => null}>
+              <Image.Overlay {...overlay}>
                 <IconExampleForOverlayBasedOnImageBaseSize />
               </Image.Overlay>
             )}
