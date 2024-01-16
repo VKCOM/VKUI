@@ -10,8 +10,6 @@ concurrency:
 
 jobs:
   labels:
-    # TODO [>=6]: удалить условие после релиза v6
-    if: false
     permissions:
       pull-requests: write
     runs-on: ubuntu-latest
