@@ -20,7 +20,6 @@
   - <a href="{{anchor}}">`ConfigProvider`</a>
   - <a href="{{anchor}}">`Chip`</a>
   - <a href="{{anchor}}">`ChipsInput`</a>
-  - <a href="{{anchor}}">`ChipsSelect`</a>
   - <a href="{{anchor}}">`ContentCard`</a>
   - <a href="{{anchor}}">`CustomScrollView`</a>
   - <a href="{{anchor}}">`CustomSelect`</a>
@@ -396,7 +395,7 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
-### [`Chip`](#/ChipsInput)
+### [`Chip`](#/Chip)
 
 - Изменено a11y-свойство
 
@@ -431,8 +430,7 @@ npx @vkontakte/vkui-codemods --help
 -  inputValue=""
 +  defaultInputValue=""
 
--  inputAriaLabel="Введите название цвета"
-+  inputLabel="Введите название цвета"
+-  inputAriaLabel="Введите название цвета" // используйте компонент FormItem
 />
 ```
 
@@ -833,7 +831,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### 🗑️ ~~`PanelHeader.Content`~~
 
-- Подкомпонент удален, используйте вместо него `typographyProps` у [`PanelHeader`](#/PanelHeader).
+- Подкомпонент удалён, используйте вместо него `typographyProps` у [`PanelHeader`](#/PanelHeader).
 
 <br/>
 
@@ -852,7 +850,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### 🗑️ ~~`PromoBanner`~~
 
-- Компонент удален.
+- Компонент удалён.
 - Для своей реализации, используйте событие [`VKWebAppShowBannerAd`](https://dev.vk.com/mini-apps/monetization/ad/banners).
 
 <br/>
@@ -885,7 +883,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### 🗑️ ~~`RangeSlider`~~
 
-- Компонент удален, используйте [`Slider`](#/Slider).
+- Компонент удалён, используйте [`Slider`](#/Slider).
 
 ```diff
 - <RangeSlider />
@@ -1088,7 +1086,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### 🗑️ ~~`VisuallyHiddenInput`~~
 
-- Компонент удален, используйте [`VisuallyHidden`](#/VisuallyHidden).
+- Компонент удалён, используйте [`VisuallyHidden`](#/VisuallyHidden).
 
 ```diff
 - <VisuallyHiddenInput />
@@ -1141,6 +1139,8 @@ npx @vkontakte/vkui-codemods --help
 
 -  creatableText="Lorem Ipsum"
 +  creatable="Lorem Ipsum"
+
+-  getIconLabel // шеврон теперь имеет чисто декоративный характер и больше не интерактивна
 />
 ```
 
@@ -1287,7 +1287,7 @@ npx @vkontakte/vkui-codemods --help
 
 ### 🗑️ ~~`RichTooltip`~~
 
-- Компонент удален, используйте [`Tooltip`](#/Tooltip).
+- Компонент удалён, используйте [`Tooltip`](#/Tooltip).
 
 ```diff
 - <RichTooltip style={{maxWidth: 320}} content={
