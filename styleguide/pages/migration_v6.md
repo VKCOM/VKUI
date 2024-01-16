@@ -430,8 +430,7 @@ npx @vkontakte/vkui-codemods --help
 -  inputValue=""
 +  defaultInputValue=""
 
--  inputAriaLabel="Введите название цвета"
-+  inputLabel="Введите название цвета"
+-  inputAriaLabel="Введите название цвета" // используйте компонент FormItem
 />
 ```
 
@@ -1140,6 +1139,8 @@ npx @vkontakte/vkui-codemods --help
 
 -  creatableText="Lorem Ipsum"
 +  creatable="Lorem Ipsum"
+
+-  getIconLabel // шеврон теперь имеет чисто декоративный характер и больше не интерактивна
 />
 ```
 
