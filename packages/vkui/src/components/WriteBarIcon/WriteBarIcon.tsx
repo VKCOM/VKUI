@@ -81,7 +81,7 @@ export const WriteBarIcon = ({
   }
 
   if (process.env.NODE_ENV === 'development') {
-    const isAccessible = !modeLabel && (!restProps['aria-label'] || restProps['aria-labelledby']);
+    const isAccessible = modeLabel || restProps['aria-label'] || restProps['aria-labelledby'];
 
     if (!isAccessible) {
       warn(COMMON_WARNINGS.a11y['button-name'], 'error');
