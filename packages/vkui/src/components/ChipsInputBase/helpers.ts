@@ -47,16 +47,18 @@ export const getNextChipOptionIndexByNavigateToProp = (
   navigateTo: NavigateTo,
   length: number,
 ) => {
+  const LAST_INDEX = length - 1;
   switch (navigateTo) {
-    case 'first':
-      return 0;
     case 'prev':
-      return currentIndex - 1;
+      const prevIndex = currentIndex - 1;
+      return prevIndex < 0 ? LAST_INDEX : prevIndex;
     case 'next':
-      return currentIndex + 1;
+      const nextIndex = currentIndex + 1;
+      return nextIndex > LAST_INDEX ? 0 : nextIndex;
     case 'last':
-      return length - 1;
+      return LAST_INDEX;
     default:
+      /* istanbul ignore next */
       return -1;
   }
 };

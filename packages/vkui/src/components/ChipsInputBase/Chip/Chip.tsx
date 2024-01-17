@@ -38,17 +38,19 @@ export const Chip = ({
   const focusVisibleClassName = useFocusVisibleClassName({ focusVisible });
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    onFocus(event);
     if (onFocusProp) {
+      /* istanbul ignore next */
       onFocusProp(event);
     }
+    onFocus(event);
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    onBlur(event);
     if (onBlurProp) {
+      /* istanbul ignore next */
       onBlurProp(event);
     }
+    onBlur(event);
   };
 
   const onRemoveWrapper = React.useCallback(

@@ -59,7 +59,7 @@ export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLD
 export const CustomSelectOption = ({
   children,
   hierarchy = 0,
-  hovered,
+  hovered: hoveredProp,
   selected,
   before,
   after,
@@ -81,6 +81,7 @@ export const CustomSelectOption = ({
         : styleProp,
     [hierarchy, styleProp],
   );
+  const hovered = hoveredProp && !disabled ? true : false;
 
   return (
     <Paragraph
@@ -90,10 +91,11 @@ export const CustomSelectOption = ({
       role="option"
       aria-disabled={disabled}
       aria-selected={selected}
+      data-hovered={hovered}
       className={classNames(
         styles['CustomSelectOption'],
         sizeY !== 'compact' && sizeYClassNames[sizeY],
-        hovered && !disabled && styles['CustomSelectOption--hover'],
+        hovered && styles['CustomSelectOption--hover'],
         disabled && styles['CustomSelectOption--disabled'],
         hierarchy > 0 && styles['CustomSelectOption--hierarchy'],
         className,

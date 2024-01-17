@@ -8,7 +8,7 @@ import type {
 } from '../../types';
 import { FormFieldProps } from '../FormField/FormField';
 
-export type NavigateTo = 'first' | 'prev' | 'next' | 'last';
+export type NavigateTo = 'prev' | 'next' | 'last';
 
 export type ChipOptionValue = string | number;
 

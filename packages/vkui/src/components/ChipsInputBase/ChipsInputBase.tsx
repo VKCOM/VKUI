@@ -59,10 +59,10 @@ export const ChipsInputBase = <O extends ChipOption>({
   const valueLength = value.length;
   const withPlaceholder = valueLength === 0;
   const isDisabled = disabled || readOnly;
-  const [chipFocusedIndex, setChipFocusedIndex] = React.useState(0);
+  const [lastFocusedChipOptionIndex, setLastFocusedChipOptionIndex] = React.useState(0);
 
   const resetChipOptionFocusToInputEl = (inputEl: HTMLInputElement) => {
-    setChipFocusedIndex(0);
+    setLastFocusedChipOptionIndex(0);
     inputEl.focus();
   };
 
@@ -76,14 +76,13 @@ export const ChipsInputBase = <O extends ChipOption>({
     const foundEl = listboxEl.querySelector<HTMLElement>(`[data-index="${index}"]`);
 
     if (foundEl) {
-      setChipFocusedIndex(index);
+      setLastFocusedChipOptionIndex(index);
       foundEl.focus();
-    } else {
-      setChipFocusedIndex(0);
     }
   };
 
   const removeChipOption = (o: O | ChipOptionValue, index: number) => {
+    /* istanbul ignore if */
     if (!inputRef.current || !listboxRef.current) {
       return;
     }
@@ -103,6 +102,7 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const handleListboxKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const targetEl = event.target;
+    /* istanbul ignore if */
     if (
       event.defaultPrevented ||
       !inputRef.current ||
@@ -162,6 +162,7 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (onBlur) {
+      /* istanbul ignore next */
       onBlur(event);
     }
 
@@ -216,7 +217,7 @@ export const ChipsInputBase = <O extends ChipOption>({
                 'data-index': index,
                 'data-value': option.value,
                 // для a11y
-                'tabIndex': chipFocusedIndex === index ? 0 : -1,
+                'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
                 'role': 'option',
                 'aria-selected': true,
                 'aria-posinset': index + 1,

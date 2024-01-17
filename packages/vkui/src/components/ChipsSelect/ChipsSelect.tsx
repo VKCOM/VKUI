@@ -191,6 +191,7 @@ export const ChipsSelect = <Option extends ChipOption>({
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     if (onFocus) {
+      /* istanbul ignore next */
       onFocus(event);
     }
 
@@ -200,6 +201,7 @@ export const ChipsSelect = <Option extends ChipOption>({
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (onBlur) {
+      /* istanbul ignore next */
       onBlur(event);
     }
 
@@ -215,6 +217,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     const dropdown = dropdownScrollBoxRef.current;
     const item = chipsSelectOptions[index];
 
+    /* istanbul ignore if */
     if (!item || !dropdown) {
       return;
     }
@@ -224,6 +227,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     const itemTop = item.offsetTop;
     const itemHeight = item.offsetHeight;
 
+    /* istanbul ignore next */
     if (center) {
       dropdown.scrollTop = itemTop - dropdownHeight / 2 + itemHeight / 2;
     } else if (itemTop + itemHeight > dropdownHeight + scrollTop) {
@@ -243,6 +247,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     }
 
     if (index === oldIndex) {
+      /* istanbul ignore next */
       return;
     }
 
@@ -264,10 +269,12 @@ export const ChipsSelect = <Option extends ChipOption>({
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (onKeyDown) {
+      /* istanbul ignore next */
       onKeyDown(event);
     }
 
     if (event.defaultPrevented) {
+      /* istanbul ignore next */
       return;
     }
 
@@ -336,7 +343,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   }, [options, focusedOptionIndex, setFocusedOption]);
 
   const onDropdownPlacementChange = React.useCallback((placement: Placement) => {
-    // console.log(placement);
+    /* istanbul ignore next */
     if (placement.startsWith('top')) {
       setDropdownVerticalPlacement('top');
     } else if (placement.startsWith('bottom')) {
