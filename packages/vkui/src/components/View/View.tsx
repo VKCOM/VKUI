@@ -119,6 +119,7 @@ export const View = ({
   const prevSwipingBack = usePrevious(swipingBack);
   const prevBrowserSwipe = usePrevious(browserSwipe);
   const prevSwipeBackResult = usePrevious(swipeBackResult);
+  const prevSwipeBackShift = usePrevious(swipeBackShift);
   const prevSwipeBackPrevPanel = usePrevious(swipeBackPrevPanel);
   const prevOnTransition = usePrevious(onTransition);
 
@@ -455,11 +456,6 @@ export const View = ({
       );
     }
 
-    // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
-    if (prevSwipeBackResult === SwipeBackResults.fail && !swipeBackResult && activePanel !== null) {
-      scroll?.scrollTo(0, scrolls.current[activePanel]);
-    }
-
     // Закончился Safari свайп
     if (prevActivePanel !== activePanelProp && browserSwipe) {
       setBrowserSwipe(false);
@@ -491,6 +487,33 @@ export const View = ({
     swipingBackTransitionEndHandler,
     waitTransitionFinish,
   ]);
+
+  React.useEffect(
+    function restoreScrollPositionWhenSwipeBackIsCancelled() {
+      // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
+      const swipeBackCancelledInTheMiddleOfAction =
+        prevSwipeBackResult === SwipeBackResults.fail && !swipeBackResult;
+      const swipeBackCancelledByMovingPanelBackToInitialPoint =
+        prevSwipingBack && !swipingBack && prevSwipeBackShift === 0;
+
+      if (
+        (swipeBackCancelledInTheMiddleOfAction ||
+          swipeBackCancelledByMovingPanelBackToInitialPoint) &&
+        activePanel !== null
+      ) {
+        scroll?.scrollTo(0, scrolls.current[activePanel]);
+      }
+    },
+    [
+      prevSwipeBackResult,
+      swipeBackResult,
+      prevSwipingBack,
+      swipingBack,
+      prevSwipeBackShift,
+      activePanel,
+      scroll,
+    ],
+  );
 
   return (
     <NavViewIdContext.Provider value={id}>

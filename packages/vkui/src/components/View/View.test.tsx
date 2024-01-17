@@ -255,7 +255,8 @@ describe('View', () => {
       expect(document.getElementById('p1')).toBeTruthy();
       expect(document.getElementById('p2')).toBeNull();
     });
-    it('restores scroll after swipeBack', () => {
+
+    it('restores scroll after cancelled swipeBack (mouse up during the move)', () => {
       let y = 101;
       scrollsCache['scroll']['p1'] = 22;
       const [MockScroll, scrollTo] = mockScrollContext(() => y);
@@ -268,7 +269,21 @@ describe('View', () => {
       });
       fireEvent.mouseUp(view);
       rerender(<SwipeBack activePanel="p1" history={['p1']} />);
-      expect(scrollTo).toBeCalledWith(0, 22);
+      expect(scrollTo).toHaveBeenCalledWith(0, 22);
+    });
+
+    it('restores scroll when swipeBack cancelled because user moves panel back to starting point', () => {
+      const currentScrollPosition = 22;
+      const startPosition = { clientX: 0, clientY: 100 };
+      const [MockScroll, scrollTo] = mockScrollContext(() => currentScrollPosition);
+      const { view, rerender, SwipeBack } = setupSwipeBack({ Wrapper: MockScroll });
+      fireEvent.mouseDown(view, startPosition);
+      fireEvent.mouseMove(view, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
+      fireEvent.mouseMove(view, startPosition);
+      fireEvent.mouseUp(view);
+
+      rerender(<SwipeBack activePanel="p2" history={['p2']} />);
+      expect(scrollTo).toHaveBeenCalledWith(0, currentScrollPosition);
     });
 
     describe('horizontal scrollable elements', () => {
