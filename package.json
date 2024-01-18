@@ -80,7 +80,7 @@
     "stylelint-config-standard": "^36.0.0",
     "stylelint-media-use-custom-media": "^4.0.0",
     "stylelint-use-logical": "^2.1.0",
-    "stylelint-value-no-unknown-custom-properties": "^5.0.0",
+    "stylelint-value-no-unknown-custom-properties": "^6.0.1",
     "swc-loader": "^0.2.3",
     "swc-plugin-css-modules": "0.1.7",
     "swc-plugin-transform-remove-imports": "1.10.0",
@@ -123,9 +123,9 @@
     "g:npm:version": "cd $INIT_CWD && npm version --no-workspaces-update --no-commit-hooks --no-git-tag-version"
   },
   "resolutions": {
-    "stylelint": "15.11.0",
-    "stylelint-config-standard": "34.0.0",
-    "stylelint-media-use-custom-media": "3.0.0"
+    "stylelint": "16.1.0",
+    "stylelint-config-standard": "36.0.0",
+    "stylelint-media-use-custom-media": "4.0.0"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
