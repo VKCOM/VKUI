@@ -857,6 +857,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       )}
       <CustomSelectInput
         autoComplete="off"
+        autoCapitalize="none"
+        autoCorrect="off"
+        spellCheck="false"
         {...restProps}
         {...selectInputAriaProps}
         getRef={selectInputRef}

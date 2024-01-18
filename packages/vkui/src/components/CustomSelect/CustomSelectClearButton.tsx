@@ -17,10 +17,10 @@ export const CustomSelectClearButton = ({
 }: CustomSelectClearButtonProps) => {
   return (
     <IconButton
-      Component="div"
+      Component="button"
       aria-label="Очистить поле"
       onKeyDown={stopPropagation}
-      role="button"
+      type="button"
       activeMode="opacity"
       hoverMode="opacity"
       {...restProps}
