@@ -5,7 +5,7 @@ import { JSCodeShiftOptions } from '../types';
 export const parser = 'tsx';
 
 const RENAME_MAP = {
-  inputAriaLabel: 'inputLabel',
+  inputAriaLabel: 'placeholder',
 };
 
 export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {
