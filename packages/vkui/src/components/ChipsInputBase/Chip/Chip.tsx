@@ -40,7 +40,6 @@ export const Chip = ({
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     if (onFocusProp) {
-      /* istanbul ignore next */
       onFocusProp(event);
     }
     onFocus(event);
@@ -48,7 +47,6 @@ export const Chip = ({
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (onBlurProp) {
-      /* istanbul ignore next */
       onBlurProp(event);
     }
     onBlur(event);

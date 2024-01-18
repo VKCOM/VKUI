@@ -85,7 +85,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   };
 
   const removeChipOption = (o: O | ChipOptionValue, index: number) => {
-    /* istanbul ignore if */
+    /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
     if (!inputRef.current || !listboxRef.current) {
       return;
     }
@@ -105,7 +105,7 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const handleListboxKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const targetEl = event.target;
-    /* istanbul ignore if */
+    /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
     if (event.defaultPrevented || !listboxRef.current || !isHTMLElement(targetEl)) {
       return;
     }
@@ -162,7 +162,6 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (onBlur) {
-      /* istanbul ignore next */
       onBlur(event);
     }
 

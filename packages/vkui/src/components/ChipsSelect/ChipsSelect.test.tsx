@@ -2,6 +2,7 @@ import * as React from 'react';
 import { act, render, within } from '@testing-library/react';
 import {
   baselineComponent,
+  fakeTimers,
   userEvent,
   waitForFloatingPosition,
   withRegExp,
@@ -20,16 +21,7 @@ const colors: ChipOption[] = [FIRST_OPTION, SECOND_OPTION, THIRD_OPTION];
 describe('ChipsSelect', () => {
   baselineComponent(ChipsSelect, { a11y: false });
 
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
-  afterEach(() => {
-    act(() => {
-      jest.runOnlyPendingTimers();
-      jest.useRealTimers();
-    });
-  });
+  fakeTimers();
 
   it('renders empty text', async () => {
     const result = render(
@@ -40,7 +32,7 @@ describe('ChipsSelect', () => {
         emptyText="__empty__"
       />,
     );
-    await userEvent.click(result.getByRole('combobox'));
+    await act(() => userEvent.click(result.getByRole('combobox')));
     await waitForFloatingPosition();
     const dropdownLocator = result.getByTestId('dropdown');
     expect(within(dropdownLocator).queryByText('__empty__')).toBeTruthy();
@@ -50,7 +42,7 @@ describe('ChipsSelect', () => {
     const result = render(
       <ChipsSelect options={colors} defaultValue={[]} dropdownTestId="dropdown" />,
     );
-    await userEvent.type(result.getByRole('combobox'), 'Син');
+    await act(() => userEvent.type(result.getByRole('combobox'), 'Син'));
     await waitForFloatingPosition();
     const dropdownLocator = result.getByTestId('dropdown');
     expect(within(dropdownLocator).getAllByRole('option')).toHaveLength(1);
@@ -59,7 +51,7 @@ describe('ChipsSelect', () => {
 
   it('shows spinner if fetching', async () => {
     const result = render(<ChipsSelect fetching defaultValue={[]} dropdownTestId="dropdown" />);
-    await userEvent.click(result.getByRole('combobox'));
+    await act(() => userEvent.click(result.getByRole('combobox')));
     await waitForFloatingPosition();
     const dropdownLocator = result.getByTestId('dropdown');
     expect(within(dropdownLocator).getByRole('status')).toBeTruthy();
@@ -71,9 +63,9 @@ describe('ChipsSelect', () => {
     );
     const inputLocator = result.getByRole('combobox');
     if (eventType === 'focus') {
-      await userEvent.tab();
+      await act(() => userEvent.tab());
     } else {
-      await userEvent.click(inputLocator);
+      await act(() => userEvent.click(inputLocator));
     }
     await waitForFloatingPosition();
     const dropdownLocator = result.getByTestId('dropdown');
@@ -84,10 +76,10 @@ describe('ChipsSelect', () => {
     const result = render(
       <ChipsSelect options={colors} defaultValue={[]} dropdownTestId="dropdown" />,
     );
-    await userEvent.click(result.getByRole('combobox'));
+    await act(() => userEvent.click(result.getByRole('combobox')));
     await waitForFloatingPosition();
     expect(result.getByTestId('dropdown')).toBeTruthy();
-    await userEvent.click(document.body);
+    await act(() => userEvent.click(document.body));
     expect(() => result.getByTestId('dropdown')).toThrow();
   });
 
@@ -98,14 +90,14 @@ describe('ChipsSelect', () => {
         <ChipsSelect options={colors} defaultValue={[]} dropdownTestId="dropdown" />,
       );
       const inputLocator = result.getByRole('combobox');
-      await userEvent.click(inputLocator);
+      await act(() => userEvent.click(inputLocator));
 
       await waitForFloatingPosition();
-      await userEvent.type(inputLocator, '{Escape}');
-      await userEvent.type(inputLocator, '{Enter}'); // если dropdown'а пока нет, то выбор из списка на {Enter} должно игнорироваться (см. в коде `case Keys.ENTER`)
+      await act(() => userEvent.type(inputLocator, '{Escape}'));
+      await act(() => userEvent.type(inputLocator, '{Enter}')); // если dropdown'а пока нет, то выбор из списка на {Enter} должно игнорироваться (см. в коде `case Keys.ENTER`
       expect(() => result.getByTestId('dropdown')).toThrow();
 
-      await userEvent.type(inputLocator, type);
+      await act(() => userEvent.type(inputLocator, type));
       await waitForFloatingPosition();
       expect(result.getByTestId('dropdown')).toBeTruthy();
     },
@@ -123,12 +115,14 @@ describe('ChipsSelect', () => {
         closeAfterSelect={closeAfterSelect}
       />,
     );
-    await userEvent.click(result.getByRole('combobox'));
+    await act(() => userEvent.click(result.getByRole('combobox')));
     await waitForFloatingPosition();
-    await userEvent.click(
-      within(result.getByTestId('dropdown')).getByRole('option', {
-        name: withRegExp(FIRST_OPTION.label),
-      }),
+    await act(() =>
+      userEvent.click(
+        within(result.getByTestId('dropdown')).getByRole('option', {
+          name: withRegExp(FIRST_OPTION.label),
+        }),
+      ),
     );
     if (closeAfterSelect) {
       expect(() => result.getByTestId('dropdown')).toThrow();
@@ -152,7 +146,7 @@ describe('ChipsSelect', () => {
         />,
       );
 
-      await userEvent.click(result.getByRole('combobox'));
+      await act(() => userEvent.click(result.getByRole('combobox')));
       await waitForFloatingPosition();
 
       const getFirstOption = () => {
@@ -178,7 +172,7 @@ describe('ChipsSelect', () => {
     );
 
     const inputLocator = result.getByRole('combobox');
-    await userEvent.click(inputLocator);
+    await act(() => userEvent.click(inputLocator));
     await waitForFloatingPosition();
 
     const boundDropdownLocator = within(result.getByTestId('dropdown'));
@@ -194,13 +188,13 @@ describe('ChipsSelect', () => {
       }),
     ];
 
-    await userEvent.type(inputLocator, '{ArrowDown}');
+    await act(() => userEvent.type(inputLocator, '{ArrowDown}'));
     expect(firstOptionLocator).toHaveAttribute('data-hovered', 'true');
 
-    await userEvent.type(inputLocator, '{ArrowUp}');
+    await act(() => userEvent.type(inputLocator, '{ArrowUp}'));
     expect(thirdOptionLocator).toHaveAttribute('data-hovered', 'true');
 
-    await userEvent.type(inputLocator, '{ArrowDown}');
+    await act(() => userEvent.type(inputLocator, '{ArrowDown}'));
     expect(firstOptionLocator).toHaveAttribute('data-hovered', 'true');
   });
 
@@ -218,15 +212,15 @@ describe('ChipsSelect', () => {
     );
 
     const inputLocator = result.getByRole('combobox');
-    await userEvent.click(inputLocator);
+    await act(() => userEvent.click(inputLocator));
     await waitForFloatingPosition();
 
     const dropdownOption = within(result.getByTestId('dropdown')).getByRole('option', {
       name: withRegExp(FIRST_OPTION.label),
     });
-    await userEvent.hover(dropdownOption); // для вызова onDropdownMouseLeave
-    await userEvent.hover(inputLocator);
-    await userEvent.click(dropdownOption);
+    await act(() => userEvent.hover(dropdownOption)); // для вызова onDropdownMouseLeav
+    await act(() => userEvent.hover(inputLocator));
+    await act(() => userEvent.click(dropdownOption));
 
     result.rerender(
       <ChipsSelect
@@ -260,15 +254,15 @@ describe('ChipsSelect', () => {
     );
 
     const inputLocator = result.getByRole('combobox');
-    await userEvent.click(inputLocator);
+    await act(() => userEvent.click(inputLocator));
     await waitForFloatingPosition();
 
     const targetOptionIndex = 7;
-    await userEvent.type(inputLocator, '{ArrowDown}');
+    await act(() => userEvent.type(inputLocator, '{ArrowDown}'));
     for (let i = 0; i < targetOptionIndex; i += 1) {
-      await userEvent.type(inputLocator, '{ArrowDown}');
+      await act(() => userEvent.type(inputLocator, '{ArrowDown}'));
     }
-    await userEvent.type(inputLocator, '{Enter}');
+    await act(() => userEvent.type(inputLocator, '{Enter}'));
 
     const selectedOption = options[targetOptionIndex];
     result.rerender(
@@ -293,7 +287,7 @@ describe('ChipsSelect', () => {
       <ChipsSelect defaultValue={[FIRST_OPTION, SECOND_OPTION]} options={colors} />,
     );
     const chipEl = result.getByRole('option', { name: withRegExp(FIRST_OPTION.label) });
-    await userEvent.click(chipEl);
+    await act(() => userEvent.click(chipEl));
     expect(result.getByRole('combobox')).not.toHaveFocus();
   });
 
@@ -314,8 +308,8 @@ describe('ChipsSelect', () => {
         />,
       );
       const inputLocator = result.getByRole('combobox');
-      await userEvent.type(inputLocator, customChip.label);
-      await userEvent.type(inputLocator, '{Enter}');
+      await act(() => userEvent.type(inputLocator, customChip.label));
+      await act(() => userEvent.type(inputLocator, '{Enter}'));
       if (creatable) {
         expect(onChange).toHaveBeenCalledWith([customChip]);
       } else {
@@ -335,12 +329,14 @@ describe('ChipsSelect', () => {
         />,
       );
       const inputLocator = result.getByRole('combobox');
-      await userEvent.type(inputLocator, customChip.label);
+      await act(() => userEvent.type(inputLocator, customChip.label));
       await waitForFloatingPosition();
-      await userEvent.click(
-        within(result.getByTestId('dropdown')).getByRole('option', {
-          name: withRegExp('Добавить новую опцию'),
-        }),
+      await act(() =>
+        userEvent.click(
+          within(result.getByTestId('dropdown')).getByRole('option', {
+            name: withRegExp('Добавить новую опцию'),
+          }),
+        ),
       );
       expect(onChange).toHaveBeenCalledWith([customChip]);
     });
@@ -362,9 +358,9 @@ describe('ChipsSelect', () => {
           />,
         );
 
-        await userEvent.type(result.getByRole('combobox'), customChip.label);
+        await act(() => userEvent.type(result.getByRole('combobox'), customChip.label));
         await waitForFloatingPosition();
-        await userEvent.click(document.body);
+        await act(() => userEvent.click(document.body));
 
         if (creatable) {
           expect(onChange).toHaveBeenCalledWith([customChip]);
@@ -374,4 +370,34 @@ describe('ChipsSelect', () => {
       },
     );
   });
+
+  it.each([{ readOnly: false }, { readOnly: true }])(
+    'calls user events (`readOnly` prop is `$readOnly`)',
+    async ({ readOnly }) => {
+      const onFocus = jest.fn();
+      const onBlur = jest.fn();
+      const onKeyDown = jest.fn();
+      const result = render(
+        <ChipsSelect
+          readOnly={readOnly}
+          data-testid="input"
+          options={colors}
+          defaultValue={[]}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onKeyDown={onKeyDown}
+        />,
+      );
+
+      const inputLocator = result.getByTestId('input');
+
+      await act(() => userEvent.tab());
+      await act(() => userEvent.type(inputLocator, '{ArrowUp}'));
+      await act(() => userEvent.tab({ shift: true }));
+
+      expect(onFocus).toHaveBeenCalled();
+      expect(onBlur).toHaveBeenCalled();
+      expect(onKeyDown).toHaveBeenCalled();
+    },
+  );
 });
