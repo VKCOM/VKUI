@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import userEvent from '@testing-library/user-event';
+import { baselineComponent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Switch } from './Switch';
 
@@ -55,7 +56,7 @@ describe('Switch', () => {
     expect(disabledSwitch.getAttribute('aria-checked')).toBe('false');
 
     jest.useFakeTimers();
-    await userEvent.click(disabledSwitch);
+    userEvent.click(disabledSwitch);
 
     expect(disabledSwitch.checked).toBeFalsy();
     expect(disabledSwitch.getAttribute('aria-checked')).toBe('false');
