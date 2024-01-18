@@ -217,9 +217,16 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
         schedulingAutoScroll();
       }
     } else {
-      initializeScrollRefs(draggingEl);
-      initializeItems(draggingEl);
-      setDragging(true);
+      setDragging((prevDragging) => {
+        // На случай, если onDragMove успеет вызваться ещё раз до того, как `dragging` выставится в
+        // `true`
+        if (prevDragging) {
+          return prevDragging;
+        }
+        initializeScrollRefs(draggingEl);
+        initializeItems(draggingEl);
+        return true;
+      });
     }
   };
 
@@ -272,6 +279,16 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
       };
     },
     [dragging, handleScroll],
+  );
+
+  useIsomorphicLayoutEffect(
+    () =>
+      function componentWillUnmount() {
+        if (placeholderItemRef.current) {
+          unsetInitialPlaceholderItemStyles(placeholderItemRef.current);
+        }
+      },
+    [],
   );
 
   return { dragging, onDragStart, onDragMove, onDragEnd };
