@@ -232,7 +232,7 @@ describe('Tappable', () => {
         </Tappable>,
       );
       const child = screen.getByTestId('child');
-      await userEvent.click(child);
+      await act(() => userEvent.click(child));
       expect(isActive(child)).toBe(true);
       expect(isActive(screen.getByTestId('parent'))).toBe(false);
     });
@@ -302,9 +302,9 @@ describe('Tappable', () => {
     });
     it('tracks mouse', async () => {
       render(<Tappable onClick={noop} data-testid="x" />);
-      await userEvent.hover(screen.getByTestId('x'));
+      await act(() => userEvent.hover(screen.getByTestId('x')));
       expect(isHovered()).toBe(true);
-      await userEvent.unhover(screen.getByTestId('x'));
+      await act(() => userEvent.unhover(screen.getByTestId('x')));
       expect(isHovered()).toBe(false);
     });
     describe('no hover when disabled', () => {
@@ -321,7 +321,7 @@ describe('Tappable', () => {
             <Tappable data-testid="c" onClick={noop} />
           </Tappable>,
         );
-        await userEvent.hover(screen.getByTestId('c'));
+        await act(() => userEvent.hover(screen.getByTestId('c')));
         expect(isHovered()).toBe(false);
         fireEvent.pointerLeave(screen.getByTestId('c'));
         expect(isHovered()).toBe(true);
@@ -333,7 +333,7 @@ describe('Tappable', () => {
               <Tappable onClick={noop} data-testid="c" disabled />
             </Tappable>,
           );
-          await userEvent.hover(screen.getByTestId('c'));
+          await act(() => userEvent.hover(screen.getByTestId('c')));
           expect(isHovered()).toBe(true);
         });
       });
