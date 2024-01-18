@@ -27,6 +27,7 @@ export const Chip = ({
   before,
   after,
   disabled,
+  readOnly,
   children,
   className,
   onFocus: onFocusProp,
@@ -70,6 +71,7 @@ export const Chip = ({
         focusVisibleClassName,
         className,
       )}
+      aria-readonly={readOnly}
       aria-disabled={disabled}
       onFocus={disabled ? undefined : handleFocus}
       onBlur={disabled ? undefined : handleBlur}
@@ -79,7 +81,7 @@ export const Chip = ({
         <Footnote className={styles['Chip__content']}>{children}</Footnote>
         {hasReactNode(after) && <div className={styles['Chip__after']}>{after}</div>}
       </div>
-      {removable && (
+      {!readOnly && removable && (
         <div className={styles['Chip__removable']}>
           <button
             tabIndex={-1} // [reason]: чтобы можно было выставлять состояние фокуса только программно через `*.focus()`

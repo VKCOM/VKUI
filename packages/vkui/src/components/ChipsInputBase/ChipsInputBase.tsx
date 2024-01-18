@@ -224,8 +224,9 @@ export const ChipsInputBase = <O extends ChipOption>({
                 'value': option.value,
                 'label': option.label,
                 'disabled': disabled,
+                'readOnly': readOnly,
                 'className': styles['ChipsInputBase__chip'],
-                'onRemove': disabled || readOnly ? undefined : handleChipRemove,
+                'onRemove': handleChipRemove,
                 // чтобы можно было легче найти этот чип в DOM
                 'data-index': index,
                 'data-value': option.value,

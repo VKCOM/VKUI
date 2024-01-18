@@ -12,6 +12,15 @@ describe('Chip', () => {
     a11y: false,
   });
 
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+  });
+
   it('removes chip on onRemove click', async () => {
     const onRemove = jest.fn();
 
@@ -24,5 +33,18 @@ describe('Chip', () => {
     await userEvent.click(screen.getByRole('button'));
 
     expect(onRemove).toHaveBeenCalled();
+  });
+
+  it('hides remove button if readOnly', async () => {
+    const result = render(<Chip value="white">Белый</Chip>);
+
+    expect(screen.getByRole('button')).toBeTruthy();
+
+    result.rerender(
+      <Chip value="white" readOnly>
+        Белый
+      </Chip>,
+    );
+    expect(() => screen.getByRole('button')).toThrow();
   });
 });

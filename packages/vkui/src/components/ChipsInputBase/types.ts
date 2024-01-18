@@ -27,6 +27,7 @@ export interface ChipProps
   value?: ChipOptionValue;
   removable?: boolean;
   disabled?: boolean;
+  readOnly?: boolean;
   removeLabel?: string;
   before?: React.ReactNode;
   after?: React.ReactNode;
