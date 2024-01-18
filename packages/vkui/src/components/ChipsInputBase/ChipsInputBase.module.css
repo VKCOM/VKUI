@@ -33,7 +33,7 @@
   appearance: none;
 }
 
-.ChipsInputBase__el:focus {
+.ChipsInputBase__el:not(:read-only):focus {
   min-inline-size: 64px;
 }
 

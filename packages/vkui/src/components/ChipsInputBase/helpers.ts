@@ -10,7 +10,8 @@ export const isValueLikeChipOptionObject = <O extends ChipOption>(v: O | ChipOpt
 /**
  * @private
  */
-export const isInputValueEmpty = (value: string) => value === DEFAULT_INPUT_VALUE;
+export const isInputValueEmpty = (input: HTMLInputElement | null) =>
+  input ? input.value === DEFAULT_INPUT_VALUE : true;
 
 /**
  * @private
@@ -47,8 +48,11 @@ export const getNextChipOptionIndexByNavigateToProp = (
   navigateTo: NavigateTo,
   length: number,
 ) => {
+  const FIRST_INDEX = 0;
   const LAST_INDEX = length - 1;
   switch (navigateTo) {
+    case 'first':
+      return FIRST_INDEX;
     case 'prev':
       const prevIndex = currentIndex - 1;
       return prevIndex < 0 ? LAST_INDEX : prevIndex;

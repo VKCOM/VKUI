@@ -88,7 +88,7 @@ export const Chip = ({
             onClick={disabled ? undefined : onRemoveWrapper}
           >
             <VisuallyHidden>
-              {removeLabel} {children}
+              &nbsp; {removeLabel} {children}
             </VisuallyHidden>
             <Icon16Cancel />
           </button>

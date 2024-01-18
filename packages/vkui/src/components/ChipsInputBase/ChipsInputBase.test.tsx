@@ -137,7 +137,33 @@ describe(ChipsInputBase, () => {
   );
 
   describe('focus', () => {
-    it('focuses input field on clicking on them', async () => {
+    it('focuses on input field after clicking to container', async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      const containerEl = result.getByRole('listbox').closest('div')!;
+      await userEvent.click(containerEl);
+      expect(result.getByTestId('chips-input')).toHaveFocus();
+    });
+
+    it('focuses to first chip after clicking to container', async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[RED_OPTION]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      const containerEl = result.getByRole('listbox').closest('div')!;
+      await userEvent.click(containerEl);
+      expect(result.getByRole('option', { name: withRegExp(RED_OPTION.label) })).toHaveFocus();
+    });
+
+    it('focuses on input field on clicking on them', async () => {
       const result = render(
         <ChipsInputBaseTest
           value={[RED_OPTION]}

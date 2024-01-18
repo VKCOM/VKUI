@@ -118,6 +118,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   inputValue: inputValueProp,
   defaultInputValue,
   disabled,
+  readOnly,
   getOptionValue = getOptionValueDefault,
   getOptionLabel = getOptionLabelDefault,
   getNewOptionData = getNewOptionDataDefault,
@@ -195,8 +196,10 @@ export const ChipsSelect = <Option extends ChipOption>({
       onFocus(event);
     }
 
-    setOpened(true);
-    setFocusedOptionIndex(null);
+    if (!readOnly) {
+      setOpened(true);
+      setFocusedOptionIndex(null);
+    }
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -206,7 +209,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     }
 
     // Не добавляем значение, если его нужно выбрать строго из списка
-    if (!event.defaultPrevented && !creatable) {
+    if (!readOnly && !event.defaultPrevented && !creatable) {
       event.preventDefault();
     }
   };
@@ -273,7 +276,7 @@ export const ChipsSelect = <Option extends ChipOption>({
       onKeyDown(event);
     }
 
-    if (event.defaultPrevented) {
+    if (event.defaultPrevented && readOnly) {
       /* istanbul ignore next */
       return;
     }
@@ -370,6 +373,7 @@ export const ChipsSelect = <Option extends ChipOption>({
       <ChipsInputBase
         {...restProps}
         disabled={disabled}
+        readOnly={readOnly}
         // FormFieldProps
         id={labelledbyId}
         getRootRef={rootRef}
