@@ -147,10 +147,11 @@ const DatePickerCustom = ({
 const DatePickerNative = ({
   min = { day: 0, month: 0, year: 0 },
   max = { day: 31, month: 12, year: 2100 },
+  monthNames,
+  popupDirection,
   dayPlaceholder,
   monthPlaceholder,
   yearPlaceholder,
-  popupDirection,
   defaultValue,
   day,
   month,
