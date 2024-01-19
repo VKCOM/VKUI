@@ -24,12 +24,37 @@ export interface SwitchProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Switch
  */
-export const Switch = ({ style, className, getRootRef, getRef, ...restProps }: SwitchProps) => {
+export const Switch = ({
+  style,
+  className,
+  getRootRef,
+  getRef,
+  checked: checkedProp,
+  ...restProps
+}: SwitchProps) => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'outside' });
 
+  const [localUncontrolledChecked, setLocalUncontrolledChecked] = React.useState(
+    Boolean(restProps.defaultChecked),
+  );
+  const isControlled = checkedProp !== undefined;
+
+  const syncUncontrolledCheckedStateOnClick = React.useCallback(
+    (e: React.MouseEvent<HTMLInputElement>) => {
+      if (isControlled) {
+        return;
+      }
+
+      const switchTarget = e.target as HTMLInputElement;
+      setLocalUncontrolledChecked(switchTarget.checked);
+    },
+    [isControlled],
+  );
+
+  const ariaCheckedState = isControlled ? checkedProp : localUncontrolledChecked;
   return (
     <label
       className={classNames(
@@ -47,9 +72,13 @@ export const Switch = ({ style, className, getRootRef, getRef, ...restProps }: S
     >
       <VisuallyHidden
         {...restProps}
+        {...(isControlled && { checked: checkedProp })}
         Component="input"
         getRootRef={getRef}
+        onClick={callMultiple(syncUncontrolledCheckedStateOnClick, restProps.onClick)}
         type="checkbox"
+        role="switch"
+        aria-checked={ariaCheckedState ? 'true' : 'false'}
         className={styles['Switch__self']}
       />
       <span aria-hidden className={styles['Switch__pseudo']} />
