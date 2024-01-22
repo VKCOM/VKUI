@@ -7,7 +7,7 @@ export function report(api: API, message: string) {
 
   const finalMessage = `${message} Advise ${chalk.white.bgBlue.bold('migration guide')} - ${
     pkg.homepage
-  }#/Migration \n\n`;
+  }#/Migrations \n\n`;
 
   try {
     report(finalMessage);
