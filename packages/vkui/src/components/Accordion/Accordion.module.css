@@ -7,6 +7,6 @@
 }
 
 .AccordionContent__in {
-  margin-block-start: -100%;
-  transition: margin-top 100ms ease-in-out;
+  max-block-size: 0;
+  transition: max-height 100ms ease-in-out;
 }
