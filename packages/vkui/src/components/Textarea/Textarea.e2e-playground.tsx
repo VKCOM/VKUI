@@ -40,6 +40,10 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
             'Музыка\nСпорт\nФотография\nПлавание\nПрограммирование\nПутешествия\nКниги\nСериалы\nФильмы\nНастольные игры',
           ],
         },
+        {
+          mode: ['plain'],
+          placeholder: ['placeholder'],
+        },
       ]}
     >
       {(props: TextareaProps) => <Textarea {...props} />}
