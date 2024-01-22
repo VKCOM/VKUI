@@ -3,6 +3,8 @@ import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
+import { Header } from '../Header/Header';
+import { Switch } from '../Switch/Switch';
 import { SimpleCell, SimpleCellProps } from './SimpleCell';
 
 const story: Meta<SimpleCellProps> = {
@@ -23,9 +25,20 @@ export const Current: Story = {
   },
   decorators: [
     (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
+      <div>
+        <Group header={<Header>Пример без свитча</Header>}>
+          <Component {...context.args} />
+        </Group>
+        <Group header={<Header>Пример со свитчом</Header>}>
+          <SimpleCell
+            Component="label"
+            subtitle="Уведомление получат друзья, которым может быть интересна ваша запись"
+            after={<Switch />}
+          >
+            Отправить уведомление
+          </SimpleCell>
+        </Group>
+      </div>
     ),
     withSinglePanel,
     withVKUILayout,
@@ -35,15 +48,27 @@ export const Current: Story = {
 export const WithParagraph: Story = {
   args: {
     onClick: () => void 0,
-    Component: 'p',
+    ChildComponent: 'p',
     children: 'Указать источник',
     subtitle: 'Уведомление получат друзья, которым может быть интересна ваша запись',
   },
   decorators: [
     (Component, context) => (
-      <Group>
-        <Component {...context.args} />
-      </Group>
+      <div>
+        <Group header={<Header>Пример без свитча</Header>}>
+          <Component {...context.args} />
+        </Group>
+        <Group header={<Header>Пример со свитчом</Header>}>
+          <SimpleCell
+            Component="label"
+            ChildComponent={context.args.ChildComponent}
+            subtitle="Уведомление получат друзья, которым может быть интересна ваша запись"
+            after={<Switch />}
+          >
+            Отправить уведомление
+          </SimpleCell>
+        </Group>
+      </div>
     ),
     withSinglePanel,
     withVKUILayout,

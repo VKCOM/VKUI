@@ -16,6 +16,7 @@ const sizeYClassNames = {
 };
 
 export interface SimpleCellOwnProps extends HasComponent {
+  ChildComponent?: React.ElementType;
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
@@ -96,7 +97,7 @@ export const SimpleCell = ({
   extraSubtitle,
   className,
   chevronSize = 'm',
-  Component = 'span',
+  ChildComponent = 'span',
   ...restProps
 }: SimpleCellProps) => {
   const platform = usePlatform();
@@ -130,7 +131,11 @@ export const SimpleCell = ({
           {badgeBeforeTitle && (
             <span className={styles['SimpleCell__badge']}>{badgeBeforeTitle}</span>
           )}
-          <Headline Component={Component} className={styles['SimpleCell__children']} weight="3">
+          <Headline
+            Component={ChildComponent}
+            className={styles['SimpleCell__children']}
+            weight="3"
+          >
             {children}
           </Headline>
           {hasReactNode(badgeAfterTitle) && (
@@ -143,7 +148,7 @@ export const SimpleCell = ({
               <span className={styles['SimpleCell__badge']}>{badgeBeforeSubtitle}</span>
             )}
             <Footnote
-              Component={Component}
+              Component={ChildComponent}
               normalize={false}
               className={classNames(styles['SimpleCell__text'], styles['SimpleCell__subtitle'])}
             >
