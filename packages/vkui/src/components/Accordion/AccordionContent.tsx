@@ -3,31 +3,25 @@ import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useDOM } from '../../lib/dom';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasRef, HasRootRef } from '../../types';
 import { AccordionContext } from './AccordionContext';
 import styles from './Accordion.module.css';
 
 /**
- * Функция расчета отрицательного margin, для скрытия контента.
+ * Функция расчета max-height, для скрытия или раскрытия контента.
  */
-function calcMarginTop(expanded: boolean, el: HTMLElement | null): string {
-  if (expanded) {
-    return `0px`;
+function calcMaxHeight(expanded: boolean, el: HTMLElement | null): string {
+  if (!expanded) {
+    return '0px';
   }
 
-  // В первый рендеринг нельзя узнать высоту элемента, поэтому прячем таким образом
+  // В первый рендеринг нельзя узнать высоту элемента
   if (el === null) {
-    return '-100%';
+    return 'inherit';
   }
 
-  return `${-el.clientHeight}px`;
-}
-
-/**
- * В первый рендеринг отключаем анимации.
- */
-function calcTransition(el: HTMLElement | null) {
-  return el === null ? 'none' : undefined;
+  return `${el.scrollHeight}px`;
 }
 
 /**
@@ -35,11 +29,12 @@ function calcTransition(el: HTMLElement | null) {
  */
 function useResizeContent(expanded: boolean, inRef: React.MutableRefObject<HTMLDivElement | null>) {
   const resize = () => {
-    inRef.current!.style.marginTop = calcMarginTop(expanded, inRef.current);
+    inRef.current!.style.maxHeight = calcMaxHeight(expanded, inRef.current);
   };
 
   const { window } = useDOM();
   useGlobalEventListener(window, 'resize', resize);
+  useIsomorphicLayoutEffect(resize, []);
 }
 
 /**
@@ -49,12 +44,11 @@ function useAccordionContent(
   expanded: boolean,
   inRef: React.MutableRefObject<HTMLDivElement | null>,
 ) {
-  const marginTop = calcMarginTop(expanded, inRef.current);
-  const transition = calcTransition(inRef.current);
+  const maxHeight = calcMaxHeight(expanded, inRef.current);
 
   useResizeContent(expanded, inRef);
 
-  return { marginTop, transition };
+  return { maxHeight };
 }
 
 export interface AccordionContentProps
