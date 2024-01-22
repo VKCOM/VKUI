@@ -3185,37 +3185,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@size-limit/file@npm:^11.0.1":
-  version: 11.0.1
-  resolution: "@size-limit/file@npm:11.0.1"
+"@size-limit/file@npm:^11.0.2":
+  version: 11.0.2
+  resolution: "@size-limit/file@npm:11.0.2"
   peerDependencies:
-    size-limit: 11.0.1
-  checksum: b6533e83faf0567ccb40df6a061f9dd3c57ddddbdabc3c6ff7f533c700bbc7c181ea61680c011c7179dba1d47ae3bd778b56ea9012dcdc093ce21dfeb81a9212
+    size-limit: 11.0.2
+  checksum: a566d41a0f96325556981cc6eafb4a2be1fbd59f89f979058dc2e566d2c847b1d9f931689c15a9e8de93adc6057d04a0886e6d66f4c6e54714533377a538587f
   languageName: node
   linkType: hard
 
-"@size-limit/webpack-css@npm:^11.0.1":
-  version: 11.0.1
-  resolution: "@size-limit/webpack-css@npm:11.0.1"
+"@size-limit/webpack-css@npm:^11.0.2":
+  version: 11.0.2
+  resolution: "@size-limit/webpack-css@npm:11.0.2"
   dependencies:
-    css-loader: ^6.8.1
+    css-loader: ^6.9.0
     css-minimizer-webpack-plugin: ^5.0.1
-    style-loader: ^3.3.3
+    style-loader: ^3.3.4
   peerDependencies:
-    size-limit: 11.0.1
-  checksum: 01505ae91a2a32cd485824b3a42c9dcc5f0ee688426a9f7077a85451ed03598d3dd100373d92358849cf9f154607d31084baf82c386879caa4f18ccaa0c6883d
+    size-limit: 11.0.2
+  checksum: ef19332643196e5a003b24481a971d9cf5655caf56163bb69fa14c0f459f0f58eb72f55f40601d177bda294a758c8daffe8c3f80358ba7c5f37961e2ae9736cb
   languageName: node
   linkType: hard
 
-"@size-limit/webpack@npm:^11.0.1":
-  version: 11.0.1
-  resolution: "@size-limit/webpack@npm:11.0.1"
+"@size-limit/webpack@npm:^11.0.2":
+  version: 11.0.2
+  resolution: "@size-limit/webpack@npm:11.0.2"
   dependencies:
     nanoid: ^5.0.4
     webpack: ^5.89.0
   peerDependencies:
-    size-limit: 11.0.1
-  checksum: 4b4e004b524dd9b47131d6aabe5a51f426a67bda161a174fe489a4aa5a3c3f24bc013f5e22eb4968985f0222cf7b32b10511472fed94cb7410606146f4260ef9
+    size-limit: 11.0.2
+  checksum: 80c1c7329530e9f67590f8de3ac7ce165dfc815a919794e7c34148e9c49f4f3de0a59ae1b743801264c5316eb17ed216519db9bcead2b5336a108f884340249f
   languageName: node
   linkType: hard
 
@@ -5394,9 +5394,9 @@ __metadata:
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0"
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0"
     "@project-tools/stylelint-bad-multiplication": "workspace:1.0.0"
-    "@size-limit/file": ^11.0.1
-    "@size-limit/webpack": ^11.0.1
-    "@size-limit/webpack-css": ^11.0.1
+    "@size-limit/file": ^11.0.2
+    "@size-limit/webpack": ^11.0.2
+    "@size-limit/webpack-css": ^11.0.2
     "@swc/cli": ^0.1.64
     "@swc/core": 1.3.103
     "@swc/jest": ^0.2.31
@@ -5455,7 +5455,7 @@ __metadata:
     react-dom: ^18.2.0
     semver: ^7.5.4
     shx: ^0.3.2
-    size-limit: ^11.0.1
+    size-limit: ^11.0.2
     style-loader: ^3.3.4
     stylelint: ^16.1.0
     stylelint-config-standard: ^36.0.0
@@ -7845,7 +7845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^6.7.1, css-loader@npm:^6.8.1":
+"css-loader@npm:^6.7.1":
   version: 6.9.0
   resolution: "css-loader@npm:6.9.0"
   dependencies:
@@ -7863,7 +7863,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^6.9.1":
+"css-loader@npm:^6.9.0, css-loader@npm:^6.9.1":
   version: 6.9.1
   resolution: "css-loader@npm:6.9.1"
   dependencies:
@@ -17391,9 +17391,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"size-limit@npm:^11.0.1":
-  version: 11.0.1
-  resolution: "size-limit@npm:11.0.1"
+"size-limit@npm:^11.0.2":
+  version: 11.0.2
+  resolution: "size-limit@npm:11.0.2"
   dependencies:
     bytes-iec: ^3.1.1
     chokidar: ^3.5.3
@@ -17403,7 +17403,7 @@ __metadata:
     picocolors: ^1.0.0
   bin:
     size-limit: bin.js
-  checksum: 090fe64fd26d793a31c6549f7d4d41cfe360f18b9b75742a9a8c23c3721ec9fff3ae5056c776c0c0b17c840972ee8653e49134d8e87492c1ce9c7016bef99d09
+  checksum: 41d5c4e1fbb5e8bd89bc6ea1a7ad16d584e2b5410524eeef2f7e40ca884a3ef107d1b6f904393fa30d51c42fed245fbadafc81872b29095e5cc42695309c48b5
   languageName: node
   linkType: hard
 
@@ -18076,7 +18076,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"style-loader@npm:^3.3.1, style-loader@npm:^3.3.3, style-loader@npm:^3.3.4":
+"style-loader@npm:^3.3.1, style-loader@npm:^3.3.4":
   version: 3.3.4
   resolution: "style-loader@npm:3.3.4"
   peerDependencies:
