@@ -76,7 +76,7 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@floating-ui/react-dom": "^2.0.5",
+    "@floating-ui/react-dom": "^2.0.6",
     "@swc/helpers": "^0.5.3"
   },
   "devDependencies": {
