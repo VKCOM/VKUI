@@ -18,7 +18,7 @@ export interface TextareaProps
     HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
     Pick<React.CSSProperties, 'maxHeight'>,
-    Pick<FormFieldProps, 'status'> {
+    Pick<FormFieldProps, 'status' | 'after'> {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   defaultValue?: string;
@@ -40,6 +40,7 @@ export const Textarea = ({
   status,
   onChange: onChangeProp,
   value: valueProp,
+  after,
   ...restProps
 }: TextareaProps) => {
   const [value, onChange] = useEnsuredControl({
@@ -70,6 +71,7 @@ export const Textarea = ({
     <FormField
       className={classNames(
         styles['Textarea'],
+        'vkuiInternalTextarea',
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
@@ -77,6 +79,7 @@ export const Textarea = ({
       getRootRef={getRootRef}
       disabled={restProps.disabled}
       status={status}
+      after={after}
     >
       <Text
         {...restProps}
