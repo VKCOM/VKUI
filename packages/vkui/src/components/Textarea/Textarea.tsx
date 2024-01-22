@@ -3,7 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { HasRef, HasRootRef } from '../../types';
+import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { Text } from '../Typography/Text/Text';
 import styles from './Textarea.module.css';
@@ -18,6 +18,7 @@ export interface TextareaProps
     HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
     Pick<React.CSSProperties, 'maxHeight'>,
+    HasAlign,
     Pick<FormFieldProps, 'status'> {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
@@ -40,6 +41,7 @@ export const Textarea = ({
   status,
   onChange: onChangeProp,
   value: valueProp,
+  align,
   ...restProps
 }: TextareaProps) => {
   const [value, onChange] = useEnsuredControl({
@@ -71,6 +73,8 @@ export const Textarea = ({
       className={classNames(
         styles['Textarea'],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
+        align === 'right' && styles['Textarea--align-right'],
+        align === 'center' && styles['Textarea--align-center'],
         className,
       )}
       style={style}
