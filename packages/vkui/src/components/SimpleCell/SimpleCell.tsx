@@ -96,6 +96,7 @@ export const SimpleCell = ({
   extraSubtitle,
   className,
   chevronSize = 'm',
+  Component = 'span',
   ...restProps
 }: SimpleCellProps) => {
   const platform = usePlatform();
@@ -129,7 +130,7 @@ export const SimpleCell = ({
           {badgeBeforeTitle && (
             <span className={styles['SimpleCell__badge']}>{badgeBeforeTitle}</span>
           )}
-          <Headline Component="span" className={styles['SimpleCell__children']} weight="3">
+          <Headline Component={Component} className={styles['SimpleCell__children']} weight="3">
             {children}
           </Headline>
           {hasReactNode(badgeAfterTitle) && (
@@ -142,6 +143,7 @@ export const SimpleCell = ({
               <span className={styles['SimpleCell__badge']}>{badgeBeforeSubtitle}</span>
             )}
             <Footnote
+              Component={Component}
               normalize={false}
               className={classNames(styles['SimpleCell__text'], styles['SimpleCell__subtitle'])}
             >
