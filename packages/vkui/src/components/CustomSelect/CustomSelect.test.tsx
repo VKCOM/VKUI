@@ -1061,7 +1061,6 @@ describe('CustomSelect', () => {
   });
 
   it('native select is reachable via nativeSelectTestId', () => {
-    // Это позволяет скринридеру зачитывать placeholder, если опция не выбрана.
     render(
       <CustomSelect
         nativeSelectTestId="nativeSelectTestId"
@@ -1077,5 +1076,28 @@ describe('CustomSelect', () => {
 
     const nativeSelect = screen.getByTestId<HTMLSelectElement>('nativeSelectTestId');
     expect(nativeSelect.value).toBe('1');
+  });
+
+  it('passes required prop to native select, not input', () => {
+    render(
+      <CustomSelect
+        nativeSelectTestId="nativeSelectTestId"
+        data-testid="inputTestId"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        placeholder="Не выбрано"
+        allowClearButton
+        defaultValue={1}
+        required
+      />,
+    );
+
+    const nativeSelect = screen.getByTestId<HTMLSelectElement>('nativeSelectTestId');
+    expect(nativeSelect.required).toBeTruthy();
+
+    const input = screen.getByTestId<HTMLInputElement>('inputTestId');
+    expect(input.required).toBeFalsy();
   });
 });
