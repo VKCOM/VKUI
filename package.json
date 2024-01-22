@@ -35,7 +35,7 @@
     "@vkontakte/prettier-config": "^0.1.0",
     "@vkontakte/stylelint-config": "^4.0.1",
     "@vkontakte/vkui-tokens": "4.41.4",
-    "autoprefixer": "^10.4.16",
+    "autoprefixer": "^10.4.17",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.2",
     "css-loader": "^6.9.0",
