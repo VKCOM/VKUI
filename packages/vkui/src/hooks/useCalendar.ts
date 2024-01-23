@@ -86,25 +86,28 @@ export function useCalendar({
   );
 
   const isMonthDisabled = React.useCallback(
-    (month: number): boolean => {
+    (month: number, year?: number): boolean => {
       const now = new Date();
-      const currentYear = viewDate.getFullYear();
-      const minMonth = minDateTime?.getMonth() || 0;
-      const maxMonth = maxDateTime?.getMonth() || 11;
+      year = year || viewDate.getFullYear();
+      const minMonth = minDateTime ? minDateTime.getMonth() : 0;
+      const maxMonth = maxDateTime ? maxDateTime.getMonth() : 11;
       const minYear = minDateTime?.getFullYear() || DEFAULT_MIN_YEAR;
       const maxYear = maxDateTime?.getFullYear() || DEFAULT_MAX_YEAR;
 
       let isDisabled =
-        currentYear === minYear || currentYear === maxYear
-          ? (currentYear === minYear && minMonth > month) ||
-            (currentYear === maxYear && month > maxMonth)
+        year === minYear || year === maxYear
+          ? (year === minYear && minMonth > month) || (year === maxYear && month > maxMonth)
           : false;
 
       if (disableFuture) {
-        isDisabled = isDisabled || (currentYear >= now.getFullYear() && month > now.getMonth());
+        isDisabled =
+          isDisabled ||
+          (year === now.getFullYear() ? month > now.getMonth() : year > now.getFullYear());
       }
       if (disablePast) {
-        isDisabled = isDisabled || (currentYear <= now.getFullYear() && month < now.getMonth());
+        isDisabled =
+          isDisabled ||
+          (year === now.getFullYear() ? month < now.getMonth() : year < now.getFullYear());
       }
 
       return isDisabled;

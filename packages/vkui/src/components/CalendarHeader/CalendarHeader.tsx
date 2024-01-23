@@ -39,7 +39,7 @@ export interface CalendarHeaderProps
   nextMonthIcon?: React.ReactNode;
   prevMonthProps?: ArrowMonthProps;
   nextMonthProps?: ArrowMonthProps;
-  isMonthDisabled?: (monthNumber: number) => boolean;
+  isMonthDisabled?: (monthNumber: number, year?: number) => boolean;
   isYearDisabled?: (yearNumber: number) => boolean;
   onChange: (viewDate: Date) => void;
   /**
@@ -126,14 +126,23 @@ export const CalendarHeader = ({
   const { className: prevMonthClassName, ...restPrevMonthProps } = prevMonthProps;
   const { className: nextMonthClassName, ...restNextMonthProps } = nextMonthProps;
 
-  const nextMonthHidden =
-    nextMonthHiddenProp ||
-    (currentMonth === 11 && currentYear === DEFAULT_MAX_YEAR) ||
-    (isMonthDisabled && isMonthDisabled(currentMonth === 11 ? 0 : currentMonth + 1));
-  const prevMonthHidden =
-    prevMonthHiddenProp ||
-    (currentMonth === 0 && currentYear === DEFAULT_MIN_YEAR) ||
-    (isMonthDisabled && isMonthDisabled(currentMonth === 0 ? 11 : currentMonth - 1));
+  let nextMonthHidden =
+    nextMonthHiddenProp || (currentMonth === 11 && currentYear === DEFAULT_MAX_YEAR);
+  if (isMonthDisabled && !nextMonthHidden) {
+    nextMonthHidden = isMonthDisabled(
+      currentMonth === 11 ? 0 : currentMonth + 1,
+      currentMonth === 11 ? Math.min(currentYear + 1, DEFAULT_MAX_YEAR) : currentYear,
+    );
+  }
+
+  let prevMonthHidden =
+    prevMonthHiddenProp || (currentMonth === 0 && currentYear === DEFAULT_MIN_YEAR);
+  if (isMonthDisabled && !prevMonthHidden) {
+    prevMonthHidden = isMonthDisabled(
+      currentMonth === 0 ? 11 : currentMonth - 1,
+      currentMonth === 0 ? Math.max(currentYear - 1, DEFAULT_MIN_YEAR) : currentYear,
+    );
+  }
 
   return (
     <RootComponent baseClassName={styles['CalendarHeader']} {...restProps}>
