@@ -4,7 +4,11 @@ import { isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
-import { contains as checkTargetIsInputEl } from '../../lib/dom';
+import {
+  contains as checkTargetIsInputEl,
+  contains,
+  getActiveElementByAnotherElement,
+} from '../../lib/dom';
 import { FormField } from '../FormField/FormField';
 import { Text } from '../Typography/Text/Text';
 import { DEFAULT_INPUT_VALUE, DEFAULT_VALUE, renderChipDefault } from './constants';
@@ -58,11 +62,10 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const valueLength = value.length;
   const withPlaceholder = valueLength === 0;
-  const isDisabled = disabled || readOnly;
-  const [chipFocusedIndex, setChipFocusedIndex] = React.useState(0);
+  const [lastFocusedChipOptionIndex, setLastFocusedChipOptionIndex] = React.useState(0);
 
   const resetChipOptionFocusToInputEl = (inputEl: HTMLInputElement) => {
-    setChipFocusedIndex(0);
+    setLastFocusedChipOptionIndex(0);
     inputEl.focus();
   };
 
@@ -76,14 +79,13 @@ export const ChipsInputBase = <O extends ChipOption>({
     const foundEl = listboxEl.querySelector<HTMLElement>(`[data-index="${index}"]`);
 
     if (foundEl) {
-      setChipFocusedIndex(index);
+      setLastFocusedChipOptionIndex(index);
       foundEl.focus();
-    } else {
-      setChipFocusedIndex(0);
     }
   };
 
   const removeChipOption = (o: O | ChipOptionValue, index: number) => {
+    /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
     if (!inputRef.current || !listboxRef.current) {
       return;
     }
@@ -103,20 +105,18 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const handleListboxKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const targetEl = event.target;
-    if (
-      event.defaultPrevented ||
-      !inputRef.current ||
-      !listboxRef.current ||
-      !isHTMLElement(targetEl)
-    ) {
+    /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
+    if (event.defaultPrevented || !listboxRef.current || !isHTMLElement(targetEl)) {
       return;
     }
 
     switch (event.key) {
       case Keys.ENTER: {
         if (
+          !readOnly &&
           checkTargetIsInputEl(targetEl, inputRef.current) &&
-          !isInputValueEmpty(inputRef.current.value)
+          inputRef.current &&
+          !isInputValueEmpty(inputRef.current)
         ) {
           event.preventDefault();
           onAddChipOption(inputRef.current.value);
@@ -125,14 +125,14 @@ export const ChipsInputBase = <O extends ChipOption>({
       }
       case Keys.DELETE:
       case Keys.BACKSPACE: {
-        if (valueLength > 0) {
+        if (!readOnly && valueLength > 0) {
           if (!checkTargetIsInputEl(targetEl, inputRef.current)) {
             event.preventDefault();
             removeChipOption(
               getChipOptionValueByHTMLElement(targetEl),
               getChipOptionIndexByHTMLElement(targetEl),
             );
-          } else if (event.key === Keys.BACKSPACE && isInputValueEmpty(inputRef.current.value)) {
+          } else if (event.key === Keys.BACKSPACE && isInputValueEmpty(inputRef.current)) {
             event.preventDefault();
             moveFocusToChipOption(
               getChipOptionIndexByHTMLElement(targetEl),
@@ -176,6 +176,18 @@ export const ChipsInputBase = <O extends ChipOption>({
     removeChipOption(v, getChipOptionIndexByValueProp(v, value));
   };
 
+  const handleRootClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (contains(event.currentTarget, getActiveElementByAnotherElement(event.currentTarget))) {
+      return;
+    }
+
+    if (valueLength > 0 && listboxRef.current) {
+      moveFocusToChipOption(0, 'first', listboxRef.current);
+    } else if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <FormField
       Component="div"
@@ -187,6 +199,7 @@ export const ChipsInputBase = <O extends ChipOption>({
       status={status}
       mode={mode}
       className={className}
+      onClick={disabled ? undefined : handleRootClick}
     >
       <div
         className={classNames(
@@ -200,7 +213,7 @@ export const ChipsInputBase = <O extends ChipOption>({
         aria-orientation="horizontal"
         aria-disabled={disabled}
         aria-readonly={readOnly}
-        onKeyDown={isDisabled ? undefined : handleListboxKeyDown}
+        onKeyDown={disabled ? undefined : handleListboxKeyDown}
       >
         {value.map((option, index) => (
           <React.Fragment key={`${typeof option.value}-${option.label}`}>
@@ -210,13 +223,14 @@ export const ChipsInputBase = <O extends ChipOption>({
                 'value': option.value,
                 'label': option.label,
                 'disabled': disabled,
+                'readOnly': readOnly,
                 'className': styles['ChipsInputBase__chip'],
                 'onRemove': handleChipRemove,
                 // чтобы можно было легче найти этот чип в DOM
                 'data-index': index,
                 'data-value': option.value,
                 // для a11y
-                'tabIndex': chipFocusedIndex === index ? 0 : -1,
+                'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
                 'role': 'option',
                 'aria-selected': true,
                 'aria-posinset': index + 1,

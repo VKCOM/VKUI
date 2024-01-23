@@ -104,6 +104,7 @@ export const useChipsInput = <O extends ChipOption>({
   );
 
   const clearInput = React.useCallback(() => {
+    /* istanbul ignore if */
     if (!inputRef.current) {
       return;
     }
