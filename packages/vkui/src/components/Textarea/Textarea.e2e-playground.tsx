@@ -34,6 +34,12 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
         {
           status: ['error', 'valid'],
         },
+        {
+          align: ['center', 'right'],
+          defaultValue: [
+            'Музыка\nСпорт\nФотография\nПлавание\nПрограммирование\nПутешествия\nКниги\nСериалы\nФильмы\nНастольные игры',
+          ],
+        },
       ]}
     >
       {(props: TextareaProps) => <Textarea {...props} />}
