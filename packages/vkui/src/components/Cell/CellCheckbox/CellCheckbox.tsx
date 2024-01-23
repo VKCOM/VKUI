@@ -2,6 +2,8 @@ import * as React from 'react';
 import {
   Icon20CheckBoxOff,
   Icon20CheckBoxOn,
+  Icon20CheckCircleOff,
+  Icon20CheckCircleOn,
   Icon24CheckBoxOff,
   Icon24CheckBoxOn,
   Icon24CheckCircleOff,
@@ -21,6 +23,14 @@ const CheckBoxOn = () => (
 
 const CheckBoxOff = () => (
   <AdaptiveIconRenderer IconCompact={Icon20CheckBoxOff} IconRegular={Icon24CheckBoxOff} />
+);
+
+const CheckCircleOn = () => (
+  <AdaptiveIconRenderer IconCompact={Icon20CheckCircleOn} IconRegular={Icon24CheckCircleOn} />
+);
+
+const CheckCircleOff = () => (
+  <AdaptiveIconRenderer IconCompact={Icon20CheckCircleOff} IconRegular={Icon24CheckCircleOff} />
 );
 
 function useTypeIcon(type: NonNullable<CellCheckboxProps['type']>) {
@@ -58,8 +68,8 @@ export const CellCheckbox = ({
 }: CellCheckboxProps) => {
   const typeIcon = useTypeIcon(type);
 
-  const IconOff = typeIcon === 'circle' ? Icon24CheckCircleOff : CheckBoxOff;
-  const IconOn = typeIcon === 'circle' ? Icon24CheckCircleOn : CheckBoxOn;
+  const IconOff = typeIcon === 'circle' ? CheckCircleOff : CheckBoxOff;
+  const IconOn = typeIcon === 'circle' ? CheckCircleOn : CheckBoxOn;
 
   return (
     <span className={classNames(styles['CellCheckbox'], className)} style={style} ref={getRootRef}>
