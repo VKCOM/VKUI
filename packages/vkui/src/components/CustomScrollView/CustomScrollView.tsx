@@ -12,13 +12,14 @@ import styles from './CustomScrollView.module.css';
 
 function hasPointerClassName(hasPointer: boolean | undefined) {
   switch (hasPointer) {
-    case undefined:
-      return styles['CustomScrollView--hasPointer-none'];
+    case true:
+      return styles['CustomScrollView--hasPointer-true'];
     case false:
       return styles['CustomScrollView--hasPointer-false'];
+    case undefined:
+    default:
+      return styles['CustomScrollView--hasPointer-none'];
   }
-
-  return styles['CustomScrollView--hasPointer-true'];
 }
 
 export interface CustomScrollViewProps
