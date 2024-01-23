@@ -118,16 +118,17 @@ export const ChipsSelect = <Option extends ChipOption>({
   inputValue: inputValueProp,
   defaultInputValue,
   disabled,
+  readOnly,
   getOptionValue = getOptionValueDefault,
   getOptionLabel = getOptionLabelDefault,
   getNewOptionData = getNewOptionDataDefault,
   renderChip = renderChipDefault,
   renderOption = renderOptionDefault,
   onChange,
-  onFocus,
+  onFocus: onFocusProp,
   onInputChange: onInputChangeProp,
-  onBlur,
-  onKeyDown,
+  onBlur: onBlurProp,
+  onKeyDown: onKeyDownProp,
   ...restProps
 }: ChipsSelectProps<Option>) => {
   const {
@@ -190,21 +191,23 @@ export const ChipsSelect = <Option extends ChipOption>({
   const dropdownScrollBoxRef = React.useRef<HTMLDivElement>(null);
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (onFocus) {
-      onFocus(event);
+    if (onFocusProp) {
+      onFocusProp(event);
     }
 
-    setOpened(true);
-    setFocusedOptionIndex(null);
+    if (!readOnly) {
+      setOpened(true);
+      setFocusedOptionIndex(null);
+    }
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (onBlur) {
-      onBlur(event);
+    if (onBlurProp) {
+      onBlurProp(event);
     }
 
     // Не добавляем значение, если его нужно выбрать строго из списка
-    if (!event.defaultPrevented && !creatable) {
+    if (!readOnly && !event.defaultPrevented && !creatable) {
       event.preventDefault();
     }
   };
@@ -215,6 +218,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     const dropdown = dropdownScrollBoxRef.current;
     const item = chipsSelectOptions[index];
 
+    /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
     if (!item || !dropdown) {
       return;
     }
@@ -224,6 +228,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     const itemTop = item.offsetTop;
     const itemHeight = item.offsetHeight;
 
+    /* istanbul ignore next: нет представления как воспроизвести */
     if (center) {
       dropdown.scrollTop = itemTop - dropdownHeight / 2 + itemHeight / 2;
     } else if (itemTop + itemHeight > dropdownHeight + scrollTop) {
@@ -243,6 +248,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     }
 
     if (index === oldIndex) {
+      /* istanbul ignore next: нет представления как воспроизвести */
       return;
     }
 
@@ -263,11 +269,11 @@ export const ChipsSelect = <Option extends ChipOption>({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (onKeyDown) {
-      onKeyDown(event);
+    if (onKeyDownProp) {
+      onKeyDownProp(event);
     }
 
-    if (event.defaultPrevented) {
+    if (event.defaultPrevented || readOnly) {
       return;
     }
 
@@ -336,7 +342,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   }, [options, focusedOptionIndex, setFocusedOption]);
 
   const onDropdownPlacementChange = React.useCallback((placement: Placement) => {
-    // console.log(placement);
+    /* istanbul ignore next:  */
     if (placement.startsWith('top')) {
       setDropdownVerticalPlacement('top');
     } else if (placement.startsWith('bottom')) {
@@ -363,6 +369,7 @@ export const ChipsSelect = <Option extends ChipOption>({
       <ChipsInputBase
         {...restProps}
         disabled={disabled}
+        readOnly={readOnly}
         // FormFieldProps
         id={labelledbyId}
         getRootRef={rootRef}

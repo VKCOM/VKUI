@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { act, render, within } from '@testing-library/react';
 import { baselineComponent, userEvent, withRegExp } from '../../testing/utils';
 import { ChipsInputBase } from './ChipsInputBase';
-import type { ChipOption, ChipsInputBasePrivateProps } from './types';
+import type { ChipsInputBasePrivateProps } from './types';
 
 const ChipsInputBaseTest = ({
   inputValue: inputValueProp,
@@ -22,10 +22,13 @@ const ChipsInputBaseTest = ({
   );
 };
 
-const TEST_OPTION = { value: 'red', label: 'Красный' };
-const chipsInputValue: ChipOption[] = [TEST_OPTION];
+const RED_OPTION = { value: 'red', label: 'Красный' };
 
-describe('ChipsInputBase', () => {
+const BLUE_OPTION = { value: 'blue', label: 'Синий' };
+
+const YELLOW_OPTION = { value: 'yellow', label: 'Жёлтый' };
+
+describe(ChipsInputBase, () => {
   baselineComponent(ChipsInputBaseTest, {
     // доступность должна быть реализована в обёртках над ChipsInputBase
     a11y: false,
@@ -49,7 +52,7 @@ describe('ChipsInputBase', () => {
   it('renders values passed to it', () => {
     const result = render(
       <ChipsInputBaseTest
-        value={chipsInputValue}
+        value={[RED_OPTION]}
         onAddChipOption={onAddChipOption}
         onRemoveChipOption={onRemoveChipOption}
       />,
@@ -57,7 +60,7 @@ describe('ChipsInputBase', () => {
     expect(result.queryByText('Красный')).not.toBeNull();
   });
 
-  it('adds chips', async () => {
+  it('adds chip', async () => {
     const result = render(
       <ChipsInputBaseTest
         value={[]}
@@ -65,82 +68,11 @@ describe('ChipsInputBase', () => {
         onRemoveChipOption={onRemoveChipOption}
       />,
     );
-    await userEvent.type(result.getByTestId('chips-input'), 'Красный{enter}');
+    await act(() => userEvent.type(result.getByTestId('chips-input'), 'Красный{enter}'));
     expect(onAddChipOption).toHaveBeenCalledWith('Красный');
   });
 
-  it('focuses to chip on hitting backspace', async () => {
-    const result = render(
-      <ChipsInputBaseTest
-        value={chipsInputValue}
-        inputValue="0"
-        onAddChipOption={onAddChipOption}
-        onRemoveChipOption={onRemoveChipOption}
-      />,
-    );
-    const chipsInputLocator = result.getByTestId('chips-input');
-    await userEvent.type(chipsInputLocator, '{backspace}');
-    expect(chipsInputLocator).toHaveFocus();
-    await userEvent.type(chipsInputLocator, '{backspace}');
-    expect(chipsInputLocator.previousSibling).toHaveFocus();
-  });
-
-  it.each(['delete', 'backspace'])(
-    'does not delete chips on hitting "%s" key in readonly mode',
-    async (type) => {
-      const result = render(
-        <ChipsInputBaseTest
-          readOnly
-          value={chipsInputValue}
-          onAddChipOption={onAddChipOption}
-          onRemoveChipOption={onRemoveChipOption}
-        />,
-      );
-      const chipEl = result.getByRole('option', { name: withRegExp(TEST_OPTION.label) });
-      await userEvent.click(chipEl);
-      await userEvent.type(chipEl, `{${type}}`);
-      expect(onRemoveChipOption).not.toHaveBeenCalled();
-    },
-  );
-
-  it('focuses ChipsInputBase on surrounding container click', async () => {
-    const result = render(
-      <ChipsInputBaseTest
-        value={chipsInputValue}
-        onAddChipOption={onAddChipOption}
-        onRemoveChipOption={onRemoveChipOption}
-      />,
-    );
-    await userEvent.click(result.getByTestId('chips-input'));
-    expect(result.getByTestId('chips-input')).toHaveFocus();
-  });
-
-  it('focuses on chip after click', async () => {
-    const result = render(
-      <ChipsInputBaseTest
-        value={chipsInputValue}
-        onAddChipOption={onAddChipOption}
-        onRemoveChipOption={onRemoveChipOption}
-      />,
-    );
-    const chipEl = result.getByRole('option', { name: withRegExp(TEST_OPTION.label) });
-    await userEvent.click(chipEl);
-    expect(chipEl).toHaveFocus();
-  });
-
-  it.todo('focuses on input field after removing only one chip');
-
-  it.todo('focuses on nearest chip after removing one of chip');
-
-  it.todo('focuses on last focused chip after focus to component');
-
-  it.todo('focuses on last focused chip after enter to component with hitting "tab" key');
-
-  it.todo('focuses on last focused chip after hitting "shift + tab" key');
-
-  it.todo('navigates between chip with arrow buttons');
-
-  it('add value on blur event if addOnBlur=true', async () => {
+  it('adds value on blur event if `addOnBlur` is `true`', async () => {
     const result = render(
       <ChipsInputBaseTest
         addOnBlur
@@ -149,8 +81,247 @@ describe('ChipsInputBase', () => {
         onRemoveChipOption={onRemoveChipOption}
       />,
     );
-    await userEvent.type(result.getByTestId('chips-input'), 'Красный');
-    await userEvent.click(document.body);
+    await act(() => userEvent.type(result.getByTestId('chips-input'), 'Красный'));
+    await act(() => userEvent.click(document.body));
     expect(onAddChipOption).toHaveBeenCalledWith('Красный');
   });
+
+  it('removes chip with icon button', async () => {
+    const result = render(
+      <ChipsInputBaseTest
+        value={[RED_OPTION]}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+      />,
+    );
+    const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
+    const removeButton = within(chipRedLocator).getByRole('button');
+    await act(() => userEvent.click(removeButton));
+    expect(onRemoveChipOption).toHaveBeenCalledWith(RED_OPTION.value);
+  });
+
+  it.each(['Delete', 'Backspace'])('removes chip when pressing {%s}', async (type) => {
+    const result = render(
+      <ChipsInputBaseTest
+        value={[RED_OPTION]}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+      />,
+    );
+    await act(() => userEvent.tab());
+    await act(() =>
+      userEvent.type(
+        result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
+        `{${type}}`,
+      ),
+    );
+    expect(onRemoveChipOption).toHaveBeenCalledWith(RED_OPTION.value);
+  });
+
+  it.each(['Delete', 'Backspace'])(
+    'does not delete chips when pressing {%s} in readonly mode',
+    async (type) => {
+      const result = render(
+        <ChipsInputBaseTest
+          readOnly
+          value={[RED_OPTION]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      await act(() => userEvent.tab());
+      await act(() =>
+        userEvent.type(
+          result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
+          `{${type}}`,
+        ),
+      );
+      expect(onRemoveChipOption).not.toHaveBeenCalled();
+    },
+  );
+
+  describe('focus', () => {
+    it('focuses on input field after clicking to container', async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      const containerEl = result.getByRole('listbox').closest('div')!;
+      await act(() => userEvent.click(containerEl));
+      expect(result.getByTestId('chips-input')).toHaveFocus();
+    });
+
+    it('focuses to first chip after clicking to container', async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[RED_OPTION]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      const containerEl = result.getByRole('listbox').closest('div')!;
+      await act(() => userEvent.click(containerEl));
+      expect(result.getByRole('option', { name: withRegExp(RED_OPTION.label) })).toHaveFocus();
+    });
+
+    it('focuses on input field on clicking on them', async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[RED_OPTION]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      await act(() => userEvent.click(result.getByTestId('chips-input')));
+      expect(result.getByTestId('chips-input')).toHaveFocus();
+    });
+
+    it('focuses on chip after clicking on them', async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[RED_OPTION]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      const chipLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
+      await act(() => userEvent.click(chipLocator));
+      expect(chipLocator).toHaveFocus();
+    });
+
+    it('focuses to last chip when pressing {Backspace} in input field', async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[RED_OPTION]}
+          inputValue="0"
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      const chipsInputLocator = result.getByTestId('chips-input');
+
+      await act(() => userEvent.type(chipsInputLocator, '{Backspace}'));
+      expect(chipsInputLocator).toHaveFocus();
+
+      await act(() => userEvent.type(chipsInputLocator, '{Backspace}'));
+      expect(chipsInputLocator.previousSibling).toHaveFocus();
+    });
+
+    it('navigates between chips with arrow buttons (it should be cycle)', async () => {
+      const value = [RED_OPTION, BLUE_OPTION, YELLOW_OPTION];
+      const result = render(
+        <ChipsInputBaseTest
+          value={[RED_OPTION, BLUE_OPTION, YELLOW_OPTION]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      const [chipRedLocator, chipBlueLocator, chipYellowLocator] = value.map(({ label }) =>
+        result.getByRole('option', { name: withRegExp(label) }),
+      );
+
+      await act(() => userEvent.type(chipRedLocator, '{ArrowRight}'));
+      expect(chipBlueLocator).toHaveFocus();
+
+      await act(() => userEvent.type(chipBlueLocator, '{ArrowRight}'));
+      expect(chipYellowLocator).toHaveFocus();
+
+      await act(() => userEvent.type(chipYellowLocator, '{ArrowRight}'));
+      expect(chipRedLocator).toHaveFocus();
+
+      await act(() => userEvent.type(chipRedLocator, '{ArrowLeft}'));
+      expect(chipYellowLocator).toHaveFocus();
+
+      await act(() => userEvent.type(chipYellowLocator, '{ArrowLeft}'));
+      expect(chipBlueLocator).toHaveFocus();
+
+      await act(() => userEvent.type(chipBlueLocator, '{ArrowRight}'));
+      expect(chipYellowLocator).toHaveFocus();
+    });
+
+    it('navigates with {Tab}', async () => {
+      const value = [RED_OPTION, BLUE_OPTION, YELLOW_OPTION];
+      const result = render(
+        <ChipsInputBaseTest
+          value={[RED_OPTION, BLUE_OPTION, YELLOW_OPTION]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      const chipsInputLocator = result.getByTestId('chips-input');
+      const [chipRedLocator, chipBlueLocator] = value.map(({ label }) =>
+        result.getByRole('option', { name: withRegExp(label) }),
+      );
+
+      await act(() => userEvent.tab());
+      expect(chipRedLocator).toHaveFocus();
+
+      await act(() => userEvent.tab());
+      expect(chipsInputLocator).toHaveFocus();
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(chipRedLocator).toHaveFocus();
+
+      await act(() => userEvent.type(chipRedLocator, '{ArrowRight}'));
+      expect(chipBlueLocator).toHaveFocus();
+
+      await act(() => userEvent.tab());
+      expect(chipsInputLocator).toHaveFocus();
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(chipBlueLocator).toHaveFocus();
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.body).toHaveFocus();
+
+      await act(() => userEvent.tab());
+      expect(chipBlueLocator).toHaveFocus();
+    });
+
+    it.each([
+      { value: [RED_OPTION], description: 'input field' },
+      { value: [RED_OPTION, BLUE_OPTION, YELLOW_OPTION], description: 'next chip' },
+      { value: [YELLOW_OPTION, RED_OPTION, BLUE_OPTION], description: 'next chip (last)' },
+      { value: [YELLOW_OPTION, BLUE_OPTION, RED_OPTION], description: 'prev chip' },
+    ])('focuses on $description after remove chip', async ({ value }) => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={value}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+        />,
+      );
+      const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
+      await act(() => userEvent.type(chipRedLocator, '{Delete}'));
+      const nextLocatorWithFocus =
+        value.length <= 1
+          ? result.getByTestId('chips-input')
+          : result.getByRole('option', { name: withRegExp(BLUE_OPTION.label) });
+      expect(nextLocatorWithFocus).toHaveFocus();
+    });
+  });
+
+  it.each([{ readOnly: false }, { readOnly: true }])(
+    'calls user events (`readOnly` prop is `$readOnly`)',
+    async ({ readOnly }) => {
+      const onBlur = jest.fn();
+      render(
+        <ChipsInputBaseTest
+          readOnly={readOnly}
+          value={[]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+          onBlur={onBlur}
+        />,
+      );
+
+      await act(() => userEvent.tab());
+      await act(() => userEvent.tab({ shift: true }));
+
+      expect(onBlur).toHaveBeenCalled();
+    },
+  );
 });

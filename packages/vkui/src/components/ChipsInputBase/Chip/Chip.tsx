@@ -27,6 +27,7 @@ export const Chip = ({
   before,
   after,
   disabled,
+  readOnly,
   children,
   className,
   onFocus: onFocusProp,
@@ -38,17 +39,17 @@ export const Chip = ({
   const focusVisibleClassName = useFocusVisibleClassName({ focusVisible });
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    onFocus(event);
     if (onFocusProp) {
       onFocusProp(event);
     }
+    onFocus(event);
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    onBlur(event);
     if (onBlurProp) {
       onBlurProp(event);
     }
+    onBlur(event);
   };
 
   const onRemoveWrapper = React.useCallback(
@@ -68,6 +69,7 @@ export const Chip = ({
         focusVisibleClassName,
         className,
       )}
+      aria-readonly={readOnly}
       aria-disabled={disabled}
       onFocus={disabled ? undefined : handleFocus}
       onBlur={disabled ? undefined : handleBlur}
@@ -77,7 +79,7 @@ export const Chip = ({
         <Footnote className={styles['Chip__content']}>{children}</Footnote>
         {hasReactNode(after) && <div className={styles['Chip__after']}>{after}</div>}
       </div>
-      {removable && (
+      {!readOnly && removable && (
         <div className={styles['Chip__removable']}>
           <button
             tabIndex={-1} // [reason]: чтобы можно было выставлять состояние фокуса только программно через `*.focus()`
@@ -86,7 +88,7 @@ export const Chip = ({
             onClick={disabled ? undefined : onRemoveWrapper}
           >
             <VisuallyHidden>
-              {removeLabel} {children}
+              &nbsp; {removeLabel} {children}
             </VisuallyHidden>
             <Icon16Cancel />
           </button>

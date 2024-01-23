@@ -63,7 +63,7 @@ const Example = () => {
           <FormItem htmlFor="color" top="Цвет (контролируемый компонент)">
             <ChipsInput
               id="color"
-              inputLabel="Введите цвета"
+              placeholder="Введите цвета"
               after={
                 <IconButton hoverMode="opacity" label="Очистить поле" onClick={onClick}>
                   <Icon16Clear />
