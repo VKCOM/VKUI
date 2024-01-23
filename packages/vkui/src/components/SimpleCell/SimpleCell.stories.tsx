@@ -38,6 +38,17 @@ export const Current: Story = {
             Отправить уведомление
           </SimpleCell>
         </Group>
+        <Group header={<Header>Пример со всеми текстовыми параметрами</Header>}>
+          <SimpleCell
+            subhead="Subhead"
+            title="Title"
+            indicator="Indicator"
+            subtitle="Subtitle"
+            extraSubtitle="Extra Subtitle"
+          >
+            Title
+          </SimpleCell>
+        </Group>
       </div>
     ),
     withSinglePanel,
@@ -67,6 +78,60 @@ export const WithParagraph: Story = {
           >
             Отправить уведомление
           </SimpleCell>
+        </Group>
+        <Group header={<Header>Пример со всеми текстовыми параметрами</Header>}>
+          <SimpleCell
+            ChildComponent={context.args.ChildComponent}
+            subhead="Subhead"
+            title="Title"
+            indicator="Indicator"
+            subtitle="Subtitle"
+            extraSubtitle="Extra Subtitle"
+          >
+            Title
+          </SimpleCell>
+        </Group>
+      </div>
+    ),
+    withSinglePanel,
+    withVKUILayout,
+  ],
+};
+
+export const WithDiv: Story = {
+  args: {
+    onClick: () => void 0,
+    ChildComponent: 'div',
+    children: 'Указать источник',
+    subtitle: 'Уведомление получат друзья, которым может быть интересна ваша запись',
+  },
+  decorators: [
+    (Component, context) => (
+      <div>
+        <Group header={<Header>Пример без свитча</Header>}>
+          <Component {...context.args} />
+        </Group>
+        <Group header={<Header>Пример со свитчом</Header>}>
+          <SimpleCell
+            Component="label"
+            ChildComponent={context.args.ChildComponent}
+            subtitle="Уведомление получат друзья, которым может быть интересна ваша запись"
+            after={<Switch />}
+          >
+            Отправить уведомление
+          </SimpleCell>
+          <Group header={<Header>Пример со всеми текстовыми параметрами</Header>}>
+            <SimpleCell
+              ChildComponent={context.args.ChildComponent}
+              subhead="Subhead"
+              title="Title"
+              indicator="Indicator"
+              subtitle="Subtitle"
+              extraSubtitle="Extra Subtitle"
+            >
+              Title
+            </SimpleCell>
+          </Group>
         </Group>
       </div>
     ),
