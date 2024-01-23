@@ -9,6 +9,7 @@
   margin: 0;
   position: relative;
   block-size: 48px;
+  inline-size: fit-content;
 
   /**
    * Чтобы закргуление было равно половине высоты.
