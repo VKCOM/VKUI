@@ -5,7 +5,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { usePrevious } from '../../hooks/usePrevious';
 import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
-import { HTMLAttributesWithRootRef } from '../../types';
+import { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
 import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
 import { Tappable } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
@@ -29,7 +29,9 @@ const fillModeClassNames = {
   shrinked: styles['TabsItem--shrinked'],
 };
 
-export interface TabsItemProps extends HTMLAttributesWithRootRef<HTMLElement> {
+export interface TabsItemProps
+  extends HTMLAttributesWithRootRef<HTMLElement>,
+    AnchorHTMLAttributesOnly {
   /**
    * Добавляет иконку слева.
    *
