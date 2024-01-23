@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useDOM } from '../../lib/dom';
@@ -8,6 +9,17 @@ import { stopPropagation } from '../../lib/utils';
 import type { HasRootRef } from '../../types';
 import { TrackerOptionsProps, useTrackerVisibility } from './useTrackerVisibility';
 import styles from './CustomScrollView.module.css';
+
+function hasPointerClassName(hasPointer: boolean | undefined) {
+  switch (hasPointer) {
+    case undefined:
+      return styles['CustomScrollView--hasPointer-none'];
+    case false:
+      return styles['CustomScrollView--hasPointer-false'];
+  }
+
+  return styles['CustomScrollView--hasPointer-true'];
+}
 
 export interface CustomScrollViewProps
   extends React.AllHTMLAttributes<HTMLDivElement>,
@@ -32,6 +44,7 @@ export const CustomScrollView = ({
   ...restProps
 }: CustomScrollViewProps) => {
   const { document, window } = useDOM();
+  const { hasPointer } = useAdaptivity();
 
   const ratio = React.useRef(NaN);
   const lastTrackerTop = React.useRef(0);
@@ -181,7 +194,7 @@ export const CustomScrollView = ({
 
   return (
     <div
-      className={classNames(styles['CustomScrollView'], className)}
+      className={classNames(className, styles['CustomScrollView'], hasPointerClassName(hasPointer))}
       ref={getRootRef}
       {...restProps}
     >
