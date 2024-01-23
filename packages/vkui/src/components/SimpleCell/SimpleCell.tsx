@@ -7,6 +7,7 @@ import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Chevron } from './Chevron/Chevron';
 import styles from './SimpleCell.module.css';
 
@@ -131,13 +132,14 @@ export const SimpleCell = ({
           {badgeBeforeTitle && (
             <span className={styles['SimpleCell__badge']}>{badgeBeforeTitle}</span>
           )}
-          <Headline
-            Component={ChildComponent}
-            className={styles['SimpleCell__children']}
-            weight="3"
-          >
+          <Headline Component="span" className={styles['SimpleCell__children']} weight="3">
             {children}
           </Headline>
+          {ChildComponent === 'p' ? (
+            <VisuallyHidden>
+              <br />
+            </VisuallyHidden>
+          ) : null}
           {hasReactNode(badgeAfterTitle) && (
             <span className={styles['SimpleCell__badge']}>{badgeAfterTitle}</span>
           )}
@@ -148,7 +150,7 @@ export const SimpleCell = ({
               <span className={styles['SimpleCell__badge']}>{badgeBeforeSubtitle}</span>
             )}
             <Footnote
-              Component={ChildComponent}
+              Component="span"
               normalize={false}
               className={classNames(styles['SimpleCell__text'], styles['SimpleCell__subtitle'])}
             >
