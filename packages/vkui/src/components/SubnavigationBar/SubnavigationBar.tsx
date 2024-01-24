@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { hasReactNode } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import {
   HorizontalScroll,
@@ -55,11 +56,13 @@ export const SubnavigationBar = ({
     >
       <ScrollWrapper className={styles['SubnavigationBar__in']} {...scrollWrapperProps}>
         <ul className={styles['SubnavigationBar__scrollIn']}>
-          {React.Children.map(children, (child, idx) => (
-            <li key={idx} className={styles['SubnavigationBar__item']}>
-              {child}
-            </li>
-          ))}
+          {React.Children.map(children, (child, idx) =>
+            hasReactNode(child) ? (
+              <li key={idx} className={styles['SubnavigationBar__item']}>
+                {child}
+              </li>
+            ) : null,
+          )}
         </ul>
       </ScrollWrapper>
     </RootComponent>
