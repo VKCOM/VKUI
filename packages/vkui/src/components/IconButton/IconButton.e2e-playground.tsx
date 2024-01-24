@@ -22,6 +22,10 @@ export const IconButtonPlayground = (props: ComponentPlaygroundProps) => {
           ],
           $adaptivity: 'y',
         },
+        {
+          children: [<Icon28MessageOutline key="icon-w28" />],
+          href: ['https://vk.ru'],
+        },
       ]}
     >
       {(props: IconButtonProps) => (
