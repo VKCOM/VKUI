@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { hasReactNode } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import {
   HorizontalScroll,
@@ -48,8 +49,6 @@ export const SubnavigationBar = ({
     };
   }
 
-  const actualChildren = React.useMemo(() => React.Children.toArray(children), [children]);
-
   return (
     <RootComponent
       baseClassName={mode === 'fixed' && styles['SubnavigationBar--mode-fixed']}
@@ -57,11 +56,13 @@ export const SubnavigationBar = ({
     >
       <ScrollWrapper className={styles['SubnavigationBar__in']} {...scrollWrapperProps}>
         <ul className={styles['SubnavigationBar__scrollIn']}>
-          {actualChildren.map((child, idx) => (
-            <li key={idx} className={styles['SubnavigationBar__item']}>
-              {child}
-            </li>
-          ))}
+          {React.Children.map(children, (child, idx) =>
+            hasReactNode(child) ? (
+              <li key={idx} className={styles['SubnavigationBar__item']}>
+                {child}
+              </li>
+            ) : null,
+          )}
         </ul>
       </ScrollWrapper>
     </RootComponent>
