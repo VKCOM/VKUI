@@ -48,6 +48,8 @@ export const SubnavigationBar = ({
     };
   }
 
+  const actualChildren = React.useMemo(() => React.Children.toArray(children), [children]);
+
   return (
     <RootComponent
       baseClassName={mode === 'fixed' && styles['SubnavigationBar--mode-fixed']}
@@ -55,7 +57,7 @@ export const SubnavigationBar = ({
     >
       <ScrollWrapper className={styles['SubnavigationBar__in']} {...scrollWrapperProps}>
         <ul className={styles['SubnavigationBar__scrollIn']}>
-          {React.Children.map(children, (child, idx) => (
+          {actualChildren.map((child, idx) => (
             <li key={idx} className={styles['SubnavigationBar__item']}>
               {child}
             </li>
