@@ -13,16 +13,6 @@
   overflow-x: hidden;
   padding-inline-end: 100px;
   position: relative;
-
-  /**
-   * Для удаление скролла в Firefox.
-   * В версии ниже 64 будет виден скролл, но это не ломает функциональность.
-   */
-  scrollbar-width: none;
-}
-
-.CustomScrollView__box::-webkit-scrollbar {
-  display: none;
 }
 
 .CustomScrollView__barY:active + .CustomScrollView__box {
@@ -82,4 +72,43 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalCustomSelectDropdown--wide) .CustomScrollView__box {
   padding-inline-end: 0;
+}
+
+.CustomScrollView--hasPointer-true .CustomScrollView__box {
+  /**
+   * Для удаление скролла в Firefox.
+   * В версии ниже 64 будет виден скролл, но это не ломает функциональность.
+   */
+  scrollbar-width: none;
+}
+
+.CustomScrollView--hasPointer-true .CustomScrollView__box::-webkit-scrollbar {
+  display: none;
+}
+
+@media (--pointer-has) {
+  .CustomScrollView--hasPointer-none .CustomScrollView__box {
+    /**
+     * Для удаление скролла в Firefox.
+     * В версии ниже 64 будет виден скролл, но это не ломает функциональность.
+     */
+    scrollbar-width: none;
+  }
+
+  .CustomScrollView--hasPointer-none .CustomScrollView__box::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/**
+ * Не отрисовываем полосу прокрутки, если у устройства отсутствует мышь
+ */
+.CustomScrollView--hasPointer-false .CustomScrollView__barY {
+  display: none;
+}
+
+@media (--pointer-has-not) {
+  .CustomScrollView--hasPointer-none .CustomScrollView__barY {
+    display: none;
+  }
 }
