@@ -37,6 +37,12 @@ export interface FormFieldProps {
    * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна кликабельная иконка.
    */
   after?: React.ReactNode;
+  /**
+   * Режим отображения.
+   *
+   * - `default` — показывает фон, обводку и, при наличии, текст-подсказку.
+   * - `plain` — показывает только текст-подсказку.
+   */
   mode?: 'default' | 'plain';
 }
 

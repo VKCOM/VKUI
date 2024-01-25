@@ -19,7 +19,7 @@ export interface TextareaProps
     HasRootRef<HTMLElement>,
     Pick<React.CSSProperties, 'maxHeight'>,
     HasAlign,
-    Pick<FormFieldProps, 'status'> {
+    Pick<FormFieldProps, 'status' | 'mode'> {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   defaultValue?: string;
@@ -42,6 +42,7 @@ export const Textarea = ({
   onChange: onChangeProp,
   value: valueProp,
   align,
+  mode,
   ...restProps
 }: TextareaProps) => {
   const [value, onChange] = useEnsuredControl({
@@ -81,6 +82,7 @@ export const Textarea = ({
       getRootRef={getRootRef}
       disabled={restProps.disabled}
       status={status}
+      mode={mode}
     >
       <Text
         {...restProps}
