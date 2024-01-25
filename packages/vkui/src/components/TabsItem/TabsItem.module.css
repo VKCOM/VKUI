@@ -10,6 +10,7 @@
   min-block-size: 32px;
   border-radius: var(--vkui--size_border_radius--regular);
   transition: background-color 150ms ease-out;
+  text-decoration: none;
 }
 
 .TabsItem--withGaps {
