@@ -1,63 +1,54 @@
 name: 'Close Pull Request'
 
 on:
-  pull_request_target:
+  pull_request:
     types: [closed]
+  workflow_dispatch:
+    inputs:
+      pr_number_by_workflow_dispatch:
+        description: 'Number of PR'
+        type: number
+        required: true
 
 jobs:
-  undeploy_styleguide:
-    # [Примечание 1] Пропускаем очищение, т.к. для PR от dependabot песочница не создаётся
-    if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
-    concurrency: ci-gh-pages
-    runs-on: ubuntu-latest
-    name: Undeploy docs (styleguide)
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: gh-pages
-
-      - name: Remove styleguide
-        run: rm -rf pull/${{ github.event.pull_request.number }}
-
-      - name: Commit it
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: 'Remove PR ${{ github.event.pull_request.number }}'
-          branch: gh-pages
+  upload_pr_workflow_payload:
+    # Не используем always(), т.к. он не учитывает отмену воркфлоу
+    # см. https://github.com/orgs/community/discussions/26303
+    if: ${{ !cancelled() }}
+    name: Call reusable workflow
+    uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
+    with:
+      action: upload
+      override_pr_number: ${{ inputs.pr_number_by_workflow_dispatch }}
 
   patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
     concurrency: ci-stable
     runs-on: ubuntu-latest
-    name: Patch
+    name: Stable Patch
     steps:
       - name: Checkout (for forked PR)
         if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Checkout (for maintainer's PR)
         if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Set Git credentials
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts && yarn run build
-        working-directory: ./.github/actions/patch
-
       - name: Make patch
-        uses: ./.github/actions/patch
+        uses: VKCOM/gh-actions/VKUI/patch@main
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           directory: packages/vkui/

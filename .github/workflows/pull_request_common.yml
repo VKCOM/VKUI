@@ -1,41 +1,47 @@
 name: 'Pull Request / Common'
 
-# > Про 'pull_request_target' и про риски его использования можно ознакомиться в статье по ссылке ниже
-# > https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
-#
-# При 'pull_request_target' свойство `github.ref` будет соответствовать `refs/head/master`, поэтому необходимо
-# вручную перебивать его на `github.event.pull_request.number` там, где это необходимо.
-#
-# Пример:
-# ```
-# - uses: actions/checkout@v3
-#   with:
-#     ref: refs/pull/${{ github.event.pull_request.number }}/merge
-# ```
-on: ['pull_request_target']
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: pr-common-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
+  labels:
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    name: Add labels
+    steps:
+      - name: Patch
+        if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["patch"]
+            })
+
   lint_codes_format:
     runs-on: ubuntu-latest
     name: Check code formatting
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+        uses: actions/checkout@v4
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Run Prettier
         run: yarn run lint:prettier

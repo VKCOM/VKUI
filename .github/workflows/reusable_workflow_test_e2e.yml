@@ -12,32 +12,37 @@ on:
 jobs:
   test_e2e:
     runs-on: ubuntu-latest
-    name: Run visual (aka e2e) tests
+    container:
+      # см. https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.focal
+      image: mcr.microsoft.com/playwright:v1.40.1-focal
+      options: --ipc=host
     strategy:
       fail-fast: false
       matrix:
-        appearance: [dark, light]
-        browser: [chromium, firefox, webkit]
-        platform: [android, ios, vkcom]
-        exclude:
-          - platform: android
-            browser: firefox
-          - platform: android
-            browser: webkit
-          - platform: ios
-            browser: firefox
-          - platform: ios
-            browser: chromium
+        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        shardTotal: [10]
+    name: 'Run e2e tests for (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref }}
+
+      # см. https://github.com/actions/checkout/issues/1169
+      - name: Set safe directory
+        run: git config --global --add safe.directory /__w/VKUI/VKUI
+
+      # см. https://github.com/microsoft/playwright/issues/21920
+      - name: Install git lfs
+        run: |
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+          apt-get install -y git-lfs
 
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
       - name: Restore LFS cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .git/lfs
           key: lfs-${{ hashFiles('.lfs-assets-id') }}
@@ -45,43 +50,23 @@ jobs:
       - name: Checkout LFS objects
         run: git lfs pull
 
-      - name: Checkout base snapshots
-        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
-        run: git fetch --no-tags --depth=1 origin $GITHUB_BASE_REF && git checkout origin/$GITHUB_BASE_REF packages/vkui/src/**/__image_snapshots__/*.png
-
-      - uses: actions/setup-node@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-scripts
 
-      - name: '[Troubleshooting for Azure VM] Install APT Repositories'
-        # Связанная проблема https://github.com/actions/runner-images/issues/675
-        run: curl --connect-timeout 1 azure.archive.ubuntu.com || (sudo sed -i 's/azure\.//' /etc/apt/sources.list && sudo apt-get update)
-
-      - name: Install deps for playwright
-        run: yarn run playwright:install ${{ matrix.browser }}
+      - name: Install dependencies
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
       - name: Run e2e tests for @vkontakte/vkui workspace
-        run: yarn run test:e2e:ci
-        env:
-          APPEARANCE: ${{ matrix.appearance }}
-          BROWSER: ${{ matrix.browser }}
-          PLATFORM: ${{ matrix.platform }}
-        continue-on-error: true
+        # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
+        run: HOME=/root yarn run test:e2e:ci --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          flags: e2e-${{ matrix.browser }}-${{ matrix.platform }}-${{ matrix.appearance }}
-          files: .nyc_output/coverage.json
-          fail_ci_if_error: true
-
-      - name: Upload test artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload Playwright blob report to GitHub Actions Artifacts
         if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: e2e-output
-          path: |
-            __diff_output__/
-            e2e-results.json
+          name: all-blob-reports-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
+          path: packages/vkui/blob-report
+          retention-days: 1
