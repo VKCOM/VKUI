@@ -16,3 +16,7 @@
   z-index: 2;
   color: var(--vkui--color_icon_secondary);
 }
+
+.Editor textarea {
+  color: blue !important;
+}
