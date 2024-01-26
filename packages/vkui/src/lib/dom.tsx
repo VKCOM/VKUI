@@ -52,6 +52,12 @@ export const isBody = (
   return node !== null && node !== undefined && 'tagName' in node && node.tagName === 'BODY';
 };
 
+export const isDocumentElement = (
+  node: Element | Window | VisualViewport | undefined | null,
+): node is HTMLHtmlElement => {
+  return node !== null && node !== undefined && 'tagName' in node && node.tagName === 'HTML';
+};
+
 export function withDOM<Props>(
   Component: React.ComponentType<Props & DOMProps>,
 ): React.ComponentType<Props> {
@@ -91,6 +97,15 @@ export function getTransformedParentCoords(element: Element) {
 export const getBoundingClientRect = (node: Element | Window, isFixedStrategy = false) => {
   const element = isWindow(node) ? node.document.documentElement : node;
   const clientRect = element.getBoundingClientRect();
+
+  if (isDocumentElement(element)) {
+    /**
+     * Если на странице не используется `html, body { height: 100% }` (или `height: 100vh`), то
+     * `height`, полученный из `document.documentElement.getBoundingClientRect()`, будет возвращать
+     * `scrollHeight`, а не `clientHeight`. Поэтому перебиваем `height` на `clientHeight`.
+     */
+    clientRect.height = element.clientHeight;
+  }
 
   let offsetX = 0;
   let offsetY = 0;
