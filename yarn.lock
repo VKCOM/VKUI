@@ -1990,6 +1990,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@floating-ui/core@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@floating-ui/core@npm:1.6.0"
+  dependencies:
+    "@floating-ui/utils": ^0.2.1
+  checksum: 2e25c53b0c124c5c9577972f8ae21d081f2f7895e6695836a53074463e8c65b47722744d6d2b5a993164936da006a268bcfe87fe68fd24dc235b1cb86bed3127
+  languageName: node
+  linkType: hard
+
 "@floating-ui/dom@npm:^1.5.4":
   version: 1.5.4
   resolution: "@floating-ui/dom@npm:1.5.4"
@@ -1997,6 +2006,16 @@ __metadata:
     "@floating-ui/core": ^1.5.3
     "@floating-ui/utils": ^0.2.0
   checksum: 5e6f05532ff4e6daf9f2d91534184d8f942ddb8fd260c2543a49bdf0c0ff69fd0867937ce1d023126008724ac238f8fc89b5e48f82cdf9f8355a1d04edd085bd
+  languageName: node
+  linkType: hard
+
+"@floating-ui/dom@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@floating-ui/dom@npm:1.6.0"
+  dependencies:
+    "@floating-ui/core": ^1.6.0
+    "@floating-ui/utils": ^0.2.1
+  checksum: 6bbb67f9241f4e07030cd564e8079dbd8b692805e94d54db63b124853318a901a5df1e0b950068e416fa7b868345d165017ec0c19c486560729d8ac856b4bd25
   languageName: node
   linkType: hard
 
@@ -2012,19 +2031,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^2.0.6":
-  version: 2.0.6
-  resolution: "@floating-ui/react-dom@npm:2.0.6"
+"@floating-ui/react-dom@npm:^2.0.7":
+  version: 2.0.7
+  resolution: "@floating-ui/react-dom@npm:2.0.7"
   dependencies:
-    "@floating-ui/dom": ^1.5.4
+    "@floating-ui/dom": ^1.6.0
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 3608537be6cae5f0442d3f826379b8e4a9ce5c4bdecf1d2b34e6709842d80444be1a00eca3641d680e2e6405d833092f58005d1b120a9d39ffd341c60b0c017c
+  checksum: 3c3907722f17c2cc11819c92d81d53962db049ea96dcd73a886e5d807b3a5d4e31c472e53f63af74f2a5c110bcc5ced68f49f16b4df11c02312fed2c7708de59
   languageName: node
   linkType: hard
 
-"@floating-ui/utils@npm:^0.2.0":
+"@floating-ui/utils@npm:^0.2.0, @floating-ui/utils@npm:^0.2.1":
   version: 0.2.1
   resolution: "@floating-ui/utils@npm:0.2.1"
   checksum: 9ed4380653c7c217cd6f66ae51f20fdce433730dbc77f95b5abfb5a808f5fdb029c6ae249b4e0490a816f2453aa6e586d9a873cd157fdba4690f65628efc6e06
@@ -5605,7 +5624,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-floating-ui@workspace:packages/vkui-floating-ui"
   dependencies:
-    "@floating-ui/react-dom": ^2.0.6
+    "@floating-ui/react-dom": ^2.0.7
     "@swc/core": ^1.3.105
     "@swc/helpers": ^0.5.3
   peerDependencies:
