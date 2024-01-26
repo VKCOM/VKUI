@@ -217,6 +217,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/IconButton/IconButton.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Div/Div.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Link/Link.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Mark/Mark.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Header/Header.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Group/Group.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Card/Card.tsx`,

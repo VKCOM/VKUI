@@ -196,6 +196,8 @@ export { PullToRefresh } from './components/PullToRefresh/PullToRefresh';
 export type { PullToRefreshProps } from './components/PullToRefresh/PullToRefresh';
 export { Link } from './components/Link/Link';
 export type { LinkProps } from './components/Link/Link';
+export { Mark } from './components/Mark/Mark';
+export type { MarkProps } from './components/Mark/Mark';
 export { OnboardingTooltip } from './components/OnboardingTooltip/OnboardingTooltip';
 export type { OnboardingTooltipProps } from './components/OnboardingTooltip/OnboardingTooltip';
 export { OnboardingTooltipContainer } from './components/OnboardingTooltip/OnboardingTooltipContainer';
