@@ -62,7 +62,6 @@ updates:
         patterns:
           - 'jest*'
           - '@types/jest*'
-          - '@swc/jest'
       testing-library:
         patterns:
           - '@testing-library/*'
@@ -74,6 +73,10 @@ updates:
         patterns:
           - 'prettier'
           - '@vkontakte/prettier-config'
+      swc:
+        patterns:
+          - '@swc/*'
+          - 'swc-plugin-*'
     versioning-strategy: increase
     open-pull-requests-limit: 20
     reviewers:
