@@ -114,7 +114,7 @@
     "lint:prettier": "prettier --check --ignore-unknown .",
     "lint:types": "tsc --incremental --emitDeclarationOnly --declaration --tsBuildInfoFile .cache/.tsbuildinfo",
     "lint:generated-files": "yarn workspace @vkontakte/vkui run lint:generated-files",
-    "prepare": "husky install",
+    "prepare": "husky",
     "pre-commit": "lint-staged",
     "playwright:install": "playwright install --with-deps",
     "playwright:cmd:merge-reports": "playwright merge-reports",
