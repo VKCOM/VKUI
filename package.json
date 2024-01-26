@@ -40,7 +40,7 @@
     "cross-env": "^7.0.2",
     "css-loader": "^6.9.1",
     "cssnano": "^6.0.3",
-    "dotenv": "^16.3.2",
+    "dotenv": "^16.4.1",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-import-resolver-alias": "^1.1.2",
