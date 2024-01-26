@@ -28,7 +28,7 @@ const getChildElOfParentWithTransformedStyle = (
   return { parentEl, parentElRect, childEl, childElRect };
 };
 
-describe('getTransformedParentCoords', () => {
+describe(getTransformedParentCoords, () => {
   const transformDefault = TRANSFORM_DEFAULT_VALUES.map((v) => ({ transform: v }));
   const willChangeDefault = WILL_CHANGE_DEFAULT_VALUES.map((v) => ({ willChange: v }));
 
@@ -68,13 +68,16 @@ describe('getTransformedParentCoords', () => {
   });
 });
 
-describe('getScrollRect', () => {
+describe(getScrollRect, () => {
   test.each([
     { scrollTop: 0, viewportHeight: 100 },
     { scrollTop: 10, viewportHeight: 100 },
     { scrollTop: 0, viewportHeight: 768 },
     { scrollTop: 10, viewportHeight: 768 },
   ])('[window] should return correct y edges for %j', ({ scrollTop, viewportHeight }) => {
+    jest
+      .spyOn(document.documentElement, 'clientHeight', 'get')
+      .mockImplementation(() => viewportHeight);
     const rect = new DOMRect(0, scrollTop > 0 ? -1 * scrollTop : scrollTop, 1280, viewportHeight);
     window.scrollY = document.documentElement.scrollTop = scrollTop;
     document.documentElement.getBoundingClientRect = jest.fn(() => rect);
@@ -99,7 +102,7 @@ describe('getScrollRect', () => {
   });
 });
 
-describe('getScrollHeight', () => {
+describe(getScrollHeight, () => {
   const getScrollHeightMock = () => 1000;
   const scrollEl = document.createElement('div');
   beforeEach(() => {
@@ -116,7 +119,7 @@ describe('getScrollHeight', () => {
   });
 });
 
-describe('getBoundingClientRect', () => {
+describe(getBoundingClientRect, () => {
   it('should return rect without offset', () => {
     const { childEl, childElRect } = getChildElOfParentWithTransformedStyle();
     expect(getBoundingClientRect(childEl)).toEqual(childElRect);
@@ -143,6 +146,22 @@ describe('getBoundingClientRect', () => {
         height: childElRect.height,
       }),
     );
+  });
+
+  it('should apply `clientHeight` to `height` of `getBoundingClientRect()` if element is HTML', () => {
+    const HTML_CLIENT_HEIGHT = 768;
+    const HTML_SCROLL_HEIGHT = 2000;
+
+    jest
+      .spyOn(document.documentElement, 'clientHeight', 'get')
+      .mockImplementation(() => HTML_CLIENT_HEIGHT);
+
+    // Симулируем, что на странице не указан `html, body { height: 100% }` (или `height: 100vh`).
+    document.documentElement.getBoundingClientRect = jest.fn(
+      () => new DOMRect(0, 0, 1280, HTML_SCROLL_HEIGHT),
+    );
+
+    expect(getBoundingClientRect(document.documentElement).height).toBe(HTML_CLIENT_HEIGHT);
   });
 });
 
