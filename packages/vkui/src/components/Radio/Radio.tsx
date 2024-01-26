@@ -4,7 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { DEFAULT_ACTIVE_EFFECT_DELAY } from '../Clickable/useState';
-import { Tappable } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -27,7 +27,11 @@ const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
 export interface RadioProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRef<HTMLInputElement>,
-    HasRootRef<HTMLLabelElement> {
+    HasRootRef<HTMLLabelElement>,
+    Pick<
+      TappableProps,
+      'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
+    > {
   description?: React.ReactNode;
   titleAfter?: React.ReactNode;
   /**
@@ -48,6 +52,11 @@ export const Radio = ({
   titleAfter,
   getRef,
   labelProps,
+  hoverMode,
+  activeMode,
+  hasHover,
+  hasActive,
+  focusVisibleMode,
   ...restProps
 }: RadioProps) => {
   const platform = usePlatform();
@@ -65,6 +74,11 @@ export const Radio = ({
       activeEffectDelay={platform === 'ios' ? 100 : DEFAULT_ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
+      hoverMode={hoverMode}
+      activeMode={activeMode}
+      hasHover={hasHover}
+      hasActive={hasActive}
+      focusVisibleMode={focusVisibleMode}
       {...labelProps}
     >
       <VisuallyHidden
