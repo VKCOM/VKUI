@@ -138,6 +138,7 @@ export const Tooltip = ({
   cornerAbsoluteOffset,
   arrow = true,
   arrowPadding = 14,
+  getRootRef,
   placement: placementProp,
   maxWidth = TOOLTIP_MAX_WIDTH,
   ...restProps
@@ -272,6 +273,7 @@ export const Tooltip = ({
       })
     : children;
 
+  const tooltipBaseRef = useExternRef<HTMLDivElement>(refs.setFloating, getRootRef);
   return (
     <React.Fragment>
       {child}
@@ -281,7 +283,7 @@ export const Tooltip = ({
           <>
             <TooltipBase
               {...restProps}
-              getRootRef={refs.setFloating}
+              getRootRef={tooltipBaseRef}
               floatingStyle={convertFloatingDataToReactCSSProperties(
                 floatingPositionStrategy,
                 floatingDataX,
