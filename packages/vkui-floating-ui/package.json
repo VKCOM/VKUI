@@ -51,12 +51,12 @@
     },
     "./utils/dom": {
       "import": {
-        "types": "./utils/dom/dist/floating-ui.utils.dom.d.ts",
-        "default": "./utils/dom/dist/floating-ui.utils.dom.esm.js"
+        "types": "./utils/dist/floating-ui.utils.dom.d.ts",
+        "default": "./utils/dist/floating-ui.utils.dom.esm.js"
       },
-      "types": "./utils/dom/dist/floating-ui.utils.dom.d.ts",
-      "module": "./utils/dom/dist/floating-ui.utils.dom.esm.js",
-      "default": "./utils/dom/dist/floating-ui.utils.dom.umd.js"
+      "types": "./utils/dist/floating-ui.utils.dom.d.ts",
+      "module": "./utils/dist/floating-ui.utils.dom.esm.js",
+      "default": "./utils/dist/floating-ui.utils.dom.umd.js"
     },
     "./react-dom": {
       "import": {
@@ -69,7 +69,7 @@
     }
   },
   "scripts": {
-    "build": "node index.mjs"
+    "build": "node --no-warnings=ExperimentalWarning --trace-warnings index.mjs"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

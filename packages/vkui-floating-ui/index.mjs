@@ -60,6 +60,11 @@ function getPackageJSONTemplate(subPackagePath) {
 }`;
 }
 
+function getOutputPathByBasename(filePath, outputDir) {
+  const filename = path.basename(filePath);
+  return path.join(outputDir, filename);
+}
+
 /**
  * Собираем отдельный файл
  *
@@ -68,8 +73,7 @@ function getPackageJSONTemplate(subPackagePath) {
  * @param {'es6' | 'commonjs'} moduleType тип модуля
  */
 async function build(filePath, outputDir, moduleType) {
-  const filename = path.basename(filePath);
-  const outputFilePath = path.join(outputDir, filename);
+  const outputFilePath = getOutputPathByBasename(filePath, outputDir);
 
   const output = await swc.transformFile(filePath, {
     module: {
@@ -105,11 +109,9 @@ async function build(filePath, outputDir, moduleType) {
 
 async function main() {
   for (const [subPackagePath, subPackageFiles] of FLOATING_UI_SUB_PACKAGES_ENTRIES_MAP) {
-    const {
-      types: subPackageTypesPath,
-      module: subPackageESMBundlePath,
-      default: subPackageUMDBundlePath,
-    } = subPackageFiles;
+    const subPackageTypesPath = path.join(FLOATING_UI_PATH, subPackageFiles.types);
+    const subPackageESMBundlePath = path.join(FLOATING_UI_PATH, subPackageFiles.module);
+    const subPackageUMDBundlePath = path.join(FLOATING_UI_PATH, subPackageFiles.default);
 
     await createFolder(subPackagePath);
 
@@ -118,12 +120,15 @@ async function main() {
     await createFolder(outputPath);
 
     await Promise.all([
-      build(path.join(FLOATING_UI_PATH, subPackageUMDBundlePath), outputPath, 'commonjs'),
-      build(path.join(FLOATING_UI_PATH, subPackageESMBundlePath), outputPath, 'es6'),
+      build(subPackageUMDBundlePath, outputPath, 'commonjs'),
+      build(subPackageESMBundlePath, outputPath, 'es6'),
     ]);
 
     await Promise.all([
-      await fsPromises.writeFile(subPackageTypesPath, getTypeTemplate(subPackagePath)),
+      await fsPromises.writeFile(
+        getOutputPathByBasename(subPackageTypesPath, outputPath),
+        getTypeTemplate(subPackagePath),
+      ),
       await fsPromises.writeFile(
         path.join(subPackagePath, 'package.json'),
         getPackageJSONTemplate(subPackagePath),
