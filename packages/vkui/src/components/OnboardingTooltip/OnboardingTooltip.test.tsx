@@ -3,7 +3,7 @@ import { Fragment, HtmlHTMLAttributes, ReactElement } from 'react';
 import { render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { HasRootRef } from '../../types';
-import { OnboardingTooltip } from './OnboardingTooltip';
+import { OnboardingTooltip, OnboardingTooltipProps } from './OnboardingTooltip';
 import { OnboardingTooltipContainer } from './OnboardingTooltipContainer';
 
 const renderTooltip = async (jsx: ReactElement) => {
@@ -102,5 +102,27 @@ describe(OnboardingTooltip, () => {
       );
       expect(ref).toHaveBeenCalledWith(screen.getByTestId('xxx'));
     });
+  });
+
+  it('should call onPlacementChange', async () => {
+    const onPlacementChange = jest.fn();
+
+    const Fixture = (props: OnboardingTooltipProps) => (
+      <OnboardingTooltipContainer data-testid="container">
+        <OnboardingTooltip shown text="text" {...props}>
+          <div data-testid="xxx" />
+        </OnboardingTooltip>
+      </OnboardingTooltipContainer>
+    );
+
+    const result = render(<Fixture placement="bottom" onPlacementChange={onPlacementChange} />);
+    await waitForFloatingPosition();
+
+    expect(onPlacementChange).not.toHaveBeenCalled();
+
+    result.rerender(<Fixture placement="auto" onPlacementChange={onPlacementChange} />);
+    await waitForFloatingPosition();
+
+    expect(onPlacementChange).toHaveBeenCalledWith('top');
   });
 });

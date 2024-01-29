@@ -9,6 +9,7 @@ import {
   type FloatingComponentProps,
   useFloating,
   useFloatingMiddlewaresBootstrap,
+  usePlacementChangeCallback,
 } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -31,6 +32,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'offsetByCrossAxis'
   | 'shown'
   | 'children'
+  | 'onPlacementChange'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
@@ -50,6 +52,10 @@ export interface OnboardingTooltipProps
   extends AllowedFloatingComponentProps,
     AllowedTooltipBaseProps,
     AllowedFloatingArrowProps {
+  /**
+   * Скрывает стрелку, указывающую на якорный элемент.
+   */
+  disableArrow?: boolean;
   /**
    * Callback, который вызывается при клике по любому месту в пределах экрана.
    */
@@ -74,6 +80,8 @@ export const OnboardingTooltip = ({
   maxWidth = TOOLTIP_MAX_WIDTH,
   style: styleProp,
   getRootRef,
+  disableArrow = false,
+  onPlacementChange,
   ...restProps
 }: OnboardingTooltipProps) => {
   const generatedId = React.useId();
@@ -90,7 +98,7 @@ export const OnboardingTooltip = ({
     offsetByMainAxis,
     offsetByCrossAxis,
     arrowRef,
-    arrow: true,
+    arrow: !disableArrow,
     arrowHeight,
     arrowPadding,
   });
@@ -110,6 +118,8 @@ export const OnboardingTooltip = ({
   const [childRef, child] = usePatchChildren(children, {
     'aria-describedby': shown ? tooltipId : undefined,
   });
+
+  usePlacementChangeCallback(resolvedPlacement, onPlacementChange);
 
   let tooltip: React.ReactPortal | null = null;
   if (shown) {
@@ -131,13 +141,17 @@ export const OnboardingTooltip = ({
           getRootRef={tooltipRef}
           style={floatingStyle}
           maxWidth={maxWidth}
-          arrowProps={{
-            offset: arrowOffset,
-            isStaticOffset: isStaticArrowOffset,
-            coords: arrowCoords,
-            placement: resolvedPlacement,
-            getRootRef: setArrowRef,
-          }}
+          arrowProps={
+            disableArrow
+              ? undefined
+              : {
+                  offset: arrowOffset,
+                  isStaticOffset: isStaticArrowOffset,
+                  coords: arrowCoords,
+                  placement: resolvedPlacement,
+                  getRootRef: setArrowRef,
+                }
+          }
         />
         <div className={styles['OnboardingTooltip__overlay']} onClickCapture={onClose} />
       </>,

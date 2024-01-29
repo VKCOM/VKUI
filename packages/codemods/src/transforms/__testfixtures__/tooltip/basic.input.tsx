@@ -21,6 +21,10 @@ const App = () => {
       <Tooltip alignX="right" alignY="top">target</Tooltip>
 
       <Tooltip alignX="right" alignY="top" placement="auto">target</Tooltip>
+
+      <Tooltip arrow></Tooltip>
+
+      <Tooltip arrow={false}>target</Tooltip>
     </React.Fragment>
   );
 };

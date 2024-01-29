@@ -10,6 +10,7 @@ import {
   getArrowCoordsByMiddlewareData,
   useFloatingMiddlewaresBootstrap,
   useFloatingWithInteractions,
+  usePlacementChangeCallback,
 } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -30,6 +31,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'children'
   | 'zIndex'
   | 'usePortal'
+  | 'onPlacementChange'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
@@ -94,6 +96,7 @@ export const Tooltip = ({
   style: styleProp,
   className,
   zIndex = 'var(--vkui--z_index_popout)',
+  onPlacementChange,
   ...popperProps
 }: TooltipProps) => {
   const generatedId = React.useId();
@@ -134,6 +137,8 @@ export const Tooltip = ({
     middlewares,
   });
   const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
+
+  usePlacementChangeCallback(placement, onPlacementChange);
 
   let tooltip: React.ReactNode = null;
   if (shown) {

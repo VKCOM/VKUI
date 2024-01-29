@@ -4,6 +4,7 @@ import type {
   UseFloatingWithInteractionsProps,
   UseFloatingWithInteractionsReturn,
 } from '../useFloatingWithInteractions';
+import { OnPlacementChange } from './common';
 
 /**
  * @private используйте алиасы, если для какого-то компонента нужно экспортировать тип
@@ -52,4 +53,9 @@ export interface FloatingComponentProps
    * По умолчанию используется document.body.
    */
   usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement>;
+  /**
+   * В зависимости от области видимости, позиция может смениться на более оптимальную,
+   * чтобы всплывающий элемент вместился в эту область видимости.
+   */
+  onPlacementChange?: OnPlacementChange;
 }

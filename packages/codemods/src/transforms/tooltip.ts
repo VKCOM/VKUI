@@ -3,6 +3,7 @@ import {
   type AttributeManipulator,
   createAttributeManipulator,
   getImportInfo,
+  swapBooleanValue,
 } from '../codemod-helpers';
 import type { JSCodeShiftOptions } from '../types';
 
@@ -65,6 +66,8 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { localName } = getImportInfo(j, file, componentName, alias);
   const attributeReplacer = createAttributeManipulator(ATTRIBUTE_REPLACER, api);
   let needRename = true;
+
+  swapBooleanValue(api, source, localName, 'arrow', 'disableArrow');
 
   // подменяем импорт
   source

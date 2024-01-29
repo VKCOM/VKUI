@@ -48,4 +48,24 @@ describe(Popover, () => {
     await waitForFloatingPosition();
     expect(result.getByTestId('target')).toHaveAttribute('aria-expanded', 'false');
   });
+
+  it('should call onPlacementChange', async () => {
+    const onPlacementChange = jest.fn();
+
+    const Fixture = (props: PopoverProps) => (
+      <Popover defaultShown {...props}>
+        <div>Target</div>
+      </Popover>
+    );
+
+    const result = render(<Fixture placement="bottom" onPlacementChange={onPlacementChange} />);
+    await waitForFloatingPosition();
+
+    expect(onPlacementChange).not.toHaveBeenCalled();
+
+    result.rerender(<Fixture placement="auto" onPlacementChange={onPlacementChange} />);
+    await waitForFloatingPosition();
+
+    expect(onPlacementChange).toHaveBeenCalledWith('top');
+  });
 });
