@@ -43,6 +43,7 @@ export {
   getOverlayIconSizeByImageBaseSize,
 } from './components/ImageBase/ImageBase';
 export type {
+  ImageBaseProps,
   ImageBaseSize,
   ImageBaseExpectedIconProps,
   ImageBaseBadgeProps,
