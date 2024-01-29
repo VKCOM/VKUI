@@ -91,6 +91,14 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
           expandable: ['always'],
           chevronSize: ['m', 's'],
         },
+
+        // Индикатор не должен сжиматься
+        {
+          children: [
+            'Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children',
+          ],
+          indicator: ['1:20:22'],
+        },
       ]}
     >
       {(props: SimpleCellProps) => <SimpleCell {...props} />}
