@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
   fakeTimers,
-  runAllTimers,
   userEvent,
   waitForFloatingPosition,
 } from '../../testing/utils';
@@ -27,22 +26,18 @@ const _children = ['first', 'middle', 'last'].map((item) => (
 
 const ActionSheetTest = ({
   children = _children,
-  onClose,
+  onClose: onCloseProp,
   ...props
 }: Partial<ActionSheetProps> & Partial<FocusTrapProps>) => {
   const toggleRef = React.useRef(null);
   const [actionSheet, toggleActionSheet] = React.useState<any>(null);
 
-  const _onClose = () => {
+  const handleClose = () => {
+    if (onCloseProp) {
+      onCloseProp();
+    }
     toggleActionSheet(null);
-    onClose && onClose();
   };
-
-  const _actionSheet = (
-    <ActionSheet data-testid="sheet" toggleRef={toggleRef} onClose={_onClose} {...props}>
-      {children}
-    </ActionSheet>
-  );
 
   return (
     <AppRoot>
@@ -54,7 +49,18 @@ const ActionSheetTest = ({
                 <CellButton
                   data-testid="toggle"
                   getRootRef={toggleRef}
-                  onClick={() => toggleActionSheet(_actionSheet)}
+                  onClick={() =>
+                    toggleActionSheet(
+                      <ActionSheet
+                        data-testid="sheet"
+                        toggleRef={toggleRef}
+                        onClose={handleClose}
+                        {...props}
+                      >
+                        {children}
+                      </ActionSheet>,
+                    )
+                  }
                 >
                   Toggle ActionSheet
                 </CellButton>
@@ -67,21 +73,20 @@ const ActionSheetTest = ({
   );
 };
 
-describe('FocusTrap', () => {
+describe(FocusTrap, () => {
   fakeTimers();
   baselineComponent(FocusTrap);
 
   const mountActionSheetViaClick = async () => {
     await userEvent.click(screen.getByTestId('toggle')); // mount ActionSheet
     await waitForFloatingPosition();
-    runAllTimers();
+    act(jest.runAllTimers);
   };
 
-  const mountAndUnmountActionSheet = async () => {
-    await mountActionSheetViaClick();
-
+  const unmountActionSheet = async () => {
     await userEvent.keyboard('{Escape}');
-    runAllTimers();
+    await waitForFloatingPosition();
+    act(jest.runAllTimers);
   };
 
   it('renders with no focusable elements', async () => {
@@ -105,23 +110,26 @@ describe('FocusTrap', () => {
   it('always calls passed onClose on ESCAPE press', async () => {
     const onClose = jest.fn();
     render(<ActionSheetTest onClose={onClose} />);
-    await mountAndUnmountActionSheet();
-
-    expect(onClose).toBeCalledTimes(1);
+    await mountActionSheetViaClick();
+    await unmountActionSheet();
+    await waitFor(() => expect(screen.getByTestId('toggle')).toHaveFocus());
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   describe('focus restoration', () => {
     it('restores focus by default', async () => {
-      render(<ActionSheetTest onClose={() => jest.fn()} />);
-      await mountAndUnmountActionSheet();
-
+      const onClose = jest.fn();
+      render(<ActionSheetTest onClose={onClose} />);
+      await mountActionSheetViaClick();
+      await unmountActionSheet();
       await waitFor(() => expect(screen.getByTestId('toggle')).toHaveFocus());
     });
 
     it('does not restore focus if restoreFocus={false}', async () => {
-      render(<ActionSheetTest restoreFocus={false} onClose={() => jest.fn()} />);
-      await mountAndUnmountActionSheet();
-
+      const onClose = jest.fn();
+      render(<ActionSheetTest restoreFocus={false} onClose={onClose} />);
+      await mountActionSheetViaClick();
+      await unmountActionSheet();
       expect(screen.getByTestId('toggle')).not.toHaveFocus();
     });
   });
@@ -131,7 +139,7 @@ describe('FocusTrap', () => {
       await userEvent.tab(); // focus toggle via keyboard
       await userEvent.keyboard('{enter}'); // mount ActionSheet via keyboard
       await waitForFloatingPosition();
-      runAllTimers();
+      act(jest.runAllTimers);
     };
 
     it('focuses first element on keyboard navigation', async () => {

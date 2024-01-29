@@ -1,15 +1,15 @@
 import { warnOnce } from './warnOnce';
 
-describe('warnOnce', () => {
+describe(warnOnce, () => {
   afterAll(() => {
     // eslint-disable-next-line no-console
     console.clear();
     jest.clearAllMocks();
   });
 
-  const warnSpy = jest.spyOn(console, 'warn');
-  const errorSpy = jest.spyOn(console, 'error');
-  const logSpy = jest.spyOn(console, 'log');
+  const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => void 0);
+  const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => void 0);
+  const logSpy = jest.spyOn(console, 'log').mockImplementation(() => void 0);
 
   const warn = warnOnce('zone');
   const warnMsg = 'warn message';
@@ -38,7 +38,7 @@ describe('warnOnce', () => {
     warn('log message', 'log');
 
     expect(logSpy).toHaveBeenCalledTimes(1);
-    expect(logSpy).toBeCalledWith(
+    expect(logSpy).toHaveBeenCalledWith(
       '%c[VKUI/zone] log message',
       'color: steelblue; font-style: italic',
     );

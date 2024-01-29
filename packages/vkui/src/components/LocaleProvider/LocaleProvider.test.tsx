@@ -8,10 +8,10 @@ import {
 } from '../ConfigProvider/ConfigProviderContext';
 import { LocaleProvider } from './LocaleProvider';
 
-describe('LocaleProvider', () => {
+describe(LocaleProvider, () => {
   baselineComponent<any>(LocaleProvider, { forward: false, a11y: false, getRootRef: false });
 
-  describe('override config context', () => {
+  it('override config context', () => {
     let config: ConfigProviderContextInterface | undefined;
     const ReadConfig = () => {
       config = useConfigProvider();

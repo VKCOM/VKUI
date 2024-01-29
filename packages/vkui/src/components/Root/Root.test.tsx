@@ -1,12 +1,6 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
-import {
-  baselineComponent,
-  fakeTimers,
-  mockScrollContext,
-  mountTest,
-  runAllTimers,
-} from '../../testing/utils';
+import { act, render } from '@testing-library/react';
+import { baselineComponent, fakeTimers, mockScrollContext, mountTest } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { View } from '../View/View';
 import { Root } from './Root';
@@ -23,10 +17,10 @@ const views = [
   </View>,
 ];
 
-describe('Root', () => {
-  fakeTimers();
-
+describe(Root, () => {
   baselineComponent(Root);
+
+  fakeTimers();
 
   describe('With View', () =>
     mountTest(() => (
@@ -45,7 +39,7 @@ describe('Root', () => {
     });
     it('after prop update', () => {
       render(<Root activeView="v1">{views}</Root>).rerender(<Root activeView="v2">{views}</Root>);
-      runAllTimers();
+      act(jest.runAllTimers);
       expect(document.getElementById('v1')).toBeNull();
       expect(document.getElementById('v2')).not.toBeNull();
     });
@@ -70,9 +64,9 @@ describe('Root', () => {
           </Root>
         </ConfigProvider>,
       );
-      runAllTimers();
-      expect(onTransition).toBeCalledTimes(1);
-      expect(onTransition).toBeCalledWith({
+      act(jest.runAllTimers);
+      expect(onTransition).toHaveBeenCalledTimes(1);
+      expect(onTransition).toHaveBeenCalledWith({
         from: 'v1',
         to: 'v2',
         isBack: false,
@@ -89,8 +83,8 @@ describe('Root', () => {
           {views}
         </Root>,
       );
-      runAllTimers();
-      expect(onTransition).toBeCalledWith({
+      act(jest.runAllTimers);
+      expect(onTransition).toHaveBeenCalledWith({
         from: 'v2',
         to: 'v1',
         isBack: true,
@@ -113,9 +107,9 @@ describe('Root', () => {
           {views}
         </Root>,
       );
-      runAllTimers();
-      expect(onTransition).toBeCalledTimes(1);
-      expect(onTransition).toBeCalledWith({
+      act(jest.runAllTimers);
+      expect(onTransition).toHaveBeenCalledTimes(1);
+      expect(onTransition).toHaveBeenCalledWith({
         from: 'v1',
         to: 'v3',
         isBack: false,
@@ -138,9 +132,9 @@ describe('Root', () => {
           {views}
         </Root>,
       );
-      runAllTimers();
-      expect(onTransition).toBeCalledTimes(1);
-      expect(onTransition).toBeCalledWith({
+      act(jest.runAllTimers);
+      expect(onTransition).toHaveBeenCalledTimes(1);
+      expect(onTransition).toHaveBeenCalledWith({
         from: 'v2',
         to: 'v1',
         isBack: true,
@@ -163,6 +157,7 @@ describe('Root', () => {
       render(<Root activeView="focus">{views}</Root>).rerender(
         <Root activeView="other">{views}</Root>,
       );
+      act(jest.runAllTimers);
       expect(document.activeElement === document.body).toBe(true);
     });
   });
@@ -187,8 +182,8 @@ describe('Root', () => {
           <Root activeView="v1">{views}</Root>
         </MockScroll>,
       );
-      runAllTimers();
-      expect(scrollTo).toBeCalledWith(0, y);
+      act(jest.runAllTimers);
+      expect(scrollTo).toHaveBeenCalledWith(0, y);
     });
     it('resets on forward navigation', () => {
       let y = 101;
@@ -209,7 +204,7 @@ describe('Root', () => {
           <Root activeView="v2">{views}</Root>
         </MockScroll>,
       );
-      runAllTimers();
+      act(jest.runAllTimers);
       expect(scrollTo.mock.calls[scrollTo.mock.calls.length - 1]).toEqual([0, 0]);
     });
   });

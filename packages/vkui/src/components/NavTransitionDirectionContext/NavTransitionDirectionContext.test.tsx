@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
-import { fakeTimers, runAllTimers } from '../../testing/utils';
+import { act, render, screen } from '@testing-library/react';
+import { fakeTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Panel } from '../Panel/Panel';
 import { Root } from '../Root/Root';
@@ -62,45 +62,53 @@ describe('useNavTransition', () => {
     const { TestComponent } = setup({ withAnimationsMode });
     // transition between views
     const component = render(<TestComponent activeView="v1" />);
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: undefined')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v3" />);
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: forwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v2" />);
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: backwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v1" />);
-    runAllTimers();
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: backwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v2" />);
-    runAllTimers();
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: forwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v3" />);
-    runAllTimers();
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: forwards')).toBeTruthy();
 
     // transition between panels
     component.rerender(<TestComponent activeView="v2" activePanel="v2.1" />);
-    runAllTimers();
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: backwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v2" activePanel="v2.2" />);
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: forwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v2" activePanel="v2.1" />);
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: backwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v2" activePanel="v2.3" />);
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: forwards')).toBeTruthy();
 
     component.rerender(<TestComponent activeView="v2" activePanel="v2.2" />);
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: backwards')).toBeTruthy();
 
     // transition to another view
     component.rerender(<TestComponent activeView="v3" />);
+    act(jest.runAllTimers);
     expect(screen.queryByText('Direction: forwards')).toBeTruthy();
   });
 });

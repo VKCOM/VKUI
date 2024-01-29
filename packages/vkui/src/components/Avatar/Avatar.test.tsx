@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
 } from '../../testing/icons';
-import { baselineComponent, tryToGetByTestId } from '../../testing/utils';
+import { baselineComponent } from '../../testing/utils';
 import { Avatar, AvatarProps } from './Avatar';
 import avatarBadgeStyles from './AvatarBadge/AvatarBadge.module.css';
 
@@ -33,22 +33,19 @@ describe(Avatar, () => {
     );
 
     const elAvatar = getAvatarRootEl();
-    const fallbackIcon = tryToGetByTestId(
-      IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
-      elAvatar,
-    );
 
     expect(elAvatar).toHaveTextContent(INITIALS);
-    expect(elAvatar).not.toContainElement(fallbackIcon);
+    expect(() =>
+      within(elAvatar).getByTestId(IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID),
+    ).toThrow();
   });
 
   it('should use `fallbackIcon` if `initials` is not provided', () => {
     render(<AvatarTest fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />} />);
 
     const elAvatar = getAvatarRootEl();
-    const fallbackIcon = tryToGetByTestId(
+    const fallbackIcon = within(elAvatar).getByTestId(
       IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
-      elAvatar,
     );
 
     expect(elAvatar).toContainElement(fallbackIcon);

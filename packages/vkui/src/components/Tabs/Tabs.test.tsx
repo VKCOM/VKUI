@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ComponentProps, useState } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { Group } from '../Group/Group';
 import { TabsItem } from '../TabsItem/TabsItem';
@@ -81,8 +81,10 @@ function isTabFocused(el: HTMLElement) {
 
 function renderTestTabs(props: ComponentProps<typeof TestTabs> = {}) {
   render(<TestTabs {...props} />);
-  screen.getByTestId('first').focus();
-  screen.getByTestId('first').click();
+  act(() => {
+    screen.getByTestId('first').focus();
+    screen.getByTestId('first').click();
+  });
 }
 
 function pressKey(key: string) {
@@ -95,7 +97,7 @@ function pressKey(key: string) {
   });
 }
 
-describe('Tabs', () => {
+describe(Tabs, () => {
   baselineComponent(Tabs);
 
   describe('Mouse handlers', () => {
@@ -118,43 +120,43 @@ describe('Tabs', () => {
   describe('Keyboard handlers', () => {
     it("doesn't focus previous element when first focused", () => {
       renderTestTabs();
-      screen.getByTestId('first').focus();
+      act(() => screen.getByTestId('first').focus());
       pressKey('ArrowLeft');
       expect(isTabFocused(screen.getByTestId('first'))).toBeTruthy();
     });
     it("doesn't focus next element when last focused", () => {
       renderTestTabs();
-      screen.getByTestId('third').focus();
+      act(() => screen.getByTestId('third').focus());
       pressKey('ArrowRight');
       expect(isTabFocused(screen.getByTestId('third'))).toBeTruthy();
     });
     it('focus next element with ArrowRight key', () => {
       renderTestTabs();
-      screen.getByTestId('second').focus();
+      act(() => screen.getByTestId('second').focus());
       pressKey('ArrowRight');
       expect(isTabFocused(screen.getByTestId('third'))).toBeTruthy();
     });
     it('focus previuos element with ArrowLeft key', () => {
       renderTestTabs();
-      screen.getByTestId('second').focus();
+      act(() => screen.getByTestId('second').focus());
       pressKey('ArrowLeft');
       expect(isTabFocused(screen.getByTestId('first'))).toBeTruthy();
     });
     it('focus first element with Home key', () => {
       renderTestTabs();
-      screen.getByTestId('third').focus();
+      act(() => screen.getByTestId('third').focus());
       pressKey('Home');
       expect(isTabFocused(screen.getByTestId('first'))).toBeTruthy();
     });
     it('focus last element with End key', () => {
       renderTestTabs();
-      screen.getByTestId('first').focus();
+      act(() => screen.getByTestId('first').focus());
       pressKey('End');
       expect(isTabFocused(screen.getByTestId('third'))).toBeTruthy();
     });
     it('select element with Space key', () => {
       renderTestTabs();
-      screen.getByTestId('first').focus();
+      act(() => screen.getByTestId('first').focus());
       pressKey('ArrowRight');
       pressKey('Space');
       expect(isTabFocused(screen.getByTestId('second'))).toBeTruthy();
@@ -162,7 +164,7 @@ describe('Tabs', () => {
     });
     it('select element with Enter key', () => {
       renderTestTabs();
-      screen.getByTestId('first').focus();
+      act(() => screen.getByTestId('first').focus());
       pressKey('ArrowRight');
       pressKey('Enter');
       expect(isTabFocused(screen.getByTestId('second'))).toBeTruthy();
@@ -170,7 +172,7 @@ describe('Tabs', () => {
     });
     it('skip disabled elements', () => {
       renderTestTabs({ disabledKeys: ['second'] });
-      screen.getByTestId('first').focus();
+      act(() => screen.getByTestId('first').focus());
       pressKey('ArrowRight');
       pressKey('Enter');
       expect(isTabFocused(screen.getByTestId('third'))).toBeTruthy();
@@ -179,7 +181,7 @@ describe('Tabs', () => {
     });
     it('focus content with Down key', () => {
       renderTestTabs();
-      screen.getByTestId('second').focus();
+      act(() => screen.getByTestId('second').focus());
       pressKey('Enter');
       pressKey('ArrowDown');
       expect(isTabSelected(screen.getByTestId('second'))).toBeTruthy();

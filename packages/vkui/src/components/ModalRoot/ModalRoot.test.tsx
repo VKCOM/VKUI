@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
-import { baselineComponent, mountTest, runAllTimers, userEvent } from '../../testing/utils';
+import { act, render, screen } from '@testing-library/react';
+import { baselineComponent, mountTest, userEvent } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
 import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalRootTouch } from './ModalRoot';
@@ -54,25 +54,25 @@ describe.each([
     });
     it('shows via prop update', () => {
       const h = render(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
-      runAllTimers();
+      act(jest.runAllTimers);
       h.rerender(<ModalRoot activeModal="m">{modals}</ModalRoot>);
-      runAllTimers();
+      act(jest.runAllTimers);
       expect(document.getElementById('m')).not.toBeNull();
       expect(document.getElementById('other')).toBeNull();
     });
     it('hides via prop update', () => {
       const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
-      runAllTimers();
+      act(jest.runAllTimers);
       h.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
-      runAllTimers();
+      act(jest.runAllTimers);
       expect(document.getElementById('m')).toBeNull();
       expect(document.getElementById('other')).toBeNull();
     });
     it('changes via prop update', () => {
       const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
-      runAllTimers();
+      act(jest.runAllTimers);
       h.rerender(<ModalRoot activeModal="other">{modals}</ModalRoot>);
-      runAllTimers();
+      act(jest.runAllTimers);
       expect(document.getElementById('m')).toBeNull();
       expect(document.getElementById('other')).not.toBeNull();
     });
@@ -89,10 +89,10 @@ describe.each([
           </ModalRoot>,
         );
         // wait for animations
-        runAllTimers();
+        act(jest.runAllTimers);
         await clickFade();
-        expect(onClose).toBeCalledTimes(1);
-        expect(onCloseRoot).not.toBeCalled();
+        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(onCloseRoot).not.toHaveBeenCalled();
       });
       it('calls root onClose if modal has no onClose', async () => {
         const onCloseRoot = jest.fn();
@@ -102,9 +102,9 @@ describe.each([
           </ModalRoot>,
         );
         // wait for animations
-        runAllTimers();
+        act(jest.runAllTimers);
         await clickFade();
-        expect(onCloseRoot).toBeCalledTimes(1);
+        expect(onCloseRoot).toHaveBeenCalledTimes(1);
       });
     });
     if (name === 'ModalRootDesktop') {
@@ -116,9 +116,9 @@ describe.each([
           </ModalRoot>,
         );
         // wait for animations
-        runAllTimers();
+        act(jest.runAllTimers);
         await userEvent.keyboard('{Escape}');
-        expect(onCloseRoot).toBeCalledTimes(1);
+        expect(onCloseRoot).toHaveBeenCalledTimes(1);
       });
     }
   });
@@ -131,10 +131,10 @@ describe.each([
     ];
 
     const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
-    runAllTimers();
+    act(jest.runAllTimers);
     h.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
     h.rerender(<ModalRoot activeModal="other">{modals}</ModalRoot>);
-    runAllTimers();
+    act(jest.runAllTimers);
 
     // check if mask is present
     expect(document.querySelector<HTMLElement>(`.${styles.ModalRoot__mask}`)?.style.opacity).toBe(
@@ -143,7 +143,7 @@ describe.each([
 
     // onClose is working
     await clickFade();
-    expect(onClose).toBeCalledTimes(1);
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   it('disables native pull-to-refresh when modal is open', () => {
@@ -152,12 +152,12 @@ describe.each([
     const component = render(<ModalRoot activeModal={null}>{modals}</ModalRoot>, {
       baseElement: document.documentElement,
     });
-    runAllTimers();
+    act(jest.runAllTimers);
 
     expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
 
     component.rerender(<ModalRoot activeModal="m">{modals}</ModalRoot>);
-    runAllTimers();
+    act(jest.runAllTimers);
 
     if (name === 'ModalRootTouch') {
       expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
@@ -166,7 +166,7 @@ describe.each([
     }
 
     component.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
-    runAllTimers();
+    act(jest.runAllTimers);
 
     expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
   });
@@ -206,12 +206,12 @@ describe.each([
       const component = render(<ModalRoot activeModal="modal-page">{modals}</ModalRoot>, {
         baseElement: document.documentElement,
       });
-      runAllTimers();
+      act(jest.runAllTimers);
 
       expect(modalPageRef.current).toHaveFocus();
 
       component.rerender(<ModalRoot activeModal="modal-card">{modals}</ModalRoot>);
-      runAllTimers();
+      act(jest.runAllTimers);
 
       expect(modalCardRef.current).toHaveFocus();
     });
@@ -220,7 +220,7 @@ describe.each([
       render(<ModalRoot activeModal="modal-page-with-input">{modals}</ModalRoot>, {
         baseElement: document.documentElement,
       });
-      runAllTimers();
+      act(jest.runAllTimers);
 
       expect(modalPageWithInputRef.current).not.toHaveFocus();
       expect(inputInnerModalPageRef.current).toHaveFocus();
@@ -235,7 +235,7 @@ describe.each([
           baseElement: document.documentElement,
         },
       );
-      runAllTimers();
+      act(jest.runAllTimers);
 
       expect(modalPageRef.current).not.toHaveFocus();
 
@@ -244,7 +244,7 @@ describe.each([
           {modals}
         </ModalRoot>,
       );
-      runAllTimers();
+      act(jest.runAllTimers);
 
       expect(modalPageWithInputRef.current).not.toHaveFocus();
       expect(inputInnerModalPageRef.current).toHaveFocus();

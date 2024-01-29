@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
-import { baselineComponent, fakeTimers, runAllTimers } from '../../testing/utils';
+import { act, render } from '@testing-library/react';
+import { baselineComponent, fakeTimers } from '../../testing/utils';
 import { PopoutWrapper } from './PopoutWrapper';
 import styles from './PopoutWrapper.module.css';
 
@@ -19,7 +19,7 @@ describe(PopoutWrapper, () => {
       const result = render(<PopoutWrapper data-testid="popout-wrapper" />);
       const locator = result.getByTestId('popout-wrapper');
       expect(locator).not.toHaveClass(styles['PopoutWrapper--opened']);
-      runAllTimers();
+      act(jest.runAllTimers);
       expect(locator).toHaveClass(styles['PopoutWrapper--opened']);
     });
   });

@@ -23,7 +23,7 @@ describe('HorizontalScroll', () => {
       deltaY: 10,
     });
 
-    expect(scrollBy).toBeCalledTimes(1);
+    expect(scrollBy).toHaveBeenCalledTimes(1);
   });
 
   it('calculates and shows arrow on hover', async () => {

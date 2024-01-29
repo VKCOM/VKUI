@@ -2,7 +2,7 @@ import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { Platform, type PlatformType } from '../../lib/platform';
-import { baselineComponent, fakeTimers, runAllTimers } from '../../testing/utils';
+import { baselineComponent, fakeTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
 
@@ -42,17 +42,18 @@ function renderRefresher(
   return { setFetching, ...handle };
 }
 
-describe('PullToRefresh', () => {
-  fakeTimers();
-
+describe(PullToRefresh, () => {
   baselineComponent(PullToRefresh);
+
+  fakeTimers();
 
   describe('calls onRefresh', () => {
     it('after pull', () => {
       const onRefresh = jest.fn();
       render(<PullToRefresh onRefresh={onRefresh} data-testid="xxx" />);
       firePull(screen.getByTestId('xxx'));
-      expect(onRefresh).toBeCalledTimes(1);
+      act(jest.runAllTimers);
+      expect(onRefresh).toHaveBeenCalledTimes(1);
     });
     it('during pull on iOS', () => {
       const onRefresh = jest.fn();
@@ -62,9 +63,10 @@ describe('PullToRefresh', () => {
         </ConfigProvider>,
       );
       firePull(screen.getByTestId('xxx'), { end: false });
-      expect(onRefresh).toBeCalledTimes(1);
+      act(jest.runAllTimers);
+      expect(onRefresh).toHaveBeenCalledTimes(1);
       fireEvent.mouseUp(screen.getByTestId('xxx'));
-      expect(onRefresh).toBeCalledTimes(1);
+      expect(onRefresh).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -93,7 +95,7 @@ describe('PullToRefresh', () => {
     it('stops on touch release if isFetching was never true', () => {
       render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
       firePull(screen.getByTestId('xxx'));
-      runAllTimers();
+      act(jest.runAllTimers);
       expect(hasSpinner()).toBe(false);
     });
     it('on second interaction', () => {
@@ -148,7 +150,7 @@ describe('PullToRefresh', () => {
     });
   });
 
-  test('disables native pull-to-refresh while pulling', () => {
+  it('disables native pull-to-refresh while pulling', async () => {
     const component = render(
       <ConfigProvider platform="ios">
         <PullToRefresh onRefresh={noop} data-testid="xxx" />
@@ -160,10 +162,12 @@ describe('PullToRefresh', () => {
 
     // класс присутствует пока пуллим
     firePull(component.getByTestId('xxx'), { end: false });
+    act(jest.runAllTimers);
     expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
 
     // класс удаляется когда отпускаем
     fireEvent.mouseUp(component.getByTestId('xxx'), { clientY: 500 });
+    act(jest.runAllTimers);
     expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
   });
 });

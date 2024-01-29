@@ -2,21 +2,21 @@ import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, fakeTimers, runAllTimers, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { Tappable, TappableProps } from './Tappable';
+import { Tappable, type TappableProps } from './Tappable';
 import styles from './Tappable.module.css';
 
 const TappableTest = (props: TappableProps) => <Tappable data-testid="tappable" {...props} />;
 
 const tappable = () => screen.getByTestId('tappable');
 
-describe('Tappable', () => {
+describe(Tappable, () => {
+  baselineComponent(TappableTest);
+
   fakeTimers();
   afterEach(() => delete window['ontouchstart']);
-
-  baselineComponent(TappableTest);
 
   it('Component: if no Component is passed Tappable becomes a div', () => {
     render(<TappableTest>Look, ma, no Component!</TappableTest>);
@@ -179,6 +179,7 @@ describe('Tappable', () => {
 
   describe('active', () => {
     afterEach(() => jest.clearAllMocks());
+
     it('shows waves on android', async () => {
       const waveCount = () => document.querySelectorAll(`.${styles.Tappable__wave}`).length;
       render(
@@ -194,58 +195,55 @@ describe('Tappable', () => {
       await waitFor(() => expect(waveCount()).toBe(1));
       await userEvent.click(screen.getByTestId('x'));
       await waitFor(() => expect(waveCount()).toBe(2));
-      act(() => {
-        jest.runAllTimers();
-      });
+      act(jest.runAllTimers);
       // removes waves
       expect(waveCount()).toBe(0);
     });
-    const isActive = (e = tappable()) =>
-      e.classList.contains(styles['Tappable--activated-background']);
 
     // TODO (@SevereCloud): пофиксить тест
     it('activates on click', async () => {
       render(<TappableTest onClick={noop} />);
       await userEvent.click(tappable());
-      await waitFor(() => expect(isActive()).toBe(true));
-      act(() => {
-        jest.runOnlyPendingTimers();
-      });
-      expect(isActive()).toBe(false);
+      await waitFor(() => expect(tappable()).toHaveClass(styles['Tappable--activated-background']));
+      act(jest.runOnlyPendingTimers);
+      expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
     });
 
     // TODO (@SevereCloud): пофиксить тест
     it.skip('activates during longtap', async () => {
       render(<TappableTest onClick={noop} />);
       fireEvent.mouseDown(tappable());
-      expect(isActive()).toBe(false);
-      await waitFor(() => expect(isActive()).toBe(true));
+      expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
+      await waitFor(() => expect(tappable()).toHaveClass(styles['Tappable--activated-background']));
 
       fireEvent.mouseUp(tappable());
-      expect(isActive()).toBe(true);
+      expect(tappable()).toHaveClass(styles['Tappable--activated-background']);
     });
 
     it('does not activate on child Tappable click', async () => {
-      render(
-        <Tappable onClick={noop} data-testid="parent">
-          <TappableTest onClick={noop} data-testid="child" />
+      const result = render(
+        <Tappable onClick={jest.fn()} data-testid="parent">
+          <TappableTest onClick={jest.fn()} data-testid="child" />
         </Tappable>,
       );
-      const child = screen.getByTestId('child');
-      await act(() => userEvent.click(child));
-      expect(isActive(child)).toBe(true);
-      expect(isActive(screen.getByTestId('parent'))).toBe(false);
+      const child = result.getByTestId('child');
+      await userEvent.click(child);
+      expect(child).toHaveClass(styles['Tappable--activated-background']);
+      expect(result.getByTestId('parent')).not.toHaveClass(
+        styles['Tappable--activated-background'],
+      );
+      act(jest.runAllTimers);
     });
+
     describe('prevents early', () => {
       it('on slide', () => {
         render(<TappableTest />);
         fireEvent.mouseDown(tappable(), { clientX: 10 });
-        act(() => {
-          jest.runOnlyPendingTimers();
-        });
+        act(jest.runOnlyPendingTimers);
         fireEvent.mouseMove(tappable(), { clientX: 40 });
-        expect(isActive()).toBe(false);
+        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
       });
+
       it('on multi-touch', () => {
         window.ontouchstart = null;
         render(<TappableTest />);
@@ -253,31 +251,30 @@ describe('Tappable', () => {
           touches: [{}],
           changedTouches: [{}],
         });
-        act(() => {
-          jest.runOnlyPendingTimers();
-        });
+        act(jest.runOnlyPendingTimers);
         fireEvent.touchStart(tappable(), {
           touches: [{}, {}],
           changedTouches: [{}],
         });
-        expect(isActive()).toBe(false);
+        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
       });
+
       it('on disable', () => {
         const h = render(<TappableTest />);
         fireEvent.mouseDown(tappable());
-        act(() => {
-          jest.runOnlyPendingTimers();
-        });
+        act(jest.runOnlyPendingTimers);
         h.rerender(<TappableTest disabled />);
-        expect(isActive()).toBe(false);
+        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
       });
+
       it('on hasActive=false', () => {
         const h = render(<TappableTest />);
         fireEvent.mouseDown(tappable());
-        runAllTimers();
+        act(jest.runAllTimers);
         h.rerender(<TappableTest hasActive={false} />);
-        expect(isActive()).toBe(false);
+        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
       });
+
       it('on child hover', async () => {
         render(
           <TappableTest>
@@ -285,56 +282,57 @@ describe('Tappable', () => {
           </TappableTest>,
         );
         fireEvent.mouseDown(tappable());
-        runAllTimers();
+        act(jest.runAllTimers);
         await userEvent.hover(screen.getByTestId('c'));
-        expect(isActive()).toBe(false);
+        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
       });
     });
   });
 
   describe('hover', () => {
-    const isHovered = (testId = 'x') =>
-      screen.getByTestId(testId).classList.contains(styles['Tappable--hovered-background']);
-
     it('is not hovered by default', () => {
-      render(<Tappable onClick={noop} data-testid="x" />);
-      expect(isHovered()).toBe(false);
+      const result = render(<Tappable onClick={noop} data-testid="x" />);
+      expect(result.getByTestId('x')).not.toHaveClass(styles['Tappable--hovered-background']);
     });
+
     it('tracks mouse', async () => {
-      render(<Tappable onClick={noop} data-testid="x" />);
-      await act(() => userEvent.hover(screen.getByTestId('x')));
-      expect(isHovered()).toBe(true);
-      await act(() => userEvent.unhover(screen.getByTestId('x')));
-      expect(isHovered()).toBe(false);
+      const result = render(<Tappable onClick={noop} data-testid="x" />);
+      await userEvent.hover(screen.getByTestId('x'));
+      expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
+      await userEvent.unhover(screen.getByTestId('x'));
+      expect(result.getByTestId('x')).not.toHaveClass(styles['Tappable--hovered-background']);
     });
+
     describe('no hover when disabled', () => {
       it('does not hover when disabled', async () => {
-        render(<Tappable onClick={noop} data-testid="x" disabled />);
+        const result = render(<Tappable onClick={noop} data-testid="x" disabled />);
         await userEvent.hover(screen.getByTestId('x'));
-        expect(isHovered()).toBe(false);
+        expect(result.getByTestId('x')).not.toHaveClass(styles['Tappable--hovered-background']);
       });
     });
+
     describe('nested hover', () => {
       it('unhovers on child hover', async () => {
-        render(
+        const result = render(
           <Tappable data-testid="x" onClick={noop}>
             <Tappable data-testid="c" onClick={noop} />
           </Tappable>,
         );
-        await act(() => userEvent.hover(screen.getByTestId('c')));
-        expect(isHovered()).toBe(false);
+        await userEvent.hover(screen.getByTestId('c'));
+        expect(result.getByTestId('x')).not.toHaveClass(styles['Tappable--hovered-background']);
         fireEvent.pointerLeave(screen.getByTestId('c'));
-        expect(isHovered()).toBe(true);
+        expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
       });
+
       describe('handles disabled children', () => {
         it('hovers on disabled child hover', async () => {
-          render(
+          const result = render(
             <Tappable onClick={noop} data-testid="x">
               <Tappable onClick={noop} data-testid="c" disabled />
             </Tappable>,
           );
-          await act(() => userEvent.hover(screen.getByTestId('c')));
-          expect(isHovered()).toBe(true);
+          await userEvent.hover(screen.getByTestId('c'));
+          expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
         });
       });
     });

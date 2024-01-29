@@ -12,12 +12,12 @@ describe(getNavId, () => {
       getNavId({ nav: 'ok' }, warn);
       getNavId({ id: 'ok' }, warn);
       getNavId({ nav: 'ok', id: 'dont' }, warn);
-      expect(warn).not.toBeCalled();
+      expect(warn).not.toHaveBeenCalled();
     });
     it('errors if nav id missing', () => {
       const warn = jest.fn();
       getNavId({}, warn);
-      expect(warn).toBeCalled();
+      expect(warn).toHaveBeenCalled();
     });
   });
 });

@@ -31,6 +31,12 @@ describe('CustomSelect', () => {
   ));
 
   it('Does not explode on NaN value', () => {
+    jest.spyOn(global.console, 'error').mockImplementationOnce((message) => {
+      if (message.includes('Received NaN')) {
+        return;
+      }
+      global.console.error(message);
+    });
     const h = render(<CustomSelect value={NaN} options={[]} />);
     expect(() => h.rerender(<CustomSelect value={NaN} options={[]} />)).not.toThrow();
   });
