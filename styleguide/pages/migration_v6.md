@@ -54,6 +54,7 @@
   - <a href="{{anchor}}">`Tabbar`</a>
   - <a href="{{anchor}}">`Tappable`</a>
   - <a href="{{anchor}}">~~`Tooltip`~~ -> `OnboardingTooltip`</a>
+  - <a href="{{anchor}}">~~`TooltipContainer`~~ -> `OnboardingTooltipContainer`</a>
   - <a href="{{anchor}}">`Typography/Title`</a>
   - <a href="{{anchor}}">`Typography/Headline`</a>
   - <a href="{{anchor}}">`Typography/Subhead`</a>
@@ -1018,6 +1019,9 @@ npx @vkontakte/vkui-codemods --help
 - alignY="left"
 + placement="bottom-start"
 
+- arrow={false}
++ disableArrow
+
 - offsetX={0}
 + offsetByCrossAxis={0}
 
@@ -1034,6 +1038,17 @@ npx @vkontakte/vkui-codemods --help
   <div>Target</div>
 - </Tooltip>
 + </OnboardingTooltip>
+```
+
+<br/>
+
+### ~~`TooltipContainer`~~ -> [`OnboardingTooltipContainer`](#/OnboardingTooltip)
+
+- Компонент переименован.
+
+```diff
+- <TooltipContainer />
++ <OnboardingTooltipContainer />
 ```
 
 <br/>

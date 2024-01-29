@@ -5,6 +5,7 @@ export type {
   PlacementWithAuto,
   AutoPlacementType,
   UseFloatingMiddleware,
+  OnPlacementChange,
 } from './types/common';
 
 export type { FloatingComponentProps, FloatingContentRenderProp } from './types/component';
@@ -35,3 +36,5 @@ export {
 } from './useFloatingMiddlewaresBootstrap';
 
 export * from './useFloatingWithInteractions';
+
+export { usePlacementChangeCallback } from './usePlacementChangeCallback';

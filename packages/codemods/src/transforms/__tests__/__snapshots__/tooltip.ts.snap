@@ -24,6 +24,10 @@ const App = () => {
       <OnboardingTooltip placement="top-end">target</OnboardingTooltip>
 
       <OnboardingTooltip placement="auto">target</OnboardingTooltip>
+
+      <OnboardingTooltip></OnboardingTooltip>
+
+      <OnboardingTooltip disableArrow>target</OnboardingTooltip>
     </React.Fragment>
   );
 };"

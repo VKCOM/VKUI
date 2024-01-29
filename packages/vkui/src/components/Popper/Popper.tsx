@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
-import { usePrevious } from '../../hooks/usePrevious';
 import {
   autoUpdateFloatingElement,
   convertFloatingDataToReactCSSProperties,
   type FloatingComponentProps,
-  type Placement,
   useFloating,
   useFloatingMiddlewaresBootstrap,
+  usePlacementChangeCallback,
   type VirtualElement,
 } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -48,6 +47,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'zIndex'
   | 'usePortal'
   | 'customMiddlewares'
+  | 'onPlacementChange'
 >;
 
 export interface PopperCommonProps
@@ -75,11 +75,6 @@ export interface PopperCommonProps
    * Подписывается на изменение геометрии `targetRef`, чтобы пересчитать свою позицию.
    */
   autoUpdateOnTargetResize?: boolean;
-  /**
-   * В зависимости от области видимости, позиция может смениться на более оптимальную,
-   * чтобы Popper вместился в эту область видимости.
-   */
-  onPlacementChange?(placement: Placement): void;
 }
 
 export interface PopperProps extends PopperCommonProps {
@@ -149,6 +144,9 @@ export const Popper = ({
       });
     },
   });
+
+  usePlacementChangeCallback(resolvedPlacement, onPlacementChange);
+
   const { arrow: arrowCoords } = middlewareData;
 
   const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRootRef);
@@ -156,16 +154,6 @@ export const Popper = ({
   useIsomorphicLayoutEffect(() => {
     refs.setReference('current' in targetRef ? targetRef.current : targetRef);
   }, [refs.setReference, targetRef]);
-
-  const prevResolvedPlacement = usePrevious(resolvedPlacement);
-  useIsomorphicLayoutEffect(() => {
-    if (prevResolvedPlacement === undefined || !onPlacementChange) {
-      return;
-    }
-    if (prevResolvedPlacement !== resolvedPlacement) {
-      onPlacementChange(resolvedPlacement);
-    }
-  }, [prevResolvedPlacement, resolvedPlacement, onPlacementChange]);
 
   const dropdown = (
     <RootComponent
