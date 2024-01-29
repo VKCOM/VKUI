@@ -14,7 +14,7 @@ describe(useAutoFocus, () => {
     const onFocus = jest.fn();
     render(<Playground onFocus={onFocus} />);
 
-    expect(onFocus).not.toBeCalled();
+    expect(onFocus).not.toHaveBeenCalled();
 
     const el = screen.getByTestId('div');
     expect(document.activeElement).not.toBe(el);
@@ -24,7 +24,7 @@ describe(useAutoFocus, () => {
     const onFocus = jest.fn();
     render(<Playground onFocus={onFocus} autoFocus />);
 
-    expect(onFocus).toBeCalled();
+    expect(onFocus).toHaveBeenCalled();
 
     const el = screen.getByTestId('div');
     expect(document.activeElement).toBe(el);

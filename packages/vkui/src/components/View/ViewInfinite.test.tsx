@@ -2,13 +2,7 @@ import * as React from 'react';
 import { type ComponentType, Fragment, type ReactNode } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { getRandomUsers } from '../../testing/mock';
-import {
-  baselineComponent,
-  fakeTimers,
-  mockScrollContext,
-  mountTest,
-  runAllTimers,
-} from '../../testing/utils';
+import { baselineComponent, fakeTimers, mockScrollContext, mountTest } from '../../testing/utils';
 import { HasChildren } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
@@ -44,7 +38,7 @@ describe('ViewInfinite', () => {
       render(<ViewInfinite activePanel="p1">{panels}</ViewInfinite>).rerender(
         <ViewInfinite activePanel="p2">{panels}</ViewInfinite>,
       );
-      runAllTimers();
+      act(jest.runAllTimers);
       expect(document.getElementById('p1')).toBeNull();
       expect(document.getElementById('p2')).not.toBeNull();
     });
@@ -59,9 +53,9 @@ describe('ViewInfinite', () => {
           {panels}
         </ViewInfinite>,
       );
-      runAllTimers();
-      expect(onTransition).toBeCalledTimes(1);
-      expect(onTransition).toBeCalledWith({
+      act(jest.runAllTimers);
+      expect(onTransition).toHaveBeenCalledTimes(1);
+      expect(onTransition).toHaveBeenCalledWith({
         from: 'p1',
         to: 'p2',
         isBack: false,
@@ -78,8 +72,8 @@ describe('ViewInfinite', () => {
           {panels}
         </ViewInfinite>,
       );
-      runAllTimers();
-      expect(onTransition).toBeCalledWith({
+      act(jest.runAllTimers);
+      expect(onTransition).toHaveBeenCalledWith({
         from: 'p2',
         to: 'p1',
         isBack: true,
@@ -88,13 +82,14 @@ describe('ViewInfinite', () => {
   });
 
   describe('blurs active element', () => {
+    const panels = [<Panel id="focus" key="1" />, <Panel id="other" key="2" />];
     const renderFocused = () => render(<input autoFocus data-testid="__autofocus__" />);
     it('on activePanel change', () => {
       renderFocused();
-      const panels = [<Panel id="focus" key="1" />, <Panel id="other" key="2" />];
       render(<ViewInfinite activePanel="focus">{panels}</ViewInfinite>).rerender(
         <ViewInfinite activePanel="other">{panels}</ViewInfinite>,
       );
+      act(jest.runAllTimers);
       expect(document.activeElement === document.body).toBe(true);
     });
   });
@@ -107,11 +102,11 @@ describe('ViewInfinite', () => {
       const { view, ...events } = setupSwipeBack();
       fireEvent.mouseDown(view, { clientX: 0, clientY: 100 });
       fireEvent.mouseMove(view, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
-      expect(events.onSwipeBackStart).toBeCalledTimes(1);
+      expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
       fireEvent.mouseUp(view, { clientX: 0, clientY: 100 });
-      act(() => jest.runAllTimers());
-      expect(events.onSwipeBack).not.toBeCalled();
-      expect(events.onSwipeBackCancel).toBeCalledTimes(1);
+      act(jest.runAllTimers);
+      expect(events.onSwipeBack).not.toHaveBeenCalled();
+      expect(events.onSwipeBackCancel).toHaveBeenCalledTimes(1);
     });
     it('does swipeBack immediately on overscroll', () => {
       const { view, ...events } = setupSwipeBack();
@@ -119,9 +114,9 @@ describe('ViewInfinite', () => {
       fireEvent.mouseMove(view, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
       fireEvent.mouseMove(view, { clientX: window.innerWidth + 1, clientY: 100 });
       fireEvent.mouseUp(view);
-      act(() => jest.runAllTimers());
-      expect(events.onSwipeBack).toBeCalledTimes(1);
-      expect(events.onSwipeBackCancel).not.toBeCalled();
+      act(jest.runAllTimers);
+      expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
+      expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
     it('detects transition direction on swipeBack with useNavDirection() hook', async () => {
       const PanelContent = () => {
@@ -172,8 +167,8 @@ describe('ViewInfinite', () => {
         });
         fireEvent.mouseMove(elPreventSwipeBack, { clientX: window.innerWidth + 1, clientY: 100 });
         fireEvent.mouseUp(elPreventSwipeBack);
-        act(() => jest.runAllTimers());
-        expect(events.onSwipeBack).not.toBeCalled();
+        act(jest.runAllTimers);
+        expect(events.onSwipeBack).not.toHaveBeenCalled();
       });
 
       it('should prevent swipe back if swiped to opposite', () => {
@@ -184,8 +179,8 @@ describe('ViewInfinite', () => {
           clientY: 100,
         });
         fireEvent.mouseUp(view);
-        act(() => jest.runAllTimers());
-        expect(events.onSwipeBack).not.toBeCalled();
+        act(jest.runAllTimers);
+        expect(events.onSwipeBack).not.toHaveBeenCalled();
       });
     });
     it('does swipeBack after animation', () => {
@@ -196,10 +191,10 @@ describe('ViewInfinite', () => {
       // speed to 0
       nowMock.mockImplementation(() => Infinity);
       fireEvent.mouseUp(view);
-      expect(events.onSwipeBack).not.toBeCalled();
-      expect(events.onSwipeBackCancel).not.toBeCalled();
-      act(() => jest.runAllTimers());
-      expect(events.onSwipeBack).toBeCalledTimes(1);
+      expect(events.onSwipeBack).not.toHaveBeenCalled();
+      expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
+      act(jest.runAllTimers);
+      expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
     });
     it('should swipe back by start touch anywhere', () => {
       const { view, ...events } = setupSwipeBack();
@@ -213,11 +208,11 @@ describe('ViewInfinite', () => {
 
       const shiftXWithOffset = fromQuarterScreenX * 2; // event.shiftX начинается с 0, для правильного высчитывания swipeBackShift, смещаем это значение
       fireEvent.mouseMove(view, { clientX: fromQuarterScreenX + shiftXWithOffset, clientY: 100 });
-      expect(events.onSwipeBackStart).toBeCalledTimes(1);
+      expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
       fireEvent.mouseUp(view);
-      act(() => jest.runAllTimers());
-      expect(events.onSwipeBack).toBeCalledTimes(1);
-      expect(events.onSwipeBackCancel).not.toBeCalled();
+      act(jest.runAllTimers);
+      expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
+      expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
     it('fails weak swipeBack', () => {
       const { view, ...events } = setupSwipeBack();
@@ -229,9 +224,9 @@ describe('ViewInfinite', () => {
       // speed to 0
       nowMock.mockImplementation(() => Infinity);
       fireEvent.mouseUp(view);
-      act(() => jest.runAllTimers());
-      expect(events.onSwipeBack).not.toBeCalled();
-      expect(events.onSwipeBackCancel).toBeCalledTimes(1);
+      act(jest.runAllTimers);
+      expect(events.onSwipeBack).not.toHaveBeenCalled();
+      expect(events.onSwipeBackCancel).toHaveBeenCalledTimes(1);
     });
     it('recovers after swipeBack', () => {
       const { view, rerender, SwipeBack, ...events } = setupSwipeBack();
@@ -245,7 +240,7 @@ describe('ViewInfinite', () => {
       expect(document.getElementById('p1')).toBeTruthy();
       expect(document.getElementById('p2')).toBeTruthy();
       rerender(<SwipeBack activePanel="p1" history={['p1']} />);
-      expect(events.onTransition).toBeCalledTimes(1);
+      expect(events.onTransition).toHaveBeenCalledTimes(1);
       expect(document.getElementById('p1')).toBeTruthy();
       expect(document.getElementById('p2')).toBeNull();
     });
@@ -262,7 +257,7 @@ describe('ViewInfinite', () => {
       });
       fireEvent.mouseUp(view);
       rerender(<SwipeBack activePanel="p1" history={['p1']} />);
-      expect(scrollTo).toBeCalledWith(0, 22);
+      expect(scrollTo).toHaveBeenCalledWith(0, 22);
     });
 
     describe('horizontal scrollable elements', () => {
@@ -304,10 +299,10 @@ describe('ViewInfinite', () => {
           clientY: 100,
         });
         fireEvent.mouseUp(elMiddleHorizontalCell);
-        expect(events.onSwipeBackStart).toBeCalledTimes(1);
-        act(() => jest.runAllTimers());
-        expect(events.onSwipeBack).toBeCalledTimes(1);
-        expect(events.onSwipeBackCancel).not.toBeCalled();
+        expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
+        act(jest.runAllTimers);
+        expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
+        expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
 
         elWithScroll.scrollLeft = 0;
 
@@ -321,10 +316,10 @@ describe('ViewInfinite', () => {
           clientY: 100,
         });
         fireEvent.mouseUp(elMiddleHorizontalCell);
-        expect(events.onSwipeBackStart).toBeCalledTimes(1);
-        act(() => jest.runAllTimers());
-        expect(events.onSwipeBack).toBeCalledTimes(1);
-        expect(events.onSwipeBackCancel).not.toBeCalled();
+        expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
+        act(jest.runAllTimers);
+        expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
+        expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
       });
 
       it('should prevent swipe back only if scroll left is not on start', () => {
@@ -348,10 +343,10 @@ describe('ViewInfinite', () => {
           clientY: 100,
         });
         fireEvent.mouseUp(elMiddleHorizontalCell);
-        expect(events.onSwipeBackStart).not.toBeCalled();
-        act(() => jest.runAllTimers());
-        expect(events.onSwipeBack).not.toBeCalled();
-        expect(events.onSwipeBackCancel).not.toBeCalled();
+        expect(events.onSwipeBackStart).not.toHaveBeenCalled();
+        act(jest.runAllTimers);
+        expect(events.onSwipeBack).not.toHaveBeenCalled();
+        expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
 
         elWithScroll.scrollLeft = 0;
 
@@ -365,10 +360,10 @@ describe('ViewInfinite', () => {
           clientY: 100,
         });
         fireEvent.mouseUp(elMiddleHorizontalCell);
-        expect(events.onSwipeBackStart).toBeCalledTimes(1);
-        act(() => jest.runAllTimers());
-        expect(events.onSwipeBack).toBeCalledTimes(1);
-        expect(events.onSwipeBackCancel).not.toBeCalled();
+        expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
+        act(jest.runAllTimers);
+        expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
+        expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
       });
     });
 
@@ -392,10 +387,10 @@ describe('ViewInfinite', () => {
       fireEvent.mouseMove(elSlide1, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
       fireEvent.mouseMove(elSlide1, { clientX: window.innerWidth / 2, clientY: 100 });
       fireEvent.mouseUp(elSlide1);
-      expect(events.onSwipeBackStart).not.toBeCalled();
-      act(() => jest.runAllTimers());
-      expect(events.onSwipeBack).not.toBeCalled();
-      expect(events.onSwipeBackCancel).not.toBeCalled();
+      expect(events.onSwipeBackStart).not.toHaveBeenCalled();
+      act(jest.runAllTimers);
+      expect(events.onSwipeBack).not.toHaveBeenCalled();
+      expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
   });
 
@@ -420,8 +415,8 @@ describe('ViewInfinite', () => {
           <ViewInfinite activePanel="p1">{panels}</ViewInfinite>
         </MockScroll>,
       );
-      runAllTimers();
-      expect(scrollTo).toBeCalledWith(0, y);
+      act(jest.runAllTimers);
+      expect(scrollTo).toHaveBeenCalledWith(0, y);
     });
     it('resets scroll on forward navigation', () => {
       let y = 101;
@@ -437,15 +432,15 @@ describe('ViewInfinite', () => {
           <ViewInfinite activePanel="p1">{panels}</ViewInfinite>
         </MockScroll>,
       );
-      runAllTimers();
+      act(jest.runAllTimers);
       scrollTo.mockReset();
       h.rerender(
         <MockScroll>
           <ViewInfinite activePanel="p2">{panels}</ViewInfinite>
         </MockScroll>,
       );
-      runAllTimers();
-      expect(scrollTo).toBeCalledWith(0, 0);
+      act(jest.runAllTimers);
+      expect(scrollTo).toHaveBeenCalledWith(0, 0);
     });
   });
 });
@@ -486,6 +481,6 @@ function setupSwipeBack({
     </Wrapper>
   );
   const component = render(<SwipeBack />);
-  runAllTimers();
+  act(jest.runAllTimers);
   return { view: component.getByTestId('view'), ...events, ...component, SwipeBack };
 }

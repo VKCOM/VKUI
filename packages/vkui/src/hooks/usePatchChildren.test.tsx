@@ -74,6 +74,12 @@ describe(usePatchChildren, () => {
   ])(
     'should inject $event event to $type (hasOwnEvent: $hasOwnEvent)',
     ({ type, event, hasOwnEvent }) => {
+      jest.spyOn(global.console, 'error').mockImplementationOnce((message) => {
+        if (message.includes('React does not recognize the')) {
+          return;
+        }
+        global.console.error(message);
+      });
       const reactElementRef = React.createRef<HTMLDivElement>();
       const ownEvent = {
         someIntValue: 1,

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { act, render, within } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import { baselineComponent, userEvent, withRegExp } from '../../testing/utils';
 import { ChipsInputBase } from './ChipsInputBase';
 import type { ChipsInputBasePrivateProps } from './types';
@@ -68,7 +68,7 @@ describe(ChipsInputBase, () => {
         onRemoveChipOption={onRemoveChipOption}
       />,
     );
-    await act(() => userEvent.type(result.getByTestId('chips-input'), 'Красный{enter}'));
+    await userEvent.type(result.getByTestId('chips-input'), 'Красный{enter}');
     expect(onAddChipOption).toHaveBeenCalledWith('Красный');
   });
 
@@ -81,8 +81,8 @@ describe(ChipsInputBase, () => {
         onRemoveChipOption={onRemoveChipOption}
       />,
     );
-    await act(() => userEvent.type(result.getByTestId('chips-input'), 'Красный'));
-    await act(() => userEvent.click(document.body));
+    await userEvent.type(result.getByTestId('chips-input'), 'Красный');
+    await userEvent.click(document.body);
     expect(onAddChipOption).toHaveBeenCalledWith('Красный');
   });
 
@@ -96,7 +96,7 @@ describe(ChipsInputBase, () => {
     );
     const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
     const removeButton = within(chipRedLocator).getByRole('button');
-    await act(() => userEvent.click(removeButton));
+    await userEvent.click(removeButton);
     expect(onRemoveChipOption).toHaveBeenCalledWith(RED_OPTION.value);
   });
 
@@ -108,12 +108,10 @@ describe(ChipsInputBase, () => {
         onRemoveChipOption={onRemoveChipOption}
       />,
     );
-    await act(() => userEvent.tab());
-    await act(() =>
-      userEvent.type(
-        result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
-        `{${type}}`,
-      ),
+    await userEvent.tab();
+    await userEvent.type(
+      result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
+      `{${type}}`,
     );
     expect(onRemoveChipOption).toHaveBeenCalledWith(RED_OPTION.value);
   });
@@ -129,12 +127,10 @@ describe(ChipsInputBase, () => {
           onRemoveChipOption={onRemoveChipOption}
         />,
       );
-      await act(() => userEvent.tab());
-      await act(() =>
-        userEvent.type(
-          result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
-          `{${type}}`,
-        ),
+      await userEvent.tab();
+      await userEvent.type(
+        result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
+        `{${type}}`,
       );
       expect(onRemoveChipOption).not.toHaveBeenCalled();
     },
@@ -150,7 +146,7 @@ describe(ChipsInputBase, () => {
         />,
       );
       const containerEl = result.getByRole('listbox').closest('div')!;
-      await act(() => userEvent.click(containerEl));
+      await userEvent.click(containerEl);
       expect(result.getByTestId('chips-input')).toHaveFocus();
     });
 
@@ -163,7 +159,7 @@ describe(ChipsInputBase, () => {
         />,
       );
       const containerEl = result.getByRole('listbox').closest('div')!;
-      await act(() => userEvent.click(containerEl));
+      await userEvent.click(containerEl);
       expect(result.getByRole('option', { name: withRegExp(RED_OPTION.label) })).toHaveFocus();
     });
 
@@ -175,7 +171,7 @@ describe(ChipsInputBase, () => {
           onRemoveChipOption={onRemoveChipOption}
         />,
       );
-      await act(() => userEvent.click(result.getByTestId('chips-input')));
+      await userEvent.click(result.getByTestId('chips-input'));
       expect(result.getByTestId('chips-input')).toHaveFocus();
     });
 
@@ -188,7 +184,7 @@ describe(ChipsInputBase, () => {
         />,
       );
       const chipLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
-      await act(() => userEvent.click(chipLocator));
+      await userEvent.click(chipLocator);
       expect(chipLocator).toHaveFocus();
     });
 
@@ -203,10 +199,10 @@ describe(ChipsInputBase, () => {
       );
       const chipsInputLocator = result.getByTestId('chips-input');
 
-      await act(() => userEvent.type(chipsInputLocator, '{Backspace}'));
+      await userEvent.type(chipsInputLocator, '{Backspace}');
       expect(chipsInputLocator).toHaveFocus();
 
-      await act(() => userEvent.type(chipsInputLocator, '{Backspace}'));
+      await userEvent.type(chipsInputLocator, '{Backspace}');
       expect(chipsInputLocator.previousSibling).toHaveFocus();
     });
 
@@ -223,22 +219,22 @@ describe(ChipsInputBase, () => {
         result.getByRole('option', { name: withRegExp(label) }),
       );
 
-      await act(() => userEvent.type(chipRedLocator, '{ArrowRight}'));
+      await userEvent.type(chipRedLocator, '{ArrowRight}');
       expect(chipBlueLocator).toHaveFocus();
 
-      await act(() => userEvent.type(chipBlueLocator, '{ArrowRight}'));
+      await userEvent.type(chipBlueLocator, '{ArrowRight}');
       expect(chipYellowLocator).toHaveFocus();
 
-      await act(() => userEvent.type(chipYellowLocator, '{ArrowRight}'));
+      await userEvent.type(chipYellowLocator, '{ArrowRight}');
       expect(chipRedLocator).toHaveFocus();
 
-      await act(() => userEvent.type(chipRedLocator, '{ArrowLeft}'));
+      await userEvent.type(chipRedLocator, '{ArrowLeft}');
       expect(chipYellowLocator).toHaveFocus();
 
-      await act(() => userEvent.type(chipYellowLocator, '{ArrowLeft}'));
+      await userEvent.type(chipYellowLocator, '{ArrowLeft}');
       expect(chipBlueLocator).toHaveFocus();
 
-      await act(() => userEvent.type(chipBlueLocator, '{ArrowRight}'));
+      await userEvent.type(chipBlueLocator, '{ArrowRight}');
       expect(chipYellowLocator).toHaveFocus();
     });
 
@@ -256,28 +252,28 @@ describe(ChipsInputBase, () => {
         result.getByRole('option', { name: withRegExp(label) }),
       );
 
-      await act(() => userEvent.tab());
+      await userEvent.tab();
       expect(chipRedLocator).toHaveFocus();
 
-      await act(() => userEvent.tab());
+      await userEvent.tab();
       expect(chipsInputLocator).toHaveFocus();
 
-      await act(() => userEvent.tab({ shift: true }));
+      await userEvent.tab({ shift: true });
       expect(chipRedLocator).toHaveFocus();
 
-      await act(() => userEvent.type(chipRedLocator, '{ArrowRight}'));
+      await userEvent.type(chipRedLocator, '{ArrowRight}');
       expect(chipBlueLocator).toHaveFocus();
 
-      await act(() => userEvent.tab());
+      await userEvent.tab();
       expect(chipsInputLocator).toHaveFocus();
 
-      await act(() => userEvent.tab({ shift: true }));
+      await userEvent.tab({ shift: true });
       expect(chipBlueLocator).toHaveFocus();
 
-      await act(() => userEvent.tab({ shift: true }));
+      await userEvent.tab({ shift: true });
       expect(document.body).toHaveFocus();
 
-      await act(() => userEvent.tab());
+      await userEvent.tab();
       expect(chipBlueLocator).toHaveFocus();
     });
 
@@ -295,7 +291,7 @@ describe(ChipsInputBase, () => {
         />,
       );
       const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
-      await act(() => userEvent.type(chipRedLocator, '{Delete}'));
+      await userEvent.type(chipRedLocator, '{Delete}');
       const nextLocatorWithFocus =
         value.length <= 1
           ? result.getByTestId('chips-input')
@@ -318,8 +314,8 @@ describe(ChipsInputBase, () => {
         />,
       );
 
-      await act(() => userEvent.tab());
-      await act(() => userEvent.tab({ shift: true }));
+      await userEvent.tab();
+      await userEvent.tab({ shift: true });
 
       expect(onBlur).toHaveBeenCalled();
     },

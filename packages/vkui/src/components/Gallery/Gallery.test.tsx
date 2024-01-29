@@ -42,7 +42,7 @@ describe('Gallery', () => {
     it('keeps slideIndex when 0 slides', () => {
       const setIndex = jest.fn();
       render(<Gallery onChange={setIndex} slideIndex={10} />);
-      expect(setIndex).not.toBeCalled();
+      expect(setIndex).not.toHaveBeenCalled();
     });
   });
 });

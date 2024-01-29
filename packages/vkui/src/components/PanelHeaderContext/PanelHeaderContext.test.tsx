@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, fakeTimers, runAllTimers, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { PanelHeaderContext } from './PanelHeaderContext';
 
@@ -28,14 +28,14 @@ describe('PanelHeaderContext', () => {
         </AdaptivityProvider>,
       );
       await userEvent.click(document.body);
-      expect(onClose).toBeCalledTimes(1);
+      expect(onClose).toHaveBeenCalledTimes(1);
     });
 
     it('on mobile fade click', async () => {
       const onClose = jest.fn();
       render(<PanelHeaderContext opened onClose={onClose} />);
       await userEvent.click(document.querySelector('.vkuiPanelHeaderContext__fade') as Element);
-      expect(onClose).toBeCalledTimes(1);
+      expect(onClose).toHaveBeenCalledTimes(1);
     });
 
     it('does not close on content click', async () => {
@@ -46,7 +46,7 @@ describe('PanelHeaderContext', () => {
         </PanelHeaderContext>,
       );
       await userEvent.click(screen.getByTestId('xxx'));
-      expect(onClose).not.toBeCalled();
+      expect(onClose).not.toHaveBeenCalled();
     });
 
     it('Removes content after opened=false', () => {
@@ -60,7 +60,7 @@ describe('PanelHeaderContext', () => {
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
-      runAllTimers();
+      act(jest.runAllTimers);
       expect(screen.queryByTestId('xxx')).toBeNull();
     });
   });

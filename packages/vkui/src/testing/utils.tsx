@@ -39,11 +39,6 @@ export function fakeTimers() {
   });
 }
 
-export const runAllTimers = () => act(() => jest.runAllTimers());
-
-export const tryToGetByTestId = (id: string, elParent: HTMLElement) =>
-  elParent.querySelector<HTMLElement>(`[data-testid="${id}"]`);
-
 export const imgOnlyAttributes: ImgOnlyAttributes = {
   alt: 'test',
   crossOrigin: 'anonymous',
@@ -70,14 +65,32 @@ export type ComponentTestOptions = {
 };
 
 export function mountTest(Component: React.ComponentType<any>) {
-  it('renders', () => {
-    let api: RenderResult;
+  it('renders', async () => {
+    expect.assertions(3);
+
+    let result: RenderResult;
+
     // mount
-    expect(() => (api = render(<Component />))).not.toThrow();
-    // update
-    expect(() => api.rerender(<Component />)).not.toThrow();
-    // unmount
-    expect(() => api.unmount()).not.toThrow();
+    try {
+      result = render(<Component />);
+      await waitForFloatingPosition();
+      act(jest.runAllTimers);
+      expect(result).toBeTruthy();
+    } catch {}
+
+    try {
+      result!.rerender(<Component />);
+      await waitForFloatingPosition();
+      act(jest.runAllTimers);
+      expect(result!).toBeTruthy();
+    } catch {}
+
+    try {
+      // unmount
+      result!.unmount();
+      act(jest.runAllTimers);
+      expect(result!).toBeTruthy();
+    } catch {}
   });
 }
 
@@ -85,15 +98,15 @@ export function a11yTest(Component: React.ComponentType<any>) {
   it('a11y: has no violations', async () => {
     const { container } = render(<Component />);
     await waitForFloatingPosition();
-
     jest.useRealTimers();
     const results = await axe(container, {});
+    jest.useFakeTimers();
     expect(results).toHaveNoViolations();
   });
 }
 
 export function getRootRefTest(Component: React.ComponentType<any>) {
-  it('getRootRef', () => {
+  it('getRootRef', async () => {
     const stableRef = { current: undefined };
 
     const ref = {
@@ -106,6 +119,8 @@ export function getRootRefTest(Component: React.ComponentType<any>) {
     };
 
     render(<Component getRootRef={ref} />);
+    await waitForFloatingPosition();
+    act(jest.runAllTimers);
 
     expect(ref.current).toBeTruthy();
   });
@@ -122,6 +137,7 @@ export function baselineComponent<Props extends object>(
     getRootRef = true,
     adaptivity,
   }: ComponentTestOptions = {},
+  testName = 'baseline',
 ) {
   const Component: React.ComponentType<any> = adaptivity
     ? (p: Props) => (
@@ -130,40 +146,67 @@ export function baselineComponent<Props extends object>(
         </AdaptivityProvider>
       )
     : RawComponent;
-  mountTest(Component);
-  a11y && a11yTest(Component);
-  forward &&
-    it('forwards attributes', async () => {
-      const cls = 'Custom';
-      const { rerender } = render(
-        <Component data-testid="__cmp__" className={cls} style={{ background: 'red' }} />,
-      );
-      await waitForFloatingPosition();
-      // forward DOM attributes
-      domAttr && expect(screen.queryByTestId('__cmp__')).toBeTruthy();
 
-      if (className || style) {
-        const styledNode = document.getElementsByClassName(cls)[0] as HTMLElement;
-        // forwards className
-        className && expect(styledNode).toBeTruthy();
-        const customClassList = Array.from(styledNode.classList).filter((item) => item !== cls);
-        // forwards style
-        style && expect(styledNode.style.background).toBe('red');
-        const customStyleCount = styledNode.style.length;
-
-        rerender(<Component />);
-
-        // does not replace default className
-        className && expect(Array.from(styledNode.classList)).toEqual(customClassList);
-        // does not replace default styles
-        style &&
-          expect(styledNode.style.length).toEqual(
-            styledNode.style.background ? customStyleCount : customStyleCount - 1,
-          );
-      }
+  describe(testName, () => {
+    beforeAll(() => {
+      jest.clearAllTimers();
+      jest.useFakeTimers();
     });
 
-  getRootRef && getRootRefTest(Component);
+    mountTest(Component);
+
+    if (a11y) {
+      a11yTest(Component);
+    }
+
+    if (forward) {
+      it('forwards attributes', async () => {
+        const cls = 'Custom';
+        const { rerender } = render(
+          <Component data-testid="__cmp__" className={cls} style={{ background: 'red' }} />,
+        );
+        await waitForFloatingPosition();
+        act(jest.runAllTimers);
+        // forward DOM attributes
+        if (domAttr) {
+          expect(screen.queryByTestId('__cmp__')).toBeTruthy();
+        }
+
+        if (className || style) {
+          const styledNode = document.getElementsByClassName(cls)[0] as HTMLElement;
+          // forwards className
+          if (className) {
+            expect(styledNode).toBeTruthy();
+          }
+          const customClassList = Array.from(styledNode.classList).filter((item) => item !== cls);
+          // forwards style
+          if (style) {
+            expect(styledNode.style.background).toBe('red');
+          }
+          const customStyleCount = styledNode.style.length;
+
+          rerender(<Component />);
+          await waitForFloatingPosition();
+          act(jest.runAllTimers);
+
+          // does not replace default className
+          if (className) {
+            expect(Array.from(styledNode.classList)).toEqual(customClassList);
+          }
+          // does not replace default styles
+          if (style) {
+            expect(styledNode.style.length).toEqual(
+              styledNode.style.background ? customStyleCount : customStyleCount - 1,
+            );
+          }
+        }
+      });
+    }
+
+    if (getRootRef) {
+      getRootRefTest(Component);
+    }
+  });
 }
 
 type RectOptions = { x?: number; y?: number; w?: number; h?: number };

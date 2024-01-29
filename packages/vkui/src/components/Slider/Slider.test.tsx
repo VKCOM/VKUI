@@ -1,7 +1,13 @@
 import * as React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { setRef } from '../../lib/utils';
-import { baselineComponent, mockRect, userEvent } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimers,
+  mockRect,
+  userEvent,
+  waitForFloatingPosition,
+} from '../../testing/utils';
 import type { TouchEvent } from '../Touch/Touch';
 import { Slider as SliderBase, type SliderMultipleProps, type SliderProps } from './Slider';
 
@@ -18,7 +24,7 @@ const Slider = ({
   return <SliderBase data-testid="root" getRootRef={getRootRef} {...restProps} />;
 };
 
-describe('Slider', () => {
+describe(Slider, () => {
   baselineComponent((props) => <Slider getAriaLabel={() => 'Slider'} {...props} />);
 
   describe('uncontrolled', () => {
@@ -211,6 +217,8 @@ describe('Slider', () => {
   });
 
   describe('with tooltip', () => {
+    fakeTimers();
+
     it('shows tooltip on hover/focus', async () => {
       render(<Slider defaultValue={30} withTooltip />);
       const slider = screen.getByRole('slider');
@@ -219,18 +227,20 @@ describe('Slider', () => {
 
       // shows tooltip on hover
       await userEvent.hover(slider);
+      await waitForFloatingPosition();
       expect(screen.queryByText('30')).toBeInTheDocument();
 
       // hides on unhover
       await userEvent.unhover(slider);
+      await waitForFloatingPosition();
       expect(screen.queryByText('30')).not.toBeInTheDocument();
 
       // shows tooltip on focus
-      slider.focus();
+      act(() => slider.focus());
       await waitFor(() => expect(screen.queryByText('30')).toBeInTheDocument());
 
       // hides on blur
-      slider.blur();
+      act(() => slider.blur());
       await waitFor(() => expect(screen.queryByText('30')).not.toBeInTheDocument());
     });
   });

@@ -195,14 +195,14 @@ describe(useModalManager, () => {
         useModalManager('m1', <MockModal id="m1" onOpen={onOpenOfComponent} />, onOpenOfArgument),
       );
       handle.result.current.onEnter();
-      expect(onOpenOfComponent).toBeCalledTimes(1);
-      expect(onOpenOfArgument).toBeCalledTimes(0);
+      expect(onOpenOfComponent).toHaveBeenCalledTimes(1);
+      expect(onOpenOfArgument).toHaveBeenCalledTimes(0);
     });
     it('calls own onOpen if missing in modal props', () => {
       const onOpen = jest.fn();
       const handle = renderHook(() => useModalManager('m1', <MockModal id="m1" />, onOpen));
       handle.result.current.onEnter();
-      expect(onOpen).toBeCalledTimes(1);
+      expect(onOpen).toHaveBeenCalledTimes(1);
     });
     it('calls active modal onOpened', () => {
       const onOpenedOfComponent = jest.fn();
@@ -218,8 +218,8 @@ describe(useModalManager, () => {
       act(() => {
         handle.result.current.onEntered('m1');
       });
-      expect(onOpenedOfComponent).toBeCalledTimes(1);
-      expect(onOpenedOfArgument).toBeCalledTimes(0);
+      expect(onOpenedOfComponent).toHaveBeenCalledTimes(1);
+      expect(onOpenedOfArgument).toHaveBeenCalledTimes(0);
     });
     it('calls own onOpened if missing in modal props', () => {
       const onOpened = jest.fn();
@@ -227,7 +227,7 @@ describe(useModalManager, () => {
       act(() => {
         handle.result.current.onEntered('m1');
       });
-      expect(onOpened).toBeCalledTimes(1);
+      expect(onOpened).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -245,8 +245,8 @@ describe(useModalManager, () => {
         ),
       );
       handle.result.current.onExit();
-      expect(onCloseOfComponent).toBeCalledTimes(1);
-      expect(onCloseOfArgument).toBeCalledTimes(0);
+      expect(onCloseOfComponent).toHaveBeenCalledTimes(1);
+      expect(onCloseOfArgument).toHaveBeenCalledTimes(0);
     });
     it('calls own onClose if missing in modal props', () => {
       const onClose = jest.fn();
@@ -254,7 +254,7 @@ describe(useModalManager, () => {
         useModalManager('m1', <MockModal id="m1" />, noop, noop, onClose),
       );
       handle.result.current.onExit();
-      expect(onClose).toBeCalledTimes(1);
+      expect(onClose).toHaveBeenCalledTimes(1);
     });
     it('calls active modal onClosed', () => {
       const onClosedOfComponent = jest.fn();
@@ -272,8 +272,8 @@ describe(useModalManager, () => {
       act(() => {
         handle.result.current.onExited('m1');
       });
-      expect(onClosedOfComponent).toBeCalledTimes(1);
-      expect(onClosedOfArgument).toBeCalledTimes(0);
+      expect(onClosedOfComponent).toHaveBeenCalledTimes(1);
+      expect(onClosedOfArgument).toHaveBeenCalledTimes(0);
     });
     it('calls own onClosed if missing in modal props', () => {
       const onClosed = jest.fn();
@@ -283,7 +283,7 @@ describe(useModalManager, () => {
       act(() => {
         handle.result.current.onExited('m1');
       });
-      expect(onClosed).toBeCalledTimes(1);
+      expect(onClosed).toHaveBeenCalledTimes(1);
     });
   });
 });

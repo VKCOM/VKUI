@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { Search } from './Search';
 import styles from './Search.module.css';
@@ -8,9 +8,10 @@ const getInput = () => screen.getByRole('searchbox');
 const getClearIcon = () => document.querySelector(`.${styles.Search__icon}`)!;
 const getFindButton = () => document.querySelector(`.${styles.Search__findButton}`)!;
 
-describe('Search', () => {
-  fakeTimers();
+describe(Search, () => {
   baselineComponent(Search);
+
+  fakeTimers();
 
   describe('works uncontrolled', () => {
     it('uses defaultValue', () => {
@@ -98,6 +99,7 @@ describe('Search', () => {
     const cb = jest.fn();
     render(<Search value="test" onFindButtonClick={cb} />);
     await userEvent.click(getFindButton());
+    act(jest.runAllTimers);
     expect(cb).toHaveBeenCalled();
   });
 });

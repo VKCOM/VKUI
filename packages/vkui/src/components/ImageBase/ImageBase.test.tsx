@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
 } from '../../testing/icons';
-import { baselineComponent, imgOnlyAttributes, tryToGetByTestId } from '../../testing/utils';
+import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
 import { ImageBase, ImageBaseProps } from './ImageBase';
 
 const TEST_LOCATORS = {
@@ -19,8 +19,7 @@ const ImageBaseTest = (props: ImageBaseProps) => (
 
 const getImageBaseRootEl = () => screen.getByTestId(TEST_LOCATORS.ROOT);
 
-const getImageBaseImgEl = (elParent = getImageBaseRootEl()) =>
-  elParent.querySelector<HTMLImageElement>('img');
+const getImageBaseImgEl = (elParent = getImageBaseRootEl()) => within(elParent).getByRole('img');
 
 describe(ImageBase, () => {
   baselineComponent(ImageBase);
@@ -32,48 +31,40 @@ describe(ImageBase, () => {
 
   it("should not render 'img' tag if `src` is not passed", () => {
     render(<ImageBaseTest />);
-    expect(getImageBaseImgEl()).not.toBeInTheDocument();
+    expect(() => getImageBaseImgEl()).toThrow();
   });
 
   it('should show fallback icon if `src` is not passed', () => {
     render(<ImageBaseTest fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />} />);
 
     const elImageBase = getImageBaseRootEl();
-    const elImageBaseIcon = tryToGetByTestId(
+    const elImageBaseIcon = within(elImageBase).getByTestId(
       IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
-      elImageBase,
     );
 
     expect(elImageBase).toContainElement(elImageBaseIcon);
   });
 
   it('should show fallback icon if `src` is bad', (doneCallback) => {
+    const onError = jest.fn();
     render(
       <ImageBaseTest
         src="https://404.please"
         fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />}
+        onError={onError}
       />,
     );
 
     const elImageBase = getImageBaseRootEl();
-    const elImg = getImageBaseImgEl(elImageBase);
-    if (!elImg) {
-      throw new Error('Cannot find img element');
-    }
 
-    elImg.onerror = jest.fn(() => {
-      // ждём re-render со стороны react
-      setTimeout(() => {
-        const elFallbackIcon = tryToGetByTestId(
-          IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
-          elImageBase,
-        );
-        expect(elImageBase).toContainElement(elFallbackIcon);
-        doneCallback();
-      }, 0);
-    });
+    fireEvent.error(getImageBaseImgEl(elImageBase));
 
-    fireEvent.error(elImg);
+    const elFallbackIcon = within(elImageBase).getByTestId(
+      IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
+    );
+    expect(elImageBase).toContainElement(elFallbackIcon);
+    expect(onError).toHaveBeenCalledTimes(1);
+    doneCallback();
   });
 
   it('[unwanted case] should show children and fallbackIcon', () => {
@@ -86,9 +77,8 @@ describe(ImageBase, () => {
     );
 
     const elImageBase = getImageBaseRootEl();
-    const elFallbackIcon = tryToGetByTestId(
+    const elFallbackIcon = within(elImageBase).getByTestId(
       IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
-      elImageBase,
     );
 
     expect(elImageBase).toHaveTextContent(CHILDREN);
@@ -98,7 +88,7 @@ describe(ImageBase, () => {
   it("should provide `ref` of 'img' tag", () => {
     const refCallback = jest.fn();
     render(<ImageBaseTest src="#" getRef={refCallback} />);
-    expect(refCallback).toBeCalled();
+    expect(refCallback).toHaveBeenCalled();
   });
 
   it("should have all attributes of 'img' tag", () => {
@@ -113,7 +103,7 @@ describe(ImageBase, () => {
     const onLoadMock = jest.fn();
     render(<ImageBaseTest onLoad={onLoadMock} src="https://image.to.load" />);
 
-    expect(onLoadMock).not.toBeCalled();
+    expect(onLoadMock).not.toHaveBeenCalled();
 
     const imageElement = getImageBaseImgEl();
     if (!imageElement) {
@@ -122,7 +112,7 @@ describe(ImageBase, () => {
 
     fireEvent.load(imageElement);
 
-    expect(onLoadMock).toBeCalledTimes(1);
+    expect(onLoadMock).toHaveBeenCalledTimes(1);
   });
 
   it('calls onLoad prop if image is already loaded but onLoad event listener missed that', () => {
@@ -143,17 +133,14 @@ describe(ImageBase, () => {
     render(<ImageBaseTest getRef={getRefMock} onLoad={onLoadMock} src="https://loaded.image" />);
 
     // make sure onLoad prop is called as is if img elment has 'complete=true'
-    expect(onLoadMock).toBeCalledTimes(1);
+    expect(onLoadMock).toHaveBeenCalledTimes(1);
 
     const imageElement = getImageBaseImgEl();
-    if (!imageElement) {
-      throw new Error('Cannot find img element');
-    }
 
     fireEvent.load(imageElement);
 
     // make sure we ignore img.onLoad that is fired for some reason after we manually handled the complete state.
-    expect(onLoadMock).toBeCalledTimes(1);
+    expect(onLoadMock).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -168,7 +155,7 @@ describe(ImageBase.Badge, () => {
     );
 
     const elImageBase = getImageBaseRootEl();
-    const elImageBaseBade = tryToGetByTestId(TEST_LOCATORS.BADGE, elImageBase);
+    const elImageBaseBade = within(elImageBase).getByTestId(TEST_LOCATORS.BADGE);
 
     expect(elImageBase).toContainElement(elImageBaseBade);
   });
@@ -185,7 +172,7 @@ describe(ImageBase.Overlay, () => {
     );
 
     const elImageBase = getImageBaseRootEl();
-    const elImageBaseOverlay = tryToGetByTestId(TEST_LOCATORS.OVERLAY, elImageBase);
+    const elImageBaseOverlay = within(elImageBase).getByTestId(TEST_LOCATORS.OVERLAY);
 
     expect(elImageBase).toContainElement(elImageBaseOverlay);
   });

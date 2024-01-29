@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { baselineComponent, fakeTimers, userEvent } from '../../../testing/utils';
 import { Chip } from './Chip';
 
@@ -23,7 +23,7 @@ describe(Chip, () => {
       </Chip>,
     );
 
-    await act(() => userEvent.click(screen.getByRole('button')));
+    await userEvent.click(screen.getByRole('button'));
 
     expect(onRemove).toHaveBeenCalled();
   });
@@ -57,8 +57,8 @@ describe(Chip, () => {
         />,
       );
 
-      await act(() => userEvent.tab());
-      await act(() => userEvent.tab({ shift: true }));
+      await userEvent.tab();
+      await userEvent.tab({ shift: true });
 
       expect(onFocus).toHaveBeenCalled();
       expect(onBlur).toHaveBeenCalled();

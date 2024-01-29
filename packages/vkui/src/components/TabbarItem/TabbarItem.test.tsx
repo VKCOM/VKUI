@@ -34,10 +34,10 @@ describe('TabbarItem', () => {
 
     const { rerender } = render(<TabbarItem onClick={cb} data-testid="test" />);
     await userEvent.click(screen.getByTestId('test'));
-    expect(cb).toBeCalledTimes(1);
+    expect(cb).toHaveBeenCalledTimes(1);
 
     rerender(<TabbarItem onClick={cb} data-testid="test" disabled />);
     await userEvent.click(screen.getByTestId('test'));
-    expect(cb).toBeCalledTimes(1);
+    expect(cb).toHaveBeenCalledTimes(1);
   });
 });

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Textarea } from './Textarea';
 
 const getInput = () => screen.getByRole('textbox');
 
-describe('Textarea', () => {
+describe(Textarea, () => {
   baselineComponent((props) => (
     <>
       <VisuallyHidden Component="label" id="textarea">
@@ -17,6 +17,8 @@ describe('Textarea', () => {
   ));
 
   describe('works uncontrolled', () => {
+    fakeTimers();
+
     it('uses defaultValue', () => {
       render(<Textarea defaultValue="def" />);
       expect(getInput()).toHaveValue('def');
@@ -36,6 +38,8 @@ describe('Textarea', () => {
   });
 
   describe('works controlled', () => {
+    fakeTimers();
+
     it('respects outer value', () => {
       const { rerender } = render(<Textarea value="init" />);
       expect(getInput()).toHaveValue('init');
@@ -60,6 +64,8 @@ describe('Textarea', () => {
   });
 
   describe('calls onResize', () => {
+    fakeTimers();
+
     it('when editing', async () => {
       const onResize = jest.fn();
       render(<Textarea value="" onResize={onResize} />);

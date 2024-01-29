@@ -31,9 +31,9 @@ describe('Calendar', () => {
       />,
     );
     await userEvent.click(screen.getByText(`${firstDayDate.getDate()}`));
-    expect(onChange).not.toBeCalled();
+    expect(onChange).not.toHaveBeenCalled();
     await userEvent.click(screen.getByText(`${maxDate.getDate() + 1}`));
-    expect(onChange).not.toBeCalled();
+    expect(onChange).not.toHaveBeenCalled();
   });
 
   it('onChange respects minDateTime', async () => {

@@ -95,16 +95,16 @@ describe('Touch', () => {
       const onLeave = jest.fn();
       render(<Touch data-testid="__t__" onEnter={onEnter} onLeave={onLeave} />);
       fireEvent.mouseEnter(screen.getByTestId('__t__'));
-      expect(onEnter).toBeCalledTimes(1);
+      expect(onEnter).toHaveBeenCalledTimes(1);
       fireEvent.mouseLeave(screen.getByTestId('__t__'));
-      expect(onLeave).toBeCalledTimes(1);
+      expect(onLeave).toHaveBeenCalledTimes(1);
     });
     it('simulates onLeave with touch', () => {
       window['ontouchstart'] = null;
       const onLeave = jest.fn();
       render(<Touch data-testid="__t__" onLeave={onLeave} />);
       fireTouchSwipe(screen.getByTestId('__t__'), [[0, 0]]);
-      expect(onLeave).toBeCalledTimes(1);
+      expect(onLeave).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -151,15 +151,15 @@ describe('Touch', () => {
           const handlers = makeHandlers();
           render(<Touch {...handlers} data-testid="__t__" />);
           fireGesture(screen.getByTestId('__t__'), [[20, 20]]);
-          expect(handlers.onStart).toBeCalledTimes(1);
-          expect(handlers.onStart).toBeCalledWith(emptyGesture(20, 20));
+          expect(handlers.onStart).toHaveBeenCalledTimes(1);
+          expect(handlers.onStart).toHaveBeenCalledWith(emptyGesture(20, 20));
         });
         it('has all params end gesture on clean tap', () => {
           const handlers = makeHandlers();
           render(<Touch {...handlers} data-testid="__t__" />);
           fireGesture(screen.getByTestId('__t__'), [[20, 20]]);
-          expect(handlers.onEnd).toBeCalledTimes(1);
-          expect(handlers.onEnd).toBeCalledWith(emptyGesture(20, 20));
+          expect(handlers.onEnd).toHaveBeenCalledTimes(1);
+          expect(handlers.onEnd).toHaveBeenCalledWith(emptyGesture(20, 20));
         });
       });
 
@@ -175,12 +175,12 @@ describe('Touch', () => {
           screen.getByTestId('__t__'),
           [0, 1, 2, 3].map((t) => [20 + vx * t, 20 + vy * t]),
         );
-        expect(handlers.onStartX).toBeCalledTimes(1);
-        expect(handlers.onStartY).toBeCalledTimes(1);
-        expect(handlers.onMoveX).toBeCalledTimes(vx ? 2 : 0);
-        expect(handlers.onMoveY).toBeCalledTimes(vy ? 2 : 0);
-        expect(handlers.onEndX).toBeCalledTimes(vx ? 1 : 0);
-        expect(handlers.onEndY).toBeCalledTimes(vy ? 1 : 0);
+        expect(handlers.onStartX).toHaveBeenCalledTimes(1);
+        expect(handlers.onStartY).toHaveBeenCalledTimes(1);
+        expect(handlers.onMoveX).toHaveBeenCalledTimes(vx ? 2 : 0);
+        expect(handlers.onMoveY).toHaveBeenCalledTimes(vy ? 2 : 0);
+        expect(handlers.onEndX).toHaveBeenCalledTimes(vx ? 1 : 0);
+        expect(handlers.onEndY).toHaveBeenCalledTimes(vy ? 1 : 0);
       });
 
       it('does not detect slide on small movement', () => {
@@ -192,9 +192,9 @@ describe('Touch', () => {
           [23, 20],
           [20, 17],
         ]);
-        expect(handlers.onStartY).toBeCalledTimes(1);
-        expect(handlers.onMoveY).not.toBeCalled();
-        expect(handlers.onEndY).not.toBeCalled();
+        expect(handlers.onStartY).toHaveBeenCalledTimes(1);
+        expect(handlers.onMoveY).not.toHaveBeenCalled();
+        expect(handlers.onEndY).not.toHaveBeenCalled();
       });
 
       it('does not detect slide if onMove[X|Y] not passed', () => {
@@ -204,8 +204,8 @@ describe('Touch', () => {
           [20, 20],
           [20, 30],
         ]);
-        expect(handlers.onEnd).toBeCalledTimes(1);
-        expect(handlers.onEnd).toBeCalledWith(
+        expect(handlers.onEnd).toHaveBeenCalledTimes(1);
+        expect(handlers.onEnd).toHaveBeenCalledWith(
           expect.objectContaining({
             isSlideX: false,
             isSlideY: false,
@@ -222,9 +222,9 @@ describe('Touch', () => {
           [20, 20],
           [30, 20],
         ]);
-        expect(handlers.onMoveX).not.toBeCalled();
-        expect(handlers.onEndX).not.toBeCalled();
-        expect(handlers.onEnd).toBeCalledWith(
+        expect(handlers.onMoveX).not.toHaveBeenCalled();
+        expect(handlers.onEndX).not.toHaveBeenCalled();
+        expect(handlers.onEnd).toHaveBeenCalledWith(
           expect.objectContaining({
             isSlide: true,
             isSlideY: true,
@@ -249,8 +249,10 @@ describe('Touch', () => {
               [25, 30],
             ],
           ]);
-          expect(handlers.onMove).toBeCalledTimes(1);
-          expect(handlers.onEnd).toBeCalledWith(expect.objectContaining({ shiftX: 0, shiftY: 6 }));
+          expect(handlers.onMove).toHaveBeenCalledTimes(1);
+          expect(handlers.onEnd).toHaveBeenCalledWith(
+            expect.objectContaining({ shiftX: 0, shiftY: 6 }),
+          );
         });
       }
 
@@ -267,10 +269,10 @@ describe('Touch', () => {
             ],
             { startEl: screen.getByTestId('__t__') },
           );
-          expect(handlers.onStart).toBeCalledTimes(1);
-          expect(handlers.onMoveY).toBeCalledTimes(2);
-          expect(handlers.onEnd).toBeCalledTimes(1);
-          expect(handlers.onEnd).toBeCalledWith(
+          expect(handlers.onStart).toHaveBeenCalledTimes(1);
+          expect(handlers.onMoveY).toHaveBeenCalledTimes(2);
+          expect(handlers.onEnd).toHaveBeenCalledTimes(1);
+          expect(handlers.onEnd).toHaveBeenCalledWith(
             expect.objectContaining({ isSlideY: true, shiftY: 10 }),
           );
         });
@@ -294,7 +296,7 @@ describe('Touch', () => {
           );
           h.rerender(<Touch {...handlers} data-testid="__t__" />);
           fireEnd();
-          expect(handlers.onEnd).toBeCalledTimes(1);
+          expect(handlers.onEnd).toHaveBeenCalledTimes(1);
         });
       }
     });
@@ -360,10 +362,10 @@ describe('Touch', () => {
       const cb = jest.fn(() => null);
       render(<Touch onClickCapture={cb} onMove={noop} data-testid="touch" />);
       await userEvent.click(screen.getByTestId('touch'));
-      expect(cb).toBeCalledTimes(1);
+      expect(cb).toHaveBeenCalledTimes(1);
       cb.mockReset();
       slideRight(screen.getByTestId('touch'));
-      expect(cb).toBeCalledTimes(1);
+      expect(cb).toHaveBeenCalledTimes(1);
     });
     it('does not fire click after slide if noSlideClick=true', () => {
       const clicked = new Set();
@@ -387,7 +389,7 @@ describe('Touch', () => {
       render(<Touch onClickCapture={cb} data-testid="touch" />);
       slideRight(screen.getByTestId('touch'));
       await userEvent.click(screen.getByTestId('touch'));
-      expect(cb).toBeCalled();
+      expect(cb).toHaveBeenCalled();
     });
     it('does not prevent click of a button after slide of a parent on mobile', () => {
       window['ontouchstart'] = null;
