@@ -9,6 +9,7 @@ import {
   type OnShownChange,
   useFloatingMiddlewaresBootstrap,
   useFloatingWithInteractions,
+  usePlacementChangeCallback,
 } from '../../lib/floating';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -30,6 +31,7 @@ export type PopoverContentRenderProp = FloatingContentRenderProp;
 type AllowedFloatingComponentProps = Pick<
   FloatingComponentProps,
   | 'placement'
+  | 'onPlacementChange'
   | 'trigger'
   | 'content'
   | 'hoverDelay'
@@ -75,6 +77,7 @@ export interface PopoverProps
 export const Popover = ({
   // UsePopoverProps
   placement: expectedPlacement = 'bottom-start',
+  onPlacementChange,
   trigger = 'click',
   content,
   hoverDelay = 150,
@@ -138,6 +141,8 @@ export const Popover = ({
     shown: shownProp,
     onShownChange,
   });
+
+  usePlacementChangeCallback(placement, onPlacementChange);
 
   const [, child] = usePatchChildren<HTMLDivElement>(
     children,

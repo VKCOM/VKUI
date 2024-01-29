@@ -22,3 +22,5 @@ export type {
 
 export type UseFloatingRefs<RT extends ReferenceType = ReferenceType> =
   UseFloatingReturn<RT>['refs'];
+
+export type OnPlacementChange = (nextPlacement: Placement) => void;
