@@ -26,7 +26,7 @@ export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps) => {
 
   const portalContainer = resolvePortalContainer(usePortal, portalRoot.current);
   if (!portalContainer || shouldDisablePortal(usePortal, mode, Boolean(disablePortal))) {
-    return children;
+    return <React.Fragment>{children}</React.Fragment>;
   }
 
   return createPortal(
@@ -47,7 +47,7 @@ function shouldDisablePortal(
     return disablePortal || usePortal !== true;
   }
   // fallback
-  return disablePortal || mode !== 'full';
+  return disablePortal || mode === 'full';
 }
 
 function resolvePortalContainer<PortalRootFromContext extends HTMLElement | null | undefined>(
