@@ -14,10 +14,12 @@ export const AdaptivityProvider = ({
   viewHeight,
   sizeX: sizeXProp,
   sizeY: sizeYProp,
-  hasPointer,
+  hasPointer: hasPointerProp,
   hasHover,
   children,
 }: AdaptivityProviderProps) => {
+  const hasPointer = hasPointerProp ?? _hasPointer;
+
   const adaptivity = React.useMemo(() => {
     const nextProps: AdaptivityProps = {
       viewWidth,
@@ -33,7 +35,7 @@ export const AdaptivityProvider = ({
 
     if (sizeYProp === undefined && (viewWidth !== undefined || viewHeight !== undefined)) {
       if (
-        (viewWidth !== undefined && isCompactByViewWidth(viewWidth, _hasPointer)) ||
+        (viewWidth !== undefined && isCompactByViewWidth(viewWidth, hasPointer)) ||
         (viewHeight !== undefined && isCompactByViewHeight(viewHeight))
       ) {
         nextProps.sizeY = 'compact';
