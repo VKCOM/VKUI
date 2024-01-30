@@ -51,12 +51,12 @@
     },
     "./utils/dom": {
       "import": {
-        "types": "./utils/dist/floating-ui.utils.dom.d.ts",
-        "default": "./utils/dist/floating-ui.utils.dom.esm.js"
+        "types": "./utils/dom/floating-ui.utils.dom.d.ts",
+        "default": "./utils/dom/floating-ui.utils.dom.esm.js"
       },
-      "types": "./utils/dist/floating-ui.utils.dom.d.ts",
-      "module": "./utils/dist/floating-ui.utils.dom.esm.js",
-      "default": "./utils/dist/floating-ui.utils.dom.umd.js"
+      "types": "./utils/dom/floating-ui.utils.dom.d.ts",
+      "module": "./utils/dom/floating-ui.utils.dom.esm.js",
+      "default": "./utils/dom/floating-ui.utils.dom.umd.js"
     },
     "./react-dom": {
       "import": {
@@ -69,7 +69,9 @@
     }
   },
   "scripts": {
-    "build": "node --no-warnings=ExperimentalWarning --trace-warnings index.mjs"
+    "build": "node --no-warnings=ExperimentalWarning --trace-warnings build.mjs",
+    "test": "NODE_OPTIONS='--no-warnings=ExperimentalWarning' jest",
+    "test:ci": "yarn test"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -80,7 +82,10 @@
     "@swc/helpers": "^0.5.3"
   },
   "devDependencies": {
-    "@swc/core": "^1.3.105"
+    "@swc/core": "^1.3.105",
+    "@swc/jest": "^0.2.31",
+    "@types/jest": "^29.5.11",
+    "jest": "^29.7.0"
   },
   "packageManager": "yarn@3.6.3",
   "publishConfig": {

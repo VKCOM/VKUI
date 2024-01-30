@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": ".cache/ts",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": false,
+    "isolatedModules": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["main.mjs", "__tests__/dist.test.ts", "jest.config.ts"],
+  "exclude": ["core/", "dom/", "react-dom/", "utils/"]
+}

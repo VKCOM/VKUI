@@ -1,2 +1,5 @@
-**/dist
-**/package.json
+core/
+dom/
+react-dom/
+utils/
+

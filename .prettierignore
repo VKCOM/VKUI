@@ -21,6 +21,9 @@ playwright-report/
 blob-report/
 all-blob-reports/
 
+packages/vkui-floating-ui/**/*.d.ts
+packages/vkui-floating-ui/**/*.esm.js
+packages/vkui-floating-ui/**/*.umd.js
 packages/vkui-floating-ui/**/package.json
 !packages/vkui-floating-ui/package.json
 
