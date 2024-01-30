@@ -1,2 +1,5 @@
-**/dist
-**/package.json
+*
+
+!index.mjs
+!.eslintrc.json
+!tsconfig.json

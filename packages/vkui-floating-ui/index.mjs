@@ -9,38 +9,13 @@ function removePathFromStart(subPackagePath) {
   return subPackagePath.replace(/^\.\//, '');
 }
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const __filename = url.fileURLToPath(import.meta.url);
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const __dirname = path.dirname(__filename);
 
-const FLOATING_UI_SUB_PACKAGES_ENTRIES_MAP = Object.entries(pkg.exports).filter(
-  ([subPackagePath]) => !subPackagePath.includes('package.json'),
-);
-
-const FLOATING_UI_SUB_PACKAGES_NAMES_REGEX_GROUP = FLOATING_UI_SUB_PACKAGES_ENTRIES_MAP.map(
-  ([subPackagePath]) => removePathFromStart(subPackagePath),
-)
-  .join('|')
-  .replace('/', '\\/');
-const FLOATING_UI_SUB_PACKAGES_NAME_REGEX = RegExp(
-  `"@floating-ui\\/(${FLOATING_UI_SUB_PACKAGES_NAMES_REGEX_GROUP})"`,
-  'g',
-);
-
-const NODE_MODULES_PATH = path.resolve(__dirname, '../../node_modules');
-const FLOATING_UI_PATH = path.join(NODE_MODULES_PATH, '@floating-ui');
-const OUTPUT_DIR = './dist';
-
-/**
- * Создание папки, если не существует
- *
- * @param {string} folderName путь к папке
- */
-async function createFolder(folderName) {
-  if (!fs.existsSync(folderName)) {
-    await fsPromises.mkdir(folderName);
-  }
+function convertToFloatingNodeModulesPath(relativePathToFile) {
+  const nodeModulesPath = path.resolve(__dirname, '../../node_modules');
+  const floatingUINodeModulesPath = path.join(nodeModulesPath, '@floating-ui');
+  return path.join(floatingUINodeModulesPath, relativePathToFile);
 }
 
 function getTypeTemplate(subPackagePath) {
@@ -50,32 +25,23 @@ function getTypeTemplate(subPackagePath) {
 }`;
 }
 
-function getPackageJSONTemplate(subPackagePath) {
-  const subPackageName = removePathFromStart(subPackagePath).replaceAll('/', '.');
+function getPackageJSONTemplate(subPackageDirPath, subPackageFiles) {
   return `{
   "sideEffects": false,
-  "main": "./dist/floating-ui.${subPackageName}.umd.js",
-  "module": "./dist/floating-ui.${subPackageName}.esm.js",
-  "types": "./dist/floating-ui.${subPackageName}.d.ts"
+  "main": "${path.relative(subPackageDirPath, subPackageFiles.default)}",
+  "module": "${path.relative(subPackageDirPath, subPackageFiles.module)}",
+  "types": "${path.relative(subPackageDirPath, subPackageFiles.types)}"
 }`;
 }
 
-function getOutputPathByBasename(filePath, outputDir) {
-  const filename = path.basename(filePath);
-  return path.join(outputDir, filename);
-}
-
 /**
- * Собираем отдельный файл
+ * Трансформируем в необходимый модуль.
  *
  * @param {string} filePath путь к файлу
- * @param {string} outputDir выходная папка
  * @param {'es6' | 'commonjs'} moduleType тип модуля
  */
-async function build(filePath, outputDir, moduleType) {
-  const outputFilePath = getOutputPathByBasename(filePath, outputDir);
-
-  const output = await swc.transformFile(filePath, {
+async function transformFileTo(filePath, moduleType) {
+  const { code } = await swc.transformFile(filePath, {
     module: {
       type: moduleType,
     },
@@ -85,10 +51,26 @@ async function build(filePath, outputDir, moduleType) {
     },
     cwd: __dirname,
   });
+  return code;
+}
 
-  const outputCode = output.code.replace(FLOATING_UI_SUB_PACKAGES_NAME_REGEX, (_, name) => {
+async function getPatchedFloatingUIFile(
+  output,
+  moduleType,
+  subPackageDirPath,
+  floatingUISubPackagesEntriesMap,
+) {
+  const floatingUISubPackagesNames = floatingUISubPackagesEntriesMap
+    .map(([subPackagePath]) => removePathFromStart(subPackagePath))
+    .join('|')
+    .replace('/', '\\/');
+  const floatingUISubPackagesRegExpNames = RegExp(
+    `"@floating-ui\\/(${floatingUISubPackagesNames})"`,
+    'g',
+  );
+  return output.replace(floatingUISubPackagesRegExpNames, (_, name) => {
     const [, foundFilesName] =
-      FLOATING_UI_SUB_PACKAGES_ENTRIES_MAP.find(([subPackage]) => subPackage.includes(name)) || [];
+      floatingUISubPackagesEntriesMap.find(([subPackage]) => subPackage.includes(name)) || [];
 
     if (!foundFilesName) {
       return;
@@ -97,41 +79,79 @@ async function build(filePath, outputDir, moduleType) {
     const { module: subPackageESMBundlePath, default: subPackageUMDBundlePath } = foundFilesName;
 
     const bundleRelativePathsByModuleType = {
-      es6: path.relative(outputDir, subPackageESMBundlePath),
-      commonjs: path.relative(outputDir, subPackageUMDBundlePath),
+      es6: path.relative(
+        path.join(__dirname, path.dirname(subPackageDirPath)),
+        path.join(__dirname, subPackageESMBundlePath),
+      ),
+      commonjs: path.relative(
+        path.join(__dirname, path.dirname(subPackageDirPath)),
+        path.join(__dirname, subPackageUMDBundlePath),
+      ),
     };
 
     return `'${bundleRelativePathsByModuleType[moduleType]}'`;
   });
+}
 
-  await fsPromises.writeFile(outputFilePath, outputCode);
+async function createFile(filePath, code) {
+  const dir = path.dirname(filePath);
+  if (!fs.existsSync(dir)) {
+    await fsPromises.mkdir(dir, { recursive: true });
+  }
+  await fsPromises.writeFile(filePath, code);
+}
+
+async function cleanup(floatingUISubPackagesEntriesMap) {
+  await Promise.all(
+    floatingUISubPackagesEntriesMap.map(([subPackageDirPath]) => {
+      if (fs.existsSync(subPackageDirPath)) {
+        return fsPromises.rmdir(subPackageDirPath, { recursive: true });
+      }
+      return Promise.resolve();
+    }),
+  );
 }
 
 async function main() {
-  for (const [subPackagePath, subPackageFiles] of FLOATING_UI_SUB_PACKAGES_ENTRIES_MAP) {
-    const subPackageTypesPath = path.join(FLOATING_UI_PATH, subPackageFiles.types);
-    const subPackageESMBundlePath = path.join(FLOATING_UI_PATH, subPackageFiles.module);
-    const subPackageUMDBundlePath = path.join(FLOATING_UI_PATH, subPackageFiles.default);
+  const floatingUISubPackagesEntriesMap = Object.entries(pkg.exports).filter(
+    ([subPackagePath]) => !subPackagePath.includes('package.json'),
+  );
 
-    await createFolder(subPackagePath);
+  await cleanup(floatingUISubPackagesEntriesMap);
 
-    const outputPath = path.join(subPackagePath, OUTPUT_DIR);
+  for (const [subPackageDirPath, subPackageFilesPaths] of floatingUISubPackagesEntriesMap) {
+    const subPackagePackageJSON = path.join(subPackageDirPath, 'package.json');
+    const {
+      types: subPackageTypesPath,
+      module: subPackageESMBundlePath,
+      default: subPackageUMDBundlePath,
+    } = subPackageFilesPaths;
 
-    await createFolder(outputPath);
-
-    await Promise.all([
-      build(subPackageUMDBundlePath, outputPath, 'commonjs'),
-      build(subPackageESMBundlePath, outputPath, 'es6'),
+    const [commonjsCode, es6Code] = await Promise.all([
+      transformFileTo(convertToFloatingNodeModulesPath(subPackageESMBundlePath), 'es6'),
+      transformFileTo(convertToFloatingNodeModulesPath(subPackageUMDBundlePath), 'commonjs'),
     ]);
-
-    await Promise.all([
-      await fsPromises.writeFile(
-        getOutputPathByBasename(subPackageTypesPath, outputPath),
-        getTypeTemplate(subPackagePath),
+    const [commonjsPatchedCode, es6PatchedCode] = await Promise.all([
+      getPatchedFloatingUIFile(
+        es6Code,
+        'es6',
+        subPackageESMBundlePath,
+        floatingUISubPackagesEntriesMap,
       ),
-      await fsPromises.writeFile(
-        path.join(subPackagePath, 'package.json'),
-        getPackageJSONTemplate(subPackagePath),
+      getPatchedFloatingUIFile(
+        commonjsCode,
+        'commonjs',
+        subPackageUMDBundlePath,
+        floatingUISubPackagesEntriesMap,
+      ),
+    ]);
+    await Promise.all([
+      createFile(subPackageESMBundlePath, es6PatchedCode),
+      createFile(subPackageUMDBundlePath, commonjsPatchedCode),
+      createFile(subPackageTypesPath, getTypeTemplate(subPackageDirPath)),
+      createFile(
+        subPackagePackageJSON,
+        getPackageJSONTemplate(subPackageDirPath, subPackageFilesPaths),
       ),
     ]);
   }
