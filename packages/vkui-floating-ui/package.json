@@ -51,12 +51,12 @@
     },
     "./utils/dom": {
       "import": {
-        "types": "./utils/dist/floating-ui.utils.dom.d.ts",
-        "default": "./utils/dist/floating-ui.utils.dom.esm.js"
+        "types": "./utils/dom/floating-ui.utils.dom.d.ts",
+        "default": "./utils/dom/floating-ui.utils.dom.esm.js"
       },
-      "types": "./utils/dist/floating-ui.utils.dom.d.ts",
-      "module": "./utils/dist/floating-ui.utils.dom.esm.js",
-      "default": "./utils/dist/floating-ui.utils.dom.umd.js"
+      "types": "./utils/dom/floating-ui.utils.dom.d.ts",
+      "module": "./utils/dom/floating-ui.utils.dom.esm.js",
+      "default": "./utils/dom/floating-ui.utils.dom.umd.js"
     },
     "./react-dom": {
       "import": {
