@@ -47,6 +47,27 @@ describe('Tooltip', () => {
     expect(screen.getByText('text')).toBeTruthy();
   });
 
+  it('uses passed getRootRef prop', async () => {
+    let tooltipRef: React.MutableRefObject<HTMLDivElement | null> | undefined;
+    const TooltipComponent = () => {
+      tooltipRef = React.useRef<HTMLDivElement | null>(null);
+      return (
+        <Tooltip isShown text="text" getRootRef={tooltipRef} data-testid="tooltip">
+          <div />
+        </Tooltip>
+      );
+    };
+
+    await renderTooltip(<TooltipComponent />);
+
+    expect(screen.getByText('text')).toBeTruthy();
+    if (!tooltipRef || !tooltipRef.current) {
+      throw new Error('tootlipRef is not set');
+    }
+
+    expect(tooltipRef.current).toBeTruthy();
+  });
+
   it('does not create extra markup when isShown=false', () => {
     render(
       <TooltipContainer data-testid="container">
