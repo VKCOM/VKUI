@@ -77,12 +77,20 @@ export function getSizeX(viewWidth: ViewWidthType): SizeTypeValues {
   return viewWidth <= ViewWidth.MOBILE ? 'compact' : 'regular';
 }
 
+export function isCompactByViewWidth(viewWidth: ViewWidthType, hasPointer: boolean) {
+  return viewWidth >= ViewWidth.SMALL_TABLET && hasPointer;
+}
+
+export function isCompactByViewHeight(viewHeight: ViewHeightType) {
+  return viewHeight <= ViewHeight.EXTRA_SMALL;
+}
+
 export function getSizeY(
   viewWidth: ViewWidthType,
   viewHeight: ViewHeightType,
   hasPointer: boolean,
 ): SizeTypeValues {
-  if ((viewWidth >= ViewWidth.SMALL_TABLET && hasPointer) || viewHeight <= ViewHeight.EXTRA_SMALL) {
+  if (isCompactByViewWidth(viewWidth, hasPointer) || isCompactByViewHeight(viewHeight)) {
     return 'compact';
   }
   return 'regular';
