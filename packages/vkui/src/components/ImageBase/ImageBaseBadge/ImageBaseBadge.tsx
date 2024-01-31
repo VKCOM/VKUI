@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../../types';
+import { HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ImageBaseContext } from '../context';
 import type { ImageBaseExpectedIconProps } from '../types';
@@ -12,7 +12,7 @@ const backgroundStyles = {
   shadow: styles['ImageBaseBadge--background-shadow'],
 };
 
-export interface ImageBaseBadgeProps extends React.AriaAttributes, HasRootRef<HTMLDivElement> {
+export interface ImageBaseBadgeProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Вид подложки под иконку.
    *
@@ -32,7 +32,6 @@ export interface ImageBaseBadgeProps extends React.AriaAttributes, HasRootRef<HT
    * > использовали иконку.
    */
   children: React.ReactElement<ImageBaseExpectedIconProps>;
-  className?: string;
 }
 
 /**
