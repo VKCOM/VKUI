@@ -1,11 +1,29 @@
-import { Config } from 'jest';
+import type { Config } from 'jest';
 
 const config: Config = {
   globalSetup: '<rootDir>/main.mjs',
+  testMatch: ['<rootDir>/*.test.mjs', '<rootDir>/*.test.cjs'],
   transform: {
-    '^.+\\.ts': '@swc/jest',
+    '^.+\\.(mj|j)s': [
+      '@swc/jest',
+      {
+        jsc: {
+          // Без этого не определит как ESM модуль
+          baseUrl: '.',
+        },
+        module: null,
+      },
+    ],
+    '^.+\\.cjs': [
+      '@swc/jest',
+      {
+        module: {
+          type: 'commonjs',
+        },
+      },
+    ],
   },
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 };
 
 export default config;

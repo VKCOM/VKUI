@@ -22,6 +22,8 @@ blob-report/
 all-blob-reports/
 
 packages/vkui-floating-ui/**/*.d.ts
+packages/vkui-floating-ui/**/*.d.mts
+packages/vkui-floating-ui/**/*.mjs
 packages/vkui-floating-ui/**/*.esm.js
 packages/vkui-floating-ui/**/*.umd.js
 packages/vkui-floating-ui/**/package.json

@@ -26,11 +26,30 @@ function getTypeTemplate(subPackagePath) {
 }
 
 function getPackageJSONTemplate(subPackageDirPath, subPackageFiles) {
+  const importTypes = path.relative(subPackageDirPath, subPackageFiles.import.types);
+  const importDefault = path.relative(subPackageDirPath, subPackageFiles.import.default);
+
+  const main = path.relative(subPackageDirPath, subPackageFiles.default);
+  const module = path.relative(subPackageDirPath, subPackageFiles.module);
+  const types = path.relative(subPackageDirPath, subPackageFiles.types);
+
   return `{
   "sideEffects": false,
-  "main": "${path.relative(subPackageDirPath, subPackageFiles.default)}",
-  "module": "${path.relative(subPackageDirPath, subPackageFiles.module)}",
-  "types": "${path.relative(subPackageDirPath, subPackageFiles.types)}"
+  "main": "./${main}",
+  "module": "./${module}",
+  "types": "./${types}",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./${importTypes}",
+        "default": "./${importDefault}"
+      },
+      "types": "./${types}",
+      "module": "./${module}",
+      "default": "./${main}"
+    }
+  }
 }`;
 }
 
@@ -44,6 +63,7 @@ async function transformFileTo(filePath, moduleType) {
   const { code } = await swc.transformFile(filePath, {
     module: {
       type: moduleType,
+      noInterop: true,
     },
     jsc: {
       externalHelpers: true,
@@ -56,10 +76,11 @@ async function transformFileTo(filePath, moduleType) {
 
 async function getPatchedFloatingUIFile(
   output,
-  moduleType,
+  extension,
   subPackageDirPath,
   floatingUISubPackagesEntriesMap,
 ) {
+  const localSubPackageDir = path.join(__dirname, path.dirname(subPackageDirPath));
   const floatingUISubPackagesNames = floatingUISubPackagesEntriesMap
     .map(([subPackagePath]) => removePathFromStart(subPackagePath))
     .join('|')
@@ -76,20 +97,13 @@ async function getPatchedFloatingUIFile(
       return;
     }
 
-    const { module: subPackageESMBundlePath, default: subPackageUMDBundlePath } = foundFilesName;
-
     const bundleRelativePathsByModuleType = {
-      es6: path.relative(
-        path.join(__dirname, path.dirname(subPackageDirPath)),
-        path.join(__dirname, subPackageESMBundlePath),
-      ),
-      commonjs: path.relative(
-        path.join(__dirname, path.dirname(subPackageDirPath)),
-        path.join(__dirname, subPackageUMDBundlePath),
-      ),
+      mjs: path.relative(localSubPackageDir, path.join(__dirname, foundFilesName.import.default)),
+      esm: path.relative(localSubPackageDir, path.join(__dirname, foundFilesName.module)),
+      umd: path.relative(localSubPackageDir, path.join(__dirname, foundFilesName.default)),
     };
 
-    return `'${bundleRelativePathsByModuleType[moduleType]}'`;
+    return `'${bundleRelativePathsByModuleType[extension]}'`;
   });
 }
 
@@ -120,37 +134,41 @@ export default async function main() {
   await cleanup(floatingUISubPackagesEntriesMap);
 
   for (const [subPackageDirPath, subPackageFilesPaths] of floatingUISubPackagesEntriesMap) {
-    const subPackagePackageJSON = path.join(subPackageDirPath, 'package.json');
-    const {
-      types: subPackageTypesPath,
-      module: subPackageESMBundlePath,
-      default: subPackageUMDBundlePath,
-    } = subPackageFilesPaths;
-
-    const [commonjsCode, es6Code] = await Promise.all([
-      transformFileTo(convertToFloatingNodeModulesPath(subPackageESMBundlePath), 'es6'),
-      transformFileTo(convertToFloatingNodeModulesPath(subPackageUMDBundlePath), 'commonjs'),
+    const [mjsCode, esmCode, umdCode] = await Promise.all([
+      transformFileTo(convertToFloatingNodeModulesPath(subPackageFilesPaths.import.default), 'es6'),
+      transformFileTo(convertToFloatingNodeModulesPath(subPackageFilesPaths.module), 'es6'),
+      transformFileTo(convertToFloatingNodeModulesPath(subPackageFilesPaths.default), 'commonjs'),
     ]);
-    const [commonjsPatchedCode, es6PatchedCode] = await Promise.all([
+    const [mjsParchedCode, esmPatchedCode, umdPatchedCode] = await Promise.all([
       getPatchedFloatingUIFile(
-        es6Code,
-        'es6',
-        subPackageESMBundlePath,
+        mjsCode,
+        'mjs',
+        subPackageFilesPaths.import.default,
         floatingUISubPackagesEntriesMap,
       ),
       getPatchedFloatingUIFile(
-        commonjsCode,
-        'commonjs',
-        subPackageUMDBundlePath,
+        esmCode,
+        'esm',
+        subPackageFilesPaths.module,
+        floatingUISubPackagesEntriesMap,
+      ),
+      getPatchedFloatingUIFile(
+        umdCode,
+        'umd',
+        subPackageFilesPaths.default,
         floatingUISubPackagesEntriesMap,
       ),
     ]);
     await Promise.all([
-      createFile(subPackageESMBundlePath, es6PatchedCode),
-      createFile(subPackageUMDBundlePath, commonjsPatchedCode),
-      createFile(subPackageTypesPath, getTypeTemplate(subPackageDirPath)),
+      createFile(subPackageFilesPaths.import.types, getTypeTemplate(subPackageDirPath)),
+      createFile(subPackageFilesPaths.import.default, mjsParchedCode),
+
+      createFile(subPackageFilesPaths.module, esmPatchedCode),
+      createFile(subPackageFilesPaths.default, umdPatchedCode),
+      createFile(subPackageFilesPaths.types, getTypeTemplate(subPackageDirPath)),
+
       createFile(
-        subPackagePackageJSON,
+        path.join(subPackageDirPath, 'package.json'),
         getPackageJSONTemplate(subPackageDirPath, subPackageFilesPaths),
       ),
     ]);
