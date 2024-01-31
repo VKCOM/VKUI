@@ -5,9 +5,23 @@
  */
 import fs from 'fs';
 import path from 'path';
-// @ts-expect-error: TS7016 no types for package
-import { defineSnapshotTest } from 'jscodeshift/dist/testUtils';
+import {
+  applyTransform,
+  defineSnapshotTest,
+  // @ts-expect-error: TS7016 no types for package
+} from 'jscodeshift/dist/testUtils';
 import { JSCodeShiftOptions } from '../types';
+
+export { applyTransform };
+
+export function getTestFixturesInputPath(
+  dirName: string,
+  testFilePrefix: string,
+  extension = 'tsx',
+) {
+  const fixtureDir = path.join(dirName, '..', '__testfixtures__');
+  return path.join(fixtureDir, testFilePrefix + `.input.${extension}`);
+}
 
 /**
  * Handles file-loading boilerplates, using same defaults as defineTest
@@ -21,8 +35,7 @@ export function defineSnapshotTestFromFixture(
 ) {
   // Assumes transform is one level up from __tests__ directory
   const module = require(path.join(dirName, '..', transformName));
-  const fixtureDir = path.join(dirName, '..', '__testfixtures__');
-  const inputPath = path.join(fixtureDir, testFilePrefix + `.input.${extension}`);
+  const inputPath = getTestFixturesInputPath(dirName, testFilePrefix, extension);
   const source = fs.readFileSync(inputPath, 'utf8');
   defineSnapshotTest(module, options, source, 'transforms correctly');
 }
