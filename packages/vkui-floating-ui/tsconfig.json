@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "skipLibCheck": true
+  },
+  "include": ["*.ts", "*.mjs", "*.cjs"],
+  "exclude": ["core/", "dom/", "react-dom/", "utils/"]
+}
