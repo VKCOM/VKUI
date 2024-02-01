@@ -18,5 +18,5 @@
 }
 
 .Editor textarea {
-  color: blue !important;
+  color: var(--vkui--color_text_subhead) !important;
 }
