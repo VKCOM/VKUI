@@ -77,7 +77,7 @@ export function getSizeX(viewWidth: ViewWidthType): SizeTypeValues {
   return viewWidth <= ViewWidth.MOBILE ? 'compact' : 'regular';
 }
 
-export function isCompactByViewWidth(viewWidth: ViewWidthType, hasPointer: boolean) {
+export function isCompactByViewWidth(viewWidth: ViewWidthType, hasPointer?: boolean) {
   return viewWidth >= ViewWidth.SMALL_TABLET && hasPointer;
 }
 
