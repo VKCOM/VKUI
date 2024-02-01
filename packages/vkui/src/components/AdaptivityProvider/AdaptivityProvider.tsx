@@ -30,13 +30,10 @@ export const AdaptivityProvider = ({
       nextProps.sizeX = getSizeX(viewWidth);
     }
 
-    if (sizeYProp === undefined && (viewWidth !== undefined || viewHeight !== undefined)) {
-      if (
-        (viewWidth !== undefined && isCompactByViewWidth(viewWidth, hasPointer)) ||
-        (viewHeight !== undefined && isCompactByViewHeight(viewHeight))
-      ) {
+    if (sizeYProp === undefined) {
+      if (isCompactByViewWidth(viewWidth, hasPointer) || isCompactByViewHeight(viewHeight)) {
         nextProps.sizeY = 'compact';
-      } else {
+      } else if (viewWidth !== undefined || viewHeight !== undefined) {
         nextProps.sizeY = 'regular';
       }
     }
