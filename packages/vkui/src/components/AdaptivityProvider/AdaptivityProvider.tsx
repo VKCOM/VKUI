@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { hasMouse as _hasPointer, canUseDOM } from '@vkontakte/vkjs';
+import { hasMouse as _hasPointer } from '@vkontakte/vkjs';
 import { getSizeX, isCompactByViewHeight, isCompactByViewWidth } from '../../lib/adaptivity';
 import { HasChildren } from '../../types';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
@@ -18,15 +18,13 @@ export const AdaptivityProvider = ({
   hasHover,
   children,
 }: AdaptivityProviderProps) => {
-  const hasPointer = hasPointerProp ?? (canUseDOM ? _hasPointer : undefined);
-
   const adaptivity = React.useMemo(() => {
     const nextProps: AdaptivityProps = {
       viewWidth,
       viewHeight,
       sizeX: sizeXProp,
       sizeY: sizeYProp,
-      hasPointer,
+      hasPointer: hasPointerProp,
       hasHover,
     };
     if (sizeXProp === undefined && viewWidth !== undefined) {
@@ -35,7 +33,8 @@ export const AdaptivityProvider = ({
 
     if (sizeYProp === undefined && (viewWidth !== undefined || viewHeight !== undefined)) {
       if (
-        (viewWidth !== undefined && isCompactByViewWidth(viewWidth, hasPointer)) ||
+        (viewWidth !== undefined &&
+          isCompactByViewWidth(viewWidth, hasPointerProp ?? _hasPointer)) ||
         (viewHeight !== undefined && isCompactByViewHeight(viewHeight))
       ) {
         nextProps.sizeY = 'compact';
@@ -45,7 +44,7 @@ export const AdaptivityProvider = ({
     }
 
     return nextProps;
-  }, [viewWidth, viewHeight, sizeXProp, sizeYProp, hasPointer, hasHover]);
+  }, [viewWidth, viewHeight, sizeXProp, sizeYProp, hasPointerProp, hasHover]);
 
   return <AdaptivityContext.Provider value={adaptivity}>{children}</AdaptivityContext.Provider>;
 };
