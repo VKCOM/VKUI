@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { hasMouse as _hasPointer } from '@vkontakte/vkjs';
 import { getSizeX, isCompactByViewHeight, isCompactByViewWidth } from '../../lib/adaptivity';
 import { HasChildren } from '../../types';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
@@ -14,7 +13,7 @@ export const AdaptivityProvider = ({
   viewHeight,
   sizeX: sizeXProp,
   sizeY: sizeYProp,
-  hasPointer: hasPointerProp,
+  hasPointer,
   hasHover,
   children,
 }: AdaptivityProviderProps) => {
@@ -24,7 +23,7 @@ export const AdaptivityProvider = ({
       viewHeight,
       sizeX: sizeXProp,
       sizeY: sizeYProp,
-      hasPointer: hasPointerProp,
+      hasPointer,
       hasHover,
     };
     if (sizeXProp === undefined && viewWidth !== undefined) {
@@ -33,8 +32,7 @@ export const AdaptivityProvider = ({
 
     if (sizeYProp === undefined && (viewWidth !== undefined || viewHeight !== undefined)) {
       if (
-        (viewWidth !== undefined &&
-          isCompactByViewWidth(viewWidth, hasPointerProp ?? _hasPointer)) ||
+        (viewWidth !== undefined && isCompactByViewWidth(viewWidth, hasPointer)) ||
         (viewHeight !== undefined && isCompactByViewHeight(viewHeight))
       ) {
         nextProps.sizeY = 'compact';
@@ -44,7 +42,7 @@ export const AdaptivityProvider = ({
     }
 
     return nextProps;
-  }, [viewWidth, viewHeight, sizeXProp, sizeYProp, hasPointerProp, hasHover]);
+  }, [viewWidth, viewHeight, sizeXProp, sizeYProp, hasPointer, hasHover]);
 
   return <AdaptivityContext.Provider value={adaptivity}>{children}</AdaptivityContext.Provider>;
 };

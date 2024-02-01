@@ -6,11 +6,7 @@ import { baselineComponent } from '../../testing/utils';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
 import { AdaptivityProvider, type AdaptivityProviderProps } from './AdaptivityProvider';
 
-const hasMouseLibDetectionStub = jest.fn(() => false);
 jest.mock('@vkontakte/vkjs', () => ({
-  get hasMouse() {
-    return hasMouseLibDetectionStub();
-  },
   get canUseDOM() {
     return true;
   },
@@ -71,7 +67,9 @@ const TestAdaptiveProvider = React.forwardRef<AdaptivityResultsRef, AdaptivityPr
 );
 
 interface TestSuite {
-  inProps: AdaptivityProviderProps & { hasMouseLibDetection?: boolean; runOnlyThisSuite?: boolean };
+  inProps: AdaptivityProviderProps & {
+    runOnlyThisSuite?: boolean;
+  };
   outProps: AdaptivityProps;
 }
 
@@ -80,7 +78,7 @@ const testSuites: TestSuite[] = [
     inProps: {
       viewWidth: ViewWidth.DESKTOP,
       viewHeight: ViewHeight.MEDIUM,
-      hasMouseLibDetection: false,
+      hasPointer: false,
     },
     outProps: {
       sizeX: 'regular',
@@ -93,7 +91,7 @@ const testSuites: TestSuite[] = [
     inProps: {
       viewWidth: ViewWidth.DESKTOP,
       viewHeight: ViewHeight.MEDIUM,
-      hasMouseLibDetection: true,
+      hasPointer: true,
     },
     outProps: {
       sizeX: 'regular',
@@ -115,7 +113,7 @@ const testSuites: TestSuite[] = [
     inProps: {
       viewWidth: ViewWidth.SMALL_TABLET,
       viewHeight: ViewHeight.MEDIUM,
-      hasMouseLibDetection: false,
+      hasPointer: false,
     },
     outProps: {
       sizeX: 'regular',
@@ -128,7 +126,7 @@ const testSuites: TestSuite[] = [
     inProps: {
       viewWidth: ViewWidth.SMALL_TABLET,
       viewHeight: ViewHeight.MEDIUM,
-      hasMouseLibDetection: true,
+      hasPointer: true,
     },
     outProps: {
       sizeX: 'regular',
@@ -142,7 +140,7 @@ const testSuites: TestSuite[] = [
       sizeX: 'compact' as const,
       viewWidth: ViewWidth.SMALL_TABLET,
       viewHeight: ViewHeight.MEDIUM,
-      hasMouseLibDetection: false,
+      hasPointer: false,
     },
     outProps: {
       sizeX: 'compact',
@@ -156,7 +154,7 @@ const testSuites: TestSuite[] = [
       sizeX: 'compact' as const,
       viewWidth: ViewWidth.SMALL_TABLET,
       viewHeight: ViewHeight.MEDIUM,
-      hasMouseLibDetection: true,
+      hasPointer: true,
     },
     outProps: {
       sizeX: 'compact',
@@ -205,7 +203,7 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       viewWidth: ViewWidth.SMALL_MOBILE,
-      hasMouseLibDetection: false,
+      hasPointer: false,
     },
     outProps: {
       sizeX: 'compact',
@@ -215,7 +213,7 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       viewWidth: ViewWidth.SMALL_MOBILE,
-      hasMouseLibDetection: true,
+      hasPointer: true,
     },
     outProps: {
       sizeX: 'compact',
@@ -225,7 +223,7 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       viewWidth: ViewWidth.MOBILE,
-      hasMouseLibDetection: false,
+      hasPointer: false,
     },
     outProps: {
       sizeX: 'compact',
@@ -235,7 +233,7 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       viewWidth: ViewWidth.MOBILE,
-      hasMouseLibDetection: true,
+      hasPointer: true,
     },
     outProps: {
       sizeX: 'compact',
@@ -245,7 +243,7 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       viewWidth: ViewWidth.SMALL_TABLET,
-      hasMouseLibDetection: false,
+      hasPointer: false,
     },
     outProps: {
       sizeX: 'regular',
@@ -255,7 +253,7 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       viewWidth: ViewWidth.SMALL_TABLET,
-      hasMouseLibDetection: true,
+      hasPointer: true,
     },
     outProps: {
       sizeX: 'regular',
@@ -265,7 +263,7 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       viewWidth: ViewWidth.TABLET,
-      hasMouseLibDetection: false,
+      hasPointer: false,
     },
     outProps: {
       sizeX: 'regular',
@@ -275,7 +273,7 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       viewWidth: ViewWidth.TABLET,
-      hasMouseLibDetection: true,
+      hasPointer: true,
     },
     outProps: {
       sizeX: 'regular',
@@ -285,7 +283,7 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       viewWidth: ViewWidth.DESKTOP,
-      hasMouseLibDetection: false,
+      hasPointer: false,
     },
     outProps: {
       sizeX: 'regular',
@@ -295,7 +293,7 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       viewWidth: ViewWidth.DESKTOP,
-      hasMouseLibDetection: true,
+      hasPointer: true,
     },
     outProps: {
       sizeX: 'regular',
@@ -328,20 +326,16 @@ describe('AdaptiveProvider and useAdaptivityWithJSMediaQueries should return sim
       null,
       '\t',
     )}\n`, () => {
-      const { hasMouseLibDetection, ...props } = inProps;
-
       beforeEach(() => {
-        hasMouseLibDetectionStub.mockReturnValue(hasMouseLibDetection ?? false);
         getViewWidthByMediaQueriesStub.mockReturnValue(() => inProps.viewWidth);
         getViewHeightByMediaQueriesStub.mockReturnValue(() => inProps.viewHeight);
       });
 
       const test = inProps.runOnlyThisSuite ? it.only : it;
-
       test('AdaptiveProvider', () => {
         const adaptivityProviderResultsRef = React.createRef<AdaptivityResultsRef>();
 
-        render(<TestAdaptiveProvider ref={adaptivityProviderResultsRef} {...props} />);
+        render(<TestAdaptiveProvider ref={adaptivityProviderResultsRef} {...inProps} />);
 
         // AdaptivityProvider results
         expect(adaptivityProviderResultsRef.current?.adaptivityProviderResults).toMatchObject(
@@ -352,7 +346,7 @@ describe('AdaptiveProvider and useAdaptivityWithJSMediaQueries should return sim
       test('useAdaptivityWithJSMediaQueries', () => {
         const adaptivityProviderResultsRef = React.createRef<AdaptivityResultsRef>();
 
-        render(<TestAdaptiveProvider ref={adaptivityProviderResultsRef} {...props} />);
+        render(<TestAdaptiveProvider ref={adaptivityProviderResultsRef} {...inProps} />);
 
         // useAdaptivityWithJSMediaQueries results
         expect(
