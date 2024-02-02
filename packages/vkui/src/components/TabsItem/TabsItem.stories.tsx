@@ -7,6 +7,7 @@ import {
   Icon20ThumbsUpOutline,
   Icon20UsersOutline,
 } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
@@ -16,6 +17,9 @@ const story: Meta<TabsItemProps> = {
   title: 'Blocks/TabsItem',
   component: TabsItem,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  args: {
+    onClick: noop,
+  },
 };
 
 export default story;

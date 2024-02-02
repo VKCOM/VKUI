@@ -145,7 +145,7 @@ const Example = () => {
         >
           <View id="feed" activePanel="feed">
             <Panel id="feed">
-              <PanelHeader before={<PanelHeaderBack />}>Новости</PanelHeader>
+              <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Новости</PanelHeader>
               <Group style={{ height: '1000px' }}>
                 <Placeholder icon={<Icon56NewsfeedOutline width={56} height={56} />} />
               </Group>
@@ -153,7 +153,7 @@ const Example = () => {
           </View>
           <View id="services" activePanel="services">
             <Panel id="services">
-              <PanelHeader before={<PanelHeaderBack />}>Сервисы</PanelHeader>
+              <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Сервисы</PanelHeader>
               <Group style={{ height: '1000px' }}>
                 <Placeholder icon={<Icon28ServicesOutline width={56} height={56} />}></Placeholder>
               </Group>
@@ -161,7 +161,7 @@ const Example = () => {
           </View>
           <View id="messages" activePanel="messages">
             <Panel id="messages">
-              <PanelHeader before={<PanelHeaderBack />}>Сообщения</PanelHeader>
+              <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Сообщения</PanelHeader>
               <Group style={{ height: '1000px' }}>
                 <Placeholder icon={<Icon28MessageOutline width={56} height={56} />}></Placeholder>
               </Group>
@@ -169,7 +169,7 @@ const Example = () => {
           </View>
           <View id="clips" activePanel="clips">
             <Panel id="clips">
-              <PanelHeader before={<PanelHeaderBack />}>Клипы</PanelHeader>
+              <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Клипы</PanelHeader>
               <Group style={{ height: '1000px' }}>
                 <Placeholder icon={<Icon28ClipOutline width={56} height={56} />}></Placeholder>
               </Group>
@@ -177,7 +177,7 @@ const Example = () => {
           </View>
           <View id="profile" activePanel="profile">
             <Panel id="profile">
-              <PanelHeader before={<PanelHeaderBack />}>Профиль</PanelHeader>
+              <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Профиль</PanelHeader>
               <Group style={{ height: '1000px' }}>
                 <Placeholder
                   icon={<Icon28UserCircleOutline width={56} height={56} />}

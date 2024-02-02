@@ -137,6 +137,7 @@ const App = () => {
           textAlign: 'center',
           padding: 32,
         }}
+        mode="tint"
       >
         <Avatar size={96} src={randomUser.photo_100} />
         <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="2">
@@ -509,7 +510,7 @@ const App = () => {
           ]}
           size="l"
           visibleCount={3}
-          layout="vertical"
+          direction="column"
         >
           Алексей, Илья, Михаил
           <br />и ещё 3 человека

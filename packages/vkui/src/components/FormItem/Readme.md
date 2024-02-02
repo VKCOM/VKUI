@@ -200,7 +200,7 @@ const Example = () => {
               Согласен со всем <Link>этим</Link>
             </Checkbox>
             <FormItem>
-              <Button size="l" stretched>
+              <Button type="submit" size="l" stretched>
                 Зарегистрироваться
               </Button>
             </FormItem>

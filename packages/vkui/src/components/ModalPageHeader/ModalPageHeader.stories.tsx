@@ -7,6 +7,7 @@ import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Div } from '../Div/Div';
 import { ModalPage } from '../ModalPage/ModalPage';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { ModalPageHeader, ModalPageHeaderProps } from './ModalPageHeader';
 
@@ -23,6 +24,12 @@ type Story = StoryObj<ModalPageHeaderProps>;
 
 const MODAL_ID = 'MODAL_ID';
 
+const HeaderButton = ({ children }: { children: React.ReactNode }) => {
+  const { onClose } = React.useContext(ModalRootContext);
+
+  return <PanelHeaderButton onClick={onClose}>{children}</PanelHeaderButton>;
+};
+
 export const Example: Story = {
   render: function Render(args) {
     const platform = usePlatform();
@@ -36,20 +43,20 @@ export const Example: Story = {
               before={
                 <React.Fragment>
                   {(platform === 'android' || platform === 'vkcom') && (
-                    <PanelHeaderButton>
+                    <HeaderButton>
                       <Icon24Cancel />
-                    </PanelHeaderButton>
+                    </HeaderButton>
                   )}
                 </React.Fragment>
               }
               after={
                 <React.Fragment>
                   {(platform === 'android' || platform === 'vkcom') && (
-                    <PanelHeaderButton>
+                    <HeaderButton>
                       <Icon24Done />
-                    </PanelHeaderButton>
+                    </HeaderButton>
                   )}
-                  {platform === 'ios' && <PanelHeaderButton>Готово</PanelHeaderButton>}
+                  {platform === 'ios' && <HeaderButton>Готово</HeaderButton>}
                 </React.Fragment>
               }
               {...args}

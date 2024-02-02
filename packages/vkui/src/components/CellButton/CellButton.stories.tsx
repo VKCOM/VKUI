@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon28AddOutline } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { CellButton, CellButtonProps } from './CellButton';
 
@@ -18,5 +19,6 @@ export const Playground: Story = {
   args: {
     children: 'Создать беседу',
     before: <Icon28AddOutline />,
+    onClick: noop,
   },
 };

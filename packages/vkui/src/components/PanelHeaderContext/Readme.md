@@ -24,9 +24,9 @@ const Example = () => {
         <View activePanel="context2">
           <Panel id="context2">
             <PanelHeader
-              before={<PanelHeaderBack />}
+              before={<PanelHeaderBack onClick={noop} />}
               after={
-                <PanelHeaderButton>
+                <PanelHeaderButton onClick={noop}>
                   <Icon28AddOutline />
                 </PanelHeaderButton>
               }

@@ -4,6 +4,7 @@ import '../packages/vkui/src/styles/common.css';
 
 import { useRef, useState } from 'react';
 import * as Icons from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
@@ -62,3 +63,5 @@ window.perfLogger = perfLogger;
 
 window.useState = useState;
 window.useRef = useRef;
+
+window.noop = noop;
