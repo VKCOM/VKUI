@@ -16,7 +16,7 @@ jobs:
     name: Add labels
     steps:
       - name: Patch
-        if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
+        if: ${{ startsWith(github.event.pull_request.title, 'fix') && github.event.pull_request.state == 'open' }}
         uses: actions/github-script@v7
         with:
           script: |
