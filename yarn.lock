@@ -5405,7 +5405,7 @@ __metadata:
     "@vkontakte/eslint-plugin": ^1.1.1
     "@vkontakte/prettier-config": ^0.1.0
     "@vkontakte/stylelint-config": ^4.0.1
-    "@vkontakte/vkui-tokens": 4.42.0
+    "@vkontakte/vkui-tokens": 4.43.0
     autoprefixer: ^10.4.17
     concurrently: ^8.2.2
     cross-env: ^7.0.2
@@ -5486,12 +5486,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/vkui-tokens@npm:4.42.0":
-  version: 4.42.0
-  resolution: "@vkontakte/vkui-tokens@npm:4.42.0"
+"@vkontakte/vkui-tokens@npm:4.43.0":
+  version: 4.43.0
+  resolution: "@vkontakte/vkui-tokens@npm:4.43.0"
   dependencies:
     csstype: ^3.1.1
-  checksum: 5ffecc25875784e8c194198f893c21bd5a64136b6ca2a6c3a4845ee331bc1f2a65d2cc9b2441ee0c9e06a4cdc27b167ac0edebec3adca603ecfaa549276ad632
+  checksum: 40e581ed4a1ccb16eecacb4e5b892953ae88f7e066f1f191e53cb91aff9c462e149d439c107ead981c375ccce8f1abce66145aeec6b82de358005a27c9148c14
   languageName: node
   linkType: hard
 
