@@ -5429,7 +5429,7 @@ __metadata:
     autoprefixer: ^10.4.17
     concurrently: ^8.2.2
     cross-env: ^7.0.2
-    css-loader: ^6.9.1
+    css-loader: ^6.10.0
     cssnano: ^6.0.3
     dotenv: ^16.4.1
     eslint: ^8.45.0
@@ -5455,7 +5455,7 @@ __metadata:
     postcss-custom-media: ^10.0.2
     postcss-gap-properties: ^5.0.1
     postcss-import: ^16.0.0
-    postcss-loader: ^8.0.0
+    postcss-loader: ^8.1.0
     postcss-logical: ^7.0.1
     postcss-modules: ^6.0.0
     postcss-value-parser: ^4.2.0
@@ -5472,13 +5472,13 @@ __metadata:
     stylelint-media-use-custom-media: ^4.0.0
     stylelint-use-logical: ^2.1.0
     stylelint-value-no-unknown-custom-properties: ^5.0.0
-    swc-loader: ^0.2.3
+    swc-loader: ^0.2.4
     swc-plugin-css-modules: 0.1.7
     swc-plugin-transform-remove-imports: 1.10.0
     ts-node: ^10.9.2
     typescript: ^5.3.3
     typescript-plugin-css-modules: ^5.0.2
-    webpack: ^5.90.0
+    webpack: ^5.90.1
     webpack-cli: ^5.1.4
     webpack-merge: ^5.10.0
     yargs: ^17.7.2
@@ -7855,7 +7855,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^6.7.1, css-loader@npm:^6.9.0, css-loader@npm:^6.9.1":
+"css-loader@npm:^6.10.0":
+  version: 6.10.0
+  resolution: "css-loader@npm:6.10.0"
+  dependencies:
+    icss-utils: ^5.1.0
+    postcss: ^8.4.33
+    postcss-modules-extract-imports: ^3.0.0
+    postcss-modules-local-by-default: ^4.0.4
+    postcss-modules-scope: ^3.1.1
+    postcss-modules-values: ^4.0.0
+    postcss-value-parser: ^4.2.0
+    semver: ^7.5.4
+  peerDependencies:
+    "@rspack/core": 0.x || 1.x
+    webpack: ^5.0.0
+  peerDependenciesMeta:
+    "@rspack/core":
+      optional: true
+    webpack:
+      optional: true
+  checksum: ee3d62b5f7e4eb24281a22506431e920d07a45bd6ea627731ce583f3c6a846ab8b8b703bace599b9b35256b9e762f9f326d969abb72b69c7e6055eacf39074fd
+  languageName: node
+  linkType: hard
+
+"css-loader@npm:^6.7.1, css-loader@npm:^6.9.0":
   version: 6.9.1
   resolution: "css-loader@npm:6.9.1"
   dependencies:
@@ -15195,17 +15219,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-loader@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "postcss-loader@npm:8.0.0"
+"postcss-loader@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "postcss-loader@npm:8.1.0"
   dependencies:
     cosmiconfig: ^9.0.0
     jiti: ^1.20.0
     semver: ^7.5.4
   peerDependencies:
+    "@rspack/core": 0.x || 1.x
     postcss: ^7.0.0 || ^8.0.1
     webpack: ^5.0.0
-  checksum: 10a79c1ceabf32f323a068c1369fe0e5b7fcf694af47e1e59b4c5a679bcc80969e77a1d21f1f156d49aa2979d0929a59cf2774c6ea4ee728d11b7e6c636c5e20
+  peerDependenciesMeta:
+    "@rspack/core":
+      optional: true
+    webpack:
+      optional: true
+  checksum: 72fd4975f7342efedaa62eb944cf309736ffde2e92ad4298d93b357f5131bc98dc219ee33d8157964868d30336e5e46a9def40873385a8b69ec9c8f1c53dcb36
   languageName: node
   linkType: hard
 
@@ -18269,6 +18299,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"swc-loader@npm:^0.2.4":
+  version: 0.2.4
+  resolution: "swc-loader@npm:0.2.4"
+  peerDependencies:
+    "@swc/core": ^1.2.147
+    webpack: ">=2"
+  checksum: f23bfe8900b35abdcb9910a2749f3c9d66edf5c660afc67fcf7983647eaec322e024d1edd3bd9fd48bd3191eea0616f67b5f8b5f923e3a648fa5b448683c3213
+  languageName: node
+  linkType: hard
+
 "swc-plugin-css-modules@npm:0.1.7":
   version: 0.1.7
   resolution: "swc-plugin-css-modules@npm:0.1.7"
@@ -19670,7 +19710,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.89.0, webpack@npm:^5.90.0":
+"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.89.0":
   version: 5.90.0
   resolution: "webpack@npm:5.90.0"
   dependencies:
@@ -19704,6 +19744,43 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: 178a0e7e9e5b26264a19dd5fe554a3508a8afafc9cce972bfd4452b5128d0db1b37832f5e615be1cff1934f24da0de967929f199be2b3fe283ca1951f98ea3fe
+  languageName: node
+  linkType: hard
+
+"webpack@npm:^5.90.1":
+  version: 5.90.1
+  resolution: "webpack@npm:5.90.1"
+  dependencies:
+    "@types/eslint-scope": ^3.7.3
+    "@types/estree": ^1.0.5
+    "@webassemblyjs/ast": ^1.11.5
+    "@webassemblyjs/wasm-edit": ^1.11.5
+    "@webassemblyjs/wasm-parser": ^1.11.5
+    acorn: ^8.7.1
+    acorn-import-assertions: ^1.9.0
+    browserslist: ^4.21.10
+    chrome-trace-event: ^1.0.2
+    enhanced-resolve: ^5.15.0
+    es-module-lexer: ^1.2.1
+    eslint-scope: 5.1.1
+    events: ^3.2.0
+    glob-to-regexp: ^0.4.1
+    graceful-fs: ^4.2.9
+    json-parse-even-better-errors: ^2.3.1
+    loader-runner: ^4.2.0
+    mime-types: ^2.1.27
+    neo-async: ^2.6.2
+    schema-utils: ^3.2.0
+    tapable: ^2.1.1
+    terser-webpack-plugin: ^5.3.10
+    watchpack: ^2.4.0
+    webpack-sources: ^3.2.3
+  peerDependenciesMeta:
+    webpack-cli:
+      optional: true
+  bin:
+    webpack: bin/webpack.js
+  checksum: a7be844d5720a0c6282fec012e6fa34b1137dff953c5d48bf2ef066a6c27c1dbc92a9b9effc05ee61c9fe269499266db9782073f2d82a589d3c5c966ffc56584
   languageName: node
   linkType: hard
 
