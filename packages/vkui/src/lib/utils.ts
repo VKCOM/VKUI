@@ -95,3 +95,19 @@ export function isValidNotReactFragmentElement(
     children.$$typeof !== Symbol.for('react.fragment')
   );
 }
+
+export function isForwardRefElement<
+  P extends React.HTMLAttributes<T> | React.SVGAttributes<T>,
+  T extends Element,
+>(
+  children: React.ReactElement,
+): children is Omit<React.DOMElement<P, T>, 'ref'> & { ref?: React.Ref<T> | undefined } {
+  if (!React.isValidElement(children)) {
+    return false;
+  }
+
+  // @ts-expect-error: TS2339 $$typeof всегда symbol, в отличии от type, благодаря этому пропускаем лишние проверки на тип.
+  // черпаем вдохновение из react-is https://github.com/facebook/react/blob/d48dbb824985166ecb7b2959db03090a8593dce0/packages/react-is/src/ReactIs.js#L119-L121
+  const typeOfOfType = children.type && children.type.$$typeof;
+  return typeOfOfType === Symbol.for('react.forward_ref');
+}

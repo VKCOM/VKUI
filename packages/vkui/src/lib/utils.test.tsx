@@ -1,6 +1,8 @@
+import * as React from 'react';
 import {
   addClassNameToElement,
   excludeKeysWithUndefined,
+  isForwardRefElement,
   removeClassNameFromElement,
 } from './utils';
 
@@ -58,5 +60,20 @@ describe(excludeKeysWithUndefined, () => {
     expect(excludeKeysWithUndefined({ key1: 1 })).toEqual({ key1: 1 });
     expect(excludeKeysWithUndefined({ key1: 1, key2: undefined })).toEqual({ key1: 1 });
     expect(excludeKeysWithUndefined({ key1: 1, key2: null, key3: undefined })).toEqual({ key1: 1, key2: null }); // prettier-ignore
+  });
+});
+
+describe('isForwardRefElement', () => {
+  test('detects components with React.forwardRef', () => {
+    function TestComponent() {
+      return null;
+    }
+
+    const TestWithForwardRefComponent = React.forwardRef(function WithForwardRefComponent() {
+      return null;
+    });
+
+    expect(isForwardRefElement(<TestWithForwardRefComponent />)).toBeTruthy();
+    expect(isForwardRefElement(<TestComponent />)).toBeFalsy();
   });
 });
