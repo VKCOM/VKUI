@@ -22,4 +22,5 @@
   margin: auto;
   border-radius: inherit;
   box-shadow: var(--vkui--elevation1);
+  pointer-events: none;
 }
