@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -12,6 +13,9 @@ const story: Meta<CellProps> = {
   component: Cell,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [withSinglePanel, withVKUILayout],
+  args: {
+    onClick: noop,
+  },
 };
 
 export default story;

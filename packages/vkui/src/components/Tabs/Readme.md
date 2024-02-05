@@ -31,12 +31,12 @@ const Example = () => {
       <Panel id="panel">
         <PanelHeader
           before={
-            <PanelHeaderButton>
+            <PanelHeaderButton onClick={noop}>
               <Icon28CameraOutline />
             </PanelHeaderButton>
           }
           after={
-            <PanelHeaderButton>
+            <PanelHeaderButton onClick={noop}>
               <Icon28AddOutline />
             </PanelHeaderButton>
           }

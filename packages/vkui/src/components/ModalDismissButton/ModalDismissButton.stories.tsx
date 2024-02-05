@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { ModalDismissButton, ModalDismissButtonProps } from './ModalDismissButton';
 
@@ -17,7 +18,7 @@ export const Playground: Story = {
   decorators: [
     (Component) => (
       <div style={{ position: 'relative' }}>
-        <Component />
+        <Component onClick={noop} />
       </div>
     ),
   ],

@@ -7,6 +7,7 @@ import {
   Icon28SettingsOutline,
   Icon28UsersOutline,
 } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Cell } from '../Cell/Cell';
@@ -52,9 +53,9 @@ export const Example: Story = {
       <View id="main" activePanel="panel1">
         <Panel id="panel1">
           <PanelHeader
-            before={<PanelHeaderBack />}
+            before={<PanelHeaderBack onClick={noop} />}
             after={
-              <PanelHeaderButton>
+              <PanelHeaderButton onClick={noop}>
                 <Icon28AddOutline />
               </PanelHeaderButton>
             }

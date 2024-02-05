@@ -43,6 +43,12 @@ const MODAL_PAGE_DYNAMIC = 'dynamic';
 const randomUser = getRandomUser();
 const users = getRandomUsers(25);
 
+const DoneButton = () => {
+  const { onClose } = React.useContext(ModalRootContext);
+
+  return <PanelHeaderSubmit onClick={onClose} />;
+};
+
 const AndroidCloseButton = ({ className }: { className?: string }) => {
   const { onClose } = React.useContext(ModalRootContext);
 
@@ -128,6 +134,7 @@ export const FullscreenModalPage: Story = {
               textAlign: 'center',
               padding: 32,
             }}
+            mode="tint"
           >
             <Avatar size={96} src={randomUser.photo_100} />
             <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="2">
@@ -166,7 +173,7 @@ export const ModalPageWithFilters: Story = {
           header={
             <ModalPageHeader
               before={sizeX.compact && <AndroidCloseButton className={sizeX.compact.className} />}
-              after={<PanelHeaderSubmit />}
+              after={<DoneButton />}
             >
               Фильтры
             </ModalPageHeader>

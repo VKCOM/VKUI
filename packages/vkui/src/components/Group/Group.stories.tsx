@@ -7,6 +7,7 @@ import {
   Icon28MailOutline,
   Icon28PhoneOutline,
 } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { CellButton } from '../CellButton/CellButton';
@@ -63,8 +64,8 @@ export const Example: Story = {
           header={<Header>Адреса</Header>}
           description="Для использования в мини-приложениях, Delivery Club, VK Taxi и других сервисах ВКонтакте. Эти адреса видны только Вам."
         >
-          <CellButton>Добавить домашний адрес</CellButton>
-          <CellButton>Добавить рабочий адрес</CellButton>
+          <CellButton onClick={noop}>Добавить домашний адрес</CellButton>
+          <CellButton onClick={noop}>Добавить рабочий адрес</CellButton>
         </Group>
       </>
     ),

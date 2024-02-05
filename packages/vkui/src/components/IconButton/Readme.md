@@ -15,14 +15,14 @@ const Example = () => {
   return (
     <div style={rowStyles}>
       <div>
-        <IconButton label="Удалить">
+        <IconButton label="Удалить" onClick={noop}>
           <Icon16Delete />
         </IconButton>
         <Footnote style={captionStyles}>16</Footnote>
       </div>
 
       <div>
-        <IconButton>
+        <IconButton onClick={noop}>
           <VisuallyHidden>Меню</VisuallyHidden>
           <Icon16MoreVertical />
         </IconButton>
@@ -30,14 +30,14 @@ const Example = () => {
       </div>
 
       <div>
-        <IconButton aria-label="Удалить 24">
+        <IconButton aria-label="Удалить 24" onClick={noop}>
           <Icon24Delete />
         </IconButton>
         <Footnote style={captionStyles}>24</Footnote>
       </div>
 
       <div>
-        <IconButton aria-labelledby="icon-28-label">
+        <IconButton aria-labelledby="icon-28-label" onClick={noop}>
           <Icon28Delete />
         </IconButton>
         <Footnote id="icon-28-label" style={captionStyles}>
@@ -47,7 +47,7 @@ const Example = () => {
       </div>
 
       <div>
-        <IconButton title="Удалить 36">
+        <IconButton title="Удалить 36" onClick={noop}>
           <Icon36Delete />
         </IconButton>
         <Footnote style={captionStyles}>36</Footnote>

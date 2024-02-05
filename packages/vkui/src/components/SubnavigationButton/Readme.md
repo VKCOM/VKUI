@@ -41,6 +41,7 @@ const SubnavigationButtonExample = () => {
                 after={buttonAfter}
                 expandable={expandable}
                 selected={selected}
+                onClick={noop}
               >
                 {mode} button
               </SubnavigationButton>

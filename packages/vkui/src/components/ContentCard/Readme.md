@@ -6,8 +6,8 @@
   - `mode`,
   - `getRootRef`,
   - `style`,
-  - `className`;
-- `img`
+  - `className`,
+  - `img`,
   - `getRef`,
   - `src`,
   - `srcSet`,
@@ -53,7 +53,6 @@ const Example = () => {
               maxHeight={150}
             />
             <ContentCard
-              disabled
               src="https://images.unsplash.com/photo-1603928726698-a015a1015d0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
               alt="Picture of person's left hand with pink paint"
               subtitle="unsplash"

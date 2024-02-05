@@ -173,6 +173,7 @@ export const Search = ({
               className={styles['Search__icon']}
               onFocus={setFocusedTrue}
               onBlur={setFocusedFalse}
+              onClick={noop}
             >
               <VisuallyHidden>{iconLabel}</VisuallyHidden>
               {icon}

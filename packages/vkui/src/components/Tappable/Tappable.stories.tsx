@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Tappable, TappableProps } from './Tappable';
 
@@ -15,7 +16,7 @@ type Story = StoryObj<TappableProps>;
 
 export const Playground: Story = {
   render: (args) => (
-    <Tappable {...args}>
+    <Tappable {...args} onClick={noop}>
       <div style={{ padding: 16 }}>Tappable</div>
     </Tappable>
   ),

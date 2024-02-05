@@ -20,7 +20,7 @@
       <CellButton
         onClick={() => {}}
         before={
-          <Avatar withBorder={false} size={40}>
+          <Avatar noBorder size={40}>
             <Icon24Add />
           </Avatar>
         }
@@ -30,7 +30,7 @@
       <CellButton
         onClick={() => {}}
         before={
-          <Avatar withBorder={false} size={48}>
+          <Avatar noBorder size={48}>
             <Icon28AddOutline />
           </Avatar>
         }
@@ -40,7 +40,7 @@
       <CellButton
         onClick={() => {}}
         before={
-          <Image withBorder={false} size={72}>
+          <Image noBorder size={72}>
             <Icon28AddOutline />
           </Image>
         }

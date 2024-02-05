@@ -8,6 +8,7 @@ import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Image } from '../Image/Image';
+import { Spacing } from '../Spacing/Spacing';
 import { Textarea } from '../Textarea/Textarea';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { ModalCard, ModalCardProps } from './ModalCard';
@@ -115,16 +116,20 @@ export const CardWithComplexContent: Story = {
         subheader="Приглашение в беседу"
         subheaderComponent="span"
         actions={
-          <ButtonGroup gap="s" mode="vertical" stretched>
-            <Button key="join" size="l" mode="primary" stretched>
-              Присоединиться
-            </Button>
-            <Button key="copy" size="l" mode="secondary" stretched>
-              Скопировать приглашение
-            </Button>
-          </ButtonGroup>
+          <React.Fragment>
+            <Spacing size={8} />
+            <ButtonGroup gap="s" mode="vertical" stretched>
+              <Button key="join" size="l" mode="primary" stretched>
+                Присоединиться
+              </Button>
+              <Button key="copy" size="l" mode="secondary" stretched>
+                Скопировать приглашение
+              </Button>
+            </ButtonGroup>
+          </React.Fragment>
         }
       >
+        <Spacing size={20} />
         <UsersStack
           photos={[
             getAvatarUrl('user_mm'),
