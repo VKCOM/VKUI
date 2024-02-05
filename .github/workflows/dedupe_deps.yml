@@ -28,7 +28,7 @@ jobs:
       - name: Create pull request with deduped deps
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           title: 'chore: Deduplicate dependencies on ${{ github.ref_name }}'
           branch: ${{ github.ref_name }}-dedupe-deps
           commit-message: 'chore: deduplicate dependencies'
