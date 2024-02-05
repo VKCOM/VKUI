@@ -4270,9 +4270,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "@testing-library/jest-dom@npm:6.3.0"
+"@testing-library/jest-dom@npm:^6.4.1":
+  version: 6.4.1
+  resolution: "@testing-library/jest-dom@npm:6.4.1"
   dependencies:
     "@adobe/css-tools": ^4.3.2
     "@babel/runtime": ^7.9.2
@@ -4299,13 +4299,13 @@ __metadata:
       optional: true
     vitest:
       optional: true
-  checksum: cea8aa17895cf4aff573fedee80e8a592611caf7bc724702fc70b3b7bfee94becd3a10873c818d931424018d6fdeeca9d1a2ea5f53b74092ad5e8e09f03dde90
+  checksum: 66cd945fc81181289835f24791ae4de4913ac4e4fd8bc2e2ee7393ad7298bc3c2fc5acd6951c5b2212a03ebe914c6924c3da6e46225126387cb2200554004b67
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^14.0.0":
-  version: 14.1.2
-  resolution: "@testing-library/react@npm:14.1.2"
+"@testing-library/react@npm:^14.2.1":
+  version: 14.2.1
+  resolution: "@testing-library/react@npm:14.2.1"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@testing-library/dom": ^9.0.0
@@ -4313,7 +4313,7 @@ __metadata:
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 0269903e53412cf96fddb55c8a97a9987a89c3308d71fa1418fe61c47d275445e7044c5387f57cf39b8cda319a41623dbad2cce7a17016aed3a9e85185aac75a
+  checksum: 7054ae69a0e06c0777da8105fa08fac7e8dac570476a065285d7b993947acda5c948598764a203ebaac759c161c562d6712f19f5bd08be3f09a07e23baee5426
   languageName: node
   linkType: hard
 
@@ -5402,8 +5402,8 @@ __metadata:
     "@swc/cli": ^0.1.64
     "@swc/core": 1.3.105
     "@swc/jest": ^0.2.31
-    "@testing-library/jest-dom": ^6.3.0
-    "@testing-library/react": ^14.0.0
+    "@testing-library/jest-dom": ^6.4.1
+    "@testing-library/react": ^14.2.1
     "@testing-library/user-event": ^14.5.1
     "@types/jest": ^29.5.12
     "@types/jest-axe": ^3.5.9
