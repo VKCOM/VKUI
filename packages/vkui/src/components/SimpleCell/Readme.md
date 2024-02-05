@@ -57,20 +57,22 @@ const Example = () => {
           <SimpleCell
             before={<Avatar size={40} src={getAvatarUrl('user_xyz')} />}
             after={
-              <IconButton label="Написать сообщение">
+              <IconButton label="Написать сообщение" onClick={noop}>
                 <Icon28MessageOutline />
               </IconButton>
             }
+            onClick={noop}
           >
             Игорь Фёдоров
           </SimpleCell>
           <SimpleCell
             before={<Avatar size={40} src={getAvatarUrl('user_arthurstam')} />}
             after={
-              <IconButton label="Написать сообщение">
+              <IconButton label="Написать сообщение" onClick={noop}>
                 <Icon28MessageOutline />
               </IconButton>
             }
+            onClick={noop}
           >
             Artur Stambultsian
           </SimpleCell>
@@ -80,22 +82,24 @@ const Example = () => {
             before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />}
             badgeAfterTitle={<Icon12Verified />}
             after={
-              <IconButton label="Написать сообщение">
+              <IconButton label="Написать сообщение" onClick={noop}>
                 <Icon28MessageOutline />
               </IconButton>
             }
             subtitle="Команда ВКонтакте"
+            onClick={noop}
           >
             Игорь Фёдоров
           </SimpleCell>
           <SimpleCell
             before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />}
             after={
-              <IconButton label="Написать сообщение">
+              <IconButton label="Написать сообщение" onClick={noop}>
                 <Icon28MessageOutline />
               </IconButton>
             }
             subtitle="Бот"
+            onClick={noop}
           >
             Artur Stambultsian
           </SimpleCell>

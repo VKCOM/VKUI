@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon28AddOutline } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { PanelHeaderBack as PanelHeaderBackCmp } from '../PanelHeaderBack/PanelHeaderBack';
 import { PanelHeaderClose as PanelHeaderCloseCmp } from '../PanelHeaderClose/PanelHeaderClose';
@@ -15,6 +16,9 @@ const story: Meta<PanelHeaderButtonProps> = {
   title: 'Layout/PanelHeaderButton',
   component: PanelHeaderButton,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  args: {
+    onClick: noop,
+  },
 };
 
 export default story;

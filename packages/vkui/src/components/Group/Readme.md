@@ -88,47 +88,51 @@ const SharedContent = () => {
         <SimpleCell
           after={
             platform === 'ios' ? (
-              <IconButton label="Подробнее">
+              <IconButton label="Подробнее" onClick={noop}>
                 <Icon16MoreHorizontal />
               </IconButton>
             ) : (
-              <IconButton label="Подробнее">
+              <IconButton label="Подробнее" onClick={noop}>
                 <Icon16MoreVertical />
               </IconButton>
             )
           }
           subtitle="Санкт-Петербург, Россия"
           before={<Avatar size={32} mode="app" />}
+          onClick={noop}
         >
           VK · Приложение для iPhone
         </SimpleCell>
         <SimpleCell
           after={
             platform === 'ios' ? (
-              <IconButton label="Подробнее">
+              <IconButton label="Подробнее" onClick={noop}>
                 <Icon16MoreHorizontal />
               </IconButton>
             ) : (
-              <IconButton label="Подробнее">
+              <IconButton label="Подробнее" onClick={noop}>
                 <Icon16MoreVertical />
               </IconButton>
             )
           }
           subtitle="Санкт-Петербург, Россия"
           before={<Avatar size={32} mode="app" />}
+          onClick={noop}
         >
           VK · Браузер Chrome для macOS
         </SimpleCell>
-        <CellButton>Показать историю активности</CellButton>
-        <CellButton mode="danger">Завершить все остальные сеансы</CellButton>
+        <CellButton onClick={noop}>Показать историю активности</CellButton>
+        <CellButton onClick={noop} mode="danger">
+          Завершить все остальные сеансы
+        </CellButton>
       </Group>
 
       <Group
         header={<Header>Адреса</Header>}
         description="Для использования в мини-приложениях, Delivery Club, VK Taxi и других сервисах ВКонтакте. Эти адреса видны только Вам."
       >
-        <CellButton>Добавить домашний адрес</CellButton>
-        <CellButton>Добавить рабочий адрес</CellButton>
+        <CellButton onClick={noop}>Добавить домашний адрес</CellButton>
+        <CellButton onClick={noop}>Добавить рабочий адрес</CellButton>
       </Group>
     </>
   );

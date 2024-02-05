@@ -8,6 +8,7 @@ import {
   Icon28PictureOutline,
   Icon28SettingsOutline,
 } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -41,7 +42,7 @@ export const SimplePanelHeader: Story = {
   render: () => (
     <View id="main" activePanel="panel1">
       <Panel id="panel1">
-        <PanelHeader before={<PanelHeaderClose />} after={<Avatar size={36} />}>
+        <PanelHeader before={<PanelHeaderClose onClick={noop} />} after={<Avatar size={36} />}>
           Стартовый экран
         </PanelHeader>
         <Div>PanelHeader c before PanelHeaderClose и after Avatar</Div>
@@ -57,7 +58,9 @@ export const PanelHeaderWithCounter: Story = {
       <View id="main" activePanel="panel1">
         <Panel id="panel1">
           <PanelHeader
-            before={<PanelHeaderBack label={platform === 'vkcom' ? 'Назад' : undefined} />}
+            before={
+              <PanelHeaderBack onClick={noop} label={platform === 'vkcom' ? 'Назад' : undefined} />
+            }
             after={
               <PanelHeaderButton
                 label={
@@ -66,6 +69,7 @@ export const PanelHeaderWithCounter: Story = {
                     21
                   </Counter>
                 }
+                onClick={noop}
               >
                 <VisuallyHidden>Изображения</VisuallyHidden>
                 <AdaptiveIconRenderer
@@ -89,7 +93,7 @@ export const PanelHeaderWithMultipleIcons: Story = {
     <View id="main" activePanel="panel1">
       <Panel id="panel1">
         <PanelHeader
-          before={<PanelHeaderBack />}
+          before={<PanelHeaderBack onClick={noop} />}
           after={
             <React.Fragment>
               <PanelHeaderButton
@@ -98,6 +102,7 @@ export const PanelHeaderWithMultipleIcons: Story = {
                     <VisuallyHidden>Новых: </VisuallyHidden>3
                   </Counter>
                 }
+                onClick={noop}
               >
                 <VisuallyHidden>Настройки</VisuallyHidden>
                 <AdaptiveIconRenderer
@@ -111,6 +116,7 @@ export const PanelHeaderWithMultipleIcons: Story = {
                     2
                   </Counter>
                 }
+                onClick={noop}
               >
                 <VisuallyHidden>Уведомления</VisuallyHidden>
                 <AdaptiveIconRenderer
@@ -136,7 +142,7 @@ export const PanelHeaderWithSearch: Story = {
     return (
       <View id="main" activePanel="panel1">
         <Panel id="panel1">
-          <PanelHeader before={platform !== 'vkcom' && <PanelHeaderBack />}>
+          <PanelHeader before={platform !== 'vkcom' && <PanelHeaderBack onClick={noop} />}>
             <Search />
           </PanelHeader>
           <Div>Search</Div>
@@ -150,7 +156,7 @@ export const PanelHeaderWithTabs: Story = {
   render: () => (
     <View id="main" activePanel="panel1">
       <Panel id="panel1">
-        <PanelHeader before={<PanelHeaderBack />}>
+        <PanelHeader before={<PanelHeaderBack onClick={noop} />}>
           <Tabs>
             <TabsItem selected>Новости</TabsItem>
             <TabsItem>Интересное</TabsItem>

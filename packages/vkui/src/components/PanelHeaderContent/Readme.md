@@ -12,9 +12,9 @@ const Example = () => {
     <View activePanel="brand">
       <Panel id="brand">
         <PanelHeader
-          before={<PanelHeaderBack label="Назад" />}
+          before={<PanelHeaderBack label="Назад" onClick={noop} />}
           after={
-            <PanelHeaderButton>
+            <PanelHeaderButton onClick={noop}>
               <AdaptiveIconRenderer
                 IconCompact={Icon24MessageOutline}
                 IconRegular={Icon28MessageOutline}

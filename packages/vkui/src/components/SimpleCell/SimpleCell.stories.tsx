@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon12Verified, Icon28MessageOutline } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Avatar } from '../Avatar/Avatar';
@@ -29,11 +30,12 @@ export const Playground: Story = {
     ),
     badgeAfterTitle: <Icon12Verified />,
     after: (
-      <IconButton label="Написать сообщение">
+      <IconButton label="Написать сообщение" onClick={noop}>
         <Icon28MessageOutline />
       </IconButton>
     ),
     subtitle: 'Команда ВКонтакте',
+    onClick: noop,
   },
   decorators: [
     (Component, context) => (

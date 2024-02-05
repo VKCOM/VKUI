@@ -41,7 +41,9 @@ const Example = () => {
             <SimpleCell before={<Icon28SchoolOutline />} subtitle="Екатеринбург">
               Школа №180
             </SimpleCell>
-            <CellButton before={<Icon28AddOutline />}>Добавить учебное заведение</CellButton>
+            <CellButton onClick={noop} before={<Icon28AddOutline />}>
+              Добавить учебное заведение
+            </CellButton>
           </Group>
         </Group>
         <Group mode="plain" header={<Header mode="secondary">Направление to="bottom"</Header>}>

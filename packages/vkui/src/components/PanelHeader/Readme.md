@@ -31,7 +31,7 @@ const Example = () => {
     <Root activeView={activeView}>
       <View id="main" activePanel={mainPanel}>
         <Panel id="panel1">
-          <PanelHeader before={<PanelHeaderClose />} after={<Avatar size={36} />}>
+          <PanelHeader before={<PanelHeaderClose onClick={noop} />} after={<Avatar size={36} />}>
             Стартовый экран
           </PanelHeader>
           <Group>
@@ -54,6 +54,7 @@ const Example = () => {
                     21
                   </Counter>
                 }
+                onClick={noop}
               >
                 <VisuallyHidden>Изображения</VisuallyHidden>
                 <AdaptiveIconRenderer
@@ -80,6 +81,7 @@ const Example = () => {
                       <VisuallyHidden>Новых: </VisuallyHidden>3
                     </Counter>
                   }
+                  onClick={noop}
                 >
                   <VisuallyHidden>Настройки</VisuallyHidden>
                   <AdaptiveIconRenderer
@@ -93,6 +95,7 @@ const Example = () => {
                       2
                     </Counter>
                   }
+                  onClick={noop}
                 >
                   <AdaptiveIconRenderer
                     IconCompact={Icon24NotificationOutline}
@@ -173,6 +176,9 @@ const Example = () => {
               <TabsItem>Интересное</TabsItem>
             </Tabs>
           </PanelHeader>
+          <Group>
+            <Div>Tabs content</Div>
+          </Group>
         </Panel>
       </View>
     </Root>

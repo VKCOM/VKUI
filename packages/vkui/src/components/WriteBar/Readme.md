@@ -69,14 +69,20 @@ const WriteBarExample = (props) => {
           <WriteBar
             value={text1}
             onChange={(e) => setText1(e.target.value)}
-            before={<WriteBarIcon mode="attach" />}
+            before={<WriteBarIcon onClick={noop} mode="attach" />}
             after={
               <>
-                <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                <WriteBarIcon onClick={noop} label="Эмоджи и стикеры">
+                  {SmileOutlineIcon}
+                </WriteBarIcon>
 
-                <WriteBarIcon label="Записать видео-сообщение">{CameraOutlineIcon}</WriteBarIcon>
+                <WriteBarIcon onClick={noop} label="Записать видео-сообщение">
+                  {CameraOutlineIcon}
+                </WriteBarIcon>
 
-                <WriteBarIcon label="Записать голосовое сообщение">{VoiceOutlineIcon}</WriteBarIcon>
+                <WriteBarIcon onClick={noop} label="Записать голосовое сообщение">
+                  {VoiceOutlineIcon}
+                </WriteBarIcon>
               </>
             }
             placeholder="Сообщение"
@@ -87,28 +93,34 @@ const WriteBarExample = (props) => {
           <WriteBar
             value={text2}
             onChange={(e) => setText2(e.target.value)}
-            before={<WriteBarIcon mode="attach" />}
+            before={<WriteBarIcon onClick={noop} mode="attach" />}
             inlineAfter={
               <>
                 {text2.length === 0 && (
-                  <WriteBarIcon label="Открыть меню бота">{KeyboardBotsOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon onClick={noop} label="Открыть меню бота">
+                    {KeyboardBotsOutlineIcon}
+                  </WriteBarIcon>
                 )}
                 {text2.length > 0 && (
-                  <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon onClick={noop} label="Эмоджи и стикеры">
+                    {SmileOutlineIcon}
+                  </WriteBarIcon>
                 )}
               </>
             }
             after={
               <>
                 {text2.length === 0 && (
-                  <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon onClick={noop} label="Эмоджи и стикеры">
+                    {SmileOutlineIcon}
+                  </WriteBarIcon>
                 )}
                 {text2.length === 0 && (
-                  <WriteBarIcon label="Записать голосовое сообщение">
+                  <WriteBarIcon onClick={noop} label="Записать голосовое сообщение">
                     {VoiceOutlineIcon}
                   </WriteBarIcon>
                 )}
-                {text2.length > 0 && <WriteBarIcon mode="send" />}
+                {text2.length > 0 && <WriteBarIcon onClick={noop} mode="send" />}
               </>
             }
             placeholder="Сообщение"
@@ -119,18 +131,22 @@ const WriteBarExample = (props) => {
           <WriteBar
             value={text3}
             onChange={(e) => setText3(e.target.value)}
-            before={<WriteBarIcon mode="attach" />}
+            before={<WriteBarIcon onClick={noop} mode="attach" />}
             inlineAfter={
               text3.length > 0 && (
-                <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                <WriteBarIcon onClick={noop} label="Смайлы и стикеры">
+                  {SmileOutlineIcon}
+                </WriteBarIcon>
               )
             }
             after={
               <>
                 {text3.length === 0 && (
-                  <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon onClick={noop} label="Смайлы и стикеры">
+                    {SmileOutlineIcon}
+                  </WriteBarIcon>
                 )}
-                <WriteBarIcon mode="send" disabled={text3.length === 0} />
+                <WriteBarIcon onClick={noop} mode="send" disabled={text3.length === 0} />
               </>
             }
             placeholder="Сообщение"
@@ -141,18 +157,22 @@ const WriteBarExample = (props) => {
           <WriteBar
             value={text4}
             onChange={(e) => setText4(e.target.value)}
-            before={<WriteBarIcon mode="attach" />}
+            before={<WriteBarIcon onClick={noop} mode="attach" />}
             inlineAfter={
               text4.length > 0 && (
-                <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                <WriteBarIcon onClick={noop} label="Смайлы и стикеры">
+                  {SmileOutlineIcon}
+                </WriteBarIcon>
               )
             }
             after={
               <>
                 {text4.length === 0 && (
-                  <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon onClick={noop} label="Смайлы и стикеры">
+                    {SmileOutlineIcon}
+                  </WriteBarIcon>
                 )}
-                <WriteBarIcon mode="done" disabled={text4.length === 0} />
+                <WriteBarIcon onClick={noop} mode="done" disabled={text4.length === 0} />
               </>
             }
             placeholder="Сообщение"
@@ -182,20 +202,24 @@ const WriteBarExample = (props) => {
               }
               inlineAfter={
                 text.length > 0 && (
-                  <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                  <WriteBarIcon onClick={noop} label="Смайлы и стикеры">
+                    {SmileOutlineIcon}
+                  </WriteBarIcon>
                 )
               }
               after={
                 <>
                   {text.length === 0 && (
-                    <WriteBarIcon label="Смайлы и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+                    <WriteBarIcon onClick={noop} label="Смайлы и стикеры">
+                      {SmileOutlineIcon}
+                    </WriteBarIcon>
                   )}
                   {text.length === 0 && (
-                    <WriteBarIcon label="Записать голосовое сообщение">
+                    <WriteBarIcon onClick={noop} label="Записать голосовое сообщение">
                       {VoiceOutlineIcon}
                     </WriteBarIcon>
                   )}
-                  {text.length > 0 && <WriteBarIcon mode="send" />}
+                  {text.length > 0 && <WriteBarIcon onClick={noop} mode="send" />}
                 </>
               }
               value={text}

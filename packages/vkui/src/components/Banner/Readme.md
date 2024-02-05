@@ -18,6 +18,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
           header="Баста в Ледовом"
           subheader="Большой концерт"
           asideMode="dismiss"
+          onDismiss={noop}
           actions={<Button>Подробнее</Button>}
         />
       </Div>
@@ -46,6 +47,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
           header="Подписка за рубль!"
           subheader="Предложение действует только до конца февраля"
           asideMode="dismiss"
+          onDismiss={noop}
           actions={
             <ButtonGroup mode="vertical" gap="m">
               <Button mode="primary">Попробовать сейчас</Button>
@@ -61,6 +63,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
           header="Сегодня день рождения Михаила Лихачёва"
           subheader="Подарите подарок"
           asideMode="dismiss"
+          onDismiss={noop}
           actions={<Button mode="primary">Подарить</Button>}
         />
       </Div>
@@ -145,6 +148,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
             </span>
           }
           asideMode="dismiss"
+          onDismiss={noop}
           actions={
             <Button mode="primary" size="m">
               Подробнее
@@ -179,6 +183,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
             />
           }
           asideMode="dismiss"
+          onDismiss={noop}
           actions={
             <Button appearance="overlay" size="m">
               Подробнее
@@ -212,6 +217,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
             />
           }
           asideMode="dismiss"
+          onDismiss={noop}
           actions={
             <Button appearance="overlay" size="m">
               Подробнее
