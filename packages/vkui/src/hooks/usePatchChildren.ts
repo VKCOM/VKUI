@@ -79,7 +79,7 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
     isValidElementResult ? children.props : {},
   );
 
-  const props = isDOMTypeElementResult
+  const props = shouldUseRef
     ? { ref: childRef, ...injectProps, ...mergedEventsByInjectProps }
     : isValidElementResult
     ? { getRootRef: childRef, ...injectProps, ...mergedEventsByInjectProps }
