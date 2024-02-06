@@ -11,6 +11,11 @@ const ComponentWithGetRootRef = ({
   <div ref={getRootRef} {...restProps}></div>
 );
 
+const ComponentWithForwardRef = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>((props, ref) => <div ref={ref} {...props}></div>);
+
 type WrapperWithUsePatchChildrenRefProps = {
   childRef?: React.RefObject<HTMLDivElement>;
   refHook?: React.RefObject<HTMLDivElement>;
@@ -39,6 +44,8 @@ describe(usePatchChildren, () => {
     { type: 'element', refPropKey: 'refHook' },
     { type: 'component', refPropKey: 'childRef' },
     { type: 'component', refPropKey: 'refHook' },
+    { type: 'forwardRef', refPropKey: 'refHook' },
+    { type: 'forwardRef', refPropKey: 'childRef' },
   ])('should get ref by $type with $refPropKey', ({ type, refPropKey }) => {
     const refByTestingHook = React.createRef<HTMLDivElement>();
     const refForCompare = React.createRef<HTMLDivElement>();
@@ -50,6 +57,9 @@ describe(usePatchChildren, () => {
         break;
       case 'component':
         reactElement = <ComponentWithGetRootRef getRootRef={refForCompare} />;
+        break;
+      case 'forwardRef':
+        reactElement = <ComponentWithForwardRef ref={refForCompare} />;
         break;
     }
 
