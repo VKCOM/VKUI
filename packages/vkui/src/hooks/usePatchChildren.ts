@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { getMergedSameEventsByProps } from '../helpers/getMergedSameEventsByProps';
-import { isDOMTypeElement, isValidNotReactFragmentElement } from '../lib/utils';
+import {
+  isDOMTypeElement,
+  isForwardRefElement,
+  isValidNotReactFragmentElement,
+} from '../lib/utils';
 import { warnOnce } from '../lib/warnOnce';
 import type { HasRootRef } from '../types';
 import { useEffectDev } from './useEffectDev';
@@ -59,12 +63,14 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
     isValidElementResult &&
     isDOMTypeElement<React.HTMLAttributes<ElementType>, ElementType>(children);
 
+  const isForwardedRefElementResult =
+    isValidElementResult &&
+    isForwardRefElement<React.HTMLAttributes<ElementType>, ElementType>(children);
+
+  const shouldUseRef = isDOMTypeElementResult || isForwardedRefElementResult;
+
   const childRef = useExternRef<ElementType>(
-    isDOMTypeElementResult
-      ? children.ref
-      : isValidElementResult
-      ? children.props.getRootRef
-      : undefined,
+    shouldUseRef ? children.ref : isValidElementResult ? children.props.getRootRef : undefined,
     externRef,
   );
 
@@ -73,7 +79,7 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
     isValidElementResult ? children.props : {},
   );
 
-  const props = isDOMTypeElementResult
+  const props = shouldUseRef
     ? { ref: childRef, ...injectProps, ...mergedEventsByInjectProps }
     : isValidElementResult
     ? { getRootRef: childRef, ...injectProps, ...mergedEventsByInjectProps }

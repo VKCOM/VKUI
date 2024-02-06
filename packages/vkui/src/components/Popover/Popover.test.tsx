@@ -68,4 +68,36 @@ describe(Popover, () => {
 
     expect(onPlacementChange).toHaveBeenCalledWith('top');
   });
+
+  test('passes popover ref to ref prop of children that uses React.forwardRef', async () => {
+    let componentRef: React.ForwardedRef<HTMLDivElement> | undefined = undefined;
+    const ComponentWithForwardRef = React.forwardRef<
+      HTMLDivElement,
+      React.HTMLAttributes<HTMLDivElement>
+    >(function Component(props, ref) {
+      componentRef = ref;
+      return (
+        <div {...props} ref={ref}>
+          Component with ref
+        </div>
+      );
+    });
+
+    render(
+      <Popover
+        defaultShown
+        content="Some popover"
+        aria-describedby="target"
+        role="tooltip"
+        data-testid="popover"
+        zIndex="100500"
+      >
+        <ComponentWithForwardRef id="target" />
+      </Popover>,
+    );
+
+    await waitForFloatingPosition();
+
+    expect(componentRef).toBeTruthy();
+  });
 });
