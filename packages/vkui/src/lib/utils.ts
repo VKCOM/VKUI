@@ -100,7 +100,7 @@ export function isForwardRefElement<
   P extends React.HTMLAttributes<T> | React.SVGAttributes<T>,
   T extends Element,
 >(
-  children: React.ReactElement,
+  children: Parameters<typeof React.isValidElement>[0],
 ): children is Omit<React.DOMElement<P, T>, 'ref'> & { ref?: React.Ref<T> | undefined } {
   if (!React.isValidElement(children)) {
     return false;

@@ -76,4 +76,10 @@ describe('isForwardRefElement', () => {
     expect(isForwardRefElement(<TestWithForwardRefComponent />)).toBeTruthy();
     expect(isForwardRefElement(<TestComponent />)).toBeFalsy();
   });
+
+  test('returns false for not valid react elements', () => {
+    expect(isForwardRefElement(45)).toBeFalsy();
+    expect(isForwardRefElement(null)).toBeFalsy();
+    expect(isForwardRefElement('Hello')).toBeFalsy();
+  });
 });
