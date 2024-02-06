@@ -1,0 +1,85 @@
+name: Publish Workflow / Complete
+description: It finish publishing
+
+inputs:
+  branch:
+    description: target branch for git push
+    required: true
+  prev_version:
+    description: package's prev version
+    required: true
+  next_version:
+    description: package's next version
+    required: true
+  package_name:
+    description: package's name
+    required: true
+  token:
+    description: token for write access to repository
+    required: true
+  npm_token:
+    description: token for publish package to NPM
+    required: true
+  npm_tag:
+    description: tag for NPM artifact
+    required: false
+    default: latest
+  use_git_tag_with_namespace:
+    required: false
+    default: true
+
+outputs:
+  prev_version:
+    description: Previous version of package
+    value: ${{ steps.internal_id_prev_version.outputs.value }}
+
+runs:
+  using: composite
+  steps:
+    - name: Commit
+      run: |
+        git add -A
+        git commit -m 'bump(${{ inputs.package_name }}): from ${{ inputs.prev_version }} to ${{ inputs.next_version }}'
+      shell: bash
+
+    - name: Create tag for core package
+      if: ${{ inputs.use_git_tag_with_namespace }}
+      run: git tag v${{ inputs.next_version }}
+      shell: bash
+
+    - name: Create tag for other package
+      if: ${{ !inputs.use_git_tag_with_namespace }}
+      run: git tag ${{ inputs.package_name }}@${{ inputs.next_version }}
+      shell: bash
+
+    - name: Generate archive
+      # ../../ – это путь до корня из директории `packages/<name>`
+      run: yarn workspace ${{ inputs.package_name }} pack --out ../../artifact.tgz
+      shell: bash
+
+    - name: Publishing release
+      run: |
+        npm publish artifact.tgz --tag ${{ inputs.npm_tag }}
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
+      shell: bash
+
+    - name: Pushing changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ inputs.token }}
+        branch: ${{ inputs.branch }}
+        tags: true
+
+    - name: Prepare payload data
+      run: |
+        mkdir -p publish_workflow_payload
+        echo ${{ inputs.outputs.next_version }} > publish_workflow_payload/next_version.txt
+        echo ${{ inputs.outputs.package_name }} > publish_workflow_payload/package_name.txt
+
+    - name: Upload payload data to artifact for deploy workflow
+      uses: actions/upload-artifact@v4
+      with:
+        name: publish_workflow_payload
+        path: publish_workflow_payload/
+        retention-days: 1

@@ -1,10 +1,19 @@
-name: 'Publish @vkontakte/vkui (pre-release)'
+name: 'Publish pre-release'
 
 on:
   workflow_dispatch:
     inputs:
-      type:
-        description: 'version type (prerelease for bumping pre-release version):'
+      package_name:
+        description: "package's name:"
+        required: true
+        type: choice
+        options:
+          - '@vkontakte/vkui'
+          - '@vkontakte/vkui-floating-ui'
+          - '@vkontakte/vkui-token-translator'
+          - '@vkontakte/vkui-codemods'
+      new_version:
+        description: 'version type (use prerelease for bumping pre-release version):'
         required: true
         type: choice
         default: 'prerelease'
@@ -13,25 +22,26 @@ on:
           - preminor
           - premajor
           - prerelease
-      tag:
+      npm_tag_aka_pre_id:
+        description: 'NPM tag:'
         required: true
-        description: 'tag ("beta" or "alpha"):'
         type: choice
         default: 'beta'
         options:
-          - beta
           - alpha
+          - beta
+          - rc
       custom_version:
-        description: 'custom version: x.y.z-beta.0 (without "v")'
+        description: 'use syntax x.y.z-beta.0, without "v" (it will ignore "version type" & "NPM tag" parameters):'
         required: false
 
-run-name: Publish pre-release ${{ inputs.type }} ${{ inputs.custom_version }} (tag ${{ inputs.tag }})
+run-name: Publish pre-release ${{ github.event.inputs.package_name }} ${{ inputs.new_version }} ${{ inputs.custom_version }} (tag ${{ inputs.npm_tag_aka_pre_id }})
 
 jobs:
   publish:
     concurrency: ci-gh-pages
     outputs:
-      release_tag: ${{ steps.updated_version.outputs.version }}
+      release_tag: ${{ steps.updated_versions_info.outputs.next_version }}
     permissions:
       id-token: write
     runs-on: ubuntu-latest
@@ -41,80 +51,31 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
+      - name: Setting up the repository environment
+        uses: ./.github/actions/publish-workflow-1-setup
+
+      - name: Bump version
+        id: updated_versions_info
+        uses: ./.github/actions/publish-workflow-2-bump-version
         with:
-          node-version: 20
-          cache: 'yarn'
-          always-auth: true
-          registry-url: 'https://registry.npmjs.org'
+          package_name: ${{ github.event.inputs.package_name }}
+          new_version: ${{ github.event.inputs.custom_version || github.event.inputs.new_version }}
+          # Ignore `pre_id` if `custom_version` is specified
+          pre_id: ${{ !github.event.inputs.custom_version && github.event.inputs.npm_tag_aka_pre_id || '' }}
 
-      - name: Install dependencies
-        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
-
-      - name: Run linters
-        run: yarn run lint
-
-      - name: Run @vkontakte/vkui unit tests
-        run: yarn workspace @vkontakte/vkui run test
-
-      - name: Set Git credentials
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Action"
-
-      - name: Saving current version to env
-        id: prev_version
-        run: |
-          echo "version=$(yarn workspace @vkontakte/vkui node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
-
-      - name: Bump by version type
-        if: ${{ !github.event.inputs.custom_version }}
-        run: yarn workspace @vkontakte/vkui run g:npm:version ${{ github.event.inputs.type }} --preid ${{ github.event.inputs.tag }}
-
-      - name: Bump by custom version
-        if: ${{ github.event.inputs.custom_version }}
-        run: yarn workspace @vkontakte/vkui run g:npm:version ${{ github.event.inputs.custom_version }} --preid ${{ github.event.inputs.tag }}
-
-      - name: Saving updated version to env
-        id: updated_version
-        run: |
-          echo "version=$(yarn workspace @vkontakte/vkui node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
-
-      - name: Adding commit and tag with updated version number
-        run: |
-          git add -A
-          git commit -m 'bump(@vkontakte/vkui): from ${{ steps.prev_version.outputs.version }} to ${{ steps.updated_version.outputs.version }}'
-          git tag v${{ steps.updated_version.outputs.version }}
-
-      - name: Pushing changes
-        uses: ad-m/github-push-action@master
+      - name: Run pre-publish checks
+        uses: ./.github/actions/publish-workflow-3-validation
         with:
-          github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          package_name: ${{ github.event.inputs.package_name }}
+
+      - name: Complete publish
+        uses: ./.github/actions/publish-workflow-4-complete
+        with:
           branch: ${{ github.ref }}
-          tags: true
-
-      - name: Generate archive
-        working-directory: ./packages/vkui
-        run: yarn pack
-
-      - name: Publishing release
-        working-directory: ./packages/vkui
-        run: |
-          npm publish package.tgz --tag ${{ github.event.inputs.tag }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
-
-      - name: Build styleguide
-        run: yarn run docs:styleguide:build --dist dist/${{ steps.updated_version.outputs.version }}
-      - name: Build storybook
-        run: yarn docs:storybook:build -o ../../styleguide/dist/${{ steps.updated_version.outputs.version }}/playground
-
-      - name: Publishing doc
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
+          prev_version: ${{ steps.updated_versions_info.outputs.prev_version }}
+          next_version: ${{ steps.updated_versions_info.outputs.next_version }}
+          package_name: ${{ github.event.inputs.package_name }}
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: styleguide/dist
-          clean: false
-          force: false
+          npm_token: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+          npm_tag: ${{ github.event.inputs.npm_tag_aka_pre_id }}
+          use_git_tag_with_namespace: ${{ github.event.inputs.package_name != '@vkontakte/vkui' }}
