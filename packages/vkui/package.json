@@ -43,7 +43,7 @@
     "postcss": "yarn run -T cross-env NODE_ENV=production concurrently 'yarn:postcss:*'",
     "postcss:bundle": "yarn run -T webpack --config webpack.styles.config.js",
     "postcss:modules": "yarn run -T postcss './src/**/*.css' --base ./src --dir ./dist/cssm --config ./cssm",
-    "swc-base": "yarn run -T cross-env NODE_ENV=production swc src/ --config-file package.swcrc --extensions .tsx,.jsx,.ts,.js",
+    "swc-base": "yarn run -T cross-env NODE_ENV=production swc src/ --config-file package.swcrc --extensions .tsx,.jsx,.ts,.js --strip-leading-paths",
     "swc:es6": "yarn swc-base -d dist -s",
     "swc:cjs": "yarn swc-base -d dist/cjs -s -C module.type=commonjs",
     "swc:cssm": "yarn swc-base -d dist/cssm -s --config-file ./cssm/cssm.swcrc",
@@ -66,7 +66,7 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@swc/helpers": "^0.5.3",
+    "@swc/helpers": "^0.5.6",
     "@vkontakte/icons": "^2.62.0",
     "@vkontakte/vkjs": "^1.1.1",
     "@vkontakte/vkui-floating-ui": "^0.1.2",
