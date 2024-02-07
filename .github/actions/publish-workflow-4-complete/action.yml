@@ -28,11 +28,6 @@ inputs:
     required: false
     default: true
 
-outputs:
-  prev_version:
-    description: Previous version of package
-    value: ${{ steps.internal_id_prev_version.outputs.value }}
-
 runs:
   using: composite
   steps:
