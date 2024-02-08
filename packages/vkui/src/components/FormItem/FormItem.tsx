@@ -6,7 +6,9 @@ import { HasComponent, HasRootRef } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { Subhead } from '../Typography/Subhead/Subhead';
+import { FormItemTop } from './FormItemTop';
+import { FormItemTopAside } from './FormItemTopAside';
+import { FormItemTopLabel } from './FormItemTopLabel';
 import styles from './FormItem.module.css';
 
 const sizeYClassNames = {
@@ -73,13 +75,16 @@ export const FormItem = ({
   const rootEl = useExternRef(getRootRef);
   const { sizeY = 'none' } = useAdaptivity();
 
-  const topComponent = topComponentProp || (htmlFor && 'label') || 'span';
   const wrappedChildren = (
     <React.Fragment>
-      {hasReactNode(top) && (
-        <Subhead className={styles['FormItem__top']} Component={topComponent} htmlFor={htmlFor}>
-          {top}
-        </Subhead>
+      {typeof top === 'string' ? ( // TODO remove breaking change
+        <FormItemTop>
+          <FormItemTopLabel htmlFor={htmlFor} Component={topComponentProp}>
+            {top}
+          </FormItemTopLabel>
+        </FormItemTop>
+      ) : (
+        top
       )}
       {children}
       {hasReactNode(bottom) && (
@@ -132,3 +137,7 @@ export const FormItem = ({
     </RootComponent>
   );
 };
+
+FormItem.Top = FormItemTop;
+FormItem.TopLabel = FormItemTopLabel;
+FormItem.TopAside = FormItemTopAside;

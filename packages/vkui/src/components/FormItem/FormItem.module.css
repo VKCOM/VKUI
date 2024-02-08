@@ -27,6 +27,23 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   color: var(--vkui--color_text_subhead);
+  display: flex;
+  justify-content: space-between;
+}
+
+.FormItemTop__label,
+.FormItemTop__aside {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.FormItemTop__label {
+  flex: 1;
+}
+
+.FormItemTop__aside {
+  color: var(--vkui--color_text_tertiary);
 }
 
 .FormItem__bottom {
