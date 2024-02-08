@@ -1,0 +1,42 @@
+name: Publish Workflow / Bump version
+description: It bump version of provided package
+
+inputs:
+  package_name:
+    description: package's name
+    required: true
+  new_version:
+    description: <newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease
+    required: true
+  pre_id:
+    description: tag for NPM artifact
+    required: false
+
+outputs:
+  prev_version:
+    value: ${{ steps.internal_id_prev_version.outputs.value }}
+  next_version:
+    value: ${{ steps.internal_id_next_version.outputs.value }}
+
+runs:
+  using: composite
+  steps:
+    - name: Saving current version to env
+      id: internal_id_prev_version
+      run: echo "value=$(yarn workspace ${{ inputs.package_name }} node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Bump ${{ inputs.package_name }} package by version type
+      if: ${{ !inputs.pre_id }}
+      run: yarn workspace ${{ inputs.package_name }} run g:npm:version ${{ inputs.new_version }}
+      shell: bash
+
+    - name: Bump ${{ inputs.package_name }} package by version type (with --preid flag)
+      if: ${{ inputs.pre_id }}
+      run: yarn workspace ${{ inputs.package_name }} run g:npm:version ${{ inputs.new_version }} --preid ${{ inputs.pre_id }}
+      shell: bash
+
+    - name: Saving new version to env
+      id: internal_id_next_version
+      run: echo "value=$(yarn workspace ${{ inputs.package_name }} node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+      shell: bash

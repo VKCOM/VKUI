@@ -1,0 +1,89 @@
+name: 'Publish: Deploy (⚠️ use manually call only if necessary)'
+# Note: display_title не задокументирован
+run-name: '${{ github.event.workflow_run.display_title }} • ${{ github.event.workflow_run.head_branch }} • ${{ github.event.workflow_run.id }}'
+
+on:
+  # TODO Добавить также 'Publish release'.
+  # Сейчас он называется 'Publish @vkontakte/vkui'. Надо будет переименовать в 'Publish release' и
+  # отвязать от @vkontakte/vkui.
+  workflow_run:
+    workflows: ['Publish pre-release']
+    types: [completed]
+  # Note: только на случай, если потребуется ручной запуск
+  workflow_dispatch:
+    inputs:
+      package_name:
+        description: "package's name:"
+        required: true
+        type: choice
+        options:
+          - '@vkontakte/vkui'
+      next_version:
+        description: "package's version (without 'v'):"
+        required: true
+        type: string
+
+jobs:
+  payload:
+    name: Prepare payload data
+    runs-on: ubuntu-latest
+    outputs:
+      package_name: ${{ steps.payload.outputs.package_name }}
+      next_version: ${{ steps.payload.outputs.next_version }}
+    steps:
+      - name: Download artifact (if it is 'workflow_run')
+        if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
+        id: artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: publish_workflow_payload
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Parse artifact (if it is 'workflow_run')
+        if: ${{ steps.artifact.conclusion == 'success' }}
+        id: payload
+        run: |
+          echo "package_name=$(cat publish_workflow_payload/package_name.txt)" >> $GITHUB_OUTPUT
+          echo "next_version=$(cat publish_workflow_payload/next_version.txt)" >> $GITHUB_OUTPUT
+
+      - name: Parse inputs (if it is 'workflow_dispatch')
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.package_name && inputs.next_version }}
+        run: |
+          echo ${{ inputs.package_name }} >> $GITHUB_OUTPUT
+          echo ${{ inputs.next_version }} >> $GITHUB_OUTPUT
+
+  deploy_vkui_docs:
+    needs: [payload]
+    if: ${{ success() && needs.payload.outputs.package_name == '@vkontakte/vkui' }}
+    runs-on: ubuntu-latest
+    name: Deploy ${{ needs.payload.outputs.package_name }} docs
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setting up the repository environment
+        uses: ./.github/actions/setup
+
+      - name: Creating docs for pre-release
+        if: ${{ github.event.workflow_run.name == 'Publish pre-release' }}
+        run: |
+          yarn run docs:styleguide:build --dist dist/${{ needs.payload.outputs.next_version }}
+          yarn run docs:storybook:build -o ../../styleguide/dist/${{ needs.payload.outputs.next_version }}/playground
+
+      - name: Creating docs for release
+        if: ${{ github.event.workflow_run.name == 'Publish release' }}
+        run: |
+          yarn run docs:styleguide:build --dist dist
+          yarn run docs:storybook:build -o ../../styleguide/dist/playground
+          mkdir -p styleguide/${{ needs.payload.outputs.next_version }}
+          cp -R styleguide/dist/* styleguide/${{ needs.payload.outputs.next_version }}
+          mv styleguide/${{ needs.payload.outputs.next_version }} styleguide/dist
+
+      - name: Publishing doc
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: styleguide/dist
+          clean: false
+          force: false

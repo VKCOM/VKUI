@@ -1,0 +1,22 @@
+name: Publish Workflow / Validation
+description: It runs pre-publish checks
+
+inputs:
+  package_name:
+    description: package's name
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Run linters
+      run: yarn run lint
+      shell: bash
+
+    - name: Run build
+      run: yarn workspace ${{ inputs.package_name }} run build
+      shell: bash
+
+    - name: Run tests and linters
+      run: yarn workspace ${{ inputs.package_name }} run test
+      shell: bash
