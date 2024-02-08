@@ -71,6 +71,7 @@ runs:
         mkdir -p publish_workflow_payload
         echo ${{ inputs.outputs.next_version }} > publish_workflow_payload/next_version.txt
         echo ${{ inputs.outputs.package_name }} > publish_workflow_payload/package_name.txt
+      shell: bash
 
     - name: Upload payload data to artifact for deploy workflow
       uses: actions/upload-artifact@v4
