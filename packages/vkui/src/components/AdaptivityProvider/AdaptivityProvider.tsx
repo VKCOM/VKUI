@@ -1,7 +1,15 @@
 import * as React from 'react';
 import { hasMouse as _hasPointer } from '@vkontakte/vkjs';
 import { BridgeAdaptivity, useBridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
-import { BREAKPOINTS, SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import {
+  BREAKPOINTS,
+  getSizeX,
+  isCompactByViewHeight,
+  isCompactByViewWidth,
+  SizeType,
+  ViewHeight,
+  ViewWidth,
+} from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasChildren } from '../../types';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
@@ -116,19 +124,13 @@ function calculateAdaptivity(
     }
   } else {
     if (sizeX === undefined && viewWidth !== undefined) {
-      if (viewWidth <= ViewWidth.MOBILE) {
-        sizeX = SizeType.COMPACT;
-      } else {
-        sizeX = SizeType.REGULAR;
-      }
+      sizeX = getSizeX(viewWidth);
     }
-    if (sizeY === undefined && viewWidth !== undefined && viewHeight !== undefined) {
-      if (
-        (viewWidth >= ViewWidth.SMALL_TABLET && _hasPointer) ||
-        viewHeight <= ViewHeight.EXTRA_SMALL
-      ) {
+
+    if (sizeY === undefined) {
+      if (isCompactByViewWidth(viewWidth, hasPointer) || isCompactByViewHeight(viewHeight)) {
         sizeY = SizeType.COMPACT;
-      } else {
+      } else if (viewWidth !== undefined || viewHeight !== undefined) {
         sizeY = SizeType.REGULAR;
       }
     }
