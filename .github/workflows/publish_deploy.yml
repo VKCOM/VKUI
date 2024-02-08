@@ -56,7 +56,7 @@ jobs:
     needs: [payload]
     if: ${{ success() && needs.payload.outputs.package_name == '@vkontakte/vkui' }}
     runs-on: ubuntu-latest
-    name: Deploy ${{ needs.payload.outputs.package_name }} docs
+    name: Deploy @vkontakte/vkui docs
     steps:
       - name: Checkout
         uses: actions/checkout@v4
