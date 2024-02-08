@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { hasMouse as _hasPointer } from '@vkontakte/vkjs';
-import { ViewHeight, ViewWidth } from '../../lib/adaptivity';
+import { getSizeX, isCompactByViewHeight, isCompactByViewWidth } from '../../lib/adaptivity';
 import { HasChildren } from '../../types';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
 
@@ -28,22 +27,17 @@ export const AdaptivityProvider = ({
       hasHover,
     };
     if (sizeXProp === undefined && viewWidth !== undefined) {
-      if (viewWidth <= ViewWidth.MOBILE) {
-        nextProps.sizeX = 'compact';
-      } else {
-        nextProps.sizeX = 'regular';
-      }
+      nextProps.sizeX = getSizeX(viewWidth);
     }
-    if (sizeYProp === undefined && viewWidth !== undefined && viewHeight !== undefined) {
-      if (
-        (viewWidth >= ViewWidth.SMALL_TABLET && _hasPointer) ||
-        viewHeight <= ViewHeight.EXTRA_SMALL
-      ) {
+
+    if (sizeYProp === undefined) {
+      if (isCompactByViewWidth(viewWidth, hasPointer) || isCompactByViewHeight(viewHeight)) {
         nextProps.sizeY = 'compact';
-      } else {
+      } else if (viewWidth !== undefined || viewHeight !== undefined) {
         nextProps.sizeY = 'regular';
       }
     }
+
     return nextProps;
   }, [viewWidth, viewHeight, sizeXProp, sizeYProp, hasPointer, hasHover]);
 
