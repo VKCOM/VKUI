@@ -1,12 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
-import { useTimeout } from '../../hooks/useTimeout';
 import { DOMProps, useDOM } from '../../lib/dom';
-import { coordY, VKUITouchEvent } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AnyFunction, HasChildren } from '../../types';
 import { ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
@@ -16,18 +13,18 @@ import TouchRootContext from '../Touch/TouchContext';
 import { PullToRefreshSpinner } from './PullToRefreshSpinner';
 import styles from './PullToRefresh.module.css';
 
-function cancelEvent(event: any) {
+const WAIT_FETCHING_TIMEOUT_MS = 1000;
+
+function cancelEvent(event: TouchEvent) {
+  /* istanbul ignore if: неясно в какой ситуации `event` из `Touch` может быть не определён */
   if (!event) {
     return false;
   }
-  while (event.originalEvent) {
-    event = event.originalEvent;
+  if ('preventDefault' in event.originalEvent && event.originalEvent.cancelable) {
+    event.originalEvent.preventDefault();
   }
-  if (event.preventDefault && event.cancelable) {
-    event.preventDefault();
-  }
-  if (event.stopPropagation) {
-    event.stopPropagation();
+  if ('stopPropagation' in event.originalEvent) {
+    event.originalEvent.stopPropagation();
   }
   return false;
 }
@@ -44,11 +41,6 @@ export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
   /** @ignore */
   scroll?: ScrollContextInterface;
 }
-
-const TOUCH_MOVE_EVENT_PARAMS = {
-  cancelable: true,
-  passive: false,
-};
 
 /**
  * @see https://vkcom.github.io/VKUI/#/PullToRefresh
@@ -102,10 +94,7 @@ export const PullToRefresh = ({
     }
   }, [touchDown, resetRefreshingState]);
 
-  const { set: setWaitFetchingTimeout, clear: clearWaitFetchingTimeout } = useTimeout(
-    onRefreshingFinish,
-    1000,
-  );
+  const waitFetchingTimeoutId = React.useRef<NodeJS.Timeout>();
 
   useIsomorphicLayoutEffect(() => {
     if (prevIsFetching !== undefined && prevIsFetching && !isFetching) {
@@ -115,21 +104,22 @@ export const PullToRefresh = ({
 
   useIsomorphicLayoutEffect(() => {
     if (prevIsFetching !== undefined && !prevIsFetching && isFetching) {
-      clearWaitFetchingTimeout();
+      clearTimeout(waitFetchingTimeoutId.current);
     }
-  }, [isFetching, prevIsFetching, clearWaitFetchingTimeout]);
+  }, [isFetching, prevIsFetching]);
 
   const runRefreshing = React.useCallback(() => {
     if (!refreshing && onRefresh) {
       // cleanup if the consumer does not start fetching in 1s
-      setWaitFetchingTimeout();
+      clearTimeout(waitFetchingTimeoutId.current);
+      waitFetchingTimeoutId.current = setTimeout(onRefreshingFinish, WAIT_FETCHING_TIMEOUT_MS);
 
       setRefreshing(true);
       setSpinnerY((prevSpinnerY) => (platform === 'ios' ? prevSpinnerY : initParams.refreshing));
 
       onRefresh();
     }
-  }, [refreshing, onRefresh, setWaitFetchingTimeout, platform, initParams.refreshing]);
+  }, [refreshing, onRefresh, onRefreshingFinish, platform, initParams.refreshing]);
 
   useIsomorphicLayoutEffect(() => {
     if (prevTouchDown !== undefined && prevTouchDown && !touchDown) {
@@ -138,6 +128,7 @@ export const PullToRefresh = ({
       } else if (refreshing && !isFetching) {
         // only iOS can start refresh before gesture end
         resetRefreshingState();
+        /* istanbul ignore if: TODO написать тест */
       } else {
         // refreshing && isFetching: refresh in progress
         // OR !refreshing && !canRefresh: pull was not strong enough
@@ -158,56 +149,44 @@ export const PullToRefresh = ({
     runRefreshing,
   ]);
 
+  useIsomorphicLayoutEffect(
+    function toggleBodyOverscrollBehavior() {
+      /* istanbul ignore if: невозможный кейс, т.к. в SSR эффекты не вызываются. Проверка на будущее, если вдруг эффект будет вызываться. */
+      if (!document) {
+        return;
+      }
+
+      if (touchDown || refreshing) {
+        // eslint-disable-next-line no-restricted-properties
+        document.documentElement.classList.add('vkui--disable-overscroll-behavior');
+      }
+
+      return () => {
+        // eslint-disable-next-line no-restricted-properties
+        document.documentElement.classList.remove('vkui--disable-overscroll-behavior');
+      };
+    },
+    [touchDown, refreshing],
+  );
+
   const startYRef = React.useRef(0);
 
-  const onTouchStart = (e: TouchEvent) => {
+  const onTouchStart = (event: TouchEvent) => {
     if (refreshing) {
-      cancelEvent(e);
+      cancelEvent(event);
+      return;
     }
     setTouchDown(true);
-    startYRef.current = e.startY;
-
-    if (document) {
-      // eslint-disable-next-line no-restricted-properties
-      document.documentElement.classList.add('vkui--disable-overscroll-behavior');
-    }
+    startYRef.current = event.startY;
   };
 
-  const shouldPreventTouchMove = (event: VKUITouchEvent) => {
-    if (watching || refreshing) {
-      return true;
-    }
-
-    /* Нам нужно запретить touchmove у документа как только стало понятно, что
-     * начинается pull.
-     * состояния watching и refreshing устанавливаются слишком поздно и браузер
-     * может успеть начать нативный pull to refresh.
-     *
-     * Этот код является запасным вариантом, на случай, если css свойство
-     * overscroll-behavior не поддерживается
-     * */
-    const shiftY = coordY(event) - startYRef.current;
-    const pageYOffset = scroll?.getScroll().y;
-    const isRefreshGestureStarted = pageYOffset === 0 && shiftY > 0 && touchDown;
-    return isRefreshGestureStarted;
-  };
-
-  const onWindowTouchMove = (event: VKUITouchEvent) => {
-    if (shouldPreventTouchMove(event)) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  };
-
-  useGlobalEventListener(document, 'touchmove', onWindowTouchMove, TOUCH_MOVE_EVENT_PARAMS);
-
-  const onTouchMove = (e: TouchEvent) => {
-    const { isY, shiftY } = e;
+  const onTouchMove = (event: TouchEvent) => {
+    const { isY, shiftY } = event;
     const { start, max } = initParams;
     const pageYOffset = scroll?.getScroll().y;
 
     if (watching && touchDown) {
-      cancelEvent(e);
+      cancelEvent(event);
 
       const { positionMultiplier, maxY } = initParams;
 
@@ -225,7 +204,7 @@ export const PullToRefresh = ({
         runRefreshing();
       }
     } else if (isY && pageYOffset === 0 && shiftY > 0 && !refreshing && touchDown) {
-      cancelEvent(e);
+      cancelEvent(event);
 
       touchY.current = shiftY;
       setWatching(true);
@@ -237,12 +216,6 @@ export const PullToRefresh = ({
   const onTouchEnd = () => {
     setWatching(false);
     setTouchDown(false);
-
-    // восстанавливаем overscroll behavior
-    if (document) {
-      // eslint-disable-next-line no-restricted-properties
-      document.documentElement.classList.remove('vkui--disable-overscroll-behavior');
-    }
   };
 
   const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
