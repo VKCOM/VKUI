@@ -1,4 +1,5 @@
 name: 'Publish pre-release'
+run-name: Publish pre-release ${{ github.event.inputs.package_name }} ${{ inputs.new_version }} ${{ inputs.custom_version }} (tag ${{ inputs.npm_tag_aka_pre_id }})
 
 on:
   workflow_dispatch:
@@ -34,8 +35,6 @@ on:
       custom_version:
         description: 'use syntax x.y.z-beta.0, without "v" (it will ignore "version type" & "NPM tag" parameters):'
         required: false
-
-run-name: Publish pre-release ${{ github.event.inputs.package_name }} ${{ inputs.new_version }} ${{ inputs.custom_version }} (tag ${{ inputs.npm_tag_aka_pre_id }})
 
 jobs:
   publish:
