@@ -1,5 +1,8 @@
 import * as React from 'react';
+import { UPDATE_GLOBALS } from '@storybook/core-events';
+import { addons } from '@storybook/preview-api';
 import { Decorator } from '@storybook/react';
+import { SET_STORYBOOK_THEME } from '../../.storybook/addons/storybook-theme/constants';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../components/AppRoot/AppRoot';
 import { ConfigProvider } from '../components/ConfigProvider/ConfigProvider';
@@ -17,8 +20,22 @@ const CenteredStyle: React.CSSProperties = {
   flexDirection: 'column',
 };
 
+const channel = addons.getChannel();
+
 export const withVKUIWrapper: Decorator = (Component, context) => {
   const { platform, appearance, hasPointer = false, hasCustomPanelHeaderAfter } = context.globals;
+
+  // eslint-disable-next-line no-restricted-properties, react-hooks/rules-of-hooks
+  React.useLayoutEffect(() => {
+    const updateGlobals = (theme: 'light' | 'dark') => {
+      channel.emit(UPDATE_GLOBALS, { globals: { appearance: theme } });
+    };
+    channel.on(SET_STORYBOOK_THEME, updateGlobals);
+    return () => {
+      channel.off(SET_STORYBOOK_THEME, updateGlobals);
+    };
+  }, []);
+
   const { centered } = context.parameters;
 
   return (

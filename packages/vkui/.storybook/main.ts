@@ -27,6 +27,7 @@ const config: StorybookConfig = {
     './addons/appearance',
     './addons/pointer',
     './addons/customPanelHeaderAfter',
+    './addons/storybook-theme',
     'storybook-addon-swc',
   ],
   framework: {
