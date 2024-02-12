@@ -8,14 +8,14 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AnyFunction, HasChildren } from '../../types';
 import { ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
-import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
+import { Touch, TouchEvent as TouchEventInternal, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { PullToRefreshSpinner } from './PullToRefreshSpinner';
 import styles from './PullToRefresh.module.css';
 
 const WAIT_FETCHING_TIMEOUT_MS = 1000;
 
-function cancelEvent(event: TouchEvent) {
+function cancelEvent(event: TouchEventInternal) {
   /* istanbul ignore if: неясно в какой ситуации `event` из `Touch` может быть не определён */
   if (!event) {
     return false;
@@ -54,7 +54,7 @@ export const PullToRefresh = ({
 }: PullToRefreshProps) => {
   const platform = usePlatform();
   const scroll = useScroll();
-  const { document } = useDOM();
+  const { window, document } = useDOM();
   const prevIsFetching = usePrevious(isFetching);
 
   const initParams = React.useMemo(
@@ -152,26 +152,45 @@ export const PullToRefresh = ({
   useIsomorphicLayoutEffect(
     function toggleBodyOverscrollBehavior() {
       /* istanbul ignore if: невозможный кейс, т.к. в SSR эффекты не вызываются. Проверка на будущее, если вдруг эффект будет вызываться. */
-      if (!document) {
+      if (!window || !document) {
         return;
       }
 
-      if (touchDown || refreshing) {
+      /**
+       * ⚠️ В частности, необходимо для iOS 15. Начиная с этой версии в Safari добавили
+       * pull-to-refresh. CSS св-во `overflow-behavior` появился только с iOS 16.
+       *
+       * Во вторую очередь, полезна блокированием скролла, чтобы пользователь дождался обновления
+       * данных.
+       */
+      /* istanbul ignore next: в jest не протестировать */
+      const handleWindowTouchMoveForPreventIOSViewportBounce = (event: TouchEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
+      };
+
+      if (watching || refreshing) {
         // eslint-disable-next-line no-restricted-properties
         document.documentElement.classList.add('vkui--disable-overscroll-behavior');
+        /* istanbul ignore next: в jest не протестировать */
+        window.addEventListener('touchmove', handleWindowTouchMoveForPreventIOSViewportBounce, {
+          passive: false,
+        });
       }
 
       return () => {
         // eslint-disable-next-line no-restricted-properties
         document.documentElement.classList.remove('vkui--disable-overscroll-behavior');
+        /* istanbul ignore next: в jest не протестировать */
+        window.removeEventListener('touchmove', handleWindowTouchMoveForPreventIOSViewportBounce);
       };
     },
-    [touchDown, refreshing],
+    [window, document, watching, refreshing],
   );
 
   const startYRef = React.useRef(0);
 
-  const onTouchStart = (event: TouchEvent) => {
+  const onTouchStart = (event: TouchEventInternal) => {
     if (refreshing) {
       cancelEvent(event);
       return;
@@ -180,7 +199,7 @@ export const PullToRefresh = ({
     startYRef.current = event.startY;
   };
 
-  const onTouchMove = (event: TouchEvent) => {
+  const onTouchMove = (event: TouchEventInternal) => {
     const { isY, shiftY } = event;
     const { start, max } = initParams;
     const pageYOffset = scroll?.getScroll().y;
