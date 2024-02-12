@@ -1,58 +1,111 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
-import { type BridgeAdaptivity, useBridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
+import { render } from '@testing-library/react';
+import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { type BridgeAdaptivity } from '../../hooks/useBridgeAdaptivity';
 import { SizeType, ViewHeight, ViewWidth } from '../../lib/adaptivity';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
 import { AdaptivityProvider, type AdaptivityProviderProps } from './AdaptivityProvider';
 
-jest.mock('../../hooks/useBridgeAdaptivity', () => {
-  const bridgeMock = jest.fn(() => {
-    return {
-      type: '',
-      viewportWidth: 0,
-      viewportHeight: 0,
-    };
-  });
-
+const bridgeMock = jest.fn(() => {
   return {
-    useBridgeAdaptivity: bridgeMock,
+    type: '',
+    viewportWidth: 0,
+    viewportHeight: 0,
+  };
+});
+jest.mock('../../hooks/useBridgeAdaptivity', () => {
+  return {
+    useBridgeAdaptivity: () => bridgeMock(),
   };
 });
 
-function CatchAdaptivityProviderContext() {
-  const { sizeX, sizeY, viewWidth, viewHeight } = React.useContext(AdaptivityContext);
+const hasPointerStub = jest.fn().mockReturnValue(true);
+jest.mock('@vkontakte/vkjs', () => ({
+  get canUseDOM() {
+    return true;
+  },
+  detectIOS: () => false,
+  get hasMouse() {
+    return hasPointerStub();
+  },
+}));
+jest.mock('../../hooks/useMediaQueries', () => ({
+  useMediaQueries: () => ({
+    desktopPlus: () => jest.fn(),
+    smallTabletPlus: () => jest.fn(),
+    tablet: () => jest.fn(),
+    smallTablet: () => jest.fn(),
+    mobile: () => jest.fn(),
+    mediumHeight: () => jest.fn(),
+    mobileLandscapeHeight: () => jest.fn(),
+  }),
+}));
+jest.mock('../../lib/matchMedia', () => ({
+  matchMediaListAddListener: () => jest.fn(),
+  matchMediaListRemoveListener: () => jest.fn(),
+}));
 
-  return (
-    <div
-      data-testid="adaptivity-provider-context"
-      data-size-x={sizeX}
-      data-size-y={sizeY}
-      data-view-width={viewWidth}
-      data-view-height={viewHeight}
-    />
-  );
+const getViewWidthByMediaQueriesStub = jest.fn().mockReturnValue(ViewWidth.SMALL_MOBILE);
+const getViewHeightByMediaQueriesStub = jest.fn().mockReturnValue(ViewHeight.SMALL);
+jest.mock('../../lib/adaptivity', () => {
+  return {
+    ...jest.requireActual('../../lib/adaptivity'),
+    getViewWidthByMediaQueries: () => getViewWidthByMediaQueriesStub(),
+    getViewHeightByMediaQueries: () => getViewHeightByMediaQueriesStub(),
+  };
+});
+
+jest.mock('../../lib/platform', () => {
+  return {
+    ...jest.requireActual('../../lib/platform'),
+    platform: () => 'vkcom',
+  };
+});
+jest.mock('../../hooks/usePlatform', () => {
+  return {
+    usePlatform: () => 'vkcom',
+  };
+});
+
+interface AdaptivityResultsRef {
+  adaptivityProviderResults: AdaptivityProps;
+  adaptivityWithJsMediaQueriesHookResults: AdaptivityProps;
 }
 
-function renderAdaptiveProvider(props?: AdaptivityProviderProps): AdaptivityProps {
-  render(
-    <AdaptivityProvider {...props}>
-      <CatchAdaptivityProviderContext />
-    </AdaptivityProvider>,
-  );
-  const elWithContextData = screen.getByTestId('adaptivity-provider-context');
+const CatchAdaptivityProviderContext = React.forwardRef<AdaptivityResultsRef>((_, ref) => {
+  const adaptivityProviderResults = React.useContext(AdaptivityContext);
+  const adaptivityWithJsMediaQueriesHookResults = useAdaptivityWithJSMediaQueries();
 
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  return {
-    sizeX: elWithContextData.dataset.sizeX,
-    sizeY: elWithContextData.dataset.sizeY,
-    viewWidth: elWithContextData.dataset.viewWidth
-      ? Number(elWithContextData.dataset.viewWidth)
-      : undefined,
-    viewHeight: elWithContextData.dataset.viewHeight
-      ? Number(elWithContextData.dataset.viewHeight)
-      : undefined,
-  } as AdaptivityProps;
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      adaptivityProviderResults,
+      adaptivityWithJsMediaQueriesHookResults,
+    }),
+    [adaptivityProviderResults, adaptivityWithJsMediaQueriesHookResults],
+  );
+  return null;
+});
+
+const TestAdaptiveProvider = React.forwardRef<AdaptivityResultsRef, AdaptivityProviderProps>(
+  (props, ref) => (
+    <AdaptivityProvider {...props}>
+      <CatchAdaptivityProviderContext ref={ref} />
+    </AdaptivityProvider>
+  ),
+);
+
+function renderAdaptiveProvider(props?: AdaptivityProviderProps): AdaptivityProps {
+  const adaptivityProviderResultsRef = React.createRef<AdaptivityResultsRef>();
+
+  render(<TestAdaptiveProvider ref={adaptivityProviderResultsRef} {...props} />);
+
+  if (!adaptivityProviderResultsRef.current) {
+    throw new Error('adaptivityProviderResultsRef.current is not defined');
+  }
+
+  return adaptivityProviderResultsRef.current?.adaptivityProviderResults;
 }
 
 function renderAdaptiveProviderWithBridge(
@@ -61,7 +114,7 @@ function renderAdaptiveProviderWithBridge(
   viewportHeight = 0,
   hasPointer?: boolean,
 ) {
-  (useBridgeAdaptivity as jest.Mock).mockReturnValue({
+  bridgeMock.mockReturnValue({
     type,
     viewportWidth,
     viewportHeight,
@@ -72,7 +125,7 @@ function renderAdaptiveProviderWithBridge(
 
 describe('AdaptivityProvider', () => {
   beforeEach(() => {
-    (useBridgeAdaptivity as jest.Mock).mockReturnValue({
+    bridgeMock.mockReturnValue({
       type: '',
       viewportWidth: 0,
       viewportHeight: 0,
@@ -83,8 +136,11 @@ describe('AdaptivityProvider', () => {
 
   describe('without bridge', () => {
     it('should return undefined adaptivity props', () => {
-      const result = renderAdaptiveProvider();
-      expect(result).toEqual({
+      const adaptivityProviderResultsRef = React.createRef<AdaptivityResultsRef>();
+
+      render(<TestAdaptiveProvider ref={adaptivityProviderResultsRef} />);
+
+      expect(adaptivityProviderResultsRef.current?.adaptivityProviderResults).toMatchObject({
         sizeX: undefined,
         sizeY: undefined,
         viewWidth: undefined,
@@ -93,11 +149,25 @@ describe('AdaptivityProvider', () => {
     });
 
     it('should define sizeX and sizeY adaptivity props', () => {
-      const result = renderAdaptiveProvider({
+      expect(
+        renderAdaptiveProvider({
+          viewWidth: ViewWidth.DESKTOP,
+          viewHeight: ViewHeight.MEDIUM,
+        }),
+      ).toMatchObject({
+        sizeX: SizeType.REGULAR,
+        sizeY: SizeType.REGULAR,
         viewWidth: ViewWidth.DESKTOP,
         viewHeight: ViewHeight.MEDIUM,
       });
-      expect(result).toEqual({
+
+      expect(
+        renderAdaptiveProvider({
+          viewWidth: ViewWidth.DESKTOP,
+          viewHeight: ViewHeight.MEDIUM,
+          hasPointer: true,
+        }),
+      ).toMatchObject({
         sizeX: SizeType.REGULAR,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.DESKTOP,
@@ -109,7 +179,7 @@ describe('AdaptivityProvider', () => {
   describe('with bridge', () => {
     it('should apply bridge adaptivity [viewWidth] SMALL_MOBILE', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 300, 420);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.COMPACT,
         sizeY: SizeType.REGULAR,
         viewWidth: ViewWidth.SMALL_MOBILE,
@@ -119,7 +189,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [viewWidth] MOBILE', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 320, 420);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.COMPACT,
         sizeY: SizeType.REGULAR,
         viewWidth: ViewWidth.MOBILE,
@@ -129,7 +199,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [viewWidth] SMALL_TABLET', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 768, 420);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.REGULAR,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.SMALL_TABLET,
@@ -139,7 +209,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [viewWidth] TABLET', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 1024, 420);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.REGULAR,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.TABLET,
@@ -149,7 +219,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [viewWidth] DESKTOP', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 1280, 420);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.REGULAR,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.DESKTOP,
@@ -159,7 +229,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [viewHeight] EXTRA_SMALL', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 320, 340);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.COMPACT,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.MOBILE,
@@ -169,7 +239,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [viewHeight] SMALL', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 320, 415);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.COMPACT,
         sizeY: SizeType.REGULAR,
         viewWidth: ViewWidth.MOBILE,
@@ -179,7 +249,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [viewHeight] MEDIUM', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 320, 720);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.COMPACT,
         sizeY: SizeType.REGULAR,
         viewWidth: ViewWidth.MOBILE,
@@ -189,7 +259,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [both] SMALL_MOBILE / EXTRA_SMALL', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 300, 340);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.COMPACT,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.SMALL_MOBILE,
@@ -199,7 +269,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [both] SMALL_TABLET / SMALL', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 768, 415);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.REGULAR,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.SMALL_TABLET,
@@ -209,7 +279,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [both] TABLET / MEDIUM', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 1024, 720);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.REGULAR,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.TABLET,
@@ -219,7 +289,7 @@ describe('AdaptivityProvider', () => {
 
     it('should apply bridge adaptivity [both] DESKTOP / MEDIUM', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 1280, 720);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.REGULAR,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.DESKTOP,
@@ -229,7 +299,7 @@ describe('AdaptivityProvider', () => {
 
     it('should ignore custom mouse with bridge [viewWidth] SMALL_TABLET', () => {
       const result = renderAdaptiveProviderWithBridge('adaptive', 768, 420, false);
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.REGULAR,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.SMALL_TABLET,
@@ -239,7 +309,7 @@ describe('AdaptivityProvider', () => {
 
     it('should use bridge force_mobile preset', () => {
       const result = renderAdaptiveProviderWithBridge('force_mobile');
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.COMPACT,
         sizeY: SizeType.REGULAR,
         viewWidth: ViewWidth.MOBILE,
@@ -249,11 +319,298 @@ describe('AdaptivityProvider', () => {
 
     it('should use bridge force_mobile_compact preset', () => {
       const result = renderAdaptiveProviderWithBridge('force_mobile_compact');
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         sizeX: SizeType.COMPACT,
         sizeY: SizeType.COMPACT,
         viewWidth: ViewWidth.MOBILE,
         viewHeight: undefined,
+      });
+    });
+  });
+});
+
+interface TestSuite {
+  inProps: AdaptivityProviderProps & {
+    runOnlyThisSuite?: boolean;
+  };
+  outProps: AdaptivityProps;
+}
+
+const testSuites: TestSuite[] = [
+  {
+    inProps: {
+      viewWidth: ViewWidth.DESKTOP,
+      viewHeight: ViewHeight.MEDIUM,
+      hasPointer: false,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.REGULAR,
+      viewWidth: ViewWidth.DESKTOP,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.DESKTOP,
+      viewHeight: ViewHeight.MEDIUM,
+      hasPointer: true,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.COMPACT,
+      viewWidth: ViewWidth.DESKTOP,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.MOBILE,
+      viewHeight: ViewHeight.EXTRA_SMALL,
+    },
+    outProps: {
+      sizeX: SizeType.COMPACT,
+      sizeY: SizeType.COMPACT,
+      viewWidth: ViewWidth.MOBILE,
+      viewHeight: ViewHeight.EXTRA_SMALL,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+      hasPointer: false,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.REGULAR,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+      hasPointer: true,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.COMPACT,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+  },
+  {
+    inProps: {
+      sizeX: SizeType.COMPACT as const,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+      hasPointer: false,
+    },
+    outProps: {
+      sizeX: SizeType.COMPACT,
+      sizeY: SizeType.REGULAR,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+  },
+  {
+    inProps: {
+      sizeX: SizeType.COMPACT as const,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+      hasPointer: true,
+    },
+    outProps: {
+      sizeX: SizeType.COMPACT,
+      sizeY: SizeType.COMPACT,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+  },
+  {
+    inProps: {
+      sizeY: SizeType.REGULAR as const,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.REGULAR,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+  },
+  {
+    inProps: {
+      sizeX: SizeType.REGULAR as const,
+      sizeY: SizeType.REGULAR as const,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.REGULAR,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+  },
+  {
+    inProps: {
+      sizeX: SizeType.REGULAR as const,
+      sizeY: SizeType.REGULAR as const,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.REGULAR,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.SMALL_MOBILE,
+      hasPointer: false,
+    },
+    outProps: {
+      sizeX: SizeType.COMPACT,
+      sizeY: SizeType.REGULAR,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.SMALL_MOBILE,
+      hasPointer: true,
+    },
+    outProps: {
+      sizeX: SizeType.COMPACT,
+      sizeY: SizeType.REGULAR,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.MOBILE,
+      hasPointer: false,
+    },
+    outProps: {
+      sizeX: SizeType.COMPACT,
+      sizeY: SizeType.REGULAR,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.MOBILE,
+      hasPointer: true,
+    },
+    outProps: {
+      sizeX: SizeType.COMPACT,
+      sizeY: SizeType.REGULAR,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.SMALL_TABLET,
+      hasPointer: false,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.REGULAR,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.SMALL_TABLET,
+      hasPointer: true,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.COMPACT,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.TABLET,
+      hasPointer: false,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.REGULAR,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.TABLET,
+      hasPointer: true,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.COMPACT,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.DESKTOP,
+      hasPointer: false,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.REGULAR,
+    },
+  },
+  {
+    inProps: {
+      viewWidth: ViewWidth.DESKTOP,
+      hasPointer: true,
+    },
+    outProps: {
+      sizeX: SizeType.REGULAR,
+      sizeY: SizeType.COMPACT,
+    },
+  },
+];
+
+describe('AdaptiveProvider without bridge and useAdaptivityWithJSMediaQueries should return similar results', () => {
+  beforeAll(() => {
+    bridgeMock.mockReturnValue({
+      type: '',
+      viewportWidth: 0,
+      viewportHeight: 0,
+    });
+  });
+  testSuites.map((testOptions) => {
+    const { inProps, outProps } = testOptions;
+
+    describe(`should define sizeX and sizeY adaptivity props for input: \n${JSON.stringify(
+      inProps,
+      null,
+      '\t',
+    )}\n`, () => {
+      beforeEach(() => {
+        hasPointerStub.mockReturnValue(false);
+        getViewWidthByMediaQueriesStub.mockReturnValue(() => inProps.viewWidth);
+        getViewHeightByMediaQueriesStub.mockReturnValue(() => inProps.viewHeight);
+      });
+
+      const test = inProps.runOnlyThisSuite ? it.only : it;
+      test('AdaptiveProvider', () => {
+        const adaptivityProviderResultsRef = React.createRef<AdaptivityResultsRef>();
+
+        render(<TestAdaptiveProvider ref={adaptivityProviderResultsRef} {...inProps} />);
+
+        // AdaptivityProvider results
+        expect(adaptivityProviderResultsRef.current?.adaptivityProviderResults).toMatchObject(
+          outProps,
+        );
+      });
+
+      test('useAdaptivityWithJSMediaQueries', () => {
+        const adaptivityProviderResultsRef = React.createRef<AdaptivityResultsRef>();
+
+        render(<TestAdaptiveProvider ref={adaptivityProviderResultsRef} {...inProps} />);
+
+        // useAdaptivityWithJSMediaQueries results
+        expect(
+          adaptivityProviderResultsRef.current?.adaptivityWithJsMediaQueriesHookResults,
+        ).toMatchObject(outProps);
       });
     });
   });
