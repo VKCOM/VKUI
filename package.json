@@ -24,7 +24,7 @@
     "@testing-library/user-event": "^14.5.1",
     "@types/jest": "^29.5.12",
     "@types/jest-axe": "^3.5.9",
-    "@types/node": "^20.11.16",
+    "@types/node": "^20.11.17",
     "@types/react": "^18.2.53",
     "@types/react-dom": "^18.2.18",
     "@types/webpack": "^5.28.5",
