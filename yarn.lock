@@ -5454,7 +5454,7 @@ __metadata:
     stylelint-media-use-custom-media: ^4.0.0
     stylelint-use-logical: ^2.1.0
     stylelint-value-no-unknown-custom-properties: ^5.0.0
-    swc-loader: ^0.2.4
+    swc-loader: ^0.2.6
     swc-plugin-css-modules: 0.1.9
     swc-plugin-transform-remove-imports: 1.12.0
     ts-node: ^10.9.2
@@ -18314,13 +18314,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-loader@npm:^0.2.3, swc-loader@npm:^0.2.4":
+"swc-loader@npm:^0.2.3":
   version: 0.2.4
   resolution: "swc-loader@npm:0.2.4"
   peerDependencies:
     "@swc/core": ^1.2.147
     webpack: ">=2"
   checksum: f23bfe8900b35abdcb9910a2749f3c9d66edf5c660afc67fcf7983647eaec322e024d1edd3bd9fd48bd3191eea0616f67b5f8b5f923e3a648fa5b448683c3213
+  languageName: node
+  linkType: hard
+
+"swc-loader@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "swc-loader@npm:0.2.6"
+  dependencies:
+    "@swc/counter": ^0.1.3
+  peerDependencies:
+    "@swc/core": ^1.2.147
+    webpack: ">=2"
+  checksum: fe90948c02a51bb8ffcff1ce3590e01dc12860b0bb7c9e22052b14fa846ed437781ae265614a5e14344bea22001108780f00a6e350e28c0b3499bc4cd11335fb
   languageName: node
   linkType: hard
 
