@@ -1,6 +1,6 @@
 name: 'Publish: Deploy (⚠️ use manually call only if necessary)'
-# Note: display_title не задокументирован
-run-name: '${{ github.event.workflow_run.display_title }} • ${{ github.event.workflow_run.head_branch }} • ${{ github.event.workflow_run.id }}'
+# Note: display_title не задокументирован из-за чего в IDE может подчёркиваться строка
+run-name: "${{ github.event_name == 'workflow_run' && format('{0}: Deploy • {1} • {2}', github.event.workflow_run.display_title, github.event.workflow_run.head_branch, github.event.workflow_run.id) || format('Publish {0} {1}@{2}: Deploy (⚠️ manually run)', inputs.publish_type, inputs.package_name, inputs.next_version) }}"
 
 on:
   # TODO Добавить также 'Publish release'.
@@ -22,39 +22,43 @@ on:
         description: "package's version (without 'v'):"
         required: true
         type: string
+      publish_type:
+        description: "⚠️ before change to 'release' make sure this is the case"
+        default: 'pre-release'
+        type: choice
+        options:
+          - 'release'
+          - 'pre-release'
 
 jobs:
   payload:
     name: Prepare payload data
     runs-on: ubuntu-latest
     outputs:
-      package_name: ${{ steps.payload.outputs.package_name }}
-      next_version: ${{ steps.payload.outputs.next_version }}
+      package_name: ${{ steps.publish_workflow_payload.outputs.package_name || inputs.package_name }}
+      next_version: ${{ steps.publish_workflow_payload.outputs.next_version || inputs.next_version }}
+      is_for_prerelease: ${{ contains(github.event.workflow_run.name, 'Publish pre-release') || contains(inputs.publish_type, 'pre-release') }}
     steps:
       - name: Download artifact (if it is 'workflow_run')
         if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
         id: artifact
         uses: actions/download-artifact@v4
         with:
+          github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           name: publish_workflow_payload
+          path: publish_workflow_payload/
           run-id: ${{ github.event.workflow_run.id }}
 
-      - name: Parse artifact (if it is 'workflow_run')
+      - name: Parse artifact
         if: ${{ steps.artifact.conclusion == 'success' }}
-        id: payload
+        id: publish_workflow_payload
         run: |
           echo "package_name=$(cat publish_workflow_payload/package_name.txt)" >> $GITHUB_OUTPUT
           echo "next_version=$(cat publish_workflow_payload/next_version.txt)" >> $GITHUB_OUTPUT
 
-      - name: Parse inputs (if it is 'workflow_dispatch')
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.package_name && inputs.next_version }}
-        run: |
-          echo ${{ inputs.package_name }} >> $GITHUB_OUTPUT
-          echo ${{ inputs.next_version }} >> $GITHUB_OUTPUT
-
   deploy_vkui_docs:
     needs: [payload]
-    if: ${{ success() && needs.payload.outputs.package_name == '@vkontakte/vkui' }}
+    if: ${{ success() && needs.payload.outputs.package_name == '@vkontakte/vkui' && needs.payload.outputs.next_version }}
     runs-on: ubuntu-latest
     name: Deploy @vkontakte/vkui docs
     steps:
@@ -65,13 +69,13 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Creating docs for pre-release
-        if: ${{ github.event.workflow_run.name == 'Publish pre-release' }}
+        if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) == true }}
         run: |
           yarn run docs:styleguide:build --dist dist/${{ needs.payload.outputs.next_version }}
           yarn run docs:storybook:build -o ../../styleguide/dist/${{ needs.payload.outputs.next_version }}/playground
 
       - name: Creating docs for release
-        if: ${{ github.event.workflow_run.name == 'Publish release' }}
+        if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
         run: |
           yarn run docs:styleguide:build --dist dist
           yarn run docs:storybook:build -o ../../styleguide/dist/playground
