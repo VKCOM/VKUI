@@ -80,7 +80,7 @@
     "stylelint-media-use-custom-media": "^4.0.0",
     "stylelint-use-logical": "^2.1.0",
     "stylelint-value-no-unknown-custom-properties": "^5.0.0",
-    "swc-loader": "^0.2.4",
+    "swc-loader": "^0.2.6",
     "swc-plugin-css-modules": "0.1.9",
     "swc-plugin-transform-remove-imports": "1.12.0",
     "ts-node": "^10.9.2",
