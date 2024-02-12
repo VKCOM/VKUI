@@ -71,7 +71,7 @@
     "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "semver": "^7.5.4",
+    "semver": "^7.6.0",
     "shx": "^0.3.2",
     "size-limit": "^11.0.2",
     "style-loader": "^3.3.4",
