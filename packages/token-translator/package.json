@@ -30,6 +30,7 @@
     "ts-node": "^10.9.2"
   },
   "scripts": {
+    "prepack": "yarn run build",
     "build": "tsc",
     "test": "jest",
     "test:ci": "yarn test"
