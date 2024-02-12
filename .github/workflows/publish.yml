@@ -1,9 +1,19 @@
-name: 'Publish @vkontakte/vkui'
+name: 'Publish release'
+run-name: Publish release ${{ inputs.package_name }} ${{ inputs.new_version }} ${{ inputs.custom_version }} (tag ${{ inputs.latest == true && 'latest' || 'legacy' }})
 
 on:
   workflow_dispatch:
     inputs:
-      type:
+      package_name:
+        description: "package's name:"
+        required: true
+        type: choice
+        options:
+          - '@vkontakte/vkui'
+          - '@vkontakte/vkui-floating-ui'
+          - '@vkontakte/vkui-token-translator'
+          - '@vkontakte/vkui-codemods'
+      new_version:
         description: 'version type:'
         required: true
         type: choice
@@ -13,7 +23,7 @@ on:
           - minor
           - major
       custom_version:
-        description: 'custom version: x.y.z (without "v")'
+        description: 'use syntax x.y.z, without "v" (it will ignore "version type" parameter):'
         required: false
       close_milestone:
         description: 'whether to close associated milestone after publish'
@@ -24,13 +34,11 @@ on:
         type: boolean
         default: true
 
-run-name: Publish ${{ inputs.type }} ${{ inputs.custom_version }}
-
 jobs:
   publish:
     concurrency: ci-gh-pages
     outputs:
-      release_tag: ${{ steps.updated_version.outputs.version }}
+      release_tag: ${{ steps.updated_versions_info.outputs.next_version }}
     permissions:
       id-token: write
     runs-on: ubuntu-latest
@@ -40,111 +48,36 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
+      - name: Setting up the repository environment
+        uses: ./.github/actions/publish-workflow-1-setup
+
+      - name: Bump version
+        id: updated_versions_info
+        uses: ./.github/actions/publish-workflow-2-bump-version
         with:
-          node-version: 20
-          cache: 'yarn'
-          always-auth: true
-          registry-url: 'https://registry.npmjs.org'
+          package_name: ${{ inputs.package_name }}
+          new_version: ${{ inputs.custom_version || inputs.new_version }}
 
-      - name: Install dependencies
-        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
-
-      - name: Set Git credentials
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Action"
-
-      - name: Saving current version to env
-        id: prev_version
-        run: |
-          echo "version=$(yarn workspace @vkontakte/vkui node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
-
-      - name: Bump by version type
-        if: ${{ !github.event.inputs.custom_version }}
-        run: yarn workspace @vkontakte/vkui run g:npm:version ${{ github.event.inputs.type }}
-
-      - name: Bump by custom version
-        if: ${{ github.event.inputs.custom_version }}
-        run: yarn workspace @vkontakte/vkui run g:npm:version ${{ github.event.inputs.custom_version }}
-
-      - name: Saving updated version to env
-        id: updated_version
-        run: |
-          echo "version=$(yarn workspace @vkontakte/vkui node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
-
-      - name: Adding commit and tag with updated version number
-        run: |
-          git add -A
-          git commit -m 'bump(@vkontakte/vkui): from ${{ steps.prev_version.outputs.version }} to ${{ steps.updated_version.outputs.version }}'
-          git tag v${{ steps.updated_version.outputs.version }}
-
-      - name: Run linters
-        run: yarn run lint
-
-      - name: Run @vkontakte/vkui unit tests
-        run: yarn workspace @vkontakte/vkui run test
-
-      - name: Pushing changes
-        uses: ad-m/github-push-action@master
+      - name: Run pre-publish checks
+        uses: ./.github/actions/publish-workflow-3-validation
         with:
-          github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          package_name: ${{ inputs.package_name }}
+
+      - name: Complete publish
+        uses: ./.github/actions/publish-workflow-4-complete
+        with:
           branch: ${{ github.ref }}
-          tags: true
-
-      - name: Create stable branch
-        uses: VKCOM/gh-actions/VKUI/stable-branch@main
-        with:
+          prev_version: ${{ steps.updated_versions_info.outputs.prev_version }}
+          next_version: ${{ steps.updated_versions_info.outputs.next_version }}
+          package_name: ${{ inputs.package_name }}
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          directory: packages/vkui/
-
-      - name: Generate archive
-        working-directory: ./packages/vkui
-        run: yarn pack
-
-      - name: Publishing with latest tag
-        working-directory: ./packages/vkui
-        if: ${{ github.event.inputs.latest == 'true' }}
-        run: npm publish package.tgz
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
-
-      - name: Publishing with legacy tag
-        working-directory: ./packages/vkui
-        if: ${{ github.event.inputs.latest != 'true' }}
-        run: npm publish package.tgz --tag legacy
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
-
-      - name: Creating doc for stable release
-        if: ${{ github.event.inputs.latest == 'true' }}
-        run: |
-          yarn run docs:styleguide:build
-          yarn run docs:storybook:build
-          mkdir styleguide/${{ steps.updated_version.outputs.version }} styleguide/dist/playground
-          cp -R packages/vkui/storybook-static/* styleguide/dist/playground
-          cp -R styleguide/dist/* styleguide/${{ steps.updated_version.outputs.version }}
-          mv styleguide/${{ steps.updated_version.outputs.version }} styleguide/dist/${{ steps.updated_version.outputs.version }}
-
-      - name: Build styleguide and storybook for legacy release
-        if: ${{ github.event.inputs.latest != 'true' }}
-        run: |
-          yarn run docs:styleguide:build --dist dist/${{ steps.updated_version.outputs.version }}
-          yarn docs:storybook:build -o ../../styleguide/dist/${{ steps.updated_version.outputs.version }}/playground
-
-      - name: Publishing doc
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: styleguide/dist
-          clean: false
-          force: false
+          npm_token: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+          npm_tag: ${{ inputs.latest == true && 'latest' || 'legacy' }}
+          use_git_tag_with_namespace: ${{ inputs.package_name != '@vkontakte/vkui' }}
 
   close_milestone:
     needs: ['publish']
-    if: ${{ github.event.inputs.close_milestone == 'true' }}
+    if: ${{ inputs.close_milestone == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Close milestone, comment on issues and release notes
@@ -152,4 +85,4 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           releaseTag: ${{ needs.publish.outputs.release_tag }}
-          latest: ${{ github.event.inputs.latest }}
+          latest: ${{ inputs.latest }}

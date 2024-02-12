@@ -3,11 +3,8 @@ name: 'Publish: Deploy (⚠️ use manually call only if necessary)'
 run-name: "${{ github.event_name == 'workflow_run' && format('{0}: Deploy • {1} • {2}', github.event.workflow_run.display_title, github.event.workflow_run.head_branch, github.event.workflow_run.id) || format('Publish {0} {1}@{2}: Deploy (⚠️ manually run)', inputs.publish_type, inputs.package_name, inputs.next_version) }}"
 
 on:
-  # TODO Добавить также 'Publish release'.
-  # Сейчас он называется 'Publish @vkontakte/vkui'. Надо будет переименовать в 'Publish release' и
-  # отвязать от @vkontakte/vkui.
   workflow_run:
-    workflows: ['Publish pre-release']
+    workflows: ['Publish pre-release', 'Publish release']
     types: [completed]
   # Note: только на случай, если потребуется ручной запуск
   workflow_dispatch:
