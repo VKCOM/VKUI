@@ -199,8 +199,6 @@
  * useFocusVisibleClassName()
  */
 /* increase specificity for selects */
-.FormField--focus-visible.FormField--focus-visible.FormField--focus-visible {
-  outline: var(--vkui_internal--outline);
-  outline-width: var(--vkui--size_border--regular);
-  outline-offset: calc(-1 * var(--vkui--size_border--regular));
+.FormField--focus-visible.FormField--focus-visible .FormField__border {
+  border-color: var(--vkui--color_stroke_accent);
 }
