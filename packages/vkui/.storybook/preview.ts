@@ -55,6 +55,9 @@ const preview: Preview = {
     hasPointer: {
       defaultValue: true,
     },
+    storybookTheme: {
+      defaultValue: 'light',
+    },
     platform: {
       name: 'Platform',
       description: 'Platform for components',
