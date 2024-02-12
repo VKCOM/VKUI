@@ -12,7 +12,7 @@ export function useLoadThemeTokens(themeName, appearanceOptions, doc = document)
   const promiseRef = React.useRef(null);
 
   React.useEffect(() => {
-    if (pending || promiseRef.current !== null) {
+    if (promiseRef.current !== null) {
       return;
     }
 
@@ -43,7 +43,7 @@ export function useLoadThemeTokens(themeName, appearanceOptions, doc = document)
         promiseRef.current = null;
         setPending(false);
       });
-  }, [pending, themeName, appearanceOptions]);
+  }, [themeName, appearanceOptions]);
 
   return !pending;
 }
