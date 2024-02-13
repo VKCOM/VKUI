@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
+import { callMultiple } from '../../lib/callMultiple';
 import { HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { Text } from '../Typography/Text/Text';
@@ -28,7 +28,6 @@ export interface TextareaProps
  * @see https://vkcom.github.io/VKUI/#/Textarea
  */
 export const Textarea = ({
-  defaultValue = '',
   grow = true,
   style,
   onResize,
@@ -38,21 +37,14 @@ export const Textarea = ({
   rows = 2,
   maxHeight,
   status,
-  onChange: onChangeProp,
-  value: valueProp,
+  onChange,
   ...restProps
 }: TextareaProps) => {
-  const [value, onChange] = useEnsuredControl({
-    defaultValue,
-    onChange: onChangeProp,
-    value: valueProp,
-  });
   const currentScrollHeight = React.useRef<number>();
   const elementRef = useExternRef(getRef);
   const { sizeY = 'none' } = useAdaptivity();
 
-  // autosize input
-  React.useEffect(() => {
+  const autosizeInput = () => {
     const el = elementRef.current;
 
     if (grow && el?.offsetParent) {
@@ -64,7 +56,9 @@ export const Textarea = ({
         currentScrollHeight.current = el.scrollHeight;
       }
     }
-  }, [grow, value, sizeY, elementRef, onResize]);
+  };
+
+  React.useEffect(autosizeInput, [grow, sizeY, elementRef, onResize]);
 
   return (
     <FormField
@@ -85,8 +79,7 @@ export const Textarea = ({
         style={{ maxHeight }}
         rows={rows}
         className={styles['Textarea__el']}
-        value={value}
-        onChange={onChange}
+        onChange={callMultiple(onChange, autosizeInput)}
         getRootRef={elementRef}
       />
     </FormField>
