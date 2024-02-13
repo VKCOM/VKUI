@@ -1,5 +1,5 @@
 name: 'Publish pre-release'
-run-name: Publish pre-release ${{ github.event.inputs.package_name }} ${{ inputs.new_version }} ${{ inputs.custom_version }} (tag ${{ inputs.npm_tag_aka_pre_id }})
+run-name: Publish pre-release ${{ inputs.package_name }} ${{ inputs.new_version }} ${{ inputs.custom_version }} (tag ${{ inputs.npm_tag_aka_pre_id }})
 
 on:
   workflow_dispatch:
@@ -40,7 +40,7 @@ jobs:
   publish:
     concurrency: ci-gh-pages
     outputs:
-      release_tag: ${{ steps.updated_versions_info.outputs.next_version }}
+      release_tag: ${{ steps.complete_publish.outputs.git_release_tag }}
     permissions:
       id-token: write
     runs-on: ubuntu-latest
@@ -57,24 +57,25 @@ jobs:
         id: updated_versions_info
         uses: ./.github/actions/publish-workflow-2-bump-version
         with:
-          package_name: ${{ github.event.inputs.package_name }}
-          new_version: ${{ github.event.inputs.custom_version || github.event.inputs.new_version }}
+          package_name: ${{ inputs.package_name }}
+          new_version: ${{ inputs.custom_version || inputs.new_version }}
           # Ignore `pre_id` if `custom_version` is specified
-          pre_id: ${{ !github.event.inputs.custom_version && github.event.inputs.npm_tag_aka_pre_id || '' }}
+          pre_id: ${{ !inputs.custom_version && inputs.npm_tag_aka_pre_id || '' }}
 
       - name: Run pre-publish checks
         uses: ./.github/actions/publish-workflow-3-validation
         with:
-          package_name: ${{ github.event.inputs.package_name }}
+          package_name: ${{ inputs.package_name }}
 
       - name: Complete publish
+        id: complete_publish
         uses: ./.github/actions/publish-workflow-4-complete
         with:
           branch: ${{ github.ref }}
           prev_version: ${{ steps.updated_versions_info.outputs.prev_version }}
           next_version: ${{ steps.updated_versions_info.outputs.next_version }}
-          package_name: ${{ github.event.inputs.package_name }}
+          package_name: ${{ inputs.package_name }}
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           npm_token: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
-          npm_tag: ${{ github.event.inputs.npm_tag_aka_pre_id }}
-          use_git_tag_with_namespace: ${{ github.event.inputs.package_name != '@vkontakte/vkui' }}
+          npm_tag: ${{ inputs.npm_tag_aka_pre_id }}
+          disable_git_tag_with_namespace: ${{ inputs.package_name == '@vkontakte/vkui' }}
