@@ -38,7 +38,7 @@ jobs:
   publish:
     concurrency: ci-gh-pages
     outputs:
-      release_tag: ${{ steps.updated_versions_info.outputs.next_version }}
+      release_tag: ${{ steps.complete_publish.outputs.git_release_tag }}
     permissions:
       id-token: write
     runs-on: ubuntu-latest
@@ -64,6 +64,7 @@ jobs:
           package_name: ${{ inputs.package_name }}
 
       - name: Complete publish
+        id: complete_publish
         uses: ./.github/actions/publish-workflow-4-complete
         with:
           branch: ${{ github.ref }}
