@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
+import { callMultiple } from '../../lib/callMultiple';
 import { HasRef, HasRootRef } from '../../types';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
@@ -60,15 +60,10 @@ export const WriteBar = ({
   getRef,
   onHeightChange,
   shadow = false,
-  defaultValue,
+  onChange,
   ...restProps
 }: WriteBarProps) => {
   const platform = usePlatform();
-
-  const [value, onChange] = useEnsuredControl({
-    defaultValue,
-    ...restProps,
-  });
 
   const textareaRef = useExternRef(getRef);
   const currentScrollHeight = React.useRef<number>();
@@ -90,7 +85,7 @@ export const WriteBar = ({
     }
   }, [onHeightChange, textareaRef]);
 
-  React.useEffect(resize, [resize, value, platform]);
+  React.useEffect(resize, [resize, platform]);
 
   return (
     <div
@@ -111,9 +106,8 @@ export const WriteBar = ({
             {...restProps}
             Component="textarea"
             className={styles['WriteBar__textarea']}
-            onChange={onChange}
+            onChange={callMultiple(onChange, resize)}
             getRootRef={textareaRef}
-            value={value}
           />
           {hasReactNode(inlineAfter) && (
             <div className={styles['WriteBar__inlineAfter']}>{inlineAfter}</div>

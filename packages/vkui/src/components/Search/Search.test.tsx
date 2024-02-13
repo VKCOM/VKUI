@@ -36,6 +36,29 @@ describe(Search, () => {
       await userEvent.click(getClearIcon());
       expect(getInput()).toHaveValue('');
     });
+    it('form reset form', async () => {
+      render(
+        <form data-testid="form">
+          <Search />
+        </form>,
+      );
+      await userEvent.type(getInput(), 'user');
+      expect(getInput()).toHaveValue('user');
+      screen.getByTestId<HTMLFormElement>('form').reset();
+      expect(getInput()).toHaveValue('');
+    });
+    it('form reset with defaultValue', async () => {
+      render(
+        <form data-testid="form">
+          <Search defaultValue="def" />
+        </form>,
+      );
+      expect(getInput()).toHaveValue('def');
+      await userEvent.type(getInput(), 'user');
+      expect(getInput()).toHaveValue('defuser');
+      screen.getByTestId<HTMLFormElement>('form').reset();
+      expect(getInput()).toHaveValue('def');
+    });
   });
 
   describe('works controlled', () => {
