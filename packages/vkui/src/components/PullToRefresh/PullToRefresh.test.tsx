@@ -114,11 +114,6 @@ describe('PullToRefresh', () => {
       const hasDefaultStart = fireEvent.mouseDown(screen.getByTestId('xxx'), { clientY: 0 });
       expect(hasDefaultStart).toBe(toHaveDefault);
     };
-    it('prevents during refresh', () => {
-      renderRefresher();
-      firePull(screen.getByTestId('xxx'));
-      expectEvents(false);
-    });
     it('releases after refresh', () => {
       const { setFetching } = renderRefresher();
       firePull(screen.getByTestId('xxx'));
@@ -151,7 +146,7 @@ describe('PullToRefresh', () => {
   test('disables native pull-to-refresh while pulling', () => {
     const component = render(
       <ConfigProvider platform="ios">
-        <PullToRefresh onRefresh={noop} data-testid="xxx" />
+        <PullToRefresh onRefresh={noop} isFetching={false} data-testid="xxx" />
       </ConfigProvider>,
       { baseElement: document.documentElement },
     );
@@ -162,8 +157,25 @@ describe('PullToRefresh', () => {
     firePull(component.getByTestId('xxx'), { end: false });
     expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
 
-    // класс удаляется когда отпускаем
+    component.rerender(
+      <ConfigProvider platform="ios">
+        <PullToRefresh onRefresh={noop} isFetching data-testid="xxx" />
+      </ConfigProvider>,
+    );
+
     fireEvent.mouseUp(component.getByTestId('xxx'), { clientY: 500 });
+    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
+
+    // пока идёт обновление, класс не удаляется, чтобы не вызывалось нативное поведение
+    firePull(component.getByTestId('xxx'), { end: true });
+    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
+
+    component.rerender(
+      <ConfigProvider platform="ios">
+        <PullToRefresh onRefresh={noop} isFetching={false} data-testid="xxx" />
+      </ConfigProvider>,
+    );
+
     expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
   });
 });
