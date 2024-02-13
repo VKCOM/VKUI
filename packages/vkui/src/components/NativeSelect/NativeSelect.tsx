@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
+import { callMultiple } from '../../lib/callMultiple';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
@@ -43,7 +43,6 @@ export interface SelectState {
  */
 const NativeSelect = ({
   style,
-  defaultValue = '',
   align,
   placeholder,
   children,
@@ -56,28 +55,22 @@ const NativeSelect = ({
   status,
   icon = <DropdownIcon />,
   before,
-  onChange: onChangeProp,
-  value: valueProp,
+  onChange,
   ...restProps
 }: NativeSelectProps) => {
   const [title, setTitle] = React.useState('');
   const [empty, setEmpty] = React.useState(false);
-  const [value, onChange] = useEnsuredControl({
-    defaultValue,
-    disabled,
-    onChange: onChangeProp,
-    value: valueProp,
-  });
   const selectRef = useExternRef(getRef);
   const { sizeY = 'none' } = useAdaptivity();
 
-  useIsomorphicLayoutEffect(() => {
+  const checkSelectedOption = () => {
     const selectedOption = selectRef.current?.options[selectRef.current.selectedIndex];
     if (selectedOption) {
       setTitle(selectedOption.text);
       setEmpty(selectedOption.value === '' && placeholder != null);
     }
-  }, [value, children]);
+  };
+  useIsomorphicLayoutEffect(checkSelectedOption, [children]);
 
   return (
     <FormField
@@ -105,8 +98,7 @@ const NativeSelect = ({
         {...restProps}
         disabled={disabled}
         className={styles['Select__el']}
-        onChange={onChange}
-        value={value}
+        onChange={callMultiple(onChange, checkSelectedOption)}
         ref={selectRef}
       >
         {placeholder && <option value="">{placeholder}</option>}
