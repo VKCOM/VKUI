@@ -134,8 +134,8 @@ export const useChipsInput = <O extends ChipOption>({
   );
 
   const reset = React.useCallback(() => {
-    setValue([]);
-  }, [setValue]);
+    setValue(defaultValue);
+  }, [defaultValue, setValue]);
 
   useNativeFormResetListener(inputRef, reset);
 
