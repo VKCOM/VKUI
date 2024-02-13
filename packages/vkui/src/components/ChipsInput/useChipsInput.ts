@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useCustomEnsuredControl, useEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
 import { simulateReactInput, type SimulateReactInputTargetState } from '../../lib/react';
 import {
   DEFAULT_INPUT_VALUE,
@@ -131,6 +132,12 @@ export const useChipsInput = <O extends ChipOption>({
     },
     [addOption, clearInput],
   );
+
+  const reset = React.useCallback(() => {
+    setValue([]);
+  }, [setValue]);
+
+  useNativeFormResetListener(inputRef, reset);
 
   return {
     value,
