@@ -4,9 +4,9 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { useBooleanState } from '../../hooks/useBooleanState';
-import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
+import { callMultiple } from '../../lib/callMultiple';
 import { touchEnabled } from '../../lib/touch';
 import { HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
@@ -50,7 +50,6 @@ export const Search = ({
   id: idProp,
   before = <Icon16SearchOutline />,
   className,
-  defaultValue = '',
   placeholder = 'Поиск',
   after = 'Отмена',
   getRef,
@@ -58,8 +57,7 @@ export const Search = ({
   onIconClick = noop,
   style,
   autoComplete = 'off',
-  onChange: onChangeProp,
-  value: valueProp,
+  onChange,
   iconLabel,
   clearLabel = 'Очистить',
   noPadding,
@@ -77,11 +75,12 @@ export const Search = ({
   const generatedId = React.useId();
   const inputId = idProp ? idProp : `search-${generatedId}`;
 
-  const [value, onChange] = useEnsuredControl({
-    defaultValue,
-    onChange: onChangeProp,
-    value: valueProp,
-  });
+  const [hasValue, setHasValue] = React.useState<boolean>(() =>
+    Boolean(inputProps.value || inputProps.defaultValue),
+  );
+  const checkHasValue: React.ChangeEventHandler<HTMLInputElement> = (e) =>
+    setHasValue(Boolean(e.currentTarget.value));
+
   const { sizeY = 'none' } = useAdaptivity();
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
   const platform = usePlatform();
@@ -132,7 +131,7 @@ export const Search = ({
         sizeY === 'none' && styles['Search--sizeY-none'],
         sizeY === 'compact' && styles['Search--sizeY-compact'],
         isFocused && styles['Search--focused'],
-        value && styles['Search--has-value'],
+        hasValue && styles['Search--has-value'],
         after && styles['Search--has-after'],
         icon && styles['Search--has-icon'],
         inputProps.disabled && styles['Search--disabled'],
@@ -161,8 +160,7 @@ export const Search = ({
             className={styles['Search__nativeInput']}
             onFocus={onFocus}
             onBlur={onBlur}
-            onChange={onChange}
-            value={value}
+            onChange={callMultiple(onChange, checkHasValue)}
           />
         </div>
         <div className={styles['Search__controls']}>
@@ -184,7 +182,7 @@ export const Search = ({
             onPointerDown={onIconCancelClickStart}
             onClick={onCancel}
             className={styles['Search__icon']}
-            tabIndex={value ? undefined : -1}
+            tabIndex={hasValue ? undefined : -1}
           >
             <VisuallyHidden>{clearLabel}</VisuallyHidden>
             {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
@@ -196,7 +194,7 @@ export const Search = ({
               className={classNames(styles['Search__findButton'], adaptiveSizeY.compact.className)}
               focusVisibleMode="inside"
               onClick={onFindButtonClick}
-              tabIndex={value ? undefined : -1}
+              tabIndex={hasValue ? undefined : -1}
             >
               {findButtonText}
             </Button>
