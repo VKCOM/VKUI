@@ -73,11 +73,11 @@ jobs:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           npm_token: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
           npm_tag: ${{ inputs.latest == true && 'latest' || 'legacy' }}
-          use_git_tag_with_namespace: ${{ inputs.package_name != '@vkontakte/vkui' }}
+          disable_git_tag_with_namespace: ${{ inputs.package_name == '@vkontakte/vkui' }}
 
   close_milestone:
     needs: ['publish']
-    if: ${{ inputs.close_milestone == 'true' }}
+    if: ${{ fromJson(inputs.close_milestone) == true }}
     runs-on: ubuntu-latest
     steps:
       - name: Close milestone, comment on issues and release notes

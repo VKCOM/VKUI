@@ -24,9 +24,9 @@ inputs:
     description: tag for NPM artifact
     required: false
     default: latest
-  use_git_tag_with_namespace:
+  disable_git_tag_with_namespace:
     required: false
-    default: true
+    default: false
 
 runs:
   using: composite
@@ -38,12 +38,12 @@ runs:
       shell: bash
 
     - name: Create tag for core package
-      if: ${{ inputs.use_git_tag_with_namespace }}
+      if: ${{ fromJSON(inputs.disable_git_tag_with_namespace) == true }}
       run: git tag v${{ inputs.next_version }}
       shell: bash
 
     - name: Create tag for other package
-      if: ${{ !inputs.use_git_tag_with_namespace }}
+      if: ${{ fromJSON(inputs.disable_git_tag_with_namespace) != true }}
       run: git tag ${{ inputs.package_name }}@${{ inputs.next_version }}
       shell: bash
 
