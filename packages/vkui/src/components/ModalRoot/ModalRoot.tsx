@@ -748,11 +748,11 @@ function calculateModalContentHeight(
    * получить реальную высоту контента.
    * Поэтому мы пересчитываем высоту, временно устанавливая height: auto;
    * */
-  const elementHeightStyle = element.style.height;
+  const currentHeightStyle = element.style.height;
   element.style.height = 'auto';
 
   const elementHeight = element.scrollHeight;
-  element.style.height = elementHeightStyle;
+  element.style.height = currentHeightStyle;
 
   return elementHeight;
 }
