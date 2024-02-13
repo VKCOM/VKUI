@@ -23,7 +23,7 @@ export default story;
 
 type Story = StoryObj<PullToRefreshProps>;
 
-const initUsers = getRandomUsers(10);
+const initUsers = getRandomUsers(20);
 
 export const Example: Story = {
   render: function Render() {

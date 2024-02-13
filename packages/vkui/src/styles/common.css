@@ -56,5 +56,6 @@
 /* отключаем нативный pull-to-refresh при взаимодействии с компонентом
  * PullToRefresh или при открывании модалки */
 .vkui--disable-overscroll-behavior {
+  /* Safari >= 16 */
   overscroll-behavior-y: none;
 }
