@@ -69,7 +69,7 @@
     "@swc/helpers": "^0.5.6",
     "@vkontakte/icons": "^2.62.0",
     "@vkontakte/vkjs": "^1.1.1",
-    "@vkontakte/vkui-floating-ui": "^0.1.2",
+    "@vkontakte/vkui-floating-ui": "^0.1.5",
     "dayjs": "^1.11.10",
     "mitt": "^3.0.1"
   },
