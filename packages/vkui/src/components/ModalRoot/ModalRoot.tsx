@@ -662,15 +662,16 @@ function initModal(modalState: ModalsStateEntry) {
 
 function initPageModal(modalState: ModalsStateEntry) {
   const { contentElement, bottomInset } = modalState;
-  const contentElementHeight = (contentElement?.firstElementChild as HTMLElement).scrollHeight;
+  const contentElementHeight = calculateModalContentHeight(
+    contentElement?.firstElementChild as HTMLElement,
+    modalState.expandable,
+  );
   const bottomInsetHeight = bottomInset?.offsetHeight || 0;
   const contentHeight = contentElementHeight + bottomInsetHeight;
   let prevTranslateY = modalState.translateY;
 
   modalState.expandable =
-    contentHeight > (contentElement?.clientHeight ?? 0) ||
-    modalState.settlingHeight === 100 ||
-    modalState.expanded;
+    contentHeight > (contentElement?.clientHeight ?? 0) || modalState.settlingHeight === 100;
 
   let collapsed = false;
   let expanded = false;
@@ -732,4 +733,26 @@ function initPageModal(modalState: ModalsStateEntry) {
 
 function initCardModal(modalState: ModalsStateEntry) {
   modalState.translateY = 0;
+}
+
+function calculateModalContentHeight(
+  element: HTMLElement,
+  isExpandable: ModalsStateEntry['expandable'],
+) {
+  if (!isExpandable) {
+    return element.scrollHeight;
+  }
+
+  /*
+   * В режиме expandable мы назначаем контейнеру контента высоту 100%, что не даёт
+   * получить реальную высоту контента.
+   * Поэтому мы пересчитываем высоту, временно устанавливая height: auto;
+   * */
+  const currentHeightStyle = element.style.height;
+  element.style.height = 'auto';
+
+  const elementHeight = element.scrollHeight;
+  element.style.height = currentHeightStyle;
+
+  return elementHeight;
 }
