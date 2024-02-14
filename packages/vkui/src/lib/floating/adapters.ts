@@ -35,14 +35,7 @@ export function autoUpdateFloatingElement(
   // код с `MutationObserver`.
   let observer: MutationObserver | null = null;
   if (elementResize) {
-    let initialUpdate = true;
-    observer = new MutationObserver(() => {
-      if (!initialUpdate) {
-        update();
-      }
-
-      initialUpdate = false;
-    });
+    observer = new MutationObserver(update);
 
     if (reference instanceof Element) {
       observer.observe(reference, {
