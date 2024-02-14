@@ -46,12 +46,22 @@ export function autoUpdateFloatingElement(
   // В случае если `ResizeObserver` будет полифилиться или он будет покрываться нашим `browserlist`, то надо удалить
   // код с `IFrameResizeObserver`.
   let observer: IFrameResizeObserver | null = null;
+  let mutationObserver: MutationObserver | null = null;
   if (elementResize && !canUseResizeObserver) {
     observer = new IFrameResizeObserver(update);
 
     if (isHTMLElement(reference)) {
-      observer.observe(reference);
+      if (isPositioned(reference)) {
+        observer.observe(reference);
+      } else {
+        mutationObserver = new MutationObserver(update);
+        mutationObserver.observe(reference, {
+          childList: true,
+          subtree: true,
+        });
+      }
     }
+
     observer.observe(floating);
   }
 
@@ -61,6 +71,15 @@ export function autoUpdateFloatingElement(
       observer = null;
     }
 
+    if (mutationObserver) {
+      mutationObserver.disconnect();
+      mutationObserver = null;
+    }
+
     autoUpdateLibDisposer();
   };
+}
+
+function isPositioned(element: HTMLElement): boolean {
+  return getComputedStyle(element).position !== 'static';
 }
