@@ -37,7 +37,7 @@ export function autoUpdateFloatingElement(
 ): ReturnType<typeof autoUpdateLib> {
   const { elementResize = false, ...restOptions } = options;
 
-  const canUseResizeObserver = typeof ResizeObserver === 'function';
+  const canUseResizeObserver = false;
   const autoUpdateLibDisposer = autoUpdateLib(reference, floating, update, {
     ...restOptions,
     elementResize: elementResize && canUseResizeObserver,
@@ -45,20 +45,20 @@ export function autoUpdateFloatingElement(
 
   // В случае если `ResizeObserver` будет полифилиться или он будет покрываться нашим `browserlist`, то надо удалить
   // код с `IFrameResizeObserver`.
-  let iframeResizer: IFrameResizeObserver | null = null;
+  let observer: IFrameResizeObserver | null = null;
   if (elementResize && !canUseResizeObserver) {
-    iframeResizer = new IFrameResizeObserver(update);
+    observer = new IFrameResizeObserver(update);
 
     if (isHTMLElement(reference)) {
-      iframeResizer.observe(reference);
+      observer.observe(reference);
     }
-    iframeResizer.observe(floating);
+    observer.observe(floating);
   }
 
   return () => {
-    if (iframeResizer) {
-      iframeResizer.disconnect();
-      iframeResizer = null;
+    if (observer) {
+      observer.disconnect();
+      observer = null;
     }
 
     autoUpdateLibDisposer();
