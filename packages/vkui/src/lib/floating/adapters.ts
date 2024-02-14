@@ -5,6 +5,7 @@ import {
   type ReferenceType,
 } from '@vkontakte/vkui-floating-ui/react-dom';
 import { isHTMLElement } from '../dom';
+import { IFrameResizeObserver } from './iframeResizeObserver';
 
 export {
   useFloating,
@@ -21,7 +22,7 @@ export {
 const defaultOptions = {
   ancestorScroll: true,
   ancestorResize: true,
-  // По умолчанию отключаем, т.к. навешивать `MutationObserver` может быть дорого.
+  // По умолчанию отключаем, т.к. навешивать `IFrameResizeObserver` может быть дорого.
   // В `autoUpdateLib` по умолчанию опция включена. Там используется ResizeObserver, но и он не менее дорогостоящий.
   // https://github.com/floating-ui/floating-ui/blob/0a34fe9cc2c7483976785a71bd0777cd7c3f2a6a/packages/dom/src/autoUpdate.ts#L6-L33
   elementResize: false,
@@ -36,38 +37,30 @@ export function autoUpdateFloatingElement(
 ): ReturnType<typeof autoUpdateLib> {
   const { elementResize = false, ...restOptions } = options;
 
+  const canUseResizeObserver = false;
   const autoUpdateLibDisposer = autoUpdateLib(reference, floating, update, {
     ...restOptions,
-    // Отключаем в библиотеке, т.к. под капотом используется `ResizeObserver`, которое не покрывается нашим `browserlist`.
-    // Вместо него мы используем `MutationObserver`.
-    // https://caniuse.com/resizeobserver
-    elementResize: false,
+    elementResize: elementResize && canUseResizeObserver,
   });
 
   // В случае если `ResizeObserver` будет полифилиться или он будет покрываться нашим `browserlist`, то надо удалить
-  // код с `MutationObserver`.
-  let observer: MutationObserver | null = null;
-  if (elementResize) {
-    observer = new MutationObserver(update);
+  // код с `IFrameResizeObserver`.
+  let iframeResizer: IFrameResizeObserver | null = null;
+  if (elementResize && !canUseResizeObserver) {
+    iframeResizer = new IFrameResizeObserver(update);
 
     if (isHTMLElement(reference)) {
-      observer.observe(reference, {
-        childList: true,
-        subtree: true,
-      });
+      iframeResizer.observe(reference);
     }
-
-    observer.observe(floating, {
-      childList: true,
-      subtree: true,
-    });
+    iframeResizer.observe(floating);
   }
 
   return () => {
-    if (observer !== null) {
-      observer.disconnect();
-      observer = null;
+    if (iframeResizer) {
+      iframeResizer.disconnect();
+      iframeResizer = null;
     }
+
     autoUpdateLibDisposer();
   };
 }
