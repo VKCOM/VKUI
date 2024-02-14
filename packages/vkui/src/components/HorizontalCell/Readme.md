@@ -22,6 +22,83 @@ const UserItems = () => {
   ));
 };
 
+const storyItems = [
+  {
+    id: 1,
+    name: 'ВКонтакте API',
+    photo_50:
+      'https://sun9-17.userapi.com/s/v1/if1/04SDm6iX9Lb6SbdbdrfonC3AYNYcmeITh7qA2hWfqZHsm8Vzg1eAgFgEXj5r9hnX4tJGjxxh.jpg?size=50x50&quality=96&crop=20,20,560,560&ava=1',
+  },
+  {
+    id: 2,
+    name: 'VK Mini Apps',
+    photo_50:
+      'https://sun9-5.userapi.com/s/v1/ig2/vDdDb2ZS0TW01OOlVpWC3jI8JQHIGTHNa-TF0uDktL0pP7iovf4wX0OzYVz9J75s5rk3W316nFt7vg3GvEpa4ldy.jpg?size=50x50&quality=95&crop=0,0,854,854&ava=1',
+  },
+  {
+    id: 3,
+    name: 'VK Team',
+    photo_50:
+      'https://sun9-9.userapi.com/s/v1/ig2/csFJEZoS4D8YqM8P0g5MMZOgJytNLiiLZvsEWcD2YvfUxEMuEjsSatqYLM6KKdmImNwcQCm_tpN0udKpEVKC4daN.jpg?size=50x50&quality=95&crop=0,0,1000,1000&ava=1',
+  },
+  {
+    id: 4,
+    name: 'VK Testers',
+    photo_50:
+      'https://sun9-25.userapi.com/s/v1/ig2/U2T4qsx4hMOzJEVmBBxSsmY7itrIkZUz0jDLXUq22kc7KCAnXQ-1qLiZ5EDy0YJV8621UKRA1SZoE9AcrTCfqiT8.jpg?size=50x50&quality=95&crop=0,0,1080,1080&ava=1',
+  },
+];
+
+const storyItemStyles = {
+  padding: 2,
+  border: '3px solid var(--vkui--color_text_accent)',
+  borderRadius: 56,
+};
+const iconCircleStyles = {
+  border: '3px solid var(--vkui--color_field_background)',
+  borderRadius: 56,
+  width: 16,
+  height: 16,
+};
+
+const titleStoryStyles = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  color: 'var(--vkui--color_text_link)',
+  maxInlineSize:
+    'calc(var(--vkui_internal--side_cell_width) - var(--vkui_internal--side_cell_gap) * 2)',
+};
+
+const AddStoryUserItem = () => {
+  return (
+    <HorizontalCell onClick={() => {}} size="s" header="История">
+      <div style={{ padding: 2 }}>
+        <GridAvatar size={56} src={[getAvatarUrl('user_ji')]}>
+          <GridAvatar.Badge>
+            <Icon20AddCircleFillBlue style={iconCircleStyles} />
+          </GridAvatar.Badge>
+        </GridAvatar>
+      </div>
+    </HorizontalCell>
+  );
+};
+
+const StoryItems = () => {
+  return storyItems.map((item) => (
+    <HorizontalCell
+      onClick={() => {}}
+      key={item.id}
+      size="s"
+      header={<Caption style={titleStoryStyles}>{item.name}</Caption>}
+    >
+      <div style={storyItemStyles}>
+        <Avatar size={50} src={item.photo_50} />
+      </div>
+    </HorizontalCell>
+  ));
+};
+
 const miniApps = [
   {
     id: 1,
@@ -148,6 +225,14 @@ const Example = () => {
     <View activePanel="horizontalCell">
       <Panel id="horizontalCell">
         <PanelHeader>HorizontalCell</PanelHeader>
+        <Group header={<Header>Истории</Header>}>
+          <HorizontalScroll>
+            <div style={{ display: 'flex' }}>
+              <AddStoryUserItem />
+              <StoryItems />
+            </div>
+          </HorizontalScroll>
+        </Group>
         <Group header={<Header>Возможные друзья</Header>}>
           <HorizontalScroll>
             <div style={{ display: 'flex' }}>
