@@ -15,6 +15,8 @@ export interface BadgeProps extends RootComponentProps<HTMLSpanElement> {
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Badge
+ *
+ * TODO [>=7]: переименовать в Dot
  */
 export const Badge = ({ mode = 'new', children, ...restProps }: BadgeProps) => (
   <RootComponent
