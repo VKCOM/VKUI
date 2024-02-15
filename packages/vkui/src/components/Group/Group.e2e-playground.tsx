@@ -14,6 +14,11 @@ export const GroupPlayground = (props: ComponentPlaygroundProps) => {
           children: [<Div key="div">Content</Div>],
           mode: ['plain', 'card'],
         },
+        {
+          header: [<Header key="header">Header</Header>],
+          children: [<Div key="div">Content</Div>],
+          description: ['Description'],
+        },
       ]}
     >
       {Group}
