@@ -5,7 +5,7 @@ import {
   type ReferenceType,
 } from '@vkontakte/vkui-floating-ui/react-dom';
 import { isHTMLElement } from '../dom';
-import { IFrameResizeObserver } from './iframeResizeObserver';
+import { CustomResizeObserver } from './customResizeObserver';
 
 export {
   useFloating,
@@ -22,7 +22,7 @@ export {
 const defaultOptions = {
   ancestorScroll: true,
   ancestorResize: true,
-  // По умолчанию отключаем, т.к. навешивать `IFrameResizeObserver` может быть дорого.
+  // По умолчанию отключаем, т.к. навешивать `CustomResizeObserver` может быть дорого.
   // В `autoUpdateLib` по умолчанию опция включена. Там используется ResizeObserver, но и он не менее дорогостоящий.
   // https://github.com/floating-ui/floating-ui/blob/0a34fe9cc2c7483976785a71bd0777cd7c3f2a6a/packages/dom/src/autoUpdate.ts#L6-L33
   elementResize: false,
@@ -44,22 +44,13 @@ export function autoUpdateFloatingElement(
   });
 
   // В случае если `ResizeObserver` будет полифилиться или он будет покрываться нашим `browserlist`, то надо удалить
-  // код с `IFrameResizeObserver`.
-  let observer: IFrameResizeObserver | null = null;
-  let mutationObserver: MutationObserver | null = null;
+  // код с `CustomResizeObserver`.
+  let observer: CustomResizeObserver | null = null;
   if (elementResize && !canUseResizeObserver) {
-    observer = new IFrameResizeObserver(update);
+    observer = new CustomResizeObserver(update);
 
     if (isHTMLElement(reference)) {
-      if (isPositioned(reference)) {
-        observer.observe(reference);
-      } else {
-        mutationObserver = new MutationObserver(update);
-        mutationObserver.observe(reference, {
-          childList: true,
-          subtree: true,
-        });
-      }
+      observer.observe(reference);
     }
 
     observer.observe(floating);
@@ -70,16 +61,6 @@ export function autoUpdateFloatingElement(
       observer.disconnect();
       observer = null;
     }
-
-    if (mutationObserver) {
-      mutationObserver.disconnect();
-      mutationObserver = null;
-    }
-
     autoUpdateLibDisposer();
   };
-}
-
-function isPositioned(element: HTMLElement): boolean {
-  return getComputedStyle(element).position !== 'static';
 }
