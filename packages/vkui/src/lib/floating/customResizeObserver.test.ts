@@ -65,7 +65,6 @@ describe(CustomResizeObserver, () => {
 
     // создает iframe
     expect(elementStub.ownerDocument.createElement).toHaveBeenCalledWith('iframe');
-    expect(elementStub.appendChild).toHaveBeenCalledWith(iframeStub);
 
     // с нужным набором стилей
     expect(iframeStub.style).toStrictEqual({
@@ -84,7 +83,11 @@ describe(CustomResizeObserver, () => {
     expect(iframeStub.tabIndex).toBe(-1);
 
     expect(observer.records).toStrictEqual([{ target: elementStub, iframe: iframeStub }]);
+
     expect(observer.mutationObserverFallback).toBe(null);
+
+    observer.appendToTheDOM();
+    expect(elementStub.appendChild).toHaveBeenCalledWith(iframeStub);
 
     // функция update подписана на событие resize у iframe.contentWindow
     expect(iframeStub.contentWindow?.addEventListener).toHaveBeenCalledWith(

@@ -50,14 +50,20 @@ export class CustomResizeObserver {
     Object.assign(iframe.style, defaultIframeStyles);
 
     this.records.push({ target: element, iframe });
+  }
 
-    element.appendChild(iframe);
-
-    if (iframe.contentWindow === null) {
-      return;
+  appendToTheDOM() {
+    for (let record of this.records) {
+      record.target.appendChild(record.iframe);
     }
 
-    iframe.contentWindow.addEventListener('resize', this.updateFunction);
+    for (let record of this.records) {
+      if (record.iframe.contentWindow === null) {
+        return;
+      }
+
+      record.iframe.contentWindow.addEventListener('resize', this.updateFunction);
+    }
   }
 
   observeUsingMutationObserver(element: HTMLElement) {

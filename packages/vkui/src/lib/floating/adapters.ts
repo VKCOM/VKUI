@@ -37,7 +37,7 @@ export function autoUpdateFloatingElement(
 ): ReturnType<typeof autoUpdateLib> {
   const { elementResize = false, ...restOptions } = options;
 
-  const canUseResizeObserver = typeof ResizeObserver === 'function';
+  const canUseResizeObserver = false;
   const autoUpdateLibDisposer = autoUpdateLib(reference, floating, update, {
     ...restOptions,
     elementResize: elementResize && canUseResizeObserver,
@@ -54,6 +54,8 @@ export function autoUpdateFloatingElement(
     }
 
     observer.observe(floating);
+
+    observer.appendToTheDOM();
   }
 
   return () => {
