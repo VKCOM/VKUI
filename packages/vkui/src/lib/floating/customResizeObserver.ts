@@ -1,11 +1,15 @@
-const defaultIframeStyles = {
+const defaultIframeStyles: Pick<
+  CSSStyleDeclaration,
+  'position' | 'left' | 'top' | 'zIndex' | 'width' | 'height' | 'pointerEvents' | 'opacity'
+> = {
   position: 'absolute',
-  left: 0,
-  top: 0,
+  left: '0',
+  top: '0',
+  zIndex: '-1',
   width: '100%',
   height: '100%',
   pointerEvents: 'none',
-  opacity: 0,
+  opacity: '0',
 };
 
 /*
@@ -24,14 +28,13 @@ const defaultIframeStyles = {
  * Применяется только если нету поддержики или полифила ResizeObserver.
  * */
 export class CustomResizeObserver {
-  updateFunction: () => void;
   records: Array<{
     target: HTMLElement;
     iframe: HTMLIFrameElement;
   }> = [];
   mutationObserverFallback: MutationObserver | null = null;
 
-  constructor(updateFunction: () => void) {
+  constructor(private readonly updateFunction: () => void) {
     this.updateFunction = updateFunction;
   }
 

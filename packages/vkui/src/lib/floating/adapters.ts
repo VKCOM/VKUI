@@ -37,7 +37,8 @@ export function autoUpdateFloatingElement(
 ): ReturnType<typeof autoUpdateLib> {
   const { elementResize = false, ...restOptions } = options;
 
-  const canUseResizeObserver = typeof ResizeObserver === 'function';
+  // eslint-disable-next-line no-restricted-globals, compat/compat
+  const canUseResizeObserver = window.ResizeObserver !== undefined;
   const autoUpdateLibDisposer = autoUpdateLib(reference, floating, update, {
     ...restOptions,
     elementResize: elementResize && canUseResizeObserver,

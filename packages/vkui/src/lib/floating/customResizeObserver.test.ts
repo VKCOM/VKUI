@@ -70,12 +70,13 @@ describe(CustomResizeObserver, () => {
     expect(iframeStub.style).toStrictEqual({
       margin: '20',
       position: 'absolute',
-      left: 0,
-      top: 0,
+      left: '0',
+      top: '0',
+      zIndex: '-1',
       width: '100%',
       height: '100%',
       pointerEvents: 'none',
-      opacity: 0,
+      opacity: '0',
     });
 
     // скрытым от скринридеров
