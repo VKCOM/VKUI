@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { usePlatform } from '../../hooks/usePlatform';
 import { SizeTypeValues } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -95,7 +94,6 @@ export const Group = ({
   ...restProps
 }: GroupProps) => {
   const { isInsideModal } = React.useContext(ModalRootContext);
-  const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
 
   const mode = useGroupMode(modeProps, sizeX, isInsideModal);
@@ -124,7 +122,6 @@ export const Group = ({
           'vkuiInternalGroup',
           styles['Group'],
           isInsideModal && styles['Group--inside-modal'],
-          platform === 'ios' && styles['Group--ios'],
           sizeX !== 'regular' && sizeXClassNames[sizeX],
           mode && stylesMode[mode],
           stylesPadding[padding],
