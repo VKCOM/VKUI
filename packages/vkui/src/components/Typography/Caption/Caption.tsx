@@ -22,12 +22,14 @@ export const Caption = ({
   className,
   level = '1',
   caps,
+  onelineText,
   Component = 'span',
   normalize = true,
   ...restProps
 }: CaptionProps) => {
   return (
     <Typography
+      onelineText={onelineText}
       Component={Component}
       normalize={normalize}
       className={classNames(className, caps && styles['Caption--caps'], stylesLevel[level])}

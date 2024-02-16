@@ -87,3 +87,10 @@
 .HorizontalCell--size-m:last-child {
   max-inline-size: var(--vkui_internal--side_cell_width);
 }
+
+.HorizontalCell--oneline-title {
+  inline-size: calc(
+    var(--vkui_internal--side_cell_width) - var(--vkui_internal--side_cell_gap) * 2
+  );
+  color: var(--vkui--color_text_link);
+}

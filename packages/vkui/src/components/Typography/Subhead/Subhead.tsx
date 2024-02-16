@@ -20,12 +20,14 @@ export const Subhead = ({
   className,
   Component = 'span',
   normalize = true,
+  onelineText,
   ...restProps
 }: SubheadProps) => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <Typography
+      onelineText={onelineText}
       Component={Component}
       normalize={normalize}
       className={classNames(

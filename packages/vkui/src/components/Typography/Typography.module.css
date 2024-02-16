@@ -21,3 +21,9 @@
 .Typography b {
   font-weight: var(--vkui--font_weight_accent1);
 }
+
+.Typography--oneline-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

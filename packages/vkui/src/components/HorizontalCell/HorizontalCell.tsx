@@ -16,13 +16,18 @@ const stylesSize = {
 
 interface CellTypographyProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   size: HorizontalCellProps['size'];
+  oneline?: boolean;
 }
 
-const CellTypography = ({ size, children, ...restProps }: CellTypographyProps) => {
+const CellTypography = ({ size, children, oneline, ...restProps }: CellTypographyProps) => {
   return size === 's' ? (
-    <Caption {...restProps}>{children}</Caption>
+    <Caption onelineText={oneline} {...restProps}>
+      {children}
+    </Caption>
   ) : (
-    <Subhead {...restProps}>{children}</Subhead>
+    <Subhead onelineText={oneline} {...restProps}>
+      {children}
+    </Subhead>
   );
 };
 
@@ -43,6 +48,10 @@ export interface HorizontalCellProps
    * Дополнительная строка текста под `children` и `subtitle`.
    */
   extraSubtitle?: React.ReactNode;
+  /**
+   * Отображает текст заголовка в одну строку для `ellipsis`.
+   */
+  onelineTitle?: boolean;
 }
 
 /**
@@ -56,6 +65,7 @@ export const HorizontalCell = ({
   size = 's',
   children = <Avatar size={56} />,
   getRootRef,
+  onelineTitle,
   getRef,
   extraSubtitle,
   ...restProps
@@ -71,8 +81,17 @@ export const HorizontalCell = ({
           <div className={styles['HorizontalCell__image']}>{children}</div>
         )}
         {(header || subtitle || extraSubtitle) && (
-          <div className={styles['HorizontalCell__content']}>
-            {hasReactNode(header) && <CellTypography size={size}>{header}</CellTypography>}
+          <div
+            className={classNames(
+              styles['HorizontalCell__content'],
+              onelineTitle && styles['HorizontalCell--oneline-title'],
+            )}
+          >
+            {hasReactNode(header) && (
+              <CellTypography oneline={onelineTitle} size={size}>
+                {header}
+              </CellTypography>
+            )}
             {hasReactNode(subtitle) && (
               <Footnote className={styles['HorizontalCell__subtitle']}>{subtitle}</Footnote>
             )}

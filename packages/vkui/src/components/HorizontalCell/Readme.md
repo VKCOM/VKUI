@@ -51,7 +51,7 @@ const storyItems = [
 
 const storyItemStyles = {
   padding: 2,
-  border: '3px solid var(--vkui--color_text_accent)',
+  border: '3px solid var(--vkui--color_text_link)',
   borderRadius: 56,
 };
 const iconCircleStyles = {
@@ -59,15 +59,6 @@ const iconCircleStyles = {
   borderRadius: 56,
   width: 16,
   height: 16,
-};
-
-const titleStoryStyles = {
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  color: 'var(--vkui--color_text_link)',
-  maxInlineSize:
-    'calc(var(--vkui_internal--side_cell_width) - var(--vkui_internal--side_cell_gap) * 2)',
 };
 
 const AddStoryUserItem = () => {
@@ -87,10 +78,11 @@ const AddStoryUserItem = () => {
 const StoryItems = () => {
   return storyItems.map((item) => (
     <HorizontalCell
+      onelineTitle={true}
       onClick={() => {}}
       key={item.id}
       size="s"
-      header={<Caption style={titleStoryStyles}>{item.name}</Caption>}
+      header={item.name}
     >
       <div style={storyItemStyles}>
         <Avatar size={50} src={item.photo_50} />

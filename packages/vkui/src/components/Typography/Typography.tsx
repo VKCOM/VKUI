@@ -26,18 +26,24 @@ export interface TypographyProps
    * Убирает внешние отступы
    */
   normalize?: boolean;
+  /**
+   * Отображает текст в одну строку для ellipsis
+   */
+  onelineText?: boolean;
 }
 
 export const Typography = ({
   weight,
   Component = 'span',
   normalize,
+  onelineText,
   ...restProps
 }: TypographyProps) => (
   <RootComponent
     Component={Component}
     baseClassName={classNames(
       styles['Typography'],
+      onelineText && styles['Typography--oneline-text'],
       normalize && styles['Typography--normalize'],
       weight && stylesWeight[weight],
     )}
