@@ -42,6 +42,18 @@ export class CustomResizeObserver {
     return this.observeUsingMutationObserver(element);
   }
 
+  appendToTheDOM() {
+    for (let record of this.records) {
+      record.target.appendChild(record.iframe);
+    }
+
+    for (let record of this.records) {
+      if (record.iframe.contentWindow) {
+        record.iframe.contentWindow.addEventListener('resize', this.updateFunction);
+      }
+    }
+  }
+
   observeUsingIframe(element: HTMLElement) {
     const iframe = element.ownerDocument.createElement('iframe');
     iframe.src = 'javascript:void(0)';
@@ -50,20 +62,6 @@ export class CustomResizeObserver {
     Object.assign(iframe.style, defaultIframeStyles);
 
     this.records.push({ target: element, iframe });
-  }
-
-  appendToTheDOM() {
-    for (let record of this.records) {
-      record.target.appendChild(record.iframe);
-    }
-
-    for (let record of this.records) {
-      if (record.iframe.contentWindow === null) {
-        return;
-      }
-
-      record.iframe.contentWindow.addEventListener('resize', this.updateFunction);
-    }
   }
 
   observeUsingMutationObserver(element: HTMLElement) {
