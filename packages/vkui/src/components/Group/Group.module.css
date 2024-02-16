@@ -189,7 +189,7 @@
 .Group__description {
   display: block;
   padding-block: 4px 16px;
-  padding-inline: 16px;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   color: var(--vkui--color_text_secondary);
 }
 
@@ -204,14 +204,6 @@
 
 .Group .Group:last-of-type {
   padding-block-end: 0;
-}
-
-/**
- * iOS
- */
-.Group--ios .Group__description {
-  padding-block: 4px 16px;
-  padding-inline: 12px;
 }
 
 /*
