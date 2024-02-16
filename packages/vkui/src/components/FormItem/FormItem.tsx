@@ -26,6 +26,10 @@ export interface FormItemProps
     RemovableProps {
   top?: React.ReactNode;
   /**
+   * Многострочный вывод заголовка. По умолчанию текст не переносится при переполнении.
+   */
+  topMultiline?: boolean;
+  /**
    * Позволяет поменять тег используемый для top
    * Если оставить пустым, то тег top будет span.
    * Если оставить пустым и использовать htmlFor, то тег top будет label.
@@ -58,6 +62,7 @@ export interface FormItemProps
 export const FormItem = ({
   children,
   top,
+  topMultiline,
   topComponent: topComponentProp,
   bottom,
   status = 'default',
@@ -77,7 +82,14 @@ export const FormItem = ({
   const wrappedChildren = (
     <React.Fragment>
       {hasReactNode(top) && (
-        <Subhead className={styles['FormItem__top']} Component={topComponent} htmlFor={htmlFor}>
+        <Subhead
+          className={classNames(
+            styles['FormItem__top'],
+            topMultiline && styles['FormItem__top--multiline'],
+          )}
+          Component={topComponent}
+          htmlFor={htmlFor}
+        >
           {top}
         </Subhead>
       )}
