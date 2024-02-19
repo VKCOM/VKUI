@@ -5446,8 +5446,8 @@ __metadata:
     stylelint-use-logical: ^2.1.0
     stylelint-value-no-unknown-custom-properties: ^5.0.0
     swc-loader: ^0.2.6
-    swc-plugin-css-modules: 0.1.9
-    swc-plugin-transform-remove-imports: 1.12.0
+    swc-plugin-css-modules: 0.1.10
+    swc-plugin-transform-remove-imports: 1.12.1
     ts-node: ^10.9.2
     typescript: ^5.3.3
     typescript-plugin-css-modules: ^5.1.0
@@ -18383,17 +18383,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-plugin-css-modules@npm:0.1.9":
-  version: 0.1.9
-  resolution: "swc-plugin-css-modules@npm:0.1.9"
-  checksum: 6d987131f6c6c31994e5ab279d40c37de761735636518e62c62690381c5a64b93e65e32461e7dc7e62723768daff30f710b9964e0e112200caddad1941bf46f5
+"swc-plugin-css-modules@npm:0.1.10":
+  version: 0.1.10
+  resolution: "swc-plugin-css-modules@npm:0.1.10"
+  checksum: ae8c1b6a3c51dfeff22696d6aa271c0ab96fdd69b7f80df94b122b1137c959fd616a60a4c0676f08e1052f222c07d85fae513fd4df72898e93c32f84f1792362
   languageName: node
   linkType: hard
 
-"swc-plugin-transform-remove-imports@npm:1.12.0":
-  version: 1.12.0
-  resolution: "swc-plugin-transform-remove-imports@npm:1.12.0"
-  checksum: 90fd2b5af3907d81dc9e20741a4ec0ec84267fb37051221f76639d5efeef18974e33699aec8534a5df2ad5e8ffe0c3d795e6f87101b25a6a1f3e53ebf6c9843b
+"swc-plugin-transform-remove-imports@npm:1.12.1":
+  version: 1.12.1
+  resolution: "swc-plugin-transform-remove-imports@npm:1.12.1"
+  checksum: 2971bc913b112f81ac4f6d10548ce22c01c6283f08cf85175d03e38f2c2aa23753e3d94357b9b2aba4b202025d7f5a9215b561ddbe0bd559334a156c87571246
   languageName: node
   linkType: hard
 
