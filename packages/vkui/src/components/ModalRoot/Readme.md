@@ -226,8 +226,6 @@ const App = () => {
       <ModalPage
         id={MODAL_PAGE_FILTERS}
         onClose={modalBack}
-        hideCloseButton
-        preventClose
         header={
           <ModalPageHeader
             before={
