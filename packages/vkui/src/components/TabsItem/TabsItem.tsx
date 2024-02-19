@@ -176,7 +176,7 @@ export const TabsItem = ({
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
         className,
       )}
-      hoverMode={platform !== Platform.IOS && styles['TabsItem--hover']}
+      hoverMode={platform === Platform.IOS ? '' : styles['TabsItem--hover']}
       activeMode=""
       focusVisibleMode="inside"
       hasActive={false}
