@@ -405,7 +405,7 @@ class ModalRootTouchComponent extends React.Component<
         } else if (numberInRange(translateY, modalState.collapsedRange)) {
           translateY = modalState.translateYFrom ?? 0;
         } else if (numberInRange(translateY, modalState.hiddenRange)) {
-          translateY = 100;
+          translateY = modalState.preventClose ? modalState.translateYFrom ?? 0 : 100;
         } else {
           translateY = modalState.translateYFrom ?? 0;
         }
@@ -413,11 +413,11 @@ class ModalRootTouchComponent extends React.Component<
         if (numberInRange(translateY, [0, 25])) {
           translateY = 0;
         } else {
-          translateY = 100;
+          translateY = modalState.preventClose ? modalState.translateYFrom ?? 0 : 100;
         }
       }
 
-      if (translateY !== 100 && shiftYEndPercent >= 75) {
+      if (translateY !== 100 && shiftYEndPercent >= 75 && !modalState.preventClose) {
         translateY = 100;
       }
 

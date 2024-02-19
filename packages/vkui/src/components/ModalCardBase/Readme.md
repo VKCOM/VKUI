@@ -76,9 +76,15 @@
 
 ## Кнопка для закрытия
 
-Через свойство `dismissButtonMode=inside|outside` можно задать вид кнопки закрытия.
+Через свойство `dismissButtonMode=inside|outside|none` можно задать вид кнопки закрытия.
 Согласно нашим дизайн-гайдам, `dismissButtonMode=outside` отображается только для `compact`-режима (десктопная и планшетные версии).
 Для `iOS` всегда будет применяться `dismissButtonMode=inside` в `regular`-режиме (мобильная версия).
+
+> **Важно**
+>
+> Обратите внимание, что свойство `dismissButtonMode=none`, которое позволяет скрыть крестик, или свойство `preventClose`,
+> отключающее возможность закрыть модалку стандартными способами,
+> негативно влияет на пользовательский опыт, используйте эти свойства только если точно знаете, что делаете.
 
 ## Отступы между контентом и кнопками действий (`actions`)
 
@@ -124,6 +130,12 @@
       subheader="Безопасной зоны не будет, потому что есть иконка"
       icon={<Icon56MoneyTransferOutline />}
     />
+    <ModalCardBase
+      dismissButtonMode="none"
+      style={{ width: 450, marginBottom: 20 }}
+      header="Десктопная и планшетная версии без крестика"
+      subheader="Очень плохая модалка"
+    />
   </AdaptivityProvider>
   <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
     <ModalCardBase
@@ -133,11 +145,17 @@
       subheader="Сверху будет безопасный отступ до иконки"
     />
     <ModalCardBase
-      style={{ width: 320 }}
+      style={{ width: 320, marginBottom: 20 }}
       dismissButtonMode="inside"
       icon={<Image borderRadius="l" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
       header="Мобильная версия с крестиком внутри"
       subheader="Безопасной зоны не будет, потому что есть иконка"
+    />
+    <ModalCardBase
+      dismissButtonMode="none"
+      style={{ width: 450 }}
+      header="Мобильная версия без крестика"
+      subheader="Очень плохая модалка"
     />
   </AdaptivityProvider>
 </div>

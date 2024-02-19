@@ -65,10 +65,20 @@ export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivEle
   modalDismissButtonTestId?: string;
   /**
    * Расположение кнопки закрытия (внутри и вне `popout'a`)
+   *
    * Доступно только в `compact`-режиме
+   *
    * На `iOS` в `regular`-режиме всегда включен `inside`
+   *
+   * ⚠️ ВНИМАНИЕ: использование `none` скрывает крестик, это негативно сказывается на пользовательском опыте
    */
-  dismissButtonMode?: 'inside' | 'outside';
+  dismissButtonMode?: 'inside' | 'outside' | 'none';
+  /**
+   * Позволяет отключить возможность закрытия модальной страницы (смахивание, клавиша `ESC`, клик по подложке)
+   *
+   * ⚠️ ВНИМАНИЕ: использование этой опции негативно сказывается на пользовательском опыте
+   */
+  preventClose?: boolean;
 }
 
 /**
@@ -88,6 +98,7 @@ export const ModalCardBase = ({
   size: sizeProp,
   modalDismissButtonTestId,
   dismissButtonMode = 'outside',
+  preventClose,
   ...restProps
 }: ModalCardBaseProps) => {
   const platform = usePlatform();
@@ -96,7 +107,9 @@ export const ModalCardBase = ({
 
   const size = isDesktop ? sizeProp : undefined;
   const withSafeZone =
-    !icon && (dismissButtonMode === 'inside' || (platform === 'ios' && !isDesktop));
+    !icon &&
+    (dismissButtonMode === 'inside' ||
+      (platform === 'ios' && !isDesktop && dismissButtonMode !== 'none'));
 
   const hasHeader = hasReactNode(header);
   const hasSubheader = hasReactNode(subheader);
@@ -144,13 +157,15 @@ export const ModalCardBase = ({
 
         {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
 
-        <ModalCardBaseCloseButton
-          testId={modalDismissButtonTestId}
-          onClose={onClose}
-          mode={dismissButtonMode}
-        >
-          {dismissLabel}
-        </ModalCardBaseCloseButton>
+        {dismissButtonMode !== 'none' && (
+          <ModalCardBaseCloseButton
+            testId={modalDismissButtonTestId}
+            onClose={onClose}
+            mode={dismissButtonMode}
+          >
+            {dismissLabel}
+          </ModalCardBaseCloseButton>
+        )}
       </div>
     </RootComponent>
   );

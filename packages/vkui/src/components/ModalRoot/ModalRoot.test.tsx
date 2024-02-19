@@ -78,7 +78,7 @@ describe.each([
     });
   });
 
-  describe('calls onClose', () => {
+  describe('handle onClose', () => {
     describe('on fade click', () => {
       it('calls modal onClose', async () => {
         const onClose = jest.fn();
@@ -105,6 +105,20 @@ describe.each([
         act(jest.runAllTimers);
         await clickFade();
         expect(onCloseRoot).toHaveBeenCalledTimes(1);
+      });
+      it('does not call root onClose when preventClose is provided', async () => {
+        const onCloseRoot = jest.fn();
+        render(
+          <ModalRoot onClose={onCloseRoot} activeModal="m">
+            <ModalPage id="m" preventClose />
+          </ModalRoot>,
+        );
+        // wait for animations
+        act(jest.runAllTimers);
+        await clickFade();
+        expect(onCloseRoot).not.toHaveBeenCalled();
+        await userEvent.keyboard('{Escape}');
+        expect(onCloseRoot).not.toHaveBeenCalled();
       });
     });
     if (name === 'ModalRootDesktop') {
