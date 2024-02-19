@@ -59,7 +59,7 @@ export const PanelHeaderButton = ({
 
   switch (platform) {
     case Platform.IOS:
-      hoverMode = 'opacity';
+      hoverMode = '';
       activeMode = 'opacity';
       break;
     case Platform.VKCOM:
