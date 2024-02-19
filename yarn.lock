@@ -2549,25 +2549,25 @@ __metadata:
   resolution: "@project-tools/storybook-addon-cartesian@workspace:tools/storybook-addon-cartesian"
   dependencies:
     "@babel/core": ^7.23.9
-    "@storybook/addon-a11y": 7.6.14
-    "@storybook/addon-actions": 7.6.14
-    "@storybook/addon-essentials": 7.6.14
-    "@storybook/addon-interactions": 7.6.14
-    "@storybook/addon-links": 7.6.14
-    "@storybook/addons": 7.6.14
-    "@storybook/api": 7.6.14
-    "@storybook/blocks": 7.6.14
-    "@storybook/components": 7.6.14
-    "@storybook/manager-api": 7.6.14
-    "@storybook/preview-api": 7.6.14
-    "@storybook/react": 7.6.14
-    "@storybook/react-webpack5": 7.6.14
-    "@storybook/theming": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/addon-a11y": 7.6.16
+    "@storybook/addon-actions": 7.6.16
+    "@storybook/addon-essentials": 7.6.16
+    "@storybook/addon-interactions": 7.6.16
+    "@storybook/addon-links": 7.6.16
+    "@storybook/addons": 7.6.16
+    "@storybook/api": 7.6.16
+    "@storybook/blocks": 7.6.16
+    "@storybook/components": 7.6.16
+    "@storybook/manager-api": 7.6.16
+    "@storybook/preview-api": 7.6.16
+    "@storybook/react": 7.6.16
+    "@storybook/react-webpack5": 7.6.16
+    "@storybook/theming": 7.6.16
+    "@storybook/types": 7.6.16
     "@swc/core": "*"
     react: "*"
     react-dom: "*"
-    storybook: 7.6.14
+    storybook: 7.6.16
     storybook-addon-swc: ^1.2.0
   languageName: unknown
   linkType: soft
@@ -3219,71 +3219,71 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-a11y@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-a11y@npm:7.6.14"
+"@storybook/addon-a11y@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-a11y@npm:7.6.16"
   dependencies:
-    "@storybook/addon-highlight": 7.6.14
+    "@storybook/addon-highlight": 7.6.16
     axe-core: ^4.2.0
-  checksum: 118156af9c3834af257f419a7895877438057c4f59610adcb47194ef7fec6734b4d927556b56b4ee67174f6ec30fb90cd3c7bf17fe2d5b713ac119d6d05ddd3f
+  checksum: 407b827a579116d4e17856be1faa84a2cf4ebc59fb8b33341fc12f48d7142b636d67727deb705c7e0ad729ead8ffb3a1f2892b6634582515e3f57790f260df39
   languageName: node
   linkType: hard
 
-"@storybook/addon-actions@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-actions@npm:7.6.14"
+"@storybook/addon-actions@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-actions@npm:7.6.16"
   dependencies:
-    "@storybook/core-events": 7.6.14
+    "@storybook/core-events": 7.6.16
     "@storybook/global": ^5.0.0
     "@types/uuid": ^9.0.1
     dequal: ^2.0.2
     polished: ^4.2.2
     uuid: ^9.0.0
-  checksum: 7f3543ab9fce4d07a45b65ed89d13271d5c42e11b97cfd3aa818e8de0200757c62b39b7c1e1efefe538f3613805d2af79cca8c74131bc7f8ef4701e54bf32835
+  checksum: f0a73c6068b99320cf8651ee3a0510a1baac44323544828307922288e368cf4f01be6a46829879ba525ad404240e22f1139a837a203df4b1b17b87adf7efa7e5
   languageName: node
   linkType: hard
 
-"@storybook/addon-backgrounds@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-backgrounds@npm:7.6.14"
+"@storybook/addon-backgrounds@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-backgrounds@npm:7.6.16"
   dependencies:
     "@storybook/global": ^5.0.0
     memoizerific: ^1.11.3
     ts-dedent: ^2.0.0
-  checksum: ea6a46f5e79d69ae08c477bc53fe7270ca3712d42ab7e1e7d5d2d9bb84627f2bf5262359bcde2c71cd28997ab696b6b56d547f595eaf8e9aef6e21b20d568ae0
+  checksum: 804b26c8d45121d3232938ce285c0c60e9f9af7bc6ad55f9aecbd2590954ab55171a10d653102ff4f2eabeb44ab0be0419e11eac654b6bc991946e412ce9e0fe
   languageName: node
   linkType: hard
 
-"@storybook/addon-controls@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-controls@npm:7.6.14"
+"@storybook/addon-controls@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-controls@npm:7.6.16"
   dependencies:
-    "@storybook/blocks": 7.6.14
+    "@storybook/blocks": 7.6.16
     lodash: ^4.17.21
     ts-dedent: ^2.0.0
-  checksum: 301175974ded594e27553bdab8ba931b9dea407d072fe3aa2f0a87dac8d632df733863199660310d372014ebf0d1384b85ebab79fba026468adbbe59dafd40d5
+  checksum: 6584cff5fadc7dd84bbcb59fb8a196a77a4c5ba3571055849b1d3475c2badcf7507cc214e785d6b8e7ded33da63c5fe4883a4cf464e9d010107f3c87c01711bd
   languageName: node
   linkType: hard
 
-"@storybook/addon-docs@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-docs@npm:7.6.14"
+"@storybook/addon-docs@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-docs@npm:7.6.16"
   dependencies:
     "@jest/transform": ^29.3.1
     "@mdx-js/react": ^2.1.5
-    "@storybook/blocks": 7.6.14
-    "@storybook/client-logger": 7.6.14
-    "@storybook/components": 7.6.14
-    "@storybook/csf-plugin": 7.6.14
-    "@storybook/csf-tools": 7.6.14
+    "@storybook/blocks": 7.6.16
+    "@storybook/client-logger": 7.6.16
+    "@storybook/components": 7.6.16
+    "@storybook/csf-plugin": 7.6.16
+    "@storybook/csf-tools": 7.6.16
     "@storybook/global": ^5.0.0
     "@storybook/mdx2-csf": ^1.0.0
-    "@storybook/node-logger": 7.6.14
-    "@storybook/postinstall": 7.6.14
-    "@storybook/preview-api": 7.6.14
-    "@storybook/react-dom-shim": 7.6.14
-    "@storybook/theming": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/node-logger": 7.6.16
+    "@storybook/postinstall": 7.6.16
+    "@storybook/preview-api": 7.6.16
+    "@storybook/react-dom-shim": 7.6.16
+    "@storybook/theming": 7.6.16
+    "@storybook/types": 7.6.16
     fs-extra: ^11.1.0
     remark-external-links: ^8.0.0
     remark-slug: ^6.0.0
@@ -3291,60 +3291,60 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 1cecc1917e3e210b1df21957e6845f17ac942f42de71116bccf2ec11d8240e2e27f9815e3f7954426bfb64bde3779307eac44dbe58407be1a725cca0f671fd5d
+  checksum: 4e75cc8e226615845586213dbf9a3457a03706a16eea75b9e42e2dcfa258cb330da7912b2d9ff81da4228158ff9358f7055cc017b4aa9c6bff07df6d0b76a7d2
   languageName: node
   linkType: hard
 
-"@storybook/addon-essentials@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-essentials@npm:7.6.14"
+"@storybook/addon-essentials@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-essentials@npm:7.6.16"
   dependencies:
-    "@storybook/addon-actions": 7.6.14
-    "@storybook/addon-backgrounds": 7.6.14
-    "@storybook/addon-controls": 7.6.14
-    "@storybook/addon-docs": 7.6.14
-    "@storybook/addon-highlight": 7.6.14
-    "@storybook/addon-measure": 7.6.14
-    "@storybook/addon-outline": 7.6.14
-    "@storybook/addon-toolbars": 7.6.14
-    "@storybook/addon-viewport": 7.6.14
-    "@storybook/core-common": 7.6.14
-    "@storybook/manager-api": 7.6.14
-    "@storybook/node-logger": 7.6.14
-    "@storybook/preview-api": 7.6.14
+    "@storybook/addon-actions": 7.6.16
+    "@storybook/addon-backgrounds": 7.6.16
+    "@storybook/addon-controls": 7.6.16
+    "@storybook/addon-docs": 7.6.16
+    "@storybook/addon-highlight": 7.6.16
+    "@storybook/addon-measure": 7.6.16
+    "@storybook/addon-outline": 7.6.16
+    "@storybook/addon-toolbars": 7.6.16
+    "@storybook/addon-viewport": 7.6.16
+    "@storybook/core-common": 7.6.16
+    "@storybook/manager-api": 7.6.16
+    "@storybook/node-logger": 7.6.16
+    "@storybook/preview-api": 7.6.16
     ts-dedent: ^2.0.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 1f41c0f3d087d2fa54d72feb4e97d3783036168d0cd8e84669e3739fdb739a925277c870394a991f1efde484d0d52a9920fefc3a38991bbbd26c9a70e55f8b31
+  checksum: 343857a291a49945bf67e8c7c65825b351bc834cb2f2d381fcc3f9e313085b78653fa13a2ca39c6ba0f97d01ce185a7f53998c276ba4cf2769631a10e424617c
   languageName: node
   linkType: hard
 
-"@storybook/addon-highlight@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-highlight@npm:7.6.14"
+"@storybook/addon-highlight@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-highlight@npm:7.6.16"
   dependencies:
     "@storybook/global": ^5.0.0
-  checksum: 8f2fbaf45270242034a5533d1badae40f8f8054f9ba511a7a362270849456130196e856f442247e163e6c2a68c0a3e3a9f9fd67f4e8059dc25e02b73fa3112fb
+  checksum: d5493f260b0b90e8d75c6327adc2fb77905f7938b37fb051d6046511a4145b5291b102369d3a687da4543603e4aed2353951d25c7c77e272c5faa1c901e17b7d
   languageName: node
   linkType: hard
 
-"@storybook/addon-interactions@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-interactions@npm:7.6.14"
+"@storybook/addon-interactions@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-interactions@npm:7.6.16"
   dependencies:
     "@storybook/global": ^5.0.0
-    "@storybook/types": 7.6.14
+    "@storybook/types": 7.6.16
     jest-mock: ^27.0.6
     polished: ^4.2.2
     ts-dedent: ^2.2.0
-  checksum: 3e563601a92c658338a95e394d875d1ae07f70b93965d0e7127d5079b21279e2c31664c69c76de2e9176851261c242daed44e969547b5a542c95c66705e6477b
+  checksum: bb103888ca3cc81890698a5f75bcaf55d85c6eaa4a6ee6e582777d547349df21e7630acf4b2dc57d7545791f77896246b15410f3a19bb1fded759ee7659ba7cf
   languageName: node
   linkType: hard
 
-"@storybook/addon-links@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-links@npm:7.6.14"
+"@storybook/addon-links@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-links@npm:7.6.16"
   dependencies:
     "@storybook/csf": ^0.1.2
     "@storybook/global": ^5.0.0
@@ -3354,82 +3354,82 @@ __metadata:
   peerDependenciesMeta:
     react:
       optional: true
-  checksum: d86ab703ae61a58c8bcb21f7688ba5adb4ff43de382c222d446df5964ec340b421fffaf2519be5b21959bbe1d8ab41ac5bee5095ac48392fa010cd922bae758a
+  checksum: 32fd74088bb6fb3187e46b268d01879a99aa3d9f2150197fbd4b218d33fb13e0f02ea028fcfe823b26e363969c8884f1168ddce04d7fdbbd421f3991eed2867e
   languageName: node
   linkType: hard
 
-"@storybook/addon-measure@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-measure@npm:7.6.14"
+"@storybook/addon-measure@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-measure@npm:7.6.16"
   dependencies:
     "@storybook/global": ^5.0.0
     tiny-invariant: ^1.3.1
-  checksum: 97eca3da816ec6c940a8c7b2c52bb1d6e212bbd0a68f9888886ac77f027b4a307992b8d6e91a5f781a7105bfc677b5e8b6cbc4278a26c92ab202bc3b7f920b61
+  checksum: 1150c85af019b2a8a53bb1a0ca57a84915b5419cea0bd77823a93b40e1fab304c74ae226db4f114546a6313662b0814bdf998e3c2c82263500e916158bca8d20
   languageName: node
   linkType: hard
 
-"@storybook/addon-outline@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-outline@npm:7.6.14"
+"@storybook/addon-outline@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-outline@npm:7.6.16"
   dependencies:
     "@storybook/global": ^5.0.0
     ts-dedent: ^2.0.0
-  checksum: 96ade22e8ef9aa61eb3965f45eef9eb86a7cbc07f0a3f4f0fa9ce9f3b50f54dc8b8f63117b85679305374954c7192f185cfb270c028f4806236193be47306abb
+  checksum: fce02a8e3afb9189b6f9119b81a3b764a27946c23be38d61321268ea97e3e108fbf6aa3540fa4ed32753c7e0deebc84e8b24e2f8133f927dc7a7b0d69b34840a
   languageName: node
   linkType: hard
 
-"@storybook/addon-toolbars@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-toolbars@npm:7.6.14"
-  checksum: 5078aabe3827aa84b749fee639c6b65e54879d7f64aef4e358306998e45eb26be47b380fdd70cec6de2ac0541509337ec329d729e5a5a2b781597c24c77d5582
+"@storybook/addon-toolbars@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-toolbars@npm:7.6.16"
+  checksum: c364a96caab178c3424ccefbd5af137be05983eac3d7ad3dd8a9634274ea0bef1d0292518eb52b8ec722e6df329f8ff472bec55a5fb4485ba7d152ade60d5dba
   languageName: node
   linkType: hard
 
-"@storybook/addon-viewport@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addon-viewport@npm:7.6.14"
+"@storybook/addon-viewport@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-viewport@npm:7.6.16"
   dependencies:
     memoizerific: ^1.11.3
-  checksum: df32800e3e38ad3dfa3af836f0ff4391a3d0d037ccf78f45ff1c961014e401e9dc26bbf4a20494d6d19bb8ee6201faf12b2553dc812824b2dfcd1a5030b66966
+  checksum: 5b106a02e78069bbf46ef98e731295da2493cacc38eeac7c0f83d7e0df87bbefad2e89e68ddb64d35b59835b1a8d8e5fdc6bdac1980c4d8c9f0557392886c146
   languageName: node
   linkType: hard
 
-"@storybook/addons@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/addons@npm:7.6.14"
+"@storybook/addons@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addons@npm:7.6.16"
   dependencies:
-    "@storybook/manager-api": 7.6.14
-    "@storybook/preview-api": 7.6.14
-    "@storybook/types": 7.6.14
-  checksum: 7f33a3c28ed3effda2be1213eb0d1571c194ce2c7044eedaad0b1a75ff14579e9fcaa3b96a2411a55cadaff98530209235fb523ce9d1fd08f503ab045545b928
+    "@storybook/manager-api": 7.6.16
+    "@storybook/preview-api": 7.6.16
+    "@storybook/types": 7.6.16
+  checksum: bed19a26a1eecfebefb73a3d61151581ff49aad2a00a0648e1100644f1b4d2b5dab9a48322a6edb4c695538521a45cc9db5b1fffcf06fa4568008b6f79bf4d4f
   languageName: node
   linkType: hard
 
-"@storybook/api@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/api@npm:7.6.14"
+"@storybook/api@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/api@npm:7.6.16"
   dependencies:
-    "@storybook/client-logger": 7.6.14
-    "@storybook/manager-api": 7.6.14
-  checksum: 1674e659e10a680e5a879037ff6c8b3bb73ad94c7c33397e5a58262f78545e853fdd5f6f2e33fafd9ad26d96d5202d390f26a152711f2f70cb3f18ed05c6537e
+    "@storybook/client-logger": 7.6.16
+    "@storybook/manager-api": 7.6.16
+  checksum: 1abf51c6b4cc632c3bc7f833aad0a6f3ceed07f22949b77a42f09252b8fd72d5b75f01b78b894a963b55c027f763a1c0d9afb2c9649b988de78393b239ef1a9c
   languageName: node
   linkType: hard
 
-"@storybook/blocks@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/blocks@npm:7.6.14"
+"@storybook/blocks@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/blocks@npm:7.6.16"
   dependencies:
-    "@storybook/channels": 7.6.14
-    "@storybook/client-logger": 7.6.14
-    "@storybook/components": 7.6.14
-    "@storybook/core-events": 7.6.14
+    "@storybook/channels": 7.6.16
+    "@storybook/client-logger": 7.6.16
+    "@storybook/components": 7.6.16
+    "@storybook/core-events": 7.6.16
     "@storybook/csf": ^0.1.2
-    "@storybook/docs-tools": 7.6.14
+    "@storybook/docs-tools": 7.6.16
     "@storybook/global": ^5.0.0
-    "@storybook/manager-api": 7.6.14
-    "@storybook/preview-api": 7.6.14
-    "@storybook/theming": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/manager-api": 7.6.16
+    "@storybook/preview-api": 7.6.16
+    "@storybook/theming": 7.6.16
+    "@storybook/types": 7.6.16
     "@types/lodash": ^4.14.167
     color-convert: ^2.0.1
     dequal: ^2.0.2
@@ -3445,18 +3445,18 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: d9c768b764ef7465014e3211a2325faf77a4877cc774700aff819c09f136dcf8510a0b3cd42bb8deb6c0b469424939cd6e7fbd982f069690ed1fcb58b45cc304
+  checksum: fadf67f2a1ed5b988d983e658fa4c5884368805bc87c9fa6485e1bea053c567c02e60f9f9d9ea90018cff72ee1deaccc3167484986be683c8b730ea0090bd43c
   languageName: node
   linkType: hard
 
-"@storybook/builder-manager@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/builder-manager@npm:7.6.14"
+"@storybook/builder-manager@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/builder-manager@npm:7.6.16"
   dependencies:
     "@fal-works/esbuild-plugin-global-externals": ^2.1.2
-    "@storybook/core-common": 7.6.14
-    "@storybook/manager": 7.6.14
-    "@storybook/node-logger": 7.6.14
+    "@storybook/core-common": 7.6.16
+    "@storybook/manager": 7.6.16
+    "@storybook/node-logger": 7.6.16
     "@types/ejs": ^3.1.1
     "@types/find-cache-dir": ^3.2.1
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.10
@@ -3469,23 +3469,23 @@ __metadata:
     fs-extra: ^11.1.0
     process: ^0.11.10
     util: ^0.12.4
-  checksum: 5de7b39542d8a69a5c39bb7e2adcb65874902e29d3d5824a72ed77b6b68cdee1f92ba8c6739873d94c7677a6fbd0dc055a34e47fc798c46ff63fb5e4a021e176
+  checksum: 5dbf1ea59975448fbb3cdab418372fb487010855042558ade54d57182c2b3a73d1716e0c56956d0e22c56585b311d0636acf5c305f9c20c88122fdca4c0ed3dc
   languageName: node
   linkType: hard
 
-"@storybook/builder-webpack5@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/builder-webpack5@npm:7.6.14"
+"@storybook/builder-webpack5@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/builder-webpack5@npm:7.6.16"
   dependencies:
     "@babel/core": ^7.23.2
-    "@storybook/channels": 7.6.14
-    "@storybook/client-logger": 7.6.14
-    "@storybook/core-common": 7.6.14
-    "@storybook/core-events": 7.6.14
-    "@storybook/core-webpack": 7.6.14
-    "@storybook/node-logger": 7.6.14
-    "@storybook/preview": 7.6.14
-    "@storybook/preview-api": 7.6.14
+    "@storybook/channels": 7.6.16
+    "@storybook/client-logger": 7.6.16
+    "@storybook/core-common": 7.6.16
+    "@storybook/core-events": 7.6.16
+    "@storybook/core-webpack": 7.6.16
+    "@storybook/node-logger": 7.6.16
+    "@storybook/preview": 7.6.16
+    "@storybook/preview-api": 7.6.16
     "@swc/core": ^1.3.82
     "@types/node": ^18.0.0
     "@types/semver": ^7.3.4
@@ -3518,40 +3518,40 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 932eef682377d472ea5d1f2cbf3fb6b3101343f67aacc313166318317484edf8daf73685680647ec73cae03cdb8a0560d5824b23daffc582b5505a66f31e3b92
+  checksum: e103cd2cdeef682b81cbe244ce538505d3ad201ef4cf9a1564acad3d5f884b43dc5a406ffb7e6bb2bf757a0981c9499ad804de2eabf8f07ed4ef0792f138bf61
   languageName: node
   linkType: hard
 
-"@storybook/channels@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/channels@npm:7.6.14"
+"@storybook/channels@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/channels@npm:7.6.16"
   dependencies:
-    "@storybook/client-logger": 7.6.14
-    "@storybook/core-events": 7.6.14
+    "@storybook/client-logger": 7.6.16
+    "@storybook/core-events": 7.6.16
     "@storybook/global": ^5.0.0
     qs: ^6.10.0
     telejson: ^7.2.0
     tiny-invariant: ^1.3.1
-  checksum: 4a585c60391bc4490c4111214ff60544cdaabe09eeefc2c5e98ee37b41865fda8866a8a0f83cabed46799eed5d38ed041af7eb5496381e3fe0679fbe098df338
+  checksum: 551c1bece60cf33b339accc202552f9a889933e47603ae7f5cbd45e6def708b009a3cde73afff9ba5b92135af00085fadf7264e9a3526f6d4d7973817d607933
   languageName: node
   linkType: hard
 
-"@storybook/cli@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/cli@npm:7.6.14"
+"@storybook/cli@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/cli@npm:7.6.16"
   dependencies:
     "@babel/core": ^7.23.2
     "@babel/preset-env": ^7.23.2
     "@babel/types": ^7.23.0
     "@ndelangen/get-tarball": ^3.0.7
-    "@storybook/codemod": 7.6.14
-    "@storybook/core-common": 7.6.14
-    "@storybook/core-events": 7.6.14
-    "@storybook/core-server": 7.6.14
-    "@storybook/csf-tools": 7.6.14
-    "@storybook/node-logger": 7.6.14
-    "@storybook/telemetry": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/codemod": 7.6.16
+    "@storybook/core-common": 7.6.16
+    "@storybook/core-events": 7.6.16
+    "@storybook/core-server": 7.6.16
+    "@storybook/csf-tools": 7.6.16
+    "@storybook/node-logger": 7.6.16
+    "@storybook/telemetry": 7.6.16
+    "@storybook/types": 7.6.16
     "@types/semver": ^7.3.4
     "@yarnpkg/fslib": 2.10.3
     "@yarnpkg/libzip": 2.3.0
@@ -3583,30 +3583,30 @@ __metadata:
   bin:
     getstorybook: ./bin/index.js
     sb: ./bin/index.js
-  checksum: 88ef6941e53040c033e140e3c3573366756d67751735bab6ad4ff40506e2681533fe37dc85a63a9b435a148e2cad7f4287796d9820c7b89b134ac1368bcfff18
+  checksum: b5554dbd4bfe5c31d6085fcf8c5d36f9cff029132928febda68153679bae7eff28f8b98fe3ee5971a1da24ffe05a96a32a4753de8e405fac69f9fce7f175e86b
   languageName: node
   linkType: hard
 
-"@storybook/client-logger@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/client-logger@npm:7.6.14"
+"@storybook/client-logger@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/client-logger@npm:7.6.16"
   dependencies:
     "@storybook/global": ^5.0.0
-  checksum: e3eb340468fb55646ec40bb78637de668a7ffdce27cd0aaa859f649ac141ac4f09defd63299100cd150f8329efead6b0d35ca60c64246e9dc71c7a9ce45ab4e1
+  checksum: c881906e9711fa5bdcd5b96b4266237c454c6f36dd6a457c2a574416ff788980dc4daaaec6ca85eb84e6d2fe10739c144227ebf8d03d24160cea35ac776941ee
   languageName: node
   linkType: hard
 
-"@storybook/codemod@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/codemod@npm:7.6.14"
+"@storybook/codemod@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/codemod@npm:7.6.16"
   dependencies:
     "@babel/core": ^7.23.2
     "@babel/preset-env": ^7.23.2
     "@babel/types": ^7.23.0
     "@storybook/csf": ^0.1.2
-    "@storybook/csf-tools": 7.6.14
-    "@storybook/node-logger": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/csf-tools": 7.6.16
+    "@storybook/node-logger": 7.6.16
+    "@storybook/types": 7.6.16
     "@types/cross-spawn": ^6.0.2
     cross-spawn: ^7.0.3
     globby: ^11.0.2
@@ -3614,48 +3614,48 @@ __metadata:
     lodash: ^4.17.21
     prettier: ^2.8.0
     recast: ^0.23.1
-  checksum: d0de70e694b0936ece0939817b788dbc4a8f840413a1df08e42976aac087bfd839c68d57104f22b4ccbf47e3dd2aad0746c5911f166736c967d7a38bdc1da196
+  checksum: 32f3e794739ae43d59ecd12e373b372b52e7b8700102b023f83a89135f193fd652a25ac855402f28ed9134e3e9753928ab6e9e844476449d457a85d86a9f5c02
   languageName: node
   linkType: hard
 
-"@storybook/components@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/components@npm:7.6.14"
+"@storybook/components@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/components@npm:7.6.16"
   dependencies:
     "@radix-ui/react-select": ^1.2.2
     "@radix-ui/react-toolbar": ^1.0.4
-    "@storybook/client-logger": 7.6.14
+    "@storybook/client-logger": 7.6.16
     "@storybook/csf": ^0.1.2
     "@storybook/global": ^5.0.0
-    "@storybook/theming": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/theming": 7.6.16
+    "@storybook/types": 7.6.16
     memoizerific: ^1.11.3
     use-resize-observer: ^9.1.0
     util-deprecate: ^1.0.2
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 349a3a17cc72703077859de9187e2100b2012fef4fdb65d04f3d15bcd328c0193449267650ff397d259038c6212f9786f2dab228c20a96daf51b3d87d3dcc439
+  checksum: d8ef01e7419e6af318ad49d7b72c0053fa6031a015fef9bfd435933a3d9f2365a7f9dcb803a676aad599ba5dd25e60a8f2413b0841e9ac8f7dfe399e5a69a2c8
   languageName: node
   linkType: hard
 
-"@storybook/core-client@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/core-client@npm:7.6.14"
+"@storybook/core-client@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/core-client@npm:7.6.16"
   dependencies:
-    "@storybook/client-logger": 7.6.14
-    "@storybook/preview-api": 7.6.14
-  checksum: 4fb71417fa8344653c3ffd6d26b1fa5664f3581f0981a81837eb75663fa5fda76b914e9a94dbe87f42e5fac43050df5ffe5dbd978ed6faabaf7dd20820702926
+    "@storybook/client-logger": 7.6.16
+    "@storybook/preview-api": 7.6.16
+  checksum: eafff482f4a28fb5a2851871fb392f1205a2e0d48fcf4253c8df5915da9351fed972863d02e1fd23def560eb07d77c6cb91a05c042d7cd7c2e03b91360ccba8e
   languageName: node
   linkType: hard
 
-"@storybook/core-common@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/core-common@npm:7.6.14"
+"@storybook/core-common@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/core-common@npm:7.6.16"
   dependencies:
-    "@storybook/core-events": 7.6.14
-    "@storybook/node-logger": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/core-events": 7.6.16
+    "@storybook/node-logger": 7.6.16
+    "@storybook/types": 7.6.16
     "@types/find-cache-dir": ^3.2.1
     "@types/node": ^18.0.0
     "@types/node-fetch": ^2.6.4
@@ -3676,38 +3676,38 @@ __metadata:
     pretty-hrtime: ^1.0.3
     resolve-from: ^5.0.0
     ts-dedent: ^2.0.0
-  checksum: 77cd2caa3eb2fc8d1fdd61ff423d128e2734f8e721416dd5050585ad401c9af19cb0e00d6310bb8e95f6be093bb25b67726742e5e1bdada9a5e8c6942c26dada
+  checksum: f9c9fbd720537a46519296bca150038a33894464c893bb009b9de2753f2d8436e0f8199cae5e88bb1a87f369042389ddf159e3895a15f8a3cd1d8eeeaf596ea3
   languageName: node
   linkType: hard
 
-"@storybook/core-events@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/core-events@npm:7.6.14"
+"@storybook/core-events@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/core-events@npm:7.6.16"
   dependencies:
     ts-dedent: ^2.0.0
-  checksum: 67eb85b5e0f72173cc8c6e7592160e57adadc3bd8632057df848eead1ae28509371cdf3bf4f67f171cded9e840e0585de3661416c5436e94c1f9f4fe4ca7bfdc
+  checksum: 1e3ff159e76e098d013cb1f68d8375b3a074426c2f1d2619eb284dc06d0af7bc4c523d5d1479d73da5baae824b680ee6afe0abff9a8806ca69a2ed4cc0962682
   languageName: node
   linkType: hard
 
-"@storybook/core-server@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/core-server@npm:7.6.14"
+"@storybook/core-server@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/core-server@npm:7.6.16"
   dependencies:
     "@aw-web-design/x-default-browser": 1.4.126
     "@discoveryjs/json-ext": ^0.5.3
-    "@storybook/builder-manager": 7.6.14
-    "@storybook/channels": 7.6.14
-    "@storybook/core-common": 7.6.14
-    "@storybook/core-events": 7.6.14
+    "@storybook/builder-manager": 7.6.16
+    "@storybook/channels": 7.6.16
+    "@storybook/core-common": 7.6.16
+    "@storybook/core-events": 7.6.16
     "@storybook/csf": ^0.1.2
-    "@storybook/csf-tools": 7.6.14
+    "@storybook/csf-tools": 7.6.16
     "@storybook/docs-mdx": ^0.1.0
     "@storybook/global": ^5.0.0
-    "@storybook/manager": 7.6.14
-    "@storybook/node-logger": 7.6.14
-    "@storybook/preview-api": 7.6.14
-    "@storybook/telemetry": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/manager": 7.6.16
+    "@storybook/node-logger": 7.6.16
+    "@storybook/preview-api": 7.6.16
+    "@storybook/telemetry": 7.6.16
+    "@storybook/types": 7.6.16
     "@types/detect-port": ^1.3.0
     "@types/node": ^18.0.0
     "@types/pretty-hrtime": ^1.0.0
@@ -3734,47 +3734,47 @@ __metadata:
     util-deprecate: ^1.0.2
     watchpack: ^2.2.0
     ws: ^8.2.3
-  checksum: e97f837710a20903eead976fa5a3300377907044efd048d7ae768fc410cb72a516815bf46d975e383f3c592e12232fcc2649fbd08fc6db72f3dd6c57f1d0cdd1
+  checksum: 8ff682fb25e79d3d8d13593b58220607a53e8535a002481d9d399620687056510138d746f9d8bc024678bad3e8b84eef4e496f63349419a985f81a7496a9c02a
   languageName: node
   linkType: hard
 
-"@storybook/core-webpack@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/core-webpack@npm:7.6.14"
+"@storybook/core-webpack@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/core-webpack@npm:7.6.16"
   dependencies:
-    "@storybook/core-common": 7.6.14
-    "@storybook/node-logger": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/core-common": 7.6.16
+    "@storybook/node-logger": 7.6.16
+    "@storybook/types": 7.6.16
     "@types/node": ^18.0.0
     ts-dedent: ^2.0.0
-  checksum: 9f8d76b973ec0b962e138beba29ae1bc12b04afd331d3d1747ff95d3725d09d91239319ba66a07397a5f73ba02fe0bec9fb8641c877639d22b21daba185d14c8
+  checksum: a7265af3466ac9a976a52e5383578b62aca10ad0b50c0f3e023cba7e595102083472153f8f1b2b15aabec1e68504b34e06b0f3c0dd7d361a0c5b9eba098da21c
   languageName: node
   linkType: hard
 
-"@storybook/csf-plugin@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/csf-plugin@npm:7.6.14"
+"@storybook/csf-plugin@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/csf-plugin@npm:7.6.16"
   dependencies:
-    "@storybook/csf-tools": 7.6.14
+    "@storybook/csf-tools": 7.6.16
     unplugin: ^1.3.1
-  checksum: 4f41c2e99f0cca22ba202b6a4d0a5713a1f92767a4d85480b9dd4260932d39b2a1f04b4522aee60d653a41b400f1b40ae65a63e90ddbf765b645c71b1c5fbe12
+  checksum: 155e06c0fc0dda65910e3a093262b82e7df224385c8637f6e9fb33b93b9d7a09d91243c75ef865089c07dcf563d092bb08db1bbd404e8b38be8c95ec182bd7f1
   languageName: node
   linkType: hard
 
-"@storybook/csf-tools@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/csf-tools@npm:7.6.14"
+"@storybook/csf-tools@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/csf-tools@npm:7.6.16"
   dependencies:
     "@babel/generator": ^7.23.0
     "@babel/parser": ^7.23.0
     "@babel/traverse": ^7.23.2
     "@babel/types": ^7.23.0
     "@storybook/csf": ^0.1.2
-    "@storybook/types": 7.6.14
+    "@storybook/types": 7.6.16
     fs-extra: ^11.1.0
     recast: ^0.23.1
     ts-dedent: ^2.0.0
-  checksum: 57c282871e41d6038989658836bde2186630a16700c09d4bebd734e51f01d96e0285b8c6d2ffa55b00cf6be37535b94027efd8ea2813cb7082fc2731b3e9115a
+  checksum: a43bf671427dd4e1dff8c2e052bcc346bec6b94e415f6fbc1b9de7c7a57aa36f3fd60ae9ab23bb1a7ae5319a171b7bc4408eb9fa8616972ffd7367c0ed162186
   languageName: node
   linkType: hard
 
@@ -3794,18 +3794,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/docs-tools@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/docs-tools@npm:7.6.14"
+"@storybook/docs-tools@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/docs-tools@npm:7.6.16"
   dependencies:
-    "@storybook/core-common": 7.6.14
-    "@storybook/preview-api": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/core-common": 7.6.16
+    "@storybook/preview-api": 7.6.16
+    "@storybook/types": 7.6.16
     "@types/doctrine": ^0.0.3
     assert: ^2.1.0
     doctrine: ^3.0.0
     lodash: ^4.17.21
-  checksum: a92147ddcc863be4a7aa584cdff9bebd7daa37fb09073ebdef09bf3860e76614127ee05762c82a08b814bd44f5a918aa8da019394f421fe8b80dce43c367f7ed
+  checksum: 0aba490d055f1245e1ca8046af5430a9d22c3ea4cac2747f0ec8d785461c92f989545f22863268fa3ea4a9c74e950ee31a20eccf71346845144572363cccd274
   languageName: node
   linkType: hard
 
@@ -3816,32 +3816,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/manager-api@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/manager-api@npm:7.6.14"
+"@storybook/manager-api@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/manager-api@npm:7.6.16"
   dependencies:
-    "@storybook/channels": 7.6.14
-    "@storybook/client-logger": 7.6.14
-    "@storybook/core-events": 7.6.14
+    "@storybook/channels": 7.6.16
+    "@storybook/client-logger": 7.6.16
+    "@storybook/core-events": 7.6.16
     "@storybook/csf": ^0.1.2
     "@storybook/global": ^5.0.0
-    "@storybook/router": 7.6.14
-    "@storybook/theming": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/router": 7.6.16
+    "@storybook/theming": 7.6.16
+    "@storybook/types": 7.6.16
     dequal: ^2.0.2
     lodash: ^4.17.21
     memoizerific: ^1.11.3
     store2: ^2.14.2
     telejson: ^7.2.0
     ts-dedent: ^2.0.0
-  checksum: 20367fd3d04a32d79ff048a6d46c594ebf3016e7f1bfe190ee4f0a998ae35b99087e62d6456d85b23122b5f93771cae1acef84416a73835a3c51389cd087ff43
+  checksum: 03af0e404cb91af32f9aa1cd07d892843131d11b5cec1d115ce2524bf14373dfb4a64b5ae22214c052b26189caeb5915749c7805bfdb11e5ca397ac4860d1784
   languageName: node
   linkType: hard
 
-"@storybook/manager@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/manager@npm:7.6.14"
-  checksum: 1311fe7688648010e01e2979836cd3cd71de9ab3558b272a1bb235e28190759f4c02ad7d344117de52180333329dc7511750cdbf03e64505aea359b8921c35b6
+"@storybook/manager@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/manager@npm:7.6.16"
+  checksum: 29735577ae8c8dab219bbb0505e75e7ac8f851f980f335e78637065839659e773b25cf9f2d6feae48a0ba7c91bac8ac358ce67e2c21c2894e1cb86c3aa7ef69f
   languageName: node
   linkType: hard
 
@@ -3852,31 +3852,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/node-logger@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/node-logger@npm:7.6.14"
-  checksum: 906292eb33622f9f97d55e6d9c67450aa77c605749ab6d63ec0f8781e49beb06433ea07a24f87c105949badd40ee818ee8ed317d8b2dbc02e2d97f27ca7d2b79
+"@storybook/node-logger@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/node-logger@npm:7.6.16"
+  checksum: f73c67115f0c7f0cf407d229d786ea9f37410b535257b597849f90c64cf9a45a557ef8ae303cfc6d172fbfa5d51ed8a338cfff45a21b6a7ff7dd09a3e4cb7466
   languageName: node
   linkType: hard
 
-"@storybook/postinstall@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/postinstall@npm:7.6.14"
-  checksum: 734396ba118bb73c419f8d36e2e1e990b2600d95978bc135795196de9826215a0c74da566fc93f48452daa840a5ed4b22aadfd9d571fd4172def19ff1bf29e67
+"@storybook/postinstall@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/postinstall@npm:7.6.16"
+  checksum: e886cc9c5650139c03d4d8264ef71b1ddf47162109d23dbece3172185566674259c66df6b943d59b18c0f25660531af2efac8bd764d0496dd0c71355ac03b1f6
   languageName: node
   linkType: hard
 
-"@storybook/preset-react-webpack@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/preset-react-webpack@npm:7.6.14"
+"@storybook/preset-react-webpack@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/preset-react-webpack@npm:7.6.16"
   dependencies:
     "@babel/preset-flow": ^7.22.15
     "@babel/preset-react": ^7.22.15
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.11
-    "@storybook/core-webpack": 7.6.14
-    "@storybook/docs-tools": 7.6.14
-    "@storybook/node-logger": 7.6.14
-    "@storybook/react": 7.6.14
+    "@storybook/core-webpack": 7.6.16
+    "@storybook/docs-tools": 7.6.16
+    "@storybook/node-logger": 7.6.16
+    "@storybook/react": 7.6.16
     "@storybook/react-docgen-typescript-plugin": 1.0.6--canary.9.0c3f3b7.0
     "@types/node": ^18.0.0
     "@types/semver": ^7.3.4
@@ -3896,20 +3896,20 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 137df2187bcee5f5c8a5ef2df115f1adbc5073acd693bde160e366850e373563e68b5ea25f8a7f239d47d3f7267bcbc7325adfbef237f7434b81fef8d40b0480
+  checksum: f96a4dc9bb14861c4a284825b0b9f9455563fd58e636840e1b1988f44e3c5902ca4f5cbeee0f09ef8e3675751ddddb9b6f55fd80cb9ef24cf6158ee2c8eebbed
   languageName: node
   linkType: hard
 
-"@storybook/preview-api@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/preview-api@npm:7.6.14"
+"@storybook/preview-api@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/preview-api@npm:7.6.16"
   dependencies:
-    "@storybook/channels": 7.6.14
-    "@storybook/client-logger": 7.6.14
-    "@storybook/core-events": 7.6.14
+    "@storybook/channels": 7.6.16
+    "@storybook/client-logger": 7.6.16
+    "@storybook/core-events": 7.6.16
     "@storybook/csf": ^0.1.2
     "@storybook/global": ^5.0.0
-    "@storybook/types": 7.6.14
+    "@storybook/types": 7.6.16
     "@types/qs": ^6.9.5
     dequal: ^2.0.2
     lodash: ^4.17.21
@@ -3918,14 +3918,14 @@ __metadata:
     synchronous-promise: ^2.0.15
     ts-dedent: ^2.0.0
     util-deprecate: ^1.0.2
-  checksum: e93275b6f63ea8e403923cfb4660894d91357ccbf1e4ed7a65c8fcd69f347bad499534c50738edbefa5b79e9fa255e743f5b1beeec8197a155031b41bd51218b
+  checksum: 93258df9961e1510e46962ff2d4394f47b789e144924cc9a78b0563386b34016cfd9560d19ee91b6f676a07159c9caf4d0714597279514719c1747921a657bae
   languageName: node
   linkType: hard
 
-"@storybook/preview@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/preview@npm:7.6.14"
-  checksum: d6268572d3b05730568158a89fae468cc283d56ff7b607248f1fdd3947968729cddf236eac8db0d8f99611f54ea7ba62baee966942a8d1b917672440622cd133
+"@storybook/preview@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/preview@npm:7.6.16"
+  checksum: 944afc9d11121e14586571e6b69e5abd7fecf80a43b1431fbca5f10b1aaa3404b646617c32389f11a6182b95a477ca7aeccaf6aec8751683f28faf72d6ae47da
   languageName: node
   linkType: hard
 
@@ -3947,23 +3947,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react-dom-shim@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/react-dom-shim@npm:7.6.14"
+"@storybook/react-dom-shim@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/react-dom-shim@npm:7.6.16"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 0f08180505cda6baec52cbff701b2b9f4336a4cee9e9ef5168aac3f44757015565e2745fc25f7298b26ac5ec5e963daee374b606baaed770a5e0a81543e2bfed
+  checksum: 8a2a7c3e211a8ba4b177b7698134cb7869e8e7436d16103e9b591323d29c4910b5cfb831283543042356aacb2548f6206c0786cd4dd37f50e8bfa4e96c557d1d
   languageName: node
   linkType: hard
 
-"@storybook/react-webpack5@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/react-webpack5@npm:7.6.14"
+"@storybook/react-webpack5@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/react-webpack5@npm:7.6.16"
   dependencies:
-    "@storybook/builder-webpack5": 7.6.14
-    "@storybook/preset-react-webpack": 7.6.14
-    "@storybook/react": 7.6.14
+    "@storybook/builder-webpack5": 7.6.16
+    "@storybook/preset-react-webpack": 7.6.16
+    "@storybook/react": 7.6.16
     "@types/node": ^18.0.0
   peerDependencies:
     "@babel/core": ^7.22.0
@@ -3975,21 +3975,21 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 74bacd19dc9ca95f7a942dd63a7d6be7aa794aa57f96f457754605f24f4b5a5339610e6cdfcf51f51692a8204a2806db2315bc72c186f00d1d894ec0032536c6
+  checksum: 4041da031dc9e4b7907a4bbb1432fddfa2e745ea564bfcd0121807d8251a54d429aa12e6a29b8d10de44f633973a7336d5492054a30dfcb4de3824aff265bfae
   languageName: node
   linkType: hard
 
-"@storybook/react@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/react@npm:7.6.14"
+"@storybook/react@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/react@npm:7.6.16"
   dependencies:
-    "@storybook/client-logger": 7.6.14
-    "@storybook/core-client": 7.6.14
-    "@storybook/docs-tools": 7.6.14
+    "@storybook/client-logger": 7.6.16
+    "@storybook/core-client": 7.6.16
+    "@storybook/docs-tools": 7.6.16
     "@storybook/global": ^5.0.0
-    "@storybook/preview-api": 7.6.14
-    "@storybook/react-dom-shim": 7.6.14
-    "@storybook/types": 7.6.14
+    "@storybook/preview-api": 7.6.16
+    "@storybook/react-dom-shim": 7.6.16
+    "@storybook/types": 7.6.16
     "@types/escodegen": ^0.0.6
     "@types/estree": ^0.0.51
     "@types/node": ^18.0.0
@@ -4011,61 +4011,61 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 4092ee35dd908a0d66bf512b952c7c0ab227f7bbc03fa1f0708e4bb0d2a3723ad2fea8e8f1325596606fec2a2fb3b0462f2ebfcb7044b8cb1569ad3176aab0cb
+  checksum: e122784ca9a023c1e5b814a6de1d953c2997a5fc2c2d934badb13ef9e6bf5d04bea8859c4d08897021c3a7b1e32170f0e49c14afd0b41df2ed3175658a19ef4c
   languageName: node
   linkType: hard
 
-"@storybook/router@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/router@npm:7.6.14"
+"@storybook/router@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/router@npm:7.6.16"
   dependencies:
-    "@storybook/client-logger": 7.6.14
+    "@storybook/client-logger": 7.6.16
     memoizerific: ^1.11.3
     qs: ^6.10.0
-  checksum: c25a175bbfcebbee90da25e9f436c269788f0810445959ce807cb761166e3ade320dc70ce64ecf5c21bbcff70877380f1b39ea662f2ff36fca9d29121f978b6e
+  checksum: 4854e2901530ed85bad91cc21417ee6141829714321e71b5ed4bdd539cb44262b000e637178099f4fbe7d26b7d8b5848e987cbc538616fbb53c7c2d5f9403907
   languageName: node
   linkType: hard
 
-"@storybook/telemetry@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/telemetry@npm:7.6.14"
+"@storybook/telemetry@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/telemetry@npm:7.6.16"
   dependencies:
-    "@storybook/client-logger": 7.6.14
-    "@storybook/core-common": 7.6.14
-    "@storybook/csf-tools": 7.6.14
+    "@storybook/client-logger": 7.6.16
+    "@storybook/core-common": 7.6.16
+    "@storybook/csf-tools": 7.6.16
     chalk: ^4.1.0
     detect-package-manager: ^2.0.1
     fetch-retry: ^5.0.2
     fs-extra: ^11.1.0
     read-pkg-up: ^7.0.1
-  checksum: c8d2304c38d7aaab2deb9ad7eb67431aa61121c41ef500a680f337a01022147105b93d6eca890f3c8570378a2745d84be23881a42c922317a341250318b49201
+  checksum: 6724b552cc3cd57687d8cafbca16a297d2a10678d76e3b718e5ab12d6b721421ed52fd3358aeaf4756b553e329d5c17ec9758dd209be96ae458bc9133e1d9bf6
   languageName: node
   linkType: hard
 
-"@storybook/theming@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/theming@npm:7.6.14"
+"@storybook/theming@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/theming@npm:7.6.16"
   dependencies:
     "@emotion/use-insertion-effect-with-fallbacks": ^1.0.0
-    "@storybook/client-logger": 7.6.14
+    "@storybook/client-logger": 7.6.16
     "@storybook/global": ^5.0.0
     memoizerific: ^1.11.3
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: f5e12fca6c5ffb7a528aea8cdaa12e3c3efd577efd706b5a20e9807a3488cd8f925225beb26ccecf232f44dfed24e5ab4647afd833dd4f9b799a036aceb8ff80
+  checksum: f41399aea0ba696c4e84cda8783251a1858c0a1b23c54253df9136521c94fcd7579646d5fc42fb947ae7beda887e42ed7c17cf9bbdbd9e859a0e5b4683e2d401
   languageName: node
   linkType: hard
 
-"@storybook/types@npm:7.6.14":
-  version: 7.6.14
-  resolution: "@storybook/types@npm:7.6.14"
+"@storybook/types@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/types@npm:7.6.16"
   dependencies:
-    "@storybook/channels": 7.6.14
+    "@storybook/channels": 7.6.16
     "@types/babel__core": ^7.0.0
     "@types/express": ^4.7.0
     file-system-cache: 2.3.0
-  checksum: 59b70571a847933b9faaaf42fec6826c3e6a173eee38a4de17e01b1443732de03fc0004eb6372f4c7a9f9630e375fe5e1dc482b3412de22acdf07c8ae7c0a84d
+  checksum: 83026a93eb1b72ac5db672bf0bad4ec0a496cc52c10955a143f7b37828c6e4ac93193608ba22416c5599295bb72e4d2ce085080aa62527ad3d01c62802a9f72a
   languageName: node
   linkType: hard
 
@@ -5498,7 +5498,7 @@ __metadata:
     "@vkontakte/vkui-floating-ui": ^0.1.5
     dayjs: ^1.11.10
     mitt: ^3.0.1
-    storybook: 7.6.14
+    storybook: 7.6.16
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -17893,15 +17893,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storybook@npm:7.6.14":
-  version: 7.6.14
-  resolution: "storybook@npm:7.6.14"
+"storybook@npm:7.6.16":
+  version: 7.6.16
+  resolution: "storybook@npm:7.6.16"
   dependencies:
-    "@storybook/cli": 7.6.14
+    "@storybook/cli": 7.6.16
   bin:
     sb: ./index.js
     storybook: ./index.js
-  checksum: adaa537003b8fac36413c803904debba31a740ec0ec1941eed2bc82483c6a12480071494dfb25f737aed478cf9c02578c1ed394a473fba469a7c054fff95e928
+  checksum: 50e582e44f8cd4f2a53eb776832cf71e89b605209790397725afa5de16360570323101528c5b99f8fac83a3a2da79986ed8505f4586cb5d788618def5b2ff88e
   languageName: node
   linkType: hard
 
