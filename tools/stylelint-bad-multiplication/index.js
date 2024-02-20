@@ -1,10 +1,10 @@
-const valueParser = require('postcss-value-parser');
-const stylelint = require('stylelint');
-const pkg = require('./package.json');
+import valueParser from 'postcss-value-parser';
+import stylelint from 'stylelint';
+import pkg from './package.json' assert { type: 'json' };
 
 const MATCH_CALC = /((?:-(moz|webkit)-)?calc)/i;
 
-const ruleName = pkg.name;
+export const ruleName = pkg.name;
 const messages = stylelint.utils.ruleMessages(ruleName, {});
 const meta = {
   url: 'https://github.com/VKCOM/VKUI/pull/2741',
@@ -66,4 +66,4 @@ ruleFunction.ruleName = ruleName;
 ruleFunction.messages = messages;
 ruleFunction.meta = meta;
 
-module.exports = stylelint.createPlugin(ruleName, ruleFunction);
+export default stylelint.createPlugin(ruleName, ruleFunction);

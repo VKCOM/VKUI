@@ -1,4 +1,4 @@
-const { ruleName } = require('./index');
+import { ruleName } from './index.js';
 
 testRule({
   plugins: ['.'],

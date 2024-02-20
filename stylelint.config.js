@@ -10,7 +10,6 @@ module.exports = {
     'stylelint-use-logical',
   ],
   rules: {
-    'indentation': null,
     'block-no-empty': null,
     'declaration-block-no-redundant-longhand-properties': null,
     'comment-empty-line-before': null,
