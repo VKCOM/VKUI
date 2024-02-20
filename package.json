@@ -32,7 +32,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "@vkontakte/eslint-plugin": "^1.2.0",
     "@vkontakte/prettier-config": "^0.1.0",
-    "@vkontakte/stylelint-config": "^4.0.1",
+    "@vkontakte/stylelint-config": "^4.0.2",
     "@vkontakte/vkui-tokens": "4.43.1",
     "autoprefixer": "^10.4.17",
     "concurrently": "^8.2.2",
@@ -78,8 +78,8 @@
     "stylelint": "^16.2.1",
     "stylelint-config-standard": "^36.0.0",
     "stylelint-media-use-custom-media": "^4.0.0",
-    "stylelint-use-logical": "^2.1.0",
-    "stylelint-value-no-unknown-custom-properties": "^5.0.0",
+    "stylelint-use-logical": "^2.1.1",
+    "stylelint-value-no-unknown-custom-properties": "^6.0.1",
     "swc-loader": "^0.2.6",
     "swc-plugin-css-modules": "0.1.10",
     "swc-plugin-transform-remove-imports": "1.12.1",
@@ -122,9 +122,9 @@
     "g:npm:version": "cd $INIT_CWD && npm version --no-workspaces-update --no-commit-hooks --no-git-tag-version"
   },
   "resolutions": {
-    "stylelint": "15.11.0",
-    "stylelint-config-standard": "34.0.0",
-    "stylelint-media-use-custom-media": "3.0.0"
+    "stylelint": "16.2.1",
+    "stylelint-config-standard": "36.0.0",
+    "stylelint-media-use-custom-media": "4.0.0"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
