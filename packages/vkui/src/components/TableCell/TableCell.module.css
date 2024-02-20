@@ -1,0 +1,94 @@
+.TableCell {
+  vertical-align: inherit;
+  border-block-end: var(--vkui--size_border--regular) solid
+    var(--vkui--color_separator_primary_alpha);
+  background-color: var(--vkui--color_background_content);
+  box-sizing: border-box;
+}
+
+.TableCell--sticky {
+  /* Навешиваем sticky тут, т.к. он работает нормально только на ячейках (см. https://caniuse.com/?search=sticky). */
+  position: sticky;
+  backface-visibility: hidden;
+}
+
+.TableCell--section-header.TableCell--sticky {
+  z-index: 2;
+  inset-block-start: 0;
+}
+
+.TableCell--section-footer.TableCell--sticky {
+  z-index: 1;
+  inset-block-end: 0;
+}
+
+.TableCell--section-header,
+.TableCell--section-footer {
+  background-color: var(--vkui--color_background_secondary);
+}
+
+.TableCell--padding-m {
+  padding-block-start: 8px;
+  padding-block-end: calc(8px - var(--vkui--size_border--regular));
+  padding-inline: 12px;
+  block-size: 48px;
+}
+
+.TableCell--align-left {
+  text-align: start;
+}
+
+.TableCell--align-center {
+  text-align: center;
+}
+
+.TableCell--align-right {
+  text-align: end;
+}
+
+.TableCell--align-justify {
+  text-align: justify;
+}
+
+/**
+ * Выставляем скругления в нужных ячейках.
+ *
+ * > Note: <thead> и <tfoot> – уникальные элементы и располагаются, соответственно, в начале
+ * > и в конце таблицы, поэтому нет нужды указывать псевдоклассы в отличие от <tbody>.
+ */
+
+/* stylelint-disable selector-max-type */
+table > tr:first-of-type > .TableCell:first-child, /* тут нужен именно :first-of-type, т.к. может быть <caption> до */
+thead > tr:first-child > .TableCell:first-child,
+tbody:first-child > :first-child > .TableCell:first-child {
+  border-start-start-radius: 8px;
+}
+
+table > tr:first-of-type > .TableCell:last-child, /* тут нужен именно :first-of-type, т.к. может быть <caption> до */
+thead > tr:first-child > .TableCell:last-child,
+tbody:first-child > :first-child > .TableCell:last-child {
+  border-start-end-radius: 8px;
+}
+
+table > tr:last-child > .TableCell:first-child, /* тут нужен именно :first-child, а не :first-of-type */
+tbody:last-child > :last-child > .TableCell:first-child,
+tfoot > tr:last-child > .TableCell:first-child {
+  border-end-start-radius: 8px;
+}
+
+table > tr:last-child > .TableCell:last-child, /* тут нужен именно :first-child, а не :first-of-type */
+tbody:last-child > :last-child > .TableCell:last-child,
+tfoot > :last-child > .TableCell:last-child {
+  border-end-end-radius: 8px;
+}
+
+/*
+ * Удаляем разделитель у ячейках в конце таблицы.
+ *
+ * Т.к. <thead> должен быть объявлен в конце, то тут не указываем его тут.
+ */
+table > tr:last-child > .TableCell,
+tbody > tr:last-child > .TableCell,
+tfoot > tr:last-child > .TableCell {
+  border-block-end: unset;
+}

@@ -245,6 +245,24 @@ export type { PaginationProps } from './components/Pagination/Pagination';
 export { Accordion } from './components/Accordion/Accordion';
 export type { AccordionProps } from './components/Accordion/Accordion';
 export type { AccordionSummaryProps } from './components/Accordion/AccordionSummary';
+export { Table } from './components/Table/Table';
+export type { TableProps } from './components/Table/Table';
+export { TableContext, TableSectionContext } from './components/Table/TableContext';
+export type {
+  TableContextProps,
+  TableSectionType,
+  TableSectionContextProps,
+} from './components/Table/types';
+export { TableRow } from './components/TableRow/TableRow';
+export type { TableRowProps } from './components/TableRow/TableRow';
+export { TableCell } from './components/TableCell/TableCell';
+export type { TableCellProps } from './components/TableCell/TableCell';
+export { TableHeader } from './components/TableHeader/TableHeader';
+export type { TableHeaderProps } from './components/TableHeader/TableHeader';
+export { TableBody } from './components/TableBody/TableBody';
+export type { TableBodyProps } from './components/TableBody/TableBody';
+export { TableFooter } from './components/TableFooter/TableFooter';
+export type { TableFooterProps } from './components/TableFooter/TableFooter';
 
 /**
  * Forms

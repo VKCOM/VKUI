@@ -4,7 +4,7 @@ import '../packages/vkui/src/styles/common.css';
 
 import { useRef, useState } from 'react';
 import * as Icons from '@vkontakte/icons';
-import { noop } from '@vkontakte/vkjs';
+import { getRandomString, noop } from '@vkontakte/vkjs';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
@@ -44,6 +44,7 @@ window.importantCountries = importantCountries;
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;
 window.getRandomUsers = getRandomUsers;
+window.getRandomString = getRandomString;
 window.getAllUsers = getAllUsers;
 window.importantCountries = importantCountries;
 window.getAvatarUrl = getAvatarUrl;
