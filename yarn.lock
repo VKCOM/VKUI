@@ -18055,7 +18055,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-standard@npm:36.0.0":
+"stylelint-config-standard@npm:^36.0.0":
   version: 36.0.0
   resolution: "stylelint-config-standard@npm:36.0.0"
   dependencies:
@@ -18066,7 +18066,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-media-use-custom-media@npm:4.0.0":
+"stylelint-media-use-custom-media@npm:^4.0.0":
   version: 4.0.0
   resolution: "stylelint-media-use-custom-media@npm:4.0.0"
   peerDependencies:
@@ -18096,7 +18096,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:16.2.1":
+"stylelint@npm:^16.2.1":
   version: 16.2.1
   resolution: "stylelint@npm:16.2.1"
   dependencies:

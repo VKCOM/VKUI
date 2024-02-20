@@ -121,11 +121,6 @@
     "size:ci": "yarn workspace @vkontakte/vkui run size:ci",
     "g:npm:version": "cd $INIT_CWD && npm version --no-workspaces-update --no-commit-hooks --no-git-tag-version"
   },
-  "resolutions": {
-    "stylelint": "16.2.1",
-    "stylelint-config-standard": "36.0.0",
-    "stylelint-media-use-custom-media": "4.0.0"
-  },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "prettier --check",
