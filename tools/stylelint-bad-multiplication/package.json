@@ -2,7 +2,10 @@
   "private": true,
   "name": "@project-tools/stylelint-bad-multiplication",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
+  "module": "index.js",
+  "exports": "./index.js",
   "scripts": {
     "build": "echo no build",
     "test": "NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" yarn run --top-level jest --runInBand",

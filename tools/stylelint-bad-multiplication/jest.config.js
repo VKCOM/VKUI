@@ -1,4 +1,6 @@
-module.exports = {
+export default {
   preset: 'jest-preset-stylelint',
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
+  // для работы `assert { type: 'json' }`
+  transform: {},
 };
