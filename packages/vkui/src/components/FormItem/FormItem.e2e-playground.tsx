@@ -24,6 +24,13 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
           bottomId: ['bottom-id'],
         },
         {
+          top: [
+            'Сверху будет находиться достаточно длинное название текста с очень большим количеством однотипных слов для переполнения текста',
+          ],
+          topMultiline: [undefined, true],
+          children: [<Input key={0} placeholder="Введите ваше значение" />],
+        },
+        {
           children: [
             <CellButton key="cellbtn">CellButton</CellButton>,
             <Checkbox key="checkbox">Checkbox</Checkbox>,
@@ -58,7 +65,7 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: FormItemProps) => <FormItem {...props} />}
+      {(props: FormItemProps) => <FormItem {...props} style={{ maxWidth: '300px' }} />}
     </ComponentPlayground>
   );
 };

@@ -20,6 +20,13 @@ export const Playground: Story = {
     bottom: 'Bottom form item',
     children: 'Form Item',
   },
+  decorators: [
+    (Component) => (
+      <div style={{ maxWidth: '300px' }}>
+        <Component />
+      </div>
+    ),
+  ],
 };
 
 export const WithInputField: Story = {
