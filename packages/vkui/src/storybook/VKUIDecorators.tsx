@@ -54,7 +54,7 @@ const SimpleLayout = ({ children }: { children: React.ReactNode }) => {
   const isVKCOM = platform === 'vkcom';
 
   return (
-    <SplitLayout header={!isVKCOM && <PanelHeader delimiter="none" />}>
+    <SplitLayout>
       <SplitCol autoSpaced={!isVKCOM}>{children}</SplitCol>
     </SplitLayout>
   );
