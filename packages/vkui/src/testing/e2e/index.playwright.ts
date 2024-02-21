@@ -13,6 +13,7 @@
  */
 
 // 1. Расширяем Playwright под свои нужды.
+import * as fs from 'node:fs/promises';
 import { devices, expect, test as testBase } from '@playwright/experimental-ct-react';
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { screenshotWithClipToContent } from './screenshotWithClipToContent';
@@ -103,6 +104,40 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
     },
     { auto: true },
   ],
+  page: async ({ page, browserName }, use, testInfo) => {
+    if (browserName !== 'chromium') {
+      return use(page);
+    }
+
+    await page.coverage.startJSCoverage({
+      resetOnNavigation: false,
+    });
+    await page.coverage.startCSSCoverage({
+      resetOnNavigation: false,
+    });
+
+    await use(page);
+
+    const resultJS = await page.coverage.stopJSCoverage();
+    const resultCSS = await page.coverage.stopCSSCoverage();
+
+    const resultJSFile = testInfo.outputPath('v8-coverage-js.json');
+    const resultCSSFile = testInfo.outputPath('v8-coverage-css.json');
+
+    await fs.writeFile(resultJSFile, JSON.stringify(resultJS));
+    await fs.writeFile(resultCSSFile, JSON.stringify(resultCSS));
+
+    testInfo.attachments.push({
+      name: 'v8-coverage-js.json',
+      contentType: 'application/json',
+      path: resultJSFile,
+    });
+    testInfo.attachments.push({
+      name: 'v8-coverage-css.json',
+      contentType: 'application/json',
+      path: resultCSSFile,
+    });
+  },
 });
 
 // 2. Ре-экспортируем нужные модули, типы и константы.
