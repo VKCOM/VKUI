@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
+import { ViewWidth } from '../../lib/adaptivity';
 import {
   ButtonPlayground,
   ButtonWithCounterPlayground,
   ButtonWithPaddingsPlayground,
+  ButtonWithStatePlayground,
 } from './Button.e2e-playground';
 
 test('Button', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
@@ -26,6 +28,18 @@ test.describe('Button', () => {
     componentPlaygroundProps,
   }) => {
     await mount(<ButtonWithPaddingsPlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
+});
+
+test.describe('Button', () => {
+  test.use({
+    adaptivityProviderProps: {
+      viewWidth: ViewWidth.SMALL_TABLET,
+    },
+  });
+  test('state', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
+    await mount(<ButtonWithStatePlayground {...componentPlaygroundProps} />);
     await expectScreenshotClippedToContent();
   });
 });
