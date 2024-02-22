@@ -46,7 +46,7 @@ test.describe('PullToRefresh', () => {
     await expectScreenshotClippedToContent();
   });
 
-  test.only('takes whole parent height and allow smaller content to center vertically', async ({
+  test('takes whole parent height and allow smaller content to center vertically', async ({
     page,
     mount,
     expectScreenshotClippedToContent,
