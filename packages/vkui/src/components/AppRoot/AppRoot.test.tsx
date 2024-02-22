@@ -130,7 +130,7 @@ describe('AppRoot', () => {
     expect(enableScrollLockStub).toHaveBeenCalledTimes(1);
 
     unmount();
-    // disableScrollLock должен быть вызван лишь разо
+    // disableScrollLock должен быть вызван лишь раз
     expect(disableScrollLockStub).toHaveBeenCalledTimes(1);
   });
 
