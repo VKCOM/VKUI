@@ -13,6 +13,7 @@
 ```jsx { "props": { "layout": false, "adaptivity": true, "iframe": false } }
 const Example = () => {
   const [sizeY, setSizeY] = useState('compact');
+  const [navigationButtonsStyle, setNavigationButtonsStyle] = useState('icon');
   const [currentPage, setCurrentPage] = useState(1);
   const [siblingCount, setSiblingCount] = useState(0);
   const [boundaryCount, setBoundaryCount] = useState(1);
@@ -28,6 +29,7 @@ const Example = () => {
       <AdaptivityProvider sizeY={sizeY}>
         <div style={demoContainerStyles}>
           <Pagination
+            navigationButtonsStyle={navigationButtonsStyle}
             currentPage={currentPage}
             siblingCount={siblingCount}
             boundaryCount={boundaryCount}
@@ -45,6 +47,17 @@ const Example = () => {
             options={[
               { label: 'compact', value: 'compact' },
               { label: 'regular', value: 'regular' },
+            ]}
+          />
+        </FormItem>
+        <FormItem top="prop[navigationButtonsStyle]">
+          <Select
+            value={navigationButtonsStyle}
+            onChange={(e) => setNavigationButtonsStyle(e.target.value)}
+            options={[
+              { label: 'icon', value: 'icon' },
+              { label: 'caption', value: 'caption' },
+              { label: 'both', value: 'both' },
             ]}
           />
         </FormItem>
