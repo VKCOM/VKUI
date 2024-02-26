@@ -17,6 +17,7 @@ export type ChipOptionLabel = React.ReactElement | string | number;
 export type ChipOption = {
   value: ChipOptionValue;
   label: ChipOptionLabel;
+  disabled?: boolean;
   [index: string]: any;
 };
 

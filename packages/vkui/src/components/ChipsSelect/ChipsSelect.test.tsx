@@ -397,4 +397,46 @@ describe('ChipsSelect', () => {
       expect(onKeyDown).toHaveBeenCalled();
     },
   );
+
+  it('should ignore disabled option', async () => {
+    const onChange = jest.fn();
+    const result = render(
+      <ChipsSelect
+        options={[FIRST_OPTION, { ...SECOND_OPTION, disabled: true }, THIRD_OPTION]}
+        dropdownTestId="dropdown"
+        onChange={onChange}
+      />,
+    );
+
+    const inputLocator = result.getByRole('combobox');
+    await userEvent.click(inputLocator);
+    await waitForFloatingPosition();
+
+    const boundDropdownLocator = within(result.getByTestId('dropdown'));
+    const [firstOptionLocator, secondOptionLocator, thirdOptionLocator] = [
+      boundDropdownLocator.getByRole('option', {
+        name: withRegExp(FIRST_OPTION.label),
+      }),
+      boundDropdownLocator.getByRole('option', {
+        name: withRegExp(SECOND_OPTION.label),
+      }),
+      boundDropdownLocator.getByRole('option', {
+        name: withRegExp(THIRD_OPTION.label),
+      }),
+    ];
+
+    await userEvent.hover(secondOptionLocator);
+    await userEvent.hover(inputLocator);
+    await userEvent.click(secondOptionLocator);
+
+    expect(onChange).not.toHaveBeenCalled();
+    await userEvent.type(inputLocator, '{ArrowDown}');
+    expect(firstOptionLocator).toHaveAttribute('data-hovered', 'true');
+
+    await userEvent.type(inputLocator, '{ArrowDown}');
+    expect(thirdOptionLocator).toHaveAttribute('data-hovered', 'true');
+
+    await userEvent.type(inputLocator, '{ArrowUp}');
+    expect(firstOptionLocator).toHaveAttribute('data-hovered', 'true');
+  });
 });
