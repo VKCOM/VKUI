@@ -21,7 +21,7 @@ const groups = [
     label: 'Arctic Monkeys',
     src: getAvatarUrl('audio_arctic_monkeys'),
   },
-  { value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri') },
+  { value: '2', label: 'Звери', disabled: true, src: getAvatarUrl('audio_leto_zveri') },
   { value: '4', label: 'FACE', src: getAvatarUrl('audio_face') },
   {
     value: '3',

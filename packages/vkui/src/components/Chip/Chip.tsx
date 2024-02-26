@@ -19,6 +19,7 @@ export type ChipValue = string | number;
 export interface ChipOption {
   value?: ChipValue;
   label?: string;
+  disabled?: boolean;
   [otherProp: string]: any;
 }
 

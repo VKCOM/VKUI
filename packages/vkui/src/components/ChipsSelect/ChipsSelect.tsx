@@ -20,6 +20,32 @@ import { IconButton } from '../IconButton/IconButton';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './ChipsSelect.module.css';
 
+const findIndexAfter = <O extends ChipOption>(options: O[] = [], startIndex = -1) => {
+  if (startIndex >= options.length - 1) {
+    return -1;
+  }
+  return options.findIndex((option, i) => i > startIndex && !option.disabled);
+};
+
+const findIndexBefore = <O extends ChipOption>(
+  options: O[] = [],
+  endIndex: number = options.length,
+) => {
+  let result = -1;
+  if (endIndex <= 0) {
+    return result;
+  }
+  for (let i = endIndex - 1; i >= 0; i--) {
+    let option = options[i];
+
+    if (!option.disabled) {
+      result = i;
+      break;
+    }
+  }
+  return result;
+};
+
 export interface ChipsSelectProps<Option extends ChipOption>
   extends Omit<ChipsInputProps<Option>, 'after'> {
   popupDirection?: 'top' | 'bottom';
@@ -224,6 +250,12 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
       return;
     }
 
+    const option = filteredOptions[index];
+
+    if (option?.disabled) {
+      return;
+    }
+
     scrollToElement(index);
     setFocusedOptionIndex(index);
   };
@@ -232,9 +264,11 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
     let index = nextIndex === null ? -1 : nextIndex;
 
     if (type === FOCUS_ACTION_NEXT) {
-      index = index + 1;
+      const nextIndex = findIndexAfter(filteredOptions, index);
+      index = nextIndex === -1 ? findIndexAfter(filteredOptions) : nextIndex; // Следующий за index или первый валидный до index
     } else if (type === FOCUS_ACTION_PREV) {
-      index = index - 1;
+      const beforeIndex = findIndexBefore(filteredOptions, index);
+      index = beforeIndex === -1 ? findIndexBefore(filteredOptions) : beforeIndex; // Предшествующий index или последний валидный после index
     }
 
     focusOptionByIndex(index, focusedOptionIndex);
@@ -248,7 +282,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
 
       if (!opened) {
         setOpened(true);
-        setFocusedOptionIndex(0);
+        focusOption(null, FOCUS_ACTION_NEXT);
       } else {
         focusOption(focusedOptionIndex, FOCUS_ACTION_PREV);
       }
@@ -259,7 +293,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
 
       if (!opened) {
         setOpened(true);
-        setFocusedOptionIndex(0);
+        focusOption(null, FOCUS_ACTION_NEXT);
       } else {
         focusOption(focusedOptionIndex, FOCUS_ACTION_NEXT);
       }
@@ -424,6 +458,7 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
                     option,
                     hovered: Boolean(hovered),
                     children: label,
+                    disabled: option.disabled,
                     selected: !!selected,
                     getRootRef: (e) => {
                       if (e) {
@@ -432,6 +467,9 @@ export const ChipsSelect = <Option extends ChipOption>(props: ChipsSelectProps<O
                       return undefined;
                     },
                     onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => {
+                      if (option.disabled) {
+                        return;
+                      }
                       onChangeStart?.(e, option);
 
                       if (!e.defaultPrevented) {
