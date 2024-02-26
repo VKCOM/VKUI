@@ -100,7 +100,12 @@ export const ContentCard = ({
             referrerPolicy={referrerPolicy}
             sizes={sizes}
             useMap={useMap}
-            fetchPriority={fetchPriority}
+            // @ts-expect-error: TS2322 нужна новая версия реакта и замена свойства на fetchPriority
+            //
+            // TODO [react@>18.2.0]: Проверить работоспособность fetchPriority
+            //
+            // https://github.com/facebook/react/issues/25682
+            fetchpriority={fetchPriority}
             height={height}
             style={{ maxHeight }}
             width="100%"
