@@ -131,7 +131,7 @@ module.exports = {
     'import/no-default-export': 'error',
 
     'react/react-in-jsx-scope': 'off',
-    'react/no-unknown-property': ['error'],
+    'react/no-unknown-property': ['error', { ignore: ['fetchPriority'] }],
 
     '@vkontakte/no-object-expression-in-arguments': [
       'error',
