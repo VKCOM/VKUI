@@ -21,7 +21,7 @@ const groups = [
     value: '1',
     label: 'Arctic Monkeys',
   },
-  { value: '2', label: 'Звери' },
+  { value: '2', label: 'Звери', disabled: true },
   { value: '4', label: 'FACE' },
   {
     value: '3',
