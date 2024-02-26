@@ -17,7 +17,7 @@ import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { Content, ContentProps } from './components/Content/Content';
 import { Footer, FooterProps } from './components/Footer/Footer';
 import { Header, HeaderProps } from './components/Header/Header';
-import { Indent } from './components/Indent/Indent';
+import { firstOpenOffset, Indent } from './components/Indent/Indent';
 import styles from './ModalSheet.module.css';
 
 const stylesSizeX = {
@@ -31,17 +31,16 @@ const sizeClassName = {
   l: styles['ModalSheet--size-l'],
 };
 
-function firstOpenOffset(clientHeight: number, settlingHeight: number): number {
-  return (clientHeight * settlingHeight) / 100;
-}
-
 function useId(idProp: string | undefined) {
   const generatingId = React.useId();
   return idProp || generatingId;
 }
 
 // Прокрутка элемента на определенный процент
-function useMobileFirstOpen(container: React.RefObject<HTMLDivElement>, settlingHeight: number) {
+function useMobileContentScrollOnFirstOpen(
+  container: React.RefObject<HTMLDivElement>,
+  settlingHeight: number,
+) {
   const { sizeX: jsSizeX } = useAdaptivityWithJSMediaQueries();
 
   useIsomorphicLayoutEffect(() => {
@@ -112,28 +111,31 @@ function useMobileScroll(container: React.RefObject<HTMLDivElement>) {
    *
    * https://caniuse.com/css-overflow-anchor
    */
-  useIsomorphicLayoutEffect(() => {
-    if (!endScroll || !isIOS || jsSizeX === 'regular' || !container.current) {
-      return;
-    }
+  useIsomorphicLayoutEffect(
+    function simulateCssOverflowAnchorOnIOS() {
+      if (!endScroll || !isIOS || jsSizeX === 'regular' || !container.current) {
+        return;
+      }
 
-    const el = container.current;
+      const el = container.current;
 
-    const observer = new MutationObserver(() => {
-      el.scrollTo({
-        top: el.scrollHeight,
-        behavior: 'smooth',
+      const observer = new MutationObserver(() => {
+        el.scrollTo({
+          top: el.scrollHeight,
+          behavior: 'smooth',
+        });
       });
-    });
 
-    observer.observe(container.current, {
-      attributes: true,
-      childList: true,
-      subtree: true,
-    });
+      observer.observe(container.current, {
+        attributes: true,
+        childList: true,
+        subtree: true,
+      });
 
-    return () => observer.disconnect();
-  }, [endScroll]);
+      return () => observer.disconnect();
+    },
+    [endScroll],
+  );
 
   return { fullOpen, endScroll };
 }
@@ -147,7 +149,7 @@ function useOpeningClosing(
   onClose: VoidFunction | undefined,
   closeProp: boolean,
 ) {
-  useMobileFirstOpen(containerRef, settlingHeight);
+  useMobileContentScrollOnFirstOpen(containerRef, settlingHeight);
 
   const { sizeX: jsSizeX } = useAdaptivityWithJSMediaQueries();
 
@@ -167,7 +169,7 @@ function useOpeningClosing(
   };
 
   const animationFallback = useTimeout(animationEnd, 320);
-  React.useEffect(() => {
+  React.useEffect(function firstOpenModal() {
     onOpen && onOpen();
     animationFallback.set();
     // eslint-disable-next-line react-hooks/exhaustive-deps

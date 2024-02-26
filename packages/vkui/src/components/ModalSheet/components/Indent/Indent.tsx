@@ -5,6 +5,10 @@ import { useDOM } from '../../../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../../../lib/useIsomorphicLayoutEffect';
 import styles from './Indent.module.css';
 
+export function firstOpenOffset(clientHeight: number, settlingHeight: number): number {
+  return (clientHeight * settlingHeight) / 100;
+}
+
 // Отступы для модалки
 function useIndents(settlingHeight: number) {
   const { document, window } = useDOM();
@@ -16,7 +20,7 @@ function useIndents(settlingHeight: number) {
 
   const indentCalculate = () => {
     const clientHeight = document!.documentElement.clientHeight;
-    const indent1Height = (clientHeight * settlingHeight) / 100;
+    const indent1Height = firstOpenOffset(clientHeight, settlingHeight);
     const indent2Height = clientHeight - indent1Height;
 
     setIndents([`${indent1Height}px`, `${indent2Height}px`]);
