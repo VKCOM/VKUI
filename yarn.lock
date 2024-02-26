@@ -5310,16 +5310,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/stylelint-config@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "@vkontakte/stylelint-config@npm:4.0.2"
+"@vkontakte/stylelint-config@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "@vkontakte/stylelint-config@npm:4.1.0"
   dependencies:
     micromatch: ^4.0.5
     postcss-value-parser: ^4.2.0
   peerDependencies:
     postcss: ^8.4.16
     stylelint: ^15.11.0 || ^16.1.0
-  checksum: 31d6fdee6556d1ed4bd0345e5b452ae8ac70af9b25eb37f0086492fee2c516f649ab9ea6d1ea4f344ab1ef332da0eb9b24e9f5cd47e17b29474fb12d6c9c8044
+  checksum: 3e897335c81c48a0093c83655ac79611a61b5cfa173ae534b599c4f4d69540d97bbd415a5bcd36323d5f2002b5465e20c9e0b906f8f089d2766a1f5c653df3da
   languageName: node
   linkType: hard
 
@@ -5416,7 +5416,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.62.0
     "@vkontakte/eslint-plugin": ^1.2.0
     "@vkontakte/prettier-config": ^0.1.0
-    "@vkontakte/stylelint-config": ^4.0.2
+    "@vkontakte/stylelint-config": ^4.1.0
     "@vkontakte/vkui-tokens": 4.43.1
     autoprefixer: ^10.4.17
     concurrently: ^8.2.2
