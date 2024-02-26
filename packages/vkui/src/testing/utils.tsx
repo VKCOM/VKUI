@@ -51,6 +51,7 @@ export const imgOnlyAttributes: ImgOnlyAttributes = {
   src: 'test',
   srcSet: 'test',
   useMap: 'test',
+  fetchPriority: 'auto',
 };
 
 export type ComponentTestOptions = {
