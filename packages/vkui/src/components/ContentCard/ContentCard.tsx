@@ -69,6 +69,7 @@ export const ContentCard = ({
   referrerPolicy,
   sizes,
   useMap,
+  fetchPriority,
   hasHover = false,
   hasActive = false,
   ...restProps
@@ -99,6 +100,7 @@ export const ContentCard = ({
             referrerPolicy={referrerPolicy}
             sizes={sizes}
             useMap={useMap}
+            fetchPriority={fetchPriority}
             height={height}
             style={{ maxHeight }}
             width="100%"

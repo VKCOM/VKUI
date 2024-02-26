@@ -91,6 +91,7 @@ export const ImageBase = ({
   src,
   srcSet,
   useMap,
+  fetchPriority,
   getRef,
   size: sizeProp,
   width: widthImg,
@@ -187,6 +188,7 @@ export const ImageBase = ({
             height={heightImg}
             onLoad={handleImageLoad}
             onError={handleImageError}
+            fetchPriority={fetchPriority}
           />
         )}
         {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
