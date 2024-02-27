@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { flushSync } from 'react-dom';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { withContext } from '../../hoc/withContext';
@@ -36,6 +37,7 @@ interface ModalRootState {
   touchDown?: boolean;
   dragging?: boolean;
   modalOpenedLog: string[];
+  rerenderCount: number;
 }
 
 class ModalRootTouchComponent extends React.Component<
@@ -48,6 +50,7 @@ class ModalRootTouchComponent extends React.Component<
       touchDown: false,
       dragging: false,
       modalOpenedLog: [],
+      rerenderCount: 0,
     };
 
     this.maskElementRef = React.createRef();
@@ -189,6 +192,11 @@ class ModalRootTouchComponent extends React.Component<
       initPageModal(modalState);
       const currentModalState = { ...modalState };
 
+      // В initPageModal могут поменяться значения, влияющие на DOM, нужно применить их как можно скорее
+      flushSync(() => {
+        this.setState((prev) => ({ rerenderCount: prev.rerenderCount + 1 }));
+      });
+
       let needAnimate = false;
 
       if (prevModalState.expandable === currentModalState.expandable) {
@@ -263,7 +271,7 @@ class ModalRootTouchComponent extends React.Component<
     if (!nextModalState) {
       // NOTE: was only for clean exit
       this.setMaskOpacity(prevModalState, 0);
-      this.setState({ modalOpenedLog: [] });
+      this.setState({ modalOpenedLog: [], rerenderCount: 0 });
       prevModalState.translateY = undefined;
       prevModalState.expandable = undefined;
     } else if (nextModalState.id && !this.state.modalOpenedLog.includes(nextModalState.id)) {
