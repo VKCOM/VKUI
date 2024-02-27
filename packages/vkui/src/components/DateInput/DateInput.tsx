@@ -184,7 +184,6 @@ export const DateInput = ({
     calendarRef,
     open,
     openCalendar,
-    closeCalendar,
     internalValue,
     handleKeyDown,
     setFocusedElement,
@@ -296,7 +295,12 @@ export const DateInput = ({
         )}
       </Text>
       {open && !disableCalendar && (
-        <Popper targetRef={rootRef} offsetDistance={8} placement={calendarPlacement}>
+        <Popper
+          targetRef={rootRef}
+          offsetDistance={8}
+          placement={calendarPlacement}
+          autoUpdateOnTargetResize
+        >
           <Calendar
             value={value}
             onChange={onCalendarChange}
@@ -304,7 +308,7 @@ export const DateInput = ({
             disablePast={disablePast}
             disableFuture={disableFuture}
             shouldDisableDate={shouldDisableDate}
-            onClose={closeCalendar}
+            onClose={removeFocusFromField}
             getRootRef={calendarRef}
             doneButtonText={doneButtonText}
             disablePickers={disablePickers}
