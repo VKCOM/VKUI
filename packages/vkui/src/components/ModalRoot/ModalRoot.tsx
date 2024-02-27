@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { flushSync } from 'react-dom';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { withContext } from '../../hoc/withContext';
@@ -37,7 +36,6 @@ interface ModalRootState {
   touchDown?: boolean;
   dragging?: boolean;
   modalOpenedLog: string[];
-  rerenderCount: number;
 }
 
 class ModalRootTouchComponent extends React.Component<
@@ -50,7 +48,6 @@ class ModalRootTouchComponent extends React.Component<
       touchDown: false,
       dragging: false,
       modalOpenedLog: [],
-      rerenderCount: 0,
     };
 
     this.maskElementRef = React.createRef();
@@ -192,11 +189,6 @@ class ModalRootTouchComponent extends React.Component<
       initPageModal(modalState);
       const currentModalState = { ...modalState };
 
-      // В initPageModal могут поменяться значения, влияющие на DOM, нужно применить их как можно скорее
-      flushSync(() => {
-        this.setState((prev) => ({ rerenderCount: prev.rerenderCount + 1 }));
-      });
-
       let needAnimate = false;
 
       if (prevModalState.expandable === currentModalState.expandable) {
@@ -271,7 +263,7 @@ class ModalRootTouchComponent extends React.Component<
     if (!nextModalState) {
       // NOTE: was only for clean exit
       this.setMaskOpacity(prevModalState, 0);
-      this.setState({ modalOpenedLog: [], rerenderCount: 0 });
+      this.setState({ modalOpenedLog: [] });
       prevModalState.translateY = undefined;
       prevModalState.expandable = undefined;
     } else if (nextModalState.id && !this.state.modalOpenedLog.includes(nextModalState.id)) {
@@ -677,6 +669,7 @@ function initPageModal(modalState: ModalsStateEntry) {
   const bottomInsetHeight = bottomInset?.offsetHeight || 0;
   const contentHeight = contentElementHeight + bottomInsetHeight;
   let prevTranslateY = modalState.translateY;
+  let prevExpandable = modalState.expandable;
 
   modalState.expandable =
     contentHeight > (contentElement?.clientHeight ?? 0) || modalState.settlingHeight === 100;
@@ -716,11 +709,10 @@ function initPageModal(modalState: ModalsStateEntry) {
     hiddenRange = [translateY + 25, translateY + 100];
   }
 
+  // Свойство expandable может измениться из-за высоты контента, в таком случае на всю высоту не разворачиваем
+  const shouldExpand = prevExpandable && modalState.expandable;
   // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
-  if (
-    (modalState.expandable && translateY > (prevTranslateY ?? 100)) ||
-    modalState.settlingHeight === 100
-  ) {
+  if ((shouldExpand && translateY > (prevTranslateY ?? 100)) || modalState.settlingHeight === 100) {
     translateY = 0;
   }
 
