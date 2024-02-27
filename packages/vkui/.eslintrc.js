@@ -131,7 +131,7 @@ module.exports = {
     'import/no-default-export': 'error',
 
     'react/react-in-jsx-scope': 'off',
-    'react/no-unknown-property': ['error', { ignore: ['fetchPriority'] }], // https://github.com/jsx-eslint/eslint-plugin-react/pull/3697
+    'react/no-unknown-property': ['error', { ignore: ['fetchPriority', 'fetchpriority'] }], // https://github.com/jsx-eslint/eslint-plugin-react/pull/3697
 
     '@vkontakte/no-object-expression-in-arguments': [
       'error',
