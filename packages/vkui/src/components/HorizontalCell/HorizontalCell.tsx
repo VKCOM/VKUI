@@ -21,11 +21,11 @@ interface CellTypographyProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
 
 const CellTypography = ({ size, children, oneline, ...restProps }: CellTypographyProps) => {
   return size === 's' ? (
-    <Caption onelineText={oneline} {...restProps}>
+    <Caption onelineText={!oneline} {...restProps}>
       {children}
     </Caption>
   ) : (
-    <Subhead onelineText={oneline} {...restProps}>
+    <Subhead onelineText={!oneline} {...restProps}>
       {children}
     </Subhead>
   );
@@ -50,8 +50,10 @@ export interface HorizontalCellProps
   extraSubtitle?: React.ReactNode;
   /**
    * Отображает текст заголовка в одну строку для `ellipsis`.
+   * @param text - цвет текста по умолчанию
+   * @param link - цвет текста как у ссылки --vkui--color_text_link
    */
-  onelineTitle?: boolean;
+  onelineTitle?: 'text' | 'link';
 }
 
 /**
@@ -84,11 +86,12 @@ export const HorizontalCell = ({
           <div
             className={classNames(
               styles['HorizontalCell__content'],
-              onelineTitle && styles['HorizontalCell--oneline-title'],
+              onelineTitle === 'text' && styles['HorizontalCell--oneline-text'],
+              onelineTitle === 'link' && styles['HorizontalCell--oneline-link'],
             )}
           >
             {hasReactNode(header) && (
-              <CellTypography oneline={onelineTitle} size={size}>
+              <CellTypography oneline={!onelineTitle} size={size}>
                 {header}
               </CellTypography>
             )}

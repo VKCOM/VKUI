@@ -88,7 +88,13 @@
   max-inline-size: var(--vkui_internal--side_cell_width);
 }
 
-.HorizontalCell--oneline-title {
+.HorizontalCell--oneline-text {
+  inline-size: calc(
+    var(--vkui_internal--side_cell_width) - var(--vkui_internal--side_cell_gap) * 2
+  );
+}
+
+.HorizontalCell--oneline-link {
   inline-size: calc(
     var(--vkui_internal--side_cell_width) - var(--vkui_internal--side_cell_gap) * 2
   );

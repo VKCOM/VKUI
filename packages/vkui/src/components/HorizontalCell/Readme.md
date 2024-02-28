@@ -78,7 +78,7 @@ const AddStoryUserItem = () => {
 const StoryItems = () => {
   return storyItems.map((item) => (
     <HorizontalCell
-      onelineTitle={true}
+      onelineTitle="link"
       onClick={() => {}}
       key={item.id}
       size="s"
