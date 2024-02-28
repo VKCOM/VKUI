@@ -669,6 +669,7 @@ function initPageModal(modalState: ModalsStateEntry) {
   const bottomInsetHeight = bottomInset?.offsetHeight || 0;
   const contentHeight = contentElementHeight + bottomInsetHeight;
   let prevTranslateY = modalState.translateY;
+  let prevExpandable = modalState.expandable;
 
   modalState.expandable =
     contentHeight > (contentElement?.clientHeight ?? 0) || modalState.settlingHeight === 100;
@@ -708,11 +709,10 @@ function initPageModal(modalState: ModalsStateEntry) {
     hiddenRange = [translateY + 25, translateY + 100];
   }
 
+  // Свойство expandable может измениться из-за высоты контента, в таком случае на всю высоту не разворачиваем
+  const shouldExpand = prevExpandable && modalState.expandable;
   // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
-  if (
-    (modalState.expandable && translateY > (prevTranslateY ?? 100)) ||
-    modalState.settlingHeight === 100
-  ) {
+  if ((shouldExpand && translateY > (prevTranslateY ?? 100)) || modalState.settlingHeight === 100) {
     translateY = 0;
   }
 
