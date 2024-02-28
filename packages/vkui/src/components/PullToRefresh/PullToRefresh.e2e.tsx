@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
-import { PullToRefreshPlayground } from './PullToRefresh.e2e-playground';
+import {
+  PullToRefreshChildrenPositionPlayground,
+  PullToRefreshPlayground,
+} from './PullToRefresh.e2e-playground';
 
 test.describe('PullToRefresh', () => {
   // we are interested in VKCOM only as we need to test here mostly
@@ -33,6 +36,20 @@ test.describe('PullToRefresh', () => {
     await page.mouse.down();
     await page.mouse.move(200, 380, { steps: 10 });
 
+    await expectScreenshotClippedToContent();
+  });
+
+  test('takes whole parent height and allow smaller content to center vertically', async ({
+    page,
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    const result = await mount(
+      <PullToRefreshChildrenPositionPlayground {...componentPlaygroundProps} />,
+    );
+    await result.waitFor();
+    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 500)));
     await expectScreenshotClippedToContent();
   });
 });
