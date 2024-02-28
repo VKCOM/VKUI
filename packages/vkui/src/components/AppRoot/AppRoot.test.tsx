@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { Appearance } from '../../lib/appearance';
 import { Platform } from '../../lib/platform';
 import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
@@ -8,7 +9,7 @@ import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { AppRoot, AppRootProps } from './AppRoot';
 import { AppRootContext } from './AppRootContext';
-import { useScrollLock } from './ScrollContext';
+import { ScrollContext, ScrollContextInterface, useScrollLock } from './ScrollContext';
 import { CUSTOM_PROPERTY_INSET_PREFIX } from './helpers';
 import styles from './AppRoot.module.css';
 
@@ -81,6 +82,56 @@ describe('AppRoot', () => {
     expect(result.getByTestId('app-root')).toHaveStyle('position: absolute');
     fireEvent.click(result.getByRole('checkbox'));
     expect(result.getByTestId('app-root')).not.toHaveStyle('position: absolute');
+  });
+
+  it('should not call enableScrollLock if scroll is already locked', () => {
+    let isScrollLockStub = false;
+    const enableScrollLockStub = jest.fn(() => (isScrollLockStub = true));
+    const disableScrollLockStub = jest.fn();
+    const scrollContextStub: ScrollContextInterface = {
+      getScroll: () => ({ x: 0, y: 0 }),
+      scrollTo: noop,
+      get isScrollLock() {
+        return Boolean(isScrollLockStub);
+      },
+      enableScrollLock: enableScrollLockStub,
+      disableScrollLock: disableScrollLockStub,
+    };
+
+    const ScrollToggler = () => {
+      useScrollLock(true);
+      return null;
+    };
+
+    const ScrollStub = ({ children }: { children: React.ReactNode }) => {
+      return <ScrollContext.Provider value={scrollContextStub}>{children}</ScrollContext.Provider>;
+    };
+
+    const Template = (props: Pick<AppRootProps, 'scroll'>) => {
+      const [showAnotherToggler, setShowAnotherToggler] = React.useState(false);
+      return (
+        <AppRoot mode="full" data-testid="app-root" {...props}>
+          <ScrollStub>
+            <ScrollToggler />
+            {showAnotherToggler && <ScrollToggler />}
+            <button onClick={() => setShowAnotherToggler(true)}>Show another toggler</button>
+          </ScrollStub>
+        </AppRoot>
+      );
+    };
+
+    const { unmount } = render(<Template />);
+    // первый компонент вызвал scrollLock
+    expect(enableScrollLockStub).toHaveBeenCalledTimes(1);
+    // второй появившийся компонент вызвал scrollLock
+    fireEvent.click(screen.getByText('Show another toggler'));
+
+    // enableScrollLock должен быть вызван лишь раз
+    expect(enableScrollLockStub).toHaveBeenCalledTimes(1);
+
+    unmount();
+    // disableScrollLock должен быть вызван лишь раз
+    expect(disableScrollLockStub).toHaveBeenCalledTimes(1);
   });
 
   describe('portalRoot in mode="embedded"', () => {
