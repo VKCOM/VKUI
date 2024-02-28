@@ -2,9 +2,11 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
 import { SizeType } from '../../lib/adaptivity';
 import { useDOM } from '../../lib/dom';
+import { Platform } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
@@ -82,6 +84,7 @@ export const TabsItem = ({
     withScrollToSelectedTab,
   }: TabsContextProps = React.useContext(TabsModeContext);
   let statusComponent = null;
+  const platform = usePlatform();
 
   const isTabFlow = role === 'tab';
 
@@ -173,7 +176,7 @@ export const TabsItem = ({
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
         className,
       )}
-      hoverMode={styles['TabsItem--hover']}
+      hoverMode={platform === Platform.IOS ? '' : styles['TabsItem--hover']}
       activeMode=""
       focusVisibleMode="inside"
       hasActive={false}
