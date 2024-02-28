@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Icon12Add, Icon12Tag, Icon16Add, Icon24Camera } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Counter } from '../Counter/Counter';
 import { Button, type ButtonProps } from './Button';
 
@@ -117,6 +118,7 @@ export const ButtonWithPaddingsPlayground = (props: ComponentPlaygroundProps) =>
           size: ['s', 'm', 'l'],
           stretched: [true, false],
           after: [<Icon12Tag key="after" />],
+          $adaptivity: 'y',
         },
       ]}
     >
@@ -127,6 +129,44 @@ export const ButtonWithPaddingsPlayground = (props: ComponentPlaygroundProps) =>
           ))}
         </div>
       )}
+    </ComponentPlayground>
+  );
+};
+
+export const ButtonWithStatePlayground = (props: ComponentPlaygroundProps) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          mode: ['primary', 'secondary', 'tertiary', 'outline', 'link'],
+          appearance: ['accent', 'positive', 'negative', 'neutral', 'overlay', 'accent-invariable'],
+          before: [<Icon24Camera key="icon-24" />],
+          after: [<Counter key="counter">16</Counter>],
+        },
+      ]}
+    >
+      {(props: ButtonProps) => {
+        const ButtonElement = (
+          <ButtonGroup>
+            <Button {...props}>Кнопка</Button>
+            <Button {...props} hovered>
+              Кнопка
+            </Button>
+            <Button {...props} activated>
+              Кнопка
+            </Button>
+          </ButtonGroup>
+        );
+        if (props.appearance === 'overlay') {
+          return (
+            <div style={{ backgroundColor: 'var(--vkui--color_background_contrast_inverse)' }}>
+              {ButtonElement}
+            </div>
+          );
+        }
+        return ButtonElement;
+      }}
     </ComponentPlayground>
   );
 };
