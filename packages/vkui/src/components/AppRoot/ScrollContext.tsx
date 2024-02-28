@@ -233,9 +233,9 @@ export const useScrollLockEffect = (effect: React.EffectCallback, deps: React.De
 };
 
 export const useScrollLock = (enabled = true) => {
-  const { enableScrollLock, disableScrollLock } = useScroll();
+  const { enableScrollLock, disableScrollLock, isScrollLock } = useScroll();
   useIsomorphicLayoutEffect(() => {
-    if (enabled) {
+    if (enabled && !isScrollLock) {
       enableScrollLock();
       return disableScrollLock;
     }
