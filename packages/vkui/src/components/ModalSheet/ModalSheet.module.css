@@ -7,6 +7,17 @@
   z-index: var(--vkui--z_index_modal);
 }
 
+.ModalSheet--hasCustomPanelHeaderAfterSlot {
+  padding-block-start: calc(
+    var(--vkui_internal--safe_area_inset_top) + var(--vkui_internal--panel_header_height)
+  );
+}
+
+.ModalSheet--hasCustomPanelHeaderAfterSlot .ModalSheet__container {
+  border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+}
+
 .ModalSheet__container {
   block-size: 100%;
   position: relative;

@@ -10,6 +10,7 @@ import { callMultiple } from '../../lib/callMultiple';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { ModalPageContext } from '../ModalPage/ModalPageContext';
@@ -295,6 +296,7 @@ export const ModalSheet = ({
   const contextValue = React.useMemo(() => ({ labelId: `${id}-label` }), [id]);
 
   const { sizeX = 'none' } = useAdaptivity();
+  const { hasCustomPanelHeaderAfter } = useConfigProvider();
 
   const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -333,6 +335,7 @@ export const ModalSheet = ({
         className,
         styles['ModalSheet'],
         sizeX !== 'compact' && stylesSizeX[sizeX],
+        hasCustomPanelHeaderAfter && styles['ModalSheet--hasCustomPanelHeaderAfterSlot'],
         opening && styles['ModalSheet--opening'],
         closing && styles['ModalSheet--closing'],
       )}
@@ -349,7 +352,7 @@ export const ModalSheet = ({
       <div
         className={classNames(
           styles['ModalSheet__container'],
-          fullOpen && styles['ModalSheet__fullOpen'],
+          fullOpen && !hasCustomPanelHeaderAfter && styles['ModalSheet__fullOpen'],
           disableSnap && styles['ModalSheet__disableSnap'],
           typeof size === 'string' && sizeClassName[size],
         )}
