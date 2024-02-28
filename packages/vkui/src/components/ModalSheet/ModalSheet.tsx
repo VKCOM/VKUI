@@ -73,8 +73,10 @@ function useMobileOverlay(container: React.RefObject<HTMLDivElement>, settlingHe
     const el = container.current!;
 
     const indent1 = firstOpenOffset(el.clientHeight, settlingHeight);
-
-    const opacity = Math.min(el.scrollTop / indent1, 1);
+    const opacity = Math.min(
+      el.scrollTop / Math.min(el.scrollHeight - el.offsetHeight, indent1),
+      1,
+    );
 
     maskRef.current!.style.opacity = `${opacity}`;
   };
