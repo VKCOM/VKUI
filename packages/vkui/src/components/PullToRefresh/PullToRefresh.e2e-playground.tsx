@@ -41,3 +41,27 @@ export const PullToRefreshPlayground = (
     </ComponentPlayground>
   );
 };
+
+export const PullToRefreshChildrenPositionPlayground = (props: ComponentPlaygroundProps) => {
+  return (
+    <ComponentPlayground {...props} platform={Platform.VKCOM}>
+      {({ ...props }: PullToRefreshProps) => (
+        <Div style={{ width: '300px', height: '500px', display: 'flex' }}>
+          <PullToRefresh {...props}>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                textAlign: 'center',
+                justifyContent: 'center',
+                flex: '1 0',
+              }}
+            >
+              Smaller content can be centered vertically
+            </div>
+          </PullToRefresh>
+        </Div>
+      )}
+    </ComponentPlayground>
+  );
+};
