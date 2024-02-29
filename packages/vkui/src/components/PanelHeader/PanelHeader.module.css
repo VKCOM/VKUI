@@ -3,8 +3,8 @@
 }
 
 .PanelHeader--fixed {
-  inset-block-start: 0;
   position: sticky;
+  inset-block-start: 0;
   z-index: var(--vkui_internal--z_index_panel_header);
 }
 
@@ -241,7 +241,6 @@
  * VKCOM
  */
 .PanelHeader--vkcom {
-  position: relative;
   z-index: var(--vkui_internal--z_index_panel_header);
 }
 
