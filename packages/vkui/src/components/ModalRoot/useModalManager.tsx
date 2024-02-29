@@ -105,6 +105,7 @@ export function useModalManager(
     state.onOpened = Modal.props.onOpened;
     state.onClose = Modal.props.onClose;
     state.onClosed = Modal.props.onClosed;
+    state.preventClose = Modal.props.preventClose;
     // ModalPage props
     if (typeof modalProps.settlingHeight === 'number') {
       state.settlingHeight = modalProps.settlingHeight;
@@ -196,7 +197,7 @@ export function useModalManager(
 
   function onExit() {
     const modalState = transitionState.activeModal && modalsState[transitionState.activeModal];
-    if (modalState) {
+    if (modalState && !modalState.preventClose) {
       if (isFunction(modalState.onClose)) {
         modalState.onClose();
       } else if (isFunction(onClose) && modalState.id) {

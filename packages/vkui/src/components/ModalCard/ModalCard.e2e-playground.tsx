@@ -116,7 +116,7 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
               </Button>
             </React.Fragment>,
           ],
-          dismissButtonMode: ['inside', 'outside'],
+          dismissButtonMode: ['inside', 'outside', 'none'],
         },
       ]}
       AppWrapper={AppWrapper}

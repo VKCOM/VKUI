@@ -69,6 +69,12 @@ export interface ModalPageProps extends HTMLAttributesWithRootRef<HTMLDivElement
    * `data-testid` для кнопки закрытия
    */
   modalDismissButtonTestId?: string;
+  /**
+   * Позволяет отключить возможность закрытия модальной страницы (смахивание, клавиша `ESC`, клик по подложке)
+   *
+   * ⚠️ ВНИМАНИЕ: использование этой опции негативно сказывается на пользовательском опыте
+   */
+  preventClose?: boolean;
 }
 
 const warn = warnOnce('ModalPage');
@@ -94,6 +100,7 @@ export const ModalPage = ({
   modalContentTestId,
   modalDismissButtonTestId,
   getRootRef,
+  preventClose,
   ...restProps
 }: ModalPageProps) => {
   const generatingId = React.useId();

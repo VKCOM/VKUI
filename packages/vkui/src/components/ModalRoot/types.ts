@@ -66,6 +66,10 @@ export interface ModalsStateEntry extends ModalElements {
   expandedRange?: TranslateRange;
   collapsedRange?: TranslateRange;
   hiddenRange?: TranslateRange;
+  /**
+   * Отключает возможность закрыть модалку стандартными способами
+   */
+  preventClose?: boolean;
 }
 
 export interface ModalRootProps {
