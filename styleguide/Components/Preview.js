@@ -112,8 +112,10 @@ class Preview extends PreviewParent {
           );
 
           let width;
+          let hasPointer = undefined; // по умолчанию берем автоматическое определение
           if (viewWidth >= BREAKPOINTS.SMALL_TABLET) {
             width = styleGuideContext.width;
+            hasPointer = styleGuideContext.hasPointer;
           } else {
             width = viewWidth - 32;
           }
@@ -161,7 +163,12 @@ class Preview extends PreviewParent {
                         appearanceOptions={styleGuideContext.appearanceOptions}
                         themeName={styleGuideContext.themeName}
                       >
-                        <Config {...styleGuideContext} layout={appRootLayout} exampleId={exampleId}>
+                        <Config
+                          {...styleGuideContext}
+                          hasPointer={hasPointer}
+                          layout={appRootLayout}
+                          exampleId={exampleId}
+                        >
                           {layout ? <Layout>{example}</Layout> : example}
                         </Config>
                       </Frame>
