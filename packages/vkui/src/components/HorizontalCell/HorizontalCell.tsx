@@ -51,7 +51,7 @@ export interface HorizontalCellProps
   /**
    * Отображает текст заголовка в одну строку для `ellipsis`.
    * @param text - цвет текста по умолчанию
-   * @param link - цвет текста как у ссылки --vkui--color_text_link
+   * @param link - цвет текста синий как у ссылки
    */
   onelineTitle?: 'text' | 'link';
 }
