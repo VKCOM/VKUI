@@ -5528,7 +5528,7 @@ __metadata:
     stylelint: ^16.2.1
     stylelint-config-standard: ^36.0.0
     stylelint-media-use-custom-media: ^4.0.0
-    stylelint-use-logical: ^2.1.1
+    stylelint-use-logical: ^2.1.2
     stylelint-value-no-unknown-custom-properties: ^6.0.1
     swc-loader: ^0.2.6
     swc-plugin-css-modules: 0.1.10
@@ -18148,12 +18148,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-use-logical@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "stylelint-use-logical@npm:2.1.1"
+"stylelint-use-logical@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "stylelint-use-logical@npm:2.1.2"
   peerDependencies:
     stylelint: ">= 11 < 17"
-  checksum: aedf6b95621a71c4bbb7622b1221283412dc8f1b8c7d4d5bf96272001c8d9ec40a3b57054f2fcb1a3576fe3256b71b0611d8e50cc079c951cedcdaff61f05593
+  checksum: 8cf83a06c6d7ffa2980efefbbb164d45531522277164458a379cdc0113634323718311c3beab892cb32e28f9e91a23defafc4b8a980291cbaae70cf0be1807bc
   languageName: node
   linkType: hard
 

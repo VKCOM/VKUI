@@ -78,7 +78,7 @@
     "stylelint": "^16.2.1",
     "stylelint-config-standard": "^36.0.0",
     "stylelint-media-use-custom-media": "^4.0.0",
-    "stylelint-use-logical": "^2.1.1",
+    "stylelint-use-logical": "^2.1.2",
     "stylelint-value-no-unknown-custom-properties": "^6.0.1",
     "swc-loader": "^0.2.6",
     "swc-plugin-css-modules": "0.1.10",
