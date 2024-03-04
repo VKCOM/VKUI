@@ -91,3 +91,5 @@ export const ImageBaseOverlay = ({
     </Tappable>
   );
 };
+
+ImageBaseOverlay.displayName = 'ImageBaseOverlay';

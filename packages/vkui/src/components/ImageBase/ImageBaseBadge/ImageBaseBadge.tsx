@@ -55,3 +55,5 @@ export const ImageBaseBadge = ({ background = 'shadow', ...restProps }: ImageBas
     />
   );
 };
+
+ImageBaseBadge.displayName = 'ImageBaseBadge';

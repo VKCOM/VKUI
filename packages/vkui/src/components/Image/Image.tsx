@@ -94,6 +94,10 @@ export const Image = ({
   );
 };
 
+Image.displayName = 'Image';
+
 Image.Badge = ImageBadge;
+Image.Badge.displayName = 'Image.Badge';
 
 Image.Overlay = ImageBase.Overlay;
+Image.Overlay.displayName = 'Image.Overlay';

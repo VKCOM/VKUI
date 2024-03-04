@@ -67,3 +67,5 @@ export const AccordionSummary = ({
     </SimpleCell>
   );
 };
+
+AccordionSummary.displayName = 'AccordionSummary';
