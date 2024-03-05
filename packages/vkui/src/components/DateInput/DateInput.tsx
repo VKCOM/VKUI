@@ -241,7 +241,14 @@ export const DateInput = ({
         name={name}
         value={value ? format(value, enableTime ? 'DD.MM.YYYYTHH:mm' : 'DD.MM.YYYY') : ''}
       />
-      <Text className={styles['DateInput__input']} onKeyDown={handleKeyDown}>
+      <Text
+        className={styles['DateInput__input']}
+        onKeyDown={handleKeyDown}
+        // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
+        // из-за чего `.Typography--normalize` перебивает стили.
+        normalize={false}
+        Component="span" // для <span> нормализация не нужна
+      >
         <InputLike
           length={2}
           getRootRef={daysRef}
