@@ -18,3 +18,5 @@ export const ImageBadge = ({ className, ...restProps }: ImageBadgeProps) => {
     />
   );
 };
+
+ImageBadge.displayName = 'ImageBadge';

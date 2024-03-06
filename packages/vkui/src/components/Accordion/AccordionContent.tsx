@@ -84,3 +84,5 @@ export const AccordionContent = ({
     </div>
   );
 };
+
+AccordionContent.displayName = 'AccordionContent';

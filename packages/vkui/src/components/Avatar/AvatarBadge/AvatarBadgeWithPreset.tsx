@@ -42,3 +42,5 @@ export const AvatarBadgeWithPreset = ({
     </ImageBase.Badge>
   );
 };
+
+AvatarBadgeWithPreset.displayName = 'Avatar.BadgeWithPreset';

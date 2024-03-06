@@ -204,6 +204,10 @@ export const ImageBase = ({
   );
 };
 
+ImageBase.displayName = 'ImageBase';
+
 ImageBase.Badge = ImageBaseBadge;
+ImageBase.Badge.displayName = 'ImageBase.Badge';
 
 ImageBase.Overlay = ImageBaseOverlay;
+ImageBase.Overlay.displayName = 'ImageBase.Overlay';

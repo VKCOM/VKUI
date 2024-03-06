@@ -18,3 +18,5 @@ export const AvatarBadge = ({ className, ...restProps }: AvatarBadgeProps) => {
     />
   );
 };
+
+AvatarBadge.displayName = 'Avatar.Badge';

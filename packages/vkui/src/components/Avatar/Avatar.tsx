@@ -119,10 +119,15 @@ export const Avatar = ({
   );
 };
 
+Avatar.displayName = 'Avatar';
+
 Avatar.Badge = AvatarBadge;
+Avatar.Badge.displayName = 'Avatar.Badge';
 
 Avatar.BadgeWithPreset = AvatarBadgeWithPreset;
+Avatar.BadgeWithPreset.displayName = 'Avatar.BadgeWithPreset';
 
 Avatar.Overlay = ImageBase.Overlay;
+Avatar.Overlay.displayName = 'Avatar.Overlay';
 
 Avatar.getInitialsFontSize = getInitialsFontSize;

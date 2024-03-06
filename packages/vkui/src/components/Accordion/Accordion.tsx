@@ -58,5 +58,10 @@ export const Accordion = ({
   return <AccordionContext.Provider value={context}>{children}</AccordionContext.Provider>;
 };
 
+Accordion.displayName = 'Accordion';
+
 Accordion.Summary = AccordionSummary;
+Accordion.Summary.displayName = 'Accordion.Summary';
+
 Accordion.Content = AccordionContent;
+Accordion.Content.displayName = 'Accordion.Content';
