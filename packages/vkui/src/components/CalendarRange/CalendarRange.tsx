@@ -37,7 +37,7 @@ export interface CalendarRangeProps
   disablePickers?: boolean;
   changeDayAriaLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  onChange?(value?: DateRangeType): void;
+  onChange?(value: DateRangeType): void;
   shouldDisableDate?(value: Date): boolean;
   onClose?(): void;
 }
