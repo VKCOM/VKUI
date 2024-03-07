@@ -16,16 +16,30 @@ const sizeXClassNames = {
   ['regular']: styles['Panel--sizeX-regular'],
 };
 
+const stylesMode = {
+  none: styles['Panel--mode-none'],
+  plain: styles['Panel--mode-plain'],
+  card: styles['Panel--mode-card'],
+};
+
 export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
   centered?: boolean;
+  mode?: 'plain' | 'card';
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Panel
  */
-export const Panel = ({ centered = false, children, nav, ...restProps }: PanelProps) => {
+export const Panel = ({
+  centered = false,
+  children,
+  nav,
+  mode: modeProp,
+  ...restProps
+}: PanelProps) => {
   const { sizeX = 'none' } = useAdaptivity();
-  const { layout } = React.useContext(AppRootContext);
+
+  const mode = usePanelMode(modeProp);
 
   return (
     <NavPanelIdContext.Provider value={restProps.id || nav}>
@@ -35,7 +49,7 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
           styles['Panel'],
           sizeXClassNames[sizeX],
           centered && 'vkuiInternalPanel--centered',
-          layout === 'card' && styles['Panel--layout-card'],
+          stylesMode[mode],
         )}
       >
         <Touch
@@ -50,3 +64,17 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
     </NavPanelIdContext.Provider>
   );
 };
+
+function usePanelMode(modeProp: PanelProps['mode']): 'plain' | 'card' | 'none' {
+  const { layout } = React.useContext(AppRootContext);
+
+  if (modeProp) {
+    return modeProp;
+  }
+
+  if (layout) {
+    return layout;
+  }
+
+  return 'none';
+}
