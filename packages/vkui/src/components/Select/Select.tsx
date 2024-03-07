@@ -42,7 +42,7 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     nativeSelectTestId,
     after,
     mode,
-    ...restProps // TODO: https://github.com/Microsoft/TypeScript/issues/12936
+    ...restProps
   } = props;
 
   const hasPointer = useAdaptivityHasPointer();
