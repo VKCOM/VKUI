@@ -31,12 +31,16 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     icon,
     ClearButton,
     allowClearButton,
+    clearButtonTestId,
     dropdownOffsetDistance,
     dropdownAutoWidth,
     forceDropdownPortal,
     selectType,
+    noMaxHeight,
     autoHideScrollbar,
     autoHideScrollbarDelay,
+    labelTextTestId,
+    nativeSelectTestId,
     ...nativeProps // TODO: https://github.com/Microsoft/TypeScript/issues/12936
   } = props;
 
