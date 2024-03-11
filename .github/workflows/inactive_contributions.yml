@@ -21,4 +21,4 @@ jobs:
           stale-pr-label: 'pr-needs-work'
           close-pr-message: 'PR закрыт из-за отсутствия активности в течение последних 14 дней. Если это произошло по ошибке или изменения все ещё актуальны, откройте PR повторно.'
           exempt-pr-labels: 'no-stale'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
