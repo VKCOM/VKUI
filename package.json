@@ -17,7 +17,7 @@
     "@size-limit/webpack": "^11.0.2",
     "@size-limit/webpack-css": "^11.0.2",
     "@swc/cli": "^0.3.10",
-    "@swc/core": "1.4.2",
+    "@swc/core": "1.4.6",
     "@swc/jest": "^0.2.36",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
