@@ -117,17 +117,17 @@ export const Banner = ({
 
       <div className={styles['Banner__content']}>
         {hasReactNode(header) && (
-          <HeaderTypography Component="p" weight="2" level={size === 'm' ? '2' : '1'}>
+          <HeaderTypography Component="div" weight="2" level={size === 'm' ? '2' : '1'}>
             {header}
           </HeaderTypography>
         )}
         {hasReactNode(subheader) && (
-          <SubheaderTypography Component="p" className={styles['Banner__subheader']}>
+          <SubheaderTypography Component="div" className={styles['Banner__subheader']}>
             {subheader}
           </SubheaderTypography>
         )}
         {hasReactNode(text) && (
-          <Text Component="p" className={styles['Banner__text']}>
+          <Text Component="div" className={styles['Banner__text']}>
             {text}
           </Text>
         )}
