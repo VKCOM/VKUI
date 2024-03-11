@@ -98,7 +98,7 @@ export type PickOnlyFunctionProps<T> = Pick<T, GetPropsWithFunctionKeys<T>>;
  * const nativeProps: HasOnlyExpectedProps<typeof restProps, NativeSelectProps> = restProps;
  *
  * @example
- * // рассширеный пример
+ * // расширенный пример
  * type SelectProps {
  *   mode: string,
  *   multiline: boolean;
@@ -119,7 +119,7 @@ export type PickOnlyFunctionProps<T> = Pick<T, GetPropsWithFunctionKeys<T>>;
  * const {mode, ...restProps} = selectProps;
  * const nativeProps: HasOnlyExpectedProps<typeof restProps, NativeSelectProps> = restProps;
  *
- * // а вот так ошибки не будет
+ * // а вот так ошибки не будет, так как restProps больше не содержит multiline
  * const {mode, multiline, ...restProps} = selectProps;
  * const nativeProps: HasOnlyExpectedProps<typeof restProps, NativeSelectProps> = restProps;
  */
