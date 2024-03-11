@@ -6,7 +6,7 @@
  * НЕ используем в *.e2e-playground.ts*, т.к. ре-экспорт '@playwright/test' приводит к ошибке в Rollup.
  *
  * ```sh
- * RollupError: Unexpected character '�' (Note that you need plugins to import files that are not JavaScript)
+ * RollupError: Unexpected character 'U+FFFD' (Note that you need plugins to import files that are not JavaScript)
  * ```
  *
  * Ошибка в файле /node_modules/@playwright/test/index.js:1:0
