@@ -2,9 +2,9 @@ import * as React from 'react';
 import { leadingZero } from '@vkontakte/vkjs';
 import { range } from '../../helpers/range';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
-import { HTMLAttributesWithRootRef } from '../../types';
+import { HasOnlyExpectedProps, HTMLAttributesWithRootRef } from '../../types';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
-import { Input } from '../Input/Input';
+import { Input, type InputProps } from '../Input/Input';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './DatePicker.module.css';
 
@@ -167,9 +167,10 @@ const DatePickerNative = ({
     },
     [onDateChange],
   );
+  const inputProps: HasOnlyExpectedProps<typeof restProps, InputProps> = restProps;
   return (
     <Input
-      {...restProps}
+      {...inputProps}
       type="date"
       onChange={onStringChange}
       min={convertToInputFormat(min)}

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
+import { HasOnlyExpectedProps } from '../../types';
 import {
   CustomSelect,
   type CustomSelectOptionInterface,
   type SelectProps,
 } from '../CustomSelect/CustomSelect';
-import { NativeSelect } from '../NativeSelect/NativeSelect';
-
+import { NativeSelect, type NativeSelectProps } from '../NativeSelect/NativeSelect';
 export type SelectType = 'default' | 'plain' | 'accent';
 
 /**
@@ -31,16 +31,23 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     icon,
     ClearButton,
     allowClearButton,
+    clearButtonTestId,
     dropdownOffsetDistance,
     fixDropdownWidth,
     forceDropdownPortal,
-    selectType,
+    noMaxHeight,
     autoHideScrollbar,
     autoHideScrollbarDelay,
-    ...nativeProps // TODO: https://github.com/Microsoft/TypeScript/issues/12936
+    labelTextTestId,
+    nativeSelectTestId,
+    after,
+    mode,
+    ...restProps
   } = props;
 
   const hasPointer = useAdaptivityHasPointer();
+
+  const nativeProps: HasOnlyExpectedProps<typeof restProps, NativeSelectProps> = restProps;
 
   return (
     <React.Fragment>
