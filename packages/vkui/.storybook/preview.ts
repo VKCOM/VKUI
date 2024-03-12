@@ -37,13 +37,13 @@ const customViewports = Object.entries(BREAKPOINTS).reduce<Record<string, Custom
 const preview: Preview = {
   parameters: {
     docs: {
-      expanded: true,
       source: {
         type: 'dynamic',
       },
     },
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
+      expanded: true,
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/,
