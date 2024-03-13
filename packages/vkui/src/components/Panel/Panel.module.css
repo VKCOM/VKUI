@@ -107,14 +107,14 @@
   background-color: var(--vkui--color_background);
 }
 
-.Panel--sizeX-regular.Panel--mode-none .Panel__in,
-.Panel--sizeX-regular.Panel--mode-none::before {
+.Panel--sizeX-regular .Panel__in,
+.Panel--sizeX-regular::before {
   background-color: transparent;
 }
 
 @media (--sizeX-regular) {
-  .Panel--sizeX-none.Panel--mode-none .Panel__in,
-  .Panel--sizeX-none.Panel--mode-none::before {
+  .Panel--sizeX-none .Panel__in,
+  .Panel--sizeX-none::before {
     background-color: transparent;
   }
 }
