@@ -293,6 +293,7 @@ export const HorizontalScroll = ({
           offsetY={arrowOffsetY}
           direction="left"
           aria-hidden
+          tabIndex={-1}
           className={classNames(
             styles['HorizontalScroll__arrow'],
             styles['HorizontalScroll__arrowLeft'],
@@ -307,6 +308,7 @@ export const HorizontalScroll = ({
           offsetY={arrowOffsetY}
           direction="right"
           aria-hidden
+          tabIndex={-1}
           className={classNames(
             styles['HorizontalScroll__arrow'],
             styles['HorizontalScroll__arrowRight'],
