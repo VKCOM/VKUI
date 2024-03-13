@@ -149,6 +149,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
         }
         case Keys.ESCAPE: {
           if (onClose) {
+            event.preventDefault();
             onClose();
           }
         }
