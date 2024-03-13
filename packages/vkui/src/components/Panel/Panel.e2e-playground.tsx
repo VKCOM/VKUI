@@ -28,6 +28,7 @@ export const PanelPlayground = (props: ComponentPlaygroundProps) => {
             </React.Fragment>,
           ],
           $adaptivity: 'x',
+          mode: ['plain', 'card', undefined],
         },
       ]}
     >
