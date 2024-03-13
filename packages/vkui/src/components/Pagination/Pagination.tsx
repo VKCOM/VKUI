@@ -2,9 +2,12 @@ import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 import { PaginationPageType, usePagination } from '../../hooks/usePagination';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
-import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+import {
+  PaginationNavigationButton,
+  type PaginationNavigationButtonProps,
+} from './PaginationNavigationButton/PaginationNavigationButton';
 import { PaginationPageButton } from './PaginationPage/PaginationPageButton';
 import { PaginationPageEllipsis } from './PaginationPage/PaginationPageEllipsis';
 import { getPageLabelDefault } from './utils';
@@ -32,24 +35,40 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    */
   disabled?: boolean;
   /**
-   * Переопределение текста для обозначения блока навигации.
-   * По умолчанию используется текст на "ru_RU".
+   * Декоративный текст для кнопки навигации назад.
+   *
+   * > Note: Экранные дикторы будут использовать `prevButtonLabel`.
+   */
+  prevButtonCaption?: string;
+  /**
+   * Декоративный текст для кнопки навигации вперёд.
+   *
+   * > Note: Экранные дикторы будут использовать `nextButtonLabel`.
+   */
+  nextButtonCaption?: string;
+  /**
+   * Задаёт стиль отображения кнопок навигации.
+   *
+   * - `icon` – показывать только иконку;
+   * - `caption` – показывать только подпись;
+   * - `both` – показывать и иконку, и подпись.
+   */
+  navigationButtonsStyle?: PaginationNavigationButtonProps['style'];
+  /**
+   * [a11y] Метка для обозначения блока навигации.
    */
   navigationLabel?: string;
   navigationLabelComponent?: HasComponent['Component'];
   /**
-   * Переопределение текста для кнопки навигации назад.
-   * По умолчанию используется текст на "ru_RU".
+   * [a11y] Метка для кнопки навигации назад.
    */
   prevButtonLabel?: string;
   /**
-   * Переопределение текста для кнопки навигации вперёд.
-   * По умолчанию используется текст на "ru_RU".
+   * [a11y] Метка для кнопки навигации вперёд.
    */
   nextButtonLabel?: string;
   /**
-   * Функция для переопределения и/или локализации текста кнопки страницы.
-   * По умолчанию используется текст на "ru_RU".
+   * [a11y] Функция для переопределения и/или локализации метки кнопки страницы.
    */
   getPageLabel?(isCurrent: boolean): string;
   onChange?(page: number): void;
@@ -64,6 +83,9 @@ export const Pagination = ({
   boundaryCount = 1,
   totalPages = 1,
   disabled,
+  prevButtonCaption = 'Назад',
+  nextButtonCaption = 'Вперёд',
+  navigationButtonsStyle = 'icon',
   getPageLabel = getPageLabelDefault,
   navigationLabel = 'Навигация по страницам',
   navigationLabelComponent = 'h2',
@@ -136,32 +158,24 @@ export const Pagination = ({
       <VisuallyHidden Component={navigationLabelComponent}>{navigationLabel}</VisuallyHidden>
       <ul className={styles['Pagination__list']}>
         <li className={styles['Pagination__prevButtonContainer']}>
-          <Button
-            size="l"
-            before={
-              <>
-                <VisuallyHidden>{prevButtonLabel}</VisuallyHidden>{' '}
-                <Icon24ChevronCompactLeft width={24} />
-              </>
-            }
-            appearance="accent"
-            mode="tertiary"
+          <PaginationNavigationButton
+            type="prev"
+            style={navigationButtonsStyle}
+            caption={prevButtonCaption}
+            Icon={Icon24ChevronCompactLeft}
+            a11yLabel={prevButtonLabel}
             disabled={isFirstPage || disabled}
             onClick={handlePrevClick}
           />
         </li>
         {pages.map(renderPages)}
         <li className={styles['Pagination__nextButtonContainer']}>
-          <Button
-            size="l"
-            after={
-              <>
-                <VisuallyHidden>{nextButtonLabel}</VisuallyHidden>
-                <Icon24ChevronCompactRight width={24} />
-              </>
-            }
-            appearance="accent"
-            mode="tertiary"
+          <PaginationNavigationButton
+            type="next"
+            style={navigationButtonsStyle}
+            caption={nextButtonCaption}
+            Icon={Icon24ChevronCompactRight}
+            a11yLabel={nextButtonLabel}
             disabled={isLastPage || disabled}
             onClick={handleNextClick}
           />
