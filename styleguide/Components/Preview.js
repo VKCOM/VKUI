@@ -1,4 +1,4 @@
-import React, { Profiler } from 'react';
+import React from 'react';
 import PlaygroundError from '@rsg-components/PlaygroundError';
 import PreviewParent from '@rsg-components/Preview/Preview';
 import ReactExample from '@rsg-components/ReactExample/ReactExample';
@@ -16,12 +16,10 @@ import {
 import { BREAKPOINTS } from '@vkui/shared/breakpoints';
 import { getVKUIConfigProviderTokensClassNamesWithGlobalAppearance } from '../lib/theme';
 import { useLoadThemeTokens } from '../lib/theme/useLoadThemeTokens';
-import { perfLogger, useViewPortSize } from '../utils';
+import { useViewPortSize } from '../utils';
 import { Frame } from './Frame/Frame';
 import { StyleGuideContext } from './StyleGuide/StyleGuideRenderer';
 import './Preview.css';
-
-const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
 
 const Layout = ({ children }) => {
   const platform = usePlatform();
@@ -123,67 +121,65 @@ class Preview extends PreviewParent {
           const appRootLayout = showLayoutSelect ? styleGuideContext.layout : undefined;
 
           return (
-            <Profiler id={exampleId} onRender={logPerf}>
-              <ConfigProvider
-                platform={styleGuideContext.platform}
-                appearance={styleGuideContext.appearance}
-                tokensClassNames={getVKUIConfigProviderTokensClassNamesWithGlobalAppearance(
-                  styleGuideContext.themeName,
-                  styleGuideContext.appearanceOptions,
+            <ConfigProvider
+              platform={styleGuideContext.platform}
+              appearance={styleGuideContext.appearance}
+              tokensClassNames={getVKUIConfigProviderTokensClassNamesWithGlobalAppearance(
+                styleGuideContext.themeName,
+                styleGuideContext.appearanceOptions,
+              )}
+            >
+              <div
+                className={classNames(
+                  'Preview',
+                  `Preview--${styleGuideContext.platform}`,
+                  layout && 'Preview--layout',
                 )}
               >
                 <div
-                  className={classNames(
-                    'Preview',
-                    `Preview--${styleGuideContext.platform}`,
-                    layout && 'Preview--layout',
-                  )}
+                  className="Preview__shadow"
+                  style={
+                    adaptivity
+                      ? {
+                          maxWidth: width,
+                          maxHeight: styleGuideContext.height,
+                        }
+                      : null
+                  }
+                />
+                <div
+                  className="Preview__in"
+                  style={adaptivity ? { height: styleGuideContext.height, width } : null}
                 >
-                  <div
-                    className="Preview__shadow"
-                    style={
-                      adaptivity
-                        ? {
-                            maxWidth: width,
-                            maxHeight: styleGuideContext.height,
-                          }
-                        : null
-                    }
-                  />
-                  <div
-                    className="Preview__in"
-                    style={adaptivity ? { height: styleGuideContext.height, width } : null}
-                  >
-                    {error ? (
-                      <PlaygroundError message={error} />
-                    ) : iframe ? (
-                      <Frame
-                        style={adaptivity ? { width, height: styleGuideContext.height } : undefined}
-                        platform={styleGuideContext.platform}
-                        appearanceOptions={styleGuideContext.appearanceOptions}
-                        themeName={styleGuideContext.themeName}
+                  {error ? (
+                    <PlaygroundError message={error} />
+                  ) : iframe ? (
+                    <Frame
+                      style={adaptivity ? { width, height: styleGuideContext.height } : undefined}
+                      platform={styleGuideContext.platform}
+                      appearanceOptions={styleGuideContext.appearanceOptions}
+                      themeName={styleGuideContext.themeName}
+                    >
+                      <Config
+                        {...styleGuideContext}
+                        hasPointer={hasPointer}
+                        layout={appRootLayout}
+                        exampleId={exampleId}
                       >
-                        <Config
-                          {...styleGuideContext}
-                          hasPointer={hasPointer}
-                          layout={appRootLayout}
-                          exampleId={exampleId}
-                        >
-                          {layout ? <Layout>{example}</Layout> : example}
-                        </Config>
-                      </Frame>
-                    ) : (
-                      <WithoutFrame
-                        themeName={styleGuideContext.themeName}
-                        appearanceOptions={styleGuideContext.appearanceOptions}
-                      >
-                        {example}
-                      </WithoutFrame>
-                    )}
-                  </div>
+                        {layout ? <Layout>{example}</Layout> : example}
+                      </Config>
+                    </Frame>
+                  ) : (
+                    <WithoutFrame
+                      themeName={styleGuideContext.themeName}
+                      appearanceOptions={styleGuideContext.appearanceOptions}
+                    >
+                      {example}
+                    </WithoutFrame>
+                  )}
                 </div>
-              </ConfigProvider>
-            </Profiler>
+              </div>
+            </ConfigProvider>
           );
         }}
       </StyleGuideContext.Consumer>

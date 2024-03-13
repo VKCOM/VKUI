@@ -17,8 +17,6 @@ module.exports = merge(webpackCommonConfig, {
         '../node_modules/react-styleguidist/lib/client/rsg-components/',
       ),
       '@vkui': path.resolve(__dirname, `../${VKUI_PACKAGE.PATHS.SRC_DIR}`),
-      'react-dom$': 'react-dom/profiling',
-      'scheduler/tracing': 'scheduler/tracing-profiling',
     },
   },
   externals: [
