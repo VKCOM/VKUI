@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
+import { baselineComponent, userEvent } from '../../testing/utils';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { HorizontalScroll } from './HorizontalScroll';
 
 describe('HorizontalScroll', () => {
@@ -27,24 +29,6 @@ describe('HorizontalScroll', () => {
   });
 
   it('calculates and shows arrow on hover', async () => {
-    function mockRef(element: HTMLDivElement) {
-      if (!element) {
-        return;
-      }
-
-      // to make sure we really call the logic that calculates show flag using element properties
-      // we return 0 for first initial render, so, arrow won't be visible,
-      // and on second call, we return value, which will allows us to see arrow on hover.
-      jest
-        .spyOn(element, 'scrollWidth', 'get')
-        .mockImplementationOnce(() => {
-          return 0;
-        })
-        .mockImplementation(() => {
-          return 300;
-        });
-    }
-
     render(
       <HorizontalScroll getRef={mockRef} data-testid="horizontal-scroll">
         <div style={{ width: '800px', height: '50px' }} />
@@ -57,4 +41,51 @@ describe('HorizontalScroll', () => {
 
     await screen.findByTestId('ScrollArrow');
   });
+
+  it('disables navigation to arrows by keyboard', async () => {
+    jest.useFakeTimers();
+
+    const result = render(
+      <AdaptivityProvider hasPointer>
+        <HorizontalScroll getRef={mockRef} data-testid="horizontal-scroll" showArrows="always">
+          <button
+            type="button"
+            data-testid="focusable-element"
+            style={{ width: '800px', height: '50px' }}
+            onClick={noop}
+          >
+            Button
+          </button>
+        </HorizontalScroll>
+      </AdaptivityProvider>,
+    );
+
+    expect(document.activeElement).toBe(document.body);
+
+    await userEvent.tab();
+    expect(document.activeElement).toBe(result.getByTestId('focusable-element'));
+
+    await userEvent.tab();
+    expect(document.activeElement).toBe(document.body);
+
+    act(jest.runAllTimers);
+  });
 });
+
+function mockRef(element: HTMLDivElement) {
+  if (!element) {
+    return;
+  }
+
+  // to make sure we really call the logic that calculates show flag using element properties
+  // we return 0 for first initial render, so, arrow won't be visible,
+  // and on second call, we return value, which will allows us to see arrow on hover.
+  jest
+    .spyOn(element, 'scrollWidth', 'get')
+    .mockImplementationOnce(() => {
+      return 0;
+    })
+    .mockImplementation(() => {
+      return 300;
+    });
+}
