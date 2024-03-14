@@ -44,7 +44,7 @@ export const File = ({
       getRootRef={getRootRef}
       disabled={restProps.disabled}
     >
-      <VisuallyHidden {...restProps} Component="input" type="file" getRootRef={getRef} />
+      <VisuallyHidden title="" {...restProps} Component="input" type="file" getRootRef={getRef} />
       {children}
     </Button>
   );
