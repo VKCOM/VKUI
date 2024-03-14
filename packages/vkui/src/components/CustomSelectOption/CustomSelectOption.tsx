@@ -5,6 +5,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CustomSelectOption.module.css';
 
 const sizeYClassNames = {
@@ -106,7 +107,10 @@ export const CustomSelectOption = ({
       <div className={styles['CustomSelectOption__main']}>
         <div className={styles['CustomSelectOption__children']}>{children}</div>
         {hasReactNode(description) && (
-          <Footnote className={styles['CustomSelectOption__description']}>{description}</Footnote>
+          <Footnote className={styles['CustomSelectOption__description']}>
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
+            {description}
+          </Footnote>
         )}
       </div>
       <div className={styles['CustomSelectOption__after']}>
