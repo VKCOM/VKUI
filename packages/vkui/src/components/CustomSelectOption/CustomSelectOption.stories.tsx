@@ -1,6 +1,14 @@
-import { Meta, StoryObj } from '@storybook/react';
+import * as React from 'react';
+import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
+import type { PartialStoryFn } from '@storybook/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { CustomSelectOption, CustomSelectOptionProps } from './CustomSelectOption';
+
+const withListBox = (Story: PartialStoryFn<ReactRenderer>) => (
+  <div role="listbox" aria-label="Список администраторов">
+    <Story />
+  </div>
+);
 
 const story: Meta<CustomSelectOptionProps> = {
   title: 'Forms/CustomSelectOption',
@@ -18,4 +26,5 @@ export const Playground: Story = {
     children: 'Игорь Федоров',
     description: 'Россия, Санкт-Петербург',
   },
+  decorators: [withListBox],
 };
