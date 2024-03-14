@@ -151,6 +151,7 @@ const ExampleUseCases = () => {
 
 const buttonText = 'Button';
 const stretchedButtonText = 'Button (stretched)';
+const buttonWithIconText = 'Button with icon';
 
 const buttonGroupHighlightStyles = {
   border: '2px dotted tomato',
@@ -179,8 +180,19 @@ const ExampleBase = () => {
           <Button size="l" appearance="accent" stretched>
             {stretchedButtonText}
           </Button>
-          <Button size="l" appearance="accent" before={<Icon24Add />} />
-          <Button size="l" appearance="accent" before={<Icon24Add />} stretched />
+          <Button
+            size="l"
+            appearance="accent"
+            before={<Icon24Add />}
+            aria-label={buttonWithIconText}
+          />
+          <Button
+            size="l"
+            appearance="accent"
+            before={<Icon24Add />}
+            aria-label={buttonWithIconText}
+            stretched
+          />
         </ButtonGroup>
       </Div>
       <FormItem>
@@ -237,14 +249,24 @@ const ExampleNested = () => {
             <Button size="l" appearance="accent" stretched>
               {stretchedButtonText}
             </Button>
-            <Button size="l" appearance="accent" before={<Icon24Add />} />
+            <Button
+              size="l"
+              appearance="accent"
+              before={<Icon24Add />}
+              aria-label={buttonWithIconText}
+            />
           </ButtonGroup>
 
           <ButtonGroup mode="horizontal" gap="m" stretched style={buttonGroupHighlightStyles}>
             <Button size="l" appearance="accent">
               {buttonText}
             </Button>
-            <Button size="l" appearance="accent" before={<Icon24Add />} />
+            <Button
+              size="l"
+              appearance="accent"
+              before={<Icon24Add />}
+              aria-label={buttonWithIconText}
+            />
           </ButtonGroup>
 
           <ButtonGroup
@@ -256,7 +278,12 @@ const ExampleNested = () => {
             <Button size="l" appearance="accent">
               {buttonText}
             </Button>
-            <Button size="l" appearance="accent" before={<Icon24Add />} />
+            <Button
+              size="l"
+              appearance="accent"
+              before={<Icon24Add />}
+              aria-label={buttonWithIconText}
+            />
           </ButtonGroup>
 
           <ButtonGroup mode="horizontal" gap="m" stretched style={buttonGroupHighlightStyles}>
@@ -274,9 +301,20 @@ const ExampleNested = () => {
             <Button size="l" appearance="accent" stretched>
               {stretchedButtonText}
             </Button>
-            <Button size="l" appearance="accent" before={<Icon24Add />} stretched />
+            <Button
+              size="l"
+              appearance="accent"
+              before={<Icon24Add />}
+              aria-label={buttonWithIconText}
+              stretched
+            />
             <ButtonGroup mode="horizontal" stretched style={buttonGroupHighlightStyles}>
-              <Button size="l" appearance="accent" before={<Icon24Add />} />
+              <Button
+                size="l"
+                appearance="accent"
+                before={<Icon24Add />}
+                aria-label={buttonWithIconText}
+              />
               <Button size="l" appearance="accent" stretched>
                 {stretchedButtonText}
               </Button>
@@ -312,15 +350,31 @@ const ExampleNested = () => {
             <Button size="l" appearance="accent">
               {buttonText}
             </Button>
-            <Button size="l" appearance="accent" before={<Icon24Add />} />
+            <Button
+              size="l"
+              appearance="accent"
+              before={<Icon24Add />}
+              aria-label={buttonWithIconText}
+            />
           </ButtonGroup>
           <ButtonGroup mode="vertical" gap="m" stretched={false} style={buttonGroupHighlightStyles}>
             <Button size="l" appearance="accent" stretched>
               {stretchedButtonText}
             </Button>
-            <Button size="l" appearance="accent" before={<Icon24Add />} stretched />
+            <Button
+              size="l"
+              appearance="accent"
+              before={<Icon24Add />}
+              aria-label={buttonWithIconText}
+              stretched
+            />
             <ButtonGroup mode="horizontal" stretched style={buttonGroupHighlightStyles}>
-              <Button size="l" appearance="accent" before={<Icon24Add />} />
+              <Button
+                size="l"
+                appearance="accent"
+                before={<Icon24Add />}
+                aria-label={buttonWithIconText}
+              />
               <Button size="l" appearance="accent" stretched>
                 {stretchedButtonText}
               </Button>

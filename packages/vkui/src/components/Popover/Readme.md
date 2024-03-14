@@ -169,7 +169,7 @@ const PopoverWithTriggerManual = () => {
       content={({ onClose }) => (
         <div style={{ display: 'flex', position: 'relative', width: 180, height: 100 }}>
           <div style={{ position: 'absolute', top: 0, right: 0 }}>
-            <IconButton onClick={onClose}>
+            <IconButton label="Закрыть" onClick={onClose}>
               <Icon16Clear />
             </IconButton>
           </div>
