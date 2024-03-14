@@ -35,6 +35,14 @@
   }
 }
 
+.vkui--layout-card {
+  background: var(--vkui--color_background);
+}
+
+.vkui--layout-plain {
+  background: var(--vkui--color_background_content);
+}
+
 .vkui--sizeY-compact {
   --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--compact);
 }
@@ -44,15 +52,6 @@
     --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--compact);
   }
 }
-
-.vkui--layout-card {
-  background: var(--vkui--color_background);
-}
-
-.vkui--layout-plain {
-  background: var(--vkui--color_background_content);
-}
-
 /* отключаем нативный pull-to-refresh при взаимодействии с компонентом
  * PullToRefresh или при открывании модалки */
 .vkui--disable-overscroll-behavior {
