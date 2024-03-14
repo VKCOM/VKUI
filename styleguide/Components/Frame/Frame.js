@@ -13,23 +13,26 @@ const FrameDomProvider = ({ platform, appearanceOptions, themeName, children }) 
   const loaded = useLoadThemeTokens(themeName, appearanceOptions, frame.document);
 
   React.useEffect(() => {
+    const hotObservers = [];
+
     // Пихаем в iFrame с примером спрайты для иконок
     const sprite = document.getElementById('__SVG_SPRITE_NODE__');
-    const masks = document.getElementById('__SVG_MASKS_NODE__');
 
     if (sprite) {
       frame.document.body.appendChild(sprite.cloneNode(true));
     }
 
-    if (masks) {
-      frame.document.body.appendChild(masks.cloneNode(true));
-    }
+    const hotIconChange = new MutationObserver(() => {
+      frame.document.getElementById('__SVG_SPRITE_NODE__').remove();
+      frame.document.body.appendChild(sprite.cloneNode(true));
+    });
+    hotIconChange.observe(sprite, { characterData: true, childList: true });
+    hotObservers.push(hotIconChange);
 
     frame.document.querySelector('.frame-content').setAttribute('id', 'root');
 
     // Пихаем в iFrame vkui стили
     const frameAssets = document.createDocumentFragment();
-    const hotObservers = [];
     Array.from(document.getElementsByClassName('vkui-style')).map((style) => {
       const frameStyle = style.cloneNode(true);
       frameAssets.appendChild(frameStyle);
