@@ -63,16 +63,32 @@ module.exports = {
       text: source,
       version: 0,
     });
-    return parser.parseWithProgramProvider(file, function () {
-      if (languageService) {
+
+    const components = parser
+      .parseWithProgramProvider(file, function () {
+        if (languageService) {
+          return languageService.getProgram();
+        }
+
+        const servicesHost = createServiceHost(tsConfigFile.options, filesCache);
+
+        languageService = ts.createLanguageService(servicesHost, ts.createDocumentRegistry());
+
         return languageService.getProgram();
-      }
+      })
+      .map((component) => {
+        Object.keys(component.props).forEach((key) => {
+          if (component.props[key].parent?.fileName?.includes('node_modules')) {
+            component.props[key].fromNodeModules = true;
+          }
 
-      const servicesHost = createServiceHost(tsConfigFile.options, filesCache);
+          delete component.props[key].declarations;
+          delete component.props[key].parent;
+        });
 
-      languageService = ts.createLanguageService(servicesHost, ts.createDocumentRegistry());
+        return component;
+      });
 
-      return languageService.getProgram();
-    });
+    return components;
   },
 };
