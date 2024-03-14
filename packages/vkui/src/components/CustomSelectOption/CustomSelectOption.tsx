@@ -108,8 +108,7 @@ export const CustomSelectOption = ({
         <div className={styles['CustomSelectOption__children']}>{children}</div>
         {hasReactNode(description) && (
           <>
-            <VisuallyHidden>&nbsp;</VisuallyHidden>
-            <Footnote className={styles['CustomSelectOption__description']}>{description}</Footnote>
+            <Footnote className={styles['CustomSelectOption__description']}><VisuallyHidden>&nbsp;</VisuallyHidden>{description}</Footnote>
           </>
         )}
       </div>
