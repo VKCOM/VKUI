@@ -19,7 +19,6 @@ import {
   importantCountries,
 } from '@vkui/testing/mock';
 import * as VKUI from '../packages/vkui/src';
-import { perfLogger } from './utils';
 
 const unstablePrefix = 'unstable_';
 const ui = { ...VKUI };
@@ -59,7 +58,6 @@ window.getAvatarUrl = getAvatarUrl;
 window.IconExampleForOverlayBasedOnImageBaseSize = IconExampleForOverlayBasedOnImageBaseSize;
 window.IconExampleForFallbackBasedOnImageBaseSize = IconExampleForFallbackBasedOnImageBaseSize;
 window.IconExampleForBadgeBasedOnImageBaseSize = IconExampleForBadgeBasedOnImageBaseSize;
-window.perfLogger = perfLogger;
 
 window.useState = useState;
 window.useRef = useRef;
