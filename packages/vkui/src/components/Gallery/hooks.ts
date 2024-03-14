@@ -5,9 +5,10 @@ import { useDOM } from '../../lib/dom';
 export function useAutoPlay(timeout: number, slideIndex: number, callbackFn: VoidFunction) {
   const { clear: clearAutoPlay, set: setAutoPlay } = useTimeout(callbackFn, timeout);
   const { document } = useDOM();
+  const idle = React.useRef(false);
 
   React.useEffect(
-    () => (timeout ? setAutoPlay() : clearAutoPlay()),
+    () => (timeout && !idle.current ? setAutoPlay() : clearAutoPlay()),
     [timeout, slideIndex, clearAutoPlay, setAutoPlay],
   );
 
@@ -19,12 +20,12 @@ export function useAutoPlay(timeout: number, slideIndex: number, callbackFn: Voi
       }
 
       const changeAutoPlay = () => {
-        if (document.visibilityState === 'visible') {
+        if (document.hidden) {
+          idle.current = true;
           clearAutoPlay();
+        } else {
+          idle.current = false;
           setAutoPlay();
-        }
-        if (document.visibilityState === 'hidden') {
-          clearAutoPlay();
         }
       };
 
