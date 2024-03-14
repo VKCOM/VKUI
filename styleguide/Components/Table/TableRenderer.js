@@ -59,7 +59,7 @@ export const TableRenderer = ({ columns, rows, getRowKey }) => {
   const vkuiRows = [];
 
   rows.forEach((prop) => {
-    if (prop.parent?.fileName?.includes('node_modules')) {
+    if (prop.fromNodeModules) {
       nodeModulesRows.push(prop);
     } else {
       vkuiRows.push(prop);
