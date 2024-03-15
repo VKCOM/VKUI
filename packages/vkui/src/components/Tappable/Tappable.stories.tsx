@@ -17,7 +17,7 @@ type Story = StoryObj<TappableProps>;
 export const Playground: Story = {
   render: (args) => (
     <Tappable {...args} onClick={noop}>
-      <div style={{ padding: 16 }}>Tappable</div>
+      <div style={{ padding: 16 }}>Кнопка</div>
     </Tappable>
   ),
 };
