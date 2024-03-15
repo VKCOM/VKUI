@@ -19,6 +19,7 @@ type Story = StoryObj<ButtonGroupProps>;
 
 const ButtonText = 'Button';
 const StretchedButtonText = 'Button (stretched)';
+const ButtonWithIconLabel = 'Кнопка с иконкой';
 
 export const Playground: Story = {
   args: {
@@ -30,20 +31,30 @@ export const Playground: Story = {
         <Button size="l" appearance="accent" stretched>
           {StretchedButtonText}
         </Button>
-        <Button size="m" appearance="accent" before={<Icon24Add />} aria-label="Button with icon" />
         <Button
           size="m"
           appearance="accent"
           before={<Icon24Add />}
-          aria-label="Button with icon"
+          aria-label={ButtonWithIconLabel}
+        />
+        <Button
+          size="m"
+          appearance="accent"
+          before={<Icon24Add />}
+          aria-label={ButtonWithIconLabel}
           stretched
         />
-        <Button size="s" appearance="accent" before={<Icon16Add />} aria-label="Button with icon" />
         <Button
           size="s"
           appearance="accent"
           before={<Icon16Add />}
-          aria-label="Button with icon"
+          aria-label={ButtonWithIconLabel}
+        />
+        <Button
+          size="s"
+          appearance="accent"
+          before={<Icon16Add />}
+          aria-label={ButtonWithIconLabel}
           stretched
         />
       </>
@@ -69,7 +80,7 @@ export const NestedButtonGroup: Story = {
             size="l"
             appearance="accent"
             before={<Icon24Add />}
-            aria-label="Button with icon"
+            aria-label={ButtonWithIconLabel}
           />
         </ButtonGroup>
 
@@ -81,7 +92,7 @@ export const NestedButtonGroup: Story = {
             size="l"
             appearance="accent"
             before={<Icon24Add />}
-            aria-label="Button with icon"
+            aria-label={ButtonWithIconLabel}
           />
         </ButtonGroup>
 
@@ -93,7 +104,7 @@ export const NestedButtonGroup: Story = {
             size="l"
             appearance="accent"
             before={<Icon24Add />}
-            aria-label="Button with icon"
+            aria-label={ButtonWithIconLabel}
           />
         </ButtonGroup>
 
@@ -117,7 +128,7 @@ export const NestedButtonGroup: Story = {
             size="l"
             appearance="accent"
             before={<Icon24Add />}
-            aria-label="Button with icon"
+            aria-label={ButtonWithIconLabel}
             stretched
           />
           <ButtonGroup mode="horizontal" stretched style={ButtonGroupHighlightStyles}>
@@ -125,7 +136,7 @@ export const NestedButtonGroup: Story = {
               size="l"
               appearance="accent"
               before={<Icon24Add />}
-              aria-label="Button with icon"
+              aria-label={ButtonWithIconLabel}
             />
             <Button size="l" appearance="accent" stretched>
               {StretchedButtonText}

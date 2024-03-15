@@ -151,7 +151,7 @@ const ExampleUseCases = () => {
 
 const buttonText = 'Button';
 const stretchedButtonText = 'Button (stretched)';
-const buttonWithIconText = 'Button with icon';
+const buttonWithIconLabel = 'Кнопка с иконкой';
 
 const buttonGroupHighlightStyles = {
   border: '2px dotted tomato',
@@ -184,13 +184,13 @@ const ExampleBase = () => {
             size="l"
             appearance="accent"
             before={<Icon24Add />}
-            aria-label={buttonWithIconText}
+            aria-label={buttonWithIconLabel}
           />
           <Button
             size="l"
             appearance="accent"
             before={<Icon24Add />}
-            aria-label={buttonWithIconText}
+            aria-label={buttonWithIconLabel}
             stretched
           />
         </ButtonGroup>
@@ -253,7 +253,7 @@ const ExampleNested = () => {
               size="l"
               appearance="accent"
               before={<Icon24Add />}
-              aria-label={buttonWithIconText}
+              aria-label={buttonWithIconLabel}
             />
           </ButtonGroup>
 
@@ -265,7 +265,7 @@ const ExampleNested = () => {
               size="l"
               appearance="accent"
               before={<Icon24Add />}
-              aria-label={buttonWithIconText}
+              aria-label={buttonWithIconLabel}
             />
           </ButtonGroup>
 
@@ -282,7 +282,7 @@ const ExampleNested = () => {
               size="l"
               appearance="accent"
               before={<Icon24Add />}
-              aria-label={buttonWithIconText}
+              aria-label={buttonWithIconLabel}
             />
           </ButtonGroup>
 
@@ -305,7 +305,7 @@ const ExampleNested = () => {
               size="l"
               appearance="accent"
               before={<Icon24Add />}
-              aria-label={buttonWithIconText}
+              aria-label={buttonWithIconLabel}
               stretched
             />
             <ButtonGroup mode="horizontal" stretched style={buttonGroupHighlightStyles}>
@@ -313,7 +313,7 @@ const ExampleNested = () => {
                 size="l"
                 appearance="accent"
                 before={<Icon24Add />}
-                aria-label={buttonWithIconText}
+                aria-label={buttonWithIconLabel}
               />
               <Button size="l" appearance="accent" stretched>
                 {stretchedButtonText}
@@ -354,7 +354,7 @@ const ExampleNested = () => {
               size="l"
               appearance="accent"
               before={<Icon24Add />}
-              aria-label={buttonWithIconText}
+              aria-label={buttonWithIconLabel}
             />
           </ButtonGroup>
           <ButtonGroup mode="vertical" gap="m" stretched={false} style={buttonGroupHighlightStyles}>
@@ -365,7 +365,7 @@ const ExampleNested = () => {
               size="l"
               appearance="accent"
               before={<Icon24Add />}
-              aria-label={buttonWithIconText}
+              aria-label={buttonWithIconLabel}
               stretched
             />
             <ButtonGroup mode="horizontal" stretched style={buttonGroupHighlightStyles}>
@@ -373,7 +373,7 @@ const ExampleNested = () => {
                 size="l"
                 appearance="accent"
                 before={<Icon24Add />}
-                aria-label={buttonWithIconText}
+                aria-label={buttonWithIconLabel}
               />
               <Button size="l" appearance="accent" stretched>
                 {stretchedButtonText}
