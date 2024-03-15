@@ -16,5 +16,6 @@ type Story = StoryObj<ImageProps>;
 export const Playground: Story = {
   args: {
     src: getAvatarUrl('app_shorm_online'),
+    alt: 'Приложение шторм онлайн',
   },
 };

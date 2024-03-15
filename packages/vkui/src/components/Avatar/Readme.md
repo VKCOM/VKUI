@@ -82,7 +82,7 @@ const OthersFeatures = () => {
               )
             )}
             {overlay && (
-              <Avatar.Overlay {...overlay}>
+              <Avatar.Overlay aria-label="Кнопка для изображения" {...overlay}>
                 <IconExampleForOverlayBasedOnImageBaseSize />
               </Avatar.Overlay>
             )}
