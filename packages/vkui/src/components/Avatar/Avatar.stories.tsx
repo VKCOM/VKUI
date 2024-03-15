@@ -75,6 +75,9 @@ export default story;
 type Story = StoryObj<AvatarStoryProps>;
 
 export const Playground: Story = {
+  args: {
+    alt: 'Фотография Татьяны Плуталовой',
+  },
   render: ({ badge, overlay, children, size = 48, ...args }) => (
     <Avatar src={args.initials ? undefined : getAvatarUrl('user_id34')} {...args} size={size}>
       {size >= 24 && badge}
@@ -87,6 +90,7 @@ export const Playground: Story = {
 export const WithBadge: Story = {
   ...Playground,
   args: {
+    ...Playground.args,
     children: (
       <Avatar.Badge>
         <IconExampleForBadgeBasedOnImageBaseSize />
@@ -98,8 +102,9 @@ export const WithBadge: Story = {
 export const WithOverlay: Story = {
   ...Playground,
   args: {
+    ...Playground.args,
     children: (
-      <Avatar.Overlay>
+      <Avatar.Overlay aria-label="Кнопка для изображения">
         <IconExampleForOverlayBasedOnImageBaseSize />
       </Avatar.Overlay>
     ),

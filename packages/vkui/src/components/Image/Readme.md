@@ -4,7 +4,10 @@
 const Default = () => {
   return (
     <Group header={<Header mode="secondary">По умолчанию</Header>}>
-      <SimpleCell before={<Image src={getAvatarUrl('app_shorm_online')} />} description="Ролевая">
+      <SimpleCell
+        before={<Image src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн" />}
+        description="Ролевая"
+      >
         Шторм онлайн
       </SimpleCell>
     </Group>
@@ -39,6 +42,7 @@ const OthersFeatures = () => {
             key={size}
             size={size}
             src={getAvatarUrl('app_shorm_online')}
+            alt="Приложение шторм онлайн"
             borderRadius={borderRadius}
           >
             {size >= 24 && badge && (
@@ -47,7 +51,7 @@ const OthersFeatures = () => {
               </Image.Badge>
             )}
             {overlay && (
-              <Image.Overlay {...overlay}>
+              <Image.Overlay aria-label="Кнопка для изображения" {...overlay}>
                 <IconExampleForOverlayBasedOnImageBaseSize />
               </Image.Overlay>
             )}
