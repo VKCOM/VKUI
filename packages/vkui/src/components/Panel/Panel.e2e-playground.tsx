@@ -28,7 +28,6 @@ export const PanelPlayground = (props: ComponentPlaygroundProps) => {
             </React.Fragment>,
           ],
           $adaptivity: 'x',
-          mode: ['plain', 'card', undefined],
         },
       ]}
     >
@@ -45,6 +44,32 @@ export const PanelPlayground = (props: ComponentPlaygroundProps) => {
         >
           <Panel {...props} />
         </div>
+      )}
+    </ComponentPlayground>
+  );
+};
+
+export const PanelModePlayground = (props: ComponentPlaygroundProps) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          $adaptivity: 'x',
+          mode: ['plain', 'card', undefined],
+        },
+      ]}
+    >
+      {(props: PanelProps) => (
+        <Panel {...props}>
+          <div style={{ padding: '8px' }}>
+            <Group mode={props.mode}>
+              <div style={{ minHeight: '100px', minWidth: '100px' }}>
+                Text within Group with mode {props.mode}
+              </div>
+            </Group>
+          </div>
+        </Panel>
       )}
     </ComponentPlayground>
   );
