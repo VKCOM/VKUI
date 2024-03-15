@@ -42,6 +42,11 @@ export function multiRef<T>(...refs: Array<React.Ref<T> | undefined>): React.Ref
 export const stopPropagation = <T extends React.SyntheticEvent>(event: T) =>
   event.stopPropagation();
 
+export const preventEventBubbling = <T extends React.SyntheticEvent>(event: T) => {
+  event.preventDefault();
+  event.stopPropagation();
+};
+
 export function addClassNameToElement(element: HTMLElement, className: string) {
   const elementClassName = element.getAttribute('class') || '';
   const updatedClassName = `${elementClassName}${elementClassName ? ' ' : ''}${className}`;

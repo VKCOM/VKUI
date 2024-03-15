@@ -257,6 +257,8 @@ export { TableRow } from './components/TableRow/TableRow';
 export type { TableRowProps } from './components/TableRow/TableRow';
 export { TableCell } from './components/TableCell/TableCell';
 export type { TableCellProps } from './components/TableCell/TableCell';
+export { TableHeaderLabel } from './components/TableHeaderLabel/TableHeaderLabel';
+export type { TableHeaderLabelProps } from './components/TableHeaderLabel/TableHeaderLabel';
 export { TableHeader } from './components/TableHeader/TableHeader';
 export type { TableHeaderProps } from './components/TableHeader/TableHeader';
 export { TableBody } from './components/TableBody/TableBody';
