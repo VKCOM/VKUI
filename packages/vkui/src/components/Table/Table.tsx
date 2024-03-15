@@ -11,9 +11,14 @@ export interface TableProps
     React.TableHTMLAttributes<HTMLTableElement>,
     HasRootRef<HTMLElement> {}
 
-export const Table = ({ padding = DEFAULT_TABLE_PADDING, children, ...restProps }: TableProps) => {
+export const Table = ({
+  padding = DEFAULT_TABLE_PADDING,
+  enableZebraStripes,
+  children,
+  ...restProps
+}: TableProps) => {
   return (
-    <TableContext.Provider value={{ padding }}>
+    <TableContext.Provider value={{ padding, enableZebraStripes }}>
       <RootComponent Component="table" baseClassName={styles.Table} {...restProps}>
         {children}
       </RootComponent>

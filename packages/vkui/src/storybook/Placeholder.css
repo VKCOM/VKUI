@@ -1,0 +1,26 @@
+.Placeholder {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  text-align: center;
+}
+
+.Placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  border-radius: 10px;
+  background-size: contain;
+  background-image: url('./assets/chessSquare.png');
+  overflow: hidden;
+}
+
+.Placeholder__text {
+  position: relative;
+  max-inline-size: 120px;
+  color: var(--vkui--color_text_secondary);
+}

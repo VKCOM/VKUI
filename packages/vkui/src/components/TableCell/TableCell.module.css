@@ -24,8 +24,15 @@
 
 .TableCell--section-header,
 .TableCell--section-footer {
+  color: var(--vkui--color_text_subhead);
   background-color: var(--vkui--color_background_secondary);
 }
+
+/* stylelint-disable selector-max-type */
+tr:nth-child(even) .TableCell--zebra-stripes {
+  background-color: var(--vkui--color_background_tertiary);
+}
+/* stylelint-enable selector-max-type */
 
 .TableCell--padding-m {
   padding-block-start: 8px;
@@ -61,34 +68,42 @@
 table > tr:first-of-type > .TableCell:first-child, /* тут нужен именно :first-of-type, т.к. может быть <caption> до */
 thead > tr:first-child > .TableCell:first-child,
 tbody:first-child > :first-child > .TableCell:first-child {
-  border-start-start-radius: 8px;
+  border-start-start-radius: var(--vkui--size_border_radius--regular);
 }
 
 table > tr:first-of-type > .TableCell:last-child, /* тут нужен именно :first-of-type, т.к. может быть <caption> до */
 thead > tr:first-child > .TableCell:last-child,
 tbody:first-child > :first-child > .TableCell:last-child {
-  border-start-end-radius: 8px;
+  border-start-end-radius: var(--vkui--size_border_radius--regular);
 }
 
 table > tr:last-child > .TableCell:first-child, /* тут нужен именно :first-child, а не :first-of-type */
 tbody:last-child > :last-child > .TableCell:first-child,
 tfoot > tr:last-child > .TableCell:first-child {
-  border-end-start-radius: 8px;
+  border-end-start-radius: var(--vkui--size_border_radius--regular);
 }
 
 table > tr:last-child > .TableCell:last-child, /* тут нужен именно :first-child, а не :first-of-type */
 tbody:last-child > :last-child > .TableCell:last-child,
 tfoot > :last-child > .TableCell:last-child {
-  border-end-end-radius: 8px;
+  border-end-end-radius: var(--vkui--size_border_radius--regular);
 }
 
 /*
  * Удаляем разделитель у ячейках в конце таблицы.
  *
- * Т.к. <thead> должен быть объявлен в конце, то тут не указываем его тут.
+ * Т.к. <thead> должен быть объявлен только в начале, то тут не указываем его тут.
  */
 table > tr:last-child > .TableCell,
 tbody > tr:last-child > .TableCell,
 tfoot > tr:last-child > .TableCell {
   border-block-end: unset;
+}
+
+/*
+ * Для <tfoot> нужно выставить разделить сверху, т.к. он может быть sticky.
+ */
+tfoot > tr:last-child > .TableCell {
+  border-block-start: var(--vkui--size_border--regular) solid
+    var(--vkui--color_separator_primary_alpha);
 }
