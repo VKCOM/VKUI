@@ -26,6 +26,7 @@ function makePostcssPlugins({
   isProduction = process.env.NODE_ENV === 'production',
   isCssModulesFile = false,
   isESNext = false,
+  isStorybook = process.env.SANDBOX === '.storybook',
 } = {}) {
   const plugins = [
     // Обработка css импортов
@@ -55,7 +56,7 @@ function makePostcssPlugins({
   // Обработка CSS Logical
   //
   // https://caniuse.com/css-logical-props
-  if (!isESNext) {
+  if (!isESNext && !isStorybook) {
     plugins.push(postcssLogical());
   }
 

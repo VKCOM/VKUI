@@ -23,7 +23,14 @@ const CenteredStyle: React.CSSProperties = {
 const channel = addons.getChannel();
 
 export const withVKUIWrapper: Decorator = (Component, context) => {
-  const { platform, appearance, hasPointer = false, hasCustomPanelHeaderAfter } = context.globals;
+  const {
+    platform,
+    appearance,
+    hasPointer = false,
+    hasCustomPanelHeaderAfter,
+    direction,
+    writingMode,
+  } = context.globals;
 
   // eslint-disable-next-line no-restricted-properties, react-hooks/rules-of-hooks
   React.useLayoutEffect(() => {
@@ -38,6 +45,11 @@ export const withVKUIWrapper: Decorator = (Component, context) => {
 
   const { centered } = context.parameters;
 
+  const style: React.CSSProperties = {
+    writingMode,
+    ...(centered ? CenteredStyle : {}),
+  };
+
   return (
     <ConfigProvider
       platform={platform}
@@ -45,7 +57,7 @@ export const withVKUIWrapper: Decorator = (Component, context) => {
       hasCustomPanelHeaderAfter={hasCustomPanelHeaderAfter}
     >
       <AdaptivityProvider hasPointer={hasPointer}>
-        <AppRoot style={centered ? CenteredStyle : undefined}>
+        <AppRoot style={style} dir={direction}>
           <Component />
         </AppRoot>
       </AdaptivityProvider>
