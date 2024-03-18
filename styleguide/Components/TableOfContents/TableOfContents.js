@@ -184,7 +184,7 @@ class TableOfContents extends React.PureComponent {
   };
 
   onSearchChange = (e) => {
-    const value = e.currentTarget.value;
+    const value = `${e.currentTarget.value}`.trim();
 
     if (value.length === 0) {
       this.searchResults = {};
@@ -192,10 +192,10 @@ class TableOfContents extends React.PureComponent {
       const section = this.pickSection(e.currentTarget.dataset.sectionName);
       this.searchResults = {
         ...this.searcResults,
-        ...this.search(section.sections, e.currentTarget.value),
+        ...this.search(section.sections, value),
       };
     }
-    this.setState({ search: e.currentTarget.value });
+    this.setState({ search: value });
   };
 
   search(sections, query = '', { exactMatch = false } = {}) {
