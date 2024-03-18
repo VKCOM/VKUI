@@ -1625,22 +1625,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/cascade-layer-name-parser@npm:^1.0.8":
-  version: 1.0.8
-  resolution: "@csstools/cascade-layer-name-parser@npm:1.0.8"
+"@csstools/cascade-layer-name-parser@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "@csstools/cascade-layer-name-parser@npm:1.0.9"
   peerDependencies:
-    "@csstools/css-parser-algorithms": ^2.6.0
-    "@csstools/css-tokenizer": ^2.2.3
-  checksum: 7102fa11c380a08061472249d3f8690b5bc3f21d7465c4cb06802a5018044561c85cc17088799c89aad82f64028f461ee905c3bfee0f0a28fd3882672017c877
+    "@csstools/css-parser-algorithms": ^2.6.1
+    "@csstools/css-tokenizer": ^2.2.4
+  checksum: 75eabf9e3707085ca38ec56869d8872156b250aae81d9e76c75ecca47264531963f918787acf8cf58f6ad32967d2151939a749e601579c34d23f06e5a60fc6d4
   languageName: node
   linkType: hard
 
-"@csstools/css-parser-algorithms@npm:^2.5.0, @csstools/css-parser-algorithms@npm:^2.6.0":
+"@csstools/css-parser-algorithms@npm:^2.5.0":
   version: 2.6.0
   resolution: "@csstools/css-parser-algorithms@npm:2.6.0"
   peerDependencies:
     "@csstools/css-tokenizer": ^2.2.3
   checksum: 06b48d5e59faec36f7491a6a1c495005878869971e850545a3dd9ee98e5a7c1c28e138137137e16b772e0aa23c29b9524a33e75be584ba3adcd1ef316e1753c0
+  languageName: node
+  linkType: hard
+
+"@csstools/css-parser-algorithms@npm:^2.6.1":
+  version: 2.6.1
+  resolution: "@csstools/css-parser-algorithms@npm:2.6.1"
+  peerDependencies:
+    "@csstools/css-tokenizer": ^2.2.4
+  checksum: 365745c2d6b3eaf26c77d09306c66012552d2b2e4cf94fabc230e8a6a954dab57867b24ebedd8bd518c8ced844c7f988e89144b5d9c76cfbddff126cfb2f153d
   languageName: node
   linkType: hard
 
@@ -1651,13 +1660,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/media-query-list-parser@npm:^2.1.7, @csstools/media-query-list-parser@npm:^2.1.8":
+"@csstools/css-tokenizer@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "@csstools/css-tokenizer@npm:2.2.4"
+  checksum: 306ce5603e1084d782e125caa86eadad2a3115e36ec824b855df7e48bb4821eec7ccf336990d37874d76cf18156586866975e46c6a75583f218c61735749af81
+  languageName: node
+  linkType: hard
+
+"@csstools/media-query-list-parser@npm:^2.1.7":
   version: 2.1.8
   resolution: "@csstools/media-query-list-parser@npm:2.1.8"
   peerDependencies:
     "@csstools/css-parser-algorithms": ^2.6.0
     "@csstools/css-tokenizer": ^2.2.3
   checksum: a14d32092481743c51ac5279b4e486d4ae50c14331e01de01ea900ba51f6b79eadd36a1fd5be840ab6c8f2c5275f0bbe29f035844ba566edd84edf9ce5470a06
+  languageName: node
+  linkType: hard
+
+"@csstools/media-query-list-parser@npm:^2.1.9":
+  version: 2.1.9
+  resolution: "@csstools/media-query-list-parser@npm:2.1.9"
+  peerDependencies:
+    "@csstools/css-parser-algorithms": ^2.6.1
+    "@csstools/css-tokenizer": ^2.2.4
+  checksum: c10c39ac23c38ccf6f21cc075ecced5cf9c98f237c559818d248b7b7ac08da5d2a92f80685a2958ef5862fb8cba4f12054f2fced5a18f8392d545934f52b42ff
   languageName: node
   linkType: hard
 
@@ -5839,9 +5865,9 @@ __metadata:
     jest-preset-stylelint: ^7.0.0
     lint-staged: ^15.2.2
     mini-css-extract-plugin: ^2.8.1
-    postcss: ^8.4.35
+    postcss: ^8.4.36
     postcss-cli: ^11.0.0
-    postcss-custom-media: ^10.0.3
+    postcss-custom-media: ^10.0.4
     postcss-gap-properties: ^5.0.1
     postcss-import: ^16.0.1
     postcss-loader: ^8.1.1
@@ -5884,7 +5910,7 @@ __metadata:
     "@types/node": ^20.11.28
     "@types/postcss-less": ^4.0.6
     jest: ^29.7.0
-    postcss: ^8.4.35
+    postcss: ^8.4.36
     postcss-less: ^6.0.0
     postcss-scss: ^4.0.9
     postcss-value-parser: ^4.2.0
@@ -15582,17 +15608,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-custom-media@npm:^10.0.3":
-  version: 10.0.3
-  resolution: "postcss-custom-media@npm:10.0.3"
+"postcss-custom-media@npm:^10.0.4":
+  version: 10.0.4
+  resolution: "postcss-custom-media@npm:10.0.4"
   dependencies:
-    "@csstools/cascade-layer-name-parser": ^1.0.8
-    "@csstools/css-parser-algorithms": ^2.6.0
-    "@csstools/css-tokenizer": ^2.2.3
-    "@csstools/media-query-list-parser": ^2.1.8
+    "@csstools/cascade-layer-name-parser": ^1.0.9
+    "@csstools/css-parser-algorithms": ^2.6.1
+    "@csstools/css-tokenizer": ^2.2.4
+    "@csstools/media-query-list-parser": ^2.1.9
   peerDependencies:
     postcss: ^8.4
-  checksum: 22f80abbce990e8ca4da5eb78e4cc0c9f689b0df58a8b55a2033faca122957814b24570417ca47e98d68e715e01610a9f19b5dcc49c645e7067b7e721bd155a7
+  checksum: 3fc05340012f4529b2f0ac4c841165f694d0837f873827f7860e9ab5d1ab9a0d852eef630305266e6c20fc960c058bf866ee24dbf8af2f534c9691fb87fb5c29
   languageName: node
   linkType: hard
 
@@ -16084,6 +16110,17 @@ __metadata:
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
   checksum: cf3c3124d3912a507603f6d9a49b3783f741075e9aa73eb592a6dd9194f9edab9d20a8875d16d137d4f779fe7b6fbd1f5727e39bfd1c3003724980ee4995e1da
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.4.36":
+  version: 8.4.36
+  resolution: "postcss@npm:8.4.36"
+  dependencies:
+    nanoid: ^3.3.7
+    picocolors: ^1.0.0
+    source-map-js: ^1.1.0
+  checksum: 1bb0f2bdfccd5a3ea0ed39700c09098f15501d38110208bfba2df5e3925e4ff7e9a4eaf8abb87bc692ae4d122d9aa0ec13bf4f4d8fd1ad8d8ceaa1f345e50ed1
   languageName: node
   linkType: hard
 
@@ -18073,6 +18110,13 @@ __metadata:
   version: 1.0.2
   resolution: "source-map-js@npm:1.0.2"
   checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c
+  languageName: node
+  linkType: hard
+
+"source-map-js@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "source-map-js@npm:1.1.0"
+  checksum: 6ef39381cdf5451c3db406e4b0fa95657be3c35db76fe6df3be430174b2e6af3c0b57d9728328dc62a211ae6209a0295d6a26442a55d5fccbf7cf1211fffa80e
   languageName: node
   linkType: hard
 
