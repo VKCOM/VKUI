@@ -74,7 +74,7 @@
     "mitt": "^3.0.1"
   },
   "devDependencies": {
-    "storybook": "7.6.17"
+    "storybook": "8.0.0"
   },
   "size-limit": [
     {
