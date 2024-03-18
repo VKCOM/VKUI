@@ -10,11 +10,9 @@ export interface UnstyledTextFieldBaseProps {
    */
   as: 'input' | 'textarea';
   /**
-   * Сбрасывает `margin` и `padding`.
-   *
    * По умолчанию отключено во избежание проблем из-за очередности загрузки стилей.
    */
-  noGaps?: boolean;
+  noPadding?: boolean;
 }
 
 export interface UnstyledTextFieldAsInputProps
@@ -45,7 +43,7 @@ export type UnstyledTextFieldProps =
  */
 export const UnstyledTextField = ({
   as,
-  noGaps = false,
+  noPadding = false,
   className,
   ...restProps
 }: UnstyledTextFieldProps) => (
@@ -54,7 +52,7 @@ export const UnstyledTextField = ({
     normalize={false}
     className={classNames(
       styles.UnstyledTextField,
-      noGaps && styles['UnstyledTextField--noGaps'],
+      noPadding && styles['UnstyledTextField--noPadding'],
       className,
     )}
     {...restProps}

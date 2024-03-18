@@ -1,4 +1,5 @@
 .UnstyledTextField {
+  margin: 0;
   border: 0;
   box-shadow: none;
   background: transparent;
@@ -8,8 +9,7 @@
   resize: none;
 }
 
-.UnstyledTextField--noGaps {
-  margin: 0;
+.UnstyledTextField--noPadding {
   padding: 0;
 }
 

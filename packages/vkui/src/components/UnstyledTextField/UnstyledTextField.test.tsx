@@ -32,8 +32,8 @@ describe(UnstyledTextField, () => {
     'baseline (as="textarea")',
   );
 
-  it('accepts noGaps prop', () => {
-    const result = render(<UnstyledTextField as="input" noGaps />);
-    expect(result.container).toHaveClass(`.${styles['UnstyledTextField--noGaps']}`);
+  it('accepts noPadding prop', () => {
+    const result = render(<UnstyledTextField as="input" noPadding />);
+    expect(result.container).toHaveClass(`.${styles['UnstyledTextField--noPadding']}`);
   });
 });
