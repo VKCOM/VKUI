@@ -3,19 +3,14 @@
 }
 
 .Textarea__el {
-  margin: 0;
-  inline-size: 100%;
-  display: block;
-  box-sizing: border-box;
-  resize: none;
-  appearance: none;
-  color: var(--vkui--color_text_primary);
-  padding: 12px;
-  max-block-size: 204px;
-  border: 0;
-  z-index: var(--vkui_internal--z_index_form_field_element);
   position: relative;
-  background: transparent;
+  z-index: var(--vkui_internal--z_index_form_field_element);
+  display: block;
+  padding: 12px;
+  inline-size: 100%;
+  max-block-size: 204px;
+  box-sizing: border-box;
+  color: var(--vkui--color_text_primary);
 }
 
 .Textarea__el[cols] {

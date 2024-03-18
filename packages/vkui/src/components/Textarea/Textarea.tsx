@@ -5,7 +5,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { callMultiple } from '../../lib/callMultiple';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
-import { Text } from '../Typography/Text/Text';
+import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
 import styles from './Textarea.module.css';
 
 const sizeYClassNames = {
@@ -78,10 +78,9 @@ export const Textarea = ({
       status={status}
       mode={mode}
     >
-      <Text
+      <UnstyledTextField
         {...restProps}
-        Component="textarea"
-        normalize={false}
+        as="textarea"
         style={{ maxHeight }}
         rows={rows}
         className={styles['Textarea__el']}

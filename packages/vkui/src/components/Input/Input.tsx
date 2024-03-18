@@ -3,7 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
-import { Text } from '../Typography/Text/Text';
+import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
 import styles from './Input.module.css';
 
 const sizeYClassNames = {
@@ -55,10 +55,9 @@ export const Input = ({
       mode={mode}
       status={status}
     >
-      <Text
+      <UnstyledTextField
         {...restProps}
-        Component="input"
-        normalize={false}
+        as="input"
         type={type}
         className={styles['Input__el']}
         getRootRef={getRef}
