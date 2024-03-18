@@ -78,6 +78,27 @@ const preview: Preview = {
       description: 'Hide "after" prop of PanelHeader for custom floating "after" element',
       defaultValue: false,
     },
+    direction: {
+      name: 'Direction',
+      description: "Attribute indicating the directionality of the element's text",
+      defaultValue: 'ltr',
+      toolbar: {
+        items: [
+          { value: 'ltr', icon: 'menu', title: 'ltr' },
+          { value: 'rtl', icon: 'menualt', title: 'rtl' },
+        ],
+      },
+    },
+    writingMode: {
+      name: 'Writing mode',
+      description:
+        'Sets whether lines of text are laid out horizontally or vertically, as well as the direction in which blocks progress',
+      defaultValue: 'horizontal-tb',
+      toolbar: {
+        icon: 'redirect',
+        items: ['horizontal-tb', 'vertical-rl', 'vertical-lr'],
+      },
+    },
   },
   argTypes: {
     getRef: { control: false },
