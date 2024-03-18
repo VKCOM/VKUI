@@ -30,32 +30,6 @@ const sizeYClassNames = {
   ['compact']: styles['CustomSelect--sizeY-compact'],
 };
 
-const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
-  if (startIndex >= options.length - 1) {
-    return -1;
-  }
-  return options.findIndex((option, i) => i > startIndex && !option.disabled);
-};
-
-const findIndexBefore = (
-  options: CustomSelectOptionInterface[] = [],
-  endIndex: number = options.length,
-) => {
-  let result = -1;
-  if (endIndex <= 0) {
-    return result;
-  }
-  for (let i = endIndex - 1; i >= 0; i--) {
-    let option = options[i];
-
-    if (!option.disabled) {
-      result = i;
-      break;
-    }
-  }
-  return result;
-};
-
 const warn = warnOnce('CustomSelect');
 
 const checkOptionsValueType = <T extends CustomSelectOptionInterface>(options: T[]) => {
@@ -339,12 +313,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         return;
       }
 
-      const option = options[index];
-
-      if (option?.disabled) {
-        return;
-      }
-
       if (scrollTo) {
         scrollToElement(index);
       }
@@ -416,6 +384,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     (index: number) => {
       const item = options[index];
 
+      if (item.disabled) {
+        return;
+      }
+
       setNativeSelectValue(item?.value);
       close();
 
@@ -472,14 +444,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const focusOption = React.useCallback(
     (type: 'next' | 'prev') => {
-      let index = focusedOptionIndex;
+      let index = focusedOptionIndex ?? -1;
 
       if (type === 'next') {
-        const nextIndex = findIndexAfter(options, index);
-        index = nextIndex === -1 ? findIndexAfter(options) : nextIndex; // Следующий за index или первый валидный до index
+        index = index >= options.length - 1 ? 0 : ++index;
       } else if (type === 'prev') {
-        const beforeIndex = findIndexBefore(options, index);
-        index = beforeIndex === -1 ? findIndexBefore(options) : beforeIndex; // Предшествующий index или последний валидный после index
+        index = index <= 0 ? options.length - 1 : --index;
       }
 
       focusOptionByIndex(index);
