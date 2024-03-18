@@ -1,5 +1,6 @@
 .AppRoot {
   block-size: 100%;
+  inline-size: 100%;
 }
 
 .AppRoot--pointer-has-not {
