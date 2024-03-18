@@ -33,7 +33,7 @@ describe(UnstyledTextField, () => {
   );
 
   it('accepts noPadding prop', () => {
-    const result = render(<UnstyledTextField as="input" noPadding />);
-    expect(result.container).toHaveClass(`.${styles['UnstyledTextField--noPadding']}`);
+    const result = render(<UnstyledTextField as="input" data-testid="test" noPadding />);
+    expect(result.getByTestId('test')).toHaveClass(styles['UnstyledTextField--noPadding']);
   });
 });
