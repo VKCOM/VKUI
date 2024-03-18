@@ -2470,6 +2470,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jridgewell/trace-mapping@npm:^0.3.21":
+  version: 0.3.25
+  resolution: "@jridgewell/trace-mapping@npm:0.3.25"
+  dependencies:
+    "@jridgewell/resolve-uri": ^3.1.0
+    "@jridgewell/sourcemap-codec": ^1.4.14
+  checksum: 9d3c40d225e139987b50c48988f8717a54a8c994d8a948ee42e1412e08988761d0754d7d10b803061cc3aebf35f92a5dbbab493bd0e1a9ef9e89a2130e83ba34
+  languageName: node
+  linkType: hard
+
 "@juggle/resize-observer@npm:^3.3.1":
   version: 3.4.0
   resolution: "@juggle/resize-observer@npm:3.4.0"
@@ -3419,6 +3429,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sindresorhus/merge-streams@npm:^2.1.0":
+  version: 2.3.0
+  resolution: "@sindresorhus/merge-streams@npm:2.3.0"
+  checksum: e989d53dee68d7e49b4ac02ae49178d561c461144cea83f66fa91ff012d981ad0ad2340cbd13f2fdb57989197f5c987ca22a74eb56478626f04e79df84291159
+  languageName: node
+  linkType: hard
+
 "@sinonjs/commons@npm:^3.0.0":
   version: 3.0.0
   resolution: "@sinonjs/commons@npm:3.0.0"
@@ -3437,37 +3454,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@size-limit/file@npm:^11.0.2":
-  version: 11.0.2
-  resolution: "@size-limit/file@npm:11.0.2"
+"@size-limit/file@npm:^11.1.1":
+  version: 11.1.1
+  resolution: "@size-limit/file@npm:11.1.1"
   peerDependencies:
-    size-limit: 11.0.2
-  checksum: a566d41a0f96325556981cc6eafb4a2be1fbd59f89f979058dc2e566d2c847b1d9f931689c15a9e8de93adc6057d04a0886e6d66f4c6e54714533377a538587f
+    size-limit: 11.1.1
+  checksum: 0d126db7b22d6fea2c0b8d20e9aadcc57e6626417270aa4bcf8d26a6fc9a4bc6d2beb995f67444e6deb72856b4d320f2e8877b98c46e459efaf12a51a3a785a3
   languageName: node
   linkType: hard
 
-"@size-limit/webpack-css@npm:^11.0.2":
-  version: 11.0.2
-  resolution: "@size-limit/webpack-css@npm:11.0.2"
+"@size-limit/webpack-css@npm:^11.1.1":
+  version: 11.1.1
+  resolution: "@size-limit/webpack-css@npm:11.1.1"
   dependencies:
-    css-loader: ^6.9.0
-    css-minimizer-webpack-plugin: ^5.0.1
+    css-loader: ^6.10.0
+    css-minimizer-webpack-plugin: ^6.0.0
     style-loader: ^3.3.4
   peerDependencies:
-    size-limit: 11.0.2
-  checksum: ef19332643196e5a003b24481a971d9cf5655caf56163bb69fa14c0f459f0f58eb72f55f40601d177bda294a758c8daffe8c3f80358ba7c5f37961e2ae9736cb
+    size-limit: 11.1.1
+  checksum: 1a900640f780238f076b67c018afcc21b67c19e580ab9b0d7d47da17a1001823a18891e60b313bc2839769becb180347807210d14029105f406cfd989b133689
   languageName: node
   linkType: hard
 
-"@size-limit/webpack@npm:^11.0.2":
-  version: 11.0.2
-  resolution: "@size-limit/webpack@npm:11.0.2"
+"@size-limit/webpack@npm:^11.1.1":
+  version: 11.1.1
+  resolution: "@size-limit/webpack@npm:11.1.1"
   dependencies:
-    nanoid: ^5.0.4
-    webpack: ^5.89.0
+    nanoid: ^5.0.6
+    webpack: ^5.90.3
   peerDependencies:
-    size-limit: 11.0.2
-  checksum: 80c1c7329530e9f67590f8de3ac7ce165dfc815a919794e7c34148e9c49f4f3de0a59ae1b743801264c5316eb17ed216519db9bcead2b5336a108f884340249f
+    size-limit: 11.1.1
+  checksum: cac8d85ef9ce7bdbb89165babe6e54defab73a852ab6936b5346241cc397c013e65b5862a5933c6bef01735b1d201d9a418f33a24b25455e69a78415fe91eb55
   languageName: node
   linkType: hard
 
@@ -5623,9 +5640,9 @@ __metadata:
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0"
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0"
     "@project-tools/stylelint-bad-multiplication": "workspace:1.0.0"
-    "@size-limit/file": ^11.0.2
-    "@size-limit/webpack": ^11.0.2
-    "@size-limit/webpack-css": ^11.0.2
+    "@size-limit/file": ^11.1.1
+    "@size-limit/webpack": ^11.1.1
+    "@size-limit/webpack-css": ^11.1.1
     "@swc/cli": ^0.3.10
     "@swc/core": 1.4.6
     "@swc/jest": ^0.2.36
@@ -5683,7 +5700,7 @@ __metadata:
     react-dom: ^18.2.0
     semver: ^7.6.0
     shx: ^0.3.4
-    size-limit: ^11.0.2
+    size-limit: ^11.1.1
     style-loader: ^3.3.4
     stylelint: ^16.2.1
     stylelint-config-standard: ^36.0.0
@@ -7360,6 +7377,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chokidar@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "chokidar@npm:3.6.0"
+  dependencies:
+    anymatch: ~3.1.2
+    braces: ~3.0.2
+    fsevents: ~2.3.2
+    glob-parent: ~5.1.2
+    is-binary-path: ~2.1.0
+    is-glob: ~4.0.1
+    normalize-path: ~3.0.0
+    readdirp: ~3.6.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  checksum: d2f29f499705dcd4f6f3bbed79a9ce2388cf530460122eed3b9c48efeab7a4e28739c6551fd15bec9245c6b9eeca7a32baa64694d64d9b6faeb74ddb8c4a413d
+  languageName: node
+  linkType: hard
+
 "chownr@npm:^1.1.1":
   version: 1.1.4
   resolution: "chownr@npm:1.1.4"
@@ -8047,7 +8083,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^6.10.0, css-loader@npm:^6.7.1, css-loader@npm:^6.9.0":
+"css-loader@npm:^6.10.0, css-loader@npm:^6.7.1":
   version: 6.10.0
   resolution: "css-loader@npm:6.10.0"
   dependencies:
@@ -8071,16 +8107,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-minimizer-webpack-plugin@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "css-minimizer-webpack-plugin@npm:5.0.1"
+"css-minimizer-webpack-plugin@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "css-minimizer-webpack-plugin@npm:6.0.0"
   dependencies:
-    "@jridgewell/trace-mapping": ^0.3.18
-    cssnano: ^6.0.1
-    jest-worker: ^29.4.3
-    postcss: ^8.4.24
-    schema-utils: ^4.0.1
-    serialize-javascript: ^6.0.1
+    "@jridgewell/trace-mapping": ^0.3.21
+    cssnano: ^6.0.3
+    jest-worker: ^29.7.0
+    postcss: ^8.4.33
+    schema-utils: ^4.2.0
+    serialize-javascript: ^6.0.2
   peerDependencies:
     webpack: ^5.0.0
   peerDependenciesMeta:
@@ -8096,7 +8132,7 @@ __metadata:
       optional: true
     lightningcss:
       optional: true
-  checksum: 10055802c61d1ae72584eac03b6bd221ecbefde11d337be44a5459d8de075b38f91b80949f95cd0c3a10295615ee013f82130bfac5fe9b5b3e8e75531f232680
+  checksum: 22da71281e06858f671c55c7263c06ece494a17a6f565d889eab7b8adcb212dbfb4df111cfe65ca09fdd7a1943b3650fe9d82d61ef10fbba8b09e56587c24c38
   languageName: node
   linkType: hard
 
@@ -8218,7 +8254,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssnano@npm:^6.0.1, cssnano@npm:^6.1.0":
+"cssnano@npm:^6.0.3, cssnano@npm:^6.1.0":
   version: 6.1.0
   resolution: "cssnano@npm:6.1.0"
   dependencies:
@@ -10950,6 +10986,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"globby@npm:^14.0.1":
+  version: 14.0.1
+  resolution: "globby@npm:14.0.1"
+  dependencies:
+    "@sindresorhus/merge-streams": ^2.1.0
+    fast-glob: ^3.3.2
+    ignore: ^5.2.4
+    path-type: ^5.0.0
+    slash: ^5.1.0
+    unicorn-magic: ^0.1.0
+  checksum: 33568444289afb1135ad62d52d5e8412900cec620e3b6ece533afa46d004066f14b97052b643833d7cf4ee03e7fac571430130cde44c333df91a45d313105170
+  languageName: node
+  linkType: hard
+
 "globby@npm:^6.1.0":
   version: 6.1.0
   resolution: "globby@npm:6.1.0"
@@ -12868,7 +12918,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-worker@npm:^29.4.3, jest-worker@npm:^29.7.0":
+"jest-worker@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest-worker@npm:29.7.0"
   dependencies:
@@ -12899,7 +12949,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jiti@npm:^1.20.0":
+"jiti@npm:^1.20.0, jiti@npm:^1.21.0":
   version: 1.21.0
   resolution: "jiti@npm:1.21.0"
   bin:
@@ -14268,12 +14318,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^5.0.4":
-  version: 5.0.4
-  resolution: "nanoid@npm:5.0.4"
+"nanoid@npm:^5.0.6":
+  version: 5.0.6
+  resolution: "nanoid@npm:5.0.6"
   bin:
     nanoid: bin/nanoid.js
-  checksum: cf09cca3774f3147100948f7478f75f4c9ee97a4af65c328dd9abbd83b12f8bb35cf9f89a21c330f3b759d667a4cd0140ed84aa5fdd522c61e0d341aeaa7fb6f
+  checksum: cd5d3eebd3b148b68b4b0238d94b1d8b4d955cc1a74b8e5217c1daecaed584d4b3701f41ce0f5e909ba4cd214592aff41fb53ac1955d77ea85d58df936726f29
   languageName: node
   linkType: hard
 
@@ -15872,7 +15922,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.0, postcss@npm:^8.1.2, postcss@npm:^8.4.24, postcss@npm:^8.4.33, postcss@npm:^8.4.35":
+"postcss@npm:^8.0.0, postcss@npm:^8.1.2, postcss@npm:^8.4.33, postcss@npm:^8.4.35":
   version: 8.4.35
   resolution: "postcss@npm:8.4.35"
   dependencies:
@@ -17400,7 +17450,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"schema-utils@npm:^4.0.0, schema-utils@npm:^4.0.1":
+"schema-utils@npm:^4.0.0, schema-utils@npm:^4.2.0":
   version: 4.2.0
   resolution: "schema-utils@npm:4.2.0"
   dependencies:
@@ -17501,6 +17551,15 @@ __metadata:
   dependencies:
     randombytes: ^2.1.0
   checksum: 3c4f4cb61d0893b988415bdb67243637333f3f574e9e9cc9a006a2ced0b390b0b3b44aef8d51c951272a9002ec50885eefdc0298891bc27eb2fe7510ea87dc4f
+  languageName: node
+  linkType: hard
+
+"serialize-javascript@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "serialize-javascript@npm:6.0.2"
+  dependencies:
+    randombytes: ^2.1.0
+  checksum: c4839c6206c1d143c0f80763997a361310305751171dd95e4b57efee69b8f6edd8960a0b7fbfc45042aadff98b206d55428aee0dc276efe54f100899c7fa8ab7
   languageName: node
   linkType: hard
 
@@ -17687,19 +17746,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"size-limit@npm:^11.0.2":
-  version: 11.0.2
-  resolution: "size-limit@npm:11.0.2"
+"size-limit@npm:^11.1.1":
+  version: 11.1.1
+  resolution: "size-limit@npm:11.1.1"
   dependencies:
     bytes-iec: ^3.1.1
-    chokidar: ^3.5.3
-    globby: ^14.0.0
-    lilconfig: ^3.0.0
+    chokidar: ^3.6.0
+    globby: ^14.0.1
+    jiti: ^1.21.0
+    lilconfig: ^3.1.1
     nanospinner: ^1.1.0
     picocolors: ^1.0.0
   bin:
     size-limit: bin.js
-  checksum: 41d5c4e1fbb5e8bd89bc6ea1a7ad16d584e2b5410524eeef2f7e40ca884a3ef107d1b6f904393fa30d51c42fed245fbadafc81872b29095e5cc42695309c48b5
+  checksum: 4f47263b959bf53bf299557e9e9895473e97f5fa2d5ef2a9e6daf09cad3d2dd6bc9201e6e0fbddfe0dfc5cfed5563d32d1adcd112040f59375fc3fbc8a39bfdd
   languageName: node
   linkType: hard
 
@@ -19983,7 +20043,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.89.0, webpack@npm:^5.90.3":
+"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.90.3":
   version: 5.90.3
   resolution: "webpack@npm:5.90.3"
   dependencies:
