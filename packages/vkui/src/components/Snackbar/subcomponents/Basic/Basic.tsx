@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../../../hooks/useAdaptivity';
 import { HTMLAttributesWithRootRef } from '../../../../types';
 import { RootComponent } from '../../../RootComponent/RootComponent';
 import { Paragraph } from '../../../Typography/Paragraph/Paragraph';
@@ -9,6 +10,11 @@ import styles from './Basic.module.css';
 const stylesLayout = {
   vertical: styles['Snackbar--layout-vertical'],
   horizontal: styles['Snackbar--layout-horizontal'],
+};
+
+const sizeYClassNames = {
+  none: styles['Snackbar--sizeY-none'],
+  regular: styles['Snackbar--sizeY-regular'],
 };
 
 export interface BasicProps {
@@ -61,6 +67,7 @@ export function Basic({
   children,
   ...restProps
 }: SnackbarBasicProps) {
+  const { sizeY = 'none' } = useAdaptivity();
   const layout = after || subtitle ? 'vertical' : layoutProps;
 
   return (
@@ -68,6 +75,7 @@ export function Basic({
       baseClassName={classNames(
         styles['Snackbar__body'],
         stylesLayout[layout],
+        sizeY !== 'compact' && sizeYClassNames[sizeY],
         mode === 'dark' && styles['Snackbar--mode-dark'],
       )}
       {...restProps}
