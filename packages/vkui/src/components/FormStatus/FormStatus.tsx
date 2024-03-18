@@ -12,10 +12,17 @@ export interface FormStatusProps extends HTMLAttributesWithRootRef<HTMLDivElemen
 /**
  * @see https://vkcom.github.io/VKUI/#/FormStatus
  */
-export const FormStatus = ({ mode, children, className, ...restProps }: FormStatusProps) => {
+export const FormStatus = ({
+  mode,
+  children,
+  className,
+  role = mode === 'error' ? 'alert' : 'status',
+  ...restProps
+}: FormStatusProps) => {
   return (
     <Banner
       {...restProps}
+      role={role}
       subheader={children}
       className={classNames(
         'vkuiInternalFormStatus',
