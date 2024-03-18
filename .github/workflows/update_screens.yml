@@ -9,11 +9,23 @@ on:
 run-name: Update screenshots for ${{ github.ref_name }}
 
 jobs:
+  get_playwright_docker_image:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.result.outputs.value }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/get-playwright-docker-image
+        id: result
+
   update_screens:
+    needs: get_playwright_docker_image
+    if: success()
     runs-on: ubuntu-latest
     container:
-      # см. https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.focal
-      image: mcr.microsoft.com/playwright:v1.42.1-focal
+      image: ${{ needs.get_playwright_docker_image.outputs.image }}
       options: --ipc=host
     strategy:
       fail-fast: false
