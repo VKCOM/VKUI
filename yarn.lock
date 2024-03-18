@@ -5720,12 +5720,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/vkjs@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@vkontakte/vkjs@npm:1.1.1"
+"@vkontakte/vkjs@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@vkontakte/vkjs@npm:1.1.2"
   dependencies:
     "@swc/helpers": ^0.5.0
-  checksum: 61da3e4c530c8dfe9e35cc49f18d01d28fdb94220c2351d01a61ff9016784e02d1237a772a085d252d8d88434783ecb33ebe5165d205264a0e2d90393a79eca0
+  checksum: f431c57544c6318664c81bf7f8bdd79ecbbea2a12e9744116d27d9dcdf86f8fa46c76b52f2c8104339fa8e60fbae570f1b7e17f816b630ee2ccd21a7930ec09d
   languageName: node
   linkType: hard
 
@@ -5910,7 +5910,7 @@ __metadata:
   dependencies:
     "@swc/helpers": ^0.5.7
     "@vkontakte/icons": ^2.62.0
-    "@vkontakte/vkjs": ^1.1.1
+    "@vkontakte/vkjs": ^1.1.2
     "@vkontakte/vkui-floating-ui": ^0.1.5
     dayjs: ^1.11.10
     mitt: ^3.0.1
