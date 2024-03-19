@@ -1,6 +1,6 @@
 `Panel` – это контейнер для контента.
 
-```jsx
+```jsx { "props": { "layout": false, "showLayoutSelect": true, "adaptivity": true } }
 const Example = () => {
   const [activePanel, setActivePanel] = React.useState('panel1');
 

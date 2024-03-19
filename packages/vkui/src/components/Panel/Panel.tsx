@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeTypeValues } from '../../lib/adaptivity';
 import { NavIdProps } from '../../lib/getNavId';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
@@ -16,16 +17,41 @@ const sizeXClassNames = {
   ['regular']: styles['Panel--sizeX-regular'],
 };
 
+const stylesMode = {
+  none: styles['Panel--mode-none'],
+  plain: styles['Panel--mode-plain'],
+  card: styles['Panel--mode-card'],
+};
+
 export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
   centered?: boolean;
+  /**
+   * Тип оформления панели.
+   *
+   * Позволяет переопределить тип оформления панели,
+   * заданный через адаптивность или свойство layout у [AppRoot](https://vkcom.github.io/VKUI/#/AppRoot),
+   * глобально задающим тип оформления макета.
+   *
+   * Если установлен `card` - Panel имеет фон отличный от фона контента.
+   * Позволяет компоненту [Group](https://vkcom.github.io/VKUI/#/Group) со свойством mode='card' точечно выглядеть как карточка.
+   * Тип `plain` — соответствует фону по умолчанию.
+   */
+  mode?: 'plain' | 'card';
 }
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Panel
  */
-export const Panel = ({ centered = false, children, nav, ...restProps }: PanelProps) => {
+export const Panel = ({
+  centered = false,
+  children,
+  nav,
+  mode: modeProp,
+  ...restProps
+}: PanelProps) => {
   const { sizeX = 'none' } = useAdaptivity();
-  const { layout } = React.useContext(AppRootContext);
+
+  const mode = usePanelMode(modeProp, sizeX);
 
   return (
     <NavPanelIdContext.Provider value={restProps.id || nav}>
@@ -35,7 +61,7 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
           styles['Panel'],
           sizeXClassNames[sizeX],
           centered && 'vkuiInternalPanel--centered',
-          layout === 'card' && styles['Panel--layout-card'],
+          stylesMode[mode],
         )}
       >
         <Touch
@@ -50,3 +76,24 @@ export const Panel = ({ centered = false, children, nav, ...restProps }: PanelPr
     </NavPanelIdContext.Provider>
   );
 };
+
+function usePanelMode(
+  modeProp: PanelProps['mode'],
+  sizeX: SizeTypeValues | 'none',
+): 'plain' | 'card' | 'none' {
+  const { layout } = React.useContext(AppRootContext);
+
+  if (modeProp) {
+    return modeProp;
+  }
+
+  if (layout) {
+    return layout;
+  }
+
+  if (sizeX !== 'none') {
+    return sizeX === 'regular' ? 'card' : 'plain';
+  }
+
+  return 'none';
+}
