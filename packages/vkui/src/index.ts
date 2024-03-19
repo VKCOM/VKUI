@@ -31,6 +31,13 @@ export type { CaptionProps } from './components/Typography/Caption/Caption';
 /**
  * Service
  */
+export { UnstyledTextField } from './components/UnstyledTextField/UnstyledTextField';
+export type {
+  UnstyledTextFieldAsInputProps,
+  UnstyledTextFieldAsTextareaProps,
+  UnstyledTextFieldBaseProps,
+  UnstyledTextFieldProps,
+} from './components/UnstyledTextField/UnstyledTextField';
 export { Tappable } from './components/Tappable/Tappable';
 export type { TappableProps } from './components/Tappable/Tappable';
 export { FixedLayout } from './components/FixedLayout/FixedLayout';
