@@ -199,6 +199,7 @@ export const PullToRefresh = ({
     startYRef.current = event.startY;
   };
 
+  const iosRefreshStartedRef = React.useRef(false);
   const onTouchMove = (event: TouchEventInternal) => {
     const { isY, shiftY } = event;
     const { start, max } = initParams;
@@ -219,7 +220,10 @@ export const PullToRefresh = ({
       setCanRefresh(progress > 80);
       setContentShift((currentY + 10) * 2.3);
 
-      if (progress > 85 && !refreshing && platform === 'ios') {
+      const iosCanStartRefreshDuringGesture =
+        platform === 'ios' && progress > 85 && !refreshing && !iosRefreshStartedRef.current;
+      if (iosCanStartRefreshDuringGesture) {
+        iosRefreshStartedRef.current = true;
         runRefreshing();
       }
     } else if (isY && pageYOffset === 0 && shiftY > 0 && !refreshing && touchDown) {
@@ -235,6 +239,7 @@ export const PullToRefresh = ({
   const onTouchEnd = () => {
     setWatching(false);
     setTouchDown(false);
+    iosRefreshStartedRef.current = false;
   };
 
   const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
