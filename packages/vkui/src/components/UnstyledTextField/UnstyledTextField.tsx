@@ -37,7 +37,7 @@ export type UnstyledTextFieldProps =
  * Компонент сбрасывает [User-agent stylesheets](https://www.geeksforgeeks.org/what-is-a-user-agent-stylesheet/)
  * полей ввода.
  *
- * Используется в [Input](?path=/story/forms-input--playground) и [Textarea](?path=/story/forms-textarea--playground).
+ * Используется в <a href="?path=/story/forms-input--playground" data-prod-href="https://vkcom.github.io/VKUI/playground/?path=/story/forms-input--playground">Input</a> и <a href="?path=/story/forms-textarea--playground" data-prod-href="https://vkcom.github.io/VKUI/playground/?path=/story/forms-textarea--playground">Textarea</a>.
  *
  * @since 6.1.0
  */
