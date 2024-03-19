@@ -346,6 +346,7 @@ export { Popover } from './components/Popover/Popover';
 export type {
   PopoverProps,
   PopoverOnShownChange,
+  PopoverArrowProps,
   PopoverContentRenderProp,
 } from './components/Popover/Popover';
 

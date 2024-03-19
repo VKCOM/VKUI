@@ -18,3 +18,7 @@
   border-radius: var(--vkui--size_border_radius--regular);
   box-shadow: var(--vkui--elevation3);
 }
+
+.Popover__arrow {
+  color: var(--vkui--color_background_modal);
+}
