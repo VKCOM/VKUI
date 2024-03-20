@@ -24,7 +24,7 @@ export interface AlertActionInterface
     AnchorHTMLAttributesOnly,
     HasDataAttribute {
   title: string;
-  action: (args: { close: VoidFunction }) => void;
+  action?: (args: { close: VoidFunction }) => void;
   /**
    * По умолчанию клик на опцию вызывает переданную в `Alert` функцию `onClose`, данное свойство
    * позволяет отключить такое поведение
