@@ -24,7 +24,7 @@ export interface AlertActionInterface
     AnchorHTMLAttributesOnly,
     HasDataAttribute {
   title: string;
-  action?: VoidFunction;
+  action: (args: { close: VoidFunction }) => void;
   /**
    * По умолчанию клик на опцию вызывает переданную в `Alert` функцию `onClose`, данное свойство
    * позволяет отключить такое поведение
@@ -116,16 +116,16 @@ export const Alert = ({
           (e?: TransitionEvent) => {
             if (!e || e.propertyName === 'opacity') {
               onClose();
-              action && action();
+              action && action({ close });
             }
           },
           timeout,
         );
       } else {
-        action && action();
+        action && action({ close });
       }
     },
-    [elementRef, waitTransitionFinish, onClose, timeout],
+    [elementRef, waitTransitionFinish, onClose, close, timeout],
   );
 
   useScrollLock();
