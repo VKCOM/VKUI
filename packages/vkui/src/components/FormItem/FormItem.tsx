@@ -37,6 +37,14 @@ export interface FormItemProps
    * Если оставить пустым и использовать htmlFor, то тег top будет label.
    */
   topComponent?: React.ElementType;
+  /**
+   * Позволяет полностью заменить шапку поля пользовательским компонентом.
+   *
+   * @since 6.1.0
+   *
+   * TODO [>=7]: удалить и использовать top - оно будет принимать либо строку, либо подкомпонент
+   */
+  topNode?: React.ReactNode;
   bottom?: React.ReactNode;
   /**
    * Передаётся при использовании `bottom`.
@@ -75,6 +83,7 @@ export const FormItem = ({
   htmlFor,
   bottomId,
   noPadding,
+  topNode,
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
@@ -82,15 +91,15 @@ export const FormItem = ({
 
   const wrappedChildren = (
     <React.Fragment>
-      {typeof top === 'string' ? (
+      {hasReactNode(topNode) ? (
+        topNode
+      ) : hasReactNode(top) ? (
         <FormItemTop>
           <FormItemTopLabel htmlFor={htmlFor} Component={topComponentProp} multiline={topMultiline}>
             {top}
           </FormItemTopLabel>
         </FormItemTop>
-      ) : (
-        top
-      )}
+      ) : null}
       {children}
       {hasReactNode(bottom) && (
         <Footnote
