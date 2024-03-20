@@ -6,7 +6,9 @@ import { HasComponent, HasRootRef } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { Subhead } from '../Typography/Subhead/Subhead';
+import { FormItemTop } from './FormItemTop/FormItemTop';
+import { FormItemTopAside } from './FormItemTop/FormItemTopAside';
+import { FormItemTopLabel } from './FormItemTop/FormItemTopLabel';
 import styles from './FormItem.module.css';
 
 const sizeYClassNames = {
@@ -78,20 +80,16 @@ export const FormItem = ({
   const rootEl = useExternRef(getRootRef);
   const { sizeY = 'none' } = useAdaptivity();
 
-  const topComponent = topComponentProp || (htmlFor && 'label') || 'span';
   const wrappedChildren = (
     <React.Fragment>
-      {hasReactNode(top) && (
-        <Subhead
-          className={classNames(
-            styles['FormItem__top'],
-            topMultiline && styles['FormItem__top--multiline'],
-          )}
-          Component={topComponent}
-          htmlFor={htmlFor}
-        >
-          {top}
-        </Subhead>
+      {typeof top === 'string' ? (
+        <FormItemTop>
+          <FormItemTopLabel htmlFor={htmlFor} Component={topComponentProp} multiline={topMultiline}>
+            {top}
+          </FormItemTopLabel>
+        </FormItemTop>
+      ) : (
+        top
       )}
       {children}
       {hasReactNode(bottom) && (
@@ -144,3 +142,7 @@ export const FormItem = ({
     </RootComponent>
   );
 };
+
+FormItem.Top = FormItemTop;
+FormItem.TopLabel = FormItemTopLabel;
+FormItem.TopAside = FormItemTopAside;

@@ -23,12 +23,9 @@
 
 .FormItem__top {
   padding-block: 2px 8px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   color: var(--vkui--color_text_subhead);
   display: flex;
-  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .FormItemTop__label,
@@ -44,9 +41,14 @@
 
 .FormItemTop__aside {
   color: var(--vkui--color_text_tertiary);
+  margin-inline-start: auto;
 }
 
-.FormItem__top--multiline {
+.FormItemTop__aside:not(:only-child) {
+  padding-inline-start: 12px;
+}
+
+.FormItemTop__label--multiline {
   white-space: normal;
 }
 
