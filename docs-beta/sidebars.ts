@@ -31,6 +31,25 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: 'category',
+      label: 'Компоненты',
+      link: {
+        type: 'generated-index',
+      },
+      collapsed: false,
+      items: [
+        {
+          type: 'category',
+          label: 'Компоненты форм',
+          link: {
+            type: 'doc',
+            id: 'components/forms/forms-introduction',
+          },
+          items: ['components/forms/input'],
+        },
+      ],
+    },
   ],
 
   // But you can create a sidebar manually

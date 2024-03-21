@@ -75,6 +75,7 @@ const config: Config = {
         customCss: './src/css/custom.css',
       } satisfies ThemeClassicOptions,
     ],
+    '@docusaurus/theme-live-codeblock',
   ],
 
   themeConfig: {

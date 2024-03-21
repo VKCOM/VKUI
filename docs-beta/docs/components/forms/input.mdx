@@ -1,0 +1,22 @@
+import InputDesignPage from './_input.design.md';
+
+# Input
+
+Надстройка над `<input type="text" />`. Компонент принимает все валидные для этого элемента свойства.
+
+## Пример реализации
+
+```tsx
+<Input
+  type="text"
+  placeholder="Ну ведь брокколи это вкусно и полезно 😢"
+  defaultValue="Брокколи 🥦"
+  after={
+    <IconButton hoverMode="opacity" label="Очистить поле" onClick={clear}>
+      <Icon16Clear />
+    </IconButton>
+  }
+/>
+```
+
+<InputDesignPage />
