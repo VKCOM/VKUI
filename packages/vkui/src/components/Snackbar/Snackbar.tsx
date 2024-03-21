@@ -45,7 +45,7 @@ export interface SnackbarProps extends HTMLAttributesWithRootRef<HTMLElement>, B
  */
 export const Snackbar = ({
   children,
-  layout: layoutProps = 'horizontal',
+  layout: layoutProps,
   action,
   before,
   after,
@@ -95,7 +95,7 @@ export const Snackbar = ({
     }
   };
 
-  const closeTimeout = useTimeout(close, duration);
+  const closeTimeout = useTimeout(close, duration * 20);
 
   const setBodyTransform = (percent: number) => {
     if (animationFrameRef.current !== null) {
@@ -168,7 +168,7 @@ export const Snackbar = ({
 
   React.useEffect(() => closeTimeout.set(), [closeTimeout]);
 
-  const layout = after || isDesktop || subtitle ? 'vertical' : layoutProps;
+  const layout = layoutProps || (after || isDesktop || subtitle ? 'vertical' : 'horizontal');
 
   return (
     <AppRootPortal>
