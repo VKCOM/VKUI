@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "name": "@vkontakte/vkui-monorepo",
   "dependencies": {
+    "@project-docs/docs-beta": "workspace:1.0.0",
     "@project-docs/styleguide": "workspace:1.0.0",
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0",
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0",
@@ -97,6 +98,8 @@
     "docs:styleguide:build": "yarn workspace @project-docs/styleguide run build",
     "docs:storybook": "yarn workspace @vkontakte/vkui storybook",
     "docs:storybook:build": "yarn workspace @vkontakte/vkui storybook:build",
+    "docs:beta": "yarn workspace @project-docs/docs-beta run start",
+    "docs:beta:build": "yarn workspace @project-docs/docs-beta run build",
     "build": "yarn workspaces foreach run build",
     "build:vkui": "yarn workspace @vkontakte/vkui run build",
     "test": "yarn workspaces foreach run test",
@@ -138,6 +141,7 @@
   "workspaces": {
     "packages": [
       "styleguide",
+      "docs-beta",
       "packages/*",
       "tools/*"
     ]
