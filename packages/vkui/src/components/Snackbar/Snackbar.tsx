@@ -95,7 +95,7 @@ export const Snackbar = ({
     }
   };
 
-  const closeTimeout = useTimeout(close, duration * 20);
+  const closeTimeout = useTimeout(close, duration);
 
   const setBodyTransform = (percent: number) => {
     if (animationFrameRef.current !== null) {
