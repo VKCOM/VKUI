@@ -31,7 +31,7 @@ export interface BasicProps {
 
   /**
    * Варианты расположения кнопки действия
-   * По умолчанию на десктопах и при наличии элементов `after` или `subtitle`
+   * По умолчанию на десктопах, или при наличии элементов `after` или `subtitle`
    * имеет значение `vertical`, в остальных случаях `horizontal`
    */
   layout?: 'vertical' | 'horizontal';
