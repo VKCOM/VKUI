@@ -167,7 +167,6 @@
   transition: flex 0.3s var(--vkui--animation_easing_platform),
     transform 0.3s var(--vkui--animation_easing_platform);
   overflow: hidden;
-  margin-inline: 4px calc(4px - var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .Search--focused .Search__after,
@@ -175,6 +174,7 @@
   flex: 1;
   transform: translate(0);
   pointer-events: initial;
+  margin-inline: 4px calc(4px - var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .Search__afterText {
