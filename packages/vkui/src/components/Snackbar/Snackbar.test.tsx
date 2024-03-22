@@ -2,19 +2,9 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import { baselineComponent } from '../../testing/utils';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Snackbar } from './Snackbar';
 import styles from './Snackbar.module.css';
-
-const getViewWidthStub = jest.fn().mockReturnValue(ViewWidth.MOBILE);
-jest.mock('../../hooks/useAdaptivityWithJSMediaQueries', () => ({
-  useAdaptivityWithJSMediaQueries() {
-    return {
-      get viewWidth() {
-        return getViewWidthStub();
-      },
-    };
-  },
-}));
 
 describe('Snackbar', () => {
   baselineComponent((props) => <Snackbar onClose={jest.fn()} {...props} />);
@@ -26,11 +16,12 @@ describe('Snackbar', () => {
   });
 
   it('renders in horizontal layout on desktop if layout prop is set', () => {
-    getViewWidthStub.mockReturnValue(ViewWidth.DESKTOP);
     const { container, rerender } = render(
-      <Snackbar action="Close me" onClose={jest.fn()}>
-        Text message
-      </Snackbar>,
+      <AdaptivityProvider viewWidth={ViewWidth.DESKTOP}>
+        <Snackbar action="Close me" onClose={jest.fn()}>
+          Text message
+        </Snackbar>
+      </AdaptivityProvider>,
     );
 
     // renders in vertical layout on desktop by default
