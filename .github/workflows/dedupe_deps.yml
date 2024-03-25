@@ -1,6 +1,12 @@
 name: 'Deduplicate dependencies'
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      push_directly:
+        description: 'push directly to the branch'
+        type: boolean
+        default: false
 
 run-name: Deduplicate dependencies on ${{ github.ref_name }}
 
@@ -26,6 +32,7 @@ jobs:
           git config --local user.name "GitHub Action"
 
       - name: Create pull request with deduped deps
+        if: ${{ inputs.push_directly != true }}
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
@@ -34,3 +41,15 @@ jobs:
           commit-message: 'chore: deduplicate dependencies'
           body: Automated dependencies deduplication
           delete-branch: true
+
+      - name: Commit files
+        if: ${{ inputs.push_directly == true }}
+        run: |
+          git commit -a -m "chore: deduplicate dependencies"
+
+      - name: Push changes to the branch directly
+        if: ${{ inputs.push_directly == true }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          branch: ${{ github.ref_name }}
