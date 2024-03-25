@@ -13,8 +13,26 @@ import {
 } from '../../lib/floating';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import {
+  DEFAULT_ARROW_HEIGHT,
+  DEFAULT_ARROW_PADDING,
+  DefaultIcon,
+} from '../FloatingArrow/DefaultIcon';
+import {
+  FloatingArrow,
+  type FloatingArrowProps as FloatingArrowPropsPrivate,
+} from '../FloatingArrow/FloatingArrow';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import styles from './Popover.module.css';
+
+/**
+ * @alias
+ * @public
+ */
+export type PopoverArrowProps = Omit<
+  FloatingArrowPropsPrivate,
+  'getRootRef' | 'coords' | 'placement' | 'Icon'
+>;
 
 /**
  * @alias
@@ -30,6 +48,9 @@ export type PopoverContentRenderProp = FloatingContentRenderProp;
 
 type AllowedFloatingComponentProps = Pick<
   FloatingComponentProps,
+  | 'arrow'
+  | 'arrowHeight'
+  | 'arrowPadding'
   | 'placement'
   | 'onPlacementChange'
   | 'trigger'
@@ -61,14 +82,38 @@ export interface PopoverProps
   extends AllowedFloatingComponentProps,
     Omit<HTMLAttributesWithRootRef<HTMLDivElement>, keyof FloatingComponentProps> {
   /**
-   * Отключает у всплывающего элемента стилизацию по умолчанию, а именно:
-   * - background
-   * - border-radius
-   * - box-shadow
+   * Отключает у всплывающего элемента стилизацию по умолчанию.
    *
-   * Используется в случае, если необходимо стилизовать по своему.
+   * У `content`:
+   * - _background_
+   * - _border-radius_
+   * - _box-shadow_
+   *
+   * У `arrow`:
+   * - _color_
+   *
+   * Используется в случае, если необходимо стилизовать по своему. Для `arrow` _color_ можно
+   * определить через в `arrowProps.iconClassName` или `arrowProps.iconStyle`.
    */
   noStyling?: boolean;
+  /**
+   * Позволяет набросить на стрелку пользовательские атрибуты.
+   */
+  arrowProps?: PopoverArrowProps;
+  /**
+   * Пользовательская SVG иконка.
+   *
+   * Требования:
+   *
+   * 1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`).
+   * 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,
+   *    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.
+   *    (см. https://github.com/VKCOM/VKUI/pull/4496).
+   * 3. Передайте высоту иконки в параметр `arrowHeight`. В значении высоты можно исключить хак с `1px` из п.2.
+   * 4. Убедитесь, что компонент принимает все валидные для SVG параметры.
+   * 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
+   */
+  ArrowIcon?: FloatingArrowPropsPrivate['Icon'];
 }
 
 /**
@@ -76,6 +121,9 @@ export interface PopoverProps
  */
 export const Popover = ({
   // UsePopoverProps
+  arrow: withArrow,
+  arrowHeight = DEFAULT_ARROW_HEIGHT,
+  arrowPadding = DEFAULT_ARROW_PADDING,
   placement: expectedPlacement = 'bottom-start',
   onPlacementChange,
   trigger = 'click',
@@ -99,6 +147,10 @@ export const Popover = ({
   // Для AppRootPortal
   usePortal = true,
 
+  // Для FloatingArrow
+  arrowProps,
+  ArrowIcon = DefaultIcon,
+
   // FocusTrapProps
   autoFocus = true,
   restoreFocus = true,
@@ -110,7 +162,12 @@ export const Popover = ({
   role,
   ...restPopoverProps
 }: PopoverProps) => {
+  const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
   const { middlewares, strictPlacement } = useFloatingMiddlewaresBootstrap({
+    arrow: withArrow,
+    arrowRef,
+    arrowHeight,
+    arrowPadding,
     placement: expectedPlacement,
     offsetByMainAxis,
     offsetByCrossAxis,
@@ -118,12 +175,13 @@ export const Popover = ({
     hideWhenReferenceHidden,
   });
   const {
-    placement,
+    placement: resolvedPlacement,
     shown,
     willBeHide,
     refs,
     referenceProps,
     floatingProps,
+    middlewareData,
     onClose,
     onRestoreFocus,
     onEscapeKeyDown,
@@ -142,7 +200,7 @@ export const Popover = ({
     onShownChange,
   });
 
-  usePlacementChangeCallback(placement, onPlacementChange);
+  usePlacementChangeCallback(resolvedPlacement, onPlacementChange);
 
   const [, child] = usePatchChildren<HTMLDivElement>(
     children,
@@ -153,6 +211,22 @@ export const Popover = ({
   let popover: React.ReactNode = null;
   if (shown) {
     floatingProps.style.zIndex = String(zIndex);
+
+    let arrow: React.ReactElement | null = null;
+    if (withArrow) {
+      const { arrow: arrowCoords } = middlewareData;
+      arrow = (
+        <FloatingArrow
+          iconClassName={noStyling ? undefined : styles['Popover__arrow']}
+          {...arrowProps}
+          coords={arrowCoords}
+          placement={resolvedPlacement}
+          getRootRef={setArrowRef}
+          Icon={ArrowIcon}
+        />
+      );
+    }
+
     popover = (
       <AppRootPortal usePortal={usePortal}>
         <div ref={refs.setFloating} className={styles['Popover']} {...floatingProps}>
@@ -163,13 +237,14 @@ export const Popover = ({
               styles['Popover__in'],
               noStyling ? undefined : styles['Popover__in--withStyling'],
               willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
-              transformOriginClassNames[placement],
+              transformOriginClassNames[resolvedPlacement],
               className,
             )}
             autoFocus={disableInteractive ? false : autoFocus}
             restoreFocus={restoreFocus ? onRestoreFocus : false}
             onClose={onEscapeKeyDown}
           >
+            {arrow}
             {typeof content === 'function' ? content({ onClose }) : content}
           </FocusTrap>
         </div>

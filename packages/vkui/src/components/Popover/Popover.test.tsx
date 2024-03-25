@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { Popover, type PopoverProps } from './Popover';
+import styles from './Popover.module.css';
 
 describe(Popover, () => {
   baselineComponent((props) => (
@@ -69,7 +70,7 @@ describe(Popover, () => {
     expect(onPlacementChange).toHaveBeenCalledWith('top');
   });
 
-  test('passes popover ref to ref prop of children that uses React.forwardRef', async () => {
+  it('passes popover ref to ref prop of children that uses React.forwardRef', async () => {
     let componentRef: React.ForwardedRef<HTMLDivElement> | undefined = undefined;
     const ComponentWithForwardRef = React.forwardRef<
       HTMLDivElement,
@@ -99,5 +100,87 @@ describe(Popover, () => {
     await waitForFloatingPosition();
 
     expect(componentRef).toBeTruthy();
+  });
+
+  it('accepts arrow feature', async () => {
+    const result = render(
+      <Popover
+        defaultShown
+        role="tooltip"
+        arrow
+        arrowProps={{ 'data-testid': 'popover-arrow' }}
+        content="Some popover"
+      >
+        <div id="target" data-testid="target">
+          Target
+        </div>
+      </Popover>,
+    );
+
+    await waitForFloatingPosition();
+
+    expect(result.getByTestId('popover-arrow')).toBeInTheDocument();
+  });
+
+  it('disables any styling', async () => {
+    const Fixture = (props: PopoverProps) => (
+      <Popover
+        defaultShown
+        role="tooltip"
+        arrow
+        arrowProps={{ 'data-testid': 'popover-arrow' }}
+        content="Some popover"
+        data-testid="popover"
+        {...props}
+      >
+        <div id="target" data-testid="target">
+          Target
+        </div>
+      </Popover>
+    );
+
+    const result = render(<Fixture />);
+    await waitForFloatingPosition();
+    expect(result.getByTestId('popover')).toHaveClass(styles['Popover__in--withStyling']);
+    expect(result.getByTestId('popover-arrow').firstElementChild).toHaveClass(
+      styles['Popover__arrow'],
+    );
+
+    result.rerender(<Fixture noStyling />);
+    await waitForFloatingPosition();
+    expect(result.getByTestId('popover')).not.toHaveClass(styles['Popover__in--withStyling']);
+    expect(result.getByTestId('popover-arrow').firstElementChild).not.toHaveClass(
+      styles['Popover__arrow'],
+    );
+  });
+
+  it('should call onClose by content', async () => {
+    const onShownChange = jest.fn();
+
+    const Fixture = () => (
+      <Popover
+        defaultShown
+        content={({ onClose }) => (
+          <button data-testid="popover-content-close-button" onClick={onClose}>
+            close
+          </button>
+        )}
+        data-testid="popover"
+        onShownChange={onShownChange}
+      >
+        <div>Target</div>
+      </Popover>
+    );
+
+    const result = render(<Fixture />);
+    await waitForFloatingPosition();
+    expect(result.getByTestId('popover')).toBeInTheDocument();
+
+    fireEvent.click(result.getByTestId('popover-content-close-button'));
+
+    result.rerender(<Fixture />);
+    await waitForFloatingPosition();
+    expect(result.queryByTestId('popover')).not.toBeInTheDocument();
+    expect(onShownChange).toHaveBeenCalledWith(false, 'callback');
   });
 });
