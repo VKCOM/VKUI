@@ -87,7 +87,7 @@
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal:not(.vkuiInternalFormLayoutGroup--segmented))
   .FormItem
   + .FormItem {
-  margin-inline-start: 24px;
+  margin-inline-start: 16px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
