@@ -13,6 +13,7 @@ export {
   getNodeScroll,
   isHTMLElement,
   isElement,
+  getParentNode,
 } from '@vkontakte/vkui-floating-ui/utils/dom';
 
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
@@ -214,4 +215,9 @@ export const getFirstTouchEventData = (event: UIEvent | React.UIEvent<HTMLElemen
     pageX: dataRaw.pageX || 0,
     pageY: dataRaw.pageY || 0,
   };
+};
+
+export const hasSelectionWithRangeType = (targetEl: HTMLElement) => {
+  const selection = getWindow(targetEl).getSelection();
+  return selection ? selection.type === 'Range' : false;
 };
