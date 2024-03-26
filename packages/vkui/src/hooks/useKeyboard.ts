@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useDOM } from '../lib/dom';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { useGlobalEventListener } from './useGlobalEventListener';
 
 interface SoftwareKeyboardState {
@@ -25,6 +26,9 @@ const eventOptions = {
   capture: false,
 };
 
+/**
+ * Проверяет фокус на элементах. Не может точно отображать
+ */
 export function useKeyboard(): SoftwareKeyboardState {
   const { document } = useDOM();
 
@@ -51,6 +55,37 @@ export function useKeyboard(): SoftwareKeyboardState {
 
   useGlobalEventListener(document, 'focusout', onFocus, eventOptions);
   useGlobalEventListener(document, 'focusin', onFocus, eventOptions);
+
+  return { isOpened };
+}
+
+const minKeyboardHeight = 30;
+/**
+ * Проверяет изменение визуального окна.
+ *
+ * Предупреждение: https://caniuse.com/?search=VisualViewport
+ */
+export function useVirtualKeyboard() {
+  const [isOpened, setIsOpened] = React.useState<boolean | undefined>(undefined);
+
+  const { document, window } = useDOM();
+
+  const onResize = () => {
+    if (!window || !document || !window.visualViewport || !document.scrollingElement) {
+      return;
+    }
+
+    const calcIsOpen =
+      window.visualViewport.height * window.visualViewport.scale + minKeyboardHeight <
+      document.scrollingElement.clientHeight;
+
+    if (isOpened !== calcIsOpen) {
+      setIsOpened(calcIsOpen);
+    }
+  };
+
+  useGlobalEventListener(window && window.visualViewport, 'resize', onResize);
+  useIsomorphicLayoutEffect(onResize, []);
 
   return { isOpened };
 }

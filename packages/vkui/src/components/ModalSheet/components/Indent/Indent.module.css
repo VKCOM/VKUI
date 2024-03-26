@@ -1,0 +1,11 @@
+.ModalSheetIndent {
+  scroll-snap-align: start;
+  overflow-anchor: none;
+}
+
+/* Компонент учитывает передачу в адаптивность regular и не отрисовывает эти элементы */
+@media (--sizeX-regular) {
+  .ModalSheetIndent {
+    display: none;
+  }
+}

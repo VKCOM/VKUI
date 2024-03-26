@@ -2,13 +2,13 @@ import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { useEventListener } from './useEventListener';
 
 export function useGlobalEventListener<K extends keyof GlobalEventHandlersEventMap>(
-  element: Document | HTMLElement | Window | null | undefined,
+  element: EventTarget | null | undefined,
   event: K,
   cb: ((ev: GlobalEventHandlersEventMap[K]) => void) | null | false | undefined,
   options?: AddEventListenerOptions,
 ): void;
 export function useGlobalEventListener<E extends Event>(
-  element: Document | HTMLElement | Window | null | undefined,
+  element: EventTarget | null | undefined,
   event: string,
   cb: ((ev: E) => void) | null | false | undefined,
   options?: AddEventListenerOptions,
@@ -17,7 +17,7 @@ export function useGlobalEventListener<
   K extends keyof GlobalEventHandlersEventMap,
   E extends Event,
 >(
-  element: Document | HTMLElement | Window | null | undefined,
+  element: EventTarget | null | undefined,
   event: K | string,
   cb: ((ev: E) => void) | null | false | undefined,
   options?: AddEventListenerOptions,
