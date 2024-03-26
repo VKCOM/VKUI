@@ -28,7 +28,7 @@ export const ModalPageHeader = ({
   ...restProps
 }: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const { isDesktop } = useAdaptivityWithJSMediaQueries();
+  const { isDesktop, sizeX } = useAdaptivityWithJSMediaQueries();
   const { labelId } = React.useContext(ModalPageContext);
 
   return (
@@ -54,7 +54,7 @@ export const ModalPageHeader = ({
       >
         {children}
       </PanelHeader>
-      {!noSeparator && <Separator wide />}
+      {!noSeparator && <Separator wide={sizeX === 'regular'} />}
     </div>
   );
 };
