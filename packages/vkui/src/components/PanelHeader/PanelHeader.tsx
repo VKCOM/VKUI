@@ -3,9 +3,8 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasComponent, HasDataAttribute, HasRef, HTMLAttributesWithRootRef } from '../../types';
+import { HasComponent, HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -30,9 +29,7 @@ const sizeYClassNames = {
   compact: styles['PanelHeader--sizeY-compact'],
 };
 
-export interface PanelHeaderProps
-  extends HTMLAttributesWithRootRef<HTMLDivElement>,
-    HasRef<HTMLDivElement> {
+export interface PanelHeaderProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   before?: React.ReactNode;
   /**
    * Добавляет элемент справа.
@@ -124,7 +121,6 @@ export const PanelHeader = ({
   transparent = false,
   delimiter = 'auto',
   shadow,
-  getRef,
   getRootRef,
   fixed,
   typographyProps,
@@ -160,23 +156,11 @@ export const PanelHeader = ({
         sizeX !== 'compact' && sizeXClassNames[sizeX],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
-      getRootRef={isFixed ? getRootRef : getRef}
+      getRootRef={getRootRef}
     >
-      {isFixed ? (
-        <FixedLayout
-          className={classNames(styles['PanelHeader__fixed'], 'vkuiInternalPanelHeader__fixed')}
-          vertical="top"
-          getRootRef={getRef}
-        >
-          <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
-            {children}
-          </PanelHeaderIn>
-        </FixedLayout>
-      ) : (
-        <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
-          {children}
-        </PanelHeaderIn>
-      )}
+      <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
+        {children}
+      </PanelHeaderIn>
       {!isVKCOM && (
         <>
           {staticSeparatorVisible && adaptiveSizeX.compact && (
