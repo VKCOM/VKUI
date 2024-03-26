@@ -11,7 +11,7 @@ export const ModalPageRoot = ({
   onOpened,
   onClosed,
   dynamicContentHeight,
-  preventClose,
+  // preventClose,
   ...restProps
 }: ModalPageV2Props) => {
   const [openLocalState] = useCustomEnsuredControl({
