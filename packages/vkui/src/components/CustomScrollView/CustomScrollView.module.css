@@ -3,6 +3,10 @@
   block-size: 100%;
   overflow: hidden;
   position: relative;
+
+  /* Для срабатывания `height: 100%` у `.CustomScrollView__box`, когда не во всех родителях есть `height: 100%`. */
+  display: flex;
+  flex-direction: column;
 }
 
 .CustomScrollView__box {
