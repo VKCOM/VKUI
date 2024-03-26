@@ -24,7 +24,12 @@ export interface AlertActionInterface
     AnchorHTMLAttributesOnly,
     HasDataAttribute {
   title: string;
-  action?: (args: { close: VoidFunction }) => void;
+  /**
+   * Обработчик клика на опцию. Если свойство `autoCloseDisabled` включено,
+   * то в аргументы `action` передаётся объект с функцией close,
+   * вызвав которую можно закрыть `action` вручную.
+   */
+  action?: (args?: { close?: VoidFunction }) => void;
   /**
    * По умолчанию клик на опцию вызывает переданную в `Alert` функцию `onClose`, данное свойство
    * позволяет отключить такое поведение
@@ -116,7 +121,7 @@ export const Alert = ({
           (e?: TransitionEvent) => {
             if (!e || e.propertyName === 'opacity') {
               onClose();
-              action && action({ close });
+              action && action();
             }
           },
           timeout,
