@@ -31,7 +31,8 @@ export interface BasicProps {
 
   /**
    * Варианты расположения кнопки действия
-   * Игнорируется на десктопах и при наличии элементов `after` или `subtitle`
+   * По умолчанию на десктопах, или при наличии элементов `after` или `subtitle`
+   * имеет значение `vertical`, в остальных случаях `horizontal`
    */
   layout?: 'vertical' | 'horizontal';
 
@@ -58,7 +59,7 @@ export interface BasicProps {
 export interface SnackbarBasicProps extends HTMLAttributesWithRootRef<HTMLDivElement>, BasicProps {}
 
 export function Basic({
-  layout: layoutProps = 'horizontal',
+  layout: layoutProps,
   action,
   after,
   before,
@@ -68,7 +69,7 @@ export function Basic({
   ...restProps
 }: SnackbarBasicProps) {
   const { sizeY = 'none' } = useAdaptivity();
-  const layout = after || subtitle ? 'vertical' : layoutProps;
+  const layout = layoutProps || (after || subtitle ? 'vertical' : 'horizontal');
 
   return (
     <RootComponent
