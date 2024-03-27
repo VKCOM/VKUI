@@ -1,6 +1,6 @@
 /* stylelint-disable-next-line selector-max-type */
-.vkui,
 .vkui > body,
+.vkui,
 .vkui__root {
   margin: 0;
   padding: 0;
