@@ -1,6 +1,7 @@
-import WebpackCommonConfig from '../../../webpack.common.config';
-import type { StorybookConfig } from '@storybook/react-webpack5';
 import { Configuration } from 'webpack';
+import path from 'path';
+import type { StorybookConfig } from '@storybook/react-webpack5';
+import WebpackCommonConfig from '../../../webpack.common.config';
 
 const cssRegExpString = /\.css$/.toString();
 
@@ -17,22 +18,24 @@ function excludeCssRulesFromConfig(config: Configuration) {
 }
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+
   addons: [
     './addons/source-tab',
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    '@storybook/addon-a11y',
-    '@project-tools/storybook-addon-cartesian',
+    getAbsolutePath('@storybook/addon-links'),
+    getAbsolutePath('@storybook/addon-essentials'),
+    getAbsolutePath('@storybook/addon-interactions'),
+    getAbsolutePath('@storybook/addon-a11y'),
+    getAbsolutePath('@project-tools/storybook-addon-cartesian'),
     './addons/appearance',
     './addons/pointer',
     './addons/customPanelHeaderAfter',
     './addons/storybook-theme',
-    'storybook-addon-swc',
+    getAbsolutePath('storybook-addon-swc'),
   ],
+
   framework: {
-    name: '@storybook/react-webpack5',
+    name: getAbsolutePath('@storybook/react-webpack5'),
     options: {
       fastRefresh: true,
       builder: {
@@ -41,6 +44,7 @@ const config: StorybookConfig = {
       },
     },
   },
+
   webpackFinal: async (config) => {
     const commonCssRules = getCssRulesFromConfig(WebpackCommonConfig) ?? [];
     const rulesWithoutCss = excludeCssRulesFromConfig(config) ?? [];
@@ -49,6 +53,14 @@ const config: StorybookConfig = {
 
     return config;
   },
+
+  docs: {
+    autodocs: true,
+  },
 };
 
 module.exports = config;
+
+function getAbsolutePath(value: string): any {
+  return path.dirname(require.resolve(path.join(value, 'package.json')));
+}
