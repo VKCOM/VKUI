@@ -19,6 +19,8 @@ const config: Config = {
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
+  noIndex: true, // no search engines allowed (temporally)
+
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
