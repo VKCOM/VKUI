@@ -24,7 +24,12 @@ export interface AlertActionInterface
     AnchorHTMLAttributesOnly,
     HasDataAttribute {
   title: string;
-  action?: VoidFunction;
+  /**
+   * Обработчик клика на опцию. Если свойство `autoCloseDisabled` включено,
+   * то в аргументы `action` передаётся объект с функцией close,
+   * вызвав которую можно закрыть `action` вручную.
+   */
+  action?: (args?: { close?: VoidFunction }) => void;
   /**
    * По умолчанию клик на опцию вызывает переданную в `Alert` функцию `onClose`, данное свойство
    * позволяет отключить такое поведение
@@ -122,10 +127,10 @@ export const Alert = ({
           timeout,
         );
       } else {
-        action && action();
+        action && action({ close });
       }
     },
-    [elementRef, waitTransitionFinish, onClose, timeout],
+    [elementRef, waitTransitionFinish, onClose, close, timeout],
   );
 
   useScrollLock();

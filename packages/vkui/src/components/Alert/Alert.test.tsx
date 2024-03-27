@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { act, render, screen } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
@@ -35,7 +36,15 @@ describe('Alert', () => {
 
   describe('calls action and do not calls onClose with autoCloseDisabled=true', () => {
     it.each([Platform.ANDROID, Platform.IOS])('%s', async (platform) => {
-      const action = jest.fn();
+      const action = jest
+        .fn()
+        .mockImplementationOnce(noop)
+        .mockImplementationOnce((args) => {
+          if (args && args.close) {
+            args.close();
+          }
+        });
+
       const onClose = jest.fn();
       render(
         <ConfigProvider platform={platform}>
@@ -50,6 +59,13 @@ describe('Alert', () => {
       expect(onClose).not.toHaveBeenCalled();
       act(jest.runAllTimers);
       expect(onClose).not.toHaveBeenCalled();
+
+      // второй клик закроет Alert, так как в action был вызван метод close()
+      await userEvent.click(screen.getByText('__action__'));
+      expect(action).toHaveBeenCalledTimes(2);
+      expect(onClose).toHaveBeenCalledTimes(0);
+      act(jest.runAllTimers);
+      expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
 
