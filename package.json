@@ -130,7 +130,7 @@
       "prettier --check",
       "cross-env LINT_PRECOMMIT_RUN=1 stylelint --allow-empty-input"
     ],
-    "*.{json,md}": [
+    "*.{json,md,mdx}": [
       "prettier --check"
     ]
   },

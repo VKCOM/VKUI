@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Input } from '../Input/Input';
+import { Textarea } from '../Textarea/Textarea';
 import { FormItem, FormItemProps } from './FormItem';
 
 const story: Meta<FormItemProps> = {
@@ -35,5 +36,37 @@ export const WithInputField: Story = {
     top: 'Пароль',
     htmlFor: 'password',
     children: <Input id="password" type="password" placeholder="Введите пароль" />,
+  },
+};
+
+export const WithInputFieldWithError: Story = {
+  ...Playground,
+  args: {
+    top: 'Пароль',
+    htmlFor: 'password',
+    children: (
+      <Input
+        id="password"
+        type="password"
+        placeholder="Введите пароль"
+        aria-describedby="errorId"
+      />
+    ),
+    bottom: 'Пароль должен быть не короче 8 символов.',
+    bottomId: 'errorId',
+    status: 'error',
+  },
+};
+
+export const WithTopAside: Story = {
+  ...Playground,
+  args: {
+    topNode: (
+      <FormItem.Top>
+        <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
+        <FormItem.TopAside id="counter">0/100</FormItem.TopAside>
+      </FormItem.Top>
+    ),
+    children: <Textarea id="about" name="about" />,
   },
 };
