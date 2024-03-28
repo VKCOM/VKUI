@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { DateInput, DateInputProps } from './DateInput';
 
@@ -7,6 +8,7 @@ const story: Meta<DateInputProps> = {
   title: 'Forms/DateInput',
   component: DateInput,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  args: { onChange: fn() },
   argTypes: {
     value: {
       control: { type: 'date' },

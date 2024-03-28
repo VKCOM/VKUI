@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Div } from '../Div/Div';
 import { Group } from '../Group/Group';
@@ -8,6 +9,7 @@ import { Accordion, AccordionProps } from './Accordion';
 const story: Meta<AccordionProps> = {
   title: 'Blocks/Accordion',
   component: Accordion,
+  args: { onChange: fn() },
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
