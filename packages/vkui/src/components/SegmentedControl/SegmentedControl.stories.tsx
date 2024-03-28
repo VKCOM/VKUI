@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
@@ -7,6 +8,7 @@ const story: Meta<SegmentedControlProps> = {
   title: 'Forms/SegmentedControl',
   component: SegmentedControl,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  args: { onChange: fn() },
 };
 
 export default story;

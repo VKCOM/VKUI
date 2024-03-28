@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import type { ChipOption } from '../ChipsInputBase/types';
 import { FormItem } from '../FormItem/FormItem';
@@ -9,6 +10,7 @@ const story: Meta<ChipsInputProps<ChipOption>> = {
   title: 'Forms/ChipsInput',
   component: ChipsInput,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  args: { onInputChange: fn() },
 };
 
 export default story;

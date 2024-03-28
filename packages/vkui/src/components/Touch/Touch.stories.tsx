@@ -1,11 +1,20 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Touch, TouchEvent, TouchProps } from './Touch';
 
 const story: Meta<TouchProps> = {
   title: 'Service/Touch',
   component: Touch,
+  args: {
+    onClick: fn(),
+    onStart: fn(),
+    onMove: fn(),
+    onEnd: fn(),
+    onEndX: fn(),
+    onEndY: fn(),
+  },
   parameters: {
     ...CanvasFullLayout,
     cantered: false,

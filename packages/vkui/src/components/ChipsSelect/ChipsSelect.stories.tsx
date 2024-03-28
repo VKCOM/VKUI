@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { Icon12Download } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import type { ChipOption } from '../ChipsInputBase/types';
@@ -10,6 +11,7 @@ const story: Meta<ChipsSelectProps<ChipOption>> = {
   title: 'Forms/ChipsSelect',
   component: ChipsSelect,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  args: { onChange: fn(), onChangeStart: fn(), onInputChange: fn() },
 };
 
 export default story;
