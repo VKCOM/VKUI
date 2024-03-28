@@ -138,7 +138,7 @@ export const Group = ({
         <React.Fragment>
           <Spacing
             className={classNames(styles['Group__separator'], styles['Group__separator--spacing'])}
-            size={16}
+            size={8}
           />
           <Separator
             className={classNames(

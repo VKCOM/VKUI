@@ -118,16 +118,16 @@
 .Group--sizeX-compact.Group--mode-card:first-of-type {
   border-start-start-radius: 0;
   border-start-end-radius: 0;
-  border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
-  border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
+  border-end-start-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none.Group--mode-card:first-of-type {
     border-start-start-radius: 0;
     border-start-end-radius: 0;
-    border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
-    border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
+    border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
+    border-end-start-radius: var(--vkui--size_border_radius_promo--regular);
   }
 }
 
