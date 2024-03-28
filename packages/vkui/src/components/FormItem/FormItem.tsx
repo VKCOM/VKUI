@@ -152,6 +152,13 @@ export const FormItem = ({
   );
 };
 
+FormItem.displayName = 'FormItem';
+
 FormItem.Top = FormItemTop;
+FormItem.Top.displayName = 'FormItem.Top';
+
 FormItem.TopLabel = FormItemTopLabel;
+FormItem.TopLabel.displayName = 'FormItem.TopLabel';
+
 FormItem.TopAside = FormItemTopAside;
+FormItem.TopAside.displayName = 'FormItem.TopAside';

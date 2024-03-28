@@ -43,3 +43,5 @@ export const FormItemTopLabel = ({
     </Subhead>
   );
 };
+
+FormItemTopLabel.displayName = 'FormItemTopLabel';

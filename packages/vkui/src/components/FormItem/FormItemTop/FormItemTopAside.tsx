@@ -21,3 +21,5 @@ export const FormItemTopAside = ({ children, ...restProps }: FormItemTopAsidePro
     </Subhead>
   );
 };
+
+FormItemTopAside.displayName = 'FormItemTopAside';
