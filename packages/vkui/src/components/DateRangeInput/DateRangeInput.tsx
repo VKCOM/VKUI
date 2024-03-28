@@ -221,7 +221,7 @@ export const DateRangeInput = ({
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
   const onCalendarChange = React.useCallback(
-    (newValue: DateRangeType) => {
+    (newValue: DateRangeType | undefined) => {
       onChange?.(newValue);
       if (closeOnChange && newValue?.[1] && newValue[1] !== value?.[1]) {
         removeFocusFromField();
