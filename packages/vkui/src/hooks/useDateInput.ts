@@ -16,7 +16,7 @@ export interface UseDateInputDependencies<T, D> {
   };
   onInternalValueChange(value: string[]): void;
   getInternalValue(value?: D | undefined): string[];
-  onChange?(value?: D | undefined): void;
+  onChange?: (value?: D | undefined) => void;
 }
 
 export function useDateInput<T extends HTMLElement, D>({
