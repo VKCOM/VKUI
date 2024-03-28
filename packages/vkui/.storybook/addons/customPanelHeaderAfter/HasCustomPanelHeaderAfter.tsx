@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useGlobals } from '@storybook/manager-api';
-import { IconButton, Icons } from '@storybook/components';
+import { IconButton } from '@storybook/components';
+import { BrowserIcon } from '@storybook/icons';
 import { PARAM_KEY } from './constants';
 
 export const HasCustomPanelHeaderAfter = () => {
@@ -13,7 +14,7 @@ export const HasCustomPanelHeaderAfter = () => {
 
   return (
     <IconButton active={active} key="customPanelHeaderAfter" onClick={toggle}>
-      <Icons icon="browser" />
+      <BrowserIcon />
       &nbsp; hasCustomPanelHeaderAfter
     </IconButton>
   );

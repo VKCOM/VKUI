@@ -2,7 +2,8 @@ import * as React from 'react';
 import { useGlobals, addons, useStorybookApi } from '@storybook/manager-api';
 import { styled } from '@storybook/theming';
 import { SET_GLOBALS } from '@storybook/core-events';
-import { IconButton, Icons } from '@storybook/components';
+import { IconButton } from '@storybook/components';
+import { SunIcon, MoonIcon } from '@storybook/icons';
 import { PARAM_KEY, SET_STORYBOOK_THEME } from './constants';
 import { vkuiDarkTheme, vkuiLightTheme } from './vkuiThemes';
 
@@ -59,7 +60,7 @@ export const StorybookTheme = () => {
 
   return (
     <SidebarIconButton key="sb-dark-theme" onClick={toggleTheme} title={title}>
-      {isCurrentThemeDark ? <Icons icon="sun" /> : <Icons icon="moon" />}
+      {isCurrentThemeDark ? <SunIcon /> : <MoonIcon />}
     </SidebarIconButton>
   );
 };
