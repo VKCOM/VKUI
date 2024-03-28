@@ -13,6 +13,7 @@ export {
   getNodeScroll,
   isHTMLElement,
   isElement,
+  getParentNode,
 } from '@vkontakte/vkui-floating-ui/utils/dom';
 
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
@@ -169,4 +170,36 @@ export const getActiveElementByAnotherElement = (el: Element | null) =>
 
 export const contains = (parent?: Element | null, child?: Element | null) => {
   return parent && child ? parent.contains(child) : false;
+};
+
+export const getFirstTouchEventData = (
+  event: Event | React.TouchEvent<HTMLElement> | TouchEvent,
+): Pick<Touch, 'identifier' | 'screenX' | 'screenY' | 'clientX' | 'clientY' | 'pageX' | 'pageY'> & {
+  target: EventTarget | null;
+} => {
+  const fallback = {
+    identifier: 0,
+    target: event.target,
+    screenX: 0,
+    screenY: 0,
+    clientX: 0,
+    clientY: 0,
+    pageX: 0,
+    pageY: 0,
+  };
+  switch (event.type) {
+    case 'touchend':
+      return (event as TouchEvent).changedTouches[0];
+    case 'touchstart':
+    case 'touchmove':
+    case 'touchcancel':
+      return (event as TouchEvent).touches[0];
+    default:
+      return fallback;
+  }
+};
+
+export const hasSelectionWithRangeType = (targetEl: HTMLElement) => {
+  const selection = getWindow(targetEl).getSelection();
+  return selection ? selection.type === 'Range' : false;
 };

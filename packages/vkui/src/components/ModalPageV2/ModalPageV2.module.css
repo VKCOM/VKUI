@@ -1,0 +1,180 @@
+.ModalPageV2Root {
+  position: fixed;
+  inset: 0;
+  z-index: var(--vkui--z_index_modal);
+  overflow: hidden;
+}
+
+.ModalPageV2Backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.4);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ModalPageV2Backdrop {
+    animation: animation-fade-in 0.2s ease-in;
+  }
+
+  .ModalPageV2Backdrop--willBeHide {
+    animation: animation-fade-out 0.1s ease-out forwards;
+  }
+}
+
+.ModalPageV2 {
+  inline-size: 100%;
+  outline: none;
+
+  /* Для ограничения высоты `.ModalPageV2__container`. */
+  display: flex;
+}
+
+.ModalPageV2__container {
+  position: relative;
+  inline-size: 100%;
+
+  /* Для срабатывания `height: 100%` у `.ModalPageV2__children`. */
+  display: flex;
+  flex-direction: column;
+}
+
+.ModalPageV2__children {
+  border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+  background-color: var(--vkui--color_background_modal);
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+
+  /*
+   * Удерживает высоту в пределах 100% родителя при переполнении контента.
+   *
+   * - см. `.ModalPageHeader {}`
+   * - см. `.ModalPageContent {}`
+   * - см. `.ModalPageFooter {}`
+   */
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+}
+
+/* Mobile */
+@media (--viewWidth-smallTabletMinus) {
+  .ModalPageV2 {
+    position: absolute;
+    inset-inline: 0 0;
+    inset-block: auto var(--vkui_internal--safe_area_inset_bottom);
+    margin-inline: auto;
+    margin-block-start: var(--vkui_internal--safe_area_inset_top);
+    block-size: auto;
+    max-inline-size: var(--vkui--size_popup_small--regular);
+    max-block-size: calc(100% - var(--vkui_internal--safe_area_inset_top));
+  }
+
+  .ModalPageV2__container::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset-block-start: 100%;
+    inset-inline-start: 0;
+    margin-block-start: -1px; /* убирает зазор под `.ModalPageV2__children`  */
+    inline-size: 100%;
+    block-size: 50%;
+    background-color: var(--vkui--color_background_modal);
+    pointer-events: none;
+    touch-action: none;
+  }
+
+  .ModalCloseButton {
+    display: none;
+  }
+}
+
+/* Mobile animations */
+@media (--viewWidth-smallTabletMinus) and (prefers-reduced-motion: no-preference) {
+  .ModalPageV2 {
+    animation: animation-slide-up 0.2s ease-out 0.1s backwards;
+  }
+
+  .ModalPageV2--willBeHide {
+    animation: animation-slide-down 0.1s ease-in forwards;
+  }
+}
+
+/* Desktop */
+@media (--viewWidth-smallTabletPlus) {
+  .ModalPageV2Root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ModalPageV2 {
+    position: relative;
+    max-block-size: calc(100% - 64px);
+  }
+
+  .ModalPageV2__container {
+    box-shadow: var(--vkui--elevation3);
+  }
+
+  .ModalPageV2__children {
+    border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
+    border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
+  }
+
+  .ModalPageV2--maxWidth-s {
+    max-inline-size: var(--vkui--size_popup_small--regular);
+  }
+
+  .ModalPageV2--maxWidth-m {
+    max-inline-size: var(--vkui--size_popup_medium--regular);
+  }
+
+  .ModalPageV2--maxWidth-l {
+    max-inline-size: var(--vkui--size_popup_large--regular);
+  }
+}
+
+/* Desktop animations */
+@media (--viewWidth-smallTabletPlus) and (prefers-reduced-motion: no-preference) {
+  .ModalPageV2 {
+    animation: animation-fade-in 0.2s ease-in 0.1s backwards;
+  }
+
+  .ModalPageV2--willBeHide {
+    animation: animation-fade-out 0.1s ease-out forwards;
+  }
+}
+
+@keyframes animation-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+@keyframes animation-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+@keyframes animation-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes animation-slide-down {
+  to {
+    transform: translateY(100%);
+  }
+}
