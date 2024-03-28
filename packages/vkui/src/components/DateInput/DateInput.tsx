@@ -51,6 +51,8 @@ export interface DateInputProps
       | 'onPrevMonth'
       | 'prevMonthIcon'
       | 'nextMonthIcon'
+      | 'minDateTime'
+      | 'maxDateTime'
     >,
     HasRootRef<HTMLDivElement>,
     FormFieldProps {
@@ -109,6 +111,8 @@ export const DateInput = ({
   shouldDisableDate,
   disableFuture,
   disablePast,
+  minDateTime,
+  maxDateTime,
   value,
   onChange,
   calendarPlacement = 'bottom-start',
@@ -333,6 +337,8 @@ export const DateInput = ({
             onPrevMonth={onPrevMonth}
             prevMonthIcon={prevMonthIcon}
             nextMonthIcon={nextMonthIcon}
+            minDateTime={minDateTime}
+            maxDateTime={maxDateTime}
           />
         </Popper>
       )}
