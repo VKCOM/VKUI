@@ -31,7 +31,7 @@ const config: StorybookConfig = {
     './addons/pointer',
     './addons/customPanelHeaderAfter',
     './addons/storybook-theme',
-    getAbsolutePath('storybook-addon-swc'),
+    getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
   ],
 
   framework: {
@@ -54,8 +54,12 @@ const config: StorybookConfig = {
     return config;
   },
 
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+  },
+
   docs: {
-    autodocs: true,
+    autodocs: false,
   },
 };
 
