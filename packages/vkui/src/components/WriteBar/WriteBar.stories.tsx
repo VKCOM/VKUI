@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { Icon28SmileOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { WriteBarIcon } from '../WriteBarIcon/WriteBarIcon';
@@ -9,6 +10,7 @@ const story: Meta<WriteBarProps> = {
   title: 'Blocks/WriteBar',
   component: WriteBar,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  args: { onHeightChange: fn() },
 };
 
 export default story;

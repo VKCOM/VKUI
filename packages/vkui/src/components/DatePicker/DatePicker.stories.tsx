@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { DatePicker, DatePickerProps } from './DatePicker';
 
@@ -6,6 +7,7 @@ const story: Meta<DatePickerProps> = {
   title: 'Forms/DatePicker',
   component: DatePicker,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  args: { onDateChange: fn() },
 };
 
 export default story;

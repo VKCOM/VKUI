@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { IconButton, Icons, WithTooltipPure } from '@storybook/components';
+import { IconButton, WithTooltipPure } from '@storybook/components';
+import { GridIcon } from '@storybook/icons';
 import { useArgs, useArgTypes, useParameter } from '@storybook/manager-api';
 import { ArgTypes } from '@storybook/types';
 import { OptionsContainer } from './OptionsContainer';
@@ -63,9 +64,8 @@ export const Tool = () => {
         />
       )}
     >
-      {/* @ts-expect-error: TS2741 Подождем, пока обновят типы */}
       <IconButton>
-        <Icons icon="grid" />
+        <GridIcon />
         &nbsp; cartesian
       </IconButton>
     </WithTooltipPure>
