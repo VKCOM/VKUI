@@ -19,7 +19,7 @@
 
 .HorizontalCell__content {
   color: var(--vkui--color_text_primary);
-  word-break: break-all;
+  word-break: break-word;
   text-overflow: ellipsis;
 }
 
