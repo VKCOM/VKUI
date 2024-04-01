@@ -11,7 +11,7 @@ type AnyFn = (...args: any[]) => void;
 
 export interface RafSchedule<T extends AnyFn> {
   (...args: Parameters<T>): void;
-  cancel(): void;
+  cancel: () => void;
 }
 
 export const rafSchd = <T extends AnyFn>(fn: T): RafSchedule<T> => {

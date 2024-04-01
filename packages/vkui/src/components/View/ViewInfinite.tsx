@@ -45,21 +45,21 @@ export interface ViewInfiniteProps
     HasPlatform,
     NavIdProps {
   activePanel: string;
-  onTransition?(params: TransitionParams & { isBack: boolean }): void;
+  onTransition?: (params: TransitionParams & { isBack: boolean }) => void;
   /**
    * callback свайпа назад
    */
-  onSwipeBack?(): void;
+  onSwipeBack?: () => void;
   /**
    * callback начала анимации свайпа назад.
    */
-  onSwipeBackStart?(activePanel: string | null): void | 'prevent';
+  onSwipeBackStart?: (activePanel: string | null) => void | 'prevent';
   /**
    * callback завершения анимации отмененного пользователем свайпа
    */
-  onSwipeBackCancel?(): void;
+  onSwipeBackCancel?: () => void;
   history?: string[];
-  isBackCheck?(params: TransitionParams): boolean;
+  isBackCheck?: (params: TransitionParams) => boolean;
   /**
    * @ignore
    */

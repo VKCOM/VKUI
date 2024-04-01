@@ -70,8 +70,8 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
   /**
    * [a11y] Функция для переопределения и/или локализации метки кнопки страницы.
    */
-  getPageLabel?(isCurrent: boolean): string;
-  onChange?(page: number): void;
+  getPageLabel?: (isCurrent: boolean) => string;
+  onChange?: (page: number) => void;
 }
 
 /**

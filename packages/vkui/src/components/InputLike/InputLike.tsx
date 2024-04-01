@@ -10,7 +10,7 @@ export interface InputLikeProps extends RootComponentProps<HTMLSpanElement> {
   index: number;
   value?: string;
   label?: string;
-  onElementSelect?(index: number): void;
+  onElementSelect?: (index: number) => void;
 }
 
 const MASK_SYMBOL = String.fromCharCode(0x2007);

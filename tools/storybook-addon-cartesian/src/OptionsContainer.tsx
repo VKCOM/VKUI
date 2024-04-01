@@ -16,7 +16,7 @@ const ItemStyle: React.CSSProperties = {
 interface OptionsContainerProps {
   options: OptionsProp;
   checkedOptions: OptionNamesProp;
-  onCheckedChange(actual: OptionNamesProp): void;
+  onCheckedChange: (actual: OptionNamesProp) => void;
 }
 
 export const OptionsContainer = ({

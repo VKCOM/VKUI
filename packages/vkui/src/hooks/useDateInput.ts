@@ -9,13 +9,13 @@ export interface UseDateInputDependencies<T, D> {
   autoFocus?: boolean;
   disabled?: boolean;
   value?: D;
-  elementsConfig(index: number): {
+  elementsConfig: (index: number) => {
     length: number;
     min: number;
     max: number;
   };
-  onInternalValueChange(value: string[]): void;
-  getInternalValue(value?: D | undefined): string[];
+  onInternalValueChange: (value: string[]) => void;
+  getInternalValue: (value?: D | undefined) => string[];
   onChange?: (value?: D | undefined) => void;
 }
 

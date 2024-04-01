@@ -17,7 +17,7 @@ interface CellDraggerProps
   extends UseDraggableProps,
     Omit<HTMLAttributesWithRootRef<HTMLElement>, keyof DraggableProps> {
   disabled?: boolean;
-  onDragStateChange?(dragging: boolean): void;
+  onDragStateChange?: (dragging: boolean) => void;
 }
 
 export const CellDragger = ({

@@ -9,7 +9,7 @@ export interface PaginationNavigationButtonProps {
   Icon: React.ComponentType;
   a11yLabel: React.ReactNode;
   disabled?: boolean;
-  onClick(): void;
+  onClick: () => void;
 }
 
 /**

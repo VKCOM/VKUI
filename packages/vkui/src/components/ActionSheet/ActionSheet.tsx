@@ -27,7 +27,7 @@ export interface ActionSheetProps
   /**
    * Закрыть попап по клику снаружи.
    */
-  onClose(options: ActionSheetOnCloseOptions): void;
+  onClose: (options: ActionSheetOnCloseOptions) => void;
   /**
    * Только мобильный iOS.
    */

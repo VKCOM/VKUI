@@ -6,7 +6,7 @@ import { IconButton } from '../IconButton/IconButton';
 
 export interface CustomSelectClearButtonProps extends HasDataAttribute {
   className?: string;
-  onClick(): void;
+  onClick: () => void;
   disabled?: boolean;
 }
 

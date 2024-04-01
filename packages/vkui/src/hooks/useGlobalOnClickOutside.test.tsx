@@ -5,7 +5,7 @@ import { useGlobalOnClickOutside } from './useGlobalOnClickOutside';
 interface WrapperUseGlobalOnClickOutsideProps {
   disableTarget?: 'target-1' | 'target-2';
   disableAllTarget?: boolean;
-  globalClickHandler(): void;
+  globalClickHandler: () => void;
 }
 
 const WrapperUseGlobalOnClickOutside = ({

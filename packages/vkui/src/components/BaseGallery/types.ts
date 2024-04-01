@@ -32,16 +32,16 @@ export interface BaseGalleryProps
   slideWidth?: string | number;
   slideIndex?: number;
   onDragStart?: TouchEventHandler;
-  onDragEnd?(e: TouchEvent, targetIndex: number): void;
-  onChange?(current: number): void;
+  onDragEnd?: (e: TouchEvent, targetIndex: number) => void;
+  onChange?: (current: number) => void;
   /**
    * Будет вызвано при клике на кнопку-стрелку влево
    */
-  onPrevClick?(event: React.MouseEvent): void;
+  onPrevClick?: (event: React.MouseEvent) => void;
   /**
    * Будет вызвано при клике на кнопку-стрелку вправо
    */
-  onNextClick?(event: React.MouseEvent): void;
+  onNextClick?: (event: React.MouseEvent) => void;
   bullets?: 'dark' | 'light' | false;
   /**
    * Позволяет отключить реагирование на тач-события

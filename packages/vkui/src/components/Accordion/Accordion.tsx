@@ -27,7 +27,7 @@ export interface AccordionProps extends HasChildren {
   /**
    * Функция изменения
    */
-  onChange?(e: boolean): void;
+  onChange?: (e: boolean) => void;
   disabled?: boolean;
 }
 

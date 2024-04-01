@@ -21,7 +21,7 @@ export interface TextareaProps
     HasAlign,
     Pick<FormFieldProps, 'status' | 'mode'> {
   grow?: boolean;
-  onResize?(el: HTMLTextAreaElement): void;
+  onResize?: (el: HTMLTextAreaElement) => void;
   defaultValue?: string;
 }
 

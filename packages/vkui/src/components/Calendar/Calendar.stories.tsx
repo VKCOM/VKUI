@@ -35,8 +35,8 @@ export const Playground: Story = {
     const parsedMinDateTime = minDateTime ? new Date(minDateTime) : minDateTime;
     const parsedMaxDateTime = maxDateTime ? new Date(maxDateTime) : maxDateTime;
 
-    const updateValue = (newDate: Date) => {
-      updateArgs({ value: newDate.getTime() });
+    const updateValue = (newDate: Date | undefined) => {
+      updateArgs({ value: newDate?.getTime() });
     };
     return (
       <Calendar

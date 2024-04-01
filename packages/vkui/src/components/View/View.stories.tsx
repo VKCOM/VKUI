@@ -130,7 +130,7 @@ export const SwipeBlockExample: Story = {
       React.useState<React.ReactNode | null>(null);
 
     const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
-      (activePanel: string) => {
+      (activePanel: string | null) => {
         if (activePanel === 'settings') {
           if (userName !== '') {
             return;

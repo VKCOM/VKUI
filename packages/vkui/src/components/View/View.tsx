@@ -36,21 +36,21 @@ export let scrollsCache: ViewsScrolls = {};
 
 export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavIdProps {
   activePanel: string;
-  onTransition?(params: { isBack: boolean; from: string; to: string }): void;
+  onTransition?: (params: { isBack: boolean; from: string; to: string }) => void;
   /**
    * callback свайпа назад
    */
-  onSwipeBack?(): void;
+  onSwipeBack?: () => void;
   /**
    * callback начала анимации свайпа назад.
    *
    * Чтобы остановить свайп назад, возвращайте `"prevent"`.
    */
-  onSwipeBackStart?(activePanel: string | null): void | 'prevent';
+  onSwipeBackStart?: (activePanel: string | null) => void | 'prevent';
   /**
    * callback завершения анимации отмененного пользователем свайпа
    */
-  onSwipeBackCancel?(): void;
+  onSwipeBackCancel?: () => void;
   history?: string[];
 
   children: React.ReactElement | Iterable<React.ReactElement>;

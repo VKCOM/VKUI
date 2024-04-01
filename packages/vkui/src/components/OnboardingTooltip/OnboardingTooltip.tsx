@@ -59,7 +59,7 @@ export interface OnboardingTooltipProps
   /**
    * Callback, который вызывается при клике по любому месту в пределах экрана.
    */
-  onClose?(this: void): void;
+  onClose?: (this: void) => void;
 }
 
 /**
