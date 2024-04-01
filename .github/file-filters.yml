@@ -14,7 +14,7 @@ dependencies: &dependencies
 package_vkui: &package_vkui
   - *dependencies
   - 'packages/vkui/*.!(md)'
-  - 'packages/vkui/!(.storybook)src/**/!(*.md|*.stories.*)'
+  - 'packages/vkui/!(.storybook)src/**/!(*.md|*.mdx|*.stories.*)'
   - 'tools/!(eslint-*|stylelint-*|storybook-*)/**'
   - 'postcss.*'
   - '.browserslistrc'
@@ -32,4 +32,5 @@ docs_storybook:
   - 'packages/vkui/.storybook/**'
   - 'packages/vkui/storybook/**'
   - 'packages/vkui/src/**/*.stories.*'
+  - 'packages/vkui/src/**/*.mdx'
   - 'tools/storybook-*/**'
