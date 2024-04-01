@@ -69,3 +69,53 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
     </ComponentPlayground>
   );
 };
+
+interface FormItemTopAsideProps extends FormItemProps {
+  topLabel?: React.ReactNode;
+  topAside?: React.ReactNode;
+}
+
+export const FormItemTopAsidePlayground = (props: ComponentPlaygroundProps) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          topLabel: [
+            <FormItem.TopLabel key="1">
+              Дополнительная информация с достаточно длинным описанием
+            </FormItem.TopLabel>,
+            undefined,
+          ],
+          topAside: [
+            <FormItem.TopAside key="0">0/100</FormItem.TopAside>,
+            <FormItem.TopAside key="1">Контент сбоку имеет приоритет</FormItem.TopAside>,
+          ],
+          children: [<Input key={0} placeholder="Введите ваше значение" />],
+        },
+        {
+          topLabel: [
+            <FormItem.TopLabel key="0" multiline>
+              Дополнительная информация с достаточно длинным описанием
+            </FormItem.TopLabel>,
+          ],
+          topAside: [<FormItem.TopAside key="0">0/100</FormItem.TopAside>],
+          children: [<Input key={0} placeholder="Введите ваше значение" />],
+        },
+      ]}
+    >
+      {({ topLabel, topAside, ...props }: FormItemTopAsideProps) => (
+        <FormItem
+          {...props}
+          topNode={
+            <FormItem.Top>
+              {topLabel}
+              {topAside}
+            </FormItem.Top>
+          }
+          style={{ maxWidth: '300px' }}
+        />
+      )}
+    </ComponentPlayground>
+  );
+};

@@ -250,6 +250,9 @@ export type { AccordionSummaryProps } from './components/Accordion/AccordionSumm
  * Forms
  */
 export { FormItem } from './components/FormItem/FormItem';
+export type { FormItemTopProps } from './components/FormItem/FormItemTop/FormItemTop';
+export type { FormItemTopLabelProps } from './components/FormItem/FormItemTop/FormItemTopLabel';
+export type { FormItemTopAsideProps } from './components/FormItem/FormItemTop/FormItemTopAside';
 export type { FormItemProps } from './components/FormItem/FormItem';
 export { FormField } from './components/FormField/FormField';
 export type { FormFieldProps } from './components/FormField/FormField';

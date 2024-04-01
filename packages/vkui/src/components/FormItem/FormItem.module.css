@@ -23,13 +23,32 @@
 
 .FormItem__top {
   padding-block: 2px 8px;
+  color: var(--vkui--color_text_subhead);
+  display: flex;
+  align-items: flex-end;
+}
+
+.FormItemTop__label,
+.FormItemTop__aside {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: var(--vkui--color_text_subhead);
 }
 
-.FormItem__top--multiline {
+.FormItemTop__label {
+  flex: 1;
+}
+
+.FormItemTop__aside {
+  color: var(--vkui--color_text_tertiary);
+  margin-inline-start: auto;
+}
+
+.FormItemTop__aside:not(:only-child) {
+  padding-inline-start: 12px;
+}
+
+.FormItemTop__label--multiline {
   white-space: normal;
 }
 

@@ -1,0 +1,36 @@
+import { Meta, Title, ArgTypes, Story, Stories, Description } from '@storybook/blocks';
+import { FormItemTop } from './FormItemTop';
+import { FormItemTopAside } from './FormItemTopAside';
+import { FormItemTopLabel } from './FormItemTopLabel';
+
+<Meta title="Forms/FormItem/Top Component" />
+
+Иногда шапка у поля может быть составной, то есть содержать несколько отдельных компонентов
+для сегментирования представленной информации. В таком случае воспользуйтесь подкомпонентами,
+которые позволят вам собрать необходимый заголовок самостоятельно и более гибко управлять передаваемыми
+в компоненты свойствами (например, для `a11y`):
+
+```jsx
+<FormItem
+  topNode={
+    <FormItem.Top>
+      <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
+      <FormItem.TopAside id="counter">0/100</FormItem.TopAside>
+    </FormItem.Top>
+  }
+>
+  <Textarea id="about" name="about" />
+</FormItem>
+```
+
+<Title>FormItem.Top</Title>
+<Description of={FormItemTop} />
+<ArgTypes of={FormItemTop} />
+
+<Title>FormItem.TopLabel</Title>
+<Description of={FormItemTopLabel} />
+<ArgTypes of={FormItemTopLabel} />
+
+<Title>FormItem.TopAside</Title>
+<Description of={FormItemTopAside} />
+<ArgTypes of={FormItemTopAside} />

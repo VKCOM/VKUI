@@ -33,6 +33,33 @@
 </FormItem>
 ```
 
+## Подкомпоненты для шапки поля
+
+Иногда шапка у поля может быть составной, то есть содержать несколько отдельных компонентов для сегментирования представленной информации. В таком случае воспользуйтесь подкомпонентами, которые позволят вам собрать необходимый заголовок самостоятельно и более гибко управлять передаваемыми в компоненты свойствами (например, для `a11y`).
+
+Компонент `<FormItem.Top>` служит оберткой для составной шапки поля, отвечая за выравнивание контента и расстановку отступов.
+
+Компонент `<FormItem.TopLabel>` отвечает за отрисовку заголовка поля. По умолчанию компонент представлен тегом `label`, если передано свойство `htmlFor`. Можно переопределить через свойство `Component`.
+
+Компонент `<FormItem.TopAside>` отвечает за отрисовку дополнительного контента справа от заголовка поля.
+
+> Обратите внимание, что составной компонент необходимо прокидывать в свойство `topNode`, а не `top`
+
+Пример использования:
+
+```jsx static
+<FormItem
+  topNode={
+    <FormItem.Top>
+      <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
+      <FormItem.TopAside>0/100</FormItem.TopAside>
+    </FormItem.Top>
+  }
+>
+  <Textarea id="about" name="about" />
+</FormItem>
+```
+
 ```jsx
 const addressItems = [
   { label: 'Почтовый индекс', name: 'zip' },
@@ -43,6 +70,7 @@ const addressItems = [
 const Example = () => {
   const [email, setEmail] = React.useState('');
   const [purpose, setPurpose] = React.useState('');
+  const [about, setAbout] = React.useState('');
   const [showPatronymic, setShowPatronymic] = React.useState(true);
 
   const onChange = (e) => {
@@ -51,6 +79,7 @@ const Example = () => {
     const setStateAction = {
       email: setEmail,
       purpose: setPurpose,
+      about: setAbout,
     }[name];
 
     setStateAction && setStateAction(value);
@@ -193,8 +222,22 @@ const Example = () => {
                 ]}
               />
             </FormItem>
-            <FormItem htmlFor="about" top="О себе">
-              <Textarea id="about" />
+            <FormItem
+              topNode={
+                <FormItem.Top>
+                  <FormItem.TopLabel htmlFor="about">О себе</FormItem.TopLabel>
+                  <FormItem.TopAside>{about.length}/100</FormItem.TopAside>
+                </FormItem.Top>
+              }
+            >
+              <Textarea
+                id="about"
+                name="about"
+                maxLength={100}
+                value={about}
+                onChange={onChange}
+                placeholder="Хобби, интересы, увлечения..."
+              />
             </FormItem>
             <Checkbox>
               Согласен со всем <Link>этим</Link>
