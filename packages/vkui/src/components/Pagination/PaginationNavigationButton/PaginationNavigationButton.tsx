@@ -1,57 +1,77 @@
 import * as React from 'react';
-import { Button } from '../../Button/Button';
+import { Button, ButtonProps } from '../../Button/Button';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 
-export interface PaginationNavigationButtonProps {
-  type: 'prev' | 'next';
-  style: 'icon' | 'caption' | 'both';
-  caption: React.ReactNode;
-  Icon: React.ComponentType;
-  a11yLabel: React.ReactNode;
-  disabled?: boolean;
-  onClick: () => void;
+export interface PaginationNavigationButtonOpts {
+  'type': 'prev' | 'next';
+  'style': 'icon' | 'caption' | 'both';
+  'caption': React.ReactNode;
+  'Icon': React.ComponentType;
+  'a11yLabel': React.ReactNode;
+  'disabled'?: boolean;
+  'onClick': (event: React.MouseEvent<HTMLElement>) => void;
+  'data-page': number | undefined;
+}
+
+export interface PaginationNavigationButtonProps extends PaginationNavigationButtonOpts {
+  renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
 }
 
 /**
  * @private
  */
-export const PaginationNavigationButton = ({
-  type,
-  style,
-  caption: captionProp,
-  Icon,
-  a11yLabel,
-  disabled,
-  onClick,
-}: PaginationNavigationButtonProps) => {
+export const getButtonPropsFromPaginationNavigationButton = (
+  opts: PaginationNavigationButtonOpts,
+) => {
   const icon: React.ReactElement | null =
-    style !== 'caption' ? (
+    opts.style !== 'caption' ? (
       <>
-        <VisuallyHidden>{a11yLabel}</VisuallyHidden>
-        <Icon />
+        <VisuallyHidden>{opts.a11yLabel}</VisuallyHidden>
+        <opts.Icon />
       </>
     ) : null;
   const caption: React.ReactElement | null =
-    style === 'caption' ? (
+    opts.style === 'caption' ? (
       <>
-        <VisuallyHidden>{a11yLabel}</VisuallyHidden>
-        <span aria-hidden="true">{captionProp}</span>
+        <VisuallyHidden>{opts.a11yLabel}</VisuallyHidden>
+        <span aria-hidden="true">{opts.caption}</span>
       </>
-    ) : style !== 'icon' ? (
-      <span aria-hidden="true">{captionProp}</span>
+    ) : opts.style !== 'icon' ? (
+      <span aria-hidden="true">{opts.caption}</span>
     ) : null;
 
-  return (
-    <Button
-      size="l"
-      before={type === 'prev' ? icon : null}
-      after={type === 'next' ? icon : null}
-      appearance={style === 'caption' ? 'neutral' : 'accent'}
-      mode="tertiary"
-      disabled={disabled}
-      onClick={onClick}
-    >
-      {caption}
-    </Button>
-  );
+  return {
+    'size': 'l',
+    'before': opts.type === 'prev' ? icon : null,
+    'after': opts.type === 'next' ? icon : null,
+    'appearance': opts.style === 'caption' ? 'neutral' : 'accent',
+    'mode': 'tertiary',
+    'disabled': opts.disabled,
+    'onClick': opts.onClick,
+    'children': caption,
+    'data-page': opts['data-page'],
+  } satisfies ButtonProps & { 'data-page': number | undefined };
+};
+
+/**
+ * @private
+ */
+export type CustomPaginationNavigationButton = ReturnType<
+  typeof getButtonPropsFromPaginationNavigationButton
+>;
+
+/**
+ * @private
+ */
+export const PaginationNavigationButton: React.FC<PaginationNavigationButtonProps> = ({
+  renderNavigationButton,
+  ...restProps
+}) => {
+  const buttonProps = getButtonPropsFromPaginationNavigationButton(restProps);
+
+  if (typeof renderNavigationButton === 'function') {
+    return renderNavigationButton(buttonProps);
+  }
+
+  return <Button {...buttonProps} />;
 };

@@ -1,14 +1,19 @@
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { PaginationPageType, usePagination } from '../../hooks/usePagination';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import {
+  type CustomPaginationNavigationButton,
   PaginationNavigationButton,
-  type PaginationNavigationButtonProps,
+  PaginationNavigationButtonProps,
 } from './PaginationNavigationButton/PaginationNavigationButton';
-import { PaginationPageButton } from './PaginationPage/PaginationPageButton';
+import {
+  type CustomPaginationPageButtonProps,
+  PaginationPageButton,
+} from './PaginationPage/PaginationPageButton';
 import { PaginationPageEllipsis } from './PaginationPage/PaginationPageEllipsis';
 import { getPageLabelDefault } from './utils';
 import styles from './Pagination.module.css';
@@ -71,7 +76,19 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    * [a11y] Функция для переопределения и/или локализации метки кнопки страницы.
    */
   getPageLabel?: (isCurrent: boolean) => string;
-  onChange?: (page: number) => void;
+  onChange?: (page: number, event: React.MouseEvent<HTMLElement>) => void;
+  /**
+   * Рендер-проп для отрисовки кнопки страницы
+   *
+   * > Note: На вход передает пропы совместимые с компонентом Tappable
+   */
+  renderPageButton?: (props: CustomPaginationPageButtonProps) => React.ReactNode;
+  /**
+   * Рендер-проп для отрисовки кнопок перемещения между соседними страницами
+   *
+   * > Note: На вход передает пропы совместимые с компонентом Button
+   */
+  renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
 }
 
 /**
@@ -92,6 +109,8 @@ export const Pagination = ({
   prevButtonLabel = 'Перейти на предыдущую страницу',
   nextButtonLabel = 'Перейти на следующую страницу',
   onChange,
+  renderPageButton,
+  renderNavigationButton,
   ...resetProps
 }: PaginationProps) => {
   const pages = usePagination({
@@ -102,26 +121,36 @@ export const Pagination = ({
   });
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
+  const prevPage = isFirstPage ? undefined : currentPage - 1;
+  const nextPage = isLastPage ? undefined : currentPage + 1;
 
-  const handlePrevClick = React.useCallback(() => {
-    if (onChange && !isFirstPage) {
-      onChange(currentPage - 1);
-    }
-  }, [currentPage, isFirstPage, onChange]);
+  const handlePrevClick = React.useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      if (onChange && prevPage != null) {
+        onChange(prevPage, event);
+      }
+    },
+    [prevPage, onChange],
+  );
 
   const handleClick = React.useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
       const page: string = event.currentTarget.dataset.page || '1';
-      onChange?.(Number(page));
+      onChange?.(Number(page), event);
     },
     [onChange],
   );
 
-  const handleNextClick = React.useCallback(() => {
-    if (onChange && !isLastPage) {
-      onChange(currentPage + 1);
-    }
-  }, [currentPage, isLastPage, onChange]);
+  const handleNextClick = React.useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      if (onChange && nextPage != null) {
+        onChange(nextPage, event);
+      }
+    },
+    [nextPage, onChange],
+  );
+
+  const { sizeY } = useAdaptivity();
 
   const renderPages = React.useCallback(
     (page: PaginationPageType) => {
@@ -135,6 +164,7 @@ export const Pagination = ({
           );
         default: {
           const isCurrent = page === currentPage;
+
           return (
             <li key={page}>
               <PaginationPageButton
@@ -142,6 +172,8 @@ export const Pagination = ({
                 isCurrent={isCurrent}
                 onClick={handleClick}
                 disabled={disabled}
+                sizeY={sizeY}
+                renderPageButton={renderPageButton}
               >
                 {page}
               </PaginationPageButton>
@@ -150,7 +182,7 @@ export const Pagination = ({
         }
       }
     },
-    [currentPage, disabled, getPageLabel, handleClick],
+    [currentPage, disabled, getPageLabel, handleClick, renderPageButton, sizeY],
   );
 
   return (
@@ -166,6 +198,8 @@ export const Pagination = ({
             a11yLabel={prevButtonLabel}
             disabled={isFirstPage || disabled}
             onClick={handlePrevClick}
+            data-page={prevPage}
+            renderNavigationButton={renderNavigationButton}
           />
         </li>
         {pages.map(renderPages)}
@@ -178,6 +212,8 @@ export const Pagination = ({
             a11yLabel={nextButtonLabel}
             disabled={isLastPage || disabled}
             onClick={handleNextClick}
+            data-page={nextPage}
+            renderNavigationButton={renderNavigationButton}
           />
         </li>
       </ul>

@@ -14,7 +14,10 @@
 const Example = () => {
   const [sizeY, setSizeY] = useState('compact');
   const [navigationButtonsStyle, setNavigationButtonsStyle] = useState('icon');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(() => {
+    const params = window.location.hash.split('?')[1] || '';
+    return Number(new URLSearchParams(params).get('page')) || 1;
+  });
   const [siblingCount, setSiblingCount] = useState(0);
   const [boundaryCount, setBoundaryCount] = useState(1);
   const [totalPages, setTotalPages] = useState(123);
@@ -23,6 +26,8 @@ const Example = () => {
   const handleChange = React.useCallback((page) => {
     setCurrentPage(page);
   }, []);
+
+  const hashPath = window.location.hash.split('?')[0].replace(/^#/, '');
 
   return (
     <div style={rootContainerStyles}>
@@ -36,6 +41,17 @@ const Example = () => {
             totalPages={totalPages}
             disabled={disabled}
             onChange={handleChange}
+            renderPageButton={(props) => (
+              <Tappable {...props} href={`#${hashPath}?page=${props['data-page']}`} />
+            )}
+            renderNavigationButton={(props) => (
+              <Button
+                {...props}
+                href={
+                  props['data-page'] == null ? undefined : `#${hashPath}?page=${props['data-page']}`
+                }
+              />
+            )}
           />
         </div>
       </AdaptivityProvider>
@@ -65,7 +81,11 @@ const Example = () => {
           <Input
             type="number"
             value={currentPage}
-            onChange={({ target: { value } }) => setCurrentPage(Number(value))}
+            onChange={({ target: { value } }) => {
+              const page = Number(value);
+              setCurrentPage(page);
+              history.replaceState(null, null, `#${hashPath}?page=${page}`);
+            }}
           />
         </FormItem>
         <FormItem top="prop[siblingCount]">
