@@ -3827,16 +3827,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.1, @swc/helpers@npm:^0.5.3":
-  version: 0.5.7
-  resolution: "@swc/helpers@npm:0.5.7"
-  dependencies:
-    tslib: ^2.4.0
-  checksum: a8aff53563a60797cb7dc787e701b36032f40b021628667eb2d3e2f737c12db2e5cfb1207ae2096871c1b3b4d10bff615520704cd5b5477ec0d1771bcff33827
-  languageName: node
-  linkType: hard
-
-"@swc/helpers@npm:^0.5.8":
+"@swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.1, @swc/helpers@npm:^0.5.3, @swc/helpers@npm:^0.5.8":
   version: 0.5.8
   resolution: "@swc/helpers@npm:0.5.8"
   dependencies:
