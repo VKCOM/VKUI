@@ -44,7 +44,8 @@ __diff_output__
 
 # IDE
 .idea/
-.vscode/
+.vscode/*
+!.vscode/extensions.json
 
 # OS
 .DS_Store
