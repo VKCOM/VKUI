@@ -21,7 +21,7 @@ export interface CustomSelectDropdownProps
    */
   autoWidth?: boolean;
   forcePortal?: boolean;
-  onPlacementChange?(placement: Placement): void;
+  onPlacementChange?: (placement: Placement) => void;
   /**
    * Отключает максимальную высоту по умолчанию
    */

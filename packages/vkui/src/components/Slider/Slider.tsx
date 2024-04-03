@@ -35,7 +35,7 @@ export interface SliderBaseProps
    *
    * > Перебивает `aria-label`.
    */
-  getAriaLabel?(index: number): string;
+  getAriaLabel?: (index: number) => string;
   /**
    * В отличие от `aria-valuetext`, позволяет более гибко форматировать текст в зависимости от значения ползунка.
    *
@@ -43,7 +43,7 @@ export interface SliderBaseProps
    *
    * > Перебивает `aria-valuetext`.
    */
-  getAriaValueText?(value: number, index: number): string;
+  getAriaValueText?: (value: number, index: number) => string;
   withTooltip?: boolean;
 }
 
@@ -51,14 +51,14 @@ export interface SliderProps extends SliderBaseProps {
   multiple?: false;
   value?: number;
   defaultValue?: number;
-  onChange?(value: number, event: TouchEvent | React.ChangeEvent): void;
+  onChange?: (value: number, event: TouchEvent | React.ChangeEvent) => void;
 }
 
 export interface SliderMultipleProps extends SliderBaseProps {
   multiple: true;
   value?: [number, number];
   defaultValue?: [number, number];
-  onChange?(value: [number, number], event: TouchEvent | React.ChangeEvent): void;
+  onChange?: (value: [number, number], event: TouchEvent | React.ChangeEvent) => void;
 }
 
 /**

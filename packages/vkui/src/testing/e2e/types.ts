@@ -25,7 +25,7 @@ export interface ScreenshotWithClipToContentOptions {
 
 export interface VKUITestHelpers {
   componentPlaygroundProps: ComponentPlaygroundProps;
-  expectScreenshotClippedToContent(options?: ScreenshotWithClipToContentOptions): Promise<void>;
+  expectScreenshotClippedToContent: (options?: ScreenshotWithClipToContentOptions) => Promise<void>;
   /** @private  */
   _skipByOnlyForProps: void;
 }

@@ -20,18 +20,18 @@ export interface CalendarDaysProps
   size?: 's' | 'm';
   dayProps?: CalendarDayElementProps;
   listenDayChangesForUpdate?: boolean;
-  onDayChange(value: Date): void;
-  isDayDisabled(value: Date): boolean;
-  isDaySelectionStart(value: Date, dayOfWeek: number): boolean;
-  isDaySelectionEnd(value: Date, dayOfWeek: number): boolean;
-  isHintedDaySelectionStart?(value: Date, dayOfWeek: number): boolean;
-  isHintedDaySelectionEnd?(value: Date, dayOfWeek: number): boolean;
-  isDayActive(value: Date): boolean;
-  isDayHinted?(value: Date): boolean;
-  isDaySelected?(value: Date): boolean;
-  isDayFocused(value: Date): boolean;
-  onDayEnter?(value: Date): void;
-  onDayLeave?(value: Date): void;
+  onDayChange: (value: Date) => void;
+  isDayDisabled: (value: Date) => boolean;
+  isDaySelectionStart: (value: Date, dayOfWeek: number) => boolean;
+  isDaySelectionEnd: (value: Date, dayOfWeek: number) => boolean;
+  isHintedDaySelectionStart?: (value: Date, dayOfWeek: number) => boolean;
+  isHintedDaySelectionEnd?: (value: Date, dayOfWeek: number) => boolean;
+  isDayActive: (value: Date) => boolean;
+  isDayHinted?: (value: Date) => boolean;
+  isDaySelected?: (value: Date) => boolean;
+  isDayFocused: (value: Date) => boolean;
+  onDayEnter?: (value: Date) => void;
+  onDayLeave?: (value: Date) => void;
 }
 
 export const CalendarDays = ({

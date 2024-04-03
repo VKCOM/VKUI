@@ -8,7 +8,7 @@ export interface LoopPoint {
   /**
    * Функция, которая по текущему сдвигу галереи определяет нужный сдвиг слайда
    */
-  target(this: void, location: number): void;
+  target: (this: void, location: number) => void;
 }
 
 export interface ControlElementsState {

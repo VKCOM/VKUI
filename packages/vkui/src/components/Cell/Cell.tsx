@@ -38,7 +38,7 @@ export interface CellProps
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
-  onDragFinish?(swappedItemRange: SwappedItemRange): void;
+  onDragFinish?: (swappedItemRange: SwappedItemRange) => void;
   /**
    * Текст для кнопки перетаскивания ячейки
    */

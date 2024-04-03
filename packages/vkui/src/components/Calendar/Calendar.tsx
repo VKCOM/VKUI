@@ -39,9 +39,9 @@ export interface CalendarProps
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   showNeighboringMonth?: boolean;
   size?: 's' | 'm';
-  onChange?(value?: Date): void;
-  shouldDisableDate?(value: Date): boolean;
-  onClose?(): void;
+  onChange?: (value?: Date) => void;
+  shouldDisableDate?: (value: Date) => boolean;
+  onClose?: () => void;
   /**
    * Дата отображаемого месяца.
    * При использовании обновление даты должно происходить вне компонента.
@@ -50,7 +50,7 @@ export interface CalendarProps
   /**
    * Изменение даты в шапке календаря.
    */
-  onHeaderChange?(value: Date): void;
+  onHeaderChange?: (value: Date) => void;
   /**
    * Минимальные дата и время, которые можно выбрать
    */

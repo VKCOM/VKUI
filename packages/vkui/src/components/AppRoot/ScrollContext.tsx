@@ -26,11 +26,11 @@ const getPageYOffsetWithoutKeyboardHeight = (window: Window) => {
 };
 
 export interface ScrollContextInterface {
-  getScroll(this: void): { x: number; y: number };
-  scrollTo(this: void, x?: number, y?: number): void;
+  getScroll: (this: void) => { x: number; y: number };
+  scrollTo: (this: void, x?: number, y?: number) => void;
   isScrollLock: boolean;
-  enableScrollLock(this: void): void;
-  disableScrollLock(this: void): void;
+  enableScrollLock: (this: void) => void;
+  disableScrollLock: (this: void) => void;
   beforeScrollLockFnSetRef?: React.RefObject<Set<() => void>>;
 }
 

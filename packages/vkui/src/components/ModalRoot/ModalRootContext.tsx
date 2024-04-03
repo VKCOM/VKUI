@@ -7,7 +7,7 @@ type ModalRefs = { [k in keyof ModalElements]: (e: ModalElements[k]) => void };
 
 export interface ModalRootContextInterface {
   updateModalHeight: VoidFunction;
-  registerModal(data: ModalRegistryEntry): void;
+  registerModal: (data: ModalRegistryEntry) => void;
   onClose?: VoidFunction;
   isInsideModal: boolean;
 }

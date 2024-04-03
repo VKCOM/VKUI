@@ -20,7 +20,7 @@ export interface TextareaProps
     Pick<React.CSSProperties, 'maxHeight'>,
     Pick<FormFieldProps, 'status'> {
   grow?: boolean;
-  onResize?(el: HTMLTextAreaElement): void;
+  onResize?: (el: HTMLTextAreaElement) => void;
   defaultValue?: string;
 }
 
