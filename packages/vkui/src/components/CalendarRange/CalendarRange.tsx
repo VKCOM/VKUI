@@ -38,8 +38,8 @@ export interface CalendarRangeProps
   changeDayLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onChange?: (value: DateRangeType | undefined) => void;
-  shouldDisableDate?(value: Date): boolean;
-  onClose?(): void;
+  shouldDisableDate?: (value: Date) => boolean;
+  onClose?: () => void;
 }
 
 const getIsDaySelected = (day: Date, value?: DateRangeType) => {

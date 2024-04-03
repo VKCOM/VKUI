@@ -2,9 +2,9 @@
 
 export interface SimulateReactInputTargetState {
   _valueTracker?: {
-    getValue(): string;
-    setValue(value: string): void;
-    stopTracking(): void;
+    getValue: () => string;
+    setValue: (value: string) => void;
+    stopTracking: () => void;
   };
 }
 

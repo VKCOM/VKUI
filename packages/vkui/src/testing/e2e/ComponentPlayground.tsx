@@ -14,7 +14,7 @@ export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'
   appearance: AppearanceType;
   adaptivityProviderProps?: Partial<AdaptivityProps>;
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
-  children(props: Props): React.ReactElement;
+  children: (props: Props) => React.ReactElement;
   AppWrapper?: React.ComponentType<AppWrapperProps>;
 }
 

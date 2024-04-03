@@ -10,9 +10,9 @@ export interface CalendarTimeProps {
   doneButtonText?: string;
   changeHoursLabel?: string;
   changeMinutesLabel?: string;
-  onChange?(value: Date): void;
-  onClose?(): void;
-  isDayDisabled?(day: Date, withTime?: boolean): boolean;
+  onChange?: (value: Date) => void;
+  onClose?: () => void;
+  isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
 }
 
 const hours: Array<{
