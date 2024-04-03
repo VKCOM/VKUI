@@ -27,8 +27,8 @@ const EllipsisText = ({
   maxWidth,
   ...restProps
 }: EllipsisTextProps) => (
-  <span ref={getRootRef} className={classNames(styles['EllipsisText'], className)}>
-    <span style={{ maxWidth }} className={styles['EllipsisText__content']} {...restProps}>
+  <span ref={getRootRef} className={classNames(styles['EllipsisText'], className)} {...restProps}>
+    <span style={{ maxWidth }} className={styles['EllipsisText__content']}>
       {children}
     </span>
   </span>
