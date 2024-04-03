@@ -15,7 +15,7 @@ const CustomSelectControlled = ({
   ...restProps
 }: Omit<SelectProps, 'value' | 'onChange'> & {
   initialValue?: string;
-  onChangeStub?(event: React.ChangeEvent<HTMLSelectElement>): void;
+  onChangeStub?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }) => {
   const [value, setValue] = React.useState(initialValue);
   const handleChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {

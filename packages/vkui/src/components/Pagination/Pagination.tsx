@@ -51,8 +51,8 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    * Функция для переопределения и/или локализации текста кнопки страницы.
    * По умолчанию используется текст на "ru_RU".
    */
-  getPageLabel?(isCurrent: boolean): string;
-  onChange?(page: number): void;
+  getPageLabel?: (isCurrent: boolean) => string;
+  onChange?: (page: number) => void;
 }
 
 /**

@@ -6,7 +6,7 @@ export interface UseEnsuredControlProps<V, E extends React.ChangeEvent<any>> {
   value?: V;
   defaultValue: V;
   disabled?: boolean | undefined;
-  onChange?(this: void, e: E): any;
+  onChange?: (this: void, e: E) => any;
 }
 
 export function useEnsuredControl<V, E extends React.ChangeEvent<any>>({
@@ -35,7 +35,7 @@ export interface UseCustomEnsuredControlProps<V> {
   value?: V;
   defaultValue: V;
   disabled?: boolean | undefined;
-  onChange?(this: void, v: V): any;
+  onChange?: (this: void, v: V) => any;
 }
 
 export function useCustomEnsuredControl<V = any>({

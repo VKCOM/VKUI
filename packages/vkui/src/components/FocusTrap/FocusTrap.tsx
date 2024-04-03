@@ -19,7 +19,7 @@ export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
   autoFocus?: boolean;
   restoreFocus?: boolean | (() => boolean);
   timeout?: number;
-  onClose?(): void;
+  onClose?: () => void;
 }
 
 /**

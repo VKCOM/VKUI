@@ -23,7 +23,8 @@ describe('Slider', () => {
 
   describe('uncontrolled', () => {
     it('uses min as fallback', () => {
-      const handleChangeForTypeCheck: jest.Mock<void, [number, TouchEvent]> = jest.fn();
+      const handleChangeForTypeCheck: jest.Mock<void, [number, TouchEvent | React.ChangeEvent]> =
+        jest.fn();
       render(<Slider onChange={handleChangeForTypeCheck} />);
       expect(screen.getByRole('slider')).toHaveValue('0');
     });
@@ -64,7 +65,8 @@ describe('Slider', () => {
 
   describe('controlled', () => {
     it('sets value', () => {
-      const handleChangeForTypeCheck: jest.Mock<void, [number, TouchEvent]> = jest.fn();
+      const handleChangeForTypeCheck: jest.Mock<void, [number, TouchEvent | React.ChangeEvent]> =
+        jest.fn();
       const { rerender } = render(<Slider value={5} onChange={handleChangeForTypeCheck} />);
       expect(screen.getByRole('slider')).toHaveValue('5');
 
@@ -89,7 +91,10 @@ describe('Slider', () => {
     });
 
     it('should overrides defaultValue if value is exist (multiple)', () => {
-      const handleChangeForTypeCheck: jest.Mock<void, [[number, number], TouchEvent]> = jest.fn();
+      const handleChangeForTypeCheck: jest.Mock<
+        void,
+        [[number, number], TouchEvent | React.ChangeEvent]
+      > = jest.fn();
       render(
         <Slider
           multiple
@@ -106,7 +111,7 @@ describe('Slider', () => {
 
   describe('change with tap', () => {
     it('moves start', async () => {
-      const handleChange: jest.Mock<void, [number, TouchEvent]> = jest.fn();
+      const handleChange: jest.Mock<void, [number, TouchEvent | React.ChangeEvent]> = jest.fn();
       render(<Slider defaultValue={30} onChange={handleChange} />);
       await userEvent.pointer([
         { target: screen.getByTestId('root'), coords: pointerPos(20), keys: '[MouseLeft]' },
@@ -116,7 +121,8 @@ describe('Slider', () => {
     });
 
     it('moves start (multiple)', async () => {
-      const handleChange: jest.Mock<void, [[number, number], TouchEvent]> = jest.fn();
+      const handleChange: jest.Mock<void, [[number, number], TouchEvent | React.ChangeEvent]> =
+        jest.fn();
       render(<Slider multiple defaultValue={[30, 70]} onChange={handleChange} />);
       const [startSlider, endSlider] = screen.getAllByRole('slider');
       await userEvent.pointer([

@@ -26,9 +26,9 @@ export interface CalendarDayProps extends CalendarDayElementProps {
   hinted?: boolean;
   sameMonth?: boolean;
   size?: 's' | 'm';
-  onChange(value: Date): void;
-  onEnter?(value: Date): void;
-  onLeave?(value: Date): void;
+  onChange: (value: Date) => void;
+  onEnter?: (value: Date) => void;
+  onLeave?: (value: Date) => void;
 }
 
 export const CalendarDay = React.memo(

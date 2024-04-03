@@ -32,7 +32,7 @@ export interface ChipProps
   removeLabel?: string;
   before?: React.ReactNode;
   after?: React.ReactNode;
-  onRemove?(event: React.MouseEvent, value: ChipOptionValue): void;
+  onRemove?: (event: React.MouseEvent, value: ChipOptionValue) => void;
 }
 
 export interface RenderChipProps extends ChipProps {
@@ -110,6 +110,6 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
 export interface ChipsInputBasePrivateProps<O extends ChipOption = ChipOption>
   extends ChipsInputBaseProps<O>,
     Pick<FormFieldProps, 'mode' | 'status' | 'before' | 'after'> {
-  onAddChipOption(value: O | string): void;
-  onRemoveChipOption(value: O | ChipOptionValue): void;
+  onAddChipOption: (value: string) => void;
+  onRemoveChipOption: (value: O | ChipOptionValue) => void;
 }

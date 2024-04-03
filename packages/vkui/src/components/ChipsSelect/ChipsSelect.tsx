@@ -109,11 +109,11 @@ export interface ChipsSelectProps<O extends ChipOption>
    */
   noMaxHeight?: boolean;
 
-  renderOption?(props: CustomSelectOptionProps, option: O): React.ReactNode;
+  renderOption?: (props: CustomSelectOptionProps, option: O) => React.ReactNode;
   /**
    * Событие срабатывающее перед onChange
    */
-  onChangeStart?(event: React.MouseEvent | React.KeyboardEvent, option: O): void;
+  onChangeStart?: (event: React.MouseEvent | React.KeyboardEvent, option: O) => void;
 }
 
 /**

@@ -29,7 +29,7 @@ export interface CustomScrollViewProps
   windowResize?: boolean;
   boxRef?: React.Ref<HTMLDivElement>;
   className?: HTMLDivElement['className'];
-  onScroll?(event: React.UIEvent<HTMLDivElement>): void;
+  onScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
   children: React.ReactNode;
 }
 

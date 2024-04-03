@@ -104,7 +104,7 @@ export interface UseFloatingWithInteractionsReturn<T extends HTMLElement = HTMLE
   referenceProps: ReferenceProps<T>;
   floatingProps: FloatingProps<T>;
   middlewareData: UseFloatingData['middlewareData'];
-  onClose(this: void): void;
-  onEscapeKeyDown?(this: void): void;
-  onRestoreFocus(this: void): boolean;
+  onClose: (this: void) => void;
+  onEscapeKeyDown?: (this: void) => void;
+  onRestoreFocus: (this: void) => boolean;
 }

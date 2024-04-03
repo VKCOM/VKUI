@@ -39,15 +39,15 @@ export interface CalendarHeaderProps
   nextMonthIcon?: React.ReactNode;
   prevMonthProps?: ArrowMonthProps;
   nextMonthProps?: ArrowMonthProps;
-  onChange(viewDate: Date): void;
+  onChange: (viewDate: Date) => void;
   /**
    * Нажатие на кнопку переключения на следующий месяц.
    */
-  onNextMonth?(): void;
+  onNextMonth?: () => void;
   /**
    * Нажатие на кнопку переключения на предыдущий месяц.
    */
-  onPrevMonth?(): void;
+  onPrevMonth?: () => void;
 }
 
 export const CalendarHeader = ({
