@@ -1,94 +1,185 @@
 .Snackbar {
-  user-select: none;
-  z-index: var(--vkui--z_index_popout);
+  --vkui_internal--snackbar_safe_area_inset_bottom: var(--vkui_internal--safe_area_inset_bottom);
+  --vkui_internal--snackbar_in_padding: 8px;
+
   position: fixed;
-  inset-block-end: 0;
-  inset-inline-start: auto;
-  inline-size: 100%;
-  padding-inline: var(--vkui_internal--safe_area_inset_left)
+  inset-inline: var(--vkui_internal--safe_area_inset_left)
     var(--vkui_internal--safe_area_inset_right);
-  padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
+  z-index: var(--vkui--z_index_popout);
+  user-select: none;
 }
 
-/**
- * CMP:
- * Epic
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalEpic--hasTabbar) .Snackbar {
-  padding-block-end: calc(
-    var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
-  );
+.Snackbar--placement-top-start,
+.Snackbar--placement-top,
+.Snackbar--placement-top-end {
+  inset-block-start: var(--vkui_internal--safe_area_inset_top);
 }
 
-.Snackbar__in,
-.Snackbar__snackbar {
-  transition: transform 320ms var(--vkui--animation_easing_platform);
+.Snackbar--placement-bottom-start,
+.Snackbar--placement-bottom,
+.Snackbar--placement-bottom-end {
+  inset-block-end: var(--vkui_internal--snackbar_safe_area_inset_bottom);
 }
 
 .Snackbar__in {
-  padding: 8px;
-  animation: animation-snackbar-intro-vertical 340ms var(--vkui--animation_easing_platform);
+  padding: var(--vkui_internal--snackbar_in_padding);
 }
 
-.Snackbar--closing .Snackbar__in {
-  transform: translate3d(0, 140%, 0);
+@media (--desktop) {
+  .Snackbar {
+    inline-size: 100%;
+    max-inline-size: 351px;
+  }
+
+  .Snackbar--placement-top,
+  .Snackbar--placement-bottom {
+    inset-inline: 0;
+    margin-inline: auto;
+  }
+
+  .Snackbar--placement-top-start,
+  .Snackbar--placement-top-end {
+    inset-block-start: var(--vkui_internal--safe_area_inset_top);
+  }
+
+  .Snackbar--placement-bottom-start,
+  .Snackbar--placement-bottom-end {
+    inset-block-end: var(--vkui_internal--snackbar_safe_area_inset_bottom);
+  }
+
+  .Snackbar--placement-top-start,
+  .Snackbar--placement-bottom-start {
+    inset-inline-start: var(--vkui_internal--safe_area_inset_left);
+    inset-inline-end: auto;
+  }
+
+  .Snackbar--placement-top-end,
+  .Snackbar--placement-bottom-end {
+    inset-inline-start: auto;
+    inset-inline-end: var(--vkui_internal--safe_area_inset_right);
+  }
+
+  .Snackbar__in {
+    --vkui_internal--snackbar_in_padding: 12px;
+  }
 }
 
-.ModalRoot .Snackbar {
-  padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
+/* Анимации */
+@media (prefers-reduced-motion: no-preference) {
+  .Snackbar {
+    --vkui_internal--snackbar_shift_x: 0;
+    --vkui_internal--snackbar_shift_y: 0;
+    --vkui_internal--snackbar_animation_from: translate3d(0, 0, 0);
+    --vkui_internal--snackbar_animation_to: translate3d(
+      0,
+      var(--vkui_internal--snackbar_shift_y),
+      0
+    );
+    --vkui_internal--snackbar_animation_duration: 340ms;
+  }
+
+  .Snackbar--ios {
+    --vkui_internal--snackbar_animation_duration: 400ms;
+  }
+
+  .Snackbar--placement-top-start,
+  .Snackbar--placement-top,
+  .Snackbar--placement-top-end {
+    --vkui_internal--snackbar_animation_from: translate3d(0, -100%, 0);
+  }
+
+  .Snackbar--placement-bottom-start,
+  .Snackbar--placement-bottom,
+  .Snackbar--placement-bottom-end {
+    --vkui_internal--snackbar_animation_from: translate3d(0, 100%, 0);
+  }
+
+  .Snackbar__in {
+    animation-duration: var(--vkui_internal--snackbar_animation_duration);
+    animation-timing-function: var(--vkui--animation_easing_platform);
+    animation-fill-mode: both;
+    transform: translate3d(0, var(--vkui_internal--snackbar_shift_y), 0);
+  }
+
+  .Snackbar--state-enter .Snackbar__in,
+  .Snackbar--state-entering .Snackbar__in {
+    animation-name: animation-snackbar-slide-in;
+  }
+
+  .Snackbar--state-entered .Snackbar__in {
+    transition-property: transform;
+    transition-duration: var(--vkui_internal--snackbar_animation_duration);
+    transition-timing-function: var(--vkui--animation_easing_platform);
+  }
+
+  .Snackbar--touched .Snackbar__in {
+    transition-property: none;
+  }
+
+  .Snackbar--state-exit .Snackbar__in,
+  .Snackbar--state-exiting .Snackbar__in {
+    animation-name: animation-snackbar-slide-out;
+  }
 }
 
-/* iOS */
-.Snackbar--ios .Snackbar__in,
-.Snackbar--ios .Snackbar__snackbar {
-  transition: transform 400ms var(--vkui--animation_easing_platform);
+/* Выносим из @media, т.к. иначе элемент не скроется, если пользователь не удаляет Snackbar из DOM. */
+.Snackbar--state-exited .Snackbar__in {
+  transform: var(--vkui_internal--snackbar_animation_from);
 }
 
-/**
- * Desktop
- */
+@media (--desktop) and (prefers-reduced-motion: no-preference) {
+  .Snackbar--placement-top-start,
+  .Snackbar--placement-bottom-start {
+    --vkui_internal--snackbar_animation_from: translate3d(-100%, 0, 0);
+  }
 
-.Snackbar--desktop {
-  max-inline-size: 351px;
-  inset-inline-start: 0;
-  inset-block-end: 0;
+  .Snackbar--placement-top-end,
+  .Snackbar--placement-bottom-end {
+    --vkui_internal--snackbar_animation_from: translate3d(100%, 0, 0);
+  }
+
+  .Snackbar--placement-top-start,
+  .Snackbar--placement-bottom-start,
+  .Snackbar--placement-top-end,
+  .Snackbar--placement-bottom-end {
+    --vkui_internal--snackbar_animation_to: translate3d(
+      var(--vkui_internal--snackbar_shift_x),
+      0,
+      0
+    );
+  }
+
+  .Snackbar__in {
+    --vkui_internal--snackbar_in_padding: 12px;
+  }
+
+  .Snackbar--placement-top-start .Snackbar__in,
+  .Snackbar--placement-bottom-start .Snackbar__in,
+  .Snackbar--placement-top-end .Snackbar__in,
+  .Snackbar--placement-bottom-end .Snackbar__in {
+    transform: translate3d(var(--vkui_internal--snackbar_shift_x), 0, 0);
+  }
 }
 
-.Snackbar--desktop .Snackbar__in {
-  padding: 12px;
-  animation-name: animation-snackbar-intro-horizontal;
-}
-
-.Snackbar--desktop.Snackbar--closing .Snackbar__in {
-  transform: translate3d(-140%, 0, 0);
-}
-
-/**
- * Touch-interaction
- */
-.Snackbar--touched .Snackbar__snackbar {
-  transition: none;
-}
-
-/**
- * Animations
- */
-@keyframes animation-snackbar-intro-vertical {
+@keyframes animation-snackbar-slide-in {
   from {
-    transform: translate3d(0, 140%, 0);
+    opacity: 0;
+    transform: var(--vkui_internal--snackbar_animation_from);
   }
 
   to {
+    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
-@keyframes animation-snackbar-intro-horizontal {
+@keyframes animation-snackbar-slide-out {
   from {
-    transform: translate3d(-140%, 0, 0);
+    opacity: 1;
+    transform: var(--vkui_internal--snackbar_animation_to);
   }
 
   to {
-    transform: translate3d(0, 0, 0);
+    opacity: 0;
+    transform: var(--vkui_internal--snackbar_animation_from);
   }
 }

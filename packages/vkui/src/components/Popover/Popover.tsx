@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { injectAriaExpandedPropByRole } from '../../lib/accessibility';
-import { animationFadeClassNames, transformOriginClassNames } from '../../lib/cssAnimation';
+import { animationFadeClassNames, transformOriginClassNames } from '../../lib/animation';
 import {
   type FloatingComponentProps,
   type FloatingContentRenderProp,

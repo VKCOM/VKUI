@@ -4,7 +4,7 @@ import { getWindow } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { Keys, pressedKey } from '../../lib/accessibility';
-import { animationFadeClassNames } from '../../lib/cssAnimation';
+import { animationFadeClassNames } from '../../lib/animation';
 import {
   type FloatingComponentProps,
   getArrowCoordsByMiddlewareData,

@@ -1,31 +1,60 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { classNames, noop } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useTimeout } from '../../hooks/useTimeout';
-import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
-import { ViewWidth } from '../../lib/adaptivity';
-import { rubber } from '../../lib/touch';
+import { Keys, pressedKey } from '../../lib/accessibility';
+import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { useReducedMotion } from '../../lib/animation/useReducedMotion';
+import { getRelativeBoundingClientRect, getWindow } from '../../lib/dom';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HTMLAttributesWithRootRef } from '../../types';
-import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { Basic, BasicProps } from './subcomponents/Basic/Basic';
+import type { ShiftData, SnackbarPlacement } from './types';
+import {
+  getInitialShiftData,
+  getMovedShiftData,
+  resolveOffsetYCssStyle,
+  shouldBeClosedByShiftData,
+} from './utils';
 import styles from './Snackbar.module.css';
 
-export interface SnackbarProps extends HTMLAttributesWithRootRef<HTMLElement>, BasicProps {
+const placementClassNames = {
+  'top-start': styles['Snackbar--placement-top-start'],
+  'top': styles['Snackbar--placement-top'],
+  'top-end': styles['Snackbar--placement-top-end'],
+  'bottom-start': styles['Snackbar--placement-bottom-start'],
+  'bottom': styles['Snackbar--placement-bottom'],
+  'bottom-end': styles['Snackbar--placement-bottom-end'],
+};
+
+const animationStateClassNames = {
+  enter: styles['Snackbar--state-enter'],
+  entering: styles['Snackbar--state-entering'],
+  entered: styles['Snackbar--state-entered'],
+  exit: styles['Snackbar--state-exit'],
+  exiting: styles['Snackbar--state-exiting'],
+  exited: styles['Snackbar--state-exited'],
+};
+
+export interface SnackbarProps
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'role'>,
+    BasicProps {
+  /**
+   * Задаёт расположение компонента.
+   */
+  placement?: SnackbarPlacement;
   /**
    * Название кнопки действия в уведомлении
    * Не может использоваться одновременно с `subtitle`
    */
   action?: React.ReactNode;
-
   /**
    * Будет вызвано при клике на кнопку действия
    */
-  onActionClick?: (e: React.MouseEvent) => void;
-
+  onActionClick?: (event: React.MouseEvent) => void;
   /**
    * Время в миллисекундах, через которое плашка скроется
    */
@@ -44,180 +73,191 @@ export interface SnackbarProps extends HTMLAttributesWithRootRef<HTMLElement>, B
  * @see https://vkcom.github.io/VKUI/#/Snackbar
  */
 export const Snackbar = ({
+  placement = 'bottom-start',
   children,
-  layout: layoutProps,
+  layout,
   action,
   before,
   after,
   duration = 4000,
-  onActionClick,
+  onActionClick = noop,
   onClose,
   mode = 'default',
   subtitle,
   offsetY,
   style,
+  getRootRef,
   ...restProps
 }: SnackbarProps) => {
+  const isReducedMotion = useReducedMotion();
   const platform = usePlatform();
-  const { viewWidth } = useAdaptivityWithJSMediaQueries();
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
-  const { waitTransitionFinish } = useWaitTransitionFinish();
 
-  const [closing, setClosing] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [touched, setTouched] = React.useState(false);
 
-  const shiftXPercentRef = React.useRef<number>(0);
-  const shiftXCurrentRef = React.useRef<number>(0);
+  const rootRef = useExternRef(getRootRef);
+  const inRef = React.useRef<HTMLDivElement>(null);
 
-  const bodyElRef = React.useRef<HTMLDivElement | null>(null);
-  const innerElRef = React.useRef<HTMLDivElement | null>(null);
+  const shiftDataRef = React.useRef<ShiftData | null>(null);
 
-  const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
+  const rafRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
+  const closeTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
+    open ? 'enter' : 'exit',
+    {
+      onExited: onClose,
+    },
+  );
 
-  const transitionFinishDurationFallback = platform === 'ios' ? 320 : 400;
+  const updateShiftAxisCSSProperties = React.useCallback(
+    (x: number | null, y: number | null) => {
+      rafRef.current = requestAnimationFrame(() => {
+        if (rootRef.current) {
+          x === null
+            ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_x')
+            : rootRef.current.style.setProperty('--vkui_internal--snackbar_shift_x', `${x}px`);
+          y === null
+            ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_y')
+            : rootRef.current.style.setProperty('--vkui_internal--snackbar_shift_y', `${y}px`);
+        }
+      });
+    },
+    [rootRef],
+  );
 
-  const close = () => {
-    setClosing(true);
-    waitTransitionFinish(
-      innerElRef.current,
-      () => {
-        onClose();
-      },
-      transitionFinishDurationFallback,
-    );
-  };
+  const close = React.useCallback(() => {
+    setOpen(false);
+  }, []);
 
-  const handleActionClick = (e: React.MouseEvent) => {
+  const handleActionClick = (event: React.MouseEvent) => {
     close();
-
-    if (action && typeof onActionClick === 'function') {
-      onActionClick(e);
+    if (action) {
+      onActionClick(event);
     }
   };
 
-  const closeTimeout = useTimeout(close, duration);
+  const handleTouchStart = () => {
+    shiftDataRef.current = getInitialShiftData(
+      rootRef.current!.offsetWidth,
+      rootRef.current!.offsetHeight,
+    );
+    setTouched(true);
+  };
 
-  const setBodyTransform = (percent: number) => {
-    if (animationFrameRef.current !== null) {
-      cancelAnimationFrame(animationFrameRef.current);
+  const handleTouchMove = (event: TouchEvent) => {
+    if (shiftDataRef.current) {
+      const { shiftX: x, shiftY: y, originalEvent } = event;
+      originalEvent.preventDefault();
+      shiftDataRef.current = getMovedShiftData(placement, shiftDataRef.current, { x, y });
+      updateShiftAxisCSSProperties(shiftDataRef.current.x, shiftDataRef.current.y);
     }
-    animationFrameRef.current = requestAnimationFrame(() => {
-      if (bodyElRef.current) {
-        bodyElRef.current.style.transform = `translate3d(${percent}%, 0, 0)`;
+  };
+
+  const handleTouchEnd = (event: TouchEvent) => {
+    if (shiftDataRef.current) {
+      if (
+        shouldBeClosedByShiftData(
+          placement,
+          shiftDataRef.current,
+          getRelativeBoundingClientRect(rootRef.current!, inRef.current!),
+          event.duration,
+        )
+      ) {
+        setOpen(false);
       }
-    });
-  };
 
-  const onTouchStart = closeTimeout.clear;
-
-  const onTouchMoveX = (event: TouchEvent) => {
-    const { shiftX, originalEvent } = event;
-    originalEvent.preventDefault();
-
-    if (!touched) {
-      setTouched(true);
+      setTouched(false);
     }
-
-    shiftXPercentRef.current = (shiftX / (bodyElRef.current?.offsetWidth ?? 0)) * 100;
-    shiftXCurrentRef.current = rubber(shiftXPercentRef.current, 72, 1.2, platform !== 'ios');
-
-    setBodyTransform(shiftXCurrentRef.current);
   };
 
-  const onTouchEnd = (e: TouchEvent) => {
-    let callback: VoidFunction | undefined;
-
-    if (touched) {
-      let shiftXCurrent = shiftXCurrentRef.current;
-      const expectTranslateY = (shiftXCurrent / e.duration) * 240 * 0.6;
-      shiftXCurrent = shiftXCurrent + expectTranslateY;
-
-      if (isDesktop && shiftXCurrent <= -50) {
-        closeTimeout.clear();
-        waitTransitionFinish(
-          bodyElRef.current,
-          () => {
-            onClose();
-          },
-          transitionFinishDurationFallback,
-        );
-        setBodyTransform(-120);
-      } else if (!isDesktop && shiftXCurrent >= 50) {
-        closeTimeout.clear();
-        waitTransitionFinish(
-          bodyElRef.current,
-          () => {
-            onClose();
-          },
-          transitionFinishDurationFallback,
-        );
-        setBodyTransform(120);
-      } else {
-        callback = () => {
-          closeTimeout.set();
-          setBodyTransform(0);
-        };
+  useIsomorphicLayoutEffect(
+    function closeAfterDelay() {
+      if (!open || touched || animationState !== 'entered') {
+        return;
       }
-    } else {
-      closeTimeout.set();
-    }
+      closeTimeoutIdRef.current = setTimeout(close, duration);
+      return function preventCloseAfterDelayOnUnmount() {
+        clearTimeout(closeTimeoutIdRef.current);
+      };
+    },
+    [open, touched, animationState, close, duration],
+  );
 
-    setTouched(false);
-    callback && requestAnimationFrame(callback);
-  };
+  useIsomorphicLayoutEffect(
+    function clearUpdateShiftAxisCSSPropertiesIfShifted() {
+      if (shiftDataRef.current && shiftDataRef.current.shifted && open && !touched) {
+        updateShiftAxisCSSProperties(null, null);
+        shiftDataRef.current = null;
+      }
+    },
+    [touched, open, updateShiftAxisCSSProperties],
+  );
 
-  React.useEffect(() => closeTimeout.set(), [closeTimeout]);
-
-  const layout = layoutProps || (after || isDesktop || subtitle ? 'vertical' : 'horizontal');
+  useIsomorphicLayoutEffect(
+    function handleGlobalKeyDownIfSnackbarOpened() {
+      if (!open) {
+        return;
+      }
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (pressedKey(event) === Keys.ESCAPE) {
+          setOpen(false);
+        }
+      };
+      const doc = getWindow(rootRef.current).document;
+      doc.addEventListener('keydown', handleKeyDown, { passive: true, capture: true });
+      return () => {
+        doc.removeEventListener('keydown', handleKeyDown, { capture: true });
+      };
+    },
+    [open, animationState, rootRef],
+  );
 
   return (
-    <AppRootPortal>
-      <RootComponent
-        {...restProps}
-        baseClassName={classNames(
-          styles['Snackbar'],
-          platform === 'ios' && styles['Snackbar--ios'],
-          closing && styles['Snackbar--closing'],
-          touched && styles['Snackbar--touched'],
-          isDesktop && styles['Snackbar--desktop'],
-        )}
-        style={offsetY ? { ...style, bottom: offsetY } : style}
+    <RootComponent
+      {...restProps}
+      role="presentation"
+      baseClassName={classNames(
+        styles['Snackbar'],
+        platform === 'ios' && styles['Snackbar--ios'],
+        touched && styles['Snackbar--touched'],
+        placementClassNames[placement],
+        animationStateClassNames[animationState],
+      )}
+      style={resolveOffsetYCssStyle(placement, style, offsetY)}
+      getRootRef={rootRef}
+    >
+      <Touch
+        role="alert"
+        className={styles['Snackbar__in']}
+        getRootRef={inRef}
+        onStart={isReducedMotion ? undefined : handleTouchStart}
+        onMove={isReducedMotion ? undefined : handleTouchMove}
+        onEnd={isReducedMotion ? undefined : handleTouchEnd}
+        {...animationHandlers}
       >
-        <Touch
-          className={styles['Snackbar__in']}
-          getRootRef={innerElRef}
-          onStart={onTouchStart}
-          onMoveX={onTouchMoveX}
-          onEnd={onTouchEnd}
+        <Basic
+          mode={mode}
+          layout={layout}
+          before={before}
+          after={after}
+          subtitle={subtitle}
+          action={
+            action && (
+              <Button
+                align="left"
+                mode="link"
+                appearance={mode === 'dark' ? 'overlay' : 'accent'}
+                size="s"
+                onClick={handleActionClick}
+              >
+                {action}
+              </Button>
+            )
+          }
         >
-          <Basic
-            className={styles['Snackbar__snackbar']}
-            getRootRef={bodyElRef}
-            layout={layout}
-            mode={mode}
-            before={before}
-            subtitle={subtitle}
-            action={
-              action && (
-                <Button
-                  align="left"
-                  mode="link"
-                  appearance={mode === 'dark' ? 'overlay' : 'accent'}
-                  size="s"
-                  onClick={handleActionClick}
-                >
-                  {action}
-                </Button>
-              )
-            }
-            after={after}
-          >
-            {children}
-          </Basic>
-        </Touch>
-      </RootComponent>
-    </AppRootPortal>
+          {children}
+        </Basic>
+      </Touch>
+    </RootComponent>
   );
 };
-
-Snackbar.Basic = Basic;

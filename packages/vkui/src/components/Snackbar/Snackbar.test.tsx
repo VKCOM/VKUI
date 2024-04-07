@@ -25,8 +25,7 @@ describe('Snackbar', () => {
     );
 
     // renders in vertical layout on desktop by default
-    expect(container.querySelector(`.${styles['Snackbar--layout-vertical']}`)).not.toBeNull();
-    expect(container.querySelector(`.${styles['Snackbar--layout-horizontal']}`)).toBeNull();
+    expect(container.querySelector(`.${styles['Snackbar--layout-none']}`)).not.toBeNull();
 
     rerender(
       <Snackbar layout="horizontal" action="Close me" onClose={jest.fn()}>

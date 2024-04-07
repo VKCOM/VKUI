@@ -129,6 +129,17 @@ export const getBoundingClientRect = (node: Element | Window, isFixedStrategy = 
   }) as DOMRect;
 };
 
+export const getRelativeBoundingClientRect = (parent: Element, child: Element) => {
+  const parentRect = getBoundingClientRect(parent);
+  const childRect = getBoundingClientRect(child);
+  return rectToClientRect({
+    x: childRect.left - parentRect.left,
+    y: childRect.top - parentRect.top,
+    width: childRect.width,
+    height: childRect.height,
+  }) as DOMRect;
+};
+
 /**
  * Адаптер над getNearestOverflowAncestor из @floating-ui/utils/dom.
  *
