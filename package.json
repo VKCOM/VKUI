@@ -30,7 +30,7 @@
     "@types/webpack": "^5.28.5",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
-    "@vkontakte/eslint-plugin": "^1.2.0",
+    "@vkontakte/eslint-plugin": "^2.0.0",
     "@vkontakte/prettier-config": "^0.1.0",
     "@vkontakte/stylelint-config": "^4.1.0",
     "@vkontakte/vkui-tokens": "4.43.1",
