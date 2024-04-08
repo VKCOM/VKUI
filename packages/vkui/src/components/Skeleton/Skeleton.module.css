@@ -1,16 +1,36 @@
+@keyframes skeleton {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: var(--vkui_internal--skeleton_width) 0;
+  }
+}
+
 .Skeleton {
+  --vkui_internal--skeleton_width: 300px;
   --vkui_internal--skeleton_color_from: var(--vkui--color_skeleton_from);
   --vkui_internal--skeleton_color_to: var(--vkui--color_skeleton_to);
-  --vkui_internal--skeleton_gradient_left: 0;
+  --vkui_internal--skeleton_animation_duration: 1.5s;
 
-  background-color: var(--vkui_internal--skeleton_color_from);
-  width: 100%;
-  max-width: 100%;
-  border-radius: 6px;
   display: inline-flex;
+  animation-duration: var(--vkui_internal--skeleton_animation_duration);
+  animation-iteration-count: infinite;
+  animation-name: skeleton;
+  background-attachment: fixed;
+  animation-timing-function: var(--vkui--animation_easing_platform);
+  background-size: var(--vkui_internal--skeleton_width) 100%;
+  inline-size: 100%;
+  max-inline-size: 100%;
   line-height: 1;
-  position: relative;
-  overflow: hidden;
+  border-radius: 6px;
+  background-image: linear-gradient(
+    to right,
+    var(--vkui_internal--skeleton_color_from) 0,
+    var(--vkui_internal--skeleton_color_to) 50%,
+    var(--vkui_internal--skeleton_color_from) 75%
+  );
 }
 
 /* Если скелетон находится внутри другого скелетона он меняет цвет */
@@ -24,36 +44,7 @@
   --vkui_internal--skeleton_color_to: var(--vkui--color_skeleton_to);
 }
 
-.Skeleton::after {
-  position: absolute;
-  left: var(--vkui_internal--skeleton_gradient_left);
-  top: 0;
-  content: ' ';
-  width: 100vw;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    var(--vkui_internal--skeleton_color_from),
-    var(--vkui_internal--skeleton_color_to),
-    var(--vkui_internal--skeleton_color_from)
-  );
-  transform: translateX(-100vw);
-  animation-name: skeleton;
-  animation-direction: normal /*rtl:reverse*/;
-  animation-duration: 1.5s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-@keyframes skeleton {
-  100% {
-    transform: translateX(100vw);
-  }
-}
-
 .Skeleton--disableAnimation::after {
-  content: none;
-
   /**
    * Safari тратит время не пересчет анимации даже если элемент скрыт
    * Для повышения производительности анимацию необходимо выключить
