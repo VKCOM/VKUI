@@ -4949,7 +4949,7 @@ __metadata:
     autoprefixer: ^10.4.19
     concurrently: ^8.2.2
     cross-env: ^7.0.3
-    css-loader: ^7.0.0
+    css-loader: ^6.10.0
     cssnano: ^6.1.2
     dotenv: ^16.4.5
     eslint: ^8.56.0
@@ -7318,30 +7318,6 @@ __metadata:
     webpack:
       optional: true
   checksum: ee3d62b5f7e4eb24281a22506431e920d07a45bd6ea627731ce583f3c6a846ab8b8b703bace599b9b35256b9e762f9f326d969abb72b69c7e6055eacf39074fd
-  languageName: node
-  linkType: hard
-
-"css-loader@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "css-loader@npm:7.0.0"
-  dependencies:
-    icss-utils: ^5.1.0
-    postcss: ^8.4.33
-    postcss-modules-extract-imports: ^3.1.0
-    postcss-modules-local-by-default: ^4.0.5
-    postcss-modules-scope: ^3.2.0
-    postcss-modules-values: ^4.0.0
-    postcss-value-parser: ^4.2.0
-    semver: ^7.5.4
-  peerDependencies:
-    "@rspack/core": 0.x || 1.x
-    webpack: ^5.27.0
-  peerDependenciesMeta:
-    "@rspack/core":
-      optional: true
-    webpack:
-      optional: true
-  checksum: e1a0b9680fb7e96c46ef1f837c445ae7add927a9dcf83efd150aaa68b58c596c97dd76881f8bc3e9349531617f61e8a2ae4fb6a9190de20db5182cb26829d8fd
   languageName: node
   linkType: hard
 
@@ -14659,7 +14635,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-extract-imports@npm:^3.0.0, postcss-modules-extract-imports@npm:^3.1.0":
+"postcss-modules-extract-imports@npm:^3.0.0":
   version: 3.1.0
   resolution: "postcss-modules-extract-imports@npm:3.1.0"
   peerDependencies:
@@ -14668,7 +14644,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-local-by-default@npm:^4.0.0, postcss-modules-local-by-default@npm:^4.0.4, postcss-modules-local-by-default@npm:^4.0.5":
+"postcss-modules-local-by-default@npm:^4.0.0, postcss-modules-local-by-default@npm:^4.0.4":
   version: 4.0.5
   resolution: "postcss-modules-local-by-default@npm:4.0.5"
   dependencies:
@@ -14681,7 +14657,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-scope@npm:^3.0.0, postcss-modules-scope@npm:^3.1.1, postcss-modules-scope@npm:^3.2.0":
+"postcss-modules-scope@npm:^3.0.0, postcss-modules-scope@npm:^3.1.1":
   version: 3.2.0
   resolution: "postcss-modules-scope@npm:3.2.0"
   dependencies:
