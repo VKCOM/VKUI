@@ -22,11 +22,6 @@
 
 ### Скриншотные тесты
 
-> ⚠️ При обновлении Playwright в [package.json](../package.json), нужно также поднять версию образа `mcr.microsoft.com/playwright` в следующих файлах:
->
-> - [.github/workflows/reusable_workflow_test_e2e.yml](../.github/workflows/reusable_workflow_test_e2e.yml)
-> - [packages/vkui/docker-compose.yml](../packages/vkui/docker-compose.yml)
-
 Используем:
 
 - [@playwright/experimental-ct-react](https://playwright.dev/docs/test-components)
