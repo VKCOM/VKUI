@@ -166,7 +166,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
         transitionMotionEnabled={false}
         hasCustomPanelHeaderAfter={false}
       >
-        <AppRoot>
+        <AppRoot disablePortal>
           <Component
             toc={toc}
             popout={popout}
