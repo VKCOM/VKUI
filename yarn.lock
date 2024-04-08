@@ -4841,7 +4841,7 @@ __metadata:
     jscodeshift: ^0.13.1
     prompts: ^2.4.2
     ts-node: ^10.9.2
-    typescript: ^5.4.3
+    typescript: ^5.4.4
   bin:
     vkui-codemods: ./dist/index.js
   languageName: unknown
@@ -4959,7 +4959,7 @@ __metadata:
     swc-plugin-css-modules: 0.1.10
     swc-plugin-transform-remove-imports: 1.12.1
     ts-node: ^10.9.2
-    typescript: ^5.4.3
+    typescript: ^5.4.4
     typescript-plugin-css-modules: ^5.1.0
     webpack: ^5.91.0
     webpack-cli: ^5.1.4
@@ -4983,7 +4983,7 @@ __metadata:
     postcss-scss: ^4.0.9
     postcss-value-parser: ^4.2.0
     ts-node: ^10.9.2
-    typescript: ^5.4.3
+    typescript: ^5.4.4
   bin:
     vkui-token-translator: ./dist/index.js
   languageName: unknown
@@ -18122,7 +18122,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:*, typescript@npm:^5.4.3":
+"typescript@npm:*":
   version: 5.4.3
   resolution: "typescript@npm:5.4.3"
   bin:
@@ -18132,13 +18132,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@*#~builtin<compat/typescript>, typescript@patch:typescript@^5.4.3#~builtin<compat/typescript>":
+"typescript@npm:^5.4.4":
+  version: 5.4.4
+  resolution: "typescript@npm:5.4.4"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: a7b54515d2adfc75c8d14188af0216b6b9ae3c192c9732797c24b1d14608eac1c83be7b1c65ce6f4ced0f2c40583f11b495fe1ba3d982afadbcc523517d183c8
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@*#~builtin<compat/typescript>":
   version: 5.4.3
   resolution: "typescript@patch:typescript@npm%3A5.4.3#~builtin<compat/typescript>::version=5.4.3&hash=f3b441"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 3a62fe90aa79d68c9ce38ea5edb2957e62801c733b99f0e5a2b8b50922761f68f7d9a40d28c544b449866e81185cddb93cba2496d0ff3fa52ef5b1f8bcace38c
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^5.4.4#~builtin<compat/typescript>":
+  version: 5.4.4
+  resolution: "typescript@patch:typescript@npm%3A5.4.4#~builtin<compat/typescript>::version=5.4.4&hash=f3b441"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 34e8fe6b892736204c6c72ae9e3027fb37f23e34cf748340712101cbe9c55527c379c4d275c407e5c66ff73eca56c7425b1fb4ac5b23dc7a62413cf6a8af98e8
   languageName: node
   linkType: hard
 
