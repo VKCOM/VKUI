@@ -8,11 +8,22 @@ import { ViewWidth } from '../../lib/adaptivity';
 import { rubber } from '../../lib/touch';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { Button } from '../Button/Button';
+import { Button, type ButtonProps } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Touch, TouchEvent } from '../Touch/Touch';
 import { Basic, BasicProps } from './subcomponents/Basic/Basic';
 import styles from './Snackbar.module.css';
+
+function getButtonAppearance(mode: BasicProps['mode']): ButtonProps['appearance'] {
+  switch (mode) {
+    case 'dark':
+      return 'overlay';
+    case 'light':
+      return 'accent-invariable';
+    default:
+      return 'accent';
+  }
+}
 
 export interface SnackbarProps extends HTMLAttributesWithRootRef<HTMLElement>, BasicProps {
   /**
@@ -202,7 +213,7 @@ export const Snackbar = ({
                 <Button
                   align="left"
                   mode="link"
-                  appearance={mode === 'dark' ? 'overlay' : 'accent'}
+                  appearance={getButtonAppearance(mode)}
                   size="s"
                   onClick={handleActionClick}
                 >

@@ -13,6 +13,10 @@
   background: var(--vkui--color_background_contrast_inverse);
 }
 
+.Snackbar--mode-light {
+  background: var(--vkui--color_background_contrast);
+}
+
 .Snackbar__before {
   margin-inline-end: 12px;
 }
@@ -79,6 +83,10 @@
 
 .Snackbar--mode-dark .Snackbar__content-text {
   color: var(--vkui--color_text_contrast);
+}
+
+.Snackbar--mode-light .Snackbar__content-text {
+  color: var(--vkui--color_text_primary_invariably);
 }
 
 .Snackbar--layout-horizontal .Snackbar__action {

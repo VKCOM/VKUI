@@ -93,6 +93,20 @@ const SnackBarExample = () => {
     );
   };
 
+  const openLight = () => {
+    if (snackbar) return;
+    setSnackbar(
+      <Snackbar
+        mode="light"
+        onClose={() => setSnackbar(null)}
+        action="Поделиться"
+        onActionClick={() => setText('Добавляем метку.')}
+      >
+        Ссылка скопирована
+      </Snackbar>,
+    );
+  };
+
   const openSuccess = () => {
     if (snackbar) return;
     setSnackbar(
@@ -131,6 +145,7 @@ const SnackBarExample = () => {
           <CellButton onClick={openWithAvatar}>Уведомление с аватаркой</CellButton>
           <CellButton onClick={openWithSibtitle}>Уведомление с дополнительным текстом</CellButton>
           <CellButton onClick={openDark}>Уведомление с темной темой</CellButton>
+          <CellButton onClick={openLight}>Уведомление со светлой темой</CellButton>
           <CellButton onClick={openSuccess}>Успешное уведомление</CellButton>
           <CellButton onClick={openError}>Уведомление с ошибкой</CellButton>
         </Group>

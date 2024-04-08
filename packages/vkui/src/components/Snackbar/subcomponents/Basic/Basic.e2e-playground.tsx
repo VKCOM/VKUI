@@ -63,6 +63,16 @@ export const BasicPlayground = (props: ComponentPlaygroundProps) => {
             </Button>,
           ],
         },
+        {
+          children: ['Text message'],
+          action: ['Button'],
+          mode: ['light', 'dark'],
+        },
+        {
+          children: ['Text message'],
+          subtitle: ['Subtitle'],
+          mode: ['light'],
+        },
       ]}
     >
       {(props: SnackbarBasicProps) => <Basic {...props} />}

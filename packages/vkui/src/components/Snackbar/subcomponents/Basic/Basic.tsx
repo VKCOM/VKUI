@@ -17,6 +17,11 @@ const sizeYClassNames = {
   regular: styles['Snackbar--sizeY-regular'],
 };
 
+const modeClassNames = {
+  light: styles['Snackbar--mode-light'],
+  dark: styles['Snackbar--mode-dark'],
+};
+
 export interface BasicProps {
   /**
    * Элемент действия.
@@ -47,7 +52,7 @@ export interface BasicProps {
   /**
    * Задает стиль снекбара
    */
-  mode?: 'default' | 'dark';
+  mode?: 'default' | 'dark' | 'light';
 
   /**
    * Дополнительная строка текста под `children`.
@@ -63,7 +68,7 @@ export function Basic({
   action,
   after,
   before,
-  mode,
+  mode = 'default',
   subtitle,
   children,
   ...restProps
@@ -77,7 +82,7 @@ export function Basic({
         styles['Snackbar__body'],
         stylesLayout[layout],
         sizeY !== 'compact' && sizeYClassNames[sizeY],
-        mode === 'dark' && styles['Snackbar--mode-dark'],
+        mode !== 'default' && modeClassNames[mode],
       )}
       {...restProps}
     >
