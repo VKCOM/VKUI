@@ -37,7 +37,7 @@
     "autoprefixer": "^10.4.19",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
-    "css-loader": "^7.0.0",
+    "css-loader": "^6.10.0",
     "cssnano": "^6.1.2",
     "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
