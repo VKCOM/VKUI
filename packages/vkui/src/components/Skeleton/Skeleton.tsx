@@ -32,7 +32,7 @@ export interface SkeletonProps extends HTMLAttributesWithRootRef<HTMLDivElement 
   /**
    * Выключает анимацию, в результате чего показывается только один цвет
    */
-  still?: boolean;
+  noAnimation?: boolean;
 }
 
 /**
@@ -60,7 +60,7 @@ export const Skeleton = ({
   getRootRef,
   colorFrom,
   colorTo,
-  still = false,
+  noAnimation,
   ...restProps
 }: SkeletonProps) => {
   const rootRef = useExternRef(getRootRef);
@@ -86,7 +86,10 @@ export const Skeleton = ({
   return (
     <RootComponent
       Component="span"
-      baseClassName={classNames(styles['Skeleton'], still && styles['Skeleton--disableAnimation'])}
+      baseClassName={classNames(
+        styles['Skeleton'],
+        noAnimation && styles['Skeleton--disableAnimation'],
+      )}
       getRootRef={rootRef}
       style={{ ...skeletonStyle, ...style }}
       {...restProps}

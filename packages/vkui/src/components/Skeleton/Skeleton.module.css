@@ -25,6 +25,7 @@
   max-inline-size: 100%;
   line-height: 1;
   border-radius: 6px;
+  background-color: var(--vkui_internal--skeleton_color_from);
   background-image: linear-gradient(
     to right,
     var(--vkui_internal--skeleton_color_from) 0,
@@ -44,10 +45,11 @@
   --vkui_internal--skeleton_color_to: var(--vkui--color_skeleton_to);
 }
 
-.Skeleton--disableAnimation::after {
+.Skeleton--disableAnimation {
   /**
    * Safari тратит время не пересчет анимации даже если элемент скрыт
    * Для повышения производительности анимацию необходимо выключить
    */
   animation-name: none;
+  background-image: none;
 }
