@@ -33,6 +33,11 @@ export interface SkeletonProps extends HTMLAttributesWithRootRef<HTMLDivElement 
    * Выключает анимацию, в результате чего показывается только один цвет
    */
   noAnimation?: boolean;
+
+  /**
+   * Длительность анимации в секундах
+   */
+  duration?: number;
 }
 
 /**
@@ -61,6 +66,7 @@ export const Skeleton = ({
   colorFrom,
   colorTo,
   noAnimation,
+  duration,
   ...restProps
 }: SkeletonProps) => {
   const rootRef = useExternRef(getRootRef);
@@ -81,6 +87,10 @@ export const Skeleton = ({
 
   if (colorTo) {
     skeletonStyle['--vkui_internal--skeleton_color_to'] = colorTo;
+  }
+
+  if (Number.isFinite(duration)) {
+    skeletonStyle['--vkui_internal--skeleton_animation_duration'] = `${duration}s`;
   }
 
   return (
