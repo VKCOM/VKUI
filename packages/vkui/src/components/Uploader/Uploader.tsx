@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { callMultiple } from '../../lib/callMultiple';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { UploaderGrid } from './components/UploaderGrid';
 import styles from './Uploader.module.css';
 
 const Border = () => (
@@ -55,3 +56,8 @@ export const Uploader = ({ onDragEnter, onDragLeave, children, ...props }: Uploa
     </RootComponent>
   );
 };
+
+Uploader.displayName = 'Uploader';
+
+Uploader.Grid = UploaderGrid;
+Uploader.Grid.displayName = 'Uploader.Grid';
