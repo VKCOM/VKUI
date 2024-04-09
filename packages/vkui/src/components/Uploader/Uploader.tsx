@@ -37,24 +37,38 @@ export interface UploaderProps extends Omit<HTMLAttributesWithRootRef<HTMLDivEle
 }
 
 /**
+ * Компонент позволяет пользователям загружать файлы, перетаскивая файлы в
+ * область на странице
+ *
  * @see https://vkcom.github.io/VKUI/#/Uploader
  */
-export const Uploader = ({ onDragEnter, onDragLeave, children, ...props }: UploaderProps) => {
+export const Uploader = ({
+  onDragOver,
+  onDragLeave,
+  onDrop,
+  children,
+  ...props
+}: UploaderProps) => {
   const [active, setActive] = React.useState(false);
 
-  const onDragEnterLocal: React.DragEventHandler<HTMLDivElement> = () => {
+  const onActive: React.DragEventHandler<HTMLDivElement> = (event) => {
+    if (event.isPropagationStopped()) {
+      return;
+    }
+
     setActive(true);
   };
 
-  const onDragLeaveLocal: React.DragEventHandler<HTMLDivElement> = () => {
+  const offActive: React.DragEventHandler<HTMLDivElement> = () => {
     setActive(false);
   };
 
   return (
     <RootComponent
       baseClassName={classNames(styles['Uploader'], active && styles['Uploader--active'])}
-      onDragEnter={callMultiple(onDragEnterLocal, onDragEnter)}
-      onDragLeave={callMultiple(onDragLeaveLocal, onDragLeave)}
+      onDragOver={callMultiple(onDragOver, onActive)}
+      onDragLeave={callMultiple(onDragLeave, offActive)}
+      onDrop={callMultiple(onDrop, offActive)}
       {...props}
     >
       <Border />

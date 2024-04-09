@@ -11,12 +11,28 @@ const Item = ({ active }) => (
   </Placeholder.Container>
 );
 
+const dragOverHandler = (event) => {
+  event.preventDefault();
+};
+
+const dropHandler = (event) => {
+  event.preventDefault();
+
+  console.table(event.dataTransfer.files);
+};
+
 <Uploader.Grid>
-  <Uploader>{({ active }) => <Item active={active} />}</Uploader>
+  <Uploader onDragOver={dragOverHandler} onDrop={dropHandler}>
+    {({ active }) => <Item active={active} />}
+  </Uploader>
 </Uploader.Grid>;
 ```
 
+<br>
+
 ## Uploader.Grid
+
+Компонент `Uploader.Grid` предназначен для расположения `Uploader` по сетке
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const Item = ({ active }) => (
