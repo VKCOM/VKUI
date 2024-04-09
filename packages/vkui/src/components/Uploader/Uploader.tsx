@@ -28,7 +28,13 @@ const Border = () => (
   </svg>
 );
 
-export type UploaderProps = HTMLAttributesWithRootRef<HTMLDivElement>;
+interface UploaderPropsChildrenProps {
+  active: boolean;
+}
+
+export interface UploaderProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children'> {
+  children?: React.ReactNode | ((renderProps: UploaderPropsChildrenProps) => React.ReactNode);
+}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Uploader
@@ -52,7 +58,7 @@ export const Uploader = ({ onDragEnter, onDragLeave, children, ...props }: Uploa
       {...props}
     >
       <Border />
-      {children}
+      {typeof children === 'function' ? children({ active }) : children}
     </RootComponent>
   );
 };
