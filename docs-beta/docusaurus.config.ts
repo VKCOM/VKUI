@@ -1,5 +1,6 @@
 import type { Options as DocsOptions } from '@docusaurus/plugin-content-docs';
 import type { Options as PageOptions } from '@docusaurus/plugin-content-pages';
+import type { Options as IdealImageOptions } from '@docusaurus/plugin-ideal-image';
 // import type { Options as SitemapOptions } from '@docusaurus/plugin-sitemap';
 import type { Options as ThemeClassicOptions } from '@docusaurus/theme-classic';
 import type { UserThemeConfig as ClassicThemeConfig } from '@docusaurus/theme-common';
@@ -78,6 +79,17 @@ const config: Config = {
       } satisfies ThemeClassicOptions,
     ],
     '@docusaurus/theme-live-codeblock',
+    [
+      '@docusaurus/plugin-ideal-image',
+      {
+        quality: 70,
+        max: 1030,
+        min: 640,
+        steps: 2,
+        // Use false to debug, but it incurs huge perf costs
+        disableInDev: true,
+      } satisfies IdealImageOptions,
+    ],
   ],
 
   themeConfig: {
