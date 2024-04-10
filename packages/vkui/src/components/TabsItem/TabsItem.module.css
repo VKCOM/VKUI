@@ -113,11 +113,6 @@
 .TabsItem--selected.TabsItem--mode-accent .TabsItem__before {
   color: var(--vkui--color_icon_accent_themed);
 }
-
-.TabsItem--selected.TabsItem--mode-secondary .TabsItem__before {
-  opacity: 0.72;
-}
-
 /* Элемент */
 .TabsItem__label {
   max-inline-size: 100%;
@@ -135,10 +130,6 @@
 
 .TabsItem--selected.TabsItem--mode-accent .TabsItem__label {
   color: var(--vkui--color_text_accent_themed);
-}
-
-.TabsItem--selected.TabsItem--mode-secondary .TabsItem__label {
-  opacity: 0.72;
 }
 
 /* Элемент */
