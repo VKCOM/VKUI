@@ -21,18 +21,18 @@ const dropHandler = (event) => {
   console.table(event.dataTransfer.files);
 };
 
-<Uploader.Grid>
-  <Uploader onDragOver={dragOverHandler} onDrop={dropHandler}>
+<DropZone.Grid>
+  <DropZone onDragOver={dragOverHandler} onDrop={dropHandler}>
     {({ active }) => <Item active={active} />}
-  </Uploader>
-</Uploader.Grid>;
+  </DropZone>
+</DropZone.Grid>;
 ```
 
 <br>
 
-## Uploader.Grid
+## DropZone.Grid
 
-Компонент `Uploader.Grid` предназначен для расположения `Uploader` по сетке
+Компонент `DropZone.Grid` предназначен для расположения `DropZone` по сетке
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const Item = ({ active }) => (
@@ -47,10 +47,10 @@ const Item = ({ active }) => (
   </Placeholder.Container>
 );
 
-<Uploader.Grid direction="row">
-  <Uploader>{({ active }) => <Item active={active} />}</Uploader>
-  <Uploader>{({ active }) => <Item active={active} />}</Uploader>
-  <Uploader>{({ active }) => <Item active={active} />}</Uploader>
-  <Uploader>{({ active }) => <Item active={active} />}</Uploader>
-</Uploader.Grid>;
+<DropZone.Grid direction="row">
+  <DropZone>{({ active }) => <Item active={active} />}</DropZone>
+  <DropZone>{({ active }) => <Item active={active} />}</DropZone>
+  <DropZone>{({ active }) => <Item active={active} />}</DropZone>
+  <DropZone>{({ active }) => <Item active={active} />}</DropZone>
+</DropZone.Grid>;
 ```

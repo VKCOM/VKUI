@@ -3,12 +3,12 @@ import { classNames } from '@vkontakte/vkjs';
 import { callMultiple } from '../../lib/callMultiple';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { UploaderGrid } from './components/UploaderGrid';
-import styles from './Uploader.module.css';
+import { DropZoneGrid } from './components/DropZoneGrid';
+import styles from './DropZone.module.css';
 
 const Border = () => (
   <svg
-    className={styles['Uploader__border']}
+    className={styles['DropZone__border']}
     width="100%"
     height="100%"
     xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@ const Border = () => (
     aria-hidden
   >
     <rect
-      className={styles['Uploader__borderRect']}
+      className={styles['DropZone__borderRect']}
       fill="none"
       strokeLinecap="round"
       strokeDasharray="4 6"
@@ -28,27 +28,27 @@ const Border = () => (
   </svg>
 );
 
-interface UploaderPropsChildrenProps {
+interface DropZonePropsChildrenProps {
   active: boolean;
 }
 
-export interface UploaderProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children'> {
-  children?: React.ReactNode | ((renderProps: UploaderPropsChildrenProps) => React.ReactNode);
+export interface DropZoneProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children'> {
+  children?: React.ReactNode | ((renderProps: DropZonePropsChildrenProps) => React.ReactNode);
 }
 
 /**
  * Компонент позволяет пользователям загружать файлы, перетаскивая файлы в
  * область на странице
  *
- * @see https://vkcom.github.io/VKUI/#/Uploader
+ * @see https://vkcom.github.io/VKUI/#/DropZone
  */
-export const Uploader = ({
+export const DropZone = ({
   onDragOver,
   onDragLeave,
   onDrop,
   children,
   ...props
-}: UploaderProps) => {
+}: DropZoneProps) => {
   const [active, setActive] = React.useState(false);
 
   const onActive: React.DragEventHandler<HTMLDivElement> = (event) => {
@@ -65,7 +65,7 @@ export const Uploader = ({
 
   return (
     <RootComponent
-      baseClassName={classNames(styles['Uploader'], active && styles['Uploader--active'])}
+      baseClassName={classNames(styles['DropZone'], active && styles['DropZone--active'])}
       onDragOver={callMultiple(onDragOver, onActive)}
       onDragLeave={callMultiple(onDragLeave, offActive)}
       onDrop={callMultiple(onDrop, offActive)}
@@ -77,7 +77,7 @@ export const Uploader = ({
   );
 };
 
-Uploader.displayName = 'Uploader';
+DropZone.displayName = 'DropZone';
 
-Uploader.Grid = UploaderGrid;
-Uploader.Grid.displayName = 'Uploader.Grid';
+DropZone.Grid = DropZoneGrid;
+DropZone.Grid.displayName = 'DropZone.Grid';

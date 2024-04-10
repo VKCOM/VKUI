@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Icon56CameraOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Placeholder } from '../Placeholder/Placeholder';
-import { Uploader, type UploaderProps } from './Uploader';
+import { DropZone, type DropZoneProps } from './DropZone';
 
-export const UploaderPlayground = (props: ComponentPlaygroundProps) => (
+export const DropZonePlayground = (props: ComponentPlaygroundProps) => (
   <ComponentPlayground {...props} propSets={[{}]}>
-    {(props: UploaderProps) => (
-      <Uploader {...props} style={{ margin: 16 }}>
+    {(props: DropZoneProps) => (
+      <DropZone {...props} style={{ margin: 16 }}>
         <Placeholder.Container>
           <Placeholder.Icon>
             <Icon56CameraOutline />
@@ -17,7 +17,7 @@ export const UploaderPlayground = (props: ComponentPlaygroundProps) => (
             Перенесите файл сюда для быстрой отправки. В таком случае изображения будут сжаты.
           </Placeholder.Text>
         </Placeholder.Container>
-      </Uploader>
+      </DropZone>
     )}
   </ComponentPlayground>
 );

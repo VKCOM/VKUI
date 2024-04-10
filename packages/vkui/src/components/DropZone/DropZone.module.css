@@ -1,8 +1,8 @@
-.Uploader {
+.DropZone {
   position: relative;
 }
 
-.Uploader__border {
+.DropZone__border {
   position: absolute;
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -13,7 +13,7 @@
   overflow: visible;
 }
 
-.Uploader__border > .Uploader__borderRect {
+.DropZone__border > .DropZone__borderRect {
   ry: var(--vkui--size_border_radius--regular);
   rx: var(--vkui--size_border_radius--regular);
   stroke: var(--vkui--color_separator_primary);
@@ -21,7 +21,7 @@
   transition: stroke 0.2s ease, stroke-width 0.2s ease;
 }
 
-.Uploader--active > .Uploader__border > .Uploader__borderRect {
+.DropZone--active > .DropZone__border > .DropZone__borderRect {
   stroke: var(--vkui--color_stroke_accent_themed);
   stroke-width: 2;
 }

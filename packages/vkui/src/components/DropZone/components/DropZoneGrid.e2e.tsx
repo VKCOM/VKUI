@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { test } from '@vkui-e2e/test';
-import { UploaderGridPlayground } from './UploaderGrid.e2e-playground';
+import { DropZoneGridPlayground } from './DropZoneGrid.e2e-playground';
 
-test.describe('UploaderGrid', () => {
+test.describe('DropZoneGrid', () => {
   test.use({
     onlyForPlatforms: ['vkcom'],
   });
 
   test('desktop', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
-    await mount(<UploaderGridPlayground {...componentPlaygroundProps} />);
+    await mount(<DropZoneGridPlayground {...componentPlaygroundProps} />);
     await expectScreenshotClippedToContent();
   });
 });

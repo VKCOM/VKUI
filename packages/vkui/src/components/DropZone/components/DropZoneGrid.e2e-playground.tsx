@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Icon56CameraOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Placeholder } from '../../Placeholder/Placeholder';
-import { Uploader } from '../Uploader';
-import { UploaderGridProps } from './UploaderGrid';
+import { DropZone } from '../DropZone';
+import { DropZoneGridProps } from './DropZoneGrid';
 
 const Item = () => (
-  <Uploader>
+  <DropZone>
     <Placeholder.Container>
       <Placeholder.Icon>
         <Icon56CameraOutline />
@@ -16,10 +16,10 @@ const Item = () => (
         Перенесите файл сюда для быстрой отправки. В таком случае изображения будут сжаты.
       </Placeholder.Text>
     </Placeholder.Container>
-  </Uploader>
+  </DropZone>
 );
 
-export const UploaderGridPlayground = (props: ComponentPlaygroundProps) => (
+export const DropZoneGridPlayground = (props: ComponentPlaygroundProps) => (
   <ComponentPlayground
     {...props}
     propSets={[
@@ -33,14 +33,14 @@ export const UploaderGridPlayground = (props: ComponentPlaygroundProps) => (
       },
     ]}
   >
-    {({ section, ...props }: UploaderGridProps & { section: number }) => (
-      <Uploader.Grid {...props}>
+    {({ section, ...props }: DropZoneGridProps & { section: number }) => (
+      <DropZone.Grid {...props}>
         {Array(section)
           .fill(null)
           .map((_, index) => (
             <Item key={index} />
           ))}
-      </Uploader.Grid>
+      </DropZone.Grid>
     )}
   </ComponentPlayground>
 );
