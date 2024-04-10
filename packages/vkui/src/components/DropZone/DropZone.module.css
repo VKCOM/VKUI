@@ -4,13 +4,12 @@
 
 .DropZone__border {
   position: absolute;
-  inset-inline-start: 0;
-  inset-block-start: 0;
-  inline-size: 100%;
-  block-size: 100%;
+  inset-inline-start: -2px;
+  inset-block-start: -2px;
+  inline-size: calc(100% + 4px);
+  block-size: calc(100% + 4px);
   border-radius: var(--vkui--size_border_radius--regular);
   pointer-events: none;
-  overflow: visible;
 }
 
 .DropZone__border > .DropZone__borderRect {
@@ -19,6 +18,8 @@
   stroke: var(--vkui--color_separator_primary);
   stroke-width: 1;
   transition: stroke 0.2s ease, stroke-width 0.2s ease;
+  block-size: calc(100% - 4px);
+  inline-size: calc(100% - 4px);
 }
 
 .DropZone--active > .DropZone__border > .DropZone__borderRect {

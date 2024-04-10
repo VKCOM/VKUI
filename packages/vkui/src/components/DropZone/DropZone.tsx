@@ -20,10 +20,8 @@ const Border = () => (
       fill="none"
       strokeLinecap="round"
       strokeDasharray="4 6"
-      x="0"
-      y="0"
-      width="100%"
-      height="100%"
+      x="2"
+      y="2"
     ></rect>
   </svg>
 );
