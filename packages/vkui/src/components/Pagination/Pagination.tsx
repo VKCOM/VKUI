@@ -8,7 +8,7 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import {
   type CustomPaginationNavigationButton,
   PaginationNavigationButton,
-  PaginationNavigationButtonProps,
+  type PaginationNavigationButtonProps,
 } from './PaginationNavigationButton/PaginationNavigationButton';
 import {
   type CustomPaginationPageButtonProps,
@@ -78,15 +78,15 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
   getPageLabel?: (isCurrent: boolean) => string;
   onChange?: (page: number, event: React.MouseEvent<HTMLElement>) => void;
   /**
-   * Рендер-проп для отрисовки кнопки страницы
+   * Функция для кастомного рендера кнопок страниц.
    *
-   * > Note: На вход передает пропы совместимые с компонентом Tappable
+   * > Note: `CustomPaginationPageButtonProps` наследует API [Tappable](https://vkcom.github.io/VKUI/#/Tappable).
    */
   renderPageButton?: (props: CustomPaginationPageButtonProps) => React.ReactNode;
   /**
-   * Рендер-проп для отрисовки кнопок перемещения между соседними страницами
+   Функция для кастомного рендера кнопок навигации `prev` и `next`.
    *
-   * > Note: На вход передает пропы совместимые с компонентом Button
+   * > Note: `CustomPaginationNavigationButton` наследует API компонентом [Button](https://vkcom.github.io/VKUI/#/Button).
    */
   renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
 }
@@ -126,7 +126,7 @@ export const Pagination = ({
 
   const handlePrevClick = React.useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
-      if (onChange && prevPage != null) {
+      if (onChange && prevPage !== undefined) {
         onChange(prevPage, event);
       }
     },
@@ -143,7 +143,7 @@ export const Pagination = ({
 
   const handleNextClick = React.useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
-      if (onChange && nextPage != null) {
+      if (onChange && nextPage !== undefined) {
         onChange(nextPage, event);
       }
     },

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, ButtonProps } from '../../Button/Button';
+import { Button, type ButtonProps } from '../../Button/Button';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 
 export interface PaginationNavigationButtonOpts {

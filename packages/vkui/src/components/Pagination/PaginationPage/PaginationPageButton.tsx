@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { SizeTypeValues } from '../../../lib/adaptivity';
-import { Tappable, TappableProps } from '../../Tappable/Tappable';
+import { type SizeTypeValues } from '../../../lib/adaptivity';
+import { Tappable, type TappableProps } from '../../Tappable/Tappable';
 import { Text } from '../../Typography/Text/Text';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import { PaginationProps } from '../Pagination';
