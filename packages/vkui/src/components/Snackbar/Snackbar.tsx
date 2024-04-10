@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useFocusWithin } from '../../hooks/useFocusWithin';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { useReducedMotion } from '../../lib/animation/useReducedMotion';
-import { getRelativeBoundingClientRect, getWindow } from '../../lib/dom';
+import { getRelativeBoundingClientRect } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
@@ -96,6 +97,7 @@ export const Snackbar = ({
   const [touched, setTouched] = React.useState(false);
 
   const rootRef = useExternRef(getRootRef);
+  const focused = useFocusWithin(rootRef);
   const inRef = React.useRef<HTMLDivElement>(null);
 
   const shiftDataRef = React.useRef<ShiftData | null>(null);
@@ -154,25 +156,24 @@ export const Snackbar = ({
   };
 
   const handleTouchEnd = (event: TouchEvent) => {
-    if (shiftDataRef.current) {
-      if (
-        shouldBeClosedByShiftData(
-          placement,
-          shiftDataRef.current,
-          getRelativeBoundingClientRect(rootRef.current!, inRef.current!),
-          event.duration,
-        )
-      ) {
-        setOpen(false);
-      }
-
-      setTouched(false);
+    if (
+      shiftDataRef.current &&
+      shouldBeClosedByShiftData(
+        placement,
+        shiftDataRef.current,
+        getRelativeBoundingClientRect(rootRef.current!, inRef.current!),
+        event.duration,
+      )
+    ) {
+      close();
     }
+
+    setTouched(false);
   };
 
   useIsomorphicLayoutEffect(
     function closeAfterDelay() {
-      if (!open || touched || animationState !== 'entered') {
+      if (!open || focused || touched || animationState !== 'entered') {
         return;
       }
       closeTimeoutIdRef.current = setTimeout(close, duration);
@@ -180,7 +181,7 @@ export const Snackbar = ({
         clearTimeout(closeTimeoutIdRef.current);
       };
     },
-    [open, touched, animationState, close, duration],
+    [open, focused, touched, animationState, close, duration],
   );
 
   useIsomorphicLayoutEffect(
@@ -193,24 +194,7 @@ export const Snackbar = ({
     [touched, open, updateShiftAxisCSSProperties],
   );
 
-  useIsomorphicLayoutEffect(
-    function handleGlobalKeyDownIfSnackbarOpened() {
-      if (!open) {
-        return;
-      }
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (pressedKey(event) === Keys.ESCAPE) {
-          setOpen(false);
-        }
-      };
-      const doc = getWindow(rootRef.current).document;
-      doc.addEventListener('keydown', handleKeyDown, { passive: true, capture: true });
-      return () => {
-        doc.removeEventListener('keydown', handleKeyDown, { capture: true });
-      };
-    },
-    [open, animationState, rootRef],
-  );
+  useGlobalEscKeyDown(open, close);
 
   return (
     <RootComponent
@@ -261,3 +245,5 @@ export const Snackbar = ({
     </RootComponent>
   );
 };
+
+Snackbar.Basic = Basic;
