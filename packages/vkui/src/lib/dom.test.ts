@@ -1,8 +1,10 @@
+import { getFakeMouseEvent, getFakeTouchEvent } from '../testing/utils';
 import {
   contains,
   getActiveElementByAnotherElement,
   getBoundingClientRect,
   getDocumentBody,
+  getFirstTouchEventData,
   getScrollHeight,
   getScrollRect,
   getTransformedParentCoords,
@@ -219,5 +221,27 @@ describe(contains, () => {
     elParent.append(elChild);
     document.body.append(elParent);
     expect(contains(elParent, elChild)).toBeTruthy();
+  });
+});
+
+describe(getFirstTouchEventData, () => {
+  it.each([
+    { type: 'touchstart', event: getFakeTouchEvent('touchstart', 10, 10) },
+    { type: 'touchmove', event: getFakeTouchEvent('touchmove', 10, 10) },
+    { type: 'touchend', event: getFakeTouchEvent('touchend', 10, 10) },
+    { type: 'mousedown', event: getFakeMouseEvent('mousedown', 10, 10) },
+    { type: 'mousemove', event: getFakeMouseEvent('mousemove', 10, 10) },
+    { type: 'mouseup', event: getFakeMouseEvent('mouseup', 10, 10) },
+    { type: 'mouseleave', event: getFakeMouseEvent('mouseleave', 10, 10) },
+  ])('should return touch data for expected event type (#type)', ({ event }) => {
+    const { clientX, clientY } = getFirstTouchEventData(event);
+    expect(clientX).toBe(10);
+    expect(clientY).toBe(10);
+  });
+
+  it('should return default data for unknown event type', () => {
+    const { clientX, clientY } = getFirstTouchEventData(new UIEvent('unknown'));
+    expect(clientX).toBe(0);
+    expect(clientY).toBe(0);
   });
 });

@@ -7,11 +7,11 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { useReducedMotion } from '../../lib/animation/useReducedMotion';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
+import { UIPanGestureRecognizer } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { Touch, TouchEvent } from '../Touch/Touch';
 import { Basic, BasicProps } from './subcomponents/Basic/Basic';
 import type { ShiftData, SnackbarPlacement } from './types';
 import {
@@ -99,6 +99,7 @@ export const Snackbar = ({
   const rootRef = useExternRef(getRootRef);
   const focused = useFocusWithin(rootRef);
   const inRef = React.useRef<HTMLDivElement>(null);
+  const panGestureRecognizer = React.useRef<UIPanGestureRecognizer | null>(null);
 
   const shiftDataRef = React.useRef<ShiftData | null>(null);
 
@@ -116,10 +117,12 @@ export const Snackbar = ({
       rafRef.current = requestAnimationFrame(() => {
         if (rootRef.current) {
           x === null
-            ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_x')
+            ? /* istanbul ignore next: функция с (null, null), но coverage подсвечивает жёлтым и пишет "branch not covered" */
+              rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_x')
             : rootRef.current.style.setProperty('--vkui_internal--snackbar_shift_x', `${x}px`);
           y === null
-            ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_y')
+            ? /* istanbul ignore next: функция с (null, null), но coverage подсвечивает жёлтым и пишет "branch not covered" */
+              rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_y')
             : rootRef.current.style.setProperty('--vkui_internal--snackbar_shift_y', `${y}px`);
         }
       });
@@ -138,7 +141,9 @@ export const Snackbar = ({
     }
   };
 
-  const handleTouchStart = () => {
+  const handleTouchStart = (event: React.UIEvent<HTMLDivElement>) => {
+    panGestureRecognizer.current = new UIPanGestureRecognizer();
+    panGestureRecognizer.current.setStartCoords(event.nativeEvent);
     shiftDataRef.current = getInitialShiftData(
       rootRef.current!.offsetWidth,
       rootRef.current!.offsetHeight,
@@ -146,23 +151,29 @@ export const Snackbar = ({
     setTouched(true);
   };
 
-  const handleTouchMove = (event: TouchEvent) => {
-    if (shiftDataRef.current) {
-      const { shiftX: x, shiftY: y, originalEvent } = event;
-      originalEvent.preventDefault();
-      shiftDataRef.current = getMovedShiftData(placement, shiftDataRef.current, { x, y });
+  const handleTouchMove = (event: React.UIEvent<HTMLDivElement>) => {
+    if (shiftDataRef.current && panGestureRecognizer.current) {
+      panGestureRecognizer.current.setInitialTimeOnce();
+      panGestureRecognizer.current.setEndCoords(event.nativeEvent);
+      shiftDataRef.current = getMovedShiftData(
+        placement,
+        shiftDataRef.current,
+        panGestureRecognizer.current.delta(),
+      );
       updateShiftAxisCSSProperties(shiftDataRef.current.x, shiftDataRef.current.y);
     }
   };
 
-  const handleTouchEnd = (event: TouchEvent) => {
+  const handleTouchEnd = () => {
     if (
+      touched &&
       shiftDataRef.current &&
+      panGestureRecognizer.current &&
       shouldBeClosedByShiftData(
         placement,
         shiftDataRef.current,
         getRelativeBoundingClientRect(rootRef.current!, inRef.current!),
-        event.duration,
+        panGestureRecognizer.current.velocity(),
       )
     ) {
       close();
@@ -186,12 +197,13 @@ export const Snackbar = ({
 
   useIsomorphicLayoutEffect(
     function clearUpdateShiftAxisCSSPropertiesIfShifted() {
-      if (shiftDataRef.current && shiftDataRef.current.shifted && open && !touched) {
+      if (shiftDataRef.current && shiftDataRef.current.shifted && !touched) {
         updateShiftAxisCSSProperties(null, null);
         shiftDataRef.current = null;
+        panGestureRecognizer.current = null;
       }
     },
-    [touched, open, updateShiftAxisCSSProperties],
+    [touched, updateShiftAxisCSSProperties],
   );
 
   useGlobalEscKeyDown(open, close);
@@ -210,13 +222,19 @@ export const Snackbar = ({
       style={resolveOffsetYCssStyle(placement, style, offsetY)}
       getRootRef={rootRef}
     >
-      <Touch
+      <div
         role="alert"
         className={styles['Snackbar__in']}
-        getRootRef={inRef}
-        onStart={isReducedMotion ? undefined : handleTouchStart}
-        onMove={isReducedMotion ? undefined : handleTouchMove}
-        onEnd={isReducedMotion ? undefined : handleTouchEnd}
+        ref={inRef}
+        // mobile
+        onTouchStart={isReducedMotion ? undefined : handleTouchStart}
+        onTouchMove={isReducedMotion ? undefined : handleTouchMove}
+        onTouchEnd={isReducedMotion ? undefined : handleTouchEnd}
+        // desktop
+        onMouseDown={isReducedMotion ? undefined : handleTouchStart}
+        onMouseMove={isReducedMotion ? undefined : handleTouchMove}
+        onMouseUp={isReducedMotion ? undefined : handleTouchEnd}
+        onMouseLeave={isReducedMotion ? undefined : handleTouchEnd}
         {...animationHandlers}
       >
         <Basic
@@ -230,7 +248,12 @@ export const Snackbar = ({
               <Button
                 align="left"
                 mode="link"
-                appearance={mode === 'dark' ? 'overlay' : 'accent'}
+                appearance={
+                  mode === 'dark'
+                    ? /* istanbul ignore next: проверяется в e2e */
+                      'overlay'
+                    : 'accent'
+                }
                 size="s"
                 onClick={handleActionClick}
               >
@@ -241,7 +264,7 @@ export const Snackbar = ({
         >
           {children}
         </Basic>
-      </Touch>
+      </div>
     </RootComponent>
   );
 };

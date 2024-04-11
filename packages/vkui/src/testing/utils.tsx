@@ -9,13 +9,17 @@ import {
 } from '@testing-library/react';
 // eslint-disable-next-line no-restricted-imports -- используем здесь setup
 import userEventLib from '@testing-library/user-event';
+import { noop } from '@vkontakte/vkjs';
 import { configureAxe, toHaveNoViolations } from 'jest-axe';
 import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
+import { REDUCE_MOTION_MEDIA_QUERY } from '../lib/animation/useReducedMotion';
 import { isHTMLElement } from '../lib/dom';
 import { ImgOnlyAttributes } from '../lib/utils';
 import { HasChildren } from '../types';
+
+export const testIf = (condition: boolean) => (condition ? it : it.skip);
 
 export const axe = configureAxe({
   /**
@@ -340,10 +344,10 @@ export const requestAnimationFrameMock = {
 /**
  * Эта функция собирает бойлерплейт по работе с fireEvent.
  */
-export const fireEventPatch = async (
+export const fireEventPatch = async <E extends EventType>(
   el: Document | Element | Window | Node | null,
-  eventType: EventType,
-  options?: Record<PropertyKey, unknown>,
+  eventType: E,
+  options?: E extends 'mouseOver' | 'mouseLeave' ? boolean : Record<PropertyKey, unknown>,
 ) => {
   if (el === null) {
     return;
@@ -366,7 +370,9 @@ export const fireEventPatch = async (
       case 'mouseOver':
       case 'mouseLeave':
         fireEvent[eventType](el);
-        await waitRAF();
+        if (options === undefined || options === true) {
+          await waitRAF();
+        }
         break;
       default:
         fireEvent[eventType](el, options);
@@ -374,4 +380,73 @@ export const fireEventPatch = async (
   });
 };
 
+export async function waitCSSKeyframesAnimation(el: HTMLElement, runOnlyPendingTimers = false) {
+  await fireEventPatch(el, 'animationStart');
+  await fireEventPatch(el, 'animationEnd');
+  act(runOnlyPendingTimers ? jest.runOnlyPendingTimers : noop);
+  await fireEventPatch(el, 'animationStart');
+  await fireEventPatch(el, 'animationEnd');
+}
+
 export const withRegExp = (v: string) => new RegExp(v);
+
+export const matchMediaReduceMotionMock = (reduce: boolean) => {
+  Object.defineProperty(global, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: reduce ? REDUCE_MOTION_MEDIA_QUERY === query : false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(), // устарело
+      removeListener: jest.fn(), // устарело
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+};
+
+export function getFakeTouchEvent(
+  type: string,
+  clientX: number,
+  clientY: number,
+  rest?: Partial<Omit<Touch, 'clientX' | 'clientY'>>,
+) {
+  const touch = {
+    identifier: 0,
+    screenX: 0,
+    screenY: 0,
+    pageX: 0,
+    pageY: 0,
+    radiusX: 0,
+    radiusY: 0,
+    force: 0,
+    rotationAngle: 0,
+    target: new EventTarget(),
+    ...rest,
+    clientX,
+    clientY,
+  };
+  return new TouchEvent(type, {
+    changedTouches: [touch],
+    touches: [touch],
+  });
+}
+
+export function getFakeMouseEvent(
+  type: string,
+  clientX: number,
+  clientY: number,
+  rest?: Partial<Omit<MouseEvent, 'clientX' | 'clientY'>>,
+) {
+  return new MouseEvent(type, {
+    movementX: 0,
+    movementY: 0,
+    screenX: 0,
+    screenY: 0,
+    relatedTarget: new EventTarget(),
+    ...rest,
+    clientX,
+    clientY,
+  });
+}

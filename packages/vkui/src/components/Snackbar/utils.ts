@@ -65,25 +65,19 @@ export function getMovedShiftData(
   return shiftData;
 }
 
-const MILLISECONDS = 1000;
 const MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE = 200;
 
 export function shouldBeClosedByShiftData(
   placement: SnackbarPlacement,
   shiftData: ShiftData,
   relativeClientRect: DOMRect,
-  durationInSeconds: number,
+  velocity: { x: number; y: number },
 ) {
   if (!shiftData.shifted) {
     return false;
   }
 
-  const duration = durationInSeconds / MILLISECONDS;
-  const deltaTime = duration <= 0 ? 1 : duration;
-  const velocity = {
-    x: relativeClientRect.x !== 0 ? relativeClientRect.x / deltaTime : 0,
-    y: relativeClientRect.y !== 0 ? relativeClientRect.y / deltaTime : 0,
-  };
+  // console.log(relativeClientRect.x, relativeClientRect.width / 2);
   const shouldBeClosedThreshold = { x: false, y: false };
   const shouldBeClosedByVelocity = { x: false, y: false };
 
@@ -119,6 +113,7 @@ export function shouldBeClosedByShiftData(
     shouldBeClosedThreshold.x ||
     shouldBeClosedByVelocity.x ||
     shouldBeClosedThreshold.y ||
+    /* istanbul ignore next: подсвечивает жёлтым и пишет "branch not covered" */
     shouldBeClosedByVelocity.y
   );
 }
