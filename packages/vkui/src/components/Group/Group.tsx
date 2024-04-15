@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { SizeTypeValues } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -95,6 +96,7 @@ export const Group = ({
 }: GroupProps) => {
   const { isInsideModal } = React.useContext(ModalRootContext);
   const { sizeX = 'none' } = useAdaptivity();
+  const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
 
   const mode = useGroupMode(modeProps, sizeX, isInsideModal);
 
@@ -136,10 +138,16 @@ export const Group = ({
 
       {separator !== 'hide' && (
         <React.Fragment>
-          <Spacing
+          <div
             className={classNames(styles['Group__separator'], styles['Group__separator--spacing'])}
-            size={8}
-          />
+          >
+            {adaptiveSizeX.compact && (
+              <Spacing className={adaptiveSizeX.compact.className} size={8} />
+            )}
+            {adaptiveSizeX.regular && (
+              <Spacing className={adaptiveSizeX.regular.className} size={16} />
+            )}
+          </div>
           <Separator
             className={classNames(
               styles['Group__separator'],

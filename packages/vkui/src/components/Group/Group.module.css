@@ -27,6 +27,8 @@
   }
 }
 
+/* ////////////////////////////////////////////////// */
+
 .Group__separator--spacing,
 .Group__separator--separator {
   display: none;
@@ -69,6 +71,8 @@
   }
 }
 
+/* ////////////////////////////////////////////////// */
+
 .Group--mode-card.Group--padding-s {
   padding: 4px;
 }
@@ -107,6 +111,15 @@
   position: relative;
 }
 
+.Group--sizeX-compact.Group--mode-card {
+  border-radius: var(--vkui--size_border_radius_promo--regular);
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-card {
+    border-radius: var(--vkui--size_border_radius_promo--regular);
+  }
+}
 @media (--sizeX-regular) {
   .Group--sizeX-none.Group--mode-none {
     background: var(--vkui--color_background_content);
@@ -174,14 +187,14 @@
   }
 }
 
-.Group--mode-plain + .Group__separator,
 .Group--mode-plain + .Group__separator + .Group__separator {
+  /* Это отступы когда layout=plain между группами и сепариком вннутри группы в группе ПЕРВОЕ ПРАВИЛО БЕСПОЛЕЗНО */
   padding-block: 8px;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none + .Group__separator,
   .Group--sizeX-none.Group--mode-none + .Group__separator + .Group__separator {
+    /* Это отступы когда layout=undefined между группами и сепариком вннутри группы в группе ПЕРВОЕ ПРАВИЛО БЕСПОЛЗЕНО */
     padding-block: 8px;
   }
 }
@@ -193,8 +206,8 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.Group .Group,
-.Group .Group + .Group__separator {
+.Group .Group {
+  /* первое правило бесполезно, потому что всегда применяется к спэйсу, у которого через style задается отступ */
   padding-inline: 0;
 }
 
