@@ -6,7 +6,7 @@
   text-decoration: none;
   color: var(--vkui--color_text_primary);
   padding-block: 0;
-  padding-inline: 20px;
+  padding-inline: 16px;
   min-block-size: 48px;
   box-sizing: border-box;
 }

@@ -18,7 +18,7 @@
 .ActionSheet__header {
   color: var(--vkui--color_text_subhead);
   padding-block: 16px;
-  padding-inline: 20px;
+  padding-inline: 16px;
 }
 
 .ActionSheet--closing {
@@ -86,7 +86,6 @@
 
 .ActionSheet--sizeY-compact .ActionSheet__header {
   padding-block: 12px;
-  padding-inline: 20px;
 }
 
 /**
