@@ -115,7 +115,14 @@ export const SimpleCell = ({
         className,
       )}
     >
-      <div className={styles['SimpleCell__before']}>{before}</div>
+      <div
+        className={classNames(
+          styles['SimpleCell__before'],
+          platform === 'ios' && styles['SimpleCell__before--ios'],
+        )}
+      >
+        {before}
+      </div>
       <div className={styles['SimpleCell__middle']}>
         {subhead && (
           <Subhead
