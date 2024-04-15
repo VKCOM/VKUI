@@ -52,8 +52,7 @@
   white-space: normal;
 }
 
-.FormItemTop__label--required::after {
-  content: '*';
+.FormItemTop__label--required {
   color: var(--vkui--color_text_negative);
   margin-inline-start: 3px;
 }

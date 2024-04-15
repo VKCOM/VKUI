@@ -38,13 +38,17 @@ export const FormItemTopLabel = ({
       className={classNames(
         styles['FormItemTop__label'],
         (multiline ?? multilineContext) && styles['FormItemTop__label--multiline'],
-        required && styles['FormItemTop__label--required'],
       )}
       Component={component}
       htmlFor={htmlFor}
       {...restProps}
     >
       {children}
+      {required && (
+        <span className={styles['FormItemTop__label--required']} aria-hidden>
+          *
+        </span>
+      )}
     </Subhead>
   );
 };
