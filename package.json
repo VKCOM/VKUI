@@ -84,7 +84,7 @@
     "swc-plugin-css-modules": "0.1.10",
     "swc-plugin-transform-remove-imports": "1.12.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.4",
+    "typescript": "^5.4.5",
     "typescript-plugin-css-modules": "^5.1.0",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",
