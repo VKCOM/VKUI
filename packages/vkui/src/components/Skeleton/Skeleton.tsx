@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useExternRef } from '../../hooks/useExternRef';
 import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Skeleton.module.css';
@@ -49,7 +48,7 @@ export interface SkeletonProps extends HTMLAttributesWithRootRef<HTMLDivElement 
  * автоматически подстраивается под размер шрифта, поэтому идеально
  * вписывается в слоты компонентов, которые обычно ожидают текст.
  *
- * @since 6.0.0
+ * @since 6.1.0
  */
 export const Skeleton = ({
   width,
@@ -62,15 +61,12 @@ export const Skeleton = ({
   circle,
   style,
   children,
-  getRootRef,
   colorFrom,
   colorTo,
   noAnimation,
   duration,
   ...restProps
 }: SkeletonProps) => {
-  const rootRef = useExternRef(getRootRef);
-
   const skeletonStyle: React.CSSProperties & CSSCustomProperties = {
     width,
     height,
@@ -100,7 +96,6 @@ export const Skeleton = ({
         styles['Skeleton'],
         noAnimation && styles['Skeleton--disableAnimation'],
       )}
-      getRootRef={rootRef}
       style={{ ...skeletonStyle, ...style }}
       {...restProps}
     >
