@@ -1,10 +1,10 @@
 @keyframes skeleton {
   from {
-    background-position: 0 0;
+    transform: translateX(0);
   }
 
   to {
-    background-position: var(--vkui_internal--skeleton_width) 0;
+    transform: translateX(var(--vkui_internal--skeleton_width));
   }
 }
 
@@ -15,16 +15,25 @@
   --vkui_internal--skeleton_animation_duration: 1.5s;
 
   display: inline-flex;
+  position: relative;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  line-height: 1;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.Skeleton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  inset-inline-start: calc(-1 * var(--vkui_internal--skeleton_width));
   animation-duration: var(--vkui_internal--skeleton_animation_duration);
   animation-iteration-count: infinite;
   animation-name: skeleton;
   background-attachment: fixed;
   animation-timing-function: var(--vkui--animation_easing_platform);
   background-size: var(--vkui_internal--skeleton_width) 100%;
-  inline-size: 100%;
-  max-inline-size: 100%;
-  line-height: 1;
-  border-radius: 6px;
   background-color: var(--vkui_internal--skeleton_color_from);
   background-image: linear-gradient(
     to right,

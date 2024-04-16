@@ -4,7 +4,6 @@
 </PanelHeader>
 <Group>
   <SimpleCell
-    disabled
     before={<Skeleton width={36} height={36} circle />}
     subtitle={<Skeleton width={90} />}
   >
