@@ -6,26 +6,6 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { DropZoneGrid } from './components/DropZoneGrid';
 import styles from './DropZone.module.css';
 
-const Border = () => (
-  <svg
-    className={styles['DropZone__border']}
-    width="100%"
-    height="100%"
-    xmlns="http://www.w3.org/2000/svg"
-    preserveAspectRatio="none"
-    aria-hidden
-  >
-    <rect
-      className={styles['DropZone__borderRect']}
-      fill="none"
-      strokeLinecap="round"
-      strokeDasharray="4 6"
-      x="2"
-      y="2"
-    ></rect>
-  </svg>
-);
-
 interface DropZonePropsChildrenProps {
   active: boolean;
 }
@@ -69,7 +49,6 @@ export const DropZone = ({
       onDrop={callMultiple(onDrop, offActive)}
       {...props}
     >
-      <Border />
       {typeof children === 'function' ? children({ active }) : children}
     </RootComponent>
   );
