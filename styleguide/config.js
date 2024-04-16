@@ -214,6 +214,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ContentBadge/ContentBadge.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ButtonGroup/ButtonGroup.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Button/Button.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ToolButton/ToolButton.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/CellButton/CellButton.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/IconButton/IconButton.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Div/Div.tsx`,
