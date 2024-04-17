@@ -86,7 +86,7 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
   /**
    Функция для кастомного рендера кнопок навигации `prev` и `next`.
    *
-   * > Note: `CustomPaginationNavigationButton` наследует API компонентом [Button](https://vkcom.github.io/VKUI/#/Button).
+   * > Note: `CustomPaginationNavigationButton` наследует API [Button](https://vkcom.github.io/VKUI/#/Button).
    */
   renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
 }
