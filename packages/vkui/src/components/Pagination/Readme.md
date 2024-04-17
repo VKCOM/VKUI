@@ -12,12 +12,15 @@
 
 ```jsx { "props": { "layout": false, "adaptivity": true, "iframe": false } }
 const Example = () => {
-  const [sizeY, setSizeY] = useState('compact');
-  const [navigationButtonsStyle, setNavigationButtonsStyle] = useState('icon');
-  const [currentPage, setCurrentPage] = useState(() => {
+  const getPageFromPath = () => {
     const params = window.location.hash.split('?')[1] || '';
     return Number(new URLSearchParams(params).get('page')) || 1;
-  });
+  };
+
+  const [sizeY, setSizeY] = useState('compact');
+  const [navigationButtonsStyle, setNavigationButtonsStyle] = useState('icon');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageFromPath, setPageFromPath] = useState(getPageFromPath);
   const [siblingCount, setSiblingCount] = useState(0);
   const [boundaryCount, setBoundaryCount] = useState(1);
   const [totalPages, setTotalPages] = useState(123);
@@ -29,30 +32,55 @@ const Example = () => {
 
   const hashPath = window.location.hash.split('?')[0].replace(/^#/, '');
 
+  React.useEffect(() => {
+    const cb = () => {
+      setPageFromPath(getPageFromPath());
+    };
+
+    window.addEventListener('popstate', cb);
+    return () => {
+      window.removeEventListener('popstate', cb);
+    };
+  }, []);
+
   return (
     <div style={rootContainerStyles}>
       <AdaptivityProvider sizeY={sizeY}>
         <div style={demoContainerStyles}>
-          <Pagination
-            navigationButtonsStyle={navigationButtonsStyle}
-            currentPage={currentPage}
-            siblingCount={siblingCount}
-            boundaryCount={boundaryCount}
-            totalPages={totalPages}
-            disabled={disabled}
-            onChange={handleChange}
-            renderPageButton={(props) => (
-              <Tappable {...props} href={`#${hashPath}?page=${props['data-page']}`} />
-            )}
-            renderNavigationButton={(props) => (
-              <Button
-                {...props}
-                href={
-                  props['data-page'] == null ? undefined : `#${hashPath}?page=${props['data-page']}`
-                }
-              />
-            )}
-          />
+          <Div>
+            <Pagination
+              navigationButtonsStyle={navigationButtonsStyle}
+              currentPage={currentPage}
+              siblingCount={siblingCount}
+              boundaryCount={boundaryCount}
+              totalPages={totalPages}
+              disabled={disabled}
+              onChange={handleChange}
+            />
+          </Div>
+          <Div>
+            <Pagination
+              navigationButtonsStyle={navigationButtonsStyle}
+              currentPage={pageFromPath}
+              siblingCount={siblingCount}
+              boundaryCount={boundaryCount}
+              totalPages={totalPages}
+              disabled={disabled}
+              renderPageButton={(props) => (
+                <Tappable {...props} href={`#${hashPath}?page=${props['data-page']}`} />
+              )}
+              renderNavigationButton={(props) => (
+                <Button
+                  {...props}
+                  href={
+                    props['data-page'] == null
+                      ? undefined
+                      : `#${hashPath}?page=${props['data-page']}`
+                  }
+                />
+              )}
+            />
+          </Div>
         </div>
       </AdaptivityProvider>
       <div style={propsContainerStyles}>
@@ -82,9 +110,7 @@ const Example = () => {
             type="number"
             value={currentPage}
             onChange={({ target: { value } }) => {
-              const page = Number(value);
-              setCurrentPage(page);
-              history.replaceState(null, null, `#${hashPath}?page=${page}`);
+              setCurrentPage(Number(value));
             }}
           />
         </FormItem>
