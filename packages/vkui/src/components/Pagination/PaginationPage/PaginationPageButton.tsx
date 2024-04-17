@@ -58,10 +58,10 @@ export const getTappablePropsFromPaginationPage = (opts: PaginationPageButtonOpt
 
 export type CustomPaginationPageButtonProps = ReturnType<typeof getTappablePropsFromPaginationPage>;
 
-export const PaginationPageButton: React.FC<PaginationPageButtonProps> = ({
+export const PaginationPageButton = ({
   renderPageButton,
   ...restProps
-}) => {
+}: PaginationPageButtonProps) => {
   const tappableProps = getTappablePropsFromPaginationPage(restProps);
 
   if (typeof renderPageButton === 'function') {

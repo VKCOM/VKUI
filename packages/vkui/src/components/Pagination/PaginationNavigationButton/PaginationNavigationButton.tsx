@@ -63,10 +63,10 @@ export type CustomPaginationNavigationButton = ReturnType<
 /**
  * @private
  */
-export const PaginationNavigationButton: React.FC<PaginationNavigationButtonProps> = ({
+export const PaginationNavigationButton = ({
   renderNavigationButton,
   ...restProps
-}) => {
+}: PaginationNavigationButtonProps) => {
   const buttonProps = getButtonPropsFromPaginationNavigationButton(restProps);
 
   if (typeof renderNavigationButton === 'function') {
