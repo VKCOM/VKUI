@@ -28,7 +28,6 @@ const Example = () => {
   const [boundaryCount, setBoundaryCount] = useState(1);
   const [disabled, setDisabled] = useState(false);
 
-
   const handleChange = React.useCallback((page) => {
     setCurrentPage(page);
   }, []);

@@ -19,7 +19,7 @@ import {
   importantCountries,
 } from '@vkui/testing/mock';
 import * as VKUI from '../packages/vkui/src';
-import {clamp} from '../packages/vkui/src/helpers/math';
+import { clamp } from '../packages/vkui/src/helpers/math';
 
 const unstablePrefix = 'unstable_';
 const ui = { ...VKUI };
