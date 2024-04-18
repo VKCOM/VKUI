@@ -19,6 +19,7 @@ import {
   importantCountries,
 } from '@vkui/testing/mock';
 import * as VKUI from '../packages/vkui/src';
+import {clamp} from '../packages/vkui/src/helpers/math';
 
 const unstablePrefix = 'unstable_';
 const ui = { ...VKUI };
@@ -55,3 +56,5 @@ window.useState = useState;
 window.useRef = useRef;
 
 window.noop = noop;
+
+window.clamp = clamp;

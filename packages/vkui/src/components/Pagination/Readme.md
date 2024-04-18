@@ -12,19 +12,22 @@
 
 ```jsx { "props": { "layout": false, "adaptivity": true, "iframe": false } }
 const Example = () => {
-  const getPageFromPath = () => {
-    const params = window.location.hash.split('?')[1] || '';
-    return Number(new URLSearchParams(params).get('page')) || 1;
-  };
-
   const [sizeY, setSizeY] = useState('compact');
   const [navigationButtonsStyle, setNavigationButtonsStyle] = useState('icon');
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(123);
+
+  const getPageFromPath = React.useCallback(() => {
+    const params = window.location.hash.split('?')[1] || '';
+    const pageFromParams = Number(new URLSearchParams(params).get('page')) || 1;
+    return clamp(pageFromParams, 1, totalPages);
+  }, [totalPages]);
+
   const [pageFromPath, setPageFromPath] = useState(getPageFromPath);
   const [siblingCount, setSiblingCount] = useState(0);
   const [boundaryCount, setBoundaryCount] = useState(1);
-  const [totalPages, setTotalPages] = useState(123);
   const [disabled, setDisabled] = useState(false);
+
 
   const handleChange = React.useCallback((page) => {
     setCurrentPage(page);
@@ -41,7 +44,7 @@ const Example = () => {
     return () => {
       window.removeEventListener('popstate', cb);
     };
-  }, []);
+  }, [getPageFromPath]);
 
   return (
     <div style={rootContainerStyles}>
