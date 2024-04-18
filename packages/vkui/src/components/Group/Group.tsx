@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { SizeTypeValues } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -9,7 +8,6 @@ import { AppRootContext } from '../AppRoot/AppRootContext';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
-import { Spacing } from '../Spacing/Spacing';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Group.module.css';
 
@@ -96,7 +94,6 @@ export const Group = ({
 }: GroupProps) => {
   const { isInsideModal } = React.useContext(ModalRootContext);
   const { sizeX = 'none' } = useAdaptivity();
-  const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
 
   const mode = useGroupMode(modeProps, sizeX, isInsideModal);
 
@@ -140,14 +137,7 @@ export const Group = ({
         <React.Fragment>
           <div
             className={classNames(styles['Group__separator'], styles['Group__separator--spacing'])}
-          >
-            {adaptiveSizeX.compact && (
-              <Spacing className={adaptiveSizeX.compact.className} size={8} />
-            )}
-            {adaptiveSizeX.regular && (
-              <Spacing className={adaptiveSizeX.regular.className} size={16} />
-            )}
-          </div>
+          />
           <Separator
             className={classNames(
               styles['Group__separator'],

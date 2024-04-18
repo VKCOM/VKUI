@@ -27,11 +27,14 @@
   }
 }
 
-/* ////////////////////////////////////////////////// */
-
 .Group__separator--spacing,
 .Group__separator--separator {
   display: none;
+}
+
+.Group__separator--spacing {
+  position: relative;
+  box-sizing: border-box;
 }
 
 /* stylelint-disable-next-line selector-max-universal */
@@ -48,11 +51,29 @@
 
 .Group--mode-card + .Group__separator--spacing {
   display: block;
+  block-size: 16px;
+  padding-block: 8px;
+  padding-inline: 0;
+}
+
+.Group--sizeX-compact.Group--mode-card + .Group__separator--spacing {
+  display: block;
+  block-size: 8px;
+  padding-block: 4px;
 }
 
 @media (--sizeX-regular) {
   .Group--sizeX-none.Group--mode-none + .Group__separator--spacing {
     display: block;
+    block-size: 16px;
+    padding-block: 8px;
+    padding-inline: 0;
+  }
+}
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-card + .Group__separator--spacing {
+    block-size: 8px;
+    padding-block: 4px;
   }
 }
 
@@ -70,8 +91,6 @@
     display: block;
   }
 }
-
-/* ////////////////////////////////////////////////// */
 
 .Group--mode-card.Group--padding-s {
   padding: 4px;
@@ -188,13 +207,11 @@
 }
 
 .Group--mode-plain + .Group__separator + .Group__separator {
-  /* Это отступы когда layout=plain между группами и сепариком вннутри группы в группе ПЕРВОЕ ПРАВИЛО БЕСПОЛЕЗНО */
   padding-block: 8px;
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none.Group--mode-none + .Group__separator + .Group__separator {
-    /* Это отступы когда layout=undefined между группами и сепариком вннутри группы в группе ПЕРВОЕ ПРАВИЛО БЕСПОЛЗЕНО */
     padding-block: 8px;
   }
 }
@@ -207,7 +224,6 @@
 }
 
 .Group .Group {
-  /* первое правило бесполезно, потому что всегда применяется к спэйсу, у которого через style задается отступ */
   padding-inline: 0;
 }
 
