@@ -16,7 +16,7 @@ export interface DropZoneProps extends Omit<HTMLAttributesWithRootRef<HTMLDivEle
 
 /**
  * Компонент позволяет пользователям загружать файлы, перетаскивая файлы в
- * область на странице
+ * область на странице.
  *
  * @see https://vkcom.github.io/VKUI/#/DropZone
  */
