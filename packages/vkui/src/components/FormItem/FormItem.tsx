@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { HasComponent, HasRootRef } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -9,6 +10,7 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import { FormItemTop } from './FormItemTop/FormItemTop';
 import { FormItemTopAside } from './FormItemTop/FormItemTopAside';
 import { FormItemTopLabel } from './FormItemTop/FormItemTopLabel';
+import { FormItemContext } from './context';
 import styles from './FormItem.module.css';
 
 const sizeYClassNames = {
@@ -64,6 +66,10 @@ export interface FormItemProps
    * @since 5.8.0
    */
   noPadding?: boolean;
+  /**
+   * Помечает поле обязательным
+   */
+  required?: boolean;
 }
 
 /**
@@ -84,6 +90,7 @@ export const FormItem = ({
   bottomId,
   noPadding,
   topNode,
+  required = false,
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
@@ -113,6 +120,8 @@ export const FormItem = ({
     </React.Fragment>
   );
 
+  const context = useObjectMemo({ required, topMultiline });
+
   return (
     <RootComponent
       {...restProps}
@@ -128,26 +137,31 @@ export const FormItem = ({
         removable && classNames(styles['FormItem--removable'], 'vkuiInternalFormItem--removable'),
       )}
     >
-      {removable ? (
-        <Removable
-          align="start"
-          onRemove={(e) => {
-            if (rootEl?.current) {
-              onRemove(e, rootEl.current);
-            }
-          }}
-          removePlaceholder={removePlaceholder}
-          indent={removable === 'indent'}
-        >
-          <div
-            className={classNames(styles['FormItem__removable'], 'vkuiInternalFormItem__removable')}
+      <FormItemContext.Provider value={context}>
+        {removable ? (
+          <Removable
+            align="start"
+            onRemove={(e) => {
+              if (rootEl?.current) {
+                onRemove(e, rootEl.current);
+              }
+            }}
+            removePlaceholder={removePlaceholder}
+            indent={removable === 'indent'}
           >
-            {wrappedChildren}
-          </div>
-        </Removable>
-      ) : (
-        wrappedChildren
-      )}
+            <div
+              className={classNames(
+                styles['FormItem__removable'],
+                'vkuiInternalFormItem__removable',
+              )}
+            >
+              {wrappedChildren}
+            </div>
+          </Removable>
+        ) : (
+          wrappedChildren
+        )}
+      </FormItemContext.Provider>
     </RootComponent>
   );
 };

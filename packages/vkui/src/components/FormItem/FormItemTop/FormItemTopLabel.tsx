@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HasComponent, HasRootRef } from '../../../types';
 import { Subhead } from '../../Typography/Subhead/Subhead';
+import { FormItemContext } from '../context';
 import styles from '../FormItem.module.css';
 
 export interface FormItemTopLabelProps
@@ -10,6 +11,7 @@ export interface FormItemTopLabelProps
     HasComponent {
   /**
    * Многострочный вывод заголовка.
+   * TODO [>=7]: удалить и вседа брать из контекста
    */
   multiline?: boolean;
 }
@@ -25,21 +27,28 @@ export const FormItemTopLabel = ({
   children,
   Component: componentProp,
   htmlFor,
-  multiline = false,
+  multiline,
   ...restProps
 }: FormItemTopLabelProps) => {
   const component = componentProp || (htmlFor && 'label') || 'span';
+  const { required, topMultiline: multilineContext } = React.useContext(FormItemContext);
+
   return (
     <Subhead
       className={classNames(
         styles['FormItemTop__label'],
-        multiline && styles['FormItemTop__label--multiline'],
+        (multiline ?? multilineContext) && styles['FormItemTop__label--multiline'],
       )}
       Component={component}
       htmlFor={htmlFor}
       {...restProps}
     >
       {children}
+      {required && (
+        <span className={styles['FormItemTop__label--required']} aria-hidden>
+          *
+        </span>
+      )}
     </Subhead>
   );
 };

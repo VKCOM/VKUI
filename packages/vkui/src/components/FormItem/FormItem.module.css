@@ -52,6 +52,11 @@
   white-space: normal;
 }
 
+.FormItemTop__label--required {
+  color: var(--vkui--color_text_negative);
+  margin-inline-start: 3px;
+}
+
 .FormItem__bottom {
   color: var(--vkui--color_text_secondary);
   padding-block-start: 8px;
