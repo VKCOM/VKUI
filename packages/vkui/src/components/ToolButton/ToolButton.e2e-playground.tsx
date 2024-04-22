@@ -11,14 +11,17 @@ export const ToolButtonPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           $adaptivity: 'y',
-          appearance: ['accent', 'neutral'],
-          mode: ['primary', 'secondary', 'tertiary', 'outline'],
           direction: ['column', 'row'],
           children: ['Кнопка'],
         },
         {
           $adaptivity: 'y',
-          direction: ['column', 'row'],
+          rounded: [true],
+        },
+        {
+          appearance: ['accent', 'neutral'],
+          mode: ['primary', 'secondary', 'tertiary', 'outline'],
+          children: ['Кнопка'],
         },
       ]}
     >

@@ -17,6 +17,10 @@
   line-height: var(--vkui--font_caption1--line_height--regular);
 }
 
+.ToolButton--rounded {
+  border-radius: var(--vkui--size_border_radius_rounded--regular);
+}
+
 .ToolButton--sizeY-regular {
   font-family: var(--vkui--font_subhead--font_family--regular);
   font-size: var(--vkui--font_subhead--font_size--regular);

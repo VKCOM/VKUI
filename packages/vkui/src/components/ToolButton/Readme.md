@@ -12,6 +12,7 @@ const Example = () => {
   const [appearance, setAppearance] = useState('accent');
   const [direction, setDirection] = useState('column');
   const [sizeY, setSizeY] = useState('compact');
+  const [rounded, setRounded] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [addText, setAddText] = useState(true);
   const [hasLink, setHasLink] = useState(false);
@@ -37,6 +38,7 @@ const Example = () => {
               mode={mode}
               direction={direction}
               appearance={appearance}
+              rounded={rounded}
               disabled={disabled}
               href={buttonLink}
               onClick={() => {}}
@@ -94,6 +96,7 @@ const Example = () => {
           />
         </FormItem>
         <FormItem top="props">
+          <Checkbox onChange={(e) => setRounded(e.target.checked)}>rounded</Checkbox>
           <Checkbox onChange={(e) => setDisabled(e.target.checked)}>disabled</Checkbox>
           <Checkbox onChange={(e) => setAddText(e.target.checked)} checked={addText}>
             add text

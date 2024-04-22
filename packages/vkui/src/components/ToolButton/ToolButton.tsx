@@ -34,9 +34,12 @@ export interface ToolButtonProps extends TappableProps, AdaptiveIconRendererProp
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline';
   appearance?: 'accent' | 'neutral';
   direction?: 'row' | 'column';
+  rounded?: boolean;
 }
 
 /**
+ *
+ *
  * @see https://vkcom.github.io/VKUI/#/ToolButton
  */
 export const ToolButton = ({
@@ -48,9 +51,11 @@ export const ToolButton = ({
   children,
   IconCompact,
   IconRegular,
+  rounded,
   ...restProps
 }: ToolButtonProps) => {
   const { sizeY = 'none' } = useAdaptivity();
+  const hasChildren = hasReactNode(children);
 
   return (
     <Tappable
@@ -62,6 +67,7 @@ export const ToolButton = ({
       className={classNames(
         className,
         styles['ToolButton'],
+        rounded && !hasChildren && styles['ToolButton--rounded'],
         stylesMode[mode],
         stylesAppearance[appearance],
         stylesDirection[direction],
@@ -70,7 +76,7 @@ export const ToolButton = ({
       {...restProps}
     >
       <AdaptiveIconRenderer IconCompact={IconCompact} IconRegular={IconRegular} />
-      {hasReactNode(children) && <span>{children}</span>}
+      {hasChildren && <span>{children}</span>}
     </Tappable>
   );
 };
