@@ -29,6 +29,11 @@
   padding-inline-end: 4px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.SimpleCell__before--ios > :global(.vkuiIcon) {
+  padding-inline-end: 0;
+}
+
 .SimpleCell__before:empty {
   display: none;
 }
