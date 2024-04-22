@@ -99,6 +99,10 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
           ],
           indicator: ['1:20:22'],
         },
+        {
+          before: [<Icon28MessageOutline key="icon" />],
+          children: ['Title'],
+        },
       ]}
     >
       {(props: SimpleCellProps) => <SimpleCell {...props} />}
