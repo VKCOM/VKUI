@@ -38,7 +38,9 @@ export interface ToolButtonProps extends TappableProps, AdaptiveIconRendererProp
 }
 
 /**
- *
+ * Кнопки, которые используются для вызова инструмента, вставки аттачей или
+ * для форматирования. Их можно использовать как кнопки для разового действия
+ * или для включения/выключения режима.
  *
  * @see https://vkcom.github.io/VKUI/#/ToolButton
  */
