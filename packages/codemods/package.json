@@ -22,7 +22,7 @@
     "typescript": "^5.4.5"
   },
   "devDependencies": {
-    "@swc/core": "^1.4.14",
+    "@swc/core": "^1.4.16",
     "@swc/jest": "^0.2.36",
     "@types/cross-spawn": "^6.0.6",
     "@types/jest": "^29.5.12",
