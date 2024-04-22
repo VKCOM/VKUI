@@ -3564,9 +3564,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-darwin-arm64@npm:1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core-darwin-arm64@npm:1.4.16"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@swc/core-darwin-x64@npm:1.4.14":
   version: 1.4.14
   resolution: "@swc/core-darwin-x64@npm:1.4.14"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core-darwin-x64@npm:1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core-darwin-x64@npm:1.4.16"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
@@ -3578,9 +3592,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-arm-gnueabihf@npm:1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.4.16"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-arm64-gnu@npm:1.4.14":
   version: 1.4.14
   resolution: "@swc/core-linux-arm64-gnu@npm:1.4.14"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm64-gnu@npm:1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.4.16"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
@@ -3592,9 +3620,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-arm64-musl@npm:1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core-linux-arm64-musl@npm:1.4.16"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-x64-gnu@npm:1.4.14":
   version: 1.4.14
   resolution: "@swc/core-linux-x64-gnu@npm:1.4.14"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-x64-gnu@npm:1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core-linux-x64-gnu@npm:1.4.16"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
@@ -3606,9 +3648,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-x64-musl@npm:1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core-linux-x64-musl@npm:1.4.16"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
 "@swc/core-win32-arm64-msvc@npm:1.4.14":
   version: 1.4.14
   resolution: "@swc/core-win32-arm64-msvc@npm:1.4.14"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@swc/core-win32-arm64-msvc@npm:1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.4.16"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
@@ -3620,6 +3676,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-win32-ia32-msvc@npm:1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.4.16"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
 "@swc/core-win32-x64-msvc@npm:1.4.14":
   version: 1.4.14
   resolution: "@swc/core-win32-x64-msvc@npm:1.4.14"
@@ -3627,7 +3690,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core@npm:*, @swc/core@npm:1.4.14, @swc/core@npm:^1.3.102, @swc/core@npm:^1.4.14":
+"@swc/core-win32-x64-msvc@npm:1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core-win32-x64-msvc@npm:1.4.16"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core@npm:*, @swc/core@npm:^1.3.102":
   version: 1.4.14
   resolution: "@swc/core@npm:1.4.14"
   dependencies:
@@ -3673,6 +3743,52 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core@npm:1.4.16, @swc/core@npm:^1.4.16":
+  version: 1.4.16
+  resolution: "@swc/core@npm:1.4.16"
+  dependencies:
+    "@swc/core-darwin-arm64": 1.4.16
+    "@swc/core-darwin-x64": 1.4.16
+    "@swc/core-linux-arm-gnueabihf": 1.4.16
+    "@swc/core-linux-arm64-gnu": 1.4.16
+    "@swc/core-linux-arm64-musl": 1.4.16
+    "@swc/core-linux-x64-gnu": 1.4.16
+    "@swc/core-linux-x64-musl": 1.4.16
+    "@swc/core-win32-arm64-msvc": 1.4.16
+    "@swc/core-win32-ia32-msvc": 1.4.16
+    "@swc/core-win32-x64-msvc": 1.4.16
+    "@swc/counter": ^0.1.2
+    "@swc/types": ^0.1.5
+  peerDependencies:
+    "@swc/helpers": ^0.5.0
+  dependenciesMeta:
+    "@swc/core-darwin-arm64":
+      optional: true
+    "@swc/core-darwin-x64":
+      optional: true
+    "@swc/core-linux-arm-gnueabihf":
+      optional: true
+    "@swc/core-linux-arm64-gnu":
+      optional: true
+    "@swc/core-linux-arm64-musl":
+      optional: true
+    "@swc/core-linux-x64-gnu":
+      optional: true
+    "@swc/core-linux-x64-musl":
+      optional: true
+    "@swc/core-win32-arm64-msvc":
+      optional: true
+    "@swc/core-win32-ia32-msvc":
+      optional: true
+    "@swc/core-win32-x64-msvc":
+      optional: true
+  peerDependenciesMeta:
+    "@swc/helpers":
+      optional: true
+  checksum: 67b72646a70c7b5967b0e2f3511bab9451285c7c24f107347ff92cea04ae61c76eb6e8c688f04d1bff2541134519f4a625005811be3b0f7670d1dad1167cc1fc
+  languageName: node
+  linkType: hard
+
 "@swc/counter@npm:^0.1.2, @swc/counter@npm:^0.1.3":
   version: 0.1.3
   resolution: "@swc/counter@npm:0.1.3"
@@ -3680,12 +3796,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.1, @swc/helpers@npm:^0.5.3, @swc/helpers@npm:^0.5.9":
+"@swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.1, @swc/helpers@npm:^0.5.3":
   version: 0.5.9
   resolution: "@swc/helpers@npm:0.5.9"
   dependencies:
     tslib: ^2.4.0
   checksum: ef2f076560711adbc37157e796046c358dc5c91716ce2ddc8d1a6d4a71e0769e145b28d1d1c7689c57d1087509b40646af84e15d623cade7ab653ebf50270bda
+  languageName: node
+  linkType: hard
+
+"@swc/helpers@npm:^0.5.10":
+  version: 0.5.10
+  resolution: "@swc/helpers@npm:0.5.10"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: 7a202710e494ff8e6f74b92cc12f2ce226c4d75c0f82c7c4fb911173d27744def1b3a8274fb3820f4161403182acb06ee553eb6e8e5b77b0d0ed7132a9e85bc2
   languageName: node
   linkType: hard
 
@@ -4883,7 +5008,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-codemods@workspace:packages/codemods"
   dependencies:
-    "@swc/core": ^1.4.14
+    "@swc/core": ^1.4.16
     "@swc/jest": ^0.2.36
     "@types/cross-spawn": ^6.0.6
     "@types/jest": ^29.5.12
@@ -4921,8 +5046,8 @@ __metadata:
   resolution: "@vkontakte/vkui-floating-ui@workspace:packages/vkui-floating-ui"
   dependencies:
     "@floating-ui/react-dom": ^2.0.8
-    "@swc/core": ^1.4.14
-    "@swc/helpers": ^0.5.9
+    "@swc/core": ^1.4.16
+    "@swc/helpers": ^0.5.10
     "@swc/jest": ^0.2.36
     "@types/jest": ^29.5.12
     jest: ^29.7.0
@@ -4948,7 +5073,7 @@ __metadata:
     "@size-limit/webpack": ^11.1.2
     "@size-limit/webpack-css": ^11.1.2
     "@swc/cli": ^0.3.12
-    "@swc/core": 1.4.14
+    "@swc/core": 1.4.16
     "@swc/jest": ^0.2.36
     "@testing-library/jest-dom": ^6.4.2
     "@testing-library/react": ^14.3.1
@@ -5028,7 +5153,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-token-translator@workspace:packages/token-translator"
   dependencies:
-    "@swc/core": 1.4.14
+    "@swc/core": 1.4.16
     "@swc/jest": ^0.2.36
     "@types/jest": ^29.5.12
     "@types/node": ^20.12.7
@@ -5058,7 +5183,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
-    "@swc/helpers": ^0.5.9
+    "@swc/helpers": ^0.5.10
     "@vkontakte/icons": ^2.104.1
     "@vkontakte/vkjs": ^1.1.2
     "@vkontakte/vkui-floating-ui": ^0.1.5
