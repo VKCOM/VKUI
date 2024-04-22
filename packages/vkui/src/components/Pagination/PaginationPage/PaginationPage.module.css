@@ -10,6 +10,8 @@
   user-select: none;
   block-size: var(--vkui--size_button_large_height--regular);
   line-height: var(--vkui--size_button_large_height--regular);
+  display: block;
+  text-decoration: none;
 }
 
 .PaginationPage--state-hover {

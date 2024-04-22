@@ -1,5 +1,6 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { SizeTypeValues } from '../../../lib/adaptivity';
 import styles from './PaginationPage.module.css';
 
 export interface UsePaginationPageClassNamesProps {
@@ -7,17 +8,26 @@ export interface UsePaginationPageClassNamesProps {
   disabled?: boolean;
 }
 
+export const getPaginationPageClassNames = (
+  opts: UsePaginationPageClassNamesProps & { sizeY?: SizeTypeValues },
+) => {
+  return classNames(
+    styles['PaginationPage'],
+    opts.sizeY == null && styles['PaginationPage--sizeY-none'],
+    opts.sizeY === 'compact' && styles['PaginationPage--sizeY-compact'],
+    opts.isCurrent && styles['PaginationPage--current'],
+    opts.disabled && styles['PaginationPage--disabled'],
+  );
+};
+
 export function usePaginationPageClassNames({
   isCurrent,
   disabled,
 }: UsePaginationPageClassNamesProps) {
-  const { sizeY = 'none' } = useAdaptivity();
-
-  return classNames(
-    styles['PaginationPage'],
-    sizeY === 'none' && styles['PaginationPage--sizeY-none'],
-    sizeY === 'compact' && styles['PaginationPage--sizeY-compact'],
-    isCurrent && styles['PaginationPage--current'],
-    disabled && styles['PaginationPage--disabled'],
-  );
+  const { sizeY } = useAdaptivity();
+  return getPaginationPageClassNames({
+    isCurrent,
+    disabled,
+    sizeY,
+  });
 }
