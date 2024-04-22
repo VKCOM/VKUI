@@ -57,7 +57,7 @@
     "jest-environment-node": "^29.7.0",
     "jest-preset-stylelint": "^7.0.0",
     "lint-staged": "^15.2.2",
-    "mini-css-extract-plugin": "^2.8.1",
+    "mini-css-extract-plugin": "^2.9.0",
     "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
     "postcss-custom-media": "^10.0.4",
