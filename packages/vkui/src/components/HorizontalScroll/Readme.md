@@ -24,16 +24,15 @@ const HorizontalScrollExample = () => {
             showArrows
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
+            inline
           >
-            <div style={{ display: 'flex' }}>
-              {recentFriends.map((item) => {
-                return (
-                  <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
-                    <Avatar size={56} src={item.photo_200} />
-                  </HorizontalCell>
-                );
-              })}
-            </div>
+            {recentFriends.map((item) => {
+              return (
+                <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
+                  <Avatar size={56} src={item.photo_200} />
+                </HorizontalCell>
+              );
+            })}
           </HorizontalScroll>
         </Group>
 
@@ -43,21 +42,20 @@ const HorizontalScrollExample = () => {
             arrowSize="m"
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
+            inline
           >
-            <div style={{ display: 'flex' }}>
-              {commonFriends.length === 0 && <PanelSpinner />}
-              {commonFriends.length > 0 && (
-                <Fragment>
-                  {commonFriends.map((item) => {
-                    return (
-                      <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
-                        <Avatar size={56} src={item.photo_200} />
-                      </HorizontalCell>
-                    );
-                  })}
-                </Fragment>
-              )}
-            </div>
+            {commonFriends.length === 0 && <Spinner size="regular" style={{ height: 88 }} />}
+            {commonFriends.length > 0 && (
+              <Fragment>
+                {commonFriends.map((item) => {
+                  return (
+                    <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
+                      <Avatar size={56} src={item.photo_200} />
+                    </HorizontalCell>
+                  );
+                })}
+              </Fragment>
+            )}
           </HorizontalScroll>
         </Group>
 

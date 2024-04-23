@@ -8,7 +8,7 @@ import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
 import { Header } from '../Header/Header';
 import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
-import { PanelSpinner } from '../PanelSpinner/PanelSpinner';
+import { Spinner } from '../Spinner/Spinner';
 import { HorizontalScroll, HorizontalScrollProps } from './HorizontalScroll';
 
 const story: Meta<HorizontalScrollProps> = {
@@ -51,21 +51,19 @@ export const Playground: Story = {
     }, []);
 
     return (
-      <HorizontalScroll {...args}>
-        <div style={{ display: 'flex' }}>
-          {commonFriends.length === 0 && <PanelSpinner />}
-          {commonFriends.length > 0 && (
-            <React.Fragment>
-              {commonFriends.map((item) => {
-                return (
-                  <HorizontalCell key={item.id} header={item.first_name}>
-                    <Avatar size={56} src={item.photo_200} />
-                  </HorizontalCell>
-                );
-              })}
-            </React.Fragment>
-          )}
-        </div>
+      <HorizontalScroll {...args} inline>
+        {commonFriends.length === 0 && <Spinner size="regular" style={{ height: 88 }} />}
+        {commonFriends.length > 0 && (
+          <React.Fragment>
+            {commonFriends.map((item) => {
+              return (
+                <HorizontalCell key={item.id} header={item.first_name}>
+                  <Avatar size={56} src={item.photo_200} />
+                </HorizontalCell>
+              );
+            })}
+          </React.Fragment>
+        )}
       </HorizontalScroll>
     );
   },
