@@ -104,10 +104,10 @@ const config: Config = {
         autoCollapseCategories: true,
       },
     },
-    // announcementBar: {
-    //   id: 'announcementBar-3', // Increment on change
-    //   content: `🎉️ <b><a target="_blank" href="https://github.com/VKCOM/VKUI/releases/tag/v6.0.0-beta.1">VKUI v6-beta.1</a> is now out!</b> 🥳️`,
-    // },
+    announcementBar: {
+      id: 'announcementBar-3', // Increment on change
+      content: `❌ <b>Under Construction!</b> ❌ `,
+    },
     navbar: {
       logo: {
         alt: 'VK logo + ui',
@@ -168,7 +168,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} VKUI, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} VKUI. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
