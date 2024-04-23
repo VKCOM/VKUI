@@ -51,12 +51,12 @@ export interface HorizontalScrollProps
    * По умолчанию прокручивается как любой горизонтальный контент через shift.
    */
   scrollOnAnyWheel?: boolean;
-    /**
+  /**
    * Задает потомкам инлайновое положение (горизонально)
    *
    * TODO [>=7]: Сделать по умолчанию `true` (или удалить, применяя стили всегда)
    */
-    inline?: boolean;
+  inline?: boolean;
 }
 
 /**
