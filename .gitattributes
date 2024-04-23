@@ -1,6 +1,7 @@
 **/src/**/__image_snapshots__/*.png filter=lfs diff=lfs merge=lfs -text
-**/static/img/*.png filter=lfs diff=lfs merge=lfs -text
+**/static/img/**/*.png filter=lfs diff=lfs merge=lfs -text
 
 # https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 /.yarn/releases/** binary
 /.yarn/plugins/** binary
+*.png filter=lfs diff=lfs merge=lfs -text
