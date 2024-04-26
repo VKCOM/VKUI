@@ -160,6 +160,14 @@ export const ImageBase = ({
     [imgRef, loaded],
   );
 
+  React.useEffect(
+    function resetLoadedStateOnSrcChange() {
+      setLoaded(false);
+      setFailed(false);
+    },
+    [hasSrc],
+  );
+
   return (
     <ImageBaseContext.Provider value={{ size }}>
       <Clickable
