@@ -76,8 +76,6 @@ export function shouldBeClosedByShiftData(
   if (!shiftData.shifted) {
     return false;
   }
-
-  // console.log(relativeClientRect.x, relativeClientRect.width / 2);
   const shouldBeClosedThreshold = { x: false, y: false };
   const shouldBeClosedByVelocity = { x: false, y: false };
 

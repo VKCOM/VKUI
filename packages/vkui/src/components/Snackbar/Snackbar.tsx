@@ -206,6 +206,16 @@ export const Snackbar = ({
     [touched, updateShiftAxisCSSProperties],
   );
 
+  React.useEffect(
+    () =>
+      function handleUnmount() {
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+        }
+      },
+    [],
+  );
+
   useGlobalEscKeyDown(open, close);
 
   return (
