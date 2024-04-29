@@ -66,7 +66,7 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@swc/helpers": "^0.5.10",
+    "@swc/helpers": "^0.5.11",
     "@vkontakte/icons": "^2.104.1",
     "@vkontakte/vkjs": "^1.1.2",
     "@vkontakte/vkui-floating-ui": "^0.1.5",
