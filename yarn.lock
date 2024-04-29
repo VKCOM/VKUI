@@ -5081,7 +5081,7 @@ __metadata:
     "@vkontakte/icons": ^2.104.1
     "@vkontakte/vkjs": ^1.1.2
     "@vkontakte/vkui-floating-ui": ^0.1.5
-    dayjs: ^1.11.10
+    dayjs: ^1.11.11
     mitt: ^3.0.1
     storybook: 8.0.8
   peerDependencies:
@@ -7577,10 +7577,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.11.10":
-  version: 1.11.10
-  resolution: "dayjs@npm:1.11.10"
-  checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
+"dayjs@npm:^1.11.11":
+  version: 1.11.11
+  resolution: "dayjs@npm:1.11.11"
+  checksum: 84788275aad8a87fee4f1ce4be08861df29687aae6b7b43dd65350118a37dda56772a3902f802cb2dc651dfed447a5a8df62d88f0fb900dba8333e411190a5d5
   languageName: node
   linkType: hard
 
