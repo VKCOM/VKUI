@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { useFocusVisible } from '../../../hooks/useFocusVisible';
-import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
-import { callMultiple } from '../../../lib/callMultiple';
+import { hasReactNode } from '@vkontakte/vkjs';
 import { HasRef, HasRootRef } from '../../../types';
+import { Clickable } from '../../Clickable/Clickable';
 import { Headline } from '../../Typography/Headline/Headline';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './SegmentedControlOption.module.css';
@@ -26,35 +24,22 @@ export const SegmentedControlOption = ({
   getRootRef,
   before,
   ...restProps
-}: SegmentedControlOptionProps) => {
-  const { focusVisible, onBlur, onFocus } = useFocusVisible();
-  const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible });
-
-  return (
-    <label
-      className={classNames(
-        styles['SegmentedControlOption'],
-        restProps.checked && styles['SegmentedControlOption--checked'],
-        focusVisibleClassNames,
-        className,
-      )}
-      ref={getRootRef}
-      style={style}
-    >
-      <VisuallyHidden
-        {...restProps}
-        Component="input"
-        getRootRef={getRef}
-        type="radio"
-        onBlur={callMultiple(onBlur, restProps.onBlur)}
-        onFocus={callMultiple(onFocus, restProps.onFocus)}
-      />
-      {hasReactNode(before) && (
-        <div className={styles['SegmentedControlOption__before']}>{before}</div>
-      )}
-      <Headline level="2" weight="2">
-        {children}
-      </Headline>
-    </label>
-  );
-};
+}: SegmentedControlOptionProps) => (
+  <Clickable
+    Component="label"
+    baseClassName={styles['SegmentedControlOption']}
+    hoverClassName={styles['SegmentedControlOption--hover']}
+    activeClassName={styles['SegmentedControlOption--hover']}
+    className={className}
+    getRootRef={getRootRef}
+    style={style}
+  >
+    <VisuallyHidden {...restProps} Component="input" getRootRef={getRef} type="radio" />
+    {hasReactNode(before) && (
+      <div className={styles['SegmentedControlOption__before']}>{before}</div>
+    )}
+    <Headline level="2" weight="2">
+      {children}
+    </Headline>
+  </Clickable>
+);
