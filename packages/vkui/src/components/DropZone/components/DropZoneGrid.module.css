@@ -1,0 +1,45 @@
+.DropZoneGrid {
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--vkui--size_base_padding_vertical--regular);
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+}
+
+.DropZoneGrid--column {
+  flex-direction: column;
+}
+
+.DropZoneGrid--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* stylelint-disable selector-max-universal -- Управляем флексом элементов и гапом */
+.DropZoneGrid > * {
+  flex: 1;
+}
+
+.DropZoneGrid--column > * {
+  margin-block-end: var(--vkui--size_base_padding_vertical--regular);
+}
+
+.DropZoneGrid--column > *:last-child {
+  margin-block-end: 0;
+}
+
+.DropZoneGrid--row > * {
+  margin-inline-end: var(--vkui--size_base_padding_horizontal--regular);
+}
+
+.DropZoneGrid--row > *:last-child {
+  margin-inline-end: 0;
+}
+
+/* Если элементов больше чем 2, то растягиваем первый элемент */
+.DropZoneGrid--row > *:first-child:nth-last-child(n + 3) {
+  flex: auto;
+  inline-size: 100%;
+  margin-block-end: var(--vkui--size_base_padding_vertical--regular);
+  margin-inline-end: 0;
+}
+/* stylelint-enable selector-max-universal */

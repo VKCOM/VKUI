@@ -285,6 +285,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ChipsSelect/ChipsSelect.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Textarea/Textarea.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/File/File.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/DropZone/DropZone.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/DatePicker/DatePicker.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/SegmentedControl/SegmentedControl.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Calendar/Calendar.tsx`,
