@@ -214,23 +214,31 @@ export function baselineComponent<Props extends object>(
   });
 }
 
-type RectOptions = { x?: number; y?: number; w?: number; h?: number };
-export function mockRect(el: HTMLElement | null, { x = 0, y = 0, w = 0, h = 0 }: RectOptions) {
+export function mockRect(el: HTMLElement | null, data: DOMRectInit) {
   if (!el) {
     return;
   }
-  el.getBoundingClientRect = () => ({
-    x,
-    y,
-    width: w,
-    height: h,
-    left: x,
-    top: y,
-    right: x + w,
-    bottom: y + h,
-    toJSON() {
-      JSON.stringify(this);
+  Object.defineProperty(el, 'getBoundingClientRect', {
+    value() {
+      return DOMRect.fromRect(data);
     },
+    writable: true,
+  });
+  Object.defineProperty(el, 'offsetTop', {
+    value: data.y,
+    writable: true,
+  });
+  Object.defineProperty(el, 'offsetLeft', {
+    value: data.x,
+    writable: true,
+  });
+  Object.defineProperty(el, 'offsetWidth', {
+    value: data.width,
+    writable: true,
+  });
+  Object.defineProperty(el, 'offsetHeight', {
+    value: data.height,
+    writable: true,
   });
 }
 
@@ -347,40 +355,46 @@ export const requestAnimationFrameMock = {
 export const fireEventPatch = async <E extends EventType>(
   el: Document | Element | Window | Node | null,
   eventType: E,
-  options?: E extends 'mouseOver' | 'mouseLeave' ? boolean : Record<PropertyKey, unknown>,
+  options?: E extends 'mouseOver' | 'mouseLeave' ? boolean : object,
 ) => {
   if (el === null) {
     return;
   }
-  await act(async () => {
-    switch (eventType) {
-      case 'focus':
-        if (isHTMLElement(el)) {
+  switch (eventType) {
+    case 'focus':
+      if (isHTMLElement(el)) {
+        await act(async () => {
           // см. https://github.com/testing-library/user-event/issues/350
           el.focus();
           await waitRAF();
-        }
-        break;
-      case 'blur':
-        if (isHTMLElement(el)) {
+        });
+      }
+      break;
+    case 'blur':
+      if (isHTMLElement(el)) {
+        await act(async () => {
           el.blur();
           await waitRAF();
-        }
-        break;
-      case 'mouseOver':
-      case 'mouseLeave':
-        fireEvent[eventType](el);
-        if (options === undefined || options === true) {
-          await waitRAF();
-        }
-        break;
-      default:
-        fireEvent[eventType](el, options);
-    }
-  });
+        });
+      }
+      break;
+    case 'mouseOver':
+    case 'mouseLeave':
+      fireEvent[eventType](el);
+      if (options === undefined || options === true) {
+        await act(async () => await waitRAF());
+      }
+      break;
+    default:
+      fireEvent[eventType](el, options);
+  }
 };
 
-export async function waitCSSKeyframesAnimation(el: HTMLElement, runOnlyPendingTimers = false) {
+export async function waitCSSKeyframesAnimation(
+  el: HTMLElement,
+  options = { runOnlyPendingTimers: false },
+) {
+  const { runOnlyPendingTimers } = options;
   await fireEventPatch(el, 'animationStart');
   await fireEventPatch(el, 'animationEnd');
   act(runOnlyPendingTimers ? jest.runOnlyPendingTimers : noop);
@@ -430,6 +444,8 @@ export function getFakeTouchEvent(
   return new TouchEvent(type, {
     changedTouches: [touch],
     touches: [touch],
+    bubbles: true,
+    cancelable: true,
   });
 }
 
@@ -448,5 +464,7 @@ export function getFakeMouseEvent(
     ...rest,
     clientX,
     clientY,
+    bubbles: true,
+    cancelable: true,
   });
 }

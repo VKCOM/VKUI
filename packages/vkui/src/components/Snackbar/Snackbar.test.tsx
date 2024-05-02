@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { type EventType, render } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
   fireEventPatch,
+  getFakeMouseEvent,
+  getFakeTouchEvent,
   matchMediaReduceMotionMock,
+  mockRect,
   requestAnimationFrameMock,
   testIf,
   userEvent,
@@ -16,7 +19,7 @@ import { Snackbar } from './Snackbar';
 import type { SnackbarPlacement } from './types';
 import styles from './Snackbar.module.css';
 
-const PLACEMENT: SnackbarPlacement[] = [
+const PLACEMENT_JEST_EACH_TABLE: SnackbarPlacement[] = [
   'top',
   'top-start',
   'top-end',
@@ -25,12 +28,41 @@ const PLACEMENT: SnackbarPlacement[] = [
   'bottom-end',
 ];
 
+const GESTURES_JEST_EACH_TABLE = [
+  {
+    name: 'touch',
+    start: 'touchStart',
+    move: 'touchMove',
+    end: 'touchEnd',
+    fireEventOptions: undefined,
+  },
+  {
+    name: 'mouse (with `mouseUp`)',
+    start: 'mouseDown',
+    move: 'mouseMove',
+    end: 'mouseUp',
+    fireEventOptions: undefined,
+  },
+  {
+    name: 'mouse (with `mouseLeave`)',
+    start: 'mouseDown',
+    move: 'mouseMove',
+    end: 'mouseLeave',
+    fireEventOptions: false,
+  },
+] as const;
+
 describe(Snackbar, () => {
-  beforeEach(() => jest.useFakeTimers());
+  const onClose = jest.fn();
+
+  beforeEach(() => {
+    onClose.mockClear();
+    jest.useFakeTimers();
+  });
 
   baselineComponent((props) => <Snackbar onClose={jest.fn()} {...props} />);
 
-  it.each(PLACEMENT)('should set offsetY relative placement="%s"', (placement) => {
+  it.each(PLACEMENT_JEST_EACH_TABLE)('should set offsetY relative placement="%s"', (placement) => {
     const result = render(<Snackbar placement={placement} offsetY={8} onClose={jest.fn()} />);
     const el = result.getByRole('presentation');
     switch (placement) {
@@ -88,28 +120,25 @@ describe(Snackbar, () => {
     });
 
     it('should be closed after timeout', async () => {
-      const onClose = jest.fn();
       const result = render(<Snackbar onClose={onClose} />);
-      await waitCSSKeyframesAnimation(result.getByRole('alert'), true);
+      await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
       expect(onClose).toHaveBeenCalled();
     });
 
     it('should use focused state for start or end timeout for close', async () => {
-      const onClose = jest.fn();
       const result = render(<Snackbar action="Action" onClose={onClose} />);
 
       await userEvent.keyboard('{Tab}');
-      await waitCSSKeyframesAnimation(result.getByRole('alert'), true);
+      await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
       expect(onClose).not.toHaveBeenCalled();
 
       await userEvent.keyboard('{Tab}');
-      await waitCSSKeyframesAnimation(result.getByRole('alert'), true);
+      await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
       expect(onClose).toHaveBeenCalled();
     });
 
     it('should be closed after click to action', async () => {
       const onActionClick = jest.fn();
-      const onClose = jest.fn();
       const result = render(
         <Snackbar
           action={<span data-testid="action">action</span>}
@@ -124,90 +153,145 @@ describe(Snackbar, () => {
     });
 
     it('should be closed after press to ESC', async () => {
-      const onClose = jest.fn();
       const result = render(<Snackbar onClose={onClose} />);
       await userEvent.keyboard('{Escape}');
       await waitCSSKeyframesAnimation(result.getByRole('alert'));
       expect(onClose).toHaveBeenCalled();
     });
 
-    testIf(value === 'no-reduce').each(['touch', 'mouse (case 1)', 'mouse (case 2)'])(
-      'should prevent or continue closing relative user %s manipulation',
-      async (eventType) => {
-        const onClose = jest.fn();
-        const result = render(<Snackbar onClose={onClose} />);
-        const elContent = result.getByRole('alert');
+    describe.each(GESTURES_JEST_EACH_TABLE)(
+      'should closing with user $name manipulation',
+      ({ start, move, end, fireEventOptions }) => {
+        testIf(value === 'no-reduce').each(PLACEMENT_JEST_EACH_TABLE)(
+          'placement="%s"',
+          async (placement) => {
+            const result = render(<Snackbar placement={placement} onClose={onClose} />);
 
-        await fireEventPatch(elContent, eventType === 'touch' ? 'touchStart' : 'mouseDown');
-        await waitCSSKeyframesAnimation(elContent, true);
-        expect(onClose).not.toHaveBeenCalled();
+            const rootEl = result.getByRole('presentation');
+            const contentEl = result.getByRole('alert');
 
-        switch (eventType) {
-          case 'touch':
-            await fireEventPatch(elContent, 'touchEnd');
-            break;
-          case 'mouse (case 1)':
-            await fireEventPatch(elContent, 'mouseUp');
-            break;
-          case 'mouse (case 2)':
-            await fireEventPatch(elContent, 'mouseLeave', false);
-            break;
-        }
-        await waitCSSKeyframesAnimation(elContent, true);
-        expect(onClose).toHaveBeenCalled();
+            const initialRect = { x: 0, y: 0, width: 320, height: 100 };
+            const movedRect = getMovedContentRectByPlacement(placement, { shouldTriggerClosing: true }); // prettier-ignore
+
+            // start
+            mockRect(rootEl, initialRect);
+            mockRect(contentEl, initialRect);
+            await fireEventPatch(contentEl, start, transformDomRectToEventData(start, initialRect));
+            await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
+
+            // move
+            mockRect(contentEl, movedRect);
+            requestAnimationFrameMock.init();
+            await fireEventPatch(contentEl, move, transformDomRectToEventData(move, movedRect));
+            requestAnimationFrameMock.triggerNextAnimationFrame();
+
+            // end
+            requestAnimationFrameMock.init();
+            await fireEventPatch(contentEl, end, fireEventOptions);
+            await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: false });
+            requestAnimationFrameMock.triggerNextAnimationFrame();
+            expect(onClose).toHaveBeenCalled();
+          },
+        );
       },
     );
 
-    testIf(value === 'no-reduce').each(PLACEMENT)(
-      'should use touched state for start or end timeout for close 2',
-      async (placement) => {
-        const onClose = jest.fn();
-        const result = render(<Snackbar placement={placement} onClose={onClose} />);
+    describe.each(GESTURES_JEST_EACH_TABLE)(
+      'should use touched state for start or end timeout for close (user $name manipulation)',
+      ({ start, move, end, fireEventOptions }) => {
+        testIf(value === 'no-reduce').each([
+          ...PLACEMENT_JEST_EACH_TABLE.map((placement) => ({ placement, shifted: true })),
+          { placement: 'top' as const, shifted: false },
+        ])('placement="$placement" (shifted: $shifted)', async ({ placement, shifted }) => {
+          const result = render(<Snackbar placement={placement} onClose={onClose} />);
 
-        const rootEl = result.getByRole('presentation');
-        const rootRect = { x: 0, y: 0, width: 320, height: 100 };
+          const rootEl = result.getByRole('presentation');
+          const contentEl = result.getByRole('alert');
 
-        const contentEl = result.getByRole('alert');
-        const contentRect = getContentRectByPlacement(placement);
+          const initialRect = { x: 0, y: 0, width: 320, height: 100 };
+          const movedRect = getMovedContentRectByPlacement(placement, { shouldTriggerClosing: false }); // prettier-ignore
 
-        await fireEventPatch(contentEl, 'mouseDown', transformDomRectToEventData(rootRect));
-        await waitCSSKeyframesAnimation(contentEl, true);
-        mockGetBoundingClientRect(rootEl, rootRect);
+          // start
+          mockRect(rootEl, initialRect);
+          mockRect(contentEl, initialRect);
+          await fireEventPatch(contentEl, start, transformDomRectToEventData(start, initialRect)); // prettier-ignore
+          await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
+          expect(onClose).not.toHaveBeenCalled();
 
-        requestAnimationFrameMock.init();
-        await fireEventPatch(contentEl, 'mouseMove', transformDomRectToEventData(contentRect));
-        requestAnimationFrameMock.triggerNextAnimationFrame();
+          if (shifted) {
+            // move
+            mockRect(contentEl, movedRect);
+            requestAnimationFrameMock.init();
+            await fireEventPatch(contentEl, move, transformDomRectToEventData(move, movedRect)); // prettier-ignore
+            requestAnimationFrameMock.triggerNextAnimationFrame();
+            expect(onClose).not.toHaveBeenCalled();
+          }
 
-        mockGetBoundingClientRect(contentEl, contentRect);
-        await fireEventPatch(contentEl, 'mouseUp', transformDomRectToEventData(contentRect));
-        await waitCSSKeyframesAnimation(contentEl, false);
-        expect(onClose).toHaveBeenCalled();
+          // end
+          requestAnimationFrameMock.init();
+          await fireEventPatch(contentEl, end, fireEventOptions); // prettier-ignore
+          await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
+          requestAnimationFrameMock.triggerNextAnimationFrame();
+          expect(onClose).toHaveBeenCalled();
+        });
       },
     );
+
+    it('should force unmount', async () => {
+      const result = render(<Snackbar placement="top" onClose={onClose} />);
+
+      const rootEl = result.getByRole('presentation');
+      const contentEl = result.getByRole('alert');
+
+      const initialRect = { x: 0, y: 0, width: 320, height: 100 };
+      const movedRect = getMovedContentRectByPlacement('top', { shouldTriggerClosing: true }); // prettier-ignore
+
+      // start
+      mockRect(rootEl, initialRect);
+      mockRect(contentEl, initialRect);
+      await fireEventPatch(contentEl, 'touchStart', transformDomRectToEventData('touchStart', initialRect)); // prettier-ignore
+      await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
+
+      // move
+      mockRect(contentEl, movedRect);
+      requestAnimationFrameMock.init();
+      await fireEventPatch(contentEl, 'touchMove', transformDomRectToEventData('touchMove', movedRect)); // prettier-ignore
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+
+      result.unmount();
+
+      expect(rootEl).not.toBeInTheDocument();
+    });
   });
 });
 
-function mockGetBoundingClientRect(el: HTMLElement, data: DOMRectInit) {
-  Object.defineProperty(el, 'getBoundingClientRect', {
-    value() {
-      return DOMRect.fromRect(data);
-    },
-  });
+function transformDomRectToEventData(
+  eventType: Extract<
+    EventType,
+    'touchStart' | 'touchMove' | 'touchEnd' | 'mouseDown' | 'mouseMove' | 'mouseUp' | 'mouseLeave'
+  >,
+  { x = 0, y = 0 }: DOMRectInit,
+) {
+  const nativeEventType = eventType.toLowerCase();
+  return eventType.startsWith('touch')
+    ? { nativeEvent: getFakeTouchEvent(nativeEventType, x, y) }
+    : { nativeEvent: getFakeMouseEvent(nativeEventType, x, y) };
 }
 
-function transformDomRectToEventData(data: DOMRectInit) {
-  return { clientX: data.x, clientY: data.y };
-}
-
-function getContentRectByPlacement(placement: SnackbarPlacement) {
+function getMovedContentRectByPlacement(
+  placement: SnackbarPlacement,
+  { shouldTriggerClosing: shouldTriggerClosing }: { shouldTriggerClosing: boolean },
+) {
   const width = 304;
   const height = 84;
+
+  const offsetForClose = shouldTriggerClosing ? 2 : 0;
 
   switch (placement) {
     case 'top': {
       return {
         x: 0,
-        y: -1 * (height / 2 + 1),
+        y: -1 * (height / 2 + offsetForClose),
         width,
         height,
       };
@@ -215,7 +299,7 @@ function getContentRectByPlacement(placement: SnackbarPlacement) {
     case 'bottom': {
       return {
         x: 0,
-        y: height / 2 + 1,
+        y: height / 2 + offsetForClose,
         width,
         height,
       };
@@ -223,7 +307,7 @@ function getContentRectByPlacement(placement: SnackbarPlacement) {
     case 'top-start':
     case 'bottom-start': {
       return {
-        x: -1 * (width / 2 + 1),
+        x: -1 * (width / 2 + offsetForClose),
         y: 0,
         width,
         height,
@@ -232,7 +316,7 @@ function getContentRectByPlacement(placement: SnackbarPlacement) {
     case 'top-end':
     case 'bottom-end': {
       return {
-        x: width / 2 + 1,
+        x: width / 2 + offsetForClose,
         y: 0,
         width,
         height,

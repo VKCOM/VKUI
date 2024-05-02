@@ -117,12 +117,10 @@ export const Snackbar = ({
       rafRef.current = requestAnimationFrame(() => {
         if (rootRef.current) {
           x === null
-            ? /* istanbul ignore next: функция с (null, null), но coverage подсвечивает жёлтым и пишет "branch not covered" */
-              rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_x')
+            ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_x')
             : rootRef.current.style.setProperty('--vkui_internal--snackbar_shift_x', `${x}px`);
           y === null
-            ? /* istanbul ignore next: функция с (null, null), но coverage подсвечивает жёлтым и пишет "branch not covered" */
-              rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_y')
+            ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_y')
             : rootRef.current.style.setProperty('--vkui_internal--snackbar_shift_y', `${y}px`);
         }
       });
@@ -198,18 +196,21 @@ export const Snackbar = ({
   useIsomorphicLayoutEffect(
     function clearUpdateShiftAxisCSSPropertiesIfShifted() {
       if (shiftDataRef.current && shiftDataRef.current.shifted && !touched) {
-        updateShiftAxisCSSProperties(null, null);
+        if (open) {
+          updateShiftAxisCSSProperties(null, null);
+        }
+        rafRef.current = null;
         shiftDataRef.current = null;
         panGestureRecognizer.current = null;
       }
     },
-    [touched, updateShiftAxisCSSProperties],
+    [open, touched, animationState, updateShiftAxisCSSProperties],
   );
 
   React.useEffect(
     () =>
       function handleUnmount() {
-        if (rafRef.current) {
+        if (rafRef.current !== null) {
           cancelAnimationFrame(rafRef.current);
         }
       },
