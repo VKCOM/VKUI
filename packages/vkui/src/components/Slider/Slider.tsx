@@ -24,6 +24,12 @@ const sizeYClassNames = {
   ['compact']: styles['Slider--sizeY-compact'],
 };
 
+const sizeClassNames = {
+  l: styles['Slider--size-l'],
+  m: styles['Slider--size-m'],
+  s: styles['Slider--size-s'],
+};
+
 export interface SliderBaseProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'> {
   min?: number;
@@ -45,6 +51,10 @@ export interface SliderBaseProps
    */
   getAriaValueText?: (value: number, index: number) => string;
   withTooltip?: boolean;
+  /**
+   * Размер ползунка.
+   */
+  size?: 's' | 'm' | 'l';
 }
 
 export interface SliderProps extends SliderBaseProps {
@@ -78,6 +88,7 @@ export const Slider = ({
   getAriaValueText,
   onChange,
   withTooltip,
+  size = 'l',
   ...restProps
 }: SliderProps | SliderMultipleProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -210,6 +221,7 @@ export const Slider = ({
         styles['Slider'],
         disabled && styles['Slider--disabled'],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
+        sizeClassNames[size],
         className,
       )}
       onStart={disabled ? undefined : handlePointerStart}

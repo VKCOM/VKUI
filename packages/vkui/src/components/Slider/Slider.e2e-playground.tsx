@@ -28,6 +28,11 @@ export const SliderPlayground = (props: ComponentPlaygroundProps) => {
           defaultValue: [50],
           $adaptivity: 'y',
         },
+
+        {
+          size: ['l', 'm', 's'],
+          $adaptivity: 'y',
+        },
       ]}
     >
       {(props: SliderProps | SliderMultipleProps) => (
