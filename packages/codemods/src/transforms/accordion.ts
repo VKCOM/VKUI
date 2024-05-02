@@ -12,6 +12,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'Accordion', alias);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   renameProp(j, source, localName, { open: 'expanded' });
 
   const accordionComponents = source

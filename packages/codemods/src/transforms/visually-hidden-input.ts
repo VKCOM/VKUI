@@ -17,6 +17,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     .filter((path) => path.node.imported.name === 'VisuallyHiddenInput')
     .at(0);
 
+  if (componentImport.length === 0) {
+    return source.toSource();
+  }
+
   componentImport.forEach((path) => {
     if (path.node.local && path.node.local.name !== path.node.imported.name) {
       localImportName = path.node.local.name;

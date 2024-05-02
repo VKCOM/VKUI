@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`alert transforms correctly 1`] = `
-"import { ActionSheet, ActionSheetItem } from '@vkontakte/vkui';
+"import { Alert } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 

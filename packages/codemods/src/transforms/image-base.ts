@@ -12,9 +12,17 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { localName: imageLocalName } = getImportInfo(j, file, 'Image', alias);
   const { localName: avatarLocalName } = getImportInfo(j, file, 'Avatar', alias);
 
-  swapBooleanValue(api, source, imageBaseLocalName, 'withBorder', 'noBorder');
-  swapBooleanValue(api, source, imageLocalName, 'withBorder', 'noBorder');
-  swapBooleanValue(api, source, avatarLocalName, 'withBorder', 'noBorder');
+  if (imageBaseLocalName) {
+    swapBooleanValue(api, source, imageBaseLocalName, 'withBorder', 'noBorder');
+  }
+
+  if (imageLocalName) {
+    swapBooleanValue(api, source, imageLocalName, 'withBorder', 'noBorder');
+  }
+
+  if (avatarLocalName) {
+    swapBooleanValue(api, source, avatarLocalName, 'withBorder', 'noBorder');
+  }
 
   return source.toSource();
 }

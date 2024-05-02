@@ -11,6 +11,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'PanelHeader', alias);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   swapBooleanValue(api, source, localName, 'visor', 'float');
 
   source

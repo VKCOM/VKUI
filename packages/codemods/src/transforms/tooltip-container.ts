@@ -14,6 +14,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { localName } = getImportInfo(j, file, componentName, alias);
   let needRename = true;
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   // подменяем импорт
   source
     .find(j.ImportDeclaration)

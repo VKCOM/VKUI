@@ -15,3 +15,14 @@ const App = () => {
   );
 };"
 `;
+
+exports[`action-sheet transforms correctly 2`] = `
+"import { ActionSheet } from '@vkontakte-fake/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    <ActionSheet popupDirection="top" />
+  );
+};"
+`;

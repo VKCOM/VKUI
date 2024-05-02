@@ -10,7 +10,9 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'Tabbar', alias);
 
-  swapBooleanValue(api, source, localName, 'shadow', 'plain');
+  if (localName) {
+    swapBooleanValue(api, source, localName, 'shadow', 'plain');
+  }
 
   return source.toSource();
 }

@@ -14,7 +14,9 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'ChipsInput', alias);
 
-  renameProp(j, source, localName, RENAME_MAP);
+  if (localName) {
+    renameProp(j, source, localName, RENAME_MAP);
+  }
 
   return source.toSource();
 }

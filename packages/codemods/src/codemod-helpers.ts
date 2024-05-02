@@ -13,21 +13,19 @@ export function getImportInfo(
   file: FileInfo,
   componentName: string,
   alias: string,
-) {
+): { localName: string | null } {
   const source = j(file.source);
 
-  let localImportName = componentName;
+  let localImportName = null;
 
-  const componentImport = source
-    .find(j.ImportDeclaration)
-    .filter((path) => path.node.source.value === alias)
-    .find(j.ImportSpecifier, { imported: { name: componentName } });
-
-  componentImport.forEach((path) => {
-    if (path.node.local && path.node.local.name !== path.node.imported.name) {
-      localImportName = path.node.local.name;
-    }
-  });
+  source
+    .find(j.ImportDeclaration, { source: { value: alias } })
+    .find(j.ImportSpecifier, { imported: { name: componentName } })
+    .forEach((path) => {
+      if (path.node.local) {
+        localImportName = path.node.local.name;
+      }
+    });
 
   return { localName: localImportName };
 }
