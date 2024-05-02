@@ -7,7 +7,7 @@ import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
 import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
-import { Tappable } from '../Tappable/Tappable';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -31,7 +31,17 @@ const fillModeClassNames = {
 
 export interface TabsItemProps
   extends HTMLAttributesWithRootRef<HTMLElement>,
-    AnchorHTMLAttributesOnly {
+    AnchorHTMLAttributesOnly,
+    Pick<
+      TappableProps,
+      | 'activeMode'
+      | 'hoverMode'
+      | 'hovered'
+      | 'activated'
+      | 'hasActive'
+      | 'hasHover'
+      | 'focusVisibleMode'
+    > {
   /**
    * Добавляет иконку слева.
    *
@@ -163,7 +173,6 @@ export const TabsItem = ({
 
   return (
     <Tappable
-      {...restProps}
       getRootRef={rootRef}
       className={classNames(
         styles['TabsItem'],
@@ -181,6 +190,7 @@ export const TabsItem = ({
       role={role}
       aria-selected={selected}
       tabIndex={tabIndex}
+      {...restProps}
     >
       {before && <div className={styles['TabsItem__before']}>{before}</div>}
       <Headline
