@@ -188,12 +188,7 @@ export const ImageBase = ({
             height={heightImg}
             onLoad={handleImageLoad}
             onError={handleImageError}
-            // @ts-expect-error: TS2322 нужна новая версия реакта и замена свойства на fetchPriority
-            //
-            // TODO [react@>18.2.0]: Проверить работоспособность fetchPriority
-            //
-            // https://github.com/facebook/react/issues/25682
-            fetchpriority={fetchPriority}
+            fetchPriority={fetchPriority}
           />
         )}
         {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
