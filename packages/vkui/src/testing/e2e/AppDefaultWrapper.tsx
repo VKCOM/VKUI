@@ -3,8 +3,12 @@ import { AppRoot, type AppRootProps } from '../../components/AppRoot/AppRoot';
 
 export type AppWrapperProps = AppRootProps;
 
-export const AppDefaultWrapper = ({ children, ...restProps }: AppWrapperProps) => (
-  <AppRoot mode="embedded" {...restProps}>
+export const AppDefaultWrapper = ({
+  mode = 'embedded',
+  children,
+  ...restProps
+}: AppWrapperProps) => (
+  <AppRoot mode={mode} {...restProps}>
     <div
       style={{
         border: '8px solid var(--playwright-border)',
