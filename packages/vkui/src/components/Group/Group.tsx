@@ -8,7 +8,6 @@ import { AppRootContext } from '../AppRoot/AppRootContext';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
-import { Spacing } from '../Spacing/Spacing';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Group.module.css';
 
@@ -136,9 +135,8 @@ export const Group = ({
 
       {separator !== 'hide' && (
         <React.Fragment>
-          <Spacing
+          <div
             className={classNames(styles['Group__separator'], styles['Group__separator--spacing'])}
-            size={16}
           />
           <Separator
             className={classNames(
