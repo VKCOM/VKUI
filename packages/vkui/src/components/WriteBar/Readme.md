@@ -12,7 +12,7 @@ const WriteBarExample = (props) => {
   const [text4, setText4] = React.useState('Да.');
 
   const attachmentsCount = 5;
-  const fixedLayoutInnerElRef = React.useRef();
+  const fixedLayoutInnerElRef = React.useRef(null);
   const [bottomPadding, setBottomPadding] = React.useState(0);
   const [isAttachmentsShown, setIsAttachmentsShown] = React.useState(false);
   const [text, setText] = React.useState('');

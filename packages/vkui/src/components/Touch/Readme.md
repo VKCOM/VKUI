@@ -30,7 +30,7 @@ const Example = () => {
   const [limitX, setLimitX] = React.useState(0);
   const [limitY, setLimitY] = React.useState(0);
 
-  const circleRef = React.useRef();
+  const circleRef = React.useRef(null);
   const startX = React.useRef(0);
   const startY = React.useRef(0);
 

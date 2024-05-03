@@ -16,12 +16,12 @@ const [popout, setPopout] = useState(null);
 const onClose = () => setPopout(null);
 const [filter, setFilter] = useState('best');
 const onChange = (e) => setFilter(e.target.value);
-const baseTargetRef = React.useRef();
-const iconsTargetRef = React.useRef();
-const subtitleTargetRef = React.useRef();
-const selectableTargetRef = React.useRef();
-const titleTargetRef = React.useRef();
-const baseTopTargetRef = React.useRef();
+const baseTargetRef = React.useRef(null);
+const iconsTargetRef = React.useRef(null);
+const subtitleTargetRef = React.useRef(null);
+const selectableTargetRef = React.useRef(null);
+const titleTargetRef = React.useRef(null);
+const baseTopTargetRef = React.useRef(null);
 
 const openBase = () =>
   setPopout(

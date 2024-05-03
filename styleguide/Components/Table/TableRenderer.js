@@ -35,9 +35,9 @@ export const TableRenderer = ({ columns, rows, getRowKey }) => {
   const [hasLeft, setHasLeft] = useState(false);
   const [hasRight, setHasRight] = useState(false);
   const appearance = useAppearance();
-  const tableRef = useRef();
+  const tableRef = useRef(null);
   const tableWidth = useRef(0);
-  const tableInRef = useRef();
+  const tableInRef = useRef(null);
   const tableInWidth = useRef(0);
   const [expanded, toggleExpanded] = React.useState(false);
 
