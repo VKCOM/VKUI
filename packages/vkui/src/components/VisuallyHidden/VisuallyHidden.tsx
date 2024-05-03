@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './VisuallyHidden.module.css';

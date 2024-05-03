@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from './RichCellIcon.module.css';

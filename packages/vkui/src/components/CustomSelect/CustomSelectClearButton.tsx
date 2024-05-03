@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { stopPropagation } from '../../lib/utils';
 import { HasDataAttribute } from '../../types';

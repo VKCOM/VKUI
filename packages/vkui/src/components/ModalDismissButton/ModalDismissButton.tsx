@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';

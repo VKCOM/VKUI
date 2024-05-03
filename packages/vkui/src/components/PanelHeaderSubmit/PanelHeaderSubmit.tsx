@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon24DoneOutline, Icon28DoneOutline } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';

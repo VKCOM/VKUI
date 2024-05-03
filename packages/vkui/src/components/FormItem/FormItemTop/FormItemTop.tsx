@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { HasComponent, HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from '../FormItem.module.css';

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { ChipOption } from '../ChipsInputBase/types';
 import {
   CustomSelectOption,

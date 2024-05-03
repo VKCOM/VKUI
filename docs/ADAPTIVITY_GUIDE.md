@@ -27,7 +27,6 @@
 _Component.tsx_
 
 ```tsx
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import styles from './Component.module.css';
@@ -86,7 +85,6 @@ _Component.module.css_
 _Component.tsx_
 
 ```tsx
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { ViewWidth, viewWidthToClassName } from '../../../lib/adaptivity';

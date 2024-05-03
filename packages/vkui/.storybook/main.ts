@@ -1,4 +1,5 @@
 import { Configuration } from 'webpack';
+import type { Options } from '@swc/core';
 import path from 'path';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import WebpackCommonConfig from '../../../webpack.common.config';
@@ -44,6 +45,18 @@ const config: StorybookConfig = {
       },
     },
   },
+
+  swc: (config: Options): Options => ({
+    ...config,
+    jsc: {
+      ...config.jsc,
+      transform: {
+        react: {
+          runtime: 'automatic',
+        },
+      },
+    },
+  }),
 
   webpackFinal: async (config) => {
     const commonCssRules = getCssRulesFromConfig(WebpackCommonConfig) ?? [];
