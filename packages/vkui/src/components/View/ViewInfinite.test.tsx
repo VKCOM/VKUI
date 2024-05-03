@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { type ComponentType, Fragment, type ReactNode } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { getRandomUsers } from '../../testing/mock';

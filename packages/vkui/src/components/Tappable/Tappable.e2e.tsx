@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
 import { TappableFocusVisiblePlayground, TappablePlayground } from './Tappable.e2e-playground';

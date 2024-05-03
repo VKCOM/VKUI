@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
 import type { PartialStoryFn } from '@storybook/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';

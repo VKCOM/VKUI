@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { baselineComponent } from '../../testing/utils';
 import { SubnavigationButton } from './SubnavigationButton';
 

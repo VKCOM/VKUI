@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { AppRoot, type AppRootProps } from '../../components/AppRoot/AppRoot';
 
 export type AppWrapperProps = AppRootProps;

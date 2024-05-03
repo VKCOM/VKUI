@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon12Add } from '@vkontakte/icons';
 import { VisuallyHidden } from '../vkui';
 import { hasAccessibleName, injectAriaExpandedPropByRole } from './accessibility';

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
 import { TextareaPlayground, TextareaStatePlayground } from './Textarea.e2e-playground';

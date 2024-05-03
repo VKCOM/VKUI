@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { type EventType, render } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {

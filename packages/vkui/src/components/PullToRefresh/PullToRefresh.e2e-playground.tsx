@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Div } from '../Div/Div';
 import { PullToRefresh, type PullToRefreshProps } from './PullToRefresh';

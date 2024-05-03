@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon20ArticleOutline, Icon20PlaceOutline, Icon20WorkOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
