@@ -79,19 +79,13 @@ export const Playground: Story = {
       const cellImageSize = getNotTooBigHeightBySize(args);
       return (
         <Group>
-          <HorizontalScroll>
-            <div style={{ display: 'flex' }}>
-              {CELL_ITEMS.map((element) => (
-                <HorizontalCell key={element.id} size={args.size} header={element.title}>
-                  <Avatar
-                    size={cellImageSize}
-                    src={element.icon}
-                    alt={`avatar: ${element.title}`}
-                  />
-                </HorizontalCell>
-              ))}
-              <Component {...args} />
-            </div>
+          <HorizontalScroll inline>
+            {CELL_ITEMS.map((element) => (
+              <HorizontalCell key={element.id} size={args.size} header={element.title}>
+                <Avatar size={cellImageSize} src={element.icon} alt={`avatar: ${element.title}`} />
+              </HorizontalCell>
+            ))}
+            <Component {...args} />
           </HorizontalScroll>
         </Group>
       );
