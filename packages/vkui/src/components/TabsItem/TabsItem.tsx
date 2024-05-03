@@ -82,6 +82,13 @@ export const TabsItem = ({
   role = 'tab',
   tabIndex: tabIndexProp,
   getRootRef,
+  hoverMode,
+  activeMode,
+  hovered,
+  activated,
+  hasHover,
+  hasActive,
+  focusVisibleMode,
   ...restProps
 }: TabsItemProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -173,6 +180,7 @@ export const TabsItem = ({
 
   return (
     <Tappable
+      {...restProps}
       getRootRef={rootRef}
       className={classNames(
         styles['TabsItem'],
@@ -183,14 +191,16 @@ export const TabsItem = ({
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
         className,
       )}
-      hoverMode={styles['TabsItem--hover']}
-      activeMode=""
-      focusVisibleMode="inside"
-      hasActive={false}
+      hoverMode={hoverMode ?? styles['TabsItem--hover']}
+      activeMode={activeMode ?? ''}
+      hasHover={hasHover}
+      hasActive={hasActive ?? false}
+      hovered={hovered}
+      activated={activated}
+      focusVisibleMode={focusVisibleMode ?? 'inside'}
       role={role}
       aria-selected={selected}
       tabIndex={tabIndex}
-      {...restProps}
     >
       {before && <div className={styles['TabsItem__before']}>{before}</div>}
       <Headline
