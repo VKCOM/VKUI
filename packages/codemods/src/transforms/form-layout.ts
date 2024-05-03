@@ -12,6 +12,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'FormLayout', alias);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   const components = source
     .find(j.JSXOpeningElement)
     .filter(

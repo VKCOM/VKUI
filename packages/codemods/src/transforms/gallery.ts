@@ -10,7 +10,9 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'Gallery', alias);
 
-  swapBooleanValue(api, source, localName, 'isDraggable', 'dragDisabled');
+  if (localName) {
+    swapBooleanValue(api, source, localName, 'isDraggable', 'dragDisabled');
+  }
 
   return source.toSource();
 }

@@ -10,6 +10,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'Banner', alias);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   const bannerComponent = source
     .find(j.JSXOpeningElement)
     .filter(

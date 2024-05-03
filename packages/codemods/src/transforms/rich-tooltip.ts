@@ -12,6 +12,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'RichTooltip', alias);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   const richTooltipComponents = source
     .find(j.JSXOpeningElement)
     .filter(

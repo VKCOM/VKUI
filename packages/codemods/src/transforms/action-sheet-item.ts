@@ -10,7 +10,9 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'ActionSheetItem', alias);
 
-  swapBooleanValue(api, source, localName, 'autoClose', 'autoCloseDisabled');
+  if (localName) {
+    swapBooleanValue(api, source, localName, 'autoClose', 'autoCloseDisabled');
+  }
 
   return source.toSource();
 }

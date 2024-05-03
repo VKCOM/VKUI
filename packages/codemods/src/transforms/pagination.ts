@@ -17,6 +17,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'Pagination', alias);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   renameProp(j, source, localName, RENAME_MAP);
 
   source

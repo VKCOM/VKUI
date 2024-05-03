@@ -10,7 +10,9 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'CardScroll', alias);
 
-  swapBooleanValue(api, source, localName, 'withSpaces', 'noSpaces');
+  if (localName) {
+    swapBooleanValue(api, source, localName, 'withSpaces', 'noSpaces');
+  }
 
   return source.toSource();
 }

@@ -14,12 +14,19 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { localName: localNameModalCard } = getImportInfo(j, file, 'ModalCard', alias);
   const { localName: localNameModalCardBase } = getImportInfo(j, file, 'ModalCardBase', alias);
 
+  const localNamesForChange: string[] = [];
+  if (localNameModalCard) {
+    localNamesForChange.push(localNameModalCard);
+  }
+  if (localNameModalCardBase) {
+    localNamesForChange.push(localNameModalCardBase);
+  }
   const modalCards = source
     .find(j.JSXOpeningElement)
     .filter(
       (path) =>
         path.value.name.type === 'JSXIdentifier' &&
-        [localNameModalCard, localNameModalCardBase].includes(path.value.name.name),
+        localNamesForChange.includes(path.value.name.name),
     );
 
   modalCards.forEach((path) => {

@@ -18,6 +18,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   let changed = false;
   const { localName } = getImportInfo(j, file, 'ConfigProvider', alias);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   const attributes = source
     .find(j.JSXOpeningElement)
     .filter(

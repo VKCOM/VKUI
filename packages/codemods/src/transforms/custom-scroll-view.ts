@@ -10,6 +10,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'CustomScrollView', alias);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   const unusedProps = source
     .find(j.JSXOpeningElement)
     .filter(

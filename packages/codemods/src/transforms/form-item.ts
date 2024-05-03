@@ -8,8 +8,11 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { alias } = options;
   const j = api.jscodeshift;
   const source = j(file.source);
-
   const { localName } = getImportInfo(j, file, 'FormItem', alias);
+
+  if (!localName) {
+    return source.toSource();
+  }
 
   source
     .find(j.JSXOpeningElement)

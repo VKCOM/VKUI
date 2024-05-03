@@ -1,4 +1,4 @@
-import { ActionSheet, ActionSheetItem } from '@vkontakte/vkui';
+import { Alert } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 

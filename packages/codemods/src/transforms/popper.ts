@@ -62,6 +62,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { localName } = getImportInfo(j, file, componentName, alias);
   const attributeReplacer = createAttributeManipulator(ATTRIBUTE_MANIPULATOR, api);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   source
     .find(j.ImportDeclaration)
     .filter((path) => path.node.source.value === alias)

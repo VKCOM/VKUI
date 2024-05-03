@@ -15,6 +15,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     .filter((path) => path.node.source.value === alias)
     .find(j.ImportSpecifier, { imported: { name: 'RangeSlider' } });
 
+  if (componentImport.length === 0) {
+    return source.toSource();
+  }
+
   const sliderImport = source
     .find(j.ImportDeclaration)
     .filter((path) => path.node.source.value === alias)

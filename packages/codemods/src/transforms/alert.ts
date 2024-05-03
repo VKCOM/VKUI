@@ -29,6 +29,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeshi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'Alert', alias);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   source
     .find(j.JSXOpeningElement)
     .filter(

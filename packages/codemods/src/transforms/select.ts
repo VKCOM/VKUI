@@ -12,9 +12,15 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { localName: customSelectLocalName } = getImportInfo(j, file, 'CustomSelect', alias);
   const { localName: chipsSelectLocalName } = getImportInfo(j, file, 'ChipsSelect', alias);
 
-  swapBooleanValue(api, source, selectLocalName, 'fixDropdownWidth', 'dropdownAutoWidth');
-  swapBooleanValue(api, source, customSelectLocalName, 'fixDropdownWidth', 'dropdownAutoWidth');
-  swapBooleanValue(api, source, chipsSelectLocalName, 'fixDropdownWidth', 'dropdownAutoWidth');
+  if (selectLocalName) {
+    swapBooleanValue(api, source, selectLocalName, 'fixDropdownWidth', 'dropdownAutoWidth');
+  }
+  if (customSelectLocalName) {
+    swapBooleanValue(api, source, customSelectLocalName, 'fixDropdownWidth', 'dropdownAutoWidth');
+  }
+  if (chipsSelectLocalName) {
+    swapBooleanValue(api, source, chipsSelectLocalName, 'fixDropdownWidth', 'dropdownAutoWidth');
+  }
 
   return source.toSource();
 }

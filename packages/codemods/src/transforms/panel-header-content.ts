@@ -12,6 +12,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'PanelHeader', alias);
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   const elements = source.find(j.JSXOpeningElement).filter((path) => {
     if (path.value.name.type === 'JSXMemberExpression') {
       const property = path.value.name;

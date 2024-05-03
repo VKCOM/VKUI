@@ -67,6 +67,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const attributeReplacer = createAttributeManipulator(ATTRIBUTE_REPLACER, api);
   let needRename = true;
 
+  if (!localName) {
+    return source.toSource();
+  }
+
   swapBooleanValue(api, source, localName, 'arrow', 'disableArrow');
 
   // подменяем импорт
