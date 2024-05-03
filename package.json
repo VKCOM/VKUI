@@ -118,7 +118,6 @@
     "playwright:install": "playwright install --with-deps",
     "playwright:cmd:merge-reports": "playwright merge-reports",
     "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install",
-    "size:ci": "yarn workspace @vkontakte/vkui run size:ci",
     "g:npm:version": "cd $INIT_CWD && npm version --no-workspaces-update --no-commit-hooks --no-git-tag-version"
   },
   "lint-staged": {
