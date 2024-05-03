@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { act } from 'react-dom/test-utils';
+import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
