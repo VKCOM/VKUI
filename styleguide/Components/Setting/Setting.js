@@ -17,7 +17,7 @@ export const Setting = ({
   className,
 }) => {
   const { setPopout } = useContext(StyleGuideContext);
-  const ref = useRef();
+  const ref = useRef(null);
 
   useEffect(
     () => () => {
