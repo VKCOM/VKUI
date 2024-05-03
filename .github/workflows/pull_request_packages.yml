@@ -161,7 +161,7 @@ jobs:
       - name: Install dependencies
         run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
 
-      - uses: andresz1/size-limit-action@v1.7.0
+      - uses: andresz1/size-limit-action@v1.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # only affects current branch
