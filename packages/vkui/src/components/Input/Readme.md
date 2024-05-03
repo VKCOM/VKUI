@@ -55,7 +55,7 @@ const ExampleBase = ({ formItemStatus }) => {
 };
 
 const ExampleWithIcon = ({ formItemStatus }) => {
-  const textInput = React.useRef();
+  const textInput = React.useRef(null);
   const clear = () => {
     if (textInput.current) {
       textInput.current.value = '';

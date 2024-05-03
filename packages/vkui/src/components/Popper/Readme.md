@@ -3,7 +3,7 @@
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const [shown, setShown] = React.useState(false);
-const buttonRef = React.useRef();
+const buttonRef = React.useRef(null);
 
 return (
   <React.Fragment>
