@@ -7,6 +7,7 @@ import {
   Playground as CaptionStory,
   WithCaps as CaptionWithCapsStory,
 } from './Caption/Caption.stories';
+import { Playground as EllipsisTextStory } from './EllipsisText/EllipsisText.stories';
 import {
   Playground as FootnoteStory,
   WithCaps as FootnoteWithCapsStory,
@@ -57,6 +58,10 @@ export const Playground: Story = {
         <TypographyWrapper>
           {/* @ts-expect-error: TS2554 см. TitleStory  */}
           {TextStory.render!({ ...TextStory.args, ...args })}
+        </TypographyWrapper>
+        <TypographyWrapper>
+          {/* @ts-expect-error: TS2554 см. TitleStory  */}
+          {EllipsisTextStory.render!({ ...EllipsisTextStory.args, ...args })}
         </TypographyWrapper>
         <TypographyWrapper>
           {/* @ts-expect-error: TS2554 см. TitleStory  */}

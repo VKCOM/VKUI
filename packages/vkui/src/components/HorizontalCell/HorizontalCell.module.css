@@ -8,6 +8,7 @@
 }
 
 .HorizontalCell__body {
+  max-inline-size: inherit;
   text-decoration: none;
   font-family: inherit;
 }
@@ -18,6 +19,7 @@
 }
 
 .HorizontalCell__content {
+  max-inline-size: inherit;
   color: var(--vkui--color_text_primary);
   word-break: break-word;
   text-overflow: ellipsis;

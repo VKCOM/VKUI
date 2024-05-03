@@ -304,6 +304,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Typography/Subhead/Subhead.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Typography/Footnote/Footnote.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Typography/Caption/Caption.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Typography/EllipsisText/EllipsisText.tsx`,
           ],
         },
         {
