@@ -82,13 +82,13 @@ export const TabsItem = ({
   role = 'tab',
   tabIndex: tabIndexProp,
   getRootRef,
-  hoverMode,
-  activeMode,
+  hoverMode = styles['TabsItem--hover'],
+  activeMode = '',
   hovered,
   activated,
   hasHover,
-  hasActive,
-  focusVisibleMode,
+  hasActive = false,
+  focusVisibleMode = 'inside',
   ...restProps
 }: TabsItemProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -191,13 +191,13 @@ export const TabsItem = ({
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
         className,
       )}
-      hoverMode={hoverMode ?? styles['TabsItem--hover']}
-      activeMode={activeMode ?? ''}
+      hoverMode={hoverMode}
+      activeMode={activeMode}
       hasHover={hasHover}
-      hasActive={hasActive ?? false}
+      hasActive={hasActive}
       hovered={hovered}
       activated={activated}
-      focusVisibleMode={focusVisibleMode ?? 'inside'}
+      focusVisibleMode={focusVisibleMode}
       role={role}
       aria-selected={selected}
       tabIndex={tabIndex}
