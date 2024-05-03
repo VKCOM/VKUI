@@ -112,6 +112,13 @@ export const Snackbar = ({
     },
   );
 
+  const clearRAF = React.useCallback(() => {
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  }, []);
+
   const updateShiftAxisCSSProperties = React.useCallback(
     (x: number | null, y: number | null) => {
       rafRef.current = requestAnimationFrame(() => {
@@ -158,7 +165,10 @@ export const Snackbar = ({
         shiftDataRef.current,
         panGestureRecognizer.current.delta(),
       );
-      updateShiftAxisCSSProperties(shiftDataRef.current.x, shiftDataRef.current.y);
+
+      if (shiftDataRef.current.shifted) {
+        updateShiftAxisCSSProperties(shiftDataRef.current.x, shiftDataRef.current.y);
+      }
     }
   };
 
@@ -194,28 +204,21 @@ export const Snackbar = ({
   );
 
   useIsomorphicLayoutEffect(
-    function clearUpdateShiftAxisCSSPropertiesIfShifted() {
-      if (shiftDataRef.current && shiftDataRef.current.shifted && !touched) {
+    function clearUserInteractionDataAfterTouchEnd() {
+      if (!touched) {
+        clearRAF();
+        shiftDataRef.current = null;
+        panGestureRecognizer.current = null;
+
         if (open) {
           updateShiftAxisCSSProperties(null, null);
         }
-        rafRef.current = null;
-        shiftDataRef.current = null;
-        panGestureRecognizer.current = null;
       }
     },
-    [open, touched, animationState, updateShiftAxisCSSProperties],
+    [touched, open, updateShiftAxisCSSProperties, clearRAF],
   );
 
-  React.useEffect(
-    () =>
-      function handleUnmount() {
-        if (rafRef.current !== null) {
-          cancelAnimationFrame(rafRef.current);
-        }
-      },
-    [],
-  );
+  React.useEffect(() => clearRAF, [clearRAF]);
 
   useGlobalEscKeyDown(open, close);
 
