@@ -129,6 +129,17 @@ export const getBoundingClientRect = (node: Element | Window, isFixedStrategy = 
   }) as DOMRect;
 };
 
+export const getRelativeBoundingClientRect = (parent: Element, child: Element) => {
+  const parentRect = getBoundingClientRect(parent);
+  const childRect = getBoundingClientRect(child);
+  return rectToClientRect({
+    x: childRect.left - parentRect.left,
+    y: childRect.top - parentRect.top,
+    width: childRect.width,
+    height: childRect.height,
+  }) as DOMRect;
+};
+
 /**
  * Адаптер над getNearestOverflowAncestor из @floating-ui/utils/dom.
  *
@@ -169,4 +180,38 @@ export const getActiveElementByAnotherElement = (el: Element | null) =>
 
 export const contains = (parent?: Element | null, child?: Element | null) => {
   return parent && child ? parent.contains(child) : false;
+};
+
+export const getFirstTouchEventData = (event: UIEvent | React.UIEvent<HTMLElement>) => {
+  let dataRaw = (function resolveData() {
+    switch (event.type) {
+      case 'touchend':
+        return (event as TouchEvent).changedTouches[0];
+      case 'touchstart':
+      case 'touchmove':
+      case 'touchcancel':
+        return (event as TouchEvent).touches[0];
+      case 'mousedown':
+      case 'mousemove':
+      case 'mouseup':
+      case 'mouseleave':
+        return event as MouseEvent;
+      default:
+        return { screenX: 0, screenY: 0, clientX: 0, clientY: 0, pageX: 0, pageY: 0 };
+    }
+  })();
+  /* istanbul ignore if */
+  if (process.env.NODE_ENV === 'test') {
+    dataRaw = dataRaw
+      ? dataRaw
+      : { screenX: 0, screenY: 0, clientX: 0, clientY: 0, pageX: 0, pageY: 0 };
+  }
+  return {
+    screenX: dataRaw.screenX || 0,
+    screenY: dataRaw.screenY || 0,
+    clientX: dataRaw.clientX || 0,
+    clientY: dataRaw.clientY || 0,
+    pageX: dataRaw.pageX || 0,
+    pageY: dataRaw.pageY || 0,
+  };
 };

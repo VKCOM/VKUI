@@ -10,6 +10,7 @@ import { TEST_CLASS_NAMES } from './constants';
 import { getAdaptivePxWidth, multiCartesian, prettyProps } from './utils';
 
 export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'div'>> {
+  isFixedComponent?: boolean;
   platform: PlatformType;
   appearance: AppearanceType;
   adaptivityProviderProps?: Partial<AdaptivityProps>;
@@ -29,6 +30,7 @@ export type ComponentPlaygroundProps = Pick<
 export const ComponentPlayground = <
   Props extends React.ComponentProps<any> = React.ComponentProps<'div'>,
 >({
+  isFixedComponent = false,
   appearance,
   platform,
   adaptivityProviderProps: adaptivityProviderPropsProp,
@@ -53,12 +55,17 @@ export const ComponentPlayground = <
     <ConfigProvider appearance={appearance} platform={platform}>
       <AdaptivityProvider {...adaptivityProviderProps}>
         <AppWrapper
-          style={{
-            width: wrapperWidth,
-            maxWidth: BREAKPOINTS.DESKTOP,
-            position: 'absolute',
-            height: 'auto',
-          }}
+          mode={isFixedComponent ? 'full' : undefined}
+          style={
+            isFixedComponent
+              ? undefined
+              : {
+                  position: 'absolute',
+                  width: wrapperWidth,
+                  height: 'auto',
+                  maxWidth: BREAKPOINTS.DESKTOP,
+                }
+          }
           {...restProps}
         >
           {multiCartesian(propSets, { adaptive: !isVKCOM }).map((props, i) => {
@@ -74,7 +81,9 @@ export const ComponentPlayground = <
 
             return (
               <React.Fragment key={i}>
-                <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(props)}</div>
+                {isFixedComponent ? null : (
+                  <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(props)}</div>
+                )}
                 <div>
                   <AdaptivityProvider {...clonedAdaptivityProviderProps}>
                     {children(props)}

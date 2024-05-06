@@ -18,7 +18,7 @@ const Slider = ({
   ...restProps
 }: SliderProps | SliderMultipleProps) => {
   const getRootRef: SliderProps['getRootRef'] = (el) => {
-    mockRect(el, { w: 100 });
+    mockRect(el, { width: 100 });
     getRootRefProp && setRef(el, getRootRefProp);
   };
   return <SliderBase data-testid="root" getRootRef={getRootRef} {...restProps} />;

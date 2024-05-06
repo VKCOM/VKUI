@@ -8,6 +8,7 @@ import { Subhead } from '../../../Typography/Subhead/Subhead';
 import styles from './Basic.module.css';
 
 const stylesLayout = {
+  none: styles['Snackbar--layout-none'],
   vertical: styles['Snackbar--layout-vertical'],
   horizontal: styles['Snackbar--layout-horizontal'],
 };
@@ -69,17 +70,17 @@ export function Basic({
   ...restProps
 }: SnackbarBasicProps) {
   const { sizeY = 'none' } = useAdaptivity();
-  const layout = layoutProps || (after || subtitle ? 'vertical' : 'horizontal');
+  const layout = after || subtitle ? 'vertical' : 'none';
 
   return (
     <RootComponent
+      {...restProps}
       baseClassName={classNames(
         styles['Snackbar__body'],
-        stylesLayout[layout],
+        stylesLayout[layoutProps || layout],
         sizeY !== 'compact' && sizeYClassNames[sizeY],
         mode === 'dark' && styles['Snackbar--mode-dark'],
       )}
-      {...restProps}
     >
       {before && <div className={styles['Snackbar__before']}>{before}</div>}
 

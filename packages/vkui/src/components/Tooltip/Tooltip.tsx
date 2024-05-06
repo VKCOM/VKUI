@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { getWindow } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
-import { Keys, pressedKey } from '../../lib/accessibility';
-import { animationFadeClassNames } from '../../lib/cssAnimation';
+import { animationFadeClassNames } from '../../lib/animation';
 import {
   type FloatingComponentProps,
   getArrowCoordsByMiddlewareData,
@@ -12,7 +11,6 @@ import {
   useFloatingWithInteractions,
   usePlacementChangeCallback,
 } from '../../lib/floating';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -178,26 +176,9 @@ export const Tooltip = ({
       </AppRootPortal>
     );
   }
-  const [childRef, child] = usePatchChildren(children, referenceProps, refs.setReference);
+  const [, child] = usePatchChildren(children, referenceProps, refs.setReference);
 
-  useIsomorphicLayoutEffect(
-    function handleGlobalKeyDownIfTooltipShown() {
-      if (!onEscapeKeyDown || !shown) {
-        return;
-      }
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (pressedKey(event) === Keys.ESCAPE) {
-          onEscapeKeyDown();
-        }
-      };
-      const doc = getWindow(childRef.current).document;
-      doc.addEventListener('keydown', handleKeyDown, { passive: true, capture: true });
-      return () => {
-        doc.removeEventListener('keydown', handleKeyDown, { capture: true });
-      };
-    },
-    [shown, childRef, onEscapeKeyDown],
-  );
+  useGlobalEscKeyDown(shown, onEscapeKeyDown);
 
   return (
     <React.Fragment>

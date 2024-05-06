@@ -35,15 +35,29 @@ export default story;
 type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean }>;
 
 export const Playground: Story = {
-  render: ({ after, ...args }) => {
+  render: function Render({ after, onClose, ...args }) {
+    const [open, setOpen] = React.useState(true);
     const After = after ? <Avatar size={32} src={getAvatarUrl()} /> : undefined;
 
-    return <Snackbar after={After} {...args} />;
+    const handleClose = () => {
+      setOpen(false);
+      onClose?.();
+    };
+
+    return (
+      <>
+        <button onClick={() => setOpen(true)}>Открыть</button>
+        {open ? <Snackbar after={After} onClose={handleClose} {...args} /> : null}
+      </>
+    );
   },
   args: {
+    before: 'Icon24',
     action: 'Поделиться',
     children: 'Этот сервис рекомендует один друг',
-    before: 'Icon24',
+  },
+  argTypes: {
+    action: { control: 'text' },
   },
 };
 
