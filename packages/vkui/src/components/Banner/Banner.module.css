@@ -57,12 +57,13 @@
   z-index: var(--vkui_internal--z_index_banner_background);
 }
 
-/* stylelint-disable-next-line selector-max-universal */
+/* stylelint-disable selector-max-universal */
 .Banner__bg,
 .Banner__bg > * {
   inline-size: 100%;
   block-size: 100%;
 }
+/* stylelint-enable selector-max-universal */
 
 .Banner__aside {
   display: flex;
