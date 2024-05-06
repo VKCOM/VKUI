@@ -14,8 +14,6 @@
 @media (prefers-reduced-motion: no-preference) {
   .Button {
     transition: background-color 0.15s ease-out, color 0.15s ease-out;
-    /* Fix for Safari: css animation + border-radius + overflow ignores parent border-radius */
-    will-change: transform;
   }
 }
 
