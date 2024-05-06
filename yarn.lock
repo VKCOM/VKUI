@@ -3930,6 +3930,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@testing-library/jest-dom@npm:^6.4.5":
+  version: 6.4.5
+  resolution: "@testing-library/jest-dom@npm:6.4.5"
+  dependencies:
+    "@adobe/css-tools": ^4.3.2
+    "@babel/runtime": ^7.9.2
+    aria-query: ^5.0.0
+    chalk: ^3.0.0
+    css.escape: ^1.5.1
+    dom-accessibility-api: ^0.6.3
+    lodash: ^4.17.21
+    redent: ^3.0.0
+  peerDependencies:
+    "@jest/globals": ">= 28"
+    "@types/bun": "*"
+    "@types/jest": ">= 28"
+    jest: ">= 28"
+    vitest: ">= 0.32"
+  peerDependenciesMeta:
+    "@jest/globals":
+      optional: true
+    "@types/bun":
+      optional: true
+    "@types/jest":
+      optional: true
+    jest:
+      optional: true
+    vitest:
+      optional: true
+  checksum: 95bd94f1f4ba2110eaaa15174207f74d46481f0f168a4d58c30f92a9285f797f9949c166aa8401bcb46e16edbf14a097013204d65801e9d1361892757e525bd6
+  languageName: node
+  linkType: hard
+
 "@testing-library/react@npm:^14.3.1":
   version: 14.3.1
   resolution: "@testing-library/react@npm:14.3.1"
@@ -5094,7 +5127,7 @@ __metadata:
     "@swc/cli": ^0.3.12
     "@swc/core": 1.4.17
     "@swc/jest": ^0.2.36
-    "@testing-library/jest-dom": ^6.4.2
+    "@testing-library/jest-dom": ^6.4.5
     "@testing-library/react": ^14.3.1
     "@testing-library/user-event": ^14.5.2
     "@types/jest": ^29.5.12
