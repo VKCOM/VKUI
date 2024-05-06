@@ -11,6 +11,12 @@
   min-inline-size: var(--vkui--size_button_minimum_width--regular);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .Button {
+    transition: background-color 0.15s ease-out, color 0.15s ease-out;
+  }
+}
+
 .Button--rounded {
   border-radius: var(--vkui--size_border_radius_rounded--regular);
 }
