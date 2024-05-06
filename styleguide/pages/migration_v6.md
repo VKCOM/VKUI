@@ -211,6 +211,8 @@ npx @vkontakte/vkui-codemods --help
 +  <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
 -  <ActionSheetItem autoClose={false}>Закрепить запись</ActionSheetItem>
 +  <ActionSheetItem autoCloseDisabled>Закрепить запись</ActionSheetItem>
+-  <ActionSheetItem>Закрепить запись</ActionSheetItem>
++  <ActionSheetItem autoCloseDisabled>Закрепить запись</ActionSheetItem>
  </ActionSheet>
 ```
 
