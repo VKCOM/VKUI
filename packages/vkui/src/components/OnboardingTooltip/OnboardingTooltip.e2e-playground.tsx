@@ -14,6 +14,7 @@ export const OnboardingTooltipPlayground = (props: ComponentPlaygroundProps) => 
       propSets={[
         {
           header: [undefined, 'header'],
+          closeBy: [undefined, 'click-close-button'],
         },
         {
           placement: ['top-start', 'top-end', 'bottom-start', 'bottom-end'],

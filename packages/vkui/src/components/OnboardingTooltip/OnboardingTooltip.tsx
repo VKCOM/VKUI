@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { hasReactNode } from '@vkontakte/vkjs';
+import { hasReactNode, noop } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { createPortal } from '../../lib/createPortal';
@@ -35,7 +35,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'onPlacementChange'
 >;
 
-type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
+type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps' | 'onCloseIconClick'>;
 
 type AllowedFloatingArrowProps = {
   /**
@@ -57,7 +57,12 @@ export interface OnboardingTooltipProps
    */
   disableArrow?: boolean;
   /**
-   * Callback, который вызывается при клике по любому месту в пределах экрана.
+   * Определяет каким образом будет закрывать тултип.
+   */
+  closeBy?: 'click-overlay' | 'click-close-button';
+  /**
+   * Обработчик, который вызывается при клике на фон (при `closeBy = 'click-overlay'`)
+   * или на кнопку закрытия (при `closeBy = 'click-close-button'`).
    */
   onClose?: (this: void) => void;
 }
@@ -75,7 +80,8 @@ export const OnboardingTooltip = ({
   offsetByCrossAxis = 0,
   arrowOffset = 0,
   isStaticArrowOffset = false,
-  onClose,
+  closeBy = 'click-overlay',
+  onClose = noop,
   placement: placementProp = 'bottom-start',
   maxWidth = TOOLTIP_MAX_WIDTH,
   style: styleProp,
@@ -135,6 +141,9 @@ export const OnboardingTooltip = ({
 
     tooltip = createPortal(
       <>
+        {closeBy === 'click-close-button' && (
+          <div className={styles['OnboardingTooltip__overlay']} />
+        )}
         <TooltipBase
           {...restProps}
           id={tooltipId}
@@ -152,8 +161,11 @@ export const OnboardingTooltip = ({
                   getRootRef: setArrowRef,
                 }
           }
+          onCloseIconClick={closeBy === 'click-close-button' ? onClose : undefined}
         />
-        <div className={styles['OnboardingTooltip__overlay']} onClickCapture={onClose} />
+        {closeBy === 'click-overlay' && (
+          <div className={styles['OnboardingTooltip__overlay']} onClickCapture={onClose} />
+        )}
       </>,
       tooltipContainer,
     );

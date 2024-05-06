@@ -46,7 +46,7 @@ export const Playground: Story = {
 };
 
 export const ShowCase: Story = {
-  render: function Render() {
+  render: function Render({ closeBy }) {
     const [tooltip, setTooltip] = React.useState(true);
     const [tooltip2, setTooltip2] = React.useState(true);
     const [tooltip3, setTooltip3] = React.useState(false);
@@ -70,6 +70,7 @@ export const ShowCase: Story = {
             <OnboardingTooltip
               text="У нас тут brand new функционал подвезли. Зацените!"
               shown={tooltip}
+              closeBy={closeBy}
               onClose={() => setTooltip(false)}
               offsetByMainAxis={10}
             >
@@ -83,6 +84,7 @@ export const ShowCase: Story = {
             before={
               <OnboardingTooltip
                 shown={tooltip2}
+                closeBy={closeBy}
                 onClose={() => {
                   setTooltip2(false);
                   setTooltip3(true);
@@ -103,6 +105,7 @@ export const ShowCase: Story = {
                   <OnboardingTooltip
                     text="Теперь у нас появились аватарки в списках. Правда круто?"
                     shown={tooltip3}
+                    closeBy={closeBy}
                     onClose={() => setTooltip3(false)}
                     arrowOffset={-6}
                   >

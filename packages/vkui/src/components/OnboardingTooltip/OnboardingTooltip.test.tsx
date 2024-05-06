@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Fragment, HtmlHTMLAttributes, ReactElement } from 'react';
 import { render, screen } from '@testing-library/react';
-import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
+import { baselineComponent, fireEventPatch, waitForFloatingPosition } from '../../testing/utils';
 import { HasRootRef } from '../../types';
 import { OnboardingTooltip, OnboardingTooltipProps } from './OnboardingTooltip';
 import { OnboardingTooltipContainer } from './OnboardingTooltipContainer';
+import styles from './OnboardingTooltip.module.css';
 
 const renderTooltip = async (jsx: ReactElement) => {
   render(<OnboardingTooltipContainer>{jsx}</OnboardingTooltipContainer>);
@@ -125,4 +126,36 @@ describe(OnboardingTooltip, () => {
 
     expect(onPlacementChange).toHaveBeenCalledWith('top');
   });
+
+  it.each([{ closeBy: 'click-overlay' as const }, { closeBy: 'click-close-button' as const }])(
+    'should call onClose when `closeBy="$closeBy"`',
+    async ({ closeBy }) => {
+      const onClose = jest.fn();
+
+      const result = render(
+        <OnboardingTooltipContainer>
+          <OnboardingTooltip shown text="text" closeBy={closeBy} onClose={onClose}>
+            <div>target</div>
+          </OnboardingTooltip>
+        </OnboardingTooltipContainer>,
+      );
+      await waitForFloatingPosition();
+      expect(onClose).not.toHaveBeenCalled();
+
+      const overlayEl = result.container.getElementsByClassName(
+        styles['OnboardingTooltip__overlay'],
+      )[0];
+      await fireEventPatch(overlayEl, 'click');
+      if (closeBy === 'click-overlay') {
+        expect(onClose).toHaveBeenCalled();
+      } else {
+        expect(onClose).not.toHaveBeenCalled();
+      }
+
+      if (closeBy === 'click-close-button') {
+        await fireEventPatch(result.getByRole('button'), 'click');
+        expect(onClose).toHaveBeenCalled();
+      }
+    },
+  );
 });

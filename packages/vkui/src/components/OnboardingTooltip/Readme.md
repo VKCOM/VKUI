@@ -266,6 +266,110 @@ const Example = () => {
 </OnboardingTooltipContainer>
 ```
 
+## Закрытие на крестик, вместо фона
+
+Используйте `closeBy="click-close-button"`
+
+```jsx
+const Example = () => {
+  const [tooltip, setTooltip] = React.useState(true);
+  const [tooltip2, setTooltip2] = React.useState(true);
+  const [tooltip3, setTooltip3] = React.useState(false);
+  const [activePanel, setActivePanel] = React.useState('tooltip');
+
+  return (
+    <View activePanel={activePanel}>
+      <Panel id="tooltip">
+        <PanelHeader>OnboardingTooltip</PanelHeader>
+        <Group>
+          <List>
+            <SimpleCell>Музыка</SimpleCell>
+            <SimpleCell>Видео</SimpleCell>
+            <SimpleCell>Игры</SimpleCell>
+            <SimpleCell>Закладки</SimpleCell>
+            <SimpleCell>Документы</SimpleCell>
+            <SimpleCell>Денежные переводы</SimpleCell>
+          </List>
+        </Group>
+        <Group>
+          <OnboardingTooltip
+            text="У нас тут brand new функционал подвезли. Зацените!"
+            shown={tooltip}
+            closeBy="click-close-button"
+            onClose={() => setTooltip(false)}
+            offsetByMainAxis={8}
+            offsetByCrossAxis={10}
+          >
+            <SimpleCell onClick={() => setActivePanel('tooltip2')}>VK Pay</SimpleCell>
+          </OnboardingTooltip>
+        </Group>
+      </Panel>
+
+      <Panel id="tooltip2">
+        <PanelHeader
+          before={
+            <OnboardingTooltip
+              shown={tooltip2}
+              closeBy="click-close-button"
+              onClose={() => {
+                setTooltip2(false);
+                setTooltip3(true);
+              }}
+              text="Нажмите на кнопку, если хотите вернуться"
+              header="Назад"
+            >
+              <PanelHeaderBack onClick={() => setActivePanel('tooltip')} />
+            </OnboardingTooltip>
+          }
+        >
+          OnboardingTooltip
+        </PanelHeader>
+        <Group>
+          <List>
+            <SimpleCell
+              before={
+                <OnboardingTooltip
+                  text="Теперь у нас появились аватарки в списках. Правда круто?"
+                  shown={tooltip3}
+                  closeBy="click-close-button"
+                  onClose={() => setTooltip3(false)}
+                  arrowOffset={-6}
+                >
+                  <Avatar />
+                </OnboardingTooltip>
+              }
+              subtitle="Веб-сайт"
+            >
+              Команда ВКонтакте
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} subtitle="Музыкант">
+              Robbie Williams
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} subtitle="Издательский дом">
+              ПостНаука
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} subtitle="Издательский дом">
+              ПостНаука
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} subtitle="Издательский дом">
+              ПостНаука
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} subtitle="Издательский дом">
+              ПостНаука
+            </SimpleCell>
+            <SimpleCell before={<Avatar />} subtitle="Издательский дом">
+              ПостНаука
+            </SimpleCell>
+          </List>
+        </Group>
+      </Panel>
+    </View>
+  );
+};
+
+<Example />;
+```
+
 ## Кастомная стрелка – `ArrowIcon`
 
 > ⚠️ Для начала, следует ознакомиться с описанием параметра `ArrowIcon`.

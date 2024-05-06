@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
@@ -13,7 +13,6 @@ import {
 } from '../../lib/floating';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
-import { Subhead } from '../Typography/Subhead/Subhead';
 
 type AllowedFloatingComponentProps = Pick<
   FloatingComponentProps,
@@ -32,7 +31,10 @@ type AllowedFloatingComponentProps = Pick<
   | 'onPlacementChange'
 >;
 
-type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
+type AllowedTooltipBaseProps = Omit<
+  TooltipBaseProps,
+  'arrowProps' | 'closeIconLabel' | 'onCloseIconClick'
+>;
 
 export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTooltipBaseProps {
   /**
@@ -88,8 +90,6 @@ export const Tooltip = ({
   // TooltipBaseProps
   id: idProp,
   getRootRef,
-  text,
-  header,
   appearance = 'neutral',
   style: styleProp,
   className,
@@ -161,12 +161,6 @@ export const Tooltip = ({
                   coords: getArrowCoordsByMiddlewareData(middlewareData),
                   getRootRef: setArrowRef,
                 }
-          }
-          text={
-            <React.Fragment>
-              {hasReactNode(header) && <Subhead weight="2">{header}</Subhead>}
-              {hasReactNode(text) && <Subhead>{text}</Subhead>}
-            </React.Fragment>
           }
           className={classNames(
             willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
