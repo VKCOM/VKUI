@@ -7,7 +7,7 @@ import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
 import { TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
-import { Tappable } from '../Tappable/Tappable';
+import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -31,7 +31,17 @@ const fillModeClassNames = {
 
 export interface TabsItemProps
   extends HTMLAttributesWithRootRef<HTMLElement>,
-    AnchorHTMLAttributesOnly {
+    AnchorHTMLAttributesOnly,
+    Pick<
+      TappableProps,
+      | 'activeMode'
+      | 'hoverMode'
+      | 'hovered'
+      | 'activated'
+      | 'hasActive'
+      | 'hasHover'
+      | 'focusVisibleMode'
+    > {
   /**
    * Добавляет иконку слева.
    *
@@ -72,6 +82,13 @@ export const TabsItem = ({
   role = 'tab',
   tabIndex: tabIndexProp,
   getRootRef,
+  hoverMode = styles['TabsItem--hover'],
+  activeMode = '',
+  hovered,
+  activated,
+  hasHover,
+  hasActive = false,
+  focusVisibleMode = 'inside',
   ...restProps
 }: TabsItemProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -174,10 +191,13 @@ export const TabsItem = ({
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
         className,
       )}
-      hoverMode={styles['TabsItem--hover']}
-      activeMode=""
-      focusVisibleMode="inside"
-      hasActive={false}
+      hoverMode={hoverMode}
+      activeMode={activeMode}
+      hasHover={hasHover}
+      hasActive={hasActive}
+      hovered={hovered}
+      activated={activated}
+      focusVisibleMode={focusVisibleMode}
       role={role}
       aria-selected={selected}
       tabIndex={tabIndex}
