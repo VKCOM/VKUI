@@ -239,7 +239,8 @@
  * CMP:
  * PanelHeader
  */
-/* stylelint-disable-next-line selector-max-universal, selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-max-universal */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader--vkcom) ~ .Group:first-of-type,
 :global(.vkuiInternalPanelHeader--vkcom) + * .Group:first-of-type {
   position: relative;
@@ -247,3 +248,4 @@
   border-start-end-radius: 0;
   border-start-start-radius: 0;
 }
+/* stylelint-enable selector-max-universal */

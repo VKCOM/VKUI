@@ -6,13 +6,14 @@
   --vkui_internal--outline_width: 2px;
 }
 
-/* stylelint-disable-next-line selector-max-universal */
+/* stylelint-disable selector-max-universal */
 .-focus-visible:focus,
 .-focus-visible:focus-visible,
 .-focus-visible *:focus,
 .-focus-visible *:focus-visible {
   outline: none;
 }
+/* stylelint-enable selector-max-universal */
 
 .-focus-visible.-focus-visible--mode-outside {
   --vkui_internal--outline_offset: var(--vkui_internal--outline_width);

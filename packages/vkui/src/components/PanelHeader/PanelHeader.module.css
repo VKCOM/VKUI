@@ -204,11 +204,12 @@
   }
 }
 
-/* stylelint-disable-next-line selector-max-universal */
+/* stylelint-disable selector-max-universal */
 .PanelHeader--android.PanelHeader--no-after .PanelHeader__content > *,
 .PanelHeader--vkcom.PanelHeader--no-after .PanelHeader__content > * {
   padding-inline-end: 0;
 }
+/* stylelint-enable selector-max-universal */
 
 .PanelHeader--android.PanelHeader--no-after .PanelHeader__content {
   padding-inline-end: 16px;
