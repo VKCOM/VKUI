@@ -5,7 +5,7 @@ export const LinkFocusVisiblePlayground = (props: ComponentPlaygroundProps) => (
   <ComponentPlayground {...props}>
     {(props: LinkProps) => (
       <div style={{ width: 300, padding: 10 }}>
-        Нажимая «Продолжить», вы принимаете{' '}
+        Нажимая «Продолжить», вы принимаете&nbsp;
         <Link href="#" {...props}>
           пользовательское соглашение
         </Link>
