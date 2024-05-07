@@ -9,8 +9,16 @@ import { CartesianConfigParameter, OptionNamesProp, OptionsProp } from './types'
 
 const getOptionsFromArgTypes = (argTypes: ArgTypes) =>
   Object.entries(argTypes).reduce<OptionsProp>((options, [argName, argValue]) => {
-    if ('boolean' === argValue.control?.type || argValue.options?.length > 0) {
-      options[argName] = argValue.control?.type === 'boolean' ? BooleanOpts : argValue.options;
+    const controlType =
+      typeof argValue.control === 'string'
+        ? argValue.control
+        : typeof argValue.control === 'object'
+        ? argValue.control.type
+        : undefined;
+    const hasOptions = argValue.options && argValue.options.length > 0;
+
+    if ('boolean' === controlType || hasOptions) {
+      options[argName] = controlType === 'boolean' ? BooleanOpts : argValue.options;
     }
     return options;
   }, {});

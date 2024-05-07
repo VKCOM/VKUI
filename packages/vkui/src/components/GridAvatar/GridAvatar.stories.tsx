@@ -21,7 +21,7 @@ const story: Meta<StoryGridAvatarProps> = {
       control: {
         type: 'select',
       },
-      options: imageBaseSizes,
+      options: [...imageBaseSizes],
     },
   },
   decorators: [withCartesian],

@@ -1,3 +1,5 @@
+import { InputType } from '@storybook/types';
+
 export const CanvasFullLayout = {
   layout: 'fullscreen',
   centered: true,
@@ -9,8 +11,6 @@ export const DisableCartesianParam = {
   },
 };
 
-export const StringArg = {
-  control: {
-    type: 'text',
-  },
+export const StringArg: InputType = {
+  control: 'text',
 };
