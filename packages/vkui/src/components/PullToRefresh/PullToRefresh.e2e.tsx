@@ -24,6 +24,7 @@ test.describe('PullToRefresh', () => {
     await page.mouse.down();
     await page.mouse.move(100, 380, { steps: 10 });
 
+    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 500)));
     await expectScreenshotClippedToContent();
   });
 
@@ -43,6 +44,7 @@ test.describe('PullToRefresh', () => {
     await page.mouse.down();
     await page.mouse.move(200, 380, { steps: 10 });
 
+    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 500)));
     await expectScreenshotClippedToContent();
   });
 
