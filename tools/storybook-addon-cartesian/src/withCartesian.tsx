@@ -28,9 +28,10 @@ function cartesianFunc(
       const res: any[] = [];
       acc.forEach((props) => {
         values.forEach((value: any) => {
+          const mapping = argTypes[prop].mapping;
           res.push({
             ...props,
-            [prop]: argTypes[prop].mapping ? argTypes[prop].mapping[value] : value,
+            [prop]: mapping ? mapping[value] : value,
           });
         });
       });

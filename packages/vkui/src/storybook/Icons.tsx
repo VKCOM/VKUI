@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { InputType } from '@storybook/types';
 import {
   Icon16Cancel,
   Icon20CheckCircleOn,
@@ -45,12 +46,12 @@ const IconOptions = Object.keys(IconsMap);
 
 export type IconName = keyof typeof IconsMap;
 
-export const IconArgType = {
+export const IconArgType: InputType = {
   options: IconOptions,
   control: 'select',
 };
 
-export const getIconArgBySize = (exp: RegExp) => {
+export const getIconArgBySize = (exp: RegExp): InputType => {
   return {
     options: IconOptions.filter((name) => exp.test(name) || name === 'None'),
     control: 'select',

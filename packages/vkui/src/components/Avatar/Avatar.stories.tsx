@@ -21,7 +21,7 @@ const story: Meta<AvatarStoryProps> = {
       control: {
         type: 'select',
       },
-      options: imageBaseSizes,
+      options: [...imageBaseSizes],
     },
     badge: {
       description: 'Использовать Badge',
