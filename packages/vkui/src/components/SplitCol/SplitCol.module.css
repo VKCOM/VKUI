@@ -35,6 +35,8 @@
 }
 
 .SplitCol--fixed {
+  position: sticky;
+  inset-block-start: 0;
   block-size: 100%;
   inline-size: 1px;
   flex-grow: 1;
@@ -46,8 +48,5 @@
   inline-size: inherit;
   min-inline-size: inherit;
   max-inline-size: inherit;
-  position: fixed;
-  transform: translateZ(0);
   overflow: hidden;
-  inset-block-start: 0;
 }

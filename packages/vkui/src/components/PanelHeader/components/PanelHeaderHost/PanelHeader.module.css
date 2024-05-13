@@ -1,0 +1,99 @@
+.PanelHeader {
+  position: relative;
+}
+
+.PanelHeader--fixed {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--vkui_internal--z_index_panel_header);
+}
+
+.PanelHeader:not(.PanelHeader--static):not(.PanelHeader--fixed) {
+  block-size: 0;
+  /* см. https://github.com/VKCOM/VKUI/issues/5571 */
+  z-index: var(--vkui_internal--z_index_panel_header);
+}
+
+.PanelHeader__separator {
+  margin-block-start: calc(-1 * var(--vkui--size_border--regular));
+}
+
+.PanelHeader__in {
+  display: flex;
+  justify-content: center;
+  background: var(--vkui--color_background_content);
+}
+
+.PanelHeader--trnsp .PanelHeader__in {
+  background: transparent;
+}
+
+.PanelHeader--sizeX-regular.PanelHeader--shadow .PanelHeader__in {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+}
+
+@media (--sizeX-regular) {
+  .PanelHeader--sizeX-none.PanelHeader--shadow .PanelHeader__in {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(:global(.vkuiInternalModalPageHeader__in)):not(
+    .PanelHeader--sep
+  )
+  .PanelHeader__in::after {
+  position: absolute;
+  inset-inline: var(--vkui--size_border--regular);
+  inset-block-end: 0;
+  block-size: var(--vkui--size_border--regular);
+  background-color: var(--vkui--color_background_content);
+  content: '';
+}
+
+@media (--sizeX-regular) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(:global(.vkuiInternalModalPageHeader__in)):not(
+      .PanelHeader--sep
+    )
+    .PanelHeader__in::after {
+    position: absolute;
+    inset-inline: var(--vkui--size_border--regular);
+    inset-block-end: 0;
+    block-size: var(--vkui--size_border--regular);
+    background-color: var(--vkui--color_background_content);
+    content: '';
+  }
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.PanelHeader--vkcom.PanelHeader--sizeX-regular:not(:global(.vkuiInternalModalPageHeader__in))
+  .PanelHeader__in {
+  border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+  box-shadow: 0 0 0 var(--vkui--size_border--regular) var(--vkui--color_field_border_alpha) inset;
+  border-block-end: 0;
+}
+
+@media (--sizeX-regular) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  .PanelHeader--vkcom.PanelHeader--sizeX-none:not(:global(.vkuiInternalModalPageHeader__in))
+    .PanelHeader__in {
+    border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+    border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+    box-shadow: 0 0 0 var(--vkui--size_border--regular) var(--vkui--color_field_border_alpha) inset;
+    border-block-end: 0;
+  }
+}
+
+/**
+ * CMP:
+ * Panel
+ */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalPanel--centered) .PanelHeader {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+}

@@ -1,0 +1,236 @@
+.PanelHeaderIn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap;
+  position: relative;
+  block-size: var(--vkui_internal--panel_header_height);
+  padding-block-start: var(--vkui_internal--safe_area_inset_top);
+}
+
+.PanelHeaderIn__before {
+  box-sizing: border-box;
+  color: var(--vkui--color_icon_accent_themed);
+  display: flex;
+  flex-shrink: 0;
+}
+
+.PanelHeaderIn__content {
+  overflow: hidden;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.PanelHeaderIn__content > * {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.PanelHeaderIn__content-in {
+  color: var(--vkui--color_text_primary);
+  font-weight: 500;
+  font-family: var(--vkui--font_family_accent);
+}
+
+.PanelHeaderIn__after {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  box-sizing: border-box;
+  color: var(--vkui--color_icon_accent_themed);
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.PanelHeaderIn__after > *:not(:last-child) {
+  margin-inline-end: 4px;
+}
+
+/**
+ * iOS
+ */
+.PanelHeaderIn--ios .PanelHeaderIn__before {
+  flex-basis: 0;
+  flex-shrink: 0;
+  flex-grow: 1;
+  opacity: 1;
+  transition: opacity 0.3s var(--vkui--animation_easing_platform);
+  padding-block: 4px 4px;
+  padding-inline: 4px 0;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.PanelHeaderIn--ios
+  .PanelHeaderIn__before
+  :global(.vkuiInternalPanelHeaderButton)
+  + :global(.vkuiInternalPanelHeaderButton--primitive) {
+  margin-inline-start: -6px;
+  padding-inline-start: 0;
+}
+
+.PanelHeaderIn--ios .PanelHeaderIn__content {
+  text-align: center;
+  opacity: 1;
+  transition: opacity 0.3s var(--vkui--animation_easing_platform);
+}
+
+.PanelHeaderIn--ios .PanelHeaderIn__content-in {
+  font-size: 21px;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.PanelHeaderIn--ios .PanelHeaderIn__content > * {
+  padding-block: 0;
+  padding-inline: 4px;
+}
+
+.PanelHeaderIn--ios.PanelHeaderIn--no-before .PanelHeaderIn__content {
+  padding-inline-start: 8px;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.PanelHeaderIn--ios.PanelHeaderIn--no-after .PanelHeaderIn__content > * {
+  padding-inline-end: 0;
+}
+
+.PanelHeaderIn--ios.PanelHeaderIn--no-after .PanelHeaderIn__content {
+  padding-inline-end: 8px;
+}
+
+.PanelHeaderIn--ios .PanelHeaderIn__after {
+  flex-basis: 0;
+  flex-shrink: 0;
+  flex-grow: 1;
+  opacity: 1;
+  transition: opacity 0.3s var(--vkui--animation_easing_platform);
+  padding-block: 4px 4px;
+  padding-inline: 0 4px;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalView--ios) :global(.vkuiInternalView__panel--prev) .PanelHeaderIn__before,
+:global(.vkuiInternalView--ios) :global(.vkuiInternalView__panel--prev) .PanelHeaderIn__after,
+:global(.vkuiInternalView--ios) :global(.vkuiInternalView__panel--prev) .PanelHeaderIn__content {
+  opacity: 0;
+}
+
+/**
+ * Android
+ */
+.PanelHeaderIn--android .PanelHeaderIn__before:not(:empty) {
+  padding-block: 4px 4px;
+  padding-inline: 4px 0;
+  margin-inline-end: -8px;
+}
+
+.PanelHeaderIn--android .PanelHeaderIn__content {
+  align-items: center;
+  flex-grow: 1;
+  max-inline-size: 100%;
+}
+
+.PanelHeaderIn--android .PanelHeaderIn__content-in {
+  font-size: 23px;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.PanelHeaderIn--android .PanelHeaderIn__content > * {
+  padding-block: 0;
+  padding-inline: 12px;
+}
+
+/**
+ * VKCOM
+ */
+.PanelHeaderIn--vkcom {
+  z-index: var(--vkui_internal--z_index_panel_header);
+}
+
+.PanelHeaderIn--vkcom .PanelHeaderIn__content {
+  text-align: center;
+}
+
+.PanelHeaderIn--vkcom .PanelHeaderIn__before:not(:empty) {
+  padding-block: 0 0;
+  padding-inline: 4px 0;
+}
+
+.PanelHeaderIn--vkcom .PanelHeaderIn__before,
+.PanelHeaderIn--vkcom .PanelHeaderIn__after {
+  flex-basis: 0;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.PanelHeaderIn--no-before .PanelHeaderIn__content > * {
+  padding-inline-start: 0;
+}
+
+/**
+ * Common
+ */
+.PanelHeaderIn--sizeY-compact:not(.PanelHeaderIn--vkcom) .PanelHeaderIn__content-in {
+  font-size: 20px;
+}
+
+@media (--sizeY-compact) {
+  .PanelHeaderIn--sizeY-none:not(.PanelHeaderIn--vkcom) .PanelHeaderIn__content-in {
+    font-size: 20px;
+  }
+}
+
+/**
+ * CMP:
+ * SplitCol
+ */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
+  .PanelHeaderIn--android.PanelHeaderIn--no-before:not(:global(.vkuiInternalModalPageHeader__in))
+  .PanelHeaderIn__content {
+  padding-inline-start: 0;
+}
+
+@media (--viewWidth-smallTabletPlus) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
+    .PanelHeaderIn--android.PanelHeaderIn--no-before:not(:global(.vkuiInternalModalPageHeader__in))
+    .PanelHeaderIn__content {
+    padding-inline-start: 0;
+  }
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.PanelHeaderIn--android.PanelHeaderIn--no-after .PanelHeaderIn__content > *,
+.PanelHeaderIn--vkcom.PanelHeaderIn--no-after .PanelHeaderIn__content > * {
+  padding-inline-end: 0;
+}
+
+.PanelHeaderIn--android.PanelHeaderIn--no-after .PanelHeaderIn__content {
+  padding-inline-end: 16px;
+}
+
+.PanelHeaderIn--android.PanelHeaderIn--no-before .PanelHeaderIn__content {
+  padding-inline-start: 16px;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
+  .PanelHeaderIn--android.PanelHeaderIn--no-after:not(:global(.vkuiInternalModalPageHeader__in))
+  .PanelHeaderIn__content {
+  padding-inline-end: 0;
+}
+
+@media (--viewWidth-smallTabletPlus) {
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
+    .PanelHeaderIn--android.PanelHeaderIn--no-after:not(:global(.vkuiInternalModalPageHeader__in))
+    .PanelHeaderIn__content {
+    padding-inline-end: 0;
+  }
+}
+
+.PanelHeaderIn--android .PanelHeaderIn__after:not(:empty),
+.PanelHeaderIn--vkcom .PanelHeaderIn__after:not(:empty) {
+  padding-block: 4px 4px;
+  padding-inline: 0 4px;
+}

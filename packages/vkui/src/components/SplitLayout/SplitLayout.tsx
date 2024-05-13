@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useObservableProps } from '../../lib/react/observable';
 import { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
+import { SplitLayoutContext } from './SplitLayoutContext';
 import styles from './SplitLayout.module.css';
 
 export interface SplitLayoutProps
@@ -33,6 +35,11 @@ export const SplitLayout = ({
   ...restProps
 }: SplitLayoutProps) => {
   const platform = usePlatform();
+  const cols = useObservableProps({});
+  const [contextValue] = React.useState(() => ({
+    cols,
+    headers: {},
+  }));
 
   return (
     <PopoutRoot
@@ -44,18 +51,20 @@ export const SplitLayout = ({
       modal={modal}
       getRootRef={getRootRef}
     >
-      {header}
-      <div
-        {...restProps}
-        ref={getRef}
-        className={classNames(
-          styles['SplitLayout__inner'],
-          !!header && styles['SplitLayout__inner--header'],
-          className,
-        )}
-      >
-        {children}
-      </div>
+      <SplitLayoutContext.Provider value={contextValue}>
+        {header}
+        <div
+          {...restProps}
+          ref={getRef}
+          className={classNames(
+            styles['SplitLayout__inner'],
+            !!header && styles['SplitLayout__inner--header'],
+            className,
+          )}
+        >
+          {children}
+        </div>
+      </SplitLayoutContext.Provider>
     </PopoutRoot>
   );
 };

@@ -6,8 +6,10 @@ import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { ViewWidth, viewWidthToClassName } from '../../lib/adaptivity';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
+import { useObservableProps, useRunActionProps } from '../../lib/react/observable';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { useSplitLayoutContext } from '../SplitLayout/SplitLayoutContext';
 import { SplitColContext } from './SplitColContext';
 import styles from './SplitCol.module.css';
 
@@ -83,14 +85,27 @@ export const SplitCol = (props: SplitColProps) => {
     getRootRef,
     ...restProps
   } = props;
+  const generatedId = React.useId();
   const baseRef = useExternRef(getRootRef);
   const { viewWidth } = useAdaptivity();
   const animate = useTransitionAnimate(animateProp);
 
-  const contextValue = useObjectMemo({
-    colRef: baseRef,
-    animate,
+  const splitLayoutContext = useSplitLayoutContext();
+  const splitColContext = useObjectMemo({
+    [generatedId]: {
+      id: generatedId,
+      colRef: baseRef,
+      style: {
+        width: width,
+        maxWidth: maxWidth,
+        minWidth: minWidth,
+      },
+      animate,
+    },
   });
+
+  useRunActionProps(splitColContext, splitLayoutContext.cols);
+  splitLayoutContext.headers[generatedId] = useObservableProps({});
 
   return (
     <RootComponent
@@ -111,8 +126,8 @@ export const SplitCol = (props: SplitColProps) => {
         stretchedOnMobile && styles['SplitCol--stretched-on-mobile'],
       )}
     >
-      <SplitColContext.Provider value={contextValue}>
-        {fixed ? <div className={styles['SplitCol__fixedInner']}>{children}</div> : children}
+      <SplitColContext.Provider value={splitColContext[generatedId]}>
+        {children}
       </SplitColContext.Provider>
     </RootComponent>
   );

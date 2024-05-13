@@ -1,12 +1,16 @@
 import * as React from 'react';
 
-export interface SplitColContextProps {
-  colRef: React.RefObject<HTMLDivElement> | null;
+export interface SplitColContextProps<Initial = null> {
+  id: string | Initial;
+  colRef: React.RefObject<HTMLDivElement> | Initial;
+  style: React.CSSProperties;
   animate: boolean;
 }
 
 export const SplitColContext = React.createContext<SplitColContextProps>({
+  id: null,
   colRef: null,
+  style: {},
   animate: true,
 });
 

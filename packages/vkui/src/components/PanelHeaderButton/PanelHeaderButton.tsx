@@ -95,7 +95,11 @@ export const PanelHeaderButton = ({
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        isPrimitive && styles['PanelHeaderButton--primitive'],
+        isPrimitive &&
+          classNames(
+            styles['PanelHeaderButton--primitive'],
+            'vkuiInternalPanelHeaderButton--primitive',
+          ),
         !isPrimitive && !isPrimitiveLabel && styles['PanelHeaderButton--notPrimitive'],
         className,
       )}
