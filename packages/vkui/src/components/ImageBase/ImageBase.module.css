@@ -6,13 +6,9 @@
   flex-shrink: 0;
   box-sizing: border-box;
   color: var(--vkui_internal--icon_color, var(--vkui--color_icon_secondary));
+  isolation: isolate;
   background-color: var(--vkui--color_background_secondary);
   background-size: cover;
-  isolation: isolate;
-}
-
-.ImageBase--transparent-background {
-  background-color: transparent;
 }
 
 .ImageBase__border {
@@ -41,6 +37,14 @@
 
 .ImageBase--loaded .ImageBase__img {
   visibility: visible;
+  background-color: var(--vkui--color_background_secondary);
+  background-size: cover;
+}
+
+.ImageBase--transparent-background,
+.ImageBase--transparent-background .ImageBase__img,
+.ImageBase--loaded {
+  background-color: transparent;
 }
 
 .ImageBase__fallback {
