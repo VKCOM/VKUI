@@ -111,3 +111,15 @@ export function isForwardRefElement<
   const typeOfOfType = children.type && children.type.$$typeof;
   return typeOfOfType === Symbol.for('react.forward_ref');
 }
+
+/**
+ * При использовании пропа fetchPriority генерируется warning "Invalid DOM property" (версия React 18.*)
+ * Ворнинга нет в React версии 19.*, поэтому пока поддерживаем 2 версии наименования
+ */
+export function getFetchPriorityProp() {
+  // @ts-expect-error: TS2339 Появится только в версии React >= 19.*
+  if (Boolean(React.use)) {
+    return 'fetchPriority';
+  }
+  return 'fetchpriority';
+}
