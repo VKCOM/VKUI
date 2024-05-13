@@ -200,7 +200,7 @@ export const Popover = ({
     onShownChange,
   });
 
-  usePlacementChangeCallback(resolvedPlacement, onPlacementChange);
+  usePlacementChangeCallback(expectedPlacement, resolvedPlacement, onPlacementChange);
 
   const [, child] = usePatchChildren<HTMLDivElement>(
     children,

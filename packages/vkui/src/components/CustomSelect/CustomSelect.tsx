@@ -269,7 +269,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     () => props.value ?? defaultValue ?? (allowClearButton ? '' : undefined),
   );
   const [popperPlacement, setPopperPlacement] = React.useState<PlacementWithAuto | undefined>(
-    undefined,
+    popupDirection,
   );
   const [options, setOptions] = React.useState(optionsProp);
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
