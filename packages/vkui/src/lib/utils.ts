@@ -116,10 +116,10 @@ export function isForwardRefElement<
  * При использовании пропа fetchPriority генерируется warning "Invalid DOM property" (версия React 18.*)
  * Ворнинга нет в React версии 19.*, поэтому пока поддерживаем 2 версии наименования
  */
-export function getFetchPriorityProp() {
+export function getFetchPriorityProp(value: React.ImgHTMLAttributes<HTMLElement>['fetchPriority']) {
   // @ts-expect-error: TS2339 Появится только в версии React >= 19.*
   if (Boolean(React.use)) {
-    return 'fetchPriority';
+    return { fetchPriority: value };
   }
-  return 'fetchpriority';
+  return { fetchpriority: value };
 }

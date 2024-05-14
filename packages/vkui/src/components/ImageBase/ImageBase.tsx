@@ -189,7 +189,7 @@ export const ImageBase = ({
             height={heightImg}
             onLoad={handleImageLoad}
             onError={handleImageError}
-            {...{ [getFetchPriorityProp()]: fetchPriority }}
+            {...getFetchPriorityProp(fetchPriority)}
           />
         )}
         {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
