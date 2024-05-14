@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Meta } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import {

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { type FocusVisibleMode } from '../../hooks/useFocusVisibleClassName';

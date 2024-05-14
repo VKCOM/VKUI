@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { getIconArgBySize, getIconComponent, IconArgType, IconName } from '../../storybook/Icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';

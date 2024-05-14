@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { test } from '@vkui-e2e/test';
 import { EllipsisTextPlayground } from './EllipsisText.e2e-playground';
 

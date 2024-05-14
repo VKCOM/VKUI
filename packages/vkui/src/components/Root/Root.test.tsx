@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { act, render } from '@testing-library/react';
 import { baselineComponent, fakeTimers, mockScrollContext, mountTest } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';

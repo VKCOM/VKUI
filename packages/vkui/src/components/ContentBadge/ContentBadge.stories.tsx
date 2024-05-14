@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
 import type { PartialStoryFn } from '@storybook/types';
 import { Icon12Services, Icon16Services, Icon20ServicesFilled } from '@vkontakte/icons';

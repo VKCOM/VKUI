@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { act, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';

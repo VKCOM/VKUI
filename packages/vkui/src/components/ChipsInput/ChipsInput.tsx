@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
 import { ChipsInputBase } from '../ChipsInputBase/ChipsInputBase';
 import {

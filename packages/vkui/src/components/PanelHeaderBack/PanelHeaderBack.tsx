@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Icon24ArrowLeftOutline,
   Icon24ChevronLeftOutline,

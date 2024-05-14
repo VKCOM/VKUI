@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, StoryObj } from '@storybook/react';
 import {

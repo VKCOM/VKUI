@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon24User } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Input, type InputProps } from './Input';

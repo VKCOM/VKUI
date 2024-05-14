@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { baselineComponent, fakeTimers, userEvent } from '../../../testing/utils';
 import { Chip } from './Chip';

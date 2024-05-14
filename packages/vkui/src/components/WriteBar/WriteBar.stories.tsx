@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Icon28SmileOutline } from '@vkontakte/icons';

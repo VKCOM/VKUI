@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { ImageBaseBadge, ImageBaseBadgeProps } from './ImageBaseBadge';

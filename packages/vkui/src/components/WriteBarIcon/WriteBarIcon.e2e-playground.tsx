@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon28VoiceOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { WriteBarIcon, type WriteBarIconProps } from './WriteBarIcon';

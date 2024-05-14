@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Platform } from '../../lib/platform';
 import { CustomSelect, type SelectProps } from './CustomSelect';

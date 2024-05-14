@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { render } from '@testing-library/react';
 import { Icon16Services } from '@vkontakte/icons';
 import { baselineComponent } from '../../testing/utils';

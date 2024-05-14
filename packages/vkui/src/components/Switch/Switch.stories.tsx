@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { SimpleCell } from '../../components/SimpleCell/SimpleCell';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { Calendar } from './Calendar';

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Icon12Fire,
   Icon12Tag,

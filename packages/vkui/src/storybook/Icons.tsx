@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { InputType } from '@storybook/types';
 import {
   Icon16Cancel,

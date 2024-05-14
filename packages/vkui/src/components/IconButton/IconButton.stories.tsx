@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Icon16Delete } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';

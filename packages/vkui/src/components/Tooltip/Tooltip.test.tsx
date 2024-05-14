@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { render } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { Tooltip, TooltipProps } from './Tooltip';

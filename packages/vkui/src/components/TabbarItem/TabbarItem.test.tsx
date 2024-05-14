@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Icon28NewsfeedOutline } from '@vkontakte/icons';
 import { baselineComponent, userEvent } from '../../testing/utils';
