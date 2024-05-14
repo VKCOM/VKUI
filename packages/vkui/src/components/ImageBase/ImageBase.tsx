@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { minOr } from '../../lib/comparing';
+import { getFetchPriorityProp } from '../../lib/utils';
 import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
@@ -188,7 +189,7 @@ export const ImageBase = ({
             height={heightImg}
             onLoad={handleImageLoad}
             onError={handleImageError}
-            fetchPriority={fetchPriority}
+            {...getFetchPriorityProp(fetchPriority)}
           />
         )}
         {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}

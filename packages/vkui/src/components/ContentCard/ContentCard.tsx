@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { getFetchPriorityProp } from '../../lib/utils';
 import { HasRef, HasRootRef } from '../../types';
 import { Card, CardProps } from '../Card/Card';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
@@ -100,7 +101,7 @@ export const ContentCard = ({
             referrerPolicy={referrerPolicy}
             sizes={sizes}
             useMap={useMap}
-            fetchPriority={fetchPriority}
+            {...getFetchPriorityProp(fetchPriority)}
             height={height}
             style={{ maxHeight }}
             width="100%"
