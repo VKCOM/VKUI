@@ -4,7 +4,7 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalEpic--hasTabbar) {
+:global(.vkuiInternalEpic--hasTabbar).Epic {
   --vkui_internal--snackbar_safe_area_inset_bottom: calc(
     var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
   );
