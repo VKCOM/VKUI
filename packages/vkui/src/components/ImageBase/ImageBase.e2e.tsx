@@ -10,6 +10,7 @@ test.describe('Image', () => {
   });
 
   test('Parent with border-radius: Image does not have visible corners from Image background', async ({
+    page,
     mount,
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
@@ -17,6 +18,7 @@ test.describe('Image', () => {
     // мы проверяем, что изображение из img полностью перекрывае фон BaseImage
     // потому что есть неприятный эффект, где видно край фона в одном из углов обрезанных с помощью border-radius и overflow: hidden у родителя
     await mount(<ImageWithParentWithBorderRadius {...componentPlaygroundProps} />);
+    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 500)));
     await expectScreenshotClippedToContent();
   });
 });
