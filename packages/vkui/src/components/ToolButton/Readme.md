@@ -1,0 +1,112 @@
+```jsx { "props": { "layout": false, "iframe": false } }
+const containerStyles = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+};
+
+const Example = () => {
+  const [mode, setMode] = useState('primary');
+  const [appearance, setAppearance] = useState('accent');
+  const [direction, setDirection] = useState('column');
+  const [sizeY, setSizeY] = useState('compact');
+  const [rounded, setRounded] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const [addText, setAddText] = useState(true);
+  const [hasLink, setHasLink] = useState(false);
+  const platform = usePlatform();
+
+  React.useEffect(() => {
+    if (platform === 'vkcom') {
+      setSizeY('compact');
+    }
+  }, [platform]);
+
+  const buttonLink = hasLink ? '#' : undefined;
+  const buttonText = addText ? 'Button' : undefined;
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+      <AdaptivityProvider sizeY={sizeY}>
+        <div style={containerStyles}>
+          <Div>
+            <ToolButton
+              IconCompact={Icon20Add}
+              IconRegular={Icon24Add}
+              mode={mode}
+              direction={direction}
+              appearance={appearance}
+              rounded={rounded}
+              disabled={disabled}
+              href={buttonLink}
+              onClick={() => {}}
+            >
+              {buttonText}
+            </ToolButton>
+          </Div>
+        </div>
+      </AdaptivityProvider>
+      <div style={{ minWidth: 200 }}>
+        <FormItem top="direction">
+          <Select
+            value={direction}
+            onChange={(e) => setDirection(e.target.value)}
+            options={[
+              { label: 'row', value: 'row' },
+              { label: 'column', value: 'column' },
+            ]}
+          />
+        </FormItem>
+        <FormItem top="mode">
+          <Select
+            value={mode}
+            onChange={(e) => setMode(e.target.value)}
+            options={[
+              { label: 'primary', value: 'primary' },
+              { label: 'secondary', value: 'secondary' },
+              { label: 'tertiary', value: 'tertiary' },
+              { label: 'outline', value: 'outline' },
+            ]}
+          />
+        </FormItem>
+        <FormItem top="appearance">
+          <Select
+            value={appearance}
+            onChange={(e) => setAppearance(e.target.value)}
+            options={[
+              { label: 'accent', value: 'accent' },
+              { label: 'neutral', value: 'neutral' },
+            ]}
+          />
+        </FormItem>
+        <FormItem top="sizeY">
+          <Select
+            value={sizeY}
+            onChange={(e) => setSizeY(e.target.value)}
+            options={[
+              { label: 'compact', value: 'compact' },
+              {
+                label: 'regular',
+                value: 'regular',
+                disabled: platform === 'vkcom',
+              },
+            ]}
+          />
+        </FormItem>
+        <FormItem top="props">
+          <Checkbox onChange={(e) => setRounded(e.target.checked)}>rounded</Checkbox>
+          <Checkbox onChange={(e) => setDisabled(e.target.checked)}>disabled</Checkbox>
+          <Checkbox onChange={(e) => setAddText(e.target.checked)} checked={addText}>
+            add text
+          </Checkbox>
+          <Checkbox onChange={(e) => setHasLink(e.target.checked)}>add href</Checkbox>
+        </FormItem>
+      </div>
+    </div>
+  );
+};
+
+<Example />;
+```

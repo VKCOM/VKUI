@@ -65,6 +65,8 @@ export { Button } from './components/Button/Button';
 export type { ButtonProps } from './components/Button/Button';
 export { IconButton } from './components/IconButton/IconButton';
 export type { IconButtonProps } from './components/IconButton/IconButton';
+export { ToolButton } from './components/ToolButton/ToolButton';
+export type { ToolButtonProps } from './components/ToolButton/ToolButton';
 
 /**
  * Layout
