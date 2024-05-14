@@ -24,8 +24,8 @@ export const ImageWithParentWithBorderRadius = (props: ComponentPlaygroundProps)
       <div
         style={{
           margin: '20px',
-          width: '94px',
-          height: '167px',
+          width: '72px',
+          height: '72px',
           borderRadius: '8px',
           overflow: 'hidden',
           position: 'relative',
