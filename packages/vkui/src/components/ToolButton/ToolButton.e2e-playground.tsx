@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon20Add, Icon24Add } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
