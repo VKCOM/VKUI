@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import {
