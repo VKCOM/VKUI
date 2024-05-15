@@ -261,7 +261,12 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalCardBase/ModalCardBase.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Pagination/Pagination.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/AdaptiveIconRenderer/AdaptiveIconRenderer.tsx`,
-            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ScrollArrow/ScrollArrow.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Table/Table.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/TableRow/TableRow.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/TableCell/TableCell.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/TableHeader/TableHeader.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/TableBody/TableBody.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/TableFooter/TableFooter.tsx`,
           ],
         },
         {

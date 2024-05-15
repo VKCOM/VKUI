@@ -1,0 +1,18 @@
+.TableHeaderLabel {
+  display: inline-flex;
+  align-items: center;
+}
+
+.TableHeaderLabel__sortIcon {
+  margin-inline-end: 4px;
+}
+
+.TableHeaderLabel__titleIcon {
+  cursor: help;
+  margin-inline-start: 4px;
+}
+
+.TableHeaderLabel__sortIcon--desc {
+  transform: rotate(180deg);
+  transform-origin: center center;
+}
