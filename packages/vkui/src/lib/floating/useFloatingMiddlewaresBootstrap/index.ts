@@ -13,9 +13,13 @@ import type { ArrowOptions, PlacementWithAuto, UseFloatingMiddleware } from '../
 
 export interface UseFloatingMiddlewaresBootstrapOptions {
   /**
-   * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства.
+   * По умолчанию компонент выберет наилучшее расположение сам, но приоритетное можно задать с помощью этого свойства.
    */
   placement?: PlacementWithAuto;
+  /**
+   * Указанное значение `placement` форсируется, даже если для выпадающего элемента недостаточно места.
+   */
+  forcePlacement?: boolean;
   /**
    * Отступ по главной оси.
    */
@@ -62,6 +66,7 @@ export const useFloatingMiddlewaresBootstrap = ({
   offsetByCrossAxis = 0,
   customMiddlewares,
   hideWhenReferenceHidden,
+  forcePlacement = false,
 }: UseFloatingMiddlewaresBootstrapOptions) => {
   return React.useMemo(() => {
     const isNotAutoPlacement = checkIsNotAutoPlacement(placement);
@@ -72,15 +77,17 @@ export const useFloatingMiddlewaresBootstrap = ({
       }),
     ];
 
-    // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
-    if (isNotAutoPlacement) {
-      middlewares.push(
-        flipMiddleware({
-          fallbackAxisSideDirection: 'start',
-        }),
-      );
-    } else {
-      middlewares.push(autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }));
+    if (!forcePlacement) {
+      // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
+      if (isNotAutoPlacement) {
+        middlewares.push(
+          flipMiddleware({
+            fallbackAxisSideDirection: 'start',
+          }),
+        );
+      } else {
+        middlewares.push(autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }));
+      }
     }
 
     middlewares.push(shiftMiddleware());
@@ -127,5 +134,6 @@ export const useFloatingMiddlewaresBootstrap = ({
     customMiddlewares,
     placement,
     hideWhenReferenceHidden,
+    forcePlacement,
   ]);
 };

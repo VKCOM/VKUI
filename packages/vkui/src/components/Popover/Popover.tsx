@@ -73,6 +73,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'restoreFocus'
   | 'children'
   | 'zIndex'
+  | 'forcePlacement'
 >;
 
 /**
@@ -126,6 +127,7 @@ export const Popover = ({
   arrowPadding = DEFAULT_ARROW_PADDING,
   placement: expectedPlacement = 'bottom-start',
   onPlacementChange,
+  forcePlacement = false,
   trigger = 'click',
   content,
   hoverDelay = 150,
@@ -173,6 +175,7 @@ export const Popover = ({
     offsetByCrossAxis,
     sameWidth,
     hideWhenReferenceHidden,
+    forcePlacement,
   });
   const {
     placement: resolvedPlacement,
