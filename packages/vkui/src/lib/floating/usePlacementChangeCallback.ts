@@ -15,7 +15,8 @@ export function usePlacementChangeCallback(
     }
     const isInitialPlacementChanged =
       prevPlacement === undefined && initialPlacement !== resolvedPlacement;
-    const isResolvedPlacementChanged = prevPlacement !== resolvedPlacement;
+    const isResolvedPlacementChanged =
+      prevPlacement !== undefined && prevPlacement !== resolvedPlacement;
     if (isInitialPlacementChanged || isResolvedPlacementChanged) {
       onPlacementChange(resolvedPlacement);
     }

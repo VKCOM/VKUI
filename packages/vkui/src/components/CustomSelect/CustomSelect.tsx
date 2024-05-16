@@ -219,7 +219,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     className,
     getRef,
     getRootRef,
-    popupDirection,
+    popupDirection = 'bottom',
     style,
     onChange,
     children,
