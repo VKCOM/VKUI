@@ -158,6 +158,10 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   });
 
   const handleClickOnReference = useStableCallback(() => {
+    // Предыдущий триггер (фокус) уже вызвал открытие всплывающего окна, игнорируем повторное нажатие
+    if (shownLocalState.reason === 'focus' && shownLocalState.shown) {
+      return;
+    }
     commitShownLocalState(!shownLocalState.shown, 'click');
   });
 
