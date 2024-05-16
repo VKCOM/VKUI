@@ -4,7 +4,7 @@
 </PanelHeader>
 <Group>
   <SimpleCell
-    before={<Skeleton width={36} height={36} circle />}
+    before={<Skeleton width={36} height={36} borderRadius="50%" />}
     subtitle={<Skeleton width={90} />}
   >
     <Skeleton width={120} />

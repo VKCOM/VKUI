@@ -4,20 +4,19 @@ import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Skeleton.module.css';
 
-export interface SkeletonProps extends HTMLAttributesWithRootRef<HTMLDivElement | HTMLSpanElement> {
-  width?: React.CSSProperties['width'];
-  height?: React.CSSProperties['height'];
-  inlineSize?: React.CSSProperties['inlineSize'];
-  blockSize?: React.CSSProperties['blockSize'];
-  maxWidth?: React.CSSProperties['maxWidth'];
-  maxInlineSize?: React.CSSProperties['maxInlineSize'];
-  borderRadius?: React.CSSProperties['borderRadius'];
-
-  /**
-   * Сделает скелетон круглым. Имеет более высокий приоритет над `borderRadius`.
-   */
-  circle?: boolean;
-
+export interface SkeletonProps
+  extends HTMLAttributesWithRootRef<HTMLDivElement | HTMLSpanElement>,
+    Pick<
+      React.CSSProperties,
+      | 'width'
+      | 'height'
+      | 'inlineSize'
+      | 'blockSize'
+      | 'maxWidth'
+      | 'maxInlineSize'
+      | 'borderRadius'
+      | 'margin'
+    > {
   /**
    * Начальный цвет анимации
    */
@@ -58,13 +57,13 @@ export const Skeleton = ({
   maxWidth,
   maxInlineSize,
   borderRadius,
-  circle,
   style,
   children,
   colorFrom,
   colorTo,
   noAnimation,
   duration,
+  margin,
   ...restProps
 }: SkeletonProps) => {
   const skeletonStyle: React.CSSProperties & CSSCustomProperties = {
@@ -74,7 +73,8 @@ export const Skeleton = ({
     blockSize,
     maxWidth,
     maxInlineSize,
-    borderRadius: circle ? '50%' : borderRadius,
+    borderRadius,
+    margin,
   };
 
   if (colorFrom) {

@@ -15,7 +15,7 @@ export const SkeletonPlayground = (props: ComponentPlaygroundProps) => {
         {
           width: [16],
           height: [16],
-          circle: [undefined, true],
+          borderRadius: [undefined, '50%'],
         },
         {
           width: [50],
