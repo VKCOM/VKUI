@@ -1,4 +1,5 @@
-import { act, render, screen } from '@testing-library/react';
+import { act } from 'react';
+import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';

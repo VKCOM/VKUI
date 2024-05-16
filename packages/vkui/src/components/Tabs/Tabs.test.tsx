@@ -1,5 +1,5 @@
-import { ComponentProps, useState } from 'react';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, ComponentProps, useState } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { Group } from '../Group/Group';
 import { TabsItem } from '../TabsItem/TabsItem';

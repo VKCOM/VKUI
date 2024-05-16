@@ -1,4 +1,5 @@
-import { act, renderHook } from '@testing-library/react';
+import { act } from 'react';
+import { renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { fakeTimers } from '../testing/utils';
 import { useTimeout } from './useTimeout';

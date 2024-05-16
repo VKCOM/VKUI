@@ -1,4 +1,5 @@
-import { act, render, screen } from '@testing-library/react';
+import { act } from 'react';
+import { render, screen } from '@testing-library/react';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { Search } from './Search';
 import styles from './Search.module.css';
@@ -68,6 +69,12 @@ describe(Search, () => {
       expect(getInput()).toHaveValue('update');
     });
     it('value overrides defaultValue', () => {
+      jest.spyOn(global.console, 'error').mockImplementationOnce((message) => {
+        if (message.includes('with both value and defaultValue props.')) {
+          return;
+        }
+        global.console.error(message);
+      });
       render(<Search defaultValue="def" value="val" />);
       expect(getInput()).toHaveValue('val');
     });
@@ -114,6 +121,7 @@ describe(Search, () => {
     const cb = jest.fn();
     render(<Search icon={<div data-testid="icon" />} onIconClick={cb} />);
     await userEvent.click(screen.getByTestId('icon'));
+    act(jest.runAllTimers);
     expect(cb).toHaveBeenCalled();
   });
 

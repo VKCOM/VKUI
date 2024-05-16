@@ -1,4 +1,5 @@
-import { act, render, screen } from '@testing-library/react';
+import { act } from 'react';
+import { render, screen } from '@testing-library/react';
 import { fakeTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Panel } from '../Panel/Panel';

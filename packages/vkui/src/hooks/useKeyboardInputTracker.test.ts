@@ -1,4 +1,5 @@
-import { act, fireEvent, renderHook } from '@testing-library/react';
+import { act } from 'react';
+import { fireEvent, renderHook } from '@testing-library/react';
 import { FOCUS_ALLOW_LIST_KEYS, Keys } from '../lib/accessibility';
 import {
   DISABLE_KEYBOARD_INPUT_EVENT_NAME,

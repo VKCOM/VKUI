@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';

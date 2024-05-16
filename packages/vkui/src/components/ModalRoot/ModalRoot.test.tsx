@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { act, render, screen } from '@testing-library/react';
+import { act } from 'react';
+import { render, screen } from '@testing-library/react';
 import { baselineComponent, mountTest, userEvent } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
 import { ModalPage } from '../ModalPage/ModalPage';

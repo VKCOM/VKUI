@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { act, renderHook } from '@testing-library/react';
+import { act } from 'react';
+import { renderHook } from '@testing-library/react';
 import {
   AppRootContext,
   DEFAULT_APP_ROOT_CONTEXT_VALUE,

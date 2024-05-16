@@ -1,12 +1,6 @@
 import * as React from 'react';
-import {
-  act,
-  type EventType,
-  fireEvent,
-  render,
-  RenderResult,
-  screen,
-} from '@testing-library/react';
+import { act } from 'react';
+import { type EventType, fireEvent, render, RenderResult, screen } from '@testing-library/react';
 // eslint-disable-next-line no-restricted-imports -- используем здесь setup
 import userEventLib from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
