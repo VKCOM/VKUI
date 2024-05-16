@@ -1,5 +1,5 @@
-import { type ComponentType, Fragment, type ReactNode } from 'react';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, type ComponentType, Fragment, type ReactNode } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { getRandomUsers } from '../../testing/mock';
 import { baselineComponent, fakeTimers, mockScrollContext, mountTest } from '../../testing/utils';
 import { HasChildren } from '../../types';

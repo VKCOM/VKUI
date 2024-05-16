@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { act, renderHook } from '@testing-library/react';
+import { act } from 'react';
+import { renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { modalTransitionReducer, useModalManager } from './useModalManager';
 

@@ -70,6 +70,12 @@ describe(Textarea, () => {
       expect(getInput()).toHaveValue('update');
     });
     it('value overrides defaultValue', () => {
+      jest.spyOn(global.console, 'error').mockImplementationOnce((message) => {
+        if (message.includes('with both value and defaultValue props.')) {
+          return;
+        }
+        global.console.error(message);
+      });
       render(<Textarea defaultValue="def" value="val" />);
       expect(getInput()).toHaveValue('val');
     });

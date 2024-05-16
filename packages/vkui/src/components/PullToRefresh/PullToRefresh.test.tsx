@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { Platform, type PlatformType } from '../../lib/platform';
 import { baselineComponent, fakeTimers } from '../../testing/utils';

@@ -1,4 +1,5 @@
-import { act, render, renderHook, waitFor } from '@testing-library/react';
+import { act } from 'react';
+import { render, renderHook, waitFor } from '@testing-library/react';
 import {
   AppRootContext,
   DEFAULT_APP_ROOT_CONTEXT_VALUE,
