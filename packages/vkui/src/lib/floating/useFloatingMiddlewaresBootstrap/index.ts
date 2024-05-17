@@ -18,8 +18,9 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
   placement?: PlacementWithAuto;
   /**
    * Указанное значение `placement` форсируется, даже если для выпадающего элемента недостаточно места.
+   * Не оказывает влияния при `placement` значениях - `'auto' | 'auto-start' | 'auto-end'`
    */
-  forcePlacement?: boolean;
+  disablePlacementFlip?: boolean;
   /**
    * Отступ по главной оси.
    */
@@ -66,10 +67,10 @@ export const useFloatingMiddlewaresBootstrap = ({
   offsetByCrossAxis = 0,
   customMiddlewares,
   hideWhenReferenceHidden,
-  forcePlacement = false,
+  disablePlacementFlip = false,
 }: UseFloatingMiddlewaresBootstrapOptions) => {
   return React.useMemo(() => {
-    const isNotAutoPlacement = checkIsNotAutoPlacement(placement);
+    const isAutoPlacement = !checkIsNotAutoPlacement(placement);
     const middlewares: UseFloatingMiddleware[] = [
       offsetMiddleware({
         crossAxis: offsetByCrossAxis,
@@ -77,17 +78,15 @@ export const useFloatingMiddlewaresBootstrap = ({
       }),
     ];
 
-    if (!forcePlacement) {
-      // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
-      if (isNotAutoPlacement) {
-        middlewares.push(
-          flipMiddleware({
-            fallbackAxisSideDirection: 'start',
-          }),
-        );
-      } else {
-        middlewares.push(autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }));
-      }
+    // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
+    if (isAutoPlacement) {
+      middlewares.push(autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }));
+    } else if (!disablePlacementFlip) {
+      middlewares.push(
+        flipMiddleware({
+          fallbackAxisSideDirection: 'start',
+        }),
+      );
     }
 
     middlewares.push(shiftMiddleware());
@@ -122,7 +121,7 @@ export const useFloatingMiddlewaresBootstrap = ({
       middlewares.push(hideMiddleware());
     }
 
-    return { middlewares, strictPlacement: isNotAutoPlacement ? placement : undefined };
+    return { middlewares, strictPlacement: isAutoPlacement ? undefined : placement };
   }, [
     offsetByCrossAxis,
     arrowRef,
@@ -134,6 +133,6 @@ export const useFloatingMiddlewaresBootstrap = ({
     customMiddlewares,
     placement,
     hideWhenReferenceHidden,
-    forcePlacement,
+    disablePlacementFlip,
   ]);
 };
