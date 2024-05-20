@@ -5,7 +5,7 @@ import {
   Icon20ChevronRightOutline,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { getMonths, getYears } from '../../lib/calendar';
+import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../lib/calendar';
 import { addMonths, setMonth, setYear, subMonths } from '../../lib/date';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -53,8 +53,8 @@ export interface CalendarHeaderProps
 export const CalendarHeader = ({
   viewDate,
   onChange,
-  prevMonthHidden = false,
-  nextMonthHidden = false,
+  prevMonthHidden: prevMonthHiddenProp = false,
+  nextMonthHidden: nextMonthHiddenProp = false,
   disablePickers = false,
   onNextMonth,
   onPrevMonth,
@@ -102,6 +102,7 @@ export const CalendarHeader = ({
   );
 
   const currentYear = viewDate.getFullYear();
+  const currentMonth = viewDate.getMonth();
 
   const years = React.useMemo(() => getYears(currentYear, 100), [currentYear]);
 
@@ -112,6 +113,11 @@ export const CalendarHeader = ({
 
   const { className: prevMonthClassName, ...restPrevMonthProps } = prevMonthProps;
   const { className: nextMonthClassName, ...restNextMonthProps } = nextMonthProps;
+
+  const nextMonthHidden =
+    nextMonthHiddenProp || (currentMonth === 11 && currentYear === DEFAULT_MAX_YEAR);
+  const prevMonthHidden =
+    prevMonthHiddenProp || (currentMonth === 0 && currentYear === DEFAULT_MIN_YEAR);
 
   return (
     <RootComponent baseClassName={styles['CalendarHeader']} {...restProps}>
@@ -164,7 +170,7 @@ export const CalendarHeader = ({
                 styles['CalendarHeader__picker'],
                 'vkuiInternalCalendarHeader__picker',
               )}
-              value={viewDate.getMonth()}
+              value={currentMonth}
               options={months}
               dropdownOffsetDistance={4}
               dropdownAutoWidth
@@ -179,7 +185,7 @@ export const CalendarHeader = ({
                 styles['CalendarHeader__picker'],
                 'vkuiInternalCalendarHeader__picker',
               )}
-              value={viewDate.getFullYear()}
+              value={currentYear}
               options={years}
               dropdownOffsetDistance={4}
               dropdownAutoWidth
