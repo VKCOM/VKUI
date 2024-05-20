@@ -1996,18 +1996,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^2.0.8":
-  version: 2.0.9
-  resolution: "@floating-ui/react-dom@npm:2.0.9"
-  dependencies:
-    "@floating-ui/dom": ^1.0.0
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: f7a05c90955c713fc2851f74f87bdde9bd91df5f264f061f489bd3b6ce74c78dda204c3e71a09adc56b64f5324f2c2f23c01382e5ec897ee7e8e5235c41b45a9
-  languageName: node
-  linkType: hard
-
 "@floating-ui/react-dom@npm:^2.1.0":
   version: 2.1.0
   resolution: "@floating-ui/react-dom@npm:2.1.0"
@@ -4205,7 +4193,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.1, @swc/helpers@npm:^0.5.11, @swc/helpers@npm:^0.5.3":
+"@swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.1, @swc/helpers@npm:^0.5.11":
   version: 0.5.11
   resolution: "@swc/helpers@npm:0.5.11"
   dependencies:
@@ -5434,16 +5422,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/vkui-floating-ui@npm:^0.1.5":
-  version: 0.1.5
-  resolution: "@vkontakte/vkui-floating-ui@npm:0.1.5"
+"@vkontakte/vkui-floating-ui@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@vkontakte/vkui-floating-ui@npm:0.2.1"
   dependencies:
-    "@floating-ui/react-dom": ^2.0.8
-    "@swc/helpers": ^0.5.3
+    "@floating-ui/react-dom": ^2.1.0
+    "@swc/helpers": ^0.5.11
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: b4e21cf639fa4622a34248c284db90d5347c696edfbeec9c6268bb9e552b76e7e978c96e648de3e5fad86c428aa6888c3e566ef586d27b5905e8e786cf448d45
+  checksum: 26f68404c8a49e2c91576262e732bc44abd82fbe4a2591284b782e614d6abbf773c83862008b9408a2eb4ba038b9f9d4f20e5a27e9647c606df2674890b72598
   languageName: node
   linkType: hard
 
@@ -5592,7 +5580,7 @@ __metadata:
     "@swc/helpers": ^0.5.11
     "@vkontakte/icons": ^2.104.1
     "@vkontakte/vkjs": ^1.1.2
-    "@vkontakte/vkui-floating-ui": ^0.1.5
+    "@vkontakte/vkui-floating-ui": ^0.2.1
     dayjs: ^1.11.11
     mitt: ^3.0.1
     storybook: 8.1.1
