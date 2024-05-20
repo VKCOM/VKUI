@@ -1,3 +1,4 @@
+import { clamp as clampNumber } from '../helpers/math';
 import {
   addDays,
   addWeeks,
@@ -15,13 +16,20 @@ import {
   subWeeks,
 } from './date';
 
+export const DEFAULT_MAX_YEAR = 9999;
+// 100 - из-за ограничений dayjs https://github.com/iamkun/dayjs/issues/2591
+export const DEFAULT_MIN_YEAR = 100;
+
 export const getYears = (currentYear: number, range: number) => {
   const years: Array<{
     value: number;
     label: string;
   }> = [];
 
-  for (let i = currentYear - range; i <= currentYear + range; i++) {
+  const minYear = clampNumber(currentYear - range, DEFAULT_MIN_YEAR, DEFAULT_MAX_YEAR);
+  const maxYear = clampNumber(currentYear + range, DEFAULT_MIN_YEAR, DEFAULT_MAX_YEAR);
+
+  for (let i = minYear; i <= maxYear; i++) {
     years.push({ label: String(i).padStart(4, '0'), value: i });
   }
 

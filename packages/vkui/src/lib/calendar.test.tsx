@@ -61,6 +61,34 @@ describe('calendar utils', () => {
         },
       ]);
     });
+    it('respects min year', () => {
+      const result = getYears(100, 1);
+
+      expect(result).toEqual([
+        {
+          label: '0100',
+          value: 100,
+        },
+        {
+          label: '0101',
+          value: 101,
+        },
+      ]);
+    });
+    it('respects max year', () => {
+      const result = getYears(9999, 1);
+
+      expect(result).toEqual([
+        {
+          label: '9998',
+          value: 9998,
+        },
+        {
+          label: '9999',
+          value: 9999,
+        },
+      ]);
+    });
   });
   describe(isDayMinMaxRestricted, () => {
     const minDate = new Date('2023-09-15T10:35:00.000Z');
