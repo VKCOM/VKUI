@@ -4870,7 +4870,7 @@ __metadata:
     "@types/node": ^20.12.11
     "@types/prompts": ^2.4.9
     chalk: ^4.1.2
-    commander: ^12.0.0
+    commander: ^12.1.0
     cross-spawn: ^7.0.3
     jest: ^29.7.0
     jscodeshift: ^0.13.1
@@ -6928,10 +6928,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^12.0.0":
-  version: 12.0.0
-  resolution: "commander@npm:12.0.0"
-  checksum: bce9e243dc008baba6b8d923f95b251ad115e6e7551a15838d7568abebcca0fc832da1800cf37caf37852f35ce4b7fb794ba7a4824b88c5adb1395f9268642df
+"commander@npm:^12.1.0":
+  version: 12.1.0
+  resolution: "commander@npm:12.1.0"
+  checksum: 68e9818b00fc1ed9cdab9eb16905551c2b768a317ae69a5e3c43924c2b20ac9bb65b27e1cab36aeda7b6496376d4da908996ba2c0b5d79463e0fb1e77935d514
   languageName: node
   linkType: hard
 
