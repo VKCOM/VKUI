@@ -39,6 +39,8 @@ export interface CalendarHeaderProps
   nextMonthIcon?: React.ReactNode;
   prevMonthProps?: ArrowMonthProps;
   nextMonthProps?: ArrowMonthProps;
+  minDateTime?: Date;
+  maxDateTime?: Date;
   onChange: (viewDate: Date) => void;
   /**
    * Нажатие на кнопку переключения на следующий месяц.
@@ -78,6 +80,8 @@ export const CalendarHeader = ({
       height={30}
     />
   ),
+  minDateTime,
+  maxDateTime,
   ...restProps
 }: CalendarHeaderProps) => {
   const { locale } = useConfigProvider();
@@ -92,19 +96,34 @@ export const CalendarHeader = ({
     [onChange, viewDate],
   );
 
+  const currentYear = viewDate.getFullYear();
+  const currentMonth = viewDate.getMonth();
+
+  const minMonth = minDateTime ? minDateTime.getMonth() : 0;
+  const maxMonth = maxDateTime ? maxDateTime.getMonth() : 11;
+  const minYear = minDateTime ? minDateTime.getFullYear() : DEFAULT_MIN_YEAR;
+  const maxYear = maxDateTime ? maxDateTime.getFullYear() : DEFAULT_MAX_YEAR;
+
   const months = React.useMemo(
     () =>
       getMonths(locale).map(({ value, label }) => ({
         value,
         label: <span className={styles['CalendarHeader__month']}>{label}</span>,
+        disabled: (currentYear === minYear || currentYear === maxYear) ?
+         currentYear === minYear && minMonth > value ||
+         currentYear === maxYear && value > maxMonth : false,
       })),
-    [locale],
+    [locale, currentYear, minDateTime, maxDateTime],
   );
 
-  const currentYear = viewDate.getFullYear();
-  const currentMonth = viewDate.getMonth();
-
-  const years = React.useMemo(() => getYears(currentYear, 100), [currentYear]);
+  const years = React.useMemo(
+    () => 
+      getYears(currentYear, 100).map(year => ({
+        ...year,
+        disabled: minYear > year.value || year.value > maxYear,
+      })),
+    [currentYear, minDateTime, maxDateTime]
+  );
 
   const formatter = new Intl.DateTimeFormat(locale, {
     year: 'numeric',

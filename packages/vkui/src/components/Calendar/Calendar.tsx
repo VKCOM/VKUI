@@ -201,6 +201,8 @@ export const Calendar = ({
         nextMonthIcon={nextMonthIcon}
         prevMonthProps={prevMonthProps}
         nextMonthProps={nextMonthProps}
+        minDateTime={minDateTime}
+        maxDateTime={maxDateTime}
       />
       <CalendarDays
         viewDate={externalViewDate || viewDate}
