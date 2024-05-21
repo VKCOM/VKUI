@@ -1,19 +1,24 @@
 import { usePrevious } from '../../hooks/usePrevious';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
-import { OnPlacementChange, Placement } from './types/common';
+import { OnPlacementChange, Placement, PlacementWithAuto } from './types/common';
 
 export function usePlacementChangeCallback(
-  placement: Placement,
+  initialPlacement: PlacementWithAuto,
+  resolvedPlacement: Placement,
   onPlacementChange: OnPlacementChange | undefined,
 ): void {
-  const prevPlacement = usePrevious(placement);
+  const prevPlacement = usePrevious(resolvedPlacement);
 
   useIsomorphicLayoutEffect(() => {
-    if (prevPlacement === undefined || !onPlacementChange) {
+    if (!onPlacementChange) {
       return;
     }
-    if (prevPlacement !== placement) {
-      onPlacementChange(placement);
+    const isInitialPlacementChanged =
+      prevPlacement === undefined && initialPlacement !== resolvedPlacement;
+    const isResolvedPlacementChanged =
+      prevPlacement !== undefined && prevPlacement !== resolvedPlacement;
+    if (isInitialPlacementChanged || isResolvedPlacementChanged) {
+      onPlacementChange(resolvedPlacement);
     }
-  }, [prevPlacement, placement, onPlacementChange]);
+  }, [prevPlacement, initialPlacement, resolvedPlacement, onPlacementChange]);
 }
