@@ -109,20 +109,22 @@ export const CalendarHeader = ({
       getMonths(locale).map(({ value, label }) => ({
         value,
         label: <span className={styles['CalendarHeader__month']}>{label}</span>,
-        disabled: (currentYear === minYear || currentYear === maxYear) ?
-         currentYear === minYear && minMonth > value ||
-         currentYear === maxYear && value > maxMonth : false,
+        disabled:
+          currentYear === minYear || currentYear === maxYear
+            ? (currentYear === minYear && minMonth > value) ||
+              (currentYear === maxYear && value > maxMonth)
+            : false,
       })),
     [locale, currentYear, minDateTime, maxDateTime],
   );
 
   const years = React.useMemo(
-    () => 
-      getYears(currentYear, 100).map(year => ({
+    () =>
+      getYears(currentYear, 100).map((year) => ({
         ...year,
         disabled: minYear > year.value || year.value > maxYear,
       })),
-    [currentYear, minDateTime, maxDateTime]
+    [currentYear, minDateTime, maxDateTime],
   );
 
   const formatter = new Intl.DateTimeFormat(locale, {
