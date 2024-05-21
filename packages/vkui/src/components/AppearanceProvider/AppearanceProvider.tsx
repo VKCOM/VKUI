@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { IconAppearanceProvider } from '@vkontakte/icons';
 import type { AppearanceType } from '../../lib/appearance';
 import { TokensClassProvider } from '../../lib/tokens';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
@@ -14,7 +15,9 @@ export interface AppearanceProviderProps {
 export const AppearanceProvider = ({ value, children }: AppearanceProviderProps) => {
   return (
     <ConfigProviderOverride appearance={value}>
-      <TokensClassProvider>{children}</TokensClassProvider>
+      <IconAppearanceProvider value={value}>
+        <TokensClassProvider>{children}</TokensClassProvider>
+      </IconAppearanceProvider>
     </ConfigProviderOverride>
   );
 };

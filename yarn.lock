@@ -3960,7 +3960,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.1, @swc/helpers@npm:^0.5.11":
+"@swc/helpers@npm:^0.5.0, @swc/helpers@npm:^0.5.11":
   version: 0.5.11
   resolution: "@swc/helpers@npm:0.5.11"
   dependencies:
@@ -5096,25 +5096,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/icons-sprite@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@vkontakte/icons-sprite@npm:2.0.0"
+"@vkontakte/icons-sprite@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@vkontakte/icons-sprite@npm:2.2.0"
   dependencies:
-    "@swc/helpers": ^0.5.1
+    "@swc/helpers": ^0.5.11
   peerDependencies:
     react: ^16.9.34 || ^17 || ^18
-  checksum: d58b2121001f8ca6cdb3c7e253646ca68e1eae6a4323474013b57af04a65d1936ae0fb4cbb2370a2b3ba6fad6275b7d32b70f0d4394c9345a5281c93d70e9809
+  checksum: 39f96a5c8250e85f5b260ced03357e685c820cd70dd0aa43294d99a9006dc0998243d3323d8774b41345d9627ae43b035975c869926e749d2d06e2938c75b62b
   languageName: node
   linkType: hard
 
-"@vkontakte/icons@npm:^2.104.1":
-  version: 2.104.1
-  resolution: "@vkontakte/icons@npm:2.104.1"
+"@vkontakte/icons@npm:^2.115.0":
+  version: 2.115.0
+  resolution: "@vkontakte/icons@npm:2.115.0"
   dependencies:
-    "@vkontakte/icons-sprite": 2.0.0
+    "@vkontakte/icons-sprite": 2.2.0
   peerDependencies:
     react: ^16.9.34 || ^17 || ^18
-  checksum: 4fa2ad8fa8ccafa6190edef68d92cbac7652470cb999f9cbcddc3620dcb0dd9d8f05689fc4e8019bd137fefe817dbfc39d2fdc328a6f938c98e32667894818fd
+  checksum: 50d6c49b35d9a8ecc3bb7afcbede839e4891ee0f461fb6541efc389088ea8d3b9064fb64cfb92d78d6a23dd33ffe86bab90eeaff3b9b134eb23cc8b9785c26c3
   languageName: node
   linkType: hard
 
@@ -5329,7 +5329,7 @@ __metadata:
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
     "@swc/helpers": ^0.5.11
-    "@vkontakte/icons": ^2.104.1
+    "@vkontakte/icons": ^2.115.0
     "@vkontakte/vkjs": ^1.1.2
     "@vkontakte/vkui-floating-ui": ^0.2.1
     dayjs: ^1.11.11
