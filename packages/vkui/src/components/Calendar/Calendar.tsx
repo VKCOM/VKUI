@@ -30,7 +30,15 @@ export interface CalendarProps
     >,
     Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate'> {
   value?: Date;
+  /**
+   * Запрещает выбор даты в прошлом.
+   * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
+   */
   disablePast?: boolean;
+  /**
+   * Запрещает выбор даты в будущем.
+   * Применяется, если не задано `shouldDisableDate`.
+   */
   disableFuture?: boolean;
   enableTime?: boolean;
   disablePickers?: boolean;
@@ -40,6 +48,9 @@ export interface CalendarProps
   showNeighboringMonth?: boolean;
   size?: 's' | 'm';
   onChange?: (value?: Date) => void;
+  /**
+   * Позволяет запретить выбор даты.
+   */
   shouldDisableDate?: (value: Date) => boolean;
   onClose?: () => void;
   /**
@@ -53,10 +64,12 @@ export interface CalendarProps
   onHeaderChange?: (value: Date) => void;
   /**
    * Минимальные дата и время, которые можно выбрать
+   * Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`.
    */
   minDateTime?: Date;
   /**
-   * Максимальные дата и время, которые можно выбрать
+   * Максимальные дата и время, которые можно выбрать.
+   * Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`.
    */
   maxDateTime?: Date;
 }
