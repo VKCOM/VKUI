@@ -48,7 +48,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'usePortal'
   | 'customMiddlewares'
   | 'onPlacementChange'
-  | 'disablePlacementFlip'
+  | 'disableFlipMiddleware'
 >;
 
 export interface PopperCommonProps
@@ -96,7 +96,7 @@ export const Popper = ({
   arrowHeight = DEFAULT_ARROW_HEIGHT,
   arrowPadding = DEFAULT_ARROW_PADDING,
   customMiddlewares,
-  disablePlacementFlip = false,
+  disableFlipMiddleware = false,
 
   // UseFloatingProps
   autoUpdateOnTargetResize = false,
@@ -127,7 +127,7 @@ export const Popper = ({
     offsetByCrossAxis,
     hideWhenReferenceHidden,
     customMiddlewares,
-    disablePlacementFlip,
+    disableFlipMiddleware,
   });
 
   const {

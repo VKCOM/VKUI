@@ -30,7 +30,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'zIndex'
   | 'usePortal'
   | 'onPlacementChange'
-  | 'disablePlacementFlip'
+  | 'disableFlipMiddleware'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
@@ -68,7 +68,7 @@ export const Tooltip = ({
   offsetByMainAxis = 8,
   offsetByCrossAxis = 0,
   hideWhenReferenceHidden,
-  disablePlacementFlip = false,
+  disableFlipMiddleware = false,
 
   // useFloatingWithInteractions
   defaultShown,
@@ -115,7 +115,7 @@ export const Tooltip = ({
     arrowRef,
     arrowPadding,
     arrowHeight,
-    disablePlacementFlip,
+    disableFlipMiddleware,
   });
   const {
     shown,

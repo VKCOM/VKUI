@@ -33,7 +33,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'shown'
   | 'children'
   | 'onPlacementChange'
-  | 'disablePlacementFlip'
+  | 'disableFlipMiddleware'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
@@ -83,7 +83,7 @@ export const OnboardingTooltip = ({
   getRootRef,
   disableArrow = false,
   onPlacementChange,
-  disablePlacementFlip = false,
+  disableFlipMiddleware = false,
   ...restProps
 }: OnboardingTooltipProps) => {
   const generatedId = React.useId();
@@ -103,7 +103,7 @@ export const OnboardingTooltip = ({
     arrow: !disableArrow,
     arrowHeight,
     arrowPadding,
-    disablePlacementFlip,
+    disableFlipMiddleware,
   });
   const {
     x: floatingDataX,

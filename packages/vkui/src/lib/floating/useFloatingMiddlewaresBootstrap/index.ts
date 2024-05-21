@@ -20,7 +20,7 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    * Указанное значение `placement` форсируется, даже если для выпадающего элемента недостаточно места.
    * Не оказывает влияния при `placement` значениях - `'auto' | 'auto-start' | 'auto-end'`
    */
-  disablePlacementFlip?: boolean;
+  disableFlipMiddleware?: boolean;
   /**
    * Отступ по главной оси.
    */
@@ -67,7 +67,7 @@ export const useFloatingMiddlewaresBootstrap = ({
   offsetByCrossAxis = 0,
   customMiddlewares,
   hideWhenReferenceHidden,
-  disablePlacementFlip = false,
+  disableFlipMiddleware = false,
 }: UseFloatingMiddlewaresBootstrapOptions) => {
   return React.useMemo(() => {
     const isAutoPlacement = !checkIsNotAutoPlacement(placement);
@@ -81,7 +81,7 @@ export const useFloatingMiddlewaresBootstrap = ({
     // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
     if (isAutoPlacement) {
       middlewares.push(autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }));
-    } else if (!disablePlacementFlip) {
+    } else if (!disableFlipMiddleware) {
       middlewares.push(
         flipMiddleware({
           fallbackAxisSideDirection: 'start',
@@ -133,6 +133,6 @@ export const useFloatingMiddlewaresBootstrap = ({
     customMiddlewares,
     placement,
     hideWhenReferenceHidden,
-    disablePlacementFlip,
+    disableFlipMiddleware,
   ]);
 };

@@ -73,7 +73,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'restoreFocus'
   | 'children'
   | 'zIndex'
-  | 'disablePlacementFlip'
+  | 'disableFlipMiddleware'
 >;
 
 /**
@@ -127,7 +127,7 @@ export const Popover = ({
   arrowPadding = DEFAULT_ARROW_PADDING,
   placement: expectedPlacement = 'bottom-start',
   onPlacementChange,
-  disablePlacementFlip = false,
+  disableFlipMiddleware = false,
   trigger = 'click',
   content,
   hoverDelay = 150,
@@ -175,7 +175,7 @@ export const Popover = ({
     offsetByCrossAxis,
     sameWidth,
     hideWhenReferenceHidden,
-    disablePlacementFlip,
+    disableFlipMiddleware,
   });
   const {
     placement: resolvedPlacement,
