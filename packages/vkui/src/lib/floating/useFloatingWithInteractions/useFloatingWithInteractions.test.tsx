@@ -231,8 +231,8 @@ describe(useFloatingWithInteractions, () => {
       rerender(<TestComponent hookResultRef={result} />);
       await waitFor(() => {
         expect(result.current.shown).toBeTruthy();
-        expect(onShownChange).toHaveBeenCalledTimes(1);
-        expect(onShownChange).toHaveBeenLastCalledWith(true, 'focus');
+        expect(onShownChange).toHaveBeenCalledTimes(2); // focus and click
+        expect(onShownChange).toHaveBeenLastCalledWith(true, 'click');
       });
 
       jest.useFakeTimers();
@@ -245,7 +245,7 @@ describe(useFloatingWithInteractions, () => {
       rerender(<TestComponent hookResultRef={result} />);
       await waitFor(() => {
         expect(result.current.shown).toBeFalsy();
-        expect(onShownChange).toHaveBeenCalledTimes(2);
+        expect(onShownChange).toHaveBeenCalledTimes(3);
         expect(onShownChange).toHaveBeenLastCalledWith(false, 'escape-key');
       });
 
@@ -253,7 +253,7 @@ describe(useFloatingWithInteractions, () => {
       rerender(<TestComponent hookResultRef={result} />);
       await waitFor(() => {
         expect(result.current.shown).toBeTruthy();
-        expect(onShownChange).toHaveBeenCalledTimes(3);
+        expect(onShownChange).toHaveBeenCalledTimes(4);
         expect(onShownChange).toHaveBeenLastCalledWith(true, 'click');
       });
     });
