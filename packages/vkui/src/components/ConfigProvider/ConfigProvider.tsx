@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { IconAppearanceProvider } from '@vkontakte/icons';
 import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { TokensClassProvider } from '../../lib/tokens';
@@ -50,7 +51,9 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps) => {
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <TokensClassProvider>{children}</TokensClassProvider>
+      <IconAppearanceProvider value={appearance}>
+        <TokensClassProvider>{children}</TokensClassProvider>
+      </IconAppearanceProvider>
     </ConfigProviderContext.Provider>
   );
 };
