@@ -119,7 +119,7 @@ export const OnboardingTooltip = ({
     'aria-describedby': shown ? tooltipId : undefined,
   });
 
-  usePlacementChangeCallback(resolvedPlacement, onPlacementChange);
+  usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
 
   let tooltip: React.ReactPortal | null = null;
   if (shown) {

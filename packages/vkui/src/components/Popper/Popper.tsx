@@ -145,7 +145,7 @@ export const Popper = ({
     },
   });
 
-  usePlacementChangeCallback(resolvedPlacement, onPlacementChange);
+  usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
 
   const { arrow: arrowCoords } = middlewareData;
 

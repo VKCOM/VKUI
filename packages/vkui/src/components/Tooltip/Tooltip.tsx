@@ -138,7 +138,7 @@ export const Tooltip = ({
   });
   const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
 
-  usePlacementChangeCallback(placement, onPlacementChange);
+  usePlacementChangeCallback(placementProp, placement, onPlacementChange);
 
   let tooltip: React.ReactNode = null;
   if (shown) {
