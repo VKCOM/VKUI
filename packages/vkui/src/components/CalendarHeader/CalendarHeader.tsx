@@ -127,9 +127,13 @@ export const CalendarHeader = ({
   const { className: nextMonthClassName, ...restNextMonthProps } = nextMonthProps;
 
   const nextMonthHidden =
-    nextMonthHiddenProp || (currentMonth === 11 && currentYear === DEFAULT_MAX_YEAR);
+    nextMonthHiddenProp ||
+    (currentMonth === 11 && currentYear === DEFAULT_MAX_YEAR) ||
+    (isMonthDisabled && isMonthDisabled(currentMonth === 11 ? 0 : currentMonth + 1));
   const prevMonthHidden =
-    prevMonthHiddenProp || (currentMonth === 0 && currentYear === DEFAULT_MIN_YEAR);
+    prevMonthHiddenProp ||
+    (currentMonth === 0 && currentYear === DEFAULT_MIN_YEAR) ||
+    (isMonthDisabled && isMonthDisabled(currentMonth === 0 ? 11 : currentMonth - 1));
 
   return (
     <RootComponent baseClassName={styles['CalendarHeader']} {...restProps}>
