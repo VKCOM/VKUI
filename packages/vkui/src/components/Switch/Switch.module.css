@@ -1,165 +1,221 @@
 .Switch {
-  user-select: none;
+  /* Switch__track */
+  --vkui_internal--Switch__track_shape: calc(var(--vkui_internal--Switch__track_width) / 2);
+
+  /* animations */ /* prettier-ignore */
+  --vkui_internal--Switch_transition_duration_x2: calc(var(--vkui_internal--Switch_transition_duration) * 2);
+
   position: relative;
   display: block;
+  border-radius: var(--vkui_internal--Switch__track_shape);
+  user-select: none;
   cursor: pointer;
-
-  /* Добавляем отступы, если пин больше трека */
-  padding: calc(
-    (var(--vkui--size_switch_pin--regular) - var(--vkui--size_switch_height--regular)) / 2
-  );
+  -webkit-tap-highlight-color: transparent;
 }
 
-.Switch--sizeY-compact {
-  padding: calc(
-    (var(--vkui--size_switch_pin--compact) - var(--vkui--size_switch_height--compact)) / 2
-  );
+.Switch--default {
+  /* Switch__track */
+  --vkui_internal--Switch__track_width: 42px;
+  --vkui_internal--Switch__track_height: 24px;
+  --vkui_internal--Switch__track_outline_width: 1.5px;
+  /* prettier-ignore */
+  --vkui_internal--Switch__track_shadow: inset 0 0 0 var(--vkui_internal--Switch__track_outline_width) var(--vkui--color_field_border_alpha);
+  --vkui_internal--Switch__track_color: var(--vkui--color_background);
+
+  /* Switch__dribble */
+  --vkui_internal--Switch__dribble_gap: calc(var(--vkui_internal--Switch__handle_width) / 2);
+  --vkui_internal--Switch__dribble_shift_x: calc(-1 * var(--vkui_internal--Switch__handle_width));
+
+  /* Switch__handle */
+  --vkui_internal--Switch__handle_gap: calc(var(--vkui_internal--Switch__track_outline_width) * 2);
+  --vkui_internal--Switch__handle_shift_x: 0;
+  --vkui_internal--Switch__handle_shift_y: 0;
+  --vkui_internal--Switch__handle_shadow: none;
+  --vkui_internal--Switch__handle_color: var(--vkui--color_icon_medium);
+  --vkui_internal--Switch__handle_width: 18px;
+  --vkui_internal--Switch__handle_widthNoUnit--pressed: 21;
+  --vkui_internal--Switch__handle_widthNoUnit--not-checked: 12;
+  --vkui_internal--Switch__handle_height: 18px;
+  --vkui_internal--Switch__handle_heightNoUnit: 18;
+  /* prettier-ignore */
+  --vkui_internal--Switch__handle_scale: calc(var(--vkui_internal--Switch__handle_widthNoUnit--not-checked) / var(--vkui_internal--Switch__handle_heightNoUnit));
+
+  /* animations */
+  --vkui_internal--Switch_transition_transform_easing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --vkui_internal--Switch_transition_duration: 0.3s;
+}
+
+.Switch--default.Switch--sizeY-compact {
+  /* Switch__track */
+  --vkui_internal--Switch__track_width: 36px;
+  --vkui_internal--Switch__track_height: 20px;
+
+  /* Switch__handle */ /* prettier-ignore */
+  --vkui_internal--Switch__handle_gap: calc(var(--vkui_internal--Switch__track_outline_width) * 2 - 1px);
+  --vkui_internal--Switch__handle_width: 16px;
+  --vkui_internal--Switch__handle_widthNoUnit--pressed: 17;
+  --vkui_internal--Switch__handle_height: 16px;
+  --vkui_internal--Switch__handle_heightNoUnit: 16;
 }
 
 @media (--sizeY-compact) {
-  .Switch--sizeY-none {
-    padding: calc(
-      (var(--vkui--size_switch_pin--compact) - var(--vkui--size_switch_height--compact)) / 2
-    );
+  .Switch--default.Switch--sizeY-none {
+    /* Switch__track */
+    --vkui_internal--Switch__track_width: 36px;
+    --vkui_internal--Switch__track_height: 20px;
+
+    /* Switch__handle */ /* prettier-ignore */
+    --vkui_internal--Switch__handle_gap: calc(var(--vkui_internal--Switch__track_outline_width) * 2 - 1px);
+    --vkui_internal--Switch__handle_width: 16px;
+    --vkui_internal--Switch__handle_height: 16px;
+    --vkui_internal--Switch__handle_heightNoUnit: 16;
+    --vkui_internal--Switch__handle_widthNoUnit--pressed: 17;
+  }
+}
+
+.Switch--ios {
+  /* Switch__track */
+  --vkui_internal--Switch__track_width: 51px;
+  --vkui_internal--Switch__track_height: 31px;
+  --vkui_internal--Switch__track_outline_width: 2px;
+  --vkui_internal--Switch__track_shadow: none;
+  --vkui_internal--Switch__track_color: var(--vkui--color_track_background);
+
+  /* Switch__handle */
+  --vkui_internal--Switch__handle_gap: 0;
+  --vkui_internal--Switch__handle_shift_x: 2px;
+  --vkui_internal--Switch__handle_shift_y: 2px;
+  --vkui_internal--Switch__handle_width: 27px;
+  --vkui_internal--Switch__handle_height: 27px;
+  --vkui_internal--Switch__handle_widthNoUnit--pressed: 27px;
+  --vkui_internal--Switch__handle_widthNoUnit--not-checked: 27px;
+  --vkui_internal--Switch__handle_color: var(--vkui--color_icon_contrast);
+  /* prettier-ignore */
+  --vkui_internal--Switch__handle_shadow:
+    0 3px 8px rgba(0, 0, 0, 0.15),
+    0 3px 1px rgba(0, 0, 0, 0.06),
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+
+  /* animations */
+  --vkui_internal--Switch_transition_transform_easing: cubic-bezier(0.36, -0.24, 0.26, 1.32);
+  --vkui_internal--Switch_transition_duration: 0.2s;
+}
+
+.Switch--ios.Switch--sizeY-compact {
+  /* Switch__track */
+  --vkui_internal--Switch__track_width: 47px;
+  --vkui_internal--Switch__track_height: 27px;
+
+  /* Switch__handle */
+  --vkui_internal--Switch__handle_width: 23px;
+  --vkui_internal--Switch__handle_height: 23px;
+  --vkui_internal--Switch__handle_widthNoUnit--pressed: 23px;
+  --vkui_internal--Switch__handle_widthNoUnit--not-checked: 23px;
+}
+
+@media (--sizeY-compact) {
+  .Switch--ios.Switch--sizeY-none {
+    /* Switch__track */
+    --vkui_internal--Switch__track_width: 47px;
+    --vkui_internal--Switch__track_height: 27px;
+
+    /* Switch__handle */
+    --vkui_internal--Switch__handle_width: 23px;
+    --vkui_internal--Switch__handle_height: 23px;
+    --vkui_internal--Switch__handle_widthNoUnit--pressed: 23px;
+    --vkui_internal--Switch__handle_widthNoUnit--not-checked: 23px;
   }
 }
 
 .Switch--disabled {
-  cursor: default;
+  cursor: not-allowed;
 }
 
-.Switch__pseudo {
+.Switch__inputFake {
+  display: block;
+}
+
+.Switch__inputNative:checked + .Switch__inputFake {
+  /* Switch__track */
+  --vkui_internal--Switch__track_color: var(--vkui--color_background_accent);
+
+  /* Switch__handle */
+  --vkui_internal--Switch__handle_scale: 1;
+  --vkui_internal--Switch__handle_color: var(--vkui--color_icon_contrast);
+}
+
+.Switch--default .Switch__inputNative:checked + .Switch__inputFake {
+  /* Switch__dribble */ /* prettier-ignore */
+  --vkui_internal--Switch__dribble_gap: calc((var(--vkui_internal--Switch__handle_width) * 2) - (var(--vkui_internal--Switch__handle_gap) * 2));
+  --vkui_internal--Switch__dribble_shift_x: var(--vkui_internal--Switch__handle_width);
+  --vkui_internal--Switch__handle_shift_x: var(--vkui_internal--Switch__handle_width);
+}
+
+.Switch--ios .Switch__inputNative:checked + .Switch__inputFake {
+  /* Switch__dribble */
+  --vkui_internal--Switch__handle_shift_x: calc(
+    var(--vkui_internal--Switch__track_width) - var(--vkui_internal--Switch__handle_width) -
+      var(--vkui_internal--Switch__track_outline_width)
+  );
+}
+
+.Switch__inputNative:active + .Switch__inputFake {
+  /* Switch__handle */ /* prettier-ignore */
+  --vkui_internal--Switch__handle_scale: calc(var(--vkui_internal--Switch__handle_widthNoUnit--pressed) / var(--vkui_internal--Switch__handle_heightNoUnit));
+}
+
+.Switch__track {
   position: relative;
   display: block;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
+  inline-size: var(--vkui_internal--Switch__track_width);
+  block-size: var(--vkui_internal--Switch__track_height);
+  border-radius: var(--vkui_internal--Switch__track_shape);
+  background-color: var(--vkui_internal--Switch__track_color);
+  box-shadow: var(--vkui_internal--Switch__track_shadow);
 }
 
-/**
- * Пин
- */
-.Switch__pseudo::before {
+.Switch__dribble {
   position: absolute;
+  inset: 0;
+  margin: auto;
+  inline-size: calc(var(--vkui_internal--Switch__handle_width) * 2);
+  block-size: var(--vkui_internal--Switch__handle_height);
+  border-radius: 9999px;
+  overflow: hidden;
+  transform-origin: var(--vkui_internal--Switch__dribble_gap) center;
+  transform: scale(var(--vkui_internal--Switch__handle_scale));
+}
+
+.Switch__dribble::before {
   content: '';
-  border-radius: 50%;
-  box-sizing: border-box;
-  background: var(--vkui--color_icon_contrast_secondary);
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
-
-  /* Делаем пин по центру */
-  inset-block-start: calc(
-    (var(--vkui--size_switch_height--regular) - var(--vkui--size_switch_pin--regular)) / 2
-  );
-  inset-inline-start: calc(
-    (var(--vkui--size_switch_height--regular) - var(--vkui--size_switch_pin--regular)) / 2
-  );
-  inline-size: var(--vkui--size_switch_pin--regular);
-  block-size: var(--vkui--size_switch_pin--regular);
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--vkui_internal--Switch__handle_color);
+  transform: translateX(var(--vkui_internal--Switch__dribble_shift_x));
 }
 
-.Switch--sizeY-compact .Switch__pseudo::before {
-  inset-block-start: calc(
-    (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
-  );
-  inset-inline-start: calc(
-    (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
-  );
-  inline-size: var(--vkui--size_switch_pin--compact);
-  block-size: var(--vkui--size_switch_pin--compact);
-}
-
-@media (--sizeY-compact) {
-  .Switch--sizeY-none .Switch__pseudo::before {
-    inset-block-start: calc(
-      (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
-    );
-    inset-inline-start: calc(
-      (var(--vkui--size_switch_height--compact) - var(--vkui--size_switch_pin--compact)) / 2
-    );
-    inline-size: var(--vkui--size_switch_pin--compact);
-    block-size: var(--vkui--size_switch_pin--compact);
-  }
-}
-
-.Switch__self:checked + .Switch__pseudo::before {
-  background: var(--vkui--color_icon_accent);
-  transform: translateX(
-    calc(var(--vkui--size_switch_width--regular) - var(--vkui--size_switch_height--regular))
+.Switch__handle {
+  position: absolute;
+  inset-inline-start: var(--vkui_internal--Switch__handle_gap);
+  inset-block-start: var(--vkui_internal--Switch__handle_gap);
+  inline-size: var(--vkui_internal--Switch__handle_width);
+  block-size: var(--vkui_internal--Switch__handle_height);
+  border-radius: 9999px;
+  transform: translate(
+    var(--vkui_internal--Switch__handle_shift_x),
+    var(--vkui_internal--Switch__handle_shift_y)
   );
 }
 
-/**
- * Трек
- */
-.Switch__pseudo::after {
+.Switch__handle::before {
   content: '';
-  display: block;
-  background: var(--vkui--color_icon_tertiary_alpha);
-  border-radius: calc(var(--vkui--size_switch_width--regular) / 2);
-  inline-size: var(--vkui--size_switch_width--regular);
-  block-size: var(--vkui--size_switch_height--regular);
-}
-
-.Switch--sizeY-compact .Switch__pseudo::after {
-  border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
-  inline-size: var(--vkui--size_switch_width--compact);
-  block-size: var(--vkui--size_switch_height--compact);
-}
-
-@media (--sizeY-compact) {
-  .Switch--sizeY-none .Switch__pseudo::after {
-    border-radius: calc(var(--vkui--size_switch_width--compact) / 2);
-    inline-size: var(--vkui--size_switch_width--compact);
-    block-size: var(--vkui--size_switch_height--compact);
-  }
-}
-
-.Switch__self:checked + .Switch__pseudo::after {
-  opacity: 0.48;
-  background: var(--vkui--color_icon_accent);
-}
-
-.Switch--sizeY-compact .Switch__self:checked + .Switch__pseudo::before {
-  transform: translateX(
-    calc(var(--vkui--size_switch_width--compact) - var(--vkui--size_switch_height--compact))
-  );
-}
-
-@media (--sizeY-compact) {
-  .Switch--sizeY-none .Switch__self:checked + .Switch__pseudo::before {
-    transform: translateX(
-      calc(var(--vkui--size_switch_width--compact) - var(--vkui--size_switch_height--compact))
-    );
-  }
-}
-
-.Switch__self[disabled] + .Switch__pseudo {
-  opacity: var(--vkui--opacity_disable);
-}
-
-/**
- * Пин
- */
-.Switch--ios .Switch__pseudo::before {
-  background: var(--vkui_internal--white);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06),
-    inset 0 0 0 0.5px rgba(0, 0, 0, 0.04);
-}
-
-.Switch--ios .Switch__self:checked + .Switch__pseudo::before {
-  background: var(--vkui_internal--white);
-}
-
-/**
- * Трек
- */
-.Switch--ios .Switch__pseudo::after {
-  background: var(--vkui--color_track_background);
-}
-
-.Switch--ios .Switch__self:checked + .Switch__pseudo::after {
-  opacity: 1;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--vkui_internal--Switch__handle_color);
+  box-shadow: var(--vkui_internal--Switch__handle_shadow);
+  transform: scale(var(--vkui_internal--Switch__handle_scale));
 }
 
 /**
@@ -169,20 +225,31 @@
  * navigating accessible vkui apps via keyboard
  */
 @media (prefers-reduced-motion: no-preference) {
-  .Switch__pseudo::after {
-    transition: background-color 0.1s ease;
+  .Switch__track {
+    transition: background-color var(--vkui_internal--Switch_transition_duration) linear;
   }
 
-  .Switch__pseudo::before {
-    transition: transform 0.1s ease;
+  .Switch__dribble,
+  .Switch__handle {
+    /* prettier-ignore */
+    transition: transform var(--vkui_internal--Switch_transition_duration) var(--vkui_internal--Switch_transition_transform_easing);
   }
 
-  .Switch--ios .Switch__pseudo::after {
-    transition: background-color 0.2s ease;
+  .Switch__dribble::before,
+  .Switch__handle::before {
+    transition-property: transform, background-color;
+    transition-timing-function: var(--vkui_internal--Switch_transition_transform_easing), linear;
   }
 
-  .Switch--ios .Switch__pseudo::before {
-    transition: transform 0.2s cubic-bezier(0.36, -0.24, 0.26, 1.32);
+  .Switch__dribble::before {
+    /* prettier-ignore */
+    transition-duration:
+      var(--vkui_internal--Switch_transition_duration_x2),
+      var(--vkui_internal--Switch_transition_duration);
+  }
+
+  .Switch__handle::before {
+    transition-duration: var(--vkui_internal--Switch_transition_duration);
   }
 }
 
