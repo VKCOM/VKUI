@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CalendarProps } from '../components/Calendar/Calendar';
-import { isDayMinMaxRestricted } from '../lib/calendar';
+import { isDayMinMaxRestricted, DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR } from '../lib/calendar';
 import {
   addMonths,
   endOfDay,
@@ -85,6 +85,52 @@ export function useCalendar({
     [disableFuture, disablePast, shouldDisableDate, minDateTime, maxDateTime],
   );
 
+  const isMonthDisabled = React.useCallback(
+    (month: number): boolean => {
+      const now = new Date();
+      const currentYear = viewDate.getFullYear();
+      const minMonth = minDateTime?.getMonth() || 0;
+      const maxMonth = maxDateTime?.getMonth() || 11;
+      const minYear = minDateTime?.getFullYear() || DEFAULT_MIN_YEAR;
+      const maxYear = maxDateTime?.getFullYear() || DEFAULT_MAX_YEAR;
+
+      let isDisabled =
+        currentYear === minYear || currentYear === maxYear
+          ? (currentYear === minYear && minMonth > month) ||
+            (currentYear === maxYear && month > maxMonth)
+          : false;
+
+      if (disableFuture) {
+        isDisabled = isDisabled || (currentYear >= now.getFullYear() && month > now.getMonth());
+      }
+      if (disablePast) {
+        isDisabled = isDisabled || (currentYear <= now.getFullYear() && month < now.getMonth());
+      }
+
+      return isDisabled;
+    },
+    [disableFuture, disablePast, viewDate, minDateTime, maxDateTime],
+  );
+
+  const isYearDisabled = React.useCallback(
+    (year: number): boolean => {
+      const now = new Date();
+      const minYear = minDateTime?.getFullYear() || DEFAULT_MIN_YEAR;
+      const maxYear = maxDateTime?.getFullYear() || DEFAULT_MAX_YEAR;
+
+      let isDisabled = minYear > year || year > maxYear;
+      if (disableFuture) {
+        isDisabled = isDisabled || year > now.getFullYear();
+      }
+      if (disablePast) {
+        isDisabled = isDisabled || year < now.getFullYear();
+      }
+
+      return isDisabled;
+    },
+    [disableFuture, disablePast, minDateTime, maxDateTime],
+  );
+
   const resetSelectedDay = React.useCallback(() => {
     setFocusedDay(undefined);
   }, [setFocusedDay]);
@@ -99,5 +145,7 @@ export function useCalendar({
     isDayFocused,
     isDayDisabled,
     resetSelectedDay,
+    isMonthDisabled,
+    isYearDisabled,
   };
 }
