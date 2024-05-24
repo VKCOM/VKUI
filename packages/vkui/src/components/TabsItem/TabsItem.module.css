@@ -66,9 +66,7 @@
 
 /* mode="accent" */
 .TabsItem--mode-accent {
-  transition:
-    background-color 150ms ease-out,
-    box-shadow 150ms ease-out;
+  transition: background-color 150ms ease-out, box-shadow 150ms ease-out;
 }
 
 .TabsItem--selected.TabsItem--mode-accent {
