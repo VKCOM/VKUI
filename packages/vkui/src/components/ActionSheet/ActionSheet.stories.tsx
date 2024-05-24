@@ -13,9 +13,16 @@ import {
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { ActionSheetItem, ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { Button } from '../Button/Button';
+import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
+import { CellButton } from '../CellButton/CellButton';
+import { Group } from '../Group/Group';
+import { Panel } from '../Panel/Panel';
+import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { Placeholder } from '../Placeholder/Placeholder';
+import { PlatformProvider } from '../PlatformProvider/PlatformProvider';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
+import { View } from '../View/View';
 import { ActionSheet, ActionSheetProps } from './ActionSheet';
 
 const story: Meta<ActionSheetProps> = {
@@ -120,5 +127,108 @@ export const WithSelectable: Story = {
       { selectable: true, children: 'Друзья по школе' },
       { selectable: true, children: 'Друзья по вузу' },
     ],
+  },
+};
+
+export const A11YExampleWithManyButtons: Story = {
+  render: function Render() {
+    const [popout, setPopout] = React.useState<React.ReactElement | null>(null);
+    const onClose = () => setPopout(null);
+    const baseTargetRef = React.useRef(null);
+    const iconsTargetRef = React.useRef(null);
+    const subtitleTargetRef = React.useRef(null);
+    const selectableTargetRef = React.useRef(null);
+    const openBase = () =>
+      setPopout(
+        <ActionSheet onClose={onClose} toggleRef={baseTargetRef}>
+          <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
+          <ActionSheetItem>Закрепить запись</ActionSheetItem>
+          <ActionSheetItem>Выключить комментирование</ActionSheetItem>
+          <ActionSheetItem>Закрепить запись</ActionSheetItem>
+          <ActionSheetItem mode="destructive">Удалить запись</ActionSheetItem>
+        </ActionSheet>,
+      );
+    const openIcons = () =>
+      setPopout(
+        <ActionSheet onClose={onClose} toggleRef={iconsTargetRef}>
+          <ActionSheetItem>Редактировать профиль</ActionSheetItem>
+          <ActionSheetItem>Слушать далее</ActionSheetItem>
+          <ActionSheetItem>Поделиться</ActionSheetItem>
+          <ActionSheetItem>Скопировать ссылку</ActionSheetItem>
+          <ActionSheetItem mode="destructive">Удалить плейлист</ActionSheetItem>
+        </ActionSheet>,
+      );
+
+    const openSubtitle = () =>
+      setPopout(
+        <ActionSheet onClose={onClose} toggleRef={subtitleTargetRef}>
+          <ActionSheetItem subtitle="Авто">Качество</ActionSheetItem>
+          <ActionSheetItem subtitle="Отсутствуют" disabled>
+            Субтитры
+          </ActionSheetItem>
+          <ActionSheetItem subtitle="Обычная">Скорость воспроизведения</ActionSheetItem>
+        </ActionSheet>,
+      );
+    const openSelectable = () =>
+      setPopout(
+        <ActionSheet onClose={onClose} toggleRef={selectableTargetRef}>
+          <ActionSheetItem name="filter" value="best" selectable>
+            Лучшие друзья
+          </ActionSheetItem>
+          <ActionSheetItem name="filter" value="relatives" selectable>
+            Родственники
+          </ActionSheetItem>
+          <ActionSheetItem name="filter" value="collegues" selectable>
+            Коллеги
+          </ActionSheetItem>
+          <ActionSheetItem name="filter" value="school" selectable>
+            Друзья по школе
+          </ActionSheetItem>
+          <ActionSheetItem name="filter" value="university" selectable>
+            Друзья по вузу
+          </ActionSheetItem>
+        </ActionSheet>,
+      );
+
+    return (
+      <SplitLayout popout={popout}>
+        <SplitCol>
+          <View activePanel="panel">
+            <Panel id="panel">
+              <PlatformProvider value="vkcom">
+                <PanelHeader>Пример ActionSheet</PanelHeader>
+                <Group>
+                  <CellButton getRootRef={baseTargetRef} onClick={openBase}>
+                    Базовый список
+                  </CellButton>
+                  <CellButton getRootRef={iconsTargetRef} onClick={openIcons}>
+                    Список с опциями VK Music
+                  </CellButton>
+                  <CellButton getRootRef={subtitleTargetRef} onClick={openSubtitle}>
+                    Список опций видео
+                  </CellButton>
+                  <CellButton getRootRef={selectableTargetRef} onClick={openSelectable}>
+                    Переместить друга
+                  </CellButton>
+                  <Placeholder
+                    header="Находите друзей"
+                    action={
+                      <ButtonGroup mode="vertical" align="center">
+                        <Button size="m">Найти друзей</Button>
+                        <Button size="m" mode="tertiary">
+                          Подробнее
+                        </Button>
+                      </ButtonGroup>
+                    }
+                  >
+                    Здесь будут отображаться люди, которых вы добавите в друзья
+                  </Placeholder>
+                </Group>
+              </PlatformProvider>
+            </Panel>
+          </View>
+        </SplitCol>
+      </SplitLayout>
+    );
   },
 };

@@ -49,7 +49,23 @@ export function useKeyboardInputTracker(): React.MutableRefObject<boolean> {
       keyboardFocusingStartedRef.current = true;
     };
 
-    const handleCustomDisableKeyboardEvent = () => {
+    const handleCustomDisableKeyboardEvent = (event: Event) => {
+      const isNVDAMouseDownOnEnterSpacePress =
+        event.type === 'mousedown' && 'detail' in event && event.detail === 0;
+      if (isNVDAMouseDownOnEnterSpacePress) {
+        // NVDA screen reader вплоть до v2024.1 когда пользователь нажимает 'Enter' или 'Space'
+        // отправляет событие 'mousedown' вместо keydown, что ложно сбрасывает наш флаг
+        // и при открытии попапа или ActionSheet FocusTrap не работает, потому что
+        // думает, что последнее взаимодействие было не с клавиатуры.
+        // @see https://github.com/nvaccess/nvda/issues/11230#issuecomment-1918018067
+        //
+        // Единственный, пока что, способ определить, что это событие прилетело от NVDA это
+        // проверить detail (счётчик кликов), что он равен 0,
+        // для обычных событий от клавиатуры/тачпада это значение
+        // всегда начинается с 1 (верно для популярных браузеров на Windows/MacOs).
+        return;
+      }
+
       keyboardFocusingStartedRef.current = false;
     };
 
