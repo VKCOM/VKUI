@@ -16,10 +16,7 @@ const Example = () => {
   const hasHeader = platform !== 'vkcom';
 
   return (
-    <SplitLayout
-      style={{ justifyContent: 'center' }}
-      header={hasHeader && <PanelHeader delimiter="none" />}
-    >
+    <SplitLayout center header={hasHeader && <PanelHeader delimiter="none" />}>
       <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
         <View activePanel="context2">
           <Panel id="context2">

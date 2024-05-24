@@ -38,7 +38,7 @@ const Example = () => {
 
   return (
     <SplitLayout
-      style={{ justifyContent: 'center' }}
+      center
       header={!isVKCOM && <PanelHeader delimiter="none" />}
       popout={popout}
       modal={modalRoot}

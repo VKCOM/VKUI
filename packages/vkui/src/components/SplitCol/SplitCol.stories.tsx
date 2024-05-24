@@ -32,7 +32,7 @@ export const Playground: Story = {
     const [panel, setPanel] = React.useState(panels[0]);
 
     return (
-      <SplitLayout style={{ justifyContent: 'center' }}>
+      <SplitLayout center>
         <SplitCol {...args}>
           <View activePanel={panel}>
             <Panel id={panels[0]}>
