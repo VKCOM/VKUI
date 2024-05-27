@@ -3,7 +3,6 @@ import { rafSchd } from '../../lib/rafSchd';
 
 const SCROLL_SPEED = 10;
 export const EDGE_SIZE = 50;
-export const OUTBOX_OFFSET = -30;
 
 export const getAutoScrollingData = (clientY: number, scrollEl: Element | Window) => {
   const scrollTop = Math.floor(getNodeScroll(scrollEl).scrollTop);
@@ -22,9 +21,7 @@ export const getAutoScrollingData = (clientY: number, scrollEl: Element | Window
   const isInBottomEdge = bottomDistance <= EDGE_SIZE;
 
   const result = {
-    shouldScrolling:
-      (canScrollUp && isInTopEdge && topDistance >= OUTBOX_OFFSET) ||
-      (canScrollDown && isInBottomEdge && bottomDistance >= OUTBOX_OFFSET),
+    shouldScrolling: (canScrollUp && isInTopEdge) || (canScrollDown && isInBottomEdge),
     y: 0,
   };
 
