@@ -1,6 +1,6 @@
 import {
+  Icon20ChevronLeftOutline,
   Icon24ArrowLeftOutline,
-  Icon24ChevronLeftOutline,
   Icon28ArrowLeftOutline,
   Icon28ChevronBack,
   Icon28ChevronLeftOutline,
@@ -25,7 +25,7 @@ const getBackIcon = (platform: PlatformType) => {
     case 'vkcom':
       return (
         <AdaptiveIconRenderer
-          IconCompact={Icon24ChevronLeftOutline}
+          IconCompact={Icon20ChevronLeftOutline}
           IconRegular={Icon28ChevronLeftOutline}
         />
       );
