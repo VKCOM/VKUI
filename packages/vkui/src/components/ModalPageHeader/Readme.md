@@ -3,8 +3,8 @@
 
 ### Требования по расположению кнопок
 
-- На Android **слева** может быть [`PanelHeaderClose`](#!/PanelHeaderClose).
-- На iOS **справа** должна быть кнопка закрытия. Это может быть либо [`PanelHeaderButton`](#!/PanelHeaderButton) с иконкой `<Icon24Dismiss />`, либо [`PanelHeaderClose`](#!/PanelHeaderClose) или [`PanelHeaderSubmit`](#!/PanelHeaderSubmit).
+- На Android **слева** может быть [`PanelHeaderClose`](#!/PanelHeaderButton).
+- На iOS **справа** должна быть кнопка закрытия. Это может быть либо [`PanelHeaderButton`](#!/PanelHeaderButton) с иконкой `<Icon24Dismiss />`, либо [`PanelHeaderClose`](#!/PanelHeaderButton) или [`PanelHeaderSubmit`](#!/PanelHeaderButton).
 - Если произойдёт навигация вперёд внутри модального окна, то **слева** в шапке останется **только** кнопка назад.
 
 Также на Android могут быть какие-то дополнительные кнопки-иконки справа, а на iOS – слева.
