@@ -30,6 +30,9 @@ inputs:
   close_milestone:
     required: false
     default: false
+  prerelease:
+    required: false
+    default: false
 
 runs:
   using: composite
@@ -66,6 +69,13 @@ runs:
         github_token: ${{ inputs.token }}
         branch: ${{ inputs.branch }}
         tags: true
+
+    - name: Create stable branch
+      uses: VKCOM/gh-actions/VKUI/stable-branch@main
+      if: ${{ inputs.package_name == '@vkontakte/vkui' && fromJSON(inputs.prerelease) == false }}
+      with:
+        token: ${{ inputs.token }}
+        directory: packages/vkui/
 
     - name: Prepare payload data
       run: |
