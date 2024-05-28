@@ -1,10 +1,5 @@
 import { requestAnimationFrameMock } from '../../testing/utils';
-import {
-  createAutoScrollController,
-  EDGE_SIZE,
-  getAutoScrollingData,
-  OUTBOX_OFFSET,
-} from './autoScroll';
+import { createAutoScrollController, EDGE_SIZE, getAutoScrollingData } from './autoScroll';
 
 const VIEWPORT_WIDTH = 1280;
 const VIEWPORT_HEIGHT = 768;
@@ -48,19 +43,16 @@ describe('getAutoScrollingData', () => {
     test.each([
       [0, 1],
       [EDGE_SIZE - 1, 1],
-      [OUTBOX_OFFSET, 1],
-      [OUTBOX_OFFSET + 10, 1],
+      [-30, 1],
+      [-20, 1],
     ])('should be truthy for scrollTop is not on top', (clientY, scrollTop) => {
       initScrollElData(scrollEl, scrollTop);
       const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
       expect(shouldScrolling).toBeTruthy();
     });
 
-    test.each([
-      [EDGE_SIZE + 1, 1],
-      [OUTBOX_OFFSET - 1, 1],
-    ])(
-      `should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE}) or outbox size (${OUTBOX_OFFSET})`,
+    test.each([[EDGE_SIZE + 1, 1]])(
+      `should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE})`,
       (clientY, scrollTop) => {
         initScrollElData(scrollEl, scrollTop);
         const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
@@ -80,11 +72,8 @@ describe('getAutoScrollingData', () => {
       expect(shouldScrolling).toBeFalsy();
     });
 
-    test.each([
-      [VIEWPORT_HEIGHT - EDGE_SIZE - 1, 0],
-      [VIEWPORT_HEIGHT + -1 * OUTBOX_OFFSET + 1, 0],
-    ])(
-      `should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE}) or outbox size (${OUTBOX_OFFSET})`,
+    test.each([[VIEWPORT_HEIGHT - EDGE_SIZE - 1, 0]])(
+      `should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE})`,
       (clientY, scrollTop) => {
         initScrollElData(scrollEl, scrollTop);
         const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
