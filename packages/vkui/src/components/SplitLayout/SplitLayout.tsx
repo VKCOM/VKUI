@@ -17,6 +17,10 @@ export interface SplitLayoutProps
    */
   modal?: React.ReactNode;
   header?: React.ReactNode;
+  /**
+   * Центрирует контент.
+   */
+  center?: boolean;
 }
 
 /**
@@ -30,6 +34,7 @@ export const SplitLayout = ({
   getRootRef,
   getRef,
   className,
+  center,
   ...restProps
 }: SplitLayoutProps) => {
   const platform = usePlatform();
@@ -39,6 +44,7 @@ export const SplitLayout = ({
       className={classNames(
         styles['SplitLayout'],
         platform === 'ios' && styles['SplitLayout--ios'],
+        center && styles['SplitLayout--center'],
       )}
       popout={popout}
       modal={modal}

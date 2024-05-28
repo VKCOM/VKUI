@@ -21,7 +21,7 @@ export const Playground: StoryObj<AlertProps> = {
     const popout = visible ? <Alert {...args} onClose={() => setVisible(false)} /> : null;
 
     return (
-      <SplitLayout style={{ justifyContent: 'center' }} popout={popout}>
+      <SplitLayout center popout={popout}>
         <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
           <Placeholder stretched>
             <Button onClick={() => setVisible(true)}>Открыть</Button>

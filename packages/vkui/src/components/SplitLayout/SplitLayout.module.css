@@ -25,3 +25,7 @@
     -1 * (var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top))
   );
 }
+
+.SplitLayout--center {
+  justify-content: center;
+}
