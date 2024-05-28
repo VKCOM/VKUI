@@ -9,7 +9,7 @@ const stylesMode = {
 };
 
 export interface BadgeProps extends RootComponentProps<HTMLSpanElement> {
-  mode: 'new' | 'prominent';
+  mode?: 'new' | 'prominent';
 }
 
 /**
