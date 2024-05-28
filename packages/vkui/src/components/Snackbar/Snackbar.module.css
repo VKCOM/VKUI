@@ -1,6 +1,11 @@
 .Snackbar {
   --vkui_internal--snackbar_safe_area_inset_bottom: var(--vkui_internal--safe_area_inset_bottom);
   --vkui_internal--snackbar_in_padding: 8px;
+  --vkui_internal--snackbar_shift_x: 0;
+  --vkui_internal--snackbar_shift_y: 0;
+  --vkui_internal--snackbar_animation_from: translate3d(0, 0, 0);
+  --vkui_internal--snackbar_animation_to: translate3d(0, var(--vkui_internal--snackbar_shift_y), 0);
+  --vkui_internal--snackbar_animation_duration: 340ms;
 
   position: fixed;
   inset-inline: var(--vkui_internal--safe_area_inset_left)
@@ -9,20 +14,24 @@
   user-select: none;
 }
 
+.Snackbar--ios {
+  --vkui_internal--snackbar_animation_duration: 400ms;
+}
+
 .Snackbar--placement-top-start,
 .Snackbar--placement-top,
 .Snackbar--placement-top-end {
+  --vkui_internal--snackbar_animation_from: translate3d(0, -100%, 0);
+
   inset-block-start: var(--vkui_internal--safe_area_inset_top);
 }
 
 .Snackbar--placement-bottom-start,
 .Snackbar--placement-bottom,
 .Snackbar--placement-bottom-end {
-  inset-block-end: var(--vkui_internal--snackbar_safe_area_inset_bottom);
-}
+  --vkui_internal--snackbar_animation_from: translate3d(0, 100%, 0);
 
-.Snackbar__in {
-  padding: var(--vkui_internal--snackbar_in_padding);
+  inset-block-end: var(--vkui_internal--snackbar_safe_area_inset_bottom);
 }
 
 @media (--desktop) {
@@ -49,93 +58,18 @@
 
   .Snackbar--placement-top-start,
   .Snackbar--placement-bottom-start {
+    --vkui_internal--snackbar_animation_from: translate3d(-100%, 0, 0);
+
     inset-inline-start: var(--vkui_internal--safe_area_inset_left);
     inset-inline-end: auto;
   }
 
   .Snackbar--placement-top-end,
   .Snackbar--placement-bottom-end {
+    --vkui_internal--snackbar_animation_from: translate3d(100%, 0, 0);
+
     inset-inline-start: auto;
     inset-inline-end: var(--vkui_internal--safe_area_inset_right);
-  }
-
-  .Snackbar__in {
-    --vkui_internal--snackbar_in_padding: 12px;
-  }
-}
-
-/* Анимации */
-@media (prefers-reduced-motion: no-preference) {
-  .Snackbar {
-    --vkui_internal--snackbar_shift_x: 0;
-    --vkui_internal--snackbar_shift_y: 0;
-    --vkui_internal--snackbar_animation_from: translate3d(0, 0, 0);
-    --vkui_internal--snackbar_animation_to: translate3d(
-      0,
-      var(--vkui_internal--snackbar_shift_y),
-      0
-    );
-    --vkui_internal--snackbar_animation_duration: 340ms;
-  }
-
-  .Snackbar--ios {
-    --vkui_internal--snackbar_animation_duration: 400ms;
-  }
-
-  .Snackbar--placement-top-start,
-  .Snackbar--placement-top,
-  .Snackbar--placement-top-end {
-    --vkui_internal--snackbar_animation_from: translate3d(0, -100%, 0);
-  }
-
-  .Snackbar--placement-bottom-start,
-  .Snackbar--placement-bottom,
-  .Snackbar--placement-bottom-end {
-    --vkui_internal--snackbar_animation_from: translate3d(0, 100%, 0);
-  }
-
-  .Snackbar__in {
-    animation-duration: var(--vkui_internal--snackbar_animation_duration);
-    animation-timing-function: var(--vkui--animation_easing_platform);
-    animation-fill-mode: both;
-    transform: translate3d(0, var(--vkui_internal--snackbar_shift_y), 0);
-  }
-
-  .Snackbar--state-enter .Snackbar__in,
-  .Snackbar--state-entering .Snackbar__in {
-    animation-name: animation-snackbar-slide-in;
-  }
-
-  .Snackbar--state-entered .Snackbar__in {
-    transition-property: transform;
-    transition-duration: var(--vkui_internal--snackbar_animation_duration);
-    transition-timing-function: var(--vkui--animation_easing_platform);
-  }
-
-  .Snackbar--touched .Snackbar__in {
-    transition-property: none;
-  }
-
-  .Snackbar--state-exit .Snackbar__in,
-  .Snackbar--state-exiting .Snackbar__in {
-    animation-name: animation-snackbar-slide-out;
-  }
-}
-
-/* Выносим из @media, т.к. иначе элемент не скроется, если пользователь не удаляет Snackbar из DOM. */
-.Snackbar--state-exited .Snackbar__in {
-  transform: var(--vkui_internal--snackbar_animation_from);
-}
-
-@media (--desktop) and (prefers-reduced-motion: no-preference) {
-  .Snackbar--placement-top-start,
-  .Snackbar--placement-bottom-start {
-    --vkui_internal--snackbar_animation_from: translate3d(-100%, 0, 0);
-  }
-
-  .Snackbar--placement-top-end,
-  .Snackbar--placement-bottom-end {
-    --vkui_internal--snackbar_animation_from: translate3d(100%, 0, 0);
   }
 
   .Snackbar--placement-top-start,
@@ -148,7 +82,51 @@
       0
     );
   }
+}
 
+.Snackbar__in {
+  padding: var(--vkui_internal--snackbar_in_padding);
+  animation-duration: var(--vkui_internal--snackbar_animation_duration);
+  animation-timing-function: var(--vkui--animation_easing_platform);
+  animation-fill-mode: both;
+  transform: translate3d(0, var(--vkui_internal--snackbar_shift_y), 0);
+}
+
+.Snackbar--state-enter .Snackbar__in,
+.Snackbar--state-entering .Snackbar__in {
+  animation-name: animation-snackbar-slide-in;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .Snackbar--state-enter .Snackbar__in,
+  .Snackbar--state-entering .Snackbar__in {
+    animation-name: animation-snackbar-fade-in;
+  }
+}
+
+.Snackbar--state-entered .Snackbar__in {
+  transition-property: transform;
+  transition-duration: var(--vkui_internal--snackbar_animation_duration);
+  transition-timing-function: var(--vkui--animation_easing_platform);
+}
+
+.Snackbar--touched .Snackbar__in {
+  transition-property: none;
+}
+
+.Snackbar--state-exit .Snackbar__in,
+.Snackbar--state-exiting .Snackbar__in {
+  animation-name: animation-snackbar-slide-out;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .Snackbar--state-exit .Snackbar__in,
+  .Snackbar--state-exiting .Snackbar__in {
+    animation-name: animation-snackbar-fade-out;
+  }
+} /* stylelint-disable-next-line at-rule-empty-line-before */
+
+@media (--desktop) {
   .Snackbar__in {
     --vkui_internal--snackbar_in_padding: 12px;
   }
@@ -181,5 +159,25 @@
   to {
     opacity: 0;
     transform: var(--vkui_internal--snackbar_animation_from);
+  }
+}
+
+/* Анимации при (prefers-reduced-motion: reduce) */
+@keyframes animation-snackbar-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+@keyframes animation-snackbar-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }

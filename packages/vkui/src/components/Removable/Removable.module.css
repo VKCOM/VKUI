@@ -47,12 +47,6 @@
   block-size: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .Removable--ios .Removable__content {
-    transition: transform 0.6s var(--vkui--animation_easing_platform);
-  }
-}
-
 .Removable__toggle {
   display: block;
   inline-size: 44px;
@@ -92,6 +86,7 @@
 
 .Removable--ios .Removable__content {
   padding-inline: 0 var(--vkui--size_base_padding_horizontal--regular);
+  transition: transform 0.6s var(--vkui--animation_easing_platform);
 }
 
 .Removable--indent .Removable__action {
