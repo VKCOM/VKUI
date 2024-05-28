@@ -145,6 +145,14 @@
 /* Элемент */
 .TabsItem__after {
   margin-inline-start: 6px;
+  color: var(--vkui--color_icon_medium);
+}
+
+.TabsItem--selected .TabsItem__after {
+  color: var(--vkui--color_icon_primary);
+}
+
+.TabsItem--mode-accent.TabsItem--selected .TabsItem__after {
   color: var(--vkui--color_icon_accent_themed);
 }
 
