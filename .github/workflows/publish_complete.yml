@@ -63,7 +63,7 @@ jobs:
     name: Complete @vkontakte/vkui
     steps:
       - name: Close milestone, comment on issues and release notes
-        uses: VKCOM/gh-actions/VKUI/complete-publish@main
+        uses: VKCOM/gh-actions/VKUI/complete-publish@imirdzhamolov/fix/VKUI-complete-publish-refactor
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           releaseTag: ${{ needs.payload.outputs.git_release_tag }}
