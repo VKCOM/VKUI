@@ -39,8 +39,6 @@ on:
 jobs:
   publish:
     concurrency: ci-gh-pages
-    outputs:
-      release_tag: ${{ steps.complete_publish.outputs.git_release_tag }}
     permissions:
       id-token: write
     runs-on: ubuntu-latest
