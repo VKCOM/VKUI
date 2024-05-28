@@ -35,7 +35,7 @@ jobs:
       package_name: ${{ steps.publish_workflow_payload.outputs.package_name || inputs.package_name }}
       npm_tag: ${{ steps.publish_workflow_payload.outputs.npm_tag || inputs.npm_tag }}
       git_release_tag: ${{ steps.publish_workflow_payload.outputs.git_release_tag || inputs.git_release_tag }}
-      close_milestone: ${{ steps.publish_workflow_payload.outputs.close_milestone }}
+      close_milestone: ${{ steps.publish_workflow_payload.outputs.close_milestone || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Download artifact (if it is 'workflow_run')
         if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
@@ -60,6 +60,7 @@ jobs:
     needs: ['payload']
     if: ${{ success() && fromJson(needs.payload.outputs.close_milestone) == true && needs.payload.outputs.package_name == '@vkontakte/vkui' }}
     runs-on: ubuntu-latest
+    name: Complete @vkontakte/vkui
     steps:
       - name: Close milestone, comment on issues and release notes
         uses: VKCOM/gh-actions/VKUI/complete-publish@main
