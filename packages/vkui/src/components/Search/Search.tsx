@@ -5,9 +5,11 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { useBooleanState } from '../../hooks/useBooleanState';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { touchEnabled } from '../../lib/touch';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
@@ -122,6 +124,16 @@ export const Search = ({
     },
     [inputRef, onCancel],
   );
+
+  useIsomorphicLayoutEffect(() => {
+    if (inputProps.value !== undefined) {
+      setHasValue(Boolean(inputProps.value));
+    }
+  }, [inputProps.value]);
+
+  useNativeFormResetListener(inputRef, () => {
+    setHasValue(Boolean(inputProps.defaultValue));
+  });
 
   return (
     <div
