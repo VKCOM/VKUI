@@ -138,12 +138,14 @@ const Example = () => {
           <Checkbox
             disabled={!(addText || addAfter)}
             onChange={(e) => setAddBefore(e.target.checked)}
+            checked={addBefore}
           >
             add before
           </Checkbox>
           <Checkbox
             disabled={!(addText || addBefore)}
             onChange={(e) => setAddAfter(e.target.checked)}
+            checked={addAfter}
           >
             add after
           </Checkbox>
