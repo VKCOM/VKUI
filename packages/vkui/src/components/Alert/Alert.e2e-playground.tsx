@@ -21,6 +21,7 @@ const baseRender = (props: AlertProps) => (
     header="Подтвердите действие"
     text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
     style={{ position: 'relative' }}
+    autoFocus={false}
     {...props}
   />
 );
