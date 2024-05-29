@@ -90,7 +90,9 @@ export const AlertLongWordPlayground = (props: ComponentPlaygroundProps) => {
       ]}
       AppWrapper={AppWrapper}
     >
-      {(props: AlertProps) => <Alert {...props} style={{ position: 'relative' }} />}
+      {(props: AlertProps) => (
+        <Alert {...props} autoFocus={false} style={{ position: 'relative' }} />
+      )}
     </ComponentPlayground>
   );
 };
