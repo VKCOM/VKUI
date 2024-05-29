@@ -70,7 +70,6 @@ describe(useFloatingWithInteractions, () => {
         const { rerender } = render(<TestComponent hookResultRef={result} />);
         await waitFor(() => {
           expect(result.current.shown).toBeFalsy();
-          expect(onShownChange).toHaveBeenCalledTimes(0);
           expect(onShownChange).not.toHaveBeenCalled();
         });
 
@@ -102,6 +101,15 @@ describe(useFloatingWithInteractions, () => {
               jest.useRealTimers();
             });
             break;
+          case 'blur':
+            await fireEventPatch(result.current.refs.reference.current, closeBy, {
+              // сбрасываем relatedTarget, потому что по умолчанию el.blur() имеет el в relatedTarget,
+              // а в этом случае floating элемент не закрывается, так как считается что blur
+              // вызван кликом на самого себя.
+              relatedTarget: undefined,
+            });
+            break;
+
           default:
             await fireEventPatch(result.current.refs.reference.current, closeBy);
         }
@@ -339,9 +347,14 @@ describe(useFloatingWithInteractions, () => {
         testComponentRender.rerender(<TestComponent hookResultRef={result} />);
         await waitFor(() => expect(result.current.shown).toBeTruthy());
 
+        const eventNameToFire = eventName === 'focus' ? 'blur' : eventName;
         await fireEventPatch(
           result.current.refs.reference.current,
-          eventName === 'focus' ? 'blur' : eventName,
+          eventNameToFire,
+          // сбрасываем relatedTarget, потому что по умолчанию el.blur() имеет el в relatedTarget,
+          // а в этом случае floating элемент не закрывается, так как считается что blur
+          // вызван кликом на самого себя.
+          eventNameToFire === 'blur' ? { referenceElement: undefined } : undefined,
         );
         testComponentRender.rerender(<TestComponent hookResultRef={result} />);
         await waitFor(() => expect(result.current.shown).toBeFalsy());
