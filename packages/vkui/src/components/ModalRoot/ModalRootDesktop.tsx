@@ -211,6 +211,7 @@ export const ModalRootDesktop = ({
 
             return (
               <FocusTrap
+                autoFocus={false}
                 restoreFocus={false}
                 onClose={onExit}
                 timeout={timeout}

@@ -622,6 +622,7 @@ class ModalRootTouchComponent extends React.Component<
                       isPage && modalState.expandable && 'vkuiInternalModalRoot__modal--expandable',
                       isPage && modalState.collapsed && 'vkuiInternalModalRoot__modal--collapsed',
                     )}
+                    autoFocus={false}
                     restoreFocus={false}
                   >
                     {Modal}

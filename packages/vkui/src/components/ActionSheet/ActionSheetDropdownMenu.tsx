@@ -78,10 +78,8 @@ export const ActionSheetDropdownMenu = ({
       style={style}
       getRootRef={elementRef}
       usePortal={false}
-      role="dialog"
-      aria-modal="true"
     >
-      <FocusTrap onClose={onClose} {...restProps} onClick={onClick} ignoreKeyboardInputDetection>
+      <FocusTrap onClose={onClose} {...restProps} onClick={onClick}>
         {children}
       </FocusTrap>
     </Popper>

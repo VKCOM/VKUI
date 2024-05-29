@@ -9,7 +9,6 @@ import {
 } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasComponent, HasRootRef } from '../../types';
-import { AppRootContext } from '../AppRoot/AppRootContext';
 
 const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
 export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
@@ -20,7 +19,6 @@ export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
   restoreFocus?: boolean | (() => boolean);
   timeout?: number;
   onClose?: () => void;
-  ignoreKeyboardInputDetection: boolean;
 }
 
 /**
@@ -34,12 +32,10 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   timeout = 0,
   getRootRef,
   children,
-  ignoreKeyboardInputDetection,
   ...restProps
 }: FocusTrapProps<T>) => {
   const ref = useExternRef<T>(getRootRef);
 
-  const { keyboardInput } = React.useContext(AppRootContext);
   const focusableNodesRef = React.useRef<HTMLElement[]>([]);
 
   useIsomorphicLayoutEffect(
@@ -69,9 +65,10 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
   useIsomorphicLayoutEffect(
     function tryToAutoFocusToFirstNode() {
-      if (!ref.current || !autoFocus || (!ignoreKeyboardInputDetection && !keyboardInput)) {
+      if (!ref.current || !autoFocus) {
         return;
       }
+
       const autoFocusToFirstNode = () => {
         if (!ref.current || !focusableNodesRef.current.length) {
           return;
@@ -86,7 +83,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
         clearTimeout(timeoutId);
       };
     },
-    [autoFocus, timeout, keyboardInput, ignoreKeyboardInputDetection],
+    [autoFocus, timeout],
   );
 
   useIsomorphicLayoutEffect(
