@@ -216,3 +216,68 @@ export const Example: Story = {
     );
   },
 };
+
+export const ExampleWithLists: Story = {
+  render: function Render() {
+    const PopoverWithTriggerClick = () => {
+      return (
+        <Popover
+          noStyling
+          trigger="click"
+          content={({ onClose }) => (
+            <Group>
+              <CellButton before={<Icon28AddOutline />} onClick={onClose}>
+                Добавить
+              </CellButton>
+              <CellButton before={<Icon28DeleteOutline />} onClick={onClose}>
+                Удалить
+              </CellButton>
+            </Group>
+          )}
+        >
+          <Button mode="outline">Нажми на меня</Button>
+        </Popover>
+      );
+    };
+
+    const PopoverWithBaseList = () => {
+      return (
+        <Popover
+          noStyling
+          trigger="click"
+          id="menupopup"
+          content={({ onClose }) => (
+            <Group>
+              <CellButton before={<Icon28AddOutline />} onClick={onClose}>
+                Добавить
+              </CellButton>
+              <CellButton before={<Icon28DeleteOutline />} onClick={onClose}>
+                Сохранить в закладках
+              </CellButton>
+              <CellButton onClick={onClose}>Закрепить запись</CellButton>
+              <CellButton onClick={onClose}>Выключить комментирование</CellButton>
+              <CellButton onClick={onClose}>Удалить запись</CellButton>
+            </Group>
+          )}
+        >
+          <CellButton>Базовый список</CellButton>
+        </Popover>
+      );
+    };
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          padding: 16,
+          gap: 16,
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+        }}
+      >
+        <PopoverWithTriggerClick />
+        <PopoverWithBaseList />
+      </div>
+    );
+  },
+};
