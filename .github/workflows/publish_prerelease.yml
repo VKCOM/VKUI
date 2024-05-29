@@ -77,3 +77,4 @@ jobs:
           npm_token: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
           npm_tag: ${{ inputs.npm_tag_aka_pre_id }}
           disable_git_tag_with_namespace: ${{ inputs.package_name == '@vkontakte/vkui' }}
+          prerelease: true
