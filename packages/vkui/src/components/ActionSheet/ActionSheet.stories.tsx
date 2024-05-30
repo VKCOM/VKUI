@@ -142,10 +142,10 @@ export const A11YExampleWithManyButtons: Story = {
     const subtitleTargetRef = React.useRef(null);
     const selectableTargetRef = React.useRef(null);
     const openBase = (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!e.target) {
+      if (!e.currentTarget) {
         return;
       }
-      const target = e.target as Element;
+      const target = e.currentTarget as Element;
       setPopout({
         id: target.id,
         popup: (
@@ -160,10 +160,10 @@ export const A11YExampleWithManyButtons: Story = {
       });
     };
     const openIcons = (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!e.target) {
+      if (!e.currentTarget) {
         return;
       }
-      const target = e.target as Element;
+      const target = e.currentTarget as Element;
       setPopout({
         id: target.id,
         popup: (
@@ -179,10 +179,10 @@ export const A11YExampleWithManyButtons: Story = {
     };
 
     const openSubtitle = (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!e.target) {
+      if (!e.currentTarget) {
         return;
       }
-      const target = e.target as Element;
+      const target = e.currentTarget as Element;
       setPopout({
         id: target.id,
         popup: (
@@ -197,10 +197,10 @@ export const A11YExampleWithManyButtons: Story = {
       });
     };
     const openSelectable = (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!e.target) {
+      if (!e.currentTarget) {
         return;
       }
-      const target = e.target as Element;
+      const target = e.currentTarget as Element;
       setPopout({
         id: target.id,
         popup: (
