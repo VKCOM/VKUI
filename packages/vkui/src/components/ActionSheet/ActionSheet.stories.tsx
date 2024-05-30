@@ -132,82 +132,142 @@ export const WithSelectable: Story = {
 
 export const A11YExampleWithManyButtons: Story = {
   render: function Render() {
-    const [popout, setPopout] = React.useState<React.ReactElement | null>(null);
+    const [popout, setPopout] = React.useState<{ id: string; popup: React.ReactElement } | null>(
+      null,
+    );
     const onClose = () => setPopout(null);
     const baseTargetRef = React.useRef(null);
+    const baseTargetId = React.useId();
     const iconsTargetRef = React.useRef(null);
     const subtitleTargetRef = React.useRef(null);
     const selectableTargetRef = React.useRef(null);
-    const openBase = () =>
-      setPopout(
-        <ActionSheet onClose={onClose} toggleRef={baseTargetRef}>
-          <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
-          <ActionSheetItem>Закрепить запись</ActionSheetItem>
-          <ActionSheetItem>Выключить комментирование</ActionSheetItem>
-          <ActionSheetItem>Закрепить запись</ActionSheetItem>
-          <ActionSheetItem mode="destructive">Удалить запись</ActionSheetItem>
-        </ActionSheet>,
-      );
-    const openIcons = () =>
-      setPopout(
-        <ActionSheet onClose={onClose} toggleRef={iconsTargetRef}>
-          <ActionSheetItem>Редактировать профиль</ActionSheetItem>
-          <ActionSheetItem>Слушать далее</ActionSheetItem>
-          <ActionSheetItem>Поделиться</ActionSheetItem>
-          <ActionSheetItem>Скопировать ссылку</ActionSheetItem>
-          <ActionSheetItem mode="destructive">Удалить плейлист</ActionSheetItem>
-        </ActionSheet>,
-      );
+    const openBase = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!e.target) {
+        return;
+      }
+      const target = e.target as Element;
+      setPopout({
+        id: target.id,
+        popup: (
+          <ActionSheet id={baseTargetId} onClose={onClose} toggleRef={baseTargetRef}>
+            <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
+            <ActionSheetItem>Закрепить запись</ActionSheetItem>
+            <ActionSheetItem>Выключить комментирование</ActionSheetItem>
+            <ActionSheetItem>Закрепить запись</ActionSheetItem>
+            <ActionSheetItem mode="destructive">Удалить запись</ActionSheetItem>
+          </ActionSheet>
+        ),
+      });
+    };
+    const openIcons = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!e.target) {
+        return;
+      }
+      const target = e.target as Element;
+      setPopout({
+        id: target.id,
+        popup: (
+          <ActionSheet onClose={onClose} toggleRef={iconsTargetRef}>
+            <ActionSheetItem>Редактировать профиль</ActionSheetItem>
+            <ActionSheetItem>Слушать далее</ActionSheetItem>
+            <ActionSheetItem>Поделиться</ActionSheetItem>
+            <ActionSheetItem>Скопировать ссылку</ActionSheetItem>
+            <ActionSheetItem mode="destructive">Удалить плейлист</ActionSheetItem>
+          </ActionSheet>
+        ),
+      });
+    };
 
-    const openSubtitle = () =>
-      setPopout(
-        <ActionSheet onClose={onClose} toggleRef={subtitleTargetRef}>
-          <ActionSheetItem subtitle="Авто">Качество</ActionSheetItem>
-          <ActionSheetItem subtitle="Отсутствуют" disabled>
-            Субтитры
-          </ActionSheetItem>
-          <ActionSheetItem subtitle="Обычная">Скорость воспроизведения</ActionSheetItem>
-        </ActionSheet>,
-      );
-    const openSelectable = () =>
-      setPopout(
-        <ActionSheet onClose={onClose} toggleRef={selectableTargetRef}>
-          <ActionSheetItem name="filter" value="best" selectable>
-            Лучшие друзья
-          </ActionSheetItem>
-          <ActionSheetItem name="filter" value="relatives" selectable>
-            Родственники
-          </ActionSheetItem>
-          <ActionSheetItem name="filter" value="collegues" selectable>
-            Коллеги
-          </ActionSheetItem>
-          <ActionSheetItem name="filter" value="school" selectable>
-            Друзья по школе
-          </ActionSheetItem>
-          <ActionSheetItem name="filter" value="university" selectable>
-            Друзья по вузу
-          </ActionSheetItem>
-        </ActionSheet>,
-      );
+    const openSubtitle = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!e.target) {
+        return;
+      }
+      const target = e.target as Element;
+      setPopout({
+        id: target.id,
+        popup: (
+          <ActionSheet onClose={onClose} toggleRef={subtitleTargetRef}>
+            <ActionSheetItem subtitle="Авто">Качество</ActionSheetItem>
+            <ActionSheetItem subtitle="Отсутствуют" disabled>
+              Субтитры
+            </ActionSheetItem>
+            <ActionSheetItem subtitle="Обычная">Скорость воспроизведения</ActionSheetItem>
+          </ActionSheet>
+        ),
+      });
+    };
+    const openSelectable = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!e.target) {
+        return;
+      }
+      const target = e.target as Element;
+      setPopout({
+        id: target.id,
+        popup: (
+          <ActionSheet onClose={onClose} toggleRef={selectableTargetRef}>
+            <ActionSheetItem name="filter" value="best" selectable>
+              Лучшие друзья
+            </ActionSheetItem>
+            <ActionSheetItem name="filter" value="relatives" selectable>
+              Родственники
+            </ActionSheetItem>
+            <ActionSheetItem name="filter" value="collegues" selectable>
+              Коллеги
+            </ActionSheetItem>
+            <ActionSheetItem name="filter" value="school" selectable>
+              Друзья по школе
+            </ActionSheetItem>
+            <ActionSheetItem name="filter" value="university" selectable>
+              Друзья по вузу
+            </ActionSheetItem>
+          </ActionSheet>
+        ),
+      });
+    };
+
+    const baseId = React.useId();
+    const musicListId = React.useId();
+    const videoListId = React.useId();
+    const moveFriendListId = React.useId();
 
     return (
-      <SplitLayout popout={popout}>
+      <SplitLayout popout={popout?.popup}>
         <SplitCol>
           <View activePanel="panel">
             <Panel id="panel">
               <PlatformProvider value="vkcom">
                 <PanelHeader>Пример ActionSheet</PanelHeader>
                 <Group>
-                  <CellButton getRootRef={baseTargetRef} onClick={openBase}>
+                  <CellButton
+                    id={baseId}
+                    aria-expanded={baseId === popout?.id}
+                    getRootRef={baseTargetRef}
+                    onClick={openBase}
+                  >
                     Базовый список
                   </CellButton>
-                  <CellButton getRootRef={iconsTargetRef} onClick={openIcons}>
+                  <CellButton
+                    id={musicListId}
+                    aria-expanded={musicListId === popout?.id}
+                    getRootRef={iconsTargetRef}
+                    onClick={openIcons}
+                  >
                     Список с опциями VK Music
                   </CellButton>
-                  <CellButton getRootRef={subtitleTargetRef} onClick={openSubtitle}>
+                  <CellButton
+                    id={videoListId}
+                    aria-expanded={videoListId === popout?.id}
+                    getRootRef={subtitleTargetRef}
+                    onClick={openSubtitle}
+                  >
                     Список опций видео
                   </CellButton>
-                  <CellButton getRootRef={selectableTargetRef} onClick={openSelectable}>
+                  <CellButton
+                    id={moveFriendListId}
+                    aria-expanded={moveFriendListId === popout?.id}
+                    getRootRef={selectableTargetRef}
+                    onClick={openSelectable}
+                  >
                     Переместить друга
                   </CellButton>
                   <Placeholder
