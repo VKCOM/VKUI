@@ -107,6 +107,8 @@ export const ActionSheet = ({
       <DropdownComponent
         closing={Boolean(closingBy)}
         timeout={timeout}
+        role="dialog"
+        aria-modal="true"
         {...dropdownProps}
         onClose={onClose}
         className={mode === 'menu' ? className : undefined}

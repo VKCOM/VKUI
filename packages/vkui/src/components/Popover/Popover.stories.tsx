@@ -220,8 +220,12 @@ export const Example: Story = {
 export const ExampleWithLists: Story = {
   render: function Render() {
     const PopoverWithTriggerClick = () => {
+      const [shown, setShown] = React.useState(false);
       return (
         <Popover
+          shown={shown}
+          onShownChange={setShown}
+          role="dialog"
           noStyling
           trigger="click"
           content={({ onClose }) => (
@@ -235,17 +239,22 @@ export const ExampleWithLists: Story = {
             </Group>
           )}
         >
-          <Button mode="outline">Нажми на меня</Button>
+          <Button aria-expanded={shown} mode="outline">
+            Нажми на меня
+          </Button>
         </Popover>
       );
     };
 
     const PopoverWithBaseList = () => {
+      const [shown, setShown] = React.useState(false);
       return (
         <Popover
+          shown={shown}
+          onShownChange={setShown}
+          role="dialog"
           noStyling
           trigger="click"
-          id="menupopup"
           content={({ onClose }) => (
             <Group>
               <CellButton before={<Icon28AddOutline />} onClick={onClose}>
@@ -260,7 +269,7 @@ export const ExampleWithLists: Story = {
             </Group>
           )}
         >
-          <CellButton>Базовый список</CellButton>
+          <CellButton aria-expanded={shown}>Базовый список</CellButton>
         </Popover>
       );
     };
