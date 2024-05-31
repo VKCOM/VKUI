@@ -75,7 +75,7 @@ export const Example: Story = {
           noStyling
           trigger="click"
           id="menupopup"
-          role="menu"
+          role="dialog"
           aria-labelledby="menubutton"
           content={({ onClose }) => (
             <Group>
@@ -93,7 +93,7 @@ export const Example: Story = {
             </Group>
           )}
         >
-          <Button id="menubutton" aria-controls="menupopup" aria-haspopup="true" mode="outline">
+          <Button id="menubutton" aria-controls="menupopup" mode="outline">
             Нажми на меня
           </Button>
         </Popover>
@@ -212,80 +212,6 @@ export const Example: Story = {
         <PopoverWithTriggerFocus />
         <PopoverWithAllTriggers />
         <PopoverWithTriggerManual />
-      </div>
-    );
-  },
-};
-
-export const ExampleWithLists: Story = {
-  render: function Render() {
-    const PopoverWithTriggerClick = () => {
-      const [shown, setShown] = React.useState(false);
-      return (
-        <Popover
-          shown={shown}
-          onShownChange={setShown}
-          role="dialog"
-          noStyling
-          trigger="click"
-          content={({ onClose }) => (
-            <Group>
-              <CellButton before={<Icon28AddOutline />} onClick={onClose}>
-                Добавить
-              </CellButton>
-              <CellButton before={<Icon28DeleteOutline />} onClick={onClose}>
-                Удалить
-              </CellButton>
-            </Group>
-          )}
-        >
-          <Button aria-expanded={shown} mode="outline">
-            Нажми на меня
-          </Button>
-        </Popover>
-      );
-    };
-
-    const PopoverWithBaseList = () => {
-      const [shown, setShown] = React.useState(false);
-      return (
-        <Popover
-          shown={shown}
-          onShownChange={setShown}
-          role="dialog"
-          noStyling
-          trigger="click"
-          content={({ onClose }) => (
-            <Group>
-              <CellButton before={<Icon28AddOutline />} onClick={onClose}>
-                Добавить
-              </CellButton>
-              <CellButton before={<Icon28DeleteOutline />} onClick={onClose}>
-                Сохранить в закладках
-              </CellButton>
-              <CellButton onClick={onClose}>Закрепить запись</CellButton>
-              <CellButton onClick={onClose}>Выключить комментирование</CellButton>
-              <CellButton onClick={onClose}>Удалить запись</CellButton>
-            </Group>
-          )}
-        >
-          <CellButton aria-expanded={shown}>Базовый список</CellButton>
-        </Popover>
-      );
-    };
-
-    return (
-      <div
-        style={{
-          display: 'flex',
-          padding: 16,
-          gap: 16,
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-        }}
-      >
-        <PopoverWithTriggerClick />
-        <PopoverWithBaseList />
       </div>
     );
   },
