@@ -110,6 +110,9 @@ export interface ChipsSelectProps<O extends ChipOption>
    */
   onChangeStart?: (event: React.MouseEvent | React.KeyboardEvent, option: O) => void;
 
+  /**
+   * Отступ от выпадающего списка
+   */
   dropdownOffsetDistance?: number;
 }
 
