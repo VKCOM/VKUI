@@ -33,11 +33,11 @@ describe(Popover, () => {
       <Popover
         shown={shown}
         id="menu"
-        role="menu"
+        role="dialog"
         aria-labelledby="target"
-        content={<div role="menuitem">1</div>}
+        content={<button>1</button>}
       >
-        <div id="target" aria-haspopup="true" aria-controls="menu" data-testid="target">
+        <div id="target" aria-controls="menu" data-testid="target">
           Target
         </div>
       </Popover>
