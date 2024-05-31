@@ -11,9 +11,27 @@ ActionSheet – имитация [нативного компонента](https
 > - Согласно гайдлайнам Apple, в `ActionSheet` должен быть элемент для закрытия, для этого предусмотрен атрибут `iosCloseItem`. По умолчанию будет использоваться `ActionSheetDefaultIosCloseItem`.
 >   Для Android версии он не нужен.
 
+## Цифровая доступность (a11y)
+
+Старайтесь сопровождать элемент текстовым описанием для корректной работы скринридеров. Для этого
+необходимо вручную передавать некоторые параметры, такие как `aria-label`.
+
+- У всплывающего элемента уже заданы атрибуты `role="dialog"` и `aria-modal="true"`, потому что по умолчанию он как раз появляется как диалог и, пока он не закроется, нельзя взаимодейтсвовать с другими элементами на странице. Эти аттрибуты можно перебить явно передавая их компоненту.
+- У целевого элемента обязательно должен быть выставлен атрибут `aria-expanded`.
+
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const [popout, setPopout] = useState(null);
-const onClose = () => setPopout(null);
+const [openedPopoutName, setOpenedPopoutName] = useState(null);
+
+const openActionSheet = (name, popout) => {
+  setPopout(popout);
+  setOpenedPopoutName(name);
+};
+const onClose = () => {
+  setPopout(null);
+  setOpenedPopoutName(null);
+};
+
 const [filter, setFilter] = useState('best');
 const onChange = (e) => setFilter(e.target.value);
 const baseTargetRef = React.useRef(null);
@@ -24,7 +42,8 @@ const titleTargetRef = React.useRef(null);
 const baseTopTargetRef = React.useRef(null);
 
 const openBase = () =>
-  setPopout(
+  openActionSheet(
+    'base',
     <ActionSheet onClose={onClose} toggleRef={baseTargetRef}>
       <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
       <ActionSheetItem>Закрепить запись</ActionSheetItem>
@@ -35,7 +54,8 @@ const openBase = () =>
   );
 
 const openIcons = () =>
-  setPopout(
+  openActionSheet(
+    'icons',
     <ActionSheet onClose={onClose} toggleRef={iconsTargetRef}>
       <ActionSheetItem
         before={
@@ -83,7 +103,8 @@ const openIcons = () =>
   );
 
 const openSubtitle = () =>
-  setPopout(
+  openActionSheet(
+    'subtitle',
     <ActionSheet onClose={onClose} toggleRef={subtitleTargetRef}>
       <ActionSheetItem
         before={
@@ -120,7 +141,8 @@ const openSubtitle = () =>
   );
 
 const openSelectable = () =>
-  setPopout(
+  openActionSheet(
+    'selectable',
     <ActionSheet onClose={onClose} toggleRef={selectableTargetRef}>
       <ActionSheetItem
         onChange={onChange}
@@ -171,7 +193,8 @@ const openSelectable = () =>
   );
 
 const openTitle = () =>
-  setPopout(
+  openActionSheet(
+    'title',
     <ActionSheet
       onClose={onClose}
       header="Вы действительно хотите удалить это видео из Ваших видео?"
@@ -182,7 +205,8 @@ const openTitle = () =>
   );
 
 const openBaseTop = () =>
-  setPopout(
+  openActionSheet(
+    'baseTop',
     <ActionSheet onClose={onClose} toggleRef={baseTopTargetRef} placement="top-end">
       <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
       <ActionSheetItem>Закрепить запись</ActionSheetItem>
@@ -200,22 +224,46 @@ React.useEffect(openBase, []);
       <Panel id="panel">
         <PanelHeader>ActionSheet</PanelHeader>
         <Group>
-          <CellButton getRootRef={baseTargetRef} onClick={openBase}>
+          <CellButton
+            getRootRef={baseTargetRef}
+            onClick={openBase}
+            aria-expanded={'base' === openedPopoutName}
+          >
             Базовый список
           </CellButton>
-          <CellButton getRootRef={iconsTargetRef} onClick={openIcons}>
+          <CellButton
+            getRootRef={iconsTargetRef}
+            onClick={openIcons}
+            aria-expanded={'icons' === openedPopoutName}
+          >
             Список с иконками
           </CellButton>
-          <CellButton getRootRef={subtitleTargetRef} onClick={openSubtitle}>
+          <CellButton
+            getRootRef={subtitleTargetRef}
+            onClick={openSubtitle}
+            aria-expanded={'subtitle' === openedPopoutName}
+          >
             С подзаголовком
           </CellButton>
-          <CellButton getRootRef={selectableTargetRef} onClick={openSelectable}>
+          <CellButton
+            getRootRef={selectableTargetRef}
+            onClick={openSelectable}
+            aria-expanded={'selectable' === openedPopoutName}
+          >
             Выделяемые
           </CellButton>
-          <CellButton getRootRef={titleTargetRef} onClick={openTitle}>
+          <CellButton
+            getRootRef={titleTargetRef}
+            onClick={openTitle}
+            aria-expanded={'title' === openedPopoutName}
+          >
             C заголовком
           </CellButton>
-          <CellButton getRootRef={baseTopTargetRef} onClick={openBaseTop}>
+          <CellButton
+            getRootRef={baseTopTargetRef}
+            onClick={openBaseTop}
+            aria-expanded={'baseTop' === openedPopoutName}
+          >
             Базовый список, открывается наверх на десктопах
           </CellButton>
         </Group>
