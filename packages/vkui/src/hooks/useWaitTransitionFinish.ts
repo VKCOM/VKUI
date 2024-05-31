@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useDOM } from '../lib/dom';
-import { transitionEvent } from '../lib/supportEvents';
 
 export const useWaitTransitionFinish = () => {
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -20,13 +19,11 @@ export const useWaitTransitionFinish = () => {
       durationFallback: number,
     ) => {
       if (element) {
-        if (!document?.hidden && transitionEvent.supported && transitionEvent.name) {
+        if (!document?.hidden) {
           remove();
-          element.addEventListener(transitionEvent.name, eventHandler);
+          element.addEventListener('transitionend', eventHandler);
           detach.current = () => {
-            if (transitionEvent.name) {
-              element.removeEventListener(transitionEvent.name, eventHandler);
-            }
+            element.removeEventListener('transitionend', eventHandler);
           };
         } else {
           if (timeoutRef?.current) {
@@ -39,7 +36,5 @@ export const useWaitTransitionFinish = () => {
     [document, remove, timeoutRef],
   );
 
-  return {
-    waitTransitionFinish,
-  };
+  return waitTransitionFinish;
 };

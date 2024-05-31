@@ -1,4 +1,3 @@
-import { act } from 'react';
 import { render } from '@testing-library/react';
 import { baselineComponent, fakeTimers } from '../../testing/utils';
 import { PopoutWrapper } from './PopoutWrapper';
@@ -10,17 +9,18 @@ describe(PopoutWrapper, () => {
   describe('opened state', () => {
     fakeTimers();
 
-    it('should be opened immediately if noBackground', () => {
-      const result = render(<PopoutWrapper data-testid="popout-wrapper" noBackground />);
-      expect(result.getByTestId('popout-wrapper')).toHaveClass(styles['PopoutWrapper--opened']);
-    });
-
-    it('should be opened after animation by default', () => {
+    it('should be opened by default', () => {
       const result = render(<PopoutWrapper data-testid="popout-wrapper" />);
       const locator = result.getByTestId('popout-wrapper');
-      expect(locator).not.toHaveClass(styles['PopoutWrapper--opened']);
-      act(jest.runAllTimers);
+      expect(locator).not.toHaveClass(styles['PopoutWrapper--closing']);
       expect(locator).toHaveClass(styles['PopoutWrapper--opened']);
+    });
+
+    it('should be closed if closing={true}', () => {
+      const result = render(<PopoutWrapper closing={true} data-testid="popout-wrapper" />);
+      const locator = result.getByTestId('popout-wrapper');
+      expect(locator).not.toHaveClass(styles['PopoutWrapper--opening']);
+      expect(locator).toHaveClass(styles['PopoutWrapper--closing']);
     });
   });
 });

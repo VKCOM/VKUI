@@ -1,22 +1,27 @@
-import { act } from 'react';
 import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimers,
+  userEvent,
+  waitCSSKeyframesAnimation,
+} from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { PanelHeaderContext } from './PanelHeaderContext';
 
 describe('PanelHeaderContext', () => {
-  baselineComponent(PanelHeaderContext);
+  baselineComponent((props) => <PanelHeaderContext opened onClose={noop} {...props} />);
   describe('Closes', () => {
     fakeTimers();
 
-    it('does not close on mount', () => {
-      render(
+    it('does not close on mount', async () => {
+      const result = render(
         <PanelHeaderContext opened={false} onClose={noop}>
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
+      await waitCSSKeyframesAnimation(result.getByTestId('content'));
       expect(screen.queryByTestId('xxx')).toBeNull();
     });
 
@@ -49,18 +54,18 @@ describe('PanelHeaderContext', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
-    it('Removes content after opened=false', () => {
-      const { rerender } = render(
+    it('Removes content after opened=false', async () => {
+      const result = render(
         <PanelHeaderContext opened onClose={noop}>
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
-      rerender(
+      result.rerender(
         <PanelHeaderContext opened={false} onClose={noop}>
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
-      act(jest.runAllTimers);
+      await waitCSSKeyframesAnimation(result.getByTestId('content'));
       expect(screen.queryByTestId('xxx')).toBeNull();
     });
   });

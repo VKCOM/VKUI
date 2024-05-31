@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { classNames, hasMouse as hasPointerLib, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useTimeout } from '../../hooks/useTimeout';
 import { getOffsetRect } from '../../lib/offset';
 import styles from './Tappable.module.css';
 
 /**
- * Возможно нужен Ripple эффект. Данный хук нужен для отказа
+ * Возможн о нужен Ripple эффект. Данный хук нужен для отказа
  * от двойного ререндера.
  */
 export const useMaybeNeedRipple = (activeMode: string, hasPointer: boolean | undefined) => {
@@ -39,14 +38,23 @@ export const useRipple = (needRipple: boolean, hasPointerContext: boolean | unde
     [],
   );
 
-  const clearClicks = useTimeout(() => setClicks([]), WAVE_LIVE);
+  React.useEffect(
+    function setClearClicksTimeout() {
+      const clicksTimeoutId = clicks.length > 0 ? setTimeout(() => setClicks([]), WAVE_LIVE) : null;
+      return function cancelClearClicksTimeout() {
+        if (clicksTimeoutId) {
+          clearTimeout(clicksTimeoutId);
+        }
+      };
+    },
+    [clicks],
+  );
 
   function addClick(x: number, y: number, pointerId: number) {
     const dateNow = Date.now();
     const filteredClicks = clicks.filter((click) => click.id + WAVE_LIVE > dateNow);
 
     setClicks([...filteredClicks, { x, y, id: dateNow, pointerId }]);
-    clearClicks.set();
     pointerDelayTimers.delete(pointerId);
   }
 

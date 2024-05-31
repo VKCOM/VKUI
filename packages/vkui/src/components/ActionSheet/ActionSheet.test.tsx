@@ -6,6 +6,7 @@ import {
   baselineComponent,
   fakeTimers,
   userEvent,
+  waitCSSKeyframesAnimation,
   waitForFloatingPosition,
 } from '../../testing/utils';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
@@ -120,20 +121,20 @@ describe(ActionSheet, () => {
       const onCloseHandler = jest.fn();
       const handlers = { onClick: jest.fn(), onChange: jest.fn() };
 
-      const { unmount } = render(
-        <ActionSheet
-          onClose={(...args) => {
-            onCloseHandler(...args);
-            unmount();
-          }}
-        >
+      const result = render(
+        <ActionSheet onClose={onCloseHandler}>
           <ActionSheetItem {...props} {...handlers} {...props} data-testid="item" />
         </ActionSheet>,
       );
       await waitForFloatingPosition();
       await userEvent.click(screen.getByTestId('item'));
-
       act(jest.runAllTimers);
+
+      if (onCloseHandler.mock.calls.length > 0) {
+        result.unmount();
+      }
+
+      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
       expect(handlers.onClick).toHaveBeenCalled();
       props.selectable && expect(handlers.onChange).toHaveBeenCalled();
 
@@ -174,22 +175,24 @@ describe(ActionSheet, () => {
   describe('closes on click outside', () => {
     it('desktop', async () => {
       const onClose = jest.fn();
-      render(<ActionSheetDesktop onClose={onClose} />);
+      const result = render(<ActionSheetDesktop onClose={onClose} />);
       await waitForFloatingPosition();
       await userEvent.click(document.body);
-      act(jest.runAllTimers);
+      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
       expect(onClose).toHaveBeenCalledTimes(1);
       expect(onClose).toHaveBeenCalledWith({ closedBy: 'other' });
     });
 
     it('mobile', async () => {
       const onClose = jest.fn();
-      const { container } = render(<ActionSheetMobile onClose={onClose} />);
+      const result = render(<ActionSheetMobile onClose={onClose} />);
       await waitForFloatingPosition();
       await userEvent.click(
-        container.querySelector<HTMLElement>(`.${popoutWrapperStyles['PopoutWrapper__overlay']}`)!,
+        result.container.querySelector<HTMLElement>(
+          `.${popoutWrapperStyles['PopoutWrapper__overlay']}`,
+        )!,
       );
-      act(jest.runAllTimers);
+      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
       expect(onClose).toHaveBeenCalledTimes(1);
       expect(onClose).toHaveBeenCalledWith({ closedBy: 'other' });
     });

@@ -1,39 +1,26 @@
 import * as React from 'react';
-import { useTimeout } from '../../hooks/useTimeout';
-import { useDOM } from '../../lib/dom';
+import { useDocumentVisibilityState } from '../../hooks/useDocumentVisibilityState';
+import { useStableCallback } from '../../hooks/useStableCallback';
+import { TimeoutId } from '../../types';
 
-export function useAutoPlay(timeout: number, slideIndex: number, callbackFn: VoidFunction) {
-  const { clear: clearAutoPlay, set: setAutoPlay } = useTimeout(callbackFn, timeout);
-  const { document } = useDOM();
+export function useAutoPlay(timeout: number, slideIndex: number, callbackFnProp: VoidFunction) {
+  const visible = useDocumentVisibilityState(Boolean(timeout));
+  const callbackFn = useStableCallback(callbackFnProp);
 
   React.useEffect(
-    () => (timeout ? setAutoPlay() : clearAutoPlay()),
-    [timeout, slideIndex, clearAutoPlay, setAutoPlay],
-  );
+    function setAutoPlay() {
+      let autoPlayTimeoutId: TimeoutId = null;
 
-  // Отключаем прокрутку слайдов при неактивной вкладке
-  React.useEffect(
-    function preventSlideChange() {
-      if (!document || !timeout) {
-        return;
+      if (timeout) {
+        autoPlayTimeoutId = setTimeout(callbackFn, timeout);
       }
 
-      const changeAutoPlay = () => {
-        if (document.visibilityState === 'visible') {
-          clearAutoPlay();
-          setAutoPlay();
+      return function clearAutoPlay() {
+        if (autoPlayTimeoutId) {
+          clearTimeout(autoPlayTimeoutId);
         }
-        if (document.visibilityState === 'hidden') {
-          clearAutoPlay();
-        }
-      };
-
-      document.addEventListener('visibilitychange', changeAutoPlay);
-
-      return () => {
-        document.removeEventListener('visibilitychange', changeAutoPlay);
       };
     },
-    [document, timeout, clearAutoPlay, setAutoPlay],
+    [visible, timeout, slideIndex, callbackFn],
   );
 }

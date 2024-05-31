@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
+import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { stopPropagation } from '../../lib/utils';
 import { AlignType, AnchorHTMLAttributesOnly, HasDataAttribute, HasRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
@@ -88,49 +88,40 @@ export const Alert = ({
 
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
-  const { waitTransitionFinish } = useWaitTransitionFinish();
 
   const [closing, setClosing] = React.useState(false);
+  const itemActionCallbackRef = React.useRef(noop);
+  const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
+    closing ? 'exit' : 'enter',
+    {
+      onExited() {
+        onClose();
+        itemActionCallbackRef.current();
+        itemActionCallbackRef.current = noop;
+      },
+    },
+  );
   const isDismissButtonVisible = isDesktop && platform !== 'ios';
-
   const elementRef = React.useRef<HTMLDivElement>(null);
-
-  const timeout = platform === 'ios' ? 300 : 200;
 
   const close = React.useCallback(() => {
     setClosing(true);
-    waitTransitionFinish(
-      elementRef.current,
-      (e?: TransitionEvent) => {
-        if (!e || e.propertyName === 'opacity') {
-          onClose();
-        }
-      },
-      timeout,
-    );
-  }, [elementRef, waitTransitionFinish, onClose, timeout]);
+  }, []);
 
   const onItemClick = React.useCallback(
     (item: AlertActionInterface) => {
-      const { action, autoCloseDisabled = false } = item;
+      const { action: itemAction, autoCloseDisabled = false } = item;
 
-      if (!autoCloseDisabled) {
-        setClosing(true);
-        waitTransitionFinish(
-          elementRef.current,
-          (e?: TransitionEvent) => {
-            if (!e || e.propertyName === 'opacity') {
-              onClose();
-              action && action();
-            }
-          },
-          timeout,
-        );
+      if (autoCloseDisabled) {
+        itemAction && itemAction({ close });
       } else {
-        action && action({ close });
+        if (itemAction) {
+          itemActionCallbackRef.current = itemAction;
+        }
+        setClosing(true);
       }
     },
-    [elementRef, waitTransitionFinish, onClose, close, timeout],
+    [close],
   );
 
   useScrollLock();
@@ -145,15 +136,16 @@ export const Alert = ({
     >
       <FocusTrap
         {...restProps}
+        {...animationHandlers}
         getRootRef={elementRef}
         onClick={stopPropagation}
         onClose={close}
-        timeout={timeout}
+        autoFocus={animationState === 'entered'}
         className={classNames(
           styles['Alert'],
           platform === 'ios' && styles['Alert--ios'],
           platform === 'vkcom' && styles['Alert--vkcom'],
-          closing && styles['Alert--closing'],
+          closing ? styles['Alert--closing'] : styles['Alert--opening'],
           isDesktop && styles['Alert--desktop'],
         )}
         role="alertdialog"

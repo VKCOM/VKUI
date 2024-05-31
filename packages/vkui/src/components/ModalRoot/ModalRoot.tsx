@@ -6,7 +6,6 @@ import { withPlatform } from '../../hoc/withPlatform';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { setTransformStyle } from '../../lib/styles';
-import { transitionEvent } from '../../lib/supportEvents';
 import { rubber } from '../../lib/touch';
 import { warnOnce } from '../../lib/warnOnce';
 import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
@@ -515,13 +514,9 @@ class ModalRootTouchComponent extends React.Component<
   };
 
   waitTransitionFinish(modalState: ModalsStateEntry | undefined, eventHandler: () => void) {
-    if (transitionEvent.supported) {
-      const onceHandler = () => {
-        modalState?.innerElement?.removeEventListener(transitionEvent.name as string, onceHandler);
-        eventHandler();
-      };
-
-      modalState?.innerElement?.addEventListener(transitionEvent.name as string, onceHandler);
+    const el = modalState ? modalState.innerElement : null;
+    if (el) {
+      el.addEventListener('transitionend', eventHandler, { once: true });
     } else {
       setTimeout(eventHandler, this.timeout);
     }
