@@ -17,9 +17,7 @@
 <br />
 
 - У всплывающего элемента обязательно должен быть указан [`role`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles).
-  Зачастую это либо [`"tooltip"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tooltip_role),
-  либо [`"menu"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/menu_role),
-  либо [`"dialog"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/dialog_role).
+  Зачастую это либо [`"tooltip"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tooltip_role), либо [`"dialog"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/dialog_role).
 - У целевого элемента, в зависимости от `role` у всплывающего элемента, должны быть заданы атрибуты
   `aria-*`. Какие именно можно ознакомиться в документации конкретного `role`.
 
@@ -55,7 +53,7 @@ const PopoverWithTriggerClick = () => {
       noStyling
       trigger="click"
       id="menupopup"
-      role="menu"
+      role="dialog"
       aria-labelledby="menubutton"
       content={({ onClose }) => (
         <div
@@ -79,7 +77,7 @@ const PopoverWithTriggerClick = () => {
         </div>
       )}
     >
-      <Button id="menubutton" aria-controls="menupopup" aria-haspopup="true" mode="outline">
+      <Button id="menubutton" aria-controls="menupopup" mode="outline">
         Нажми на меня
       </Button>
     </Popover>
