@@ -44,7 +44,6 @@ export const SplitLayout = ({
       className={classNames(
         styles['SplitLayout'],
         platform === 'ios' && styles['SplitLayout--ios'],
-        center && styles['SplitLayout--center'],
       )}
       popout={popout}
       modal={modal}
@@ -57,6 +56,7 @@ export const SplitLayout = ({
         className={classNames(
           styles['SplitLayout__inner'],
           !!header && styles['SplitLayout__inner--header'],
+          center && styles['SplitLayout__inner--center'],
           className,
         )}
       >
