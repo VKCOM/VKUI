@@ -21,7 +21,10 @@ import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import { CustomSelectClearButton, CustomSelectClearButtonProps } from './CustomSelectClearButton';
+import {
+  CustomSelectClearButton,
+  type CustomSelectClearButtonProps,
+} from './CustomSelectClearButton';
 import { CustomSelectInput } from './CustomSelectInput';
 import styles from './CustomSelect.module.css';
 
@@ -119,6 +122,8 @@ export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
   extends CustomSelectOptionProps {
   option: T;
 }
+
+export type { CustomSelectClearButtonProps };
 
 export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
