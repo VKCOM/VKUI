@@ -31,7 +31,7 @@ import {
   isNotServicePreset,
   renderOptionDefault,
 } from './constants';
-import type { FocusActionType, OptionPreset } from './types';
+import type { FocusActionType } from './types';
 import { useChipsSelect, type UseChipsSelectProps } from './useChipsSelect';
 import styles from './ChipsSelect.module.css';
 
@@ -39,37 +39,6 @@ const stylesDropdownVerticalPlacement = {
   top: styles['ChipsSelect--pop-up'],
   bottom: styles['ChipsSelect--pop-down'],
 } as const;
-
-const findIndexAfter = <O extends ChipOption>(
-  options: Array<OptionPreset<O>> = [],
-  startIndex = -1,
-) => {
-  if (startIndex >= options.length - 1) {
-    return -1;
-  }
-  return options.findIndex(
-    (option, i) => i > startIndex && (!isNotServicePreset(option) || !option.disabled),
-  );
-};
-
-const findIndexBefore = <O extends ChipOption>(
-  options: Array<OptionPreset<O>> = [],
-  endIndex: number = options.length,
-) => {
-  let result = -1;
-  if (endIndex <= 0) {
-    return result;
-  }
-  for (let i = endIndex - 1; i >= 0; i--) {
-    let option = options[i];
-
-    if (!isNotServicePreset(option) || !option.disabled) {
-      result = i;
-      break;
-    }
-  }
-  return result;
-};
 
 export interface ChipsSelectProps<O extends ChipOption>
   extends ChipsInputBaseProps<O>,
@@ -283,12 +252,6 @@ export const ChipsSelect = <Option extends ChipOption>({
       return;
     }
 
-    const option = options[index];
-
-    if (isNotServicePreset(option) && option.disabled) {
-      return;
-    }
-
     scrollToElement(index);
     setFocusedOptionIndex(index);
   };
@@ -297,11 +260,9 @@ export const ChipsSelect = <Option extends ChipOption>({
     let index = nextIndex === null ? -1 : nextIndex;
 
     if (type === FOCUS_ACTION_NEXT) {
-      const nextIndex = findIndexAfter(options, index);
-      index = nextIndex === -1 ? findIndexAfter(options) : nextIndex; // Следующий за index или первый валидный до index
+      index = index >= options.length - 1 ? 0 : ++index;
     } else if (type === FOCUS_ACTION_PREV) {
-      const beforeIndex = findIndexBefore(options, index);
-      index = beforeIndex === -1 ? findIndexBefore(options) : beforeIndex; // Предшествующий index или последний валидный после index
+      index = index <= 0 ? options.length - 1 : --index;
     }
 
     focusOptionByIndex(index, focusedOptionIndex);
@@ -337,7 +298,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         }
         if (focusedOptionIndex != null) {
           const foundOption = options[focusedOptionIndex];
-          if (foundOption && isNotServicePreset(foundOption)) {
+          if (foundOption && isNotServicePreset(foundOption) && !foundOption.disabled) {
             event.preventDefault();
 
             if (onChangeStart) {
