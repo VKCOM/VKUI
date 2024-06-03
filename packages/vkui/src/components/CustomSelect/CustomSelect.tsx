@@ -186,6 +186,9 @@ export interface SelectProps<
    * (e2e) testId кнопки очистки
    */
   clearButtonTestId?: string;
+  /**
+   * Отступ от выпадающего списка
+   */
   dropdownOffsetDistance?: number;
   /**
    * Ширина раскрывающегося списка зависит от контента

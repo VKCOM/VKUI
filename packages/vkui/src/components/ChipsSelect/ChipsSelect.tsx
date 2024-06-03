@@ -35,11 +35,6 @@ import type { FocusActionType, OptionPreset } from './types';
 import { useChipsSelect, type UseChipsSelectProps } from './useChipsSelect';
 import styles from './ChipsSelect.module.css';
 
-const stylesDropdownVerticalPlacement = {
-  top: styles['ChipsSelect--pop-up'],
-  bottom: styles['ChipsSelect--pop-down'],
-} as const;
-
 const findIndexAfter = <O extends ChipOption>(
   options: Array<OptionPreset<O>> = [],
   startIndex = -1,
@@ -114,6 +109,11 @@ export interface ChipsSelectProps<O extends ChipOption>
    * Событие срабатывающее перед onChange
    */
   onChangeStart?: (event: React.MouseEvent | React.KeyboardEvent, option: O) => void;
+
+  /**
+   * Отступ от выпадающего списка
+   */
+  dropdownOffsetDistance?: number;
 }
 
 /**
@@ -160,6 +160,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   onInputChange: onInputChangeProp,
   onBlur: onBlurProp,
   onKeyDown: onKeyDownProp,
+  dropdownOffsetDistance = 0,
   ...restProps
 }: ChipsSelectProps<Option>) => {
   const {
@@ -403,6 +404,17 @@ export const ChipsSelect = <Option extends ChipOption>({
     opened ? dropdownScrollBoxRef : null,
   );
 
+  const openedClassNames = React.useMemo(
+    () =>
+      (opened &&
+        dropdownOffsetDistance === 0 &&
+        (dropdownVerticalPlacement?.includes('top')
+          ? styles['ChipsSelect--pop-up']
+          : styles['ChipsSelect--pop-down'])) ||
+      undefined,
+    [dropdownOffsetDistance, opened, dropdownVerticalPlacement],
+  );
+
   return (
     <>
       <ChipsInputBase
@@ -412,13 +424,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         // FormFieldProps
         id={labelledbyId}
         getRootRef={rootRef}
-        className={classNames(
-          styles['ChipsSelect'],
-          opened &&
-            dropdownVerticalPlacement &&
-            stylesDropdownVerticalPlacement[dropdownVerticalPlacement],
-          className,
-        )}
+        className={classNames(styles['ChipsSelect'], openedClassNames, className)}
         status={status}
         after={dropdownIconProp || <DropdownIcon opened={opened} />}
         // option
@@ -453,6 +459,7 @@ export const ChipsSelect = <Option extends ChipOption>({
           autoWidth={dropdownAutoWidth}
           forcePortal={forceDropdownPortal}
           noMaxHeight={noMaxHeight}
+          offsetDistance={dropdownOffsetDistance}
           // a11y
           id={dropdownId}
           role="listbox"
