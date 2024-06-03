@@ -2652,7 +2652,7 @@ __metadata:
     react-children-utilities: ^2.10.0
     react-docgen-typescript: ^2.2.2
     react-dom: "*"
-    react-frame-component: ^5.2.6
+    react-frame-component: ^5.2.7
     react-styleguidist: ^13.1.2
     typescript: "*"
   languageName: unknown
@@ -15976,14 +15976,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-frame-component@npm:^5.2.6":
-  version: 5.2.6
-  resolution: "react-frame-component@npm:5.2.6"
+"react-frame-component@npm:^5.2.7":
+  version: 5.2.7
+  resolution: "react-frame-component@npm:5.2.7"
   peerDependencies:
     prop-types: ^15.5.9
     react: ">= 16.3"
     react-dom: ">= 16.3"
-  checksum: 6669a0acc1532b53e80b14688b06d64bfab88103a1e4377a386f4350a51d76494b48ac1b8f6818bd60ae2d37cce015314ce725d807be72e9fe9258e9303bb6ec
+  checksum: e28975cf8ca1e730f66f1fc9e4d4248f33970088b95737d6a271ba8650bc35c1bbf97537685c8ab9a32af0fd89c52777e03de848b8cc3c9e8842506ddc3f65d9
   languageName: node
   linkType: hard
 
