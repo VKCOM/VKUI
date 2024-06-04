@@ -6,8 +6,8 @@ import styles from './Popover.module.css';
 
 describe(Popover, () => {
   baselineComponent((props) => (
-    <Popover defaultShown {...props}>
-      <div>Test</div>
+    <Popover defaultShown {...props} aria-label="меню базового компонента">
+      <button aria-label="greetings dialog">Test</button>
     </Popover>
   ));
 

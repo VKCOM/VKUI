@@ -90,6 +90,7 @@ const PopoverWithTriggerFocus = () => {
       trigger="focus"
       role="dialog"
       aria-describedby="dialog-2"
+      aria-label="Форма отправки сообщения"
       content={({ onClose }) => (
         <FormLayoutGroup>
           <FormItem top="Имя">
