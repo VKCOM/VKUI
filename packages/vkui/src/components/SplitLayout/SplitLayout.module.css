@@ -26,6 +26,6 @@
   );
 }
 
-.SplitLayout--center {
+.SplitLayout__inner--center {
   justify-content: center;
 }
