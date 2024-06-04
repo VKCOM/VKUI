@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@project-tools/stylelint-bad-multiplication",
+  "name": "@project-tools/stylelint-plugin-vkui",
   "version": "1.0.0",
   "type": "module",
   "main": "index.js",
