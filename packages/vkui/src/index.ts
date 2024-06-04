@@ -250,6 +250,7 @@ export type { CustomPaginationNavigationButton } from './components/Pagination/P
 export { Accordion } from './components/Accordion/Accordion';
 export type { AccordionProps } from './components/Accordion/Accordion';
 export type { AccordionSummaryProps } from './components/Accordion/AccordionSummary';
+export type { AccordionContentProps } from './components/Accordion/AccordionContent';
 
 /**
  * Forms
