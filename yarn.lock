@@ -2470,9 +2470,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@project-tools/stylelint-bad-multiplication@workspace:1.0.0, @project-tools/stylelint-bad-multiplication@workspace:tools/stylelint-bad-multiplication":
+"@project-tools/stylelint-plugin-vkui@workspace:1.0.0, @project-tools/stylelint-plugin-vkui@workspace:tools/stylelint-plugin-vkui":
   version: 0.0.0-use.local
-  resolution: "@project-tools/stylelint-bad-multiplication@workspace:tools/stylelint-bad-multiplication"
+  resolution: "@project-tools/stylelint-plugin-vkui@workspace:tools/stylelint-plugin-vkui"
   languageName: unknown
   linkType: soft
 
@@ -5328,7 +5328,7 @@ __metadata:
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0"
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0"
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0"
-    "@project-tools/stylelint-bad-multiplication": "workspace:1.0.0"
+    "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
     "@size-limit/file": ^11.1.4
     "@size-limit/webpack": ^11.1.4
     "@size-limit/webpack-css": ^11.1.4

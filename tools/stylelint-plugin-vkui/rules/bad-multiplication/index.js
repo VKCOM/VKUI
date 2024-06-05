@@ -1,10 +1,9 @@
 import valueParser from 'postcss-value-parser';
 import stylelint from 'stylelint';
-import pkg from './package.json' assert { type: 'json' };
 
 const MATCH_CALC = /((?:-(moz|webkit)-)?calc)/i;
 
-export const ruleName = pkg.name;
+export const ruleName = 'vkui-internal/bad-multiplication';
 const messages = stylelint.utils.ruleMessages(ruleName, {});
 const meta = {
   url: 'https://github.com/VKCOM/VKUI/pull/2741',
@@ -66,4 +65,4 @@ ruleFunction.ruleName = ruleName;
 ruleFunction.messages = messages;
 ruleFunction.meta = meta;
 
-export default stylelint.createPlugin(ruleName, ruleFunction);
+export default ruleFunction;
