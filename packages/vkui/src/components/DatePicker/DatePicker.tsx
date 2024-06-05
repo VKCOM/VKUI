@@ -53,10 +53,6 @@ export interface DatePickerProps
   disabled?: boolean;
 }
 
-type DatePickerNormalizedProps = Omit<DatePickerProps, 'defaultValue'> & {
-  valuePropName: 'defaultValue' | 'value';
-};
-
 // Переводим state к формату гг-мм-дд
 function convertToInputFormat(value: Partial<DatePickerDateFormat> | undefined) {
   if (!value) {
@@ -80,13 +76,6 @@ function parseInputDate(date: string): DatePickerDateFormat {
   };
 }
 
-function getNormalizedDateValue(value?: DatePickerDateFormat, defaultValue?: DatePickerDateFormat) {
-  if (value) {
-    return { propName: 'value', date: value } as const;
-  }
-  return { propName: 'defaultValue', date: defaultValue } as const;
-}
-
 function getMonthMaxDay(month?: number, year?: number) {
   return month ? new Date(year || 2016, month, 0).getDate() : 31;
 }
@@ -99,31 +88,38 @@ const DatePickerCustom = ({
   monthPlaceholder,
   yearPlaceholder,
   popupDirection,
-  value: valueProp = DEFAULT_EMPTY_DATE,
+  value,
   monthNames,
   onDateChange,
   disabled,
-  valuePropName,
+  defaultValue = DEFAULT_EMPTY_DATE,
   ...restProps
-}: DatePickerNormalizedProps) => {
-  const [value, setValue] = React.useState<DatePickerDateFormat>(() => valueProp);
+}: DatePickerProps) => {
+  const isControlled = value !== undefined;
+  const [internalValue, setInternalValue] = React.useState<DatePickerDateFormat>(() =>
+    isControlled ? value : defaultValue,
+  );
   const hiddenInput = React.useRef<HTMLInputElement>(null);
 
   const onSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const nextDate = {
-      day: value.day,
-      month: value.month,
-      year: value.year,
+      day: internalValue.day,
+      month: internalValue.month,
+      year: internalValue.year,
     };
     nextDate[e.target.name as keyof typeof nextDate] = Number(e.target.value);
-    nextDate.day = clamp(nextDate.day, 1, getMonthMaxDay(nextDate.month, nextDate.year));
-    setValue(nextDate);
+    nextDate.day = nextDate.day
+      ? clamp(nextDate.day, 1, getMonthMaxDay(nextDate.month, nextDate.year))
+      : nextDate.day;
+    setInternalValue(nextDate);
     onDateChange?.(nextDate);
   };
-  const dayOptions = range(1, getMonthMaxDay(value.month, value.year)).map((value) => ({
-    label: String(value),
-    value,
-  }));
+  const dayOptions = range(1, getMonthMaxDay(internalValue.month, internalValue.year)).map(
+    (value) => ({
+      label: String(value),
+      value,
+    }),
+  );
   const monthOptions = (monthNames || DefaultMonths).map((name, index) => ({
     label: name,
     value: index + 1,
@@ -134,14 +130,14 @@ const DatePickerCustom = ({
   }));
 
   useIsomorphicLayoutEffect(() => {
-    if (valuePropName === 'value') {
-      setValue(valueProp || DEFAULT_EMPTY_DATE);
+    if (isControlled) {
+      setInternalValue(value);
     }
-  }, [valueProp]);
+  }, [value]);
 
   useNativeFormResetListener(hiddenInput, () => {
-    if (valuePropName === 'defaultValue') {
-      setValue(valueProp);
+    if (!isControlled) {
+      setInternalValue(defaultValue);
     }
   });
 
@@ -151,7 +147,7 @@ const DatePickerCustom = ({
         <div className={styles['DatePicker__day']}>
           <CustomSelect
             name="day"
-            value={value.day}
+            value={internalValue.day}
             options={dayOptions}
             placeholder={dayPlaceholder}
             popupDirection={popupDirection}
@@ -163,7 +159,7 @@ const DatePickerCustom = ({
           <CustomSelect
             className={styles['DatePicker__monthSelect']}
             name="month"
-            value={value.month}
+            value={internalValue.month}
             options={monthOptions}
             placeholder={monthPlaceholder}
             popupDirection={popupDirection}
@@ -174,7 +170,7 @@ const DatePickerCustom = ({
         <div className={styles['DatePicker__year']}>
           <CustomSelect
             name="year"
-            value={value.year}
+            value={internalValue.year}
             options={yearOptions}
             placeholder={yearPlaceholder}
             popupDirection={popupDirection}
@@ -187,7 +183,7 @@ const DatePickerCustom = ({
         type="hidden"
         name={name}
         ref={hiddenInput}
-        {...{ [valuePropName]: convertToInputFormat(value) }}
+        value={convertToInputFormat(internalValue)}
       />
     </RootComponent>
   );
@@ -201,18 +197,30 @@ const DatePickerNative = ({
   dayPlaceholder,
   monthPlaceholder,
   yearPlaceholder,
-  value = DEFAULT_EMPTY_DATE,
-  valuePropName,
+  value,
+  defaultValue = DEFAULT_EMPTY_DATE,
   onDateChange,
   ...restProps
-}: DatePickerNormalizedProps) => {
+}: DatePickerProps) => {
   const onStringChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
       onDateChange?.(parseInputDate(e.currentTarget.value));
     },
     [onDateChange],
   );
-  const inputProps: HasOnlyExpectedProps<typeof restProps, InputProps> = restProps;
+  const inputProps: HasOnlyExpectedProps<
+    typeof restProps & Pick<InputProps, 'value' | 'defaultValue'>,
+    InputProps
+  > = restProps;
+
+  if (value) {
+    // контролируемый компонент
+    inputProps.value = convertToInputFormat(value);
+  } else {
+    // неконтролируемый компонент
+    inputProps.defaultValue = convertToInputFormat(defaultValue);
+  }
+
   return (
     <Input
       {...inputProps}
@@ -220,7 +228,6 @@ const DatePickerNative = ({
       onChange={onStringChange}
       min={convertToInputFormat(min)}
       max={convertToInputFormat(max)}
-      {...{ [valuePropName]: convertToInputFormat(value) }}
     />
   );
 };
@@ -228,15 +235,13 @@ const DatePickerNative = ({
 /**
  * @see https://vkcom.github.io/VKUI/#/DatePicker
  */
-export const DatePicker = ({ onDateChange, defaultValue, value, ...props }: DatePickerProps) => {
+export const DatePicker = ({ onDateChange, ...props }: DatePickerProps) => {
   const hasPointer = useAdaptivityHasPointer();
 
   const onChange = (update: DatePickerDateFormat) => {
     onDateChange && onDateChange({ ...update });
   };
 
-  const { propName, date } = getNormalizedDateValue(value, defaultValue);
-
   const Cmp = hasPointer ? DatePickerCustom : DatePickerNative;
-  return <Cmp {...props} onDateChange={onChange} value={date} valuePropName={propName} />;
+  return <Cmp {...props} onDateChange={onChange} />;
 };
