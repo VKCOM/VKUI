@@ -1,4 +1,5 @@
 .Textarea {
+  overflow: hidden;
   position: relative;
 }
 
