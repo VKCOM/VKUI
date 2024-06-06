@@ -3,8 +3,8 @@ import { leadingZero } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { range } from '../../helpers/range';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasOnlyExpectedProps, HTMLAttributesWithRootRef } from '../../types';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
 import { Input, type InputProps } from '../Input/Input';
@@ -96,9 +96,7 @@ const DatePickerCustom = ({
   ...restProps
 }: DatePickerProps) => {
   const isControlled = value !== undefined;
-  const [internalValue, setInternalValue] = React.useState<DatePickerDateFormat>(() =>
-    isControlled ? value : defaultValue,
-  );
+  const [internalValue, setInternalValue] = useCustomEnsuredControl({ value, defaultValue });
   const hiddenInput = React.useRef<HTMLInputElement>(null);
 
   const onSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -128,12 +126,6 @@ const DatePickerCustom = ({
     label: String(value),
     value: value,
   }));
-
-  useIsomorphicLayoutEffect(() => {
-    if (isControlled) {
-      setInternalValue(value);
-    }
-  }, [value]);
 
   useNativeFormResetListener(hiddenInput, () => {
     if (!isControlled) {
