@@ -87,6 +87,7 @@ export const Switch = ({
         focusVisibleClassNames,
         className,
       )}
+      style={style}
       ref={getRootRef}
       onBlur={handleBlur}
       onFocus={handleFocus}
@@ -94,7 +95,6 @@ export const Switch = ({
       <VisuallyHidden {...inputProps} className={styles['Switch__inputNative']} />
       <span aria-hidden className={styles['Switch__inputFake']}>
         <span className={styles['Switch__track']} />
-        {platform !== 'ios' ? <span aria-hidden className={styles['Switch__dribble']} /> : null}
         <span aria-hidden className={styles['Switch__handle']} />
       </span>
     </label>
