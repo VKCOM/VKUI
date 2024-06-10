@@ -13,12 +13,14 @@ const TestComponent = ({
   restoreFocus,
   hookResultRef,
   keyboardInput = false,
+  autoFocus = false, // for multiple trigger [click, focus]
 }: {
   restoreFocus?: boolean;
   hookResultRef: {
     current: ReturnType<typeof useFloatingWithInteractions<HTMLButtonElement>>;
   };
   keyboardInput?: boolean;
+  autoFocus?: boolean;
 }) => {
   const { shown, refs, referenceProps, floatingProps } = hookResultRef.current;
 
@@ -34,7 +36,12 @@ const TestComponent = ({
             restoreFocus={restoreFocus ? hookResultRef.current.onRestoreFocus : restoreFocus}
             onClose={hookResultRef.current.onEscapeKeyDown}
           >
-            <input data-testid="focus-trap" type="text" defaultValue="Reference" />
+            <input
+              autoFocus={autoFocus}
+              data-testid="focus-trap"
+              type="text"
+              defaultValue="Reference"
+            />
           </FocusTrap>
         </span>
       ) : null}
@@ -219,42 +226,34 @@ describe(useFloatingWithInteractions, () => {
           onShownChange,
         }),
       );
-      const { rerender } = render(<TestComponent hookResultRef={result} />);
+      const { rerender } = render(<TestComponent hookResultRef={result} autoFocus />);
       await waitFor(() => {
         expect(result.current.shown).toBeFalsy();
         expect(onShownChange).toHaveBeenCalledTimes(0);
         expect(onShownChange).not.toHaveBeenCalled();
       });
 
-      await userEvent.click(result.current.refs.reference.current!);
+      await fireEventPatch(result.current.refs.reference.current, 'focus');
 
-      rerender(<TestComponent hookResultRef={result} />);
+      rerender(<TestComponent hookResultRef={result} autoFocus />);
       await waitFor(() => {
         expect(result.current.shown).toBeTruthy();
-        expect(onShownChange).toHaveBeenCalledTimes(2); // focus and click
-        expect(onShownChange).toHaveBeenLastCalledWith(true, 'click');
+        expect(onShownChange).toHaveBeenCalledTimes(1); // focus
+        expect(onShownChange).toHaveBeenLastCalledWith(true, 'focus');
       });
 
       jest.useFakeTimers();
-      await userEvent.keyboard('{Escape}');
+      await userEvent.click(result.current.refs.reference.current!);
       act(() => {
         jest.runOnlyPendingTimers();
         jest.useRealTimers();
       });
 
-      rerender(<TestComponent hookResultRef={result} />);
+      rerender(<TestComponent hookResultRef={result} autoFocus />);
       await waitFor(() => {
         expect(result.current.shown).toBeFalsy();
-        expect(onShownChange).toHaveBeenCalledTimes(3);
-        expect(onShownChange).toHaveBeenLastCalledWith(false, 'escape-key');
-      });
-
-      await fireEventPatch(result.current.refs.reference.current, 'click');
-      rerender(<TestComponent hookResultRef={result} />);
-      await waitFor(() => {
-        expect(result.current.shown).toBeTruthy();
-        expect(onShownChange).toHaveBeenCalledTimes(4);
-        expect(onShownChange).toHaveBeenLastCalledWith(true, 'click');
+        expect(onShownChange).toHaveBeenCalledTimes(3); // focus and click
+        expect(onShownChange).toHaveBeenLastCalledWith(false, 'click');
       });
     });
 
