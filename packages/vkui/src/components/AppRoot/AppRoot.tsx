@@ -6,6 +6,7 @@ import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { getDocumentBody } from '../../lib/dom';
 import { useTokensClassName } from '../../lib/tokens';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { AppRootContext } from './AppRootContext';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
 import {
@@ -51,6 +52,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * [Panel](https://vkcom.github.io/VKUI/#/Panel) и [Group](https://vkcom.github.io/VKUI/#/Group).
    */
   layout?: AppRootLayout;
+  userSelectMode?: 'disabled-in-webview' | 'disabled-by-pointer' | 'enabled' | 'disabled';
 }
 
 /**
@@ -66,6 +68,7 @@ export const AppRoot = ({
   className,
   safeAreaInsets: safeAreaInsetsProp,
   layout,
+  userSelectMode = 'disabled-in-webview',
   ...props
 }: AppRootProps) => {
   const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
@@ -195,21 +198,51 @@ export const AppRoot = ({
     </AppRootContext.Provider>
   );
 
+  const { isWebView } = useConfigProvider();
+  const userSelectModeClassName = getUserSelectModeClassName({
+    userSelectMode,
+    isWebView,
+    hasPointer,
+  });
+
   return mode === 'partial' ? (
     content
   ) : (
     <div
       ref={appRootRef}
-      className={classNames(
-        styles['AppRoot'],
-        hasPointer === undefined
-          ? styles['AppRoot--pointer-none']
-          : !hasPointer && styles['AppRoot--pointer-has-not'],
-        className,
-      )}
+      className={classNames(styles['AppRoot'], userSelectModeClassName, className)}
       {...props}
     >
       {content}
     </div>
   );
 };
+
+function getUserSelectModeClassName({
+  userSelectMode,
+  isWebView,
+  hasPointer,
+}: {
+  userSelectMode: AppRootProps['userSelectMode'];
+  isWebView: boolean;
+  hasPointer: boolean | undefined;
+}): string | null {
+  switch (userSelectMode) {
+    case 'disabled-in-webview': {
+      return isWebView ? styles['AppRoot--user-select-none'] : null;
+    }
+    case 'disabled-by-pointer': {
+      return hasPointer === undefined
+        ? styles['AppRoot--pointer-none']
+        : !hasPointer
+        ? styles['AppRoot--user-select-none']
+        : null;
+    }
+    case 'enabled':
+      return null;
+    case 'disabled':
+      return styles['AppRoot--user-select-none'];
+    default:
+      return null;
+  }
+}
