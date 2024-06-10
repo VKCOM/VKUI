@@ -3,7 +3,6 @@
   align-items: flex-start;
   padding: 0;
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
-  user-select: text;
   font-family: var(--vkui--font_family_base);
 }
 
