@@ -3,6 +3,7 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useAppearance } from '../../../hooks/useAppearance';
 import { focusVisiblePresetModeClassNames } from '../../../hooks/useFocusVisibleClassName';
+import { DisableClickableLockStateContext } from '../../Clickable/useState';
 import { Tappable } from '../../Tappable/Tappable';
 import { ImageBaseContext } from '../context';
 import type { ImageBaseExpectedIconProps } from '../types';
@@ -87,7 +88,9 @@ export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
       hasActive={false}
       onClick={onClick}
     >
-      {children}
+      <DisableClickableLockStateContext.Provider value>
+        {children}
+      </DisableClickableLockStateContext.Provider>
     </Tappable>
   );
 };
