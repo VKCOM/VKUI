@@ -13,6 +13,7 @@ import {
   extractPortalRootByProp,
   getClassNamesByMode,
   getParentElement,
+  getUserSelectModeClassName,
   setSafeAreaInsets,
 } from './helpers';
 import type { AppRootLayout, AppRootMode, AppRootScroll, SafeAreaInsets } from './types';
@@ -217,32 +218,3 @@ export const AppRoot = ({
     </div>
   );
 };
-
-function getUserSelectModeClassName({
-  userSelectMode,
-  isWebView,
-  hasPointer,
-}: {
-  userSelectMode: AppRootProps['userSelectMode'];
-  isWebView: boolean;
-  hasPointer: boolean | undefined;
-}): string | null {
-  switch (userSelectMode) {
-    case 'disabled-in-webview': {
-      return isWebView ? styles['AppRoot--user-select-none'] : null;
-    }
-    case 'disabled-by-pointer': {
-      return hasPointer === undefined
-        ? styles['AppRoot--pointer-none']
-        : !hasPointer
-        ? styles['AppRoot--user-select-none']
-        : null;
-    }
-    case 'enabled':
-      return null;
-    case 'disabled':
-      return styles['AppRoot--user-select-none'];
-    default:
-      return null;
-  }
-}

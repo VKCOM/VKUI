@@ -1,6 +1,7 @@
 import type { SizeTypeValues } from '../../lib/adaptivity';
 import { isRefObject } from '../../lib/isRefObject';
-import type { AppRootLayout, AppRootMode, SafeAreaInsets } from './types';
+import type { AppRootLayout, AppRootMode, AppRootUserSelectMode, SafeAreaInsets } from './types';
+import styles from './AppRoot.module.css';
 
 type ContainerClassNamesProps = {
   mode: AppRootMode;
@@ -84,3 +85,30 @@ export const setSafeAreaInsets = (
     }
   };
 };
+
+export function getUserSelectModeClassName({
+  userSelectMode,
+  isWebView,
+  hasPointer,
+}: {
+  userSelectMode: AppRootUserSelectMode;
+  isWebView: boolean;
+  hasPointer?: boolean;
+}) {
+  if (userSelectMode === 'disabled-in-webview') {
+    return isWebView ? styles['AppRoot--user-select-none'] : null;
+  }
+  if (userSelectMode === 'disabled-by-pointer') {
+    return hasPointer === undefined
+      ? styles['AppRoot--pointer-none']
+      : !hasPointer
+      ? styles['AppRoot--user-select-none']
+      : null;
+  }
+
+  if (userSelectMode === 'disabled') {
+    return styles['AppRoot--user-select-none'];
+  }
+
+  return null;
+}
