@@ -93,22 +93,23 @@ export function getUserSelectModeClassName({
 }: {
   userSelectMode: AppRootUserSelectMode;
   isWebView: boolean;
-  hasPointer?: boolean;
-}) {
-  if (userSelectMode === 'disabled-in-webview') {
-    return isWebView ? styles['AppRoot--user-select-none'] : null;
+  hasPointer: boolean | undefined;
+}): string | null {
+  switch (userSelectMode) {
+    case 'disabled-in-webview': {
+      return isWebView ? styles['AppRoot--user-select-none'] : null;
+    }
+    case 'enabled-with-pointer': {
+      return hasPointer === undefined
+        ? styles['AppRoot--pointer-none']
+        : !hasPointer
+        ? styles['AppRoot--user-select-none']
+        : null;
+    }
+    case 'disabled':
+      return styles['AppRoot--user-select-none'];
+    case 'enabled':
+    default:
+      return null;
   }
-  if (userSelectMode === 'disabled-by-pointer') {
-    return hasPointer === undefined
-      ? styles['AppRoot--pointer-none']
-      : !hasPointer
-      ? styles['AppRoot--user-select-none']
-      : null;
-  }
-
-  if (userSelectMode === 'disabled') {
-    return styles['AppRoot--user-select-none'];
-  }
-
-  return null;
 }

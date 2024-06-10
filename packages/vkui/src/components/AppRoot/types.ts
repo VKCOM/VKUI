@@ -12,7 +12,7 @@ export type AppRootLayout = 'card' | 'plain';
 export type AppRootScroll = 'global' | 'contain';
 
 export type AppRootUserSelectMode =
-  | 'disabled-in-webview'
-  | 'disabled-by-pointer'
   | 'enabled'
+  | 'enabled-with-pointer'
+  | 'disabled-in-webview'
   | 'disabled';

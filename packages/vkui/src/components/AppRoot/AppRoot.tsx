@@ -16,7 +16,13 @@ import {
   getUserSelectModeClassName,
   setSafeAreaInsets,
 } from './helpers';
-import type { AppRootLayout, AppRootMode, AppRootScroll, SafeAreaInsets } from './types';
+import type {
+  AppRootLayout,
+  AppRootMode,
+  AppRootScroll,
+  AppRootUserSelectMode,
+  SafeAreaInsets,
+} from './types';
 import styles from './AppRoot.module.css';
 
 export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -53,7 +59,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * [Panel](https://vkcom.github.io/VKUI/#/Panel) и [Group](https://vkcom.github.io/VKUI/#/Group).
    */
   layout?: AppRootLayout;
-  userSelectMode?: 'disabled-in-webview' | 'disabled-by-pointer' | 'enabled' | 'disabled';
+  userSelectMode?: AppRootUserSelectMode;
 }
 
 /**
