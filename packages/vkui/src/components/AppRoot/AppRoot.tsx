@@ -59,6 +59,14 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * [Panel](https://vkcom.github.io/VKUI/#/Panel) и [Group](https://vkcom.github.io/VKUI/#/Group).
    */
   layout?: AppRootLayout;
+  /**
+   * Задаёт режим выбора текста (выделения текста) для всего приложения.
+   *
+   * - `disabled-in-webview` – запрещает выбор текста, если приложение запущено в webview;
+   * - `enabled-with-pointer` – разрешает выбор текста, если устройство ввода типа `pointer` (например `мышь`), в остальных случаях запрещает;
+   * - `disabled` – запрещает выбор текста;
+   * - `enabled` – разрешает выбор текста.
+   */
   userSelectMode?: AppRootUserSelectMode;
 }
 
