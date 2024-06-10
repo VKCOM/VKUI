@@ -5485,7 +5485,7 @@ __metadata:
     concurrently: ^8.2.2
     cross-env: ^7.0.3
     css-loader: ^6.10.0
-    cssnano: ^7.0.1
+    cssnano: ^7.0.2
     dotenv: ^16.4.5
     eslint: ^8.56.0
     eslint-config-prettier: ^8.10.0
@@ -8029,6 +8029,46 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cssnano-preset-default@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "cssnano-preset-default@npm:7.0.2"
+  dependencies:
+    browserslist: ^4.23.0
+    css-declaration-sorter: ^7.2.0
+    cssnano-utils: ^5.0.0
+    postcss-calc: ^10.0.0
+    postcss-colormin: ^7.0.0
+    postcss-convert-values: ^7.0.0
+    postcss-discard-comments: ^7.0.0
+    postcss-discard-duplicates: ^7.0.0
+    postcss-discard-empty: ^7.0.0
+    postcss-discard-overridden: ^7.0.0
+    postcss-merge-longhand: ^7.0.1
+    postcss-merge-rules: ^7.0.1
+    postcss-minify-font-values: ^7.0.0
+    postcss-minify-gradients: ^7.0.0
+    postcss-minify-params: ^7.0.0
+    postcss-minify-selectors: ^7.0.1
+    postcss-normalize-charset: ^7.0.0
+    postcss-normalize-display-values: ^7.0.0
+    postcss-normalize-positions: ^7.0.0
+    postcss-normalize-repeat-style: ^7.0.0
+    postcss-normalize-string: ^7.0.0
+    postcss-normalize-timing-functions: ^7.0.0
+    postcss-normalize-unicode: ^7.0.0
+    postcss-normalize-url: ^7.0.0
+    postcss-normalize-whitespace: ^7.0.0
+    postcss-ordered-values: ^7.0.0
+    postcss-reduce-initial: ^7.0.0
+    postcss-reduce-transforms: ^7.0.0
+    postcss-svgo: ^7.0.1
+    postcss-unique-selectors: ^7.0.1
+  peerDependencies:
+    postcss: ^8.4.31
+  checksum: 776b01e795809b975de9828b7ac02671f904049d8768ddfe24460e81c28f5f7f942bf63c624a9f7d5b0ccfee152cafeae78bdaf7d5ee35e85bcfbce98e9a8e28
+  languageName: node
+  linkType: hard
+
 "cssnano-utils@npm:^5.0.0":
   version: 5.0.0
   resolution: "cssnano-utils@npm:5.0.0"
@@ -8047,6 +8087,18 @@ __metadata:
   peerDependencies:
     postcss: ^8.4.31
   checksum: 595aa89f80ff3e122c4ef099f1cb4bf6b4eedd4a40fe0826a9b8ad0d990f3f402803959bd201710b779c49c525ff7b7ff63227c98629b29ba9d167dc4e385d4b
+  languageName: node
+  linkType: hard
+
+"cssnano@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "cssnano@npm:7.0.2"
+  dependencies:
+    cssnano-preset-default: ^7.0.2
+    lilconfig: ^3.1.1
+  peerDependencies:
+    postcss: ^8.4.31
+  checksum: 1ea5f63d1c1c4ba87581ce1536393deb94338439b69ced9a75276a4b4914bbc81eeee41b9ad9f557554658cd547a55144232967f428f4c444e47c055b5401cec
   languageName: node
   linkType: hard
 
@@ -15150,6 +15202,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-merge-longhand@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "postcss-merge-longhand@npm:7.0.1"
+  dependencies:
+    postcss-value-parser: ^4.2.0
+    stylehacks: ^7.0.1
+  peerDependencies:
+    postcss: ^8.4.31
+  checksum: 29cf6ce9eb672783d110760777a9dcf7313cbe96d22b383c027a4678d1076ad480ec88b788b3f61d743053dfa98af1cf5ce887d986b65e06d49818eef2e2672e
+  languageName: node
+  linkType: hard
+
 "postcss-merge-rules@npm:^7.0.0":
   version: 7.0.0
   resolution: "postcss-merge-rules@npm:7.0.0"
@@ -15161,6 +15225,20 @@ __metadata:
   peerDependencies:
     postcss: ^8.4.31
   checksum: 44f7e2840daa36c26b6eb3df90a2eb9c0f37848da30b7487b39cc39aea31a3df9f5e98012098ac703ecab6269e369f603cce57546b5f835a47ef3a27960d3faf
+  languageName: node
+  linkType: hard
+
+"postcss-merge-rules@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "postcss-merge-rules@npm:7.0.1"
+  dependencies:
+    browserslist: ^4.23.0
+    caniuse-api: ^3.0.0
+    cssnano-utils: ^5.0.0
+    postcss-selector-parser: ^6.1.0
+  peerDependencies:
+    postcss: ^8.4.31
+  checksum: 6fa8416dd807c05fa33b30894e8c17949cf6b3638e6469b167e415ce0fe14b78ca419cf2abc6d14c9e1103b9f98bb57da519ee419f352d23e2cdddfe914975db
   languageName: node
   linkType: hard
 
@@ -15209,6 +15287,17 @@ __metadata:
   peerDependencies:
     postcss: ^8.4.31
   checksum: 4a8ef9e3888378a8621c5541d8f2e7ee13aebe814b54d7ef9301e51df9858572decc5765eb7fa1527b3aa47c18cb04d20023269a18aeaaef466edee9bd1385e2
+  languageName: node
+  linkType: hard
+
+"postcss-minify-selectors@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "postcss-minify-selectors@npm:7.0.1"
+  dependencies:
+    postcss-selector-parser: ^6.1.0
+  peerDependencies:
+    postcss: ^8.4.31
+  checksum: c03f2da03db8b0829d139d58f828c8f77b036adbde88264c7be37651cdf6bb237f5773596c5b66e1c19a730ad778fcb90ffe30c5c61042d54f57c99d90f1233a
   languageName: node
   linkType: hard
 
@@ -15466,6 +15555,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-svgo@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "postcss-svgo@npm:7.0.1"
+  dependencies:
+    postcss-value-parser: ^4.2.0
+    svgo: ^3.3.2
+  peerDependencies:
+    postcss: ^8.4.31
+  checksum: 4196d9b7ec37ea7c427b6d3d40fa75bdae6d1fdf5a814481202138fb9b074ecc1e442b8e0202aa8c76eaaff747e2f6bfec968cfe7bc774d8a58faf8bd945ff4e
+  languageName: node
+  linkType: hard
+
 "postcss-unique-selectors@npm:^7.0.0":
   version: 7.0.0
   resolution: "postcss-unique-selectors@npm:7.0.0"
@@ -15474,6 +15575,17 @@ __metadata:
   peerDependencies:
     postcss: ^8.4.31
   checksum: 7f7c817c6bf37812487ba7b2d1ea2cc6c10768e6c6a54654e8d1f6860926b878a446fea3b890d53420bfdab030a1a8300fba12cd5a82253a76d72c55ae749c5b
+  languageName: node
+  linkType: hard
+
+"postcss-unique-selectors@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "postcss-unique-selectors@npm:7.0.1"
+  dependencies:
+    postcss-selector-parser: ^6.1.0
+  peerDependencies:
+    postcss: ^8.4.31
+  checksum: 01ceef7b278a0c53c6cd3ac625b606f907ef9f80871f807499a6d4a1b7f1305ae307718d6c9309777705e882d8e3e65013e8bff1f68cef169da0316f9618eb45
   languageName: node
   linkType: hard
 
@@ -17959,6 +18071,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stylehacks@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "stylehacks@npm:7.0.1"
+  dependencies:
+    browserslist: ^4.23.0
+    postcss-selector-parser: ^6.1.0
+  peerDependencies:
+    postcss: ^8.4.31
+  checksum: 1e6b12209e033c97aee6eb93954d193f2bee36c05372ddb6aae41cfb86ef01088516dc3d32049d98dcdcd29ce96d55c74864ac227fc86714140365b1b7d23310
+  languageName: node
+  linkType: hard
+
 "stylelint-config-recommended@npm:^14.0.0":
   version: 14.0.0
   resolution: "stylelint-config-recommended@npm:14.0.0"
@@ -18138,6 +18262,23 @@ __metadata:
   bin:
     svgo: ./bin/svgo
   checksum: 42168748a5586d85d447bec2867bc19814a4897f973ff023e6aad4ff19ba7408be37cf3736e982bb78e3f1e52df8785da5dca77a8ebc64c0ebd6fcf9915d2895
+  languageName: node
+  linkType: hard
+
+"svgo@npm:^3.3.2":
+  version: 3.3.2
+  resolution: "svgo@npm:3.3.2"
+  dependencies:
+    "@trysound/sax": 0.2.0
+    commander: ^7.2.0
+    css-select: ^5.1.0
+    css-tree: ^2.3.1
+    css-what: ^6.1.0
+    csso: ^5.0.5
+    picocolors: ^1.0.0
+  bin:
+    svgo: ./bin/svgo
+  checksum: a3f8aad597dec13ab24e679c4c218147048dc1414fe04e99447c5f42a6e077b33d712d306df84674b5253b98c9b84dfbfb41fdd08552443b04946e43d03e054e
   languageName: node
   linkType: hard
 
