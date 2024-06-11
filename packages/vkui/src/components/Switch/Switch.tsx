@@ -95,7 +95,13 @@ export const Switch = ({
       <VisuallyHidden {...inputProps} className={styles['Switch__inputNative']} />
       <span aria-hidden className={styles['Switch__inputFake']}>
         <span className={styles['Switch__track']} />
-        <span aria-hidden className={styles['Switch__handle']} />
+        <span
+          aria-hidden
+          className={classNames(
+            styles['Switch__handle'],
+            platform !== 'ios' && !disabled && styles['Switch__handle--withRipple'],
+          )}
+        />
       </span>
     </label>
   );

@@ -174,7 +174,7 @@
   transition: transform var(--vkui_internal--Switch__handle_shift_x_duration) var(--vkui_internal--Switch__handle_shift_x_easing);
 }
 
-.Switch__handle::before {
+.Switch__handle::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -186,6 +186,63 @@
   transition-timing-function: var(--vkui_internal--Switch__handle_shift_x_easing), linear;
   /* prettier-ignore */
   transition-duration: var(--vkui_internal--Switch__handle_scale_duration), var(--vkui_internal--Switch__handle_color_duration);
+}
+
+.Switch__handle--withRipple::before {
+  --vkui_internal--Switch__handleRipple_opacity: 0;
+  --vkui_internal--Switch__handleRipple_opacity_duration: 15ms;
+  --vkui_internal--Switch__handleRipple_color: var(--vkui--color_icon_medium);
+  --vkui_internal--Switch__handleRipple_color_duration: 15ms;
+
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 40px;
+  block-size: 40px;
+  border-radius: inherit;
+  background-color: var(--vkui_internal--Switch__handleRipple_color);
+  opacity: var(--vkui_internal--Switch__handleRipple_opacity);
+  transform: translate(-50%, -50%);
+  transition-property: opacity, background-color;
+  /* prettier-ignore */
+  transition-duration:
+    var(--vkui_internal--Switch__handleRipple_opacity_duration),
+    var(--vkui_internal--Switch__handleRipple_color_duration);
+  transition-timing-function: linear;
+}
+
+@media (--sizeY-compact) {
+  .Switch__handle--withRipple::before {
+    inline-size: 32px;
+    block-size: 32px;
+  }
+}
+
+/* устройства с мышкой */
+@media (hover: hover) and (pointer: fine) {
+  .Switch__inputFake:hover .Switch__handle--withRipple::before {
+    --vkui_internal--Switch__handleRipple_opacity: 0.08;
+  }
+}
+
+.Switch__inputFake:active .Switch__handle--withRipple::before {
+  --vkui_internal--Switch__handleRipple_opacity: 0.12;
+}
+
+.Switch__inputNative:checked + .Switch__inputFake .Switch__handle--withRipple::before {
+  --vkui_internal--Switch__handleRipple_color: var(--vkui--color_background_accent);
+}
+
+/* тач-устройства */
+@media (hover: none) {
+  .Switch__handle--withRipple::before {
+    --vkui_internal--Switch__handleRipple_opacity_duration: 375ms;
+  }
+
+  .Switch__inputFake:active .Switch__handle--withRipple::before {
+    --vkui_internal--Switch__handleRipple_opacity_duration: 105ms;
+  }
 }
 
 /**
