@@ -1,6 +1,6 @@
 # Руководство по сопровождению VKUI
 
-Данный документ содержит базовую информацию по сопровождению и процессам разработки и будет полезен в первую очередь сопровождающим (maintainers) репозитория **VKUI**. Информацию по правилам работы с кодом можно найти в [требованиях к разработке](https://github.com/VKCOM/VKUI/blob/master/docs/CONTRIBUTING.md)
+Данный документ содержит базовую информацию по сопровождению и процессам разработки и будет полезен в первую очередь сопровождающим (maintainers) репозитория **VKUI**. Информацию по правилам работы с кодом можно найти в [требованиях к разработке](https://github.com/VKCOM/VKUI/blob/master/docs/CONTRIBUTING.md).
 
 ## Issues
 
@@ -32,7 +32,7 @@
 
 - если работа над `PR` ещё ведется, рекомендуется перевести его в [draft](https://docs.github.com/ru/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-stage-of-a-pull-request#converting-a-pull-request-to-a-draft).
 - существует автоматизация, которая закрывает `PR` в случае 2х-недельного отсутствия в нем активности. В случае продолжительной работы над каким-то `PR` рекомендуется проставить ему в поле `Labels` значение `no-stale` для игнорирования автоматизации.
-- название `PR` обычно автоматически подставляется со сделанного `commit`а. Необходимо придерживаться [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/#summary), в таком случае будут срабатывать автоматизации, например, если название в шапке `PR` начинается с `fix`, то проставится в поле `Labels` значение `patch` для автоматического дублирования кода в ветку для патч-изменений.
+- название `PR` обычно автоматически подставляется со сделанного `commit`. Необходимо придерживаться [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/#summary), в таком случае будут срабатывать автоматизации, например, если название в шапке `PR` начинается с `fix`, то проставится в поле `Labels` значение `patch` для автоматического дублирования кода в ветку для патч-изменений.
 
 ## Создание патч-изменений
 
@@ -88,5 +88,5 @@
 Полный список доступных автоматизаций можно найти на [соответствующей странице](https://github.com/VKCOM/VKUI/actions), вот описание нескольких наиболее полезных:
 
 - [Deduplicate dependencies](https://github.com/VKCOM/VKUI/actions/workflows/dedupe_deps.yml): позволяет запустить дедупликацию зависимостей в ветке. Если безопасно вносить изменения в ветку напрямую, то можно отметить `push directly to the branch`, иначе будет создан `PR` с изменениями в выбранную ветку. Бывает полезно запускать эту автоматизацию после обновления зависимостей в ветке - у нас настроен [Dependabot](https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide), который [обновляет зависимости](https://github.com/VKCOM/VKUI/blob/master/.github/dependabot.yml) в начале каждой недели.
-- [Update screenshots](https://github.com/VKCOM/VKUI/actions/workflows/update_screens.yml): данная автоматизация позволяет запускать обновление скриншотов в выбранной ветке вручную (если вы забыли это сделать локально, например), а так же отвечает за обновление скриншотов в stable-ветках в автоматическом режиме (потому что мы не дублируем обновление скриншотов из `master` в `stable`-ветки из-за возможных отличий).
-- [Close inactive issues and PRs](https://github.com/VKCOM/VKUI/actions/workflows/inactive_contributions.yml): автоматизация закрывает устаревшие `issues` и `PR`.
+- [Update screenshots](https://github.com/VKCOM/VKUI/actions/workflows/update_screens.yml): данная автоматизация позволяет запускать обновление скриншотов в выбранной ветке вручную (если вы забыли это сделать локально, например), а так же отвечает за обновление скриншотов в `stable`-ветках в автоматическом режиме (потому что мы не дублируем обновление скриншотов из `master` в `stable`-ветки из-за возможных отличий).
+- [Close inactive issues and PRs](https://github.com/VKCOM/VKUI/actions/workflows/inactive_contributions.yml): автоматизация закрывает устаревшие `issues` и `PRs`.
