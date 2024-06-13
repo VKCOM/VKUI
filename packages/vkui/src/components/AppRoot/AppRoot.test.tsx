@@ -16,36 +16,62 @@ import styles from './AppRoot.module.css';
 describe('AppRoot', () => {
   baselineComponent(AppRoot, { getRootRef: false });
 
-  it('should setup user-select mode by hasPointer from AdaptivityProvider', () => {
-    const Template = (props: { hasPointer?: boolean }) => (
-      <AdaptivityProvider {...props}>
-        <AppRoot mode="full" data-testid="app-root" userSelectMode="enabled-with-pointer" />
-      </AdaptivityProvider>
-    );
-    const result = render(<Template />);
-    expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-none']);
-    result.rerender(<Template hasPointer={false} />);
-    expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
-    result.rerender(<Template hasPointer={true} />);
-    expect(result.getByTestId('app-root')).not.toHaveClass(
-      styles['AppRoot--pointer-none'],
-      styles['AppRoot--user-select-none'],
-    );
-  });
+  describe('userSelectMode', () => {
+    it('controlled by hasPointer in enalbe-with-pointer from AdaptivityProvider', () => {
+      const Template = (props: { hasPointer?: boolean }) => (
+        <AdaptivityProvider {...props}>
+          <AppRoot mode="full" data-testid="app-root" userSelectMode="enabled-with-pointer" />
+        </AdaptivityProvider>
+      );
+      const result = render(<Template />);
+      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-none']);
+      result.rerender(<Template hasPointer={false} />);
+      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+      result.rerender(<Template hasPointer={true} />);
+      expect(result.getByTestId('app-root')).not.toHaveClass(
+        styles['AppRoot--pointer-none'],
+        styles['AppRoot--user-select-none'],
+      );
+    });
 
-  it('should setup user-select mode class by isWebView from ConfigProvider', () => {
-    const Template = (props: { isWebView?: boolean }) => (
-      <ConfigProvider {...props}>
-        <AppRoot mode="full" data-testid="app-root" userSelectMode="disabled-in-webview" />
-      </ConfigProvider>
-    );
-    const result = render(<Template isWebView />);
-    expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
-    result.rerender(<Template isWebView={false} />);
-    expect(result.getByTestId('app-root')).not.toHaveClass(
-      styles['AppRoot--pointer-none'],
-      styles['AppRoot--user-select-none'],
-    );
+    it('controlled by isWebView from ConfigProvider in disabled-in-webview ', () => {
+      const Template = ({
+        userSelectMode,
+        isWebView,
+      }: {
+        isWebView?: boolean;
+        userSelectMode?: AppRootProps['userSelectMode'];
+      }) => (
+        <ConfigProvider isWebView={isWebView}>
+          <AppRoot mode="full" data-testid="app-root" userSelectMode={userSelectMode} />
+        </ConfigProvider>
+      );
+      // по умолчанию userSelectMode='disabled-in-webview'
+      const result = render(<Template isWebView />);
+      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+      result.rerender(<Template isWebView userSelectMode="disabled-in-webview" />);
+      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+
+      result.rerender(<Template isWebView={false} />);
+      expect(result.getByTestId('app-root')).not.toHaveClass(
+        styles['AppRoot--pointer-none'],
+        styles['AppRoot--user-select-none'],
+      );
+    });
+
+    it('should setup user-select-none class when user-select mode is disalbed', () => {
+      const result = render(
+        <AppRoot mode="full" data-testid="app-root" userSelectMode="enabled" />,
+      );
+
+      expect(result.getByTestId('app-root')).not.toHaveClass(
+        styles['AppRoot--pointer-none'],
+        styles['AppRoot--user-select-none'],
+      );
+
+      result.rerender(<AppRoot mode="full" data-testid="app-root" userSelectMode="disabled" />);
+      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+    });
   });
 
   it('should return expected context', () => {
