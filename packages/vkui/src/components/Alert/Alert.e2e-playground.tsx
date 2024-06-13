@@ -21,6 +21,7 @@ const baseRender = (props: AlertProps) => (
     header="Подтвердите действие"
     text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
     style={{ position: 'relative' }}
+    autoFocus={false}
     {...props}
   />
 );
@@ -89,7 +90,9 @@ export const AlertLongWordPlayground = (props: ComponentPlaygroundProps) => {
       ]}
       AppWrapper={AppWrapper}
     >
-      {(props: AlertProps) => <Alert {...props} style={{ position: 'relative' }} />}
+      {(props: AlertProps) => (
+        <Alert {...props} autoFocus={false} style={{ position: 'relative' }} />
+      )}
     </ComponentPlayground>
   );
 };

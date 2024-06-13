@@ -367,7 +367,11 @@ export const fireEventPatch = async <E extends EventType>(
     case 'blur':
       if (isHTMLElement(el)) {
         await act(async () => {
-          el.blur();
+          if (options) {
+            fireEvent[eventType](el, options);
+          } else {
+            el.blur();
+          }
           await waitRAF();
         });
       }

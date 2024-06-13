@@ -75,7 +75,7 @@ export const Example: Story = {
           noStyling
           trigger="click"
           id="menupopup"
-          role="menu"
+          role="dialog"
           aria-labelledby="menubutton"
           content={({ onClose }) => (
             <Group>
@@ -93,7 +93,7 @@ export const Example: Story = {
             </Group>
           )}
         >
-          <Button id="menubutton" aria-controls="menupopup" aria-haspopup="true" mode="outline">
+          <Button id="menubutton" aria-controls="menupopup" mode="outline">
             Нажми на меня
           </Button>
         </Popover>

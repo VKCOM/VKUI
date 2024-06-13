@@ -22,7 +22,12 @@ const ActionSheetDesktop = ({ onClose = jest.fn(), ...restProps }: Partial<Actio
   return (
     <ConfigProvider platform="vkcom">
       <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-        <ActionSheet toggleRef={toggleRef} onClose={onClose} {...restProps} />
+        <ActionSheet
+          aria-label="menu list"
+          toggleRef={toggleRef}
+          onClose={onClose}
+          {...restProps}
+        />
       </AdaptivityProvider>
     </ConfigProvider>
   );
@@ -35,7 +40,7 @@ const ActionSheetMobile = ({ onClose = jest.fn(), ...restProps }: Partial<Action
   }, []);
   return (
     <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer={false}>
-      <ActionSheet toggleRef={toggleRef} onClose={onClose} {...restProps} />
+      <ActionSheet aria-label="menu list" toggleRef={toggleRef} onClose={onClose} {...restProps} />
     </AdaptivityProvider>
   );
 };
@@ -45,7 +50,15 @@ const ActionSheetMenu = ({ onClose = jest.fn(), ...restProps }: Partial<ActionSh
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
   }, []);
-  return <ActionSheet mode="menu" toggleRef={toggleRef} onClose={onClose} {...restProps} />;
+  return (
+    <ActionSheet
+      aria-label="menu list"
+      mode="menu"
+      toggleRef={toggleRef}
+      onClose={onClose}
+      {...restProps}
+    />
+  );
 };
 
 const ActionSheetSheet = ({ onClose = jest.fn(), ...restProps }: Partial<ActionSheetProps>) => {
@@ -53,7 +66,15 @@ const ActionSheetSheet = ({ onClose = jest.fn(), ...restProps }: Partial<ActionS
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
   }, []);
-  return <ActionSheet mode="sheet" toggleRef={toggleRef} onClose={onClose} {...restProps} />;
+  return (
+    <ActionSheet
+      aria-label="menu list"
+      mode="sheet"
+      toggleRef={toggleRef}
+      onClose={onClose}
+      {...restProps}
+    />
+  );
 };
 
 describe(ActionSheet, () => {

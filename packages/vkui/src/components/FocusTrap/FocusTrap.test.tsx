@@ -101,11 +101,11 @@ describe(FocusTrap, () => {
     expect(screen.getByTestId('sheet')).toBeInTheDocument();
   });
 
-  it('does not focus first element by default', async () => {
+  it('focuses first element by default', async () => {
     render(<ActionSheetTest />);
     await mountActionSheetViaClick();
 
-    expect(screen.getByTestId('first')).not.toHaveFocus();
+    expect(screen.getByTestId('first')).toHaveFocus();
   });
 
   it('always calls passed onClose on ESCAPE press', async () => {

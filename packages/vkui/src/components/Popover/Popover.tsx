@@ -161,7 +161,7 @@ export const Popover = ({
   noStyling = false,
   zIndex = 'var(--vkui--z_index_popout)',
   // a11y
-  role,
+  role = 'dialog',
   ...restPopoverProps
 }: PopoverProps) => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
