@@ -62,10 +62,12 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Задаёт режим выбора текста (выделения текста) для всего приложения.
    *
-   * - `disabled-in-webview` – запрещает выбор текста, если приложение запущено в webview;
-   * - `enabled-with-pointer` – разрешает выбор текста, если устройство ввода типа `pointer` (например `мышь`), в остальных случаях запрещает;
+   * - `disabled-in-webview` – запрещает выбор текста только если приложение запущено в webview (по значению свойства `isWebView` из [ConfigProvider](https://vkcom.github.io/VKUI/#/ConfigProvider));
+   * - `enabled-with-pointer` – разрешает выбор текста если устройство ввода типа `pointer` (например `мышь`), в остальных случаях запрещает;
    * - `disabled` – запрещает выбор текста;
    * - `enabled` – разрешает выбор текста.
+   *
+   * @since 6.2.0
    */
   userSelectMode?: AppRootUserSelectMode;
 }
