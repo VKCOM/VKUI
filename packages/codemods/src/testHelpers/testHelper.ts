@@ -1,13 +1,10 @@
 /**
- * Adopted version of https://github.com/facebook/jscodeshift/blob/v0.15.0/src/testUtils.js
- * TODO [jscodeshift@>0.13.0]: Remove it
- * More info - PR #6254
+ * Файл для упрощенной работы с дефолтными функциями запуска `jscodeshift`
  */
-import fs from 'fs';
 import path from 'path';
 import {
   applyTransform,
-  defineSnapshotTest,
+  defineSnapshotTestFromFixture as defineSnapshotTestFromFixtureOrig,
   // @ts-expect-error: TS7016 no types for package
 } from 'jscodeshift/dist/testUtils';
 import { JSCodeShiftOptions } from '../types';
@@ -24,18 +21,23 @@ export function getTestFixturesInputPath(
 }
 
 /**
- * Handles file-loading boilerplates, using same defaults as defineTest
+ * У оригинального defineSnapshotTestFromFixture нет типов
+ * Избавляемся от необходимости в тестах постоянно указывать `module`
  */
 export function defineSnapshotTestFromFixture(
   dirName: string,
   transformName: string,
   options: JSCodeShiftOptions,
   testFilePrefix: string,
-  extension = 'tsx',
 ) {
   // Assumes transform is one level up from __tests__ directory
   const module = require(path.join(dirName, '..', transformName));
-  const inputPath = getTestFixturesInputPath(dirName, testFilePrefix, extension);
-  const source = fs.readFileSync(inputPath, 'utf8');
-  defineSnapshotTest(module, options, source, 'transforms correctly');
+  defineSnapshotTestFromFixtureOrig(
+    dirName,
+    module,
+    options,
+    testFilePrefix,
+    'transforms correctly',
+    { parser: 'tsx' },
+  );
 }
