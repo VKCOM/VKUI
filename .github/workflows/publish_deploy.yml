@@ -28,8 +28,8 @@ on:
           - 'pre-release'
 
 env:
-  CHECKOUT_BRANCH: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.ref }}   
-          
+  CHECKOUT_BRANCH: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.ref }}
+
 jobs:
   payload:
     name: Prepare payload data
