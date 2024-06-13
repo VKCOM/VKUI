@@ -91,7 +91,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const commitShownLocalState = React.useCallback(
     (nextShown: boolean, reason: ShownChangeReason) => {
       setShownLocalState((prevState) => {
-        if (prevState.shown !== nextShown) {
+        if (prevState.shown !== nextShown || prevState.reason !== reason) {
           return {
             shown: nextShown,
             reason,
@@ -118,6 +118,11 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   );
 
   const handleFocusOnReference = useStableCallback(() => {
+    // Повторный вызов события фокуса - следствие клика на reference-элемент
+    if (shownLocalState.shown) {
+      commitShownLocalState(false, 'focus');
+      return;
+    }
     if (blockFocusRef.current) {
       /* istanbul ignore next: в Jest не воспроизводится баг на вебе (cм. onRestoreFocus) */
       blockFocusRef.current = false;
@@ -158,6 +163,11 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   });
 
   const handleClickOnReference = useStableCallback(() => {
+    // Предыдущий триггер (фокус) уже вызвал открытие/закрытие всплывающего окна, игнорируем вызов
+    if (shownLocalState.reason === 'focus') {
+      commitShownLocalState(shownLocalState.shown, 'click');
+      return;
+    }
     commitShownLocalState(!shownLocalState.shown, 'click');
   });
 
