@@ -63,7 +63,7 @@ Element.prototype.scrollTo = jest.fn();
  *  - https://github.com/jsdom/jsdom/issues/1781
  *  - https://developer.mozilla.org/en-US/docs/Web/API/TransitionEvent/TransitionEvent
  *
- * Inspirated by: https://codesandbox.io/s/bgfz1?file=%2Fsrc%2Findex.test.js%3A70-363
+ * Inspired by: https://codesandbox.io/s/bgfz1?file=%2Fsrc%2Findex.test.js%3A70-363
  */
 class TransitionEvent extends global.Event {
   elapsedTime;
