@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from '@vkontakte/icons';
 import { hasReactNode } from '@vkontakte/vkjs';
+import { useReducedMotion } from '../../lib/animation';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -18,22 +19,53 @@ export const Spinner = React.memo(
   ({
     size = 'regular',
     children = 'Загружается...',
-    disableAnimation,
+    disableAnimation = false,
     ...restProps
   }: SpinnerProps) => {
+    const isReducedMotion = useReducedMotion();
     const SpinnerIcon = {
       small: Icon16Spinner,
       regular: Icon24Spinner,
       medium: Icon32Spinner,
       large: Icon44Spinner,
     }[size];
+    let svgAnimateElement: React.ReactNode = null;
 
-    const center = {
-      small: 8,
-      regular: 12,
-      medium: 16,
-      large: 22,
-    }[size];
+    const [isReadyForSetSVGAnimateElement, setIsReadyForSetSVGAnimateElement] = React.useState(
+      disableAnimation ? true : false,
+    );
+
+    React.useEffect(function waitReactHydrationBeforeSetSVGAnimateElement() {
+      setIsReadyForSetSVGAnimateElement(true);
+    }, []);
+
+    if (isReadyForSetSVGAnimateElement && !disableAnimation) {
+      if (isReducedMotion) {
+        svgAnimateElement = (
+          <animate
+            attributeName="opacity"
+            keyTimes="0; 0.5; 1"
+            values="1; 0.1; 1"
+            begin="0s"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        );
+      } else {
+        const center = { small: 8, regular: 12, medium: 16, large: 22 }[size];
+        svgAnimateElement = (
+          <animateTransform
+            attributeType="XML"
+            attributeName="transform"
+            type="rotate"
+            from={`0 ${center} ${center}`}
+            to={`360 ${center} ${center}`}
+            dur="0.7s"
+            repeatCount="indefinite"
+          />
+        );
+      }
+    }
 
     return (
       <RootComponent
@@ -42,21 +74,7 @@ export const Spinner = React.memo(
         {...restProps}
         baseClassName={styles['Spinner']}
       >
-        <SpinnerIcon>
-          {!disableAnimation && (
-            // TODO [a11y]: use reduced motion hook?
-            //              https://github.com/VKCOM/VKUI/pull/4673
-            <animateTransform
-              attributeName="transform"
-              attributeType="XML"
-              type="rotate"
-              from={`0 ${center} ${center}`}
-              to={`360 ${center} ${center}`}
-              dur="0.7s"
-              repeatCount="indefinite"
-            />
-          )}
-        </SpinnerIcon>
+        <SpinnerIcon>{svgAnimateElement}</SpinnerIcon>
         {hasReactNode(children) && <VisuallyHidden>{children}</VisuallyHidden>}
       </RootComponent>
     );
