@@ -95,9 +95,9 @@ export function useCalendar({
       const maxYear = maxDateTime?.getFullYear() || DEFAULT_MAX_YEAR;
 
       let isDisabled =
-        year === minYear || year === maxYear
+        year >= minYear && year <= maxYear
           ? (year === minYear && minMonth > month) || (year === maxYear && month > maxMonth)
-          : false;
+          : true;
 
       if (disableFuture) {
         isDisabled =
