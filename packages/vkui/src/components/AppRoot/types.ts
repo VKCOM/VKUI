@@ -11,8 +11,4 @@ export type AppRootLayout = 'card' | 'plain';
 
 export type AppRootScroll = 'global' | 'contain';
 
-export type AppRootUserSelectMode =
-  | 'enabled'
-  | 'enabled-with-pointer'
-  | 'disabled-in-webview'
-  | 'disabled';
+export type AppRootUserSelectMode = 'enabled' | 'enabled-with-pointer' | 'disabled';

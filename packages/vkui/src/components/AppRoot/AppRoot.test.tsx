@@ -34,22 +34,14 @@ describe('AppRoot', () => {
       );
     });
 
-    it('controlled by isWebView from ConfigProvider in disabled-in-webview ', () => {
-      const Template = ({
-        userSelectMode,
-        isWebView,
-      }: {
-        isWebView?: boolean;
-        userSelectMode?: AppRootProps['userSelectMode'];
-      }) => (
+    it('controlled by isWebView from ConfigProvider by default', () => {
+      const Template = ({ isWebView }: { isWebView?: boolean }) => (
         <ConfigProvider isWebView={isWebView}>
-          <AppRoot mode="full" data-testid="app-root" userSelectMode={userSelectMode} />
+          <AppRoot mode="full" data-testid="app-root" />
         </ConfigProvider>
       );
       // по умолчанию userSelectMode='disabled-in-webview'
       const result = render(<Template isWebView />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
-      result.rerender(<Template isWebView userSelectMode="disabled-in-webview" />);
       expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
 
       result.rerender(<Template isWebView={false} />);

@@ -61,8 +61,9 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   layout?: AppRootLayout;
   /**
    * Задаёт режим выбора текста (выделения текста) для всего приложения.
+   * По умолчанию, если режим не задан, запрещает выбор текста в приложениях,
+   * запущенных в webview (по значению свойства `isWebView` из [ConfigProvider](https://vkcom.github.io/VKUI/#/ConfigProvider)).
    *
-   * - `disabled-in-webview` – запрещает выбор текста в приложениях, запущенных в webview (по значению свойства `isWebView` из [ConfigProvider](https://vkcom.github.io/VKUI/#/ConfigProvider))
    * - `enabled-with-pointer` – разрешает выбор текста, если устройство ввода типа `pointer` (например, `мышь`), в остальных случаях запрещает;
    * - `disabled` – запрещает выбор текста;
    * - `enabled` – разрешает выбор текста.
@@ -85,7 +86,7 @@ export const AppRoot = ({
   className,
   safeAreaInsets: safeAreaInsetsProp,
   layout,
-  userSelectMode = 'disabled-in-webview',
+  userSelectMode,
   ...props
 }: AppRootProps) => {
   const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
