@@ -74,8 +74,7 @@ Note: В начале классов разделить (`-`), чтобы кра
 
 .-deviceType--mobile-forced,
 .-deviceType--desktop-forced {
-  /* stylelint-disable-next-line declaration-no-important */
-  display: none !important;
+  /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
 
 @media (--desktop) {
