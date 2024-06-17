@@ -13,6 +13,8 @@ export type { SafeAreaInsets } from './components/AppRoot/types';
  * Typography
  */
 export type { TypographyProps } from './components/Typography/Typography';
+export { DisplayTitle } from './components/Typography/DisplayTitle/DisplayTitle';
+export type { DisplayTitleProps } from './components/Typography/DisplayTitle/DisplayTitle';
 export { Title } from './components/Typography/Title/Title';
 export type { TitleProps } from './components/Typography/Title/Title';
 export { Headline } from './components/Typography/Headline/Headline';

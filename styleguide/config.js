@@ -299,6 +299,7 @@ const baseConfig = {
         {
           name: 'Typography',
           components: () => [
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Typography/DisplayTitle/DisplayTitle.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Typography/Title/Title.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Typography/Headline/Headline.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Typography/Text/Text.tsx`,
