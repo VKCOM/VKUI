@@ -38,7 +38,7 @@ const getCustomMedias = () => {
     '--sizeY-compact': `(pointer: fine) and ${widthPlus(BREAKPOINTS.SMALL_TABLET)}, ${heightMinus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`, // prettier-ignore
     '--sizeY-regular': `(pointer: coarse) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, (pointer: none) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, ${widthMinus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`, // prettier-ignore
 
-    '--hover-has': '(hover: hover)',
+    '--hover-has': '(hover: hover) and (pointer: fine)', // см. https://github.com/VKCOM/VKUI/issues/3469
     '--hover-has-not': '(hover: none)',
 
     '--pointer-has': '(pointer: fine)',

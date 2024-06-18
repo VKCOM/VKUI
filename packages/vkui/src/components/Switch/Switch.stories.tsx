@@ -7,6 +7,9 @@ const story: Meta<SwitchProps> = {
   title: 'Blocks/Switch',
   component: Switch,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  args: {
+    name: 'switch',
+  },
   argTypes: {
     disabled: {
       control: 'boolean',

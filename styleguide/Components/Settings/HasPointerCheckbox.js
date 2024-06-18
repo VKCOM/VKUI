@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, Switch } from '@vkui';
+import { Checkbox, Link } from '@vkui';
 import { Setting } from '../Setting/Setting';
 
 export const HasPointerCheckbox = ({ onChange, value, ...restProps }) => (
@@ -12,7 +12,7 @@ export const HasPointerCheckbox = ({ onChange, value, ...restProps }) => (
       </React.Fragment>
     }
   >
-    <Switch
+    <Checkbox
       checked={value}
       onChange={(e) => onChange(e.target.checked)}
       disabled={restProps.disabled}

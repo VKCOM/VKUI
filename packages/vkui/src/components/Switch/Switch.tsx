@@ -6,12 +6,12 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { HasRef, HasRootRef } from '../../types';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 
 const sizeYClassNames = {
   none: styles['Switch--sizeY-none'],
-  ['compact']: styles['Switch--sizeY-compact'],
+  compact: styles['Switch--sizeY-compact'],
 };
 
 export interface SwitchProps
@@ -28,12 +28,18 @@ export const Switch = ({
   getRootRef,
   getRef,
   checked: checkedProp,
+  disabled,
+  onBlur: onBlurProp,
+  onFocus: onFocusProp,
+  onClick,
   ...restProps
 }: SwitchProps) => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'outside' });
+  const handleBlur = callMultiple(onBlur, onBlurProp);
+  const handleFocus = callMultiple(onFocus, onFocusProp);
 
   const [localUncontrolledChecked, setLocalUncontrolledChecked] = React.useState(
     Boolean(restProps.defaultChecked),
@@ -52,34 +58,54 @@ export const Switch = ({
     [isControlled],
   );
 
-  const ariaCheckedState = isControlled ? checkedProp : localUncontrolledChecked;
+  const inputProps: VisuallyHiddenProps<HTMLInputElement> = {
+    ...restProps,
+    Component: 'input',
+    getRootRef: getRef,
+    type: 'checkbox',
+    role: 'switch',
+    disabled: disabled,
+    onBlur: onBlurProp,
+    onFocus: onFocusProp,
+    onClick: callMultiple(syncUncontrolledCheckedStateOnClick, onClick),
+  };
+
+  if (isControlled) {
+    inputProps.checked = checkedProp;
+    inputProps['aria-checked'] = checkedProp ? 'true' : 'false';
+  } else {
+    inputProps['aria-checked'] = localUncontrolledChecked ? 'true' : 'false';
+  }
+
   return (
     <label
       className={classNames(
         styles['Switch'],
-        platform === 'ios' && styles['Switch--ios'],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        restProps.disabled && styles['Switch--disabled'],
+        platform === 'ios' ? styles['Switch--ios'] : styles['Switch--default'],
+        disabled && styles['Switch--disabled'],
         focusVisibleClassNames,
         className,
       )}
       style={style}
       ref={getRootRef}
-      onBlur={callMultiple(onBlur, restProps.onBlur)}
-      onFocus={callMultiple(onFocus, restProps.onFocus)}
     >
       <VisuallyHidden
-        {...restProps}
-        {...(isControlled && { checked: checkedProp })}
-        Component="input"
-        getRootRef={getRef}
-        onClick={callMultiple(syncUncontrolledCheckedStateOnClick, restProps.onClick)}
-        type="checkbox"
-        role="switch"
-        aria-checked={ariaCheckedState ? 'true' : 'false'}
-        className={styles['Switch__self']}
+        {...inputProps}
+        className={styles['Switch__inputNative']}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
       />
-      <span aria-hidden className={styles['Switch__pseudo']} />
+      <span aria-hidden className={styles['Switch__inputFake']}>
+        <span className={styles['Switch__track']} />
+        <span
+          aria-hidden
+          className={classNames(
+            styles['Switch__handle'],
+            platform !== 'ios' && !disabled && styles['Switch__handle--withRipple'],
+          )}
+        />
+      </span>
     </label>
   );
 };

@@ -4,7 +4,7 @@ import { baselineComponent, userEvent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Switch } from './Switch';
 
-describe('Switch', () => {
+describe(Switch, () => {
   baselineComponent((props) => (
     <>
       <VisuallyHidden Component="label" id="switch">
