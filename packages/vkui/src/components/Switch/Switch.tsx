@@ -36,7 +36,7 @@ export const Switch = ({
 }: SwitchProps) => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
-  const { focusVisible, onBlur, onFocus } = useFocusVisible(false);
+  const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'outside' });
   const handleBlur = callMultiple(onBlur, onBlurProp);
   const handleFocus = callMultiple(onFocus, onFocusProp);
