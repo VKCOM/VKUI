@@ -106,7 +106,7 @@ export const CalendarHeader = ({
         label: <span className={styles['CalendarHeader__month']}>{label}</span>,
         disabled: isMonthDisabled && isMonthDisabled(value),
       })),
-    [locale, currentYear, isMonthDisabled, isYearDisabled],
+    [locale, isMonthDisabled],
   );
 
   const years = React.useMemo(

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CalendarProps } from '../components/Calendar/Calendar';
-import { isDayMinMaxRestricted, DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR } from '../lib/calendar';
+import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, isDayMinMaxRestricted } from '../lib/calendar';
 import {
   addMonths,
   endOfDay,
