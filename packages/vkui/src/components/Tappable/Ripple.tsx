@@ -5,7 +5,7 @@ import { getOffsetRect } from '../../lib/offset';
 import styles from './Tappable.module.css';
 
 /**
- * Возможн о нужен Ripple эффект. Данный хук нужен для отказа
+ * Возможно нужен Ripple эффект. Данный хук нужен для отказа
  * от двойного ререндера.
  */
 export const useMaybeNeedRipple = (activeMode: string, hasPointer: boolean | undefined) => {
