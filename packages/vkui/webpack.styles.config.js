@@ -1,6 +1,7 @@
 const path = require('path');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { makePostcssPlugins } = require('./scripts/postcss');
+const { getMinimizerOptions, makePostcssPlugins } = require('./scripts/postcss');
 
 /**
  * Конфигурация для css
@@ -20,18 +21,22 @@ function makeCssRuleUse({ isCssModulesFile = false } = {}) {
       loader: 'postcss-loader',
       options: {
         postcssOptions: {
-          plugins: makePostcssPlugins({ isVKUIPackageBuild: true, isCssModulesFile }),
+          plugins: makePostcssPlugins({
+            isVKUIPackageBuild: true,
+            isCssModulesFile,
+            disableMinimizer: true,
+          }),
         },
       },
     },
   ];
 }
 
+/** @type {import('webpack').Configuration} */
 module.exports = {
-  // CSS is optimized via postcss, we dont care about JS
-  mode: 'none',
+  mode: 'production',
   entry: {
-    stable: ['./src/styles/themes.css', './src/index.ts'],
+    vkui: ['./src/styles/themes.css', './src/index.ts'],
     components: './src/index.ts',
   },
   output: {
@@ -41,6 +46,7 @@ module.exports = {
   module: {
     rules: [
       {
+        sideEffects: true,
         test: /\.[jt]sx?$/,
         exclude: /node_modules/,
         loader: 'swc-loader',
@@ -70,21 +76,19 @@ module.exports = {
       },
     ],
   },
-  optimization: {
-    splitChunks: {
-      chunks: (chunk) => ['stable'].includes(chunk.name),
-      cacheGroups: {
-        // capture all common deps
-        vkui: {
-          name: 'vkui',
-          test: (module, { chunkGraph }) =>
-            chunkGraph.getModuleChunks(module).some((chunk) => chunk.name === 'stable'),
-        },
-      },
-    },
-  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      '...',
+      new CssMinimizerPlugin({
+        minimizerOptions: {
+          preset: ['default', getMinimizerOptions(true)],
+        },
+      }),
+    ],
   },
   devtool: 'source-map',
   plugins: [new MiniCssExtractPlugin({ filename: '[name].css' })],
