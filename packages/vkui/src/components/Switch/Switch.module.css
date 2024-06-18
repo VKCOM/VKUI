@@ -220,7 +220,7 @@
 }
 
 /* устройства с мышкой */
-@media (hover: hover) and (pointer: fine) {
+@media (--hover-has) {
   .Switch__inputFake:hover .Switch__handle--withRipple::before {
     --vkui_internal--Switch__handleRipple_opacity: 0.08;
   }
@@ -235,7 +235,7 @@
 }
 
 /* тач-устройства */
-@media (hover: none) {
+@media (--hover-has-not) {
   .Switch__handle--withRipple::before {
     --vkui_internal--Switch__handleRipple_opacity_duration: 375ms;
   }

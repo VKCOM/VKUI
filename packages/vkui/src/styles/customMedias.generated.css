@@ -11,7 +11,7 @@
 /* prettier-ignore */
 @custom-media --sizeY-regular (pointer: coarse) and (min-height: 415px), (pointer: none) and (min-height: 415px), (max-width: 767.9px) and (min-height: 415px);
 /* prettier-ignore */
-@custom-media --hover-has (hover: hover);
+@custom-media --hover-has (hover: hover) and (pointer: fine);
 /* prettier-ignore */
 @custom-media --hover-has-not (hover: none);
 /* prettier-ignore */

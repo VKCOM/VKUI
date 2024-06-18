@@ -13,8 +13,7 @@
   border-radius: 0;
 }
 
-/* See https://www.ctrl.blog/entry/css-media-hover-samsung.html */
-@media (hover: hover) and (pointer: fine) {
+@media (--hover-has) {
   .Link:hover {
     text-decoration: underline;
   }
