@@ -26,7 +26,7 @@ export const Playground: Story = {};
 export const WithSimpleCellLabel: Story = {
   render: function Render(args) {
     return (
-      <SimpleCell Component="label" after={<Switch name="switch" {...args} />}>
+      <SimpleCell Component="label" after={<Switch {...args} />}>
         Комментарии к записям
       </SimpleCell>
     );
