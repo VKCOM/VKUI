@@ -8,7 +8,7 @@ import { configureAxe, toHaveNoViolations } from 'jest-axe';
 import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
-import { REDUCE_MOTION_MEDIA_QUERY } from '../lib/animation/useReducedMotion';
+import { REDUCE_MOTION_MEDIA_QUERY } from '../lib/animation';
 import { isHTMLElement } from '../lib/dom';
 import { ImgOnlyAttributes } from '../lib/utils';
 import { HasChildren } from '../types';
