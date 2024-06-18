@@ -36,7 +36,7 @@ export const Switch = ({
 }: SwitchProps) => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
-  const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const { focusVisible, onBlur, onFocus } = useFocusVisible(false);
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'outside' });
   const handleBlur = callMultiple(onBlur, onBlurProp);
   const handleFocus = callMultiple(onFocus, onFocusProp);
@@ -89,10 +89,13 @@ export const Switch = ({
       )}
       style={style}
       ref={getRootRef}
-      onBlur={handleBlur}
-      onFocus={handleFocus}
     >
-      <VisuallyHidden {...inputProps} className={styles['Switch__inputNative']} />
+      <VisuallyHidden
+        {...inputProps}
+        className={styles['Switch__inputNative']}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+      />
       <span aria-hidden className={styles['Switch__inputFake']}>
         <span className={styles['Switch__track']} />
         <span
