@@ -97,7 +97,7 @@
   animation-name: animation-snackbar-slide-in;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (--reduce-motion) {
   .Snackbar--state-enter .Snackbar__in,
   .Snackbar--state-entering .Snackbar__in {
     animation-name: animation-snackbar-fade-in;
@@ -119,7 +119,7 @@
   animation-name: animation-snackbar-slide-out;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (--reduce-motion) {
   .Snackbar--state-exit .Snackbar__in,
   .Snackbar--state-exiting .Snackbar__in {
     animation-name: animation-snackbar-fade-out;

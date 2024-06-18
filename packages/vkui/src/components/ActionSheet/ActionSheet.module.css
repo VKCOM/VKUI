@@ -8,7 +8,7 @@
   box-sizing: border-box;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (--reduce-motion) {
   .ActionSheet {
     --vkui_internal--actionsheet_animation_opacity_initial: 0;
     --vkui_internal--actionsheet_animation_translateY_initial: 0%;
@@ -120,7 +120,7 @@
   padding: 0;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (--reduce-motion) {
   .ActionSheet--menu {
     --vkui_internal--actionsheet_animation_translateY_initial: 0%;
   }

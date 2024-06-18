@@ -58,7 +58,7 @@
   animation: animation-panelheadercontext-translate-out var(--vkui--animation_duration_m) ease both;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (--reduce-motion) {
   .PanelHeaderContext--opened .PanelHeaderContext__in {
     animation-name: animation-panelheadercontext-fade-in;
   }

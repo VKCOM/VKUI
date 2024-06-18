@@ -284,7 +284,7 @@
   inset-inline-end: 8px;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
+@media (--reduce-motion) {
   .Alert,
   .Alert--ios {
     --vkui_internal--alert_animation_scale_initial: 1;
