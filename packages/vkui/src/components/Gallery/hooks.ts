@@ -1,26 +1,47 @@
 import * as React from 'react';
-import { useDocumentVisibilityState } from '../../hooks/useDocumentVisibilityState';
 import { useStableCallback } from '../../hooks/useStableCallback';
+import { useDOM } from '../../lib/dom';
 import { TimeoutId } from '../../types';
 
 export function useAutoPlay(timeout: number, slideIndex: number, callbackFnProp: VoidFunction) {
-  const visible = useDocumentVisibilityState(Boolean(timeout));
+  const { document } = useDOM();
   const callbackFn = useStableCallback(callbackFnProp);
 
   React.useEffect(
-    function setAutoPlay() {
-      let autoPlayTimeoutId: TimeoutId = null;
-
-      if (timeout) {
-        autoPlayTimeoutId = setTimeout(callbackFn, timeout);
+    function initializeAutoPlay() {
+      if (!document || !timeout) {
+        return;
       }
 
-      return function clearAutoPlay() {
-        if (autoPlayTimeoutId) {
-          clearTimeout(autoPlayTimeoutId);
+      let timeoutId: TimeoutId = null;
+
+      const stop = () => {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
         }
       };
+
+      const start = () => {
+        switch (document.visibilityState) {
+          case 'visible':
+            stop();
+            timeoutId = setTimeout(callbackFn, timeout);
+            break;
+          case 'hidden':
+            stop();
+        }
+      };
+
+      start();
+
+      document.addEventListener('visibilitychange', start);
+
+      return () => {
+        stop();
+        document.removeEventListener('visibilitychange', start);
+      };
     },
-    [visible, timeout, slideIndex, callbackFn],
+    [document, timeout, slideIndex, callbackFn],
   );
 }
