@@ -6,7 +6,6 @@
   block-size: auto;
 }
 
-.PanelHeaderContext--sizeX-compact,
 .PanelHeaderContext--sizeX-compact {
   --vkui_internal--PanelHeaderContext__fade_display: block;
 
@@ -14,7 +13,6 @@
 }
 
 @media (--sizeX-compact) {
-  .PanelHeaderContext--sizeX-none,
   .PanelHeaderContext--sizeX-none {
     --vkui_internal--PanelHeaderContext__fade_display: block;
 
