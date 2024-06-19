@@ -317,10 +317,17 @@ describe(Tappable, () => {
             <Tappable data-testid="c" onClick={noop} />
           </Tappable>,
         );
+        await userEvent.hover(screen.getByTestId('x'));
+        expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('c')).not.toHaveClass(styles['Tappable--hovered-background']);
+
         await userEvent.hover(screen.getByTestId('c'));
         expect(result.getByTestId('x')).not.toHaveClass(styles['Tappable--hovered-background']);
-        fireEvent.pointerLeave(screen.getByTestId('c'));
+        expect(result.getByTestId('c')).toHaveClass(styles['Tappable--hovered-background']);
+
+        await userEvent.hover(screen.getByTestId('x'));
         expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('c')).not.toHaveClass(styles['Tappable--hovered-background']);
       });
 
       describe('handles disabled children', () => {
