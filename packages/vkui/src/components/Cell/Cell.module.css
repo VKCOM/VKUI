@@ -15,7 +15,7 @@
 .Cell__dragger {
   position: relative;
   flex-shrink: 0;
-  margin-inline-end: 16px;
+  margin-inline-end: var(--vkui--spacing_size_2xl);
 }
 
 .Cell__content {
@@ -45,11 +45,11 @@
  * iOS
  */
 .Cell--ios .Cell__dragger {
-  margin-inline: 12px 0;
+  margin-inline: var(--vkui--spacing_size_xl) 0;
 }
 
 .Cell--ios .Cell__checkbox {
-  margin-inline-end: 12px;
+  margin-inline-end: var(--vkui--spacing_size_xl);
 }
 
 .Cell--ios.Cell--removable .Cell__content {
