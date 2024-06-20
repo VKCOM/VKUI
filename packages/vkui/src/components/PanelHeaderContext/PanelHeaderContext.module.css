@@ -109,7 +109,9 @@
 }
 
 .PanelHeaderContext--sizeX-regular .PanelHeaderContext__content {
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(0, 0, 0, 0.16);
+  box-shadow:
+    0 0 4px rgba(0, 0, 0, 0.08),
+    0 8px 8px rgba(0, 0, 0, 0.16);
 }
 
 @media (--sizeX-regular) {
@@ -123,7 +125,9 @@
   }
 
   .PanelHeaderContext--sizeX-none .PanelHeaderContext__content {
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(0, 0, 0, 0.16);
+    box-shadow:
+      0 0 4px rgba(0, 0, 0, 0.08),
+      0 8px 8px rgba(0, 0, 0, 0.16);
   }
 }
 

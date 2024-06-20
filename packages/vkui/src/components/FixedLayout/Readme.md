@@ -35,13 +35,13 @@ const Example = () => {
             fringilla volutpat in sed velit. Aenean aliquet bibendum pretium.
             <br />
             <br />
-            Cras pulvinar lobortis purus. Donec placerat suscipit leo vitae sodales. Phasellus convallis
-            lorem vitae arcu finibus pellentesque. In imperdiet vel leo a euismod. Nam sed odio a neque
-            venenatis suscipit a placerat magna. Mauris magna nisl, consequat nec augue vitae, ultricies
-            scelerisque ante. Phasellus pharetra risus eget imperdiet sodales. Integer dignissim auctor
-            semper. Nulla odio odio, euismod ut interdum in, bibendum sed massa. Proin rutrum molestie
-            massa in ultrices. Donec eu euismod turpis, eget lobortis lorem. Nulla facilisi. Nam lacinia
-            posuere turpis, sed laoreet turpis auctor nec.
+            Cras pulvinar lobortis purus. Donec placerat suscipit leo vitae sodales. Phasellus
+            convallis lorem vitae arcu finibus pellentesque. In imperdiet vel leo a euismod. Nam sed
+            odio a neque venenatis suscipit a placerat magna. Mauris magna nisl, consequat nec augue
+            vitae, ultricies scelerisque ante. Phasellus pharetra risus eget imperdiet sodales.
+            Integer dignissim auctor semper. Nulla odio odio, euismod ut interdum in, bibendum sed
+            massa. Proin rutrum molestie massa in ultrices. Donec eu euismod turpis, eget lobortis
+            lorem. Nulla facilisi. Nam lacinia posuere turpis, sed laoreet turpis auctor nec.
             <br />
             <br />
             Curabitur eu fermentum mauris. Phasellus malesuada consectetur mollis. Pellentesque
@@ -56,9 +56,10 @@ const Example = () => {
             <br />
             In hac habitasse platea dictumst. Etiam luctus erat metus, quis efficitur quam vulputate
             quis. Duis ultricies non mauris condimentum molestie. Maecenas sollicitudin ex sem, quis
-            ultrices libero blandit eu. Vivamus in turpis pulvinar, malesuada enim at, hendrerit magna.
-            Proin eu nulla eget arcu pretium pharetra. Sed ullamcorper pulvinar est eu dapibus. Cras
-            at varius justo. In ex odio, condimentum id pellentesque a, sodales ut diam.
+            ultrices libero blandit eu. Vivamus in turpis pulvinar, malesuada enim at, hendrerit
+            magna. Proin eu nulla eget arcu pretium pharetra. Sed ullamcorper pulvinar est eu
+            dapibus. Cras at varius justo. In ex odio, condimentum id pellentesque a, sodales ut
+            diam.
             <br />
             <br />
             Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;

@@ -25,14 +25,14 @@ export const getAdaptiveSizeType = (
       type === undefined
         ? compactClassNames.mq
         : type === 'compact'
-        ? compactClassNames[type]
-        : false,
+          ? compactClassNames[type]
+          : false,
     regular:
       type === undefined
         ? regularClassNames.mq
         : type === 'regular'
-        ? regularClassNames[type]
-        : false,
+          ? regularClassNames[type]
+          : false,
   };
 };
 
@@ -45,14 +45,14 @@ export const getAdaptiveViewWidth = (
       viewWidth === undefined
         ? viewWidthClassNames.tabletMinus.mq
         : viewWidth < ViewWidth.TABLET
-        ? viewWidthClassNames.tabletMinus.forced
-        : false,
+          ? viewWidthClassNames.tabletMinus.forced
+          : false,
     tabletPlus:
       viewWidth === undefined
         ? viewWidthClassNames.tabletPlus.mq
         : viewWidth >= ViewWidth.TABLET
-        ? viewWidthClassNames.tabletPlus.forced
-        : false,
+          ? viewWidthClassNames.tabletPlus.forced
+          : false,
   };
 };
 

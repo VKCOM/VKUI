@@ -309,8 +309,8 @@ const Content = () => {
         {direction === 'forwards'
           ? 'вперёд'
           : direction === 'backwards'
-          ? 'назад'
-          : 'не определено'}
+            ? 'назад'
+            : 'не определено'}
       </Headline>
       {spinner}
     </Div>

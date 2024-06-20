@@ -13,8 +13,8 @@ const getOptionsFromArgTypes = (argTypes: ArgTypes) =>
       typeof argValue.control === 'string'
         ? argValue.control
         : typeof argValue.control === 'object'
-        ? argValue.control.type
-        : undefined;
+          ? argValue.control.type
+          : undefined;
     const hasOptions = argValue.options && argValue.options.length > 0;
 
     if ('boolean' === controlType || hasOptions) {

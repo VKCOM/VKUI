@@ -131,7 +131,9 @@
   block-size: 100%;
   background-color: var(--vkui--color_background_modal);
   content: '';
-  transition: opacity 0.15s ease-out, background-color 0.15s ease-out;
+  transition:
+    opacity 0.15s ease-out,
+    background-color 0.15s ease-out;
 }
 
 .ActionSheetItem--ios::after {

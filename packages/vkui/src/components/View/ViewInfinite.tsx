@@ -613,8 +613,8 @@ class ViewInfiniteComponent extends React.Component<
             iOSSwipeBackSimulationEnabled
               ? this.handleTouchMoveXForIOSSwipeBackSimulation
               : platform === 'ios'
-              ? this.handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
-              : undefined
+                ? this.handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
+                : undefined
           }
           onEnd={
             iOSSwipeBackSimulationEnabled ? this.handleTouchEndForIOSSwipeBackSimulation : undefined

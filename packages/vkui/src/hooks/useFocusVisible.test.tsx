@@ -9,17 +9,16 @@ import { useFocusVisible } from './useFocusVisible';
 
 const wrapper =
   (keyboardInput: boolean) =>
-  ({ children }: { children?: React.ReactNode }) =>
-    (
-      <AppRootContext.Provider
-        value={{
-          ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
-          keyboardInput,
-        }}
-      >
-        {children}
-      </AppRootContext.Provider>
-    );
+  ({ children }: { children?: React.ReactNode }) => (
+    <AppRootContext.Provider
+      value={{
+        ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
+        keyboardInput,
+      }}
+    >
+      {children}
+    </AppRootContext.Provider>
+  );
 
 describe('useFocusVisible', () => {
   it('Sets focusVisible: true onFocus', () => {
