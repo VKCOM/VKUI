@@ -38,30 +38,43 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
   const focusableNodesRef = React.useRef<HTMLElement[]>([]);
 
+  const recalculateFocusableNodesRef = () => {
+    if (!ref.current) {
+      return;
+    }
+    // eslint-disable-next-line no-restricted-properties
+    const newFocusableElements = ref.current.querySelectorAll<HTMLElement>(FOCUSABLE_ELEMENTS);
+
+    const nodes: HTMLElement[] = [];
+    newFocusableElements.forEach((focusableEl) => {
+      const { display, visibility } = getComputedStyle(focusableEl);
+      if (display !== 'none' && visibility !== 'hidden') {
+        nodes.push(focusableEl);
+      }
+    });
+
+    if (nodes.length === 0) {
+      // Чтобы фокус был хотя бы на родителе
+      nodes.push(ref.current);
+    }
+    focusableNodesRef.current = nodes;
+  }
+
   useIsomorphicLayoutEffect(
     function collectFocusableNodesRef() {
       if (!ref.current) {
         return;
       }
-
-      const nodes: HTMLElement[] = [];
-      // eslint-disable-next-line no-restricted-properties
-      ref.current.querySelectorAll<HTMLElement>(FOCUSABLE_ELEMENTS).forEach((focusableEl) => {
-        const { display, visibility } = getComputedStyle(focusableEl);
-        if (display !== 'none' && visibility !== 'hidden') {
-          nodes.push(focusableEl);
-        }
+      const observer = new MutationObserver(recalculateFocusableNodesRef);
+      observer.observe(ref.current, {
+        subtree: true,
+        childList: true,
       });
-
-      if (nodes.length === 0) {
-        // Чтобы фокус был хотя бы на родителе
-        nodes.push(ref.current);
-      }
-
-      focusableNodesRef.current = nodes;
+      recalculateFocusableNodesRef()
+      return () => observer.disconnect()
     },
-    [children],
-  );
+    [ref],
+  )
 
   useIsomorphicLayoutEffect(
     function tryToAutoFocusToFirstNode() {
