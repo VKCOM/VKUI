@@ -1,6 +1,7 @@
 const path = require('path');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { makePostcssPlugins } = require('./scripts/postcss');
+const { getMinimizerOptions, makePostcssPlugins } = require('./scripts/postcss');
 
 /**
  * Конфигурация для css
@@ -27,11 +28,11 @@ function makeCssRuleUse({ isCssModulesFile = false } = {}) {
   ];
 }
 
+/** @type {import('webpack').Configuration} */
 module.exports = {
-  // CSS is optimized via postcss, we dont care about JS
-  mode: 'none',
+  mode: 'production',
   entry: {
-    stable: ['./src/styles/themes.css', './src/index.ts'],
+    vkui: ['./src/styles/themes.css', './src/index.ts'],
     components: './src/index.ts',
   },
   output: {
@@ -41,6 +42,7 @@ module.exports = {
   module: {
     rules: [
       {
+        sideEffects: true,
         test: /\.[jt]sx?$/,
         exclude: /node_modules/,
         loader: 'swc-loader',
@@ -71,17 +73,8 @@ module.exports = {
     ],
   },
   optimization: {
-    splitChunks: {
-      chunks: (chunk) => ['stable'].includes(chunk.name),
-      cacheGroups: {
-        // capture all common deps
-        vkui: {
-          name: 'vkui',
-          test: (module, { chunkGraph }) =>
-            chunkGraph.getModuleChunks(module).some((chunk) => chunk.name === 'stable'),
-        },
-      },
-    },
+    minimize: true,
+    minimizer: ['...', new CssMinimizerPlugin({ minimizerOptions: getMinimizerOptions(true) })],
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
