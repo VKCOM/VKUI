@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { useTimeout } from '../../hooks/useTimeout';
+import type { TimeoutId } from '../../types';
+
+/**
+ * 'temporary-visible' – "планирует" скрытие ползунка через N миллисекунд. Если тайм-аут не успеет
+ * сработать, то каждый последующий вызов функции будет откладывать скрытие ползунка.
+ */
+type VisibilityState = 'visible' | 'hidden' | 'temporary-visible';
 
 /**
  * Хук, который позволяет управлять видимостью ползунка скроллбара.
@@ -11,57 +17,64 @@ export const useTrackerVisibility = (
   autoHideScrollbar = false,
   autoHideScrollbarDelay = 500,
 ): TrackerVisibilityProps => {
-  const [trackerVisible, setTrackerVisible] = React.useState(!autoHideScrollbar);
+  const [visibility, setVisibility] = React.useState<VisibilityState>(
+    autoHideScrollbar ? 'hidden' : 'visible',
+  );
   const isMouseOver = React.useRef(false);
   const isTrackerDragging = React.useRef(false);
 
-  const { set: setVisibilityTimeout, clear: clearVisibilityTimeout } = useTimeout(
-    () => setTrackerVisible(false),
-    autoHideScrollbarDelay,
-  );
-
   const onTrackerDragStart = React.useCallback(() => {
-    clearVisibilityTimeout();
-    setTrackerVisible(true);
     isTrackerDragging.current = true;
-  }, [clearVisibilityTimeout]);
+    setVisibility('visible');
+  }, []);
 
   const onTrackerDragStop = React.useCallback(() => {
     isTrackerDragging.current = false;
     if (!isMouseOver.current) {
-      setVisibilityTimeout();
+      setVisibility('temporary-visible');
     }
-  }, [setVisibilityTimeout, isMouseOver]);
-
-  /**
-   * Позволяет "запланировать" скрытие ползунка через delay миллисекунд. Если тайм-аут не успевает сработать, то каждый
-   * последующий вызов функции откладывает скрытие ползунка на delay миллисекунд
-   */
-  const queueTrackerVisibility = React.useCallback(() => {
-    if (isTrackerDragging.current) {
-      return;
-    }
-    setTrackerVisible(true);
-    setVisibilityTimeout();
-  }, [setVisibilityTimeout]);
+  }, []);
 
   const onTrackerMouseEnter = React.useCallback(() => {
-    clearVisibilityTimeout();
     isMouseOver.current = true;
-    setTrackerVisible(true);
-  }, [clearVisibilityTimeout]);
+    setVisibility('visible');
+  }, []);
 
   const onTrackerMouseLeave = React.useCallback(() => {
-    queueTrackerVisibility();
     isMouseOver.current = false;
-  }, [queueTrackerVisibility]);
+    if (!isTrackerDragging.current) {
+      setVisibility('temporary-visible');
+    }
+  }, []);
 
   const onTargetScroll = React.useCallback(() => {
-    queueTrackerVisibility();
-  }, [queueTrackerVisibility]);
+    if (isMouseOver.current || isTrackerDragging.current) {
+      return;
+    }
+    setVisibility('temporary-visible');
+  }, []);
+
+  React.useEffect(
+    function hideAfterDelay() {
+      let timeoutId: TimeoutId = null;
+
+      if (visibility === 'temporary-visible') {
+        timeoutId = setTimeout(() => {
+          setVisibility('hidden');
+        }, autoHideScrollbarDelay);
+      }
+
+      return function clearHideAfterDelay() {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+      };
+    },
+    [visibility, autoHideScrollbarDelay],
+  );
 
   return {
-    trackerVisible,
+    trackerVisible: visibility !== 'hidden',
     onTrackerDragStart,
     onTrackerDragStop,
     onTrackerMouseEnter,

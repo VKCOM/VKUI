@@ -1,39 +1,47 @@
 import * as React from 'react';
-import { useTimeout } from '../../hooks/useTimeout';
+import { useStableCallback } from '../../hooks/useStableCallback';
 import { useDOM } from '../../lib/dom';
+import { TimeoutId } from '../../types';
 
-export function useAutoPlay(timeout: number, slideIndex: number, callbackFn: VoidFunction) {
-  const { clear: clearAutoPlay, set: setAutoPlay } = useTimeout(callbackFn, timeout);
+export function useAutoPlay(timeout: number, slideIndex: number, callbackFnProp: VoidFunction) {
   const { document } = useDOM();
+  const callbackFn = useStableCallback(callbackFnProp);
 
   React.useEffect(
-    () => (timeout ? setAutoPlay() : clearAutoPlay()),
-    [timeout, slideIndex, clearAutoPlay, setAutoPlay],
-  );
-
-  // Отключаем прокрутку слайдов при неактивной вкладке
-  React.useEffect(
-    function preventSlideChange() {
+    function initializeAutoPlay() {
       if (!document || !timeout) {
         return;
       }
 
-      const changeAutoPlay = () => {
-        if (document.visibilityState === 'visible') {
-          clearAutoPlay();
-          setAutoPlay();
-        }
-        if (document.visibilityState === 'hidden') {
-          clearAutoPlay();
+      let timeoutId: TimeoutId = null;
+
+      const stop = () => {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
         }
       };
 
-      document.addEventListener('visibilitychange', changeAutoPlay);
+      const start = () => {
+        switch (document.visibilityState) {
+          case 'visible':
+            stop();
+            timeoutId = setTimeout(callbackFn, timeout);
+            break;
+          case 'hidden':
+            stop();
+        }
+      };
+
+      start();
+
+      document.addEventListener('visibilitychange', start);
 
       return () => {
-        document.removeEventListener('visibilitychange', changeAutoPlay);
+        stop();
+        document.removeEventListener('visibilitychange', start);
       };
     },
-    [document, timeout, clearAutoPlay, setAutoPlay],
+    [document, timeout, slideIndex, callbackFn],
   );
 }

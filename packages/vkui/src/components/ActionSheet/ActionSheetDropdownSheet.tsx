@@ -31,7 +31,7 @@ export const ActionSheetDropdownSheet = ({
       className={classNames(
         styles['ActionSheet'],
         platform === 'ios' && styles['ActionSheet--ios'],
-        closing && styles['ActionSheet--closing'],
+        closing ? styles['ActionSheet--closing'] : styles['ActionSheet--opening'],
         sizeY === 'compact' && styles['ActionSheet--sizeY-compact'],
         className,
       )}

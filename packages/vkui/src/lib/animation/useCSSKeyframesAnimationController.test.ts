@@ -1,11 +1,9 @@
 import { act } from 'react';
 import { renderHook } from '@testing-library/react';
-import { matchMediaReduceMotionMock } from '../../testing/utils';
 import { useCSSKeyframesAnimationController } from './useCSSKeyframesAnimationController';
 
 describe(useCSSKeyframesAnimationController, () => {
-  describe.each(['reduce', 'no-reduce'])('for `(prefers-reduced-motion: %s)`', (value) => {
-    const isReducedMotion = value === 'reduce';
+  describe.each([false, true])('`noAnimation` prop is `%s`', (noAnimation) => {
     const callbacks = {
       onEnter: jest.fn(),
       onEntering: jest.fn(),
@@ -16,8 +14,6 @@ describe(useCSSKeyframesAnimationController, () => {
     };
 
     beforeEach(() => {
-      matchMediaReduceMotionMock(isReducedMotion);
-
       for (const key in callbacks) {
         if (callbacks.hasOwnProperty(key)) {
           callbacks[key].mockClear();
@@ -26,12 +22,14 @@ describe(useCSSKeyframesAnimationController, () => {
     });
 
     it('should enter', () => {
-      const { result } = renderHook(() => useCSSKeyframesAnimationController('enter', callbacks));
+      const { result } = renderHook(() =>
+        useCSSKeyframesAnimationController('enter', callbacks, noAnimation),
+      );
 
-      !isReducedMotion && expect(result.current[0]).toBe('enter');
+      !noAnimation && expect(result.current[0]).toBe('enter');
 
       act(result.current[1].onAnimationStart);
-      if (!isReducedMotion) {
+      if (!noAnimation) {
         expect(result.current[0]).toBe('entering');
         expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
       }
@@ -44,10 +42,10 @@ describe(useCSSKeyframesAnimationController, () => {
     it('should exit', () => {
       const { result } = renderHook(() => useCSSKeyframesAnimationController('exit', callbacks));
 
-      !isReducedMotion && expect(result.current[0]).toBe('exit');
+      !noAnimation && expect(result.current[0]).toBe('exit');
 
       act(result.current[1].onAnimationStart);
-      if (!isReducedMotion) {
+      if (!noAnimation) {
         expect(result.current[0]).toBe('exiting');
         expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
       }

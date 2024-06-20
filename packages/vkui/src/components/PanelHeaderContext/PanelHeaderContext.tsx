@@ -1,20 +1,18 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useGlobalOnClickOutside } from '../../hooks/useGlobalOnClickOutside';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useTimeout } from '../../hooks/useTimeout';
-import { useDOM } from '../../lib/dom';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HTMLAttributesWithRootRef } from '../../types';
+import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import styles from './PanelHeaderContext.module.css';
 
 const sizeXClassNames = {
   none: styles['PanelHeaderContext--sizeX-none'],
-  ['compact']: styles['PanelHeaderContext--sizeX-compact'],
-  ['regular']: styles['PanelHeaderContext--sizeX-regular'],
+  compact: styles['PanelHeaderContext--sizeX-compact'],
+  regular: styles['PanelHeaderContext--sizeX-regular'],
 };
 
 export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -27,46 +25,36 @@ export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLD
  */
 export const PanelHeaderContext = ({
   children,
-  onClose,
   opened = false,
   className,
+  onClose,
   ...restProps
 }: PanelHeaderContextProps) => {
-  const { document } = useDOM();
   const platform = usePlatform();
-  const [visible, setVisible] = React.useState(opened);
-  const closing = visible && !opened;
   const { sizeX = 'none' } = useAdaptivity();
   const elementRef = React.useRef<HTMLDivElement>(null);
+  const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
+    opened ? 'enter' : 'exit',
+  );
+  const visible = animationState !== 'exited';
 
-  useIsomorphicLayoutEffect(() => {
-    opened && setVisible(true);
-  }, [opened]);
+  useScrollLock(platform !== 'vkcom' && visible);
 
-  useScrollLock(platform !== 'vkcom' && opened);
-
-  // start closing on outer click
-  useGlobalEventListener(
-    document,
-    'click',
-    opened &&
-      !closing &&
-      ((event) => {
-        if (elementRef.current && !elementRef.current.contains(event.target as Node)) {
-          event.stopPropagation();
-          onClose();
-        }
-      }),
-    { capture: true },
+  const handleGlobalOnClickOutside = React.useCallback(
+    (event: MouseEvent) => {
+      if (opened) {
+        event.stopPropagation();
+        onClose();
+      }
+    },
+    [opened, onClose],
   );
 
-  // fallback onAnimationEnd when animationend not supported
-  const onAnimationEnd = () => setVisible(false);
-  const animationFallback = useTimeout(onAnimationEnd, 200);
-  React.useEffect(
-    () => (closing ? animationFallback.set() : animationFallback.clear()),
-    [animationFallback, closing],
-  );
+  useGlobalOnClickOutside(handleGlobalOnClickOutside, visible ? elementRef : null);
+
+  if (!visible) {
+    return null;
+  }
 
   return (
     <FixedLayout
@@ -74,28 +62,26 @@ export const PanelHeaderContext = ({
       className={classNames(
         styles['PanelHeaderContext'],
         platform === 'ios' && styles['PanelHeaderContext--ios'],
-        opened && styles['PanelHeaderContext--opened'],
-        closing && styles['PanelHeaderContext--closing'],
+        opened ? styles['PanelHeaderContext--opened'] : styles['PanelHeaderContext--closing'],
         sizeXClassNames[sizeX],
         className,
       )}
       vertical="top"
     >
-      {visible && (
-        <div
-          onClick={(event) => {
-            event.stopPropagation();
-            onClose();
-          }}
-          className={styles['PanelHeaderContext__fade']}
-        />
-      )}
       <div
+        onClick={(event) => {
+          event.stopPropagation();
+          onClose();
+        }}
+        className={styles['PanelHeaderContext__fade']}
+      />
+      <div
+        data-testid={process.env.NODE_ENV === 'test' ? 'content' : undefined}
         className={styles['PanelHeaderContext__in']}
         ref={elementRef}
-        onAnimationEnd={closing ? onAnimationEnd : undefined}
+        {...animationHandlers}
       >
-        {visible && <div className={styles['PanelHeaderContext__content']}>{children}</div>}
+        <div className={styles['PanelHeaderContext__content']}>{children}</div>
       </div>
     </FixedLayout>
   );

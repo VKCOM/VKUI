@@ -19,6 +19,8 @@
 /* prettier-ignore */
 @custom-media --pointer-has-not (pointer: coarse), (pointer: none);
 /* prettier-ignore */
+@custom-media --reduce-motion screen and (prefers-reduced-motion: reduce);
+/* prettier-ignore */
 @custom-media --desktop (min-width: 768px) and (pointer: fine), (min-width: 768px) and (min-height: 720px);
 /* prettier-ignore */
 @custom-media --mobile (max-width: 767.9px), (pointer: none) and (max-height: 719.9px), (pointer: coarse) and (max-height: 719.9px);

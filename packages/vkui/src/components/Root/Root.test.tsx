@@ -1,18 +1,25 @@
 import { act } from 'react';
-import { render } from '@testing-library/react';
-import { baselineComponent, fakeTimers, mockScrollContext, mountTest } from '../../testing/utils';
+import { render, screen } from '@testing-library/react';
+import {
+  baselineComponent,
+  fakeTimers,
+  mockScrollContext,
+  mountTest,
+  waitCSSKeyframesAnimation,
+} from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { View } from '../View/View';
 import { Root } from './Root';
+import styles from './Root.module.css';
 
 const views = [
-  <View id="v1" key="1" activePanel="">
+  <View id="v1" data-testid="v1" key="1" activePanel="">
     <></>
   </View>,
-  <View id="v2" key="2" activePanel="">
+  <View id="v2" data-testid="v2" key="2" activePanel="">
     <></>
   </View>,
-  <View id="v3" key="3" activePanel="">
+  <View id="v3" data-testid="v3" key="3" activePanel="">
     <></>
   </View>,
 ];
@@ -37,11 +44,12 @@ describe(Root, () => {
       expect(document.getElementById('v1')).not.toBeNull();
       expect(document.getElementById('v2')).toBeNull();
     });
-    it('after prop update', () => {
-      render(<Root activeView="v1">{views}</Root>).rerender(<Root activeView="v2">{views}</Root>);
-      act(jest.runAllTimers);
-      expect(document.getElementById('v1')).toBeNull();
-      expect(document.getElementById('v2')).not.toBeNull();
+    it('after prop update', async () => {
+      const result = render(<Root activeView="v1">{views}</Root>);
+      result.rerender(<Root activeView="v2">{views}</Root>);
+      await waitCSSKeyframesAnimation(getViewPanelById('v2'));
+      expect(result.queryByTestId('v1')).toBeNull();
+      expect(result.queryByTestId('v2')).not.toBeNull();
     });
   });
 
@@ -49,22 +57,23 @@ describe(Root, () => {
     it.each([
       ['with animation', true],
       ['without animation', false],
-    ])('%s', (_name, animate) => {
+    ])('%s', async (_name, animate) => {
       const onTransition = jest.fn();
-      render(
+      const result = render(
         <ConfigProvider transitionMotionEnabled={animate}>
           <Root activeView="v1" onTransition={onTransition}>
             {views}
           </Root>
         </ConfigProvider>,
-      ).rerender(
+      );
+      result.rerender(
         <ConfigProvider transitionMotionEnabled={animate}>
           <Root activeView="v2" onTransition={onTransition}>
             {views}
           </Root>
         </ConfigProvider>,
       );
-      act(jest.runAllTimers);
+      await waitCSSKeyframesAnimation(getViewPanelById('v2'), { runOnlyPendingTimers: true });
       expect(onTransition).toHaveBeenCalledTimes(1);
       expect(onTransition).toHaveBeenCalledWith({
         from: 'v1',
@@ -72,25 +81,27 @@ describe(Root, () => {
         isBack: false,
       });
     });
-    it('detects back transition', () => {
+    it('detects back transition', async () => {
       const onTransition = jest.fn();
-      render(
+      const h = render(
         <Root activeView="v2" onTransition={onTransition}>
           {views}
         </Root>,
-      ).rerender(
+      );
+      h.rerender(
         <Root activeView="v1" onTransition={onTransition}>
           {views}
         </Root>,
       );
-      act(jest.runAllTimers);
+      await waitCSSKeyframesAnimation(getViewPanelById('v2'));
+      await waitCSSKeyframesAnimation(getViewPanelById('v1'), { runOnlyPendingTimers: true });
       expect(onTransition).toHaveBeenCalledWith({
         from: 'v2',
         to: 'v1',
         isBack: true,
       });
     });
-    it('once on rapid transitions', () => {
+    it('once on rapid transitions', async () => {
       const onTransition = jest.fn();
       const h = render(
         <Root activeView="v2" onTransition={onTransition}>
@@ -102,20 +113,22 @@ describe(Root, () => {
           {views}
         </Root>,
       );
+      await waitCSSKeyframesAnimation(getViewPanelById('v2'));
+      await waitCSSKeyframesAnimation(getViewPanelById('v1'));
       h.rerender(
         <Root activeView="v3" onTransition={onTransition}>
           {views}
         </Root>,
       );
-      act(jest.runAllTimers);
-      expect(onTransition).toHaveBeenCalledTimes(1);
+      await waitCSSKeyframesAnimation(getViewPanelById('v3'), { runOnlyPendingTimers: true });
+      expect(onTransition).toHaveBeenCalledTimes(2);
       expect(onTransition).toHaveBeenCalledWith({
         from: 'v1',
         to: 'v3',
         isBack: false,
       });
     });
-    it('once on "canceled" transition', () => {
+    it('once on "canceled" transition', async () => {
       const onTransition = jest.fn();
       const h = render(
         <Root activeView="v1" onTransition={onTransition}>
@@ -127,13 +140,16 @@ describe(Root, () => {
           {views}
         </Root>,
       );
+      await waitCSSKeyframesAnimation(getViewPanelById('v1'));
+      await waitCSSKeyframesAnimation(getViewPanelById('v2'));
       h.rerender(
         <Root activeView="v1" onTransition={onTransition}>
           {views}
         </Root>,
       );
-      act(jest.runAllTimers);
-      expect(onTransition).toHaveBeenCalledTimes(1);
+      await waitCSSKeyframesAnimation(getViewPanelById('v2'));
+      await waitCSSKeyframesAnimation(getViewPanelById('v1'), { runOnlyPendingTimers: true });
+      expect(onTransition).toHaveBeenCalledTimes(2);
       expect(onTransition).toHaveBeenCalledWith({
         from: 'v2',
         to: 'v1',
@@ -163,7 +179,7 @@ describe(Root, () => {
   });
 
   describe('scroll control', () => {
-    it('restores on back navigation', () => {
+    it('restores on back navigation', async () => {
       let y = 101;
       const [MockScroll, scrollTo] = mockScrollContext(() => y);
       const h = render(
@@ -182,10 +198,11 @@ describe(Root, () => {
           <Root activeView="v1">{views}</Root>
         </MockScroll>,
       );
-      act(jest.runAllTimers);
+      await waitCSSKeyframesAnimation(getViewPanelById('v2'));
+      await waitCSSKeyframesAnimation(getViewPanelById('v1'), { runOnlyPendingTimers: true });
       expect(scrollTo).toHaveBeenCalledWith(0, y);
     });
-    it('resets on forward navigation', () => {
+    it('resets on forward navigation', async () => {
       let y = 101;
       const [MockScroll, scrollTo] = mockScrollContext(() => y);
       const h = render(
@@ -199,13 +216,20 @@ describe(Root, () => {
           <Root activeView="v1">{views}</Root>
         </MockScroll>,
       );
+      await waitCSSKeyframesAnimation(getViewPanelById('v2'));
+      await waitCSSKeyframesAnimation(getViewPanelById('v1'), { runOnlyPendingTimers: true });
       h.rerender(
         <MockScroll>
           <Root activeView="v2">{views}</Root>
         </MockScroll>,
       );
-      act(jest.runAllTimers);
+      await waitCSSKeyframesAnimation(getViewPanelById('v1'));
+      await waitCSSKeyframesAnimation(getViewPanelById('v2'), { runOnlyPendingTimers: true });
       expect(scrollTo.mock.calls[scrollTo.mock.calls.length - 1]).toEqual([0, 0]);
     });
   });
 });
+
+function getViewPanelById(panelTestId: string) {
+  return screen.getByTestId(panelTestId).closest<HTMLElement>(`.${styles['Root__view']}`)!;
+}

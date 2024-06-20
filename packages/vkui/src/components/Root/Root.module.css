@@ -1,7 +1,17 @@
 .Root {
+  --vkui_internal--root_animation_opacity_initial: 0;
+  --vkui_internal--root_animation_transform_initial: scale(1.05);
+  --vkui_internal--root_animation_duration: 0.3s;
+
   inline-size: 100%;
   block-size: 100%;
   position: relative;
+}
+
+.Root--ios {
+  --vkui_internal--root_animation_opacity_initial: 1;
+  --vkui_internal--root_animation_transform_initial: translate3d(0, 100%, 0);
+  --vkui_internal--root_animation_duration: 0.6s;
 }
 
 .Root--transition {
@@ -14,6 +24,16 @@
   position: relative;
 }
 
+.Root__view--show-forward {
+  /* prettier-ignore */
+  animation: root-animation-show-forward var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform);
+}
+
+.Root__view--hide-back {
+  /* prettier-ignore */
+  animation: root-animation-hide-back var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform) forwards;
+}
+
 .Root--transition .Root__view {
   position: fixed;
   inset-inline-start: 0;
@@ -24,14 +44,6 @@
 .Root__scrollCompensation {
   inline-size: 100%;
   block-size: 100%;
-}
-
-.Root__view--show-forward {
-  animation: root-android-animation-show-forward 0.3s var(--vkui--animation_easing_platform);
-}
-
-.Root__view--hide-back {
-  animation: root-android-animation-hide-back 0.3s var(--vkui--animation_easing_platform) forwards;
 }
 
 /**
@@ -51,22 +63,49 @@
 }
 
 .Root--ios .Root__view--show-back::after {
-  animation: root-ios-animation-show-back 0.6s var(--vkui--animation_easing_platform) forwards;
+  /* prettier-ignore */
+  animation: root-ios-overlay-animation-show-back var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform) forwards;
 }
 
 .Root--ios .Root__view--hide-forward::after {
-  animation: root-ios-animation-hide-forward 0.6s var(--vkui--animation_easing_platform);
+  /* prettier-ignore */
+  animation: root-ios-overlay-animation-hide-forward var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform);
 }
 
-.Root--ios .Root__view--show-forward {
-  animation: root-ios-animation-show-forward 0.6s var(--vkui--animation_easing_platform);
+@media (--reduce-motion) {
+  .Root {
+    --vkui_internal--root_animation_transform_initial: 1;
+  }
+
+  .Root--ios {
+    --vkui_internal--root_animation_opacity_initial: 0;
+    --vkui_internal--root_animation_transform_initial: 1;
+  }
 }
 
-.Root--ios .Root__view--hide-back {
-  animation: root-ios-animation-hide-back 0.6s var(--vkui--animation_easing_platform) forwards;
-}
+@keyframes root-animation-hide-back {
+  from {
+    transform: none;
+    opacity: 1;
+  }
 
-@keyframes root-ios-animation-show-back {
+  to {
+    transform: var(--vkui_internal--root_animation_transform_initial);
+    opacity: var(--vkui_internal--root_animation_opacity_initial);
+  }
+}
+@keyframes root-animation-show-forward {
+  from {
+    transform: var(--vkui_internal--root_animation_transform_initial);
+    opacity: var(--vkui_internal--root_animation_opacity_initial);
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes root-ios-overlay-animation-show-back {
   from {
     opacity: 0.3;
   }
@@ -75,57 +114,12 @@
     opacity: 0;
   }
 }
-@keyframes root-ios-animation-hide-forward {
+@keyframes root-ios-overlay-animation-hide-forward {
   from {
     opacity: 0;
   }
 
   to {
     opacity: 0.3;
-  }
-}
-@keyframes root-ios-animation-hide-back {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(0, 100%, 0);
-  }
-}
-@keyframes root-ios-animation-show-forward {
-  from {
-    transform: translate3d(0, 100%, 0);
-  }
-
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-/**
- * Android
- */
-
-@keyframes root-android-animation-hide-back {
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  to {
-    transform: scale(1.05);
-    opacity: 0;
-  }
-}
-@keyframes root-android-animation-show-forward {
-  from {
-    transform: scale(1.05);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
   }
 }

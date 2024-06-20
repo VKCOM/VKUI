@@ -126,3 +126,5 @@ export type PickOnlyFunctionProps<T> = Pick<T, GetPropsWithFunctionKeys<T>>;
 export type HasOnlyExpectedProps<Props, ExpectedProps> = {
   [K in keyof Props]: K extends keyof ExpectedProps ? ExpectedProps[K] : never;
 };
+
+export type TimeoutId = ReturnType<typeof setTimeout> | null;

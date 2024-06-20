@@ -1,7 +1,4 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useTimeout } from '../../hooks/useTimeout';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutWrapper.module.css';
@@ -56,19 +53,6 @@ export const PopoutWrapper = ({
   onClick,
   ...restProps
 }: PopoutWrapperProps) => {
-  const platform = usePlatform();
-  const [opened, setOpened] = React.useState(noBackground);
-
-  const onFadeInEnd = (e?: React.AnimationEvent) => {
-    if (!e || e.animationName === styles['animation-full-fade-in']) {
-      setOpened(true);
-    }
-  };
-  const animationFinishFallback = useTimeout(onFadeInEnd, platform === 'ios' ? 300 : 200);
-  React.useEffect(() => {
-    !opened && animationFinishFallback.set();
-  }, [animationFinishFallback, opened]);
-
   return (
     <RootComponent
       {...restProps}
@@ -76,12 +60,10 @@ export const PopoutWrapper = ({
         styles['PopoutWrapper'],
         stylesAlignY[alignY],
         stylesAlignX[alignX],
-        closing && styles['PopoutWrapper--closing'],
-        opened && styles['PopoutWrapper--opened'],
+        closing ? styles['PopoutWrapper--closing'] : styles['PopoutWrapper--opened'],
         fixed && styles['PopoutWrapper--fixed'],
         !noBackground && styles['PopoutWrapper--masked'],
       )}
-      onAnimationEnd={opened ? undefined : onFadeInEnd}
     >
       <div className={styles['PopoutWrapper__container']}>
         <div className={styles['PopoutWrapper__overlay']} onClick={onClick} />

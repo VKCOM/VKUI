@@ -2,7 +2,6 @@ import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
-import { useReducedMotion } from './useReducedMotion';
 
 export type UseCSSAnimationControllerCallback = {
   onEnter?: () => void;
@@ -27,8 +26,8 @@ export const useCSSKeyframesAnimationController = (
     onExiting: onExitingProp = noop,
     onExited: onExitedProp = noop,
   }: UseCSSAnimationControllerCallback = {},
+  noAnimation = false,
 ): [AnimationState, AnimationHandlers] => {
-  const isReducedMotion = useReducedMotion();
   const [state, setState] = React.useState<AnimationState>(stateProp);
   const [willBeEnter, setWillBeEnter] = React.useState(stateProp === 'enter');
   const [willBeExit, setWillBeExit] = React.useState(stateProp === 'exit');
@@ -74,7 +73,7 @@ export const useCSSKeyframesAnimationController = (
     function updateState() {
       switch (stateProp) {
         case 'enter':
-          if (isReducedMotion && state === 'enter') {
+          if (noAnimation && state === 'enter') {
             entered();
             break;
           }
@@ -88,7 +87,7 @@ export const useCSSKeyframesAnimationController = (
           onEnter();
           break;
         case 'exit':
-          if (isReducedMotion && state === 'exit') {
+          if (noAnimation && state === 'exit') {
             exited();
             break;
           }
@@ -103,7 +102,7 @@ export const useCSSKeyframesAnimationController = (
           break;
       }
     },
-    [state, stateProp, willBeEnter, willBeExit, isReducedMotion, entered, exited, onEnter, onExit],
+    [state, stateProp, willBeEnter, willBeExit, noAnimation, entered, exited, onEnter, onExit],
   );
 
   return [state, { onAnimationStart, onAnimationEnd }];

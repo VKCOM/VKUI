@@ -1,37 +1,38 @@
 .PanelHeaderContext {
+  --vkui_internal--PanelHeaderContext__fade_display: none;
+
   z-index: var(--vkui_internal--z_index_panel_header_context);
-}
-
-.PanelHeaderContext--opened,
-.PanelHeaderContext--closing {
   inline-size: 100%;
-  block-size: 100%;
-}
-
-.PanelHeaderContext--sizeX-regular.PanelHeaderContext--opened,
-.PanelHeaderContext--sizeX-regular.PanelHeaderContext--closing {
   block-size: auto;
 }
 
-@media (--sizeX-regular) {
-  .PanelHeaderContext--sizeX-none.PanelHeaderContext--opened,
-  .PanelHeaderContext--sizeX-none.PanelHeaderContext--closing {
-    block-size: auto;
+.PanelHeaderContext--sizeX-compact {
+  --vkui_internal--PanelHeaderContext__fade_display: block;
+
+  block-size: 100%;
+}
+
+@media (--sizeX-compact) {
+  .PanelHeaderContext--sizeX-none {
+    --vkui_internal--PanelHeaderContext__fade_display: block;
+
+    block-size: 100%;
   }
 }
 
 .PanelHeaderContext__in {
   position: absolute;
+  z-index: 1;
   inset-inline-start: 0;
   inline-size: 100%;
   padding: 8px;
   box-sizing: border-box;
-  pointer-events: none;
 }
 
 .PanelHeaderContext__fade {
-  display: none;
+  display: var(--vkui_internal--PanelHeaderContext__fade_display);
   position: absolute;
+  z-index: 0;
   inline-size: 100%;
   block-size: 100%;
   inset-inline-start: 0;
@@ -39,31 +40,30 @@
   background: rgba(0, 0, 0, 0.4);
 }
 
-.PanelHeaderContext--sizeX-compact .PanelHeaderContext__fade {
-  display: block;
-}
-
-@media (--sizeX-compact) {
-  .PanelHeaderContext--sizeX-none .PanelHeaderContext__fade {
-    display: block;
-  }
-}
-
 .PanelHeaderContext--opened .PanelHeaderContext__fade {
-  animation: animation-panelheadercontext-fade-in 0.2s ease;
+  animation: animation-panelheadercontext-fade-in var(--vkui--animation_duration_m) ease both;
 }
 
 .PanelHeaderContext--closing .PanelHeaderContext__fade {
-  animation: animation-panelheadercontext-fade-out 0.2s ease;
+  animation: animation-panelheadercontext-fade-out var(--vkui--animation_duration_m) ease both;
 }
 
 .PanelHeaderContext--opened .PanelHeaderContext__in {
-  pointer-events: auto;
-  animation: animation-panelheadercontext-translate-in 0.2s ease;
+  animation: animation-panelheadercontext-translate-in var(--vkui--animation_duration_m) ease both;
 }
 
 .PanelHeaderContext--closing .PanelHeaderContext__in {
-  animation: animation-panelheadercontext-translate-out 0.2s ease;
+  animation: animation-panelheadercontext-translate-out var(--vkui--animation_duration_m) ease both;
+}
+
+@media (--reduce-motion) {
+  .PanelHeaderContext--opened .PanelHeaderContext__in {
+    animation-name: animation-panelheadercontext-fade-in;
+  }
+
+  .PanelHeaderContext--closing .PanelHeaderContext__in {
+    animation-name: animation-panelheadercontext-fade-out;
+  }
 }
 
 .PanelHeaderContext__content {

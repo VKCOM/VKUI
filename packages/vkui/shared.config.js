@@ -44,6 +44,8 @@ const getCustomMedias = () => {
     '--pointer-has': '(pointer: fine)',
     '--pointer-has-not': '(pointer: coarse), (pointer: none)',
 
+    '--reduce-motion': 'screen and (prefers-reduced-motion: reduce)',
+
     '--desktop': `${widthPlus(BREAKPOINTS.SMALL_TABLET)} and (pointer: fine), ${widthPlus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(BREAKPOINTS.MEDIUM_HEIGHT)}`, // prettier-ignore
     '--mobile': `${widthMinus(BREAKPOINTS.SMALL_TABLET)}, (pointer: none) and ${heightMinus(BREAKPOINTS.MEDIUM_HEIGHT)}, (pointer: coarse) and ${heightMinus(BREAKPOINTS.MEDIUM_HEIGHT)}`, // prettier-ignore
 

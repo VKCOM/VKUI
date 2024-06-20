@@ -93,7 +93,7 @@ const App = () => {
 
 ```jsx
 const App = () => {
-  const [history, setHistory] = useState(['main']);
+  const [history, setHistory] = React.useState(['main']);
   const activePanel = history[history.length - 1];
 
   const go = React.useCallback((panel) => {
@@ -109,26 +109,38 @@ const App = () => {
   const [userName, setUserName] = React.useState('');
   const [popoutWithRestriction, setPopoutWithRestriction] = React.useState(null);
 
+  const validateUserName = React.useCallback(() => {
+    if (userName !== '') {
+      return true;
+    }
+
+    setPopoutWithRestriction(
+      <Alert
+        header="Поле Имя не заполнено"
+        text="Пожалуйста, заполните его."
+        onClose={() => setPopoutWithRestriction(null)}
+      />,
+    );
+
+    return false;
+  }, [userName]);
+
   const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
     (activePanel) => {
       if (activePanel === 'settings') {
-        if (userName !== '') {
-          return;
-        }
-
-        setPopoutWithRestriction(
-          <Alert
-            header="Поле Имя не заполнено"
-            text="Пожалуйста, заполните его."
-            onClose={() => setPopoutWithRestriction(null)}
-          />,
-        );
-
-        return 'prevent';
+        const isValid = validateUserName();
+        return isValid ? undefined : 'prevent';
       }
+      return;
     },
-    [userName],
+    [validateUserName],
   );
+
+  const handleBackForPreventIfNeeded = React.useCallback(() => {
+    if (validateUserName()) {
+      goBack();
+    }
+  }, [validateUserName, goBack]);
 
   return (
     <SplitLayout popout={popoutWithRestriction}>
@@ -143,10 +155,14 @@ const App = () => {
             <MainPanelContent onProfileClick={handleProfileClick} />
           </Panel>
           <Panel id="profile">
-            <ProfilePanelContent onSettingsClick={handleSettingsClick} />
+            <ProfilePanelContent onSettingsClick={handleSettingsClick} onBack={goBack} />
           </Panel>
           <Panel id="settings">
-            <SettingsPanelContent name={userName} onChangeName={setUserName} />
+            <SettingsPanelContent
+              name={userName}
+              onChangeName={setUserName}
+              onBack={handleBackForPreventIfNeeded}
+            />
           </Panel>
         </View>
       </SplitCol>
@@ -167,10 +183,10 @@ const MainPanelContent = ({ onProfileClick }) => {
   );
 };
 
-const ProfilePanelContent = ({ onSettingsClick }) => {
+const ProfilePanelContent = ({ onSettingsClick, onBack }) => {
   return (
     <React.Fragment>
-      <PanelHeader>Профиль</PanelHeader>
+      <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Профиль</PanelHeader>
       <Group>
         <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
         <Div style={{ height: 50, background: '#eee' }} data-vkui-swipe-back={false}>
@@ -208,7 +224,7 @@ const ProfilePanelContent = ({ onSettingsClick }) => {
   );
 };
 
-const SettingsPanelContent = ({ name, onChangeName }) => {
+const SettingsPanelContent = ({ name, onChangeName, onBack }) => {
   const handleNameChange = React.useCallback(
     (event) => {
       onChangeName(event.target.value.trim());
@@ -218,7 +234,7 @@ const SettingsPanelContent = ({ name, onChangeName }) => {
 
   return (
     <React.Fragment>
-      <PanelHeader>Настройки</PanelHeader>
+      <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Настройки</PanelHeader>
       <Group>
         <Placeholder>Пример с блокированием свайпбека пока не будет выполнено условие</Placeholder>
         <FormItem htmlFor="name" top="Имя">
