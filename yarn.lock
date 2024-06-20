@@ -5366,7 +5366,7 @@ __metadata:
     postcss-logical: ^7.0.1
     postcss-modules: ^6.0.0
     postcss-value-parser: ^4.2.0
-    prettier: ^2.8.8
+    prettier: ^3.3.2
     process: ^0.11.10
     react: ^18.3.1
     react-dom: ^18.3.1
@@ -5377,6 +5377,7 @@ __metadata:
     stylelint: ^16.6.1
     stylelint-config-standard: ^36.0.0
     stylelint-media-use-custom-media: ^4.0.0
+    stylelint-prettier: ^5.0.0
     stylelint-use-logical: ^2.1.2
     stylelint-value-no-unknown-custom-properties: ^6.0.1
     swc-loader: ^0.2.6
@@ -14815,12 +14816,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-fallback@npm:prettier@^3, prettier@npm:^3.1.1":
-  version: 3.2.5
-  resolution: "prettier@npm:3.2.5"
+"prettier-fallback@npm:prettier@^3, prettier@npm:^3.1.1, prettier@npm:^3.3.2":
+  version: 3.3.2
+  resolution: "prettier@npm:3.3.2"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 2ee4e1417572372afb7a13bb446b34f20f1bf1747db77cf6ccaf57a9be005f2f15c40f903d41a6b79eec3f57fff14d32a20fb6dee1f126da48908926fe43c311
+  checksum: 5557d8caed0b182f68123c2e1e370ef105251d1dd75800fadaece3d061daf96b1389141634febf776050f9d732c7ae8fd444ff0b4a61b20535e7610552f32c69
   languageName: node
   linkType: hard
 
@@ -14830,15 +14831,6 @@ __metadata:
   dependencies:
     fast-diff: ^1.1.2
   checksum: 00ce8011cf6430158d27f9c92cfea0a7699405633f7f1d4a45f07e21bf78e99895911cbcdc3853db3a824201a7c745bd49bfea8abd5fb9883e765a90f74f8392
-  languageName: node
-  linkType: hard
-
-"prettier@npm:^2.8.8":
-  version: 2.8.8
-  resolution: "prettier@npm:2.8.8"
-  bin:
-    prettier: bin-prettier.js
-  checksum: b49e409431bf129dd89238d64299ba80717b57ff5a6d1c1a8b1a28b590d998a34e083fa13573bc732bb8d2305becb4c9a4407f8486c81fa7d55100eb08263cf8
   languageName: node
   linkType: hard
 
@@ -17164,6 +17156,18 @@ __metadata:
   peerDependencies:
     stylelint: ">=16"
   checksum: 018b622e489f2a7e7b0c8010a49948e2634068125564b821cd405a6e156aa976b36f74349036a7b29ccd8a5e8db0c9fdedc81c42480128494cb34b744de4b11a
+  languageName: node
+  linkType: hard
+
+"stylelint-prettier@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "stylelint-prettier@npm:5.0.0"
+  dependencies:
+    prettier-linter-helpers: ^1.0.0
+  peerDependencies:
+    prettier: ">=3.0.0"
+    stylelint: ">=16.0.0"
+  checksum: 757b677f0e4345de1eab62b0e1a8d6ff50d968e2c541bae7ac7b5595157a49ee033c8911f92056d2bdfb0a2945faa5509814cb13170e48336bfc2c4c3b3ee9c2
   languageName: node
   linkType: hard
 
