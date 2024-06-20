@@ -164,7 +164,8 @@
   min-inline-size: initial;
   max-inline-size: min-content;
   pointer-events: none;
-  transition: flex 0.3s var(--vkui--animation_easing_platform),
+  transition:
+    flex 0.3s var(--vkui--animation_easing_platform),
     transform 0.3s var(--vkui--animation_easing_platform);
   overflow: hidden;
 }

@@ -82,8 +82,8 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
   const props = shouldUseRef
     ? { ref: childRef, ...injectProps, ...mergedEventsByInjectProps }
     : isValidElementResult
-    ? { getRootRef: childRef, ...injectProps, ...mergedEventsByInjectProps }
-    : undefined;
+      ? { getRootRef: childRef, ...injectProps, ...mergedEventsByInjectProps }
+      : undefined;
 
   useEffectDev(() => {
     if (!childRef.current) {

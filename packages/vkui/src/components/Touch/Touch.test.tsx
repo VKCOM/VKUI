@@ -13,7 +13,7 @@ import { Touch } from './Touch';
 
 // Настоящего Touch нет в jsdom: https://github.com/jsdom/jsdom/issues/1508
 const asClientPos = ([clientX = 0, clientY = 0] = []): Touch & MouseEvent =>
-  ({ clientX, clientY } as any);
+  ({ clientX, clientY }) as any;
 
 function fireMouseSwipe(
   e: HTMLElement,

@@ -472,8 +472,8 @@ export const View = ({
           iOSSwipeBackSimulationEnabled
             ? handleTouchMoveXForIOSSwipeBackSimulation
             : platform === 'ios'
-            ? handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
-            : undefined
+              ? handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
+              : undefined
         }
         onEnd={iOSSwipeBackSimulationEnabled ? handleTouchEndForIOSSwipeBackSimulation : undefined}
       >

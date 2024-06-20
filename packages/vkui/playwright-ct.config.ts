@@ -61,8 +61,8 @@ export default defineConfig<VKUITestOptions>({
   workers: process.env.CI
     ? 1
     : typeof process.env.PLAYWRIGHT_WORKERS === 'string'
-    ? Number(process.env.PLAYWRIGHT_WORKERS)
-    : undefined,
+      ? Number(process.env.PLAYWRIGHT_WORKERS)
+      : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI
     ? [['github'], ['dot'], ['blob'], ...DEFAULT_REPORTERS]
