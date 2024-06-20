@@ -1,49 +1,53 @@
-import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Spacing.module.css';
 
-export const ALLOWED_SIZES = [
-  '3xs',
-  '2xs',
-  'xs',
-  's',
-  'm',
-  'l',
-  'xl',
-  '2xl',
-  '3xl',
-  '4xl',
-] as const;
-type Size = (typeof ALLOWED_SIZES)[number];
+export const CUSTOM_CSS_TOKEN_FOR_USER_GAP = '--vkui_internal--Spacing_gap';
+
+export const sizesClassNames = {
+  '3xs': styles['Spacing--3xs'],
+  '2xs': styles['Spacing--2xs'],
+  'xs': styles['Spacing--xs'],
+  's': styles['Spacing--s'],
+  'm': styles['Spacing--m'],
+  'l': styles['Spacing--l'],
+  'xl': styles['Spacing--xl'],
+  '2xl': styles['Spacing--2xl'],
+  '3xl': styles['Spacing--3xl'],
+  '4xl': styles['Spacing--4xl'],
+};
+
+export type SpacingSize = keyof typeof sizesClassNames;
 
 export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Высота спэйсинга
    */
-  size?: number | Size;
+  size?: number | SpacingSize;
 }
 /**
  * @see https://vkcom.github.io/VKUI/#/Spacing
  */
-export const Spacing = ({ size = 'm', style: styleProp, ...restProps }: SpacingProps) => {
-  const style: React.CSSProperties = {
-    ...getSizeStyle(size),
-    ...styleProp,
-  };
+export const Spacing = ({ size = 'm', style, className, ...restProps }: SpacingProps) => {
+  if (typeof size === 'string') {
+    className = className ? classNames(sizesClassNames[size], className) : sizesClassNames[size];
+  } else {
+    if (style) {
+      // @ts-expect-error: TS7053 В React.CSSProperties не учитывается Custom Properties
+      style[CUSTOM_CSS_TOKEN_FOR_USER_GAP] = size;
+    } else {
+      // @ts-expect-error: TS2353 В React.CSSProperties не учитывается Custom Properties
+      style = { [CUSTOM_CSS_TOKEN_FOR_USER_GAP]: size };
+    }
+  }
 
-  return <RootComponent {...restProps} baseClassName={styles['Spacing']} style={style} />;
+  return (
+    <RootComponent
+      {...restProps}
+      style={style}
+      className={className}
+      baseClassName={styles['Spacing']}
+    />
+  );
 };
-
-function getSizeStyle(size: number | Size): React.CSSProperties {
-  const sizeValue = getSizeValue(size);
-
-  return {
-    height: sizeValue,
-    padding: `calc(${sizeValue} / 2px) 0`,
-  };
-}
-
-function getSizeValue(size: number | Size): `var(--vkui--spacing_size_${Size})` | number {
-  return typeof size === 'string' ? `var(--vkui--spacing_size_${size})` : size;
-}
