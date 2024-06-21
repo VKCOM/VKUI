@@ -199,7 +199,7 @@ describe(FocusTrap, () => {
       expect(result.getByTestId('middle')).toHaveFocus();
 
       // remove middle
-      await waitFor(() => result.getByTestId('middle').remove())
+      await waitFor(() => result.getByTestId('middle').remove());
 
       // reset focus to first
       expect(result.getByTestId('first')).toHaveFocus();
