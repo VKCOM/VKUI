@@ -38,12 +38,9 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
   const focusableNodesRef = React.useRef<HTMLElement[]>([]);
 
-  const recalculateFocusableNodesRef = () => {
-    if (!ref.current) {
-      return;
-    }
+  const recalculateFocusableNodesRef = (parentNode: HTMLElement) => {
     // eslint-disable-next-line no-restricted-properties
-    const newFocusableElements = ref.current.querySelectorAll<HTMLElement>(FOCUSABLE_ELEMENTS);
+    const newFocusableElements = parentNode.querySelectorAll<HTMLElement>(FOCUSABLE_ELEMENTS);
 
     const nodes: HTMLElement[] = [];
     newFocusableElements.forEach((focusableEl) => {
@@ -55,26 +52,27 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
     if (nodes.length === 0) {
       // Чтобы фокус был хотя бы на родителе
-      nodes.push(ref.current);
+      nodes.push(parentNode);
     }
     focusableNodesRef.current = nodes;
-  }
+  };
 
   useIsomorphicLayoutEffect(
     function collectFocusableNodesRef() {
       if (!ref.current) {
         return;
       }
-      const observer = new MutationObserver(recalculateFocusableNodesRef);
+      const parentNode = ref.current;
+      const observer = new MutationObserver(() => recalculateFocusableNodesRef(parentNode));
       observer.observe(ref.current, {
         subtree: true,
         childList: true,
       });
-      recalculateFocusableNodesRef()
-      return () => observer.disconnect()
+      recalculateFocusableNodesRef(parentNode);
+      return () => observer.disconnect();
     },
     [ref],
-  )
+  );
 
   useIsomorphicLayoutEffect(
     function tryToAutoFocusToFirstNode() {
