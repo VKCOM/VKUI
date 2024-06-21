@@ -26,13 +26,18 @@ const stylesDirection = {
 
 const sizeYClassNames = {
   none: styles['ToolButton--sizeY-none'],
-  ['regular']: styles['ToolButton--sizeY-regular'],
+  regular: styles['ToolButton--sizeY-regular'],
 };
 
 export interface ToolButtonProps extends TappableProps, AdaptiveIconRendererProps {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline';
   appearance?: 'accent' | 'neutral';
   direction?: 'row' | 'column';
+  /**
+   * Задаёт `50%` закругления для контейнера.
+   *
+   * > Note: игнорируется при передаче `children`.
+   */
   rounded?: boolean;
 }
 
@@ -77,7 +82,7 @@ export const ToolButton = ({
       {...restProps}
     >
       <AdaptiveIconRenderer IconCompact={IconCompact} IconRegular={IconRegular} />
-      {hasChildren && <span>{children}</span>}
+      {hasChildren && <span className={styles['ToolButton__text']}>{children}</span>}
     </Tappable>
   );
 };
