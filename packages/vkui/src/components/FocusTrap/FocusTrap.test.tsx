@@ -170,5 +170,43 @@ describe(FocusTrap, () => {
       await userEvent.tab();
       expect(screen.getByTestId('first')).toHaveFocus();
     });
+
+    it('manages navigation inside trap on TAB with remove last child when navigate', async () => {
+      const result = render(<ActionSheetTest />);
+      await mountViaKeyboard();
+
+      // forward to middle
+      await userEvent.tab();
+      expect(result.getByTestId('middle')).toHaveFocus();
+
+      // remove last
+      await waitFor(() => result.getByTestId('last').remove());
+
+      // check focus in middle yet
+      expect(result.getByTestId('middle')).toHaveFocus();
+
+      // forward to first
+      await userEvent.tab();
+      expect(result.getByTestId('first')).toHaveFocus();
+    });
+
+    it('manages navigation inside trap on TAB with remove middle child when focus on middle', async () => {
+      const result = render(<ActionSheetTest />);
+      await mountViaKeyboard();
+
+      // forward to middle
+      await userEvent.tab();
+      expect(result.getByTestId('middle')).toHaveFocus();
+
+      // remove middle
+      await waitFor(() => result.getByTestId('middle').remove())
+
+      // reset focus to first
+      expect(result.getByTestId('first')).toHaveFocus();
+
+      // forward to last
+      await userEvent.tab();
+      expect(result.getByTestId('last')).toHaveFocus();
+    });
   });
 });
