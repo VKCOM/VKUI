@@ -6,6 +6,7 @@ import {
   getActiveElementByAnotherElement,
   getWindow,
   isHTMLElement,
+  useDOM,
 } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasComponent, HasRootRef } from '../../types';
@@ -35,8 +36,17 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   ...restProps
 }: FocusTrapProps<T>) => {
   const ref = useExternRef<T>(getRootRef);
+  const { document } = useDOM();
 
   const focusableNodesRef = React.useRef<HTMLElement[]>([]);
+
+  const focusNodeByIndex = (nodeIndex: number) => {
+    const element = focusableNodesRef.current[nodeIndex];
+
+    if (element) {
+      element.focus();
+    }
+  };
 
   const recalculateFocusableNodesRef = (parentNode: HTMLElement) => {
     // eslint-disable-next-line no-restricted-properties
@@ -57,13 +67,26 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
     focusableNodesRef.current = nodes;
   };
 
+  const onMutateParentHandler = (parentNode: HTMLElement) => {
+    recalculateFocusableNodesRef(parentNode);
+
+    if (document) {
+      const activeElement = document.activeElement as HTMLElement;
+      const currentElementIndex = Math.max(
+        document.activeElement ? focusableNodesRef.current.indexOf(activeElement) : -1,
+        0,
+      );
+      focusNodeByIndex(currentElementIndex);
+    }
+  };
+
   useIsomorphicLayoutEffect(
     function collectFocusableNodesRef() {
       if (!ref.current) {
         return;
       }
       const parentNode = ref.current;
-      const observer = new MutationObserver(() => recalculateFocusableNodesRef(parentNode));
+      const observer = new MutationObserver(() => onMutateParentHandler(parentNode));
       observer.observe(ref.current, {
         subtree: true,
         childList: true,
