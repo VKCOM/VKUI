@@ -13,12 +13,14 @@ export const Paragraph = ({
   className,
   Component = 'span',
   normalize = false,
+  inline = false,
   ...restProps
 }: ParagraphProps) => {
   return (
     <Typography
       Component={Component}
       normalize={normalize}
+      inline={inline}
       className={classNames(className, styles['Paragraph'])}
       {...restProps}
     />

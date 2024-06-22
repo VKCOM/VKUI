@@ -28,6 +28,7 @@ export const Headline = ({
   level = '1',
   Component = 'span',
   normalize = true,
+  inline = false,
   ...restProps
 }: HeadlineProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -36,6 +37,7 @@ export const Headline = ({
     <Typography
       Component={Component}
       normalize={normalize}
+      inline={inline}
       weight={weight}
       className={classNames(
         className,
