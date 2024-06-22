@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { stopPropagation } from '../../lib/utils';
@@ -103,6 +104,8 @@ export const CustomScrollView = ({
       resizeHandler.add(window);
     }
   }, [windowResize, window]);
+
+  useResizeObserver(boxRef, resize);
 
   useIsomorphicLayoutEffect(() => {
     let style = trackerY.current?.style;
