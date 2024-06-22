@@ -183,4 +183,34 @@ describe(Popover, () => {
     expect(result.queryByTestId('popover')).not.toBeInTheDocument();
     expect(onShownChange).toHaveBeenCalledWith(false, 'callback');
   });
+
+  it('check keepMounted=true, popover not unmount when close', async () => {
+    let shown = true;
+
+    const getFixture = () => {
+      return <Popover
+        shown={shown}
+        content="Some popover"
+        aria-describedby="target"
+        role="tooltip"
+        data-testid="popover"
+        keepMounted
+      >
+        <div id="target">Target</div>
+      </Popover>
+    }
+
+    const result = render(getFixture());
+    await waitForFloatingPosition();
+
+    expect(result.getByTestId('popover').parentElement).not.toHaveClass(styles['Popover--hidden']);
+
+    shown = false;
+    result.rerender(getFixture());
+
+    await waitForFloatingPosition();
+
+    expect(result.getByTestId('popover')).toBeInTheDocument();
+    expect(result.getByTestId('popover').parentElement).toHaveClass(styles['Popover--hidden']);
+  })
 });

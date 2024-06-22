@@ -22,3 +22,11 @@
 .Popover__arrow {
   color: var(--vkui--color_background_modal);
 }
+
+.Popover--hidden {
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  opacity: 0;
+  visibility: hidden;
+}
