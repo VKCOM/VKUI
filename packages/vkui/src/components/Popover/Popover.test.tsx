@@ -188,17 +188,19 @@ describe(Popover, () => {
     let shown = true;
 
     const getFixture = () => {
-      return <Popover
-        shown={shown}
-        content="Some popover"
-        aria-describedby="target"
-        role="tooltip"
-        data-testid="popover"
-        keepMounted
-      >
-        <div id="target">Target</div>
-      </Popover>
-    }
+      return (
+        <Popover
+          shown={shown}
+          content="Some popover"
+          aria-describedby="target"
+          role="tooltip"
+          data-testid="popover"
+          keepMounted
+        >
+          <div id="target">Target</div>
+        </Popover>
+      );
+    };
 
     const result = render(getFixture());
     await waitForFloatingPosition();
@@ -212,5 +214,5 @@ describe(Popover, () => {
 
     expect(result.getByTestId('popover')).toBeInTheDocument();
     expect(result.getByTestId('popover').parentElement).toHaveClass(styles['Popover--hidden']);
-  })
+  });
 });

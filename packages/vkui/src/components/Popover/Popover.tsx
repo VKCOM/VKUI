@@ -244,10 +244,7 @@ export const Popover = ({
       <AppRootPortal usePortal={usePortal}>
         <div
           ref={refs.setFloating}
-          className={classNames(
-            styles['Popover'],
-            hidden && styles['Popover--hidden']
-          )}
+          className={classNames(styles['Popover'], hidden && styles['Popover--hidden'])}
           {...floatingProps}
         >
           <FocusTrap
