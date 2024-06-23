@@ -1,0 +1,47 @@
+/* stylelint-disable declaration-property-value-disallowed-list -- определение токенов */
+:root {
+  --shiki-color-text: oklch(86.07% 0 0deg);
+  --shiki-token-constant: oklch(76.85% 0.121 252.34deg);
+  --shiki-token-string: oklch(81.11% 0.124 55.08deg);
+  --shiki-token-comment: oklch(55.18% 0.017 251.27deg);
+  --shiki-token-keyword: oklch(72.14% 0.162 15.49deg);
+  /*--shiki-token-parameter: #ff9800; is same as in light mode */
+  --shiki-token-function: oklch(72.67% 0.137 299.15deg);
+  --shiki-token-string-expression: oklch(69.28% 0.179 143.2deg);
+  --shiki-token-punctuation: oklch(79.21% 0 0deg);
+  --shiki-token-link: var(--shiki-token-string);
+
+  /* from github-dark */
+  --shiki-color-ansi-black: #586069;
+  --shiki-color-ansi-black-dim: #58606980;
+  --shiki-color-ansi-red: #ea4a5a;
+  --shiki-color-ansi-red-dim: #ea4a5a80;
+  --shiki-color-ansi-green: #34d058;
+  --shiki-color-ansi-green-dim: #34d05880;
+  --shiki-color-ansi-yellow: #ffea7f;
+  --shiki-color-ansi-yellow-dim: #ffea7f80;
+  --shiki-color-ansi-blue: #2188ff;
+  --shiki-color-ansi-blue-dim: #2188ff80;
+  --shiki-color-ansi-magenta: #b392f0;
+  --shiki-color-ansi-magenta-dim: #b392f080;
+  --shiki-color-ansi-cyan: #39c5cf;
+  --shiki-color-ansi-cyan-dim: #39c5cf80;
+  --shiki-color-ansi-white: #d1d5da;
+  --shiki-color-ansi-white-dim: #d1d5da80;
+  --shiki-color-ansi-bright-black: #959da5;
+  --shiki-color-ansi-bright-black-dim: #959da580;
+  --shiki-color-ansi-bright-red: #f97583;
+  --shiki-color-ansi-bright-red-dim: #f9758380;
+  --shiki-color-ansi-bright-green: #85e89d;
+  --shiki-color-ansi-bright-green-dim: #85e89d80;
+  --shiki-color-ansi-bright-yellow: #ffea7f;
+  --shiki-color-ansi-bright-yellow-dim: #ffea7f80;
+  --shiki-color-ansi-bright-blue: #79b8ff;
+  --shiki-color-ansi-bright-blue-dim: #79b8ff80;
+  --shiki-color-ansi-bright-magenta: #b392f0;
+  --shiki-color-ansi-bright-magenta-dim: #b392f080;
+  --shiki-color-ansi-bright-cyan: #56d4dd;
+  --shiki-color-ansi-bright-cyan-dim: #56d4dd80;
+  --shiki-color-ansi-bright-white: #fafbfc;
+  --shiki-color-ansi-bright-white-dim: #fafbfc80;
+}

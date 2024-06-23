@@ -1,0 +1,33 @@
+.host {
+  border-radius: 16px;
+  padding: 32px;
+  background-image: url('./background.svg');
+  background-color: #2f2f2f;
+  background-size: cover;
+  margin-block-end: 56px;
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.host > h1 {
+  color: var(--vkui--color_text_contrast);
+  margin-block-start: 0;
+  margin-block-end: 16px;
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.host > p {
+  margin-block: 0;
+  color: var(--vkui--color_text_primary);
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.host > p {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  font-family: var(--vkui--font_family_accent);
+}
+
+.buttons {
+  margin-block-start: 44px;
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@vkontakte/vkui-nextra-theme",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VKCOM/VKUI.git",
+    "directory": "packages/vkui-nextra-theme"
+  },
+  "bugs": "https://github.com/VKCOM/VKUI/issues",
+  "homepage": "https://vkcom.github.io/VKUI/",
+  "license": "MIT",
+  "dependencies": {
+    "@vkontakte/icons": "^2.122.0 || ^3.0.0",
+    "@vkontakte/vkjs": "^1.1.2",
+    "@vkontakte/vkui": "workspace:^",
+    "@vkontakte/vkui-tokens": "^4.47.0"
+  },
+  "devDependencies": {
+    "next": "^14.2.4",
+    "nextra": "^2.13.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "peerDependencies": {
+    "next": "^14.2.4",
+    "nextra": "^2.13.4"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
+  }
+}

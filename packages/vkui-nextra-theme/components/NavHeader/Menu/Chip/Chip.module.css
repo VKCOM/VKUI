@@ -1,0 +1,12 @@
+.host {
+  padding-block: 8px;
+  padding-inline: 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--vkui--color_text_primary);
+}
+
+.active,
+.host:hover {
+  background: var(--vkui--color_field_background);
+}
