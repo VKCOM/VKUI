@@ -7,11 +7,9 @@ describe('test useResizeObserver', () => {
     const callback = jest.fn();
     const Fixture = (props: { mockedBlocksIds: string[] }) => {
       const ref = useRef(null);
-      useResizeObserver(ref, callback, {
-        useMutationObserver: true,
-      });
+      useResizeObserver(ref, callback);
       return (
-        <div ref={ref}>
+        <div ref={ref} style={{position: 'static'}}>
           {props.mockedBlocksIds.map((id) => (
             <div key={id} data-testid={id} style={{ height: 50 }}></div>
           ))}

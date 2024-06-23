@@ -1,6 +1,6 @@
 const defaultIframeStyles: Pick<
   CSSStyleDeclaration,
-  'position' | 'left' | 'top' | 'zIndex' | 'width' | 'height' | 'pointerEvents' | 'opacity'
+  'position' | 'left' | 'top' | 'zIndex' | 'width' | 'height' | 'pointerEvents' | 'opacity' | 'border'
 > = {
   position: 'absolute',
   left: '0',
@@ -10,6 +10,7 @@ const defaultIframeStyles: Pick<
   height: '100%',
   pointerEvents: 'none',
   opacity: '0',
+  border: '0',
 };
 
 /*
