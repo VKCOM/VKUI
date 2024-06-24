@@ -23,7 +23,7 @@ export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
   /**
    * Форсированное отключение захвата фокуса
    */
-  disableTrap?: boolean;
+  disabled?: boolean;
 }
 
 /**
@@ -34,7 +34,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   onClose,
   autoFocus = true,
   restoreFocus = true,
-  disableTrap = false,
+  disabled = false,
   timeout = 0,
   getRootRef,
   children,
@@ -104,7 +104,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
   useIsomorphicLayoutEffect(
     function tryToAutoFocusToFirstNode() {
-      if (!ref.current || !autoFocus || disableTrap) {
+      if (!ref.current || !autoFocus || disabled) {
         return;
       }
 
@@ -122,7 +122,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
         clearTimeout(timeoutId);
       };
     },
-    [autoFocus, timeout, disableTrap],
+    [autoFocus, timeout, disabled],
   );
 
   useIsomorphicLayoutEffect(
@@ -157,7 +157,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
     }
 
     const onDocumentKeydown = (event: KeyboardEvent) => {
-      if (disableTrap) {
+      if (disabled) {
         return;
       }
 
@@ -207,7 +207,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
     return () => {
       doc.removeEventListener('keydown', onDocumentKeydown, true);
     };
-  }, [onClose, ref, disableTrap]);
+  }, [onClose, ref, disabled]);
 
   return (
     <Component tabIndex={-1} ref={ref} {...restProps}>

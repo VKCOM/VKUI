@@ -257,7 +257,7 @@ export const Popover = ({
               transformOriginClassNames[resolvedPlacement],
               className,
             )}
-            disableTrap={hidden}
+            disabled={hidden}
             autoFocus={disableInteractive ? false : autoFocus}
             restoreFocus={restoreFocus ? onRestoreFocus : false}
             onClose={onEscapeKeyDown}
