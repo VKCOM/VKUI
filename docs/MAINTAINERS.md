@@ -28,7 +28,7 @@
 
 При создании нового `Pull Request` в описании уже подтянется шаблон, который нужно будет заполнить.
 Обычно `Pull Request` решает `issue` - ссылку на неё нужно указать через [ключевые слова](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests).
-Если `PR` не имеет `issue`, то наиболее полное описание проблемы/доработки должно содержаться в описании этого `PR`, а также необходимо будет заполнить все поля по аналогии с `Issue`.
+Если `PR` не имеет `issue`, то наиболее полное описание проблемы/доработки должно содержаться в описании этого `PR`, а также необходимо будет заполнить все поля по аналогии с `Issues`.
 
 - если работа над `PR` ещё ведется, рекомендуется перевести его в [draft](https://docs.github.com/ru/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-stage-of-a-pull-request#converting-a-pull-request-to-a-draft).
 - существует автоматизация, которая закрывает `PR` в случае 2х-недельного отсутствия в нем активности. В случае продолжительной работы над каким-то `PR` рекомендуется проставить ему в поле `Labels` значение `no-stale` для игнорирования автоматизации.
@@ -36,7 +36,7 @@
 
 ## Создание патч-изменений
 
-При разработке мы опираемся на [GitLab Flow](https://docs.gitlab.com/ee/topics/gitlab_flow.html#release-branches-with-gitlab-flow). Подробнее можно почитать в [этом PR](https://github.com/VKCOM/VKUI/pull/2759).
+При разработке мы опираемся на [GitLab Flow](https://docs.gitlab.co.jp/ee/topics/gitlab_flow.html#release-branches-with-gitlab-flow). Подробнее можно почитать в [этом PR](https://github.com/VKCOM/VKUI/pull/2759).
 
 Кратко:
 
@@ -47,7 +47,7 @@
 
 ## Подготовка Release Notes (актуально для VKUI)
 
-Для каждого релиза **VKUI** мы подготавливаем [список изменений](https://github.com/VKCOM/VKUI/releases). Следует вносить сюда описание тех задач, которые влияют на конечный артефакт библиотеки (технические задачи, например, обновление правил `eslint`, указывать не нужно). Название необходимого `Release notes` соответствует полю `Milestone`, указанному в задаче.
+Для каждого релиза **VKUI** мы подготавливаем [список изменений](https://github.com/VKCOM/VKUI/releases). Следует вносить сюда описание тех задач, которые влияют на конечный артефакт библиотеки (технические задачи, например, обновление правил `eslint`, указывать не нужно). Название необходимого `Release notes` соответствует полю `Milestone`, указанному в задаче. Примеры эталонных Release Notes для [патч-изменений](https://github.com/VKCOM/VKUI/releases/tag/v6.0.3) и [минорных изменений](https://github.com/VKCOM/VKUI/releases/tag/v6.1.0). В конце описания внесённых изменений мы всегда оставляем ссылку на `Pull Request`, а не на `issue` для полноты контекста и единообразия (изменения не всегда могут быть привязаны к `issue`).
 
 > ⚠️ Обратите внимание
 >
