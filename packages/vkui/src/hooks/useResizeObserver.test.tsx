@@ -9,7 +9,7 @@ describe('test useResizeObserver', () => {
       const ref = useRef(null);
       useResizeObserver(ref, callback);
       return (
-        <div ref={ref} style={{position: 'static'}}>
+        <div ref={ref} style={{ position: 'static' }}>
           {props.mockedBlocksIds.map((id) => (
             <div key={id} data-testid={id} style={{ height: 50 }}></div>
           ))}

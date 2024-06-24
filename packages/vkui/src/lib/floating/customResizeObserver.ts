@@ -1,6 +1,14 @@
 const defaultIframeStyles: Pick<
   CSSStyleDeclaration,
-  'position' | 'left' | 'top' | 'zIndex' | 'width' | 'height' | 'pointerEvents' | 'opacity' | 'border'
+  | 'position'
+  | 'left'
+  | 'top'
+  | 'zIndex'
+  | 'width'
+  | 'height'
+  | 'pointerEvents'
+  | 'opacity'
+  | 'border'
 > = {
   position: 'absolute',
   left: '0',

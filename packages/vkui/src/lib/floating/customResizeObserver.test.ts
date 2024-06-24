@@ -77,6 +77,7 @@ describe(CustomResizeObserver, () => {
       height: '100%',
       pointerEvents: 'none',
       opacity: '0',
+      border: '0',
     });
 
     // скрытым от скринридеров
