@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { DisplayTitle } from '../../components/DisplayTitle/DisplayTitle';
+import { DisplayTitle } from '@vkontakte/vkui';
 import styles from './Header2.module.css';
 
 export function Header2({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
