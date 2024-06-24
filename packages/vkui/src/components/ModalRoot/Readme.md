@@ -442,7 +442,7 @@ const App = () => {
         actions={
           <React.Fragment>
             <Spacing size={16} />
-            <ButtonGroup size="s" stretched>
+            <ButtonGroup gap="s" stretched>
               <Button
                 key="deny"
                 size="l"
@@ -475,7 +475,7 @@ const App = () => {
         actions={
           <React.Fragment>
             <Spacing size={8} />
-            <ButtonGroup size="l" mode="vertical" stretched>
+            <ButtonGroup gap="l" mode="vertical" stretched>
               <Button
                 key="join"
                 size="l"
