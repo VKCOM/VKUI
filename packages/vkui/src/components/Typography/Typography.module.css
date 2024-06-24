@@ -3,7 +3,7 @@
   padding: 0;
 }
 
-.Typography--normalize:not(.Typography--inline) {
+.Typography--block {
   display: block;
 }
 
