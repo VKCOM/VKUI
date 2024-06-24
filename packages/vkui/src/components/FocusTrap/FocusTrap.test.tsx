@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { act } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
@@ -194,7 +195,7 @@ describe(FocusTrap, () => {
       expect(result.getByTestId('middle')).toHaveFocus();
 
       // remove last
-      await React.act(async () => {
+      await act(async () => {
         result.rerender(<Template childIds={['first', 'middle']} />);
       });
 
@@ -228,7 +229,7 @@ describe(FocusTrap, () => {
       expect(result.getByTestId('middle')).toHaveFocus();
 
       // remove middle
-      await React.act(async () => {
+      await act(async () => {
         result.rerender(<Template childIds={['first', 'last']} />);
       });
 
