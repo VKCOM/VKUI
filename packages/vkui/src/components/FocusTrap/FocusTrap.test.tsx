@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { act } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
@@ -82,13 +81,13 @@ describe(FocusTrap, () => {
   const mountActionSheetViaClick = async () => {
     await userEvent.click(screen.getByTestId('toggle')); // mount ActionSheet
     await waitForFloatingPosition();
-    act(jest.runAllTimers);
+    React.act(jest.runAllTimers);
   };
 
   const unmountActionSheet = async () => {
     await userEvent.keyboard('{Escape}');
     await waitForFloatingPosition();
-    act(jest.runAllTimers);
+    React.act(jest.runAllTimers);
   };
 
   it('renders with no focusable elements', async () => {
@@ -141,7 +140,7 @@ describe(FocusTrap, () => {
       await userEvent.tab(); // focus toggle via keyboard
       await userEvent.keyboard('{enter}'); // mount ActionSheet via keyboard
       await waitForFloatingPosition();
-      act(jest.runAllTimers);
+      React.act(jest.runAllTimers);
     };
 
     it('focuses first element on keyboard navigation', async () => {
@@ -194,7 +193,7 @@ describe(FocusTrap, () => {
       expect(result.getByTestId('middle')).toHaveFocus();
 
       // remove last
-      await act(async () => {
+      await React.act(async () => {
         result.rerender(<Template childIds={['first', 'middle']} />);
       });
 
@@ -228,7 +227,7 @@ describe(FocusTrap, () => {
       expect(result.getByTestId('middle')).toHaveFocus();
 
       // remove middle
-      await act(async () => {
+      await React.act(async () => {
         result.rerender(<Template childIds={['first', 'last']} />);
       });
 
