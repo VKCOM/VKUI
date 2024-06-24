@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { AllHTMLAttributes, useRef } from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
 import { FOCUSABLE_ELEMENTS_LIST, Keys, pressedKey } from '../../lib/accessibility';
 import {
@@ -13,7 +13,7 @@ import { HasComponent, HasRootRef } from '../../types';
 
 const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
 export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
-  extends React.AllHTMLAttributes<T>,
+  extends AllHTMLAttributes<T>,
     HasRootRef<T>,
     HasComponent {
   autoFocus?: boolean;
@@ -38,7 +38,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   const ref = useExternRef<T>(getRootRef);
   const { document } = useDOM();
 
-  const focusableNodesRef = React.useRef<HTMLElement[]>([]);
+  const focusableNodesRef = useRef<HTMLElement[]>([]);
 
   const focusNodeByIndex = (nodeIndex: number) => {
     const element = focusableNodesRef.current[nodeIndex];
