@@ -45,7 +45,6 @@ export const Typography = ({
       styles['Typography'],
       normalize && styles['Typography--normalize'],
       inline && styles['Typography--inline'],
-      !inline && normalize && styles['Typography--block'],
       weight && stylesWeight[weight],
     )}
     {...restProps}
