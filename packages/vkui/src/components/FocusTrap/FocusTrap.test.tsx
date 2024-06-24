@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { act } from 'react';
+import { act, Fragment, useRef, useState } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
@@ -32,8 +31,8 @@ const ActionSheetTest = ({
   onClose: onCloseProp,
   ...props
 }: Partial<ActionSheetProps> & Partial<FocusTrapProps>) => {
-  const toggleRef = React.useRef(null);
-  const [actionSheet, toggleActionSheet] = React.useState<any>(null);
+  const toggleRef = useRef(null);
+  const [actionSheet, toggleActionSheet] = useState<any>(null);
 
   const handleClose = () => {
     if (onCloseProp) {
@@ -95,7 +94,7 @@ describe(FocusTrap, () => {
   it('renders with no focusable elements', async () => {
     render(
       <ActionSheetTest>
-        <React.Fragment>NOPE</React.Fragment>
+        <Fragment>NOPE</Fragment>
       </ActionSheetTest>,
     );
     await mountActionSheetViaClick();
