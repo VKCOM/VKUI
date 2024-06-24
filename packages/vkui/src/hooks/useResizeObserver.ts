@@ -14,6 +14,7 @@ export function useResizeObserver(
 
   useIsomorphicLayoutEffect(
     function addResizeObserverHandler() {
+      /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
       if (!ref.current) {
         return;
       }
