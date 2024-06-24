@@ -51,7 +51,9 @@
   block-size: 100%;
   background-color: var(--vkui--color_icon_medium);
   border-radius: 12px;
-  transition: transform 200ms, opacity 200ms;
+  transition:
+    transform 200ms,
+    opacity 200ms;
 }
 
 .CustomScrollView__trackerY:hover::before,

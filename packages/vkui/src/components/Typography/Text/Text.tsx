@@ -19,6 +19,7 @@ export const Text = ({
   className,
   Component = 'span',
   normalize = true,
+  inline = false,
   ...restProps
 }: TextProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -27,6 +28,7 @@ export const Text = ({
     <Typography
       Component={Component}
       normalize={normalize}
+      inline={inline}
       className={classNames(
         className,
         styles['Text'],

@@ -5,6 +5,7 @@ import {
   baselineComponent,
   fakeTimers,
   userEvent,
+  waitCSSKeyframesAnimation,
   waitForFloatingPosition,
 } from '../../testing/utils';
 import { ActionSheet, ActionSheetProps } from '../ActionSheet/ActionSheet';
@@ -81,13 +82,13 @@ describe(FocusTrap, () => {
   const mountActionSheetViaClick = async () => {
     await userEvent.click(screen.getByTestId('toggle')); // mount ActionSheet
     await waitForFloatingPosition();
-    React.act(jest.runAllTimers);
+    await waitCSSKeyframesAnimation(screen.getByTestId('sheet'), { runOnlyPendingTimers: true });
   };
 
   const unmountActionSheet = async () => {
     await userEvent.keyboard('{Escape}');
     await waitForFloatingPosition();
-    React.act(jest.runAllTimers);
+    await waitCSSKeyframesAnimation(screen.getByTestId('sheet'), { runOnlyPendingTimers: true });
   };
 
   it('renders with no focusable elements', async () => {
@@ -140,7 +141,7 @@ describe(FocusTrap, () => {
       await userEvent.tab(); // focus toggle via keyboard
       await userEvent.keyboard('{enter}'); // mount ActionSheet via keyboard
       await waitForFloatingPosition();
-      React.act(jest.runAllTimers);
+      await waitCSSKeyframesAnimation(screen.getByTestId('sheet'), { runOnlyPendingTimers: true });
     };
 
     it('focuses first element on keyboard navigation', async () => {

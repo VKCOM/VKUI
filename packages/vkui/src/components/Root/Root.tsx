@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useTimeout } from '../../hooks/useTimeout';
 import { useDOM } from '../../lib/dom';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -93,26 +92,17 @@ export const Root = ({
     }
   }, [transition, prevView]);
 
-  const fallbackTransition = useTimeout(finishTransition, platform === 'ios' ? 600 : 300);
-  React.useEffect(() => {
-    if (!transition) {
-      fallbackTransition.clear();
-      return;
-    }
-    fallbackTransition.set();
-  }, [fallbackTransition, transition]);
+  React.useEffect(
+    function onAnimationEndFallback() {
+      if (transition && disableAnimation) {
+        finishTransition();
+      }
+    },
+    [transition, disableAnimation, finishTransition],
+  );
 
-  const onAnimationEnd = (e: React.AnimationEvent) => {
-    if (
-      [
-        styles['root-android-animation-hide-back'],
-        styles['root-android-animation-show-forward'],
-        styles['root-ios-animation-hide-back'],
-        styles['root-ios-animation-show-forward'],
-      ].includes(e.animationName)
-    ) {
-      finishTransition();
-    }
+  const onAnimationEnd = () => {
+    finishTransition();
   };
 
   return (

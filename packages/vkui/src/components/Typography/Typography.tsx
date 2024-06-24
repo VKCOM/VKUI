@@ -26,12 +26,17 @@ export interface TypographyProps
    * Убирает внешние отступы
    */
   normalize?: boolean;
+  /**
+   * Делает блок инлайновым
+   */
+  inline?: boolean;
 }
 
 export const Typography = ({
   weight,
   Component = 'span',
   normalize,
+  inline,
   ...restProps
 }: TypographyProps) => (
   <RootComponent
@@ -39,6 +44,7 @@ export const Typography = ({
     baseClassName={classNames(
       styles['Typography'],
       normalize && styles['Typography--normalize'],
+      inline && styles['Typography--inline'],
       weight && stylesWeight[weight],
     )}
     {...restProps}

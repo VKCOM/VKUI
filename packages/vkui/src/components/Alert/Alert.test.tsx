@@ -3,7 +3,12 @@ import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
 import { Platform } from '../../lib/platform';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimers,
+  userEvent,
+  waitCSSKeyframesAnimation,
+} from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Alert, type AlertProps } from './Alert';
@@ -19,7 +24,7 @@ describe('Alert', () => {
   describe('closes', () => {
     it.each(['overlay', 'close'])('with %s click', async (trigger) => {
       const onClose = jest.fn();
-      render(
+      const result = render(
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
           <Alert onClose={onClose} />
         </AdaptivityProvider>,
@@ -27,9 +32,10 @@ describe('Alert', () => {
       const target =
         trigger === 'overlay' ? '.vkuiPopoutWrapper__overlay' : '.vkuiModalDismissButton';
 
-      await userEvent.click(document.querySelector(target) as Element);
-      expect(onClose).not.toHaveBeenCalled();
-      act(jest.runAllTimers);
+      await userEvent.click(document.querySelector(target)!);
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
       expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
@@ -46,25 +52,35 @@ describe('Alert', () => {
         });
 
       const onClose = jest.fn();
-      render(
+      const result = render(
         <ConfigProvider platform={platform}>
           <Alert
             onClose={onClose}
-            actions={[{ action, title: '__action__', autoCloseDisabled: true, mode: 'default' }]}
+            actions={[
+              {
+                action,
+                'title': 'Item',
+                'data-testid': '__action__',
+                'autoCloseDisabled': true,
+                'mode': 'default',
+              },
+            ]}
           />
         </ConfigProvider>,
       );
-      await userEvent.click(screen.getByText('__action__'));
+      await userEvent.click(result.getByTestId('__action__'));
       expect(action).toHaveBeenCalledTimes(1);
-      expect(onClose).not.toHaveBeenCalled();
-      act(jest.runAllTimers);
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
       expect(onClose).not.toHaveBeenCalled();
 
       // второй клик закроет Alert, так как в action был вызван метод close()
-      await userEvent.click(screen.getByText('__action__'));
+      await userEvent.click(result.getByTestId('__action__'));
       expect(action).toHaveBeenCalledTimes(2);
-      expect(onClose).toHaveBeenCalledTimes(0);
-      act(jest.runAllTimers);
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
       expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
@@ -73,31 +89,32 @@ describe('Alert', () => {
     it.each([Platform.ANDROID, Platform.IOS])('%s', async (platform) => {
       const action = jest.fn();
       const onClose = jest.fn();
-      render(
+      const result = render(
         <ConfigProvider platform={platform}>
           <Alert
             onClose={onClose}
             actions={[
               {
                 action,
-                title: '__action__',
-                mode: 'default',
+                'title': 'Item',
+                'data-testid': '__action__',
+                'mode': 'default',
               },
             ]}
           />
         </ConfigProvider>,
       );
-      await userEvent.click(screen.getByText('__action__'));
-      expect(action).not.toHaveBeenCalled();
-      expect(onClose).not.toHaveBeenCalled();
-      act(jest.runAllTimers);
+      await userEvent.click(result.getByTestId('__action__'));
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
       expect(action).toHaveBeenCalledTimes(1);
       expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
 
   it('passes data-testid to actions', async () => {
-    render(
+    const result = render(
       <Alert
         onClose={jest.fn()}
         actions={[
@@ -106,7 +123,9 @@ describe('Alert', () => {
         ]}
       />,
     );
-    act(jest.runAllTimers);
+    await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+      runOnlyPendingTimers: true,
+    });
     expect(screen.getByTestId('allow-test-id')).toHaveTextContent('Allow');
     expect(screen.getByTestId('deny-test-id')).toHaveTextContent('Deny');
   });

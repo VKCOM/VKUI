@@ -1,4 +1,6 @@
 .Alert {
+  --vkui_internal--alert_animation_scale_initial: 0.95;
+
   user-select: none;
   color: var(--vkui--color_text_primary);
   position: relative;
@@ -8,18 +10,21 @@
   margin-inline: 24px;
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius_paper--regular);
-  animation: animation-android-alert-intro 0.2s var(--vkui--animation_easing_platform);
 }
 
 .Alert--desktop {
   inline-size: 100%;
 }
 
+.Alert--opening {
+  /* prettier-ignore */
+  animation: animation-alert-scale-up var(--vkui--animation_duration_m) var(--vkui--animation_easing_platform);
+}
+
 .Alert--closing {
-  transform: scale(0.95);
   opacity: 0;
-  transition: transform 0.2s var(--vkui--animation_easing_platform),
-    opacity 0.2s var(--vkui--animation_easing_platform);
+  /* prettier-ignore */
+  animation: animation-alert-scale-down var(--vkui--animation_duration_m) var(--vkui--animation_easing_platform);
 }
 
 .Alert::before {
@@ -102,17 +107,16 @@
  * iOS version
  */
 .Alert--ios {
+  --vkui_internal--alert_animation_scale_initial: 1.05;
+
   inline-size: 270px;
   min-inline-size: 270px;
   overflow: hidden;
-  animation: animation-ios-alert-intro 0.3s var(--vkui--animation_easing_platform);
   box-shadow: none;
 }
 
 .Alert--ios.Alert--closing {
-  transform: none;
-  opacity: 0;
-  transition: opacity 0.3s var(--vkui--animation_easing_platform);
+  --vkui_internal--alert_animation_scale_initial: 1;
 }
 
 .Alert--ios .Alert__content {
@@ -252,7 +256,9 @@
  */
 
 .Alert--vkcom {
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 0 96px rgba(0, 0, 0, 0.16);
+  box-shadow:
+    0 0 2px rgba(0, 0, 0, 0.12),
+    0 0 96px rgba(0, 0, 0, 0.16);
   inline-size: 400px;
 }
 
@@ -280,13 +286,17 @@
   inset-inline-end: 8px;
 }
 
-/**
- * Animations
- */
-@keyframes animation-ios-alert-intro {
+@media (--reduce-motion) {
+  .Alert,
+  .Alert--ios {
+    --vkui_internal--alert_animation_scale_initial: 1;
+  }
+}
+
+@keyframes animation-alert-scale-up {
   from {
     opacity: 0;
-    transform: scale(1.05);
+    transform: scale(var(--vkui_internal--alert_animation_scale_initial));
   }
 
   to {
@@ -294,14 +304,14 @@
     transform: scale(1);
   }
 }
-@keyframes animation-android-alert-intro {
+@keyframes animation-alert-scale-down {
   from {
-    opacity: 0;
-    transform: scale(0.95);
+    opacity: 1;
+    transform: scale(1);
   }
 
   to {
-    opacity: 1;
-    transform: scale(1);
+    opacity: 0;
+    transform: scale(var(--vkui_internal--alert_animation_scale_initial));
   }
 }

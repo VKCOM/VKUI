@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { act } from 'react';
 import { render, screen } from '@testing-library/react';
-import { baselineComponent, mountTest, userEvent } from '../../testing/utils';
+import { baselineComponent, mountTest, userEvent, waitCSSTransitionEnd } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
 import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalRootTouch } from './ModalRoot';
@@ -47,35 +47,53 @@ describe.each([
     )));
 
   describe('shows active modal', () => {
-    const modals = [<ModalPage id="m" key="m" />, <ModalPage id="other" key="o" />];
+    const modals = [
+      <ModalPage id="m" data-testid="m" key="m" />,
+      <ModalPage id="other" data-testid="other" key="o" />,
+    ];
     it('on mount', () => {
-      render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
-      expect(document.getElementById('m')).not.toBeNull();
-      expect(document.getElementById('other')).toBeNull();
+      const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
+      expect(h.queryByTestId('m')).not.toBeNull();
+      expect(h.queryByTestId('other')).toBeNull();
     });
     it('shows via prop update', () => {
       const h = render(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
       act(jest.runAllTimers);
       h.rerender(<ModalRoot activeModal="m">{modals}</ModalRoot>);
       act(jest.runAllTimers);
-      expect(document.getElementById('m')).not.toBeNull();
-      expect(document.getElementById('other')).toBeNull();
+      expect(h.queryByTestId('m')).not.toBeNull();
+      expect(h.queryByTestId('other')).toBeNull();
     });
-    it('hides via prop update', () => {
+    it('hides via prop update', async () => {
       const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
       act(jest.runAllTimers);
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(h.getByTestId('m')));
+      expect(h.queryByTestId('m')).not.toBeNull();
+      expect(h.queryByTestId('other')).toBeNull();
+
       h.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
       act(jest.runAllTimers);
-      expect(document.getElementById('m')).toBeNull();
-      expect(document.getElementById('other')).toBeNull();
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(h.getByTestId('m')));
+      expect(h.queryByTestId('m')).toBeNull();
+      expect(h.queryByTestId('other')).toBeNull();
     });
-    it('changes via prop update', () => {
+    it('changes via prop update', async () => {
       const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
       act(jest.runAllTimers);
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(h.getByTestId('m')));
+      expect(h.queryByTestId('m')).not.toBeNull();
+      expect(h.queryByTestId('other')).toBeNull();
+
       h.rerender(<ModalRoot activeModal="other">{modals}</ModalRoot>);
       act(jest.runAllTimers);
-      expect(document.getElementById('m')).toBeNull();
-      expect(document.getElementById('other')).not.toBeNull();
+      if (
+        name === 'ModalRootTouch' /* note: 'ModalRootDesktop' смена `activeModal` без анимаций */
+      ) {
+        await waitCSSTransitionEnd(getFirstHTMLElementChild(h.getByTestId('m')));
+      }
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(h.getByTestId('other')));
+      expect(h.queryByTestId('m')).toBeNull();
+      expect(h.queryByTestId('other')).not.toBeNull();
     });
   });
 
@@ -161,8 +179,8 @@ describe.each([
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('disables native pull-to-refresh when modal is open', () => {
-    const modals = [<ModalPage id="m" key="m" />, <ModalPage id="other" key="o" />];
+  it('disables native pull-to-refresh when modal is open', async () => {
+    const modals = [<ModalPage id="m" data-testid="m" key="m" />, <ModalPage id="other" key="o" />];
 
     const component = render(<ModalRoot activeModal={null}>{modals}</ModalRoot>, {
       baseElement: document.documentElement,
@@ -173,6 +191,7 @@ describe.each([
 
     component.rerender(<ModalRoot activeModal="m">{modals}</ModalRoot>);
     act(jest.runAllTimers);
+    await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('m')));
 
     if (name === 'ModalRootTouch') {
       expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
@@ -182,6 +201,7 @@ describe.each([
 
     component.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
     act(jest.runAllTimers);
+    await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('m')));
 
     expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
   });
@@ -209,24 +229,31 @@ describe.each([
       modalPageWithInputRef = React.createRef<HTMLDivElement>();
       inputInnerModalPageRef = React.createRef<HTMLInputElement>();
       modals = [
-        <ModalPage id="modal-page" key="1" getRootRef={modalPageRef} />,
-        <ModalCard id="modal-card" key="2" getRootRef={modalCardRef} />,
-        <ModalPage id="modal-page-with-input" key="3" getRootRef={modalPageWithInputRef}>
+        <ModalPage id="modal-page" data-testid="modal-page" key="1" getRootRef={modalPageRef} />,
+        <ModalCard id="modal-card" data-testid="modal-card" key="2" getRootRef={modalCardRef} />,
+        <ModalPage
+          id="modal-page-with-input"
+          data-testid="modal-page-with-input"
+          key="3"
+          getRootRef={modalPageWithInputRef}
+        >
           <input ref={inputInnerModalPageRef} autoFocus />
         </ModalPage>,
       ];
     });
 
-    it('should focus on modal container if controllable element does not exist or is not focused', () => {
+    it('should focus on modal container if controllable element does not exist or is not focused', async () => {
       const component = render(<ModalRoot activeModal="modal-page">{modals}</ModalRoot>, {
         baseElement: document.documentElement,
       });
       act(jest.runAllTimers);
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('modal-page')));
 
       expect(modalPageRef.current).toHaveFocus();
 
       component.rerender(<ModalRoot activeModal="modal-card">{modals}</ModalRoot>);
       act(jest.runAllTimers);
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('modal-card')));
 
       expect(modalCardRef.current).toHaveFocus();
     });
@@ -266,3 +293,7 @@ describe.each([
     });
   });
 });
+
+function getFirstHTMLElementChild(el: HTMLElement | null) {
+  return el && el.firstElementChild instanceof HTMLElement ? el.firstElementChild : null;
+}

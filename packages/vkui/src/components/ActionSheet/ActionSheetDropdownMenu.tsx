@@ -26,6 +26,8 @@ export const ActionSheetDropdownMenu = ({
   style,
   popupOffsetDistance = 0,
   placement,
+  onAnimationStart,
+  onAnimationEnd,
   ...restProps
 }: SharedDropdownProps) => {
   const { document } = useDOM();
@@ -72,12 +74,15 @@ export const ActionSheetDropdownMenu = ({
         styles['ActionSheet'],
         platform === 'ios' && styles['ActionSheet--ios'],
         styles['ActionSheet--menu'],
+        closing ? styles['ActionSheet--closing'] : styles['ActionSheet--opening'],
         sizeY === 'compact' && styles['ActionSheet--sizeY-compact'],
         className,
       )}
       style={style}
       getRootRef={elementRef}
       usePortal={false}
+      onAnimationStart={onAnimationStart}
+      onAnimationEnd={onAnimationEnd}
     >
       <FocusTrap onClose={onClose} {...restProps} onClick={onClick}>
         {children}

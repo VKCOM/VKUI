@@ -16,6 +16,7 @@ import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
 import { Input } from '../Input/Input';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
+import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
@@ -31,7 +32,7 @@ export default story;
 
 type Story = StoryObj<ViewProps>;
 
-const MainPanelContent = ({ onProfileClick }: { onProfileClick: () => void }) => {
+const MainPanelContent = ({ onProfileClick }: { onProfileClick: VoidFunction }) => {
   return (
     <React.Fragment>
       <PanelHeader>Main</PanelHeader>
@@ -42,10 +43,16 @@ const MainPanelContent = ({ onProfileClick }: { onProfileClick: () => void }) =>
   );
 };
 
-const ProfilePanelContent = ({ onSettingsClick }: { onSettingsClick: () => void }) => {
+const ProfilePanelContent = ({
+  onSettingsClick,
+  onBack,
+}: {
+  onSettingsClick: VoidFunction;
+  onBack: VoidFunction;
+}) => {
   return (
     <React.Fragment>
-      <PanelHeader>Профиль</PanelHeader>
+      <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Профиль</PanelHeader>
       <Group>
         <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
         <Div style={{ height: 50, background: '#eee' }} data-vkui-swipe-back={false}>
@@ -86,9 +93,11 @@ const ProfilePanelContent = ({ onSettingsClick }: { onSettingsClick: () => void 
 const SettingsPanelContent = ({
   name,
   onChangeName,
+  onBack,
 }: {
   name: string;
   onChangeName: (val: string) => void;
+  onBack: VoidFunction;
 }) => {
   const handleNameChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (event) => {
@@ -99,7 +108,7 @@ const SettingsPanelContent = ({
 
   return (
     <React.Fragment>
-      <PanelHeader>Настройки</PanelHeader>
+      <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Настройки</PanelHeader>
       <Group>
         <Placeholder>Пример с блокированием свайпбека пока не будет выполнено условие</Placeholder>
         <FormItem htmlFor="name" top="Имя">
@@ -129,27 +138,38 @@ export const SwipeBlockExample: Story = {
     const [popoutWithRestriction, setPopoutWithRestriction] =
       React.useState<React.ReactNode | null>(null);
 
+    const validateUserName = React.useCallback(() => {
+      if (userName !== '') {
+        return true;
+      }
+
+      setPopoutWithRestriction(
+        <Alert
+          header="Поле Имя не заполнено"
+          text="Пожалуйста, заполните его."
+          onClose={() => setPopoutWithRestriction(null)}
+        />,
+      );
+
+      return false;
+    }, [userName]);
+
     const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
       (activePanel: string | null) => {
         if (activePanel === 'settings') {
-          if (userName !== '') {
-            return;
-          }
-
-          setPopoutWithRestriction(
-            <Alert
-              header="Поле Имя не заполнено"
-              text="Пожалуйста, заполните его."
-              onClose={() => setPopoutWithRestriction(null)}
-            />,
-          );
-
-          return 'prevent';
+          const isValid = validateUserName();
+          return isValid ? undefined : 'prevent';
         }
         return;
       },
-      [userName],
+      [validateUserName],
     );
+
+    const handleBackForPreventIfNeeded = React.useCallback(() => {
+      if (validateUserName()) {
+        goBack();
+      }
+    }, [validateUserName, goBack]);
 
     return (
       <ConfigProviderOverride platform="ios" isWebView>
@@ -165,10 +185,14 @@ export const SwipeBlockExample: Story = {
                 <MainPanelContent onProfileClick={handleProfileClick} />
               </Panel>
               <Panel id="profile">
-                <ProfilePanelContent onSettingsClick={handleSettingsClick} />
+                <ProfilePanelContent onSettingsClick={handleSettingsClick} onBack={goBack} />
               </Panel>
               <Panel id="settings">
-                <SettingsPanelContent name={userName} onChangeName={setUserName} />
+                <SettingsPanelContent
+                  name={userName}
+                  onChangeName={setUserName}
+                  onBack={handleBackForPreventIfNeeded}
+                />
               </Panel>
             </View>
           </SplitCol>

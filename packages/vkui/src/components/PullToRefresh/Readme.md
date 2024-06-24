@@ -19,10 +19,13 @@ const Example = () => {
   const onRefresh = React.useCallback(() => {
     setFetching(true);
 
-    setTimeout(() => {
-      setFetching(false);
-      setUsers((prevUsers) => [getRandomUser(), ...prevUsers]);
-    }, getRandomInt(600, 2000));
+    setTimeout(
+      () => {
+        setFetching(false);
+        setUsers((prevUsers) => [getRandomUser(), ...prevUsers]);
+      },
+      getRandomInt(600, 2000),
+    );
   }, []);
 
   return (

@@ -8,8 +8,10 @@ module.exports = {
     'stylelint-media-use-custom-media',
     'stylelint-value-no-unknown-custom-properties',
     'stylelint-use-logical',
+    'stylelint-prettier',
   ],
   rules: {
+    'prettier/prettier': true,
     'block-no-empty': null,
     'declaration-block-no-redundant-longhand-properties': null,
     'comment-empty-line-before': null,

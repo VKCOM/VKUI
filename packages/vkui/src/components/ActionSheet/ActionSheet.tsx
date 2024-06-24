@@ -3,7 +3,7 @@ import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useTimeout } from '../../hooks/useTimeout';
+import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -48,38 +48,29 @@ export const ActionSheet = ({
   popupOffsetDistance,
   placement,
   mode: modeProp,
+  onClose,
   ...restProps
 }: ActionSheetProps) => {
   const platform = usePlatform();
   const [closingBy, setClosingBy] = React.useState<undefined | CloseInitiators>(undefined);
-  const onClose = () => setClosingBy('other');
-  const _action = React.useRef(noop);
+  const onCloseWithOther = () => setClosingBy('other');
+  const actionCallbackRef = React.useRef(noop);
 
-  const afterClose = () => {
-    restProps.onClose({ closedBy: closingBy || 'other' });
-    _action.current();
-    _action.current = noop;
-  };
+  const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
+    closingBy !== undefined ? 'exit' : 'enter',
+    {
+      onExited() {
+        onClose({ closedBy: closingBy || 'other' });
+        actionCallbackRef.current();
+        actionCallbackRef.current = noop;
+      },
+    },
+  );
 
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const mode = modeProp ?? (isDesktop ? 'menu' : 'sheet');
 
   useScrollLock(mode === 'sheet');
-
-  let timeout = platform === 'ios' ? 300 : 200;
-
-  if (mode === 'menu') {
-    timeout = 0;
-  }
-
-  const fallbackTransitionFinish = useTimeout(afterClose, timeout);
-  React.useEffect(() => {
-    if (closingBy) {
-      fallbackTransitionFinish.set();
-    } else {
-      fallbackTransitionFinish.clear();
-    }
-  }, [closingBy, fallbackTransitionFinish]);
 
   const onItemClick = React.useCallback<ItemClickHandler>(
     ({ action, immediateAction, autoClose, isCancelItem }) =>
@@ -87,7 +78,9 @@ export const ActionSheet = ({
         event.persist();
         immediateAction && immediateAction(event);
         if (autoClose) {
-          _action.current = () => action && action(event);
+          if (action) {
+            actionCallbackRef.current = () => action(event);
+          }
           setClosingBy(isCancelItem ? 'cancel-item' : 'action-item');
         } else {
           action && action(event);
@@ -106,11 +99,12 @@ export const ActionSheet = ({
     <ActionSheetContext.Provider value={contextValue}>
       <DropdownComponent
         closing={Boolean(closingBy)}
-        timeout={timeout}
         role="dialog"
         aria-modal="true"
+        autoFocus={animationState === 'entered'}
         {...dropdownProps}
-        onClose={onClose}
+        {...animationHandlers}
+        onClose={onCloseWithOther}
         className={mode === 'menu' ? className : undefined}
         style={mode === 'menu' ? style : undefined}
       >
@@ -146,7 +140,7 @@ export const ActionSheet = ({
       alignY="bottom"
       className={className}
       style={style}
-      onClick={onClose}
+      onClick={onCloseWithOther}
       fixed
     >
       {actionSheet}

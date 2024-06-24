@@ -151,8 +151,8 @@ export const getNearestOverflowAncestor = (childEl: Node): HTMLElement | Window 
   return isBody(foundAncestor)
     ? getWindow(foundAncestor)
     : isHTMLElement(childEl)
-    ? foundAncestor
-    : null;
+      ? foundAncestor
+      : null;
 };
 
 export const getScrollHeight = (node: Element | Window) => {

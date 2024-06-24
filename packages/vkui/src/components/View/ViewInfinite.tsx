@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { animationEvent, transitionEvent } from '../../lib/supportEvents';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasPlatform, HTMLAttributesWithRootRef } from '../../types';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
@@ -127,7 +126,7 @@ class ViewInfiniteComponent extends React.Component<
   private swipeBackPrevented = false;
   private scrolls = scrollsCache[getNavId(this.props, warn) as string] || {};
   private transitionFinishTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
-  private animationFinishTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
+  private readonly animationFinishTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
 
   get document() {
     return this.props.document;
@@ -194,17 +193,6 @@ class ViewInfiniteComponent extends React.Component<
           animated: true,
           isBack,
         });
-
-        // Фолбек анимации перехода
-        if (!animationEvent.supported) {
-          if (this.animationFinishTimeout) {
-            clearTimeout(this.animationFinishTimeout);
-          }
-          this.animationFinishTimeout = setTimeout(
-            this.transitionEndHandler,
-            this.props.platform === 'android' || this.props.platform === 'vkcom' ? 300 : 600,
-          );
-        }
       }
     }
 
@@ -296,24 +284,30 @@ class ViewInfiniteComponent extends React.Component<
     );
   }
 
+  private transitionDisposer = noop;
+
+  private disposeTransition() {
+    this.transitionDisposer();
+    this.transitionDisposer = noop;
+  }
+
   waitTransitionFinish(
     elem: HTMLElement | null | undefined,
     eventHandler: TransitionEventHandler,
   ): void {
-    if (transitionEvent.supported && transitionEvent.name && elem) {
-      elem.removeEventListener(
-        transitionEvent.name as keyof HTMLElementEventMap,
-        eventHandler as EventListener,
-      );
-      elem.addEventListener(
-        transitionEvent.name as keyof HTMLElementEventMap,
-        eventHandler as EventListener,
-      );
+    if (this.shouldDisableTransitionMotion()) {
+      this.disposeTransition();
+      this.transitionFinishTimeout = setTimeout(eventHandler);
+    } else if (elem) {
+      this.disposeTransition();
+      elem.addEventListener('transitionend', eventHandler);
+      this.transitionDisposer = () => {
+        elem.removeEventListener('transitionend', eventHandler);
+      };
     } else {
       if (this.transitionFinishTimeout) {
         clearTimeout(this.transitionFinishTimeout);
       }
-
       this.transitionFinishTimeout = setTimeout(
         eventHandler,
         this.props.platform === 'android' || this.props.platform === 'vkcom' ? 300 : 600,
@@ -365,17 +359,8 @@ class ViewInfiniteComponent extends React.Component<
     );
   }
 
-  transitionEndHandler = (e?: React.AnimationEvent): void => {
-    if (
-      (!e ||
-        [
-          styles['animation-ios-next-forward'],
-          styles['animation-ios-prev-back'],
-          styles['animation-view-next-forward'],
-          styles['animation-view-prev-back'],
-        ].includes(e.animationName)) &&
-      this.state.prevPanel !== null
-    ) {
+  transitionEndHandler = (): void => {
+    if (this.state.prevPanel !== null) {
       this.flushTransition(this.state.prevPanel, Boolean(this.state.isBack));
     }
   };
@@ -628,8 +613,8 @@ class ViewInfiniteComponent extends React.Component<
             iOSSwipeBackSimulationEnabled
               ? this.handleTouchMoveXForIOSSwipeBackSimulation
               : platform === 'ios'
-              ? this.handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
-              : undefined
+                ? this.handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
+                : undefined
           }
           onEnd={
             iOSSwipeBackSimulationEnabled ? this.handleTouchEndForIOSSwipeBackSimulation : undefined

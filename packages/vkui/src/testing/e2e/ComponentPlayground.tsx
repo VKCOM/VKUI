@@ -48,8 +48,8 @@ export const ComponentPlayground = <
   const wrapperWidth = adaptivityProviderProps.viewWidth
     ? getAdaptivePxWidth(adaptivityProviderProps.viewWidth)
     : isVKCOM
-    ? 'auto'
-    : BREAKPOINTS.MOBILE;
+      ? 'auto'
+      : BREAKPOINTS.MOBILE;
 
   return (
     <ConfigProvider appearance={appearance} platform={platform}>

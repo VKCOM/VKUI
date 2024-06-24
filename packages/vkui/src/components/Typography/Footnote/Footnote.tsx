@@ -14,11 +14,13 @@ export const Footnote = ({
   caps,
   Component = 'span',
   normalize = true,
+  inline = false,
   ...restProps
 }: FootnoteProps) => (
   <Typography
     Component={Component}
     normalize={normalize}
+    inline={inline}
     className={classNames(className, styles['Footnote'], caps && styles['Footnote--caps'])}
     {...restProps}
   />

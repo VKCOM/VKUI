@@ -5,7 +5,6 @@ import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
-import { useReducedMotion } from '../../lib/animation/useReducedMotion';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
 import { UIPanGestureRecognizer } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -37,7 +36,7 @@ const animationStateClassNames = {
   entered: styles['Snackbar--state-entered'],
   exit: styles['Snackbar--state-exit'],
   exiting: styles['Snackbar--state-exiting'],
-  exited: styles['Snackbar--state-exited'],
+  exited: undefined,
 };
 
 export interface SnackbarProps
@@ -90,7 +89,6 @@ export const Snackbar = ({
   getRootRef,
   ...restProps
 }: SnackbarProps) => {
-  const isReducedMotion = useReducedMotion();
   const platform = usePlatform();
 
   const [open, setOpen] = React.useState(true);
@@ -222,6 +220,10 @@ export const Snackbar = ({
 
   useGlobalEscKeyDown(open, close);
 
+  if (animationState === 'exited') {
+    return null;
+  }
+
   return (
     <RootComponent
       {...restProps}
@@ -241,14 +243,14 @@ export const Snackbar = ({
         className={styles['Snackbar__in']}
         ref={inRef}
         // mobile
-        onTouchStart={isReducedMotion ? undefined : handleTouchStart}
-        onTouchMove={isReducedMotion ? undefined : handleTouchMove}
-        onTouchEnd={isReducedMotion ? undefined : handleTouchEnd}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         // desktop
-        onMouseDown={isReducedMotion ? undefined : handleTouchStart}
-        onMouseMove={isReducedMotion ? undefined : handleTouchMove}
-        onMouseUp={isReducedMotion ? undefined : handleTouchEnd}
-        onMouseLeave={isReducedMotion ? undefined : handleTouchEnd}
+        onMouseDown={handleTouchStart}
+        onMouseMove={handleTouchMove}
+        onMouseUp={handleTouchEnd}
+        onMouseLeave={handleTouchEnd}
         {...animationHandlers}
       >
         <Basic
