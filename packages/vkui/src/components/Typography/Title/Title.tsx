@@ -22,12 +22,14 @@ export const Title = ({
   level = '1',
   Component = 'span',
   normalize = true,
+  inline = false,
   ...restProps
 }: TitleProps) => {
   return (
     <Typography
       Component={Component}
       normalize={normalize}
+      inline={inline}
       className={classNames(className, stylesLevel[level])}
       {...restProps}
     />
