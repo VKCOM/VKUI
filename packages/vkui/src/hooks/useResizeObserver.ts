@@ -8,7 +8,7 @@ import { useStableCallback } from './useStableCallback';
  */
 export function useResizeObserver(
   ref: React.MutableRefObject<HTMLElement | null>,
-  callback: (rect: DOMRect) => void,
+  callback: () => void,
 ) {
   const stableCallback = useStableCallback(callback);
 
@@ -18,9 +18,7 @@ export function useResizeObserver(
         return;
       }
       const element = ref.current;
-      const observer = new CustomResizeObserver(() => {
-        stableCallback(element.getBoundingClientRect());
-      });
+      const observer = new CustomResizeObserver(stableCallback);
       observer.observe(element);
       observer.appendToTheDOM();
 
