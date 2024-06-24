@@ -193,6 +193,7 @@ describe(FocusTrap, () => {
       await userEvent.tab();
       expect(result.getByTestId('middle')).toHaveFocus();
 
+      // remove last
       await act(async () => {
         result.rerender(<Template childIds={['first', 'middle']} />);
       });
