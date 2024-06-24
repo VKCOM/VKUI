@@ -226,6 +226,12 @@ const DatePickerNative = ({
 
 /**
  * @see https://vkcom.github.io/VKUI/#/DatePicker
+ *
+ * @deprecated 6.2.0
+ *
+ * Компонент устарел и будет удален в v7. Используйте вместо него компоненты
+ * [Input](https://vkcom.github.io/VKUI/#/Input) и
+ * [Select](https://vkcom.github.io/VKUI/#/Select).
  */
 export const DatePicker = ({ onDateChange, ...props }: DatePickerProps) => {
   const hasPointer = useAdaptivityHasPointer();
