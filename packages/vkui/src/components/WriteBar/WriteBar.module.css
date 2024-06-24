@@ -1,5 +1,5 @@
 .WriteBar {
-  background: var(--vkui--color_background_modal);
+  background: var(--vkui--color_background_contrast_themed);
 }
 
 .WriteBar--shadow {

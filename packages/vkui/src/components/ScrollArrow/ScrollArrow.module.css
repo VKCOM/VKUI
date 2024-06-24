@@ -24,7 +24,7 @@
 
 .ScrollArrow__icon {
   position: relative;
-  background-color: var(--vkui--color_background_modal);
+  background-color: var(--vkui--color_background_contrast_themed);
   color: var(--vkui--color_icon_secondary);
   box-shadow: var(--vkui--elevation3);
   display: flex;
