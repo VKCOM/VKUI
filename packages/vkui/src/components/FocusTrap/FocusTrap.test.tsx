@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { act } from 'react';
+import { act, Fragment, useRef, useState } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
@@ -12,6 +11,8 @@ import { ActionSheet, ActionSheetProps } from '../ActionSheet/ActionSheet';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
+import { AppRootContext, DEFAULT_APP_ROOT_CONTEXT_VALUE } from '../AppRoot/AppRootContext';
+import { Button } from '../Button/Button';
 import { CellButton } from '../CellButton/CellButton';
 import { Panel } from '../Panel/Panel';
 import { SplitCol } from '../SplitCol/SplitCol';
@@ -30,8 +31,8 @@ const ActionSheetTest = ({
   onClose: onCloseProp,
   ...props
 }: Partial<ActionSheetProps> & Partial<FocusTrapProps>) => {
-  const toggleRef = React.useRef(null);
-  const [actionSheet, toggleActionSheet] = React.useState<any>(null);
+  const toggleRef = useRef(null);
+  const [actionSheet, toggleActionSheet] = useState<any>(null);
 
   const handleClose = () => {
     if (onCloseProp) {
@@ -93,7 +94,7 @@ describe(FocusTrap, () => {
   it('renders with no focusable elements', async () => {
     render(
       <ActionSheetTest>
-        <React.Fragment>NOPE</React.Fragment>
+        <Fragment>NOPE</Fragment>
       </ActionSheetTest>,
     );
     await mountActionSheetViaClick();
@@ -169,6 +170,82 @@ describe(FocusTrap, () => {
       // forward
       await userEvent.tab();
       expect(screen.getByTestId('first')).toHaveFocus();
+    });
+
+    it('manages navigation inside trap on TAB with remove last child when navigate', async () => {
+      const Template = (props: { childIds: string[] }) => {
+        return (
+          <AppRootContext.Provider
+            value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput: true }}
+          >
+            <FocusTrap>
+              <div>
+                {props.childIds.map((childId) => (
+                  <Button key={childId} data-testid={childId}>
+                    Кнопка {childId}
+                  </Button>
+                ))}
+              </div>
+            </FocusTrap>
+          </AppRootContext.Provider>
+        );
+      };
+
+      const result = render(<Template childIds={['first', 'middle', 'last']} />);
+
+      // forward to middle
+      await userEvent.tab();
+      expect(result.getByTestId('middle')).toHaveFocus();
+
+      // remove last
+      await act(async () => {
+        result.rerender(<Template childIds={['first', 'middle']} />);
+      });
+
+      // check focus in middle yet
+      expect(result.getByTestId('middle')).toHaveFocus();
+
+      // forward to first
+      await userEvent.tab();
+      expect(result.getByTestId('first')).toHaveFocus();
+    });
+
+    it('manages navigation inside trap on TAB with remove middle child when focus on middle', async () => {
+      const Template = (props: { childIds: string[] }) => {
+        return (
+          <AppRootContext.Provider
+            value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput: true }}
+          >
+            <FocusTrap>
+              <div>
+                {props.childIds.map((childId) => (
+                  <Button key={childId} data-testid={childId}>
+                    Кнопка {childId}
+                  </Button>
+                ))}
+              </div>
+            </FocusTrap>
+          </AppRootContext.Provider>
+        );
+      };
+
+      const result = render(<Template childIds={['first', 'middle', 'last']} />);
+
+      // forward to middle
+      await userEvent.tab();
+      expect(result.getByTestId('middle')).toHaveFocus();
+
+      // remove middle
+      await act(async () => {
+        result.rerender(<Template childIds={['first', 'last']} />);
+      });
+
+      // reset focus to first
+      expect(result.getByTestId('first')).toHaveFocus();
+
+      // forward to last
+      await userEvent.tab();
+      expect(result.getByTestId('last')).toHaveFocus();
     });
   });
 });
