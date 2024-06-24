@@ -29,7 +29,7 @@
 .-focus-visible.-focus-visible--focused.-focus-visible--mode-outside {
   outline: var(--vkui_internal--outline);
   outline-offset: var(--vkui_internal--outline_offset_to);
-  animation: animation-outline-offset 2s ease-in-out 0.01s forwards;
+  animation: animation-outline-offset 0.1s ease-in-out 0.01s forwards;
 }
 
 @media (--reduce-motion) {
