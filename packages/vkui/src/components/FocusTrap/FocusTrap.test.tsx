@@ -12,6 +12,7 @@ import { ActionSheet, ActionSheetProps } from '../ActionSheet/ActionSheet';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
+import { Button } from '../Button/Button';
 import { CellButton } from '../CellButton/CellButton';
 import { Panel } from '../Panel/Panel';
 import { SplitCol } from '../SplitCol/SplitCol';
@@ -172,15 +173,29 @@ describe(FocusTrap, () => {
     });
 
     it('manages navigation inside trap on TAB with remove last child when navigate', async () => {
-      const result = render(<ActionSheetTest />);
-      await mountViaKeyboard();
+      const Template = (props: { childIds: string[] }) => {
+        return (
+          <FocusTrap>
+            <div>
+              {props.childIds.map((childId) => (
+                <Button key={childId} data-testid={childId}>
+                  Кнопка {childId}
+                </Button>
+              ))}
+            </div>
+          </FocusTrap>
+        );
+      };
+
+      const result = render(<Template childIds={['first', 'middle', 'last']} />);
 
       // forward to middle
       await userEvent.tab();
       expect(result.getByTestId('middle')).toHaveFocus();
 
-      // remove last
-      await waitFor(() => result.getByTestId('last').remove());
+      await act(async () => {
+        result.rerender(<Template childIds={['first', 'middle']} />);
+      });
 
       // check focus in middle yet
       expect(result.getByTestId('middle')).toHaveFocus();
@@ -191,15 +206,30 @@ describe(FocusTrap, () => {
     });
 
     it('manages navigation inside trap on TAB with remove middle child when focus on middle', async () => {
-      const result = render(<ActionSheetTest />);
-      await mountViaKeyboard();
+      const Template = (props: { childIds: string[] }) => {
+        return (
+          <FocusTrap>
+            <div>
+              {props.childIds.map((childId) => (
+                <Button key={childId} data-testid={childId}>
+                  Кнопка {childId}
+                </Button>
+              ))}
+            </div>
+          </FocusTrap>
+        );
+      };
+
+      const result = render(<Template childIds={['first', 'middle', 'last']} />);
 
       // forward to middle
       await userEvent.tab();
       expect(result.getByTestId('middle')).toHaveFocus();
 
       // remove middle
-      await waitFor(() => result.getByTestId('middle').remove());
+      await act(async () => {
+        result.rerender(<Template childIds={['first', 'last']} />);
+      });
 
       // reset focus to first
       expect(result.getByTestId('first')).toHaveFocus();
