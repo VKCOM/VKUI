@@ -5335,7 +5335,7 @@ __metadata:
     autoprefixer: ^10.4.19
     concurrently: ^8.2.2
     cross-env: ^7.0.3
-    css-loader: ^6.10.0
+    css-loader: ^7.1.2
     css-minimizer-webpack-plugin: ^7.0.0
     cssnano: ^7.0.2
     dotenv: ^16.4.5
@@ -5373,7 +5373,7 @@ __metadata:
     semver: ^7.6.2
     shx: ^0.3.4
     size-limit: ^11.1.4
-    style-loader: ^3.3.4
+    style-loader: ^4.0.0
     stylelint: ^16.6.1
     stylelint-config-standard: ^36.0.0
     stylelint-media-use-custom-media: ^4.0.0
@@ -5386,7 +5386,7 @@ __metadata:
     ts-node: ^10.9.2
     typescript: ^5.4.5
     typescript-plugin-css-modules: ^5.1.0
-    webpack: ^5.91.0
+    webpack: ^5.92.1
     webpack-cli: ^5.1.4
     webpack-merge: ^5.10.0
     yargs: ^17.7.2
@@ -5727,6 +5727,15 @@ __metadata:
   peerDependencies:
     acorn: ^8
   checksum: 944fb2659d0845c467066bdcda2e20c05abe3aaf11972116df457ce2627628a81764d800dd55031ba19de513ee0d43bb771bc679cc0eda66dc8b4fade143bc0c
+  languageName: node
+  linkType: hard
+
+"acorn-import-attributes@npm:^1.9.5":
+  version: 1.9.5
+  resolution: "acorn-import-attributes@npm:1.9.5"
+  peerDependencies:
+    acorn: ^8
+  checksum: 1c0c49b6a244503964ae46ae850baccf306e84caf99bc2010ed6103c69a423987b07b520a6c619f075d215388bd4923eccac995886a54309eda049ab78a4be95
   languageName: node
   linkType: hard
 
@@ -7552,7 +7561,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^6.10.0, css-loader@npm:^6.7.1":
+"css-loader@npm:^6.7.1":
   version: 6.10.0
   resolution: "css-loader@npm:6.10.0"
   dependencies:
@@ -7597,6 +7606,30 @@ __metadata:
     webpack:
       optional: true
   checksum: 586e8d2d38c1456355cde973bebae7ba9dbe46640a485cae75e5d867f87b9171284245f8951e635ae82466b614ca19a4951966ab48743cdfa161321d79aa677c
+  languageName: node
+  linkType: hard
+
+"css-loader@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "css-loader@npm:7.1.2"
+  dependencies:
+    icss-utils: ^5.1.0
+    postcss: ^8.4.33
+    postcss-modules-extract-imports: ^3.1.0
+    postcss-modules-local-by-default: ^4.0.5
+    postcss-modules-scope: ^3.2.0
+    postcss-modules-values: ^4.0.0
+    postcss-value-parser: ^4.2.0
+    semver: ^7.5.4
+  peerDependencies:
+    "@rspack/core": 0.x || 1.x
+    webpack: ^5.27.0
+  peerDependenciesMeta:
+    "@rspack/core":
+      optional: true
+    webpack:
+      optional: true
+  checksum: 15bfd90d778ddab90ee1d04c8c8bcc13ea6c0791d01b52b09d1b1c753b3410f7a7788a510d93726a9878e70b7c1a140f21efdf5c96e1857872107551d3897822
   languageName: node
   linkType: hard
 
@@ -8442,6 +8475,16 @@ __metadata:
     graceful-fs: ^4.2.4
     tapable: ^2.2.0
   checksum: ccfd01850ecf2aa51e8554d539973319ff7d8a539ef1e0ba3460a0ccad6223c4ef6e19165ee64161b459cd8a48df10f52af4434c60023c65fde6afa32d475f7e
+  languageName: node
+  linkType: hard
+
+"enhanced-resolve@npm:^5.17.0":
+  version: 5.17.0
+  resolution: "enhanced-resolve@npm:5.17.0"
+  dependencies:
+    graceful-fs: ^4.2.4
+    tapable: ^2.2.0
+  checksum: 1066000454da6a7aeabdbe1f433d912d1e39e6892142a78a37b6577aab27e0436091fa1399d857ad87085b1c3b73a0f811c8874da3dbdc40fbd5ebe89a5568e6
   languageName: node
   linkType: hard
 
@@ -17100,7 +17143,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"style-loader@npm:^3.3.1, style-loader@npm:^3.3.4":
+"style-loader@npm:^3.3.1":
   version: 3.3.4
   resolution: "style-loader@npm:3.3.4"
   peerDependencies:
@@ -18698,6 +18741,43 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: f1073715dbb1ed5c070affef293d800a867708bcbc5aba4d8baee87660e0cf53c55966a6f36fab078d1d6c9567cdcd0a9086bdfb607cab87ea68c6449791b9a3
+  languageName: node
+  linkType: hard
+
+"webpack@npm:^5.92.1":
+  version: 5.92.1
+  resolution: "webpack@npm:5.92.1"
+  dependencies:
+    "@types/eslint-scope": ^3.7.3
+    "@types/estree": ^1.0.5
+    "@webassemblyjs/ast": ^1.12.1
+    "@webassemblyjs/wasm-edit": ^1.12.1
+    "@webassemblyjs/wasm-parser": ^1.12.1
+    acorn: ^8.7.1
+    acorn-import-attributes: ^1.9.5
+    browserslist: ^4.21.10
+    chrome-trace-event: ^1.0.2
+    enhanced-resolve: ^5.17.0
+    es-module-lexer: ^1.2.1
+    eslint-scope: 5.1.1
+    events: ^3.2.0
+    glob-to-regexp: ^0.4.1
+    graceful-fs: ^4.2.11
+    json-parse-even-better-errors: ^2.3.1
+    loader-runner: ^4.2.0
+    mime-types: ^2.1.27
+    neo-async: ^2.6.2
+    schema-utils: ^3.2.0
+    tapable: ^2.1.1
+    terser-webpack-plugin: ^5.3.10
+    watchpack: ^2.4.1
+    webpack-sources: ^3.2.3
+  peerDependenciesMeta:
+    webpack-cli:
+      optional: true
+  bin:
+    webpack: bin/webpack.js
+  checksum: 11bec781260c4180883e98a4a15a08df297aca654ded45e70598f688881dd722f992d680addafe6f6342debede345cddcce2b781c50f5cde29d6c0bc33a82452
   languageName: node
   linkType: hard
 
