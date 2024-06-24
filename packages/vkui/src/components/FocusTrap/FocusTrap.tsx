@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { AllHTMLAttributes, useRef } from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
 import { FOCUSABLE_ELEMENTS_LIST, Keys, pressedKey } from '../../lib/accessibility';
 import {
@@ -6,13 +6,14 @@ import {
   getActiveElementByAnotherElement,
   getWindow,
   isHTMLElement,
+  useDOM,
 } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasComponent, HasRootRef } from '../../types';
 
 const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
 export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
-  extends React.AllHTMLAttributes<T>,
+  extends AllHTMLAttributes<T>,
     HasRootRef<T>,
     HasComponent {
   autoFocus?: boolean;
@@ -40,32 +41,65 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   ...restProps
 }: FocusTrapProps<T>) => {
   const ref = useExternRef<T>(getRootRef);
+  const { document } = useDOM();
 
-  const focusableNodesRef = React.useRef<HTMLElement[]>([]);
+  const focusableNodesRef = useRef<HTMLElement[]>([]);
+
+  const focusNodeByIndex = (nodeIndex: number) => {
+    const element = focusableNodesRef.current[nodeIndex];
+
+    if (element) {
+      element.focus();
+    }
+  };
+
+  const recalculateFocusableNodesRef = (parentNode: HTMLElement) => {
+    // eslint-disable-next-line no-restricted-properties
+    const newFocusableElements = parentNode.querySelectorAll<HTMLElement>(FOCUSABLE_ELEMENTS);
+
+    const nodes: HTMLElement[] = [];
+    newFocusableElements.forEach((focusableEl) => {
+      const { display, visibility } = getComputedStyle(focusableEl);
+      if (display !== 'none' && visibility !== 'hidden') {
+        nodes.push(focusableEl);
+      }
+    });
+
+    if (nodes.length === 0) {
+      // Чтобы фокус был хотя бы на родителе
+      nodes.push(parentNode);
+    }
+    focusableNodesRef.current = nodes;
+  };
+
+  const onMutateParentHandler = (parentNode: HTMLElement) => {
+    recalculateFocusableNodesRef(parentNode);
+
+    if (document) {
+      const activeElement = document.activeElement as HTMLElement;
+      const currentElementIndex = Math.max(
+        document.activeElement ? focusableNodesRef.current.indexOf(activeElement) : -1,
+        0,
+      );
+      focusNodeByIndex(currentElementIndex);
+    }
+  };
 
   useIsomorphicLayoutEffect(
     function collectFocusableNodesRef() {
       if (!ref.current) {
         return;
       }
-
-      const nodes: HTMLElement[] = [];
-      // eslint-disable-next-line no-restricted-properties
-      ref.current.querySelectorAll<HTMLElement>(FOCUSABLE_ELEMENTS).forEach((focusableEl) => {
-        const { display, visibility } = getComputedStyle(focusableEl);
-        if (display !== 'none' && visibility !== 'hidden') {
-          nodes.push(focusableEl);
-        }
+      const parentNode = ref.current;
+      const observer = new MutationObserver(() => onMutateParentHandler(parentNode));
+      observer.observe(ref.current, {
+        subtree: true,
+        childList: true,
       });
-
-      if (nodes.length === 0) {
-        // Чтобы фокус был хотя бы на родителе
-        nodes.push(ref.current);
-      }
-
-      focusableNodesRef.current = nodes;
+      recalculateFocusableNodesRef(parentNode);
+      return () => observer.disconnect();
     },
-    [children],
+    [ref],
   );
 
   useIsomorphicLayoutEffect(
