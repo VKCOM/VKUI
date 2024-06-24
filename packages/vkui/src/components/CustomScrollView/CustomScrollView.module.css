@@ -15,6 +15,10 @@
   position: relative;
 }
 
+.CustomScrollView__box-content {
+  position: relative;
+}
+
 .CustomScrollView__barY:active + .CustomScrollView__box {
   pointer-events: none;
 }
