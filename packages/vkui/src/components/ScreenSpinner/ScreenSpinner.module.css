@@ -19,7 +19,7 @@
   position: relative;
   inline-size: 88px;
   block-size: 88px;
-  background: var(--vkui--color_background_modal);
+  background: var(--vkui--color_background_contrast_themed);
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_border_radius--regular);
   color: var(--vkui--color_icon_medium);

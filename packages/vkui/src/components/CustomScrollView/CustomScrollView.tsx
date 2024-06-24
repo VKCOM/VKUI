@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { stopPropagation } from '../../lib/utils';
@@ -57,6 +58,7 @@ export const CustomScrollView = ({
   const trackerTop = React.useRef(0);
 
   const boxRef = useExternRef(externalBoxRef);
+  const boxContentRef = React.useRef<HTMLDivElement>(null);
 
   const barY = React.useRef<HTMLDivElement>(null);
   const trackerY = React.useRef<HTMLDivElement>(null);
@@ -103,6 +105,8 @@ export const CustomScrollView = ({
       resizeHandler.add(window);
     }
   }, [windowResize, window]);
+
+  useResizeObserver(boxContentRef, resize);
 
   useIsomorphicLayoutEffect(() => {
     let style = trackerY.current?.style;
@@ -200,7 +204,9 @@ export const CustomScrollView = ({
       {...restProps}
     >
       <div className={styles['CustomScrollView__box']} tabIndex={-1} ref={boxRef} onScroll={scroll}>
-        {children}
+        <div ref={boxContentRef} className={styles['CustomScrollView__box-content']}>
+          {children}
+        </div>
       </div>
 
       <div className={styles['CustomScrollView__barY']} ref={barY} onClick={stopPropagation}>
