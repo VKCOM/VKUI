@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
+import {useResizeObserver} from "../../hooks/useResizeObserver";
 import { useDOM } from '../../lib/dom';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
@@ -76,7 +77,14 @@ export const FixedLayout = ({
     }
   };
   React.useEffect(doResize, [colRef, platform, ref, useParentWidth]);
+
+  const parentRef = useParentWidth && ref.current?.parentElement
+    ? {
+      current: ref.current.parentElement
+    }
+    : null
   useGlobalEventListener(window, 'resize', doResize);
+  useResizeObserver(parentRef || colRef, doResize)
 
   return (
     <OnboardingTooltipContainer
