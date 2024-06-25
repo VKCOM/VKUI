@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { calculateGap } from '../../lib/layouts/helpers';
 import type { GridGaps } from '../../lib/layouts/types';
