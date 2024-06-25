@@ -3,7 +3,7 @@ import { MEDIA_QUERIES, type MediaQueries } from '../lib/adaptivity';
 import { mediaQueryNull } from '../lib/browser';
 import { useDOM } from '../lib/dom';
 
-const mediaQueriesCache = new Map<Window | undefined, MediaQueries>();
+const mediaQueriesCache = new WeakMap<Window | undefined, MediaQueries>();
 
 /**
  * Возвращает медиа выражения определенные дизайн-системой.
