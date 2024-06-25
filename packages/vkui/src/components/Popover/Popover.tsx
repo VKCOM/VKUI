@@ -117,7 +117,6 @@ export interface PopoverProps
   ArrowIcon?: FloatingArrowPropsPrivate['Icon'];
   /**
    * Используется для того, чтобы не удалять поповер из DOM дерева при скрытии.
-   * По умолчанию false
    */
   keepMounted?: boolean;
 }
@@ -171,7 +170,6 @@ export const Popover = ({
   ...restPopoverProps
 }: PopoverProps) => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
-  const wasShowedRef = React.useRef(false);
   const { middlewares, strictPlacement } = useFloatingMiddlewaresBootstrap({
     arrow: withArrow,
     arrowRef,
@@ -219,7 +217,7 @@ export const Popover = ({
   );
 
   let popover: React.ReactNode = null;
-  if (shown || (keepMounted && wasShowedRef.current)) {
+  if (shown || keepMounted) {
     const hidden = keepMounted && !shown;
     if (!hidden) {
       floatingProps.style.zIndex = String(zIndex);
@@ -268,7 +266,6 @@ export const Popover = ({
         </div>
       </AppRootPortal>
     );
-    wasShowedRef.current = true;
   }
 
   return (

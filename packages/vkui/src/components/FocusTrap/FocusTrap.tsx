@@ -147,14 +147,14 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
   useIsomorphicLayoutEffect(
     function calculateRestoreFocusTo() {
-      if (!ref.current || !restoreFocus) {
+      if (!ref.current || !restoreFocus || disabled) {
         setRestoreFocusTo(null);
         return;
       }
 
       setRestoreFocusTo(getActiveElementByAnotherElement(ref.current));
     },
-    [ref, restoreFocus],
+    [ref, restoreFocus, disabled],
   );
 
   useIsomorphicLayoutEffect(
