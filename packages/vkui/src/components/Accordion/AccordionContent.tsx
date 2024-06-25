@@ -25,30 +25,23 @@ function calcMaxHeight(expanded: boolean, el: HTMLElement | null): string {
 }
 
 /**
- * Хук для отслеживания изменения высоты контента.
+ * Хук для скрывания или раскрывания контента. Возвращает стили для in элемента.
  */
-function useResizeContent(expanded: boolean, inRef: React.MutableRefObject<HTMLDivElement | null>) {
+function useAccordionContent(expanded: boolean) {
+  const ref = React.useRef<HTMLDivElement | null>(null);
+
+  const maxHeight = calcMaxHeight(expanded, ref.current);
+
   const resize = () => {
-    inRef.current!.style.maxHeight = calcMaxHeight(expanded, inRef.current);
+    const el = ref.current;
+    el!.style.maxHeight = calcMaxHeight(expanded, el);
   };
 
   const { window } = useDOM();
   useGlobalEventListener(window, 'resize', resize);
   useIsomorphicLayoutEffect(resize, []);
-}
 
-/**
- * Хук для скрывания или раскрывания контента. Возвращает стили для in элемента.
- */
-function useAccordionContent(
-  expanded: boolean,
-  inRef: React.MutableRefObject<HTMLDivElement | null>,
-) {
-  const maxHeight = calcMaxHeight(expanded, inRef.current);
-
-  useResizeContent(expanded, inRef);
-
-  return { maxHeight };
+  return [ref, { maxHeight }] as const;
 }
 
 export interface AccordionContentProps
@@ -63,10 +56,11 @@ export const AccordionContent = ({
   children,
   ...restProps
 }: AccordionContentProps) => {
-  const inRef = useExternRef(getRef);
   const { expanded, labelId, contentId } = React.useContext(AccordionContext);
 
-  const inStyle = useAccordionContent(expanded, inRef);
+  const [ref, inStyle] = useAccordionContent(expanded);
+
+  const inRef = useExternRef(ref, getRef);
 
   return (
     <div
