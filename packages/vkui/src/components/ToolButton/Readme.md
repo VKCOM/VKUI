@@ -28,9 +28,9 @@ const Example = () => {
   const buttonText = addText ? 'Button' : undefined;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+    <Flex reverse noWrap>
       <AdaptivityProvider sizeY={sizeY}>
-        <div style={containerStyles}>
+        <Flex align="center" justify="center" style={{ width: '100%' }}>
           <Div>
             <ToolButton
               IconCompact={Icon20Add}
@@ -46,9 +46,9 @@ const Example = () => {
               {buttonText}
             </ToolButton>
           </Div>
-        </div>
+        </Flex>
       </AdaptivityProvider>
-      <div style={{ minWidth: 200 }}>
+      <Flex.Item flexBasis={200} flex="fixed">
         <FormItem top="direction">
           <Select
             value={direction}
@@ -103,8 +103,8 @@ const Example = () => {
           </Checkbox>
           <Checkbox onChange={(e) => setHasLink(e.target.checked)}>add href</Checkbox>
         </FormItem>
-      </div>
-    </div>
+      </Flex.Item>
+    </Flex>
   );
 };
 

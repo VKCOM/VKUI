@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HasChildren, HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
@@ -37,11 +36,18 @@ export interface FlexItemProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   flexBasis: number;
 }
 
-export const FlexItem = ({ children, alignSelf, flex, flexBasis, ...rest }: FlexItemProps) => {
+export const FlexItem = ({
+  children,
+  alignSelf,
+  flex,
+  flexBasis,
+  style,
+  ...rest
+}: FlexItemProps) => {
   return (
     <RootComponent
       {...rest}
-      style={{ flexBasis }}
+      style={{ ...style, flexBasis }}
       baseClassName={classNames(
         styles.FlexItem,
         alignSelf && alignSelfClassNames[alignSelf],
