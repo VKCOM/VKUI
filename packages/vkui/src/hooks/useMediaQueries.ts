@@ -3,31 +3,19 @@ import { MEDIA_QUERIES, type MediaQueries } from '../lib/adaptivity';
 import { mediaQueryNull } from '../lib/browser';
 import { useDOM } from '../lib/dom';
 
-interface StoredMediaQueries {
-  /**
-   * Постоянная ссылка на окно. Это необходима, чтобы пересоздать медиа выражение если окно вдруг измениться.
-   *
-   * > `styleguide`
-   * >
-   * > В данный момент изменения окна существует в рамках песочницы. По сути мы храним ссылку на окно ради этого кейса
-   * > в песочнице.
-   */
-  window: Window | undefined;
-  /**
-   * Хранит созданные медиа выражения.
-   *
-   * Достаточно единожды создать экземпляры `MediaQueryList`, а дальше подписываться на события
-   * через метод `addEventListener(type, listener)`.
-   *
-   * {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList}
-   */
-  mediaQueries: MediaQueries | null;
-}
+const mediaQueriesCache = new WeakMap<Window, MediaQueries>();
 
-const storedMediaQueries: StoredMediaQueries = {
-  window: undefined,
-  mediaQueries: null,
-};
+function getMediaQueries(matchMedia: (query: string) => MediaQueryList): MediaQueries {
+  return {
+    desktopPlus: matchMedia(MEDIA_QUERIES.DESKTOP_PLUS),
+    smallTabletPlus: matchMedia(MEDIA_QUERIES.SMALL_TABLET_PLUS),
+    tablet: matchMedia(MEDIA_QUERIES.TABLET),
+    smallTablet: matchMedia(MEDIA_QUERIES.SMALL_TABLET),
+    mobile: matchMedia(MEDIA_QUERIES.MOBILE),
+    mediumHeight: matchMedia(MEDIA_QUERIES.MEDIUM_HEIGHT),
+    mobileLandscapeHeight: matchMedia(MEDIA_QUERIES.MOBILE_LANDSCAPE_HEIGHT),
+  };
+}
 
 /**
  * Возвращает медиа выражения определенные дизайн-системой.
@@ -35,26 +23,22 @@ const storedMediaQueries: StoredMediaQueries = {
 export const useMediaQueries = () => {
   const { window } = useDOM();
 
-  return React.useMemo(
+  return React.useMemo<MediaQueries>(
     function initializeStoreOrUpdateStoreIfWindowChanges() {
-      if (storedMediaQueries.window === window && storedMediaQueries.mediaQueries !== null) {
-        return storedMediaQueries.mediaQueries;
+      if (!window) {
+        return getMediaQueries(mediaQueryNull);
       }
 
-      const matchMedia = window ? window.matchMedia.bind(window) : mediaQueryNull;
+      const storedMediaQueries = mediaQueriesCache.get(window);
+      if (storedMediaQueries) {
+        return storedMediaQueries;
+      }
 
-      storedMediaQueries.window = window;
-      storedMediaQueries.mediaQueries = {
-        desktopPlus: matchMedia(MEDIA_QUERIES.DESKTOP_PLUS),
-        smallTabletPlus: matchMedia(MEDIA_QUERIES.SMALL_TABLET_PLUS),
-        tablet: matchMedia(MEDIA_QUERIES.TABLET),
-        smallTablet: matchMedia(MEDIA_QUERIES.SMALL_TABLET),
-        mobile: matchMedia(MEDIA_QUERIES.MOBILE),
-        mediumHeight: matchMedia(MEDIA_QUERIES.MEDIUM_HEIGHT),
-        mobileLandscapeHeight: matchMedia(MEDIA_QUERIES.MOBILE_LANDSCAPE_HEIGHT),
-      };
+      const mediaQueries = getMediaQueries(window.matchMedia.bind(window));
 
-      return storedMediaQueries.mediaQueries;
+      mediaQueriesCache.set(window, mediaQueries);
+
+      return mediaQueries;
     },
     [window],
   );
