@@ -1,12 +1,4 @@
 ```jsx { "props": { "layout": false, "iframe": false } }
-const containerStyles = {
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-};
-
 const Example = () => {
   const [mode, setMode] = useState('primary');
   const [appearance, setAppearance] = useState('accent');
