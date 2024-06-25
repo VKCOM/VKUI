@@ -10,6 +10,7 @@ import {
   isSameMonth,
   isWithinInterval,
   startOfDay,
+  subMonths,
 } from '../../lib/date';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
@@ -220,7 +221,7 @@ export const CalendarRange = ({
       <div className={styles['CalendarRange__inner']}>
         <CalendarHeader
           viewDate={secondViewDate}
-          onChange={setViewDate}
+          onChange={(newDate) => setViewDate(subMonths(newDate, 1))}
           prevMonthHidden
           onNextMonth={setNextMonth}
           disablePickers={disablePickers}
