@@ -3,13 +3,12 @@ import { MEDIA_QUERIES, type MediaQueries } from '../lib/adaptivity';
 import { mediaQueryNull } from '../lib/browser';
 import { useDOM } from '../lib/dom';
 
-const MediaQueriesCacheContext = React.createContext(new Map<Window | undefined, MediaQueries>());
+const mediaQueriesCache = new Map<Window | undefined, MediaQueries>();
 
 /**
  * Возвращает медиа выражения определенные дизайн-системой.
  */
 export const useMediaQueries = () => {
-  const mediaQueriesCache = React.useContext(MediaQueriesCacheContext);
   const { window } = useDOM();
 
   return React.useMemo<MediaQueries>(
@@ -35,6 +34,6 @@ export const useMediaQueries = () => {
 
       return mediaQueries;
     },
-    [mediaQueriesCache, window],
+    [window],
   );
 };
