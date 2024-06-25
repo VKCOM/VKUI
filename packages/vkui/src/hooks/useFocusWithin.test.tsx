@@ -1,3 +1,5 @@
+'use no memo';
+
 import * as React from 'react';
 import { act } from 'react';
 import { render, screen } from '@testing-library/react';

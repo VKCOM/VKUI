@@ -1,3 +1,5 @@
+'use no memo';
+
 import { render } from '@testing-library/react';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import {

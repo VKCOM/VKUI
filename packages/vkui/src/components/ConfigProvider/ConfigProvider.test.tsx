@@ -1,3 +1,5 @@
+'use no memo';
+
 import * as React from 'react';
 import { render } from '@testing-library/react';
 import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
