@@ -79,17 +79,16 @@ export const FixedLayout = ({
   };
   React.useEffect(doResize, [colRef, platform, ref, useParentWidth]);
 
+  const parent = ref.current?.parentElement || null;
   const parentRef = useMemo(
-    () =>
-      useParentWidth && ref.current?.parentElement
-        ? {
-            current: ref.current.parentElement,
-          }
-        : null,
-    [ref.current, useParentWidth],
+    () => ({
+      current: parent,
+    }),
+    [parent],
   );
+
   useGlobalEventListener(window, 'resize', doResize);
-  useResizeObserver(parentRef || colRef, doResize);
+  useResizeObserver(useParentWidth ? parentRef : colRef, doResize);
 
   return (
     <OnboardingTooltipContainer
