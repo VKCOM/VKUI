@@ -12,7 +12,7 @@ return (
     </Button>
     {shown && (
       <Popper
-        forcePortal={false}
+        usePortal={false}
         style={{ padding: '9px 12px', backgroundColor: 'green', color: '#fff' }}
         targetRef={buttonRef}
       >
@@ -58,7 +58,7 @@ return (
       arrow
       arrowProps={{ iconStyle: { color: 'green' } }}
       placement="bottom"
-      forcePortal={false}
+      usePortal={false}
       style={{ padding: '9px 12px', backgroundColor: 'green', color: '#fff' }}
       targetRef={{
         getBoundingClientRect() {
