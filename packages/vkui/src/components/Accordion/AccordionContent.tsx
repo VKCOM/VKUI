@@ -42,6 +42,7 @@ export const AccordionContent = ({
   useIsomorphicLayoutEffect(() => {
     const inEl = inRef.current;
 
+    /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
     if (!inEl) {
       return;
     }
