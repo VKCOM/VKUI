@@ -7,6 +7,95 @@
 }
 
 .AccordionContent__in {
-  max-block-size: 0;
-  transition: max-height 100ms ease-in-out;
+  --vkui_internal--AccordionContent_height: initial;
+
+  animation-duration: 100ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@media (--reduce-motion) {
+  .AccordionContent__in {
+    animation-duration: 300ms;
+    animation-timing-function: linear;
+  }
+}
+
+.AccordionContent__in--enter {
+  animation-name: animation-collapse;
+}
+
+@media (--reduce-motion) {
+  .AccordionContent__in--enter {
+    animation-name: animation-fade-in;
+  }
+}
+
+.AccordionContent__in--entered {
+  block-size: var(--vkui_internal--AccordionContent_height);
+}
+
+.AccordionContent__in--exit {
+  animation-name: animation-expand;
+}
+
+@media (--reduce-motion) {
+  .AccordionContent__in--exit {
+    animation-name: animation-fade-out;
+  }
+}
+
+.AccordionContent__in--exited {
+  block-size: 0;
+}
+
+@keyframes animation-collapse {
+  0% {
+    block-size: 0;
+  }
+
+  100% {
+    block-size: var(--vkui_internal--AccordionContent_height);
+  }
+}
+@keyframes animation-expand {
+  0% {
+    block-size: var(--vkui_internal--AccordionContent_height);
+  }
+
+  100% {
+    block-size: 0;
+  }
+}
+@keyframes animation-fade-in {
+  0% {
+    opacity: 0;
+    block-size: var(--vkui_internal--AccordionContent_height);
+  }
+
+  50% {
+    opacity: 0;
+    block-size: var(--vkui_internal--AccordionContent_height);
+  }
+
+  100% {
+    opacity: 1;
+    block-size: var(--vkui_internal--AccordionContent_height);
+  }
+}
+@keyframes animation-fade-out {
+  0% {
+    opacity: 1;
+    block-size: var(--vkui_internal--AccordionContent_height);
+  }
+
+  50% {
+    opacity: 0;
+    block-size: var(--vkui_internal--AccordionContent_height);
+  }
+
+  100% {
+    opacity: 0;
+    block-size: var(--vkui_internal--AccordionContent_height);
+  }
 }

@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react';
 import { useCSSKeyframesAnimationController } from './useCSSKeyframesAnimationController';
 
 describe(useCSSKeyframesAnimationController, () => {
-  describe.each([false, true])('`noAnimation` prop is `%s`', (noAnimation) => {
+  describe.each([false, true])('`disableInitAnimation` prop is `%s`', (disableInitAnimation) => {
     const callbacks = {
       onEnter: jest.fn(),
       onEntering: jest.fn(),
@@ -23,13 +23,13 @@ describe(useCSSKeyframesAnimationController, () => {
 
     it('should enter', () => {
       const { result } = renderHook(() =>
-        useCSSKeyframesAnimationController('enter', callbacks, noAnimation),
+        useCSSKeyframesAnimationController('enter', callbacks, disableInitAnimation),
       );
 
-      !noAnimation && expect(result.current[0]).toBe('enter');
+      !disableInitAnimation && expect(result.current[0]).toBe('enter');
 
       act(result.current[1].onAnimationStart);
-      if (!noAnimation) {
+      if (!disableInitAnimation) {
         expect(result.current[0]).toBe('entering');
         expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
       }
@@ -40,12 +40,14 @@ describe(useCSSKeyframesAnimationController, () => {
     });
 
     it('should exit', () => {
-      const { result } = renderHook(() => useCSSKeyframesAnimationController('exit', callbacks));
+      const { result } = renderHook(() =>
+        useCSSKeyframesAnimationController('exit', callbacks, disableInitAnimation),
+      );
 
-      !noAnimation && expect(result.current[0]).toBe('exit');
+      !disableInitAnimation && expect(result.current[0]).toBe('exit');
 
       act(result.current[1].onAnimationStart);
-      if (!noAnimation) {
+      if (!disableInitAnimation) {
         expect(result.current[0]).toBe('exiting');
         expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
       }
