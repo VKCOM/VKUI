@@ -17,7 +17,8 @@ export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
     HasRootRef<T>,
     HasComponent {
   autoFocus?: boolean;
-  restoreFocus?: boolean | (() => boolean);
+  restoreFocusOnUnmount?: boolean | (() => boolean);
+  restoreFocusOnDisabled?: boolean;
   timeout?: number;
   onClose?: () => void;
   /**
@@ -33,8 +34,9 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   Component = 'div',
   onClose,
   autoFocus = true,
-  restoreFocus = true,
+  restoreFocusOnUnmount = true,
   disabled = false,
+  restoreFocusOnDisabled = false,
   timeout = 0,
   getRootRef,
   children,
@@ -128,13 +130,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   );
 
   const restoreFocusImpl = useCallback(() => {
-    if (!restoreFocusTo) {
-      return;
-    }
-
-    const shouldRestoreFocus = typeof restoreFocus === 'function' ? restoreFocus() : restoreFocus;
-
-    if (!shouldRestoreFocus || !isHTMLElement(restoreFocusTo)) {
+    if (!restoreFocusTo || !isHTMLElement(restoreFocusTo)) {
       return;
     }
 
@@ -143,34 +139,55 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
         restoreFocusTo.focus();
       }
     }, timeout);
-  }, [restoreFocus, restoreFocusTo, timeout]);
+  }, [restoreFocusTo, timeout]);
 
   useIsomorphicLayoutEffect(
-    function calculateRestoreFocusTo() {
-      if (!ref.current || !restoreFocus || disabled) {
-        setRestoreFocusTo(null);
+    function calculateRestoreFocusToOnDisabled() {
+      if (!ref.current) {
         return;
       }
+      if (restoreFocusOnDisabled && !disabled) {
+        setRestoreFocusTo(getActiveElementByAnotherElement(ref.current));
+      } else {
+        setRestoreFocusTo(null);
+      }
+    },
+    [ref, restoreFocusOnDisabled, disabled],
+  );
 
+  useIsomorphicLayoutEffect(
+    function calculateRestoreFocusToOnUnmount() {
+      if (!ref.current || !restoreFocusOnUnmount) {
+        return;
+      }
       setRestoreFocusTo(getActiveElementByAnotherElement(ref.current));
     },
-    [ref, restoreFocus, disabled],
+    [ref, restoreFocusOnUnmount],
   );
 
   useIsomorphicLayoutEffect(
     function tryToRestoreFocusOnUnmount() {
-      return () => restoreFocusImpl();
+      return () => {
+        const shouldRestoreFocus =
+          typeof restoreFocusOnUnmount === 'function'
+            ? restoreFocusOnUnmount()
+            : restoreFocusOnUnmount;
+
+        if (shouldRestoreFocus) {
+          restoreFocusImpl();
+        }
+      };
     },
-    [restoreFocusImpl],
+    [restoreFocusOnUnmount, restoreFocusImpl],
   );
 
   useIsomorphicLayoutEffect(
     function tryToRestoreFocusWhenDisabled() {
-      if (disabled) {
+      if (restoreFocusOnDisabled && disabled) {
         restoreFocusImpl();
       }
     },
-    [disabled, restoreFocusImpl],
+    [disabled, restoreFocusOnDisabled, restoreFocusImpl],
   );
 
   useIsomorphicLayoutEffect(() => {

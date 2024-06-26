@@ -618,7 +618,7 @@ class ModalRootTouchComponent extends React.Component<
                       isPage && modalState.collapsed && 'vkuiInternalModalRoot__modal--collapsed',
                     )}
                     autoFocus={false}
-                    restoreFocus={false}
+                    restoreFocusOnUnmount={false}
                   >
                     {Modal}
                   </FocusTrap>

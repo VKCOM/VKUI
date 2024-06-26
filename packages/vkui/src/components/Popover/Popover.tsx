@@ -255,9 +255,10 @@ export const Popover = ({
               transformOriginClassNames[resolvedPlacement],
               className,
             )}
+            restoreFocusOnDisabled={keepMounted}
             disabled={hidden}
             autoFocus={disableInteractive ? false : autoFocus}
-            restoreFocus={restoreFocus ? onRestoreFocus : false}
+            restoreFocusOnUnmount={restoreFocus ? onRestoreFocus : false}
             onClose={onEscapeKeyDown}
           >
             {arrow}
