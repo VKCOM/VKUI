@@ -6,6 +6,7 @@ import { callMultiple } from '../../lib/callMultiple';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
+import { useResizeTextarea } from './useResizeTextarea';
 import styles from './Textarea.module.css';
 
 const sizeYClassNames = {
@@ -43,25 +44,12 @@ export const Textarea = ({
   mode,
   ...restProps
 }: TextareaProps) => {
-  const currentScrollHeight = React.useRef<number>();
-  const elementRef = useExternRef(getRef);
   const { sizeY = 'none' } = useAdaptivity();
 
-  const autosizeInput = () => {
-    const el = elementRef.current;
+  const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);
+  const elementRef = useExternRef(getRef, refResizeTextarea);
 
-    if (grow && el?.offsetParent) {
-      el.style.height = '';
-      el.style.height = `${el.scrollHeight}px`;
-
-      if (el.scrollHeight !== currentScrollHeight.current && onResize) {
-        onResize(el);
-        currentScrollHeight.current = el.scrollHeight;
-      }
-    }
-  };
-
-  React.useEffect(autosizeInput, [grow, sizeY, elementRef, onResize]);
+  React.useEffect(resize, [resize, sizeY]);
 
   return (
     <FormField
@@ -84,7 +72,7 @@ export const Textarea = ({
         style={{ maxHeight }}
         rows={rows}
         className={styles['Textarea__el']}
-        onChange={callMultiple(onChange, autosizeInput)}
+        onChange={callMultiple(onChange, resize)}
         getRootRef={elementRef}
       />
     </FormField>
