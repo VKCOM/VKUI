@@ -259,7 +259,7 @@ describe(FocusTrap, () => {
       expect(result.getByTestId('button-out-trap')).toHaveFocus();
     });
 
-    it('should restore focus when disabled become true', async () => {
+    it('should restore focus when mount become true', async () => {
       const Fixture = () => {
         const [showTrap, setShowTrap] = useState(false);
         const [disabled, setDisabled] = useState(false);
@@ -268,8 +268,8 @@ describe(FocusTrap, () => {
             {showTrap && (
               <FocusTrap
                 disabled={disabled}
-                restoreFocusOnDisabled={true}
-                restoreFocus={false}
+                mount={!disabled}
+                restoreFocus={true}
               >
                 <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
                 <Button data-testid="button-set-disabled" onClick={() => setDisabled(true)}>

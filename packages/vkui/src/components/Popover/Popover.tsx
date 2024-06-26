@@ -255,7 +255,7 @@ export const Popover = ({
               transformOriginClassNames[resolvedPlacement],
               className,
             )}
-            restoreFocusOnDisabled={keepMounted}
+            mount={!hidden}
             disabled={hidden}
             autoFocus={disableInteractive ? false : autoFocus}
             restoreFocus={restoreFocus ? onRestoreFocus : false}
