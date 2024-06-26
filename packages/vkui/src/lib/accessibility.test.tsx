@@ -1,5 +1,5 @@
 import { Icon12Add } from '@vkontakte/icons';
-import { VisuallyHidden } from '../vkui';
+import { VisuallyHidden } from '../components/VisuallyHidden/VisuallyHidden';
 import { hasAccessibleName, injectAriaExpandedPropByRole } from './accessibility';
 
 describe('accessibility utils', () => {
