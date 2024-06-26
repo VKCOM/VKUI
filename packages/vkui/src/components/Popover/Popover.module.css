@@ -22,3 +22,7 @@
 .Popover__arrow {
   color: var(--vkui--color_background_contrast_themed);
 }
+
+.Popover--hidden {
+  display: none;
+}

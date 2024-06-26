@@ -115,6 +115,10 @@ export interface PopoverProps
    * 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
    */
   ArrowIcon?: FloatingArrowPropsPrivate['Icon'];
+  /**
+   * Используется для того, чтобы не удалять поповер из DOM дерева при скрытии.
+   */
+  keepMounted?: boolean;
 }
 
 /**
@@ -140,6 +144,7 @@ export const Popover = ({
   disableInteractive,
   disableCloseOnClickOutside,
   disableCloseOnEscKey,
+  keepMounted = false,
   // uncontrolled
   defaultShown = false,
   // controlled
@@ -212,8 +217,11 @@ export const Popover = ({
   );
 
   let popover: React.ReactNode = null;
-  if (shown) {
-    floatingProps.style.zIndex = String(zIndex);
+  if (shown || keepMounted) {
+    const hidden = keepMounted && !shown;
+    if (!hidden) {
+      floatingProps.style.zIndex = String(zIndex);
+    }
 
     let arrow: React.ReactElement | null = null;
     if (withArrow) {
@@ -232,7 +240,11 @@ export const Popover = ({
 
     popover = (
       <AppRootPortal usePortal={usePortal}>
-        <div ref={refs.setFloating} className={styles['Popover']} {...floatingProps}>
+        <div
+          ref={refs.setFloating}
+          className={classNames(styles['Popover'], hidden && styles['Popover--hidden'])}
+          {...floatingProps}
+        >
           <FocusTrap
             {...restPopoverProps}
             role={role}
@@ -243,6 +255,8 @@ export const Popover = ({
               transformOriginClassNames[resolvedPlacement],
               className,
             )}
+            mount={!hidden}
+            disabled={hidden}
             autoFocus={disableInteractive ? false : autoFocus}
             restoreFocus={restoreFocus ? onRestoreFocus : false}
             onClose={onEscapeKeyDown}
