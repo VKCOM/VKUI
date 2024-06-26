@@ -1,5 +1,6 @@
 import { classNames } from '@vkontakte/vkjs';
-import { CSSCustomProperties, HTMLAttributesWithRootRef, LiteralUnion } from '../../types';
+import { calculateGap, GapProp } from '../../lib/layouts';
+import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { FlexItem, FlexItemProps } from './FlexItem/FlexItem';
 import styles from './Flex.module.css';
@@ -23,8 +24,6 @@ const alignClassNames = {
   baseline: styles['Flex--align-baseline'],
 };
 
-type FlexGap = LiteralUnion<4 | 8 | 16 | 24 | 32, number>;
-
 type FlexContentProps =
   | 'start'
   | 'end'
@@ -35,45 +34,34 @@ type FlexContentProps =
 
 export interface FlexProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Направление осей, эквивалентно `flex-direction`
+   * Направление осей, эквивалентно `flex-direction`.
    */
   direction?: 'row' | 'column';
   /**
-   * Отступы между элементами
-   * Через массив можно задать отступ между столбцами и строками [column, row]
+   * Отступы между элементами.
+   * Через массив можно задать отступ между столбцами и строками [column, row], если они отличаются.
    */
-  gap?: FlexGap | [FlexGap, FlexGap];
+  gap?: GapProp;
   /**
-   * Отключает перенос контента, эквивалентно `flex-wrap=nowrap`
+   * Отключает перенос контента, эквивалентно `flex-wrap=nowrap`.
    */
   noWrap?: boolean;
   /**
-   * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`
+   * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`.
    */
   align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
   /**
-   * Выравнивание элементов по главной оси, эквивалентно `justify-content`
+   * Выравнивание элементов по главной оси, эквивалентно `justify-content`.
    */
   justify?: FlexContentProps;
   /**
-   * Значение `auto` позволяет задать платформенные отступы вокруг контейнера
+   * Значение `auto` позволяет задать платформенные отступы вокруг контейнера.
    */
   margin?: 'none' | 'auto';
   /**
-   * Для инвертирования направления, эквивалентно `row-reverse` `column-reverse`
+   * Для инвертирования направления, эквивалентно `row-reverse` `column-reverse`.
    */
   reverse?: boolean;
-}
-
-function calculateGap(gap: FlexProps['gap']) {
-  if (!gap) {
-    return { columnGap: undefined, rowGap: undefined };
-  }
-  if (typeof gap === 'number') {
-    return { columnGap: gap, rowGap: gap };
-  }
-
-  return { columnGap: gap[0], rowGap: gap[1] };
 }
 
 export const Flex = ({
@@ -87,7 +75,7 @@ export const Flex = ({
   reverse = false,
   ...props
 }: FlexProps) => {
-  const { rowGap, columnGap } = calculateGap(gap);
+  const [columnGap, rowGap] = calculateGap(gap);
   const style: CSSCustomProperties = {};
 
   if (typeof rowGap === 'number') {

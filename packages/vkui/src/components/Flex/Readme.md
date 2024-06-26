@@ -28,8 +28,19 @@ const FlexContainer = ({ itemsCount, ...props }) => {
   );
 };
 
+const GapSelectValues = [
+  { label: '4', value: 4 },
+  { label: '8', value: 8 },
+  { label: '16', value: 16 },
+  { label: '24', value: 24 },
+  { label: '32', value: 32 },
+];
+
 const Example = () => {
   const [gap, setGap] = useState(8);
+  const [rowGap, setRowGap] = useState(8);
+  const [columnGap, setColumnGap] = useState(8);
+  const [complexGap, setComplexGap] = useState(false);
   const [itemsCount, setItemsCount] = useState(4);
   const [direction, setDirection] = useState('row');
   const [align, setAlign] = useState(undefined);
@@ -43,7 +54,7 @@ const Example = () => {
       <Flex.Item flex="content">
         <FlexContainer
           itemsCount={itemsCount}
-          gap={gap}
+          gap={complexGap ? [columnGap, rowGap] : gap}
           direction={direction}
           align={align}
           justify={justify}
@@ -95,19 +106,36 @@ const Example = () => {
             ]}
           />
         </FormItem>
-        <FormItem top="gap">
-          <Select
-            value={gap}
-            onChange={(e) => setGap(Number(e.target.value))}
-            options={[
-              { label: '4', value: 4 },
-              { label: '8', value: 8 },
-              { label: '16', value: 16 },
-              { label: '24', value: 24 },
-              { label: '32', value: 32 },
-            ]}
-          />
-        </FormItem>
+        <Checkbox value={complexGap} onChange={(e) => setComplexGap(e.target.checked)}>
+          Complex Gap
+        </Checkbox>
+        {!complexGap && (
+          <FormItem top="gap">
+            <Select
+              value={gap}
+              onChange={(e) => setGap(Number(e.target.value))}
+              options={GapSelectValues}
+            />
+          </FormItem>
+        )}
+        {complexGap && (
+          <FormItem top="row gap">
+            <Select
+              value={rowGap}
+              onChange={(e) => setRowGap(Number(e.target.value))}
+              options={GapSelectValues}
+            />
+          </FormItem>
+        )}
+        {complexGap && (
+          <FormItem top="column gap">
+            <Select
+              value={columnGap}
+              onChange={(e) => setColumnGap(Number(e.target.value))}
+              options={GapSelectValues}
+            />
+          </FormItem>
+        )}
         <FormItem top="align">
           <Select
             value={align}
