@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -80,7 +79,7 @@ export const FixedLayout = ({
   React.useEffect(doResize, [colRef, platform, ref, useParentWidth]);
 
   const parent = ref.current?.parentElement || null;
-  const parentRef = useMemo(
+  const parentRef = React.useMemo(
     () => ({
       current: parent,
     }),
