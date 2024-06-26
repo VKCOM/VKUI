@@ -36,7 +36,9 @@ export type GapsProp = GapProp | [GapProp, GapProp];
 /**
  * Возвращает массив отступов [columnGap, rowGap]
  */
-export function calculateGap(gap: GapsProp | undefined) {
+export function calculateGap(
+  gap: GapsProp | undefined,
+): [GapProp, GapProp] | [undefined, undefined] {
   if (!gap) {
     return [undefined, undefined];
   }

@@ -1,5 +1,10 @@
 import { classNames } from '@vkontakte/vkjs';
-import { calculateGap, columnGapClassNames, GapsProp, rowGapClassNames } from '../../lib/layouts';
+import {
+  calculateGap,
+  columnGapClassNames,
+  type GapsProp,
+  rowGapClassNames,
+} from '../../lib/layouts';
 import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { FlexItem, FlexItemProps } from './FlexItem/FlexItem';
