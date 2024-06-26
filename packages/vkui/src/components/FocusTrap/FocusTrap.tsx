@@ -17,7 +17,7 @@ export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
     HasRootRef<T>,
     HasComponent {
   autoFocus?: boolean;
-  restoreFocusOnUnmount?: boolean | (() => boolean);
+  restoreFocus?: boolean | (() => boolean);
   restoreFocusOnDisabled?: boolean;
   timeout?: number;
   onClose?: () => void;
@@ -34,7 +34,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   Component = 'div',
   onClose,
   autoFocus = true,
-  restoreFocusOnUnmount = true,
+  restoreFocus = true,
   disabled = false,
   restoreFocusOnDisabled = false,
   timeout = 0,
@@ -157,28 +157,28 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
   useIsomorphicLayoutEffect(
     function calculateRestoreFocusToOnUnmount() {
-      if (!ref.current || !restoreFocusOnUnmount) {
+      if (!ref.current || !restoreFocus) {
         return;
       }
       setRestoreFocusTo(getActiveElementByAnotherElement(ref.current));
     },
-    [ref, restoreFocusOnUnmount],
+    [ref, restoreFocus],
   );
 
   useIsomorphicLayoutEffect(
     function tryToRestoreFocusOnUnmount() {
       return () => {
         const shouldRestoreFocus =
-          typeof restoreFocusOnUnmount === 'function'
-            ? restoreFocusOnUnmount()
-            : restoreFocusOnUnmount;
+          typeof restoreFocus === 'function'
+            ? restoreFocus()
+            : restoreFocus;
 
         if (shouldRestoreFocus) {
           restoreFocusImpl();
         }
       };
     },
-    [restoreFocusOnUnmount, restoreFocusImpl],
+    [restoreFocus, restoreFocusImpl],
   );
 
   useIsomorphicLayoutEffect(

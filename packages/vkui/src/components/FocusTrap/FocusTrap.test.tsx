@@ -129,7 +129,7 @@ describe(FocusTrap, () => {
 
     it('does not restore focus if restoreFocus={false}', async () => {
       const onClose = jest.fn();
-      render(<ActionSheetTest restoreFocusOnUnmount={false} onClose={onClose} />);
+      render(<ActionSheetTest restoreFocus={false} onClose={onClose} />);
       await mountActionSheetViaClick();
       await unmountActionSheet();
       expect(screen.getByTestId('toggle')).not.toHaveFocus();
@@ -269,7 +269,7 @@ describe(FocusTrap, () => {
               <FocusTrap
                 disabled={disabled}
                 restoreFocusOnDisabled={true}
-                restoreFocusOnUnmount={false}
+                restoreFocus={false}
               >
                 <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
                 <Button data-testid="button-set-disabled" onClick={() => setDisabled(true)}>
