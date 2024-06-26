@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -78,12 +79,15 @@ export const FixedLayout = ({
   };
   React.useEffect(doResize, [colRef, platform, ref, useParentWidth]);
 
-  const parentRef =
-    useParentWidth && ref.current?.parentElement
-      ? {
-          current: ref.current.parentElement,
-        }
-      : null;
+  const parentRef = useMemo(
+    () =>
+      useParentWidth && ref.current?.parentElement
+        ? {
+            current: ref.current.parentElement,
+          }
+        : null,
+    [ref.current, useParentWidth],
+  );
   useGlobalEventListener(window, 'resize', doResize);
   useResizeObserver(parentRef || colRef, doResize);
 

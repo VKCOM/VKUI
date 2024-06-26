@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import { useEffect } from 'react';
 import * as React from 'react';
 import { CustomResizeObserver } from '../lib/floating/customResizeObserver';
 import { useStableCallback } from './useStableCallback';
