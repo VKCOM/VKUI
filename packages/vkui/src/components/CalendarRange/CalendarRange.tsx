@@ -183,8 +183,8 @@ export const CalendarRange = ({
 
   const onRightPartViewDateChange = React.useCallback(
     (newDate: Date) => setViewDate(subMonths(newDate, 1)),
-    [setViewDate]
-  )
+    [setViewDate],
+  );
 
   return (
     <RootComponent {...props} baseClassName={styles['CalendarRange']}>
