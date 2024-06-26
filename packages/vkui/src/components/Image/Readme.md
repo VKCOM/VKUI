@@ -55,6 +55,21 @@ const OthersFeatures = () => {
   );
 };
 
+const NonInteractive = () => {
+  return (
+    <Group header={<Header mode="secondary">Вложенный интерактивный элемент</Header>}>
+      <Div>
+        {' '}
+        <Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн">
+          <Image.Overlay nonInteractive>
+            <Button onClick={() => console.log('clicked')}>Button</Button>
+          </Image.Overlay>
+        </Image>
+      </Div>
+    </Group>
+  );
+};
+
 const Example = () => {
   return (
     <View activePanel="avatar">
@@ -64,6 +79,8 @@ const Example = () => {
         <Default />
 
         <OthersFeatures />
+
+        <NonInteractive />
       </Panel>
     </View>
   );

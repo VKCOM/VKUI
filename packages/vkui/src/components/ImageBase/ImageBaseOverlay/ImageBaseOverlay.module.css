@@ -20,6 +20,10 @@
   opacity: 1;
 }
 
+.ImageBaseOverlay--clickable {
+  cursor: pointer;
+}
+
 .ImageBaseOverlay--theme-light {
   color: var(--vkui--color_icon_accent);
   background-color: var(--vkui--color_avatar_overlay_inverse_alpha);

@@ -1,63 +1,36 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
+import { useKeyboard } from '../../../components/Clickable/useKeyboard';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useAppearance } from '../../../hooks/useAppearance';
-import { focusVisiblePresetModeClassNames } from '../../../hooks/useFocusVisibleClassName';
+import { useExternRef } from '../../../hooks/useExternRef';
+import { useFocusVisible } from '../../../hooks/useFocusVisible';
+import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
 import { DisableClickableLockStateContext } from '../../Clickable/useState';
-import { Tappable } from '../../Tappable/Tappable';
 import { ImageBaseContext } from '../context';
-import type { ImageBaseExpectedIconProps } from '../types';
 import { validateOverlayIcon } from '../validators';
+import { useHover, useNonInteractiveOverlayProps } from './hooks';
+import type {
+  ImageBaseOverlayInteractiveProps,
+  ImageBaseOverlayNonInteractiveProps,
+} from './types';
 import styles from './ImageBaseOverlay.module.css';
 
-export interface ImageBaseOverlayProps extends React.AriaAttributes {
-  /**
-   * Задаёт тему оформления.
-   *
-   * > По умолчанию берётся из параметра `appearance` в `ConfigProvider`.
-   */
-  theme?: 'dark' | 'light';
-  /**
-   * Определяет каким образом должен показываться оверлей.
-   *
-   * - `"on-hover"` – на наведение указателя мыши.
-   * - `"always"` – всегда показывать.
-   *
-   * > По умолчанию определяется в зависимости от того, есть ли у пользователя мышь или нет.
-   */
-  visibility?: 'on-hover' | 'always';
-  /**
-   * Принимает иконку.
-   *
-   *
-   * > 📝 Нужный для `<ImageBase size={...} />` размер можно узнать из функции `getOverlayIconSizeByImageBaseSize()`.
-   *
-   * > Предпочтительней использовать иконки из `@vkontakte/icons`.
-   *
-   * > 📊️ Если вы хотите передать кастомную иконку, то следует именовать её по шаблону `Icon<size><name>`. Или же
-   * > чтобы в неё был передан параметр `width`. Тогда мы сможем выводить в консоль подсказку правильного ли размера вы
-   * > использовали иконку.
-   */
-  children: React.ReactElement<ImageBaseExpectedIconProps>;
-  className?: string;
-  onClick?: React.MouseEventHandler<HTMLElement>;
-}
+export type ImageBaseOverlayProps =
+  | ImageBaseOverlayInteractiveProps
+  | ImageBaseOverlayNonInteractiveProps;
 
-/**
- * Интерактивный оверлей над картинкой.
- */
-export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
-  className,
-  theme: themeProp,
-  visibility: visibilityProp,
+const ImageBaseOverlayInteractive = ({
   children,
-  onClick: onClickProp,
+  className,
+  getRootRef,
+  nonInteractive,
+  overlayShown,
   ...restProps
-}: ImageBaseOverlayProps) => {
-  const appearance = useAppearance();
-  const hasPointer = useAdaptivityHasPointer();
-  const theme = themeProp ?? appearance;
-  const visibility = visibilityProp ?? (hasPointer ? 'on-hover' : 'always');
+}: ImageBaseOverlayInteractiveProps & { overlayShown?: boolean }) => {
+  const { focusVisible, ...focusEvents } = useFocusVisible();
+  const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'inside' });
+  const keyboardHandlers = useKeyboard();
 
   if (process.env.NODE_ENV === 'development') {
     if (children) {
@@ -67,32 +40,84 @@ export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
     }
   }
 
-  const onClick = onClickProp ?? visibility === 'on-hover' ? noop : undefined;
-
   return (
-    <Tappable
+    <div
       {...restProps}
+      tabIndex={0}
+      role="button"
       className={classNames(
-        styles['ImageBaseOverlay'],
-        visibility === 'always' && styles['ImageBaseOverlay--visible'],
-        theme === 'light' && styles['ImageBaseOverlay--theme-light'],
-        theme === 'dark' && styles['ImageBaseOverlay--theme-dark'],
+        styles['ImageBaseOverlay--clickable'],
+        (focusVisible || overlayShown) && styles['ImageBaseOverlay--visible'],
+        focusVisibleClassNames,
         className,
       )}
-      hasHover={visibility === 'on-hover'}
-      hoverMode={visibility === 'on-hover' ? styles['ImageBaseOverlay--visible'] : undefined}
-      focusVisibleMode={classNames(
-        focusVisiblePresetModeClassNames['inside'],
-        styles['ImageBaseOverlay--visible'],
-      )}
-      hasActive={false}
-      onClick={onClick}
+      ref={getRootRef}
+      {...focusEvents}
+      {...keyboardHandlers}
     >
-      <DisableClickableLockStateContext.Provider value>
-        {children}
-      </DisableClickableLockStateContext.Provider>
-    </Tappable>
+      {children}
+    </div>
   );
+};
+
+const ImageBaseOverlayNonInteractive = ({
+  className,
+  getRootRef,
+  nonInteractive,
+  overlayShown: overlayShownProps,
+  ...restProps
+}: ImageBaseOverlayNonInteractiveProps & { overlayShown?: boolean }) => {
+  const rootRef = useExternRef(getRootRef);
+  const { shown: overlayShown, onClick: onOverlayClick } = useNonInteractiveOverlayProps(rootRef);
+
+  return (
+    <DisableClickableLockStateContext.Provider value>
+      <div
+        {...restProps}
+        ref={rootRef}
+        className={classNames(
+          (overlayShown || overlayShownProps) && styles['ImageBaseOverlay--visible'],
+          className,
+        )}
+        onClick={onOverlayClick}
+      />
+    </DisableClickableLockStateContext.Provider>
+  );
+};
+
+/**
+ * Оверлей над картинкой.
+ */
+export const ImageBaseOverlay = ({
+  className,
+  theme: themeProp,
+  visibility: visibilityProp,
+  ...restProps
+}: ImageBaseOverlayProps) => {
+  const appearance = useAppearance();
+  const hasPointer = useAdaptivityHasPointer();
+  const theme = themeProp ?? appearance;
+  const visibility = visibilityProp ?? (hasPointer ? 'on-hover' : 'always');
+  const { hovered, ...hoverHandlers } = useHover();
+
+  const commonClassNames = classNames(
+    styles['ImageBaseOverlay'],
+    theme === 'light' && styles['ImageBaseOverlay--theme-light'],
+    theme === 'dark' && styles['ImageBaseOverlay--theme-dark'],
+    className,
+  );
+
+  const commonProps = {
+    ...hoverHandlers,
+    className: commonClassNames,
+    overlayShown: visibility === 'always' || (visibility === 'on-hover' && hovered),
+  };
+
+  if (restProps.nonInteractive) {
+    return <ImageBaseOverlayNonInteractive {...restProps} {...commonProps} />;
+  }
+
+  return <ImageBaseOverlayInteractive {...restProps} {...commonProps} />;
 };
 
 ImageBaseOverlay.displayName = 'ImageBaseOverlay';
