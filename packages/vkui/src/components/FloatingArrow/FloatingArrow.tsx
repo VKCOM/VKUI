@@ -86,67 +86,38 @@ function getArrowPositionData(
     }
   };
 
-  if (placement === 'top' || placement === 'top-start') {
+  let xOffsetProp = placement.endsWith('end') && isStaticOffset ? 'right' : 'left';
+  let yOffsetProp = placement.endsWith('end') && isStaticOffset ? 'bottom' : 'top';
+
+  if (placement.startsWith('top')) {
     return [
       'bottom',
       {
         top: '100%',
-        left: withOffset(false),
+        [xOffsetProp]: withOffset(false),
       },
     ];
-  } else if (placement === 'top-end') {
-    return [
-      'bottom',
-      {
-        top: '100%',
-        [isStaticOffset ? 'right' : 'left']: withOffset(false),
-      },
-    ];
-  } else if (placement === 'right' || placement === 'right-start') {
+  } else if (placement.startsWith('right')) {
     return [
       'left',
       {
-        top: withOffset(true),
+        [yOffsetProp]: withOffset(true),
         left: 0,
       },
     ];
-  } else if (placement === 'right-end') {
-    return [
-      'left',
-      {
-        [isStaticOffset ? 'bottom' : 'top']: withOffset(true),
-        left: 0,
-      },
-    ];
-  } else if (placement === 'bottom' || placement === 'bottom-start') {
+  } else if (placement.startsWith('bottom')) {
     return [
       undefined,
       {
         bottom: '100%',
-        left: withOffset(false),
-      },
-    ];
-  } else if (placement === 'bottom-end') {
-    return [
-      undefined,
-      {
-        bottom: '100%',
-        [isStaticOffset ? 'right' : 'left']: withOffset(false),
-      },
-    ];
-  } else if (placement === 'left' || placement === 'left-start') {
-    return [
-      'right',
-      {
-        top: withOffset(true),
-        right: 0,
+        [xOffsetProp]: withOffset(false),
       },
     ];
   } else {
     return [
       'right',
       {
-        [isStaticOffset ? 'bottom' : 'top']: withOffset(true),
+        [yOffsetProp]: withOffset(true),
         right: 0,
       },
     ];
