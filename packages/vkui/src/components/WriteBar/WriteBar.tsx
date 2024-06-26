@@ -4,6 +4,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { HasRef, HasRootRef } from '../../types';
+import { useResizeTextarea } from '../Textarea/useResizeTextarea';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
 import { TypographyProps } from '../Typography/Typography';
@@ -65,25 +66,8 @@ export const WriteBar = ({
 }: WriteBarProps) => {
   const platform = usePlatform();
 
-  const textareaRef = useExternRef(getRef);
-  const currentScrollHeight = React.useRef<number>();
-
-  const resize = React.useCallback(() => {
-    const textareaEl = textareaRef.current;
-    if (!textareaEl) {
-      return;
-    }
-
-    if (textareaEl.offsetParent) {
-      textareaEl.style.height = '';
-      textareaEl.style.height = `${textareaEl.scrollHeight}px`;
-
-      if (textareaEl.scrollHeight !== currentScrollHeight.current && onHeightChange) {
-        onHeightChange();
-        currentScrollHeight.current = textareaEl.scrollHeight;
-      }
-    }
-  }, [onHeightChange, textareaRef]);
+  const [refResizeTextarea, resize] = useResizeTextarea(onHeightChange, true);
+  const textareaRef = useExternRef(getRef, refResizeTextarea);
 
   React.useEffect(resize, [resize, platform]);
 
