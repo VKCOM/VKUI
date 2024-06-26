@@ -86,7 +86,7 @@ function getArrowPositionData(
     }
   };
 
-  if (placement.startsWith('top')) {
+  if (placement === 'top' || placement === 'top-start') {
     return [
       'bottom',
       {
@@ -94,7 +94,15 @@ function getArrowPositionData(
         left: withOffset(false),
       },
     ];
-  } else if (placement.startsWith('right')) {
+  } else if (placement === 'top-end') {
+    return [
+      'bottom',
+      {
+        top: '100%',
+        right: withOffset(false),
+      },
+    ];
+  } else if (placement === 'right' || placement === 'right-start') {
     return [
       'left',
       {
@@ -102,12 +110,28 @@ function getArrowPositionData(
         left: 0,
       },
     ];
-  } else if (placement.startsWith('bottom')) {
+  } else if (placement === 'right-end') {
+    return [
+      'left',
+      {
+        bottom: withOffset(true),
+        left: 0,
+      },
+    ];
+  } else if (placement === 'bottom' || placement === 'bottom-start') {
     return [
       undefined,
       {
         bottom: '100%',
         left: withOffset(false),
+      },
+    ];
+  } else if (placement === 'bottom-end') {
+    return [
+      undefined,
+      {
+        bottom: '100%',
+        right: withOffset(false),
       },
     ];
   } else {
