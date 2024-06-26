@@ -191,7 +191,7 @@ const PopoverWithTriggerManual = () => {
 
 const Playground = () => {
   return (
-    <Flex margin="auto" direction="column" align="start" gap={16}>
+    <Flex margin="auto" direction="column" align="start" gap="2xl">
       <PopoverWithTriggerHover />
       <PopoverWithTriggerClick />
       <PopoverWithTriggerFocus />

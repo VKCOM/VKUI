@@ -46,9 +46,9 @@ const Example = () => {
   }, [getPageFromPath]);
 
   return (
-    <Flex reverse justify="end" margin="auto">
+    <Flex reverse justify="end" align="center" margin="auto">
       <AdaptivityProvider sizeY={sizeY}>
-        <Flex.Item flex="grow" style={{ paddingTop: 24, paddingBottom: 24 }}>
+        <Flex.Item flex="grow">
           <Div>
             <Pagination
               navigationButtonsStyle={navigationButtonsStyle}

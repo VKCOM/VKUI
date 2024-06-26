@@ -30,10 +30,6 @@ const FlexContainer = ({ itemsCount, ...props }) => {
 
 const GapSelectValues = [
   {
-    label: '3xs',
-    value: '3xs',
-  },
-  {
     label: '2xs',
     value: '2xs',
   },

@@ -11,7 +11,7 @@ const Example = () => {
 
   return (
     <Flex direction="column">
-      <Flex margin="auto" gap={8}>
+      <Flex margin="auto" gap="m">
         <GridAvatar>{badge}</GridAvatar>
         <GridAvatar src={[getAvatarUrl('user_ji')]}>{badge}</GridAvatar>
         <GridAvatar src={[getAvatarUrl('user_wayshev'), getAvatarUrl('user_mm')]}>

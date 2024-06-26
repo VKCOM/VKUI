@@ -1,9 +1,5 @@
 /* Row Gap */
 
-.-row-gap--3xs {
-  --vkui_internal--row_gap: var(--vkui--spacing_size_3xs);
-}
-
 .-row-gap--2xs {
   --vkui_internal--row_gap: var(--vkui--spacing_size_2xs);
 }
@@ -41,10 +37,6 @@
 }
 
 /* Column Gap */
-
-.-column-gap--3xs {
-  --vkui_internal--column_gap: var(--vkui--spacing_size_3xs);
-}
 
 .-column-gap--2xs {
   --vkui_internal--column_gap: var(--vkui--spacing_size_2xs);

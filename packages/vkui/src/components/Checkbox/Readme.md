@@ -18,7 +18,7 @@
 ```
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-<Flex gap={16} margin="auto">
+<Flex gap="2xl" margin="auto">
   <Checkbox defaultChecked />
   <Checkbox />
   <Checkbox defaultChecked />

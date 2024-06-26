@@ -29,7 +29,7 @@ const OthersFeatures = () => {
         onBadgeChange={setBadge}
         onOverlayChange={setOverlay}
       />
-      <Flex margin="auto" gap={[8, 16]}>
+      <Flex margin="auto" gap={['m', '2xl']}>
         {[16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map((size) => (
           <Image
             key={size}

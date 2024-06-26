@@ -13,7 +13,7 @@
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const Example = () => {
   return (
-    <Flex justify="center" gap={16} margin="auto">
+    <Flex justify="center" gap="2xl" margin="auto">
       <div>
         <IconButton label="Удалить" onClick={noop}>
           <Icon16Delete />

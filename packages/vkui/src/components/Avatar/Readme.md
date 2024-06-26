@@ -55,7 +55,7 @@ const OthersFeatures = () => {
         onBadgeChange={setBadge}
         onOverlayChange={setOverlay}
       />
-      <Flex margin="auto" gap={8}>
+      <Flex margin="auto" gap="m">
         {[16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map((size) => (
           <Avatar
             key={`${size}-${useInitials}`}

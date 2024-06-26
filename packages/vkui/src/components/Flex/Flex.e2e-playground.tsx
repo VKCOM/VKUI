@@ -19,7 +19,7 @@ export const FlexPlayground = (props: ComponentPlaygroundProps) => {
           gap: ['m'],
         },
         {
-          children: [[<ChildNode key="1" />, <ChildNode key="2" />, <ChildNode key="1" />]],
+          children: [[<ChildNode key="1" />, <ChildNode key="2" />, <ChildNode key="3" />]],
           gap: [[8, 16]],
           style: [{ width: 120 }],
         },

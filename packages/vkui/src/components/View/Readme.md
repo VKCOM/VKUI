@@ -210,14 +210,12 @@ const ProfilePanelContent = ({ onSettingsClick, onBack }) => {
         header={<Header>HorizontalScroll</Header>}
         description="Свайпбэк срабатывает либо если мы тянем за левый край экрана, либо если позиция горизонтального скролла равна нулю"
       >
-        <HorizontalScroll>
-          <Flex noWrap>
-            {getRandomUsers(15).map((user) => (
-              <HorizontalCell key={user.id} size="s" header={user.first_name}>
-                <Avatar size={56} src={user.photo_100} />
-              </HorizontalCell>
-            ))}
-          </Flex>
+        <HorizontalScroll inline>
+          {getRandomUsers(15).map((user) => (
+            <HorizontalCell key={user.id} size="s" header={user.first_name}>
+              <Avatar size={56} src={user.photo_100} />
+            </HorizontalCell>
+          ))}
         </HorizontalScroll>
       </Group>
     </React.Fragment>
