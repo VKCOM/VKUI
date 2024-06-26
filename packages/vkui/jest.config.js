@@ -13,7 +13,7 @@ const config = {
   },
   displayName: 'unit',
   roots: [path.join(__dirname, 'src')],
-  setupFilesAfterEnv: [path.join(__dirname, 'jest.setup.js')],
+  setupFilesAfterEnv: [path.join(__dirname, 'jest.setup.ts')],
   testRegex: '\\.test\\.tsx?$',
   collectCoverage: true,
   collectCoverageFrom: ['src/*/**/**.{ts,tsx}'],

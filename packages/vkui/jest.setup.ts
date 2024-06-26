@@ -1,8 +1,10 @@
-require('@testing-library/jest-dom');
+import '@testing-library/jest-dom';
 
 // Не реализован в JSDOM.
 // https://jestjs.io/docs/manual-mocks
 global.DOMRect = class DOMRect {
+  x = 0;
+  y = 0;
   top = 0;
   right = 0;
   bottom = 0;
@@ -19,7 +21,7 @@ global.DOMRect = class DOMRect {
     this.width = width;
     this.height = height;
   }
-  static fromRect(other) {
+  static fromRect(other?: DOMRectInit) {
     return new DOMRect(other?.x, other?.y, other?.width, other?.height);
   }
   toJSON() {
@@ -65,12 +67,12 @@ Element.prototype.scrollTo = jest.fn();
  *
  * Inspired by: https://codesandbox.io/s/bgfz1?file=%2Fsrc%2Findex.test.js%3A70-363
  */
-class TransitionEvent extends global.Event {
-  elapsedTime;
-  propertyName;
-  pseudoElement;
+class TransitionEventImplement extends global.Event {
+  elapsedTime = 0.0;
+  propertyName = '';
+  pseudoElement = '';
 
-  constructor(type, transitionEventInitDict = {}) {
+  constructor(type: string, transitionEventInitDict: TransitionEventInit = {}) {
     super(type, transitionEventInitDict);
 
     this.elapsedTime = transitionEventInitDict.elapsedTime || 0.0;
@@ -79,4 +81,4 @@ class TransitionEvent extends global.Event {
   }
 }
 
-global.TransitionEvent = TransitionEvent;
+global.TransitionEvent = TransitionEventImplement;
