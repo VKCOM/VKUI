@@ -1,6 +1,6 @@
+import {useEffect} from "react";
 import * as React from 'react';
 import { CustomResizeObserver } from '../lib/floating/customResizeObserver';
-import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { useStableCallback } from './useStableCallback';
 
 /**
@@ -12,7 +12,7 @@ export function useResizeObserver(
 ) {
   const stableCallback = useStableCallback(callback);
 
-  useIsomorphicLayoutEffect(
+  useEffect(
     function addResizeObserverHandler() {
       /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
       if (!ref || !ref.current) {
@@ -25,6 +25,6 @@ export function useResizeObserver(
 
       return () => observer.disconnect();
     },
-    [ref, ref?.current],
+    [ref, stableCallback],
   );
 }
