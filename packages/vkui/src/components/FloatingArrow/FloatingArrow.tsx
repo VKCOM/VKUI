@@ -86,10 +86,8 @@ function getArrowPositionData(
     }
   };
 
-  let xOffsetProp = placement.endsWith('end') && isStaticOffset ? 'right' : 'left';
-  let yOffsetProp = placement.endsWith('end') && isStaticOffset ? 'bottom' : 'top';
-
   if (placement.startsWith('top')) {
+    const xOffsetProp = getXOffsetProp(placement, isStaticOffset);
     return [
       'bottom',
       {
@@ -98,6 +96,7 @@ function getArrowPositionData(
       },
     ];
   } else if (placement.startsWith('right')) {
+    const yOffsetProp = getYOffsetProp(placement, isStaticOffset);
     return [
       'left',
       {
@@ -106,6 +105,7 @@ function getArrowPositionData(
       },
     ];
   } else if (placement.startsWith('bottom')) {
+    const xOffsetProp = getXOffsetProp(placement, isStaticOffset);
     return [
       undefined,
       {
@@ -114,6 +114,7 @@ function getArrowPositionData(
       },
     ];
   } else {
+    const yOffsetProp = getYOffsetProp(placement, isStaticOffset);
     return [
       'right',
       {
@@ -122,4 +123,12 @@ function getArrowPositionData(
       },
     ];
   }
+}
+
+function getXOffsetProp(placement: Placement, isStaticOffset: boolean) {
+  return placement.endsWith('end') && isStaticOffset ? 'right' : 'left';
+}
+
+function getYOffsetProp(placement: Placement, isStaticOffset: boolean) {
+  return placement.endsWith('end') && isStaticOffset ? 'bottom' : 'top';
 }
