@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { calculateGap, GapProp } from '../../lib/layouts';
+import { calculateGap, columnGapClassNames, GapsProp, rowGapClassNames } from '../../lib/layouts';
 import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { FlexItem, FlexItemProps } from './FlexItem/FlexItem';
@@ -39,9 +39,10 @@ export interface FlexProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   direction?: 'row' | 'column';
   /**
    * Отступы между элементами.
+   * Значение из списка предопределённых пресетов или число, которое будет приведено к пикселям.
    * Через массив можно задать отступ между столбцами и строками [column, row], если они отличаются.
    */
-  gap?: GapProp;
+  gap?: GapsProp;
   /**
    * Отключает перенос контента, эквивалентно `flex-wrap=nowrap`.
    */
@@ -79,10 +80,10 @@ export const Flex = ({
   const style: CSSCustomProperties = {};
 
   if (typeof rowGap === 'number') {
-    style['--vkui_internal--flex_row_gap'] = `${rowGap}px`;
+    style['--vkui_internal--row_gap'] = `${rowGap}px`;
   }
   if (typeof columnGap === 'number') {
-    style['--vkui_internal--flex_column_gap'] = `${columnGap}px`;
+    style['--vkui_internal--column_gap'] = `${columnGap}px`;
   }
 
   return (
@@ -94,6 +95,8 @@ export const Flex = ({
         reverse && styles['Flex--reverse'],
         direction !== 'row' && styles['Flex--direction-column'],
         margin !== 'none' && styles['Flex--margin-auto'],
+        typeof columnGap === 'string' && columnGapClassNames[columnGap],
+        typeof rowGap === 'string' && rowGapClassNames[rowGap],
         align && alignClassNames[align],
         justify && justifyClassNames[justify],
       )}

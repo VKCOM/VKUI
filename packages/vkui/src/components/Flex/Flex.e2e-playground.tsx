@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Flex, type FlexProps } from './Flex';
 
@@ -11,13 +10,13 @@ export const FlexPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           children: [[<ChildNode key="1" />, <ChildNode key="2" />]],
-          gap: [8],
+          gap: ['m'],
           margin: ['auto'],
         },
         {
           direction: ['row', 'column'],
           children: [[<ChildNode key="1" />, <ChildNode key="2" />]],
-          gap: [8],
+          gap: ['m'],
         },
         {
           children: [[<ChildNode key="1" />, <ChildNode key="2" />, <ChildNode key="1" />]],

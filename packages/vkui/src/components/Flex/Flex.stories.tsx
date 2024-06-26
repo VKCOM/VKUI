@@ -19,7 +19,7 @@ type Story = StoryObj<FlexProps>;
 
 export const Playground: Story = {
   args: {
-    gap: 8,
+    gap: 'm',
     style: { height: '100%' },
   },
   render: (args) => (

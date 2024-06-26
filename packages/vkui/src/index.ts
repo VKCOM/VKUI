@@ -4,6 +4,7 @@ import './styles/dynamicTokens.css';
 import './styles/focusVisible.module.css';
 import './styles/animationFades.module.css';
 import './styles/transformOriginByPlacement.module.css';
+import './styles/gaps.module.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
 export type { AppRootProps } from './components/AppRoot/AppRoot';

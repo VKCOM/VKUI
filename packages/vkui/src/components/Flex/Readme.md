@@ -29,17 +29,52 @@ const FlexContainer = ({ itemsCount, ...props }) => {
 };
 
 const GapSelectValues = [
-  { label: '4', value: 4 },
-  { label: '8', value: 8 },
-  { label: '16', value: 16 },
-  { label: '24', value: 24 },
-  { label: '32', value: 32 },
+  {
+    label: '3xs',
+    value: '3xs',
+  },
+  {
+    label: '2xs',
+    value: '2xs',
+  },
+  {
+    label: 'xs',
+    value: 'xs',
+  },
+  {
+    label: 's',
+    value: 's',
+  },
+  {
+    label: 'm',
+    value: 'm',
+  },
+  {
+    label: 'l',
+    value: 'l',
+  },
+  {
+    label: 'xl',
+    value: 'xl',
+  },
+  {
+    label: '2xl',
+    value: '2xl',
+  },
+  {
+    label: '3xl',
+    value: '3xl',
+  },
+  {
+    label: '4xl',
+    value: '4xl',
+  },
 ];
 
 const Example = () => {
-  const [gap, setGap] = useState(8);
-  const [rowGap, setRowGap] = useState(8);
-  const [columnGap, setColumnGap] = useState(8);
+  const [gap, setGap] = useState('m');
+  const [rowGap, setRowGap] = useState('m');
+  const [columnGap, setColumnGap] = useState('m');
   const [complexGap, setComplexGap] = useState(false);
   const [itemsCount, setItemsCount] = useState(4);
   const [direction, setDirection] = useState('row');
@@ -113,7 +148,7 @@ const Example = () => {
           <FormItem top="gap">
             <Select
               value={gap}
-              onChange={(e) => setGap(Number(e.target.value))}
+              onChange={(e) => setGap(e.target.value)}
               options={GapSelectValues}
             />
           </FormItem>
@@ -122,7 +157,7 @@ const Example = () => {
           <FormItem top="row gap">
             <Select
               value={rowGap}
-              onChange={(e) => setRowGap(Number(e.target.value))}
+              onChange={(e) => setRowGap(e.target.value)}
               options={GapSelectValues}
             />
           </FormItem>
@@ -131,7 +166,7 @@ const Example = () => {
           <FormItem top="column gap">
             <Select
               value={columnGap}
-              onChange={(e) => setColumnGap(Number(e.target.value))}
+              onChange={(e) => setColumnGap(e.target.value)}
               options={GapSelectValues}
             />
           </FormItem>
