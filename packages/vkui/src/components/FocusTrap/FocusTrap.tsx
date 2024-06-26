@@ -130,10 +130,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   );
 
   const restoreFocusImpl = useCallback(() => {
-    const shouldRestoreFocus =
-      typeof restoreFocus === 'function'
-        ? restoreFocus()
-        : restoreFocus;
+    const shouldRestoreFocus = typeof restoreFocus === 'function' ? restoreFocus() : restoreFocus;
 
     if (!restoreFocusTo || !isHTMLElement(restoreFocusTo) || !shouldRestoreFocus) {
       return;

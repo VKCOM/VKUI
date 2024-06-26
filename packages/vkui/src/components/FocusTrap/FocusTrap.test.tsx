@@ -266,11 +266,7 @@ describe(FocusTrap, () => {
         return (
           <>
             {showTrap && (
-              <FocusTrap
-                disabled={disabled}
-                mount={!disabled}
-                restoreFocus={true}
-              >
+              <FocusTrap disabled={disabled} mount={!disabled} restoreFocus={true}>
                 <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
                 <Button data-testid="button-set-disabled" onClick={() => setDisabled(true)}>
                   Кнопка не в FocusTrap

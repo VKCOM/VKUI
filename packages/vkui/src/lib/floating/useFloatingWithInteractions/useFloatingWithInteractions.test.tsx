@@ -33,9 +33,7 @@ const TestComponent = ({
         <span ref={refs.floating} {...floatingProps}>
           <FocusTrap
             autoFocus
-            restoreFocus={
-              restoreFocus ? hookResultRef.current.onRestoreFocus : restoreFocus
-            }
+            restoreFocus={restoreFocus ? hookResultRef.current.onRestoreFocus : restoreFocus}
             onClose={hookResultRef.current.onEscapeKeyDown}
           >
             <input
