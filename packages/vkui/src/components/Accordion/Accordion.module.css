@@ -22,7 +22,7 @@
 }
 
 .AccordionContent__in--enter {
-  animation-name: animation-collapse;
+  animation-name: animation-expand;
 }
 
 @media (--reduce-motion) {
@@ -36,7 +36,7 @@
 }
 
 .AccordionContent__in--exit {
-  animation-name: animation-expand;
+  animation-name: animation-collapse;
 }
 
 @media (--reduce-motion) {
@@ -49,7 +49,7 @@
   block-size: 0;
 }
 
-@keyframes animation-collapse {
+@keyframes animation-expand {
   0% {
     block-size: 0;
   }
@@ -58,7 +58,7 @@
     block-size: var(--vkui_internal--AccordionContent_height);
   }
 }
-@keyframes animation-expand {
+@keyframes animation-collapse {
   0% {
     block-size: var(--vkui_internal--AccordionContent_height);
   }
