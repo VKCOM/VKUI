@@ -99,7 +99,7 @@ function getArrowPositionData(
       'bottom',
       {
         top: '100%',
-        right: withOffset(false),
+        [isStaticOffset ? 'right' : 'left']: withOffset(false),
       },
     ];
   } else if (placement === 'right' || placement === 'right-start') {
@@ -114,7 +114,7 @@ function getArrowPositionData(
     return [
       'left',
       {
-        bottom: withOffset(true),
+        [isStaticOffset ? 'bottom' : 'top']: withOffset(true),
         left: 0,
       },
     ];
@@ -131,14 +131,22 @@ function getArrowPositionData(
       undefined,
       {
         bottom: '100%',
-        right: withOffset(false),
+        [isStaticOffset ? 'right' : 'left']: withOffset(false),
+      },
+    ];
+  } else if (placement === 'left' || placement === 'left-start') {
+    return [
+      'right',
+      {
+        top: withOffset(true),
+        right: 0,
       },
     ];
   } else {
     return [
       'right',
       {
-        top: withOffset(true),
+        [isStaticOffset ? 'bottom' : 'top']: withOffset(true),
         right: 0,
       },
     ];
