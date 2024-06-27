@@ -1,10 +1,10 @@
-import { KeyboardEvent, useCallback } from 'react';
+import { type KeyboardEvent } from 'react';
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
-import { callMultiple } from '../../lib/callMultiple';
+import { pressedKey } from '../../lib/accessibility';
 import { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { DEFAULT_ACTIVE_EFFECT_DELAY } from '../Clickable/useState';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';
@@ -66,15 +66,13 @@ export const Radio = ({
   const { sizeY = 'none' } = useAdaptivity();
   const inputRef = useExternRef<HTMLInputElement>(getRef);
 
-  const onInputKeyUp = useCallback(
-    (e: KeyboardEvent) => {
-      const input = inputRef.current;
-      if (input && !input.checked && e.code === 'Space') {
-        input.click();
-      }
-    },
-    [inputRef],
-  );
+  const onInputKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+    const input = inputRef.current;
+    if (input && !input.checked && pressedKey(e) === 'Space') {
+      input.click();
+    }
+    restProps.onKeyUp && restProps.onKeyUp(e);
+  };
 
   return (
     <Tappable
@@ -101,7 +99,7 @@ export const Radio = ({
         type="radio"
         role="radio"
         getRootRef={inputRef}
-        onKeyUp={callMultiple(onInputKeyUp, restProps.onKeyDown)}
+        onKeyUp={onInputKeyUp}
         className={styles['Radio__input']}
       />
       <div className={styles['Radio__container']}>
