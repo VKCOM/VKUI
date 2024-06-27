@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { DEFAULT_ACTIVE_EFFECT_DELAY } from '../Clickable/useState';
@@ -62,7 +61,6 @@ export const Radio = ({
 }: RadioProps) => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
-  const inputRef = useExternRef<HTMLInputElement>(getRef);
 
   return (
     <Tappable
@@ -88,7 +86,7 @@ export const Radio = ({
         Component="input"
         type="radio"
         role="radio"
-        getRootRef={inputRef}
+        getRootRef={getRef}
         className={styles['Radio__input']}
       />
       <div className={styles['Radio__container']}>
