@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 import { HasRootRef } from '../../../types';
 import { RootComponentProps } from '../../RootComponent/RootComponent';
 import styles from './EllipsisText.module.css';
@@ -42,7 +42,7 @@ const EllipsisText = ({
     if (contentRef && contentRef.current) {
       contentRef.current.style.setProperty('-webkit-line-clamp', maxLines > 1 ? `${maxLines}` : '');
     }
-  }, [contentRef, maxLines])
+  }, [contentRef, maxLines]);
 
   return (
     <span ref={getRootRef} className={classNames(styles['EllipsisText'], className)} {...restProps}>
@@ -51,13 +51,13 @@ const EllipsisText = ({
         ref={contentRef}
         className={classNames(
           styles['EllipsisText__content'],
-          maxLines > 1 && styles['EllipsisText__content--multiline']
+          maxLines > 1 && styles['EllipsisText__content--multiline'],
         )}
       >
         {children}
       </span>
     </span>
-  )
+  );
 };
 
 export { EllipsisText };
