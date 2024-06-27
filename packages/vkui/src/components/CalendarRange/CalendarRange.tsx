@@ -83,6 +83,8 @@ export const CalendarRange = ({
     isDayFocused,
     isDayDisabled,
     resetSelectedDay,
+    isMonthDisabled,
+    isYearDisabled,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
   const [hintedDate, setHintedDate] = React.useState<DateRangeType>();
   const secondViewDate = addMonths(viewDate, 1);
@@ -201,6 +203,8 @@ export const CalendarRange = ({
           changeMonthLabel={changeMonthLabel}
           changeYearLabel={changeYearLabel}
           prevMonthIcon={prevMonthIcon}
+          isMonthDisabled={isMonthDisabled}
+          isYearDisabled={isYearDisabled}
         />
         <CalendarDays
           viewDate={viewDate}
@@ -236,6 +240,8 @@ export const CalendarRange = ({
           changeMonthLabel={changeMonthLabel}
           changeYearLabel={changeYearLabel}
           nextMonthIcon={nextMonthIcon}
+          isMonthDisabled={isMonthDisabled}
+          isYearDisabled={isYearDisabled}
         />
         <CalendarDays
           viewDate={secondViewDate}

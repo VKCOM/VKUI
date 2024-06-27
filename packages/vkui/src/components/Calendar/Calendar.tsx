@@ -123,6 +123,8 @@ export const Calendar = ({
     isDayFocused,
     isDayDisabled,
     resetSelectedDay,
+    isMonthDisabled,
+    isYearDisabled,
   } = useCalendar({
     value,
     disableFuture,
@@ -201,6 +203,8 @@ export const Calendar = ({
         nextMonthIcon={nextMonthIcon}
         prevMonthProps={prevMonthProps}
         nextMonthProps={nextMonthProps}
+        isMonthDisabled={isMonthDisabled}
+        isYearDisabled={isYearDisabled}
       />
       <CalendarDays
         viewDate={externalViewDate || viewDate}

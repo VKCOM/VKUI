@@ -39,6 +39,8 @@ export interface CalendarHeaderProps
   nextMonthIcon?: React.ReactNode;
   prevMonthProps?: ArrowMonthProps;
   nextMonthProps?: ArrowMonthProps;
+  isMonthDisabled?: (monthNumber: number, year?: number) => boolean;
+  isYearDisabled?: (yearNumber: number) => boolean;
   onChange: (viewDate: Date) => void;
   /**
    * Нажатие на кнопку переключения на следующий месяц.
@@ -78,6 +80,8 @@ export const CalendarHeader = ({
       height={30}
     />
   ),
+  isMonthDisabled,
+  isYearDisabled,
   ...restProps
 }: CalendarHeaderProps) => {
   const { locale } = useConfigProvider();
@@ -92,19 +96,27 @@ export const CalendarHeader = ({
     [onChange, viewDate],
   );
 
+  const currentYear = viewDate.getFullYear();
+  const currentMonth = viewDate.getMonth();
+
   const months = React.useMemo(
     () =>
       getMonths(locale).map(({ value, label }) => ({
         value,
         label: <span className={styles['CalendarHeader__month']}>{label}</span>,
+        disabled: isMonthDisabled && isMonthDisabled(value),
       })),
-    [locale],
+    [locale, isMonthDisabled],
   );
 
-  const currentYear = viewDate.getFullYear();
-  const currentMonth = viewDate.getMonth();
-
-  const years = React.useMemo(() => getYears(currentYear, 100), [currentYear]);
+  const years = React.useMemo(
+    () =>
+      getYears(currentYear, 100).map((year) => ({
+        ...year,
+        disabled: isYearDisabled && isYearDisabled(year.value),
+      })),
+    [currentYear, isYearDisabled],
+  );
 
   const formatter = new Intl.DateTimeFormat(locale, {
     year: 'numeric',
@@ -114,10 +126,23 @@ export const CalendarHeader = ({
   const { className: prevMonthClassName, ...restPrevMonthProps } = prevMonthProps;
   const { className: nextMonthClassName, ...restNextMonthProps } = nextMonthProps;
 
-  const nextMonthHidden =
+  let nextMonthHidden =
     nextMonthHiddenProp || (currentMonth === 11 && currentYear === DEFAULT_MAX_YEAR);
-  const prevMonthHidden =
+  if (isMonthDisabled && !nextMonthHidden) {
+    nextMonthHidden = isMonthDisabled(
+      currentMonth === 11 ? 0 : currentMonth + 1,
+      currentMonth === 11 ? Math.min(currentYear + 1, DEFAULT_MAX_YEAR) : currentYear,
+    );
+  }
+
+  let prevMonthHidden =
     prevMonthHiddenProp || (currentMonth === 0 && currentYear === DEFAULT_MIN_YEAR);
+  if (isMonthDisabled && !prevMonthHidden) {
+    prevMonthHidden = isMonthDisabled(
+      currentMonth === 0 ? 11 : currentMonth - 1,
+      currentMonth === 0 ? Math.max(currentYear - 1, DEFAULT_MIN_YEAR) : currentYear,
+    );
+  }
 
   return (
     <RootComponent baseClassName={styles['CalendarHeader']} {...restProps}>
