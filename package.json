@@ -138,6 +138,7 @@
   "packageManager": "yarn@4.3.1",
   "workspaces": {
     "packages": [
+      "benchmark",
       "styleguide",
       "packages/*",
       "tools/*"

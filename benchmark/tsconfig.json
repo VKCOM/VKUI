@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["es6", "dom", "dom.Iterable"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "tmp/.cache/ts",
+    "paths": {
+      "@vkontakte/vkui": ["../packages/vkui/src"]
+    }
+  },
+  "include": ["*.ts*", "**/*.ts*", "*.mjs", "**/*.mjs", "*.js", "**/*.js"],
+  "exclude": ["**/node_modules", "**/dist", "**/tmp"],
+  "files": ["./types/env.d.ts"]
+}
