@@ -14,13 +14,16 @@ export const setDraggingItemShiftStyles = (draggingEl: HTMLElement, nextShiftY: 
   });
 };
 
-export const setSiblingItemsShiftStyles = ([
-  {
-    el,
-    draggingElRect: { height },
-  },
-  direction,
-]: [Omit<SiblingItem, 'shifted'>, Direction], additionalGap = 0,) => {
+export const setSiblingItemsShiftStyles = (
+  [
+    {
+      el,
+      draggingElRect: { height },
+    },
+    direction,
+  ]: [Omit<SiblingItem, 'shifted'>, Direction],
+  additionalGap = 0,
+) => {
   requestAnimationFrame(() => {
     if (direction === 'up') {
       el.style.setProperty('transition', 'transform 0.3s ease-in 0s');
@@ -83,7 +86,10 @@ export const unsetInitialPlaceholderItemStyles = ({ el }: PlaceholderItem) => {
   }
 };
 
-export const setInitialSiblingItemStyles = ({ el, shifted, draggingElRect }: SiblingItem, additionalGap = 0) => {
+export const setInitialSiblingItemStyles = (
+  { el, shifted, draggingElRect }: SiblingItem,
+  additionalGap = 0,
+) => {
   const { height } = draggingElRect;
   requestAnimationFrame(() => {
     el.style.setProperty('pointer-events', 'none');

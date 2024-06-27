@@ -7,7 +7,7 @@ export type ListProps = HTMLAttributesWithRootRef<HTMLDivElement> & {
   /**
    * Задает отступ между элементами
    */
-  gap?: number,
+  gap?: number;
 };
 
 /**
@@ -24,7 +24,11 @@ export const List = ({ children, gap = 0, ...restProps }: ListProps) => {
       {...restProps}
     >
       {children}
-      <div aria-hidden {...DATA_DRAGGABLE_PLACEHOLDER_REACT_PROP} className={styles['List__placeholder']}></div>
+      <div
+        aria-hidden
+        {...DATA_DRAGGABLE_PLACEHOLDER_REACT_PROP}
+        className={styles['List__placeholder']}
+      ></div>
     </RootComponent>
   );
 };

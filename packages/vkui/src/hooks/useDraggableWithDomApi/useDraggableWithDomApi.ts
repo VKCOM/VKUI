@@ -76,9 +76,7 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
   const initializeItems = (draggingEl: HTMLElement) => {
     const draggingElRect = getBoundingClientRect(draggingEl, true);
     const parentElement = draggingEl.parentElement;
-    itemsGapRef.current = parentElement
-      ? parseInt(parentElement.style.gap)
-      : 0;
+    itemsGapRef.current = parentElement ? parseInt(parentElement.style.gap) : 0;
 
     const { children } = parentElement || { children: [] };
     Array.prototype.forEach.call(children, (el: HTMLElement, index) => {
@@ -97,7 +95,9 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
     if (draggingItemRef.current) {
       setInitialDraggingItemStyles(draggingItemRef.current); // 2. repaint
     }
-    siblingItemsRef.current.forEach((sibling) => setInitialSiblingItemStyles(sibling, itemsGapRef.current)); // 2. repaint
+    siblingItemsRef.current.forEach((sibling) =>
+      setInitialSiblingItemStyles(sibling, itemsGapRef.current),
+    ); // 2. repaint
   };
   const cleanupItems = () => {
     if (placeholderItemRef.current) {
