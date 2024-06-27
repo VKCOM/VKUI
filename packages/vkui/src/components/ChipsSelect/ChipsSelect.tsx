@@ -141,6 +141,8 @@ export const ChipsSelect = <Option extends ChipOption>({
   noMaxHeight = false,
   filterFn = defaultFilterFn,
   dropdownTestId,
+  onClose,
+  onOpen,
 
   // ChipsInputProps
   getRef,
@@ -204,6 +206,8 @@ export const ChipsSelect = <Option extends ChipOption>({
     creatable,
     filterFn,
     selectedBehavior,
+    onClose,
+    onOpen,
 
     // other
     disabled,
