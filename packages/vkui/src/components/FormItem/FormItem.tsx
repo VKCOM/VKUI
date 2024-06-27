@@ -29,7 +29,7 @@ export interface FormItemProps
     HasComponent,
     RemovableProps {
   top?: React.ReactNode;
-  topId?: string,
+  topId?: string;
   /**
    * Многострочный вывод заголовка. По умолчанию текст не переносится при переполнении.
    */
@@ -104,7 +104,12 @@ export const FormItem = ({
         topNode
       ) : hasReactNode(top) ? (
         <FormItemTop>
-          <FormItemTopLabel htmlFor={htmlFor} Component={topComponentProp} multiline={topMultiline} id={topId}>
+          <FormItemTopLabel
+            htmlFor={htmlFor}
+            Component={topComponentProp}
+            multiline={topMultiline}
+            id={topId}
+          >
             {top}
           </FormItemTopLabel>
         </FormItemTop>

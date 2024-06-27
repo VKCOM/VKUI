@@ -1,8 +1,8 @@
-import {fireEvent, render, screen} from "@testing-library/react";
-import {act} from "react";
-import {getDocumentBody} from "../../lib/dom";
-import {baselineComponent, fakeTimers, userEvent} from '../../testing/utils';
-import {Radio} from "../Radio/Radio";
+import { act } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { getDocumentBody } from '../../lib/dom';
+import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import { Radio } from '../Radio/Radio';
 import { RadioGroup } from './RadioGroup';
 
 describe('RadioGroup', () => {
@@ -13,35 +13,37 @@ describe('RadioGroup', () => {
     render(
       <>
         <span id="title">Title</span>
-        <RadioGroup
-          aria-labelledby="title"
-        >
+        <RadioGroup aria-labelledby="title">
           <Radio name="test">Classic</Radio>
           <Radio name="test">Regular</Radio>
         </RadioGroup>
-      </>
-    )
+      </>,
+    );
 
     const radioComponent = screen.getByRole<HTMLInputElement>('radiogroup');
     expect(radioComponent).toBeTruthy();
 
-    expect(radioComponent.getAttribute('aria-labelledby')).toBe("title")
-  })
+    expect(radioComponent.getAttribute('aria-labelledby')).toBe('title');
+  });
 
   it('check navigation by radio buttons', async () => {
     render(
       <RadioGroup>
-        <Radio name="test" value="classic" data-testid="classic">Classic</Radio>
-        <Radio name="test" value="regular" data-testid="regular">Regular</Radio>
-      </RadioGroup>
-    )
+        <Radio name="test" value="classic" data-testid="classic">
+          Classic
+        </Radio>
+        <Radio name="test" value="regular" data-testid="regular">
+          Regular
+        </Radio>
+      </RadioGroup>,
+    );
     expect(getDocumentBody()).toHaveFocus();
 
     const checkRadioFocusAndChecked = (testId: string) => {
       const radio = screen.getByTestId<HTMLInputElement>(testId);
       expect(radio).toHaveFocus();
       expect(radio).toBeChecked();
-    }
+    };
 
     await userEvent.tab();
     expect(screen.getByTestId<HTMLInputElement>('classic')).toHaveFocus();
@@ -60,15 +62,19 @@ describe('RadioGroup', () => {
 
     await userEvent.tab();
     expect(getDocumentBody()).toHaveFocus();
-  })
+  });
 
   it('check keydown space when radio not checked', async () => {
     render(
       <RadioGroup>
-        <Radio name="test" value="classic" data-testid="classic">Classic</Radio>
-        <Radio name="test" value="regular" data-testid="regular">Regular</Radio>
-      </RadioGroup>
-    )
+        <Radio name="test" value="classic" data-testid="classic">
+          Classic
+        </Radio>
+        <Radio name="test" value="regular" data-testid="regular">
+          Regular
+        </Radio>
+      </RadioGroup>,
+    );
 
     const radioButton = screen.getByTestId<HTMLInputElement>('classic');
     if (!radioButton) {
@@ -80,10 +86,10 @@ describe('RadioGroup', () => {
     expect(radioButton).toHaveFocus();
 
     await act(async () => {
-      fireEvent.keyUp(screen.getByTestId('classic'), {code: 'Space', key: ' '})
-    })
+      fireEvent.keyUp(screen.getByTestId('classic'), { code: 'Space', key: ' ' });
+    });
 
     expect(radioButton).toHaveFocus();
     expect(radioButton).toBeChecked();
-  })
+  });
 });
