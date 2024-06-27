@@ -38,6 +38,14 @@ export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
    */
   selectedBehavior?: 'hide' | 'highlight';
   filterFn?: false | FilterFn<O>;
+  /**
+   * Будет вызвано в момент скрытия выпадающего списка
+   */
+  onClose?: VoidFunction;
+  /**
+   * Будет вызвано в момент открытия выпадающего списка
+   */
+  onOpen?: VoidFunction;
 }
 
 export const useChipsSelect = <O extends ChipOption>({
@@ -63,6 +71,8 @@ export const useChipsSelect = <O extends ChipOption>({
   filterFn = defaultFilterFn,
   selectedBehavior = DEFAULT_SELECTED_BEHAVIOR,
   options: optionsProp = DEFAULT_VALUE,
+  onClose,
+  onOpen,
 }: UseChipsSelectProps<O>) => {
   const { value, inputValue, onInputChange, ...restChipsInputProps } = useChipsInput({
     // option
@@ -102,16 +112,24 @@ export const useChipsSelect = <O extends ChipOption>({
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | null>(0);
   const [focusedOption, setFocusedOption] = React.useState<O | null>(null);
 
+  const handleOpened = React.useCallback(
+    (openedProp: boolean) => {
+      openedProp ? onOpen?.() : onClose?.();
+      setOpened(openedProp);
+    },
+    [onOpen, onClose],
+  );
+
   const handleInputChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       onInputChange(event);
 
       if (!opened) {
-        setOpened(true);
+        handleOpened(true);
         setFocusedOptionIndex(0);
       }
     },
-    [onInputChange, opened],
+    [onInputChange, opened, handleOpened],
   );
 
   useIsomorphicLayoutEffect(
@@ -166,7 +184,7 @@ export const useChipsSelect = <O extends ChipOption>({
     // dropdown states
     options,
     opened,
-    setOpened,
+    setOpened: handleOpened,
     focusedOption,
     focusedOptionIndex,
     setFocusedOption,
