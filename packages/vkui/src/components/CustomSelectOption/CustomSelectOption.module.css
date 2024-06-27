@@ -52,6 +52,7 @@
 
 .CustomSelectOption__children {
   min-inline-size: 0;
+  word-break: break-all;
 }
 
 .CustomSelectOption__after {
