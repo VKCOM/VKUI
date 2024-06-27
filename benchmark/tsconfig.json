@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "classnameTransform": "asIs",
+          "customMatcher": "\\.module\\.css$"
+        }
+      }
+    ]
+  },
+  "include": ["*.ts*", "**/*.ts*", "*.mjs", "**/*.mjs", "*.js", "**/*.js"],
+  "files": ["./types/env.d.ts"]
+}

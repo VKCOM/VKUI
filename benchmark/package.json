@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "name": "benchmark",
+  "packageManager": "yarn@3.6.3",
+  "scripts": {
+    "browser:build": "webpack --config browser/webpack.config.mjs",
+    "browser:server": "node browser/http-server.mjs",
+    "browser:benchmark": "../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
+    "browser:benchmark:ci": "yarn run -T playwright test --config browser/playwright.config.ts",
+    "browser:docker:clear-playwright-cache": "../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker rm -f && docker volume rm benchmark_benchmark_playwright_cache"
+  },
+  "dependencies": {
+    "@playwright/test": "1.44.1",
+    "@swc/core": "^1.5.25",
+    "@vkontakte/vkui": "workspace:packages/vkui",
+    "css-loader": "^6.10.0",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "dotenv": "^16.4.5",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.9.0",
+    "playwright": "1.44.1",
+    "postcss": "^8.4.38",
+    "postcss-modules": "^6.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "serve-handler": "^6.1.5",
+    "swc-loader": "^0.2.6",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.91.0"
+  }
+}
