@@ -22,7 +22,7 @@ export const OnboardingTooltipPlayground = (props: ComponentPlaygroundProps) => 
           arrowOffset: [15, -15],
         },
         {
-          placement: ['top'],
+          placement: ['top-start', 'top-end', 'bottom-start', 'bottom-end'],
           arrowOffset: [10, -1],
           isStaticArrowOffset: [true],
         },

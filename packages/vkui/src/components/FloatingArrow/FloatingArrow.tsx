@@ -87,36 +87,48 @@ function getArrowPositionData(
   };
 
   if (placement.startsWith('top')) {
+    const xOffsetProp = getXOffsetProp(placement, isStaticOffset);
     return [
       'bottom',
       {
         top: '100%',
-        left: withOffset(false),
+        [xOffsetProp]: withOffset(false),
       },
     ];
   } else if (placement.startsWith('right')) {
+    const yOffsetProp = getYOffsetProp(placement, isStaticOffset);
     return [
       'left',
       {
-        top: withOffset(true),
+        [yOffsetProp]: withOffset(true),
         left: 0,
       },
     ];
   } else if (placement.startsWith('bottom')) {
+    const xOffsetProp = getXOffsetProp(placement, isStaticOffset);
     return [
       undefined,
       {
         bottom: '100%',
-        left: withOffset(false),
+        [xOffsetProp]: withOffset(false),
       },
     ];
   } else {
+    const yOffsetProp = getYOffsetProp(placement, isStaticOffset);
     return [
       'right',
       {
-        top: withOffset(true),
+        [yOffsetProp]: withOffset(true),
         right: 0,
       },
     ];
   }
+}
+
+function getXOffsetProp(placement: Placement, isStaticOffset: boolean) {
+  return placement.endsWith('end') && isStaticOffset ? 'right' : 'left';
+}
+
+function getYOffsetProp(placement: Placement, isStaticOffset: boolean) {
+  return placement.endsWith('end') && isStaticOffset ? 'bottom' : 'top';
 }
