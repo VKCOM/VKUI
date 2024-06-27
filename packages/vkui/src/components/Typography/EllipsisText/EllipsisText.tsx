@@ -1,5 +1,5 @@
-import { classNames } from '@vkontakte/vkjs';
 import { useEffect, useRef } from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { HasRootRef } from '../../../types';
 import { RootComponentProps } from '../../RootComponent/RootComponent';
 import styles from './EllipsisText.module.css';
