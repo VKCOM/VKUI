@@ -239,5 +239,64 @@ describe(FocusTrap, () => {
       await userEvent.tab();
       expect(result.getByTestId('last')).toHaveFocus();
     });
+
+    it('disabled FocusTrap navigation', async () => {
+      const result = render(
+        <>
+          <FocusTrap disabled={true}>
+            <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
+          </FocusTrap>
+          <Button data-testid="button-out-trap">Кнопка не в FocusTrap</Button>
+        </>,
+      );
+
+      await act(async () => {
+        result.getByTestId('button-in-trap')?.focus();
+      });
+
+      await userEvent.tab();
+
+      expect(result.getByTestId('button-out-trap')).toHaveFocus();
+    });
+
+    it('should restore focus when mount become true', async () => {
+      const Fixture = () => {
+        const [showTrap, setShowTrap] = useState(false);
+        const [disabled, setDisabled] = useState(false);
+        return (
+          <>
+            {showTrap && (
+              <FocusTrap disabled={disabled} mount={!disabled} restoreFocus={true}>
+                <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
+                <Button data-testid="button-set-disabled" onClick={() => setDisabled(true)}>
+                  Кнопка не в FocusTrap
+                </Button>
+              </FocusTrap>
+            )}
+            <Button data-testid="button-show-trap" onClick={() => setShowTrap(true)}>
+              Кнопка не в FocusTrap
+            </Button>
+          </>
+        );
+      };
+
+      const result = render(<Fixture />);
+
+      await act(async () => {
+        const showButton = result.getByTestId('button-show-trap');
+        showButton?.focus();
+        showButton?.click();
+      });
+
+      await userEvent.tab();
+
+      expect(result.getByTestId('button-set-disabled')).toHaveFocus();
+
+      await act(async () => {
+        result.getByTestId('button-set-disabled').click();
+      });
+
+      await waitFor(() => expect(result.getByTestId('button-show-trap')).toHaveFocus());
+    });
   });
 });
