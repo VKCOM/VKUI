@@ -43,6 +43,7 @@ export type {
   UnstyledTextFieldProps,
 } from './components/UnstyledTextField/UnstyledTextField';
 export { Tappable } from './components/Tappable/Tappable';
+export { DisableClickableLockStateContext } from './components/Clickable/useState';
 export type { TappableProps } from './components/Tappable/Tappable';
 export { FixedLayout } from './components/FixedLayout/FixedLayout';
 export type { FixedLayoutProps } from './components/FixedLayout/FixedLayout';
