@@ -1,7 +1,6 @@
 import { ruleName } from './index.js';
 
 testRule({
-  plugins: ['.'],
   ruleName,
   config: true,
 

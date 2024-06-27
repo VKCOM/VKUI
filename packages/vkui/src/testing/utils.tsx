@@ -8,7 +8,7 @@ import { configureAxe, toHaveNoViolations } from 'jest-axe';
 import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
-import { REDUCE_MOTION_MEDIA_QUERY } from '../lib/animation/useReducedMotion';
+import { REDUCE_MOTION_MEDIA_QUERY } from '../lib/animation';
 import { isHTMLElement } from '../lib/dom';
 import { ImgOnlyAttributes } from '../lib/utils';
 import { HasChildren } from '../types';
@@ -367,7 +367,11 @@ export const fireEventPatch = async <E extends EventType>(
     case 'blur':
       if (isHTMLElement(el)) {
         await act(async () => {
-          el.blur();
+          if (options) {
+            fireEvent[eventType](el, options);
+          } else {
+            el.blur();
+          }
           await waitRAF();
         });
       }
@@ -385,7 +389,7 @@ export const fireEventPatch = async <E extends EventType>(
 };
 
 export async function waitCSSKeyframesAnimation(
-  el: HTMLElement,
+  el: HTMLElement | null,
   options = { runOnlyPendingTimers: false },
 ) {
   const { runOnlyPendingTimers } = options;
@@ -394,6 +398,10 @@ export async function waitCSSKeyframesAnimation(
   act(runOnlyPendingTimers ? jest.runOnlyPendingTimers : noop);
   await fireEventPatch(el, 'animationStart');
   await fireEventPatch(el, 'animationEnd');
+}
+
+export async function waitCSSTransitionEnd(el: HTMLElement | null, eventData?: object) {
+  await fireEventPatch(el, 'transitionEnd', new TransitionEvent('transitionend', eventData));
 }
 
 export const withRegExp = (v: string) => new RegExp(v);

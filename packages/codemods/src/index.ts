@@ -102,8 +102,11 @@ const run = async () => {
 
   logger.info(
     `
-    All done! Please check if everything is applied correctly. 
+    All done! Please check that everything is applied correctly. 
     If it's not the case - feel free to contact VKUI Team. 
+    Do not forget to run ${chalk.cyan.bold(
+      'prettier',
+    )} to eliminate unwanted code formatting after applying migrations. 
     Happy coding with ${chalk.green.bold('v6')}!`,
   );
 };

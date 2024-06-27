@@ -65,7 +65,7 @@ const OthersFeatures = () => {
       >
         {[16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map((size) => (
           <Avatar
-            key={size}
+            key={`${size}-${useInitials}`}
             size={size}
             src={useInitials ? undefined : getAvatarUrl('user_id34')}
             gradientColor={gradientColor}

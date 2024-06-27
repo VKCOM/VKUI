@@ -10,6 +10,7 @@ import {
   isSameMonth,
   isWithinInterval,
   startOfDay,
+  subMonths,
 } from '../../lib/date';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
@@ -182,6 +183,11 @@ export const CalendarRange = ({
     [hintedDate],
   );
 
+  const onRightPartViewDateChange = React.useCallback(
+    (newDate: Date) => setViewDate(subMonths(newDate, 1)),
+    [setViewDate],
+  );
+
   return (
     <RootComponent {...props} baseClassName={styles['CalendarRange']}>
       <div className={styles['CalendarRange__inner']}>
@@ -224,7 +230,7 @@ export const CalendarRange = ({
       <div className={styles['CalendarRange__inner']}>
         <CalendarHeader
           viewDate={secondViewDate}
-          onChange={setViewDate}
+          onChange={onRightPartViewDateChange}
           prevMonthHidden
           onNextMonth={setNextMonth}
           disablePickers={disablePickers}

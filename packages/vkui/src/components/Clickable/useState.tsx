@@ -38,6 +38,13 @@ export interface StateProps {
   hoverClassName?: string;
 }
 
+interface StateHookProps extends StateProps {
+  /**
+   * Блокирование активации состояний
+   */
+  lockState: boolean;
+}
+
 export const DEFAULT_ACTIVE_EFFECT_DELAY = 600;
 
 export const ACTIVE_DELAY = 70;
@@ -45,10 +52,10 @@ export const ACTIVE_DELAY = 70;
 /**
  * Управляет наведением на компонент, игнорирует тач события
  */
-function useHover({ hovered, hoverClassName, hasHover = true }: StateProps) {
+function useHover({ hovered, hoverClassName, hasHover = true, lockState }: StateHookProps) {
   const [hoveredState, setHover] = React.useState(false);
 
-  const hover = hasHover && (hovered || hoveredState) ? hoverClassName : undefined;
+  const hover = hasHover && !lockState && (hovered || hoveredState) ? hoverClassName : undefined;
 
   const onPointerEnter: React.PointerEventHandler<any> = (e) => {
     if (e.pointerType === 'touch') {
@@ -77,13 +84,15 @@ function useActive({
   activeClassName,
   activeEffectDelay,
   hasActive = true,
-}: StateProps) {
+  lockState,
+}: StateHookProps) {
   const [activatedState, setActivated] = useStateWithDelay(false);
 
   // Список нажатий которые не требуется отменять
   const pointersUp = React.useMemo(() => new Set<number>(), []);
 
-  const active = hasActive && (activated || activatedState) ? activeClassName : undefined;
+  const active =
+    hasActive && !lockState && (activated || activatedState) ? activeClassName : undefined;
 
   const onPointerDown = () => setActivated(true, ACTIVE_DELAY);
   const onPointerCancel: React.PointerEventHandler = (e) => {
@@ -133,8 +142,9 @@ export function useState({ hasHover, hasActive, ...restProps }: StateProps) {
   const [lockState, setLockBubbling, setLockBubblingImmediate] = useLockState();
 
   const props = {
-    hasHover: hasHover && !lockState,
-    hasActive: hasActive && !lockState,
+    hasHover,
+    hasActive,
+    lockState,
     ...restProps,
   };
 

@@ -37,8 +37,6 @@ on:
 jobs:
   publish:
     concurrency: ci-gh-pages
-    outputs:
-      release_tag: ${{ steps.complete_publish.outputs.git_release_tag }}
     permissions:
       id-token: write
     runs-on: ubuntu-latest
@@ -74,16 +72,5 @@ jobs:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           npm_token: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
           npm_tag: ${{ inputs.latest == true && 'latest' || 'legacy' }}
+          close_milestone: ${{ inputs.close_milestone == true }}
           disable_git_tag_with_namespace: ${{ inputs.package_name == '@vkontakte/vkui' }}
-
-  close_milestone:
-    needs: ['publish']
-    if: ${{ fromJson(inputs.close_milestone) == true }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Close milestone, comment on issues and release notes
-        uses: VKCOM/gh-actions/VKUI/complete-publish@main
-        with:
-          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          releaseTag: ${{ needs.publish.outputs.release_tag }}
-          latest: ${{ inputs.latest }}

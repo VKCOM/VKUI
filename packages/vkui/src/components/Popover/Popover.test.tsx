@@ -1,3 +1,5 @@
+'use no memo';
+
 import * as React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
@@ -6,8 +8,8 @@ import styles from './Popover.module.css';
 
 describe(Popover, () => {
   baselineComponent((props) => (
-    <Popover defaultShown {...props}>
-      <div>Test</div>
+    <Popover defaultShown {...props} aria-label="меню базового компонента">
+      <button aria-label="greetings dialog">Test</button>
     </Popover>
   ));
 
@@ -33,11 +35,11 @@ describe(Popover, () => {
       <Popover
         shown={shown}
         id="menu"
-        role="menu"
+        role="dialog"
         aria-labelledby="target"
-        content={<div role="menuitem">1</div>}
+        content={<button>1</button>}
       >
-        <div id="target" aria-haspopup="true" aria-controls="menu" data-testid="target">
+        <div id="target" aria-controls="menu" data-testid="target">
           Target
         </div>
       </Popover>
@@ -182,5 +184,37 @@ describe(Popover, () => {
     await waitForFloatingPosition();
     expect(result.queryByTestId('popover')).not.toBeInTheDocument();
     expect(onShownChange).toHaveBeenCalledWith(false, 'callback');
+  });
+
+  it('check keepMounted=true, popover not unmount when close', async () => {
+    let shown = true;
+
+    const getFixture = () => {
+      return (
+        <Popover
+          shown={shown}
+          content="Some popover"
+          aria-describedby="target"
+          role="tooltip"
+          data-testid="popover"
+          keepMounted
+        >
+          <div id="target">Target</div>
+        </Popover>
+      );
+    };
+
+    const result = render(getFixture());
+    await waitForFloatingPosition();
+
+    expect(result.getByTestId('popover').parentElement).not.toHaveClass(styles['Popover--hidden']);
+
+    shown = false;
+    result.rerender(getFixture());
+
+    await waitForFloatingPosition();
+
+    expect(result.getByTestId('popover')).toBeInTheDocument();
+    expect(result.getByTestId('popover').parentElement).toHaveClass(styles['Popover--hidden']);
   });
 });

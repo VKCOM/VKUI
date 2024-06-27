@@ -1,10 +1,10 @@
 import { Icon12Add } from '@vkontakte/icons';
-import { VisuallyHidden } from '../vkui';
+import { VisuallyHidden } from '../components/VisuallyHidden/VisuallyHidden';
 import { hasAccessibleName, injectAriaExpandedPropByRole } from './accessibility';
 
 describe('accessibility utils', () => {
   describe('injectAriaExpandedPropByRole()', () => {
-    it.each(['menu', 'application', 'tab', 'menuitem', 'treeitem', 'gridcell'])(
+    it.each(['dialog', 'menu', 'application', 'tab', 'menuitem', 'treeitem', 'gridcell'])(
       'should injects aria-expanded attribute to provided props when role="%s"',
       (role) => {
         expect(injectAriaExpandedPropByRole({}, true, role)).toEqual({ 'aria-expanded': true });

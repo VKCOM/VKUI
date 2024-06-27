@@ -66,11 +66,13 @@
 
 /* mode="accent" */
 .TabsItem--mode-accent {
-  transition: background-color 150ms ease-out, box-shadow 150ms ease-out;
+  transition:
+    background-color 150ms ease-out,
+    box-shadow 150ms ease-out;
 }
 
 .TabsItem--selected.TabsItem--mode-accent {
-  background-color: var(--vkui--color_background_modal);
+  background-color: var(--vkui--color_background_contrast_themed);
   box-shadow: var(--vkui--elevation2);
 }
 
@@ -145,6 +147,14 @@
 /* Элемент */
 .TabsItem__after {
   margin-inline-start: 6px;
+  color: var(--vkui--color_icon_medium);
+}
+
+.TabsItem--selected .TabsItem__after {
+  color: var(--vkui--color_icon_primary);
+}
+
+.TabsItem--mode-accent.TabsItem--selected .TabsItem__after {
   color: var(--vkui--color_icon_accent_themed);
 }
 

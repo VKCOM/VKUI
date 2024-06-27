@@ -46,8 +46,6 @@ https://github.com/VKCOM/VKUI/pull/3641
   overflow: hidden;
   border-radius: inherit;
   transition: background-color 0.15s ease-out;
-  /* Fix for Safari: css animation + border-radius + overflow ignores parent border-radius */
-  will-change: transform;
 }
 
 /**

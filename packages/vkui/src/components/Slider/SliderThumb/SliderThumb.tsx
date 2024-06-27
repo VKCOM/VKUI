@@ -23,6 +23,7 @@ interface SliderThumbProps extends HasRootRef<HTMLSpanElement>, HasDataAttribute
     React.RefAttributes<HTMLInputElement> &
     HasDataAttribute;
   withTooltip?: boolean;
+  isActive?: boolean;
 }
 
 export const SliderThumb = ({
@@ -30,9 +31,10 @@ export const SliderThumb = ({
   getRootRef,
   inputProps,
   withTooltip,
+  isActive,
   ...restProps
 }: SliderThumbProps) => {
-  const { focusVisible, onBlur, onFocus } = useFocusVisible(false);
+  const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({
     focusVisible,
     mode: styles['SliderThumb--focus-visible'],
@@ -74,7 +76,7 @@ export const SliderThumb = ({
 
   const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
 
-  const shouldShowTooltip = withTooltip && (focusVisible || isHovered);
+  const shouldShowTooltip = withTooltip && (focusVisible || isHovered || isActive);
 
   const inputValue = inputProps && inputProps.value;
   React.useEffect(
@@ -93,7 +95,13 @@ export const SliderThumb = ({
         ref={handleRootRef}
         onMouseEnter={setHoveredTrue}
         onMouseLeave={setHoveredFalse}
-        className={classNames(styles['SliderThumb'], focusVisibleClassNames, className)}
+        className={classNames(
+          styles['SliderThumb'],
+          focusVisibleClassNames,
+          isActive && styles['SliderThumb--active'],
+          isHovered && styles['SliderThumb--hover'],
+          className,
+        )}
       >
         <input
           {...inputProps}

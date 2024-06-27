@@ -2,11 +2,8 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
-import { useTimeout } from '../../hooks/useTimeout';
-import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { blurActiveElement, canUseDOM, useDOM } from '../../lib/dom';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { animationEvent } from '../../lib/supportEvents';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -134,13 +131,6 @@ export const View = ({
   const iOSSwipeBackSimulationEnabled =
     !disableAnimation && platform === 'ios' && configProvider.isWebView && Boolean(onSwipeBack);
 
-  const pickPanel = (id: string | null) => {
-    if (id === null) {
-      return null;
-    }
-    return panelNodes.current[id];
-  };
-
   const flushTransition = React.useCallback(
     (prevPanel: string, isBackTransition: boolean) => {
       if (isBackTransition) {
@@ -171,26 +161,11 @@ export const View = ({
     afterTransition.current = noop;
   }, [afterTransition.current]);
 
-  const transitionEndHandler = React.useCallback(
-    (e?: React.AnimationEvent): void => {
-      if (
-        (!e ||
-          [
-            styles['animation-ios-next-forward'],
-            styles['animation-ios-prev-back'],
-            styles['animation-view-next-forward'],
-            styles['animation-view-prev-back'],
-          ].includes(e.animationName)) &&
-        prevPanel !== null
-      ) {
-        flushTransition(prevPanel, Boolean(isBack));
-      }
-    },
-    [flushTransition, isBack, prevPanel],
-  );
-
-  const { waitTransitionFinish } = useWaitTransitionFinish();
-  const animationFinishTimeout = useTimeout(transitionEndHandler, platform === 'ios' ? 600 : 300);
+  const onAnimationEnd = React.useCallback(() => {
+    if (prevPanel !== null) {
+      flushTransition(prevPanel, Boolean(isBack));
+    }
+  }, [flushTransition, isBack, prevPanel]);
 
   const onSwipeBackSuccess = React.useCallback(() => {
     onSwipeBack && onSwipeBack();
@@ -206,24 +181,15 @@ export const View = ({
     setSwipeBackShift(0);
   }, [onSwipeBackCancelProp]);
 
-  const swipingBackTransitionEndHandler = React.useCallback(
-    (e?: TransitionEvent): void => {
-      // indexOf because of vendor prefixes in old browsers
-      if (
-        !e ||
-        (e?.propertyName.includes('transform') && e?.target === pickPanel(swipeBackNextPanel))
-      ) {
-        switch (swipeBackResult) {
-          case 'fail':
-            onSwipeBackCancel();
-            break;
-          case 'success':
-            onSwipeBackSuccess();
-        }
-      }
-    },
-    [onSwipeBackCancel, onSwipeBackSuccess, swipeBackNextPanel, swipeBackResult],
-  );
+  const swipingBackTransitionEndHandler = React.useCallback(() => {
+    switch (swipeBackResult) {
+      case 'fail':
+        onSwipeBackCancel();
+        break;
+      case 'success':
+        onSwipeBackSuccess();
+    }
+  }, [onSwipeBackCancel, onSwipeBackSuccess, swipeBackResult]);
 
   const handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: TouchEvent) => {
     if (browserSwipe) {
@@ -300,7 +266,6 @@ export const View = ({
 
   const handleTouchEndForIOSSwipeBackSimulation = (event: TouchEvent) => {
     swipeBackPrevented.current = false;
-
     if (swipingBack) {
       const speed = (swipeBackShift / event.duration) * 1000;
       if (swipeBackShift === 0) {
@@ -366,6 +331,12 @@ export const View = ({
     };
   };
 
+  const onTransitionEnd = (event: React.TransitionEvent<HTMLDivElement>) => {
+    if (event.propertyName.includes('transform')) {
+      swipingBackTransitionEndHandler();
+    }
+  };
+
   React.useEffect(() => {
     // Нужен переход
     if (
@@ -392,11 +363,6 @@ export const View = ({
         setActivePanel(null);
         setAnimated(true);
         setIsBack(isBackTransition);
-
-        // Фолбек анимации перехода
-        if (!animationEvent.supported) {
-          animationFinishTimeout.set();
-        }
       }
     }
 
@@ -432,13 +398,7 @@ export const View = ({
     }
 
     // Началась анимация завершения свайпа назад.
-    if (!prevSwipeBackResult && swipeBackResult) {
-      waitTransitionFinish(
-        pickPanel(swipeBackNextPanel),
-        swipingBackTransitionEndHandler,
-        platform === 'ios' ? 600 : 300,
-      );
-    }
+    // см. `onTransitionEnd()`
 
     // Закончился Safari свайп
     if (prevActivePanel !== activePanelProp && browserSwipe) {
@@ -452,13 +412,11 @@ export const View = ({
   }, [
     activePanelProp,
     activePanel,
-    animationFinishTimeout,
     browserSwipe,
     children,
     disableAnimation,
     document,
     flushTransition,
-    platform,
     prevActivePanel,
     prevBrowserSwipe,
     prevOnTransition,
@@ -468,8 +426,6 @@ export const View = ({
     scroll,
     swipeBackNextPanel,
     swipeBackResult,
-    swipingBackTransitionEndHandler,
-    waitTransitionFinish,
   ]);
 
   React.useEffect(
@@ -516,32 +472,49 @@ export const View = ({
           iOSSwipeBackSimulationEnabled
             ? handleTouchMoveXForIOSSwipeBackSimulation
             : platform === 'ios'
-            ? handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
-            : undefined
+              ? handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
+              : undefined
         }
         onEnd={iOSSwipeBackSimulationEnabled ? handleTouchEndForIOSSwipeBackSimulation : undefined}
       >
         <div className={styles['View__panels']}>
           {panels.map((panel: React.ReactElement) => {
             const panelId = getNavId(panel.props, warn);
-            const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
-            const isTransitionTarget = animated && panelId === (isBack ? prevPanel : nextPanel);
-            const compensateScroll =
-              isPrev || panelId === swipeBackNextPanel || (panelId === nextPanel && isBack);
+
+            const isPanelActive = panelId === activePanel;
+            const isPanelPrev = panelId === prevPanel;
+            const isPanelNext = panelId === nextPanel;
+            const isAnimatedTarget = animated && (isBack ? isPanelPrev : isPanelNext);
+
+            const isSwipeBackPrev = panelId === swipeBackPrevPanel;
+            const isSwipeBackNext = panelId === swipeBackNextPanel;
+            const isSwipeBackTarget = !prevSwipeBackResult && swipeBackResult && isSwipeBackNext;
+
+            let scrollCompensateStyle: React.CSSProperties | undefined = undefined;
+
+            if (isPanelPrev || (isPanelNext && isBack) || isSwipeBackPrev || isSwipeBackNext) {
+              const marginTop = scrolls.current[panelId];
+              if (marginTop !== undefined) {
+                scrollCompensateStyle = { marginTop: -1 * marginTop };
+              }
+            }
 
             return (
               <div
                 className={classNames(
                   styles['View__panel'],
-                  panelId === activePanel && styles['View__panel--active'],
-                  panelId === prevPanel && styles['View__panel--prev'],
-                  panelId === nextPanel && styles['View__panel--next'],
-                  panelId === swipeBackPrevPanel && styles['View__panel--swipe-back-prev'],
-                  panelId === swipeBackNextPanel && styles['View__panel--swipe-back-next'],
+
+                  isPanelActive && styles['View__panel--active'],
+                  isPanelPrev && styles['View__panel--prev'],
+                  isPanelNext && styles['View__panel--next'],
+
+                  isSwipeBackPrev && styles['View__panel--swipe-back-prev'],
+                  isSwipeBackNext && styles['View__panel--swipe-back-next'],
                   swipeBackResult === 'success' && styles['View__panel--swipe-back-success'],
                   swipeBackResult === 'fail' && styles['View__panel--swipe-back-failed'],
                 )}
-                onAnimationEnd={isTransitionTarget ? transitionEndHandler : undefined}
+                onTransitionEnd={isSwipeBackTarget ? onTransitionEnd : undefined}
+                onAnimationEnd={isAnimatedTarget ? onAnimationEnd : undefined}
                 ref={(el) => panelId !== undefined && (panelNodes.current[panelId] = el)}
                 style={calcPanelSwipeStyles(panelId)}
                 key={panelId}
@@ -552,12 +525,7 @@ export const View = ({
                     style={calcPanelSwipeBackOverlayStyles(panelId)}
                   />
                 )}
-                <div
-                  className={styles['View__panel-in']}
-                  style={{
-                    marginTop: compensateScroll ? -(scrolls.current[panelId] ?? 0) : undefined,
-                  }}
-                >
+                <div className={styles['View__panel-in']} style={scrollCompensateStyle}>
                   <NavTransitionDirectionProvider isBack={swipingBack || isBack}>
                     <NavTransitionProvider
                       entering={panelId === nextPanel || panelId === swipeBackNextPanel}

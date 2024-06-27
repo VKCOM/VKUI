@@ -4,12 +4,14 @@ const { VKUI_PACKAGE } = require('./shared');
 module.exports = {
   extends: ['stylelint-config-standard', '@vkontakte/stylelint-config'],
   plugins: [
-    '@project-tools/stylelint-bad-multiplication',
+    '@project-tools/stylelint-plugin-vkui',
     'stylelint-media-use-custom-media',
     'stylelint-value-no-unknown-custom-properties',
     'stylelint-use-logical',
+    'stylelint-prettier',
   ],
   rules: {
+    'prettier/prettier': true,
     'block-no-empty': null,
     'declaration-block-no-redundant-longhand-properties': null,
     'comment-empty-line-before': null,
@@ -69,7 +71,7 @@ module.exports = {
       },
     ],
     'selector-pseudo-class-disallowed-list': ['global'],
-    '@project-tools/stylelint-bad-multiplication': true,
+    'vkui-internal/bad-multiplication': true,
     'import-notation': null,
     'plugin/vkui': null,
     'plugin/selector-bem-pattern': null,

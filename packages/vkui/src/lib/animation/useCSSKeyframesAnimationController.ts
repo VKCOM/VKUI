@@ -2,7 +2,6 @@ import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
-import { useReducedMotion } from './useReducedMotion';
 
 export type UseCSSAnimationControllerCallback = {
   onEnter?: () => void;
@@ -27,8 +26,9 @@ export const useCSSKeyframesAnimationController = (
     onExiting: onExitingProp = noop,
     onExited: onExitedProp = noop,
   }: UseCSSAnimationControllerCallback = {},
+  disableInitAnimation = false,
 ): [AnimationState, AnimationHandlers] => {
-  const isReducedMotion = useReducedMotion();
+  const isFirstInitRef = React.useRef(disableInitAnimation);
   const [state, setState] = React.useState<AnimationState>(stateProp);
   const [willBeEnter, setWillBeEnter] = React.useState(stateProp === 'enter');
   const [willBeExit, setWillBeExit] = React.useState(stateProp === 'exit');
@@ -74,7 +74,7 @@ export const useCSSKeyframesAnimationController = (
     function updateState() {
       switch (stateProp) {
         case 'enter':
-          if (isReducedMotion && state === 'enter') {
+          if (isFirstInitRef.current && state === 'enter') {
             entered();
             break;
           }
@@ -88,7 +88,7 @@ export const useCSSKeyframesAnimationController = (
           onEnter();
           break;
         case 'exit':
-          if (isReducedMotion && state === 'exit') {
+          if (isFirstInitRef.current && state === 'exit') {
             exited();
             break;
           }
@@ -102,8 +102,10 @@ export const useCSSKeyframesAnimationController = (
           onExit();
           break;
       }
+
+      isFirstInitRef.current = false;
     },
-    [state, stateProp, willBeEnter, willBeExit, isReducedMotion, entered, exited, onEnter, onExit],
+    [state, stateProp, willBeEnter, willBeExit, entered, exited, onEnter, onExit],
   );
 
   return [state, { onAnimationStart, onAnimationEnd }];

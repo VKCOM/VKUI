@@ -13,6 +13,8 @@ export type { SafeAreaInsets } from './components/AppRoot/types';
  * Typography
  */
 export type { TypographyProps } from './components/Typography/Typography';
+export { DisplayTitle } from './components/Typography/DisplayTitle/DisplayTitle';
+export type { DisplayTitleProps } from './components/Typography/DisplayTitle/DisplayTitle';
 export { Title } from './components/Typography/Title/Title';
 export type { TitleProps } from './components/Typography/Title/Title';
 export { Headline } from './components/Typography/Headline/Headline';
@@ -250,6 +252,7 @@ export type { CustomPaginationNavigationButton } from './components/Pagination/P
 export { Accordion } from './components/Accordion/Accordion';
 export type { AccordionProps } from './components/Accordion/Accordion';
 export type { AccordionSummaryProps } from './components/Accordion/AccordionSummary';
+export type { AccordionContentProps } from './components/Accordion/AccordionContent';
 
 /**
  * Forms
@@ -299,6 +302,7 @@ export type {
   SelectProps,
   CustomSelectOptionInterface,
   CustomSelectRenderOption,
+  CustomSelectClearButtonProps,
 } from './components/CustomSelect/CustomSelect';
 export { CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
 export type { CustomSelectOptionProps } from './components/CustomSelectOption/CustomSelectOption';
@@ -357,6 +361,7 @@ export {
 export { AppearanceProvider } from './components/AppearanceProvider/AppearanceProvider';
 export type { AppearanceProviderProps } from './components/AppearanceProvider/AppearanceProvider';
 export { Appearance } from './lib/appearance';
+export type { AppearanceType } from './lib/appearance';
 export { LocaleProvider } from './components/LocaleProvider/LocaleProvider';
 export type { LocaleProviderProps } from './components/LocaleProvider/LocaleProvider';
 export { PlatformProvider } from './components/PlatformProvider/PlatformProvider';

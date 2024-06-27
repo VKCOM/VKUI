@@ -52,10 +52,7 @@ export const Example: Story = {
     const hasHeader = platform !== 'vkcom';
 
     return (
-      <SplitLayout
-        header={hasHeader && <PanelHeader delimiter="none" />}
-        style={{ justifyContent: 'center' }}
-      >
+      <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />} center>
         {viewWidth.tabletPlus && (
           <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
             <Panel>

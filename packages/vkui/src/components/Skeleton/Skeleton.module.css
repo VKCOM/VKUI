@@ -62,3 +62,10 @@
   animation-name: none;
   background-image: none;
 }
+
+@media (--reduce-motion) {
+  .Skeleton {
+    animation-name: none;
+    background-image: none;
+  }
+}

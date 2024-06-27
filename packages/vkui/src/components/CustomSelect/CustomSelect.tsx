@@ -21,7 +21,10 @@ import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import { CustomSelectClearButton, CustomSelectClearButtonProps } from './CustomSelectClearButton';
+import {
+  CustomSelectClearButton,
+  type CustomSelectClearButtonProps,
+} from './CustomSelectClearButton';
 import { CustomSelectInput } from './CustomSelectInput';
 import styles from './CustomSelect.module.css';
 
@@ -120,6 +123,8 @@ export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
   option: T;
 }
 
+export type { CustomSelectClearButtonProps };
+
 export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
 > extends NativeSelectProps,
@@ -186,6 +191,9 @@ export interface SelectProps<
    * (e2e) testId кнопки очистки
    */
   clearButtonTestId?: string;
+  /**
+   * Отступ от выпадающего списка
+   */
   dropdownOffsetDistance?: number;
   /**
    * Ширина раскрывающегося списка зависит от контента
@@ -219,7 +227,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     className,
     getRef,
     getRootRef,
-    popupDirection,
+    popupDirection = 'bottom',
     style,
     onChange,
     children,
@@ -269,7 +277,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     () => props.value ?? defaultValue ?? (allowClearButton ? '' : undefined),
   );
   const [popperPlacement, setPopperPlacement] = React.useState<PlacementWithAuto | undefined>(
-    undefined,
+    popupDirection,
   );
   const [options, setOptions] = React.useState(optionsProp);
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(

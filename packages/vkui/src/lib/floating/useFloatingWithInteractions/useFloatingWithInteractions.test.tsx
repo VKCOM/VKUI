@@ -6,19 +6,21 @@ import {
 } from '../../../components/AppRoot/AppRootContext';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
 import { fireEventPatch, userEvent } from '../../../testing/utils';
-import { ShownChangeReason } from './types';
+import type { ShownChangeReason } from './types';
 import { useFloatingWithInteractions } from './useFloatingWithInteractions';
 
 const TestComponent = ({
   restoreFocus,
   hookResultRef,
   keyboardInput = false,
+  autoFocus = false, // for multiple trigger [click, focus]
 }: {
   restoreFocus?: boolean;
   hookResultRef: {
     current: ReturnType<typeof useFloatingWithInteractions<HTMLButtonElement>>;
   };
   keyboardInput?: boolean;
+  autoFocus?: boolean;
 }) => {
   const { shown, refs, referenceProps, floatingProps } = hookResultRef.current;
 
@@ -34,7 +36,12 @@ const TestComponent = ({
             restoreFocus={restoreFocus ? hookResultRef.current.onRestoreFocus : restoreFocus}
             onClose={hookResultRef.current.onEscapeKeyDown}
           >
-            <input data-testid="focus-trap" type="text" defaultValue="Reference" />
+            <input
+              autoFocus={autoFocus}
+              data-testid="focus-trap"
+              type="text"
+              defaultValue="Reference"
+            />
           </FocusTrap>
         </span>
       ) : null}
@@ -57,7 +64,7 @@ describe(useFloatingWithInteractions, () => {
       { trigger: 'hover' as const, openBy: 'mouseOver' as const, closeBy: 'escape-key' as const },
       { trigger: 'hover' as const, openBy: 'mouseOver' as const, closeBy: 'click-outside' as const }, // prettier-ignore
     ])(
-      'should shown by $openBy event  and hidden by $closeBy event (trigger: $trigger)',
+      'should shown by $openBy event and hidden by $closeBy event (trigger: $trigger)',
       async ({ trigger, openBy, closeBy }) => {
         const onShownChange = jest.fn();
         const { result } = renderHook(() =>
@@ -70,7 +77,6 @@ describe(useFloatingWithInteractions, () => {
         const { rerender } = render(<TestComponent hookResultRef={result} />);
         await waitFor(() => {
           expect(result.current.shown).toBeFalsy();
-          expect(onShownChange).toHaveBeenCalledTimes(0);
           expect(onShownChange).not.toHaveBeenCalled();
         });
 
@@ -102,6 +108,15 @@ describe(useFloatingWithInteractions, () => {
               jest.useRealTimers();
             });
             break;
+          case 'blur':
+            await fireEventPatch(result.current.refs.reference.current, closeBy, {
+              // сбрасываем relatedTarget, потому что по умолчанию el.blur() имеет el в relatedTarget,
+              // а в этом случае floating элемент не закрывается, так как считается что blur
+              // вызван кликом на самого себя.
+              relatedTarget: undefined,
+            });
+            break;
+
           default:
             await fireEventPatch(result.current.refs.reference.current, closeBy);
         }
@@ -126,7 +141,7 @@ describe(useFloatingWithInteractions, () => {
       { trigger: 'focus' as const, openBy: 'focus' as const, closeBy: 'escape-key' as const },
       { trigger: 'focus' as const, openBy: 'focus' as const, closeBy: 'click-outside' as const },
     ])(
-      'should shown by $openBy event  and hidden by $closeBy event (trigger: $trigger)',
+      'should shown by $openBy event and hidden by $closeBy event (trigger: $trigger)',
       async ({ trigger, openBy, closeBy }) => {
         const shouldClosedByClickOutside = closeBy === 'click-outside';
         const onShownChange = jest.fn();
@@ -209,6 +224,46 @@ describe(useFloatingWithInteractions, () => {
         });
       },
     );
+
+    it('should work correctly with trigger=[click, focus]', async () => {
+      const onShownChange = jest.fn();
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: ['click', 'focus'],
+          onShownChange,
+        }),
+      );
+      const { rerender } = render(<TestComponent hookResultRef={result} autoFocus />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).toHaveBeenCalledTimes(0);
+        expect(onShownChange).not.toHaveBeenCalled();
+      });
+
+      await fireEventPatch(result.current.refs.reference.current, 'focus');
+
+      rerender(<TestComponent hookResultRef={result} autoFocus />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeTruthy();
+        expect(onShownChange).toHaveBeenCalledTimes(1); // focus
+        expect(onShownChange).toHaveBeenLastCalledWith(true, 'focus');
+      });
+
+      jest.useFakeTimers();
+      await userEvent.click(result.current.refs.reference.current!);
+      act(() => {
+        jest.runOnlyPendingTimers();
+        jest.useRealTimers();
+      });
+
+      rerender(<TestComponent hookResultRef={result} autoFocus />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).toHaveBeenCalledTimes(3); // focus and click
+        expect(onShownChange).toHaveBeenLastCalledWith(false, 'click');
+      });
+    });
 
     it('should stayed shown if hover to floating element', async () => {
       const { result } = renderHook(() =>
@@ -339,9 +394,14 @@ describe(useFloatingWithInteractions, () => {
         testComponentRender.rerender(<TestComponent hookResultRef={result} />);
         await waitFor(() => expect(result.current.shown).toBeTruthy());
 
+        const eventNameToFire = eventName === 'focus' ? 'blur' : eventName;
         await fireEventPatch(
           result.current.refs.reference.current,
-          eventName === 'focus' ? 'blur' : eventName,
+          eventNameToFire,
+          // сбрасываем relatedTarget, потому что по умолчанию el.blur() имеет el в relatedTarget,
+          // а в этом случае floating элемент не закрывается, так как считается что blur
+          // вызван кликом на самого себя.
+          eventNameToFire === 'blur' ? { referenceElement: undefined } : undefined,
         );
         testComponentRender.rerender(<TestComponent hookResultRef={result} />);
         await waitFor(() => expect(result.current.shown).toBeFalsy());

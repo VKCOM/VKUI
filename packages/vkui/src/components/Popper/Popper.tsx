@@ -48,6 +48,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'usePortal'
   | 'customMiddlewares'
   | 'onPlacementChange'
+  | 'disableFlipMiddleware'
 >;
 
 export interface PopperCommonProps
@@ -95,6 +96,7 @@ export const Popper = ({
   arrowHeight = DEFAULT_ARROW_HEIGHT,
   arrowPadding = DEFAULT_ARROW_PADDING,
   customMiddlewares,
+  disableFlipMiddleware = false,
 
   // UseFloatingProps
   autoUpdateOnTargetResize = false,
@@ -125,6 +127,7 @@ export const Popper = ({
     offsetByCrossAxis,
     hideWhenReferenceHidden,
     customMiddlewares,
+    disableFlipMiddleware,
   });
 
   const {
@@ -145,7 +148,7 @@ export const Popper = ({
     },
   });
 
-  usePlacementChangeCallback(resolvedPlacement, onPlacementChange);
+  usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
 
   const { arrow: arrowCoords } = middlewareData;
 

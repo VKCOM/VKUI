@@ -45,7 +45,7 @@ export const ModalRootDesktop = ({
     delayEnter,
   } = useModalManager(activeModalProp, children, onOpen, onOpened, onClose, onClosed, noop);
 
-  const { waitTransitionFinish } = useWaitTransitionFinish();
+  const waitTransitionFinish = useWaitTransitionFinish();
   const prevProps = usePrevious({
     exitingModal,
     enteringModal,
@@ -211,6 +211,7 @@ export const ModalRootDesktop = ({
 
             return (
               <FocusTrap
+                autoFocus={false}
                 restoreFocus={false}
                 onClose={onExit}
                 timeout={timeout}

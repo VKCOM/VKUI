@@ -16,7 +16,7 @@ import {
   updateInternalStateValue,
   updateInternalStateValueByNativeChange,
 } from './helpers';
-import type { InternalGestureRef, InternalValueState } from './types';
+import type { InternalDraggingType, InternalGestureRef, InternalValueState } from './types';
 import styles from './Slider.module.css';
 
 const sizeYClassNames = {
@@ -107,6 +107,7 @@ export const Slider = ({
   const multiple = multipleProp && endValue !== null;
   const startValueInPercent = toPercent(startValue, min, max);
   const endReversedValueInPercent = multiple ? toPercent(endValue, min, max) : 0;
+  const [activeThumb, setActiveThumb] = React.useState<InternalDraggingType | null>(null);
 
   const gesture = React.useRef<InternalGestureRef>({
     dragging: null,
@@ -182,6 +183,7 @@ export const Slider = ({
     changeValue(updatedInternalStateValue, event);
 
     event.originalEvent.stopPropagation();
+    setActiveThumb(gesture.dragging);
   };
 
   const handlePointerMove: TouchEventHandler = (event: TouchEvent) => {
@@ -200,6 +202,7 @@ export const Slider = ({
   const handlePointerEnd: TouchEventHandler = (event) => {
     gesture.dragging = null;
     event.originalEvent.stopPropagation();
+    setActiveThumb(null);
   };
 
   const handleChangeByNativeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -260,6 +263,7 @@ export const Slider = ({
             'aria-labelledby': ariaLabelledBy,
             'onChange': handleChangeByNativeInput,
           }}
+          isActive={activeThumb === 'start'}
         />
         {multiple && (
           <SliderThumb
@@ -280,6 +284,7 @@ export const Slider = ({
               'aria-labelledby': ariaLabelledBy,
               'onChange': handleChangeByNativeInput,
             }}
+            isActive={activeThumb === 'end'}
           />
         )}
       </div>

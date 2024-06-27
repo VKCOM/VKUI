@@ -1,9 +1,18 @@
 .ActionSheet {
+  --vkui_internal--actionsheet_animation_opacity_initial: 1;
+  --vkui_internal--actionsheet_animation_translateY_initial: 100%;
+
   inline-size: 100%;
   max-inline-size: var(--vkui--size_popup_small--regular);
   padding: 10px;
   box-sizing: border-box;
-  animation: animation-actionsheet-intro 0.2s var(--vkui--animation_easing_platform);
+}
+
+@media (--reduce-motion) {
+  .ActionSheet {
+    --vkui_internal--actionsheet_animation_opacity_initial: 0;
+    --vkui_internal--actionsheet_animation_translateY_initial: 0%;
+  }
 }
 
 .ActionSheet__content-wrapper {
@@ -21,9 +30,15 @@
   padding-inline: 16px;
 }
 
+.ActionSheet--opening {
+  /* prettier-ignore */
+  animation: animation-actionsheet-slide-up var(--vkui--animation_duration_m) var(--vkui--animation_easing_platform);
+}
+
 .ActionSheet--closing {
-  transform: translateY(calc(100% + 20px));
-  transition: transform 0.2s var(--vkui--animation_easing_platform);
+  opacity: 0;
+  /* prettier-ignore */
+  animation: animation-actionsheet-slide-down var(--vkui--animation_duration_m) var(--vkui--animation_easing_platform);
 }
 
 .ActionSheet__title + .ActionSheet__text {
@@ -35,7 +50,6 @@
  */
 .ActionSheet--ios {
   padding: 8px;
-  animation: animation-actionsheet-intro 0.3s var(--vkui--animation_easing_platform);
   background: transparent;
 }
 
@@ -54,7 +68,6 @@
 
 .ActionSheet--ios.ActionSheet--closing {
   transform: translateY(100%);
-  transition: transform 0.3s var(--vkui--animation_easing_platform);
 }
 
 .ActionSheet--ios .ActionSheet__header {
@@ -93,9 +106,11 @@
  */
 
 .ActionSheet--menu {
+  --vkui_internal--actionsheet_animation_opacity_initial: 0;
+  --vkui_internal--actionsheet_animation_translateY_initial: 5%;
+
   inline-size: auto;
   block-size: auto;
-  animation: none;
   padding: 0;
   max-inline-size: 100%;
 }
@@ -105,15 +120,31 @@
   padding: 0;
 }
 
-/**
-* Animations
-*/
-@keyframes animation-actionsheet-intro {
+@media (--reduce-motion) {
+  .ActionSheet--menu {
+    --vkui_internal--actionsheet_animation_translateY_initial: 0%;
+  }
+}
+
+@keyframes animation-actionsheet-slide-up {
   from {
-    transform: translateY(100%);
+    opacity: var(--vkui_internal--actionsheet_animation_opacity_initial);
+    transform: translateY(var(--vkui_internal--actionsheet_animation_translateY_initial));
   }
 
   to {
+    opacity: 1;
     transform: translateY(0);
+  }
+}
+@keyframes animation-actionsheet-slide-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: var(--vkui_internal--actionsheet_animation_opacity_initial);
+    transform: translateY(var(--vkui_internal--actionsheet_animation_translateY_initial));
   }
 }

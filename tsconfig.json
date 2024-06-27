@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "jsx": "react-jsx",
     "target": "esnext",
     "lib": ["es6", "dom", "dom.Iterable"],

@@ -27,6 +27,9 @@ on:
           - 'release'
           - 'pre-release'
 
+env:
+  CHECKOUT_BRANCH: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.ref }}
+
 jobs:
   payload:
     name: Prepare payload data
@@ -61,6 +64,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ env.CHECKOUT_BRANCH }}
 
       - name: Setting up the repository environment
         uses: ./.github/actions/setup

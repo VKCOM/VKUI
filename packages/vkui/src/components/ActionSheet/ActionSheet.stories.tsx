@@ -47,10 +47,14 @@ export const Base: Story = {
     ) : null;
 
     return (
-      <SplitLayout style={{ justifyContent: 'center' }} popout={popout}>
+      <SplitLayout center popout={popout}>
         <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
           <Placeholder stretched>
-            <Button getRootRef={baseToggleRef} onClick={() => setVisible(true)}>
+            <Button
+              getRootRef={baseToggleRef}
+              onClick={() => setVisible(true)}
+              aria-expanded={visible}
+            >
               Открыть
             </Button>
           </Placeholder>

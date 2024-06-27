@@ -106,6 +106,7 @@ export const injectAriaExpandedPropByRole = (
   role?: React.AriaRole,
 ) => {
   switch (role) {
+    case 'dialog':
     case 'menu':
     case 'application':
     case 'tab':

@@ -1,3 +1,5 @@
+'use no memo';
+
 import { render } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { AppRoot } from '../../components/AppRoot/AppRoot';
 import { setRef } from '../../lib/utils';
 import {
   baselineComponent,
@@ -227,7 +228,11 @@ describe(Slider, () => {
     fakeTimers();
 
     it('shows tooltip on hover/focus', async () => {
-      render(<Slider defaultValue={30} withTooltip />);
+      render(
+        <AppRoot>
+          <Slider defaultValue={30} withTooltip />
+        </AppRoot>,
+      );
       const slider = screen.getByRole('slider');
 
       expect(screen.queryByText('30')).not.toBeInTheDocument();
@@ -243,6 +248,7 @@ describe(Slider, () => {
       expect(screen.queryByText('30')).not.toBeInTheDocument();
 
       // shows tooltip on focus
+      fireEvent.keyDown(document, { key: 'Tab', code: 'Tab' });
       act(() => slider.focus());
       await waitFor(() => expect(screen.queryByText('30')).toBeInTheDocument());
 

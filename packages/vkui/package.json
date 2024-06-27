@@ -1,5 +1,5 @@
 {
-  "version": "6.0.1-beta.0",
+  "version": "6.1.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "main": "dist/cjs/index.js",
@@ -67,14 +67,14 @@
   },
   "dependencies": {
     "@swc/helpers": "^0.5.11",
-    "@vkontakte/icons": "^2.104.1",
-    "@vkontakte/vkjs": "^1.1.2",
+    "@vkontakte/icons": "^2.115.0",
+    "@vkontakte/vkjs": "^1.2.0",
     "@vkontakte/vkui-floating-ui": "^0.2.1",
     "dayjs": "^1.11.11",
     "mitt": "^3.0.1"
   },
   "devDependencies": {
-    "storybook": "8.1.1"
+    "storybook": "8.1.10"
   },
   "size-limit": [
     {

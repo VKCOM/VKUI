@@ -19,7 +19,7 @@ module.exports = {
   extends: ['plugin:react-hooks/recommended'],
   plugins: ['import', '@project-tools/vkui', 'unicorn'],
   parserOptions: {
-    project: './tsconfig.json',
+    project: './tsconfig.eslint.json',
     tsconfigRootDir: __dirname,
   },
   settings: {

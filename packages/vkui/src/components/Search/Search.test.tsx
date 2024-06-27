@@ -1,5 +1,5 @@
 import { act } from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { Search } from './Search';
 import styles from './Search.module.css';
@@ -47,6 +47,30 @@ describe(Search, () => {
       screen.getByTestId<HTMLFormElement>('form').reset();
       expect(getInput()).toHaveValue('');
     });
+    it('handles clear button visibility correctly', async () => {
+      render(
+        <form data-testid="form">
+          <Search />
+          <input data-testid="reset" type="reset" />
+        </form>,
+      );
+      expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
+      await userEvent.type(getInput(), 'user');
+      expect(getClearIcon()).not.toHaveAttribute('tabindex');
+      fireEvent.click(screen.getByTestId('reset'));
+      expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
+    });
+    it('handles clear button visibility with default value correctly', async () => {
+      render(
+        <form data-testid="form">
+          <Search defaultValue="val" />
+          <input data-testid="reset" type="reset" />
+        </form>,
+      );
+      expect(getClearIcon()).not.toHaveAttribute('tabindex');
+      fireEvent.click(screen.getByTestId('reset'));
+      expect(getClearIcon()).not.toHaveAttribute('tabindex');
+    });
     it('form reset with defaultValue', async () => {
       render(
         <form data-testid="form">
@@ -83,6 +107,12 @@ describe(Search, () => {
       render(<Search value={value} onChange={(e) => (value = e.target.value)} />);
       await userEvent.type(getInput(), 'X');
       expect(value).toBe('initX');
+    });
+    it('handles clear button visibility correctly', () => {
+      const { rerender } = render(<Search value="init" />);
+      expect(getClearIcon()).not.toHaveAttribute('tabindex');
+      rerender(<Search value="" />);
+      expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
     });
     // TODO (@SevereCloud): не понял почему тест сломался, на деле очистка работает
     it.skip('clears value', async () => {

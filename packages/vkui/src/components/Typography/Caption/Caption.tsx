@@ -23,12 +23,14 @@ export const Caption = ({
   caps,
   Component = 'span',
   normalize = true,
+  inline = false,
   ...restProps
 }: CaptionProps) => {
   return (
     <Typography
       Component={Component}
       normalize={normalize}
+      inline={inline}
       className={classNames(className, caps && styles['Caption--caps'], stylesLevel[level])}
       {...restProps}
     />

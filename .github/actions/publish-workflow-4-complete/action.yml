@@ -27,10 +27,12 @@ inputs:
   disable_git_tag_with_namespace:
     required: false
     default: false
-
-outputs:
-  git_release_tag:
-    value: ${{ steps.git_release_tag.outputs.value }}
+  close_milestone:
+    required: false
+    default: false
+  prerelease:
+    required: false
+    default: false
 
 runs:
   using: composite
@@ -68,11 +70,21 @@ runs:
         branch: ${{ inputs.branch }}
         tags: true
 
+    - name: Create stable branch
+      uses: VKCOM/gh-actions/VKUI/stable-branch@main
+      if: ${{ inputs.package_name == '@vkontakte/vkui' && fromJSON(inputs.prerelease) == false }}
+      with:
+        token: ${{ inputs.token }}
+        directory: packages/vkui/
+
     - name: Prepare payload data
       run: |
         mkdir -p publish_workflow_payload
         echo ${{ inputs.next_version }} > publish_workflow_payload/next_version.txt
         echo ${{ inputs.package_name }} > publish_workflow_payload/package_name.txt
+        echo ${{ inputs.npm_tag }} > publish_workflow_payload/npm_tag.txt
+        echo ${{ steps.git_release_tag.outputs.value }} > publish_workflow_payload/git_release_tag.txt
+        echo ${{ inputs.close_milestone }} > publish_workflow_payload/close_milestone.txt
       shell: bash
 
     - name: Upload payload data to artifact for deploy workflow

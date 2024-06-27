@@ -15,6 +15,10 @@
   position: relative;
 }
 
+.CustomScrollView__box-content {
+  position: relative;
+}
+
 .CustomScrollView__barY:active + .CustomScrollView__box {
   pointer-events: none;
 }
@@ -51,7 +55,9 @@
   block-size: 100%;
   background-color: var(--vkui--color_icon_medium);
   border-radius: 12px;
-  transition: transform 200ms, opacity 200ms;
+  transition:
+    transform 200ms,
+    opacity 200ms;
 }
 
 .CustomScrollView__trackerY:hover::before,

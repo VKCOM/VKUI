@@ -11,6 +11,7 @@
   isolation: isolate;
 }
 
+.ImageBase--loaded,
 .ImageBase--transparent-background {
   background-color: transparent;
 }

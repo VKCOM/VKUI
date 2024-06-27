@@ -6,15 +6,23 @@ import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { getDocumentBody } from '../../lib/dom';
 import { useTokensClassName } from '../../lib/tokens';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { AppRootContext } from './AppRootContext';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
 import {
   extractPortalRootByProp,
   getClassNamesByMode,
   getParentElement,
+  getUserSelectModeClassName,
   setSafeAreaInsets,
 } from './helpers';
-import type { AppRootLayout, AppRootMode, AppRootScroll, SafeAreaInsets } from './types';
+import type {
+  AppRootLayout,
+  AppRootMode,
+  AppRootScroll,
+  AppRootUserSelectMode,
+  SafeAreaInsets,
+} from './types';
 import styles from './AppRoot.module.css';
 
 export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -51,6 +59,18 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * [Panel](https://vkcom.github.io/VKUI/#/Panel) и [Group](https://vkcom.github.io/VKUI/#/Group).
    */
   layout?: AppRootLayout;
+  /**
+   * Задаёт режим выбора текста (выделения текста) для всего приложения.
+   * По умолчанию, если режим не задан, запрещает выбор текста в приложениях,
+   * запущенных в webview (по значению свойства `isWebView` из [ConfigProvider](https://vkcom.github.io/VKUI/#/ConfigProvider)).
+   *
+   * - `enabled-with-pointer` – разрешает выбор текста, если устройство ввода типа `pointer` (например, `мышь`), в остальных случаях запрещает;
+   * - `disabled` – запрещает выбор текста;
+   * - `enabled` – разрешает выбор текста.
+   *
+   * @since 6.2.0
+   */
+  userSelectMode?: AppRootUserSelectMode;
 }
 
 /**
@@ -66,6 +86,7 @@ export const AppRoot = ({
   className,
   safeAreaInsets: safeAreaInsetsProp,
   layout,
+  userSelectMode,
   ...props
 }: AppRootProps) => {
   const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
@@ -195,18 +216,19 @@ export const AppRoot = ({
     </AppRootContext.Provider>
   );
 
+  const { isWebView } = useConfigProvider();
+  const userSelectModeClassName = getUserSelectModeClassName({
+    userSelectMode,
+    isWebView,
+    hasPointer,
+  });
+
   return mode === 'partial' ? (
     content
   ) : (
     <div
       ref={appRootRef}
-      className={classNames(
-        styles['AppRoot'],
-        hasPointer === undefined
-          ? styles['AppRoot--pointer-none']
-          : !hasPointer && styles['AppRoot--pointer-has-not'],
-        className,
-      )}
+      className={classNames(styles['AppRoot'], userSelectModeClassName, className)}
       {...props}
     >
       {content}

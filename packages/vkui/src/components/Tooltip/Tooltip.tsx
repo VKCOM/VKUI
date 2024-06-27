@@ -30,6 +30,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'zIndex'
   | 'usePortal'
   | 'onPlacementChange'
+  | 'disableFlipMiddleware'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
@@ -67,6 +68,7 @@ export const Tooltip = ({
   offsetByMainAxis = 8,
   offsetByCrossAxis = 0,
   hideWhenReferenceHidden,
+  disableFlipMiddleware = false,
 
   // useFloatingWithInteractions
   defaultShown,
@@ -113,6 +115,7 @@ export const Tooltip = ({
     arrowRef,
     arrowPadding,
     arrowHeight,
+    disableFlipMiddleware,
   });
   const {
     shown,
@@ -136,7 +139,7 @@ export const Tooltip = ({
   });
   const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
 
-  usePlacementChangeCallback(placement, onPlacementChange);
+  usePlacementChangeCallback(placementProp, placement, onPlacementChange);
 
   let tooltip: React.ReactNode = null;
   if (shown) {

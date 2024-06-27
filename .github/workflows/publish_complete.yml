@@ -1,0 +1,70 @@
+name: 'Publish: Complete (⚠️ use manually call only if necessary)'
+# Note: display_title не задокументирован из-за чего в IDE может подчёркиваться строка
+run-name: "${{ github.event_name == 'workflow_run' && format('{0}: Complete • {1} • {2}', github.event.workflow_run.display_title, github.event.workflow_run.head_branch, github.event.workflow_run.id) || format('Publish {0} {1} ({2}): Complete (⚠️ manually run)', inputs.package_name, inputs.git_release_tag, inputs.npm_tag) }}"
+
+on:
+  workflow_run:
+    workflows: ['Publish release']
+    types: [completed]
+  # Note: только на случай, если потребуется ручной запуск
+  workflow_dispatch:
+    inputs:
+      package_name:
+        description: "package's name:"
+        required: true
+        type: choice
+        options:
+          - '@vkontakte/vkui'
+      git_release_tag:
+        description: 'git release tag (ex: `v6.0.0`):'
+        required: true
+        type: string
+      npm_tag:
+        description: 'npm tag:'
+        required: true
+        type: choice
+        options:
+          - 'latest'
+          - 'legacy'
+
+jobs:
+  payload:
+    name: Prepare payload data
+    runs-on: ubuntu-latest
+    outputs:
+      package_name: ${{ steps.publish_workflow_payload.outputs.package_name || inputs.package_name }}
+      npm_tag: ${{ steps.publish_workflow_payload.outputs.npm_tag || inputs.npm_tag }}
+      git_release_tag: ${{ steps.publish_workflow_payload.outputs.git_release_tag || inputs.git_release_tag }}
+      close_milestone: ${{ steps.publish_workflow_payload.outputs.close_milestone || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Download artifact (if it is 'workflow_run')
+        if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
+        id: artifact
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          name: publish_workflow_payload
+          path: publish_workflow_payload/
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Parse artifact
+        if: ${{ steps.artifact.conclusion == 'success' }}
+        id: publish_workflow_payload
+        run: |
+          echo "package_name=$(cat publish_workflow_payload/package_name.txt)" >> $GITHUB_OUTPUT
+          echo "npm_tag=$(cat publish_workflow_payload/npm_tag.txt)" >> $GITHUB_OUTPUT
+          echo "git_release_tag=$(cat publish_workflow_payload/git_release_tag.txt)" >> $GITHUB_OUTPUT
+          echo "close_milestone=$(cat publish_workflow_payload/close_milestone.txt)" >> $GITHUB_OUTPUT
+
+  package_vkui_complete:
+    needs: ['payload']
+    if: ${{ success() && fromJson(needs.payload.outputs.close_milestone) == true && needs.payload.outputs.package_name == '@vkontakte/vkui' }}
+    runs-on: ubuntu-latest
+    name: Complete @vkontakte/vkui
+    steps:
+      - name: Close milestone, comment on issues and release notes
+        uses: VKCOM/gh-actions/VKUI/complete-publish@main
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          releaseTag: ${{ needs.payload.outputs.git_release_tag }}
+          latest: ${{ needs.payload.outputs.npm_tag == 'latest' }}

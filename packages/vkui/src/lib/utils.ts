@@ -117,8 +117,7 @@ export function isForwardRefElement<
  * Ворнинга нет в React версии 19.*, поэтому пока поддерживаем 2 версии наименования
  */
 export function getFetchPriorityProp(value: React.ImgHTMLAttributes<HTMLElement>['fetchPriority']) {
-  // @ts-expect-error: TS2339 Появится только в версии React >= 19.*
-  if (Boolean(React.use)) {
+  if (React.version.startsWith('19')) {
     return { fetchPriority: value };
   }
   return { fetchpriority: value };

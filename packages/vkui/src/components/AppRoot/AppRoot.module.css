@@ -3,15 +3,15 @@
   inline-size: 100%;
 }
 
-.AppRoot--pointer-has-not {
+.AppRoot--user-select-none {
   user-select: none;
 }
 
-/** 
- * Хак для webkit-based браузеров, потому что на версиях iOS <= 14.* исчезает возможность 
- * редактировать contenteditable элементы, если выше по дереву задан user-select: none; 
+/**
+ * Хак для webkit-based браузеров, потому что на версиях iOS <= 14.* исчезает возможность
+ * редактировать contenteditable элементы, если выше по дереву задан user-select: none;
  */
-.AppRoot--pointer-has-not [contenteditable] {
+.AppRoot--user-select-none [contenteditable] {
   user-select: text;
 }
 

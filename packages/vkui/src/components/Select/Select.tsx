@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
+import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { HasOnlyExpectedProps } from '../../types';
 import {
   CustomSelect,
@@ -14,6 +15,7 @@ export type SelectType = 'default' | 'plain' | 'accent';
  */
 export const Select = <OptionT extends CustomSelectOptionInterface>({
   children,
+  className,
   ...props
 }: SelectProps<OptionT>) => {
   const {
@@ -45,15 +47,20 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     ...restProps
   } = props;
 
-  const hasPointer = useAdaptivityHasPointer();
+  const { deviceType } = useAdaptivityConditionalRender();
 
   const nativeProps: HasOnlyExpectedProps<typeof restProps, NativeSelectProps> = restProps;
 
   return (
     <React.Fragment>
-      {(hasPointer === undefined || hasPointer) && <CustomSelect {...props} />}
-      {(hasPointer === undefined || !hasPointer) && (
-        <NativeSelect {...nativeProps}>
+      {deviceType.desktop && (
+        <CustomSelect className={classNames(className, deviceType.desktop.className)} {...props} />
+      )}
+      {deviceType.mobile && (
+        <NativeSelect
+          className={classNames(className, deviceType.mobile.className)}
+          {...nativeProps}
+        >
           {options.map(({ label, value }) => (
             <option value={value} key={`${value}`}>
               {label}

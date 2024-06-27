@@ -1,17 +1,9 @@
-/**
- * [a11y]
- * add animation for browsers that support prefers-reduced-motion
- * so that users with vestibular motion disorders have no problem
- * navigating accessible vkui apps via keyboard
- */
-@media (prefers-reduced-motion: no-preference) {
-  .-anim-fade-in {
-    animation: anim-fade-in 0.1s ease-in forwards;
-  }
+.-anim-fade-in {
+  animation: anim-fade-in 0.1s ease-in forwards;
+}
 
-  .-anim-fade-out {
-    animation: anim-fade-out 0.1s ease-out forwards;
-  }
+.-anim-fade-out {
+  animation: anim-fade-out 0.1s ease-out forwards;
 }
 
 @keyframes anim-fade-in {

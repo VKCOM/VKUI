@@ -33,6 +33,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'shown'
   | 'children'
   | 'onPlacementChange'
+  | 'disableFlipMiddleware'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
@@ -82,6 +83,7 @@ export const OnboardingTooltip = ({
   getRootRef,
   disableArrow = false,
   onPlacementChange,
+  disableFlipMiddleware = false,
   ...restProps
 }: OnboardingTooltipProps) => {
   const generatedId = React.useId();
@@ -101,6 +103,7 @@ export const OnboardingTooltip = ({
     arrow: !disableArrow,
     arrowHeight,
     arrowPadding,
+    disableFlipMiddleware,
   });
   const {
     x: floatingDataX,
@@ -119,7 +122,7 @@ export const OnboardingTooltip = ({
     'aria-describedby': shown ? tooltipId : undefined,
   });
 
-  usePlacementChangeCallback(resolvedPlacement, onPlacementChange);
+  usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
 
   let tooltip: React.ReactPortal | null = null;
   if (shown) {

@@ -16,21 +16,54 @@ import styles from './AppRoot.module.css';
 describe('AppRoot', () => {
   baselineComponent(AppRoot, { getRootRef: false });
 
-  it('should setup pointer class by hasPointer from AdaptivityProvider', () => {
-    const Template = (props: { hasPointer?: boolean }) => (
-      <AdaptivityProvider {...props}>
-        <AppRoot mode="full" data-testid="app-root" />
-      </AdaptivityProvider>
-    );
-    const result = render(<Template />);
-    expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-none']);
-    result.rerender(<Template hasPointer={false} />);
-    expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-has-not']);
-    result.rerender(<Template hasPointer={true} />);
-    expect(result.getByTestId('app-root')).not.toHaveClass(
-      styles['AppRoot--pointer-none'],
-      styles['AppRoot--pointer-has-not'],
-    );
+  describe('userSelectMode', () => {
+    it('controlled by hasPointer in enalbe-with-pointer from AdaptivityProvider', () => {
+      const Template = (props: { hasPointer?: boolean }) => (
+        <AdaptivityProvider {...props}>
+          <AppRoot mode="full" data-testid="app-root" userSelectMode="enabled-with-pointer" />
+        </AdaptivityProvider>
+      );
+      const result = render(<Template />);
+      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-none']);
+      result.rerender(<Template hasPointer={false} />);
+      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+      result.rerender(<Template hasPointer={true} />);
+      expect(result.getByTestId('app-root')).not.toHaveClass(
+        styles['AppRoot--pointer-none'],
+        styles['AppRoot--user-select-none'],
+      );
+    });
+
+    it('controlled by isWebView from ConfigProvider by default', () => {
+      const Template = ({ isWebView }: { isWebView?: boolean }) => (
+        <ConfigProvider isWebView={isWebView}>
+          <AppRoot mode="full" data-testid="app-root" />
+        </ConfigProvider>
+      );
+      // по умолчанию userSelectMode='disabled-in-webview'
+      const result = render(<Template isWebView />);
+      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+
+      result.rerender(<Template isWebView={false} />);
+      expect(result.getByTestId('app-root')).not.toHaveClass(
+        styles['AppRoot--pointer-none'],
+        styles['AppRoot--user-select-none'],
+      );
+    });
+
+    it('should setup user-select-none class when user-select mode is disalbed', () => {
+      const result = render(
+        <AppRoot mode="full" data-testid="app-root" userSelectMode="enabled" />,
+      );
+
+      expect(result.getByTestId('app-root')).not.toHaveClass(
+        styles['AppRoot--pointer-none'],
+        styles['AppRoot--user-select-none'],
+      );
+
+      result.rerender(<AppRoot mode="full" data-testid="app-root" userSelectMode="disabled" />);
+      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+    });
   });
 
   it('should return expected context', () => {
