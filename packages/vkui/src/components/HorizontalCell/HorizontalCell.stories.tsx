@@ -3,6 +3,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
+import { Flex } from '../Flex/Flex';
 import { Group } from '../Group/Group';
 import { Image } from '../Image/Image';
 import { HorizontalCell, HorizontalCellProps } from './HorizontalCell';
@@ -66,9 +67,9 @@ export const Playground: Story = {
   decorators: [
     (Component, context) => (
       <Group>
-        <div style={{ display: 'flex' }}>
+        <Flex>
           <Component {...context.args} />
-        </div>
+        </Flex>
       </Group>
     ),
     withSinglePanel,

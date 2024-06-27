@@ -20,16 +20,9 @@ const SubnavigationButtonExample = () => {
   const buttonAfter = addAfter && <Counter size="s">3</Counter>;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-      <AdaptivityProvider sizeY={sizeY}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            width: '100%',
-          }}
-        >
+    <Flex reverse justify="end">
+      <Flex direction="column" justify="center">
+        <AdaptivityProvider sizeY={sizeY}>
           {['primary', 'outline', 'tertiary'].map((mode) => (
             <Div key={mode}>
               <SubnavigationButton
@@ -47,9 +40,9 @@ const SubnavigationButtonExample = () => {
               </SubnavigationButton>
             </Div>
           ))}
-        </div>
-      </AdaptivityProvider>
-      <div style={{ minWidth: 200 }}>
+        </AdaptivityProvider>
+      </Flex>
+      <Flex.Item flexBasis={200}>
         <FormItem top="appearance">
           <Select
             value={appearance}
@@ -102,8 +95,8 @@ const SubnavigationButtonExample = () => {
           <Checkbox onChange={(e) => setAddBefore(e.target.checked)}>add before</Checkbox>
           <Checkbox onChange={(e) => setAddAfter(e.target.checked)}>add after</Checkbox>
         </FormItem>
-      </div>
-    </div>
+      </Flex.Item>
+    </Flex>
   );
 };
 

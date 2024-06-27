@@ -8,6 +8,7 @@ import { Button } from '../Button/Button';
 import { CellButton } from '../CellButton/CellButton';
 import { Checkbox } from '../Checkbox/Checkbox';
 import { Div } from '../Div/Div';
+import { Flex } from '../Flex/Flex';
 import { FormItem } from '../FormItem/FormItem';
 import { FormLayoutGroup } from '../FormLayoutGroup/FormLayoutGroup';
 import { Group } from '../Group/Group';
@@ -174,7 +175,7 @@ export const Example: Story = {
           role="dialog"
           aria-describedby="dialog-3"
           content={({ onClose }) => (
-            <div style={{ display: 'flex', position: 'relative', width: 180, height: 100 }}>
+            <Flex style={{ position: 'relative', width: 180, height: 100 }}>
               <div style={{ position: 'absolute', top: 0, right: 0 }}>
                 <IconButton aria-label="Close dialog" onClick={onClose}>
                   <Icon16Clear />
@@ -186,7 +187,7 @@ export const Example: Story = {
                 is
                 <br />a lie
               </div>
-            </div>
+            </Flex>
           )}
           onShownChange={handleShownChange}
         >
@@ -198,21 +199,13 @@ export const Example: Story = {
     };
 
     return (
-      <div
-        style={{
-          display: 'flex',
-          padding: 16,
-          gap: 16,
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-        }}
-      >
+      <Flex margin="auto" direction="column" align="start" gap="2xl">
         <PopoverWithTriggerHover />
         <PopoverWithTriggerClick />
         <PopoverWithTriggerFocus />
         <PopoverWithAllTriggers />
         <PopoverWithTriggerManual />
-      </div>
+      </Flex>
     );
   },
 };

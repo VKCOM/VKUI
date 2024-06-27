@@ -13,6 +13,7 @@ const Example = () => {
 
 const CustomInput = () => {
   const style = {
+    // for presentation purposes only
     position: 'relative',
     display: 'block',
     width: '100%',

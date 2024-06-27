@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Avatar } from '../Avatar/Avatar';
+import { Flex } from '../Flex/Flex';
 import { Group } from '../Group/Group';
 import { List } from '../List/List';
 import { Panel } from '../Panel/Panel';
@@ -26,18 +27,17 @@ type Story = StoryObj<OnboardingTooltipProps>;
 export const Playground: Story = {
   render: (args) => (
     <OnboardingTooltipContainer style={{ minHeight: '100%' }}>
-      <div
+      <Flex
+        justify="center"
+        align="center"
         style={{
           height: '200px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
         }}
       >
         <OnboardingTooltip {...args}>
           <Avatar />
         </OnboardingTooltip>
-      </div>
+      </Flex>
     </OnboardingTooltipContainer>
   ),
   args: {

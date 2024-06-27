@@ -10,8 +10,8 @@ const Example = () => {
   ) : undefined;
 
   return (
-    <div>
-      <div style={{ display: 'flex', padding: 12, gap: 8, flexFlow: 'row wrap' }}>
+    <Flex direction="column">
+      <Flex margin="auto" gap="m">
         <GridAvatar>{badge}</GridAvatar>
         <GridAvatar src={[getAvatarUrl('user_ji')]}>{badge}</GridAvatar>
         <GridAvatar src={[getAvatarUrl('user_wayshev'), getAvatarUrl('user_mm')]}>
@@ -32,13 +32,13 @@ const Example = () => {
         >
           {badge}
         </GridAvatar>
-      </div>
+      </Flex>
       <FormItem top="badge">
         <Checkbox checked={Boolean(badge)} onChange={(e) => setIsBadged(e.target.checked)}>
           badge (example, Icon20GiftCircleFillRed)
         </Checkbox>
       </FormItem>
-    </div>
+    </Flex>
   );
 };
 

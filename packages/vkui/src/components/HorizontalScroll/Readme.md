@@ -75,54 +75,46 @@ const HorizontalScrollExample = () => {
           HorizontalCellShowMore
         </PanelHeader>
         <Group header={<Header>Альбомы</Header>}>
-          <HorizontalScroll>
-            <div style={{ display: 'flex' }}>
-              <AlbumItems />
-              <HorizontalCellShowMore onClick={() => {}} size="l" height={124} />
-            </div>
+          <HorizontalScroll inline>
+            <AlbumItems />
+            <HorizontalCellShowMore onClick={() => {}} size="l" height={124} />
           </HorizontalScroll>
         </Group>
         <Group header={<Header>Возможные друзья</Header>}>
-          <HorizontalScroll>
-            <div style={{ display: 'flex' }}>
-              <div style={{ display: 'flex' }}>
-                <RandomUsers />
-              </div>
-              <HorizontalCellShowMore
-                onClick={() => {}}
-                compensateLastCellIndent
-                size="s"
-                height={56}
-              />
-            </div>
+          <HorizontalScroll inline>
+            <RandomUsers />
+
+            <HorizontalCellShowMore
+              onClick={() => {}}
+              compensateLastCellIndent
+              size="s"
+              height={56}
+            />
           </HorizontalScroll>
         </Group>
         <Group header={<Header>Игры</Header>}>
-          <HorizontalScroll>
-            <div style={{ display: 'flex' }}>
-              <div style={{ display: 'flex' }}>
-                <HorizontalCell onClick={() => {}} size="m" header="Warma-geddon">
-                  <Image
-                    size={88}
-                    borderRadius="l"
-                    src={'https://sun9-45.userapi.com/c846418/v846418215/5cf20/Gd9mQ6dVXTw.jpg'}
-                  />
-                </HorizontalCell>
-                <HorizontalCell onClick={() => {}} size="m" header="Golden Valley">
-                  <Image
-                    size={88}
-                    borderRadius="l"
-                    src={'https://sun9-71.userapi.com/c849220/v849220453/147ade/0MtQXKEVsiQ.jpg'}
-                  />
-                </HorizontalCell>
-              </div>
-              <HorizontalCellShowMore
-                onClick={() => {}}
-                compensateLastCellIndent
-                size="m"
-                height={88}
+          <HorizontalScroll inline>
+            <HorizontalCell onClick={() => {}} size="m" header="Warma-geddon">
+              <Image
+                size={88}
+                borderRadius="l"
+                src={'https://sun9-45.userapi.com/c846418/v846418215/5cf20/Gd9mQ6dVXTw.jpg'}
               />
-            </div>
+            </HorizontalCell>
+            <HorizontalCell onClick={() => {}} size="m" header="Golden Valley">
+              <Image
+                size={88}
+                borderRadius="l"
+                src={'https://sun9-71.userapi.com/c849220/v849220453/147ade/0MtQXKEVsiQ.jpg'}
+              />
+            </HorizontalCell>
+
+            <HorizontalCellShowMore
+              onClick={() => {}}
+              compensateLastCellIndent
+              size="m"
+              height={88}
+            />
           </HorizontalScroll>
         </Group>
       </Panel>
