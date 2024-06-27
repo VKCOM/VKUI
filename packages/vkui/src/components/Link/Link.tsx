@@ -27,6 +27,7 @@ export const Link = ({
       className={classNames(styles['Link'], hasVisited && styles['Link--has-visited'], className)}
       hasHover={false}
       activeMode="opacity"
+      hoverMode="none"
       focusVisibleMode="outside"
     >
       {children}
