@@ -49,12 +49,10 @@ describe(ImageBaseOverlay, () => {
     const element = screen.getByTestId('overlay');
 
     await userEvent.tab();
-    // expect(element).toHaveFocus();
-    // await waitFor(() => {
     expect(element).toHaveFocus();
-    // });
+    
     act(jest.runAllTimers);
-    // expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).not.toBeNull();
+    
     await userEvent.tab();
     expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).toBeNull();
   });
