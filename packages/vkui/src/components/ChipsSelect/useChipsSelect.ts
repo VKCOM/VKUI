@@ -113,9 +113,9 @@ export const useChipsSelect = <O extends ChipOption>({
   const [focusedOption, setFocusedOption] = React.useState<O | null>(null);
 
   const handleOpened = React.useCallback(
-    (openedProp: boolean) => {
-      openedProp ? onOpen?.() : onClose?.();
-      setOpened(openedProp);
+    (isOpened: boolean) => {
+      isOpened ? onOpen?.() : onClose?.();
+      setOpened(isOpened);
     },
     [onOpen, onClose],
   );
