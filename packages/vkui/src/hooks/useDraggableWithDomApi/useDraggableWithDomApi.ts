@@ -72,9 +72,15 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
   const draggingItemRef = React.useRef<DraggingItem | null>(null);
   const placeholderItemRef = React.useRef<PlaceholderItem | null>(null);
   const siblingItemsRef = React.useRef<SiblingItem[]>([]);
+  const itemsGapRef = React.useRef<number>(0);
   const initializeItems = (draggingEl: HTMLElement) => {
     const draggingElRect = getBoundingClientRect(draggingEl, true);
-    const { children } = draggingEl.parentElement || { children: [] };
+    const parentElement = draggingEl.parentElement;
+    itemsGapRef.current = parentElement
+      ? parseInt(parentElement.style.gap)
+      : 0;
+
+    const { children } = parentElement || { children: [] };
     Array.prototype.forEach.call(children, (el: HTMLElement, index) => {
       if (el === draggingEl) {
         itemStartIndexRef.current = itemEndIndexRef.current = index;
@@ -91,7 +97,7 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
     if (draggingItemRef.current) {
       setInitialDraggingItemStyles(draggingItemRef.current); // 2. repaint
     }
-    siblingItemsRef.current.forEach(setInitialSiblingItemStyles); // 2. repaint
+    siblingItemsRef.current.forEach((sibling) => setInitialSiblingItemStyles(sibling, itemsGapRef.current)); // 2. repaint
   };
   const cleanupItems = () => {
     if (placeholderItemRef.current) {
@@ -155,8 +161,8 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
     shiftItemEls: Array<[SiblingItem, Direction]>,
     unshiftItemEls: Array<[SiblingItem, Direction]>,
   ) => {
-    shiftItemEls.forEach(setSiblingItemsShiftStyles);
-    unshiftItemEls.forEach(setSiblingItemsShiftStyles);
+    shiftItemEls.forEach((item) => setSiblingItemsShiftStyles(item, itemsGapRef.current));
+    unshiftItemEls.forEach((item) => setSiblingItemsShiftStyles(item, itemsGapRef.current));
   };
 
   const schedulingAutoScrollTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);

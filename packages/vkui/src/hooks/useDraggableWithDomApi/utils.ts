@@ -20,14 +20,14 @@ export const setSiblingItemsShiftStyles = ([
     draggingElRect: { height },
   },
   direction,
-]: [Omit<SiblingItem, 'shifted'>, Direction]) => {
+]: [Omit<SiblingItem, 'shifted'>, Direction], additionalGap = 0,) => {
   requestAnimationFrame(() => {
     if (direction === 'up') {
       el.style.setProperty('transition', 'transform 0.3s ease-in 0s');
       el.style.removeProperty('transform');
     } else {
       el.style.setProperty('transition', 'transform 0.3s ease-out 0s');
-      el.style.setProperty('transform', `translateY(${height}px)`);
+      el.style.setProperty('transform', `translateY(${height + additionalGap}px)`);
     }
   });
 };
@@ -73,22 +73,24 @@ export const setInitialPlaceholderItemStyles = ({ el, draggingElRect }: Placehol
   node.style.setProperty('height', `${height}px`);
   node.style.setProperty('pointer-events', 'none');
   el.appendChild(node);
+  el.style.setProperty('display', 'block');
 };
 
 export const unsetInitialPlaceholderItemStyles = ({ el }: PlaceholderItem) => {
+  el.style.display = '';
   if (el.firstElementChild) {
     el.firstElementChild.remove();
   }
 };
 
-export const setInitialSiblingItemStyles = ({ el, shifted, draggingElRect }: SiblingItem) => {
+export const setInitialSiblingItemStyles = ({ el, shifted, draggingElRect }: SiblingItem, additionalGap = 0) => {
   const { height } = draggingElRect;
   requestAnimationFrame(() => {
     el.style.setProperty('pointer-events', 'none');
     el.style.setProperty('transition', 'none 0s ease 0s');
 
     if (shifted) {
-      el.style.setProperty('transform', `translateY(${height}px)`);
+      el.style.setProperty('transform', `translateY(${height + additionalGap}px)`);
     }
   });
 };

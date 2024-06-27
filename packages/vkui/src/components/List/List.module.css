@@ -1,0 +1,8 @@
+.List {
+  display: flex;
+  flex-direction: column;
+}
+
+.List__placeholder {
+  display: none;
+}
