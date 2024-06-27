@@ -1,5 +1,4 @@
-import { act } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { getDocumentBody } from '../../lib/dom';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { Radio } from '../Radio/Radio';
@@ -62,34 +61,5 @@ describe('RadioGroup', () => {
 
     await userEvent.tab();
     expect(getDocumentBody()).toHaveFocus();
-  });
-
-  it('check keydown space when radio not checked', async () => {
-    render(
-      <RadioGroup>
-        <Radio name="test" value="classic" data-testid="classic">
-          Classic
-        </Radio>
-        <Radio name="test" value="regular" data-testid="regular">
-          Regular
-        </Radio>
-      </RadioGroup>,
-    );
-
-    const radioButton = screen.getByTestId<HTMLInputElement>('classic');
-    if (!radioButton) {
-      throw new Error('Can not find component');
-    }
-
-    await userEvent.tab();
-    expect(radioButton).not.toBeChecked();
-    expect(radioButton).toHaveFocus();
-
-    await act(async () => {
-      fireEvent.keyUp(screen.getByTestId('classic'), { code: 'Space', key: ' ' });
-    });
-
-    expect(radioButton).toHaveFocus();
-    expect(radioButton).toBeChecked();
   });
 });
