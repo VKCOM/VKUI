@@ -17,6 +17,6 @@ describe('List', () => {
         </Cell>
       </List>,
     );
-    expect(screen.getByTestId('list')).toHaveStyle('gap: 20px');
+    expect(screen.getByTestId('list').style.gridGap).toBe('20px');
   });
 });
