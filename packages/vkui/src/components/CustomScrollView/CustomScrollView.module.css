@@ -17,6 +17,8 @@
 
 .CustomScrollView__box-content {
   position: relative;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .CustomScrollView__barY:active + .CustomScrollView__box {
