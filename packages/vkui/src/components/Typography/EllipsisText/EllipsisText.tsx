@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useIsomorphicLayoutEffect } from "../../../lib/useIsomorphicLayoutEffect";
 import { HasRootRef } from '../../../types';
 import { RootComponentProps } from '../../RootComponent/RootComponent';
 import styles from './EllipsisText.module.css';
@@ -38,7 +39,7 @@ const EllipsisText = ({
 }: EllipsisTextProps) => {
   const contentRef = useRef<HTMLSpanElement | null>(null);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (contentRef && contentRef.current) {
       contentRef.current.style.setProperty('-webkit-line-clamp', maxLines > 1 ? `${maxLines}` : '');
     }
