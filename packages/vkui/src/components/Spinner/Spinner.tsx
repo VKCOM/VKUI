@@ -15,7 +15,7 @@ export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
 /**
  * @see https://vkcom.github.io/VKUI/#/Spinner
  */
-export const Spinner = React.memo(
+export const Spinner: React.FC<SpinnerProps> = React.memo(
   ({
     size = 'regular',
     children = 'Загружается...',

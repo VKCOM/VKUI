@@ -9,7 +9,7 @@ import { useStableCallback } from './useStableCallback';
 export function useResizeObserver(
   ref: React.MutableRefObject<HTMLElement | null> | React.RefObject<HTMLElement | null> | null,
   callback: (element: HTMLElement) => void,
-) {
+): void {
   const stableCallback = useStableCallback(callback);
 
   useEffect(

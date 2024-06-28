@@ -70,7 +70,9 @@ export interface FlexProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   reverse?: boolean;
 }
 
-export const Flex = ({
+export const Flex: React.FC<FlexProps> & {
+  Item: typeof FlexItem;
+} = ({
   gap,
   align,
   justify,

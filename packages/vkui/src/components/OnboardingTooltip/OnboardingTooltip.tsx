@@ -85,7 +85,7 @@ export const OnboardingTooltip = ({
   onPlacementChange,
   disableFlipMiddleware = false,
   ...restProps
-}: OnboardingTooltipProps) => {
+}: OnboardingTooltipProps): React.ReactNode => {
   const generatedId = React.useId();
   const tooltipId = idProp || generatedId;
   const { entering } = useNavTransition();

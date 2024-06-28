@@ -33,7 +33,7 @@ export const Input = ({
   status,
   mode,
   ...restProps
-}: InputProps) => {
+}: InputProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { stopPropagation } from '../../lib/utils';
 import { HasDataAttribute } from '../../types';
@@ -13,7 +14,7 @@ export const CustomSelectClearButton = ({
   className,
   onClick,
   ...restProps
-}: CustomSelectClearButtonProps) => {
+}: CustomSelectClearButtonProps): React.ReactNode => {
   return (
     <IconButton
       Component="button"

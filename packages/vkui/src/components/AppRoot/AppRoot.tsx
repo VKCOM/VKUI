@@ -88,7 +88,7 @@ export const AppRoot = ({
   layout,
   userSelectMode,
   ...props
-}: AppRootProps) => {
+}: AppRootProps): React.ReactNode => {
   const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
   const tokensClassName = useTokensClassName();
 

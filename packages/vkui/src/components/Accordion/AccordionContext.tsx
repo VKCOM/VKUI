@@ -8,9 +8,10 @@ export interface AccordionContextProps {
   onChange: (e: boolean) => void;
 }
 
-export const AccordionContext = React.createContext<AccordionContextProps>({
-  labelId: '',
-  contentId: '',
-  expanded: false,
-  onChange: noop,
-});
+export const AccordionContext: React.Context<AccordionContextProps> =
+  React.createContext<AccordionContextProps>({
+    labelId: '',
+    contentId: '',
+    expanded: false,
+    onChange: noop,
+  });

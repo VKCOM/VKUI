@@ -12,7 +12,10 @@ export interface AppearanceProviderProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/AppearanceProvider
  */
-export const AppearanceProvider = ({ value, children }: AppearanceProviderProps) => {
+export const AppearanceProvider = ({
+  value,
+  children,
+}: AppearanceProviderProps): React.ReactNode => {
   return (
     <ConfigProviderOverride appearance={value}>
       <IconAppearanceProvider value={value}>

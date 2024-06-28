@@ -72,15 +72,17 @@ export interface ConfigProviderContextInterface {
   locale: string;
 }
 
-export const ConfigProviderContext = React.createContext<ConfigProviderContextInterface>({
-  hasCustomPanelHeaderAfter: false,
-  customPanelHeaderAfterMinWidth: 90,
-  isWebView: false,
-  transitionMotionEnabled: true,
-  platform: platform(),
-  appearance: undefined, // undefined обозначает что тема должна определиться автоматически
-  tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
-  locale: 'ru',
-});
+export const ConfigProviderContext: React.Context<ConfigProviderContextInterface> =
+  React.createContext<ConfigProviderContextInterface>({
+    hasCustomPanelHeaderAfter: false,
+    customPanelHeaderAfterMinWidth: 90,
+    isWebView: false,
+    transitionMotionEnabled: true,
+    platform: platform(),
+    appearance: undefined, // undefined обозначает что тема должна определиться автоматически
+    tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
+    locale: 'ru',
+  });
 
-export const useConfigProvider = () => React.useContext(ConfigProviderContext);
+export const useConfigProvider = (): ConfigProviderContextInterface =>
+  React.useContext(ConfigProviderContext);

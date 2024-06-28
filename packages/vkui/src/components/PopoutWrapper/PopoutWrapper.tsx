@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -52,7 +53,7 @@ export const PopoutWrapper = ({
   children,
   onClick,
   ...restProps
-}: PopoutWrapperProps) => {
+}: PopoutWrapperProps): React.ReactNode => {
   return (
     <RootComponent
       {...restProps}

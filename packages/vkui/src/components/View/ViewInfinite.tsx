@@ -669,7 +669,7 @@ class ViewInfiniteComponent extends React.Component<
   }
 }
 
-export const ViewInfinite = withContext(
+export const ViewInfinite: React.FC<ViewInfiniteProps> = withContext(
   withContext(
     withContext(
       withPlatform(withDOM<ViewInfiniteProps>(ViewInfiniteComponent)),

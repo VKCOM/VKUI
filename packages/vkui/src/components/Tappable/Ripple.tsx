@@ -8,7 +8,10 @@ import styles from './Tappable.module.css';
  * Возможно нужен Ripple эффект. Данный хук нужен для отказа
  * от двойного ререндера.
  */
-export const useMaybeNeedRipple = (activeMode: string, hasPointer: boolean | undefined) => {
+export const useMaybeNeedRipple = (
+  activeMode: string,
+  hasPointer: boolean | undefined,
+): boolean => {
   const platform = usePlatform();
 
   return platform === 'android' && !hasPointer && activeMode === 'background';
@@ -27,7 +30,14 @@ const WAVE_LIVE = 225;
 /**
  * Хук для создания Ripple эффектов
  */
-export const useRipple = (needRipple: boolean, hasPointerContext: boolean | undefined) => {
+export const useRipple = (
+  needRipple: boolean,
+  hasPointerContext: boolean | undefined,
+): {
+  clicks: Wave[];
+  onPointerDown: React.PointerEventHandler<HTMLSpanElement>;
+  onPointerCancel: React.PointerEventHandler<HTMLSpanElement>;
+} => {
   const [clicks, setClicks] = React.useState<Wave[]>([]);
 
   /**
@@ -93,7 +103,7 @@ export interface RippleProps {
   clicks: Wave[];
 }
 
-export const Ripple = ({ needRipple = true, clicks }: RippleProps) => {
+export const Ripple = ({ needRipple = true, clicks }: RippleProps): React.ReactNode => {
   return (
     <span
       aria-hidden

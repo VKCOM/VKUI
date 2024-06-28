@@ -13,7 +13,7 @@ export const useGlobalOnClickOutside = <
 >(
   callback: (event: MouseEvent) => void,
   ...refs: T[]
-) => {
+): void => {
   const { document } = useDOM();
   useIsomorphicLayoutEffect(() => {
     const someRefNotNull = refs.some((ref) => ref && ref.current !== null);

@@ -24,6 +24,5 @@ export const DEFAULT_APP_ROOT_CONTEXT_VALUE: AppRootContextInterface = {
   disablePortal: false,
 };
 
-export const AppRootContext = React.createContext<AppRootContextInterface>(
-  DEFAULT_APP_ROOT_CONTEXT_VALUE,
-);
+export const AppRootContext: React.Context<AppRootContextInterface> =
+  React.createContext<AppRootContextInterface>(DEFAULT_APP_ROOT_CONTEXT_VALUE);

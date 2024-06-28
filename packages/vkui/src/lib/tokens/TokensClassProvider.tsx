@@ -22,7 +22,7 @@ export interface TokensClassProviderProps {
   children: React.ReactNode;
 }
 
-export const TokensClassProvider = ({ children }: TokensClassProviderProps) => {
+export const TokensClassProvider: React.FC<TokensClassProviderProps> = ({ children }) => {
   return React.Children.map(children, (child) => {
     if (React.isValidElement<ProvidedChildProps>(child)) {
       return <InjectTokenClassNameToChild>{child}</InjectTokenClassNameToChild>;

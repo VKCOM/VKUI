@@ -59,7 +59,7 @@ export const WriteBarIcon = ({
   className,
   label: labelProp,
   ...restProps
-}: WriteBarIconProps) => {
+}: WriteBarIconProps): React.ReactNode => {
   const platform = usePlatform();
 
   let predefinedIcons;

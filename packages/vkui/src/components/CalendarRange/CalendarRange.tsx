@@ -72,7 +72,7 @@ export const CalendarRange = ({
   nextMonthIcon,
   listenDayChangesForUpdate,
   ...props
-}: CalendarRangeProps) => {
+}: CalendarRangeProps): React.ReactNode => {
   const {
     viewDate,
     setViewDate,

@@ -27,7 +27,7 @@ export const CellDragger = ({
   onDragFinish,
   children,
   ...restProps
-}: CellDraggerProps) => {
+}: CellDraggerProps): React.ReactNode => {
   const platform = usePlatform();
   const Icon = platform === 'ios' ? Icon24ReorderIos : Icon24Reorder;
 

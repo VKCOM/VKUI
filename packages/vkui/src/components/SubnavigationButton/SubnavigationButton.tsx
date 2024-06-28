@@ -83,7 +83,7 @@ export const SubnavigationButton = ({
   children,
   className,
   ...restProps
-}: SubnavigationButtonProps) => {
+}: SubnavigationButtonProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (

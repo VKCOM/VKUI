@@ -24,7 +24,12 @@ const warn = warnOnce('IconButton');
 /**
  * @see https://vkcom.github.io/VKUI/#/IconButton
  */
-export const IconButton = ({ label, children, className, ...restProps }: IconButtonProps) => {
+export const IconButton = ({
+  label,
+  children,
+  className,
+  ...restProps
+}: IconButtonProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
 

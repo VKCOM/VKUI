@@ -1,7 +1,7 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Progress } from './Progress';
 
-export const ProgressPlayground = (props: ComponentPlaygroundProps) => {
+export const ProgressPlayground = (props: ComponentPlaygroundProps): React.ReactNode => {
   return (
     <ComponentPlayground
       {...props}

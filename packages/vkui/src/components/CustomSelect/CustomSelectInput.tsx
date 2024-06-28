@@ -51,7 +51,7 @@ export const CustomSelectInput = ({
   fetching,
   labelTextTestId,
   ...restProps
-}: CustomSelectInputProps) => {
+}: CustomSelectInputProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   const title = children || placeholder;

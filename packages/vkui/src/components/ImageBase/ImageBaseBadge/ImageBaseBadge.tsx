@@ -39,7 +39,10 @@ export interface ImageBaseBadgeProps extends HTMLAttributesWithRootRef<HTMLDivEl
  *
  * > Не используйте при `size < 24`
  */
-export const ImageBaseBadge = ({ background = 'shadow', ...restProps }: ImageBaseBadgeProps) => {
+export const ImageBaseBadge: React.FC<ImageBaseBadgeProps> = ({
+  background = 'shadow',
+  ...restProps
+}: ImageBaseBadgeProps) => {
   if (process.env.NODE_ENV === 'development') {
     if (restProps.children) {
       // eslint-disable-next-line react-hooks/rules-of-hooks

@@ -21,7 +21,7 @@ const PlaceholderContainer = ({
   stretched,
   noPadding = false,
   ...restProps
-}: PlaceholderContainerProps) => (
+}: PlaceholderContainerProps): React.ReactNode => (
   <RootComponent
     baseClassName={classNames(
       styles['Placeholder'],
@@ -34,13 +34,16 @@ const PlaceholderContainer = ({
 
 export type PlaceholderIconProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
-const PlaceholderIcon = (props: PlaceholderIconProps) => (
+const PlaceholderIcon = (props: PlaceholderIconProps): React.ReactNode => (
   <RootComponent baseClassName={styles['Placeholder__icon']} {...props} />
 );
 
 export type PlaceholderHeaderProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
 
-const PlaceholderHeader = ({ className, ...restProps }: PlaceholderHeaderProps) => (
+const PlaceholderHeader = ({
+  className,
+  ...restProps
+}: PlaceholderHeaderProps): React.ReactNode => (
   <Title
     level="2"
     weight="2"
@@ -51,7 +54,7 @@ const PlaceholderHeader = ({ className, ...restProps }: PlaceholderHeaderProps) 
 
 export type PlaceholderTextProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
 
-const PlaceholderText = ({ className, ...restProps }: PlaceholderTextProps) => (
+const PlaceholderText = ({ className, ...restProps }: PlaceholderTextProps): React.ReactNode => (
   <Headline
     weight="3"
     className={classNames(className, styles['Placeholder__text'])}
@@ -61,7 +64,7 @@ const PlaceholderText = ({ className, ...restProps }: PlaceholderTextProps) => (
 
 export type PlaceholderActionsProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
-const PlaceholderActions = (props: PlaceholderActionsProps) => (
+const PlaceholderActions = (props: PlaceholderActionsProps): React.ReactNode => (
   <RootComponent baseClassName={styles['Placeholder__action']} {...props} />
 );
 
@@ -83,14 +86,13 @@ export interface PlaceholderProps extends PlaceholderContainerProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/Placeholder
  */
-export const Placeholder = ({
-  icon,
-  header,
-  children,
-  action,
-  noPadding = false,
-  ...restProps
-}: PlaceholderProps) => (
+export const Placeholder: React.FC<PlaceholderProps> & {
+  Container: typeof PlaceholderContainer;
+  Icon: typeof PlaceholderIcon;
+  Header: typeof PlaceholderHeader;
+  Text: typeof PlaceholderText;
+  Actions: typeof PlaceholderActions;
+} = ({ icon, header, children, action, noPadding = false, ...restProps }: PlaceholderProps) => (
   <PlaceholderContainer noPadding={noPadding} {...restProps}>
     {hasReactNode(icon) && <PlaceholderIcon>{icon}</PlaceholderIcon>}
     {hasReactNode(header) && <PlaceholderHeader>{header}</PlaceholderHeader>}

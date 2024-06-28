@@ -45,11 +45,12 @@ export function getClassNamesByMode({
   return [baseClassNames, stylesClassNames];
 }
 
-export const getParentElement = (el: HTMLElement | null) => (el ? el.parentElement : null);
+export const getParentElement = (el: HTMLElement | null): HTMLElement | null =>
+  el ? el.parentElement : null;
 
 export const extractPortalRootByProp = (
   portalRootProp: HTMLElement | React.RefObject<HTMLElement>,
-) => (isRefObject(portalRootProp) ? portalRootProp.current : portalRootProp);
+): HTMLElement | null => (isRefObject(portalRootProp) ? portalRootProp.current : portalRootProp);
 
 export const CUSTOM_PROPERTY_INSET_PREFIX = `--vkui_internal--safe_area_inset_`;
 
@@ -57,7 +58,7 @@ export const setSafeAreaInsets = (
   safeAreaInsets: SafeAreaInsets | undefined,
   rootContainer: HTMLElement,
   portalContainer?: HTMLElement,
-) => {
+): (() => void) => {
   if (!safeAreaInsets) {
     return () => void 0;
   }

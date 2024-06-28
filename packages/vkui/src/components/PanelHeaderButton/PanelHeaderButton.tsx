@@ -48,7 +48,7 @@ export const PanelHeaderButton = ({
   label,
   className,
   ...restProps
-}: PanelHeaderButtonProps) => {
+}: PanelHeaderButtonProps): React.ReactNode => {
   const isPrimitive = isPrimitiveReactNode(children);
   const isPrimitiveLabel = isPrimitiveReactNode(label);
   const platform = usePlatform();

@@ -112,7 +112,7 @@ export const Calendar = ({
   minDateTime,
   maxDateTime,
   ...props
-}: CalendarProps) => {
+}: CalendarProps): React.ReactNode => {
   const {
     viewDate,
     setViewDate,

@@ -164,7 +164,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   onKeyDown: onKeyDownProp,
   dropdownOffsetDistance = 0,
   ...restProps
-}: ChipsSelectProps<Option>) => {
+}: ChipsSelectProps<Option>): React.ReactNode => {
   const {
     // Связано с ChipsInputProps
     // option

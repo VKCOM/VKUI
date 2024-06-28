@@ -14,7 +14,7 @@ import type { CSSBreakpointsClassNames, MediaQueries } from './types';
 /**
  * @public
  */
-export function getViewWidthByViewportWidth(viewportWidth: number) {
+export function getViewWidthByViewportWidth(viewportWidth: number): ViewWidthType {
   if (viewportWidth >= BREAKPOINTS.DESKTOP) {
     return ViewWidth.DESKTOP;
   }
@@ -51,7 +51,7 @@ export function getViewWidthByMediaQueries(mediaQueries: MediaQueries): ViewWidt
 /**
  * @public
  */
-export function getViewHeightByViewportHeight(viewportHeight: number) {
+export function getViewHeightByViewportHeight(viewportHeight: number): ViewHeightType {
   if (viewportHeight >= BREAKPOINTS.MEDIUM_HEIGHT) {
     return ViewHeight.MEDIUM;
   }
@@ -77,11 +77,14 @@ export function getSizeX(viewWidth: ViewWidthType): SizeTypeValues {
   return viewWidth <= ViewWidth.MOBILE ? 'compact' : 'regular';
 }
 
-export function isCompactByViewWidth(viewWidth: ViewWidthType | undefined, hasPointer?: boolean) {
+export function isCompactByViewWidth(
+  viewWidth: ViewWidthType | undefined,
+  hasPointer?: boolean,
+): boolean | undefined {
   return viewWidth !== undefined && viewWidth >= ViewWidth.SMALL_TABLET && hasPointer;
 }
 
-export function isCompactByViewHeight(viewHeight: ViewHeightType | undefined) {
+export function isCompactByViewHeight(viewHeight: ViewHeightType | undefined): boolean {
   return viewHeight !== undefined && viewHeight <= ViewHeight.EXTRA_SMALL;
 }
 

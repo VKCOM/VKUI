@@ -20,7 +20,13 @@ export const DEFAULT_MAX_YEAR = 9999;
 // 100 - из-за ограничений dayjs https://github.com/iamkun/dayjs/issues/2591
 export const DEFAULT_MIN_YEAR = 100;
 
-export const getYears = (currentYear: number, range: number) => {
+export const getYears = (
+  currentYear: number,
+  range: number,
+): Array<{
+  value: number;
+  label: string;
+}> => {
   const years: Array<{
     value: number;
     label: string;
@@ -36,7 +42,12 @@ export const getYears = (currentYear: number, range: number) => {
   return years;
 };
 
-export const getMonths = (locale?: string) => {
+export const getMonths = (
+  locale?: string,
+): Array<{
+  value: number;
+  label: string;
+}> => {
   const months: Array<{
     value: number;
     label: string;
@@ -59,7 +70,7 @@ export const getDaysNames = (
   now: Date,
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6,
   locale?: string,
-) => {
+): string[] => {
   const formatter = new Intl.DateTimeFormat(locale, {
     weekday: 'short',
   });
@@ -68,7 +79,7 @@ export const getDaysNames = (
   );
 };
 
-export const navigateDate = (date?: Date | null, key?: string) => {
+export const navigateDate = (date?: Date | null, key?: string): Date => {
   let newDate = date ?? new Date();
 
   switch (key) {
@@ -89,7 +100,7 @@ export const navigateDate = (date?: Date | null, key?: string) => {
   return newDate;
 };
 
-export const getWeeks = (viewDate: Date, weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6) => {
+export const getWeeks = (viewDate: Date, weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6): Date[][] => {
   const start = startOfWeek(startOfMonth(viewDate), weekStartsOn);
   const end = endOfWeek(endOfMonth(viewDate), weekStartsOn);
 
@@ -111,7 +122,7 @@ export const getWeeks = (viewDate: Date, weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6
   return nestedWeeks;
 };
 
-export const setTimeEqual = (to: Date, from?: Date | null) => {
+export const setTimeEqual = (to: Date, from?: Date | null): Date => {
   if (from) {
     to.setHours(from.getHours());
     to.setMinutes(from.getMinutes());
@@ -122,15 +133,16 @@ export const setTimeEqual = (to: Date, from?: Date | null) => {
   return to;
 };
 
-export const isFirstDay = (day: Date, dayOfWeek: number) =>
+export const isFirstDay = (day: Date, dayOfWeek: number): boolean =>
   dayOfWeek === 0 || isFirstDayOfMonth(day);
 
-export const isLastDay = (day: Date, dayOfWeek: number) => dayOfWeek === 6 || isLastDayOfMonth(day);
+export const isLastDay = (day: Date, dayOfWeek: number): boolean =>
+  dayOfWeek === 6 || isLastDayOfMonth(day);
 
 /**
  * Возвращает дату, ограниченную `min` и/или `max` значениями
  */
-export function clamp(day: Date, options: { min?: Date; max?: Date } = {}) {
+export function clamp(day: Date, options: { min?: Date; max?: Date } = {}): Date {
   const { min, max } = options;
   if (min && isBefore(day, min)) {
     return min;
@@ -147,7 +159,7 @@ export function clamp(day: Date, options: { min?: Date; max?: Date } = {}) {
 export function isDayMinMaxRestricted(
   day: Date,
   options: { min?: Date; max?: Date; withTime?: boolean } = {},
-) {
+): boolean {
   const { min, max, withTime = false } = options;
   if (!withTime && ((min && isSameDay(day, min)) || (max && isSameDay(day, max)))) {
     return false;

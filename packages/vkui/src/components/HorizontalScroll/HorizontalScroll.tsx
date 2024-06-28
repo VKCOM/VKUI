@@ -179,7 +179,7 @@ export const HorizontalScroll = ({
   scrollOnAnyWheel = false,
   inline = false,
   ...restProps
-}: HorizontalScrollProps) => {
+}: HorizontalScrollProps): React.ReactNode => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
   const [directionRef, textDirection = 'ltr'] = useDirection<HTMLDivElement>();

@@ -84,7 +84,7 @@ export const Header = ({
   aside,
   multiline,
   ...restProps
-}: HeaderProps) => {
+}: HeaderProps): React.ReactNode => {
   return (
     <RootComponent
       {...restProps}

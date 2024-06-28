@@ -36,7 +36,19 @@ export function useCalendar({
   onPrevMonth,
   minDateTime,
   maxDateTime,
-}: UseCalendarDependencies) {
+}: UseCalendarDependencies): {
+  viewDate: Date;
+  setViewDate: (value: Date) => void;
+  setPrevMonth: () => void;
+  setNextMonth: () => void;
+  focusedDay: Date | undefined;
+  setFocusedDay: React.Dispatch<React.SetStateAction<Date | undefined>>;
+  isDayFocused: (day: Date) => boolean;
+  isDayDisabled: (day: Date, withTime?: boolean) => boolean;
+  resetSelectedDay: () => void;
+  isMonthDisabled: (month: number, year?: number) => boolean;
+  isYearDisabled: (year: number) => boolean;
+} {
   const [viewDate, setViewDate] = React.useState(
     (Array.isArray(value) ? value[0] : value) ?? new Date(),
   );

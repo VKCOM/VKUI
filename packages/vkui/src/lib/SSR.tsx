@@ -14,7 +14,7 @@ export interface SSRWrapperProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/SSR
  */
-export const SSRWrapper = ({ userAgent, browserInfo, children }: SSRWrapperProps) => {
+export const SSRWrapper: React.FC<SSRWrapperProps> = ({ userAgent, browserInfo, children }) => {
   if (!browserInfo && userAgent) {
     browserInfo = computeBrowserInfo(userAgent);
   }

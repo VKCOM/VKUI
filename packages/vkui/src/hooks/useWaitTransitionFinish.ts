@@ -2,7 +2,11 @@ import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useDOM } from '../lib/dom';
 
-export const useWaitTransitionFinish = () => {
+export const useWaitTransitionFinish = (): ((
+  element: HTMLElement | undefined | null,
+  eventHandler: VoidFunction,
+  durationFallback: number,
+) => void) => {
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const { document } = useDOM();
   const detach = React.useRef(noop);

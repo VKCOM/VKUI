@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Mark.module.css';
@@ -11,6 +12,6 @@ export type MarkProps = HTMLAttributesWithRootRef<HTMLDivElement>;
  * @since 6.1.0
  * @see https://vkcom.github.io/VKUI/#/Mark
  */
-export const Mark = (props: MarkProps) => (
+export const Mark = (props: MarkProps): React.ReactNode => (
   <RootComponent baseClassName={styles['Mark']} Component="mark" {...props} />
 );

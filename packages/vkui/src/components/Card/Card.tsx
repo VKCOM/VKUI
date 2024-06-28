@@ -10,7 +10,7 @@ export interface CardProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
 /**
  * @see https://vkcom.github.io/VKUI/#/Card
  */
-export const Card = ({ mode = 'tint', ...restProps }: CardProps) => {
+export const Card = ({ mode = 'tint', ...restProps }: CardProps): React.ReactNode => {
   const withBorder = mode === 'outline' || mode === 'outline-tint';
   return (
     <RootComponent

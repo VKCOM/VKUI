@@ -632,7 +632,7 @@ class ModalRootTouchComponent extends React.Component<
   }
 }
 
-export const ModalRootTouch = withContext(
+export const ModalRootTouch: React.FC<ModalRootWithDOMProps> = withContext(
   withPlatform(
     withDOM<ModalRootWithDOMProps>(withModalManager(initModal)(ModalRootTouchComponent)),
   ),

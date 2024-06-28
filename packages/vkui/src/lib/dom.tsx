@@ -30,15 +30,16 @@ export interface DOMContextInterface {
 export type DOMProps = DOMContextInterface;
 
 /* eslint-disable no-restricted-globals */
-export const getDOM = () => ({
+export const getDOM = (): DOMContextInterface => ({
   window: canUseDOM ? window : undefined,
   document: canUseDOM ? document : undefined,
 });
 /* eslint-enable no-restricted-globals */
 
-export const DOMContext = React.createContext<DOMContextInterface>(getDOM());
+export const DOMContext: React.Context<DOMContextInterface> =
+  React.createContext<DOMContextInterface>(getDOM());
 
-export const useDOM = () => {
+export const useDOM = (): DOMContextInterface => {
   return React.useContext(DOMContext);
 };
 
@@ -74,15 +75,18 @@ export function withDOM<Props>(
   return WithDOM;
 }
 
-export function blurActiveElement(document: Document | undefined) {
+export function blurActiveElement(document: Document | undefined): void {
   if (document && document.activeElement) {
     (document.activeElement as HTMLElement).blur();
   }
 }
 
-export const TRANSFORM_DEFAULT_VALUES = ['none', 'initial', 'inherit', 'unset'];
-export const WILL_CHANGE_DEFAULT_VALUES = ['auto', 'initial', 'inherit', 'unset'];
-export function getTransformedParentCoords(element: Element) {
+export const TRANSFORM_DEFAULT_VALUES: string[] = ['none', 'initial', 'inherit', 'unset'];
+export const WILL_CHANGE_DEFAULT_VALUES: string[] = ['auto', 'initial', 'inherit', 'unset'];
+export function getTransformedParentCoords(element: Element): {
+  x: number;
+  y: number;
+} {
   let parentNode = element.parentNode;
   while (parentNode !== null) {
     if (isHTMLElement(parentNode)) {
@@ -155,11 +159,18 @@ export const getNearestOverflowAncestor = (childEl: Node): HTMLElement | Window 
       : null;
 };
 
-export const getScrollHeight = (node: Element | Window) => {
+export const getScrollHeight = (node: Element | Window): number => {
   return isWindow(node) ? node.document.documentElement.scrollHeight : node.scrollHeight;
 };
 
-export const getScrollRect = (node: Element | Window) => {
+export const getScrollRect = (
+  node: Element | Window,
+): {
+  relative: DOMRect;
+  edges: {
+    y: [number, number];
+  };
+} => {
   const window = isElement(node) ? getWindow(node) : node;
   const scrollElRect = getBoundingClientRect(node);
 
@@ -173,16 +184,25 @@ export const getScrollRect = (node: Element | Window) => {
   };
 };
 
-export const getDocumentBody = (node?: any) => getWindow(node).document.body;
+export const getDocumentBody = (node?: any): HTMLElement => getWindow(node).document.body;
 
-export const getActiveElementByAnotherElement = (el: Element | null) =>
+export const getActiveElementByAnotherElement = (el: Element | null): Element | null =>
   el ? el.ownerDocument.activeElement : null;
 
-export const contains = (parent?: Element | null, child?: Element | null) => {
+export const contains = (parent?: Element | null, child?: Element | null): boolean => {
   return parent && child ? parent.contains(child) : false;
 };
 
-export const getFirstTouchEventData = (event: UIEvent | React.UIEvent<HTMLElement>) => {
+export const getFirstTouchEventData = (
+  event: UIEvent | React.UIEvent<HTMLElement>,
+): {
+  screenX: number;
+  screenY: number;
+  clientX: number;
+  clientY: number;
+  pageX: number;
+  pageY: number;
+} => {
   let dataRaw = (function resolveData() {
     switch (event.type) {
       case 'touchend':

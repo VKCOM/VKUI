@@ -12,6 +12,7 @@ import {
 import { isValueLikeChipOptionObject } from '../ChipsInputBase/helpers';
 import type {
   ChipOption,
+  ChipOptionLabel,
   ChipOptionValue,
   GetNewOptionData,
   GetOptionLabel,
@@ -23,7 +24,12 @@ export const transformValue = <O extends ChipOption>(
   value: O[],
   getOptionValue: GetOptionValue<O>,
   getOptionLabel: GetOptionLabel<O>,
-) =>
+): Array<
+  O & {
+    label: ChipOptionLabel;
+    value: ChipOptionValue;
+  }
+> =>
   value.map((option) => ({
     ...option,
     label: getOptionLabel(option),
@@ -67,7 +73,21 @@ export const useChipsInput = <O extends ChipOption>({
 
   // other
   disabled,
-}: UseChipsInputProps<O>) => {
+}: UseChipsInputProps<O>): {
+  value: Array<
+    O & {
+      label: ChipOptionLabel;
+      value: ChipOptionValue;
+    }
+  >;
+  addOption: (newValue: O | string) => void;
+  addOptionFromInput: (inputValue: string) => void;
+  removeOption: (newValue: O | ChipOptionValue) => void;
+  inputRef: React.RefObject<HTMLInputElement & SimulateReactInputTargetState>;
+  inputValue: string;
+  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => any;
+  clearInput: () => void;
+} => {
   const [value, setValue] = useCustomEnsuredControl({
     disabled,
     value: valueProp ? transformValue(valueProp, getOptionValue, getOptionLabel) : undefined,

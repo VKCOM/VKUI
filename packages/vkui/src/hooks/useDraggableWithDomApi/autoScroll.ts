@@ -4,7 +4,13 @@ import { rafSchd } from '../../lib/rafSchd';
 const SCROLL_SPEED = 10;
 export const EDGE_SIZE = 50;
 
-export const getAutoScrollingData = (clientY: number, scrollEl: Element | Window) => {
+export const getAutoScrollingData = (
+  clientY: number,
+  scrollEl: Element | Window,
+): {
+  shouldScrolling: boolean;
+  y: number;
+} => {
   const scrollTop = Math.floor(getNodeScroll(scrollEl).scrollTop);
 
   const { relative, edges } = getScrollRect(scrollEl);
@@ -37,7 +43,13 @@ export const getAutoScrollingData = (clientY: number, scrollEl: Element | Window
 
 export type AutoScrollingDataFn = () => { shouldScrolling: boolean; y: number };
 
-export const createAutoScrollController = (scrollEl: Element | Window) => {
+export const createAutoScrollController = (
+  scrollEl: Element | Window,
+): {
+  tryAutoScroll: (fn: AutoScrollingDataFn) => void;
+  stop: () => void;
+  readonly isRunning: boolean;
+} => {
   let isRunning = false;
   const scheduledScroll = rafSchd(scroll);
 

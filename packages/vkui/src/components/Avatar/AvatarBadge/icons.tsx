@@ -8,7 +8,7 @@ export const Icon12Circle = ({
   width = 12,
   height = 12,
   ...restProps
-}: React.ComponentProps<typeof Icon12CircleLib>) => {
+}: React.ComponentProps<typeof Icon12CircleLib>): React.ReactNode => {
   return (
     <Icon12CircleLib {...restProps} width={width >= 24 ? 15 : 12} height={height >= 24 ? 15 : 12} />
   );
@@ -18,7 +18,7 @@ export const Icon12OnlineMobile = ({
   width = 8,
   height = 12,
   ...restProps
-}: React.ComponentProps<typeof Icon12OnlineMobileLib>) => {
+}: React.ComponentProps<typeof Icon12OnlineMobileLib>): React.ReactNode => {
   return (
     <Icon12OnlineMobileLib
       {...restProps}

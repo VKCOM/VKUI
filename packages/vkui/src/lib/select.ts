@@ -63,6 +63,8 @@ export function defaultFilterFn<O extends Option>(
   return false;
 }
 
-export const getFormFieldModeFromSelectType = (selectType: SelectType = 'default') => {
+export const getFormFieldModeFromSelectType = (
+  selectType: SelectType = 'default',
+): 'default' | 'plain' => {
   return selectType === 'default' ? 'default' : 'plain';
 };

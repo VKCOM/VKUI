@@ -18,7 +18,7 @@ export const Link = ({
   className,
   onClick = noop,
   ...restProps
-}: LinkProps) => {
+}: LinkProps): React.ReactNode => {
   return (
     <Tappable
       Component={restProps.href ? 'a' : 'button'}

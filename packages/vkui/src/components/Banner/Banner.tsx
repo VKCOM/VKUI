@@ -97,7 +97,7 @@ export const Banner = ({
   onDismiss,
   dismissLabel = 'Скрыть',
   ...restProps
-}: BannerProps) => {
+}: BannerProps): React.ReactNode => {
   const platform = usePlatform();
 
   const HeaderTypography = size === 'm' ? Title : Headline;

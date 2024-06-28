@@ -85,7 +85,7 @@ function validateIconComponentSizeByImageSize(
 
 const warnImageBase = warnOnce('ImageBase');
 
-export function validateFallbackIcon(imageSize: number, iconProp: IconProp) {
+export function validateFallbackIcon(imageSize: number, iconProp: IconProp): void {
   return validateIconComponentSizeByImageSize(
     imageSize,
     iconProp,
