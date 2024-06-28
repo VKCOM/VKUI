@@ -17,6 +17,7 @@ export const RadioGroup = ({ mode = 'vertical', ...restProps }: RadioGroupProps)
       'vkuiInternalRadioGroup',
       mode === 'horizontal' && styles['RadioGroup--mode-horizontal'],
     )}
+    role="radiogroup"
     {...restProps}
   />
 );
