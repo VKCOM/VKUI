@@ -8,12 +8,13 @@ type OnboardingTooltipContainerProps = React.HTMLAttributes<HTMLDivElement> &
     fixed?: boolean;
   };
 
-export const OnboardingTooltipContainer = React.forwardRef<
-  HTMLDivElement,
-  OnboardingTooltipContainerProps
->(({ fixed = false, ...props }, ref) => {
-  props[onboardingTooltipContainerAttr] = fixed ? 'fixed' : 'true';
-  return <div {...props} ref={ref} />;
-});
+export const OnboardingTooltipContainer: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<OnboardingTooltipContainerProps> & React.RefAttributes<HTMLDivElement>
+> = React.forwardRef<HTMLDivElement, OnboardingTooltipContainerProps>(
+  ({ fixed = false, ...props }, ref) => {
+    props[onboardingTooltipContainerAttr] = fixed ? 'fixed' : 'true';
+    return <div {...props} ref={ref} />;
+  },
+);
 
 OnboardingTooltipContainer.displayName = 'OnboardingTooltipContainer';

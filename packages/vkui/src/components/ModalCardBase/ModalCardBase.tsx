@@ -100,7 +100,7 @@ export const ModalCardBase = ({
   dismissButtonMode = 'outside',
   preventClose,
   ...restProps
-}: ModalCardBaseProps) => {
+}: ModalCardBaseProps): React.ReactNode => {
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const isSoftwareKeyboardOpened = useKeyboard().isOpened;

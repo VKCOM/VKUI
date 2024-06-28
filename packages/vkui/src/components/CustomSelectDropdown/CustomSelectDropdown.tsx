@@ -45,7 +45,7 @@ export const CustomSelectDropdown = ({
   className,
   noMaxHeight = false,
   ...restProps
-}: CustomSelectDropdownProps) => {
+}: CustomSelectDropdownProps): React.ReactNode => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
 
   const onPlacementChange = React.useCallback(

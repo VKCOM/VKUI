@@ -13,7 +13,7 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
 /**
  * @see https://vkcom.github.io/VKUI/#/Separator
  */
-export const Separator = ({ wide, ...restProps }: SeparatorProps) => (
+export const Separator = ({ wide, ...restProps }: SeparatorProps): React.ReactNode => (
   <RootComponent
     {...restProps}
     baseClassName={classNames(styles['Separator'], !wide && styles['Separator--padded'])}

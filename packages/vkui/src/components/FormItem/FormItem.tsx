@@ -76,7 +76,11 @@ export interface FormItemProps
 /**
  * @see https://vkcom.github.io/VKUI/#/FormItem
  */
-export const FormItem = ({
+export const FormItem: React.FC<FormItemProps> & {
+  Top: typeof FormItemTop;
+  TopLabel: typeof FormItemTopLabel;
+  TopAside: typeof FormItemTopAside;
+} = ({
   children,
   top,
   topId,

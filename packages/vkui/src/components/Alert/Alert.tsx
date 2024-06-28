@@ -80,7 +80,7 @@ export const Alert = ({
   dismissButtonTestId,
   getRootRef,
   ...restProps
-}: AlertProps) => {
+}: AlertProps): React.ReactNode => {
   const generatedId = React.useId();
 
   const headerId = `vkui-alert-${generatedId}-header`;

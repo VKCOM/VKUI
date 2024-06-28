@@ -3,7 +3,7 @@ import * as React from 'react';
 export function useResizeTextarea(
   onResize: ((el: HTMLTextAreaElement) => void) | undefined,
   grow = true,
-) {
+): readonly [React.RefObject<HTMLTextAreaElement>, () => void] {
   const elementRef = React.useRef<HTMLTextAreaElement>(null);
   const currentScrollHeight = React.useRef<number>();
 
@@ -31,5 +31,5 @@ export function useResizeTextarea(
     resizeElement(el);
   }, [elementRef, resizeElement]);
 
-  return [elementRef, resize] as const;
+  return [elementRef, resize];
 }

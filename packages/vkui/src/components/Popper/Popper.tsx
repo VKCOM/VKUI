@@ -113,7 +113,7 @@ export const Popper = ({
   style: styleProp,
   onPlacementChange,
   ...restProps
-}: PopperProps) => {
+}: PopperProps): React.ReactNode => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
   const { strictPlacement, middlewares } = useFloatingMiddlewaresBootstrap({

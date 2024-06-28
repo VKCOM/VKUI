@@ -7,12 +7,12 @@ export interface TransitionContextProps {
 const TransitionContext = React.createContext<TransitionContextProps>({
   entering: false,
 });
-export const useNavTransition = () => React.useContext(TransitionContext);
+export const useNavTransition = (): TransitionContextProps => React.useContext(TransitionContext);
 
 export const NavTransitionProvider = ({
   children,
   entering,
-}: React.PropsWithChildren<TransitionContextProps>) => {
+}: React.PropsWithChildren<TransitionContextProps>): React.ReactNode => {
   const parentContext = useNavTransition();
   const contextValue = useObjectMemo({
     entering: parentContext.entering || entering,

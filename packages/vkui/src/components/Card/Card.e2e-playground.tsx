@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   ComponentPlayground,
   type ComponentPlaygroundProps,
@@ -5,7 +6,7 @@ import {
 } from '@vkui-e2e/playground-helpers';
 import { Card, type CardProps } from './Card';
 
-export const CardPlayground = (props: ComponentPlaygroundProps) => {
+export const CardPlayground = (props: ComponentPlaygroundProps): React.ReactNode => {
   return (
     <ComponentPlayground
       {...props}

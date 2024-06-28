@@ -2,7 +2,8 @@ import * as React from 'react';
 import { rescale } from '../../helpers/math';
 import type { InternalDraggingType, InternalValueState } from './types';
 
-export const toPercent = (v: number, min: number, max: number) => ((v - min) / (max - min)) * 100;
+export const toPercent = (v: number, min: number, max: number): number =>
+  ((v - min) / (max - min)) * 100;
 
 export const offsetToValue = (
   startX: number,
@@ -10,7 +11,7 @@ export const offsetToValue = (
   min: number,
   max: number,
   step?: number,
-) => {
+): number => {
   return rescale(startX, [0, width], [min, max], { step });
 };
 
@@ -77,7 +78,7 @@ export const snapDirection = (
   prevValue: InternalValueState,
   nextValue: number,
   type: InternalDraggingType | null,
-) => {
+): 'start' | 'end' => {
   if (type === 'start') {
     return 'start';
   }
@@ -95,7 +96,7 @@ export const snapDirection = (
 
 export const getDraggingTypeByTargetDataset = <T extends (EventTarget & HTMLElement) | null>(
   target: T,
-) => {
+): 'start' | 'end' | null => {
   if (target) {
     if (target.dataset.type === 'start') {
       return 'start';
@@ -115,7 +116,11 @@ const resetProps = {
 
 export const extractSliderAriaAttributesFromRestProps = <T extends React.AriaAttributes>(
   restProps: T,
-) => {
+): T & {
+  ariaLabel: string | undefined;
+  ariaValueText: string | undefined;
+  ariaLabelledBy: string | undefined;
+} => {
   const ariaLabel = restProps['aria-label'];
   const ariaValueText = restProps['aria-valuetext'];
   const ariaLabelledBy = restProps['aria-labelledby'];

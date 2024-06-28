@@ -22,7 +22,7 @@ const warn = warnOnce('GridAvatar');
 /**
  * @see https://vkcom.github.io/VKUI/#/GridAvatar
  */
-export const GridAvatar = ({
+export const GridAvatar: React.FC<GridAvatarProps> & { Badge: typeof GridAvatarBadge } = ({
   src = [],
   size = GRID_AVATAR_DEFAULT_SIZE,
   className,

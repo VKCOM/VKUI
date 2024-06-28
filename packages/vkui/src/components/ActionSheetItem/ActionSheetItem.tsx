@@ -72,7 +72,7 @@ export const ActionSheetItem = ({
   className,
   isCancelItem,
   ...restProps
-}: ActionSheetItemProps) => {
+}: ActionSheetItemProps): React.ReactNode => {
   const platform = usePlatform();
   const { onItemClick = () => noop, mode: actionSheetMode } =
     React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);

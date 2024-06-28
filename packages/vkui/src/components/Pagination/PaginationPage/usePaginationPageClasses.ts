@@ -10,7 +10,7 @@ export interface UsePaginationPageClassNamesProps {
 
 export const getPaginationPageClassNames = (
   opts: UsePaginationPageClassNamesProps & { sizeY?: SizeTypeValues },
-) => {
+): string => {
   return classNames(
     styles['PaginationPage'],
     opts.sizeY == null && styles['PaginationPage--sizeY-none'],
@@ -23,7 +23,7 @@ export const getPaginationPageClassNames = (
 export function usePaginationPageClassNames({
   isCurrent,
   disabled,
-}: UsePaginationPageClassNamesProps) {
+}: UsePaginationPageClassNamesProps): string {
   const { sizeY } = useAdaptivity();
   return getPaginationPageClassNames({
     isCurrent,

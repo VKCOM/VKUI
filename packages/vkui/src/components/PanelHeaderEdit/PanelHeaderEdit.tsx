@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   Icon24DoneOutline,
   Icon24PenOutline,
@@ -32,7 +33,7 @@ export const PanelHeaderEdit = ({
   editLabel = 'Редактировать',
   doneLabel = 'Готово',
   ...restProps
-}: PanelHeaderEditProps) => {
+}: PanelHeaderEditProps): React.ReactNode => {
   const platform = usePlatform();
   const label = isActive ? doneLabel : editLabel;
 

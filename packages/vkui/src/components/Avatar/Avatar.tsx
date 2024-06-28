@@ -75,7 +75,12 @@ export interface AvatarProps extends Omit<ImageBaseProps, 'widthSize' | 'heightS
 /**
  * @see https://vkcom.github.io/VKUI/#/Avatar
  */
-export const Avatar = ({
+export const Avatar: React.FC<AvatarProps> & {
+  Badge: typeof AvatarBadge;
+  BadgeWithPreset: typeof AvatarBadgeWithPreset;
+  Overlay: typeof ImageBase.Overlay;
+  getInitialsFontSize: typeof getInitialsFontSize;
+} = ({
   size = AVATAR_DEFAULT_SIZE,
   className,
   gradientColor,

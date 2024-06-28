@@ -50,7 +50,7 @@ const AlertActionBase = ({ mode, ...restProps }: AlertActionProps) => {
   );
 };
 
-export const AlertAction = (props: AlertActionProps) => {
+export const AlertAction = (props: AlertActionProps): React.ReactNode => {
   const platform = usePlatform();
 
   if (platform === 'ios') {

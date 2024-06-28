@@ -57,7 +57,7 @@ const NativeSelect = ({
   before,
   onChange,
   ...restProps
-}: NativeSelectProps) => {
+}: NativeSelectProps): React.ReactNode => {
   const [title, setTitle] = React.useState('');
   const [empty, setEmpty] = React.useState(false);
   const selectRef = useExternRef(getRef);

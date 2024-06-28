@@ -40,7 +40,7 @@ export const Tappable = ({
   onPointerDown,
   onPointerCancel,
   ...restProps
-}: TappableProps) => {
+}: TappableProps): React.ReactNode => {
   const isClickable = checkClickable(restProps);
 
   const { sizeX = 'none', hasPointer } = useAdaptivity();

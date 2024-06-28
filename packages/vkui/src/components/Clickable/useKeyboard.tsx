@@ -8,7 +8,9 @@ import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
  * - role="link" (активация по Enter)
  * - role="button" (активация по Space и Enter)
  */
-export function useKeyboard() {
+export function useKeyboard(): {
+  onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+} {
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (!shouldTriggerClickOnEnterOrSpace(e)) {
       return;

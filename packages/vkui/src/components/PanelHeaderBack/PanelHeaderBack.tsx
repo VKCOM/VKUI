@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   Icon20ChevronLeftOutline,
   Icon24ArrowLeftOutline,
@@ -47,7 +48,7 @@ export const PanelHeaderBack = ({
   className,
   children = 'Назад',
   ...restProps
-}: PanelHeaderButtonProps) => {
+}: PanelHeaderButtonProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
   // также label нужно скрывать при platform === 'ios' && sizeX === regular

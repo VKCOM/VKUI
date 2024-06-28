@@ -29,7 +29,7 @@ export const ActionSheetDropdownMenu = ({
   onAnimationStart,
   onAnimationEnd,
   ...restProps
-}: SharedDropdownProps) => {
+}: SharedDropdownProps): React.ReactNode => {
   const { document } = useDOM();
   const platform = usePlatform();
   const { sizeY } = useAdaptivityWithJSMediaQueries();

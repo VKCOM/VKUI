@@ -15,7 +15,7 @@ export const SelectTypography = ({
   selectType = 'default',
   children,
   ...restProps
-}: SelectTypographyProps) => {
+}: SelectTypographyProps): React.ReactNode => {
   return (
     <Text weight={selectType === 'accent' ? '2' : '3'} {...restProps}>
       {children}

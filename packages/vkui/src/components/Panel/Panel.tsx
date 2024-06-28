@@ -48,7 +48,7 @@ export const Panel = ({
   nav,
   mode: modeProp,
   ...restProps
-}: PanelProps) => {
+}: PanelProps): React.ReactNode => {
   const { sizeX = 'none' } = useAdaptivity();
 
   const mode = usePanelMode(modeProp, sizeX);

@@ -65,7 +65,7 @@ export const ScrollArrow = ({
   label: labelProp,
   children = <ArrowIcon size={size} />,
   ...restProps
-}: ScrollArrowProps) => {
+}: ScrollArrowProps): React.ReactNode => {
   const label = labelProp ?? labelDirection[direction];
 
   return (

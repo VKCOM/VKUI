@@ -69,7 +69,7 @@ export const View = ({
   children,
   className,
   ...restProps
-}: ViewProps) => {
+}: ViewProps): React.ReactNode => {
   const id = getNavId({ nav, id: restProps.id });
   const scrolls = React.useRef(scrollsCache[id as string] || {});
   const afterTransition = React.useRef(noop);

@@ -6,7 +6,7 @@ export interface NavIdProps {
   id?: string;
 }
 
-export function getNavId(props: NavIdProps, warn?: WarnOnceHandler) {
+export function getNavId(props: NavIdProps, warn?: WarnOnceHandler): string | undefined {
   const id = props.nav || props.id;
   if (process.env.NODE_ENV === 'development' && !id && warn) {
     warn('Навигационный элемент должен иметь свойство "nav" или "id"', 'error');

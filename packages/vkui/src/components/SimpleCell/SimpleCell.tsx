@@ -97,7 +97,7 @@ export const SimpleCell = ({
   className,
   chevronSize = 'm',
   ...restProps
-}: SimpleCellProps) => {
+}: SimpleCellProps): React.ReactNode => {
   const platform = usePlatform();
 
   const hasChevron = expandable === 'always' || (expandable === 'auto' && platform === 'ios');

@@ -26,7 +26,7 @@ export const ModalPageHeader = ({
   className,
   typographyProps,
   ...restProps
-}: ModalPageHeaderProps) => {
+}: ModalPageHeaderProps): React.ReactNode => {
   const platform = usePlatform();
   const { isDesktop, sizeX } = useAdaptivityWithJSMediaQueries();
   const { labelId } = React.useContext(ModalPageContext);

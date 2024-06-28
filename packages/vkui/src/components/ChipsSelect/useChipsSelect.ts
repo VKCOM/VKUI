@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { isEqual } from '@vkontakte/vkjs';
+import { SimulateReactInputTargetState } from '../../lib/react';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import {
@@ -14,7 +15,7 @@ import {
   getOptionLabelDefault,
   getOptionValueDefault,
 } from '../ChipsInputBase/constants';
-import type { ChipOption } from '../ChipsInputBase/types';
+import type { ChipOption, ChipOptionLabel, ChipOptionValue } from '../ChipsInputBase/types';
 import { DEFAULT_EMPTY_TEXT, DEFAULT_SELECTED_BEHAVIOR, isNotServicePreset } from './constants';
 import type { OptionPreset } from './types';
 
@@ -73,7 +74,31 @@ export const useChipsSelect = <O extends ChipOption>({
   options: optionsProp = DEFAULT_VALUE,
   onClose,
   onOpen,
-}: UseChipsSelectProps<O>) => {
+}: UseChipsSelectProps<O>): {
+  // options
+  value: Array<
+    O & {
+      label: ChipOptionLabel;
+      value: ChipOptionValue;
+    }
+  >;
+  // input
+  inputValue: string;
+  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  // dropdown states
+  options: Array<OptionPreset<O>>;
+  opened: boolean;
+  setOpened: (isOpened: boolean) => void;
+  focusedOption: O | null;
+  focusedOptionIndex: number | null;
+  setFocusedOption: React.Dispatch<React.SetStateAction<O | null>>;
+  setFocusedOptionIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  addOption: (newValue: string | O) => void;
+  addOptionFromInput: (inputValue: string) => void;
+  removeOption: (newValue: ChipOptionValue | O) => void;
+  inputRef: React.RefObject<HTMLInputElement & SimulateReactInputTargetState>;
+  clearInput: () => void;
+} => {
   const { value, inputValue, onInputChange, ...restChipsInputProps } = useChipsInput({
     // option
     value: valueProp,

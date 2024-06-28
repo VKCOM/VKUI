@@ -65,7 +65,7 @@ export const Skeleton = ({
   duration,
   margin,
   ...restProps
-}: SkeletonProps) => {
+}: SkeletonProps): React.ReactNode => {
   const skeletonStyle: React.CSSProperties & CSSCustomProperties = {
     width,
     height,

@@ -38,7 +38,7 @@ export const Root = ({
   onTransition,
   nav,
   ...restProps
-}: RootProps) => {
+}: RootProps): React.ReactNode => {
   const scroll = React.useContext(ScrollContext);
   const platform = usePlatform();
   const { document } = useDOM();

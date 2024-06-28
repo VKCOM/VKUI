@@ -13,7 +13,11 @@ export interface DropdownIconProps extends HTMLAttributesWithRootRef<SVGSVGEleme
   opened?: boolean;
 }
 
-export const DropdownIcon = ({ opened = false, className, ...restProps }: DropdownIconProps) => {
+export const DropdownIcon = ({
+  opened = false,
+  className,
+  ...restProps
+}: DropdownIconProps): React.ReactNode => {
   const { sizeY } = useAdaptivityConditionalRender();
   const IconCompact = opened ? Icon20ChevronUp : Icon20Dropdown;
   const IconRegular = opened ? Icon24ChevronUp : Icon24ChevronDown;

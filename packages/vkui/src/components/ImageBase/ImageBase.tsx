@@ -82,7 +82,10 @@ export interface ImageBaseProps
 /**
  * @see https://vkcom.github.io/VKUI/#/ImageBase
  */
-export const ImageBase = ({
+export const ImageBase: React.FC<ImageBaseProps> & {
+  Badge: typeof ImageBaseBadge;
+  Overlay: typeof ImageBaseOverlay;
+} = ({
   alt,
   crossOrigin,
   decoding,

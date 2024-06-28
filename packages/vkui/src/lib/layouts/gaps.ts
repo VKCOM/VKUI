@@ -3,7 +3,7 @@ import styles from '../../styles/gaps.module.css';
 
 type GapPresets = '2xs' | 'xs' | 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
 
-export const columnGapClassNames = {
+export const columnGapClassNames: Record<GapPresets, string> = {
   '2xs': styles['-column-gap--2xs'],
   'xs': styles['-column-gap--xs'],
   's': styles['-column-gap--s'],
@@ -15,7 +15,7 @@ export const columnGapClassNames = {
   '4xl': styles['-column-gap--4xl'],
 };
 
-export const rowGapClassNames = {
+export const rowGapClassNames: Record<GapPresets, string> = {
   '2xs': styles['-row-gap--2xs'],
   'xs': styles['-row-gap--xs'],
   's': styles['-row-gap--s'],

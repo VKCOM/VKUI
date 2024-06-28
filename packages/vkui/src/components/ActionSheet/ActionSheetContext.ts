@@ -14,4 +14,6 @@ export type ActionSheetContextType<T extends Element = Element> = {
   mode?: 'sheet' | 'menu';
 };
 
-export const ActionSheetContext = React.createContext<ActionSheetContextType<any>>({});
+export const ActionSheetContext: React.Context<ActionSheetContextType<any>> = React.createContext(
+  {},
+);

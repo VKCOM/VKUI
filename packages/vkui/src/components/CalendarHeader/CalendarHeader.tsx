@@ -83,7 +83,7 @@ export const CalendarHeader = ({
   isMonthDisabled,
   isYearDisabled,
   ...restProps
-}: CalendarHeaderProps) => {
+}: CalendarHeaderProps): React.ReactNode => {
   const { locale } = useConfigProvider();
   const onMonthsChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>

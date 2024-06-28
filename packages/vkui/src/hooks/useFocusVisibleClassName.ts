@@ -2,7 +2,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { LiteralUnion } from '../types';
 import styles from '../styles/focusVisible.module.css';
 
-export const focusVisiblePresetModeClassNames = {
+export const focusVisiblePresetModeClassNames: Record<'inside' | 'outside', string> = {
   inside: styles['-focus-visible--mode-inside'],
   outside: styles['-focus-visible--mode-outside'],
 };
@@ -35,7 +35,7 @@ export interface UseFocusVisibleClassNameProps {
 export function useFocusVisibleClassName({
   focusVisible = false,
   mode = 'inside',
-}: UseFocusVisibleClassNameProps) {
+}: UseFocusVisibleClassNameProps): string {
   const modeClassName = isPresetMode(mode) ? focusVisiblePresetModeClassNames[mode] : mode;
 
   const focusVisibleClassNames = classNames(

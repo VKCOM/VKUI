@@ -1,6 +1,6 @@
 import { ActionSheetItem, ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 
-export const ActionSheetDefaultIosCloseItem = (props: ActionSheetItemProps) => {
+export const ActionSheetDefaultIosCloseItem = (props: ActionSheetItemProps): React.ReactNode => {
   return (
     <ActionSheetItem mode="cancel" isCancelItem {...props}>
       Отмена

@@ -3,7 +3,11 @@ import { useStableCallback } from '../../hooks/useStableCallback';
 import { useDOM } from '../../lib/dom';
 import { TimeoutId } from '../../types';
 
-export function useAutoPlay(timeout: number, slideIndex: number, callbackFnProp: VoidFunction) {
+export function useAutoPlay(
+  timeout: number,
+  slideIndex: number,
+  callbackFnProp: VoidFunction,
+): void {
   const { document } = useDOM();
   const callbackFn = useStableCallback(callbackFnProp);
 

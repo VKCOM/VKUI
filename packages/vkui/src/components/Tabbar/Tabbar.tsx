@@ -35,7 +35,7 @@ const getItemsLayoutClassName = (
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabbar
  */
-export const Tabbar = ({ plain = false, mode, ...restProps }: TabbarProps) => {
+export const Tabbar = ({ plain = false, mode, ...restProps }: TabbarProps): React.ReactNode => {
   const platform = usePlatform();
 
   return (

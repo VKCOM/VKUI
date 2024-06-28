@@ -58,7 +58,7 @@ export const Radio = ({
   hasActive,
   focusVisibleMode,
   ...restProps
-}: RadioProps) => {
+}: RadioProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
 

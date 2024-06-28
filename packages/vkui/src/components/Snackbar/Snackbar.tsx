@@ -72,7 +72,7 @@ export interface SnackbarProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Snackbar
  */
-export const Snackbar = ({
+export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   placement = 'bottom-start',
   children,
   layout,

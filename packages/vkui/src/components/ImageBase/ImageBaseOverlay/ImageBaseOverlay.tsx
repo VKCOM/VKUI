@@ -45,7 +45,7 @@ export interface ImageBaseOverlayProps extends React.AriaAttributes {
 /**
  * Интерактивный оверлей над картинкой.
  */
-export const ImageBaseOverlay = ({
+export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
   className,
   theme: themeProp,
   visibility: visibilityProp,

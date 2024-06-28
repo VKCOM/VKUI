@@ -25,7 +25,7 @@ export const DisplayTitle = ({
   normalize = true,
   inline = false,
   ...restProps
-}: DisplayTitleProps) => {
+}: DisplayTitleProps): React.ReactNode => {
   return (
     <Typography
       Component={Component}

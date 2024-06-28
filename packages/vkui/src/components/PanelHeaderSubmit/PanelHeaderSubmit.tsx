@@ -10,7 +10,7 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 export const PanelHeaderSubmit = ({
   children = 'Готово',
   ...restProps
-}: PanelHeaderButtonProps) => {
+}: PanelHeaderButtonProps): React.ReactNode => {
   const platform = usePlatform();
 
   return (

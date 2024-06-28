@@ -47,7 +47,7 @@ export const FormLayoutGroup = ({
   onRemove = noop,
   getRootRef,
   ...restProps
-}: FormLayoutGroupProps) => {
+}: FormLayoutGroupProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const isRemovable = removable && mode === 'horizontal';
   const rootEl = useExternRef(getRootRef);

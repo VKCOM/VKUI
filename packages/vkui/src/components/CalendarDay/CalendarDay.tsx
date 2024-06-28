@@ -31,7 +31,7 @@ export interface CalendarDayProps extends CalendarDayElementProps {
   onLeave?: (value: Date) => void;
 }
 
-export const CalendarDay = React.memo(
+export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
   ({
     day,
     today,

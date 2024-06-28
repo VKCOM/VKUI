@@ -20,7 +20,7 @@ function getMediaQueries(matchMedia: (query: string) => MediaQueryList): MediaQu
 /**
  * Возвращает медиа выражения определенные дизайн-системой.
  */
-export const useMediaQueries = () => {
+export const useMediaQueries = (): MediaQueries => {
   const { window } = useDOM();
 
   return React.useMemo<MediaQueries>(

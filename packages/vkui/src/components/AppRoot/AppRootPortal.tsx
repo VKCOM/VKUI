@@ -15,7 +15,7 @@ export interface AppRootPortalProps extends HasChildren {
   usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null;
 }
 
-export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps) => {
+export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): React.ReactNode => {
   const { portalRoot, mode, disablePortal } = React.useContext(AppRootContext);
   const appearance = useAppearance();
 

@@ -43,7 +43,7 @@ export const FlexItem = ({
   flexBasis,
   style,
   ...rest
-}: FlexItemProps) => {
+}: FlexItemProps): React.ReactNode => {
   return (
     <RootComponent
       {...rest}

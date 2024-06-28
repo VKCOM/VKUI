@@ -56,7 +56,7 @@ export const CalendarDays = ({
   listenDayChangesForUpdate = false,
   getRootRef,
   ...props
-}: CalendarDaysProps) => {
+}: CalendarDaysProps): React.ReactNode => {
   const { locale } = useConfigProvider();
   const ref = useExternRef(getRootRef);
   const now = useTodayDate(listenDayChangesForUpdate);

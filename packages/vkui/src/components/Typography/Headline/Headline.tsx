@@ -30,7 +30,7 @@ export const Headline = ({
   normalize = true,
   inline = false,
   ...restProps
-}: HeadlineProps) => {
+}: HeadlineProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
