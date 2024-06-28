@@ -1,0 +1,11 @@
+/* stylelint-disable selector-max-type -- глобальные стили изменяют глобальные элементы */
+html {
+  color-scheme: var(--vkui--colors_scheme);
+  color: var(--vkui--color_text_primary);
+  background-color: var(--vkui--color_background_content);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

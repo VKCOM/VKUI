@@ -1,0 +1,31 @@
+.host {
+  inline-size: 100%;
+  border-block-end: 1px solid var(--vkui--color_image_border_alpha);
+}
+
+.inner {
+  margin-block: 0;
+  margin-inline: auto;
+  max-inline-size: 1440px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-block: 24px;
+  padding-inline: 40px;
+  color: var(--vkui--color_text_primary);
+}
+
+.before,
+.after {
+  display: flex;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.after > * {
+  margin-inline-end: 8px;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.after > *:last-child {
+  margin-inline-end: 0;
+}

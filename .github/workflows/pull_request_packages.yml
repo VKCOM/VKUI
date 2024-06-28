@@ -56,6 +56,9 @@ jobs:
       - name: Run Stylelint
         run: yarn run lint:style
 
+      - name: Run build VKUI
+        run: yarn run build:vkui
+
       - name: Run types checking
         run: yarn run lint:types
 

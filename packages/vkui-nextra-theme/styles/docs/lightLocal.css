@@ -1,0 +1,6 @@
+/* stylelint-disable declaration-property-value-disallowed-list -- определение токенов */
+.vkui--vkBase--light {
+  --docs--color_background_content: #fafafa;
+  --docs--color_background_icon: #fff;
+  --docs--color_stroke_separator_secondary: #ebebeb;
+}
