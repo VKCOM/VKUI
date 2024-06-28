@@ -13,7 +13,7 @@ describe('Typography', () => {
 
   it('should have specific className when color="primary"', () => {
     render(
-      <Typography data-testid="text" color="primary">
+      <Typography data-testid="text" colorType="primary">
         Text
       </Typography>,
     );

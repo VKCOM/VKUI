@@ -23,7 +23,7 @@ export const Title = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  color = 'inherit',
+  colorType = 'inherit',
   ...restProps
 }: TitleProps) => {
   return (
@@ -31,7 +31,7 @@ export const Title = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      color={color}
+      colorType={colorType}
       className={classNames(className, stylesLevel[level])}
       {...restProps}
     />

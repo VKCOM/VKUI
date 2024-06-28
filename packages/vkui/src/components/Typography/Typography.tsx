@@ -36,7 +36,7 @@ export interface TypographyProps
    * - `inherit`: Цвет будет наследоваться от родителя
    * - `primary`: Цвет будет равен значению токена `--vkui--color_text_primary`
    */
-  color?: 'inherit' | 'primary';
+  colorType?: 'inherit' | 'primary';
 }
 
 export const Typography = ({
@@ -44,15 +44,15 @@ export const Typography = ({
   Component = 'span',
   normalize,
   inline,
-  color = 'inherit',
+  colorType = 'inherit',
   ...restProps
 }: TypographyProps) => (
   <RootComponent
     Component={Component}
     baseClassName={classNames(
       styles['Typography'],
-      color === 'inherit' && styles['Typography--color-inherit'],
-      color === 'primary' && styles['Typography--color-primary'],
+      colorType === 'inherit' && styles['Typography--color-inherit'],
+      colorType === 'primary' && styles['Typography--color-primary'],
       normalize && styles['Typography--normalize'],
       inline && styles['Typography--inline'],
       weight && stylesWeight[weight],

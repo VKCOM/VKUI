@@ -29,7 +29,7 @@ export const Headline = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  color = 'inherit',
+  colorType = 'inherit',
   ...restProps
 }: HeadlineProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -40,7 +40,7 @@ export const Headline = ({
       normalize={normalize}
       inline={inline}
       weight={weight}
-      color={color}
+      colorType={colorType}
       className={classNames(
         className,
         sizeY !== 'regular' && sizeYClassNames[sizeY],

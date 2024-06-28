@@ -14,7 +14,7 @@ export const Paragraph = ({
   Component = 'span',
   normalize = false,
   inline = false,
-  color = 'inherit',
+  colorType = 'inherit',
   ...restProps
 }: ParagraphProps) => {
   return (
@@ -22,7 +22,7 @@ export const Paragraph = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      color={color}
+      colorType={colorType}
       className={classNames(className, styles['Paragraph'])}
       {...restProps}
     />
