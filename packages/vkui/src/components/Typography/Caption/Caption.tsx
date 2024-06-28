@@ -24,6 +24,7 @@ export const Caption = ({
   Component = 'span',
   normalize = true,
   inline = false,
+  color = 'inherit',
   ...restProps
 }: CaptionProps) => {
   return (
@@ -31,6 +32,7 @@ export const Caption = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
+      color={color}
       className={classNames(className, caps && styles['Caption--caps'], stylesLevel[level])}
       {...restProps}
     />

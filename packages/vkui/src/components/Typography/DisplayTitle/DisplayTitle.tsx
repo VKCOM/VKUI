@@ -24,6 +24,7 @@ export const DisplayTitle = ({
   Component = 'span',
   normalize = true,
   inline = false,
+  color = 'inherit',
   ...restProps
 }: DisplayTitleProps) => {
   return (
@@ -31,6 +32,7 @@ export const DisplayTitle = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
+      color={color}
       className={classNames(className, stylesLevel[level])}
       {...restProps}
     />

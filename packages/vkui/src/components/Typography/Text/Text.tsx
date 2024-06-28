@@ -20,6 +20,7 @@ export const Text = ({
   Component = 'span',
   normalize = true,
   inline = false,
+  color = 'inherit',
   ...restProps
 }: TextProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -29,6 +30,7 @@ export const Text = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
+      color={color}
       className={classNames(
         className,
         styles['Text'],
