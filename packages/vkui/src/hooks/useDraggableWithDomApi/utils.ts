@@ -81,6 +81,7 @@ export const setInitialPlaceholderItemStyles = ({ el, draggingElRect }: Placehol
 
 export const unsetInitialPlaceholderItemStyles = ({ el }: PlaceholderItem) => {
   el.style.display = '';
+  el.removeAttribute('style');
   if (el.firstElementChild) {
     el.firstElementChild.remove();
   }

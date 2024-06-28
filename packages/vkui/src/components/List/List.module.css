@@ -1,6 +1,5 @@
 .List {
-  display: flex;
-  flex-direction: column;
+  display: grid;
 }
 
 .List__placeholder {

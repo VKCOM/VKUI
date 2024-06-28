@@ -19,7 +19,7 @@ export const List = ({ children, gap = 0, ...restProps }: ListProps) => {
       role="list"
       className={styles.List}
       style={{
-        gap,
+        gridGap: gap,
       }}
       {...restProps}
     >
