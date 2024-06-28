@@ -85,7 +85,6 @@ export const Radio = ({
         {...restProps}
         Component="input"
         type="radio"
-        role="radio"
         getRootRef={getRef}
         className={styles['Radio__input']}
       />
