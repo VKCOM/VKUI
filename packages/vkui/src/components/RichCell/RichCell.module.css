@@ -98,7 +98,7 @@
 }
 
 .RichCell__bottom {
-  margin-block-start: 5px;
+  margin-block-start: var(--vkui--spacing_size_s);
 }
 
 .RichCell__actions {
