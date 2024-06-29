@@ -24,7 +24,7 @@ const coordY = (e: VKUITouchEvent): number => {
 };
 
 // eslint-disable-next-line no-restricted-globals
-const touchEnabled = () => canUseDOM && 'ontouchstart' in window;
+const touchEnabled = (): boolean => canUseDOM && 'ontouchstart' in window;
 
 /*
  * Возвращает массив поддерживаемых событий

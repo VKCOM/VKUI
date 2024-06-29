@@ -2,15 +2,15 @@ import * as React from 'react';
 import { Chip } from './Chip/Chip';
 import type { ChipOption, ChipOptionLabel, ChipOptionValue, RenderChipProps } from './types';
 
-export const DEFAULT_VALUE = [];
+export const DEFAULT_VALUE: never[] = [];
 
 export const DEFAULT_INPUT_VALUE = '';
 
-export function getOptionValueDefault<O extends ChipOption>(option: O) {
+export function getOptionValueDefault<O extends ChipOption>(option: O): ChipOptionValue {
   return option.value;
 }
 
-export function getOptionLabelDefault<O extends ChipOption>(option: O) {
+export function getOptionLabelDefault<O extends ChipOption>(option: O): ChipOptionLabel {
   return option.label;
 }
 

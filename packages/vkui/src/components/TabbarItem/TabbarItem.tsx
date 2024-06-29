@@ -37,7 +37,7 @@ export const TabbarItem = ({
   Component = href ? 'a' : 'button',
   disabled,
   ...restProps
-}: TabbarItemProps) => {
+}: TabbarItemProps): React.ReactNode => {
   const platform = usePlatform();
 
   if (process.env.NODE_ENV === 'development') {

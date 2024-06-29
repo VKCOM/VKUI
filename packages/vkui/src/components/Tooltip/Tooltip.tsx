@@ -98,7 +98,7 @@ export const Tooltip = ({
   zIndex = 'var(--vkui--z_index_popout)',
   onPlacementChange,
   ...popperProps
-}: TooltipProps) => {
+}: TooltipProps): React.ReactNode => {
   const generatedId = React.useId();
   const tooltipId = idProp || generatedId;
 

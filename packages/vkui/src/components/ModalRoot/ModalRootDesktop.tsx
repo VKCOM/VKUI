@@ -25,7 +25,7 @@ export const ModalRootDesktop = ({
   onClose,
   onClosed,
   modalOverlayTestId,
-}: ModalRootWithDOMProps) => {
+}: ModalRootWithDOMProps): React.ReactNode => {
   const maskElementRef = React.useRef<HTMLDivElement>(null);
   const maskAnimationFrame = React.useRef<number | undefined>(undefined);
   const restoreFocusTo = React.useRef<HTMLElement | undefined>(undefined);

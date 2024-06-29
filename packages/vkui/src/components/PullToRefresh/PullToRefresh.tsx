@@ -51,7 +51,7 @@ export const PullToRefresh = ({
   onRefresh,
   className,
   ...restProps
-}: PullToRefreshProps) => {
+}: PullToRefreshProps): React.ReactNode => {
   const platform = usePlatform();
   const scroll = useScroll();
   const { window, document } = useDOM();

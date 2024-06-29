@@ -1,6 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "isolatedModules": true,
+    "declaration": true,
     "baseUrl": ".",
     "paths": {
       "@vkui-e2e/test": ["./src/testing/e2e/index.playwright"],

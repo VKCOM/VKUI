@@ -17,37 +17,43 @@ export class UIPanGestureRecognizer {
   x2 = 0;
   y2 = 0;
 
-  setInitialTimeOnce() {
+  setInitialTimeOnce(): void {
     if (this.initialTime === DEFAULT_INITIAL_TIME) {
       this.initialTime = Date.now();
     }
   }
 
-  setStartCoords(event: UIEvent) {
+  setStartCoords(event: UIEvent): void {
     const { clientX, clientY } = getFirstTouchEventData(event);
     this.x1 = clientX;
     this.y1 = clientY;
   }
 
-  setEndCoords(event: UIEvent) {
+  setEndCoords(event: UIEvent): void {
     const { clientX, clientY } = getFirstTouchEventData(event);
     this.x2 = clientX;
     this.y2 = clientY;
   }
 
-  delta() {
+  delta(): {
+    x: number;
+    y: number;
+  } {
     return {
       x: this.x2 - this.x1,
       y: this.y2 - this.y1,
     };
   }
 
-  distance() {
+  distance(): number {
     const { x, y } = this.delta();
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
   }
 
-  velocity() {
+  velocity(): {
+    x: number;
+    y: number;
+  } {
     const deltaTime = (Date.now() - this.initialTime) / MILLISECONDS;
 
     if (deltaTime <= 0) {
@@ -58,7 +64,7 @@ export class UIPanGestureRecognizer {
     return { x: x / deltaTime, y: y / deltaTime };
   }
 
-  angle() {
+  angle(): number {
     const deltaX = this.x2 - this.x1;
     const deltaY = this.y2 - this.y1;
     const radians = Math.atan2(deltaY, deltaX);
@@ -66,7 +72,7 @@ export class UIPanGestureRecognizer {
     return degrees < 0 ? 360 + degrees : degrees;
   }
 
-  reset() {
+  reset(): void {
     this.initialTime = DEFAULT_INITIAL_TIME;
     this.x1 = this.y1 = 0;
     this.x2 = this.y2 = 0;

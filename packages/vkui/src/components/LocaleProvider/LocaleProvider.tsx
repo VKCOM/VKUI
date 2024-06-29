@@ -17,6 +17,6 @@ export interface LocaleProviderProps {
  * @since 5.0.0
  * @see https://vkcom.github.io/VKUI/#/LocaleProvider
  */
-export function LocaleProvider({ value, children }: LocaleProviderProps) {
+export function LocaleProvider({ value, children }: LocaleProviderProps): React.ReactNode {
   return <ConfigProviderOverride locale={value}>{children}</ConfigProviderOverride>;
 }

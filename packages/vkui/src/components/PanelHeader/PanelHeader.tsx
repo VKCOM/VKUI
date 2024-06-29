@@ -129,7 +129,7 @@ export const PanelHeader = ({
   fixed,
   typographyProps,
   ...restProps
-}: PanelHeaderProps) => {
+}: PanelHeaderProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeX = 'none', sizeY = 'none' } = useAdaptivity();
   const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();

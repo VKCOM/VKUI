@@ -59,7 +59,7 @@ export const ToolButton = ({
   IconRegular,
   rounded,
   ...restProps
-}: ToolButtonProps) => {
+}: ToolButtonProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const hasChildren = hasReactNode(children);
 

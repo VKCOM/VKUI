@@ -26,7 +26,11 @@ export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>
 /**
  * @see https://vkcom.github.io/VKUI/#/CardGrid
  */
-export const CardGrid = ({ size = 's', spaced = false, ...restProps }: CardGridProps) => {
+export const CardGrid = ({
+  size = 's',
+  spaced = false,
+  ...restProps
+}: CardGridProps): React.ReactNode => {
   const { sizeX = 'none' } = useAdaptivity();
 
   return (

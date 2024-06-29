@@ -9,7 +9,12 @@ import {
   sizeMiddleware,
 } from '../adapters';
 import { checkIsNotAutoPlacement, getAutoPlacementAlign } from '../functions';
-import type { ArrowOptions, PlacementWithAuto, UseFloatingMiddleware } from '../types/common';
+import type {
+  ArrowOptions,
+  Placement,
+  PlacementWithAuto,
+  UseFloatingMiddleware,
+} from '../types/common';
 
 export interface UseFloatingMiddlewaresBootstrapOptions {
   /**
@@ -68,7 +73,10 @@ export const useFloatingMiddlewaresBootstrap = ({
   customMiddlewares,
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
-}: UseFloatingMiddlewaresBootstrapOptions) => {
+}: UseFloatingMiddlewaresBootstrapOptions): {
+  middlewares: UseFloatingMiddleware[];
+  strictPlacement: Placement | undefined;
+} => {
   return React.useMemo(() => {
     const isAutoPlacement = !checkIsNotAutoPlacement(placement);
     const middlewares: UseFloatingMiddleware[] = [

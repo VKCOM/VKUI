@@ -51,7 +51,7 @@ export const SegmentedControl = ({
   onChange: onChangeProp,
   value: valueProp,
   ...restProps
-}: SegmentedControlProps) => {
+}: SegmentedControlProps): React.ReactNode => {
   const id = React.useId();
 
   const [value, onChange] = useCustomEnsuredControl({

@@ -90,7 +90,7 @@ export const Slider = ({
   withTooltip,
   size = 'l',
   ...restProps
-}: SliderProps | SliderMultipleProps) => {
+}: SliderProps | SliderMultipleProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   const isControlled = valueProp !== undefined;

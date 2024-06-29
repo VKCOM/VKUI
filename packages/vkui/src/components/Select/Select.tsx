@@ -17,7 +17,7 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
   children,
   className,
   ...props
-}: SelectProps<OptionT>) => {
+}: SelectProps<OptionT>): React.ReactNode => {
   const {
     options = [],
     searchable,

@@ -23,7 +23,7 @@ export const PullToRefreshSpinner = ({
   progress = 0,
   children = 'Пожалуйста, подождите...',
   ...restProps
-}: PullToRefreshSpinnerProps) => {
+}: PullToRefreshSpinnerProps): React.ReactNode => {
   const radius = 0.5 * size - 0.5 * strokeWidth;
   const dasharray = 2 * Math.PI * radius;
   const circleCenter = 0.5 * size;

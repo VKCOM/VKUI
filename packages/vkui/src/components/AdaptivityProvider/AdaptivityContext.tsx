@@ -25,4 +25,5 @@ export interface AdaptivityProps extends SizeProps {
   hasHover?: boolean;
 }
 
-export const AdaptivityContext = React.createContext<AdaptivityProps>({});
+export const AdaptivityContext: React.Context<AdaptivityProps> =
+  React.createContext<AdaptivityProps>({});

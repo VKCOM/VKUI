@@ -13,7 +13,10 @@ export interface ConfigProviderOverrideProps extends Partial<ConfigProviderConte
 /**
  * Компонент предназначен для перебивания одного из значений контекста
  */
-export function ConfigProviderOverride({ children, ...contextValue }: ConfigProviderOverrideProps) {
+export function ConfigProviderOverride({
+  children,
+  ...contextValue
+}: ConfigProviderOverrideProps): React.ReactNode {
   const parentConfig = useConfigProvider();
 
   const configContext = useObjectMemo({

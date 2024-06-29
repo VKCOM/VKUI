@@ -119,14 +119,13 @@ function useActive({
   };
 }
 
-export const ClickableLockStateContext = React.createContext<undefined | ((v: boolean) => void)>(
-  undefined,
-);
+export const ClickableLockStateContext: React.Context<((v: boolean) => void) | undefined> =
+  React.createContext<undefined | ((v: boolean) => void)>(undefined);
 
 /**
  * Блокирует стейт на всплытие
  */
-export function useLockState() {
+export function useLockState(): readonly [boolean, (v: boolean) => void, (...args: any[]) => void] {
   const setLockBubbling = React.useContext(ClickableLockStateContext) || noop;
   const [lockState, setLockState] = React.useState(false);
 
@@ -138,7 +137,10 @@ export function useLockState() {
 /**
  * Управляет состоянием компонента
  */
-export function useState({ hasHover, hasActive, ...restProps }: StateProps) {
+export function useState({ hasHover, hasActive, ...restProps }: StateProps): {
+  stateClassName: string;
+  setLockBubblingImmediate: (...args: any[]) => void;
+} {
   const [lockState, setLockBubbling, setLockBubblingImmediate] = useLockState();
 
   const props = {

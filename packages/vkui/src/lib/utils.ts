@@ -10,7 +10,7 @@ export type ImgOnlyAttributes = {
 export function debounce<A extends any[]>(fn: (...args: A) => void, delay: number) {
   let timeout: any;
 
-  return (...args: A) => {
+  return (...args: A): void => {
     clearTimeout(timeout);
     timeout = setTimeout(() => fn(...args), delay);
   };
@@ -39,17 +39,17 @@ export function multiRef<T>(...refs: Array<React.Ref<T> | undefined>): React.Ref
   };
 }
 
-export const stopPropagation = <T extends React.SyntheticEvent>(event: T) =>
+export const stopPropagation = <T extends React.SyntheticEvent>(event: T): void =>
   event.stopPropagation();
 
-export function addClassNameToElement(element: HTMLElement, className: string) {
+export function addClassNameToElement(element: HTMLElement, className: string): void {
   const elementClassName = element.getAttribute('class') || '';
   const updatedClassName = `${elementClassName}${elementClassName ? ' ' : ''}${className}`;
 
   element.setAttribute('class', updatedClassName);
 }
 
-export function removeClassNameFromElement(element: HTMLElement, classNameToRemove: string) {
+export function removeClassNameFromElement(element: HTMLElement, classNameToRemove: string): void {
   const classNamesArray = (element.getAttribute('class') || '').split(/\s+/);
   const elementIndexToRemove = classNamesArray.findIndex(
     (className) => className === classNameToRemove,
@@ -116,7 +116,13 @@ export function isForwardRefElement<
  * При использовании пропа fetchPriority генерируется warning "Invalid DOM property" (версия React 18.*)
  * Ворнинга нет в React версии 19.*, поэтому пока поддерживаем 2 версии наименования
  */
-export function getFetchPriorityProp(value: React.ImgHTMLAttributes<HTMLElement>['fetchPriority']) {
+export function getFetchPriorityProp(value: React.ImgHTMLAttributes<HTMLElement>['fetchPriority']):
+  | {
+      fetchPriority: 'high' | 'low' | 'auto' | undefined;
+    }
+  | {
+      fetchpriority: 'high' | 'low' | 'auto' | undefined;
+    } {
   if (React.version.startsWith('19')) {
     return { fetchPriority: value };
   }

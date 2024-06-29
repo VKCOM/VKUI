@@ -54,7 +54,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   onBlur,
   onInputChange,
   ...restProps
-}: ChipsInputBasePrivateProps<O>) => {
+}: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const idGenerated = React.useId();
   const inputRef = useExternRef(getRef);

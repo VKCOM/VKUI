@@ -33,7 +33,7 @@ export const SliderThumb = ({
   withTooltip,
   isActive,
   ...restProps
-}: SliderThumbProps) => {
+}: SliderThumbProps): React.ReactNode => {
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({
     focusVisible,

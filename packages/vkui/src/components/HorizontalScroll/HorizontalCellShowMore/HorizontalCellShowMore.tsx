@@ -55,7 +55,7 @@ export const HorizontalCellShowMore = ({
   size = 's',
   children = size === 's' ? 'Все' : 'Показать все',
   ...restProps
-}: HorizontalCellShowMoreProps) => {
+}: HorizontalCellShowMoreProps): React.ReactNode => {
   return (
     <div
       style={style}

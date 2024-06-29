@@ -22,7 +22,11 @@ export const getMergedSameEventsByProps = <
 >(
   mainProps: MainProps,
   secondProps: React.ComponentProps<T>,
-) => {
+): {
+  [K in keyof OnlyFnPropsByMain]?:
+    | ((this: any, ...args: Parameters<OnlyFnPropsByMain[K]>) => void)
+    | undefined;
+} => {
   const result: {
     [K in keyof OnlyFnPropsByMain]?:
       | ((this: any, ...args: Parameters<OnlyFnPropsByMain[K]>) => void)

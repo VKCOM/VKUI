@@ -20,7 +20,7 @@ export const ActionSheetDropdownSheet = ({
   toggleRef,
   className,
   ...restProps
-}: SharedDropdownProps) => {
+}: SharedDropdownProps): React.ReactNode => {
   const { sizeY } = useAdaptivityWithJSMediaQueries();
   const platform = usePlatform();
 

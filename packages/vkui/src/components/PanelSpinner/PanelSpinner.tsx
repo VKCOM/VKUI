@@ -8,7 +8,7 @@ export interface PanelSpinnerProps extends SpinnerProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelSpinner
  */
-export const PanelSpinner = React.memo(
+export const PanelSpinner: React.FC<PanelSpinnerProps> = React.memo(
   ({ height = 96, style, ...restProps }: PanelSpinnerProps) => (
     <Spinner size="regular" {...restProps} style={{ height, ...style }} />
   ),

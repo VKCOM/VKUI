@@ -1,7 +1,11 @@
 import { FocusEvent, useCallback, useContext, useState } from 'react';
 import { AppRootContext } from '../components/AppRoot/AppRootContext';
 
-export function useFocusVisible(withKeyboardInputCheck = true) {
+export function useFocusVisible(withKeyboardInputCheck = true): {
+  focusVisible: boolean;
+  onFocus: (event: FocusEvent<HTMLElement>) => void;
+  onBlur: (event: FocusEvent<HTMLElement>) => void;
+} {
   const [isFocused, setIsFocused] = useState(false);
   const { keyboardInput } = useContext(AppRootContext);
 

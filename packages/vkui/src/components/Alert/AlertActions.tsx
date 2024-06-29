@@ -27,7 +27,7 @@ export const AlertActions = ({
   onItemClick,
   actionsAlign,
   actionsLayout,
-}: AlertActionsProps) => {
+}: AlertActionsProps): React.ReactNode => {
   const platform = usePlatform();
 
   const direction: AlertProps['actionsLayout'] =

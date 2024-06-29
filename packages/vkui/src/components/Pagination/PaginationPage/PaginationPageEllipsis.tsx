@@ -15,7 +15,7 @@ export const PaginationPageEllipsis = ({
   className,
   disabled,
   ...restProps
-}: PaginationPageEllipsisProps) => {
+}: PaginationPageEllipsisProps): React.ReactNode => {
   const paginationClassNames = usePaginationPageClassNames({ isCurrent: false, disabled });
 
   return (

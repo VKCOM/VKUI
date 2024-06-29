@@ -27,7 +27,7 @@ function getMaskElements(length: number) {
   return result;
 }
 
-export const InputLike = ({
+export const InputLike: React.FC<InputLikeProps> = ({
   value,
   length,
   index,

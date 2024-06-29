@@ -19,7 +19,7 @@ export interface AvatarBadgeWithPresetProps
   preset?: 'online' | 'online-mobile';
 }
 
-export const AvatarBadgeWithPreset = ({
+export const AvatarBadgeWithPreset: React.FC<AvatarBadgeWithPresetProps> = ({
   preset = 'online',
   className,
   ...restProps

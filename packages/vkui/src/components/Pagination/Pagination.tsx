@@ -112,7 +112,7 @@ export const Pagination = ({
   renderPageButton,
   renderNavigationButton,
   ...resetProps
-}: PaginationProps) => {
+}: PaginationProps): React.ReactNode => {
   const pages = usePagination({
     currentPage,
     totalPages,

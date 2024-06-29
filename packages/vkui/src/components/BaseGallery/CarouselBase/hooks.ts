@@ -5,7 +5,11 @@ import { ANIMATION_DURATION } from './constants';
 
 const TIMING_FUNCTION = cubicBezier(0.8, 1);
 
-export function useSlideAnimation() {
+export function useSlideAnimation(): {
+  getAnimateFunction: (drawFunction: DrawInterface) => () => void;
+  addToAnimationQueue: (func: VoidFunction) => void;
+  startAnimation: () => void;
+} {
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
   function getAnimateFunction(drawFunction: DrawInterface) {

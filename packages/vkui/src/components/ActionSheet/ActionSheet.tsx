@@ -50,7 +50,7 @@ export const ActionSheet = ({
   mode: modeProp,
   onClose,
   ...restProps
-}: ActionSheetProps) => {
+}: ActionSheetProps): React.ReactNode => {
   const platform = usePlatform();
   const [closingBy, setClosingBy] = React.useState<undefined | CloseInitiators>(undefined);
   const onCloseWithOther = () => setClosingBy('other');

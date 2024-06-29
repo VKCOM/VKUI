@@ -70,7 +70,7 @@ export const CustomSelectOption = ({
   className,
   onClick,
   ...restProps
-}: CustomSelectOptionProps) => {
+}: CustomSelectOptionProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const style = React.useMemo(
     () =>

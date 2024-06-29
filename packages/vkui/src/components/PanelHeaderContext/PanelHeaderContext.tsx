@@ -29,7 +29,7 @@ export const PanelHeaderContext = ({
   className,
   onClose,
   ...restProps
-}: PanelHeaderContextProps) => {
+}: PanelHeaderContextProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
   const elementRef = React.useRef<HTMLDivElement>(null);

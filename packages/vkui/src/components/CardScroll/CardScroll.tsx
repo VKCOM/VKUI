@@ -30,7 +30,7 @@ export const CardScroll = ({
   showArrows = true,
   noSpaces = false,
   ...restProps
-}: CardScrollProps) => {
+}: CardScrollProps): React.ReactNode => {
   const refContainer = React.useRef<HTMLDivElement>(null);
   const gapRef = React.useRef<HTMLDivElement>(null);
 

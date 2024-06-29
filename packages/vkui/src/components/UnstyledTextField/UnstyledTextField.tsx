@@ -46,7 +46,7 @@ export const UnstyledTextField = ({
   noPadding = false,
   className,
   ...restProps
-}: UnstyledTextFieldProps) => (
+}: UnstyledTextFieldProps): React.ReactNode => (
   <Text
     Component={as}
     normalize={false}

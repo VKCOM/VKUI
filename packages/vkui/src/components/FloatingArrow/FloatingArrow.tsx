@@ -47,7 +47,7 @@ export const FloatingArrow = ({
   getRootRef,
   Icon = DefaultIcon,
   ...restProps
-}: FloatingArrowProps) => {
+}: FloatingArrowProps): React.ReactNode => {
   const [arrowPlacement, arrowStyles] = getArrowPositionData(
     placement,
     coords,

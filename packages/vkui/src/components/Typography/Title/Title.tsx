@@ -24,7 +24,7 @@ export const Title = ({
   normalize = true,
   inline = false,
   ...restProps
-}: TitleProps) => {
+}: TitleProps): React.ReactNode => {
   return (
     <Typography
       Component={Component}

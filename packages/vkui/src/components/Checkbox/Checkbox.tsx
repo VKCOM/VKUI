@@ -61,7 +61,7 @@ export const Checkbox = ({
   onChange,
   titleAfter,
   ...restProps
-}: CheckboxProps) => {
+}: CheckboxProps): React.ReactNode => {
   const inputRef = useExternRef(getRef);
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();

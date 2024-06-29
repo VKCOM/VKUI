@@ -50,7 +50,7 @@ export const ButtonGroup = ({
   stretched = false,
   align = 'left' /* NOTE: Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */,
   ...restProps
-}: ButtonGroupProps) => {
+}: ButtonGroupProps): React.ReactNode => {
   return (
     <RootComponent
       baseClassName={classNames(

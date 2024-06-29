@@ -43,7 +43,7 @@ export const Textarea = ({
   align,
   mode,
   ...restProps
-}: TextareaProps) => {
+}: TextareaProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);

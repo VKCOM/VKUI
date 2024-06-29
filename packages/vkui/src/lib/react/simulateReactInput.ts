@@ -16,7 +16,7 @@ export interface SimulateReactInputTargetState {
 export const simulateReactInput = (
   target: HTMLInputElement & SimulateReactInputTargetState,
   nextValue = '',
-) => {
+): void => {
   try {
     const prevValue = target.value;
     target.value = nextValue;

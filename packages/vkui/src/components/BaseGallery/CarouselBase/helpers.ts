@@ -9,7 +9,7 @@ export function calculateIndent(
   targetIndex: number,
   slidesManager: SlidesManagerState,
   isCenterWithCustomWidth: boolean,
-) {
+): number {
   if (slidesManager.isFullyVisible || !slidesManager.slides.length) {
     return 0;
   }
@@ -36,7 +36,7 @@ export function getShiftedIndexes(
   direction: 1 | -1,
   slides: GallerySlidesState[],
   availableWidth: number,
-) {
+): number[] {
   let gap = availableWidth;
   const shiftedSlideIndexes = [];
   const startIndex = direction === 1 ? 0 : slides.length - 1;
@@ -87,7 +87,10 @@ export function calculateLoopPoints(
 /**
  * Вычисляем "ключевые" точки, на которых должно происходить смещение слайдов
  */
-export function getLoopPoints(slidesManager: SlidesManagerState, containerWidth: number) {
+export function getLoopPoints(
+  slidesManager: SlidesManagerState,
+  containerWidth: number,
+): LoopPoint[] {
   const { slides, snaps } = slidesManager;
   const startShiftedIndexes = getShiftedIndexes(-1, slides, snaps[0]);
   const endShiftedIndexes = getShiftedIndexes(1, slides, containerWidth - snaps[0]);
@@ -106,7 +109,7 @@ export function getTargetIndex(
   slideIndex: number,
   currentShiftX: number,
   currentShiftXDelta: number,
-) {
+): number {
   const shift = currentShiftX + currentShiftXDelta;
   const direction = currentShiftXDelta < 0 ? 1 : -1;
 

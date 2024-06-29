@@ -11,7 +11,11 @@ export interface ScrollSaverProps extends HasChildren {
 /**
  * @see https://vkcom.github.io/VKUI/#/ScrollSaver
  */
-export const ScrollSaver = ({ children, initialScroll, saveScroll }: ScrollSaverProps) => {
+export const ScrollSaver = ({
+  children,
+  initialScroll,
+  saveScroll,
+}: ScrollSaverProps): React.ReactNode => {
   const { getScroll, scrollTo } = React.useContext(ScrollContext);
   useIsomorphicLayoutEffect(() => {
     if (typeof initialScroll === 'number') {

@@ -5,7 +5,8 @@ interface FormItemContextProps {
   topMultiline?: boolean;
 }
 
-export const FormItemContext = React.createContext<FormItemContextProps>({
-  required: false,
-  topMultiline: false,
-});
+export const FormItemContext: React.Context<FormItemContextProps> =
+  React.createContext<FormItemContextProps>({
+    required: false,
+    topMultiline: false,
+  });

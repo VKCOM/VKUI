@@ -47,7 +47,10 @@ export const SizeType = {
 
 export type SizeTypeValues = ValuesOfObject<typeof SizeType>;
 
-export const VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP = {
+export const VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP: Record<
+  ViewWidthType,
+  'smallMobileMinus' | 'mobile' | 'smallTablet' | 'tablet' | 'desktopPlus'
+> = {
   [ViewWidth.SMALL_MOBILE]: 'smallMobileMinus',
   [ViewWidth.MOBILE]: 'mobile',
   [ViewWidth.SMALL_TABLET]: 'smallTablet',

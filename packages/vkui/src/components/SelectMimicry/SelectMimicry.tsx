@@ -45,7 +45,7 @@ export const SelectMimicry = ({
   className,
   autoFocus,
   ...restProps
-}: SelectMimicryProps) => {
+}: SelectMimicryProps): React.ReactNode => {
   const rootRef = useExternRef(getRootRef);
 
   const { sizeY = 'none' } = useAdaptivity();

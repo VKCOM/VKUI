@@ -59,7 +59,7 @@ export const HorizontalCell = ({
   getRef,
   extraSubtitle,
   ...restProps
-}: HorizontalCellProps) => {
+}: HorizontalCellProps): React.ReactNode => {
   return (
     <div
       ref={getRootRef}

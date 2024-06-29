@@ -1,6 +1,13 @@
 import * as React from 'react';
 
-export const useBooleanState = (defaultValue = false) => {
+export const useBooleanState = (
+  defaultValue = false,
+): {
+  value: boolean;
+  setTrue: () => void;
+  setFalse: () => void;
+  toggle: () => void;
+} => {
   const [value, setValue] = React.useState(defaultValue);
 
   const setTrue = React.useCallback(() => {

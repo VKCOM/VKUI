@@ -10,7 +10,7 @@ export interface ChevronProps extends Omit<React.SVGProps<SVGSVGElement>, 'width
   size?: 's' | 'm';
 }
 
-export const Chevron = ({ size = 'm', ...restProps }: ChevronProps) => {
+export const Chevron = ({ size = 'm', ...restProps }: ChevronProps): React.ReactNode => {
   const Icon = iconSize[size];
 
   return <Icon {...restProps} />;

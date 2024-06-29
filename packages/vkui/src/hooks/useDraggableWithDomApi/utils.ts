@@ -1,6 +1,12 @@
 import type { Direction, DraggingItem, PlaceholderItem, SiblingItem } from './types';
 
-export const getTargetIsOverOrUnderElData = (clientY: number, elRect: DOMRect) => {
+export const getTargetIsOverOrUnderElData = (
+  clientY: number,
+  elRect: DOMRect,
+): {
+  isUnderEl: boolean;
+  isOverEl: boolean;
+} => {
   const elRectHalfHeight = elRect.height / 2;
   return {
     isUnderEl: clientY <= elRect.bottom - elRectHalfHeight,
@@ -8,7 +14,7 @@ export const getTargetIsOverOrUnderElData = (clientY: number, elRect: DOMRect) =
   };
 };
 
-export const setDraggingItemShiftStyles = (draggingEl: HTMLElement, nextShiftY: number) => {
+export const setDraggingItemShiftStyles = (draggingEl: HTMLElement, nextShiftY: number): void => {
   requestAnimationFrame(() => {
     draggingEl.style.transform = `translateY(${nextShiftY}px)`;
   });
@@ -23,7 +29,7 @@ export const setSiblingItemsShiftStyles = (
     direction,
   ]: [Omit<SiblingItem, 'shifted'>, Direction],
   additionalGap = 0,
-) => {
+): void => {
   requestAnimationFrame(() => {
     if (direction === 'up') {
       el.style.setProperty('transition', 'transform 0.3s ease-in 0s');
@@ -35,7 +41,7 @@ export const setSiblingItemsShiftStyles = (
   });
 };
 
-export const setInitialDraggingItemStyles = ({ el, draggingElRect }: DraggingItem) => {
+export const setInitialDraggingItemStyles = ({ el, draggingElRect }: DraggingItem): void => {
   const { top, left, width, height } = draggingElRect;
   requestAnimationFrame(() => {
     // Inspired by https://github.com/hello-pangea/dnd
@@ -51,7 +57,7 @@ export const setInitialDraggingItemStyles = ({ el, draggingElRect }: DraggingIte
   });
 };
 
-export const unsetInitialDraggingItemStyles = ({ el }: DraggingItem) => {
+export const unsetInitialDraggingItemStyles = ({ el }: DraggingItem): void => {
   requestAnimationFrame(() => {
     el.style.removeProperty('pointer-events');
     el.style.removeProperty('position');
@@ -65,7 +71,7 @@ export const unsetInitialDraggingItemStyles = ({ el }: DraggingItem) => {
   });
 };
 
-export const setInitialPlaceholderItemStyles = ({ el, draggingElRect }: PlaceholderItem) => {
+export const setInitialPlaceholderItemStyles = ({ el, draggingElRect }: PlaceholderItem): void => {
   if (el.firstElementChild) {
     return;
   }
@@ -79,7 +85,7 @@ export const setInitialPlaceholderItemStyles = ({ el, draggingElRect }: Placehol
   el.style.setProperty('display', 'block');
 };
 
-export const unsetInitialPlaceholderItemStyles = ({ el }: PlaceholderItem) => {
+export const unsetInitialPlaceholderItemStyles = ({ el }: PlaceholderItem): void => {
   el.style.display = '';
   el.removeAttribute('style');
   if (el.firstElementChild) {
@@ -90,7 +96,7 @@ export const unsetInitialPlaceholderItemStyles = ({ el }: PlaceholderItem) => {
 export const setInitialSiblingItemStyles = (
   { el, shifted, draggingElRect }: SiblingItem,
   additionalGap = 0,
-) => {
+): void => {
   const { height } = draggingElRect;
   requestAnimationFrame(() => {
     el.style.setProperty('pointer-events', 'none');
@@ -102,7 +108,7 @@ export const setInitialSiblingItemStyles = (
   });
 };
 
-export const unsetInitialSiblingItemStyles = ({ el }: Omit<SiblingItem, 'shifted'>) => {
+export const unsetInitialSiblingItemStyles = ({ el }: Omit<SiblingItem, 'shifted'>): void => {
   requestAnimationFrame(() => {
     el.style.removeProperty('pointer-events');
     el.style.removeProperty('transition');
