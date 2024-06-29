@@ -1,5 +1,5 @@
-import { classNames } from '@vkontakte/vkjs';
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { DATA_DRAGGABLE_PLACEHOLDER_REACT_PROP } from '../../hooks/useDraggableWithDomApi';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -15,7 +15,12 @@ export type ListProps = HTMLAttributesWithRootRef<HTMLDivElement> & {
 /**
  * @see https://vkcom.github.io/VKUI/#/List
  */
-export const List = ({ children, gap = 0, className, ...restProps }: ListProps): React.ReactNode => {
+export const List = ({
+  children,
+  gap = 0,
+  className,
+  ...restProps
+}: ListProps): React.ReactNode => {
   return (
     <RootComponent
       role="list"
