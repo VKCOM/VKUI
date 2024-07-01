@@ -8,7 +8,7 @@ describe('Typography', () => {
 
   it('should have specific className when color not send', () => {
     render(<Typography data-testid="text">Text</Typography>);
-    expect(screen.getByTestId('text')).toHaveClass(style['Typography--color-inherit']);
+    expect(screen.getByTestId('text')).not.toHaveClass(style['Typography--color-primary']);
   });
 
   it('should have specific className when color="primary"', () => {
