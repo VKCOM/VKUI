@@ -24,7 +24,6 @@ export const DisplayTitle = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'initial',
   ...restProps
 }: DisplayTitleProps): React.ReactNode => {
   return (
@@ -32,7 +31,6 @@ export const DisplayTitle = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      colorType={colorType}
       className={classNames(className, stylesLevel[level])}
       {...restProps}
     />

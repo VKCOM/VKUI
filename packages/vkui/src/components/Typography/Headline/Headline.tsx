@@ -29,7 +29,6 @@ export const Headline = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'initial',
   ...restProps
 }: HeadlineProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -40,7 +39,6 @@ export const Headline = ({
       normalize={normalize}
       inline={inline}
       weight={weight}
-      colorType={colorType}
       className={classNames(
         className,
         sizeY !== 'regular' && sizeYClassNames[sizeY],

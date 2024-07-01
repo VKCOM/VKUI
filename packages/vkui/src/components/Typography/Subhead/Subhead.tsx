@@ -20,7 +20,6 @@ export const Subhead = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'initial',
   ...restProps
 }: SubheadProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -30,7 +29,6 @@ export const Subhead = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      colorType={colorType}
       className={classNames(
         className,
         styles['Subhead'],

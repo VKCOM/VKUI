@@ -14,7 +14,7 @@ const InjectTokenClassNameToChild = ({ children }: InjectTokenClassNameToChildPr
   const tokensClassName = useTokensClassName();
 
   return React.cloneElement(children, {
-    className: classNames(tokensClassName, children.props.className),
+    className: classNames(tokensClassName, 'vkui__typography', children.props.className),
   });
 };
 

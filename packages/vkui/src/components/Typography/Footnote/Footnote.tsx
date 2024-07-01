@@ -15,14 +15,12 @@ export const Footnote = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'initial',
   ...restProps
 }: FootnoteProps): React.ReactNode => (
   <Typography
     Component={Component}
     normalize={normalize}
     inline={inline}
-    colorType={colorType}
     className={classNames(className, styles['Footnote'], caps && styles['Footnote--caps'])}
     {...restProps}
   />

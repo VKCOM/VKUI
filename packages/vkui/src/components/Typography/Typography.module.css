@@ -8,10 +8,6 @@
   display: inline-block;
 }
 
-.Typography--color-primary {
-  color: var(--vkui--color_text_primary);
-}
-
 /* Мы утяжеляем селектор, чтобы перебить другие селекторы */
 .Typography--weight-1.Typography--weight-1.Typography--weight-1 {
   font-weight: var(--vkui--font_weight_accent1);

@@ -23,7 +23,6 @@ export const Title = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'initial',
   ...restProps
 }: TitleProps): React.ReactNode => {
   return (
@@ -31,7 +30,6 @@ export const Title = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      colorType={colorType}
       className={classNames(className, stylesLevel[level])}
       {...restProps}
     />

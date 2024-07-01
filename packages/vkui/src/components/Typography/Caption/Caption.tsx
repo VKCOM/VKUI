@@ -24,7 +24,6 @@ export const Caption = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'initial',
   ...restProps
 }: CaptionProps): React.ReactNode => {
   return (
@@ -32,7 +31,6 @@ export const Caption = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      colorType={colorType}
       className={classNames(className, caps && styles['Caption--caps'], stylesLevel[level])}
       {...restProps}
     />

@@ -14,7 +14,6 @@ export const Paragraph = ({
   Component = 'span',
   normalize = false,
   inline = false,
-  colorType = 'initial',
   ...restProps
 }: ParagraphProps): React.ReactNode => {
   return (
@@ -22,7 +21,6 @@ export const Paragraph = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      colorType={colorType}
       className={classNames(className, styles['Paragraph'])}
       {...restProps}
     />

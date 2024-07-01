@@ -30,13 +30,6 @@ export interface TypographyProps
    * Делает блок инлайновым
    */
   inline?: boolean;
-  /**
-   * Цвет текста:
-   *
-   * - `initial`: Цвет будет наследоваться от родителя
-   * - `primary`: Цвет будет равен значению токена `--vkui--color_text_primary`
-   */
-  colorType?: 'initial' | 'primary';
 }
 
 export const Typography = ({
@@ -44,14 +37,12 @@ export const Typography = ({
   Component = 'span',
   normalize,
   inline,
-  colorType = 'initial',
   ...restProps
 }: TypographyProps): React.ReactNode => (
   <RootComponent
     Component={Component}
     baseClassName={classNames(
       styles['Typography'],
-      colorType === 'primary' && styles['Typography--color-primary'],
       normalize && styles['Typography--normalize'],
       inline && styles['Typography--inline'],
       weight && stylesWeight[weight],
