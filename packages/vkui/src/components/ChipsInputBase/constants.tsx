@@ -26,9 +26,9 @@ export function getNewOptionDataDefault<O extends ChipOption>(
 }
 
 export function renderChipDefault(props: RenderChipProps): React.ReactNode {
-  const { disabled, label, ...rest } = props;
+  const { label, ...rest } = props;
   return (
-    <Chip removable={!disabled} {...rest}>
+    <Chip removable={!props.disabled} {...rest}>
       {label}
     </Chip>
   );

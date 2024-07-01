@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { baselineComponent, userEvent, withRegExp } from '../../testing/utils';
 import { ChipsInputBase } from './ChipsInputBase';
 import type { ChipsInputBasePrivateProps } from './types';
@@ -320,4 +320,58 @@ describe(ChipsInputBase, () => {
       expect(onBlur).toHaveBeenCalled();
     },
   );
+
+  it('applies option readOnly and disabled to chips', () => {
+    render(
+      <ChipsInputBaseTest
+        value={[
+          { ...RED_OPTION, readOnly: true },
+          { ...BLUE_OPTION, disabled: true },
+          YELLOW_OPTION,
+        ]}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+      />,
+    );
+
+    const redOption = screen.getByRole('option', { name: /Красный/ });
+    expect(redOption.getAttribute('aria-readonly')).toBeTruthy();
+    expect(redOption.getAttribute('aria-disabled')).toBeFalsy();
+
+    const blueOption = screen.getByRole('option', { name: /Синий/ });
+    expect(blueOption.getAttribute('aria-readonly')).toBeFalsy();
+    expect(blueOption.getAttribute('aria-disabled')).toBeTruthy();
+
+    const yellowOption = screen.getByRole('option', { name: /Жёлтый/ });
+    expect(yellowOption.getAttribute('aria-readonly')).toBeFalsy();
+    expect(yellowOption.getAttribute('aria-disabled')).toBeFalsy();
+  });
+
+  it('applies input readOnly and disabled to chips: all readOnly and disabled', () => {
+    render(
+      <ChipsInputBaseTest
+        readOnly
+        disabled
+        value={[
+          { ...RED_OPTION, readOnly: true },
+          { ...BLUE_OPTION, disabled: true },
+          YELLOW_OPTION,
+        ]}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+      />,
+    );
+
+    const redOption = screen.getByRole('option', { name: /Красный/ });
+    expect(redOption.getAttribute('aria-readonly')).toBeTruthy();
+    expect(redOption.getAttribute('aria-disabled')).toBeTruthy();
+
+    const blueOption = screen.getByRole('option', { name: /Синий/ });
+    expect(blueOption.getAttribute('aria-readonly')).toBeTruthy();
+    expect(blueOption.getAttribute('aria-disabled')).toBeTruthy();
+
+    const yellowOption = screen.getByRole('option', { name: /Жёлтый/ });
+    expect(yellowOption.getAttribute('aria-readonly')).toBeTruthy();
+    expect(yellowOption.getAttribute('aria-disabled')).toBeTruthy();
+  });
 });
