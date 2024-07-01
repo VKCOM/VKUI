@@ -47,14 +47,14 @@ export class CustomResizeObserver {
     this.updateFunction = updateFunction;
   }
 
-  observe(element: HTMLElement) {
+  observe(element: HTMLElement): void {
     if (isPositioned(element)) {
       return this.observeUsingIframe(element);
     }
     return this.observeUsingMutationObserver(element);
   }
 
-  appendToTheDOM() {
+  appendToTheDOM(): void {
     for (let record of this.records) {
       record.target.appendChild(record.iframe);
     }
@@ -66,7 +66,7 @@ export class CustomResizeObserver {
     }
   }
 
-  observeUsingIframe(element: HTMLElement) {
+  observeUsingIframe(element: HTMLElement): void {
     const iframe = element.ownerDocument.createElement('iframe');
     iframe.src = 'javascript:void(0)';
     iframe.ariaHidden = 'true';
@@ -76,7 +76,7 @@ export class CustomResizeObserver {
     this.records.push({ target: element, iframe });
   }
 
-  observeUsingMutationObserver(element: HTMLElement) {
+  observeUsingMutationObserver(element: HTMLElement): void {
     if (!this.mutationObserverFallback) {
       this.mutationObserverFallback = new MutationObserver(this.updateFunction);
     }
@@ -87,7 +87,7 @@ export class CustomResizeObserver {
     });
   }
 
-  disconnect() {
+  disconnect(): void {
     this.records.map(({ target, iframe }) => {
       if (iframe.contentWindow) {
         iframe.contentWindow.removeEventListener('resize', this.updateFunction);

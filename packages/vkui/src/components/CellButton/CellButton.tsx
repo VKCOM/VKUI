@@ -15,7 +15,7 @@ export const CellButton = ({
   mode = 'primary',
   className,
   ...restProps
-}: CellButtonProps) => {
+}: CellButtonProps): React.ReactNode => {
   return (
     <SimpleCell
       {...restProps}

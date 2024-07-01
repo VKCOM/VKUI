@@ -36,7 +36,7 @@ export const SplitLayout = ({
   className,
   center,
   ...restProps
-}: SplitLayoutProps) => {
+}: SplitLayoutProps): React.ReactNode => {
   const platform = usePlatform();
 
   return (

@@ -34,21 +34,22 @@ export interface ScrollContextInterface {
   beforeScrollLockFnSetRef?: React.RefObject<Set<() => void>>;
 }
 
-export const ScrollContext = React.createContext<ScrollContextInterface>({
-  getScroll: () => ({ x: 0, y: 0 }),
-  scrollTo: noop,
-  isScrollLock: false,
-  enableScrollLock: noop,
-  disableScrollLock: noop,
-});
+export const ScrollContext: React.Context<ScrollContextInterface> =
+  React.createContext<ScrollContextInterface>({
+    getScroll: () => ({ x: 0, y: 0 }),
+    scrollTo: noop,
+    isScrollLock: false,
+    enableScrollLock: noop,
+    disableScrollLock: noop,
+  });
 
-export const useScroll = () => React.useContext(ScrollContext);
+export const useScroll = (): ScrollContextInterface => React.useContext(ScrollContext);
 
 export interface ScrollControllerProps extends HasChildren {
   elRef: React.RefObject<HTMLElement>;
 }
 
-export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
+export const GlobalScrollController = ({ children }: ScrollControllerProps): React.ReactNode => {
   const { window, document } = useDOM();
   const [isScrollLock, setScrollLock] = React.useState(false);
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
@@ -117,7 +118,10 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps) => {
   return <ScrollContext.Provider value={scrollController}>{children}</ScrollContext.Provider>;
 };
 
-export const ElementScrollController = ({ elRef, children }: ScrollControllerProps) => {
+export const ElementScrollController = ({
+  elRef,
+  children,
+}: ScrollControllerProps): React.ReactNode => {
   const [isScrollLock, setScrollLock] = React.useState(false);
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
 
@@ -199,7 +203,10 @@ export const ElementScrollController = ({ elRef, children }: ScrollControllerPro
  * @param effect функция, которая может возвращать функцию очистки
  * @param deps effect обновится только при изменении значений в списке.
  */
-export const useScrollLockEffect = (effect: React.EffectCallback, deps: React.DependencyList) => {
+export const useScrollLockEffect = (
+  effect: React.EffectCallback,
+  deps: React.DependencyList,
+): void => {
   const destructorRef = React.useRef<ReturnType<React.EffectCallback>>(noop);
   const { isScrollLock, beforeScrollLockFnSetRef } = useScroll();
 
@@ -232,7 +239,7 @@ export const useScrollLockEffect = (effect: React.EffectCallback, deps: React.De
   }, [isScrollLock]);
 };
 
-export const useScrollLock = (enabled = true) => {
+export const useScrollLock = (enabled = true): void => {
   const { enableScrollLock, disableScrollLock, isScrollLock } = useScroll();
   useIsomorphicLayoutEffect(() => {
     if (enabled && !isScrollLock) {

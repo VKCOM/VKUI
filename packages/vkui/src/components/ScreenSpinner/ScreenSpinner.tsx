@@ -22,7 +22,7 @@ export const ScreenSpinner = ({
   onClick,
   children = 'Пожалуйста, подождите...',
   ...restProps
-}: ScreenSpinnerProps) => {
+}: ScreenSpinnerProps): React.ReactNode => {
   const hideSpinner = state === 'done' || state === 'error';
 
   const Icon = {

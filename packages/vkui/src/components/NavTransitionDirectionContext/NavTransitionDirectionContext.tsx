@@ -7,7 +7,7 @@ const TransitionDirectionContext = React.createContext<DirectionContextType>(und
 export const NavTransitionDirectionProvider = ({
   children,
   isBack: isBackProp,
-}: React.PropsWithChildren<{ isBack: DirectionContextType }>) => {
+}: React.PropsWithChildren<{ isBack: DirectionContextType }>): React.ReactNode => {
   const parentIsBack = React.useContext(TransitionDirectionContext);
   // if local isBack is undefined then transition happend on the parent side (probably Root)
   const isBack = isBackProp !== undefined ? isBackProp : parentIsBack;

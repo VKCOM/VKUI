@@ -22,7 +22,7 @@ export const Subhead = ({
   inline = false,
   colorType = 'initial',
   ...restProps
-}: SubheadProps) => {
+}: SubheadProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (

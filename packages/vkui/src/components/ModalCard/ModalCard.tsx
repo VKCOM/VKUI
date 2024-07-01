@@ -40,7 +40,7 @@ export const ModalCard = ({
   dismissButtonMode,
   dismissLabel,
   ...restProps
-}: ModalCardProps) => {
+}: ModalCardProps): React.ReactNode => {
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const platform = usePlatform();
 

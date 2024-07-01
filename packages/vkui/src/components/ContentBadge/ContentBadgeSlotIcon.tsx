@@ -16,7 +16,7 @@ const singleIconClassNames = {
 
 export type ContentBadgeSlotIconProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
-export const ContentBadgeSlotIcon = ({
+export const ContentBadgeSlotIcon: React.FC<ContentBadgeSlotIconProps> = ({
   className,
   getRootRef,
   children,

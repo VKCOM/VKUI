@@ -15,7 +15,7 @@ export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'
   appearance: AppearanceType;
   adaptivityProviderProps?: Partial<AdaptivityProps>;
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
-  children: (props: Props) => React.ReactElement;
+  children: (props: Props) => React.ReactNode;
   AppWrapper?: React.ComponentType<AppWrapperProps>;
 }
 
@@ -38,7 +38,7 @@ export const ComponentPlayground = <
   children,
   AppWrapper = AppDefaultWrapper,
   ...restProps
-}: InternalComponentPlaygroundProps<Props>) => {
+}: InternalComponentPlaygroundProps<Props>): React.ReactNode => {
   const isVKCOM = platform === 'vkcom';
   const adaptivityProviderProps: AdaptivityProps = Object.assign(
     isVKCOM ? { sizeX: 'regular', sizeY: 'compact' } : {},

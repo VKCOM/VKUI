@@ -146,7 +146,7 @@ export const DateInput = ({
   nextMonthIcon,
   disableCalendar = false,
   ...props
-}: DateInputProps) => {
+}: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
   const monthsRef = React.useRef<HTMLSpanElement>(null);
   const yearsRef = React.useRef<HTMLSpanElement>(null);

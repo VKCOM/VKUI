@@ -69,7 +69,7 @@ export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement>
 /**
  * @see https://vkcom.github.io/VKUI/#/SplitCol
  */
-export const SplitCol = (props: SplitColProps) => {
+export const SplitCol = (props: SplitColProps): React.ReactNode => {
   const {
     children,
     width,

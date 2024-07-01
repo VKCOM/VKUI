@@ -6,7 +6,7 @@ export const InputLikeDivider = ({
   children,
   className,
   ...props
-}: React.InputHTMLAttributes<HTMLSpanElement>) => {
+}: React.InputHTMLAttributes<HTMLSpanElement>): React.ReactNode => {
   return (
     <span className={classNames(styles['InputLike__divider'], className)} {...props}>
       {children}

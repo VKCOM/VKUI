@@ -48,7 +48,9 @@ export interface CellProps
 /**
  * @see https://vkcom.github.io/VKUI/#/Cell
  */
-export const Cell = ({
+export const Cell: React.FC<CellProps> & {
+  Checkbox: typeof CellCheckbox;
+} = ({
   mode,
   onRemove = noop,
   removePlaceholder = 'Удалить',

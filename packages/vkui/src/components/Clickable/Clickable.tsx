@@ -175,7 +175,7 @@ export const Clickable = <T,>({
   focusVisibleMode = 'inside',
   baseClassName: baseClassNameProp,
   ...restProps
-}: ClickableProps<T>) => {
+}: ClickableProps<T>): React.ReactNode => {
   const commonProps = component(restProps);
   const isClickable = checkClickable(restProps);
   const baseClassName = classNames(

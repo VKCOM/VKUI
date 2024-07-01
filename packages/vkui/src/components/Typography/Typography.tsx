@@ -46,7 +46,7 @@ export const Typography = ({
   inline,
   colorType = 'initial',
   ...restProps
-}: TypographyProps) => (
+}: TypographyProps): React.ReactNode => (
   <RootComponent
     Component={Component}
     baseClassName={classNames(

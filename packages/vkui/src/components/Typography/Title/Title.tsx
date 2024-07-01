@@ -25,7 +25,7 @@ export const Title = ({
   inline = false,
   colorType = 'initial',
   ...restProps
-}: TitleProps) => {
+}: TitleProps): React.ReactNode => {
   return (
     <Typography
       Component={Component}

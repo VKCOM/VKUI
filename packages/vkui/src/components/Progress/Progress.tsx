@@ -51,7 +51,7 @@ export const Progress = ({
   height,
   style: styleProps,
   ...restProps
-}: ProgressProps) => {
+}: ProgressProps): React.ReactNode => {
   const progress = clamp(value, PROGRESS_MIN_VALUE, PROGRESS_MAX_VALUE);
   const title = `${progress} / ${PROGRESS_MAX_VALUE}`;
 

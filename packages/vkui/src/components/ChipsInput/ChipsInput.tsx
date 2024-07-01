@@ -35,7 +35,7 @@ export const ChipsInput = <Option extends ChipOption>({
   // other
   disabled,
   ...restProps
-}: ChipsInputProps<Option>) => {
+}: ChipsInputProps<Option>): React.ReactNode => {
   const {
     value,
     addOptionFromInput,

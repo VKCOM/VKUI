@@ -16,7 +16,7 @@ export const Paragraph = ({
   inline = false,
   colorType = 'initial',
   ...restProps
-}: ParagraphProps) => {
+}: ParagraphProps): React.ReactNode => {
   return (
     <Typography
       Component={Component}

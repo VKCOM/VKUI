@@ -93,16 +93,16 @@ const Example = () => {
 
   return (
     <AdaptivityProvider sizeY={sizeY}>
-      <div style={rootContainerStyles}>
-        <div style={demoContainerStyles}>
+      <Flex justify="end" reverse>
+        <Flex.Item flex="grow">
           <ExampleBase formItemStatus={formItemStatus} />
           <Spacing size={16} />
           <Separator />
           <Spacing size={16} />
           <ExampleWithIcon formItemStatus={formItemStatus} />
-        </div>
+        </Flex.Item>
 
-        <div style={propsContainerStyles}>
+        <Flex.Item flexBasis={200}>
           <FormItem top="AdaptivityProvider[sizeY]">
             <Select
               value={sizeY}
@@ -124,26 +124,10 @@ const Example = () => {
               ]}
             />
           </FormItem>
-        </div>
-      </div>
+        </Flex.Item>
+      </Flex>
     </AdaptivityProvider>
   );
-};
-
-const rootContainerStyles = {
-  display: 'flex',
-  flexDirection: 'row-reverse',
-  flexWrap: 'wrap',
-};
-
-const demoContainerStyles = {
-  flexGrow: 2,
-  minWidth: 320,
-};
-
-const propsContainerStyles = {
-  minWidth: 200,
-  marginRight: 'auto',
 };
 
 <Example />;

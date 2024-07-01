@@ -49,7 +49,10 @@ export function convertFloatingDataToReactCSSProperties(
 
 export const getArrowCoordsByMiddlewareData = (
   middlewareData: UseFloatingData['middlewareData'],
-) => {
+): {
+  x: number;
+  y: number;
+} => {
   const coords = { x: 0, y: 0 };
   if (middlewareData.arrow) {
     const { x = 0, y = 0 } = middlewareData.arrow;

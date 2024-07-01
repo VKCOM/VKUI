@@ -17,7 +17,7 @@ export interface PlatformProviderProps {
  * @since 5.1.0
  * @see https://vkcom.github.io/VKUI/#/PlatformProvider
  */
-export function PlatformProvider({ value, children }: PlatformProviderProps) {
+export function PlatformProvider({ value, children }: PlatformProviderProps): React.ReactNode {
   return (
     <ConfigProviderOverride platform={value}>
       <TokensClassProvider>{children}</TokensClassProvider>

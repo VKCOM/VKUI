@@ -40,7 +40,7 @@ export const CarouselBase = ({
   getRef,
   arrowSize = 'l',
   ...restProps
-}: BaseGalleryProps) => {
+}: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
   const slidesManager = React.useRef<SlidesManagerState>(SLIDES_MANAGER_STATE);
 

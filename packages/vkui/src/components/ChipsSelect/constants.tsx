@@ -18,7 +18,7 @@ export const FOCUS_ACTION_NEXT: FocusActionType = 'next';
 
 export const FOCUS_ACTION_PREV: FocusActionType = 'prev';
 
-export const renderOptionDefault = (props: CustomSelectOptionProps) => (
+export const renderOptionDefault = (props: CustomSelectOptionProps): React.ReactNode => (
   <CustomSelectOption {...props} />
 );
 

@@ -29,7 +29,20 @@ export function useDateInput<T extends HTMLElement, D>({
   onInternalValueChange,
   getInternalValue,
   value,
-}: UseDateInputDependencies<T, D>) {
+}: UseDateInputDependencies<T, D>): {
+  rootRef: React.RefObject<HTMLDivElement>;
+  calendarRef: React.RefObject<HTMLDivElement>;
+  open: boolean;
+  openCalendar: () => void;
+  closeCalendar: () => void;
+  internalValue: string[];
+  focusedElement: number | null;
+  setFocusedElement: React.Dispatch<React.SetStateAction<number | null>>;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLSpanElement>) => void;
+  clear: () => void;
+  handleFieldEnter: () => void;
+  removeFocusFromField: () => void;
+} {
   const { document } = useDOM();
   const { value: open, setTrue: openCalendar, setFalse: closeCalendar } = useBooleanState(false);
   const rootRef = React.useRef<HTMLDivElement>(null);

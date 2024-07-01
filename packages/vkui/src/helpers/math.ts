@@ -1,7 +1,7 @@
-export const clamp = (value: number, min: number, max: number) =>
+export const clamp = (value: number, min: number, max: number): number =>
   Math.max(min, Math.min(value, max));
 
-export function precisionRound(number: number, precision = 1) {
+export function precisionRound(number: number, precision = 1): number {
   let factor = Math.pow(10, precision);
   return Math.round(number * factor) / factor;
 }
@@ -41,7 +41,7 @@ export function rescale(
   from: [number, number],
   to: [number, number],
   options: { step?: number } = {},
-) {
+): number {
   const scaled = ((value - from[0]) / (from[1] - from[0])) * (to[1] - to[0]) + to[0];
   return decimatedClamp(scaled, to[0], to[1], options.step);
 }

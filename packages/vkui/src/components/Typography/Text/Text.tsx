@@ -22,7 +22,7 @@ export const Text = ({
   inline = false,
   colorType = 'initial',
   ...restProps
-}: TextProps) => {
+}: TextProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (

@@ -53,7 +53,7 @@ export const BaseGallery = ({
   getRef,
   arrowSize = 'l',
   ...restProps
-}: BaseGalleryProps) => {
+}: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
   const layoutState = React.useRef<LayoutState>(LAYOUT_DEFAULT_STATE);
   const [shiftState, setShiftState] = React.useState<ShiftingState>(SHIFT_DEFAULT_STATE);

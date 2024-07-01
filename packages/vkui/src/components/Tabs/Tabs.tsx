@@ -39,13 +39,14 @@ export interface TabsContextProps {
   scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
 }
 
-export const TabsModeContext = React.createContext<TabsContextProps>({
-  mode: 'default',
-  withGaps: false,
-  layoutFillMode: 'auto',
-  withScrollToSelectedTab: false,
-  scrollBehaviorToSelectedTab: 'nearest',
-});
+export const TabsModeContext: React.Context<TabsContextProps> =
+  React.createContext<TabsContextProps>({
+    mode: 'default',
+    withGaps: false,
+    layoutFillMode: 'auto',
+    withScrollToSelectedTab: false,
+    scrollBehaviorToSelectedTab: 'nearest',
+  });
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabs
@@ -58,7 +59,7 @@ export const Tabs = ({
   scrollBehaviorToSelectedTab = 'nearest',
   layoutFillMode = 'auto',
   ...restProps
-}: TabsProps) => {
+}: TabsProps): React.ReactNode => {
   const platform = usePlatform();
   const { document } = useDOM();
 

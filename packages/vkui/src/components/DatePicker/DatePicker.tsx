@@ -233,7 +233,7 @@ const DatePickerNative = ({
  * [Input](https://vkcom.github.io/VKUI/#/Input) и
  * [Select](https://vkcom.github.io/VKUI/#/Select).
  */
-export const DatePicker = ({ onDateChange, ...props }: DatePickerProps) => {
+export const DatePicker = ({ onDateChange, ...props }: DatePickerProps): React.ReactNode => {
   const hasPointer = useAdaptivityHasPointer();
 
   const onChange = (update: DatePickerDateFormat) => {

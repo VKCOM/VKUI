@@ -18,7 +18,7 @@ export const Link = ({
   className,
   onClick = noop,
   ...restProps
-}: LinkProps) => {
+}: LinkProps): React.ReactNode => {
   return (
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
@@ -27,6 +27,7 @@ export const Link = ({
       className={classNames(styles['Link'], hasVisited && styles['Link--has-visited'], className)}
       hasHover={false}
       activeMode="opacity"
+      hoverMode="none"
       focusVisibleMode="outside"
     >
       {children}

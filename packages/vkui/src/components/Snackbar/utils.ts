@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { rubberbandIfOutOfBounds } from '../../lib/animation';
 import type { ShiftData, SnackbarPlacement } from './types';
 
@@ -5,7 +6,7 @@ export function resolveOffsetYCssStyle(
   placement: SnackbarPlacement,
   style?: React.CSSProperties,
   offsetY?: React.CSSProperties['inset'],
-) {
+): React.CSSProperties | undefined {
   if (offsetY === undefined) {
     return style;
   }
@@ -21,7 +22,16 @@ export function resolveOffsetYCssStyle(
   }
 }
 
-export function getInitialShiftData(width: number, height: number) {
+export function getInitialShiftData(
+  width: number,
+  height: number,
+): {
+  shifted: boolean;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+} {
   return {
     shifted: false,
     x: 0,
@@ -35,7 +45,7 @@ export function getMovedShiftData(
   placement: SnackbarPlacement,
   shiftData: ShiftData,
   nextShift: { x: number; y: number },
-) {
+): ShiftData {
   switch (placement) {
     case 'top-start':
     case 'bottom-start':
@@ -72,7 +82,7 @@ export function shouldBeClosedByShiftData(
   shiftData: ShiftData,
   relativeClientRect: DOMRect,
   velocity: { x: number; y: number },
-) {
+): boolean {
   if (!shiftData.shifted) {
     return false;
   }

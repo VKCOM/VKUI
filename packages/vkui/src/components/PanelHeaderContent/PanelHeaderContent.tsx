@@ -57,7 +57,7 @@ export const PanelHeaderContent = ({
   children,
   onClick,
   ...restProps
-}: PanelHeaderContentProps) => {
+}: PanelHeaderContentProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const InComponent = onClick ? Tappable : 'div';
   const rootProps = onClick ? {} : restProps;

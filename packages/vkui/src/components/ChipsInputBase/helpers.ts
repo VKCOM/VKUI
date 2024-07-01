@@ -10,7 +10,7 @@ export const isValueLikeChipOptionObject = <O extends ChipOption>(v: O | ChipOpt
 /**
  * @private
  */
-export const isInputValueEmpty = (input: HTMLInputElement | null) =>
+export const isInputValueEmpty = (input: HTMLInputElement | null): boolean =>
   input ? input.value === DEFAULT_INPUT_VALUE : true;
 
 /**
@@ -19,7 +19,7 @@ export const isInputValueEmpty = (input: HTMLInputElement | null) =>
 export const getChipOptionIndexByValueProp = <O extends ChipOption>(
   optionProp: O | ChipOptionValue,
   valueProp: O[],
-) => {
+): number => {
   const value = isValueLikeChipOptionObject(optionProp) ? optionProp.value : optionProp;
   return valueProp.findIndex((option) => option.value === value);
 };
@@ -27,7 +27,7 @@ export const getChipOptionIndexByValueProp = <O extends ChipOption>(
 /**
  * @private
  */
-export const getChipOptionIndexByHTMLElement = (el: HTMLElement | null) => {
+export const getChipOptionIndexByHTMLElement = (el: HTMLElement | null): number => {
   const value = el && el.dataset.index;
   return typeof value === 'string' ? Number(value) : -1;
 };
@@ -35,7 +35,7 @@ export const getChipOptionIndexByHTMLElement = (el: HTMLElement | null) => {
 /**
  * @private
  */
-export const getChipOptionValueByHTMLElement = (el: HTMLElement | null) => {
+export const getChipOptionValueByHTMLElement = (el: HTMLElement | null): string | -1 => {
   const value = el && el.dataset.value;
   return typeof value === 'string' ? value : -1;
 };
@@ -47,7 +47,7 @@ export const getNextChipOptionIndexByNavigateToProp = (
   currentIndex: number,
   navigateTo: NavigateTo,
   length: number,
-) => {
+): number => {
   const FIRST_INDEX = 0;
   const LAST_INDEX = length - 1;
   switch (navigateTo) {

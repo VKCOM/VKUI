@@ -33,7 +33,7 @@ export const SubnavigationBar = ({
   getScrollToRight = defaultScrollToRight,
   scrollAnimationDuration,
   ...restProps
-}: SubnavigationBarProps) => {
+}: SubnavigationBarProps): React.ReactNode => {
   let ScrollWrapper: React.ElementType;
   let scrollWrapperProps = {};
 

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';
@@ -13,7 +14,7 @@ export const ModalDismissButton = ({
   children = 'Закрыть',
   className,
   ...restProps
-}: ModalDismissButtonProps) => {
+}: ModalDismissButtonProps): React.ReactNode => {
   return (
     <Tappable
       className={classNames(styles['ModalDismissButton'], className)}

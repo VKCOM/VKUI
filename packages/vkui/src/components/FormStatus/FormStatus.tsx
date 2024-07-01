@@ -18,7 +18,7 @@ export const FormStatus = ({
   className,
   role = mode === 'error' ? 'alert' : 'status',
   ...restProps
-}: FormStatusProps) => {
+}: FormStatusProps): React.ReactNode => {
   return (
     <Banner
       {...restProps}

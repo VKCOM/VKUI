@@ -1,7 +1,7 @@
 /**
  * Генерирует массив с диапазоном чисел.
  */
-export function range(from: number, to: number, step = 1) {
+export function range(from: number, to: number, step = 1): number[] {
   const direction = from < to ? 1 : -1;
   const distance = Math.abs(from - to) + 1;
   const arrayLength = Math.ceil(distance / step);
@@ -17,7 +17,7 @@ export function range(from: number, to: number, step = 1) {
  * Генерирует массив с диапазоном чисел в порядке возрастания.
  * Если `from` меньше `to`, вернется пустой массив.
  */
-export function rangeIncrement(from: number, to: number, step = 1) {
+export function rangeIncrement(from: number, to: number, step = 1): number[] {
   if (from > to) {
     return [];
   }

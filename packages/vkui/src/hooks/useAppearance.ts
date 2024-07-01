@@ -1,7 +1,7 @@
 import { useConfigProvider } from '../components/ConfigProvider/ConfigProviderContext';
-import { DEFAULT_APPEARANCE } from '../lib/appearance';
+import { AppearanceType, DEFAULT_APPEARANCE } from '../lib/appearance';
 
-export function useAppearance() {
+export function useAppearance(): AppearanceType {
   const { appearance } = useConfigProvider();
 
   return appearance ?? DEFAULT_APPEARANCE;

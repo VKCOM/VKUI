@@ -63,7 +63,7 @@ export const WriteBar = ({
   shadow = false,
   onChange,
   ...restProps
-}: WriteBarProps) => {
+}: WriteBarProps): React.ReactNode => {
   const platform = usePlatform();
 
   const [refResizeTextarea, resize] = useResizeTextarea(onHeightChange, true);

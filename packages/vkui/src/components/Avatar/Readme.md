@@ -55,14 +55,7 @@ const OthersFeatures = () => {
         onBadgeChange={setBadge}
         onOverlayChange={setOverlay}
       />
-      <div
-        style={{
-          display: 'flex',
-          padding: 12,
-          gap: 8,
-          flexFlow: 'row wrap',
-        }}
-      >
+      <Flex margin="auto" gap="m">
         {[16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map((size) => (
           <Avatar
             key={`${size}-${useInitials}`}
@@ -88,7 +81,7 @@ const OthersFeatures = () => {
             )}
           </Avatar>
         ))}
-      </div>
+      </Flex>
     </Group>
   );
 };

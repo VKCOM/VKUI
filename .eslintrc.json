@@ -53,7 +53,12 @@
             "group": "external",
             "position": "before"
           },
-          { "pattern": "{.,..}/**/*.css", "group": "index", "position": "after" }
+          {
+            "pattern": "*.css",
+            "group": "index",
+            "patternOptions": { "matchBase": true },
+            "position": "after"
+          }
         ]
       }
     ],

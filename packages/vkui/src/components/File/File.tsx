@@ -27,7 +27,7 @@ export const File = ({
   getRootRef,
   appearance,
   ...restProps
-}: FileProps) => {
+}: FileProps): React.ReactNode => {
   return (
     <Button
       Component="label"

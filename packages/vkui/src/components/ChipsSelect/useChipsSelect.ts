@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { isEqual } from '@vkontakte/vkjs';
+import { SimulateReactInputTargetState } from '../../lib/react';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import {
@@ -14,7 +15,7 @@ import {
   getOptionLabelDefault,
   getOptionValueDefault,
 } from '../ChipsInputBase/constants';
-import type { ChipOption } from '../ChipsInputBase/types';
+import type { ChipOption, ChipOptionLabel, ChipOptionValue } from '../ChipsInputBase/types';
 import { DEFAULT_EMPTY_TEXT, DEFAULT_SELECTED_BEHAVIOR, isNotServicePreset } from './constants';
 import type { OptionPreset } from './types';
 
@@ -38,6 +39,14 @@ export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
    */
   selectedBehavior?: 'hide' | 'highlight';
   filterFn?: false | FilterFn<O>;
+  /**
+   * Будет вызвано в момент скрытия выпадающего списка
+   */
+  onClose?: VoidFunction;
+  /**
+   * Будет вызвано в момент открытия выпадающего списка
+   */
+  onOpen?: VoidFunction;
 }
 
 export const useChipsSelect = <O extends ChipOption>({
@@ -63,7 +72,33 @@ export const useChipsSelect = <O extends ChipOption>({
   filterFn = defaultFilterFn,
   selectedBehavior = DEFAULT_SELECTED_BEHAVIOR,
   options: optionsProp = DEFAULT_VALUE,
-}: UseChipsSelectProps<O>) => {
+  onClose,
+  onOpen,
+}: UseChipsSelectProps<O>): {
+  // options
+  value: Array<
+    O & {
+      label: ChipOptionLabel;
+      value: ChipOptionValue;
+    }
+  >;
+  // input
+  inputValue: string;
+  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  // dropdown states
+  options: Array<OptionPreset<O>>;
+  opened: boolean;
+  setOpened: (isOpened: boolean) => void;
+  focusedOption: O | null;
+  focusedOptionIndex: number | null;
+  setFocusedOption: React.Dispatch<React.SetStateAction<O | null>>;
+  setFocusedOptionIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  addOption: (newValue: string | O) => void;
+  addOptionFromInput: (inputValue: string) => void;
+  removeOption: (newValue: ChipOptionValue | O) => void;
+  inputRef: React.RefObject<HTMLInputElement & SimulateReactInputTargetState>;
+  clearInput: () => void;
+} => {
   const { value, inputValue, onInputChange, ...restChipsInputProps } = useChipsInput({
     // option
     value: valueProp,
@@ -102,16 +137,24 @@ export const useChipsSelect = <O extends ChipOption>({
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | null>(0);
   const [focusedOption, setFocusedOption] = React.useState<O | null>(null);
 
+  const handleOpened = React.useCallback(
+    (isOpened: boolean) => {
+      isOpened ? onOpen?.() : onClose?.();
+      setOpened(isOpened);
+    },
+    [onOpen, onClose],
+  );
+
   const handleInputChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       onInputChange(event);
 
       if (!opened) {
-        setOpened(true);
+        handleOpened(true);
         setFocusedOptionIndex(0);
       }
     },
-    [onInputChange, opened],
+    [onInputChange, opened, handleOpened],
   );
 
   useIsomorphicLayoutEffect(
@@ -166,7 +209,7 @@ export const useChipsSelect = <O extends ChipOption>({
     // dropdown states
     options,
     opened,
-    setOpened,
+    setOpened: handleOpened,
     focusedOption,
     focusedOptionIndex,
     setFocusedOption,

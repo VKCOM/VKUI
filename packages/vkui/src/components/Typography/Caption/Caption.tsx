@@ -26,7 +26,7 @@ export const Caption = ({
   inline = false,
   colorType = 'initial',
   ...restProps
-}: CaptionProps) => {
+}: CaptionProps): React.ReactNode => {
   return (
     <Typography
       Component={Component}

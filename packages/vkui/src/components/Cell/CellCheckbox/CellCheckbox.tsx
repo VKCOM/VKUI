@@ -65,7 +65,7 @@ export const CellCheckbox = ({
   style,
   type = 'auto',
   ...restProps
-}: CellCheckboxProps) => {
+}: CellCheckboxProps): React.ReactNode => {
   const typeIcon = useTypeIcon(type);
 
   const IconOff = typeIcon === 'circle' ? CheckCircleOff : CheckBoxOff;

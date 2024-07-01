@@ -168,7 +168,7 @@ export const Popover = ({
   // a11y
   role = 'dialog',
   ...restPopoverProps
-}: PopoverProps) => {
+}: PopoverProps): React.ReactNode => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
   const { middlewares, strictPlacement } = useFloatingMiddlewaresBootstrap({
     arrow: withArrow,

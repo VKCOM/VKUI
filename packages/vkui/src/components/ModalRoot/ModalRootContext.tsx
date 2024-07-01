@@ -12,16 +12,22 @@ export interface ModalRootContextInterface {
   isInsideModal: boolean;
 }
 
-export const ModalRootContext = React.createContext<ModalRootContextInterface>({
-  updateModalHeight: () => undefined,
-  registerModal: () => undefined,
-  isInsideModal: false,
-});
+export const ModalRootContext: React.Context<ModalRootContextInterface> =
+  React.createContext<ModalRootContextInterface>({
+    updateModalHeight: () => undefined,
+    registerModal: () => undefined,
+    isInsideModal: false,
+  });
 
 /**
  * All referenced elements must be static
  */
-export function useModalRegistry(id: string | undefined, type: ModalType) {
+export function useModalRegistry(
+  id: string | undefined,
+  type: ModalType,
+): {
+  refs: Required<ModalRefs>;
+} {
   const modalContext = React.useContext(ModalRootContext);
   const elements = React.useRef<ModalElements>({}).current;
   useIsomorphicLayoutEffect(() => {

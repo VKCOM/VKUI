@@ -31,7 +31,7 @@ export const Headline = ({
   inline = false,
   colorType = 'initial',
   ...restProps
-}: HeadlineProps) => {
+}: HeadlineProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (

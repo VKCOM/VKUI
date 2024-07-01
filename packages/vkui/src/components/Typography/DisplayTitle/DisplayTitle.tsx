@@ -26,7 +26,7 @@ export const DisplayTitle = ({
   inline = false,
   colorType = 'initial',
   ...restProps
-}: DisplayTitleProps) => {
+}: DisplayTitleProps): React.ReactNode => {
   return (
     <Typography
       Component={Component}

@@ -14,7 +14,7 @@ export type VisuallyHiddenProps<T> = RootComponentProps<T>;
 export const VisuallyHidden = <T,>({
   Component = 'span',
   ...restProps
-}: VisuallyHiddenProps<T>) => (
+}: VisuallyHiddenProps<T>): React.ReactNode => (
   <RootComponent
     Component={Component}
     {...restProps}

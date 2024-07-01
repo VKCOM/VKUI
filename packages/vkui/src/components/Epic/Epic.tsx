@@ -18,7 +18,12 @@ const warn = warnOnce('Epic');
 /**
  * @see https://vkcom.github.io/VKUI/#/Epic
  */
-export const Epic = ({ activeStory, tabbar, children, ...restProps }: EpicProps) => {
+export const Epic = ({
+  activeStory,
+  tabbar,
+  children,
+  ...restProps
+}: EpicProps): React.ReactNode => {
   const scroll = React.useRef<{ [key: string]: number }>({}).current;
 
   const story =

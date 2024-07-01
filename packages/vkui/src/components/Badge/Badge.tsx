@@ -17,7 +17,7 @@ export interface BadgeProps extends RootComponentProps<HTMLSpanElement> {
  *
  * TODO [>=7]: переименовать в Dot
  */
-export const Badge = ({ mode = 'new', children, ...restProps }: BadgeProps) => (
+export const Badge = ({ mode = 'new', children, ...restProps }: BadgeProps): React.ReactNode => (
   <RootComponent
     Component="span"
     baseClassName={classNames(styles['Badge'], stylesMode[mode])}

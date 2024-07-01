@@ -4,6 +4,7 @@ import './styles/dynamicTokens.css';
 import './styles/focusVisible.module.css';
 import './styles/animationFades.module.css';
 import './styles/transformOriginByPlacement.module.css';
+import './styles/gaps.module.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
 export type { AppRootProps } from './components/AppRoot/AppRoot';
@@ -103,6 +104,8 @@ export { HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll
 export type { HorizontalScrollProps } from './components/HorizontalScroll/HorizontalScroll';
 export { AspectRatio } from './components/AspectRatio/AspectRatio';
 export type { AspectRatioProps } from './components/AspectRatio/AspectRatio';
+export { Flex } from './components/Flex/Flex';
+export type { FlexProps } from './components/Flex/Flex';
 
 /**
  * Popouts
