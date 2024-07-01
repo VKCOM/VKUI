@@ -1,6 +1,10 @@
 import { classNames } from '@vkontakte/vkjs';
-import { calculateGap } from '../../lib/layouts/helpers';
-import type { GridGaps } from '../../lib/layouts/types';
+import {
+  calculateGap,
+  columnGapClassNames,
+  type GapsProp,
+  rowGapClassNames,
+} from '../../lib/layouts';
 import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './SimpleGrid.module.css';
@@ -25,10 +29,11 @@ export interface SimpleGridProps extends HTMLAttributesWithRootRef<HTMLDivElemen
    */
   columns?: number;
   /**
-   * Отступы между элементами
-   * Через массив можно задать отступ между строками и столбцами [row, column]
+   * Отступы между элементами.
+   * Значение из списка предопределённых пресетов или число, которое будет приведено к пикселям.
+   * Через массив можно задать отступ между столбцами и строками [column, row], если они отличаются.
    */
-  gap?: GridGaps;
+  gap?: GapsProp;
   /**
    * Управляет отступами вокруг контейнера
    * Значение `none` позволяет отключить отступы
@@ -49,7 +54,7 @@ export interface SimpleGridProps extends HTMLAttributesWithRootRef<HTMLDivElemen
 
 export const SimpleGrid = ({
   columns = 1,
-  gap: gapProp,
+  gap,
   style: styleProp,
   margin = 'none',
   minColWidth,
@@ -57,12 +62,12 @@ export const SimpleGrid = ({
   ...props
 }: SimpleGridProps) => {
   const style: CSSCustomProperties = {};
-  const [rowGap, columnGap] = calculateGap(gapProp);
+  const [rowGap, columnGap] = calculateGap(gap);
   if (typeof rowGap === 'number') {
-    style['--vkui_internal--grid_row_gap'] = `${rowGap}px`;
+    style['--vkui_internal--row_gap'] = `${rowGap}px`;
   }
   if (typeof columnGap === 'number') {
-    style['--vkui_internal--grid_column_gap'] = `${columnGap}px`;
+    style['--vkui_internal--column_gap'] = `${columnGap}px`;
   }
   style['--vkui_internal--grid_columns'] = `${columns}`;
   if (minColWidth) {
@@ -77,6 +82,8 @@ export const SimpleGrid = ({
         margin !== 'none' && marginClassNames[margin],
         alignClassNames[align],
         minColWidth && styles['SimpleGrid--with-min-width'],
+        typeof columnGap === 'string' && columnGapClassNames[columnGap],
+        typeof rowGap === 'string' && rowGapClassNames[rowGap],
       )}
       style={{ ...styleProp, ...style }}
     />

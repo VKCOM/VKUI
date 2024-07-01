@@ -1,11 +1,9 @@
 .SimpleGrid {
-  --vkui_internal--grid_row_gap: 0px;
-  --vkui_internal--grid_column_gap: 0px;
   --vkui_internal--grid_columns: 1;
   --vkui_internal--min_col_width: 0;
 
   display: grid;
-  gap: var(--vkui_internal--grid_row_gap) var(--vkui_internal--grid_column_gap);
+  gap: var(--vkui_internal--row_gap) var(--vkui_internal--column_gap);
   grid-template-columns: repeat(var(--vkui_internal--grid_columns), minmax(0, 1fr));
 }
 

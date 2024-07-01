@@ -1,22 +1,23 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { Flex, type FlexProps } from './Flex';
+import { SimpleGrid, type SimpleGridProps } from './SimpleGrid';
 
 const ChildNode = () => <div style={{ width: 50, height: 50, backgroundColor: 'red' }} />;
 
-export const FlexPlayground = (props: ComponentPlaygroundProps) => {
+export const SimpleGridPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
       propSets={[
         {
           children: [[<ChildNode key="1" />, <ChildNode key="2" />]],
+          columns: [1, 2],
           gap: ['m'],
           margin: ['auto'],
         },
         {
-          direction: ['row', 'column'],
+          margin: ['auto-inline', 'auto-block'],
           children: [[<ChildNode key="1" />, <ChildNode key="2" />]],
-          gap: ['m'],
+          gap: ['xl'],
         },
         {
           children: [[<ChildNode key="1" />, <ChildNode key="2" />, <ChildNode key="3" />]],
@@ -25,7 +26,7 @@ export const FlexPlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: FlexProps) => <Flex {...props} />}
+      {(props: SimpleGridProps) => <SimpleGrid {...props} />}
     </ComponentPlayground>
   );
 };

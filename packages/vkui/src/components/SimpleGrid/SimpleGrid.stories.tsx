@@ -15,7 +15,7 @@ type Story = StoryObj<SimpleGridProps>;
 
 export const Playground: Story = {
   args: {
-    gap: 8,
+    gap: 'm',
   },
   render: (args) => (
     <SimpleGrid {...args}>
