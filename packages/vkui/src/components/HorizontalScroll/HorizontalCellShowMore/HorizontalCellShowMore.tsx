@@ -46,7 +46,7 @@ export interface HorizontalCellShowMoreProps
   /**
    * Выравнивание по центру относительно родителя
    */
-  stretched?: boolean,
+  stretched?: boolean;
 }
 
 export const HorizontalCellShowMore = ({

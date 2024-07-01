@@ -32,6 +32,8 @@ describe('HorizontalCellShowMore', () => {
 
   it('should have specific className when stretched=true', () => {
     const component = render(<HorizontalCellShowMore data-testid="show-more" stretched={true} />);
-    expect(component.getByTestId('show-more').parentElement).toHaveClass(styles['HorizontalCellShowMore--stretched'])
-  })
+    expect(component.getByTestId('show-more').parentElement).toHaveClass(
+      styles['HorizontalCellShowMore--stretched'],
+    );
+  });
 });
