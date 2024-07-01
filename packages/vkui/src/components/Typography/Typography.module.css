@@ -8,10 +8,6 @@
   display: inline-block;
 }
 
-.Typography--color-inherit {
-  color: inherit;
-}
-
 .Typography--color-primary {
   color: var(--vkui--color_text_primary);
 }

@@ -15,7 +15,7 @@ export const Footnote = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'inherit',
+  colorType = 'initial',
   ...restProps
 }: FootnoteProps) => (
   <Typography

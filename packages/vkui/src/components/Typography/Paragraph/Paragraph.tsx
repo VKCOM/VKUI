@@ -14,7 +14,7 @@ export const Paragraph = ({
   Component = 'span',
   normalize = false,
   inline = false,
-  colorType = 'inherit',
+  colorType = 'initial',
   ...restProps
 }: ParagraphProps) => {
   return (

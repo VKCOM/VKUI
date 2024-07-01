@@ -20,7 +20,7 @@ export const Text = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'inherit',
+  colorType = 'initial',
   ...restProps
 }: TextProps) => {
   const { sizeY = 'none' } = useAdaptivity();

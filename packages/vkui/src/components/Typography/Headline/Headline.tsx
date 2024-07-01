@@ -29,7 +29,7 @@ export const Headline = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'inherit',
+  colorType = 'initial',
   ...restProps
 }: HeadlineProps) => {
   const { sizeY = 'none' } = useAdaptivity();

@@ -24,7 +24,7 @@ export const Caption = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'inherit',
+  colorType = 'initial',
   ...restProps
 }: CaptionProps) => {
   return (

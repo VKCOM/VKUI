@@ -24,7 +24,7 @@ export const DisplayTitle = ({
   Component = 'span',
   normalize = true,
   inline = false,
-  colorType = 'inherit',
+  colorType = 'initial',
   ...restProps
 }: DisplayTitleProps) => {
   return (
