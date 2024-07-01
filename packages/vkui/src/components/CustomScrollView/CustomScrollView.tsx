@@ -44,7 +44,7 @@ export const CustomScrollView = ({
   onScroll,
   getRootRef,
   ...restProps
-}: CustomScrollViewProps) => {
+}: CustomScrollViewProps): React.ReactNode => {
   const { document, window } = useDOM();
   const { hasPointer } = useAdaptivity();
 

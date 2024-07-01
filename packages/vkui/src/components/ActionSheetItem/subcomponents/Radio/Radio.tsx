@@ -27,7 +27,7 @@ export const Radio = ({
   className,
   style,
   ...restProps
-}: ActionSheetItemCheckedProps) => {
+}: ActionSheetItemCheckedProps): React.ReactNode => {
   return (
     <RootComponent getRootRef={getRootRef} className={className} style={style}>
       <VisuallyHidden

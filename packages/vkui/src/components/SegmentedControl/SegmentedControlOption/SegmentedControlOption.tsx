@@ -24,7 +24,7 @@ export const SegmentedControlOption = ({
   getRootRef,
   before,
   ...restProps
-}: SegmentedControlOptionProps) => (
+}: SegmentedControlOptionProps): React.ReactNode => (
   <Clickable
     Component="label"
     baseClassName={styles['SegmentedControlOption']}

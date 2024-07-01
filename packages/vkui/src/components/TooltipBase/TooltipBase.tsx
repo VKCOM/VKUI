@@ -75,7 +75,7 @@ export const TooltipBase = ({
   maxWidth = TOOLTIP_MAX_WIDTH,
   className,
   ...restProps
-}: TooltipBaseProps) => {
+}: TooltipBaseProps): React.ReactNode => {
   return (
     <RootComponent
       {...restProps}

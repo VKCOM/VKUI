@@ -83,7 +83,9 @@ export interface ContentBadgeProps
  *
  * TODO [>=7]: переименовать в Badge
  */
-export const ContentBadge = ({
+export const ContentBadge: React.FC<ContentBadgeProps> & {
+  SlotIcon: typeof ContentBadgeSlotIcon;
+} = ({
   appearance = 'accent',
   mode = 'primary',
   capsule,

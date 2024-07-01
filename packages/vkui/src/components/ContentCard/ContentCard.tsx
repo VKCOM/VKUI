@@ -74,7 +74,7 @@ export const ContentCard = ({
   hasHover = false,
   hasActive = false,
   ...restProps
-}: ContentCardProps) => {
+}: ContentCardProps): React.ReactNode => {
   return (
     <Card
       mode={mode}

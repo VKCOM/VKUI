@@ -13,7 +13,12 @@ export interface InfoRowProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
 /**
  * @see https://vkcom.github.io/VKUI/#/InfoRow
  */
-export const InfoRow = ({ header, children, className, ...restProps }: InfoRowProps) => (
+export const InfoRow = ({
+  header,
+  children,
+  className,
+  ...restProps
+}: InfoRowProps): React.ReactNode => (
   <Headline
     {...restProps}
     Component="span"

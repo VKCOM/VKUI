@@ -69,7 +69,7 @@ export const MiniInfoCell = ({
   expandable = false,
   className,
   ...restProps
-}: MiniInfoCellProps) => {
+}: MiniInfoCellProps): React.ReactNode => {
   const cellClasses = classNames(
     styles['MiniInfoCell'],
     stylesTextWrap[textWrap],

@@ -18,7 +18,7 @@ export function rubberbandIfOutOfBounds(
   min: number,
   max: number,
   constant = 0.15,
-) {
+): number {
   if (constant === 0) {
     return clamp(position, min, max);
   }

@@ -75,7 +75,7 @@ export const Button = ({
   disableSpinnerAnimation,
   rounded,
   ...restProps
-}: ButtonProps) => {
+}: ButtonProps): React.ReactNode => {
   const hasIcons = Boolean(before || after);
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const { sizeY = 'none' } = useAdaptivity();

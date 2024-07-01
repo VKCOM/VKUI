@@ -91,7 +91,7 @@ export const Group = ({
   padding = 'm',
   tabIndex: tabIndexProp,
   ...restProps
-}: GroupProps) => {
+}: GroupProps): React.ReactNode => {
   const { isInsideModal } = React.useContext(ModalRootContext);
   const { sizeX = 'none' } = useAdaptivity();
 

@@ -16,7 +16,7 @@ export const Footnote = ({
   normalize = true,
   inline = false,
   ...restProps
-}: FootnoteProps) => (
+}: FootnoteProps): React.ReactNode => (
   <Typography
     Component={Component}
     normalize={normalize}

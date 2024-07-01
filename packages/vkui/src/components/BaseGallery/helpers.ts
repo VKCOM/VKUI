@@ -13,7 +13,7 @@ export const calcMin = ({
   viewportOffsetWidth = 0,
   align,
   isCenterWithCustomWidth,
-}: CalcMin) => {
+}: CalcMin): number | undefined => {
   switch (align) {
     case 'left':
       return containerWidth - layerWidth;
@@ -38,7 +38,7 @@ export const calcMax = ({
   slides = [],
   viewportOffsetWidth = 0,
   isCenterWithCustomWidth,
-}: CalcMax) => {
+}: CalcMax): number => {
   if (isCenterWithCustomWidth && slides.length) {
     const { width, coordX } = slides[0];
     return viewportOffsetWidth / 2 - coordX - width / 2;

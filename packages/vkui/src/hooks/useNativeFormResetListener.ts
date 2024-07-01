@@ -4,7 +4,7 @@ import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 export const useNativeFormResetListener = (
   ref: React.RefObject<HTMLElement>,
   handler: (event: Event) => void,
-) => {
+): void => {
   useIsomorphicLayoutEffect(() => {
     if (!ref.current) {
       return;

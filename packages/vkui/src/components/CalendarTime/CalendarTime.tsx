@@ -39,7 +39,7 @@ export const CalendarTime = ({
   changeHoursLabel,
   changeMinutesLabel,
   isDayDisabled,
-}: CalendarTimeProps) => {
+}: CalendarTimeProps): React.ReactNode => {
   const localHours = isDayDisabled
     ? hours.map((hour) => {
         return { ...hour, disabled: isDayDisabled(setHours(value, hour.value), true) };

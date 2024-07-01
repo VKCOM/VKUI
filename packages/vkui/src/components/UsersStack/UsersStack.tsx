@@ -124,7 +124,7 @@ export const UsersStack = ({
   children,
   direction = 'row',
   ...restProps
-}: UsersStackProps) => {
+}: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';

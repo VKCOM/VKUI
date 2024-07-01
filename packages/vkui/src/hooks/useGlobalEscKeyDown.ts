@@ -12,7 +12,10 @@ const EVENT_OPTIONS = {
  *
  * @private
  */
-export const useGlobalEscKeyDown = (init: boolean, callback?: (event: KeyboardEvent) => void) => {
+export const useGlobalEscKeyDown = (
+  init: boolean,
+  callback?: (event: KeyboardEvent) => void,
+): void => {
   const { document } = useDOM();
   useIsomorphicLayoutEffect(() => {
     if (!document || !init || !callback) {

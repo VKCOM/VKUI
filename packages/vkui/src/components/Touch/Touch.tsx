@@ -83,7 +83,7 @@ export const Touch = ({
   noSlideClick = false,
   stopPropagation = false,
   ...restProps
-}: TouchProps) => {
+}: TouchProps): React.ReactNode => {
   const { document } = useDOM();
   const events = React.useMemo(getSupportedEvents, []);
   const didSlide = React.useRef(false);

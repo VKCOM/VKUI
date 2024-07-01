@@ -33,7 +33,7 @@ export const Switch = ({
   onFocus: onFocusProp,
   onClick,
   ...restProps
-}: SwitchProps) => {
+}: SwitchProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();

@@ -21,7 +21,7 @@ export const DEFAULT_ARROW_PADDING = 10;
 const PLATFORM_HEIGHT = 1;
 const ARROW_HEIGHT_WITH_WHITE_SPACE = DEFAULT_ARROW_HEIGHT + PLATFORM_HEIGHT;
 
-export const DefaultIcon = (props: React.SVGAttributes<SVGSVGElement>) => {
+export const DefaultIcon = (props: React.SVGAttributes<SVGSVGElement>): React.ReactNode => {
   return (
     <svg
       width={DEFAULT_ARROW_WIDTH}

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HasChildren, ValuesOfObject } from '../types';
 import { getTextFromChildren } from './children';
 
-export const FOCUSABLE_ELEMENTS_LIST = [
+export const FOCUSABLE_ELEMENTS_LIST: string[] = [
   'a[href]',
   'area[href]',
   'input:not([disabled]):not([hidden]):not([type="hidden"]):not([aria-hidden])',
@@ -52,12 +52,27 @@ const EVENT_KEY_TO_COMMON_KEY_MAP = new Map([
   ['PageDown', Keys.PAGE_DOWN],
 ]);
 
-export function pressedKey<T extends KeyboardEvent | React.KeyboardEvent>(event: T) {
+export function pressedKey<T extends KeyboardEvent | React.KeyboardEvent>(
+  event: T,
+):
+  | 'Enter'
+  | 'Space'
+  | 'Tab'
+  | 'Escape'
+  | 'Home'
+  | 'End'
+  | 'ArrowLeft'
+  | 'ArrowRight'
+  | 'ArrowUp'
+  | 'ArrowDown'
+  | 'PageUp'
+  | 'PageDown'
+  | null {
   const foundKey = EVENT_KEY_TO_COMMON_KEY_MAP.get(event.key);
   return foundKey ? foundKey : null;
 }
 
-export const FOCUS_ALLOW_LIST_KEYS = new Set<string>([
+export const FOCUS_ALLOW_LIST_KEYS: Set<string> = new Set<string>([
   Keys.TAB,
   Keys.ARROW_LEFT,
   Keys.ARROW_RIGHT,
@@ -67,13 +82,15 @@ export const FOCUS_ALLOW_LIST_KEYS = new Set<string>([
   Keys.DELETE,
 ]);
 
-export function isKeyboardFocusingStarted<T extends KeyboardEvent | React.KeyboardEvent>(event: T) {
+export function isKeyboardFocusingStarted<T extends KeyboardEvent | React.KeyboardEvent>(
+  event: T,
+): boolean {
   return FOCUS_ALLOW_LIST_KEYS.has(event.key);
 }
 
 export function shouldTriggerClickOnEnterOrSpace(
   e: KeyboardEvent | React.KeyboardEvent<HTMLElement>,
-) {
+): boolean {
   const el = e.target as HTMLElement;
   const { tagName } = el;
 
@@ -104,7 +121,7 @@ export const injectAriaExpandedPropByRole = (
   props: React.ComponentProps<any>,
   state: boolean,
   role?: React.AriaRole,
-) => {
+): React.ComponentProps<any> => {
   switch (role) {
     case 'dialog':
     case 'menu':
@@ -131,7 +148,7 @@ export function hasAccessibleName({
   'aria-labelledby': ariaLabelledBy,
   title,
   children,
-}: HasAccessibleNameProps) {
+}: HasAccessibleNameProps): boolean {
   if (ariaLabel || ariaLabelledBy || title) {
     return true;
   }
@@ -150,7 +167,7 @@ export function hasAccessibleName({
  */
 export const getHorizontalFocusGoTo = (
   keys: Extract<KeysValues, 'ArrowUp' | 'ArrowLeft' | 'ArrowDown' | 'ArrowRight'>,
-) => {
+): 'prev' | 'next' => {
   switch (keys) {
     case Keys.ARROW_UP:
     case Keys.ARROW_LEFT:

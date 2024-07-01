@@ -16,7 +16,7 @@ export const AdaptivityProvider = ({
   hasPointer,
   hasHover,
   children,
-}: AdaptivityProviderProps) => {
+}: AdaptivityProviderProps): React.ReactNode => {
   const adaptivity = React.useMemo(() => {
     const nextProps: AdaptivityProps = {
       viewWidth,

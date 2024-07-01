@@ -67,7 +67,7 @@ export const Search = ({
   findButtonText = 'Найти',
   onFindButtonClick,
   ...inputProps
-}: SearchProps) => {
+}: SearchProps): React.ReactNode => {
   const inputRef = useExternRef(getRef);
   const {
     value: isFocused,

@@ -38,7 +38,7 @@ export const Typography = ({
   normalize,
   inline,
   ...restProps
-}: TypographyProps) => (
+}: TypographyProps): React.ReactNode => (
   <RootComponent
     Component={Component}
     baseClassName={classNames(

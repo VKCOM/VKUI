@@ -68,7 +68,7 @@ export const FormField = ({
   mode = 'default',
   className,
   ...restProps
-}: FormFieldOwnProps) => {
+}: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef);
   const { sizeY = 'none' } = useAdaptivity();
   const [hover, setHover] = React.useState(false);

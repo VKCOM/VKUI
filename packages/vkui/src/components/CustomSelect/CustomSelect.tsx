@@ -219,7 +219,7 @@ type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
  */
 export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterface>(
   props: SelectProps<OptionInterfaceT>,
-) {
+): React.ReactNode {
   const [opened, setOpened] = React.useState(false);
   const {
     before,

@@ -37,7 +37,7 @@ export const Counter = ({
   children,
   className,
   ...restProps
-}: CounterProps) => {
+}: CounterProps): React.ReactNode => {
   if (React.Children.count(children) === 0) {
     return null;
   }

@@ -7,7 +7,10 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
  */
-export const PanelHeaderClose = ({ children = 'Отмена', ...restProps }: PanelHeaderButtonProps) => {
+export const PanelHeaderClose = ({
+  children = 'Отмена',
+  ...restProps
+}: PanelHeaderButtonProps): React.ReactNode => {
   const platform = usePlatform();
 
   return (

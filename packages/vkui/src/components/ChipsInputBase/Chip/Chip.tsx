@@ -33,7 +33,7 @@ export const Chip = ({
   onFocus: onFocusProp,
   onBlur: onBlurProp,
   ...restProps
-}: ChipProps) => {
+}: ChipProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const { focusVisible, onFocus, onBlur } = useFocusVisible();
   const focusVisibleClassName = useFocusVisibleClassName({ focusVisible });

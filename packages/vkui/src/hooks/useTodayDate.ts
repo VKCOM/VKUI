@@ -11,7 +11,7 @@ import { useDOM } from '../lib/dom';
  *
  * @param listenDayChangesForUpdate - флаг по которому определяется, будет ли создаваться подписка на смену календарного дня
  */
-export function useTodayDate(listenDayChangesForUpdate = false) {
+export function useTodayDate(listenDayChangesForUpdate = false): Date {
   const { document, window } = useDOM();
   const [todayDate, setTodayDate] = React.useState(() => new Date());
 

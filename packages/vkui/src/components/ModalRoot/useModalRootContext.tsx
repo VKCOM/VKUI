@@ -1,4 +1,5 @@
 import * as React from 'react';
-import { ModalRootContext } from './ModalRootContext';
+import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
 
-export const useModalRootContext = () => React.useContext(ModalRootContext);
+export const useModalRootContext = (): ModalRootContextInterface =>
+  React.useContext(ModalRootContext);

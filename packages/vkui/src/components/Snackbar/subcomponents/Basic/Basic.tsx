@@ -68,7 +68,7 @@ export function Basic({
   subtitle,
   children,
   ...restProps
-}: SnackbarBasicProps) {
+}: SnackbarBasicProps): React.ReactNode {
   const { sizeY = 'none' } = useAdaptivity();
   const layout = after || subtitle ? 'vertical' : 'none';
 

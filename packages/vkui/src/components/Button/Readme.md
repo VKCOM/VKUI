@@ -1,11 +1,4 @@
 ```jsx { "props": { "layout": false, "iframe": false } }
-const containerStyles = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  width: '100%',
-};
-
 const Example = () => {
   const [align, setAlign] = useState('center');
   const [appearance, setAppearance] = useState('accent');
@@ -42,12 +35,14 @@ const Example = () => {
   const buttonText = addText ? 'Button' : undefined;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+    <Flex justify="end" reverse>
       <AdaptivityProvider sizeY={sizeY}>
-        <div
+        <Flex
+          direction="column"
+          justify="center"
           style={{
+            // For docs purpose only
             background: appearance === 'overlay' ? '#232323' : 'unset',
-            ...containerStyles,
           }}
         >
           {['primary', 'secondary', 'tertiary', 'outline', 'link'].map((mode) => (
@@ -70,9 +65,9 @@ const Example = () => {
               </Button>
             </Div>
           ))}
-        </div>
+        </Flex>
       </AdaptivityProvider>
-      <div style={{ minWidth: 200 }}>
+      <Flex.Item flexBasis={200}>
         <FormItem top="appearance">
           <Select
             value={appearance}
@@ -151,8 +146,8 @@ const Example = () => {
           </Checkbox>
           <Checkbox onChange={(e) => setHasLink(e.target.checked)}>add href</Checkbox>
         </FormItem>
-      </div>
-    </div>
+      </Flex.Item>
+    </Flex>
   );
 };
 

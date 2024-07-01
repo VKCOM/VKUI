@@ -64,7 +64,9 @@ export interface RichCellProps extends TappableProps {
 /**
  * @see https://vkcom.github.io/VKUI/#/RichCell
  */
-export const RichCell = ({
+export const RichCell: React.FC<RichCellProps> & {
+  Icon: typeof RichCellIcon;
+} = ({
   subhead,
   children,
   text,

@@ -41,7 +41,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   getRootRef,
   children,
   ...restProps
-}: FocusTrapProps<T>) => {
+}: FocusTrapProps<T>): React.ReactNode => {
   const ref = useExternRef<T>(getRootRef);
   const { document } = useDOM();
 

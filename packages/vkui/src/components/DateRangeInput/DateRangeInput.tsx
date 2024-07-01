@@ -135,7 +135,7 @@ export const DateRangeInput = ({
   nextMonthIcon,
   disableCalendar = false,
   ...props
-}: DateRangeInputProps) => {
+}: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
   const monthsStartRef = React.useRef<HTMLSpanElement>(null);
   const yearsStartRef = React.useRef<HTMLSpanElement>(null);

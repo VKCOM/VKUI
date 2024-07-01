@@ -24,7 +24,6 @@ import { Placeholder } from '../Placeholder/Placeholder';
 import { Radio } from '../Radio/Radio';
 import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
-import { Title } from '../Typography/Title/Title';
 import { ModalPage, ModalPageProps } from './ModalPage';
 
 const story: Meta<ModalPageProps> = {
@@ -125,21 +124,11 @@ export const FullscreenModalPage: Story = {
             </ModalPageHeader>
           }
         >
-          <Gradient
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-              padding: 32,
-            }}
-            mode="tint"
-          >
-            <Avatar size={96} src={randomUser.photo_100} />
-            <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="2">
-              {randomUser.first_name + ' ' + randomUser.last_name}
-            </Title>
+          <Gradient mode="tint">
+            <Placeholder
+              icon={<Avatar size={96} src={randomUser.photo_100} />}
+              header={randomUser.first_name + ' ' + randomUser.last_name}
+            ></Placeholder>
           </Gradient>
           <Group
             header={

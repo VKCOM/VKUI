@@ -29,7 +29,7 @@ const getAppearanceTokenClassNameByPlatform = (
 /**
  * @private
  */
-export const useTokensClassName = () => {
+export const useTokensClassName = (): string => {
   const {
     platform,
     appearance = DEFAULT_APPEARANCE,

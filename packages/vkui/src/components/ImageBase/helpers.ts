@@ -17,8 +17,11 @@ export function getFallbackIconSizeByImageBaseSize(imageSize: number): 12 | 16 |
   }
   return getFallbackIconSizeByImageBaseSize.MAX_SIZE;
 }
+export declare namespace getFallbackIconSizeByImageBaseSize {
+  export let MAX_SIZE: 36;
+}
 
-getFallbackIconSizeByImageBaseSize.MAX_SIZE = 36 as const;
+getFallbackIconSizeByImageBaseSize.MAX_SIZE = 36;
 
 /**
  * Возвращает размер иконки основанный на дизайн-системы.
@@ -34,6 +37,9 @@ export function getBadgeIconSizeByImageBaseSize(imageSize: number): 12 | 16 | 20
     return 20;
   }
   return getBadgeIconSizeByImageBaseSize.MAX_SIZE;
+}
+export declare namespace getBadgeIconSizeByImageBaseSize {
+  export let MAX_SIZE: 24;
 }
 
 getBadgeIconSizeByImageBaseSize.MAX_SIZE = 24 as const;
@@ -60,6 +66,9 @@ export function getOverlayIconSizeByImageBaseSize(
     return 28;
   }
   return getOverlayIconSizeByImageBaseSize.MAX_SIZE;
+}
+export declare namespace getOverlayIconSizeByImageBaseSize {
+  export let MAX_SIZE: 32;
 }
 
 getOverlayIconSizeByImageBaseSize.MAX_SIZE = 32 as const;

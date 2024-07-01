@@ -36,7 +36,7 @@ const EllipsisText = ({
   maxWidth,
   maxLines = 1,
   ...restProps
-}: EllipsisTextProps) => {
+}: EllipsisTextProps): React.ReactNode => {
   const contentRef = useRef<HTMLSpanElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {

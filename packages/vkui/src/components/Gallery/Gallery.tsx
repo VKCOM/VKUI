@@ -24,7 +24,7 @@ export const Gallery = ({
   bullets,
   looped,
   ...props
-}: GalleryProps) => {
+}: GalleryProps): React.ReactNode => {
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
   const isControlled = typeof props.slideIndex === 'number';
   const slideIndex = isControlled ? props.slideIndex ?? 0 : localSlideIndex;

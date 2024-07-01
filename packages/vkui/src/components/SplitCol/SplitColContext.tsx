@@ -5,9 +5,10 @@ export interface SplitColContextProps {
   animate: boolean;
 }
 
-export const SplitColContext = React.createContext<SplitColContextProps>({
-  colRef: null,
-  animate: true,
-});
+export const SplitColContext: React.Context<SplitColContextProps> =
+  React.createContext<SplitColContextProps>({
+    colRef: null,
+    animate: true,
+  });
 
-export const useSplitCol = () => React.useContext(SplitColContext);
+export const useSplitCol = (): SplitColContextProps => React.useContext(SplitColContext);

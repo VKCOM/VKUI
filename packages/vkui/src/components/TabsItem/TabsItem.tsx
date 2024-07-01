@@ -90,7 +90,7 @@ export const TabsItem = ({
   hasActive = false,
   focusVisibleMode = 'inside',
   ...restProps
-}: TabsItemProps) => {
+}: TabsItemProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const {
     mode,

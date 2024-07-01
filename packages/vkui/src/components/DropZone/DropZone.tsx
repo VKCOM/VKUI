@@ -21,13 +21,9 @@ export interface DropZoneProps extends Omit<HTMLAttributesWithRootRef<HTMLDivEle
  * @since 6.1.0
  * @see https://vkcom.github.io/VKUI/#/DropZone
  */
-export const DropZone = ({
-  onDragOver,
-  onDragLeave,
-  onDrop,
-  children,
-  ...props
-}: DropZoneProps) => {
+export const DropZone: React.FC<DropZoneProps> & {
+  Grid: typeof DropZoneGrid;
+} = ({ onDragOver, onDragLeave, onDrop, children, ...props }: DropZoneProps): React.ReactNode => {
   const [active, setActive] = React.useState(false);
 
   const onActive: React.DragEventHandler<HTMLDivElement> = (event) => {

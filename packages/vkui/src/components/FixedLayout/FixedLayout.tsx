@@ -52,7 +52,7 @@ export const FixedLayout = ({
   className,
   useParentWidth,
   ...restProps
-}: FixedLayoutProps) => {
+}: FixedLayoutProps): React.ReactNode => {
   const platform = usePlatform();
   const ref = React.useRef<HTMLElement | null>(null);
   const [width, setWidth] = React.useState<string | undefined>(undefined);

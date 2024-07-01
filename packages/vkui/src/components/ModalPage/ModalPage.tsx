@@ -102,7 +102,7 @@ export const ModalPage = ({
   getRootRef,
   preventClose,
   ...restProps
-}: ModalPageProps) => {
+}: ModalPageProps): React.ReactNode => {
   const generatingId = React.useId();
   const id = idProp || generatingId;
 

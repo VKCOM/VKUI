@@ -18,6 +18,6 @@ export const RootComponent = <T,>({
   className,
   getRootRef,
   ...restProps
-}: RootComponentProps<T>) => (
+}: RootComponentProps<T>): React.ReactNode => (
   <Component ref={getRootRef} className={classNames(baseClassName, className)} {...restProps} />
 );

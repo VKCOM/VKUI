@@ -72,7 +72,10 @@ const getBorderRadiusBySize = (
 /**
  * @see https://vkcom.github.io/VKUI/#/Image
  */
-export const Image = ({
+export const Image: React.FC<ImageProps> & {
+  Badge: typeof ImageBadge;
+  Overlay: typeof ImageBase.Overlay;
+} = ({
   size = IMAGE_DEFAULT_SIZE,
   borderRadius: borderRadiusProp = 'm',
   style,

@@ -31,7 +31,10 @@ export interface AccordionProps extends HasChildren {
   disabled?: boolean;
 }
 
-export const Accordion = ({
+export const Accordion: React.FC<AccordionProps> & {
+  Summary: typeof AccordionSummary;
+  Content: typeof AccordionContent;
+} = ({
   id,
   expanded: expandedProp,
   defaultExpanded = false,

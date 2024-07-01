@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasChildren } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
@@ -9,7 +10,7 @@ import styles from './Alert.module.css';
 interface AlertTypography extends HasChildren {
   id: string;
 }
-export const AlertHeader = (props: AlertTypography) => {
+export const AlertHeader = (props: AlertTypography): React.ReactNode => {
   const platform = usePlatform();
 
   switch (platform) {
@@ -19,7 +20,7 @@ export const AlertHeader = (props: AlertTypography) => {
       return <Title className={styles['Alert__header']} weight="2" level="2" {...props} />;
   }
 };
-export const AlertText = (props: AlertTypography) => {
+export const AlertText = (props: AlertTypography): React.ReactNode => {
   const platform = usePlatform();
 
   switch (platform) {

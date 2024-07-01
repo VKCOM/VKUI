@@ -22,7 +22,7 @@ export interface PaginationNavigationButtonProps extends PaginationNavigationBut
  */
 export const getButtonPropsFromPaginationNavigationButton = (
   opts: PaginationNavigationButtonOpts,
-) => {
+): ButtonProps & { 'data-page': number | undefined } => {
   const icon: React.ReactElement | null =
     opts.style !== 'caption' ? (
       <>
@@ -66,7 +66,7 @@ export type CustomPaginationNavigationButton = ReturnType<
 export const PaginationNavigationButton = ({
   renderNavigationButton,
   ...restProps
-}: PaginationNavigationButtonProps) => {
+}: PaginationNavigationButtonProps): React.ReactNode => {
   const buttonProps = getButtonPropsFromPaginationNavigationButton(restProps);
 
   if (typeof renderNavigationButton === 'function') {

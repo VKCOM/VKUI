@@ -64,26 +64,23 @@
     </Group>
 
     <Group>
-      <Div>
-        <div
-          style={{
-            backgroundImage: 'linear-gradient(135deg, #f24973 0%, #3948e6 100%)',
-            height: 200,
-            display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'center',
-            paddingBottom: '6px',
-            borderRadius: 12,
-          }}
+      <Flex
+        align="end"
+        justify="center"
+        margin="auto"
+        style={{
+          backgroundImage: 'linear-gradient(135deg, #f24973 0%, #3948e6 100%)',
+          height: 200,
+          borderRadius: 'inherit',
+        }}
+      >
+        <UsersStack
+          photos={[getAvatarUrl('user_xyz'), getAvatarUrl('user_va'), getAvatarUrl('user_tc')]}
+          style={{ color: 'var(--vkui--color_text_contrast)', padding: '8px 16px 16px 16px' }}
         >
-          <UsersStack
-            photos={[getAvatarUrl('user_xyz'), getAvatarUrl('user_va'), getAvatarUrl('user_tc')]}
-            style={{ color: '#fff', padding: '8px 16px' }}
-          >
-            Проголосовали 2 176 человек
-          </UsersStack>
-        </div>
-      </Div>
+          Проголосовали 2 176 человек
+        </UsersStack>
+      </Flex>
     </Group>
   </Panel>
 </View>

@@ -128,21 +128,11 @@ const App = () => {
 
   const randomUserFriends = (
     <React.Fragment>
-      <Gradient
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          padding: 32,
-        }}
-        mode="tint"
-      >
-        <Avatar size={96} src={randomUser.photo_100} />
-        <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="2">
-          {randomUser.first_name + ' ' + randomUser.last_name}
-        </Title>
+      <Gradient mode="tint">
+        <Placeholder
+          icon={<Avatar size={96} src={randomUser.photo_100} />}
+          header={randomUser.first_name + ' ' + randomUser.last_name}
+        ></Placeholder>
       </Gradient>
       <Group
         header={

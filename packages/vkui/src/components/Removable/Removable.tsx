@@ -162,7 +162,7 @@ export const Removable = ({
   toggleButtonTestId,
   removeButtonTestId,
   ...restProps
-}: RemovableOwnProps) => {
+}: RemovableOwnProps): React.ReactNode => {
   const platform = usePlatform();
 
   const onRemoveClick = (e: React.MouseEvent) => {

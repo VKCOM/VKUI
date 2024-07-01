@@ -9,7 +9,7 @@ import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
  *
  * @see {@link https://beta.reactjs.org/apis/react-dom/hydrate#handling-different-client-and-server-content React Docs}
  */
-export function useIsClient(initial = false) {
+export function useIsClient(initial = false): boolean {
   const [isClient, setIsClient] = React.useState(initial);
 
   useIsomorphicLayoutEffect(() => {

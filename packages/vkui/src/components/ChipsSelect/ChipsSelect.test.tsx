@@ -57,8 +57,9 @@ describe('ChipsSelect', () => {
   });
 
   it.each(['click', 'focus'])('opens dropdown when %s on input field', async (eventType) => {
+    const onOpen = jest.fn();
     const result = render(
-      <ChipsSelect options={colors} defaultValue={[]} dropdownTestId="dropdown" />,
+      <ChipsSelect options={colors} defaultValue={[]} dropdownTestId="dropdown" onOpen={onOpen} />,
     );
     const inputLocator = result.getByRole('combobox');
     if (eventType === 'focus') {
@@ -69,36 +70,56 @@ describe('ChipsSelect', () => {
     await waitForFloatingPosition();
     const dropdownLocator = result.getByTestId('dropdown');
     expect(within(dropdownLocator).getAllByRole('option')).toHaveLength(colors.length);
+    expect(onOpen).toHaveBeenCalledTimes(1);
   });
 
   it('closes options on click outside', async () => {
+    const onClose = jest.fn();
     const result = render(
-      <ChipsSelect options={colors} defaultValue={[]} dropdownTestId="dropdown" />,
+      <ChipsSelect
+        options={colors}
+        defaultValue={[]}
+        dropdownTestId="dropdown"
+        onClose={onClose}
+      />,
     );
     await userEvent.click(result.getByRole('combobox'));
     await waitForFloatingPosition();
     expect(result.getByTestId('dropdown')).toBeTruthy();
     await userEvent.click(document.body);
     expect(() => result.getByTestId('dropdown')).toThrow();
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   it.each(['{ArrowDown}', 'typing text'])(
     'closes dropdown on {Escape} and open when %s',
     async (type) => {
+      const onOpen = jest.fn();
+      const onClose = jest.fn();
       const result = render(
-        <ChipsSelect options={colors} defaultValue={[]} dropdownTestId="dropdown" />,
+        <ChipsSelect
+          options={colors}
+          defaultValue={[]}
+          dropdownTestId="dropdown"
+          onOpen={onOpen}
+          onClose={onClose}
+        />,
       );
       const inputLocator = result.getByRole('combobox');
       await userEvent.click(inputLocator);
 
       await waitForFloatingPosition();
+      expect(onOpen).toHaveBeenCalledTimes(1);
       await userEvent.type(inputLocator, '{Escape}');
+      expect(onClose).toHaveBeenCalledTimes(1);
       await userEvent.type(inputLocator, '{Enter}'); // если dropdown'а пока нет, то выбор из списка на {Enter} должно игнорироваться (см. в коде `case Keys.ENTER`)
       expect(() => result.getByTestId('dropdown')).toThrow();
+      expect(onOpen).toHaveBeenCalledTimes(1);
 
       await userEvent.type(inputLocator, type);
       await waitForFloatingPosition();
       expect(result.getByTestId('dropdown')).toBeTruthy();
+      expect(onOpen).toHaveBeenCalledTimes(2);
     },
   );
 

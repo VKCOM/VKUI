@@ -17,7 +17,11 @@ export interface GradientProps extends HTMLAttributesWithRootRef<HTMLDivElement>
 /**
  * @see https://vkcom.github.io/VKUI/#/Gradient
  */
-export const Gradient = ({ mode = 'default', to = 'top', ...restProps }: GradientProps) => {
+export const Gradient = ({
+  mode = 'default',
+  to = 'top',
+  ...restProps
+}: GradientProps): React.ReactNode => {
   return (
     <RootComponent
       role="presentation"

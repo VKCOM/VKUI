@@ -21,7 +21,7 @@ export const Subhead = ({
   normalize = true,
   inline = false,
   ...restProps
-}: SubheadProps) => {
+}: SubheadProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (

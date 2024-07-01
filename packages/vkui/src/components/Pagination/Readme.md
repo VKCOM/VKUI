@@ -46,9 +46,9 @@ const Example = () => {
   }, [getPageFromPath]);
 
   return (
-    <div style={rootContainerStyles}>
+    <Flex reverse justify="end" align="center" margin="auto">
       <AdaptivityProvider sizeY={sizeY}>
-        <div style={demoContainerStyles}>
+        <Flex.Item flex="grow">
           <Div>
             <Pagination
               navigationButtonsStyle={navigationButtonsStyle}
@@ -83,9 +83,9 @@ const Example = () => {
               )}
             />
           </Div>
-        </div>
+        </Flex.Item>
       </AdaptivityProvider>
-      <div style={propsContainerStyles}>
+      <Flex.Item flexBasis={200} flex="fixed">
         <FormItem top="sizeY">
           <Select
             value={sizeY}
@@ -142,25 +142,10 @@ const Example = () => {
             disabled
           </Checkbox>
         </FormItem>
-      </div>
-    </div>
+      </Flex.Item>
+    </Flex>
   );
 };
-
-const rootContainerStyles = {
-  display: 'flex',
-  flexDirection: 'row-reverse',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-};
-
-const demoContainerStyles = {
-  flexGrow: 2,
-  paddingTop: 24,
-  paddingBottom: 24,
-};
-
-const propsContainerStyles = { minWidth: 200 };
 
 <Example />;
 ```

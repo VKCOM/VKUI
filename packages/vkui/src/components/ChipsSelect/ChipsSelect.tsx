@@ -141,6 +141,8 @@ export const ChipsSelect = <Option extends ChipOption>({
   noMaxHeight = false,
   filterFn = defaultFilterFn,
   dropdownTestId,
+  onClose,
+  onOpen,
 
   // ChipsInputProps
   getRef,
@@ -162,7 +164,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   onKeyDown: onKeyDownProp,
   dropdownOffsetDistance = 0,
   ...restProps
-}: ChipsSelectProps<Option>) => {
+}: ChipsSelectProps<Option>): React.ReactNode => {
   const {
     // Связано с ChipsInputProps
     // option
@@ -204,6 +206,8 @@ export const ChipsSelect = <Option extends ChipOption>({
     creatable,
     filterFn,
     selectedBehavior,
+    onClose,
+    onOpen,
 
     // other
     disabled,
