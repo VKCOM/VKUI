@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useTokensClassName } from './useTokenClassName';
+import styles from './TokensClassProvider.module.css';
 
 type ProvidedChildProps = {
   className?: string;
@@ -14,7 +15,11 @@ const InjectTokenClassNameToChild = ({ children }: InjectTokenClassNameToChildPr
   const tokensClassName = useTokensClassName();
 
   return React.cloneElement(children, {
-    className: classNames(tokensClassName, 'vkui__typography', children.props.className),
+    className: classNames(
+      tokensClassName,
+      styles['TokensClassProvider--default-color'],
+      children.props.className,
+    ),
   });
 };
 

@@ -58,8 +58,3 @@
   /* Safari >= 16 */
   overscroll-behavior-y: none;
 }
-
-.vkui__typography {
-  color-scheme: var(--vkui--colors_scheme);
-  color: var(--vkui--color_text_primary);
-}
