@@ -1553,16 +1553,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-parser-algorithms@npm:^2.6.3":
-  version: 2.6.3
-  resolution: "@csstools/css-parser-algorithms@npm:2.6.3"
-  peerDependencies:
-    "@csstools/css-tokenizer": ^2.3.1
-  checksum: f1bfcb6680c801f4201c30b77827e000b838e5a45b42f146ec352cd008b51ebb31b8aae00364369765c24e938391e221e37f4063e3a6151316d6990c498da103
-  languageName: node
-  linkType: hard
-
-"@csstools/css-parser-algorithms@npm:^2.7.0":
+"@csstools/css-parser-algorithms@npm:^2.6.3, @csstools/css-parser-algorithms@npm:^2.7.0":
   version: 2.7.0
   resolution: "@csstools/css-parser-algorithms@npm:2.7.0"
   peerDependencies:
@@ -1571,31 +1562,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-tokenizer@npm:^2.3.1":
-  version: 2.3.1
-  resolution: "@csstools/css-tokenizer@npm:2.3.1"
-  checksum: a5fe22faed5673b5d19e64aa7f4730b48711d0946470551376bc3125d831511070c94addfdfc6a62634e968955050ef2c99c92ff8cb294d9bf70ebc1f3ac22a8
-  languageName: node
-  linkType: hard
-
-"@csstools/css-tokenizer@npm:^2.3.2":
+"@csstools/css-tokenizer@npm:^2.3.1, @csstools/css-tokenizer@npm:^2.3.2":
   version: 2.3.2
   resolution: "@csstools/css-tokenizer@npm:2.3.2"
   checksum: 40c0eaba3f46134c4b8952d25c3076a69463b55c82a5b4bf9be344b3db544c6fee2d1ddb2dd7dd0afb8a347a1903b050c29c83c981aa0f8c3f33fc795bf21e58
   languageName: node
   linkType: hard
 
-"@csstools/media-query-list-parser@npm:^2.1.11":
-  version: 2.1.11
-  resolution: "@csstools/media-query-list-parser@npm:2.1.11"
-  peerDependencies:
-    "@csstools/css-parser-algorithms": ^2.6.3
-    "@csstools/css-tokenizer": ^2.3.1
-  checksum: e338eff90b43ab31b3d33c55c792f7760d556feaeaa042e12b8e3f873293b72f1140df1bbbfa1c9dcc16c58afb777f1e218e17afdcd0ab8228d2a8ea22bcbe61
-  languageName: node
-  linkType: hard
-
-"@csstools/media-query-list-parser@npm:^2.1.12":
+"@csstools/media-query-list-parser@npm:^2.1.11, @csstools/media-query-list-parser@npm:^2.1.12":
   version: 2.1.12
   resolution: "@csstools/media-query-list-parser@npm:2.1.12"
   peerDependencies:
@@ -15140,18 +15114,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.0, postcss@npm:^8.1.2, postcss@npm:^8.4.33, postcss@npm:^8.4.35, postcss@npm:^8.4.38":
-  version: 8.4.38
-  resolution: "postcss@npm:8.4.38"
-  dependencies:
-    nanoid: ^3.3.7
-    picocolors: ^1.0.0
-    source-map-js: ^1.2.0
-  checksum: 649f9e60a763ca4b5a7bbec446a069edf07f057f6d780a5a0070576b841538d1ecf7dd888f2fbfd1f76200e26c969e405aeeae66332e6927dbdc8bdcb90b9451
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.4.39":
+"postcss@npm:^8.0.0, postcss@npm:^8.1.2, postcss@npm:^8.4.33, postcss@npm:^8.4.35, postcss@npm:^8.4.38, postcss@npm:^8.4.39":
   version: 8.4.39
   resolution: "postcss@npm:8.4.39"
   dependencies:
