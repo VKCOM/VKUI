@@ -85,7 +85,7 @@ const Example = () => {
       <Flex.Item flex="content">
         <FlexContainer
           itemsCount={itemsCount}
-          gap={complexGap ? [columnGap, rowGap] : gap}
+          gap={complexGap ? [rowGap, columnGap] : gap}
           direction={direction}
           align={align}
           justify={justify}

@@ -32,7 +32,7 @@ export type GapProp = LiteralUnion<GapPresets, number>;
 export type GapsProp = GapProp | [GapProp, GapProp];
 
 /**
- * Возвращает массив отступов [columnGap, rowGap]
+ * Возвращает массив отступов [rowGap, columnGap]
  */
 export function calculateGap(
   gap: GapsProp | undefined,
