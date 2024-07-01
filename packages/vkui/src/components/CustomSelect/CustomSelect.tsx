@@ -10,7 +10,10 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { debounce } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
-import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
+import {
+  CustomSelectDropdown,
+  CustomSelectDropdownProps,
+} from '../CustomSelectDropdown/CustomSelectDropdown';
 import {
   CustomSelectOption,
   CustomSelectOptionProps,
@@ -129,7 +132,8 @@ export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
 > extends NativeSelectProps,
     FormFieldProps,
-    TrackerOptionsProps {
+    TrackerOptionsProps,
+    Pick<CustomSelectDropdownProps, 'overscrollBehavior'> {
   /**
    * Если `true`, то при клике на `CustomSelect` в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
    * производится по `option.label`.
@@ -256,6 +260,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     nativeSelectTestId,
     defaultValue,
     required,
+    overscrollBehavior,
     ...restProps
   } = props;
 
@@ -896,6 +901,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           onPlacementChange={setPopperPlacement}
           onMouseLeave={resetFocusedOption}
           fetching={fetching}
+          overscrollBehavior={overscrollBehavior}
           offsetDistance={dropdownOffsetDistance}
           autoWidth={dropdownAutoWidth}
           forcePortal={forceDropdownPortal}

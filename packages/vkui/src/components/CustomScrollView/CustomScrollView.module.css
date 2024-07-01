@@ -13,6 +13,7 @@
   overflow-x: hidden;
   padding-inline-end: 100px;
   position: relative;
+  overscroll-behavior: none;
 }
 
 .CustomScrollView__box-content {
