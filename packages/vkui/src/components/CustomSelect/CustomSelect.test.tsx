@@ -1106,4 +1106,21 @@ describe('CustomSelect', () => {
     const input = screen.getByTestId<HTMLInputElement>('inputTestId');
     expect(input.required).toBeFalsy();
   });
+
+  it('check getSelectInputRef: ref value not null', () => {
+    const inputRef: React.Ref<HTMLInputElement> = {
+      current: null,
+    };
+    render(
+      <CustomSelect
+        getSelectInputRef={inputRef}
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        placeholder="Не выбрано"
+      />,
+    );
+    expect(inputRef.current).not.toBeNull();
+  });
 });

@@ -131,6 +131,10 @@ export interface SelectProps<
     FormFieldProps,
     TrackerOptionsProps {
   /**
+   * ref на внутрений компонент input
+   */
+  getSelectInputRef?: React.Ref<HTMLInputElement>;
+  /**
    * Если `true`, то при клике на `CustomSelect` в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
    * производится по `option.label`.
    */
@@ -256,6 +260,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     nativeSelectTestId,
     defaultValue,
     required,
+    getSelectInputRef,
     ...restProps
   } = props;
 
@@ -703,7 +708,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [emptyText, options, renderDropdown, renderOption]);
 
-  const selectInputRef = React.useRef<HTMLInputElement | null>(null);
+  const selectInputRef = useExternRef(getSelectInputRef);
   const focusOnInputTimerRef = React.useRef<ReturnType<typeof setTimeout>>();
   const focusOnInput = React.useCallback(() => {
     clearTimeout(focusOnInputTimerRef.current);
@@ -711,7 +716,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     focusOnInputTimerRef.current = setTimeout(() => {
       selectInputRef.current && selectInputRef.current.focus();
     }, 0);
-  }, []);
+  }, [selectInputRef]);
   useIsomorphicLayoutEffect(function clearFocusOnInputTimer() {
     return () => {
       clearTimeout(focusOnInputTimerRef.current);
@@ -795,7 +800,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         }
       }
     },
-    [document, focusOnInput],
+    [document, focusOnInput, selectInputRef],
   );
 
   const preventInputBlurWhenClickInsideFocusedSelectArea = (
