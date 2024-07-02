@@ -12,3 +12,11 @@
   flex: 0 0 auto;
   max-inline-size: inherit;
 }
+
+.EllipsisText__content--multiline {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  -moz-box-orient: vertical;
+  white-space: normal;
+}
