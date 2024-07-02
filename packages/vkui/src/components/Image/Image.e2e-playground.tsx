@@ -81,6 +81,22 @@ export const ImagePlayground = (props: ComponentPlaygroundProps) => {
           widthSize: [48],
           heightSize: [64],
         },
+        {
+          borderRadius: ['s'],
+          borderStartStartRadius: ['l'],
+        },
+        {
+          borderRadius: ['s'],
+          borderStartEndRadius: ['l'],
+        },
+        {
+          borderRadius: ['s'],
+          borderEndStartRadius: ['l'],
+        },
+        {
+          borderRadius: ['s'],
+          borderEndEndRadius: ['l'],
+        },
       ]}
     >
       {(props: ImageProps) => <Image {...props} />}
