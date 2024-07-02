@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
 import { HTMLAttributesWithRootRef } from '../../types';
-import { CustomScrollView } from '../CustomScrollView/CustomScrollView';
+import { CustomScrollView, CustomScrollViewProps } from '../CustomScrollView/CustomScrollView';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import { Popper } from '../Popper/Popper';
 import { Spinner } from '../Spinner/Spinner';
@@ -10,6 +10,7 @@ import styles from './CustomSelectDropdown.module.css';
 
 export interface CustomSelectDropdownProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
+    Pick<CustomScrollViewProps, 'overscrollBehavior'>,
     TrackerOptionsProps {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
@@ -44,6 +45,8 @@ export const CustomSelectDropdown = ({
   autoHideScrollbarDelay,
   className,
   noMaxHeight = false,
+  // CustomScrollView
+  overscrollBehavior,
   ...restProps
 }: CustomSelectDropdownProps): React.ReactNode => {
   const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
@@ -86,6 +89,7 @@ export const CustomSelectDropdown = ({
         className={noMaxHeight ? undefined : styles['CustomSelectDropdown__in--withMaxHeight']}
         autoHideScrollbar={autoHideScrollbar}
         autoHideScrollbarDelay={autoHideScrollbarDelay}
+        overscrollBehavior={overscrollBehavior}
       >
         {fetching ? (
           <div className={styles['CustomSelectDropdown__fetching']}>

@@ -32,6 +32,10 @@ export interface CustomScrollViewProps
   className?: HTMLDivElement['className'];
   onScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
   children: React.ReactNode;
+  /**
+   * Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior)
+   */
+  overscrollBehavior?: 'auto' | 'contain' | 'none';
 }
 
 export const CustomScrollView = ({
@@ -43,6 +47,7 @@ export const CustomScrollView = ({
   autoHideScrollbarDelay,
   onScroll,
   getRootRef,
+  overscrollBehavior = 'auto',
   ...restProps
 }: CustomScrollViewProps): React.ReactNode => {
   const { document, window } = useDOM();
@@ -203,7 +208,15 @@ export const CustomScrollView = ({
       ref={getRootRef}
       {...restProps}
     >
-      <div className={styles['CustomScrollView__box']} tabIndex={-1} ref={boxRef} onScroll={scroll}>
+      <div
+        className={styles['CustomScrollView__box']}
+        tabIndex={-1}
+        ref={boxRef}
+        onScroll={scroll}
+        style={{
+          overscrollBehavior,
+        }}
+      >
         <div ref={boxContentRef} className={styles['CustomScrollView__box-content']}>
           {children}
         </div>
