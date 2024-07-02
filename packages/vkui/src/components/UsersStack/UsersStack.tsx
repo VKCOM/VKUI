@@ -18,11 +18,26 @@ const stylesDirection = {
   'column': styles['UsersStack--direction-column'],
 };
 
+interface Photo {
+  src: string;
+  renderWrapper?: (props: { children: React.ReactNode; key: string | number }) => React.ReactNode;
+}
+
 export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Массив ссылок на фотографии
+   * Массив ссылок на фотографии либо массив структур вида:
+   *
+   * ```
+   * {
+   *   src: string,
+   *   renderWrapper?: (props: {
+   *     children: ReactNode;
+   *     key: string | number
+   *   }) => ReactNode;
+   * }
+   * ```
    */
-  photos?: string[];
+  photos?: string[] | Photo[];
   /**
    * Размер аватарок
    */
@@ -140,7 +155,9 @@ export const UsersStack = ({
     const hrefID = `#${id}`;
     const maskID = `UsersStackMask${cmpId}${i}`;
 
-    return (
+    const photoSrc = typeof photo === 'object' ? photo.src : photo;
+
+    const photoElement = (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={styles['UsersStack__photo']}
@@ -155,11 +172,19 @@ export const UsersStack = ({
         </clipPath>
         <g clipPath={`url(#${maskID})`}>
           <use href={hrefID} className={styles['UsersStack__fill']} />
-          <image href={photo} width={photoSize} height={photoSize} />
+          <image href={photoSrc} width={photoSize} height={photoSize} />
           <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
         </g>
       </svg>
     );
+
+    if (typeof photo === 'object' && photo.renderWrapper) {
+      return photo.renderWrapper({
+        children: photoElement,
+        key: i,
+      });
+    }
+    return photoElement;
   });
 
   const othersElement = canShowOthers ? (
