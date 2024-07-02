@@ -11,6 +11,7 @@ import {
   useFloatingWithInteractions,
   usePlacementChangeCallback,
 } from '../../lib/floating';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import {
@@ -119,6 +120,10 @@ export interface PopoverProps
    * Используется для того, чтобы не удалять поповер из DOM дерева при скрытии.
    */
   keepMounted?: boolean;
+  /**
+   * Элемент относительно которого будет позиционироваться поповер
+   */
+  anchorRef?: React.RefObject<HTMLElement> | HTMLElement;
 }
 
 /**
@@ -145,6 +150,7 @@ export const Popover = ({
   disableCloseOnClickOutside,
   disableCloseOnEscKey,
   keepMounted = false,
+  anchorRef,
   // uncontrolled
   defaultShown = false,
   // controlled
@@ -210,11 +216,18 @@ export const Popover = ({
 
   usePlacementChangeCallback(expectedPlacement, resolvedPlacement, onPlacementChange);
 
-  const [, child] = usePatchChildren<HTMLDivElement>(
+  const [childRef, child] = usePatchChildren<HTMLDivElement>(
     children,
     injectAriaExpandedPropByRole(referenceProps, shown, role),
-    refs.setReference,
   );
+
+  useIsomorphicLayoutEffect(() => {
+    if (anchorRef) {
+      refs.setReference('current' in anchorRef ? anchorRef.current : anchorRef);
+    } else {
+      refs.setReference(childRef.current);
+    }
+  }, [childRef, refs, anchorRef]);
 
   let popover: React.ReactNode = null;
   if (shown || keepMounted) {
