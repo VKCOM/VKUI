@@ -1,28 +1,38 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { usePlatform } from '../../hooks/usePlatform';
+import { classNames } from '@vkontakte/vkjs';
 import { HasDataAttribute, HasRef, HasRootRef } from '../../types';
-import { DEFAULT_ACTIVE_EFFECT_DELAY } from '../Clickable/useState';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import { Text } from '../Typography/Text/Text';
+import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
+import { SelectionControl } from '../SelectionControl/SelectionControl';
+import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
+import { type TappableProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Radio.module.css';
 
-const sizeYClassNames = {
-  none: styles['Radio--sizeY-none'],
-  ['compact']: styles['Radio--sizeY-compact'],
-};
-
-const RadioIcon = (props: React.SVGProps<SVGSVGElement>) => {
+function RadioIcon24(props: React.ComponentProps<'svg'>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden {...props}>
-      <circle cx="12" cy="12" r="11" stroke="currentColor" strokeWidth="2" fill="none" />
-      <circle cx="12" cy="12" r="7.5" className={styles['Radio__pin']} fill="currentColor" />
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden {...props}>
+      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
+      <circle cx="12" cy="12" r="7" className={styles['Radio__pin']} fill="currentColor" />
     </svg>
   );
-};
+}
+
+function RadioIcon20(props: React.ComponentProps<'svg'>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden {...props}>
+      <circle cx="10" cy="10" r="7.75" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <circle cx="10" cy="10" r="5.5" className={styles['Radio__pin']} fill="currentColor" />
+    </svg>
+  );
+}
+
+function RadioIcon() {
+  return (
+    <div className={styles['Radio__icon']}>
+      <AdaptiveIconRenderer IconCompact={RadioIcon20} IconRegular={RadioIcon24} />
+    </div>
+  );
+}
 
 export interface RadioProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -59,19 +69,10 @@ export const Radio = ({
   focusVisibleMode,
   ...restProps
 }: RadioProps): React.ReactNode => {
-  const platform = usePlatform();
-  const { sizeY = 'none' } = useAdaptivity();
-
   return (
-    <Tappable
-      Component="label"
+    <SelectionControl
       style={style}
-      className={classNames(
-        styles['Radio'],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-        className,
-      )}
-      activeEffectDelay={platform === 'ios' ? 100 : DEFAULT_ACTIVE_EFFECT_DELAY}
+      className={classNames(styles['Radio'], className)}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
       hoverMode={hoverMode}
@@ -88,18 +89,10 @@ export const Radio = ({
         getRootRef={getRef}
         className={styles['Radio__input']}
       />
-      <div className={styles['Radio__container']}>
-        <RadioIcon className={styles['Radio__icon']} />
-        <div className={styles['Radio__content']}>
-          <div className={styles['Radio__title']}>
-            <Text>{children}</Text>
-            <div className={styles['Radio__titleAfter']}>{titleAfter}</div>
-          </div>
-          {hasReactNode(description) && (
-            <Footnote className={styles['Radio__description']}>{description}</Footnote>
-          )}
-        </div>
-      </div>
-    </Tappable>
+      <RadioIcon />
+      <SelectionControlLabel titleAfter={titleAfter} description={description}>
+        {children}
+      </SelectionControlLabel>
+    </SelectionControl>
   );
 };
