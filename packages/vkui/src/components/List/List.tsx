@@ -19,6 +19,7 @@ export const List = ({
   children,
   gap = 0,
   className,
+  style,
   ...restProps
 }: ListProps): React.ReactNode => {
   return (
@@ -26,6 +27,7 @@ export const List = ({
       role="list"
       className={classNames(styles.List, className)}
       style={{
+        ...style,
         gridGap: gap,
       }}
       {...restProps}
