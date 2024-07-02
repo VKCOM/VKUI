@@ -83,7 +83,7 @@ describe('Placeholder item', () => {
   it('should add placeholder with styles', async () => {
     setInitialPlaceholderItemStyles({ index: 0, el, draggingElRect: domRect });
     expect(el).toContainHTML(
-      `<div><div style="display: block; width: ${domRect.width}px; height: ${domRect.height}px; pointer-events: none;" /></div>`,
+      `<div style="display: block;"><div style="display: block; width: ${domRect.width}px; height: ${domRect.height}px; pointer-events: none;" /></div>`,
     );
   });
 

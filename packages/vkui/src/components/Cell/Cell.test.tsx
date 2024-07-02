@@ -15,7 +15,7 @@ describe('Cell', () => {
       let updatedList = [...initialList];
 
       render(
-        <List>
+        <List gap={20}>
           {updatedList.map((item) => (
             <Cell
               key={item}
