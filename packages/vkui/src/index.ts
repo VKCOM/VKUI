@@ -145,6 +145,9 @@ export type { ModalCardProps } from './components/ModalCard/ModalCard';
 export { ModalDismissButton } from './components/ModalDismissButton/ModalDismissButton';
 export type { ModalDismissButtonProps } from './components/ModalDismissButton/ModalDismissButton';
 
+export { ModalSheet as unstable_ModalSheet } from './components/ModalSheet/ModalSheet';
+export type { ModalSheetProps as unstable_ModalSheetProps } from './components/ModalSheet/ModalSheet';
+
 /**
  * Blocks
  */

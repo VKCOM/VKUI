@@ -1,0 +1,219 @@
+.ModalSheet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  position: fixed;
+  z-index: var(--vkui--z_index_modal);
+}
+
+.ModalSheet--hasCustomPanelHeaderAfterSlot {
+  padding-block-start: calc(
+    var(--vkui_internal--safe_area_inset_top) + var(--vkui_internal--panel_header_height)
+  );
+}
+
+.ModalSheet--hasCustomPanelHeaderAfterSlot .ModalSheet__container {
+  border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+}
+
+.ModalSheet__container {
+  block-size: 100%;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: none;
+  /**
+   * Для удаление скролла в Firefox.
+   * В версии ниже 64 будет виден скролл, но это не ломает функциональность.
+   */
+  scrollbar-width: none;
+  /**
+   * В старых браузерах не работает, но это не ломает функциональность.
+   */
+  scroll-snap-type: y mandatory;
+  inline-size: 100%;
+}
+
+.ModalSheet__disableSnap {
+  scroll-snap-type: none;
+}
+
+.ModalSheet--closing {
+  pointer-events: none;
+}
+
+/**
+ * Якорь для прилипания скролла к концу модалки.
+ */
+.ModalSheet__endAnchor {
+  overflow-anchor: auto;
+  block-size: 1px;
+  margin-block-start: -1px;
+}
+
+.ModalSheet__container::-webkit-scrollbar {
+  display: none;
+}
+
+.ModalSheet__content {
+  display: flex;
+  flex-direction: column;
+  background: var(--vkui--color_background_modal);
+  border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+  border-end-end-radius: 0;
+  border-end-start-radius: 0;
+  margin-inline: auto;
+  transition: border-radius 0.1s var(--vkui--animation_easing_platform);
+  inline-size: 100%;
+  scroll-snap-stop: always;
+  scroll-snap-align: start;
+  overflow-anchor: none;
+}
+
+.ModalSheet--size-s {
+  max-inline-size: var(--vkui--size_popup_small--regular);
+}
+
+.ModalSheet--size-m {
+  max-inline-size: var(--vkui--size_popup_medium--regular);
+}
+
+.ModalSheet--size-l {
+  max-inline-size: var(--vkui--size_popup_large--regular);
+}
+
+.ModalSheet__fullOpen .ModalSheet__content {
+  transition: none;
+  border-radius: 0;
+}
+
+.ModalSheet__overlay {
+  position: absolute;
+  background: var(--vkui--color_overlay_primary);
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ModalSheet--sizeX-regular .ModalSheet__overlay {
+  opacity: 1;
+}
+
+@media (--sizeX-regular) {
+  .ModalSheet--sizeX-none .ModalSheet__overlay {
+    opacity: 1;
+  }
+}
+
+.ModalSheet__dismissButton {
+  display: none;
+}
+
+.ModalSheet--sizeX-regular .ModalSheet__dismissButton {
+  display: block;
+}
+
+@media (--sizeX-regular) {
+  .ModalSheet--sizeX-none .ModalSheet__dismissButton {
+    display: block;
+  }
+}
+
+/**
+  * В старых браузерах sticky не работает, но это не ломает функциональность.
+  */
+.ModalSheet__header {
+  z-index: 1;
+  position: sticky;
+  inset-block-start: 0;
+  border-radius: inherit;
+  background: var(--vkui--color_background_modal);
+}
+
+.ModalSheet__footer {
+  z-index: 2;
+  position: sticky;
+  inset-block-end: 0;
+  background: var(--vkui--color_background_modal);
+  border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
+}
+
+.ModalSheet--sizeX-regular .ModalSheet__content {
+  border-radius: var(--vkui--size_border_radius_paper--regular);
+  max-block-size: 100%;
+}
+
+@media (--sizeX-regular) {
+  .ModalSheet--sizeX-none .ModalSheet__content {
+    border-radius: var(--vkui--size_border_radius_paper--regular);
+    max-block-size: 100%;
+  }
+}
+
+.ModalSheet--sizeX-regular .ModalSheet__Content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+@media (--sizeX-regular) {
+  .ModalSheet--sizeX-none .ModalSheet__Content {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
+
+.ModalSheet--sizeX-regular .ModalSheet__container {
+  display: flex;
+  block-size: initial;
+  max-block-size: calc(100% - 32px * 2);
+  margin-block: 32px;
+  margin-inline: 56px;
+  border-radius: var(--vkui--size_border_radius_paper--regular);
+  overflow: initial;
+}
+
+@media (--sizeX-regular) {
+  .ModalSheet--sizeX-none .ModalSheet__container {
+    display: flex;
+    block-size: initial;
+    max-block-size: calc(100% - 32px * 2);
+    margin-block: 32px;
+    margin-inline: 56px;
+    border-radius: var(--vkui--size_border_radius_paper--regular);
+    overflow: initial;
+  }
+}
+
+.ModalSheet--sizeX-regular.ModalSheet--opening {
+  animation: animation-fade-in 0.32s ease;
+}
+
+@media (--sizeX-regular) {
+  .ModalSheet--sizeX-none.ModalSheet--opening {
+    animation: animation-fade-in 0.32s ease;
+  }
+}
+
+.ModalSheet--sizeX-regular.ModalSheet--closing {
+  animation: animation-fade-in 0.32s ease reverse;
+}
+
+@media (--sizeX-regular) {
+  .ModalSheet--sizeX-none.ModalSheet--closing {
+    animation: animation-fade-in 0.32s ease reverse;
+  }
+}
+
+@keyframes animation-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
