@@ -1,11 +1,56 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { canUseDOM } from '../lib/dom';
-import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 interface EventListenerHandle {
   add: (el: HTMLElement | Document | Window) => void;
   remove: () => void;
+}
+
+class EventListener implements EventListenerHandle {
+  callback: (ev: any) => void = noop;
+  options: AddEventListenerOptions | boolean | undefined = undefined;
+  eventType: string;
+  #target: HTMLElement | Document | Window | null = null;
+
+  constructor(
+    type: string,
+    callback: false | null | undefined | ((ev: any) => void),
+    options?: AddEventListenerOptions | boolean,
+  ) {
+    this.options = options;
+    this.eventType = type;
+
+    if (callback) {
+      this.callback = callback;
+    }
+  }
+
+  readonly #listener = (ev: any) => {
+    this.callback(ev);
+  };
+
+  add = (el: HTMLElement | Document | Window) => {
+    if (!canUseDOM) {
+      return;
+    }
+    this.remove();
+    if (!el) {
+      return;
+    }
+
+    el.addEventListener(this.eventType, this.#listener, this.options);
+    this.#target = el;
+  };
+
+  remove = () => {
+    if (!canUseDOM || !this.#target) {
+      return;
+    }
+
+    this.#target.removeEventListener(this.eventType, this.#listener, this.options);
+    this.#target = null;
+  };
 }
 
 export function useEventListener<K extends keyof GlobalEventHandlersEventMap>(
@@ -23,33 +68,22 @@ export function useEventListener<E extends Event, K extends keyof GlobalEventHan
   _cb: false | null | undefined | ((ev: E) => void),
   _options?: AddEventListenerOptions,
 ): EventListenerHandle {
-  const cbRef = React.useRef(_cb);
-  useIsomorphicLayoutEffect(() => {
-    cbRef.current = _cb;
-  }, [_cb]);
-  const cb = React.useCallback((e: any) => cbRef.current && cbRef.current(e), []);
+  const ref = React.useRef<EventListener | null>(null);
+  if (ref.current === null) {
+    ref.current = new EventListener(event, _cb, _options);
+  } else {
+    ref.current.eventType = event;
+    ref.current.options = _options;
 
-  const detach = React.useRef(noop);
-  const remove = React.useCallback(() => {
-    detach.current();
-    detach.current = noop;
+    if (_cb) {
+      ref.current.callback = _cb;
+    }
+  }
+
+  React.useEffect(() => {
+    const detach = ref.current?.remove.bind(ref.current);
+    return detach;
   }, []);
-  const add = React.useCallback(
-    (el: HTMLElement | Document | Window) => {
-      if (!canUseDOM) {
-        return;
-      }
-      remove();
-      if (!el) {
-        return;
-      }
-      const options = { ..._options };
-      el.addEventListener(event, cb, options);
-      detach.current = () => el.removeEventListener(event, cb, options);
-    },
-    [_options, cb, event, remove],
-  );
-  React.useEffect(() => remove, [remove]);
 
-  return React.useMemo(() => ({ add, remove }), [add, remove]);
+  return ref.current;
 }
