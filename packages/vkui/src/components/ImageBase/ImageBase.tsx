@@ -81,7 +81,7 @@ export interface ImageBaseProps
    * Пользовательское значения стиля object-fit
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit)
    */
-  objectFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
+  objectFit?: React.CSSProperties['objectFit'];
 }
 
 /**
