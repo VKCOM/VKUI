@@ -7,7 +7,7 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasComponent, HasRootRef } from '../../types';
-import {useCompensateScrollWidth} from "./useCompensateScrollWidth";
+import { useCompensateScrollWidth } from './useCompensateScrollWidth';
 import styles from './FormField.module.css';
 
 const sizeYClassNames = {
@@ -103,12 +103,9 @@ export const FormField = ({
 
   const updatePadding = (partRef: React.RefObject<HTMLSpanElement | null>, property: string) => {
     if (partRef.current) {
-      scrollContainerRef.current?.style.setProperty(
-        property,
-        `${partRef.current.offsetWidth}px`,
-      );
+      scrollContainerRef.current?.style.setProperty(property, `${partRef.current.offsetWidth}px`);
     }
-  }
+  };
 
   useIsomorphicLayoutEffect(() => {
     before && updatePadding(beforeRef, 'padding-inline-start');
@@ -151,8 +148,8 @@ export const FormField = ({
           ref={afterRef}
           className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}
         >
-            {after}
-          </span>
+          {after}
+        </span>
       )}
       <span aria-hidden className={styles['FormField__border']} />
     </Component>
