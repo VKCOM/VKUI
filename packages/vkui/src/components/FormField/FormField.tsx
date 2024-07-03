@@ -138,14 +138,14 @@ export const FormField = ({
         className,
       )}
     >
-      {before && (
-        <span className={styles['FormField__before']} ref={beforeRef}>
-            {before}
-          </span>
-      )}
       <div className={styles['FormField__scroll-container']} ref={scrollContainerRef}>
         <div className={styles['FormField__content']}>{children}</div>
       </div>
+      {before && (
+        <span className={styles['FormField__before']} ref={beforeRef}>
+          {before}
+        </span>
+      )}
       {after && (
         <span
           ref={afterRef}
