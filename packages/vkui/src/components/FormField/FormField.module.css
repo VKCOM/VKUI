@@ -1,13 +1,26 @@
 .FormField {
   position: relative;
   display: flex;
-  align-items: center;
   box-sizing: border-box;
   min-block-size: var(--vkui--size_field_height--regular);
   font-family: var(--vkui--font_family_base);
   -webkit-tap-highlight-color: transparent;
   isolation: isolate;
   border-radius: var(--vkui--size_border_radius--regular);
+  overflow: hidden;
+  width: 100%;
+}
+
+.FormField__scroll-container {
+  overflow-y: auto;
+  max-block-size: inherit;
+  min-block-size: inherit;
+  width: 100%;
+}
+
+.FormField__content {
+  min-block-size: inherit;
+  display: flex;
 }
 
 .FormField--sizeY-compact {
@@ -28,7 +41,7 @@
 
 .FormField__before,
 .FormField__after {
-  position: relative;
+  position: absolute;
   z-index: var(--vkui_internal--z_index_form_field_side);
   display: flex;
   align-items: center;
@@ -38,6 +51,8 @@
   min-inline-size: var(--vkui--size_field_height--regular);
   block-size: 100%;
   color: var(--vkui--color_icon_secondary);
+  inset-block-start: 50%;
+  transform: translateY(-50%);
 }
 
 .FormField--sizeY-compact .FormField__before,
@@ -56,10 +71,12 @@
 
 .FormField__before {
   color: var(--vkui--color_icon_accent);
+  inset-inline-start: 0;
 }
 
 .FormField__after {
   color: var(--vkui--color_icon_secondary);
+  inset-inline-end: 0;
 }
 
 .FormField__border {

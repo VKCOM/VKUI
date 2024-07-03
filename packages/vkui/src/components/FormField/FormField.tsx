@@ -1,10 +1,13 @@
+import { useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasComponent, HasRootRef } from '../../types';
+import {useCompensateScrollWidth} from "./useCompensateScrollWidth";
 import styles from './FormField.module.css';
 
 const sizeYClassNames = {
@@ -71,6 +74,9 @@ export const FormField = ({
 }: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef);
   const { sizeY = 'none' } = useAdaptivity();
+  const afterRef = useRef<HTMLSpanElement | null>(null);
+  const beforeRef = useRef<HTMLSpanElement | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [hover, setHover] = React.useState(false);
 
   const focusWithin = useFocusWithin(elRef);
@@ -89,6 +95,22 @@ export const FormField = ({
     setHover(false);
   };
 
+  const updatePadding = (partRef: React.RefObject<HTMLSpanElement | null>, property: string) => {
+    if (partRef.current) {
+      scrollContainerRef.current?.style.setProperty(
+        property,
+        `${partRef.current.offsetWidth}px`,
+      );
+    }
+  }
+
+  useIsomorphicLayoutEffect(() => {
+    before && updatePadding(beforeRef, 'padding-inline-start');
+    after && updatePadding(afterRef, 'padding-inline-end');
+  }, [after, before, afterRef, beforeRef, scrollContainerRef]);
+
+  useCompensateScrollWidth(scrollContainerRef, afterRef, !!after);
+
   return (
     <Component
       {...restProps}
@@ -106,14 +128,23 @@ export const FormField = ({
         className,
       )}
     >
-      {before && <span className={styles['FormField__before']}>{before}</span>}
-      {children}
-      {after && (
-        <span className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}>
-          {after}
-        </span>
-      )}
-      <span aria-hidden className={styles['FormField__border']} />
+      <div className={styles['FormField__scroll-container']} ref={scrollContainerRef}>
+        {before && (
+          <span className={styles['FormField__before']} ref={beforeRef}>
+            {before}
+          </span>
+        )}
+        <div className={styles['FormField__content']}>{children}</div>
+        {after && (
+          <span
+            ref={afterRef}
+            className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}
+          >
+            {after}
+          </span>
+        )}
+        <span aria-hidden className={styles['FormField__border']} />
+      </div>
     </Component>
   );
 };
