@@ -47,6 +47,10 @@ export interface FormFieldProps {
    * - `plain` — показывает только текст-подсказку.
    */
   mode?: 'default' | 'plain';
+  /**
+   * Максимальная высота поля
+   */
+  maxHeight?: number;
 }
 
 interface FormFieldOwnProps
@@ -70,6 +74,8 @@ export const FormField = ({
   disabled,
   mode = 'default',
   className,
+  maxHeight,
+  style,
   ...restProps
 }: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef);
@@ -115,6 +121,10 @@ export const FormField = ({
     <Component
       {...restProps}
       ref={elRef}
+      style={{
+        ...style,
+        maxHeight,
+      }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={classNames(

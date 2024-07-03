@@ -7,7 +7,6 @@
   -webkit-tap-highlight-color: transparent;
   isolation: isolate;
   border-radius: var(--vkui--size_border_radius--regular);
-  overflow: hidden;
   width: 100%;
 }
 
@@ -21,6 +20,7 @@
 .FormField__content {
   min-block-size: inherit;
   display: flex;
+  align-items: center;
 }
 
 .FormField--sizeY-compact {

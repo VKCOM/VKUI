@@ -36,6 +36,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   after,
   status,
   mode,
+  maxHeight,
 
   // option
   value = DEFAULT_VALUE,
@@ -199,6 +200,7 @@ export const ChipsInputBase = <O extends ChipOption>({
       status={status}
       mode={mode}
       className={className}
+      maxHeight={maxHeight}
       onClick={disabled ? undefined : handleRootClick}
     >
       <div

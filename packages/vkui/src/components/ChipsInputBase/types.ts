@@ -109,7 +109,7 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
  */
 export interface ChipsInputBasePrivateProps<O extends ChipOption = ChipOption>
   extends ChipsInputBaseProps<O>,
-    Pick<FormFieldProps, 'mode' | 'status' | 'before' | 'after'> {
+    Pick<FormFieldProps, 'mode' | 'status' | 'before' | 'after' | 'maxHeight'> {
   onAddChipOption: (value: string) => void;
   onRemoveChipOption: (value: O | ChipOptionValue) => void;
 }
