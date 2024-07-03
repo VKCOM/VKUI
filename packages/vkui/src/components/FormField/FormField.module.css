@@ -7,14 +7,14 @@
   -webkit-tap-highlight-color: transparent;
   isolation: isolate;
   border-radius: var(--vkui--size_border_radius--regular);
-  width: 100%;
+  inline-size: 100%;
 }
 
 .FormField__scroll-container {
   overflow-y: auto;
   max-block-size: inherit;
   min-block-size: inherit;
-  width: 100%;
+  inline-size: 100%;
 }
 
 .FormField__content {
