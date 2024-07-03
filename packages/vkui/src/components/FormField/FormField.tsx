@@ -128,23 +128,23 @@ export const FormField = ({
         className,
       )}
     >
-      <div className={styles['FormField__scroll-container']} ref={scrollContainerRef}>
-        {before && (
-          <span className={styles['FormField__before']} ref={beforeRef}>
+      {before && (
+        <span className={styles['FormField__before']} ref={beforeRef}>
             {before}
           </span>
-        )}
+      )}
+      <div className={styles['FormField__scroll-container']} ref={scrollContainerRef}>
         <div className={styles['FormField__content']}>{children}</div>
-        {after && (
-          <span
-            ref={afterRef}
-            className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}
-          >
+      </div>
+      {after && (
+        <span
+          ref={afterRef}
+          className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}
+        >
             {after}
           </span>
-        )}
-        <span aria-hidden className={styles['FormField__border']} />
-      </div>
+      )}
+      <span aria-hidden className={styles['FormField__border']} />
     </Component>
   );
 };
