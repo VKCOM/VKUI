@@ -33,7 +33,7 @@ describe(ImageBase, () => {
     expect(() => getImageBaseImgEl()).toThrow();
   });
 
-  it("should have style objectFit ", () => {
+  it('should have style objectFit ', () => {
     render(<ImageBaseTest src="#" objectFit="fill" />);
     expect(getImageBaseImgEl().style.objectFit).toBe('fill');
   });
