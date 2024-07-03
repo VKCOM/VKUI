@@ -33,6 +33,11 @@ describe(ImageBase, () => {
     expect(() => getImageBaseImgEl()).toThrow();
   });
 
+  it("should have style objectFit ", () => {
+    render(<ImageBaseTest src="#" objectFit="fill" />);
+    expect(getImageBaseImgEl().style.objectFit).toBe('fill');
+  });
+
   it('should show fallback icon if `src` is not passed', () => {
     render(<ImageBaseTest fallbackIcon={<IconExampleForFallbackBasedOnImageBaseSize />} />);
 

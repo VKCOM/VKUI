@@ -77,6 +77,11 @@ export interface ImageBaseProps
    * @since 5.10.0
    */
   withTransparentBackground?: boolean;
+  /**
+   * Пользовательское значения стиля object-fit
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit)
+   */
+  objectFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
 }
 
 /**
@@ -109,6 +114,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   onLoad,
   onError,
   withTransparentBackground,
+  objectFit = 'cover',
   ...restProps
 }: ImageBaseProps) => {
   const size = sizeProp ?? minOr([widthSize, heightSize], defaultSize);
@@ -180,6 +186,9 @@ export const ImageBase: React.FC<ImageBaseProps> & {
             ref={imgRef}
             alt={alt}
             className={styles['ImageBase__img']}
+            style={{
+              objectFit,
+            }}
             crossOrigin={crossOrigin}
             decoding={decoding}
             loading={loading}

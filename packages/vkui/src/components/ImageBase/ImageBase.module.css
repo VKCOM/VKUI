@@ -40,7 +40,6 @@
   block-size: 100%;
   border: 0;
   border-radius: inherit;
-  object-fit: cover;
   visibility: hidden;
 }
 
