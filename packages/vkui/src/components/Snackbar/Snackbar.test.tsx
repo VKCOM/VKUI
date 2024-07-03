@@ -158,6 +158,17 @@ describe(Snackbar, () => {
       expect(onClose).toHaveBeenCalled();
     });
 
+    it('should have css variables with offsetY', async () => {
+      const ref: React.Ref<HTMLDivElement> = {
+        current: null,
+      };
+      render(<Snackbar onClose={onClose} getRootRef={ref} offsetY={100} />);
+      expect(ref.current).toBeTruthy();
+      expect(ref.current!.style.getPropertyValue('--vkui_internal--snackbar_offset_y')).toBe(
+        '100px',
+      );
+    });
+
     describe.each(GESTURES_JEST_EACH_TABLE)(
       'should closing with user $name manipulation',
       ({ start, move, end, fireEventOptions }) => {
