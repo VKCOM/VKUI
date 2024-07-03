@@ -216,6 +216,15 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
     [touched, open, updateShiftAxisCSSProperties, clearRAF],
   );
 
+  useIsomorphicLayoutEffect(
+    function updateCssVariableOffsetY() {
+      if (rootRef && rootRef.current && offsetY) {
+        rootRef.current.style.setProperty('--vkui_internal--snackbar_offset_y', `${offsetY}px`);
+      }
+    },
+    [rootRef, offsetY],
+  );
+
   React.useEffect(() => clearRAF, [clearRAF]);
 
   useGlobalEscKeyDown(open, close);

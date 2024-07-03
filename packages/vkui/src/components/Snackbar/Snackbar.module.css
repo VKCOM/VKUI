@@ -6,6 +6,7 @@
   --vkui_internal--snackbar_animation_from: translate3d(0, 0, 0);
   --vkui_internal--snackbar_animation_to: translate3d(0, var(--vkui_internal--snackbar_shift_y), 0);
   --vkui_internal--snackbar_animation_duration: 340ms;
+  --vkui_internal--snackbar_offset_y: 0;
 
   position: fixed;
   inset-inline: var(--vkui_internal--safe_area_inset_left)
@@ -21,7 +22,11 @@
 .Snackbar--placement-top-start,
 .Snackbar--placement-top,
 .Snackbar--placement-top-end {
-  --vkui_internal--snackbar_animation_from: translate3d(0, -100%, 0);
+  --vkui_internal--snackbar_animation_from: translate3d(
+    0,
+    calc(-100% - var(--vkui_internal--snackbar_offset_y)),
+    0
+  );
 
   inset-block-start: var(--vkui_internal--safe_area_inset_top);
 }
@@ -29,7 +34,11 @@
 .Snackbar--placement-bottom-start,
 .Snackbar--placement-bottom,
 .Snackbar--placement-bottom-end {
-  --vkui_internal--snackbar_animation_from: translate3d(0, 100%, 0);
+  --vkui_internal--snackbar_animation_from: translate3d(
+    0,
+    calc(100% + var(--vkui_internal--snackbar_offset_y)),
+    0
+  );
 
   inset-block-end: var(--vkui_internal--snackbar_safe_area_inset_bottom);
 }
