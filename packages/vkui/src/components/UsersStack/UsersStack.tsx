@@ -18,9 +18,15 @@ const stylesDirection = {
   'column': styles['UsersStack--direction-column'],
 };
 
-interface Photo {
+export type UsersStackRenderWrapperProps = {
+  key: string | number;
+  children: React.ReactElement;
+  ['data-src']: string;
+}
+
+export type UsersStackPhotos = {
   src: string;
-  renderWrapper?: (props: { children: React.ReactNode; key: string | number }) => React.ReactNode;
+  renderWrapper?: (props: UsersStackRenderWrapperProps) => React.ReactNode;
 }
 
 export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
