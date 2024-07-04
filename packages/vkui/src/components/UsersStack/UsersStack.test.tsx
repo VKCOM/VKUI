@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { getAvatarUrl } from '../../testing/mock';
 import { baselineComponent } from '../../testing/utils';
-import { UsersStack, UsersStackProps } from './UsersStack';
+import { UsersStack, type UsersStackProps } from './UsersStack';
 
 describe('UsersStack', () => {
   baselineComponent(UsersStack);
