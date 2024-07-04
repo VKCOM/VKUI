@@ -20,6 +20,12 @@
   opacity: 1;
 }
 
+@media (--hover-has) {
+  .ImageBaseOverlay:hover {
+    opacity: 1;
+  }
+}
+
 .ImageBaseOverlay--clickable {
   cursor: pointer;
 }

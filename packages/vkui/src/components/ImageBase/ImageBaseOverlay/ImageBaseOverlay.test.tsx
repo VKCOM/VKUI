@@ -11,7 +11,7 @@ const ImageBaseOverlayClickableTest = (props: Omit<ImageBaseOverlayProps, 'child
     data-testid="overlay"
     aria-label="Интерактивная Кнопка"
     {...props}
-    nonInteractive={false}
+    disableInteractive={false}
   >
     <Icon12Add />
   </ImageBaseOverlay>
@@ -20,7 +20,7 @@ const ImageBaseOverlayClickableTest = (props: Omit<ImageBaseOverlayProps, 'child
 const ImageBaseOverlayNonClickableTest = (
   props: Omit<ImageBaseOverlayProps, 'children' | 'onClick'>,
 ) => (
-  <ImageBaseOverlay data-testid="overlay" {...props} nonInteractive>
+  <ImageBaseOverlay data-testid="overlay" {...props} disableInteractive>
     <Button data-testid="button1">Button</Button>
     <Button data-testid="button2">Button</Button>
   </ImageBaseOverlay>
@@ -87,7 +87,9 @@ describe(ImageBaseOverlay, () => {
 
     it('handles onClick prop', () => {
       const handleClick = jest.fn();
-      render(<ImageBaseOverlayClickableTest onClick={handleClick} nonInteractive={undefined} />);
+      render(
+        <ImageBaseOverlayClickableTest onClick={handleClick} disableInteractive={undefined} />,
+      );
 
       fireEvent.click(screen.getByTestId('overlay'));
       expect(handleClick).toHaveBeenCalledTimes(1);

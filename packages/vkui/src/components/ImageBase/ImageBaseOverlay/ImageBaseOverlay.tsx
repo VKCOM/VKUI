@@ -9,7 +9,7 @@ import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassNam
 import { DisableClickableLockStateContext } from '../../Clickable/useState';
 import { ImageBaseContext } from '../context';
 import { validateOverlayIcon } from '../validators';
-import { useHover, useNonInteractiveOverlayProps } from './hooks';
+import { useNonInteractiveOverlayProps } from './hooks';
 import type {
   ImageBaseOverlayInteractiveProps,
   ImageBaseOverlayNonInteractiveProps,
@@ -24,7 +24,7 @@ const ImageBaseOverlayInteractive = ({
   children,
   className,
   getRootRef,
-  nonInteractive,
+  disableInteractive,
   overlayShown,
   ...restProps
 }: ImageBaseOverlayInteractiveProps & { overlayShown?: boolean }) => {
@@ -63,7 +63,7 @@ const ImageBaseOverlayInteractive = ({
 const ImageBaseOverlayNonInteractive = ({
   className,
   getRootRef,
-  nonInteractive,
+  disableInteractive,
   overlayShown: overlayShownProps,
   ...restProps
 }: ImageBaseOverlayNonInteractiveProps & { overlayShown?: boolean }) => {
@@ -98,7 +98,6 @@ export const ImageBaseOverlay = ({
   const hasPointer = useAdaptivityHasPointer();
   const theme = themeProp ?? appearance;
   const visibility = visibilityProp ?? (hasPointer ? 'on-hover' : 'always');
-  const { hovered, ...hoverHandlers } = useHover();
 
   const commonClassNames = classNames(
     styles['ImageBaseOverlay'],
@@ -108,12 +107,12 @@ export const ImageBaseOverlay = ({
   );
 
   const commonProps = {
-    ...hoverHandlers,
     className: commonClassNames,
-    overlayShown: visibility === 'always' || (visibility === 'on-hover' && hovered),
+    overlayShown: visibility === 'always',
   };
 
-  if (restProps.nonInteractive) {
+  // Не делаем деструктуризация пропа, потому что Typescript не вывозит
+  if (restProps.disableInteractive) {
     return <ImageBaseOverlayNonInteractive {...restProps} {...commonProps} />;
   }
 

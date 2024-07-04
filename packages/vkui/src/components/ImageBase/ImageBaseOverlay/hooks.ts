@@ -24,20 +24,3 @@ export function useNonInteractiveOverlayProps(rootRef: React.MutableRefObject<HT
     onClick,
   };
 }
-
-export function useHover() {
-  const [hovered, setHovered] = React.useState(false);
-
-  const onPointerEnter: React.PointerEventHandler<unknown> = (e) => {
-    if (e.pointerType === 'touch') {
-      return;
-    }
-    setHovered(true);
-  };
-
-  const onPointerLeave = () => {
-    setHovered(false);
-  };
-
-  return { hovered, onPointerEnter, onPointerLeave };
-}

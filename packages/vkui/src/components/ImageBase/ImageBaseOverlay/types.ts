@@ -42,7 +42,7 @@ export interface ImageBaseOverlayInteractiveProps extends ImageBaseOverlayCommon
    * > использовали иконку.
    */
   children: React.ReactElement<ImageBaseExpectedIconProps>;
-  nonInteractive?: false;
+  disableInteractive?: false;
 }
 
 export interface ImageBaseOverlayNonInteractiveProps extends ImageBaseOverlayCommonProps {
@@ -52,7 +52,7 @@ export interface ImageBaseOverlayNonInteractiveProps extends ImageBaseOverlayCom
    *
    * TODO [>=7]: для определения интерактивности завязываться на св-во `onClick`
    */
-  nonInteractive: true;
+  disableInteractive: true;
   onClick?: undefined;
   children: React.ReactNode;
 }
