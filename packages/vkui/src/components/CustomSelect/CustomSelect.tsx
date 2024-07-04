@@ -637,16 +637,13 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     y: React.MouseEvent['clientY'];
   }>({ x: 0, y: 0 });
   const focusOptionOnMouseMove = React.useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
+    (e: React.MouseEvent<HTMLElement>, index: number) => {
       const isMouseChangedPosition =
         Math.abs(prevMousePositionRef.current.x - e.clientX) >= 1 ||
         Math.abs(prevMousePositionRef.current.y - e.clientY) >= 1;
 
       if (isMouseChangedPosition) {
-        focusOptionByIndex(
-          Array.prototype.indexOf.call(e.currentTarget.parentNode?.children, e.currentTarget),
-          false,
-        );
+        focusOptionByIndex(index, false);
       }
 
       prevMousePositionRef.current = { x: e.clientX, y: e.clientY };
@@ -677,7 +674,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
             // Причём координаты события меняются на пару пикселей по сравнению с прошлым вызовом,
             // а значит нельзя на них опираться, чтобы запретить обработку такого события.
             // C mousemove такой проблемы нет, что позволяет реализовать поведение при наведении с клавиатуры и при наведении мышью идентично `<select>`.
-            onMouseMove: focusOptionOnMouseMove,
+            onMouseMove: (e) => focusOptionOnMouseMove(e, index),
             id: `${popupAriaId}-${option.value}`,
           })}
         </React.Fragment>
