@@ -3,20 +3,20 @@
 У компонента есть вертикальный режим – когда текст располагается под аватарками. В таком режиме рекомендуется использовать размер `m`.
 
 ```jsx
-const AvatarWrapper = ({ children, key, className }) => {
+const AvatarWrapper = (props) => {
   const user = getRandomUser();
 
   return (
     <Tooltip text={`${user.first_name} ${user.last_name}`}>
       <div
-        key={key}
+        key={props.key}
         style={{
           cursor: 'pointer',
         }}
-        className={className}
-        onClick={() => window.open(src, '_blank')}
+        className={props.className}
+        onClick={() => window.open(props['data-src'], '_blank')}
       >
-        {children}
+        {props.children}
       </div>
     </Tooltip>
   );
