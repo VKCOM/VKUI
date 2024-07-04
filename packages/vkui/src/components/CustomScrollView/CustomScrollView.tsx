@@ -27,7 +27,7 @@ const overscrollBehaviorClassNames = {
   auto: undefined,
   contain: styles['CustomScrollView__box--overscrollBehavior-contain'],
   none: styles['CustomScrollView__box--overscrollBehavior-none'],
-}
+};
 
 export interface CustomScrollViewProps
   extends React.AllHTMLAttributes<HTMLDivElement>,
