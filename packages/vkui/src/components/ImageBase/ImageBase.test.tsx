@@ -5,6 +5,7 @@ import {
 } from '../../testing/icons';
 import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
 import { ImageBase, ImageBaseProps } from './ImageBase';
+import styles from './ImageBase.module.css';
 
 const TEST_LOCATORS = {
   ROOT: 'image-base',
@@ -34,8 +35,17 @@ describe(ImageBase, () => {
   });
 
   it('should have style objectFit ', () => {
-    render(<ImageBaseTest src="#" objectFit="fill" />);
-    expect(getImageBaseImgEl().style.objectFit).toBe('fill');
+    const { rerender } = render(<ImageBaseTest src="#" objectFit="contain" />);
+    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--objectFit-contain']);
+
+    rerender(<ImageBaseTest src="#" objectFit="cover" />);
+    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--objectFit-cover']);
+
+    rerender(<ImageBaseTest src="#" objectFit="none" />);
+    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--objectFit-none']);
+
+    rerender(<ImageBaseTest src="#" objectFit="scale-down" />);
+    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--objectFit-scaleDown']);
   });
 
   it('should show fallback icon if `src` is not passed', () => {

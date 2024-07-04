@@ -84,6 +84,20 @@ export interface ImageBaseProps
   objectFit?: React.CSSProperties['objectFit'];
 }
 
+const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
+  switch (objectFit) {
+    case 'contain':
+      return styles['ImageBase__img--objectFit-contain'];
+    case 'cover':
+      return styles['ImageBase__img--objectFit-cover'];
+    case 'none':
+      return styles['ImageBase__img--objectFit-none'];
+    case 'scale-down':
+      return styles['ImageBase__img--objectFit-scaleDown'];
+  }
+  return undefined;
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/ImageBase
  */
@@ -185,10 +199,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
           <img
             ref={imgRef}
             alt={alt}
-            className={styles['ImageBase__img']}
-            style={{
-              objectFit,
-            }}
+            className={classNames(styles['ImageBase__img'], getObjectFitClassName(objectFit))}
             crossOrigin={crossOrigin}
             decoding={decoding}
             loading={loading}
