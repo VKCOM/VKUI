@@ -3,7 +3,7 @@
 У компонента есть вертикальный режим – когда текст располагается под аватарками. В таком режиме рекомендуется использовать размер `m`.
 
 ```jsx
-const AvatarWrapper = ({ children, src, key }) => {
+const AvatarWrapper = ({ children, key, className }) => {
   const user = getRandomUser();
 
   return (
@@ -13,6 +13,7 @@ const AvatarWrapper = ({ children, src, key }) => {
         style={{
           cursor: 'pointer',
         }}
+        className={className}
         onClick={() => window.open(src, '_blank')}
       >
         {children}
@@ -107,16 +108,13 @@ const App = () => {
           <Div>
             <UsersStack
               photos={[
-                getAvatarUrl('user_ox'),
-                getAvatarUrl('user_vitalyavolyn'),
-                getAvatarUrl('user_eee'),
-                getAvatarUrl('user_wayshev'),
-                getAvatarUrl('user_arthurstam'),
-                getAvatarUrl('user_xyz'),
-              ].map((src) => ({
-                src,
-                renderWrapper: (props) => <AvatarWrapper {...props} src={src} />,
-              }))}
+                { src: getAvatarUrl('user_ox'), renderWrapper: AvatarWrapper },
+                { src: getAvatarUrl('user_vitalyavolyn'), renderWrapper: AvatarWrapper },
+                { src: getAvatarUrl('user_eee'), renderWrapper: AvatarWrapper },
+                { src: getAvatarUrl('user_wayshev'), renderWrapper: AvatarWrapper },
+                { src: getAvatarUrl('user_arthurstam'), renderWrapper: AvatarWrapper },
+                { src: getAvatarUrl('user_xyz'), renderWrapper: AvatarWrapper },
+              ]}
               size="l"
               direction="column"
             >

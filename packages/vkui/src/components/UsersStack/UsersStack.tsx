@@ -22,28 +22,20 @@ export type UsersStackRenderWrapperProps = {
   key: string | number;
   children: React.ReactElement;
   ['data-src']: string;
-}
+  className: string;
+};
 
-export type UsersStackPhotos = {
+export type UsersStackPhoto = {
   src: string;
-  renderWrapper?: (props: UsersStackRenderWrapperProps) => React.ReactNode;
-}
+  renderWrapper?: (props: UsersStackRenderWrapperProps) => React.ReactElement;
+};
 
 export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Массив ссылок на фотографии либо массив структур вида:
-   *
-   * ```
-   * {
-   *   src: string,
-   *   renderWrapper?: (props: {
-   *     children: ReactNode;
-   *     key: string | number
-   *   }) => ReactNode;
-   * }
+   * Массив ссылок на фотографии либо массив структур типа `UsersStackPhoto`:
    * ```
    */
-  photos?: string[] | Photo[];
+  photos?: string[] | UsersStackPhoto[];
   /**
    * Размер аватарок
    */
@@ -134,6 +126,14 @@ const photoSizes: Record<NonNullable<UsersStackProps['size']>, PhotoSizeType> = 
   l: 32,
 };
 
+const PhotoWrapper = (props: UsersStackRenderWrapperProps) => {
+  return (
+    <div className={props.className} key={props.key}>
+      {props.children}
+    </div>
+  );
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/UsersStack
  */
@@ -161,15 +161,11 @@ export const UsersStack = ({
     const hrefID = `#${id}`;
     const maskID = `UsersStackMask${cmpId}${i}`;
 
-    const photoSrc = typeof photo === 'object' ? photo.src : photo;
+    const isPhotoType = typeof photo === 'object';
+    const photoSrc = isPhotoType ? photo.src : photo;
 
     const photoElement = (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className={styles['UsersStack__photo']}
-        key={i}
-        aria-hidden
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" className={styles['UsersStack__photo']} aria-hidden>
         <defs>
           <PathElement id={id} direction={direction} photoSize={photoSize} />
         </defs>
@@ -184,23 +180,25 @@ export const UsersStack = ({
       </svg>
     );
 
-    if (typeof photo === 'object' && photo.renderWrapper) {
-      return photo.renderWrapper({
-        children: photoElement,
-        key: i,
-      });
-    }
-    return photoElement;
+    const wrapperRender = (isPhotoType && photo.renderWrapper) || PhotoWrapper;
+    return wrapperRender({
+      'children': photoElement,
+      'key': i,
+      'data-src': photoSrc,
+      'className': styles['UsersStack__photoWrapper'],
+    });
   });
 
   const othersElement = canShowOthers ? (
-    <CounterTypography
-      caps
-      weight="1"
-      className={classNames(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
-    >
-      +{count}
-    </CounterTypography>
+    <div className={styles['UsersStack__photoWrapper']}>
+      <CounterTypography
+        caps
+        weight="1"
+        className={classNames(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
+      >
+        +{count}
+      </CounterTypography>
+    </div>
   ) : null;
 
   return (
