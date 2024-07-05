@@ -3,12 +3,14 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { stopPropagation } from '../../lib/utils';
 import type { HasRootRef } from '../../types';
-import { TrackerOptionsProps, useTrackerVisibility } from './useTrackerVisibility';
+import { useCustomScrollViewResize } from './useCustomScrollViewResize';
+import { useDetectScrollDirection } from './useDetectScrollDirection';
+import { useHorizontalScrollController } from './useHorizontalScrollController';
+import { TrackerOptionsProps } from './useTrackerVisibility';
+import { useVerticalScrollController } from './useVerticalScrollController';
 import styles from './CustomScrollView.module.css';
 
 function hasPointerClassName(hasPointer: boolean | undefined) {
@@ -41,136 +43,87 @@ export const CustomScrollView = ({
   windowResize,
   autoHideScrollbar = false,
   autoHideScrollbarDelay,
-  onScroll,
+  onScroll: onScrollProp,
   getRootRef,
   ...restProps
 }: CustomScrollViewProps): React.ReactNode => {
-  const { document, window } = useDOM();
+  const { document } = useDOM();
   const { hasPointer } = useAdaptivity();
-
-  const ratio = React.useRef(NaN);
-  const lastTrackerTop = React.useRef(0);
-  const clientHeight = React.useRef(0);
-  const trackerHeight = React.useRef(0);
-  const scrollHeight = React.useRef(0);
-  const transformProp = React.useRef('');
-  const startY = React.useRef(0);
-  const trackerTop = React.useRef(0);
+  const [pressedBar, setPressedBar] = React.useState<'vertical' | 'horizontal' | null>(null);
 
   const boxRef = useExternRef(externalBoxRef);
   const boxContentRef = React.useRef<HTMLDivElement>(null);
 
-  const barY = React.useRef<HTMLDivElement>(null);
-  const trackerY = React.useRef<HTMLDivElement>(null);
+  const {
+    trackerVisible: verticalTrackerVisible,
+    barRef: barY,
+    trackerRef: trackerY,
+    onResize: verticalScrollResize,
+    onScroll: verticalScroll,
+    onDragStart: onVerticalDragStart,
+    onMove: onVerticalMove,
+    onUp: onVerticalUp,
+    onTrackerMouseEnter: onVerticalTrackerMouseEnter,
+    onTrackerMouseLeave: onVerticalTrackerMouseLeave,
+  } = useVerticalScrollController(boxRef, autoHideScrollbar, autoHideScrollbarDelay);
 
-  const setTrackerPosition = (scrollTop: number) => {
-    lastTrackerTop.current = scrollTop;
-    if (trackerY.current !== null) {
-      (trackerY.current.style as any)[transformProp.current] = `translate(0, ${scrollTop}px)`;
-    }
-  };
+  const {
+    trackerVisible: horizontalTrackerVisible,
+    barRef: barX,
+    trackerRef: trackerX,
+    onResize: horizontalScrollResize,
+    onScroll: horizontalScroll,
+    onDragStart: onHorizontalDragStart,
+    onMove: onHorizontalMove,
+    onUp: onHorizontalUp,
+    onTrackerMouseEnter: onHorizontalTrackerMouseEnter,
+    onTrackerMouseLeave: onHorizontalTrackerMouseLeave,
+  } = useHorizontalScrollController(boxRef, autoHideScrollbar, autoHideScrollbarDelay);
 
-  const setTrackerPositionFromScroll = (scrollTop: number) => {
-    const progress = scrollTop / (scrollHeight.current - clientHeight.current);
-    setTrackerPosition((clientHeight.current - trackerHeight.current) * progress);
-  };
+  const scrollDirection = useDetectScrollDirection(boxRef);
 
-  const resize = () => {
-    if (!boxRef.current || !barY.current || !trackerY.current) {
+  useCustomScrollViewResize({
+    windowResize,
+    boxContentRef,
+    onResize: () => {
+      verticalScrollResize();
+      horizontalScrollResize();
+    },
+  });
+
+  const onUp = (e: MouseEvent) => {
+    if (!scrollDirection) {
       return;
     }
-    const localClientHeight = boxRef.current.clientHeight;
-    const localScrollHeight = boxRef.current.scrollHeight;
-    const localRatio = localClientHeight / localScrollHeight;
-    const localTrackerHeight = Math.max(localClientHeight * localRatio, 40);
-
-    ratio.current = localRatio;
-    clientHeight.current = localClientHeight;
-    scrollHeight.current = localScrollHeight;
-    trackerHeight.current = localTrackerHeight;
-
-    if (localRatio >= 1) {
-      barY.current.style.display = 'none';
+    e.preventDefault();
+    if (scrollDirection === 'vertical') {
+      onVerticalUp();
     } else {
-      barY.current.style.display = '';
-      trackerY.current.style.height = `${localTrackerHeight}px`;
-      setTrackerPositionFromScroll(boxRef.current.scrollTop);
+      onHorizontalUp();
     }
-  };
-
-  const resizeHandler = useEventListener('resize', resize);
-
-  useIsomorphicLayoutEffect(() => {
-    if (windowResize && window) {
-      resizeHandler.add(window);
-    }
-  }, [windowResize, window]);
-
-  useResizeObserver(boxContentRef, resize);
-
-  useIsomorphicLayoutEffect(() => {
-    let style = trackerY.current?.style;
-    let prop = '';
-    if (style !== undefined) {
-      if ('transform' in style) {
-        prop = 'transform';
-      } else if ('webkitTransform' in style) {
-        prop = 'webkitTransform';
-      }
-    }
-    transformProp.current = prop;
-  }, []);
-
-  useIsomorphicLayoutEffect(resize);
-
-  const setScrollPositionFromTracker = (trackerTop: number) => {
-    const progress = trackerTop / (clientHeight.current - trackerHeight.current);
-    if (boxRef.current !== null) {
-      boxRef.current.scrollTop = (scrollHeight.current - clientHeight.current) * progress;
-    }
+    setPressedBar(null);
+    unsubscribe();
   };
 
   const onMove = (e: MouseEvent) => {
     e.preventDefault();
-    const diff = e.clientY - startY.current;
-    const position = Math.min(
-      Math.max(trackerTop.current + diff, 0),
-      clientHeight.current - trackerHeight.current,
-    );
-
-    setScrollPositionFromTracker(position);
-  };
-
-  const {
-    trackerVisible,
-    onTargetScroll,
-    onTrackerDragStart,
-    onTrackerDragStop,
-    onTrackerMouseEnter,
-    onTrackerMouseLeave,
-  } = useTrackerVisibility(autoHideScrollbar, autoHideScrollbarDelay);
-
-  const onUp = (e: MouseEvent) => {
-    e.preventDefault();
-
-    if (autoHideScrollbar) {
-      onTrackerDragStop();
+    if (pressedBar === 'vertical') {
+      onVerticalMove(e);
+    } else {
+      onHorizontalMove(e);
     }
-
-    unsubscribe();
   };
 
-  const scroll = (event: React.UIEvent<HTMLDivElement>) => {
-    if (ratio.current >= 1 || !boxRef.current) {
+  const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    if (!scrollDirection) {
       return;
     }
-
-    if (autoHideScrollbar) {
-      onTargetScroll();
+    if (scrollDirection === 'horizontal') {
+      horizontalScroll();
+    } else {
+      verticalScroll();
     }
-
-    setTrackerPositionFromScroll(boxRef.current.scrollTop);
-    onScroll?.(event);
+    onScrollProp?.(event);
   };
 
   const listeners = [useEventListener('mousemove', onMove), useEventListener('mouseup', onUp)];
@@ -185,13 +138,13 @@ export const CustomScrollView = ({
     listeners.forEach((l) => l.remove());
   }
 
-  const onDragStart = (e: React.MouseEvent) => {
+  const onDragStart = (e: React.MouseEvent, isVertical: boolean) => {
     e.preventDefault();
-    startY.current = e.clientY;
-    trackerTop.current = lastTrackerTop.current;
-
-    if (autoHideScrollbar) {
-      onTrackerDragStart();
+    setPressedBar(isVertical ? 'vertical' : 'horizontal');
+    if (isVertical) {
+      onVerticalDragStart(e);
+    } else {
+      onHorizontalDragStart(e);
     }
 
     subscribe(document);
@@ -203,7 +156,12 @@ export const CustomScrollView = ({
       ref={getRootRef}
       {...restProps}
     >
-      <div className={styles['CustomScrollView__box']} tabIndex={-1} ref={boxRef} onScroll={scroll}>
+      <div
+        className={styles['CustomScrollView__box']}
+        tabIndex={-1}
+        ref={boxRef}
+        onScroll={onScroll}
+      >
         <div ref={boxContentRef} className={styles['CustomScrollView__box-content']}>
           {children}
         </div>
@@ -213,12 +171,24 @@ export const CustomScrollView = ({
         <div
           className={classNames(
             styles['CustomScrollView__trackerY'],
-            !trackerVisible && styles['CustomScrollView__trackerY--hidden'],
+            !verticalTrackerVisible && styles['CustomScrollView__trackerY--hidden'],
           )}
-          onMouseEnter={autoHideScrollbar ? onTrackerMouseEnter : undefined}
-          onMouseLeave={autoHideScrollbar ? onTrackerMouseLeave : undefined}
+          onMouseEnter={autoHideScrollbar ? onVerticalTrackerMouseEnter : undefined}
+          onMouseLeave={autoHideScrollbar ? onVerticalTrackerMouseLeave : undefined}
           ref={trackerY}
-          onMouseDown={onDragStart}
+          onMouseDown={(e) => onDragStart(e, true)}
+        />
+      </div>
+      <div className={styles['CustomScrollView__barX']} ref={barX} onClick={stopPropagation}>
+        <div
+          className={classNames(
+            styles['CustomScrollView__trackerX'],
+            !horizontalTrackerVisible && styles['CustomScrollView__trackerX--hidden'],
+          )}
+          onMouseEnter={autoHideScrollbar ? onHorizontalTrackerMouseEnter : undefined}
+          onMouseLeave={autoHideScrollbar ? onHorizontalTrackerMouseLeave : undefined}
+          ref={trackerX}
+          onMouseDown={(e) => onDragStart(e, false)}
         />
       </div>
     </div>
