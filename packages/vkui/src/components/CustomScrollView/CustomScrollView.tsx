@@ -34,6 +34,9 @@ export interface CustomScrollViewProps
   className?: HTMLDivElement['className'];
   onScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
   children: React.ReactNode;
+  /**
+   * Включение замены горизонтального скролла
+   */
   enableHorizontalScroll?: boolean;
 }
 
