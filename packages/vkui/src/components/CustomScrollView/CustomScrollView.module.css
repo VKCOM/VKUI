@@ -10,8 +10,12 @@
   inline-size: 100%;
   block-size: 100%;
   overflow-y: scroll;
-  overflow-x: scroll;
+  overflow-x: hidden;
   position: relative;
+}
+
+.CustomScrollView__box--horizontalEnabled {
+  overflow-x: scroll;
 }
 
 .CustomScrollView__box-content {

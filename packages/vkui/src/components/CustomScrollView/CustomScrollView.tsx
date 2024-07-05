@@ -34,6 +34,7 @@ export interface CustomScrollViewProps
   className?: HTMLDivElement['className'];
   onScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
   children: React.ReactNode;
+  enableHorizontalScroll?: boolean;
 }
 
 export const CustomScrollView = ({
@@ -43,6 +44,7 @@ export const CustomScrollView = ({
   windowResize,
   autoHideScrollbar = false,
   autoHideScrollbarDelay,
+  enableHorizontalScroll = false,
   onScroll: onScrollProp,
   getRootRef,
   ...restProps
@@ -157,7 +159,10 @@ export const CustomScrollView = ({
       {...restProps}
     >
       <div
-        className={styles['CustomScrollView__box']}
+        className={classNames(
+          styles['CustomScrollView__box'],
+          enableHorizontalScroll && styles['CustomScrollView__box--horizontalEnabled'],
+        )}
         tabIndex={-1}
         ref={boxRef}
         onScroll={onScroll}
@@ -179,18 +184,20 @@ export const CustomScrollView = ({
           onMouseDown={(e) => onDragStart(e, true)}
         />
       </div>
-      <div className={styles['CustomScrollView__barX']} ref={barX} onClick={stopPropagation}>
-        <div
-          className={classNames(
-            styles['CustomScrollView__trackerX'],
-            !horizontalTrackerVisible && styles['CustomScrollView__trackerX--hidden'],
-          )}
-          onMouseEnter={autoHideScrollbar ? onHorizontalTrackerMouseEnter : undefined}
-          onMouseLeave={autoHideScrollbar ? onHorizontalTrackerMouseLeave : undefined}
-          ref={trackerX}
-          onMouseDown={(e) => onDragStart(e, false)}
-        />
-      </div>
+      {enableHorizontalScroll && (
+        <div className={styles['CustomScrollView__barX']} ref={barX} onClick={stopPropagation}>
+          <div
+            className={classNames(
+              styles['CustomScrollView__trackerX'],
+              !horizontalTrackerVisible && styles['CustomScrollView__trackerX--hidden'],
+            )}
+            onMouseEnter={autoHideScrollbar ? onHorizontalTrackerMouseEnter : undefined}
+            onMouseLeave={autoHideScrollbar ? onHorizontalTrackerMouseLeave : undefined}
+            ref={trackerX}
+            onMouseDown={(e) => onDragStart(e, false)}
+          />
+        </div>
+      )}
     </div>
   );
 };
