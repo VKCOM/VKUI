@@ -9,11 +9,9 @@ const AvatarWrapper = (props) => {
   return (
     <Tooltip text={`${user.first_name} ${user.last_name}`}>
       <div
-        key={props.key}
         style={{
           cursor: 'pointer',
         }}
-        className={props.className}
         onClick={() => window.open(props['data-src'], '_blank')}
       >
         {props.children}
