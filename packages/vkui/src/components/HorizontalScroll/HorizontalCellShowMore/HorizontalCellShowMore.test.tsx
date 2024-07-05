@@ -30,10 +30,10 @@ describe('HorizontalCellShowMore', () => {
     expect(screen.queryByText('Показать все')).toBeFalsy();
   });
 
-  it('should have specific className when stretched=true', () => {
-    const component = render(<HorizontalCellShowMore data-testid="show-more" stretched={true} />);
+  it('should have specific className when centered=true', () => {
+    const component = render(<HorizontalCellShowMore data-testid="show-more" centered={true} />);
     expect(component.getByTestId('show-more').parentElement).toHaveClass(
-      styles['HorizontalCellShowMore--stretched'],
+      styles['HorizontalCellShowMore--centered'],
     );
   });
 });
