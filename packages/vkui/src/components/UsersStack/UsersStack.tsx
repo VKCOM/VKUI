@@ -155,7 +155,7 @@ export const UsersStack = ({
     const photoSrc = isPhotoType ? photo.src : photo;
 
     let photoElement = (
-      <svg xmlns="http://www.w3.org/2000/svg" className={styles['UsersStack__photo']} aria-hidden>
+      <svg xmlns="http://www.w3.org/2000/svg" className={styles['UsersStack__photo']} aria-hidden display="block">
         <defs>
           <PathElement id={id} direction={direction} photoSize={photoSize} />
         </defs>
