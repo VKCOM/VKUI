@@ -45,6 +45,7 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     after,
     mode,
     maxHeight,
+    getSelectInputRef,
     ...restProps
   } = props;
 
