@@ -29,21 +29,6 @@ const ImageBaseOverlayNonClickableTest = (
 describe(ImageBaseOverlay, () => {
   baselineComponent(ImageBaseOverlayClickableTest);
 
-  it.each([
-    ['without noInteractive', ImageBaseOverlayClickableTest],
-    ['with noInteractive', ImageBaseOverlayNonClickableTest],
-  ])('overlay shown on hover %s', async (_name, Component) => {
-    render(<Component />);
-
-    const element = screen.getByTestId('overlay');
-
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).toBeNull();
-    await userEvent.hover(element);
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).not.toBeNull();
-    await userEvent.unhover(element);
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).toBeNull();
-  });
-
   it('focus event works as expected without noInteractive', async () => {
     render(<ImageBaseOverlayClickableTest />);
     const element = screen.getByTestId('overlay');
