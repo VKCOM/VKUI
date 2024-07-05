@@ -19,10 +19,8 @@ const stylesDirection = {
 };
 
 export type UsersStackRenderWrapperProps = {
-  key: string | number;
   children: React.ReactElement;
   ['data-src']: string;
-  className: string;
 };
 
 export type UsersStackPhoto = {
@@ -126,14 +124,6 @@ const photoSizes: Record<NonNullable<UsersStackProps['size']>, PhotoSizeType> = 
   l: 32,
 };
 
-const PhotoWrapper = (props: UsersStackRenderWrapperProps) => {
-  return (
-    <div className={props.className} key={props.key}>
-      {props.children}
-    </div>
-  );
-};
-
 /**
  * @see https://vkcom.github.io/VKUI/#/UsersStack
  */
@@ -164,7 +154,7 @@ export const UsersStack = ({
     const isPhotoType = typeof photo === 'object';
     const photoSrc = isPhotoType ? photo.src : photo;
 
-    const photoElement = (
+    let photoElement = (
       <svg xmlns="http://www.w3.org/2000/svg" className={styles['UsersStack__photo']} aria-hidden>
         <defs>
           <PathElement id={id} direction={direction} photoSize={photoSize} />
@@ -179,14 +169,18 @@ export const UsersStack = ({
         </g>
       </svg>
     );
+    if (isPhotoType && photo.renderWrapper) {
+      photoElement = photo.renderWrapper({
+        'children': photoElement,
+        'data-src': photoSrc,
+      });
+    }
 
-    const wrapperRender = (isPhotoType && photo.renderWrapper) || PhotoWrapper;
-    return wrapperRender({
-      'children': photoElement,
-      'key': i,
-      'data-src': photoSrc,
-      'className': styles['UsersStack__photoWrapper'],
-    });
+    return (
+      <div className={styles['UsersStack__photoWrapper']} key={i}>
+        {photoElement}
+      </div>
+    );
   });
 
   const othersElement = canShowOthers ? (

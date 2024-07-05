@@ -15,11 +15,7 @@ describe('UsersStack', () => {
 
     const photos: UsersStackProps['photos'] = avatarsUrls.map((src, index) => ({
       src,
-      renderWrapper: ({ children, key }) => (
-        <div data-testid={`wrapper-${index}`} key={key}>
-          {children}
-        </div>
-      ),
+      renderWrapper: ({ children }) => <div data-testid={`wrapper-${index}`}>{children}</div>,
     }));
 
     const result = render(
