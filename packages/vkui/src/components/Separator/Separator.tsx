@@ -7,14 +7,14 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
   /**
    * Стиль отображения компонента
    */
-  mode: 'primary' | 'secondary' | 'primary-alpha';
+  mode?: 'primary' | 'secondary' | 'primary-alpha';
   /**
    * С этим свойством компонент не будет иметь отступы слева и справа
    */
   wide?: boolean;
 }
 
-const modeClassNames: Record<SeparatorProps['mode'], string> = {
+const modeClassNames: Record<Exclude<SeparatorProps['mode'], undefined>, string> = {
   'primary': styles['Separator--mode-primary'],
   'secondary': styles['Separator--mode-secondary'],
   'primary-alpha': styles['Separator--mode-primaryAlpha'],
@@ -31,7 +31,6 @@ export const Separator = ({
   <RootComponent
     {...restProps}
     baseClassName={classNames(
-      styles['Separator'],
       !wide && styles['Separator--padded'],
       modeClassNames[mode],
     )}
