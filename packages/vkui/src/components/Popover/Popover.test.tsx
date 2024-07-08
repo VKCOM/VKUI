@@ -1,8 +1,9 @@
 'use no memo';
 
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
+import { Button } from '../Button/Button';
 import { Popover, type PopoverProps } from './Popover';
 import styles from './Popover.module.css';
 
@@ -216,5 +217,31 @@ describe(Popover, () => {
 
     expect(result.getByTestId('popover')).toBeInTheDocument();
     expect(result.getByTestId('popover').parentElement).toHaveClass(styles['Popover--hidden']);
+  });
+
+  it('check click on anchor element should open Popover', async () => {
+    const anchorRef: React.RefObject<HTMLButtonElement> = {
+      current: null,
+    };
+    render(
+      <>
+        <Button data-testid="open-button" getRootRef={anchorRef}>
+          Open
+        </Button>
+        <Popover
+          trigger="click"
+          defaultShown={false}
+          content="Some popover"
+          data-testid="popover"
+          anchorRef={anchorRef}
+        />
+      </>,
+    );
+
+    expect(() => screen.getByTestId('popover')).toThrow();
+
+    fireEvent.click(screen.getByTestId('open-button'));
+
+    expect(screen.getByTestId('popover')).toBeInTheDocument();
   });
 });
