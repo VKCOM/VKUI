@@ -25,6 +25,12 @@ function hasPointerClassName(hasPointer: boolean | undefined) {
   }
 }
 
+const overscrollBehaviorClassNames = {
+  auto: undefined,
+  contain: styles['CustomScrollView__box--overscrollBehavior-contain'],
+  none: styles['CustomScrollView__box--overscrollBehavior-none'],
+};
+
 export interface CustomScrollViewProps
   extends React.AllHTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement>,
@@ -34,6 +40,10 @@ export interface CustomScrollViewProps
   className?: HTMLDivElement['className'];
   onScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
   children: React.ReactNode;
+  /**
+   * Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior)
+   */
+  overscrollBehavior?: 'auto' | 'contain' | 'none';
   /**
    * Включение замены горизонтального скролла
    */
@@ -50,6 +60,7 @@ export const CustomScrollView = ({
   enableHorizontalScroll = false,
   onScroll: onScrollProp,
   getRootRef,
+  overscrollBehavior = 'auto',
   ...restProps
 }: CustomScrollViewProps): React.ReactNode => {
   const { document } = useDOM();
@@ -165,6 +176,7 @@ export const CustomScrollView = ({
         className={classNames(
           styles['CustomScrollView__box'],
           enableHorizontalScroll && styles['CustomScrollView__box--horizontalEnabled'],
+          overscrollBehaviorClassNames[overscrollBehavior],
         )}
         tabIndex={-1}
         ref={boxRef}
