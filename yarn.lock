@@ -5404,7 +5404,7 @@ __metadata:
     autoprefixer: ^10.4.19
     concurrently: ^8.2.2
     cross-env: ^7.0.3
-    css-loader: ^6.10.0
+    css-loader: ^7.1.2
     css-minimizer-webpack-plugin: ^7.0.0
     cssnano: ^7.0.3
     dotenv: ^16.4.5
@@ -5442,7 +5442,7 @@ __metadata:
     semver: ^7.6.2
     shx: ^0.3.4
     size-limit: ^11.1.4
-    style-loader: ^3.3.4
+    style-loader: ^4.0.0
     stylelint: ^16.6.1
     stylelint-config-standard: ^36.0.1
     stylelint-media-use-custom-media: ^4.0.0
@@ -5457,7 +5457,7 @@ __metadata:
     typescript-plugin-css-modules: ^5.1.0
     webpack: ^5.91.0
     webpack-cli: ^5.1.4
-    webpack-merge: ^5.10.0
+    webpack-merge: ^6.0.1
     yargs: ^17.7.2
   languageName: unknown
   linkType: soft
@@ -7651,7 +7651,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^6.10.0, css-loader@npm:^6.7.1":
+"css-loader@npm:^6.7.1":
   version: 6.11.0
   resolution: "css-loader@npm:6.11.0"
   dependencies:
@@ -7675,7 +7675,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^7.1.1":
+"css-loader@npm:^7.1.1, css-loader@npm:^7.1.2":
   version: 7.1.2
   resolution: "css-loader@npm:7.1.2"
   dependencies:
@@ -17471,7 +17471,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"style-loader@npm:^3.3.1, style-loader@npm:^3.3.4":
+"style-loader@npm:^3.3.1":
   version: 3.3.4
   resolution: "style-loader@npm:3.3.4"
   peerDependencies:
@@ -19008,7 +19008,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-merge@npm:^5.10.0, webpack-merge@npm:^5.7.3":
+"webpack-merge@npm:^5.7.3":
   version: 5.10.0
   resolution: "webpack-merge@npm:5.10.0"
   dependencies:
@@ -19016,6 +19016,17 @@ __metadata:
     flat: ^5.0.2
     wildcard: ^2.0.0
   checksum: 1fe8bf5309add7298e1ac72fb3f2090e1dfa80c48c7e79fa48aa60b5961332c7d0d61efa8851acb805e6b91a4584537a347bc106e05e9aec87fa4f7088c62f2f
+  languageName: node
+  linkType: hard
+
+"webpack-merge@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "webpack-merge@npm:6.0.1"
+  dependencies:
+    clone-deep: ^4.0.1
+    flat: ^5.0.2
+    wildcard: ^2.0.1
+  checksum: e8a604c686b944605a1c57cc7b75e886ab902dc5ffdd15259a092c5c2dd5f58868fe39f995ea4bad4f189e38843b061c4ae1eb22822d7169813f4adab571dc3d
   languageName: node
   linkType: hard
 
@@ -19232,7 +19243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wildcard@npm:^2.0.0":
+"wildcard@npm:^2.0.0, wildcard@npm:^2.0.1":
   version: 2.0.1
   resolution: "wildcard@npm:2.0.1"
   checksum: e0c60a12a219e4b12065d1199802d81c27b841ed6ad6d9d28240980c73ceec6f856771d575af367cbec2982d9ae7838759168b551776577f155044f5a5ba843c
