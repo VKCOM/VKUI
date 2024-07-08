@@ -41,7 +41,7 @@ export const GridAvatar: React.FC<GridAvatarProps> & { Badge: typeof GridAvatarB
         {src.map((url, index) =>
           index < MAX_GRID_LENGTH ? (
             <div
-              key={url}
+              key={index}
               className={styles['GridAvatar__item']}
               style={{ backgroundImage: `url(${url})` }}
             />
