@@ -40,8 +40,23 @@
   block-size: 100%;
   border: 0;
   border-radius: inherit;
-  object-fit: cover;
   visibility: hidden;
+}
+
+.ImageBase__img--objectFit-contain {
+  object-fit: contain;
+}
+
+.ImageBase__img--objectFit-cover {
+  object-fit: cover;
+}
+
+.ImageBase__img--objectFit-none {
+  object-fit: none;
+}
+
+.ImageBase__img--objectFit-scaleDown {
+  object-fit: scale-down;
 }
 
 .ImageBase--loaded .ImageBase__img {
