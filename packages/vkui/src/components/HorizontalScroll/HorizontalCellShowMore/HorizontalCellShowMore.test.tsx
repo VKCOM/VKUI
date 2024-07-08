@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../../testing/utils';
 import { HorizontalCellShowMore } from './HorizontalCellShowMore';
+import styles from './HorizontalCellShowMore.module.css';
 
 describe('HorizontalCellShowMore', () => {
   baselineComponent(HorizontalCellShowMore);
@@ -27,5 +28,12 @@ describe('HorizontalCellShowMore', () => {
     await screen.findByText('Show more');
     expect(screen.queryByText('Все')).toBeFalsy();
     expect(screen.queryByText('Показать все')).toBeFalsy();
+  });
+
+  it('should have specific className when centered=true', () => {
+    const component = render(<HorizontalCellShowMore data-testid="show-more" centered={true} />);
+    expect(component.getByTestId('show-more').parentElement).toHaveClass(
+      styles['HorizontalCellShowMore--centered'],
+    );
   });
 });
