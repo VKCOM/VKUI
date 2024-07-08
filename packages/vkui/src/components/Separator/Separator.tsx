@@ -30,10 +30,7 @@ export const Separator = ({
 }: SeparatorProps): React.ReactNode => (
   <RootComponent
     {...restProps}
-    baseClassName={classNames(
-      !wide && styles['Separator--padded'],
-      modeClassNames[mode],
-    )}
+    baseClassName={classNames(!wide && styles['Separator--padded'], modeClassNames[mode])}
   >
     <hr className={styles['Separator__in']} />
   </RootComponent>
