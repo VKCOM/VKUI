@@ -133,7 +133,10 @@ export interface SelectProps<
 > extends NativeSelectProps,
     FormFieldProps,
     TrackerOptionsProps,
-    Pick<CustomSelectDropdownProps, 'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'> {
+    Pick<
+      CustomSelectDropdownProps,
+      'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
+    > {
   /**
    * ref на внутрений компонент input
    */
