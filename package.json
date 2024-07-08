@@ -61,7 +61,7 @@
     "mini-css-extract-plugin": "^2.9.0",
     "postcss": "^8.4.39",
     "postcss-cli": "^11.0.0",
-    "postcss-custom-media": "^10.0.7",
+    "postcss-custom-media": "^10.0.8",
     "postcss-gap-properties": "^5.0.1",
     "postcss-import": "^16.1.0",
     "postcss-loader": "^8.1.1",
