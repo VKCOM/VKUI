@@ -1,5 +1,5 @@
-import {AllHTMLAttributes, useCallback, useRef, useState} from 'react';
-import {arraysEquals} from "../../helpers/array";
+import { AllHTMLAttributes, useCallback, useRef, useState } from 'react';
+import { arraysEquals } from '../../helpers/array';
 import { useExternRef } from '../../hooks/useExternRef';
 import { FOCUSABLE_ELEMENTS_LIST, Keys, pressedKey } from '../../lib/accessibility';
 import {
@@ -85,7 +85,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
     recalculateFocusableNodesRef(parentNode);
 
     if (arraysEquals(oldFocusableNodes, focusableNodesRef.current)) {
-      return
+      return;
     }
 
     if (document) {
