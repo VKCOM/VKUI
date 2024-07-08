@@ -123,12 +123,6 @@ export const ClickableLockStateContext: React.Context<((v: boolean) => void) | u
   React.createContext<undefined | ((v: boolean) => void)>(undefined);
 
 /**
- * По умолчанию вложенные `Tappable` отменяют `hover`/`active`-состояние верхнеуровневого `Tappable`.
- * Данный контекст позволяет отключить такое поведение.
- */
-export const DisableClickableLockStateContext = React.createContext<boolean>(false);
-
-/**
  * Блокирует стейт на всплытие
  */
 export function useLockState(): readonly [boolean, (v: boolean) => void, (...args: any[]) => void] {
@@ -148,7 +142,6 @@ export function useState({ hasHover, hasActive, ...restProps }: StateProps): {
   setLockBubblingImmediate: (...args: any[]) => void;
 } {
   const [lockState, setLockBubbling, setLockBubblingImmediate] = useLockState();
-  const disableLockState = React.useContext(DisableClickableLockStateContext) || false;
 
   const props = {
     hasHover,
@@ -164,11 +157,8 @@ export function useState({ hasHover, hasActive, ...restProps }: StateProps): {
   const handlers = mergeCalls(hoverEvent, activeEvent);
 
   React.useEffect(() => {
-    if (disableLockState) {
-      return;
-    }
     setLockBubbling(!!stateClassName);
-  }, [setLockBubbling, stateClassName, disableLockState]);
+  }, [setLockBubbling, stateClassName]);
 
   return {
     stateClassName,

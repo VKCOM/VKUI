@@ -6,7 +6,6 @@ import { useAppearance } from '../../../hooks/useAppearance';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
-import { DisableClickableLockStateContext } from '../../Clickable/useState';
 import { ImageBaseContext } from '../context';
 import { validateOverlayIcon } from '../validators';
 import { useNonInteractiveOverlayProps } from './hooks';
@@ -71,17 +70,15 @@ const ImageBaseOverlayNonInteractive = ({
   const { shown: overlayShown, onClick: onOverlayClick } = useNonInteractiveOverlayProps(rootRef);
 
   return (
-    <DisableClickableLockStateContext.Provider value>
-      <div
-        {...restProps}
-        ref={rootRef}
-        className={classNames(
-          (overlayShown || overlayShownProps) && styles['ImageBaseOverlay--visible'],
-          className,
-        )}
-        onClick={onOverlayClick}
-      />
-    </DisableClickableLockStateContext.Provider>
+    <div
+      {...restProps}
+      ref={rootRef}
+      className={classNames(
+        (overlayShown || overlayShownProps) && styles['ImageBaseOverlay--visible'],
+        className,
+      )}
+      onClick={onOverlayClick}
+    />
   );
 };
 
@@ -111,7 +108,7 @@ export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
     overlayShown: visibility === 'always',
   };
 
-  // Не делаем деструктуризация пропа, потому что Typescript не вывозит
+  // Не делаем деструктуризацию пропа, потому что Typescript не вывозит
   if (restProps.disableInteractive) {
     return <ImageBaseOverlayNonInteractive {...restProps} {...commonProps} />;
   }

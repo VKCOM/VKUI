@@ -3,7 +3,6 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { DisableClickableLockStateContext } from '../Clickable/useState';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Tappable, type TappableProps } from './Tappable';
 import styles from './Tappable.module.css';
@@ -329,21 +328,6 @@ describe(Tappable, () => {
         await userEvent.hover(screen.getByTestId('x'));
         expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
         expect(result.getByTestId('c')).not.toHaveClass(styles['Tappable--hovered-background']);
-      });
-
-      it('preserve hover on child hover with DisableClickableLockStateContext', async () => {
-        const result = render(
-          <Tappable data-testid="x" onClick={noop} style={{ padding: 60 }}>
-            Tappable
-            <DisableClickableLockStateContext.Provider value>
-              <Tappable data-testid="c" onClick={noop}>
-                Inner Tappable
-              </Tappable>
-            </DisableClickableLockStateContext.Provider>
-          </Tappable>,
-        );
-        await userEvent.hover(screen.getByTestId('c'));
-        expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
       });
 
       describe('handles disabled children', () => {
