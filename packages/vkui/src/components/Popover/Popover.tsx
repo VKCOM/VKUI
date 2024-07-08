@@ -75,6 +75,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'children'
   | 'zIndex'
   | 'disableFlipMiddleware'
+  | 'customMiddlewares'
 >;
 
 /**
@@ -150,6 +151,7 @@ export const Popover = ({
   disableCloseOnClickOutside,
   disableCloseOnEscKey,
   keepMounted = false,
+  customMiddlewares,
   anchorRef,
   // uncontrolled
   defaultShown = false,
@@ -187,6 +189,7 @@ export const Popover = ({
     sameWidth,
     hideWhenReferenceHidden,
     disableFlipMiddleware,
+    customMiddlewares,
   });
   const {
     placement: resolvedPlacement,
