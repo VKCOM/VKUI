@@ -331,7 +331,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const scrollToElement = React.useCallback((index: number, center = false) => {
     const dropdown = scrollBoxRef.current;
-    const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
+    const item =
+      dropdown && dropdown.firstElementChild
+        ? (dropdown.firstElementChild.children[index] as HTMLElement)
+        : null;
 
     if (!item || !dropdown) {
       return;
