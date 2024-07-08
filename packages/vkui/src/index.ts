@@ -301,6 +301,7 @@ export { Textarea } from './components/Textarea/Textarea';
 export type { TextareaProps } from './components/Textarea/Textarea';
 export { SelectionControl } from './components/SelectionControl/SelectionControl';
 export type { SelectionControlProps } from './components/SelectionControl/SelectionControl';
+export { Radio } from './components/Radio/Radio';
 export type { RadioProps } from './components/Radio/Radio';
 export { RadioGroup } from './components/RadioGroup/RadioGroup';
 export type { RadioGroupProps } from './components/RadioGroup/RadioGroup';

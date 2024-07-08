@@ -1,24 +1,3 @@
-.Radio__icon {
-  display: flex;
-  flex-shrink: 0;
-  color: var(--vkui--color_icon_tertiary);
-  transition: color 0.15s var(--vkui--animation_easing_platform);
-}
-
-.Radio__input:checked ~ .Radio__icon {
-  color: var(--vkui--color_icon_accent);
-}
-
-.Radio__icon .Radio__pin {
-  transform-origin: center;
-  transform: scale(0);
-  transition: transform 0.15s var(--vkui--animation_easing_platform);
-}
-
-.Radio__input:checked ~ .Radio__icon .Radio__pin {
-  transform: none;
-}
-
 /**
  * CMP:
  * RadioGroup

@@ -13,12 +13,14 @@ export type VisuallyHiddenProps<T> = RootComponentProps<T>;
  */
 export const VisuallyHidden = <T,>({
   Component = 'span',
+  baseClassName,
   ...restProps
 }: VisuallyHiddenProps<T>): React.ReactNode => (
   <RootComponent
     Component={Component}
     {...restProps}
     baseClassName={classNames(
+      baseClassName,
       styles['VisuallyHidden'],
       Component === 'input' && styles['VisuallyHidden--focusable-input'],
     )}

@@ -1,38 +1,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { HasDataAttribute, HasRef, HasRootRef } from '../../types';
-import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
 import { type TappableProps } from '../Tappable/Tappable';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+import { RadioInput } from './RadioInput/RadioInput';
 import styles from './Radio.module.css';
-
-function RadioIcon24(props: React.ComponentProps<'svg'>) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden {...props}>
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-      <circle cx="12" cy="12" r="7" className={styles['Radio__pin']} fill="currentColor" />
-    </svg>
-  );
-}
-
-function RadioIcon20(props: React.ComponentProps<'svg'>) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden {...props}>
-      <circle cx="10" cy="10" r="7.75" stroke="currentColor" strokeWidth="1.5" fill="none" />
-      <circle cx="10" cy="10" r="5.5" className={styles['Radio__pin']} fill="currentColor" />
-    </svg>
-  );
-}
-
-function RadioIcon() {
-  return (
-    <div className={styles['Radio__icon']}>
-      <AdaptiveIconRenderer IconCompact={RadioIcon20} IconRegular={RadioIcon24} />
-    </div>
-  );
-}
 
 export interface RadioProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -82,17 +55,12 @@ export const Radio = ({
       focusVisibleMode={focusVisibleMode}
       {...labelProps}
     >
-      <VisuallyHidden
-        {...restProps}
-        Component="input"
-        type="radio"
-        getRootRef={getRef}
-        className={styles['Radio__input']}
-      />
-      <RadioIcon />
+      <RadioInput {...restProps} getRef={getRef} />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}
       </SelectionControlLabel>
     </SelectionControl>
   );
 };
+
+Radio.Input = RadioInput;
