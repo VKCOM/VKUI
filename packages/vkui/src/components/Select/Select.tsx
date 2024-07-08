@@ -46,6 +46,7 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     mode,
     maxHeight,
     getSelectInputRef,
+    overscrollBehavior,
     ...restProps
   } = props;
 

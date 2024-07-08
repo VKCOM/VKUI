@@ -80,6 +80,7 @@ export const Image: React.FC<ImageProps> & {
   borderRadius: borderRadiusProp = 'm',
   style,
   className,
+  objectFit = 'cover',
   ...restProps
 }: ImageProps) => {
   const borderRadius = React.useMemo(
@@ -90,6 +91,7 @@ export const Image: React.FC<ImageProps> & {
   return (
     <ImageBase
       {...restProps}
+      objectFit={objectFit}
       size={size}
       style={{ ...style, borderRadius }}
       className={className}
