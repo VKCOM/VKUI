@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
-import { RootComponent } from '../RootComponent/RootComponent';
+import { CSSCustomProperties } from '../../types';
+import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './AspectRatio.module.css';
 
-export interface AspectRatioProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface AspectRatioProps extends RootComponentProps<HTMLElement> {
   className?: string;
   /**
    * По умолчанию, вложенный контент будет растягиваться и заполнять весь блок.
