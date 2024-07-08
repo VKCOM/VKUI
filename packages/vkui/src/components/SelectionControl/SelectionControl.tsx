@@ -14,7 +14,7 @@ const sizeYClassNames = {
 };
 
 export interface SelectionControlProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends React.ComponentProps<'label'>,
     HasRootRef<HTMLLabelElement>,
     Pick<
       TappableProps,
