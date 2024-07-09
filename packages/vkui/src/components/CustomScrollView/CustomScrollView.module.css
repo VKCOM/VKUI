@@ -15,6 +15,14 @@
   position: relative;
 }
 
+.CustomScrollView__box--overscrollBehavior-contain {
+  overscroll-behavior: contain;
+}
+
+.CustomScrollView__box--overscrollBehavior-none {
+  overscroll-behavior: none;
+}
+
 .CustomScrollView__box-content {
   position: relative;
   inline-size: 100%;

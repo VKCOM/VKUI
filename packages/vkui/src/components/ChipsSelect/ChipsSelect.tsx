@@ -13,7 +13,10 @@ import {
   renderChipDefault,
 } from '../ChipsInputBase/constants';
 import type { ChipOption, ChipsInputBaseProps } from '../ChipsInputBase/types';
-import { CustomSelectDropdown } from '../CustomSelectDropdown/CustomSelectDropdown';
+import {
+  CustomSelectDropdown,
+  CustomSelectDropdownProps,
+} from '../CustomSelectDropdown/CustomSelectDropdown';
 import {
   CustomSelectOption,
   type CustomSelectOptionProps,
@@ -69,7 +72,8 @@ const findIndexBefore = <O extends ChipOption>(
 export interface ChipsSelectProps<O extends ChipOption>
   extends ChipsInputBaseProps<O>,
     UseChipsSelectProps<O>,
-    Pick<FormFieldProps, 'status' | 'mode' | 'before'> {
+    Pick<FormFieldProps, 'status' | 'mode' | 'before'>,
+    Pick<CustomSelectDropdownProps, 'overscrollBehavior'> {
   placement?: 'top' | 'bottom';
   /**
    * Отрисовка Spinner вместо списка опций в выпадающем списке
@@ -143,6 +147,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   dropdownTestId,
   onClose,
   onOpen,
+  overscrollBehavior,
 
   // ChipsInputProps
   getRef,
@@ -464,6 +469,7 @@ export const ChipsSelect = <Option extends ChipOption>({
           forcePortal={forceDropdownPortal}
           noMaxHeight={noMaxHeight}
           offsetDistance={dropdownOffsetDistance}
+          overscrollBehavior={overscrollBehavior}
           // a11y
           id={dropdownId}
           role="listbox"
