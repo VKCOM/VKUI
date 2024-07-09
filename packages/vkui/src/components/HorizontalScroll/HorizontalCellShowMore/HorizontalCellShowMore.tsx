@@ -43,6 +43,10 @@ export interface HorizontalCellShowMoreProps
    * Если `HorizontalCellShowMore` находится на одном уровне с остальными `HorizontalCell`, то этот проп использовать не нужно.
    */
   compensateLastCellIndent?: boolean;
+  /**
+   * Выравнивание по центру относительно родителя
+   */
+  centered?: boolean;
 }
 
 export const HorizontalCellShowMore = ({
@@ -54,6 +58,7 @@ export const HorizontalCellShowMore = ({
   height,
   size = 's',
   children = size === 's' ? 'Все' : 'Показать все',
+  centered = false,
   ...restProps
 }: HorizontalCellShowMoreProps): React.ReactNode => {
   return (
@@ -62,6 +67,7 @@ export const HorizontalCellShowMore = ({
       className={classNames(
         styles['HorizontalCellShowMore'],
         compensateLastCellIndent && styles['HorizontalCellShowMore--compensate-last-cell-indent'],
+        centered && styles['HorizontalCellShowMore--centered'],
         sizeClassNames[size],
         className,
       )}

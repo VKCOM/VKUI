@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
 import { ImageBadge, type ImageBadgeProps } from './ImageBadge/ImageBadge';
+import styles from './Image.module.css';
 
 export type { ImageBadgeProps, ImageBaseOverlayProps as ImageOverlayProps };
 
@@ -11,6 +13,22 @@ export interface ImageProps extends Omit<ImageBaseProps, 'badge'> {
    * Размер закругления.
    */
   borderRadius?: 's' | 'l' | 'm';
+  /**
+   * Размер закругления угла между сторонами начала блока и строки
+   */
+  borderStartStartRadius?: 's' | 'l' | 'm';
+  /**
+   * Размер закругления угла между стороной начала блока и стороной конца строки
+   */
+  borderStartEndRadius?: 's' | 'l' | 'm';
+  /**
+   * Размер закругления угла между стороной конца блока и стороной начала строки
+   */
+  borderEndStartRadius?: 's' | 'l' | 'm';
+  /**
+   * Размер закругления угла между сторонами конца блока и строки
+   */
+  borderEndEndRadius?: 's' | 'l' | 'm';
 }
 
 const getBorderRadiusBySize = (
@@ -69,6 +87,17 @@ const getBorderRadiusBySize = (
   }
 };
 
+const getBorderRadiusBySizeInPx = (
+  size: Exclude<ImageBaseProps['size'], undefined>,
+  borderRadius: ImageProps['borderRadius'],
+) => {
+  if (!borderRadius) {
+    return undefined;
+  }
+
+  return `${getBorderRadiusBySize(size, borderRadius)}px`;
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/Image
  */
@@ -77,22 +106,60 @@ export const Image: React.FC<ImageProps> & {
   Overlay: typeof ImageBase.Overlay;
 } = ({
   size = IMAGE_DEFAULT_SIZE,
-  borderRadius: borderRadiusProp = 'm',
+  borderRadius = 'm',
+  borderStartStartRadius,
+  borderStartEndRadius,
+  borderEndStartRadius,
+  borderEndEndRadius,
   style,
   className,
+  objectFit = 'cover',
   ...restProps
 }: ImageProps) => {
-  const borderRadius = React.useMemo(
-    () => getBorderRadiusBySize(size, borderRadiusProp),
-    [size, borderRadiusProp],
+  const borderStyles = React.useMemo(
+    () => ({
+      '--vkui_internal--Image_border_radius': getBorderRadiusBySizeInPx(size, borderRadius),
+      '--vkui_internal--Image_border_start_start_radius': getBorderRadiusBySizeInPx(
+        size,
+        borderStartStartRadius,
+      ),
+      '--vkui_internal--Image_border_start_end_radius': getBorderRadiusBySizeInPx(
+        size,
+        borderStartEndRadius,
+      ),
+      '--vkui_internal--Image_border_end_start_radius': getBorderRadiusBySizeInPx(
+        size,
+        borderEndStartRadius,
+      ),
+      '--vkui_internal--Image_border_end_end_radius': getBorderRadiusBySizeInPx(
+        size,
+        borderEndEndRadius,
+      ),
+    }),
+    [
+      borderRadius,
+      borderStartStartRadius,
+      borderStartEndRadius,
+      borderEndStartRadius,
+      borderEndEndRadius,
+      size,
+    ],
   );
 
   return (
     <ImageBase
       {...restProps}
+      objectFit={objectFit}
       size={size}
-      style={{ ...style, borderRadius }}
-      className={className}
+      style={{ ...borderStyles, ...style }}
+      className={classNames(
+        className,
+        styles['Image'],
+        borderStartStartRadius && styles['Image--borderStartStartRadius'],
+        borderStartEndRadius && styles['Image--borderStartEndRadius'],
+        borderEndStartRadius && styles['Image--borderEndStartRadius'],
+        borderEndEndRadius && styles['Image--borderEndEndRadius'],
+      )}
     />
   );
 };
