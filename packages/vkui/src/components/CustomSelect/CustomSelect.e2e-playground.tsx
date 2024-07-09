@@ -75,30 +75,3 @@ export const CustomSelectNoMaxHeightPlayground = (props: ComponentPlaygroundProp
     </ComponentPlayground>
   );
 };
-
-export const CustomSelectOptionScrollPlayground = (props: ComponentPlaygroundProps) => {
-  return (
-    <ComponentPlayground {...props} propSets={[{ value: [7] }]}>
-      {(props: SelectProps) => (
-        <div style={{ height: 200 }}>
-          <CustomSelect
-            data-testid="target-select"
-            {...props}
-            options={[
-              { value: 1, label: 'Гарри Поттер и философский камень' },
-              { value: 2, label: 'Гарри Поттер и Тайная комната' },
-              {
-                value: 3,
-                label: 'Гарри Поттер и узник Азкабана',
-              },
-              { value: 4, label: 'Гарри Поттер и Кубок Огня' },
-              { value: 5, label: 'Гарри Поттер и Орден Феникса' },
-              { value: 6, label: 'Гарри Поттер и Принц-полукровка' },
-              { value: 7, label: 'Гарри Поттер и Дары Смерти' },
-            ]}
-          />
-        </div>
-      )}
-    </ComponentPlayground>
-  );
-};
