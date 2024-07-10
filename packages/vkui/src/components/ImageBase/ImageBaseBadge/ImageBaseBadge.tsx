@@ -7,6 +7,16 @@ import type { ImageBaseExpectedIconProps } from '../types';
 import { validateBadgeIcon } from '../validators';
 import styles from './ImageBaseBadge.module.css';
 
+function DevelopmentCheck({ children }: Pick<ImageBaseBadgeProps, 'children'>) {
+  const { size } = React.useContext(ImageBaseContext);
+
+  if (children) {
+    validateBadgeIcon(size, { name: 'children', value: children });
+  }
+
+  return null;
+}
+
 const backgroundStyles = {
   stroke: styles['ImageBaseBadge--background-stroke'],
   shadow: styles['ImageBaseBadge--background-shadow'],
@@ -43,19 +53,16 @@ export const ImageBaseBadge: React.FC<ImageBaseBadgeProps> = ({
   background = 'shadow',
   ...restProps
 }: ImageBaseBadgeProps) => {
-  if (process.env.NODE_ENV === 'development') {
-    if (restProps.children) {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { size } = React.useContext(ImageBaseContext);
-      validateBadgeIcon(size, { name: 'children', value: restProps.children });
-    }
-  }
-
   return (
-    <RootComponent
-      {...restProps}
-      baseClassName={classNames(styles['ImageBaseBadge'], backgroundStyles[background])}
-    />
+    <>
+      <RootComponent
+        {...restProps}
+        baseClassName={classNames(styles['ImageBaseBadge'], backgroundStyles[background])}
+      />
+      {process.env.NODE_ENV === 'development' && (
+        <DevelopmentCheck>{restProps.children}</DevelopmentCheck>
+      )}
+    </>
   );
 };
 

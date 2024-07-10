@@ -12,7 +12,7 @@
 Изначально писать адаптивность стоит через **CSS Media Queries**.
 
 Для медиа запросов мы используем [custom-media-queries](https://preset-env.cssdb.org/features/#custom-media-queries).
-Значения определяются в функции `getCustomMedias()` в [./packages/vkui/shared.config.js](../packages/vkui/shared.config.js).
+Текущие медиа запросы можно посмотреть в типе [CSSCustomMedias](../packages/vkui/src/lib/adaptivity/types.ts).
 
 При разработке следует предусмотреть возможность переопределения параметров адаптивности через `AdaptivityProvider`.
 
@@ -33,7 +33,7 @@ import styles from './Component.module.css';
 
 const sizeXClassNames = {
   none: styles['Component--sizeX-none'], // означает, что sizeX не определён в AdaptivityProvider – используем `@media`
-  ['compact']: styles['Component--sizeX-compact'],
+  compact: styles['Component--sizeX-compact'],
 };
 
 const Component = () => {
@@ -136,7 +136,7 @@ _Component.module.css_
 ```
 
 По историческим причинам, в JS (см. [AdaptivityProvider](../packages/vkui/src/components/AdaptivityProvider/AdaptivityProvider.tsx))
-и в CSS (см. [getCustomMedias().js](../packages/vkui/shared.config.js)) по-разному определяются брейкпоинты. В CSS они
+и в CSS (см. [customMedias.generated.css](../packages/vkui/src/styles/customMedias.generated.css)) по-разному определяются брейкпоинты. В CSS они
 выходят более расширенными, а в JS ограничиваются точечными значениями. Для конвертации этой разницы создана функция [viewWidthToClassName](../packages/vkui/src/lib/adaptivity/functions.ts).
 
 ### Хук [useAdaptivityConditionalRender](../packages/vkui/src/hooks/useAdaptivityConditionalRender/useAdaptivityConditionalRender.tsx)
