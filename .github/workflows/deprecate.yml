@@ -24,6 +24,10 @@ jobs:
   deprecate:
     runs-on: ubuntu-latest
     steps:
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
+
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
