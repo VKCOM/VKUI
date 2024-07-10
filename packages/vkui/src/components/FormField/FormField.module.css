@@ -15,6 +15,8 @@
   max-block-size: inherit;
   min-block-size: inherit;
   inline-size: 100%;
+  padding-inline-start: var(--vkui_internal--FormField_padding_inline-start, 0);
+  padding-inline-end: var(--vkui_internal--FormField_padding_inline-end, 0);
 }
 
 .FormField__content {
@@ -76,7 +78,7 @@
 
 .FormField__after {
   color: var(--vkui--color_icon_secondary);
-  inset-inline-end: 0;
+  inset-inline-end: var(--vkui_internal--FormField_inset_inline-end, 0);
 }
 
 .FormField__border {
