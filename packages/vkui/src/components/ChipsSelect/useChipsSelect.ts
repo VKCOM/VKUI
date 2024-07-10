@@ -139,8 +139,13 @@ export const useChipsSelect = <O extends ChipOption>({
 
   const handleOpened = React.useCallback(
     (isOpened: boolean) => {
-      isOpened ? onOpen?.() : onClose?.();
-      setOpened(isOpened);
+      setOpened(oldOpened => {
+        if (oldOpened !== isOpened) {
+          isOpened ? onOpen?.() : onClose?.();
+          return isOpened
+        }
+        return oldOpened;
+      })
     },
     [onOpen, onClose],
   );
