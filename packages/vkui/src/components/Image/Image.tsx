@@ -75,6 +75,7 @@ const getBorderRadiusBySize = (
 export const Image: React.FC<ImageProps> & {
   Badge: typeof ImageBadge;
   Overlay: typeof ImageBase.Overlay;
+  PositionedComponent: typeof ImageBase.PositionedComponent;
 } = ({
   size = IMAGE_DEFAULT_SIZE,
   borderRadius: borderRadiusProp = 'm',
@@ -106,3 +107,6 @@ Image.Badge.displayName = 'Image.Badge';
 
 Image.Overlay = ImageBase.Overlay;
 Image.Overlay.displayName = 'Image.Overlay';
+
+Image.PositionedComponent = ImageBase.PositionedComponent;
+Image.PositionedComponent.displayName = 'Image.PositionedComponent';

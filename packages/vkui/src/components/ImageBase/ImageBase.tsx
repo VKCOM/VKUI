@@ -7,6 +7,7 @@ import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from 
 import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
+import { ImageBasePositionedComponent } from './ImageBasePositionedComponent/ImageBasePositionedComponent';
 import { ImageBaseContext } from './context';
 import type { ImageBaseContextProps, ImageBaseExpectedIconProps, ImageBaseSize } from './types';
 import { validateFallbackIcon, validateSize } from './validators';
@@ -104,6 +105,7 @@ const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
 export const ImageBase: React.FC<ImageBaseProps> & {
   Badge: typeof ImageBaseBadge;
   Overlay: typeof ImageBaseOverlay;
+  PositionedComponent: typeof ImageBasePositionedComponent;
 } = ({
   alt,
   crossOrigin,
@@ -129,9 +131,11 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   onError,
   withTransparentBackground,
   objectFit = 'cover',
+  getRootRef,
   ...restProps
 }: ImageBaseProps) => {
   const size = sizeProp ?? minOr([widthSize, heightSize], defaultSize);
+  const wrapperRef = useExternRef(getRootRef);
 
   const width = widthSize ?? size;
   const height = heightSize ?? size;
@@ -185,7 +189,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   );
 
   return (
-    <ImageBaseContext.Provider value={{ size }}>
+    <ImageBaseContext.Provider value={{ size, ref: wrapperRef }}>
       <Clickable
         style={{ width, height, ...style }}
         baseClassName={classNames(
@@ -193,6 +197,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
           loaded && styles['ImageBase--loaded'],
           withTransparentBackground && styles['ImageBase--transparent-background'],
         )}
+        getRootRef={wrapperRef}
         {...restProps}
       >
         {hasSrc && (
@@ -230,3 +235,6 @@ ImageBase.Badge.displayName = 'ImageBase.Badge';
 
 ImageBase.Overlay = ImageBaseOverlay;
 ImageBase.Overlay.displayName = 'ImageBase.Overlay';
+
+ImageBase.PositionedComponent = ImageBasePositionedComponent;
+ImageBase.PositionedComponent.displayName = 'ImageBase.PositionedComponent';

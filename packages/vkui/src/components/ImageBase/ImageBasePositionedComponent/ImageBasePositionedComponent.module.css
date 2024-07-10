@@ -1,0 +1,9 @@
+.PositionedComponent {
+  position: absolute;
+  z-index: var(--vkui_internal--z_index_image_base_positioned_element);
+  transition: opacity 0.3s ease-in-out;
+}
+
+.PositionedComponent--hidden {
+  opacity: 0;
+}
