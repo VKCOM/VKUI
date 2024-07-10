@@ -20,6 +20,10 @@ import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Checkbox.module.css';
 
+function setIndeterminate(el: HTMLInputElement, indeterminate: boolean) {
+  el.indeterminate = indeterminate;
+}
+
 const sizeYClassNames = {
   none: styles['Checkbox--sizeY-none'],
   ['compact']: styles['Checkbox--sizeY-compact'],
@@ -68,10 +72,10 @@ export const Checkbox = ({
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
 
   React.useEffect(() => {
-    const indeterminateValue = indeterminate === undefined ? defaultIndeterminate : indeterminate;
+    const indeterminateValue = indeterminate ?? Boolean(defaultIndeterminate);
 
     if (inputRef.current) {
-      inputRef.current.indeterminate = Boolean(indeterminateValue);
+      setIndeterminate(inputRef.current, indeterminateValue);
     }
   }, [defaultIndeterminate, indeterminate, inputRef]);
 
@@ -80,17 +84,16 @@ export const Checkbox = ({
       if (
         defaultIndeterminate !== undefined &&
         indeterminate === undefined &&
-        restProps.checked === undefined &&
-        inputRef.current
+        restProps.checked === undefined
       ) {
-        inputRef.current.indeterminate = false;
+        event.currentTarget.indeterminate = false;
       }
-      if (indeterminate !== undefined && inputRef.current) {
-        inputRef.current.indeterminate = indeterminate;
+      if (indeterminate !== undefined) {
+        event.currentTarget.indeterminate = indeterminate;
       }
       onChange && onChange(event);
     },
-    [defaultIndeterminate, indeterminate, restProps.checked, onChange, inputRef],
+    [defaultIndeterminate, indeterminate, restProps.checked, onChange],
   );
 
   if (process.env.NODE_ENV === 'development') {
