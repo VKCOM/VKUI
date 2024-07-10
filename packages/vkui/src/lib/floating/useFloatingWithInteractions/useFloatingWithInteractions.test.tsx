@@ -374,51 +374,44 @@ describe(useFloatingWithInteractions, () => {
       });
     });
 
-    it.each(['focus' as const, 'click' as const])(
-      'should prefer shown state by %s trigger',
-      async (eventName) => {
-        const { result } = renderHook(() =>
-          useFloatingWithInteractions<HTMLButtonElement>({
-            defaultShown: false,
-            trigger: ['focus', 'click', 'hover'],
-          }),
-        );
-        const testComponentRender = render(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeFalsy());
+    it('should simultaneously react to different triggers', async () => {
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: ['focus', 'click', 'hover'],
+        }),
+      );
+      const testComponentRender = render(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
 
-        await fireEventPatch(result.current.refs.reference.current, eventName);
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeTruthy());
+      await fireEventPatch(result.current.refs.reference.current, 'focus');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
-        await fireEventPatch(result.current.refs.reference.current, 'mouseLeave');
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeTruthy());
+      await fireEventPatch(result.current.refs.reference.current, 'mouseLeave');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
 
-        const eventNameToFire = eventName === 'focus' ? 'blur' : eventName;
-        await fireEventPatch(
-          result.current.refs.reference.current,
-          eventNameToFire,
-          // сбрасываем relatedTarget, потому что по умолчанию el.blur() имеет el в relatedTarget,
-          // а в этом случае floating элемент не закрывается, так как считается что blur
-          // вызван кликом на самого себя.
-          eventNameToFire === 'blur' ? { referenceElement: undefined } : undefined,
-        );
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeFalsy());
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
-        await fireEventPatch(result.current.refs.reference.current, eventName);
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeTruthy());
+      await fireEventPatch(result.current.refs.floating.current, 'mouseOver');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
-        await fireEventPatch(result.current.refs.floating.current, 'mouseOver');
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeTruthy());
+      await fireEventPatch(result.current.refs.floating.current, 'mouseLeave');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
 
-        await fireEventPatch(result.current.refs.floating.current, 'mouseLeave');
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeTruthy());
-      },
-    );
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      await fireEventPatch(result.current.refs.reference.current, 'mouseLeave');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+    });
 
     it('should use manual state', async () => {
       const { result, rerender } = renderHook(
