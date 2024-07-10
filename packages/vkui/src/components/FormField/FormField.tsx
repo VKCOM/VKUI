@@ -84,6 +84,8 @@ export const FormField = ({
   const beforeRef = useRef<HTMLSpanElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [hover, setHover] = React.useState(false);
+  const [paddingInlineStart, setPaddingInlineStart] = React.useState(0);
+  const [paddingInlineEnd, setPaddingInlineEnd] = React.useState(0);
 
   const focusWithin = useFocusWithin(elRef);
   const focusVisibleClassNames = useFocusVisibleClassName({
@@ -101,15 +103,18 @@ export const FormField = ({
     setHover(false);
   };
 
-  const updatePadding = (partRef: React.RefObject<HTMLSpanElement | null>, property: string) => {
+  const updatePadding = (
+    partRef: React.RefObject<HTMLSpanElement | null>,
+    setter: (value: number) => void,
+  ) => {
     if (partRef.current) {
-      scrollContainerRef.current?.style.setProperty(property, `${partRef.current.offsetWidth}px`);
+      setter(partRef.current.offsetWidth);
     }
   };
 
   useIsomorphicLayoutEffect(() => {
-    before && updatePadding(beforeRef, 'padding-inline-start');
-    after && updatePadding(afterRef, 'padding-inline-end');
+    before && updatePadding(beforeRef, setPaddingInlineStart);
+    after && updatePadding(afterRef, setPaddingInlineEnd);
   }, [after, before, afterRef, beforeRef, scrollContainerRef]);
 
   useCompensateScrollWidth(scrollContainerRef, afterRef, !!after);
@@ -135,7 +140,14 @@ export const FormField = ({
         className,
       )}
     >
-      <div className={styles['FormField__scroll-container']} ref={scrollContainerRef}>
+      <div
+        className={styles['FormField__scroll-container']}
+        ref={scrollContainerRef}
+        style={{
+          paddingInlineStart,
+          paddingInlineEnd,
+        }}
+      >
         <div className={styles['FormField__content']}>{children}</div>
       </div>
       {before && (
