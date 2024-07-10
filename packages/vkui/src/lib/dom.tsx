@@ -235,3 +235,26 @@ export const getFirstTouchEventData = (
     pageY: dataRaw.pageY || 0,
   };
 };
+
+/**
+ * ⚠️ В частности, необходимо для iOS 15. Начиная с этой версии в Safari добавили
+ * pull-to-refresh. CSS св-во `overflow-behavior` появился только с iOS 16.
+ *
+ * Во вторую очередь, полезна блокированием скролла, чтобы пользователь дождался обновления
+ * данных.
+ */
+export const initializeBrowserGesturePreventionEffect = (window: Window): VoidFunction => {
+  const options: AddEventListenerOptions & EventListenerOptions = { passive: false };
+  const handleWindowTouchMove = (event: TouchEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  window.document.documentElement.classList.add('vkui--disable-overscroll-behavior'); // eslint-disable-line no-restricted-properties
+  window.addEventListener('touchmove', handleWindowTouchMove, options);
+
+  return function dispose() {
+    window.document.documentElement.classList.remove('vkui--disable-overscroll-behavior'); // eslint-disable-line no-restricted-properties
+    window.removeEventListener('touchmove', handleWindowTouchMove, options);
+  };
+};
