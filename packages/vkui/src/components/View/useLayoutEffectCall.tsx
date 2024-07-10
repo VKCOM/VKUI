@@ -19,7 +19,7 @@ class LayoutEffectCall {
    * Вызовет функцию после изменения DOM, но до того как пользователь увидит
    * изменения
    */
-  call = (fn: () => void) => {
+  add = (fn: () => void) => {
     this.#fns.push(fn);
   };
 }
@@ -38,5 +38,5 @@ export function useLayoutEffectCall() {
     ref.current!.run();
   });
 
-  return ref.current.call;
+  return ref.current.add;
 }
