@@ -31,7 +31,6 @@ export type UsersStackPhoto = {
 export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Массив ссылок на фотографии либо массив структур типа `UsersStackPhoto`:
-   * ```
    */
   photos?: string[] | UsersStackPhoto[];
   /**
