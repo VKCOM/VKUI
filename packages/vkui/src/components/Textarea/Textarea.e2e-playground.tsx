@@ -1,5 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { BREAKPOINTS } from '../../shared/breakpoints';
+import { BREAKPOINTS } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
 import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';

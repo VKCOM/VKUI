@@ -1,8 +1,6 @@
-/**
- * Соответствуют тому, что генерирует функция `getCustomMedias()`.
- *
- * {@link import('../../../shared.config.js') ../../../shared.config.js}
- */
+import type { ValuesOfObject } from '../../types';
+import type { SizeType } from './constants';
+
 export type CSSBreakpoints =
   | 'desktopPlus'
   | 'tabletPlus'
@@ -31,3 +29,23 @@ export type JSBreakpoints =
   | 'mobileLandscapeHeight';
 
 export type MediaQueries = Record<JSBreakpoints, MediaQueryList>;
+
+type SizeTypeValue = ValuesOfObject<typeof SizeType>;
+
+/**
+ * Используется в `packages/vkui/scripts/generateCSSCustomMedias.mjs`, который отвечает за генерацию
+ * `packages/vkui/styles/customMedias.generated.css`.
+ */
+export type CSSCustomMedias = Record<
+  | `--sizeX-${SizeTypeValue}`
+  | `--sizeY-${SizeTypeValue}`
+  | `--viewWidth-${CSSBreakpoints}`
+  | '--hover-has'
+  | '--hover-has-not'
+  | '--pointer-has'
+  | '--pointer-has-not'
+  | '--reduce-motion'
+  | '--desktop'
+  | '--mobile',
+  string
+>;
