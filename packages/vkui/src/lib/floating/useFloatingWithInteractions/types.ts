@@ -80,6 +80,10 @@ export interface UseFloatingWithInteractionsProps {
    * Вызывается при каждом изменении видимости всплывающего элемента.
    */
   onShownChange?: OnShownChange;
+  /**
+   * Колбэк вызываемый при завершении анимации закрытия
+   */
+  onHideAnimationComplete?: () => void;
 }
 
 export type ReferenceProps<T = HTMLElement> = Omit<

@@ -36,6 +36,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   middlewares,
   hoverDelay = 0,
   closeAfterClick = false,
+  onHideAnimationComplete,
 
   // disables
   disabled = false,
@@ -207,6 +208,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     if (willBeHide) {
       setShownFinalState(false);
       setWillBeHide(false);
+      onHideAnimationComplete && onHideAnimationComplete();
     }
   };
 

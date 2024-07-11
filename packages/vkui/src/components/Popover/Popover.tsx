@@ -120,6 +120,10 @@ export interface PopoverProps
    * Используется для того, чтобы не удалять поповер из DOM дерева при скрытии.
    */
   keepMounted?: boolean;
+  /**
+   * Колбэк вызываемый при завершении анимации закрытия поповера
+   */
+  onHideAnimationComplete?: () => void;
 }
 
 /**
@@ -146,6 +150,7 @@ export const Popover = ({
   disableCloseOnClickOutside,
   disableCloseOnEscKey,
   keepMounted = false,
+  onHideAnimationComplete,
   customMiddlewares,
   // uncontrolled
   defaultShown = false,
@@ -209,6 +214,7 @@ export const Popover = ({
     defaultShown,
     shown: shownProp,
     onShownChange,
+    onHideAnimationComplete,
   });
 
   usePlacementChangeCallback(expectedPlacement, resolvedPlacement, onPlacementChange);
