@@ -2,6 +2,7 @@ import { test } from '@vkui-e2e/test';
 import { Appearance } from '../../lib/appearance';
 import {
   CustomSelectNoMaxHeightPlayground,
+  CustomSelectOptionScrollPlayground,
   CustomSelectPlayground,
 } from './CustomSelect.e2e-playground';
 
@@ -33,6 +34,26 @@ test.describe('CustomSelect', () => {
        * спрятан инпут, чтобы не появлялся тултип autosuggestion на iOS при клике на инпут.
        **/
       .click({ force: componentPlaygroundProps.platform === 'ios' });
+
+    await expectScreenshotClippedToContent();
+  });
+});
+
+test.describe('CustomSelect', () => {
+  test.use({
+    onlyForAppearances: [Appearance.LIGHT],
+    platform: 'android',
+    onlyForBrowsers: ['chromium'],
+  });
+  test('scroll to option', async ({
+    mount,
+    page,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<CustomSelectOptionScrollPlayground {...componentPlaygroundProps} />);
+
+    await page.getByTestId('target-select').click();
 
     await expectScreenshotClippedToContent();
   });
