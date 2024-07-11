@@ -108,11 +108,11 @@ export const CustomScrollView = ({
   });
 
   const onUp = (e: MouseEvent) => {
-    if (!scrollDirection) {
+    if (!pressedBar) {
       return;
     }
     e.preventDefault();
-    if (scrollDirection === 'vertical') {
+    if (pressedBar === 'vertical') {
       onVerticalUp();
     } else {
       onHorizontalUp();
@@ -122,6 +122,9 @@ export const CustomScrollView = ({
   };
 
   const onMove = (e: MouseEvent) => {
+    if (!pressedBar) {
+      return;
+    }
     e.preventDefault();
     if (pressedBar === 'vertical') {
       onVerticalMove(e);

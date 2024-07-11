@@ -166,6 +166,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/FixedLayout/FixedLayout.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/AspectRatio/AspectRatio.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Flex/Flex.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/CustomScrollView/CustomScrollView.tsx`,
           ],
           sections: [
             {

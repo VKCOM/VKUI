@@ -12,6 +12,7 @@
   overflow-y: scroll;
   overflow-x: hidden;
   position: relative;
+  outline: none;
 }
 
 .CustomScrollView__box--overscrollBehavior-contain {
