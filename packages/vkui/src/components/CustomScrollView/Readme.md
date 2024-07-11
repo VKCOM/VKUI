@@ -1,4 +1,4 @@
-Компонент, заменяющий браузерный скролл на кастомный
+Компонент, заменяющий браузерную полосу прокрутки на кастомную
 
 ```jsx { "props": { "layout": false, "adaptivity": true, "iframe": false } }
 const WithVerticalScroll = () => {
