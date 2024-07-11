@@ -42,7 +42,7 @@ test.describe('CustomSelect', () => {
 test.describe('CustomSelect', () => {
   test.use({
     onlyForAppearances: [Appearance.LIGHT],
-    platform: 'android',
+    onlyForPlatforms: ['android'],
     onlyForBrowsers: ['chromium'],
   });
   test('scroll to option', async ({
