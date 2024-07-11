@@ -50,6 +50,9 @@ export interface CustomScrollViewProps
   enableHorizontalScroll?: boolean;
 }
 
+/**
+ * @see https://vkcom.github.io/VKUI/#/CustomScrollView
+ */
 export const CustomScrollView = ({
   className,
   children,

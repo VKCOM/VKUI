@@ -1,56 +1,35 @@
-Компонент, заменяющий браузерный скролл на кастомный
+import { Meta, ReactRenderer, StoryObj } from '@storybook/react';
+import { PartialStoryFn } from '@storybook/types';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Div } from '../Div/Div';
+import { CustomScrollView, CustomScrollViewProps } from './CustomScrollView';
 
-```jsx { "props": { "layout": false, "adaptivity": true, "iframe": false } }
-const WithVerticalScroll = () => {
-  return (
-    <CustomScrollView
-      windowResize={true}
-      style={{
-        height: 200,
-      }}
-    >
-      <List>
-        {['Say', 'Hello', 'To', 'My', 'Little', 'Friend'].map((item) => (
-          <Cell key={item} before={<Avatar />}>
-            {item}
-          </Cell>
-        ))}
-      </List>
-    </CustomScrollView>
-  );
+const Wrapper = (Story: PartialStoryFn<ReactRenderer>) => (
+  <div
+    style={{
+      borderRadius: 10,
+      border: '1px solid #000',
+    }}
+  >
+    <Story />
+  </div>
+);
+
+const story: Meta<CustomScrollViewProps> = {
+  title: 'Layout/CustomScrollView',
+  component: CustomScrollView,
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
-const WithHorizontalScroll = () => {
-  const [recentFriends] = useState(getRandomUsers(20));
-  return (
-    <CustomScrollView windowResize={true} enableHorizontalScroll={true}>
-      <div
-        style={{
-          width: 1440,
-          display: 'flex',
-          paddingBlockEnd: 20,
-        }}
-      >
-        {recentFriends.map((item) => {
-          return (
-            <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
-              <Avatar size={56} src={item.photo_200} />
-            </HorizontalCell>
-          );
-        })}
-      </div>
-    </CustomScrollView>
-  );
-};
+export default story;
 
-const WithBothScrollAndAutoHide = () => {
-  return (
-    <CustomScrollView
-      windowResize={true}
-      enableHorizontalScroll={true}
-      style={{ height: 300 }}
-      autoHideScrollbar={true}
-    >
+type Story = StoryObj<CustomScrollViewProps>;
+
+export const Playground: Story = {
+  args: {
+    style: { height: 300, width: 600 },
+    enableHorizontalScroll: true,
+    children: (
       <Div
         style={{
           width: 1440,
@@ -104,34 +83,7 @@ const WithBothScrollAndAutoHide = () => {
         tincidunt ex. In rhoncus turpis turpis, et viverra ex malesuada vel. Donec nisi tellus,
         mollis et posuere vel, dictum eget neque.
       </Div>
-    </CustomScrollView>
-  );
+    ),
+  },
+  decorators: [Wrapper],
 };
-
-const Example = () => {
-  return (
-    <View activePanel="customScrollView">
-      <Panel id="customScrollView">
-        <PanelHeader>CustomScrollView</PanelHeader>
-        <Group header={<Header mode="secondary">Вертикальный скролл</Header>}>
-          <WithVerticalScroll />
-        </Group>
-        <Group header={<Header mode="secondary">Горизонтальный скролл</Header>}>
-          <WithHorizontalScroll />
-        </Group>
-        <Group
-          header={
-            <Header mode="secondary">
-              Вертикальный и горизонтальный скролл с автоматическим сркытием скроллбара
-            </Header>
-          }
-        >
-          <WithBothScrollAndAutoHide />
-        </Group>
-      </Panel>
-    </View>
-  );
-};
-
-<Example />;
-```
