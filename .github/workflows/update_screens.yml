@@ -67,6 +67,10 @@ jobs:
       - name: Checkout LFS objects
         run: git lfs pull
 
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
+
       - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:
