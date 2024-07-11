@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalOnClickOutside } from '../../hooks/useGlobalOnClickOutside';
 import { Keys } from '../../lib/accessibility';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn } from '../../lib/select';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { ChipsInputBase } from '../ChipsInputBase/ChipsInputBase';
 import {
   getNewOptionDataDefault,
@@ -414,21 +412,6 @@ export const ChipsSelect = <Option extends ChipOption>({
     opened ? rootRef : null,
     opened ? dropdownScrollBoxRef : null,
   );
-
-  const focusListener = useEventListener('focusin', () => {
-    if (!readOnly) {
-      setOpened(true);
-      setFocusedOptionIndex(null);
-    }
-  });
-
-  useIsomorphicLayoutEffect(() => {
-    if (!rootRef.current) {
-      return;
-    }
-    focusListener.add(rootRef.current);
-    return () => focusListener.remove();
-  }, [rootRef, focusListener]);
 
   const openedClassNames = React.useMemo(
     () =>
