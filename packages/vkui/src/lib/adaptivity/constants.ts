@@ -1,7 +1,5 @@
 import { ValuesOfObject } from '../../types';
 
-export { BREAKPOINTS, MEDIA_QUERIES } from '../../shared/breakpoints';
-
 /**
  * Public API.
  * Брейкпоинты на ширину.
