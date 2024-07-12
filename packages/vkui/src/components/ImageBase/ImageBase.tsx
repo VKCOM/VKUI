@@ -82,6 +82,10 @@ export interface ImageBaseProps
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit)
    */
   objectFit?: React.CSSProperties['objectFit'];
+  /**
+   * Флаг для сохранения пропорций картинки
+   */
+  keepAspectRatio?: boolean;
 }
 
 const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
@@ -129,6 +133,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   onError,
   withTransparentBackground,
   objectFit = 'cover',
+  keepAspectRatio,
   ...restProps
 }: ImageBaseProps) => {
   const size = sizeProp ?? minOr([widthSize, heightSize], defaultSize);
@@ -199,11 +204,19 @@ export const ImageBase: React.FC<ImageBaseProps> & {
           <img
             ref={imgRef}
             alt={alt}
-            className={classNames(styles['ImageBase__img'], getObjectFitClassName(objectFit))}
+            className={classNames(
+              styles['ImageBase__img'],
+              getObjectFitClassName(objectFit),
+              keepAspectRatio && styles['ImageBase__img--keepRatio'],
+            )}
             crossOrigin={crossOrigin}
             decoding={decoding}
             loading={loading}
             referrerPolicy={referrerPolicy}
+            style={{
+              width: widthImg || width,
+              height: heightImg || height,
+            }}
             sizes={sizes}
             src={src}
             srcSet={srcSet}
