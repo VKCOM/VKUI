@@ -17,7 +17,7 @@ import { Headline } from '../Typography/Headline/Headline';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Search.module.css';
 
-type RenderIconButtonFn = (
+export type RenderIconButtonFn = (
   icon: React.ReactNode,
   props: Partial<IconButtonProps> | void,
 ) => React.ReactNode;
