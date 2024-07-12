@@ -30,6 +30,14 @@ const DEFAULT_VALUE = [
   },
 ];
 
+const ClearButton = ({ onClick, ...restProps }) => {
+  return (
+    <IconButton hoverMode="opacity" label="Очистить поле" onClick={onClick} {...restProps}>
+      <Icon16Clear />
+    </IconButton>
+  );
+};
+
 const Example = () => {
   const [colors, setColors] = React.useState([
     {
@@ -46,11 +54,6 @@ const Example = () => {
     },
   ]);
 
-  const onClick = (event) => {
-    event.stopPropagation();
-    setColors([]);
-  };
-
   const onChange = (event) => {
     setColors(event);
   };
@@ -64,17 +67,18 @@ const Example = () => {
             <ChipsInput
               id="color"
               placeholder="Введите цвета"
-              after={
-                <IconButton hoverMode="opacity" label="Очистить поле" onClick={onClick}>
-                  <Icon16Clear />
-                </IconButton>
-              }
+              ClearButton={ClearButton}
+              allowClearButton={true}
               value={colors}
               onChange={onChange}
             />
           </FormItem>
           <FormItem htmlFor="list" top="Список">
-            <ChipsInput id="list" placeholder="Введите название и нажмите Enter" />
+            <ChipsInput
+              id="list"
+              placeholder="Введите название и нажмите Enter"
+              allowClearButton={true}
+            />
           </FormItem>
           <FormItem htmlFor="favoriteGroups" top="Любимые группы (неконтролируемый компонент)">
             <ChipsInput
