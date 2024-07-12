@@ -7,9 +7,7 @@ import type {
   HTMLAttributesWithRootRef,
 } from '../../types';
 import { FormFieldProps } from '../FormField/FormField';
-import {
-  FormFieldClearButtonProps,
-} from '../FormFieldClearButton/FormFieldClearButton';
+import { FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
 
 export type NavigateTo = 'first' | 'prev' | 'next' | 'last';
 

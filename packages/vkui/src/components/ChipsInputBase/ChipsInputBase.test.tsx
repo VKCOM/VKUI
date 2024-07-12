@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {fireEvent, render, screen, within} from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { baselineComponent, userEvent, withRegExp } from '../../testing/utils';
 import { ChipsInputBase } from './ChipsInputBase';
 import type { ChipsInputBasePrivateProps } from './types';
@@ -397,11 +397,7 @@ describe(ChipsInputBase, () => {
   it('should call onClear callback when click to clear button', () => {
     render(
       <ChipsInputBaseTest
-        value={[
-          RED_OPTION,
-          BLUE_OPTION,
-          YELLOW_OPTION,
-        ]}
+        value={[RED_OPTION, BLUE_OPTION, YELLOW_OPTION]}
         clearButtonTestId="clear-button"
         clearButtonShown={true}
         onAddChipOption={onAddChipOption}
@@ -413,5 +409,5 @@ describe(ChipsInputBase, () => {
     fireEvent.click(screen.getByTestId('clear-button'));
 
     expect(onClearOptions).toBeCalledTimes(1);
-  })
+  });
 });
