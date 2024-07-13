@@ -19,7 +19,7 @@ import styles from './Search.module.css';
 
 export type RenderIconButtonFn = (
   icon: React.ReactNode,
-  props: Partial<IconButtonProps> | void,
+  props?: Partial<IconButtonProps>,
 ) => React.ReactNode;
 
 export interface SearchProps
