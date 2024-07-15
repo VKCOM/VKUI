@@ -11,6 +11,12 @@ const sizeYClassNames = {
   ['compact']: styles['RichCell--sizeY-compact'],
 };
 
+const alignAfterClassNames = {
+  start: styles['RichCell__content-after--align-start'],
+  center: styles['RichCell__content-after--align-center'],
+  end: styles['RichCell__content-after--align-end'],
+};
+
 export interface RichCellProps extends TappableProps {
   /**
    * Контейнер для текста над `children`.
@@ -52,6 +58,10 @@ export interface RichCellProps extends TappableProps {
    */
   afterCaption?: React.ReactNode;
   /**
+   * Выравнивание after компонента по вертикали
+   */
+  afterAlign?: 'start' | 'center' | 'end';
+  /**
    * Убирает анимацию нажатия.
    */
   disabled?: boolean;
@@ -78,6 +88,7 @@ export const RichCell: React.FC<RichCellProps> & {
   actions,
   multiline,
   className,
+  afterAlign = 'start',
   ...restProps
 }: RichCellProps) => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -109,18 +120,21 @@ export const RichCell: React.FC<RichCellProps> & {
               </Subhead>
             )}
           </div>
-          {(after || afterCaption) && (
-            <div className={styles['RichCell__content-after']}>
-              {after && <div className={styles['RichCell__after-children']}>{after}</div>}
-              {afterCaption && (
-                <div className={styles['RichCell__after-caption']}>{afterCaption}</div>
-              )}
-            </div>
-          )}
         </div>
         {bottom && <div className={styles['RichCell__bottom']}>{bottom}</div>}
         {actions && <div className={styles['RichCell__actions']}>{actions}</div>}
       </div>
+      {(after || afterCaption) && (
+        <div
+          className={classNames(
+            styles['RichCell__content-after'],
+            alignAfterClassNames[afterAlign],
+          )}
+        >
+          {after && <div className={styles['RichCell__after-children']}>{after}</div>}
+          {afterCaption && <div className={styles['RichCell__after-caption']}>{afterCaption}</div>}
+        </div>
+      )}
     </Tappable>
   );
 };

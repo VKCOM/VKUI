@@ -51,6 +51,18 @@
   box-sizing: border-box;
 }
 
+.RichCell__content-after--align-start {
+  align-self: flex-start;
+}
+
+.RichCell__content-after--align-center {
+  align-self: center;
+}
+
+.RichCell__content-after--align-end {
+  align-self: flex-end;
+}
+
 .RichCell__after-children {
   font-weight: var(--vkui--font_weight_accent2);
 }
