@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { StoryId } from '@storybook/types';
 import { SyntaxHighlighter } from '@storybook/components';
-import { SNIPPET_RENDERED } from '@storybook/core/docs-tools';
+import { SNIPPET_RENDERED } from '@storybook/docs-tools';
 import { useChannel } from '@storybook/manager-api';
 
 type SnippetRenderedArgs = {
