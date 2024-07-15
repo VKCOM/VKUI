@@ -4526,12 +4526,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/vkjs@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@vkontakte/vkjs@npm:1.2.0"
+"@vkontakte/vkjs@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@vkontakte/vkjs@npm:1.2.1"
   dependencies:
     "@swc/helpers": "npm:^0.5.0"
-  checksum: 10/1f95a47d5e6446143a80cdc595d99aa72c6ab2def5e35c39afd865ee04558ecc976a83c170c0e6c5364c7b8bf8de5d1d63eff420c98a7d4a40ca5770e8e205f8
+  checksum: 10/30c9dfb43f7aea7e62822edf1c35ef635af0521d08cb6ff9297d0434b0f5eae6095f02675be4d9bdd289dbeed617100cfe9c13b662dcd93e3a9a6a70d1c4f6b4
   languageName: node
   linkType: hard
 
@@ -4718,7 +4718,7 @@ __metadata:
   dependencies:
     "@swc/helpers": "npm:^0.5.12"
     "@vkontakte/icons": "npm:^2.115.0"
-    "@vkontakte/vkjs": "npm:^1.2.0"
+    "@vkontakte/vkjs": "npm:^1.2.1"
     "@vkontakte/vkui-floating-ui": "npm:^0.2.1"
     dayjs: "npm:^1.11.11"
     mitt: "npm:^3.0.1"
