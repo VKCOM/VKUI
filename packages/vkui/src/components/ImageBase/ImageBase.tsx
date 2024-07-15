@@ -83,7 +83,8 @@ export interface ImageBaseProps
    */
   objectFit?: React.CSSProperties['objectFit'];
   /**
-   * Флаг для сохранения пропорций картинки
+   * Флаг для сохранения пропорций картинки.
+   * Для корректной работы необходимо задать размеры хотя бы одной стороны картинки
    */
   keepAspectRatio?: boolean;
 }
