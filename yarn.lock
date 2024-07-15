@@ -3422,6 +3422,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/helpers@npm:^0.5.12":
+  version: 0.5.12
+  resolution: "@swc/helpers@npm:0.5.12"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 10/f04a4728c38a6e75a85b077408e175e1abbc1650a76e4b78008d6380ca1422d9f7f4f9fe61b42f8fb889140f05ced6a5a9983037a8d5d8086bf6bc80a0b2118b
+  languageName: node
+  linkType: hard
+
 "@swc/jest@npm:^0.2.36":
   version: 0.2.36
   resolution: "@swc/jest@npm:0.2.36"
@@ -4562,7 +4571,7 @@ __metadata:
   dependencies:
     "@floating-ui/react-dom": "npm:^2.1.1"
     "@swc/core": "npm:^1.6.13"
-    "@swc/helpers": "npm:^0.5.11"
+    "@swc/helpers": "npm:^0.5.12"
     "@swc/jest": "npm:^0.2.36"
     "@types/jest": "npm:^29.5.12"
     jest: "npm:^29.7.0"
@@ -4700,7 +4709,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
-    "@swc/helpers": "npm:^0.5.11"
+    "@swc/helpers": "npm:^0.5.12"
     "@vkontakte/icons": "npm:^2.115.0"
     "@vkontakte/vkjs": "npm:^1.2.0"
     "@vkontakte/vkui-floating-ui": "npm:^0.2.1"
