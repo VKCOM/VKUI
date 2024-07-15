@@ -1,12 +1,39 @@
+.DateInput__wrapper {
+  position: relative;
+  flex-grow: 1;
+
+  --vkui_internal--DateInput_input_margin_inline_start: 10px;
+  --vkui_internal--DateInput_input_margin_inline_end: 14px;
+}
+
 .DateInput__input {
   display: block;
   flex-grow: 1;
-  margin-inline: 10px 14px;
+  margin-inline: var(--vkui_internal--DateInput_input_margin_inline_start)
+    var(--vkui_internal--DateInput_input_margin_inline_end);
   z-index: var(--vkui_internal--z_index_form_field_element);
   cursor: text;
   white-space: nowrap;
   user-select: text;
   font-variant-numeric: tabular-nums;
+}
+
+.DateInput__input--hidden {
+  opacity: 0;
+}
+
+.DateInput__placeholder {
+  position: absolute;
+  padding-inline: var(--vkui_internal--DateInput_input_margin_inline_start)
+    var(--vkui_internal--DateInput_input_margin_inline_end);
+  inset-block-start: 0;
+  inline-size: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
 }
 
 .DateInput__input--time-divider {
@@ -19,7 +46,7 @@
 }
 
 @media (--sizeY-compact) {
-  .DateInput--sizeY-none .DateInput__input {
-    margin-inline-end: 22px;
+  .DateInput--sizeY-none .DateInput__wrapper {
+    --vkui_internal--DateInput_input_margin_inline_end: 22px;
   }
 }

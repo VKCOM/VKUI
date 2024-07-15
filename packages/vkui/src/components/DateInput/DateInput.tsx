@@ -61,6 +61,7 @@ export interface DateInputProps
   clearFieldLabel?: string;
   showCalendarLabel?: string;
   disableCalendar?: boolean;
+  placeholder?: string;
 }
 
 const elementsConfig = (index: number) => {
@@ -145,6 +146,7 @@ export const DateInput = ({
   prevMonthIcon,
   nextMonthIcon,
   disableCalendar = false,
+  placeholder,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -219,6 +221,8 @@ export const DateInput = ({
     [onChange, removeFocusFromField, closeOnChange, enableTime],
   );
 
+  const showPlaceholder = !open && !value && !!placeholder;
+
   return (
     <FormField
       style={style}
@@ -240,70 +244,80 @@ export const DateInput = ({
       onFocus={callMultiple(handleFieldEnter, onFocus)}
       {...props}
     >
-      <input
-        type="hidden"
-        name={name}
-        value={value ? format(value, enableTime ? 'DD.MM.YYYYTHH:mm' : 'DD.MM.YYYY') : ''}
-      />
-      <Text
-        className={styles['DateInput__input']}
-        onKeyDown={handleKeyDown}
-        // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
-        // из-за чего `.Typography--normalize` перебивает стили.
-        normalize={false}
-        Component="span" // для <span> нормализация не нужна
-      >
-        <InputLike
-          length={2}
-          getRootRef={daysRef}
-          index={0}
-          onElementSelect={setFocusedElement}
-          value={internalValue[0]}
-          label={changeDayLabel}
+      <div className={styles['DateInput__wrapper']}>
+        <input
+          type="hidden"
+          name={name}
+          value={value ? format(value, enableTime ? 'DD.MM.YYYYTHH:mm' : 'DD.MM.YYYY') : ''}
         />
-        <InputLikeDivider>.</InputLikeDivider>
-        <InputLike
-          length={2}
-          getRootRef={monthsRef}
-          index={1}
-          onElementSelect={setFocusedElement}
-          value={internalValue[1]}
-          label={changeMonthLabel}
-        />
-        <InputLikeDivider>.</InputLikeDivider>
-        <InputLike
-          length={4}
-          getRootRef={yearsRef}
-          index={2}
-          onElementSelect={setFocusedElement}
-          value={internalValue[2]}
-          label={changeYearLabel}
-        />
-        {enableTime && (
-          <React.Fragment>
-            <InputLikeDivider className={styles['DateInput__input--time-divider']}>
-              {' '}
-            </InputLikeDivider>
-            <InputLike
-              length={2}
-              getRootRef={hoursRef}
-              index={3}
-              onElementSelect={setFocusedElement}
-              value={internalValue[3]}
-              label={changeHoursLabel}
-            />
-            <InputLikeDivider>:</InputLikeDivider>
-            <InputLike
-              length={2}
-              getRootRef={minutesRef}
-              index={4}
-              onElementSelect={setFocusedElement}
-              value={internalValue[4]}
-              label={changeMinutesLabel}
-            />
-          </React.Fragment>
+        <Text
+          className={classNames(
+            styles['DateInput__input'],
+            showPlaceholder && styles['DateInput__input--hidden'],
+          )}
+          onKeyDown={handleKeyDown}
+          // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
+          // из-за чего `.Typography--normalize` перебивает стили.
+          normalize={false}
+          Component="span" // для <span> нормализация не нужна
+        >
+          <InputLike
+            length={2}
+            getRootRef={daysRef}
+            index={0}
+            onElementSelect={setFocusedElement}
+            value={internalValue[0]}
+            label={changeDayLabel}
+          />
+          <InputLikeDivider>.</InputLikeDivider>
+          <InputLike
+            length={2}
+            getRootRef={monthsRef}
+            index={1}
+            onElementSelect={setFocusedElement}
+            value={internalValue[1]}
+            label={changeMonthLabel}
+          />
+          <InputLikeDivider>.</InputLikeDivider>
+          <InputLike
+            length={4}
+            getRootRef={yearsRef}
+            index={2}
+            onElementSelect={setFocusedElement}
+            value={internalValue[2]}
+            label={changeYearLabel}
+          />
+          {enableTime && (
+            <React.Fragment>
+              <InputLikeDivider className={styles['DateInput__input--time-divider']}>
+                {' '}
+              </InputLikeDivider>
+              <InputLike
+                length={2}
+                getRootRef={hoursRef}
+                index={3}
+                onElementSelect={setFocusedElement}
+                value={internalValue[3]}
+                label={changeHoursLabel}
+              />
+              <InputLikeDivider>:</InputLikeDivider>
+              <InputLike
+                length={2}
+                getRootRef={minutesRef}
+                index={4}
+                onElementSelect={setFocusedElement}
+                value={internalValue[4]}
+                label={changeMinutesLabel}
+              />
+            </React.Fragment>
+          )}
+        </Text>
+        {showPlaceholder && (
+          <Text className={styles['DateInput__placeholder']} Component="span">
+            {placeholder}
+          </Text>
         )}
-      </Text>
+      </div>
       {open && !disableCalendar && (
         <Popper
           targetRef={rootRef}
