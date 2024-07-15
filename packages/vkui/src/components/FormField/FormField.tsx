@@ -23,7 +23,7 @@ const iconAlignClassNames = {
   end: styles['FormField__icon--align-end'],
 };
 
-type FieldIconsAlign = 'start' | 'center' | 'end';
+export type FieldIconsAlign = 'start' | 'center' | 'end';
 
 export interface FormFieldProps {
   status?: 'default' | 'error' | 'valid';
@@ -50,7 +50,7 @@ export interface FormFieldProps {
    */
   after?: React.ReactNode;
   /**
-   * Вертикальное выравнивание иконки слева
+   * Вертикальное выравнивание иконки справа
    */
   afterAlign?: FieldIconsAlign;
   /**
