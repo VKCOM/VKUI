@@ -53,7 +53,7 @@ const Component = ({ className, children }) => {
 };
 ```
 
-Если модификатором является CSS свойством, то стоит предпочесть определения CSS Custom Properties в
+Если модификатор является CSS-свойством, то стоит предпочесть определения CSS Custom Properties
 для его передачи.
 
 ```jsx
