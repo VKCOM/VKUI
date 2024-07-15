@@ -116,6 +116,7 @@
 .ModalPage--desktop .ModalPage__content,
 :global(.vkuiInternalModalRoot__modal--expandable) .ModalPage__content {
   overflow-y: auto;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 

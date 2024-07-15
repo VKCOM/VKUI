@@ -295,13 +295,6 @@ class ModalRootTouchComponent extends React.Component<
     const { shiftY, originalEvent } = event;
     const target = originalEvent.target as HTMLElement;
 
-    if (!event.isY) {
-      if (this.viewportRef.current?.contains(target)) {
-        originalEvent.preventDefault();
-      }
-      return;
-    }
-
     if (!modalState.innerElement?.contains(target)) {
       return originalEvent.preventDefault();
     }
