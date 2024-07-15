@@ -4,7 +4,7 @@ import { CSSCustomProperties } from '../../types';
 import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './AspectRatio.module.css';
 
-export interface AspectRatioProps extends RootComponentProps<HTMLElement> {
+export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
   className?: string;
   /**
    * По умолчанию, вложенный контент будет растягиваться и заполнять весь блок.
