@@ -15,7 +15,7 @@ const useScrollbarWidth = (scrollContainerRef: React.RefObject<HTMLElement | nul
 
   useResizeObserver(scrollContainerRef, recalculateScrollWidth);
 
-  useIsomorphicLayoutEffect(recalculateScrollWidth);
+  useIsomorphicLayoutEffect(recalculateScrollWidth, []);
 
   return scrollWidth;
 };
