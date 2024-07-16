@@ -1,17 +1,5 @@
 .Button {
   position: relative;
-  display: inline-block;
-  box-sizing: border-box;
-  border: 0;
-  min-block-size: var(--vkui--size_button_small_height--compact);
-  margin: 0;
-  padding: 0;
-  border-radius: var(--vkui--size_border_radius--regular);
-  max-inline-size: 100%;
-  min-inline-size: var(--vkui--size_button_minimum_width--regular);
-  transition:
-    background-color 0.15s ease-out,
-    color 0.15s ease-out;
 }
 
 .Button--rounded {
