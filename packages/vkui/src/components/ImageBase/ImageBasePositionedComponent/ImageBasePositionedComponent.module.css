@@ -2,8 +2,62 @@
   position: absolute;
   z-index: var(--vkui_internal--z_index_image_base_positioned_element);
   transition: opacity 0.3s ease-in-out;
+  inset-inline-start: var(--vkui_internal--PositionedComponent_inset_inline_start, initial);
+  inset-inline-end: var(--vkui_internal--PositionedComponent_inset_inline_end, initial);
+  inset-block-start: var(--vkui_internal--PositionedComponent_inset_block_start, initial);
+  inset-block-end: var(--vkui_internal--PositionedComponent_inset_block_end, initial);
 }
 
 .PositionedComponent--hidden {
   opacity: 0;
+}
+
+.PositionedComponent--position-topStart {
+  inset-inline-start: 0;
+  inset-block-start: 0;
+}
+
+.PositionedComponent--position-top {
+  inset-inline-start: 50%;
+  inset-block-start: 0;
+  transform: translateX(-50%);
+}
+
+.PositionedComponent--position-topEnd {
+  inset-inline-end: 0;
+  inset-block-start: 0;
+}
+
+.PositionedComponent--position-bottomStart {
+  inset-inline-start: 0;
+  inset-block-end: 0;
+}
+
+.PositionedComponent--position-bottom {
+  inset-inline-start: 50%;
+  inset-block-end: 0;
+  transform: translateX(-50%);
+}
+
+.PositionedComponent--position-bottomEnd {
+  inset-block-end: 0;
+  inset-inline-end: 0;
+}
+
+.PositionedComponent--position-middleStart {
+  inset-inline-start: 0;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+}
+
+.PositionedComponent--position-middle {
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.PositionedComponent--position-middleEnd {
+  inset-inline-end: 0;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
 }

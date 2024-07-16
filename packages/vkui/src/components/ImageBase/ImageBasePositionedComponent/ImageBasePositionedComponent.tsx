@@ -1,18 +1,39 @@
-import { useEffect } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useEventListener } from '../../../hooks/useEventListener';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ImageBaseContext } from '../context';
 import styles from './ImageBasePositionedComponent.module.css';
 
-type Position = {
+export type PositionedComponentPlacement =
+  | 'top-start'
+  | 'top'
+  | 'top-end'
+  | 'bottom-start'
+  | 'bottom'
+  | 'bottom-end'
+  | 'middle-start'
+  | 'middle'
+  | 'middle-end';
+
+export type PositionedComponentPosition = {
   insetInlineStart?: React.CSSProperties['insetInlineStart'];
   insetInlineEnd?: React.CSSProperties['insetInlineEnd'];
   insetBlockStart?: React.CSSProperties['insetBlockStart'];
   insetBlockEnd?: React.CSSProperties['insetBlockEnd'];
+};
+
+const positionPlacementClassNames: Record<PositionedComponentPlacement, string> = {
+  'top-start': styles['PositionedComponent--position-topStart'],
+  'top': styles['PositionedComponent--position-top'],
+  'top-end': styles['PositionedComponent--position-topEnd'],
+  'bottom-start': styles['PositionedComponent--position-bottomStart'],
+  'bottom': styles['PositionedComponent--position-bottom'],
+  'bottom-end': styles['PositionedComponent--position-bottomEnd'],
+  'middle-start': styles['PositionedComponent--position-middleStart'],
+  'middle': styles['PositionedComponent--position-middle'],
+  'middle-end': styles['PositionedComponent--position-middleEnd'],
 };
 
 export interface ImageBasePositionedComponentProps
@@ -20,7 +41,7 @@ export interface ImageBasePositionedComponentProps
   /**
    * Позиция компонента относительно родителя
    */
-  position: Position;
+  position: PositionedComponentPlacement | PositionedComponentPosition;
   /**
    * Режим отображения компонента:
    *
@@ -46,37 +67,57 @@ export const ImageBasePositionedComponent = ({
   const [hidden, setHidden] = React.useState(visibility !== 'always');
   const { ref: imageWrapperRef } = React.useContext(ImageBaseContext);
 
-  const mouseOverListener = useEventListener('mouseover', () => setHidden(false));
-  const mouseOutListener = useEventListener('mouseout', () => setHidden(true));
+  useIsomorphicLayoutEffect(
+    function resetHidden() {
+      setHidden(visibility === 'on-image-hover');
+    },
+    [visibility],
+  );
 
-  useIsomorphicLayoutEffect(() => {
-    setHidden(visibility === 'on-image-hover');
-  }, [visibility]);
+  React.useEffect(
+    function updateHiddenSubscribe() {
+      const wrapper = (containerRef && containerRef.current) || imageWrapperRef.current;
+      if (wrapper && visibility === 'on-image-hover') {
+        const onMouseOver = () => setHidden(false);
+        const onMouseOut = () => setHidden(true);
 
-  useEffect(() => {
-    const wrapper = (containerRef && containerRef.current) || imageWrapperRef.current;
-    if (wrapper && visibility === 'on-image-hover') {
-      mouseOverListener.add(wrapper);
-      mouseOutListener.add(wrapper);
+        wrapper.addEventListener('mouseover', onMouseOver);
+        wrapper.addEventListener('mouseout', onMouseOut);
 
-      return () => {
-        mouseOverListener.remove();
-        mouseOutListener.remove();
-      };
-    }
-    return;
-  }, [mouseOverListener, mouseOutListener, visibility, imageWrapperRef, containerRef]);
+        return () => {
+          wrapper.removeEventListener('mouseover', onMouseOver);
+          wrapper.removeEventListener('mouseout', onMouseOut);
+        };
+      }
+      return;
+    },
+    [visibility, imageWrapperRef, containerRef],
+  );
+
+  const positionStyle = React.useMemo(
+    () =>
+      typeof position === 'object'
+        ? {
+            '--vkui_internal--PositionedComponent_inset_inline_start': position.insetInlineStart,
+            '--vkui_internal--PositionedComponent_inset_inline_end': position.insetInlineEnd,
+            '--vkui_internal--PositionedComponent_inset_block_start': position.insetBlockStart,
+            '--vkui_internal--PositionedComponent_inset_block_end': position.insetBlockEnd,
+          }
+        : {},
+    [position],
+  );
 
   return (
     <RootComponent
       {...restProps}
       style={{
         ...style,
-        ...position,
+        ...positionStyle,
       }}
       className={classNames(
         styles['PositionedComponent'],
         hidden && styles['PositionedComponent--hidden'],
+        typeof position === 'string' && positionPlacementClassNames[position],
         className,
       )}
     />

@@ -59,6 +59,9 @@ export type {
   ImageBaseExpectedIconProps,
   ImageBaseBadgeProps,
   ImageBaseOverlayProps,
+  ImageBasePositionedComponentProps,
+  PositionedComponentPlacement,
+  PositionedComponentPosition,
 } from './components/ImageBase/ImageBase';
 
 /**

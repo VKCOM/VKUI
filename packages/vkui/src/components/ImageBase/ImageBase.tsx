@@ -7,7 +7,12 @@ import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from 
 import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
-import { ImageBasePositionedComponent } from './ImageBasePositionedComponent/ImageBasePositionedComponent';
+import {
+  ImageBasePositionedComponent,
+  type ImageBasePositionedComponentProps,
+  type PositionedComponentPlacement,
+  type PositionedComponentPosition,
+} from './ImageBasePositionedComponent/ImageBasePositionedComponent';
 import { ImageBaseContext } from './context';
 import type { ImageBaseContextProps, ImageBaseExpectedIconProps, ImageBaseSize } from './types';
 import { validateFallbackIcon, validateSize } from './validators';
@@ -19,6 +24,9 @@ export type {
   ImageBaseBadgeProps,
   ImageBaseOverlayProps,
   ImageBaseContextProps,
+  ImageBasePositionedComponentProps,
+  PositionedComponentPlacement,
+  PositionedComponentPosition,
 };
 
 export {
