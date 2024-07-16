@@ -85,5 +85,6 @@ export const WithAllFeatures: Story = {
     beforeSubtitle: <Icon12Tag />,
     afterSubtitle: <Icon12Fire />,
     subtitle: 'SOHN — Conrad',
+    aside: <Link>Показать все</Link>,
   },
 };
