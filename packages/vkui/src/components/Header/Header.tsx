@@ -122,7 +122,12 @@ export const Header = ({
       )}
     >
       {before && (
-        <div className={classNames(styles['Header__before'], subtitle && styles['Header__before--withSubtitle'])}>
+        <div
+          className={classNames(
+            styles['Header__before'],
+            subtitle && styles['Header__before--withSubtitle'],
+          )}
+        >
           {before}
         </div>
       )}
@@ -133,11 +138,7 @@ export const Header = ({
           mode={mode}
           size={size}
         >
-          {beforeTitle && (
-            <div className={styles['Header__content__before']}>
-              {beforeTitle}
-            </div>
-          )}
+          {beforeTitle && <div className={styles['Header__content__before']}>{beforeTitle}</div>}
           <span
             className={classNames(
               styles['Header__content-in'],
@@ -146,11 +147,7 @@ export const Header = ({
           >
             {children}
           </span>
-          {afterTitle && (
-            <div className={styles['Header__content__after']}>
-              {afterTitle}
-            </div>
-          )}
+          {afterTitle && <div className={styles['Header__content__after']}>{afterTitle}</div>}
           {hasReactNode(indicator) && (
             <Footnote className={styles['Header__indicator']} weight="2">
               {indicator}
@@ -160,9 +157,7 @@ export const Header = ({
         {hasReactNode(subtitle) && (
           <div className={styles['Header__subtitleWrapper']}>
             {beforeSubtitle && (
-              <div className={styles['Header__subtitleBefore']}>
-                {beforeSubtitle}
-              </div>
+              <div className={styles['Header__subtitleBefore']}>{beforeSubtitle}</div>
             )}
             <Subhead
               className={classNames(
@@ -174,9 +169,7 @@ export const Header = ({
               {subtitle}
             </Subhead>
             {afterSubtitle && (
-              <div className={styles['Header__subtitleAfter']}>
-                {afterSubtitle}
-              </div>
+              <div className={styles['Header__subtitleAfter']}>{afterSubtitle}</div>
             )}
           </div>
         )}

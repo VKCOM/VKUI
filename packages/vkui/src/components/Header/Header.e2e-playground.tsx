@@ -3,8 +3,8 @@ import {
   Icon12Tag,
   Icon16LockOutline,
   Icon16UnlockOutline,
-  Icon28UserCircleFillBlue
-} from "@vkontakte/icons";
+  Icon28UserCircleFillBlue,
+} from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Counter } from '../Counter/Counter';
 import { Link } from '../Link/Link';
@@ -92,7 +92,7 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           beforeSubtitle: [<Icon12Tag key="beforeSubtitle" />],
           afterSubtitle: [<Icon12Fire key="afterSubtitle" />],
           subtitle: ['SOHN — Conrad'],
-        }
+        },
       ]}
     >
       {({ children, ...restProps }: HeaderProps) => (

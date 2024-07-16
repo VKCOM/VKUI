@@ -1,4 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
+import {
+  Icon12Fire,
+  Icon12Tag,
+  Icon16LockOutline,
+  Icon16UnlockOutline,
+  Icon28UserCircleFillBlue,
+} from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Counter } from '../Counter/Counter';
@@ -66,4 +73,17 @@ export const WithCounter: Story = {
     withSinglePanel,
     withVKUILayout,
   ],
+};
+
+export const WithAllFeatures: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    before: <Icon28UserCircleFillBlue />,
+    beforeTitle: <Icon16LockOutline />,
+    afterTitle: <Icon16UnlockOutline />,
+    beforeSubtitle: <Icon12Tag />,
+    afterSubtitle: <Icon12Fire />,
+    subtitle: 'SOHN — Conrad',
+  },
 };
