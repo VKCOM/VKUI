@@ -66,15 +66,15 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@swc/helpers": "^0.5.11",
+    "@swc/helpers": "^0.5.12",
     "@vkontakte/icons": "^2.115.0",
-    "@vkontakte/vkjs": "^1.2.0",
+    "@vkontakte/vkjs": "^1.2.1",
     "@vkontakte/vkui-floating-ui": "^0.2.1",
     "dayjs": "^1.11.11",
     "mitt": "^3.0.1"
   },
   "devDependencies": {
-    "storybook": "8.1.10"
+    "storybook": "8.2.2"
   },
   "size-limit": [
     {
