@@ -193,9 +193,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       showWithDelay.cancel();
       hideWithDelay.cancel();
 
-      if (shownLocalState.reason !== 'focus' && shownLocalState.reason !== 'click') {
-        hideWithDelay();
-      }
+      hideWithDelay();
     }
   });
 
