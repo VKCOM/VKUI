@@ -1,3 +1,5 @@
+import * as React from 'react';
+import type { MediaQueries } from '../../lib/adaptivity';
 import { rubberbandIfOutOfBounds } from '../../lib/animation';
 import type { ShiftData, SnackbarPlacement } from './types';
 
@@ -21,9 +23,14 @@ export function resolveOffsetYCssStyle(
   }
 }
 
-export function getInitialShiftData(width: number, height: number) {
+export function getInitialShiftData(
+  width: number,
+  height: number,
+  mediaQueries: MediaQueries,
+): ShiftData {
   return {
     shifted: false,
+    isDesktop: mediaQueries.smallTabletPlus.matches, // eslint-disable-line no-restricted-properties
     x: 0,
     y: 0,
     width,
@@ -35,29 +42,24 @@ export function getMovedShiftData(
   placement: SnackbarPlacement,
   shiftData: ShiftData,
   nextShift: { x: number; y: number },
-) {
-  switch (placement) {
-    case 'top-start':
-    case 'bottom-start':
+): ShiftData {
+  /* istanbul ignore else: TODO чтобы протестировать кейс в блоке else, нужно мокать useMediaQueries(), чтобы перебивать mediaQueries.smallTabletPlus.matches */
+  if (shiftData.isDesktop) {
+    if (placement.endsWith('start')) {
       shiftData.x = rubberbandIfOutOfBounds(nextShift.x, -shiftData.width, 0);
-      break;
-    case 'top-end':
-    case 'bottom-end':
+    } else if (placement.endsWith('end')) {
       shiftData.x = rubberbandIfOutOfBounds(nextShift.x, 0, shiftData.width);
-      break;
+    }
+
+    if (placement.startsWith('bottom')) {
+      shiftData.y = rubberbandIfOutOfBounds(nextShift.y, 0, shiftData.height);
+    }
+  } else if (placement.startsWith('bottom')) {
+    shiftData.x = rubberbandIfOutOfBounds(nextShift.x, -shiftData.width, 0);
   }
 
-  switch (placement) {
-    case 'top-start':
-    case 'top':
-    case 'top-end':
-      shiftData.y = rubberbandIfOutOfBounds(nextShift.y, -shiftData.height, 0);
-      break;
-    case 'bottom-start':
-    case 'bottom':
-    case 'bottom-end':
-      shiftData.y = rubberbandIfOutOfBounds(nextShift.y, 0, shiftData.height);
-      break;
+  if (placement.startsWith('top')) {
+    shiftData.y = rubberbandIfOutOfBounds(nextShift.y, -shiftData.height, 0);
   }
 
   shiftData.shifted = true;
@@ -76,35 +78,37 @@ export function shouldBeClosedByShiftData(
   if (!shiftData.shifted) {
     return false;
   }
+
   const shouldBeClosedThreshold = { x: false, y: false };
   const shouldBeClosedByVelocity = { x: false, y: false };
 
-  switch (placement) {
-    case 'top-start':
-    case 'bottom-start':
+  /* istanbul ignore else: TODO чтобы протестировать кейс в блоке else, нужно мокать useMediaQueries(), чтобы перебивать mediaQueries.smallTabletPlus.matches */
+  if (shiftData.isDesktop) {
+    if (placement.endsWith('start')) {
       shouldBeClosedThreshold.x = relativeClientRect.x < -relativeClientRect.width / 2;
-      shouldBeClosedByVelocity.x = velocity.x < -MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE;
-      break;
-    case 'top-end':
-    case 'bottom-end':
+      shouldBeClosedByVelocity.x =
+        relativeClientRect.x < 0 ? velocity.x < -MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE : false;
+    } else if (placement.endsWith('end')) {
       shouldBeClosedThreshold.x = relativeClientRect.x > relativeClientRect.width / 2;
-      shouldBeClosedByVelocity.x = velocity.x > MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE;
-      break;
+      shouldBeClosedByVelocity.x =
+        relativeClientRect.x > 0 ? velocity.x > MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE : false;
+    }
+
+    if (placement.startsWith('bottom')) {
+      shouldBeClosedThreshold.y = relativeClientRect.y > relativeClientRect.height / 2;
+      shouldBeClosedByVelocity.y =
+        relativeClientRect.y > 0 ? velocity.y > MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE : false;
+    }
+  } else if (placement.startsWith('bottom')) {
+    shouldBeClosedThreshold.x = relativeClientRect.x < -relativeClientRect.width / 2;
+    shouldBeClosedByVelocity.x =
+      relativeClientRect.x < 0 ? velocity.x < -MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE : false;
   }
 
-  switch (placement) {
-    case 'top-start':
-    case 'top':
-    case 'top-end':
-      shouldBeClosedThreshold.y = relativeClientRect.y < -relativeClientRect.height / 2;
-      shouldBeClosedByVelocity.y = velocity.y < -MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE;
-      break;
-    case 'bottom-start':
-    case 'bottom':
-    case 'bottom-end':
-      shouldBeClosedThreshold.y = relativeClientRect.y > relativeClientRect.height / 2;
-      shouldBeClosedByVelocity.y = velocity.y > MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE;
-      break;
+  if (placement.startsWith('top')) {
+    shouldBeClosedThreshold.y = relativeClientRect.y < -relativeClientRect.height / 2;
+    shouldBeClosedByVelocity.y =
+      relativeClientRect.y < 0 ? velocity.y < -MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE : false;
   }
 
   return (
