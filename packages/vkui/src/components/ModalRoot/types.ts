@@ -70,6 +70,7 @@ export interface ModalsStateEntry extends ModalElements {
    * Отключает возможность закрыть модалку стандартными способами
    */
   preventClose?: boolean;
+  allowHorizontalScroll?: boolean;
 }
 
 export interface ModalRootProps {

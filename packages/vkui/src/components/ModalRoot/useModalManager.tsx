@@ -101,6 +101,7 @@ export function useModalManager(
       id: id ?? null,
     };
 
+    state.allowHorizontalScroll = Modal.props.allowHorizontalScroll;
     state.onOpen = Modal.props.onOpen;
     state.onOpened = Modal.props.onOpened;
     state.onClose = Modal.props.onClose;

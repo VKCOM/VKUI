@@ -119,6 +119,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.ModalPage--allow-horizontal-scroll .ModalPage__content {
+  overflow-x: auto;
+}
+
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .ModalPage--desktop .ModalPage__content-in,
 :global(.vkuiInternalModalRoot__modal--expandable) .ModalPage__content-in {

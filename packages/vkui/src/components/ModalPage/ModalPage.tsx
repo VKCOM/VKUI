@@ -75,6 +75,10 @@ export interface ModalPageProps extends HTMLAttributesWithRootRef<HTMLDivElement
    * ⚠️ ВНИМАНИЕ: использование этой опции негативно сказывается на пользовательском опыте
    */
   preventClose?: boolean;
+  /**
+   * Разрешаем на свой страх и риск использовать горизонтальный скрол внутри модалки
+   * */
+  allowHorizontalScroll?: boolean;
 }
 
 const warn = warnOnce('ModalPage');
@@ -101,6 +105,7 @@ export const ModalPage = ({
   modalDismissButtonTestId,
   getRootRef,
   preventClose,
+  allowHorizontalScroll,
   ...restProps
 }: ModalPageProps): React.ReactNode => {
   const generatingId = React.useId();
@@ -141,6 +146,7 @@ export const ModalPage = ({
           styles['ModalPage'],
           platform === 'ios' && styles['ModalPage--ios'],
           isDesktop && styles['ModalPage--desktop'],
+          allowHorizontalScroll && styles['ModalPage--allow-horizontal-scroll'],
           sizeX === 'regular' && 'vkuiInternalModalPage--sizeX-regular',
           typeof size === 'string' && sizeClassName[size],
         )}
