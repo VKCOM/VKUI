@@ -17,12 +17,12 @@
 
 .Header__before {
   align-self: center;
-  margin-inline-end: 8px;
-  margin-block-start: 2px;
+  margin-inline-end: var(--vkui--spacing_size_m);
+  margin-block-start: var(--vkui--spacing_size_3xs);
 }
 
 .Header__before--withSubtitle {
-  margin-block-start: 6px;
+  margin-block-start: var(--vkui--spacing_size_s);
 }
 
 .Header__subtitleWrapper {
@@ -31,19 +31,19 @@
 }
 
 .Header__subtitleBefore {
-  margin-inline-end: 4px;
+  margin-inline-end: var(--vkui--spacing_size_xs);
 }
 
 .Header__subtitleAfter {
-  margin-inline-start: 4px;
+  margin-inline-start: var(--vkui--spacing_size_xs);
 }
 
 .Header__content__before {
-  margin-inline-end: 4px;
+  margin-inline-end: var(--vkui--spacing_size_xs);
 }
 
 .Header__content__after {
-  margin-inline-start: 4px;
+  margin-inline-start: var(--vkui--spacing_size_xs);
 }
 
 .Header__main {
@@ -82,7 +82,7 @@
 
 .Header__indicator {
   color: var(--vkui--color_text_secondary);
-  margin-inline-start: 4px;
+  margin-inline-start: var(--vkui--spacing_size_xs);
   flex-shrink: 0;
 }
 
@@ -188,7 +188,7 @@
 :global(.vkuiInternalGroup--mode-card)
   > :global(.vkuiInternalTappable):first-child
   > .Header:not(.Header--mode-tertiary) {
-  margin-block-start: -4px;
+  margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
 }
 
 @media (--sizeX-regular) {
@@ -198,7 +198,7 @@
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
     > :global(.vkuiInternalTappable):first-child
     > .Header:not(.Header--mode-tertiary) {
-    margin-block-start: -4px;
+    margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
   }
 }
 
