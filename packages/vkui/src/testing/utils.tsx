@@ -8,7 +8,6 @@ import { configureAxe, toHaveNoViolations } from 'jest-axe';
 import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
-import { REDUCE_MOTION_MEDIA_QUERY } from '../lib/animation';
 import { isHTMLElement } from '../lib/dom';
 import { ImgOnlyAttributes } from '../lib/utils';
 import { HasChildren } from '../types';
@@ -406,11 +405,11 @@ export async function waitCSSTransitionEnd(el: HTMLElement | null, eventData?: o
 
 export const withRegExp = (v: string) => new RegExp(v);
 
-export const matchMediaReduceMotionMock = (reduce: boolean) => {
+export const matchMediaMock = (queries?: string | string[]) => {
   Object.defineProperty(global, 'matchMedia', {
     writable: true,
     value: jest.fn().mockImplementation((query) => ({
-      matches: reduce ? REDUCE_MOTION_MEDIA_QUERY === query : false,
+      matches: queries ? queries.includes(query) : false,
       media: query,
       onchange: null,
       addListener: jest.fn(), // устарело
