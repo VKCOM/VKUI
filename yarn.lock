@@ -4584,9 +4584,6 @@ __metadata:
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0"
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0"
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
-    "@size-limit/file": "npm:^11.1.4"
-    "@size-limit/webpack": "npm:^11.1.4"
-    "@size-limit/webpack-css": "npm:^11.1.4"
     "@swc/cli": "npm:^0.4.0"
     "@swc/core": "npm:1.6.13"
     "@swc/jest": "npm:^0.2.36"
@@ -4645,7 +4642,6 @@ __metadata:
     react-dom: "npm:^18.3.1"
     semver: "npm:^7.6.2"
     shx: "npm:^0.3.4"
-    size-limit: "npm:^11.1.4"
     style-loader: "npm:^3.3.4"
     stylelint: "npm:^16.7.0"
     stylelint-config-standard: "npm:^36.0.1"
@@ -4700,12 +4696,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
+    "@size-limit/file": "npm:^11.1.4"
+    "@size-limit/webpack": "npm:^11.1.4"
+    "@size-limit/webpack-css": "npm:^11.1.4"
     "@swc/helpers": "npm:^0.5.12"
     "@vkontakte/icons": "npm:^2.115.0"
     "@vkontakte/vkjs": "npm:^1.2.1"
     "@vkontakte/vkui-floating-ui": "npm:^0.2.1"
     dayjs: "npm:^1.11.11"
     mitt: "npm:^3.0.1"
+    size-limit: "npm:^11.1.4"
     storybook: "npm:8.2.2"
   peerDependencies:
     react: ^18.2.0
