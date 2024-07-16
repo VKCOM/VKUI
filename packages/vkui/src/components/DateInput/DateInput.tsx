@@ -14,6 +14,7 @@ import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
 import { Popper } from '../Popper/Popper';
+import { EllipsisText } from '../Typography/EllipsisText/EllipsisText';
 import { Text } from '../Typography/Text/Text';
 import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
@@ -313,9 +314,7 @@ export const DateInput = ({
           )}
         </Text>
         {showPlaceholder && (
-          <Text className={styles['DateInput__placeholder']} Component="span">
-            {placeholder}
-          </Text>
+          <EllipsisText className={styles['DateInput__placeholder']}>{placeholder}</EllipsisText>
         )}
       </div>
       {open && !disableCalendar && (
