@@ -87,19 +87,19 @@ ReactDOM.render(
 ```jsx static
 import { ConfigProvider, AppRoot, Button } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/components.css';
-import '@vkontakte/vkui-tokens/themes/paradigmBase/cssVars/declarations/onlyVariables.css';
-import '@vkontakte/vkui-tokens/themes/paradigmBaseDark/cssVars/declarations/onlyVariablesLocal.css';
+import '@vkontakte/vkui-tokens/themes/paradigmBase/cssVars/declarations/onlyVariables.css'; // базовая тема должна подключаться через `:root`, поэтому здесь импортируется `onlyVariables.css`
+import '@vkontakte/vkui-tokens/themes/paradigmBaseDark/cssVars/declarations/onlyVariablesLocal.css'; // остальные должны быть завязаны на CSS класс, поэтому здесь импортируется `onlyVariablesLocal.css`
 
 // раз iOS мы не затрагиваем, то необходимо подключить стили по умолчанию
-import '@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariables.css';
+import '@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css';
 import '@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css';
 
 ReactDOM.render(
   <ConfigProvider
     tokensClassNames={{
       android: {
-        light: 'myCustomThemeTokens--appearance-light',
-        dark: 'myCustomThemeTokens--appearance-dark',
+        light: 'vkui--paradigmBase--light',
+        dark: 'vkui--paradigmBase--dark',
       },
     }}
   >
@@ -120,8 +120,8 @@ import '@vkontakte/vkui/dist/components.css';
 import './myCustomThemeTokens.css';
 
 // раз iOS мы не затрагиваем, то необходимо подключить стили по умолчанию
-import '@vkontakte/vkui-tokens/themes/myCustomIOS/cssVars/declarations/onlyVariables.css';
-import '@vkontakte/vkui-tokens/themes/myCustomIOSDark/cssVars/declarations/onlyVariablesLocal.css';
+import '@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css';
+import '@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css';
 
 ReactDOM.render(
   <ConfigProvider
