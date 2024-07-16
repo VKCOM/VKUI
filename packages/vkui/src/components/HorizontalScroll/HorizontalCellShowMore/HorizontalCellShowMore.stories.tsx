@@ -9,7 +9,7 @@ import { HorizontalScroll } from '../HorizontalScroll';
 import { HorizontalCellShowMore, HorizontalCellShowMoreProps } from './HorizontalCellShowMore';
 
 const story: Meta<HorizontalCellShowMoreProps> = {
-  title: 'Blocks/HorizontalCellShowMore',
+  title: 'Layout/HorizontalScroll/HorizontalCellShowMore',
   component: HorizontalCellShowMore,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {

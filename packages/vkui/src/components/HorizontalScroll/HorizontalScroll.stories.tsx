@@ -12,7 +12,7 @@ import { Spinner } from '../Spinner/Spinner';
 import { HorizontalScroll, HorizontalScrollProps } from './HorizontalScroll';
 
 const story: Meta<HorizontalScrollProps> = {
-  title: 'Layout/HorizontalScroll',
+  title: 'Layout/HorizontalScroll/HorizontalScroll',
   component: HorizontalScroll,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
