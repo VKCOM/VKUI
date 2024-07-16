@@ -6,7 +6,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import {CSSCustomProperties, HasComponent, HasRootRef} from '../../types';
+import { CSSCustomProperties, HasComponent, HasRootRef } from '../../types';
 import { useScrollbarWidth } from './useScrollbarWidth';
 import styles from './FormField.module.css';
 
