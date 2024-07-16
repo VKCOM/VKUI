@@ -1,41 +1,23 @@
-/**
- * Храним брейкпоинты в JS файле для синхронизации значений между TS и CSS.
- *
- * @type {{
- *  DESKTOP: 1280,
- *  TABLET: 1024,
- *  SMALL_TABLET: 768,
- *  MOBILE: 320,
- *  MOBILE_LANDSCAPE_HEIGHT: 415,
- *  MEDIUM_HEIGHT: 720
- * }}
- */
-const BREAKPOINTS = {
+export const BREAKPOINTS = {
   DESKTOP: 1280,
   TABLET: 1024,
   SMALL_TABLET: 768,
   MOBILE: 320,
   MOBILE_LANDSCAPE_HEIGHT: 415,
   MEDIUM_HEIGHT: 720,
-};
+} as const;
 
 /**
  * Луч [a;+∞)
- *
- * @param {number} a
- * @returns {string}
  */
-function widthPlus(a) {
+export function widthPlus(a: number): string {
   return `(min-width: ${a}px)`;
 }
 
 /**
  * Открытый луч (-∞;b)
- *
- * @param {number} b
- * @returns {string}
  */
-function widthMinus(b) {
+export function widthMinus(b: number): string {
   // NOTE: `not` плохо поддерживается, поэтому используем max-width и вычитаем
   // от числа 0.1
   return `(max-width: ${b - 0.1}px)`;
@@ -43,32 +25,22 @@ function widthMinus(b) {
 
 /**
  * Полуинтервал [a;b)
- *
- * @param {number} a
- * @param {number} b
- * @returns {string}
  */
-function widthHalfInterval(a, b) {
+export function widthHalfInterval(a: number, b: number): string {
   return `${widthPlus(a)} and ${widthMinus(b)}`;
 }
 
 /**
  * Луч [a;+∞)
- *
- * @param {number} a
- * @returns {string}
  */
-function heightPlus(a) {
+export function heightPlus(a: number): string {
   return `(min-height: ${a}px)`;
 }
 
 /**
  * Открытый луч (-∞;b)
- *
- * @param {number} b
- * @returns {string}
  */
-function heightMinus(b) {
+export function heightMinus(b: number): string {
   // NOTE: `not` плохо поддерживается, поэтому используем max-width и вычитаем
   // от числа 0.1
   return `(max-height: ${b - 0.1}px)`;
@@ -76,16 +48,12 @@ function heightMinus(b) {
 
 /**
  * Полуинтервал [a;b)
- *
- * @param {number} a
- * @param {number} b
- * @returns {string}
  */
-function heightHalfInterval(a, b) {
+export function heightHalfInterval(a: number, b: number): string {
   return `${heightPlus(a)} and ${heightMinus(b)}`;
 }
 
-const MEDIA_QUERIES = {
+export const MEDIA_QUERIES = {
   DESKTOP_PLUS: widthPlus(BREAKPOINTS.DESKTOP),
 
   TABLET: widthHalfInterval(BREAKPOINTS.TABLET, BREAKPOINTS.DESKTOP),
@@ -98,15 +66,4 @@ const MEDIA_QUERIES = {
   MEDIUM_HEIGHT: heightPlus(BREAKPOINTS.MEDIUM_HEIGHT),
 
   MOBILE_LANDSCAPE_HEIGHT: heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT),
-};
-
-module.exports = {
-  BREAKPOINTS,
-  MEDIA_QUERIES,
-  widthHalfInterval,
-  widthPlus,
-  widthMinus,
-  heightHalfInterval,
-  heightPlus,
-  heightMinus,
-};
+} as const;

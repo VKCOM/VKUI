@@ -56,25 +56,25 @@
     "test:e2e-update": "./scripts/generate_env_docker.sh -u && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e:ci": "yarn run -T playwright test --config playwright-ct.config.ts",
     "test:e2e-update:ci": "yarn run test:e2e:ci --update-snapshots",
-    "lint:generated-files": "yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
+    "lint:generated-files": "yarn run -T tsc scripts/generateCSSCustomMedias.mjs --checkJs --module ESNext --moduleResolution node --resolveJsonModule --allowSyntheticDefaultImports --noEmit && yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
     "storybook": "bash -c 'source .env && yarn run -T cross-env SANDBOX=\\.storybook storybook dev -p ${STORYBOOK_DEV_PORT:=6006}'",
     "storybook:build": "yarn run -T cross-env SANDBOX=\\.storybook FROM_STORYBOOK=1 storybook build",
-    "generate:css-custom-medias": "node scripts/generateCSSCustomMedias.js"
+    "generate:css-custom-medias": "node scripts/generateCSSCustomMedias.mjs"
   },
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@swc/helpers": "^0.5.11",
+    "@swc/helpers": "^0.5.12",
     "@vkontakte/icons": "^2.115.0",
-    "@vkontakte/vkjs": "^1.2.0",
+    "@vkontakte/vkjs": "^1.2.1",
     "@vkontakte/vkui-floating-ui": "^0.2.1",
     "dayjs": "^1.11.11",
     "mitt": "^3.0.1"
   },
   "devDependencies": {
-    "storybook": "8.1.10"
+    "storybook": "8.2.2"
   },
   "size-limit": [
     {

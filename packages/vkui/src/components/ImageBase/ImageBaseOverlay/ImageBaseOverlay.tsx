@@ -15,6 +15,18 @@ import type {
 } from './types';
 import styles from './ImageBaseOverlay.module.css';
 
+function DevelopmentCheck({ children }: Pick<ImageBaseOverlayInteractiveProps, 'children'>) {
+  const { size } = React.useContext(ImageBaseContext);
+
+  if (process.env.NODE_ENV === 'development') {
+    if (children) {
+      validateOverlayIcon(size, { name: 'children', value: children });
+    }
+  }
+
+  return null;
+}
+
 export type ImageBaseOverlayProps =
   | ImageBaseOverlayInteractiveProps
   | ImageBaseOverlayNonInteractiveProps;
@@ -31,31 +43,26 @@ const ImageBaseOverlayInteractive = ({
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'inside' });
   const keyboardHandlers = useKeyboard();
 
-  if (process.env.NODE_ENV === 'development') {
-    if (children) {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { size } = React.useContext(ImageBaseContext);
-      validateOverlayIcon(size, { name: 'children', value: children });
-    }
-  }
-
   return (
-    <div
-      {...restProps}
-      tabIndex={0}
-      role="button"
-      className={classNames(
-        styles['ImageBaseOverlay--clickable'],
-        (focusVisible || overlayShown) && styles['ImageBaseOverlay--visible'],
-        focusVisibleClassNames,
-        className,
-      )}
-      ref={getRootRef}
-      {...focusEvents}
-      {...keyboardHandlers}
-    >
-      {children}
-    </div>
+    <>
+      <div
+        {...restProps}
+        tabIndex={0}
+        role="button"
+        className={classNames(
+          styles['ImageBaseOverlay--clickable'],
+          (focusVisible || overlayShown) && styles['ImageBaseOverlay--visible'],
+          focusVisibleClassNames,
+          className,
+        )}
+        ref={getRootRef}
+        {...focusEvents}
+        {...keyboardHandlers}
+      >
+        {children}
+      </div>
+      {process.env.NODE_ENV === 'development' && <DevelopmentCheck>{children}</DevelopmentCheck>}
+    </>
   );
 };
 
