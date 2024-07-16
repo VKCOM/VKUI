@@ -14,7 +14,7 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
   wide?: boolean;
 }
 
-const modeClassNames: Record<Exclude<SeparatorProps['mode'], undefined>, string> = {
+const modeClassNames = {
   'primary': styles['Separator--mode-primary'],
   'secondary': styles['Separator--mode-secondary'],
   'primary-alpha': styles['Separator--mode-primaryAlpha'],
