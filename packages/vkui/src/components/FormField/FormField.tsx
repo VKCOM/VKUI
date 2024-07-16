@@ -6,7 +6,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HasComponent, HasRootRef } from '../../types';
+import {CSSCustomProperties, HasComponent, HasRootRef} from '../../types';
 import { useScrollbarWidth } from './useScrollbarWidth';
 import styles from './FormField.module.css';
 
@@ -119,7 +119,7 @@ export const FormField = ({
 
   const scrollbarWidth = useScrollbarWidth(scrollContainerRef);
 
-  const scrollContainerStyles = React.useMemo(
+  const scrollContainerStyles: CSSCustomProperties = React.useMemo(
     () => ({
       '--vkui_internal--FormField_padding_inline-start': `${paddingInlineStart}px`,
       '--vkui_internal--FormField_padding_inline-end': `${paddingInlineEnd}px`,
@@ -127,7 +127,7 @@ export const FormField = ({
     [paddingInlineStart, paddingInlineEnd],
   );
 
-  const afterStyles = React.useMemo(
+  const afterStyles: CSSCustomProperties = React.useMemo(
     () => ({
       '--vkui_internal--FormField_inset_inline-end': `${scrollbarWidth}px`,
     }),
@@ -158,7 +158,6 @@ export const FormField = ({
       <div
         className={styles['FormField__scroll-container']}
         ref={scrollContainerRef}
-        // @ts-expect-error: TS2559 TS ругается на переменные
         style={scrollContainerStyles}
       >
         <div className={styles['FormField__content']}>{children}</div>
@@ -172,7 +171,6 @@ export const FormField = ({
         <span
           ref={afterRef}
           className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}
-          // @ts-expect-error: TS2559 TS ругается на переменные
           style={afterStyles}
         >
           {after}
