@@ -38,8 +38,8 @@ const SimpleSearch = ({ goHeaderSearch }) => {
     setSearch(e.target.value);
   };
 
-  const thematicsFiltered = thematics.filter(
-    ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
+  const thematicsFiltered = thematics.filter(({ name }) =>
+    name.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
