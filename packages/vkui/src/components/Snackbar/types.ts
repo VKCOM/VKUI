@@ -6,4 +6,11 @@ export type SnackbarPlacement =
   | 'bottom'
   | 'bottom-end';
 
-export type ShiftData = { x: number; y: number; width: number; height: number; shifted: boolean };
+export type ShiftData = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  shifted: boolean;
+  isDesktop: boolean;
+};
