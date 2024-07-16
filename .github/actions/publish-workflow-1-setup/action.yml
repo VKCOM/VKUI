@@ -4,6 +4,9 @@ description: It setting up the repository environment for publish
 runs:
   using: composite
   steps:
+    - name: Enable Corepack
+      run: corepack enable
+      shell: bash
     - name: Setup NodeJS
       uses: actions/setup-node@v4
       with:

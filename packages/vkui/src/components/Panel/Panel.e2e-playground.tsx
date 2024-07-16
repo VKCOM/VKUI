@@ -58,6 +58,10 @@ export const PanelModePlayground = (props: ComponentPlaygroundProps) => {
           $adaptivity: 'x',
           mode: ['plain', 'card', undefined],
         },
+        {
+          $adaptivity: 'x',
+          disableBackground: [true],
+        },
       ]}
     >
       {(props: PanelProps) => (

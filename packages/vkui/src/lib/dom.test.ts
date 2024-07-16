@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/react';
 import { getFakeMouseEvent, getFakeTouchEvent } from '../testing/utils';
 import {
   contains,
@@ -8,6 +9,7 @@ import {
   getScrollHeight,
   getScrollRect,
   getTransformedParentCoords,
+  initializeBrowserGesturePreventionEffect,
   TRANSFORM_DEFAULT_VALUES,
   WILL_CHANGE_DEFAULT_VALUES,
 } from './dom';
@@ -243,5 +245,37 @@ describe(getFirstTouchEventData, () => {
     const { clientX, clientY } = getFirstTouchEventData(new UIEvent('unknown'));
     expect(clientX).toBe(0);
     expect(clientY).toBe(0);
+  });
+});
+
+describe(initializeBrowserGesturePreventionEffect, () => {
+  it('should set and unset CSS class to <html />', () => {
+    const dispose = jest.fn().mockImplementation(initializeBrowserGesturePreventionEffect(window));
+
+    expect(document.documentElement).toHaveClass('vkui--disable-overscroll-behavior');
+
+    dispose();
+
+    expect(document.documentElement).not.toHaveClass('vkui--disable-overscroll-behavior');
+    expect(dispose).toHaveBeenCalled();
+  });
+
+  it('should prevent touchmove event', () => {
+    const dispose = jest.fn().mockImplementation(initializeBrowserGesturePreventionEffect(window));
+
+    const preventDefault = jest.fn();
+    const stopPropagation = jest.fn();
+    const touchMoveEvent = new TouchEvent('touchmove');
+    Object.assign(touchMoveEvent, { preventDefault, stopPropagation });
+
+    fireEvent(window, touchMoveEvent);
+    expect(preventDefault).toHaveBeenCalledTimes(1);
+    expect(stopPropagation).toHaveBeenCalledTimes(1);
+
+    dispose();
+
+    fireEvent(window, touchMoveEvent);
+    expect(preventDefault).toHaveBeenCalledTimes(1);
+    expect(stopPropagation).toHaveBeenCalledTimes(1);
   });
 });

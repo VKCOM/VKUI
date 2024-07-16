@@ -45,7 +45,11 @@
   block-size: 32px;
 }
 
-.UsersStack__photo + .UsersStack__photo {
+.UsersStack__photoWrapper {
+  display: flex;
+}
+
+.UsersStack__photoWrapper:not(:first-child) {
   margin-inline-start: -2px;
 }
 

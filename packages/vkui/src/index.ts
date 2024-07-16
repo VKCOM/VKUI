@@ -222,7 +222,11 @@ export { OnboardingTooltipContainer } from './components/OnboardingTooltip/Onboa
 export { Counter } from './components/Counter/Counter';
 export type { CounterProps } from './components/Counter/Counter';
 export { UsersStack } from './components/UsersStack/UsersStack';
-export type { UsersStackProps } from './components/UsersStack/UsersStack';
+export type {
+  UsersStackProps,
+  UsersStackPhoto,
+  UsersStackRenderWrapperProps,
+} from './components/UsersStack/UsersStack';
 export { Separator } from './components/Separator/Separator';
 export type { SeparatorProps } from './components/Separator/Separator';
 export { Spacing } from './components/Spacing/Spacing';

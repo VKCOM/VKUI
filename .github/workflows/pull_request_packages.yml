@@ -44,6 +44,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
+
       - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:
@@ -102,6 +106,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
+
       - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:
@@ -152,6 +160,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
+
       - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:
@@ -180,6 +192,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
+
       - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:
@@ -206,6 +222,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
 
       - name: Setup NodeJS
         uses: actions/setup-node@v4
