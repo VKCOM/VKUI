@@ -206,7 +206,7 @@ export type { ImageProps, ImageBadgeProps, ImageOverlayProps } from './component
 export { Progress } from './components/Progress/Progress';
 export type { ProgressProps } from './components/Progress/Progress';
 export { Search } from './components/Search/Search';
-export type { SearchProps } from './components/Search/Search';
+export type { SearchProps, RenderIconButtonFn } from './components/Search/Search';
 export { Tabs } from './components/Tabs/Tabs';
 export type { TabsProps } from './components/Tabs/Tabs';
 export { TabsItem } from './components/TabsItem/TabsItem';

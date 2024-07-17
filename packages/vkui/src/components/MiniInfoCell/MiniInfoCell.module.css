@@ -1,6 +1,6 @@
 .MiniInfoCell {
   display: flex;
-  padding-block: 6px;
+  padding-block: var(--vkui--spacing_size_s);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   color: var(--vkui--color_text_subhead);
 }
@@ -10,7 +10,7 @@
 }
 
 .MiniInfoCell__before {
-  margin-inline-end: 12px;
+  margin-inline-end: var(--vkui--spacing_size_xl);
   color: var(--vkui--color_icon_secondary);
 }
 
@@ -49,8 +49,8 @@
 }
 
 .MiniInfoCell__after {
-  margin-inline-start: 12px;
-  margin-block: -2px;
+  margin-inline-start: var(--vkui--spacing_size_xl);
+  margin-block: calc(-1 * var(--vkui--spacing_size_2xs));
 }
 
 .MiniInfoCell--mode-add,
@@ -69,7 +69,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .MiniInfoCell__middle :global(.vkuiIcon) {
-  margin-inline-start: 4px;
+  margin-inline-start: var(--vkui--spacing_size_xs);
   color: var(--vkui--color_text_accent);
 }
 

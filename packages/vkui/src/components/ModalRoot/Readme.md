@@ -112,7 +112,7 @@ const App = () => {
 
     if (activeModal === null) {
       localModalHistory = [];
-    } else if (modalHistory.indexOf(activeModal) !== -1) {
+    } else if (modalHistory.includes(activeModal)) {
       localModalHistory = localModalHistory.splice(0, localModalHistory.indexOf(activeModal) + 1);
     } else {
       localModalHistory.push(activeModal);

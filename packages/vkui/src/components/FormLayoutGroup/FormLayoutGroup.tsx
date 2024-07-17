@@ -55,7 +55,9 @@ export const FormLayoutGroup = ({
   return (
     <RootComponent
       getRootRef={rootEl}
+      Component="fieldset"
       baseClassName={classNames(
+        styles['FormLayoutGroup'],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         mode === 'horizontal' &&
           classNames(
