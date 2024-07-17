@@ -68,7 +68,7 @@ const Example = () => {
               id="color"
               placeholder="Введите цвета"
               ClearButton={ClearButton}
-              allowClearButton={true}
+              allowClearButton
               value={colors}
               onChange={onChange}
             />
