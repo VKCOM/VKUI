@@ -3,6 +3,7 @@ import { baselineComponent } from '../../../testing/utils';
 import { Image } from '../../Image/Image';
 import {
   ImageBasePositionedComponent,
+  PositionedComponentIndentation,
   PositionedComponentPlacement,
 } from './ImageBasePositionedComponent';
 import styles from './ImageBasePositionedComponent.module.css';
@@ -88,6 +89,46 @@ describe(ImageBasePositionedComponent, () => {
     expect(screen.getByTestId('component')).toHaveClass(styles['PositionedComponent--hidden']);
   });
 
+  it('check visibility on image hover without use Image', async () => {
+    const containerRef: React.RefObject<HTMLDivElement> = {
+      current: null,
+    };
+    render(
+      <>
+        <div ref={containerRef}>
+          <ImageBasePositionedComponent
+            data-testid="component"
+            visibility="on-image-hover"
+            containerRef={containerRef}
+            position="top"
+          />
+        </div>
+      </>,
+    );
+
+    expect(screen.getByTestId('component')).toHaveClass(styles['PositionedComponent--hidden']);
+
+    fireEvent(
+      containerRef.current!,
+      new MouseEvent('mouseover', {
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+
+    expect(screen.getByTestId('component')).not.toHaveClass(styles['PositionedComponent--hidden']);
+
+    fireEvent(
+      containerRef.current!,
+      new MouseEvent('mouseout', {
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+
+    expect(screen.getByTestId('component')).toHaveClass(styles['PositionedComponent--hidden']);
+  });
+
   const placementFixtures = Object.entries({
     'top-start': styles['PositionedComponent--position-topStart'],
     'top': styles['PositionedComponent--position-top'],
@@ -106,5 +147,103 @@ describe(ImageBasePositionedComponent, () => {
   it.each(placementFixtures)('should have placement className %j', ({ placement, className }) => {
     render(<ImageBasePositionedComponent data-testid="component" position={placement} />);
     expect(screen.getByTestId('component')).toHaveClass(className);
+  });
+
+  const horizontalIndentationFixtures = Object.entries({
+    'xs': styles['PositionedComponent--horizontalIndent-xs'],
+    's': styles['PositionedComponent--horizontalIndent-s'],
+    'm': styles['PositionedComponent--horizontalIndent-m'],
+    'l': styles['PositionedComponent--horizontalIndent-l'],
+    'xl': styles['PositionedComponent--horizontalIndent-xl'],
+    '2xl': styles['PositionedComponent--horizontalIndent-2xl'],
+    '3xl': styles['PositionedComponent--horizontalIndent-3xl'],
+  }).map(([indent, className]) => ({
+    indent: indent as Exclude<PositionedComponentIndentation, string | number>,
+    className,
+  }));
+
+  it.each(horizontalIndentationFixtures)(
+    'should have horizontal indentation className %j',
+    ({ indent, className }) => {
+      render(
+        <ImageBasePositionedComponent
+          data-testid="component"
+          position="top"
+          horizontalIndent={indent}
+        />,
+      );
+      expect(screen.getByTestId('component')).toHaveClass(className);
+    },
+  );
+
+  const verticalIndentationFixtures = Object.entries({
+    'xs': styles['PositionedComponent--verticalIndent-xs'],
+    's': styles['PositionedComponent--verticalIndent-s'],
+    'm': styles['PositionedComponent--verticalIndent-m'],
+    'l': styles['PositionedComponent--verticalIndent-l'],
+    'xl': styles['PositionedComponent--verticalIndent-xl'],
+    '2xl': styles['PositionedComponent--verticalIndent-2xl'],
+    '3xl': styles['PositionedComponent--verticalIndent-3xl'],
+  }).map(([indent, className]) => ({
+    indent: indent as Exclude<PositionedComponentIndentation, string | number>,
+    className,
+  }));
+
+  it.each(verticalIndentationFixtures)(
+    'should have vertical indentation className %j',
+    ({ indent, className }) => {
+      render(
+        <ImageBasePositionedComponent
+          data-testid="component"
+          position="top"
+          verticalIndent={indent}
+        />,
+      );
+      expect(screen.getByTestId('component')).toHaveClass(className);
+    },
+  );
+
+  it('check number indentation', () => {
+    render(
+      <ImageBasePositionedComponent
+        data-testid="component"
+        position="top"
+        verticalIndent={10}
+        horizontalIndent={15}
+      />,
+    );
+    expect(
+      screen
+        .getByTestId('component')
+        .style.getPropertyValue('--vkui_internal--PositionedComponent_horizontal_indent'),
+    ).toBe('15px');
+
+    expect(
+      screen
+        .getByTestId('component')
+        .style.getPropertyValue('--vkui_internal--PositionedComponent_vertical_indent'),
+    ).toBe('10px');
+  });
+
+  it('check string indentation', () => {
+    render(
+      <ImageBasePositionedComponent
+        data-testid="component"
+        position="top"
+        verticalIndent="5%"
+        horizontalIndent="10%"
+      />,
+    );
+    expect(
+      screen
+        .getByTestId('component')
+        .style.getPropertyValue('--vkui_internal--PositionedComponent_horizontal_indent'),
+    ).toBe('10%');
+
+    expect(
+      screen
+        .getByTestId('component')
+        .style.getPropertyValue('--vkui_internal--PositionedComponent_vertical_indent'),
+    ).toBe('5%');
   });
 });

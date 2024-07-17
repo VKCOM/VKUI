@@ -6,6 +6,65 @@
   inset-inline-end: var(--vkui_internal--PositionedComponent_inset_inline_end, initial);
   inset-block-start: var(--vkui_internal--PositionedComponent_inset_block_start, initial);
   inset-block-end: var(--vkui_internal--PositionedComponent_inset_block_end, initial);
+
+  --vkui_internal--PositionedComponent_horizontal_indent: 0;
+  --vkui_internal--PositionedComponent_vertical_indent: 0;
+}
+
+.PositionedComponent--horizontalIndent-xs {
+  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_xs);
+}
+
+.PositionedComponent--horizontalIndent-s {
+  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_s);
+}
+
+.PositionedComponent--horizontalIndent-m {
+  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_m);
+}
+
+.PositionedComponent--horizontalIndent-l {
+  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_l);
+}
+
+.PositionedComponent--horizontalIndent-xl {
+  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_xl);
+}
+
+.PositionedComponent--horizontalIndent-2xl {
+  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_2xl);
+}
+
+.PositionedComponent--horizontalIndent-3xl {
+  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_3xl);
+}
+
+.PositionedComponent--verticalIndent-xs {
+  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_xs);
+}
+
+.PositionedComponent--verticalIndent-s {
+  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_s);
+}
+
+.PositionedComponent--verticalIndent-m {
+  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_m);
+}
+
+.PositionedComponent--verticalIndent-l {
+  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_l);
+}
+
+.PositionedComponent--verticalIndent-xl {
+  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_xl);
+}
+
+.PositionedComponent--verticalIndent-2xl {
+  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_2xl);
+}
+
+.PositionedComponent--verticalIndent-3xl {
+  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_3xl);
 }
 
 .PositionedComponent--hidden {
@@ -13,39 +72,39 @@
 }
 
 .PositionedComponent--position-topStart {
-  inset-inline-start: 0;
-  inset-block-start: 0;
+  inset-inline-start: var(--vkui_internal--PositionedComponent_horizontal_indent);
+  inset-block-start: var(--vkui_internal--PositionedComponent_vertical_indent);
 }
 
 .PositionedComponent--position-top {
   inset-inline-start: 50%;
-  inset-block-start: 0;
+  inset-block-start: var(--vkui_internal--PositionedComponent_vertical_indent);
   transform: translateX(-50%);
 }
 
 .PositionedComponent--position-topEnd {
-  inset-inline-end: 0;
-  inset-block-start: 0;
+  inset-inline-end: var(--vkui_internal--PositionedComponent_horizontal_indent);
+  inset-block-start: var(--vkui_internal--PositionedComponent_vertical_indent);
 }
 
 .PositionedComponent--position-bottomStart {
-  inset-inline-start: 0;
-  inset-block-end: 0;
+  inset-inline-start: var(--vkui_internal--PositionedComponent_horizontal_indent);
+  inset-block-end: var(--vkui_internal--PositionedComponent_vertical_indent);
 }
 
 .PositionedComponent--position-bottom {
   inset-inline-start: 50%;
-  inset-block-end: 0;
+  inset-block-end: var(--vkui_internal--PositionedComponent_vertical_indent);
   transform: translateX(-50%);
 }
 
 .PositionedComponent--position-bottomEnd {
-  inset-block-end: 0;
-  inset-inline-end: 0;
+  inset-block-end: var(--vkui_internal--PositionedComponent_vertical_indent);
+  inset-inline-end: var(--vkui_internal--PositionedComponent_horizontal_indent);
 }
 
 .PositionedComponent--position-middleStart {
-  inset-inline-start: 0;
+  inset-inline-start: var(--vkui_internal--PositionedComponent_horizontal_indent);
   inset-block-start: 50%;
   transform: translateY(-50%);
 }
@@ -57,7 +116,7 @@
 }
 
 .PositionedComponent--position-middleEnd {
-  inset-inline-end: 0;
+  inset-inline-end: var(--vkui_internal--PositionedComponent_horizontal_indent);
   inset-block-start: 50%;
   transform: translateY(-50%);
 }

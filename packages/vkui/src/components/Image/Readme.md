@@ -87,10 +87,9 @@ const WithPositionedComponents = () => {
         <Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн">
           {showContextMenu && (
             <Image.PositionedComponent
-              position={{
-                insetInlineEnd: '5%',
-                insetBlockStart: '5%',
-              }}
+              position="top-end"
+              horizontalIndent="l"
+              verticalIndent="l"
               visibility={contextMenuOpened ? 'always' : contextMenuVisibility}
             >
               <ContextMenu onShownChange={setContextMenuOpened} />

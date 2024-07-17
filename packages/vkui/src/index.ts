@@ -62,6 +62,7 @@ export type {
   ImageBasePositionedComponentProps,
   PositionedComponentPlacement,
   PositionedComponentPosition,
+  PositionedComponentIndentation,
 } from './components/ImageBase/ImageBase';
 
 /**

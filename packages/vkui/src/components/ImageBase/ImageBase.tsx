@@ -10,6 +10,7 @@ import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay
 import {
   ImageBasePositionedComponent,
   type ImageBasePositionedComponentProps,
+  type PositionedComponentIndentation,
   type PositionedComponentPlacement,
   type PositionedComponentPosition,
 } from './ImageBasePositionedComponent/ImageBasePositionedComponent';
@@ -27,6 +28,7 @@ export type {
   ImageBasePositionedComponentProps,
   PositionedComponentPlacement,
   PositionedComponentPosition,
+  PositionedComponentIndentation,
 };
 
 export {
