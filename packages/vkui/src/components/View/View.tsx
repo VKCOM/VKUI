@@ -345,7 +345,7 @@ export const View = ({
         .find((id) => id === prevActivePanel || id === activePanelProp);
 
       const isBackTransition = firstLayerId === activePanelProp;
-      scrolls.current[prevActivePanel] = scroll?.getScroll(false).y;
+      scrolls.current[prevActivePanel] = scroll?.getScroll({ compensateKeyboardHeight: false }).y;
 
       if (disableAnimation) {
         flushTransition(prevActivePanel, isBackTransition);

@@ -25,8 +25,12 @@ const getPageYOffsetWithoutKeyboardHeight = (window: Window) => {
   return window.pageYOffset - diffOfClientHeightAndViewportHeight;
 };
 
+export type GetScrollOptions = {
+  compensateKeyboardHeight?: boolean;
+};
+
 export interface ScrollContextInterface {
-  getScroll: (this: void, excludeKeyboardHeight?: boolean) => { x: number; y: number };
+  getScroll: (this: void, options?: GetScrollOptions) => { x: number; y: number };
   scrollTo: (this: void, x?: number, y?: number) => void;
   isScrollLock: boolean;
   enableScrollLock: (this: void) => void;
@@ -55,9 +59,11 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
 
   const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
-    (excludeKeyboardHeight = true) => ({
+    (options = { compensateKeyboardHeight: true }) => ({
       x: window!.pageXOffset,
-      y: excludeKeyboardHeight ? getPageYOffsetWithoutKeyboardHeight(window!) : window!.pageYOffset,
+      y: options.compensateKeyboardHeight
+        ? getPageYOffsetWithoutKeyboardHeight(window!)
+        : window!.pageYOffset,
     }),
     [window],
   );

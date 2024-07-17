@@ -178,7 +178,10 @@ class ViewInfiniteComponent extends React.Component<
       const prevScrolls = this.scrolls[prevProps.activePanel] || [];
       const scrolls = {
         ...this.scrolls,
-        [prevProps.activePanel]: [...prevScrolls, this.props.scroll?.getScroll(false).y],
+        [prevProps.activePanel]: [
+          ...prevScrolls,
+          this.props.scroll?.getScroll({ compensateKeyboardHeight: false }).y,
+        ],
       };
       this.scrolls = scrolls;
 
