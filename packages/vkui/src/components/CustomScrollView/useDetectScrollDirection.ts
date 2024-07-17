@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import {TimeoutId} from "../../types";
+import { TimeoutId } from '../../types';
 
 /**
  * Хук определяет в каком измерении происходит скролл(в горизонтальном или вертикальном)
