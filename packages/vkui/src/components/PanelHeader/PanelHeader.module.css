@@ -92,7 +92,7 @@
   flex-grow: 1;
   opacity: 1;
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
-  padding-block: 4px 4px;
+  padding-block: 4px;
   padding-inline: 4px 0;
 }
 
@@ -136,7 +136,7 @@
   flex-grow: 1;
   opacity: 1;
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
-  padding-block: 4px 4px;
+  padding-block: 4px;
   padding-inline: 0 4px;
 }
 
@@ -150,7 +150,7 @@
  * Android
  */
 .PanelHeader--android .PanelHeader__before:not(:empty) {
-  padding-block: 4px 4px;
+  padding-block: 4px;
   padding-inline: 4px 0;
   margin-inline-end: -8px;
 }
@@ -237,7 +237,7 @@
 
 .PanelHeader--android .PanelHeader__after:not(:empty),
 .PanelHeader--vkcom .PanelHeader__after:not(:empty) {
-  padding-block: 4px 4px;
+  padding-block: 4px;
   padding-inline: 0 4px;
 }
 
@@ -302,7 +302,7 @@
 }
 
 .PanelHeader--vkcom .PanelHeader__before:not(:empty) {
-  padding-block: 0 0;
+  padding-block: 0;
   padding-inline: 4px 0;
 }
 

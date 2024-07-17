@@ -159,7 +159,7 @@ describe(ChipsInputBase, () => {
       expect(result.getByTestId('chips-input')).toHaveFocus();
     });
 
-    it('focuses to first chip after clicking to container', async () => {
+    it('focuses to input after clicking to container', async () => {
       const result = render(
         <ChipsInputBaseTest
           value={[RED_OPTION]}
@@ -170,7 +170,7 @@ describe(ChipsInputBase, () => {
       );
       const containerEl = result.getByRole('listbox').closest('div')!;
       await userEvent.click(containerEl);
-      expect(result.getByRole('option', { name: withRegExp(RED_OPTION.label) })).toHaveFocus();
+      expect(result.getByTestId('chips-input')).toHaveFocus();
     });
 
     it('focuses on input field on clicking on them', async () => {

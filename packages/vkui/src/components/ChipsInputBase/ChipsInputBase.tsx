@@ -188,9 +188,7 @@ export const ChipsInputBase = <O extends ChipOption>({
       return;
     }
 
-    if (valueLength > 0 && listboxRef.current) {
-      moveFocusToChipOption(0, 'first', listboxRef.current);
-    } else if (inputRef.current) {
+    if (inputRef.current) {
       inputRef.current.focus();
     }
   };

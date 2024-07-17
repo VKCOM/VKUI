@@ -102,3 +102,7 @@
     background: var(--vkui--color_background);
   }
 }
+
+.Panel--disableBackground .Panel__in {
+  background: transparent;
+}

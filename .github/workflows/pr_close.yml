@@ -37,6 +37,10 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
+
       - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:

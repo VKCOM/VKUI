@@ -16,12 +16,11 @@ describe('PanelHeaderContext', () => {
     fakeTimers();
 
     it('does not close on mount', async () => {
-      const result = render(
+      render(
         <PanelHeaderContext opened={false} onClose={noop}>
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
-      await waitCSSKeyframesAnimation(result.getByTestId('content'));
       expect(screen.queryByTestId('xxx')).toBeNull();
     });
 
