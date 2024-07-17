@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import {TimeoutId} from "../../types";
 
 /**
  * Хук определяет в каком измерении происходит скролл(в горизонтальном или вертикальном)
@@ -12,7 +13,7 @@ export const useDetectScrollDirection = (boxRef: React.RefObject<HTMLDivElement>
     null,
   );
 
-  const timeoutId = React.useRef<NodeJS.Timeout | null>(null);
+  const timeoutId = React.useRef<TimeoutId>(null);
 
   const updateDirection = (direction: 'vertical' | 'horizontal') => {
     setScrollDirection(direction);

@@ -28,5 +28,5 @@ export const useCustomScrollViewResize = ({
 
   useResizeObserver(boxContentRef, resizeCb);
 
-  useIsomorphicLayoutEffect(resizeCb);
+  useIsomorphicLayoutEffect(resizeCb, []);
 };

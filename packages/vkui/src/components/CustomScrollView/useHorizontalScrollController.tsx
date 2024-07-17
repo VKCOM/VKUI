@@ -55,13 +55,14 @@ export const useHorizontalScrollController = (
     clientWidth.current = localClientWidth;
     scrollWidth.current = localScrollWidth;
     trackerWidth.current = localTrackerWidth;
+    const currentScrollLeft = boxRef.current.scrollLeft;
 
     if (localVerticalRatio >= 1) {
       barX.current.style.display = 'none';
     } else {
       barX.current.style.display = '';
       trackerX.current.style.width = `${localTrackerWidth}px`;
-      setTrackerPositionFromScroll(boxRef.current.scrollLeft);
+      setTrackerPositionFromScroll(currentScrollLeft);
     }
   };
 

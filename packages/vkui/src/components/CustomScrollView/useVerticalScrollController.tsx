@@ -56,12 +56,14 @@ export const useVerticalScrollController = (
     scrollHeight.current = localScrollHeight;
     trackerHeight.current = localTrackerHeight;
 
+    const currentScrollTop = boxRef.current.scrollTop;
+
     if (localVerticalRatio >= 1) {
       barY.current.style.display = 'none';
     } else {
       barY.current.style.display = '';
       trackerY.current.style.height = `${localTrackerHeight}px`;
-      setTrackerPositionFromScroll(boxRef.current.scrollTop);
+      setTrackerPositionFromScroll(currentScrollTop);
     }
   };
 
