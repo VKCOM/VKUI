@@ -3,6 +3,7 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
+import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
@@ -44,6 +45,12 @@ export interface SnackbarProps
     BasicProps {
   /**
    * Задаёт расположение компонента.
+   *
+   * > Note: в мобильном режиме:
+   * > - `"top-start"`/`"top-end"` перебивается на `"top"`, чтобы поведение было схожим с нативными
+   * >   уведомлениями;
+   * > - `"bottom"`/`"bottom-end"` перебивается на "bottom-start", чтобы избежать вызова системных
+   * >   функций, таких как **Pull To Refresh** и **Режим управления одной рукой**.
    */
   placement?: SnackbarPlacement;
   /**
@@ -103,6 +110,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
 
   const rafRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
   const closeTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const mediaQueries = useMediaQueries();
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     open ? 'enter' : 'exit',
     {
@@ -150,6 +158,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
     shiftDataRef.current = getInitialShiftData(
       rootRef.current!.offsetWidth,
       rootRef.current!.offsetHeight,
+      mediaQueries,
     );
     setTouched(true);
   };

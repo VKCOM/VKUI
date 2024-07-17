@@ -1516,6 +1516,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@colors/colors@npm:1.5.0":
+  version: 1.5.0
+  resolution: "@colors/colors@npm:1.5.0"
+  checksum: 10/9d226461c1e91e95f067be2bdc5e6f99cfe55a721f45afb44122e23e4b8602eeac4ff7325af6b5a369f36396ee1514d3809af3f57769066d80d83790d8e53339
+  languageName: node
+  linkType: hard
+
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -5680,6 +5687,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"benchmark@workspace:benchmark":
+  version: 0.0.0-use.local
+  resolution: "benchmark@workspace:benchmark"
+  dependencies:
+    "@playwright/test": "npm:1.45.1"
+    "@swc/core": "npm:^1.6.13"
+    "@vkontakte/vkui": "workspace:packages/vkui"
+    cli-table3: "npm:^0.6.1"
+    css-loader: "npm:^6.10.0"
+    css-minimizer-webpack-plugin: "npm:^7.0.0"
+    dotenv: "npm:^16.4.5"
+    finalhandler: "npm:1.2.0"
+    html-webpack-plugin: "npm:^5.5.0"
+    mini-css-extract-plugin: "npm:^2.9.0"
+    playwright: "npm:1.45.1"
+    postcss: "npm:^8.4.39"
+    postcss-modules: "npm:^6.0.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    serve-static: "npm:1.15.0"
+    swc-loader: "npm:^0.2.6"
+    terser-webpack-plugin: "npm:^5.3.10"
+    webpack: "npm:^5.91.0"
+  languageName: unknown
+  linkType: soft
+
 "bin-check@npm:^4.1.0":
   version: 4.1.0
   resolution: "bin-check@npm:4.1.0"
@@ -6224,6 +6257,19 @@ __metadata:
   version: 2.9.2
   resolution: "cli-spinners@npm:2.9.2"
   checksum: 10/a0a863f442df35ed7294424f5491fa1756bd8d2e4ff0c8736531d886cec0ece4d85e8663b77a5afaf1d296e3cbbebff92e2e99f52bbea89b667cbe789b994794
+  languageName: node
+  linkType: hard
+
+"cli-table3@npm:^0.6.1":
+  version: 0.6.5
+  resolution: "cli-table3@npm:0.6.5"
+  dependencies:
+    "@colors/colors": "npm:1.5.0"
+    string-width: "npm:^4.2.0"
+  dependenciesMeta:
+    "@colors/colors":
+      optional: true
+  checksum: 10/8dca71256f6f1367bab84c33add3f957367c7c43750a9828a4212ebd31b8df76bd7419d386e3391ac7419698a8540c25f1a474584028f35b170841cde2e055c5
   languageName: node
   linkType: hard
 

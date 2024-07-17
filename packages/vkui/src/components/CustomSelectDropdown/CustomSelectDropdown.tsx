@@ -10,7 +10,10 @@ import styles from './CustomSelectDropdown.module.css';
 
 export interface CustomSelectDropdownProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
-    Pick<CustomScrollViewProps, 'overscrollBehavior'>,
+    Pick<
+      CustomScrollViewProps,
+      'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
+    >,
     TrackerOptionsProps {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;

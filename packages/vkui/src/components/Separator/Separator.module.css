@@ -1,5 +1,13 @@
-.Separator {
+.Separator--mode-primary {
   color: var(--vkui--color_separator_primary);
+}
+
+.Separator--mode-secondary {
+  color: var(--vkui--color_separator_secondary);
+}
+
+.Separator--mode-primaryAlpha {
+  color: var(--vkui--color_separator_primary_alpha);
 }
 
 .Separator__in {

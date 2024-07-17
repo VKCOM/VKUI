@@ -6,7 +6,7 @@ import { Placeholder } from '../Placeholder/Placeholder';
 import { DropZone, DropZoneProps } from './DropZone';
 
 const story: Meta<DropZoneProps> = {
-  title: 'Blocks/DropZone',
+  title: 'Forms/DropZone',
   component: DropZone,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
