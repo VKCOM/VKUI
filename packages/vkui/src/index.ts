@@ -391,6 +391,7 @@ export { withPlatform } from './hoc/withPlatform';
  */
 export { usePlatform } from './hooks/usePlatform';
 export { useAdaptivity } from './hooks/useAdaptivity';
+export { useHandleOpenModals } from './hooks/useHandleOpenModals';
 export {
   type UseAdaptivityConditionalRender,
   useAdaptivityConditionalRender,

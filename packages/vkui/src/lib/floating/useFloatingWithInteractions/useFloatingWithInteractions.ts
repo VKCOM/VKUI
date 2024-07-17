@@ -3,6 +3,7 @@ import { debounce } from '@vkontakte/vkjs';
 import { getWindow, isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
+import { useHandleOpenModals } from '../../../hooks/useHandleOpenModals';
 import { useStableCallback } from '../../../hooks/useStableCallback';
 import { contains, getActiveElementByAnotherElement } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
@@ -227,6 +228,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     blockFocusRef.current = true;
     commitShownLocalState(false, 'click-outside');
   }, [commitShownLocalState]);
+
+  useHandleOpenModals(() => commitShownLocalState(false, 'open-modal'));
 
   useGlobalOnClickOutside(
     handleClickOutside,
