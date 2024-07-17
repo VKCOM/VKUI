@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ImageBaseContext } from '../context';
+import { calculateIndent, isIndentSizeConstant } from './helpers';
 import styles from './ImageBasePositionedComponent.module.css';
 
 export type PositionedComponentPlacement =
@@ -26,6 +26,7 @@ export type PositionedComponentPosition = {
 };
 
 export type PositionedComponentIndentation =
+  | '2xs'
   | 'xs'
   | 's'
   | 'm'
@@ -33,6 +34,7 @@ export type PositionedComponentIndentation =
   | 'xl'
   | '2xl'
   | '3xl'
+  | '4xl'
   | number
   | string;
 
@@ -49,6 +51,7 @@ const positionPlacementClassNames = {
 };
 
 const horizontalIndentClassNames = {
+  '2xs': styles['PositionedComponent--horizontalIndent-2xs'],
   'xs': styles['PositionedComponent--horizontalIndent-xs'],
   's': styles['PositionedComponent--horizontalIndent-s'],
   'm': styles['PositionedComponent--horizontalIndent-m'],
@@ -56,9 +59,11 @@ const horizontalIndentClassNames = {
   'xl': styles['PositionedComponent--horizontalIndent-xl'],
   '2xl': styles['PositionedComponent--horizontalIndent-2xl'],
   '3xl': styles['PositionedComponent--horizontalIndent-3xl'],
+  '4xl': styles['PositionedComponent--horizontalIndent-4xl'],
 };
 
 const verticalIndentClassNames = {
+  '2xs': styles['PositionedComponent--verticalIndent-2xs'],
   'xs': styles['PositionedComponent--verticalIndent-xs'],
   's': styles['PositionedComponent--verticalIndent-s'],
   'm': styles['PositionedComponent--verticalIndent-m'],
@@ -66,6 +71,7 @@ const verticalIndentClassNames = {
   'xl': styles['PositionedComponent--verticalIndent-xl'],
   '2xl': styles['PositionedComponent--verticalIndent-2xl'],
   '3xl': styles['PositionedComponent--verticalIndent-3xl'],
+  '4xl': styles['PositionedComponent--verticalIndent-4xl'],
 };
 
 export interface ImageBasePositionedComponentProps
@@ -149,25 +155,6 @@ export const ImageBasePositionedComponent = ({
     [position],
   );
 
-  const isIndentSizeConstant = (indent: PositionedComponentIndentation) => {
-    return (
-      indent === 'xs' ||
-      indent === 's' ||
-      indent === 'm' ||
-      indent === 'l' ||
-      indent === 'xl' ||
-      indent === '2xl' ||
-      indent === '3xl'
-    );
-  };
-
-  const calculateIndent = useCallback((indent: PositionedComponentIndentation) => {
-    if (isIndentSizeConstant(indent)) {
-      return;
-    }
-    return typeof indent === 'string' ? indent : `${indent}px`;
-  }, []);
-
   const indentationStyle = React.useMemo(() => {
     return {
       '--vkui_internal--PositionedComponent_horizontal_indent':
@@ -175,7 +162,7 @@ export const ImageBasePositionedComponent = ({
       '--vkui_internal--PositionedComponent_vertical_indent':
         verticalIndent && calculateIndent(verticalIndent),
     };
-  }, [calculateIndent, horizontalIndent, verticalIndent]);
+  }, [horizontalIndent, verticalIndent]);
 
   return (
     <RootComponent

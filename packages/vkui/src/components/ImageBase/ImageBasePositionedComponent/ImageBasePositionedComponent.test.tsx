@@ -150,6 +150,7 @@ describe(ImageBasePositionedComponent, () => {
   });
 
   const horizontalIndentationFixtures = Object.entries({
+    '2xs': styles['PositionedComponent--horizontalIndent-2xs'],
     'xs': styles['PositionedComponent--horizontalIndent-xs'],
     's': styles['PositionedComponent--horizontalIndent-s'],
     'm': styles['PositionedComponent--horizontalIndent-m'],
@@ -157,6 +158,7 @@ describe(ImageBasePositionedComponent, () => {
     'xl': styles['PositionedComponent--horizontalIndent-xl'],
     '2xl': styles['PositionedComponent--horizontalIndent-2xl'],
     '3xl': styles['PositionedComponent--horizontalIndent-3xl'],
+    '4xl': styles['PositionedComponent--horizontalIndent-4xl'],
   }).map(([indent, className]) => ({
     indent: indent as Exclude<PositionedComponentIndentation, string | number>,
     className,
@@ -177,6 +179,7 @@ describe(ImageBasePositionedComponent, () => {
   );
 
   const verticalIndentationFixtures = Object.entries({
+    '2xs': styles['PositionedComponent--verticalIndent-2xs'],
     'xs': styles['PositionedComponent--verticalIndent-xs'],
     's': styles['PositionedComponent--verticalIndent-s'],
     'm': styles['PositionedComponent--verticalIndent-m'],
@@ -184,6 +187,7 @@ describe(ImageBasePositionedComponent, () => {
     'xl': styles['PositionedComponent--verticalIndent-xl'],
     '2xl': styles['PositionedComponent--verticalIndent-2xl'],
     '3xl': styles['PositionedComponent--verticalIndent-3xl'],
+    '4xl': styles['PositionedComponent--verticalIndent-4xl'],
   }).map(([indent, className]) => ({
     indent: indent as Exclude<PositionedComponentIndentation, string | number>,
     className,
