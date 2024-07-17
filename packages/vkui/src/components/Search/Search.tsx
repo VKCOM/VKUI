@@ -12,10 +12,15 @@ import { touchEnabled } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
-import { IconButton } from '../IconButton/IconButton';
+import { IconButton, IconButtonProps } from '../IconButton/IconButton';
 import { Headline } from '../Typography/Headline/Headline';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Search.module.css';
+
+export type RenderIconButtonFn = (
+  icon: React.ReactNode,
+  props?: Partial<IconButtonProps>,
+) => React.ReactNode;
 
 export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -26,7 +31,7 @@ export interface SearchProps
    */
   after?: React.ReactNode;
   before?: React.ReactNode;
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | ((renderFn: RenderIconButtonFn) => React.ReactNode);
   onIconClick?: React.PointerEventHandler<HTMLElement>;
   defaultValue?: string;
   iconLabel?: string;
@@ -55,7 +60,7 @@ export const Search = ({
   placeholder = 'Поиск',
   after = 'Отмена',
   getRef,
-  icon,
+  icon: iconProp,
   onIconClick = noop,
   style,
   autoComplete = 'off',
@@ -135,6 +140,21 @@ export const Search = ({
     setHasValue(Boolean(inputProps.defaultValue));
   });
 
+  const renderIconButton: RenderIconButtonFn = (icon, props = {}) => (
+    <IconButton
+      hoverMode="opacity"
+      onPointerDown={onIconClickStart}
+      className={styles['Search__icon']}
+      onFocus={setFocusedTrue}
+      onBlur={setFocusedFalse}
+      onClick={noop}
+      {...props}
+    >
+      <VisuallyHidden>{iconLabel}</VisuallyHidden>
+      {icon}
+    </IconButton>
+  );
+
   return (
     <div
       className={classNames(
@@ -145,7 +165,7 @@ export const Search = ({
         isFocused && styles['Search--focused'],
         hasValue && styles['Search--has-value'],
         after && styles['Search--has-after'],
-        icon && styles['Search--has-icon'],
+        iconProp && styles['Search--has-icon'],
         inputProps.disabled && styles['Search--disabled'],
         !noPadding && styles['Search--withPadding'],
         className,
@@ -176,19 +196,10 @@ export const Search = ({
           />
         </div>
         <div className={styles['Search__controls']}>
-          {icon && (
-            <IconButton
-              hoverMode="opacity"
-              onPointerDown={onIconClickStart}
-              className={styles['Search__icon']}
-              onFocus={setFocusedTrue}
-              onBlur={setFocusedFalse}
-              onClick={noop}
-            >
-              <VisuallyHidden>{iconLabel}</VisuallyHidden>
-              {icon}
-            </IconButton>
-          )}
+          {iconProp &&
+            (typeof iconProp === 'function'
+              ? iconProp(renderIconButton)
+              : renderIconButton(iconProp))}
           <IconButton
             hoverMode="opacity"
             onPointerDown={onIconCancelClickStart}

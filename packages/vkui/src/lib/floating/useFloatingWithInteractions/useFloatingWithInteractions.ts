@@ -176,7 +176,11 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     commitShownLocalState(false, 'click');
   });
 
-  const handleMouseEnterOnBoth = useStableCallback(() => {
+  const handleMouseEnterOnBoth = useStableCallback((event: React.MouseEvent<HTMLElement>) => {
+    if (willBeHide && event.currentTarget === refs.floating.current) {
+      return;
+    }
+
     showWithDelay.cancel();
     hideWithDelay.cancel();
 
@@ -185,19 +189,23 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     }
   });
 
-  const handleMouseLeaveOnBothForHoverAndFocusStates = useStableCallback(() => {
-    blockFocusRef.current = false;
-    blockMouseEnterRef.current = false;
+  const handleMouseLeaveOnBothForHoverAndFocusStates = useStableCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      if (willBeHide && event.currentTarget === refs.floating.current) {
+        return;
+      }
 
-    if (triggerOnHover) {
-      showWithDelay.cancel();
-      hideWithDelay.cancel();
+      blockFocusRef.current = false;
+      blockMouseEnterRef.current = false;
 
-      if (shownLocalState.reason !== 'focus' && shownLocalState.reason !== 'click') {
+      if (triggerOnHover) {
+        showWithDelay.cancel();
+        hideWithDelay.cancel();
+
         hideWithDelay();
       }
-    }
-  });
+    },
+  );
 
   const handleFloatingAnimationStart = () => {
     hasCSSAnimation.current = true;

@@ -35,6 +35,8 @@ export const PanelHeaderContext = ({
   const elementRef = React.useRef<HTMLDivElement>(null);
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     opened ? 'enter' : 'exit',
+    undefined,
+    true,
   );
   const visible = animationState !== 'exited';
 
