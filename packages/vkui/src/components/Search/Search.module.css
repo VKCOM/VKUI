@@ -159,21 +159,20 @@
 
 .Search__after {
   flex: 0;
-  transform: translate(50%);
   transform-origin: left;
   min-inline-size: initial;
   max-inline-size: min-content;
   pointer-events: none;
-  transition:
-    flex 0.3s var(--vkui--animation_easing_platform),
-    transform 0.3s var(--vkui--animation_easing_platform);
+  transition-timing-function: var(--vkui--animation_easing_platform);
+  transition-duration: 0.3s;
+  transition-property: flex, margin-inline;
   overflow: hidden;
+  margin-inline: 0;
 }
 
 .Search--focused .Search__after,
 .Search--has-value .Search__after {
   flex: 1;
-  transform: translate(0);
   pointer-events: initial;
   margin-inline: 4px calc(4px - var(--vkui--size_base_padding_horizontal--regular));
 }
