@@ -8,7 +8,7 @@ const useScrollbarWidth = (scrollContainerRef: React.RefObject<HTMLElement | nul
   const recalculateScrollWidth = () => {
     if (scrollContainerRef && scrollContainerRef.current) {
       setScrollWidth(
-        scrollContainerRef.current?.offsetWidth - scrollContainerRef.current?.clientWidth,
+        scrollContainerRef.current.offsetWidth - scrollContainerRef.current.clientWidth,
       );
     }
   };
