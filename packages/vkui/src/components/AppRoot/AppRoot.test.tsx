@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { Appearance } from '../../lib/appearance';
 import { Platform } from '../../lib/platform';
+import {createSignal} from "../../lib/signal";
 import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -68,8 +69,10 @@ describe('AppRoot', () => {
 
   it('should return expected context', () => {
     let portalRoot: React.RefObject<HTMLElement | null> = React.createRef();
+    let openModalsSignal = createSignal();
     const contextCallback = jest.fn().mockImplementation((ctx) => {
       portalRoot = ctx.portalRoot;
+      openModalsSignal = ctx.openModalsSignal;
       return null;
     });
     const result = render(
@@ -85,6 +88,7 @@ describe('AppRoot', () => {
       disablePortal: false,
       layout: undefined,
       keyboardInput: false,
+      openModalsSignal: openModalsSignal,
     });
   });
 
