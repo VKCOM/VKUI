@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { Appearance } from '../../lib/appearance';
 import { Platform } from '../../lib/platform';
-import {createSignal} from "../../lib/signal";
+import { createSignal } from '../../lib/signal';
 import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
