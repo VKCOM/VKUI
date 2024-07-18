@@ -201,7 +201,7 @@ const CustomSearchLogicSelect = ({ id }) => {
       onInputChange={onCustomSearchInputChange}
       renderOption={({ option, ...restProps }) => (
         <CustomSelectOption
-          style={option.value === '0' ? { color: 'var(--vkui--color_background_accent)' } : {}}
+          style={option.value === '0' ? { color: 'var(--vkui--color_text_accent)' } : {}}
           {...restProps}
         >
           {option.label}
