@@ -70,6 +70,7 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           mode: ['primary'],
           children: ['Кто может оставлять записи на моей странице'],
           afterTitle: [<Icon16UnlockOutline key="afterTitle" />],
+          multiline: [undefined, true],
         },
         {
           mode: ['primary'],
@@ -82,6 +83,7 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           children: ['Кто может оставлять записи на моей странице'],
           subtitle: ['SOHN — Conrad'],
           afterSubtitle: [<Icon12Fire key="afterSubtitle" />],
+          multiline: [undefined, true],
         },
         {
           mode: ['primary', 'secondary', 'tertiary'],
@@ -92,6 +94,7 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           beforeSubtitle: [<Icon12Tag key="beforeSubtitle" />],
           afterSubtitle: [<Icon12Fire key="afterSubtitle" />],
           subtitle: ['SOHN — Conrad'],
+          multiline: [undefined, true],
         },
       ]}
     >
