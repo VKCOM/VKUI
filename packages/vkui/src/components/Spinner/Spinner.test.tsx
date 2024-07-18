@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
-import { baselineComponent, matchMediaReduceMotionMock } from '../../testing/utils';
+import { REDUCE_MOTION_MEDIA_QUERY } from '../../lib/animation';
+import { baselineComponent, matchMediaMock } from '../../testing/utils';
 import { Spinner } from './Spinner';
 
 describe('Spinner', () => {
@@ -8,10 +9,10 @@ describe('Spinner', () => {
   describe.each(['reduce', 'not reduce'])('animation', (prefer) => {
     const reduced = prefer === 'reduce';
     beforeAll(() => {
-      matchMediaReduceMotionMock(reduced);
+      matchMediaMock(reduced ? REDUCE_MOTION_MEDIA_QUERY : undefined);
     });
     afterAll(() => {
-      matchMediaReduceMotionMock(!reduced);
+      matchMediaMock(!reduced ? undefined : REDUCE_MOTION_MEDIA_QUERY);
     });
 
     it(`should ${prefer} motion`, () => {

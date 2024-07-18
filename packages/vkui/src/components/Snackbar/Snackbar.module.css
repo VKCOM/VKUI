@@ -4,7 +4,7 @@
   --vkui_internal--snackbar_shift_x: 0;
   --vkui_internal--snackbar_shift_y: 0;
   --vkui_internal--snackbar_animation_from: translate3d(0, 0, 0);
-  --vkui_internal--snackbar_animation_to: translate3d(0, var(--vkui_internal--snackbar_shift_y), 0);
+  --vkui_internal--snackbar_animation_to: translate3d(0, 0, 0);
   --vkui_internal--snackbar_animation_duration: 340ms;
 
   position: fixed;
@@ -22,6 +22,7 @@
 .Snackbar--placement-top,
 .Snackbar--placement-top-end {
   --vkui_internal--snackbar_animation_from: translate3d(0, -100%, 0);
+  --vkui_internal--snackbar_animation_to: translate3d(0, var(--vkui_internal--snackbar_shift_y), 0);
 
   inset-block-start: var(--vkui_internal--safe_area_inset_top);
 }
@@ -29,7 +30,8 @@
 .Snackbar--placement-bottom-start,
 .Snackbar--placement-bottom,
 .Snackbar--placement-bottom-end {
-  --vkui_internal--snackbar_animation_from: translate3d(0, 100%, 0);
+  --vkui_internal--snackbar_animation_from: translate3d(-100%, 0, 0);
+  --vkui_internal--snackbar_animation_to: translate3d(var(--vkui_internal--snackbar_shift_x), 0, 0);
 
   inset-block-end: var(--vkui_internal--snackbar_safe_area_inset_bottom);
 }
@@ -42,23 +44,26 @@
 
   .Snackbar--placement-top,
   .Snackbar--placement-bottom {
-    inset-inline: 0;
     margin-inline: auto;
   }
 
-  .Snackbar--placement-top-start,
-  .Snackbar--placement-top-end {
-    inset-block-start: var(--vkui_internal--safe_area_inset_top);
-  }
-
-  .Snackbar--placement-bottom-start,
-  .Snackbar--placement-bottom-end {
-    inset-block-end: var(--vkui_internal--snackbar_safe_area_inset_bottom);
+  .Snackbar--placement-bottom {
+    --vkui_internal--snackbar_animation_from: translate3d(0, 100%, 0);
+    --vkui_internal--snackbar_animation_to: translate3d(
+      0,
+      var(--vkui_internal--snackbar_shift_y),
+      0
+    );
   }
 
   .Snackbar--placement-top-start,
   .Snackbar--placement-bottom-start {
     --vkui_internal--snackbar_animation_from: translate3d(-100%, 0, 0);
+    --vkui_internal--snackbar_animation_to: translate3d(
+      var(--vkui_internal--snackbar_shift_x),
+      0,
+      0
+    );
 
     inset-inline-start: var(--vkui_internal--safe_area_inset_left);
     inset-inline-end: auto;
@@ -67,20 +72,14 @@
   .Snackbar--placement-top-end,
   .Snackbar--placement-bottom-end {
     --vkui_internal--snackbar_animation_from: translate3d(100%, 0, 0);
-
-    inset-inline-start: auto;
-    inset-inline-end: var(--vkui_internal--safe_area_inset_right);
-  }
-
-  .Snackbar--placement-top-start,
-  .Snackbar--placement-bottom-start,
-  .Snackbar--placement-top-end,
-  .Snackbar--placement-bottom-end {
     --vkui_internal--snackbar_animation_to: translate3d(
       var(--vkui_internal--snackbar_shift_x),
       0,
       0
     );
+
+    inset-inline-start: auto;
+    inset-inline-end: var(--vkui_internal--safe_area_inset_right);
   }
 }
 
@@ -89,7 +88,35 @@
   animation-duration: var(--vkui_internal--snackbar_animation_duration);
   animation-timing-function: var(--vkui--animation_easing_platform);
   animation-fill-mode: both;
+}
+
+.Snackbar--placement-top-start .Snackbar__in,
+.Snackbar--placement-top .Snackbar__in,
+.Snackbar--placement-top-end .Snackbar__in {
   transform: translate3d(0, var(--vkui_internal--snackbar_shift_y), 0);
+}
+
+.Snackbar--placement-bottom-start .Snackbar__in,
+.Snackbar--placement-bottom .Snackbar__in,
+.Snackbar--placement-bottom-end .Snackbar__in {
+  transform: translate3d(var(--vkui_internal--snackbar_shift_x), 0, 0);
+}
+
+@media (--desktop) {
+  .Snackbar__in {
+    --vkui_internal--snackbar_in_padding: 12px;
+  }
+
+  .Snackbar--placement-top-start .Snackbar__in,
+  .Snackbar--placement-bottom-start .Snackbar__in,
+  .Snackbar--placement-top-end .Snackbar__in,
+  .Snackbar--placement-bottom-end .Snackbar__in {
+    transform: translate3d(var(--vkui_internal--snackbar_shift_x), 0, 0);
+  }
+
+  .Snackbar--placement-bottom .Snackbar__in {
+    transform: translate3d(0, var(--vkui_internal--snackbar_shift_y), 0);
+  }
 }
 
 .Snackbar--state-enter .Snackbar__in,
@@ -125,19 +152,6 @@
     animation-name: animation-snackbar-fade-out;
   }
 } /* stylelint-disable-next-line at-rule-empty-line-before */
-
-@media (--desktop) {
-  .Snackbar__in {
-    --vkui_internal--snackbar_in_padding: 12px;
-  }
-
-  .Snackbar--placement-top-start .Snackbar__in,
-  .Snackbar--placement-bottom-start .Snackbar__in,
-  .Snackbar--placement-top-end .Snackbar__in,
-  .Snackbar--placement-bottom-end .Snackbar__in {
-    transform: translate3d(var(--vkui_internal--snackbar_shift_x), 0, 0);
-  }
-}
 
 @keyframes animation-snackbar-slide-in {
   from {

@@ -1,4 +1,4 @@
-import { act } from 'react';
+import { act, type ComponentType, useState } from 'react';
 import { render, renderHook, waitFor } from '@testing-library/react';
 import {
   AppRootContext,
@@ -9,11 +9,29 @@ import { fireEventPatch, userEvent } from '../../../testing/utils';
 import type { ShownChangeReason } from './types';
 import { useFloatingWithInteractions } from './useFloatingWithInteractions';
 
+const DynamicContent = ({ onClose }: { onClose: VoidFunction }) => {
+  const [state, setState] = useState(false);
+  const handleClick = () => {
+    act(onClose);
+    setState((prev) => !prev);
+  };
+  return state ? (
+    <button data-testid="dynamic-content-item" onClick={handleClick}>
+      Удалить
+    </button>
+  ) : (
+    <button data-testid="dynamic-content-item" onClick={handleClick}>
+      Добавить
+    </button>
+  );
+};
+
 const TestComponent = ({
   restoreFocus,
   hookResultRef,
   keyboardInput = false,
   autoFocus = false, // for multiple trigger [click, focus]
+  Content,
 }: {
   restoreFocus?: boolean;
   hookResultRef: {
@@ -21,8 +39,9 @@ const TestComponent = ({
   };
   keyboardInput?: boolean;
   autoFocus?: boolean;
+  Content?: ComponentType<{ onClose: VoidFunction }>;
 }) => {
-  const { shown, refs, referenceProps, floatingProps } = hookResultRef.current;
+  const { shown, refs, referenceProps, floatingProps, onClose } = hookResultRef.current;
 
   return (
     <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput }}>
@@ -30,7 +49,7 @@ const TestComponent = ({
         Reference
       </button>
       {shown ? (
-        <span ref={refs.floating} {...floatingProps}>
+        <span ref={refs.floating} data-testid="floating" {...floatingProps}>
           <FocusTrap
             autoFocus
             restoreFocus={restoreFocus ? hookResultRef.current.onRestoreFocus : restoreFocus}
@@ -42,6 +61,7 @@ const TestComponent = ({
               type="text"
               defaultValue="Reference"
             />
+            {Content ? <Content onClose={onClose} /> : null}
           </FocusTrap>
         </span>
       ) : null}
@@ -374,51 +394,44 @@ describe(useFloatingWithInteractions, () => {
       });
     });
 
-    it.each(['focus' as const, 'click' as const])(
-      'should prefer shown state by %s trigger',
-      async (eventName) => {
-        const { result } = renderHook(() =>
-          useFloatingWithInteractions<HTMLButtonElement>({
-            defaultShown: false,
-            trigger: ['focus', 'click', 'hover'],
-          }),
-        );
-        const testComponentRender = render(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeFalsy());
+    it('should simultaneously react to different triggers', async () => {
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: ['focus', 'click', 'hover'],
+        }),
+      );
+      const testComponentRender = render(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
 
-        await fireEventPatch(result.current.refs.reference.current, eventName);
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeTruthy());
+      await fireEventPatch(result.current.refs.reference.current, 'focus');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
-        await fireEventPatch(result.current.refs.reference.current, 'mouseLeave');
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeTruthy());
+      await fireEventPatch(result.current.refs.reference.current, 'mouseLeave');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
 
-        const eventNameToFire = eventName === 'focus' ? 'blur' : eventName;
-        await fireEventPatch(
-          result.current.refs.reference.current,
-          eventNameToFire,
-          // сбрасываем relatedTarget, потому что по умолчанию el.blur() имеет el в relatedTarget,
-          // а в этом случае floating элемент не закрывается, так как считается что blur
-          // вызван кликом на самого себя.
-          eventNameToFire === 'blur' ? { referenceElement: undefined } : undefined,
-        );
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeFalsy());
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
-        await fireEventPatch(result.current.refs.reference.current, eventName);
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeTruthy());
+      await fireEventPatch(result.current.refs.floating.current, 'mouseOver');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
 
-        await fireEventPatch(result.current.refs.floating.current, 'mouseOver');
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeTruthy());
+      await fireEventPatch(result.current.refs.floating.current, 'mouseLeave');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
 
-        await fireEventPatch(result.current.refs.floating.current, 'mouseLeave');
-        testComponentRender.rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => expect(result.current.shown).toBeTruthy());
-      },
-    );
+      await fireEventPatch(result.current.refs.reference.current, 'click');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeTruthy());
+
+      await fireEventPatch(result.current.refs.reference.current, 'mouseLeave');
+      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      await waitFor(() => expect(result.current.shown).toBeFalsy());
+    });
 
     it('should use manual state', async () => {
       const { result, rerender } = renderHook(
@@ -490,6 +503,40 @@ describe(useFloatingWithInteractions, () => {
         expect(onShownChange).toHaveBeenCalledWith(false, 'callback');
       });
     });
+
+    it.each(['mouseOver', 'mouseLeave'] as const)(
+      'should prevent %s events on floating ref',
+      async (mouseEvent) => {
+        const { result: hookResultRef } = renderHook(() =>
+          useFloatingWithInteractions<HTMLButtonElement>({
+            trigger: 'hover',
+            hoverDelay: 0,
+            defaultShown: false,
+          }),
+        );
+        const renderResult = render(
+          <TestComponent hookResultRef={hookResultRef} Content={DynamicContent} />,
+        );
+
+        await fireEventPatch(hookResultRef.current.refs.reference.current, 'mouseOver');
+        renderResult.rerender(
+          <TestComponent hookResultRef={hookResultRef} Content={DynamicContent} />,
+        );
+        await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationStart');
+        await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationEnd');
+        await waitFor(() => expect(hookResultRef.current.shown).toBeTruthy());
+
+        await fireEventPatch(hookResultRef.current.refs.floating.current, 'mouseOver');
+        await fireEventPatch(renderResult.getByTestId('dynamic-content-item'), 'click');
+        renderResult.rerender(
+          <TestComponent hookResultRef={hookResultRef} Content={DynamicContent} />,
+        );
+        await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationStart');
+        await fireEventPatch(hookResultRef.current.refs.floating.current, mouseEvent);
+        await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationEnd');
+        await waitFor(() => expect(hookResultRef.current.shown).toBeFalsy());
+      },
+    );
   });
 
   describe('tests with snapshot', () => {
