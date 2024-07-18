@@ -276,7 +276,7 @@ describe(useFloatingWithInteractions, () => {
       act(() => openModalsSignal.dispatch());
 
       expect(onShownChange).toBeCalledTimes(1);
-      expect(onShownChange).toBeCalledWith(false, 'open-modal')
+      expect(onShownChange).toBeCalledWith(false, 'open-modal');
     });
 
     it('should work correctly with trigger=[click, focus]', async () => {
