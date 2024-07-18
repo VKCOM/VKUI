@@ -9,17 +9,13 @@ import { warnOnce } from '../../../lib/warnOnce';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ScrollArrow } from '../../ScrollArrow/ScrollArrow';
 import { Touch, TouchEvent } from '../../Touch/Touch';
+import { GalleryBullets } from '../GalleryBullets/GalleryBullets';
 import { BaseGalleryProps, GallerySlidesState } from '../types';
 import { ANIMATION_DURATION, CONTROL_ELEMENTS_STATE, SLIDES_MANAGER_STATE } from './constants';
 import { calculateIndent, getLoopPoints, getTargetIndex } from './helpers';
 import { useSlideAnimation } from './hooks';
 import { ControlElementsState, SlidesManagerState } from './types';
 import styles from '../BaseGallery.module.css';
-
-const stylesBullets = {
-  dark: styles['BaseGallery__bullets--dark'],
-  light: styles['BaseGallery__bullets--light'],
-};
 
 const warn = warnOnce('Gallery');
 
@@ -39,6 +35,8 @@ export const CarouselBase = ({
   showArrows,
   getRef,
   arrowSize = 'l',
+  bulletsClassName,
+  slideClassName,
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -337,7 +335,7 @@ export const CarouselBase = ({
         <div className={styles['BaseGallery__layer']} ref={layerRef}>
           {React.Children.map(children, (item: React.ReactNode, i: number) => (
             <div
-              className={styles['BaseGallery__slide']}
+              className={classNames(styles['BaseGallery__slide'], slideClassName)}
               key={`slide-${i}`}
               ref={(el) => setSlideRef(el, i)}
             >
@@ -348,20 +346,14 @@ export const CarouselBase = ({
       </Touch>
 
       {bullets && (
-        <div
-          aria-hidden
-          className={classNames(styles['BaseGallery__bullets'], stylesBullets[bullets])}
+        <GalleryBullets
+          bullets={bullets}
+          slideIndex={slideIndex}
+          onChange={onChange}
+          bulletsClassName={bulletsClassName}
         >
-          {React.Children.map(children, (_item: React.ReactNode, index: number) => (
-            <div
-              className={classNames(
-                styles['BaseGallery__bullet'],
-                index === slideIndex && styles['BaseGallery__bullet--active'],
-              )}
-              key={index}
-            />
-          ))}
-        </div>
+          {children}
+        </GalleryBullets>
       )}
 
       {showArrows && hasPointer && canSlideLeft && (

@@ -43,6 +43,8 @@ export interface BaseGalleryProps
    */
   onNextClick?: (event: React.MouseEvent) => void;
   bullets?: 'dark' | 'light' | false;
+  bulletsClassName?: string;
+  slideClassName?: string;
   /**
    * Позволяет отключить реагирование на тач-события
    */

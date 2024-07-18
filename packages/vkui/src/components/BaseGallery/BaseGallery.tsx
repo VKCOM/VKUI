@@ -8,6 +8,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import { Touch, TouchEvent } from '../Touch/Touch';
+import { GalleryBullets } from './GalleryBullets/GalleryBullets';
 import { calcMax, calcMin } from './helpers';
 import { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
 import styles from './BaseGallery.module.css';
@@ -32,10 +33,6 @@ const SHIFT_DEFAULT_STATE = {
   indent: 0,
 };
 
-const stylesBullets = {
-  dark: styles['BaseGallery__bullets--dark'],
-  light: styles['BaseGallery__bullets--light'],
-};
 export const BaseGallery = ({
   bullets = false,
   getRootRef,
@@ -52,6 +49,8 @@ export const BaseGallery = ({
   showArrows,
   getRef,
   arrowSize = 'l',
+  bulletsClassName,
+  slideClassName,
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -338,7 +337,7 @@ export const BaseGallery = ({
         <div className={styles['BaseGallery__layer']} style={layerStyle}>
           {React.Children.map(children, (item: React.ReactNode, i: number) => (
             <div
-              className={styles['BaseGallery__slide']}
+              className={classNames(styles['BaseGallery__slide'], slideClassName)}
               key={`slide-${i}`}
               ref={(el) => setSlideRef(el, i)}
             >
@@ -349,20 +348,14 @@ export const BaseGallery = ({
       </Touch>
 
       {bullets && (
-        <div
-          aria-hidden
-          className={classNames(styles['BaseGallery__bullets'], stylesBullets[bullets])}
+        <GalleryBullets
+          bullets={bullets}
+          slideIndex={slideIndex}
+          onChange={onChange}
+          bulletsClassName={bulletsClassName}
         >
-          {React.Children.map(children, (_item: React.ReactNode, index: number) => (
-            <div
-              className={classNames(
-                styles['BaseGallery__bullet'],
-                index === slideIndex && styles['BaseGallery__bullet--active'],
-              )}
-              key={index}
-            />
-          ))}
-        </div>
+          {children}
+        </GalleryBullets>
       )}
 
       {showArrows && hasPointer && canSlideLeft && (
