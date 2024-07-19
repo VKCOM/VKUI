@@ -217,7 +217,7 @@
 
 .ActionSheetItem--sizeY-compact.ActionSheetItem--ios {
   min-block-size: 36px;
-  padding-block: 4px 4px;
+  padding-block: 4px;
   padding-inline: 18px 20px;
 }
 

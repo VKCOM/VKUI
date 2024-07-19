@@ -19,14 +19,14 @@
 .SimpleCell__before {
   display: flex;
   align-items: center;
-  padding-block: 6px;
-  padding-inline-end: 12px;
+  padding-block: var(--vkui--spacing_size_s);
+  padding-inline-end: var(--vkui--spacing_size_xl);
   color: var(--vkui_internal--icon_color, var(--vkui--color_icon_accent));
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .SimpleCell__before > :global(.vkuiIcon) {
-  padding-inline-end: 4px;
+  padding-inline-end: var(--vkui--spacing_size_xs);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
@@ -42,7 +42,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-block: 10px;
+  padding-block: var(--vkui--spacing_size_l);
   max-inline-size: 100%;
   flex-grow: 1;
   min-inline-size: 0;
@@ -51,7 +51,7 @@
 
 /* stylelint-disable-next-line selector-max-universal -- gap: 2px */
 .SimpleCell__middle > *:not(:first-child) {
-  margin-block-start: 2px;
+  margin-block-start: var(--vkui--spacing_size_2xs);
 }
 
 .SimpleCell__subhead {
@@ -101,7 +101,7 @@
 
 /* stylelint-disable-next-line selector-max-universal -- gap: 4px */
 .SimpleCell__content > *:not(:last-child) {
-  margin-inline-end: 4px;
+  margin-inline-end: var(--vkui--spacing_size_xs);
 }
 
 .SimpleCell__indicator {
@@ -111,7 +111,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding-inline-start: 12px;
+  padding-inline-start: var(--vkui--spacing_size_xl);
 }
 
 .SimpleCell__after {
@@ -123,17 +123,17 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .SimpleCell__after > :global(.vkuiIcon) {
-  padding-inline-start: 8px;
+  padding-inline-start: var(--vkui--spacing_size_m);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .SimpleCell__after > :global(.vkuiIcon):last-child {
-  padding-inline-end: 2px;
+  padding-inline-end: var(--vkui--spacing_size_2xs);
 }
 
 .SimpleCell__chevronIcon {
   color: var(--vkui--color_icon_tertiary);
-  padding-inline-start: 12px;
+  padding-inline-start: var(--vkui--spacing_size_xl);
 }
 
 /**
@@ -145,7 +145,7 @@
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__before {
-  padding-block: 4px;
+  padding-block: var(--vkui--spacing_size_xs);
 }
 
 @media (--sizeY-compact) {
@@ -154,7 +154,7 @@
   }
 
   .SimpleCell--sizeY-none .SimpleCell__before {
-    padding-block: 4px;
+    padding-block: var(--vkui--spacing_size_xs);
   }
 }
 

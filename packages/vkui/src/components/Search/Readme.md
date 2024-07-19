@@ -38,8 +38,8 @@ const SimpleSearch = ({ goHeaderSearch }) => {
     setSearch(e.target.value);
   };
 
-  const thematicsFiltered = thematics.filter(
-    ({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1,
+  const thematicsFiltered = thematics.filter(({ name }) =>
+    name.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -238,7 +238,38 @@ const App = () => {
             <Group>
               <Search
                 defaultValue="value"
-                icon={<Icon24Done />}
+                icon={(renderButton) => (
+                  <Popover
+                    noStyling
+                    trigger="click"
+                    id="menupopup"
+                    role="dialog"
+                    aria-labelledby="menubutton"
+                    content={({ onClose }) => (
+                      <div
+                        style={{
+                          backgroundColor: 'var(--vkui--color_background_modal_inverse)',
+                          borderRadius: 8,
+                          boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+                        }}
+                      >
+                        <CellButton role="menuitem" before={<Icon28AddOutline />} onClick={onClose}>
+                          Добавить
+                        </CellButton>
+                        <CellButton
+                          role="menuitem"
+                          before={<Icon28DeleteOutline />}
+                          mode="danger"
+                          onClick={onClose}
+                        >
+                          Добавить и очистить
+                        </CellButton>
+                      </div>
+                    )}
+                  >
+                    {renderButton(<Icon24Done />)}
+                  </Popover>
+                )}
                 after={<Icon24User />}
                 onFindButtonClick={onFindButtonClick}
               />
