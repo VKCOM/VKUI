@@ -11,7 +11,7 @@
   min-block-size: 56px;
   display: flex;
   align-items: center;
-  background: var(--vkui--color_background_modal);
+  background: var(--vkui--color_background_contrast_themed);
   box-shadow: var(--vkui--elevation4);
   border-radius: var(--vkui--size_card_border_radius--regular);
 }
