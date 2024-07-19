@@ -20,7 +20,7 @@ export interface TextareaProps
     HasRootRef<HTMLElement>,
     Pick<React.CSSProperties, 'maxHeight'>,
     HasAlign,
-    Pick<FormFieldProps, 'status' | 'mode'> {
+    FormFieldProps {
   grow?: boolean;
   onResize?: (el: HTMLTextAreaElement) => void;
   defaultValue?: string;
@@ -42,6 +42,10 @@ export const Textarea = ({
   onChange,
   align,
   mode,
+  after,
+  before,
+  afterAlign,
+  beforeAlign,
   ...restProps
 }: TextareaProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -65,6 +69,10 @@ export const Textarea = ({
       disabled={restProps.disabled}
       status={status}
       mode={mode}
+      after={after}
+      before={before}
+      afterAlign={afterAlign}
+      beforeAlign={beforeAlign}
     >
       <UnstyledTextField
         {...restProps}
