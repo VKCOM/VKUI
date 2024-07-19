@@ -51,7 +51,7 @@ describe('ActionSheetItem', () => {
     expect(onCloseCallback).toHaveBeenCalledTimes(1);
   });
 
-  it('check call onItemClick callback when click to ActionSheetItem', async () => {
+  it('check call onItemClick callback when click to ActionSheetItem with selectable=true', async () => {
     const onItemClickCallback = jest.fn();
 
     render(
@@ -66,6 +66,7 @@ describe('ActionSheetItem', () => {
       </ActionSheetContext.Provider>,
     );
 
+    // эмулируем событие клика при навигации стрелочками
     await React.act(async () =>
       fireEvent(
         screen.getByTestId('action-item'),
@@ -79,6 +80,8 @@ describe('ActionSheetItem', () => {
 
     expect(onItemClickCallback).toHaveBeenCalledTimes(0);
 
+    // эмулируем настоящее событие клика(отличается оно тем, что clientX и clientY != 0)
+    // @see packages/vkui/src/components/ActionSheetItem/helpers.ts
     const newMouseEvent = new MouseEvent('click', {
       clientX: 1,
       clientY: 1,

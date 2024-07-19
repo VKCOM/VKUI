@@ -127,6 +127,8 @@ describe(ActionSheet, () => {
         </ActionSheet>,
       );
       await waitForFloatingPosition();
+      // эмулируем настоящее событие клика(отличается оно тем, что clientX и clientY != 0)
+      // @see packages/vkui/src/components/ActionSheetItem/helpers.ts
       fireEvent(
         screen.getByTestId('item'),
         new MouseEvent('click', {
