@@ -181,7 +181,10 @@ export const FormField = ({
         <div className={styles['FormField__content']}>{children}</div>
       </div>
       {before && (
-        <span className={classNames(styles['FormField__before'], iconAlignClassNames[beforeAlign])} ref={beforeRef}>
+        <span
+          className={classNames(styles['FormField__before'], iconAlignClassNames[beforeAlign])}
+          ref={beforeRef}
+        >
           {before}
         </span>
       )}

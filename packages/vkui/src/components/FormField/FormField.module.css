@@ -72,11 +72,13 @@
 }
 
 .FormField__icon--align-start {
-  align-self: flex-start;
+  inset-block-start: 0;
+  transform: translateY(0);
 }
 
 .FormField__icon--align-end {
-  align-self: flex-end;
+  inset-block-start: 100%;
+  transform: translateY(-100%);
 }
 
 .FormField__before {
