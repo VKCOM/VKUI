@@ -71,6 +71,14 @@
   }
 }
 
+.FormField__icon--align-start {
+  align-self: flex-start;
+}
+
+.FormField__icon--align-end {
+  align-self: flex-end;
+}
+
 .FormField__before {
   color: var(--vkui--color_icon_accent);
   inset-inline-start: 0;

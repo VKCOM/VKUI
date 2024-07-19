@@ -20,6 +20,14 @@ const stylesStatus = {
   valid: styles['FormField--status-valid'],
 };
 
+const iconAlignClassNames = {
+  center: undefined,
+  start: styles['FormField__icon--align-start'],
+  end: styles['FormField__icon--align-end'],
+};
+
+export type FieldIconsAlign = 'start' | 'center' | 'end';
+
 export interface FormFieldProps {
   status?: 'default' | 'error' | 'valid';
   /**
@@ -32,6 +40,10 @@ export interface FormFieldProps {
    */
   before?: React.ReactNode;
   /**
+   * Вертикальное выравнивание иконки слева
+   */
+  beforeAlign?: FieldIconsAlign;
+  /**
    * Добавляет иконку справа.
    *
    * Рекомендации:
@@ -40,6 +52,10 @@ export interface FormFieldProps {
    * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна кликабельная иконка.
    */
   after?: React.ReactNode;
+  /**
+   * Вертикальное выравнивание иконки справа
+   */
+  afterAlign?: FieldIconsAlign;
   /**
    * Режим отображения.
    *
@@ -71,6 +87,8 @@ export const FormField = ({
   getRootRef,
   before,
   after,
+  beforeAlign = 'center',
+  afterAlign = 'center',
   disabled,
   mode = 'default',
   className,
@@ -163,14 +181,18 @@ export const FormField = ({
         <div className={styles['FormField__content']}>{children}</div>
       </div>
       {before && (
-        <span className={styles['FormField__before']} ref={beforeRef}>
+        <span className={classNames(styles['FormField__before'], iconAlignClassNames[beforeAlign])} ref={beforeRef}>
           {before}
         </span>
       )}
       {after && (
         <span
           ref={afterRef}
-          className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}
+          className={classNames(
+            styles['FormField__after'],
+            iconAlignClassNames[afterAlign],
+            'vkuiInternalFormField__after',
+          )}
           style={afterStyles}
         >
           {after}
