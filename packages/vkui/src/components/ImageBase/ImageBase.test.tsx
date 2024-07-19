@@ -156,6 +156,12 @@ describe(ImageBase, () => {
     // make sure we ignore img.onLoad that is fired for some reason after we manually handled the complete state.
     expect(onLoadMock).toHaveBeenCalledTimes(1);
   });
+
+  it('should have className with keepRatio', () => {
+    render(<ImageBaseTest src="#" keepAspectRatio={true} />);
+
+    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--keepRatio']);
+  });
 });
 
 describe(ImageBase.Badge, () => {
