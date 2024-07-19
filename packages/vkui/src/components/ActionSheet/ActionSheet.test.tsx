@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { act } from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
@@ -127,7 +127,14 @@ describe(ActionSheet, () => {
         </ActionSheet>,
       );
       await waitForFloatingPosition();
-      await userEvent.click(screen.getByTestId('item'));
+      fireEvent(
+        screen.getByTestId('item'),
+        new MouseEvent('click', {
+          clientX: 1,
+          clientY: 1,
+          bubbles: true,
+        }),
+      );
       act(jest.runAllTimers);
 
       if (onCloseHandler.mock.calls.length > 0) {
