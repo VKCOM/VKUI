@@ -72,11 +72,11 @@ export const Textarea = ({
       before={before}
       afterAlign={afterAlign}
       beforeAlign={beforeAlign}
+      maxHeight={maxHeight}
     >
       <UnstyledTextField
         {...restProps}
         as="textarea"
-        style={{ maxHeight }}
         rows={rows}
         className={styles['Textarea__el']}
         onChange={callMultiple(onChange, resize)}

@@ -1,13 +1,10 @@
-import { useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { CSSCustomProperties, HasComponent, HasRootRef } from '../../types';
-import { useScrollbarWidth } from './useScrollbarWidth';
+import { HasComponent, HasRootRef } from '../../types';
 import styles from './FormField.module.css';
 
 const sizeYClassNames = {
@@ -24,6 +21,14 @@ const iconAlignClassNames = {
   center: undefined,
   start: styles['FormField__icon--align-start'],
   end: styles['FormField__icon--align-end'],
+};
+
+const renderIcon = (icon: React.ReactNode, align: FieldIconsAlign, className: string) => {
+  return (
+    <div className={styles['FormField__iconWrapper']}>
+      <span className={classNames(iconAlignClassNames[align], className)}>{icon}</span>
+    </div>
+  );
 };
 
 export type FieldIconsAlign = 'start' | 'center' | 'end';
@@ -98,12 +103,7 @@ export const FormField = ({
 }: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef);
   const { sizeY = 'none' } = useAdaptivity();
-  const afterRef = useRef<HTMLSpanElement | null>(null);
-  const beforeRef = useRef<HTMLSpanElement | null>(null);
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [hover, setHover] = React.useState(false);
-  const [paddingInlineStart, setPaddingInlineStart] = React.useState(0);
-  const [paddingInlineEnd, setPaddingInlineEnd] = React.useState(0);
 
   const focusWithin = useFocusWithin(elRef);
   const focusVisibleClassNames = useFocusVisibleClassName({
@@ -120,37 +120,6 @@ export const FormField = ({
     e.stopPropagation();
     setHover(false);
   };
-
-  const updatePadding = (
-    partRef: React.RefObject<HTMLSpanElement | null>,
-    setter: (value: number) => void,
-  ) => {
-    if (partRef.current) {
-      setter(partRef.current.offsetWidth);
-    }
-  };
-
-  useIsomorphicLayoutEffect(() => {
-    before && updatePadding(beforeRef, setPaddingInlineStart);
-    after && updatePadding(afterRef, setPaddingInlineEnd);
-  }, [after, before, afterRef, beforeRef, scrollContainerRef]);
-
-  const scrollbarWidth = useScrollbarWidth(scrollContainerRef);
-
-  const scrollContainerStyles: CSSCustomProperties = React.useMemo(
-    () => ({
-      '--vkui_internal--FormField_padding_inline-start': `${paddingInlineStart}px`,
-      '--vkui_internal--FormField_padding_inline-end': `${paddingInlineEnd}px`,
-    }),
-    [paddingInlineStart, paddingInlineEnd],
-  );
-
-  const afterStyles: CSSCustomProperties = React.useMemo(
-    () => ({
-      '--vkui_internal--FormField_inset_inline-end': `${scrollbarWidth}px`,
-    }),
-    [scrollbarWidth],
-  );
 
   return (
     <Component
@@ -177,34 +146,16 @@ export const FormField = ({
         className,
       )}
     >
-      <div
-        className={styles['FormField__scroll-container']}
-        ref={scrollContainerRef}
-        style={scrollContainerStyles}
-      >
+      <div className={styles['FormField_scrollContainer']}>
+        {before && renderIcon(before, beforeAlign, styles['FormField__before'])}
         <div className={styles['FormField__content']}>{children}</div>
-      </div>
-      {before && (
-        <span
-          className={classNames(styles['FormField__before'], iconAlignClassNames[beforeAlign])}
-          ref={beforeRef}
-        >
-          {before}
-        </span>
-      )}
-      {after && (
-        <span
-          ref={afterRef}
-          className={classNames(
-            styles['FormField__after'],
-            iconAlignClassNames[afterAlign],
-            'vkuiInternalFormField__after',
+        {after &&
+          renderIcon(
+            after,
+            afterAlign,
+            classNames(styles['FormField__after'], 'vkuiInternalFormField__after'),
           )}
-          style={afterStyles}
-        >
-          {after}
-        </span>
-      )}
+      </div>
       <span aria-hidden className={styles['FormField__border']} />
     </Component>
   );

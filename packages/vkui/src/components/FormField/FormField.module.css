@@ -10,19 +10,17 @@
   inline-size: 100%;
 }
 
-.FormField__scroll-container {
-  overflow-y: auto;
-  max-block-size: inherit;
-  min-block-size: inherit;
+.FormField_scrollContainer {
+  display: flex;
   inline-size: 100%;
-  padding-inline-start: var(--vkui_internal--FormField_padding_inline-start, 0);
-  padding-inline-end: var(--vkui_internal--FormField_padding_inline-end, 0);
+  overflow-y: auto;
 }
 
 .FormField__content {
   min-block-size: inherit;
   display: flex;
   align-items: center;
+  flex-grow: 1;
 }
 
 .FormField--sizeY-compact {
@@ -41,20 +39,24 @@
   z-index: var(--vkui_internal--z_index_form_field_element);
 }
 
+.FormField__iconWrapper {
+  block-size: 100%;
+  display: flex;
+  position: sticky;
+  inset-block-start: 0;
+}
+
 .FormField__before,
 .FormField__after {
-  position: absolute;
-  z-index: var(--vkui_internal--z_index_form_field_side);
   display: flex;
   align-items: center;
   align-content: center;
   justify-content: center;
+  align-self: center;
   flex-shrink: 0;
   min-inline-size: var(--vkui--size_field_height--regular);
   block-size: 100%;
   color: var(--vkui--color_icon_secondary);
-  inset-block-start: 50%;
-  transform: translateY(-50%);
 }
 
 .FormField--sizeY-compact .FormField__before,
@@ -72,23 +74,19 @@
 }
 
 .FormField__icon--align-start {
-  inset-block-start: 0;
-  transform: translateY(0);
+  align-self: flex-start;
 }
 
 .FormField__icon--align-end {
-  inset-block-start: 100%;
-  transform: translateY(-100%);
+  align-self: flex-end;
 }
 
 .FormField__before {
   color: var(--vkui--color_icon_accent);
-  inset-inline-start: 0;
 }
 
 .FormField__after {
   color: var(--vkui--color_icon_secondary);
-  inset-inline-end: var(--vkui_internal--FormField_inset_inline-end, 0);
 }
 
 .FormField__border {
