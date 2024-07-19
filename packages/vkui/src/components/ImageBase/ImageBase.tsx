@@ -49,11 +49,11 @@ export interface ImageBaseProps
   /**
    * Ширина изображения
    */
-  widthSize?: number;
+  widthSize?: number | string;
   /**
    * Высота изображения
    */
-  heightSize?: number;
+  heightSize?: number | string;
   /**
    * Отключает обводку.
    */
@@ -103,6 +103,20 @@ const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
   return undefined;
 };
 
+const parsePx = (value: string): number | undefined => {
+  if (value.endsWith('px')) {
+    return parseInt(value);
+  }
+  return undefined;
+};
+
+const sizeToNumber = (size: number | string | undefined): number | undefined => {
+  if (typeof size === 'string') {
+    return parsePx(size);
+  }
+  return size;
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/ImageBase
  */
@@ -134,13 +148,13 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   onError,
   withTransparentBackground,
   objectFit = 'cover',
-  keepAspectRatio,
+  keepAspectRatio = false,
   ...restProps
 }: ImageBaseProps) => {
-  const size = sizeProp ?? minOr([widthSize, heightSize], defaultSize);
+  const size = sizeProp ?? minOr([sizeToNumber(widthSize), sizeToNumber(heightSize)], defaultSize);
 
-  const width = widthSize ?? size;
-  const height = heightSize ?? size;
+  const width = widthSize ?? (keepAspectRatio ? undefined : size);
+  const height = heightSize ?? (keepAspectRatio ? undefined : size);
 
   const [loaded, setLoaded] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
@@ -214,10 +228,14 @@ export const ImageBase: React.FC<ImageBaseProps> & {
             decoding={decoding}
             loading={loading}
             referrerPolicy={referrerPolicy}
-            style={{
-              width: widthImg || width,
-              height: heightImg || height,
-            }}
+            style={
+              keepAspectRatio
+                ? {
+                    width: widthImg || width,
+                    height: heightImg || height,
+                  }
+                : undefined
+            }
             sizes={sizes}
             src={src}
             srcSet={srcSet}
