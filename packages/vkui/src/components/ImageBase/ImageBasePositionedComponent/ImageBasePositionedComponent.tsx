@@ -4,7 +4,7 @@ import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffec
 import { HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ImageBaseContext } from '../context';
-import { calculateIndent, isIndentSizeConstant } from './helpers';
+import { resolveIndent } from './helpers';
 import styles from './ImageBasePositionedComponent.module.css';
 
 export type PositionedComponentPlacement =
@@ -155,13 +155,29 @@ export const ImageBasePositionedComponent = ({
     [position],
   );
 
-  const indentationStyle = React.useMemo(() => {
-    return {
-      '--vkui_internal--PositionedComponent_horizontal_indent':
-        horizontalIndent && calculateIndent(horizontalIndent),
-      '--vkui_internal--PositionedComponent_vertical_indent':
-        verticalIndent && calculateIndent(verticalIndent),
-    };
+  const [
+    horizontalIndentStyle,
+    verticalIndentStyle,
+    horizontalIndentClassName,
+    verticalIndentClassName,
+  ] = React.useMemo(() => {
+    const [horizontalIndentStyle, horizontalIndentClassName] = resolveIndent(
+      horizontalIndent,
+      '--vkui_internal--PositionedComponent_horizontal_indent',
+      horizontalIndentClassNames,
+    );
+    const [verticalIndentStyle, verticalIndentClassName] = resolveIndent(
+      verticalIndent,
+      '--vkui_internal--PositionedComponent_vertical_indent',
+      verticalIndentClassNames,
+    );
+
+    return [
+      horizontalIndentStyle,
+      verticalIndentStyle,
+      horizontalIndentClassName,
+      verticalIndentClassName,
+    ];
   }, [horizontalIndent, verticalIndent]);
 
   return (
@@ -170,19 +186,15 @@ export const ImageBasePositionedComponent = ({
       style={{
         ...style,
         ...positionStyle,
-        ...indentationStyle,
+        ...horizontalIndentStyle,
+        ...verticalIndentStyle,
       }}
       className={classNames(
         styles['PositionedComponent'],
         hidden && styles['PositionedComponent--hidden'],
         typeof position === 'string' && positionPlacementClassNames[position],
-        horizontalIndent &&
-          isIndentSizeConstant(horizontalIndent) &&
-          horizontalIndentClassNames[horizontalIndent],
-        verticalIndent &&
-          isIndentSizeConstant(verticalIndent) &&
-          verticalIndentClassNames[verticalIndent],
-        className,
+        horizontalIndentClassName,
+        verticalIndentClassName,
       )}
     />
   );

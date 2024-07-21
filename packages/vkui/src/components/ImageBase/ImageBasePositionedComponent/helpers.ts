@@ -1,6 +1,6 @@
 import { PositionedComponentIndentation } from './ImageBasePositionedComponent';
 
-export function isIndentSizeConstant(indent: PositionedComponentIndentation) {
+function isIndentSizeConstant(indent: PositionedComponentIndentation) {
   return (
     indent === '2xs' ||
     indent === 'xs' ||
@@ -14,9 +14,27 @@ export function isIndentSizeConstant(indent: PositionedComponentIndentation) {
   );
 }
 
-export function calculateIndent(indent: PositionedComponentIndentation) {
+function calculateIndent(indent: PositionedComponentIndentation) {
   if (isIndentSizeConstant(indent)) {
     return;
   }
   return typeof indent === 'string' ? indent : `${indent}px`;
 }
+
+export const resolveIndent = (
+  indent: PositionedComponentIndentation | undefined,
+  cssProperty: string,
+  classNames: Record<string, string>,
+): [React.CSSProperties | undefined, string | undefined] => {
+  if (!indent) {
+    return [undefined, undefined];
+  }
+
+  const calculatedIndent = calculateIndent(indent);
+
+  if (calculatedIndent) {
+    return [{ [cssProperty]: calculatedIndent }, undefined];
+  }
+
+  return [undefined, classNames[indent]];
+};
