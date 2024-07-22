@@ -46,6 +46,8 @@ export interface CustomScrollViewProps
   overscrollBehavior?: 'auto' | 'contain' | 'none';
   /**
    * Включение замены горизонтального скролла
+   *
+   * > ⚠️ Важно: На версиях Firefox ниже 64 могут возникнуть проблемы при использовании этого флага, будьте осторожны
    */
   enableHorizontalScroll?: boolean;
 }

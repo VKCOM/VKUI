@@ -11,6 +11,7 @@
   block-size: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
+  padding-inline-end: 100px;
   position: relative;
   outline: none;
 }
@@ -24,6 +25,7 @@
 }
 
 .CustomScrollView__box--horizontalEnabled {
+  padding-inline-end: 0;
   overflow-x: scroll;
 }
 
