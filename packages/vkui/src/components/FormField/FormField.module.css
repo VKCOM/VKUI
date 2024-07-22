@@ -21,6 +21,7 @@
   display: flex;
   align-items: center;
   flex-grow: 1;
+  overflow: hidden;
 }
 
 .FormField--sizeY-compact {
