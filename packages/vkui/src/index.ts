@@ -274,7 +274,7 @@ export type { FormItemTopLabelProps } from './components/FormItem/FormItemTop/Fo
 export type { FormItemTopAsideProps } from './components/FormItem/FormItemTop/FormItemTopAside';
 export type { FormItemProps } from './components/FormItem/FormItem';
 export { FormField } from './components/FormField/FormField';
-export type { FormFieldProps } from './components/FormField/FormField';
+export type { FormFieldProps, FieldIconsAlign } from './components/FormField/FormField';
 export { FormLayoutGroup } from './components/FormLayoutGroup/FormLayoutGroup';
 export type { FormLayoutGroupProps } from './components/FormLayoutGroup/FormLayoutGroup';
 export { FormStatus } from './components/FormStatus/FormStatus';

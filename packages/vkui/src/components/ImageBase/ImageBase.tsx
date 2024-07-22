@@ -60,11 +60,11 @@ export interface ImageBaseProps
   /**
    * Ширина изображения
    */
-  widthSize?: number;
+  widthSize?: number | string;
   /**
    * Высота изображения
    */
-  heightSize?: number;
+  heightSize?: number | string;
   /**
    * Отключает обводку.
    */
@@ -93,6 +93,11 @@ export interface ImageBaseProps
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit)
    */
   objectFit?: React.CSSProperties['objectFit'];
+  /**
+   * Флаг для сохранения пропорций картинки.
+   * Для корректной работы необходимо задать размеры хотя бы одной стороны картинки
+   */
+  keepAspectRatio?: boolean;
 }
 
 const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
@@ -107,6 +112,20 @@ const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
       return styles['ImageBase__img--objectFit-scaleDown'];
   }
   return undefined;
+};
+
+const parsePx = (value: string): number | undefined => {
+  if (value.endsWith('px')) {
+    return parseInt(value);
+  }
+  return undefined;
+};
+
+const sizeToNumber = (size: number | string | undefined): number | undefined => {
+  if (typeof size === 'string') {
+    return parsePx(size);
+  }
+  return size;
 };
 
 /**
@@ -141,14 +160,15 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   onError,
   withTransparentBackground,
   objectFit = 'cover',
+  keepAspectRatio = false,
   getRootRef,
   ...restProps
 }: ImageBaseProps) => {
-  const size = sizeProp ?? minOr([widthSize, heightSize], defaultSize);
+  const size = sizeProp ?? minOr([sizeToNumber(widthSize), sizeToNumber(heightSize)], defaultSize);
   const wrapperRef = useExternRef(getRootRef);
 
-  const width = widthSize ?? size;
-  const height = heightSize ?? size;
+  const width = widthSize ?? (keepAspectRatio ? undefined : size);
+  const height = heightSize ?? (keepAspectRatio ? undefined : size);
 
   const [loaded, setLoaded] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
@@ -214,11 +234,23 @@ export const ImageBase: React.FC<ImageBaseProps> & {
           <img
             ref={imgRef}
             alt={alt}
-            className={classNames(styles['ImageBase__img'], getObjectFitClassName(objectFit))}
+            className={classNames(
+              styles['ImageBase__img'],
+              getObjectFitClassName(objectFit),
+              keepAspectRatio && styles['ImageBase__img--keepRatio'],
+            )}
             crossOrigin={crossOrigin}
             decoding={decoding}
             loading={loading}
             referrerPolicy={referrerPolicy}
+            style={
+              keepAspectRatio
+                ? {
+                    width: widthImg || width,
+                    height: heightImg || height,
+                  }
+                : undefined
+            }
             sizes={sizes}
             src={src}
             srcSet={srcSet}
