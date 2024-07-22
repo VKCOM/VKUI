@@ -37,6 +37,7 @@ const Uncontrolled = () => {
         emptyText="Совсем ничего не найдено"
         selectedBehavior="hide"
         closeAfterSelect={false}
+        allowClearButton={true}
         onChangeStart={(event, option) => {
           if (option.value === 'download') {
             event.preventDefault();
@@ -85,6 +86,7 @@ const ControlledCreatable = () => {
         options={colors}
         placeholder="Не выбраны"
         creatable="Добавить цвет"
+        allowClearButton={true}
       />
     </FormItem>
   );
