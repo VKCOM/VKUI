@@ -6,10 +6,7 @@ import { Button } from '../../Button/Button';
 import { CellButton } from '../../CellButton/CellButton';
 import { Popover } from '../../Popover/Popover';
 import { ImageBase } from '../ImageBase';
-import {
-  ImageBasePositionedComponent,
-  ImageBasePositionedComponentProps,
-} from './ImageBasePositionedComponent';
+import { ImageBaseFloatElement, ImageBaseFloatElementProps } from './ImageBaseFloatElement';
 
 const ContextMenu = () => {
   return (
@@ -44,9 +41,9 @@ const ContextMenu = () => {
   );
 };
 
-const story: Meta<ImageBasePositionedComponentProps> = {
-  title: 'Blocks/ImageBasePositionedComponent',
-  component: ImageBasePositionedComponent,
+const story: Meta<ImageBaseFloatElementProps> = {
+  title: 'Blocks/ImageBaseFloatElement',
+  component: ImageBaseFloatElement,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [
     (Component) => (
@@ -59,7 +56,7 @@ const story: Meta<ImageBasePositionedComponentProps> = {
 
 export default story;
 
-type Story = StoryObj<ImageBasePositionedComponentProps>;
+type Story = StoryObj<ImageBaseFloatElementProps>;
 
 export const Playground: Story = {
   args: {

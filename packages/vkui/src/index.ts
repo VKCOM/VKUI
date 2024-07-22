@@ -59,7 +59,7 @@ export type {
   ImageBaseExpectedIconProps,
   ImageBaseBadgeProps,
   ImageBaseOverlayProps,
-  ImageBasePositionedComponentProps,
+  ImageBaseFloatElementProps,
   PositionedComponentPlacement,
   PositionedComponentPosition,
   PositionedComponentIndentation,

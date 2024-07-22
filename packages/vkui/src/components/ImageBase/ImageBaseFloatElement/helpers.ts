@@ -1,4 +1,4 @@
-import { PositionedComponentIndentation } from './ImageBasePositionedComponent';
+import { PositionedComponentIndentation } from './ImageBaseFloatElement';
 
 function isIndentSizeConstant(indent: PositionedComponentIndentation) {
   return (

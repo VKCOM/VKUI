@@ -5,7 +5,7 @@ import { HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ImageBaseContext } from '../context';
 import { resolveIndent } from './helpers';
-import styles from './ImageBasePositionedComponent.module.css';
+import styles from './ImageBaseFloatElement.module.css';
 
 export type PositionedComponentPlacement =
   | 'top-start'
@@ -74,8 +74,7 @@ const verticalIndentClassNames = {
   '4xl': styles['PositionedComponent--verticalIndent-4xl'],
 };
 
-export interface ImageBasePositionedComponentProps
-  extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface ImageBaseFloatElementProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Позиция компонента относительно родителя
    */
@@ -102,7 +101,7 @@ export interface ImageBasePositionedComponentProps
   containerRef?: React.RefObject<HTMLElement | null>;
 }
 
-export const ImageBasePositionedComponent = ({
+export const ImageBaseFloatElement = ({
   position,
   visibility = 'always',
   style,
@@ -111,7 +110,7 @@ export const ImageBasePositionedComponent = ({
   horizontalIndent,
   verticalIndent,
   ...restProps
-}: ImageBasePositionedComponentProps) => {
+}: ImageBaseFloatElementProps) => {
   const [hidden, setHidden] = React.useState(visibility !== 'always');
   const { ref: imageWrapperRef } = React.useContext(ImageBaseContext);
 
@@ -200,4 +199,4 @@ export const ImageBasePositionedComponent = ({
   );
 };
 
-ImageBasePositionedComponent.displayName = 'ImageBasePositionedComponent';
+ImageBaseFloatElement.displayName = 'ImageBaseFloatElement';

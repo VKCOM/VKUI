@@ -2,18 +2,18 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../../testing/utils';
 import { Image } from '../../Image/Image';
 import {
-  ImageBasePositionedComponent,
+  ImageBaseFloatElement,
   PositionedComponentIndentation,
   PositionedComponentPlacement,
-} from './ImageBasePositionedComponent';
-import styles from './ImageBasePositionedComponent.module.css';
+} from './ImageBaseFloatElement';
+import styles from './ImageBaseFloatElement.module.css';
 
-describe(ImageBasePositionedComponent, () => {
-  baselineComponent(ImageBasePositionedComponent);
+describe(ImageBaseFloatElement, () => {
+  baselineComponent(ImageBaseFloatElement);
 
   it('check component position', () => {
     render(
-      <ImageBasePositionedComponent
+      <ImageBaseFloatElement
         data-testid="component"
         position={{
           insetBlockStart: '10px',
@@ -52,7 +52,7 @@ describe(ImageBasePositionedComponent, () => {
     render(
       <>
         <Image size={96} src="test" alt="Приложение шторм онлайн" data-testid="image">
-          <ImageBasePositionedComponent
+          <ImageBaseFloatElement
             data-testid="component"
             visibility="on-image-hover"
             position={{
@@ -96,7 +96,7 @@ describe(ImageBasePositionedComponent, () => {
     render(
       <>
         <div ref={containerRef}>
-          <ImageBasePositionedComponent
+          <ImageBaseFloatElement
             data-testid="component"
             visibility="on-image-hover"
             containerRef={containerRef}
@@ -145,7 +145,7 @@ describe(ImageBasePositionedComponent, () => {
   }));
 
   it.each(placementFixtures)('should have placement className %j', ({ placement, className }) => {
-    render(<ImageBasePositionedComponent data-testid="component" position={placement} />);
+    render(<ImageBaseFloatElement data-testid="component" position={placement} />);
     expect(screen.getByTestId('component')).toHaveClass(className);
   });
 
@@ -168,11 +168,7 @@ describe(ImageBasePositionedComponent, () => {
     'should have horizontal indentation className %j',
     ({ indent, className }) => {
       render(
-        <ImageBasePositionedComponent
-          data-testid="component"
-          position="top"
-          horizontalIndent={indent}
-        />,
+        <ImageBaseFloatElement data-testid="component" position="top" horizontalIndent={indent} />,
       );
       expect(screen.getByTestId('component')).toHaveClass(className);
     },
@@ -197,11 +193,7 @@ describe(ImageBasePositionedComponent, () => {
     'should have vertical indentation className %j',
     ({ indent, className }) => {
       render(
-        <ImageBasePositionedComponent
-          data-testid="component"
-          position="top"
-          verticalIndent={indent}
-        />,
+        <ImageBaseFloatElement data-testid="component" position="top" verticalIndent={indent} />,
       );
       expect(screen.getByTestId('component')).toHaveClass(className);
     },
@@ -209,7 +201,7 @@ describe(ImageBasePositionedComponent, () => {
 
   it('check number indentation', () => {
     render(
-      <ImageBasePositionedComponent
+      <ImageBaseFloatElement
         data-testid="component"
         position="top"
         verticalIndent={10}
@@ -231,7 +223,7 @@ describe(ImageBasePositionedComponent, () => {
 
   it('check string indentation', () => {
     render(
-      <ImageBasePositionedComponent
+      <ImageBaseFloatElement
         data-testid="component"
         position="top"
         verticalIndent="5%"

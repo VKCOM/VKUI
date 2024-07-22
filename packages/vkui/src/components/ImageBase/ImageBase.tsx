@@ -6,14 +6,14 @@ import { getFetchPriorityProp } from '../../lib/utils';
 import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
-import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import {
-  ImageBasePositionedComponent,
-  type ImageBasePositionedComponentProps,
+  ImageBaseFloatElement,
+  type ImageBaseFloatElementProps,
   type PositionedComponentIndentation,
   type PositionedComponentPlacement,
   type PositionedComponentPosition,
-} from './ImageBasePositionedComponent/ImageBasePositionedComponent';
+} from './ImageBaseFloatElement/ImageBaseFloatElement';
+import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import { ImageBaseContext } from './context';
 import type { ImageBaseContextProps, ImageBaseExpectedIconProps, ImageBaseSize } from './types';
 import { validateFallbackIcon, validateSize } from './validators';
@@ -25,7 +25,7 @@ export type {
   ImageBaseBadgeProps,
   ImageBaseOverlayProps,
   ImageBaseContextProps,
-  ImageBasePositionedComponentProps,
+  ImageBaseFloatElementProps,
   PositionedComponentPlacement,
   PositionedComponentPosition,
   PositionedComponentIndentation,
@@ -134,7 +134,7 @@ const sizeToNumber = (size: number | string | undefined): number | undefined => 
 export const ImageBase: React.FC<ImageBaseProps> & {
   Badge: typeof ImageBaseBadge;
   Overlay: typeof ImageBaseOverlay;
-  PositionedComponent: typeof ImageBasePositionedComponent;
+  PositionedComponent: typeof ImageBaseFloatElement;
 } = ({
   alt,
   crossOrigin,
@@ -278,5 +278,5 @@ ImageBase.Badge.displayName = 'ImageBase.Badge';
 ImageBase.Overlay = ImageBaseOverlay;
 ImageBase.Overlay.displayName = 'ImageBase.Overlay';
 
-ImageBase.PositionedComponent = ImageBasePositionedComponent;
+ImageBase.PositionedComponent = ImageBaseFloatElement;
 ImageBase.PositionedComponent.displayName = 'ImageBase.PositionedComponent';
