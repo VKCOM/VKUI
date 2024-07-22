@@ -43,6 +43,11 @@
   visibility: hidden;
 }
 
+.ImageBase__img--keepRatio {
+  inline-size: auto;
+  block-size: auto;
+}
+
 .ImageBase__img--objectFit-contain {
   object-fit: contain;
 }
