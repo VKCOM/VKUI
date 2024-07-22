@@ -337,9 +337,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     const dropdown = scrollBoxRef.current;
     const optionsWrapper = optionsWrapperRef.current;
     const item =
-      dropdown && optionsWrapper
-        ? (optionsWrapper.children[index] as HTMLElement)
-        : null;
+      dropdown && optionsWrapper ? (optionsWrapper.children[index] as HTMLElement) : null;
 
     if (!item || !dropdown) {
       return;
@@ -706,9 +704,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const resolvedContent = React.useMemo(() => {
     const defaultDropdownContent =
       options?.length > 0 ? (
-        <div ref={optionsWrapperRef}>
-          {options.map(renderOption)}
-        </div>
+        <div ref={optionsWrapperRef}>{options.map(renderOption)}</div>
       ) : (
         <Footnote className={styles['CustomSelect__empty']}>{emptyText}</Footnote>
       );
