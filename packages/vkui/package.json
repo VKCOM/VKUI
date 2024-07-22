@@ -74,6 +74,10 @@
     "mitt": "^3.0.1"
   },
   "devDependencies": {
+    "@size-limit/file": "^11.1.4",
+    "@size-limit/webpack": "^11.1.4",
+    "@size-limit/webpack-css": "^11.1.4",
+    "size-limit": "^11.1.4",
     "storybook": "8.2.2"
   },
   "size-limit": [
