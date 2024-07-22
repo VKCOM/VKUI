@@ -194,6 +194,7 @@ export const ImageBaseFloatElement = ({
         typeof position === 'string' && positionPlacementClassNames[position],
         horizontalIndentClassName,
         verticalIndentClassName,
+        className,
       )}
     />
   );
