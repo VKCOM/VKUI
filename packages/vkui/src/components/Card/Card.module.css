@@ -4,7 +4,6 @@
   border-radius: var(--vkui--size_card_border_radius--regular);
   list-style-type: none;
   display: block;
-  text-align: unset;
 }
 
 .Card--mode-shadow {
