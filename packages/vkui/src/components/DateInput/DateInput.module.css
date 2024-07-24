@@ -8,7 +8,6 @@
   white-space: nowrap;
   user-select: text;
   font-variant-numeric: tabular-nums;
-  margin-block: auto;
 }
 
 .DateInput__input--time-divider {
