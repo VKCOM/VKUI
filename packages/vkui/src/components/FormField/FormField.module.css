@@ -16,14 +16,14 @@
   align-items: flex-start;
   justify-content: flex-start;
   overflow-y: auto;
-  min-height: inherit;
+  min-block-size: inherit;
 }
 
 .FormField__content {
-  min-height: inherit;
+  min-block-size: inherit;
   display: flex;
   flex-grow: 1;
-  min-width: 0;
+  min-inline-size: 0;
 }
 
 .FormField--sizeY-compact {
