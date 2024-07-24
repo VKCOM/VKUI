@@ -47,7 +47,7 @@ export const FlexItem = ({
   return (
     <RootComponent
       {...rest}
-      style={{ ...style, flexBasis }}
+      style={{ flexBasis, ...style }}
       baseClassName={classNames(
         styles.FlexItem,
         alignSelf && alignSelfClassNames[alignSelf],
