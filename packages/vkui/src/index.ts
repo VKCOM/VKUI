@@ -289,6 +289,7 @@ export { ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
 export { ChipsSelect } from './components/ChipsSelect/ChipsSelect';
 export type { ChipsSelectProps } from './components/ChipsSelect/ChipsSelect';
+export type { FormFieldClearButtonProps } from './components/FormFieldClearButton/FormFieldClearButton';
 export { Slider } from './components/Slider/Slider';
 export type { SliderBaseProps, SliderProps, SliderMultipleProps } from './components/Slider/Slider';
 export { Textarea } from './components/Textarea/Textarea';

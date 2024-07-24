@@ -7,7 +7,7 @@ export const GradientPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          mode: ['default', 'tint'],
+          mode: ['default', 'tint', 'overlay'],
           to: ['top', 'bottom'],
         },
       ]}

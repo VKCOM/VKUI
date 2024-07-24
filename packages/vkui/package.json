@@ -70,11 +70,11 @@
     "@vkontakte/icons": "^2.115.0",
     "@vkontakte/vkjs": "^1.2.1",
     "@vkontakte/vkui-floating-ui": "^0.2.1",
-    "dayjs": "^1.11.11",
+    "dayjs": "^1.11.12",
     "mitt": "^3.0.1"
   },
   "devDependencies": {
-    "storybook": "8.2.2"
+    "storybook": "8.2.5"
   },
   "size-limit": [
     {

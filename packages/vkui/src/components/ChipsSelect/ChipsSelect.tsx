@@ -121,6 +121,11 @@ export interface ChipsSelectProps<O extends ChipOption>
    * Отступ от выпадающего списка
    */
   dropdownOffsetDistance?: number;
+
+  /**
+   * Если `true`, то справа будет отображаться кнопка для очистки значения
+   */
+  allowClearButton?: boolean;
 }
 
 /**
@@ -171,6 +176,8 @@ export const ChipsSelect = <Option extends ChipOption>({
   onBlur: onBlurProp,
   onKeyDown: onKeyDownProp,
   dropdownOffsetDistance = 0,
+  allowClearButton,
+  clearButtonTestId,
   ...restProps
 }: ChipsSelectProps<Option>): React.ReactNode => {
   const {
@@ -180,6 +187,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     addOptionFromInput,
     addOption,
     removeOption,
+    clearOptions,
     // input
     inputRef: inputRefHook,
     inputValue,
@@ -427,23 +435,35 @@ export const ChipsSelect = <Option extends ChipOption>({
     [dropdownOffsetDistance, opened, dropdownVerticalPlacement],
   );
 
+  const clearButtonShown = allowClearButton && (!!value.length || !!inputValue.length);
+
   return (
     <>
       <ChipsInputBase
         {...restProps}
         disabled={disabled}
         readOnly={readOnly}
+        clearButtonShown={clearButtonShown}
+        clearButtonTestId={clearButtonTestId}
         // FormFieldProps
         id={labelledbyId}
         getRootRef={rootRef}
         className={classNames(styles['ChipsSelect'], openedClassNames, className)}
         status={status}
-        after={dropdownIconProp || <DropdownIcon opened={opened} />}
+        after={
+          dropdownIconProp || (
+            <DropdownIcon
+              opened={opened}
+              className={clearButtonShown ? styles['ChipsSelect__dropdown-icon'] : undefined}
+            />
+          )
+        }
         // option
         value={value}
         onAddChipOption={addOptionFromInput}
         onRemoveChipOption={removeOption}
         renderChip={renderChip}
+        onClear={clearOptions}
         // input
         getRef={inputRef}
         inputValue={inputValue}
