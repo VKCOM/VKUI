@@ -12,7 +12,12 @@ import { useChipsInput, type UseChipsInputProps } from './useChipsInput';
 export interface ChipsInputProps<Option extends ChipOption>
   extends ChipsInputBaseProps<Option>,
     UseChipsInputProps<Option>,
-    Pick<FormFieldProps, 'status' | 'mode' | 'before' | 'after'> {}
+    Pick<FormFieldProps, 'status' | 'mode' | 'before' | 'after'> {
+  /**
+   * Если `true`, то справа будет отображаться кнопка для очистки значения
+   */
+  allowClearButton?: boolean;
+}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ChipsInput
@@ -34,12 +39,14 @@ export const ChipsInput = <Option extends ChipOption>({
 
   // other
   disabled,
+  allowClearButton,
   ...restProps
 }: ChipsInputProps<Option>): React.ReactNode => {
   const {
     value,
     addOptionFromInput,
     removeOption,
+    clearOptions,
 
     // input
     inputRef: inputRefHook,
@@ -69,8 +76,10 @@ export const ChipsInput = <Option extends ChipOption>({
       {...restProps}
       disabled={disabled}
       value={value}
+      clearButtonShown={allowClearButton && (!!value.length || !!inputValue.length)}
       onAddChipOption={addOptionFromInput}
       onRemoveChipOption={removeOption}
+      onClear={clearOptions}
       getRef={inputRef}
       inputValue={inputValue}
       onInputChange={onInputChange}

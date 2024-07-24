@@ -77,7 +77,7 @@
 }
 
 .TabsItem--hover.TabsItem--mode-accent {
-  background-color: var(--vkui--color_background_secondary);
+  background-color: var(--vkui--color_background_contrast_themed--hover);
 }
 
 .TabsItem--mode-accent::before {
