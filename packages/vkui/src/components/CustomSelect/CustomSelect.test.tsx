@@ -845,8 +845,8 @@ describe('CustomSelect', () => {
         labelTextTestId="labelTextTestId"
         initialValue="0"
         options={[
-          { value: 0, label: 'Mike' },
-          { value: 1, label: 'Josh' },
+          { value: '0', label: 'Mike' },
+          { value: '1', label: 'Josh' },
         ]}
         onChangeStub={onChangeStub}
       />,

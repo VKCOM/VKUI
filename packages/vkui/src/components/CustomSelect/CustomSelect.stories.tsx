@@ -75,6 +75,7 @@ export const QAPlayground: Story = {
               id="administrator-select-id"
               placeholder="Не выбран"
               options={users}
+              defaultValue={users[2].value}
               selectType={selectType}
               allowClearButton
             />
