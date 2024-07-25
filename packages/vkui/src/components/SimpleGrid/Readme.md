@@ -72,7 +72,7 @@ const Example = () => {
         <SimpleGrid
           align={align}
           columns={columns}
-          gap={complexGap ? [rowGap, columnGap] : gap}
+          gap={complexGap ? [columnGap, rowGap] : gap}
           margin={margin}
         >
           {Array.from({ length: itemsCount }, (item, index) => {

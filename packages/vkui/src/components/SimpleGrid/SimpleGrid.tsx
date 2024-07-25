@@ -62,7 +62,7 @@ export const SimpleGrid = ({
   ...props
 }: SimpleGridProps) => {
   const style: CSSCustomProperties = {};
-  const [rowGap, columnGap] = calculateGap(gap);
+  const [columnGap, rowGap] = calculateGap(gap);
   if (typeof rowGap === 'number') {
     style['--vkui_internal--row_gap'] = `${rowGap}px`;
   }
@@ -85,7 +85,7 @@ export const SimpleGrid = ({
         typeof columnGap === 'string' && columnGapClassNames[columnGap],
         typeof rowGap === 'string' && rowGapClassNames[rowGap],
       )}
-      style={{ ...styleProp, ...style }}
+      style={{ ...style, ...styleProp }}
     />
   );
 };

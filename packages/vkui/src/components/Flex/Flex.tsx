@@ -83,7 +83,7 @@ export const Flex: React.FC<FlexProps> & {
   reverse = false,
   ...props
 }: FlexProps) => {
-  const [rowGap, columnGap] = calculateGap(gap);
+  const [columnGap, rowGap] = calculateGap(gap);
   const style: CSSCustomProperties = {};
 
   if (typeof rowGap === 'number') {
