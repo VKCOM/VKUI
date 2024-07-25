@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, debounce } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
@@ -7,7 +7,6 @@ import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { debounce } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import {
