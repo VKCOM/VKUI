@@ -46,6 +46,8 @@ export interface FlexProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    * Отступы между элементами.
    * Значение из списка предопределённых пресетов или число, которое будет приведено к пикселям.
    * Через массив можно задать отступ между столбцами и строками [column, row], если они отличаются.
+   * 
+   * TODO [>=7]: порядок следования будет [row, column]
    */
   gap?: GapsProp;
   /**
