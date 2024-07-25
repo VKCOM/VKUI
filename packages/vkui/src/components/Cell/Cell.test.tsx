@@ -50,7 +50,7 @@ describe('Cell', () => {
       </Cell>,
     );
 
-    // Явное значение Component = div приоритетней автоматической логике по установлению тэга a
+    // Явное значение Component = div приоритетней автоматической логики по установке тэга a
     expect(document.querySelector('a[href="http://the.link"]')).toBeFalsy();
     expect(document.querySelector('div[href="http://the.link"]')).toBeTruthy();
 
