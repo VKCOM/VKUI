@@ -113,4 +113,55 @@ describe('CalendarHeader', () => {
 
     expect(onChange).not.toHaveBeenCalled();
   });
+
+  it('fire onChange when click on year dropdown item', async () => {
+    const onChange = jest.fn();
+    jest.useFakeTimers();
+    const { container } = render(<CalendarHeader viewDate={targetDate} onChange={onChange} />);
+
+    const [, yearPicker] = container.getElementsByClassName(styles['CalendarHeader__picker']);
+    await userEvent.click(yearPicker);
+    const [minYearSelectOption] = container.getElementsByClassName(styles['CustomSelectOption']);
+    await userEvent.click(minYearSelectOption);
+
+    expect(onChange).toHaveBeenCalled();
+  });
+
+  it('should not find prev month button', () => {
+    const onChange = jest.fn();
+    const isMonthDisabled = jest.fn();
+    isMonthDisabled.mockImplementation(() => true);
+    jest.useFakeTimers();
+    const { container } = render(
+      <CalendarHeader
+        viewDate={new Date('2023-01-20T07:40:00.000Z')}
+        nextMonthHidden={false}
+        onChange={onChange}
+        isMonthDisabled={isMonthDisabled}
+      />,
+    );
+    expect(isMonthDisabled).toBeCalledWith(11, 2022);
+    expect(container.getElementsByClassName(styles['CalendarHeader__nav-icon-prev']).length).toBe(
+      0,
+    );
+  });
+
+  it('should not find next month button', () => {
+    const onChange = jest.fn();
+    const isMonthDisabled = jest.fn();
+    isMonthDisabled.mockImplementation(() => true);
+    jest.useFakeTimers();
+    const { container } = render(
+      <CalendarHeader
+        viewDate={new Date('2023-12-20T07:40:00.000Z')}
+        prevMonthHidden={false}
+        onChange={onChange}
+        isMonthDisabled={isMonthDisabled}
+      />,
+    );
+    expect(isMonthDisabled).toBeCalledWith(0, 2024);
+    expect(container.getElementsByClassName(styles['CalendarHeader__nav-icon-next']).length).toBe(
+      0,
+    );
+  });
 });
