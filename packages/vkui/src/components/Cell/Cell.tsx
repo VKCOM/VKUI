@@ -127,7 +127,7 @@ export const Cell: React.FC<CellProps> & {
     className: styles['Cell__content'],
     // чтобы свойство, если не определено, не присутствовало в
     // restProps явно как {'Component': undefined} и ниже не переопределяло
-    // возможное значение commonProps.Component = 'a' при слияние двух объектов, как
+    // возможное значение commonProps.Component = 'a' при слиянии двух объектов, как
     // {...commonProps, ...restProps}
     ...(Component && { Component }),
     before: (
