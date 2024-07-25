@@ -1,10 +1,50 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, getByText, render, screen } from '@testing-library/react';
+import { getDocumentBody } from '../../lib/dom';
 import { baselineComponent } from '../../testing/utils';
 import { CalendarRange } from './CalendarRange';
 import styles from './CalendarRange.module.css';
+import dayStyles from '../CalendarDay/CalendarDay.module.css';
+import daysStyles from '../CalendarDays/CalendarDays.module.css';
+
+const firstDayDate = new Date('2023-09-01T07:40:00.000Z');
 
 describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
+
+  const getParts = () => {
+    return getDocumentBody().getElementsByClassName(
+      styles['CalendarRange__inner'],
+    ) as HTMLCollectionOf<HTMLElement>;
+  };
+
+  const clickDayInPart = (part: HTMLElement, date: string) => {
+    fireEvent.click(getByText(part, date));
+  };
+
+  const getCalendarDayBlock = (part: HTMLElement, date: string) => {
+    return getByText(part, date).closest(`.${dayStyles['CalendarDay']}`) as HTMLElement;
+  };
+
+  const getLeftPart = () => {
+    const [leftPart] = getParts();
+    return leftPart;
+  };
+
+  const getRightPart = () => {
+    const [, rightPart] = getParts();
+    return rightPart;
+  };
+
+  const checkLeftPartMonth = (monthName: string) => {
+    expect(getByText(getLeftPart(), monthName)).toBeTruthy();
+  };
+
+  const triggerKeyDownEvent = (key: string) => {
+    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles['CalendarDays'])[0], {
+      key,
+      code: key,
+    });
+  };
 
   it('calls onChange when initial value is [null, null]', () => {
     const onChangeStub = jest.fn();
@@ -50,5 +90,89 @@ describe('CalendarRange', () => {
     fireEvent.click(leftPartSelect!);
 
     expect(screen.getByRole('option', { selected: true, name: 'май' }));
+  });
+
+  it('check navigation by keyboard between two months', async () => {
+    jest.useFakeTimers();
+    render(<CalendarRange value={[firstDayDate, firstDayDate]} />);
+
+    checkLeftPartMonth('сентябрь');
+
+    triggerKeyDownEvent('ArrowLeft');
+
+    checkLeftPartMonth('август');
+    expect(getByText(document.activeElement as HTMLElement, '31')).toBeInTheDocument();
+
+    triggerKeyDownEvent('ArrowRight');
+
+    checkLeftPartMonth('август');
+    expect(getByText(document.activeElement as HTMLElement, '1')).toBeInTheDocument();
+
+    triggerKeyDownEvent('ArrowUp');
+
+    checkLeftPartMonth('август');
+    expect(getByText(document.activeElement as HTMLElement, '25')).toBeInTheDocument();
+
+    triggerKeyDownEvent('ArrowDown');
+
+    checkLeftPartMonth('август');
+    expect(getByText(document.activeElement as HTMLElement, '1')).toBeInTheDocument();
+  });
+
+  it('check click on same day', async () => {
+    jest.useFakeTimers();
+    render(<CalendarRange value={[firstDayDate, null]} />);
+
+    const [leftPart] = getParts();
+    clickDayInPart(leftPart, '1');
+
+    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(
+      dayStyles['CalendarDay--selection-start'],
+    );
+    expect(getCalendarDayBlock(leftPart, '1')).not.toHaveClass(
+      dayStyles['CalendarDay--selection-end'],
+    );
+  });
+
+  it('check range working', async () => {
+    jest.useFakeTimers();
+    render(<CalendarRange value={[firstDayDate, null]} />);
+
+    const [leftPart] = getParts();
+    clickDayInPart(leftPart, '3');
+
+    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(
+      dayStyles['CalendarDay--selection-start'],
+    );
+    expect(getCalendarDayBlock(leftPart, '3')).toHaveClass(dayStyles['CalendarDay--selection-end']);
+  });
+
+  it('check reverse range select working', async () => {
+    jest.useFakeTimers();
+    const onChange = jest.fn();
+    const { rerender } = render(
+      <CalendarRange value={[firstDayDate, firstDayDate]} onChange={onChange} />,
+    );
+
+    triggerKeyDownEvent('ArrowLeft');
+
+    const [leftPart] = getParts();
+    clickDayInPart(leftPart, '30');
+
+    expect(onChange.mock.calls).toEqual([[[new Date('2023-08-30T07:40:00.000Z'), firstDayDate]]]);
+
+    rerender(
+      <CalendarRange
+        value={[new Date('2023-08-30T07:40:00.000Z'), firstDayDate]}
+        onChange={onChange}
+      />,
+    );
+
+    expect(getCalendarDayBlock(getLeftPart(), '30')).toHaveClass(
+      dayStyles['CalendarDay--selection-start'],
+    );
+    expect(getCalendarDayBlock(getRightPart(), '1')).toHaveClass(
+      dayStyles['CalendarDay--selection-end'],
+    );
   });
 });
