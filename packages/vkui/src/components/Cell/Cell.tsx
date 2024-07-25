@@ -125,7 +125,11 @@ export const Cell: React.FC<CellProps> & {
     hasHover: hasActive && !removable,
     ...restProps,
     className: styles['Cell__content'],
-    Component: Component,
+    // чтобы свойство, если не определено, не присутствовало в
+    // restProps явно как {'Component': undefined} и ниже не переопределяло
+    // возможное значение commonProps.Component = 'a' при слияние двух объектов, как
+    // {...commonProps, ...restProps}
+    ...(Component && { Component }),
     before: (
       <React.Fragment>
         {draggable && platform !== 'ios' && dragger}
