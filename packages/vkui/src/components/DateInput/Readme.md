@@ -17,6 +17,7 @@ const Example = () => {
   const [closeOnChange, setCloseOnChange] = useState(true);
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(false);
   const [disableCalendar, setDisableCalendar] = useState(false);
+  const [placeholder, setPlaceholder] = useState('');
   const [locale, setLocale] = useState('ru');
 
   return (
@@ -59,6 +60,13 @@ const Example = () => {
           Включено
         </Checkbox>
       </FormItem>
+      <FormItem top="Плейсхолдер">
+        <Input
+          value={placeholder}
+          onChange={(e) => setPlaceholder(e.target.value)}
+          style={{ maxWidth: 300 }}
+        />
+      </FormItem>
       <FormItem top="Локаль">
         <Select
           style={{ width: 100 }}
@@ -97,6 +105,7 @@ const Example = () => {
               disablePickers={disablePickers}
               showNeighboringMonth={showNeighboringMonth}
               disableCalendar={disableCalendar}
+              placeholder={placeholder}
             />
           </LocaleProvider>
         </Flex>
