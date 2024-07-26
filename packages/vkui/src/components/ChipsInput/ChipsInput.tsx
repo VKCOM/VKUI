@@ -1,10 +1,5 @@
 import { useExternRef } from '../../hooks/useExternRef';
 import { ChipsInputBase } from '../ChipsInputBase/ChipsInputBase';
-import {
-  getNewOptionDataDefault,
-  getOptionLabelDefault,
-  getOptionValueDefault,
-} from '../ChipsInputBase/constants';
 import type { ChipOption, ChipsInputBaseProps } from '../ChipsInputBase/types';
 import type { FormFieldProps } from '../FormField/FormField';
 import { useChipsInput, type UseChipsInputProps } from './useChipsInput';
@@ -33,9 +28,9 @@ export const ChipsInput = <Option extends ChipOption>({
   inputValue: inputValueProp,
   defaultInputValue: inputDefaultValueProp,
   onInputChange: onInputChangeProp,
-  getOptionValue = getOptionValueDefault,
-  getOptionLabel = getOptionLabelDefault,
-  getNewOptionData = getNewOptionDataDefault,
+  getOptionValue,
+  getOptionLabel,
+  getNewOptionData,
 
   // other
   disabled,
