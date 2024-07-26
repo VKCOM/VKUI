@@ -7,15 +7,6 @@ export type ImgOnlyAttributes = {
   >]: React.ImgHTMLAttributes<HTMLImageElement>[index];
 };
 
-export function debounce<A extends any[]>(fn: (...args: A) => void, delay: number) {
-  let timeout: any;
-
-  return (...args: A): void => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => fn(...args), delay);
-  };
-}
-
 export function setRef<T>(element: T, ref?: React.Ref<T>): void {
   if (ref) {
     if (typeof ref === 'function') {
