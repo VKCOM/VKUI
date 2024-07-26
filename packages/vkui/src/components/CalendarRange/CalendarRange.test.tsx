@@ -121,7 +121,8 @@ describe('CalendarRange', () => {
 
   it('check click on same day', async () => {
     jest.useFakeTimers();
-    render(<CalendarRange value={[firstDayDate, null]} />);
+    const onChange = jest.fn();
+    render(<CalendarRange value={[firstDayDate, null]} onChange={onChange} />);
 
     const [leftPart] = getParts();
     clickDayInPart(leftPart, '1');
@@ -136,7 +137,8 @@ describe('CalendarRange', () => {
 
   it('check range working', async () => {
     jest.useFakeTimers();
-    render(<CalendarRange value={[firstDayDate, null]} />);
+    const onChange = jest.fn();
+    render(<CalendarRange value={[firstDayDate, null]} onChange={onChange} />);
 
     const [leftPart] = getParts();
     clickDayInPart(leftPart, '3');
