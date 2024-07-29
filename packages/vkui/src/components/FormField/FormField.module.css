@@ -58,21 +58,18 @@
   justify-content: center;
   align-self: center;
   min-inline-size: var(--vkui--size_field_height--regular);
-  block-size: 100%;
   color: var(--vkui--color_icon_secondary);
 }
 
 .FormField--sizeY-compact .FormField__before,
 .FormField--sizeY-compact .FormField__after {
   min-inline-size: var(--vkui--size_field_height--compact);
-  block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
   .FormField--sizeY-none .FormField__before,
   .FormField--sizeY-none .FormField__after {
     min-inline-size: var(--vkui--size_field_height--compact);
-    block-size: var(--vkui--size_field_height--compact);
   }
 }
 
