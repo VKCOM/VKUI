@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const { makePostcssPlugins } = require('./packages/vkui/scripts/postcss');
-const { VKUI_PACKAGE } = require('./shared');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -111,9 +110,6 @@ if (sandbox) {
 }
 
 const config = {
-  entry: {
-    vkui: `./${VKUI_PACKAGE.PATHS.JS_MAIN_EXPORT}`,
-  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
