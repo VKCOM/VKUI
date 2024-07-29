@@ -49,8 +49,10 @@ export interface SnackbarProps
    * > Note: в мобильном режиме:
    * > - `"top-start"`/`"top-end"` перебивается на `"top"`, чтобы поведение было схожим с нативными
    * >   уведомлениями;
-   * > - `"bottom"`/`"bottom-end"` перебивается на "bottom-start", чтобы избежать вызова системных
+   * > - `"bottom"` перебивается на `"bottom-start"`, чтобы избежать вызова системных
    * >   функций, таких как **Pull To Refresh** и **Режим управления одной рукой**.
+   * > - `"bottom-start"`/`"bottom-end"` закрываются смахиванием в любое из направлений
+   * >   по горизонтальной оси.
    */
   placement?: SnackbarPlacement;
   /**
@@ -126,7 +128,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   }, []);
 
   const updateShiftAxisCSSProperties = React.useCallback(
-    (x: number | null, y: number | null) => {
+    (x: number | null, y: number | null, direction: number | null) => {
       rafRef.current = requestAnimationFrame(() => {
         if (rootRef.current) {
           x === null
@@ -135,6 +137,12 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
           y === null
             ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_y')
             : rootRef.current.style.setProperty('--vkui_internal--snackbar_shift_y', `${y}px`);
+          direction === null
+            ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_direction')
+            : rootRef.current.style.setProperty(
+                '--vkui_internal--snackbar_direction',
+                `${direction}`,
+              );
         }
       });
     },
@@ -174,7 +182,11 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       );
 
       if (shiftDataRef.current.shifted) {
-        updateShiftAxisCSSProperties(shiftDataRef.current.x, shiftDataRef.current.y);
+        updateShiftAxisCSSProperties(
+          shiftDataRef.current.x,
+          shiftDataRef.current.y,
+          shiftDataRef.current.direction,
+        );
       }
     }
   };
@@ -218,7 +230,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
         panGestureRecognizer.current = null;
 
         if (open) {
-          updateShiftAxisCSSProperties(null, null);
+          updateShiftAxisCSSProperties(null, null, null);
         }
       }
     },

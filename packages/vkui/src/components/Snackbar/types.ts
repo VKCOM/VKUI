@@ -9,6 +9,7 @@ export type SnackbarPlacement =
 export type ShiftData = {
   x: number;
   y: number;
+  direction: number | null;
   width: number;
   height: number;
   shifted: boolean;

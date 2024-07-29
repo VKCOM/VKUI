@@ -3,6 +3,7 @@
   --vkui_internal--snackbar_in_padding: 8px;
   --vkui_internal--snackbar_shift_x: 0;
   --vkui_internal--snackbar_shift_y: 0;
+  --vkui_internal--snackbar_direction: 0;
   --vkui_internal--snackbar_animation_from: translate3d(0, 0, 0);
   --vkui_internal--snackbar_animation_to: translate3d(0, 0, 0);
   --vkui_internal--snackbar_animation_duration: 340ms;
@@ -27,10 +28,22 @@
   inset-block-start: var(--vkui_internal--safe_area_inset_top);
 }
 
+.Snackbar--placement-bottom-start {
+  --vkui_internal--snackbar_direction: -1;
+}
+
+.Snackbar--placement-bottom-end {
+  --vkui_internal--snackbar_direction: 1;
+}
+
 .Snackbar--placement-bottom-start,
 .Snackbar--placement-bottom,
 .Snackbar--placement-bottom-end {
-  --vkui_internal--snackbar_animation_from: translate3d(-100%, 0, 0);
+  --vkui_internal--snackbar_animation_from: translate3d(
+    calc(var(--vkui_internal--snackbar_direction) * 100%),
+    0,
+    0
+  );
   --vkui_internal--snackbar_animation_to: translate3d(var(--vkui_internal--snackbar_shift_x), 0, 0);
 
   inset-block-end: var(--vkui_internal--snackbar_safe_area_inset_bottom);
