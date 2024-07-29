@@ -1,5 +1,5 @@
-import {fireEvent, render, screen} from "@testing-library/react";
-import {baselineComponent, userEvent} from '../../testing/utils';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { ChipsInput } from './ChipsInput';
 
 describe(ChipsInput, () => {
@@ -29,13 +29,13 @@ describe(ChipsInput, () => {
           ]}
           onChange={onChange}
         />
-      </form>
-    )
+      </form>,
+    );
 
-    fireEvent(screen.getByTestId('form'), new Event('reset'))
+    fireEvent(screen.getByTestId('form'), new Event('reset'));
 
-    expect(onChange).toBeCalledWith([])
-  })
+    expect(onChange).toBeCalledWith([]);
+  });
 
   it('should clear value when click on remove button', async () => {
     const onChange = jest.fn();
@@ -43,7 +43,11 @@ describe(ChipsInput, () => {
       <ChipsInput
         id="color"
         placeholder="Введите цвета"
-        ClearButton={(props) => <div {...props} data-testid="delete">Delete</div>}
+        ClearButton={(props) => (
+          <div {...props} data-testid="delete">
+            Delete
+          </div>
+        )}
         allowClearButton
         value={[
           {
@@ -60,27 +64,31 @@ describe(ChipsInput, () => {
           },
         ]}
         onChange={onChange}
-      />
-    )
+      />,
+    );
     await userEvent.click(screen.getByTestId('delete'));
-    expect(onChange).toBeCalledWith([])
-  })
+    expect(onChange).toBeCalledWith([]);
+  });
 
-  it('should show clear button when inputValue !== ', () => {
+  it('should show clear button when inputValue !== ""', () => {
     render(
       <ChipsInput
         id="color"
         placeholder="Введите цвета"
-        ClearButton={(props) => <div {...props} data-testid="delete">Delete</div>}
+        ClearButton={(props) => (
+          <div {...props} data-testid="delete">
+            Delete
+          </div>
+        )}
         allowClearButton
         value={[]}
         inputValue="Синий"
-      />
+      />,
     );
     expect(screen.getByTestId('delete')).toBeInTheDocument();
-  })
+  });
 
-  it('should clear 123 when click on remove button', async () => {
+  it('should delete option when keydown {Delete}', async () => {
     const onChange = jest.fn();
     const initialOptions = [
       {
@@ -95,22 +103,22 @@ describe(ChipsInput, () => {
         value: 'blue',
         label: 'Синий',
       },
-    ]
-    const {container} = render(
+    ];
+    const { container } = render(
       <ChipsInput
         id="color"
         placeholder="Введите цвета"
         value={initialOptions}
         onChange={onChange}
-      />
-    )
+      />,
+    );
     const chip = container.querySelector('div[data-value="blue"]') as HTMLElement;
     chip.focus();
 
-    await userEvent.keyboard('{Delete}')
+    await userEvent.keyboard('{Delete}');
 
     const resultValue = [...initialOptions];
-    resultValue.pop()
-    expect(onChange).toBeCalledWith(resultValue)
-  })
+    resultValue.pop();
+    expect(onChange).toBeCalledWith(resultValue);
+  });
 });
