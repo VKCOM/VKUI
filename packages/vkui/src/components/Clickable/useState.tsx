@@ -47,7 +47,7 @@ interface StateHookProps extends StateProps {
 
 export const DEFAULT_ACTIVE_EFFECT_DELAY = 600;
 
-export const ACTIVE_DELAY = 70;
+const ACTIVE_DELAY = 70;
 
 /**
  * Управляет наведением на компонент, игнорирует тач события
@@ -125,7 +125,7 @@ export const ClickableLockStateContext: React.Context<((v: boolean) => void) | u
 /**
  * Блокирует стейт на всплытие
  */
-export function useLockState(): readonly [boolean, (v: boolean) => void, (...args: any[]) => void] {
+function useLockState(): readonly [boolean, (v: boolean) => void, (...args: any[]) => void] {
   const setLockBubbling = React.useContext(ClickableLockStateContext) || noop;
   const [lockState, setLockState] = React.useState(false);
 
