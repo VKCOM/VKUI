@@ -4633,7 +4633,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-hooks: "npm:^4.6.2"
     eslint-plugin-unicorn: "npm:^48.0.1"
-    husky: "npm:^9.1.1"
+    husky: "npm:^9.1.3"
     jest: "npm:^29.7.0"
     jest-axe: "npm:^9.0.0"
     jest-environment-jsdom: "npm:^29.7.0"
@@ -9811,12 +9811,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^9.1.1":
-  version: 9.1.1
-  resolution: "husky@npm:9.1.1"
+"husky@npm:^9.1.3":
+  version: 9.1.3
+  resolution: "husky@npm:9.1.3"
   bin:
     husky: bin.js
-  checksum: 10/c3be0392071b78c680fc6b9fd7978f52c26e18238a2840c6eabfc0db395e19fcd798da8eff0e31a9e76c479d6019a567d83a8de80f360d28552bc83bd1839b7c
+  checksum: 10/35d7ad85a247fb130659ae60b05bca9461820d261d6ff181b55c3dc6f2ae5da5ae3f3807367b90cc85d3bb915a2de8295aa9950e3cba3309994b7763dfd70cb1
   languageName: node
   linkType: hard
 
