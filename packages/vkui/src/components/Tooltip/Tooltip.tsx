@@ -31,6 +31,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'usePortal'
   | 'onPlacementChange'
   | 'disableFlipMiddleware'
+  | 'trigger'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
@@ -75,6 +76,7 @@ export const Tooltip = ({
   shown: shownProp,
   onShownChange,
   hoverDelay = 150,
+  trigger = ['hover', 'focus'],
 
   // инверсированные св-ва для useFloatingWithInteractions
   enableInteractive = false,
@@ -131,7 +133,7 @@ export const Tooltip = ({
     shown: shownProp,
     onShownChange,
     placement: strictPlacement,
-    trigger: ['hover', 'focus'],
+    trigger,
     hoverDelay,
     closeAfterClick: !disableCloseAfterClick,
     disableInteractive: !enableInteractive,
