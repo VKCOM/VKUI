@@ -62,6 +62,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'defaultShown'
   | 'shown'
   | 'onShownChange'
+  | 'onShownChanged'
   | 'usePortal'
   | 'sameWidth'
   | 'hideWhenReferenceHidden'
@@ -152,6 +153,7 @@ export const Popover = ({
   // controlled
   shown: shownProp,
   onShownChange,
+  onShownChanged,
 
   // Для AppRootPortal
   usePortal = true,
@@ -209,6 +211,7 @@ export const Popover = ({
     defaultShown,
     shown: shownProp,
     onShownChange,
+    onShownChanged,
   });
 
   usePlacementChangeCallback(expectedPlacement, resolvedPlacement, onPlacementChange);
