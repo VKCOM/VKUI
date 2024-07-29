@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { fireEvent, getByRole, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, userEvent } from '../../testing/utils';
