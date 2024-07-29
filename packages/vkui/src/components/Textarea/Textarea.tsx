@@ -12,8 +12,6 @@ import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
 import { useResizeTextarea } from './useResizeTextarea';
 import styles from './Textarea.module.css';
 
-const DEFAULT_MAX_HEIGHT = 204;
-
 const sizeYClassNames = {
   none: styles['Textarea--sizeY-none'],
   ['compact']: styles['Textarea--sizeY-compact'],
@@ -42,7 +40,7 @@ export const Textarea = ({
   getRootRef,
   getRef,
   rows = 2,
-  maxHeight,
+  maxHeight = 204,
   status,
   onChange,
   align,
@@ -81,7 +79,7 @@ export const Textarea = ({
       before={before}
       afterAlign={afterAlign}
       beforeAlign={beforeAlign}
-      maxHeight={maxHeight || DEFAULT_MAX_HEIGHT}
+      maxHeight={maxHeight}
     >
       <UnstyledTextField
         {...restProps}
