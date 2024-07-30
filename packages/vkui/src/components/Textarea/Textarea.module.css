@@ -1,6 +1,7 @@
 .Textarea {
   overflow: hidden;
   position: relative;
+  max-block-size: 204px;
 }
 
 .Textarea__el {
