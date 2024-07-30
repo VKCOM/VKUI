@@ -1,8 +1,8 @@
-import {render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Icon16Services } from '@vkontakte/icons';
 import { baselineComponent } from '../../testing/utils';
-import {ContentBadge, ContentBadgeProps} from './ContentBadge';
-import styles from "./ContentBadge.module.css";
+import { ContentBadge, ContentBadgeProps } from './ContentBadge';
+import styles from './ContentBadge.module.css';
 import footnoteStyles from '../Typography/Footnote/Footnote.module.css';
 
 describe(ContentBadge, () => {
@@ -42,7 +42,7 @@ describe(ContentBadge, () => {
     expect(() => result.getByTestId('icon')).toThrow();
   });
 
-  it.each<{props: Partial<ContentBadgeProps>, classNames: string[]}>([
+  it.each<{ props: Partial<ContentBadgeProps>; classNames: string[] }>([
     {
       props: {
         mode: 'outline',
@@ -56,16 +56,16 @@ describe(ContentBadge, () => {
       },
       classNames: [styles['ContentBadge--capsule'], footnoteStyles['Footnote']],
     },
-  ])(`should have classNames "$classNames" when has props "$props"`, ({props, classNames}) => {
+  ])(`should have classNames "$classNames" when has props "$props"`, ({ props, classNames }) => {
     render(
       <ContentBadge {...props} data-testid="badge">
-        <ContentBadge.SlotIcon >
+        <ContentBadge.SlotIcon>
           <Icon16Services />
         </ContentBadge.SlotIcon>
         Test
       </ContentBadge>,
     );
     const badge = screen.getByTestId('badge');
-    classNames.forEach(className => expect(badge).toHaveClass(className));
-  })
+    classNames.forEach((className) => expect(badge).toHaveClass(className));
+  });
 });
