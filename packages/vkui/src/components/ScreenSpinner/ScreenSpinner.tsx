@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { useKeyboardClick } from '../../hooks/useKeyboardClick';
 import { mergeCalls } from '../../lib/mergeCalls';
+import { clickByKeyboardHandler } from '../../lib/utils';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
@@ -46,22 +46,53 @@ const ScreenSpinnerLoader: React.FC<SpinnerProps> = ({
 
 ScreenSpinnerLoader.displayName = 'ScreenSpinner.Loader';
 
-type ScreenSpinnerSwapIconProps = HTMLAttributesWithRootRef<HTMLElement>;
+type ScreenSpinnerSwapIconProps = HTMLAttributesWithRootRef<HTMLElement> & {
+  cancelLabel?: ScreenSpinnerProps['cancelLabel'];
+};
 
-const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = (
-  props: ScreenSpinnerSwapIconProps,
-) => {
+const ScreenSpinnerCancelIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
+  onKeyDown,
+  'aria-label': ariaLabel = 'Отменить',
+  ...restProps
+}: ScreenSpinnerSwapIconProps) => {
+  const handlers = mergeCalls(
+    { onKeyDown: clickByKeyboardHandler },
+    {
+      onKeyDown,
+    },
+  );
+  let clickableProps: React.HTMLAttributes<HTMLSpanElement> = {
+    ...handlers,
+    'tabIndex': 0,
+    'role': 'button',
+    'aria-label': ariaLabel,
+  };
+
+  return (
+    <RootComponent baseClassName={styles['ScreenSpinner__icon']} {...clickableProps} {...restProps}>
+      <Icon24Cancel />
+    </RootComponent>
+  );
+};
+
+const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
+  cancelLabel,
+  ...restProps
+}: ScreenSpinnerSwapIconProps) => {
   const { state } = React.useContext(ScreenSpinnerContext);
+
+  if (state === 'cancelable') {
+    return <ScreenSpinnerCancelIcon aria-label={cancelLabel} {...restProps} />;
+  }
 
   const Icon = {
     loading: () => null,
-    cancelable: Icon24Cancel,
     done: Icon48DoneOutline,
     error: Icon48CancelCircle,
   }[state];
 
   return (
-    <RootComponent baseClassName={styles['ScreenSpinner__icon']} {...props}>
+    <RootComponent baseClassName={styles['ScreenSpinner__icon']} {...restProps}>
       <Icon />
     </RootComponent>
   );
@@ -70,24 +101,12 @@ const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = (
 ScreenSpinnerSwapIcon.displayName = 'ScreenSpinner.SwapIcon';
 
 type ScreenSpinnerContainerProps = HTMLAttributesWithRootRef<HTMLSpanElement> &
-  Pick<ScreenSpinnerProps, 'state' | 'cancelLabel'>;
+  Pick<ScreenSpinnerProps, 'state'>;
 
 const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
   state = 'loading',
-  onKeyDown,
-  cancelLabel = 'Отменить',
   ...restProps
 }: ScreenSpinnerContainerProps) => {
-  const keyboardHandlers = useKeyboardClick();
-
-  let clickableProps: React.HTMLAttributes<HTMLSpanElement> | undefined = undefined;
-  if (state === 'cancelable') {
-    const handlers = mergeCalls(keyboardHandlers, {
-      onKeyDown,
-    });
-    clickableProps = { ...handlers, 'tabIndex': 0, 'role': 'button', 'aria-label': cancelLabel };
-  }
-
   return (
     <ScreenSpinnerContext.Provider value={{ state }}>
       <RootComponent
@@ -95,7 +114,6 @@ const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
           styles['ScreenSpinner'],
           state !== 'loading' && stateClassNames[state],
         )}
-        {...clickableProps}
         {...restProps}
       />
     </ScreenSpinnerContext.Provider>
@@ -123,9 +141,9 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
 
   return (
     <PopoutWrapper className={className} style={style} noBackground>
-      <ScreenSpinnerContainer state={state} onClick={onClick} cancelLabel={cancelLabel}>
+      <ScreenSpinnerContainer state={state}>
         <ScreenSpinnerLoader {...restProps} />
-        <ScreenSpinnerSwapIcon />
+        <ScreenSpinnerSwapIcon onClick={onClick} cancelLabel={cancelLabel} />
       </ScreenSpinnerContainer>
     </PopoutWrapper>
   );

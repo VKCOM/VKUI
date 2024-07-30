@@ -4,8 +4,8 @@ import {
   FocusVisibleModeProps,
   useFocusVisibleClassName,
 } from '../../hooks/useFocusVisibleClassName';
-import { useKeyboardClick } from '../../hooks/useKeyboardClick';
 import { mergeCalls } from '../../lib/mergeCalls';
+import { clickByKeyboardHandler } from '../../lib/utils';
 import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
 import {
   ClickableLockStateContext,
@@ -74,18 +74,21 @@ const RealClickable = <T,>({
     activated,
   });
 
-  const keyboardHandlers = useKeyboardClick();
-
-  const handlers = mergeCalls(focusEvents, stateEvents, keyboardHandlers, {
-    onPointerEnter,
-    onPointerLeave,
-    onPointerDown,
-    onPointerCancel,
-    onPointerUp,
-    onBlur,
-    onFocus,
-    onKeyDown,
-  });
+  const handlers = mergeCalls(
+    focusEvents,
+    stateEvents,
+    { onKeyDown: clickByKeyboardHandler },
+    {
+      onPointerEnter,
+      onPointerLeave,
+      onPointerDown,
+      onPointerCancel,
+      onPointerUp,
+      onBlur,
+      onFocus,
+      onKeyDown,
+    },
+  );
 
   return (
     <RootComponent

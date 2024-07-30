@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { shouldTriggerClickOnEnterOrSpace } from './accessibility';
+import { isHTMLElement } from './dom';
 
 export type ImgOnlyAttributes = {
   [index in Exclude<
@@ -118,4 +120,20 @@ export function getFetchPriorityProp(value: React.ImgHTMLAttributes<HTMLElement>
     return { fetchPriority: value };
   }
   return { fetchpriority: value };
+}
+
+/*
+ * [a11y]
+ * Обрабатывает событие onkeydown
+ * для кастомных доступных элементов:
+ * - role="link" (активация по Enter)
+ * - role="button" (активация по Space и Enter)
+ */
+export function clickByKeyboardHandler(event: React.KeyboardEvent<HTMLDivElement>): void {
+  if (!isHTMLElement(event.target) || !shouldTriggerClickOnEnterOrSpace(event)) {
+    return;
+  }
+
+  event.preventDefault();
+  event.target.click?.();
 }

@@ -19,10 +19,6 @@
   opacity: 0;
 }
 
-.ScreenSpinner--state-cancelable {
-  cursor: pointer;
-}
-
 .ScreenSpinner__icon {
   position: absolute;
   inset-block-start: 0;
@@ -31,6 +27,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.ScreenSpinner--state-cancelable .ScreenSpinner__icon {
+  cursor: pointer;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
