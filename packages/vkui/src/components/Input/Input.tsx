@@ -16,7 +16,7 @@ export interface InputProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
-    FormFieldProps {}
+    Omit<FormFieldProps, 'maxHeight'> {}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Input

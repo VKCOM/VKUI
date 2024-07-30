@@ -18,7 +18,6 @@ export interface TextareaProps
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onResize'>,
     HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
-    Pick<React.CSSProperties, 'maxHeight'>,
     HasAlign,
     FormFieldProps {
   grow?: boolean;
@@ -73,11 +72,11 @@ export const Textarea = ({
       before={before}
       afterAlign={afterAlign}
       beforeAlign={beforeAlign}
+      maxHeight={maxHeight}
     >
       <UnstyledTextField
         {...restProps}
         as="textarea"
-        style={{ maxHeight }}
         rows={rows}
         className={styles['Textarea__el']}
         onChange={callMultiple(onChange, resize)}

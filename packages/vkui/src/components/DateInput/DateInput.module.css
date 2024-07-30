@@ -1,6 +1,7 @@
 .DateInput__input {
   display: block;
   flex-grow: 1;
+  align-self: center;
   margin-inline: 10px 14px;
   z-index: var(--vkui_internal--z_index_form_field_element);
   cursor: text;

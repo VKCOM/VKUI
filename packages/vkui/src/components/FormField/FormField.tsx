@@ -23,6 +23,14 @@ const iconAlignClassNames = {
   end: styles['FormField__icon--align-end'],
 };
 
+const renderIcon = (icon: React.ReactNode, align: FieldIconsAlign, className: string) => {
+  return (
+    <div className={styles['FormField__iconWrapper']}>
+      <span className={classNames(iconAlignClassNames[align], className)}>{icon}</span>
+    </div>
+  );
+};
+
 export type FieldIconsAlign = 'start' | 'center' | 'end';
 
 export interface FormFieldProps {
@@ -60,6 +68,10 @@ export interface FormFieldProps {
    * - `plain` — показывает только текст-подсказку.
    */
   mode?: 'default' | 'plain';
+  /**
+   * Максимальная высота поля
+   */
+  maxHeight?: number;
 }
 
 interface FormFieldOwnProps
@@ -85,6 +97,8 @@ export const FormField = ({
   disabled,
   mode = 'default',
   className,
+  maxHeight,
+  style,
   ...restProps
 }: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef);
@@ -111,6 +125,14 @@ export const FormField = ({
     <Component
       {...restProps}
       ref={elRef}
+      style={
+        maxHeight !== undefined
+          ? {
+              ...style,
+              maxHeight,
+            }
+          : style
+      }
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={classNames(
@@ -124,23 +146,16 @@ export const FormField = ({
         className,
       )}
     >
-      {before && (
-        <span className={classNames(styles['FormField__before'], iconAlignClassNames[beforeAlign])}>
-          {before}
-        </span>
-      )}
-      {children}
-      {after && (
-        <span
-          className={classNames(
-            styles['FormField__after'],
-            iconAlignClassNames[afterAlign],
-            'vkuiInternalFormField__after',
+      <div className={styles['FormField_scrollContainer']}>
+        {before && renderIcon(before, beforeAlign, styles['FormField__before'])}
+        <div className={styles['FormField__content']}>{children}</div>
+        {after &&
+          renderIcon(
+            after,
+            afterAlign,
+            classNames(styles['FormField__after'], 'vkuiInternalFormField__after'),
           )}
-        >
-          {after}
-        </span>
-      )}
+      </div>
       <span aria-hidden className={styles['FormField__border']} />
     </Component>
   );
