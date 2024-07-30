@@ -13,7 +13,9 @@ jest.mock(
       usePlacementChangeCallback: (initialPlacement, _, onPlacementChange) => {
         if (lastInitialPlacement !== initialPlacement) {
           lastInitialPlacement !== undefined &&
-            initialPlacement !== 'auto' && initialPlacement !== 'auto-end' && initialPlacement !== 'auto-start' &&
+            initialPlacement !== 'auto' &&
+            initialPlacement !== 'auto-end' &&
+            initialPlacement !== 'auto-start' &&
             onPlacementChange &&
             onPlacementChange(initialPlacement);
           lastInitialPlacement = initialPlacement;
