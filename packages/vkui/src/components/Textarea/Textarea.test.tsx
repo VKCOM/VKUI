@@ -1,7 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { Platform } from '../../lib/platform';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import {AlignType} from "../../types";
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Textarea } from './Textarea';
+import styles from './Textarea.module.css'
 
 const getInput = () => screen.getByRole('textbox');
 
@@ -14,6 +18,17 @@ describe(Textarea, () => {
       <Textarea aria-labelledby="textarea" {...props} />
     </>
   ));
+
+  it.each<[AlignType, string]>([
+    ['right', styles['Textarea--align-right']],
+    ['center', styles['Textarea--align-center']],
+  ])(`should have className when align %s`, (align, className) => {
+    const ref = {
+      current: null,
+    }
+    render(<Textarea getRootRef={ref} align={align} />);
+    expect(ref.current).toHaveClass(className);
+  })
 
   describe('works uncontrolled', () => {
     fakeTimers();
@@ -95,18 +110,54 @@ describe(Textarea, () => {
   describe('calls onResize', () => {
     fakeTimers();
 
+    const mockTextareaScrollHeight = () => {
+      const textArea = screen.getByTestId('textarea');
+      let height = 100;
+      jest.spyOn(textArea, 'scrollHeight', 'get').mockImplementation(() => {
+        const currHeight = height;
+        height += 10;
+        return currHeight;
+      });
+    };
+
     it('when editing', async () => {
       const onResize = jest.fn();
-      render(<Textarea value="" onResize={onResize} />);
+      render(<Textarea data-testid="textarea" value="" onResize={onResize} />);
+      mockTextareaScrollHeight();
       await userEvent.type(getInput(), '{enter}{enter}{enter}{enter}');
-      expect(onResize).toHaveBeenCalled();
+      expect(onResize).toHaveBeenCalledTimes(5);
     });
     it('when changing controlled value', () => {
       const onResize = jest.fn();
-      render(<Textarea value="" onResize={onResize} />).rerender(
-        <Textarea value="\n\n\n\n" onResize={onResize} />,
+      const { rerender } = render(<Textarea data-testid="textarea" value="" onResize={onResize} />);
+      mockTextareaScrollHeight();
+      rerender(<Textarea data-testid="textarea" value="\n\n\n\n" onResize={onResize} />);
+      expect(onResize).toHaveBeenCalledTimes(2);
+    });
+    it('when changing platform', async () => {
+      const onResize = jest.fn();
+
+      const { rerender } = render(
+        <ConfigProvider platform={Platform.VKCOM}>
+          <Textarea data-testid="textarea" value="" onResize={onResize} />
+        </ConfigProvider>,
       );
-      expect(onResize).toHaveBeenCalled();
+      mockTextareaScrollHeight();
+
+      rerender(
+        <ConfigProvider platform={Platform.ANDROID}>
+          <Textarea data-testid="textarea" value="" onResize={onResize} />
+        </ConfigProvider>,
+      );
+
+      expect(onResize).toHaveBeenCalledTimes(2);
+    });
+    it('when resize window', () => {
+      const onResize = jest.fn();
+      render(<Textarea data-testid="textarea" value="" onResize={onResize} />);
+      mockTextareaScrollHeight();
+      fireEvent(window, new Event('resize'));
+      expect(onResize).toHaveBeenCalledTimes(2);
     });
     it("won't resize if parent is invisible", () => {
       const onResize = jest.fn();

@@ -48,6 +48,7 @@ export const Textarea = ({
   before,
   afterAlign,
   beforeAlign,
+  value,
   ...restProps
 }: TextareaProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -57,7 +58,7 @@ export const Textarea = ({
   const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);
   const elementRef = useExternRef(getRef, refResizeTextarea);
 
-  React.useEffect(resize, [resize, sizeY, platform]);
+  React.useEffect(resize, [resize, sizeY, platform, value]);
   useGlobalEventListener(window, 'resize', resize);
 
   return (
@@ -82,6 +83,7 @@ export const Textarea = ({
     >
       <UnstyledTextField
         {...restProps}
+        value={value}
         as="textarea"
         rows={rows}
         className={styles['Textarea__el']}
