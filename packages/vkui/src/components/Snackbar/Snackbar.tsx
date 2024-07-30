@@ -139,7 +139,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
             : rootRef.current.style.setProperty('--vkui_internal--snackbar_shift_y', `${y}px`);
           direction === null
             ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_direction')
-            : /* istanbul ignore: TODO чтобы протестировать кейс, нужно мокать useMediaQueries(), чтобы перебивать mediaQueries.smallTabletPlus.matches */
+            : /* istanbul ignore next: TODO чтобы протестировать кейс, нужно мокать useMediaQueries(), чтобы перебивать mediaQueries.smallTabletPlus.matches */
               rootRef.current.style.setProperty(
                 '--vkui_internal--snackbar_direction',
                 `${direction}`,
