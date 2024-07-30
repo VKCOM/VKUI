@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { TouchEvent } from '../../components/Touch/Touch';
+import type { CustomTouchEvent } from '../../components/Touch/Touch';
 import { getBoundingClientRect, getNearestOverflowAncestor, getNodeScroll } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { createAutoScrollController, getAutoScrollingData } from './autoScroll';
@@ -192,12 +192,12 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
     }, AUTO_SCROLL_START_DELAY);
   };
 
-  const onDragStart = (event: TouchEvent) => {
+  const onDragStart = (event: CustomTouchEvent) => {
     event.originalEvent.stopPropagation();
     event.originalEvent.preventDefault();
   };
 
-  const onDragMove = (event: TouchEvent) => {
+  const onDragMove = (event: CustomTouchEvent) => {
     event.originalEvent.stopPropagation();
     event.originalEvent.preventDefault();
 
@@ -236,7 +236,7 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
     }
   };
 
-  const onDragEnd = (event: TouchEvent) => {
+  const onDragEnd = (event: CustomTouchEvent) => {
     event.originalEvent.stopPropagation();
     event.originalEvent.preventDefault();
 

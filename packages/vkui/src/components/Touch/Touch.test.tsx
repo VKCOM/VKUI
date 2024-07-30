@@ -62,6 +62,17 @@ afterEach(() => delete window['ontouchstart']);
 describe('Touch', () => {
   baselineComponent(Touch);
 
+  it.each([true, false])('use stopPropagation={%s}', (stopPropagation) => {
+    const onMouseDown = jest.fn();
+    const result = render(
+      <div data-testid="container" onMouseDown={onMouseDown}>
+        <Touch stopPropagation={stopPropagation} data-testid="touch" />
+      </div>,
+    );
+    fireEvent.mouseDown(result.getByTestId('touch'));
+    expect(onMouseDown).toHaveBeenCalledTimes(stopPropagation ? 0 : 1);
+  });
+
   it('does not leak listeners when unmounting during gesture', () => {
     let moved = false;
     const { unmount } = render(<Touch onMove={() => (moved = true)} data-testid="touch" />);
