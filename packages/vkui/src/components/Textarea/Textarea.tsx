@@ -21,7 +21,6 @@ export interface TextareaProps
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onResize'>,
     HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
-    Pick<React.CSSProperties, 'maxHeight'>,
     HasAlign,
     FormFieldProps {
   grow?: boolean;

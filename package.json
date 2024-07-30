@@ -116,7 +116,6 @@
     "lint:types": "tsc --incremental --emitDeclarationOnly --declaration --tsBuildInfoFile .cache/.tsbuildinfo",
     "lint:generated-files": "yarn workspace @vkontakte/vkui run lint:generated-files",
     "prepare": "husky",
-    "pre-commit": "lint-staged",
     "playwright:install": "playwright install --with-deps",
     "playwright:cmd:merge-reports": "playwright merge-reports",
     "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install",
