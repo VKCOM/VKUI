@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
-import {AlignType} from "../../types";
+import { AlignType } from '../../types';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Textarea } from './Textarea';
-import styles from './Textarea.module.css'
+import styles from './Textarea.module.css';
 
 const getInput = () => screen.getByRole('textbox');
 
@@ -25,10 +25,10 @@ describe(Textarea, () => {
   ])(`should have className when align %s`, (align, className) => {
     const ref = {
       current: null,
-    }
+    };
     render(<Textarea getRootRef={ref} align={align} />);
     expect(ref.current).toHaveClass(className);
-  })
+  });
 
   describe('works uncontrolled', () => {
     fakeTimers();
