@@ -49,40 +49,40 @@ yarn workspace benchmark runtime:start
 
 ### touch (single)
 
-| sampleCount | mean  | stdDev  | min  | median | max  |
-| ----------- | ----- | ------- | ---- | ------ | ---- |
-| 15          | 06.67 | ±00.9ms | 05.6 | 06.6   | 08.3 |
+| sampleCount | mean  | stdDev   | min  | median | max  |
+| ----------- | ----- | -------- | ---- | ------ | ---- |
+| 15          | 06.61 | ±00.81ms | 05.4 | 06.8   | 07.9 |
 
 | JSEventListeners | JSHeapTotalSize | JSHeapUsedSize | LayoutCount | LayoutDuration | RecalcStyleCount | RecalcStyleDuration | ScriptDuration | TaskDuration |
 | ---------------- | --------------- | -------------- | ----------- | -------------- | ---------------- | ------------------- | -------------- | ------------ |
-| 143              | 3.4 MiB         | 1.8 MiB        | 2           | 0.001832       | 2                | 0.001315            | 0.013624       | 0.030369     |
+| 140              | 3.4 MiB         | 1.8 MiB        | 2           | 0.001813       | 2                | 0.001409            | 0.013405       | 0.030949     |
 
 ### touch width providers (single)
 
-| sampleCount | mean  | stdDev   | min  | median | max  |
-| ----------- | ----- | -------- | ---- | ------ | ---- |
-| 15          | 11.19 | ±02.65ms | 07.6 | 15.3   | 15.3 |
+| sampleCount | mean  | stdDev  | min  | median | max  |
+| ----------- | ----- | ------- | ---- | ------ | ---- |
+| 15          | 10.99 | ±03.2ms | 07.4 | 07.4   | 18.5 |
 
 | JSEventListeners | JSHeapTotalSize | JSHeapUsedSize | LayoutCount | LayoutDuration | RecalcStyleCount | RecalcStyleDuration | ScriptDuration | TaskDuration |
 | ---------------- | --------------- | -------------- | ----------- | -------------- | ---------------- | ------------------- | -------------- | ------------ |
-| 149              | 3.4 MiB         | 1.9 MiB        | 2           | 0.002061       | 2                | 0.001949            | 0.015388       | 0.033263     |
+| 146              | 3.6 MiB         | 1.9 MiB        | 2           | 0.002033       | 2                | 0.001977            | 0.015241       | 0.034252     |
 
 ### touch (multiple)
 
 | sampleCount | mean  | stdDev   | min  | median | max  |
 | ----------- | ----- | -------- | ---- | ------ | ---- |
-| 15          | 61.48 | ±06.06ms | 54.7 | 59.6   | 77.7 |
+| 15          | 44.15 | ±01.66ms | 41.1 | 44.9   | 46.1 |
 
 | JSEventListeners | JSHeapTotalSize | JSHeapUsedSize | LayoutCount | LayoutDuration | RecalcStyleCount | RecalcStyleDuration | ScriptDuration | TaskDuration |
 | ---------------- | --------------- | -------------- | ----------- | -------------- | ---------------- | ------------------- | -------------- | ------------ |
-| 3140             | 27.0 MiB        | 9.2 MiB        | 3           | 0.012517       | 3                | 0.003371            | 0.040067       | 0.080648     |
+| 140              | 8.8 MiB         | 4.0 MiB        | 2           | 0.012301       | 2                | 0.003312            | 0.02725        | 0.065623     |
 
 ### touch with providers (multiple)
 
-| sampleCount | mean | stdDev   | min  | median | max  |
-| ----------- | ---- | -------- | ---- | ------ | ---- |
-| 15          | 61   | ±03.01ms | 57.6 | 59.6   | 67.2 |
+| sampleCount | mean  | stdDev   | min  | median | max   |
+| ----------- | ----- | -------- | ---- | ------ | ----- |
+| 15          | 56.35 | ±31.46ms | 44.5 | 47.3   | 173.4 |
 
 | JSEventListeners | JSHeapTotalSize | JSHeapUsedSize | LayoutCount | LayoutDuration | RecalcStyleCount | RecalcStyleDuration | ScriptDuration | TaskDuration |
 | ---------------- | --------------- | -------------- | ----------- | -------------- | ---------------- | ------------------- | -------------- | ------------ |
-| 3146             | 26.8 MiB        | 9.2 MiB        | 3           | 0.012233       | 3                | 0.003991            | 0.040436       | 0.080798     |
+| 146              | 8.8 MiB         | 4.0 MiB        | 2           | 0.012215       | 2                | 0.004027            | 0.029771       | 0.069578     |
