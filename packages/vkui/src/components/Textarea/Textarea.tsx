@@ -39,7 +39,7 @@ export const Textarea = ({
   getRootRef,
   getRef,
   rows = 2,
-  maxHeight = 204,
+  maxHeight,
   status,
   onChange,
   align,

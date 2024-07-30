@@ -17,12 +17,12 @@
   inline-size: initial;
 }
 
-.Textarea--sizeY-compact .Textarea__el {
+.Textarea--sizeY-compact {
   max-block-size: 196px;
 }
 
 @media (--sizeY-compact) {
-  .Textarea--sizeY-none .Textarea__el {
+  .Textarea--sizeY-none {
     max-block-size: 196px;
   }
 }
