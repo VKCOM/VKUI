@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { PlacementWithAuto, usePlacementChangeCallback } from '../../lib/floating';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { CustomSelectDropdown, CustomSelectDropdownProps } from './CustomSelectDropdown';
 import styles from './CustomSelectDropdown.module.css';
 
@@ -11,15 +12,17 @@ jest.mock(
   () =>
     ({
       usePlacementChangeCallback: (initialPlacement, _, onPlacementChange) => {
-        if (lastInitialPlacement !== initialPlacement) {
-          lastInitialPlacement !== undefined &&
-            initialPlacement !== 'auto' &&
-            initialPlacement !== 'auto-end' &&
-            initialPlacement !== 'auto-start' &&
-            onPlacementChange &&
-            onPlacementChange(initialPlacement);
-          lastInitialPlacement = initialPlacement;
-        }
+        useIsomorphicLayoutEffect(() => {
+          if (lastInitialPlacement !== initialPlacement) {
+            lastInitialPlacement !== undefined &&
+              initialPlacement !== 'auto' &&
+              initialPlacement !== 'auto-end' &&
+              initialPlacement !== 'auto-start' &&
+              onPlacementChange &&
+              onPlacementChange(initialPlacement);
+            lastInitialPlacement = initialPlacement;
+          }
+        }, [initialPlacement, onPlacementChange]);
       },
     }) satisfies { usePlacementChangeCallback: typeof usePlacementChangeCallback },
 );
@@ -43,7 +46,7 @@ describe('CustomSelectDropdown', () => {
     expect(screen.getByTestId('test-content')).not.toBeNull();
   });
 
-  it('should call onPlacementChange callback when placement is changed', () => {
+  it('should call onPlacementChange callback when placement is changed', async () => {
     const onPlacementChange = jest.fn();
 
     const props: CustomSelectDropdownProps = {
@@ -60,7 +63,7 @@ describe('CustomSelectDropdown', () => {
     rerender(<CustomSelectDropdown {...props} placement="bottom" />);
     expect(screen.getByTestId('dropdown')).toHaveClass(styles['CustomSelectDropdown--bottom']);
 
-    expect(onPlacementChange).toBeCalledTimes(1);
+    expect(onPlacementChange).toBeCalledTimes(2);
   });
 
   it('should have className when noMaxHeight = true', () => {
