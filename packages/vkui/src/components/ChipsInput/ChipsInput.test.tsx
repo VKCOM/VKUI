@@ -119,6 +119,6 @@ describe(ChipsInput, () => {
 
     const resultValue = [...initialOptions];
     resultValue.pop();
-    expect(onChange).toBeCalledWith(resultValue);
+    expect(onChange).toHaveBeenCalledWith(resultValue);
   });
 });
