@@ -1,6 +1,5 @@
+import { useCallback } from 'react';
 import * as React from 'react';
-import { useEventListener } from '../../hooks/useEventListener';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { TimeoutId } from '../../types';
 
 /**
@@ -20,7 +19,7 @@ export const useDetectScrollDirection = (boxRef: React.RefObject<HTMLDivElement>
     timeoutId.current = setTimeout(() => setScrollDirection(null), 200);
   };
 
-  const scrollHandler = useEventListener('scroll', () => {
+  const onScroll = useCallback(() => {
     if (!boxRef || !boxRef.current) {
       return;
     }
@@ -36,11 +35,10 @@ export const useDetectScrollDirection = (boxRef: React.RefObject<HTMLDivElement>
     }
     lastScrollLeft.current = scrollLeft;
     lastScrollTop.current = scrollTop;
-  });
-
-  useIsomorphicLayoutEffect(() => {
-    boxRef.current && scrollHandler.add(boxRef.current);
   }, [boxRef]);
 
-  return scrollDirection;
+  return {
+    scrollDirection,
+    onScroll,
+  };
 };

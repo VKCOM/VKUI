@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CustomScrollBarController } from './CustomScrollBarController';
+import { CustomScrollBarController } from './types';
 import { useTrackerVisibility } from './useTrackerVisibility';
 
 export const useVerticalScrollController = (
@@ -15,7 +15,6 @@ export const useVerticalScrollController = (
   const startY = React.useRef(0);
   const trackerTop = React.useRef(0);
 
-  const barY = React.useRef<HTMLDivElement>(null);
   const trackerY = React.useRef<HTMLDivElement>(null);
 
   const {
@@ -39,8 +38,8 @@ export const useVerticalScrollController = (
     setVerticalTrackerPosition((clientHeight.current - trackerHeight.current) * progress);
   };
 
-  const onResize = () => {
-    if (!boxRef.current || !barY.current || !trackerY.current) {
+  const onResize = (barY: HTMLDivElement | null) => {
+    if (!boxRef.current || !barY || !trackerY.current) {
       return;
     }
     const localClientHeight = boxRef.current.clientHeight;
@@ -56,9 +55,9 @@ export const useVerticalScrollController = (
     const currentScrollTop = boxRef.current.scrollTop;
 
     if (localVerticalRatio >= 1) {
-      barY.current.style.display = 'none';
+      barY.style.display = 'none';
     } else {
-      barY.current.style.display = '';
+      barY.style.display = '';
       trackerY.current.style.height = `${localTrackerHeight}px`;
       setTrackerPositionFromScroll(currentScrollTop);
     }
@@ -71,7 +70,7 @@ export const useVerticalScrollController = (
     }
   };
 
-  const onMove = (e: MouseEvent) => {
+  const onMove = (e: React.MouseEvent) => {
     const diff = e.clientY - startY.current;
     const position = Math.min(
       Math.max(trackerTop.current + diff, 0),
@@ -109,7 +108,6 @@ export const useVerticalScrollController = (
 
   return {
     trackerVisible,
-    barRef: barY,
     trackerRef: trackerY,
     onResize,
     onMove,

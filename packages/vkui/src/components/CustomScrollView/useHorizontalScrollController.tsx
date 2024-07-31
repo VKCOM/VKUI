@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CustomScrollBarController } from './CustomScrollBarController';
+import { CustomScrollBarController } from './types';
 import { useTrackerVisibility } from './useTrackerVisibility';
 
 export const useHorizontalScrollController = (
@@ -15,7 +15,6 @@ export const useHorizontalScrollController = (
   const startX = React.useRef(0);
   const trackerLeft = React.useRef(0);
 
-  const barX = React.useRef<HTMLDivElement>(null);
   const trackerX = React.useRef<HTMLDivElement>(null);
 
   const {
@@ -39,8 +38,8 @@ export const useHorizontalScrollController = (
     setHorizontalTrackerPosition((clientWidth.current - trackerWidth.current) * progress);
   };
 
-  const onResize = () => {
-    if (!boxRef.current || !barX.current || !trackerX.current) {
+  const onResize = (barX: HTMLDivElement | null) => {
+    if (!boxRef.current || !barX || !trackerX.current) {
       return;
     }
     const localClientWidth = boxRef.current.clientWidth;
@@ -55,9 +54,9 @@ export const useHorizontalScrollController = (
     const currentScrollLeft = boxRef.current.scrollLeft;
 
     if (localVerticalRatio >= 1) {
-      barX.current.style.display = 'none';
+      barX.style.display = 'none';
     } else {
-      barX.current.style.display = '';
+      barX.style.display = '';
       trackerX.current.style.width = `${localTrackerWidth}px`;
       setTrackerPositionFromScroll(currentScrollLeft);
     }
@@ -70,7 +69,7 @@ export const useHorizontalScrollController = (
     }
   };
 
-  const onMove = (e: MouseEvent) => {
+  const onMove = (e: React.MouseEvent) => {
     const diff = e.clientX - startX.current;
     const position = Math.min(
       Math.max(trackerLeft.current + diff, 0),
@@ -106,7 +105,6 @@ export const useHorizontalScrollController = (
 
   return {
     trackerVisible,
-    barRef: barX,
     trackerRef: trackerX,
     onResize,
     onMove,

@@ -1,17 +1,20 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useDOM } from '../../lib/dom';
-import { stopPropagation } from '../../lib/utils';
 import type { HasRootRef } from '../../types';
+import { ScrollX } from './ScrollX';
+import { ScrollY } from './ScrollY';
+import { BarHandlers } from './types';
 import { useCustomScrollViewResize } from './useCustomScrollViewResize';
 import { useDetectScrollDirection } from './useDetectScrollDirection';
-import { useHorizontalScrollController } from './useHorizontalScrollController';
 import { TrackerOptionsProps } from './useTrackerVisibility';
-import { useVerticalScrollController } from './useVerticalScrollController';
 import styles from './CustomScrollView.module.css';
+
+const DEFAULT_BAR_HANDLERS: BarHandlers = {
+  onResize: noop,
+  onScroll: noop,
+};
 
 function hasPointerClassName(hasPointer: boolean | undefined) {
   switch (hasPointer) {
@@ -68,110 +71,38 @@ export const CustomScrollView = ({
   overscrollBehavior = 'auto',
   ...restProps
 }: CustomScrollViewProps): React.ReactNode => {
-  const { document } = useDOM();
   const { hasPointer } = useAdaptivity();
-  const [pressedBar, setPressedBar] = React.useState<'vertical' | 'horizontal' | null>(null);
 
   const boxRef = useExternRef(externalBoxRef);
   const boxContentRef = React.useRef<HTMLDivElement>(null);
+  const barX = React.useRef<HTMLDivElement>(null);
+  const barY = React.useRef<HTMLDivElement>(null);
 
-  const {
-    trackerVisible: verticalTrackerVisible,
-    barRef: barY,
-    trackerRef: trackerY,
-    onResize: verticalScrollResize,
-    onScroll: verticalScroll,
-    onDragStart: onVerticalDragStart,
-    onMove: onVerticalMove,
-    onUp: onVerticalUp,
-    onTrackerMouseEnter: onVerticalTrackerMouseEnter,
-    onTrackerMouseLeave: onVerticalTrackerMouseLeave,
-  } = useVerticalScrollController(boxRef, autoHideScrollbar, autoHideScrollbarDelay);
+  const { scrollDirection, onScroll: detectScrollDirection } = useDetectScrollDirection(boxRef);
 
-  const {
-    trackerVisible: horizontalTrackerVisible,
-    barRef: barX,
-    trackerRef: trackerX,
-    onResize: horizontalScrollResize,
-    onScroll: horizontalScroll,
-    onDragStart: onHorizontalDragStart,
-    onMove: onHorizontalMove,
-    onUp: onHorizontalUp,
-    onTrackerMouseEnter: onHorizontalTrackerMouseEnter,
-    onTrackerMouseLeave: onHorizontalTrackerMouseLeave,
-  } = useHorizontalScrollController(boxRef, autoHideScrollbar, autoHideScrollbarDelay);
-
-  const scrollDirection = useDetectScrollDirection(boxRef);
+  const barYHandlers = React.useRef({ ...DEFAULT_BAR_HANDLERS });
+  const barXHandlers = React.useRef({ ...DEFAULT_BAR_HANDLERS });
 
   useCustomScrollViewResize({
     windowResize,
     boxContentRef,
     onResize: () => {
-      verticalScrollResize();
-      horizontalScrollResize();
+      barYHandlers.current.onResize(barY.current);
+      barXHandlers.current.onResize(barX.current);
     },
   });
 
-  const onUp = (e: MouseEvent) => {
-    if (!pressedBar) {
-      return;
-    }
-    e.preventDefault();
-    if (pressedBar === 'vertical') {
-      onVerticalUp();
-    } else {
-      onHorizontalUp();
-    }
-    setPressedBar(null);
-    unsubscribe();
-  };
-
-  const onMove = (e: MouseEvent) => {
-    if (!pressedBar) {
-      return;
-    }
-    e.preventDefault();
-    if (pressedBar === 'vertical') {
-      onVerticalMove(e);
-    } else {
-      onHorizontalMove(e);
-    }
-  };
-
   const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    detectScrollDirection();
     if (!scrollDirection) {
       return;
     }
     if (scrollDirection === 'horizontal') {
-      horizontalScroll();
+      barXHandlers.current.onScroll();
     } else {
-      verticalScroll();
+      barYHandlers.current.onScroll();
     }
     onScrollProp?.(event);
-  };
-
-  const listeners = [useEventListener('mousemove', onMove), useEventListener('mouseup', onUp)];
-
-  function subscribe(el: Document | undefined) {
-    if (el) {
-      listeners.forEach((l) => l.add(el));
-    }
-  }
-
-  function unsubscribe() {
-    listeners.forEach((l) => l.remove());
-  }
-
-  const onDragStart = (e: React.MouseEvent, isVertical: boolean) => {
-    e.preventDefault();
-    setPressedBar(isVertical ? 'vertical' : 'horizontal');
-    if (isVertical) {
-      onVerticalDragStart(e);
-    } else {
-      onHorizontalDragStart(e);
-    }
-
-    subscribe(document);
   };
 
   return (
@@ -194,32 +125,21 @@ export const CustomScrollView = ({
           {children}
         </div>
       </div>
-
-      <div className={styles['CustomScrollView__barY']} ref={barY} onClick={stopPropagation}>
-        <div
-          className={classNames(
-            styles['CustomScrollView__trackerY'],
-            !verticalTrackerVisible && styles['CustomScrollView__trackerY--hidden'],
-          )}
-          onMouseEnter={autoHideScrollbar ? onVerticalTrackerMouseEnter : undefined}
-          onMouseLeave={autoHideScrollbar ? onVerticalTrackerMouseLeave : undefined}
-          ref={trackerY}
-          onMouseDown={(e) => onDragStart(e, true)}
-        />
-      </div>
+      <ScrollY
+        bar={barY}
+        barHandlers={barYHandlers}
+        boxRef={boxRef}
+        autoHideScrollbar={autoHideScrollbar}
+        autoHideScrollbarDelay={autoHideScrollbarDelay}
+      />
       {enableHorizontalScroll && (
-        <div className={styles['CustomScrollView__barX']} ref={barX} onClick={stopPropagation}>
-          <div
-            className={classNames(
-              styles['CustomScrollView__trackerX'],
-              !horizontalTrackerVisible && styles['CustomScrollView__trackerX--hidden'],
-            )}
-            onMouseEnter={autoHideScrollbar ? onHorizontalTrackerMouseEnter : undefined}
-            onMouseLeave={autoHideScrollbar ? onHorizontalTrackerMouseLeave : undefined}
-            ref={trackerX}
-            onMouseDown={(e) => onDragStart(e, false)}
-          />
-        </div>
+        <ScrollX
+          bar={barX}
+          barHandlers={barXHandlers}
+          boxRef={boxRef}
+          autoHideScrollbar={autoHideScrollbar}
+          autoHideScrollbarDelay={autoHideScrollbarDelay}
+        />
       )}
     </div>
   );
