@@ -38,7 +38,7 @@ describe('Cell', () => {
       );
 
       await userEvent.click(
-        screen.getByTestId('list-xyz').querySelector(`[aria-label="${label}"]`) as Element,
+        screen.getByTestId('list-xyz').querySelector<HTMLElement>(`[aria-label="${label}"]`)!,
       );
 
       expect(updatedList).toEqual(initialList);
@@ -174,7 +174,7 @@ describe('Cell', () => {
     );
 
     const cell = screen.getByTestId('list-xyz');
-    const dragger = cell.querySelector(`.${styles['Cell__dragger']}`) as HTMLElement;
+    const dragger = cell.querySelector<HTMLElement>(`.${styles['Cell__dragger']}`)!;
     expect(dragger).toBeInTheDocument();
 
     fireEvent.mouseDown(dragger, {
@@ -198,7 +198,7 @@ describe('Cell', () => {
       </ConfigProvider>,
     );
     const cell = screen.getByTestId('list-xyz');
-    const dragger = cell.querySelector(`.${styles['Cell__dragger']}`) as HTMLElement;
+    const dragger = cell.querySelector<HTMLElement>(`.${styles['Cell__dragger']}`)!;
     const content = screen.getByTestId('content');
 
     // Проверяем, что dragger находится в DOM дереве после контента, значит в after
@@ -215,7 +215,7 @@ describe('Cell', () => {
     );
 
     const cell = screen.getByTestId('list-xyz');
-    const dragger = cell.querySelector(`.${styles['Cell__dragger']}`) as HTMLElement;
+    const dragger = cell.querySelector<HTMLElement>(`.${styles['Cell__dragger']}`)!;
     expect(dragger).toBeInTheDocument();
 
     fireEvent.mouseDown(dragger, {

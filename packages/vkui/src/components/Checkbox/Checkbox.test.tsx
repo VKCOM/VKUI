@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { getDocumentBody } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
@@ -21,9 +21,9 @@ describe('Checkbox', () => {
     };
     render(<CheckboxController />);
     expect(screen.getByRole('checkbox')).not.toBeChecked();
-    await userEvent.click(screen.getByText('check'));
+    fireEvent.click(screen.getByText('check'));
     expect(screen.getByRole('checkbox')).toBeChecked();
-    await userEvent.click(screen.getByText('check'));
+    fireEvent.click(screen.getByText('check'));
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 
@@ -54,14 +54,14 @@ describe('Checkbox', () => {
     );
 
     fireEvent.click(screen.getByText('Check'));
-    expect((screen.getByRole<HTMLInputElement>('checkbox')).indeterminate).toBeFalsy();
+    expect(screen.getByRole<HTMLInputElement>('checkbox').indeterminate).toBeFalsy();
   });
 
   it('check not reset indeterminate when click to checkbox', () => {
     render(<Checkbox indeterminate={true}>Check</Checkbox>);
 
     fireEvent.click(screen.getByText('Check'));
-    expect((screen.getByRole<HTMLInputElement>('checkbox')).indeterminate).toBeTruthy();
+    expect(screen.getByRole<HTMLInputElement>('checkbox').indeterminate).toBeTruthy();
   });
 
   it('check dev errors', () => {
