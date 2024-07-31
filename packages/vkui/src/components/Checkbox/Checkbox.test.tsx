@@ -57,10 +57,10 @@ describe('Checkbox', () => {
     expect((screen.getByRole<HTMLInputElement>('checkbox')).indeterminate).toBeFalsy();
   });
 
-  it('check not reset indeterminate when click to checkbox', async () => {
+  it('check not reset indeterminate when click to checkbox', () => {
     render(<Checkbox indeterminate={true}>Check</Checkbox>);
 
-    await React.act(async () => await userEvent.click(screen.getByText('Check')));
+    fireEvent.click(screen.getByText('Check'));
     expect((screen.getByRole<HTMLInputElement>('checkbox')).indeterminate).toBeTruthy();
   });
 
