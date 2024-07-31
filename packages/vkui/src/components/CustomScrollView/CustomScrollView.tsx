@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import type { HasRootRef } from '../../types';
@@ -10,11 +10,6 @@ import { useCustomScrollViewResize } from './useCustomScrollViewResize';
 import { useDetectScrollDirection } from './useDetectScrollDirection';
 import { TrackerOptionsProps } from './useTrackerVisibility';
 import styles from './CustomScrollView.module.css';
-
-const DEFAULT_BAR_HANDLERS: BarHandlers = {
-  resize: noop,
-  scroll: noop,
-};
 
 function hasPointerClassName(hasPointer: boolean | undefined) {
   switch (hasPointer) {
@@ -78,15 +73,15 @@ export const CustomScrollView = ({
 
   const { scrollDirection, onScroll: detectScrollDirection } = useDetectScrollDirection(boxRef);
 
-  const barYHandlers = React.useRef({ ...DEFAULT_BAR_HANDLERS });
-  const barXHandlers = React.useRef({ ...DEFAULT_BAR_HANDLERS });
+  const barYHandlers = React.useRef<BarHandlers | null>(null);
+  const barXHandlers = React.useRef<BarHandlers | null>(null);
 
   useCustomScrollViewResize({
     windowResize,
     boxContentRef,
     onResize: () => {
-      barYHandlers.current.resize();
-      barXHandlers.current.resize();
+      barYHandlers.current?.resize();
+      barXHandlers.current?.resize();
     },
   });
 
@@ -96,9 +91,9 @@ export const CustomScrollView = ({
       return;
     }
     if (scrollDirection === 'horizontal') {
-      barXHandlers.current.scroll();
+      barXHandlers.current?.scroll();
     } else {
-      barYHandlers.current.scroll();
+      barYHandlers.current?.scroll();
     }
     onScrollProp?.(event);
   };

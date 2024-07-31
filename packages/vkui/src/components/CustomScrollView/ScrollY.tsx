@@ -32,8 +32,10 @@ export const ScrollY = ({
   );
 
   useIsomorphicLayoutEffect(() => {
-    barHandlers.current.resize = verticalScrollResize;
-    barHandlers.current.scroll = verticalScroll;
+    barHandlers.current = {
+      resize: verticalScrollResize,
+      scroll: verticalScroll,
+    };
   }, [verticalScrollResize, verticalScroll, barHandlers]);
 
   return (

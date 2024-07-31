@@ -32,8 +32,10 @@ export const ScrollX = ({
   );
 
   useIsomorphicLayoutEffect(() => {
-    barHandlers.current.resize = horizontalScrollResize;
-    barHandlers.current.scroll = horizontalScroll;
+    barHandlers.current = {
+      resize: horizontalScrollResize,
+      scroll: horizontalScroll,
+    };
   }, [horizontalScrollResize, horizontalScroll, barHandlers]);
 
   return (

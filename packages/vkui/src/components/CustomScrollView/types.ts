@@ -16,7 +16,7 @@ export type CustomScrollBarController = {
 export type BarHandlers = Pick<CustomScrollBarController, 'resize' | 'scroll'>;
 
 export type ScrollProps = {
-  barHandlers: React.MutableRefObject<BarHandlers>;
+  barHandlers: React.MutableRefObject<BarHandlers | null>;
   boxRef: React.MutableRefObject<HTMLDivElement | null>;
   autoHideScrollbar: boolean;
   autoHideScrollbarDelay?: number;
