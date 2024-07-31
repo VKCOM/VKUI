@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { CustomScrollBarController } from './CustomScrollBarController';
 import { useTrackerVisibility } from './useTrackerVisibility';
-import { useTransformProp } from './useTransformProp';
 
 export const useHorizontalScrollController = (
   boxRef: React.RefObject<HTMLDivElement | null>,
@@ -19,8 +18,6 @@ export const useHorizontalScrollController = (
   const barX = React.useRef<HTMLDivElement>(null);
   const trackerX = React.useRef<HTMLDivElement>(null);
 
-  const transformProp = useTransformProp(trackerX);
-
   const {
     trackerVisible,
     onTargetScroll,
@@ -33,7 +30,7 @@ export const useHorizontalScrollController = (
   const setHorizontalTrackerPosition = (scrollLeft: number) => {
     lastTrackerLeft.current = scrollLeft;
     if (trackerX.current !== null) {
-      (trackerX.current.style as any)[transformProp.current] = `translate(${scrollLeft}px, 0)`;
+      (trackerX.current.style as any)['transform'] = `translate(${scrollLeft}px, 0)`;
     }
   };
 
