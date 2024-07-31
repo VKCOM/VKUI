@@ -7,13 +7,13 @@ import { useVerticalScrollController } from './useVerticalScrollController';
 import styles from './CustomScrollView.module.css';
 
 export const ScrollY = ({
-  bar: barY,
   barHandlers,
   boxRef,
   autoHideScrollbar,
   autoHideScrollbarDelay,
 }: ScrollProps) => {
   const {
+    barRef: barY,
     trackerVisible: verticalTrackerVisible,
     trackerRef: trackerY,
     resize: verticalScrollResize,

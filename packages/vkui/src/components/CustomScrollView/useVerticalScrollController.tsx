@@ -7,6 +7,8 @@ export const useVerticalScrollController = (
   autoHideScrollbar: boolean,
   autoHideScrollbarDelay?: number,
 ): CustomScrollBarController => {
+  const barY = React.useRef<HTMLDivElement>(null);
+
   const verticalRatio = React.useRef(NaN);
   const lastTrackerTop = React.useRef(0);
   const clientHeight = React.useRef(0);
@@ -38,8 +40,8 @@ export const useVerticalScrollController = (
     setVerticalTrackerPosition((clientHeight.current - trackerHeight.current) * progress);
   };
 
-  const resize = (barY: HTMLDivElement | null) => {
-    if (!boxRef.current || !barY || !trackerY.current) {
+  const resize = () => {
+    if (!boxRef.current || !barY.current || !trackerY.current) {
       return;
     }
     const localClientHeight = boxRef.current.clientHeight;
@@ -55,9 +57,9 @@ export const useVerticalScrollController = (
     const currentScrollTop = boxRef.current.scrollTop;
 
     if (localVerticalRatio >= 1) {
-      barY.style.display = 'none';
+      barY.current.style.display = 'none';
     } else {
-      barY.style.display = '';
+      barY.current.style.display = '';
       trackerY.current.style.height = `${localTrackerHeight}px`;
       setTrackerPositionFromScroll(currentScrollTop);
     }
@@ -107,6 +109,7 @@ export const useVerticalScrollController = (
   };
 
   return {
+    barRef: barY,
     trackerVisible,
     trackerRef: trackerY,
     resize,

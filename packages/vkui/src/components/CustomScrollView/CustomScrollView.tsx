@@ -75,8 +75,6 @@ export const CustomScrollView = ({
 
   const boxRef = useExternRef(externalBoxRef);
   const boxContentRef = React.useRef<HTMLDivElement>(null);
-  const barX = React.useRef<HTMLDivElement>(null);
-  const barY = React.useRef<HTMLDivElement>(null);
 
   const { scrollDirection, onScroll: detectScrollDirection } = useDetectScrollDirection(boxRef);
 
@@ -87,8 +85,8 @@ export const CustomScrollView = ({
     windowResize,
     boxContentRef,
     onResize: () => {
-      barYHandlers.current.resize(barY.current);
-      barXHandlers.current.resize(barX.current);
+      barYHandlers.current.resize();
+      barXHandlers.current.resize();
     },
   });
 
@@ -126,7 +124,6 @@ export const CustomScrollView = ({
         </div>
       </div>
       <ScrollY
-        bar={barY}
         barHandlers={barYHandlers}
         boxRef={boxRef}
         autoHideScrollbar={autoHideScrollbar}
@@ -134,7 +131,6 @@ export const CustomScrollView = ({
       />
       {enableHorizontalScroll && (
         <ScrollX
-          bar={barX}
           barHandlers={barXHandlers}
           boxRef={boxRef}
           autoHideScrollbar={autoHideScrollbar}

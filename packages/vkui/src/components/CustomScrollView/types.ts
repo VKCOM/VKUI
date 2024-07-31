@@ -1,9 +1,10 @@
 import * as React from 'react';
 
 export type CustomScrollBarController = {
+  barRef: React.RefObject<HTMLDivElement>;
   trackerRef: React.RefObject<HTMLDivElement>;
   trackerVisible: boolean;
-  resize: (bar: HTMLDivElement | null) => void;
+  resize: () => void;
   dragging: (e: React.MouseEvent) => void;
   dragEnd: () => void;
   scroll: () => void;
@@ -15,7 +16,6 @@ export type CustomScrollBarController = {
 export type BarHandlers = Pick<CustomScrollBarController, 'resize' | 'scroll'>;
 
 export type ScrollProps = {
-  bar: React.MutableRefObject<HTMLDivElement | null>;
   barHandlers: React.MutableRefObject<BarHandlers>;
   boxRef: React.MutableRefObject<HTMLDivElement | null>;
   autoHideScrollbar: boolean;

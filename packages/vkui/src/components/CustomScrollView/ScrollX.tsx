@@ -7,13 +7,13 @@ import { useHorizontalScrollController } from './useHorizontalScrollController';
 import styles from './CustomScrollView.module.css';
 
 export const ScrollX = ({
-  bar: barX,
   barHandlers,
   boxRef,
   autoHideScrollbar,
   autoHideScrollbarDelay,
 }: ScrollProps) => {
   const {
+    barRef: barX,
     trackerVisible: horizontalTrackerVisible,
     trackerRef: trackerX,
     resize: horizontalScrollResize,

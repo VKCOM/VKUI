@@ -7,6 +7,8 @@ export const useHorizontalScrollController = (
   autoHideScrollbar: boolean,
   autoHideScrollbarDelay?: number,
 ): CustomScrollBarController => {
+  const barX = React.useRef<HTMLDivElement>(null);
+
   const horizontalRatio = React.useRef(NaN);
   const lastTrackerLeft = React.useRef(0);
   const clientWidth = React.useRef(0);
@@ -38,8 +40,8 @@ export const useHorizontalScrollController = (
     setHorizontalTrackerPosition((clientWidth.current - trackerWidth.current) * progress);
   };
 
-  const resize = (barX: HTMLDivElement | null) => {
-    if (!boxRef.current || !barX || !trackerX.current) {
+  const resize = () => {
+    if (!boxRef.current || !barX.current || !trackerX.current) {
       return;
     }
     const localClientWidth = boxRef.current.clientWidth;
@@ -54,9 +56,9 @@ export const useHorizontalScrollController = (
     const currentScrollLeft = boxRef.current.scrollLeft;
 
     if (localVerticalRatio >= 1) {
-      barX.style.display = 'none';
+      barX.current.style.display = 'none';
     } else {
-      barX.style.display = '';
+      barX.current.style.display = '';
       trackerX.current.style.width = `${localTrackerWidth}px`;
       setTrackerPositionFromScroll(currentScrollLeft);
     }
@@ -104,6 +106,7 @@ export const useHorizontalScrollController = (
   };
 
   return {
+    barRef: barX,
     trackerVisible,
     trackerRef: trackerX,
     resize,
