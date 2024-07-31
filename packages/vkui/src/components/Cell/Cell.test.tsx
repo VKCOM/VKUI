@@ -45,6 +45,23 @@ describe('Cell', () => {
     });
   });
 
+  test('has "a" tag by default if href is defined', () => {
+    const { rerender } = render(
+      <Cell Component="div" href="http://the.link">
+        Саша Колобов
+      </Cell>,
+    );
+
+    // Явное значение Component = div приоритетней автоматической логики по установке тэга a
+    expect(document.querySelector('a[href="http://the.link"]')).toBeFalsy();
+    expect(document.querySelector('div[href="http://the.link"]')).toBeTruthy();
+
+    rerender(<Cell href="http://the.link">Саша Колобов</Cell>);
+
+    // без явного значения в Component компонент будет иметь тэг 'a' из-за переданного значения href
+    expect(document.querySelector('a[href="http://the.link"]')).toBeTruthy();
+  });
+
   describe("mode='removable'", () => {
     test('handles click', () => {
       const removeStub = jest.fn();
