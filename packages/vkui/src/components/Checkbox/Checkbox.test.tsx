@@ -46,14 +46,14 @@ describe('Checkbox', () => {
     expect(getDocumentBody()).toHaveFocus();
   });
 
-  it('check reset indeterminate when click to checkbox', async () => {
+  it('check reset indeterminate when click to checkbox', () => {
     render(
       <ConfigProvider platform={Platform.VKCOM}>
         <Checkbox defaultIndeterminate={true}>Check</Checkbox>
       </ConfigProvider>,
     );
 
-    await React.act(async () => await userEvent.click(screen.getByText('Check')));
+    fireEvent.click(screen.getByText('Check'));
     expect((screen.getByRole<HTMLInputElement>('checkbox')).indeterminate).toBeFalsy();
   });
 
