@@ -83,8 +83,8 @@ export const FixedLayout = ({
       setWidth(
         `${
           colRef.current.clientWidth -
-          parseFloat(computedStyle.paddingLeft) -
-          parseFloat(computedStyle.paddingRight)
+          parseFloat(computedStyle.paddingLeft || '0') -
+          parseFloat(computedStyle.paddingRight || '0')
         }px`,
       );
     } else {
