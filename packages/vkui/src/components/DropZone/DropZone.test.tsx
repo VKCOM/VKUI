@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { stopPropagation } from '../../lib/utils';
 import { baselineComponent } from '../../testing/utils';
@@ -15,11 +14,10 @@ describe('DropZone', () => {
       </DropZone>,
     );
     expect(screen.getByTestId('drop-zone')).not.toHaveClass(styles['DropZone--active']);
-
-    await React.act(async () => fireEvent.dragOver(screen.getByTestId('content')));
+    fireEvent.dragOver(screen.getByTestId('content'));
     expect(screen.getByTestId('drop-zone')).toHaveClass(styles['DropZone--active']);
 
-    await React.act(async () => fireEvent.dragLeave(screen.getByTestId('content')));
+    fireEvent.dragLeave(screen.getByTestId('content'));
     expect(screen.getByTestId('drop-zone')).not.toHaveClass(styles['DropZone--active']);
   });
 
@@ -29,7 +27,7 @@ describe('DropZone', () => {
         <div data-testid="content"></div>
       </DropZone>,
     );
-    await React.act(async () => fireEvent.dragOver(screen.getByTestId('content')));
+    fireEvent.dragOver(screen.getByTestId('content'));
     expect(screen.getByTestId('drop-zone')).not.toHaveClass(styles['DropZone--active']);
   });
 
@@ -39,7 +37,7 @@ describe('DropZone', () => {
         {({ active }) => <div data-testid="content" data-active={active} />}
       </DropZone>,
     );
-    await React.act(async () => fireEvent.dragOver(screen.getByTestId('content')));
+    fireEvent.dragOver(screen.getByTestId('content'));
     expect(screen.getByTestId('content').getAttribute('data-active')).toBe('true');
   });
 });

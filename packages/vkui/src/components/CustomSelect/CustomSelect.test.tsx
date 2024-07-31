@@ -1367,7 +1367,7 @@ describe('CustomSelect', () => {
     fireEvent.click(screen.getByTestId('select'));
     const option = screen.getByRole('option', { name: 'Категория 1' });
 
-    await React.act(async () => fireEvent.mouseMove(option, { clientY: 20 }));
+    fireEvent.mouseMove(option, { clientY: 20 });
 
     expect(option.getAttribute('data-hovered')).toBe('false');
   });

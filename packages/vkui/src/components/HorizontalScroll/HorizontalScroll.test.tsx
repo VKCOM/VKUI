@@ -107,8 +107,8 @@ describe('HorizontalScroll', () => {
     fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
 
     const arrowRight = screen.getByTestId('ScrollArrowRight');
-    await React.act(async () => fireEvent.click(arrowRight));
-    await React.act(async () => fireEvent.click(arrowRight));
+    fireEvent.click(arrowRight);
+    fireEvent.click(arrowRight);
 
     await waitFor(() => {
       expect(mockedData.scrollLeft).toBe(300);
@@ -131,13 +131,13 @@ describe('HorizontalScroll', () => {
     fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
 
     const arrowLeft = screen.getByTestId('ScrollArrowLeft');
-    await React.act(async () => fireEvent.click(arrowLeft));
+    fireEvent.click(arrowLeft);
 
     await waitFor(() => {
       expect(mockedData.scrollLeft).toBe(100);
     });
 
-    await React.act(async () => fireEvent.click(arrowLeft));
+    fireEvent.click(arrowLeft);
     await waitFor(() => {
       expect(mockedData.scrollLeft).toBe(0);
     });
@@ -163,14 +163,14 @@ describe('HorizontalScroll', () => {
     fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
 
     const arrowRight = screen.getByTestId('ScrollArrowRight');
-    await React.act(async () => fireEvent.click(arrowRight));
+    fireEvent.click(arrowRight);
 
     await waitFor(() => {
       expect(mockedData.scrollLeft).toBe(300);
     });
 
     const arrowLeft = screen.getByTestId('ScrollArrowLeft');
-    await React.act(async () => fireEvent.click(arrowLeft));
+    fireEvent.click(arrowLeft);
 
     await waitFor(() => {
       expect(mockedData.scrollLeft).toBe(200);
