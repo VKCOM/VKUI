@@ -112,8 +112,8 @@ describe(ChipsInput, () => {
         onChange={onChange}
       />,
     );
-    const chip = container.querySelector('div[data-value="blue"]') as HTMLElement;
-    chip.focus();
+    const chip = container.querySelector<HTMLElement>('[data-value="blue"]');
+    chip?.focus();
 
     await userEvent.keyboard('{Delete}');
 
