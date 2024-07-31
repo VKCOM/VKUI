@@ -16,24 +16,24 @@ export const ScrollX = ({
   const {
     trackerVisible: horizontalTrackerVisible,
     trackerRef: trackerX,
-    onResize: horizontalScrollResize,
-    onScroll: horizontalScroll,
-    onDragStart: onHorizontalDragStart,
-    onMove: onHorizontalMove,
-    onUp: onHorizontalUp,
-    onTrackerMouseEnter: onHorizontalTrackerMouseEnter,
-    onTrackerMouseLeave: onHorizontalTrackerMouseLeave,
+    resize: horizontalScrollResize,
+    scroll: horizontalScroll,
+    dragStart: onHorizontalDragStart,
+    dragging: onHorizontalDragging,
+    dragEnd: onHorizontalDragEnd,
+    trackerMouseEnter: onHorizontalTrackerMouseEnter,
+    trackerMouseLeave: onHorizontalTrackerMouseLeave,
   } = useHorizontalScrollController(boxRef, autoHideScrollbar, autoHideScrollbarDelay);
 
   const { onDragStart: onMouseDown } = useDragAndDrop(
     onHorizontalDragStart,
-    onHorizontalMove,
-    onHorizontalUp,
+    onHorizontalDragging,
+    onHorizontalDragEnd,
   );
 
   useIsomorphicLayoutEffect(() => {
-    barHandlers.current.onResize = horizontalScrollResize;
-    barHandlers.current.onScroll = horizontalScroll;
+    barHandlers.current.resize = horizontalScrollResize;
+    barHandlers.current.scroll = horizontalScroll;
   }, [horizontalScrollResize, horizontalScroll, barHandlers]);
 
   return (

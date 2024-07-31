@@ -12,8 +12,8 @@ import { TrackerOptionsProps } from './useTrackerVisibility';
 import styles from './CustomScrollView.module.css';
 
 const DEFAULT_BAR_HANDLERS: BarHandlers = {
-  onResize: noop,
-  onScroll: noop,
+  resize: noop,
+  scroll: noop,
 };
 
 function hasPointerClassName(hasPointer: boolean | undefined) {
@@ -87,8 +87,8 @@ export const CustomScrollView = ({
     windowResize,
     boxContentRef,
     onResize: () => {
-      barYHandlers.current.onResize(barY.current);
-      barXHandlers.current.onResize(barX.current);
+      barYHandlers.current.resize(barY.current);
+      barXHandlers.current.resize(barX.current);
     },
   });
 
@@ -98,9 +98,9 @@ export const CustomScrollView = ({
       return;
     }
     if (scrollDirection === 'horizontal') {
-      barXHandlers.current.onScroll();
+      barXHandlers.current.scroll();
     } else {
-      barYHandlers.current.onScroll();
+      barYHandlers.current.scroll();
     }
     onScrollProp?.(event);
   };

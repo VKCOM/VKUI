@@ -16,24 +16,24 @@ export const ScrollY = ({
   const {
     trackerVisible: verticalTrackerVisible,
     trackerRef: trackerY,
-    onResize: verticalScrollResize,
-    onScroll: verticalScroll,
-    onDragStart: onVerticalDragStart,
-    onMove: onVerticalMove,
-    onUp: onVerticalUp,
-    onTrackerMouseEnter: onVerticalTrackerMouseEnter,
-    onTrackerMouseLeave: onVerticalTrackerMouseLeave,
+    resize: verticalScrollResize,
+    scroll: verticalScroll,
+    dragStart: onVerticalDragStart,
+    dragging: onVerticalDragging,
+    dragEnd: onVerticalDragEnd,
+    trackerMouseEnter: onVerticalTrackerMouseEnter,
+    trackerMouseLeave: onVerticalTrackerMouseLeave,
   } = useVerticalScrollController(boxRef, autoHideScrollbar, autoHideScrollbarDelay);
 
   const { onDragStart: onMouseDown } = useDragAndDrop(
     onVerticalDragStart,
-    onVerticalMove,
-    onVerticalUp,
+    onVerticalDragging,
+    onVerticalDragEnd,
   );
 
   useIsomorphicLayoutEffect(() => {
-    barHandlers.current.onResize = verticalScrollResize;
-    barHandlers.current.onScroll = verticalScroll;
+    barHandlers.current.resize = verticalScrollResize;
+    barHandlers.current.scroll = verticalScroll;
   }, [verticalScrollResize, verticalScroll, barHandlers]);
 
   return (

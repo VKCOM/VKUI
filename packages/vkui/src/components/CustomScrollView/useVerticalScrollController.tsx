@@ -38,7 +38,7 @@ export const useVerticalScrollController = (
     setVerticalTrackerPosition((clientHeight.current - trackerHeight.current) * progress);
   };
 
-  const onResize = (barY: HTMLDivElement | null) => {
+  const resize = (barY: HTMLDivElement | null) => {
     if (!boxRef.current || !barY || !trackerY.current) {
       return;
     }
@@ -70,7 +70,7 @@ export const useVerticalScrollController = (
     }
   };
 
-  const onMove = (e: React.MouseEvent) => {
+  const dragging = (e: React.MouseEvent) => {
     const diff = e.clientY - startY.current;
     const position = Math.min(
       Math.max(trackerTop.current + diff, 0),
@@ -80,13 +80,13 @@ export const useVerticalScrollController = (
     setScrollPositionFromTracker(position);
   };
 
-  const onUp = () => {
+  const dragEnd = () => {
     if (autoHideScrollbar) {
       onTrackerDragStop();
     }
   };
 
-  const onScroll = () => {
+  const scroll = () => {
     if (!boxRef.current) {
       return;
     }
@@ -97,7 +97,7 @@ export const useVerticalScrollController = (
     setTrackerPositionFromScroll(boxRef.current.scrollTop);
   };
 
-  const onDragStart = (e: React.MouseEvent) => {
+  const dragStart = (e: React.MouseEvent) => {
     startY.current = e.clientY;
     trackerTop.current = lastTrackerTop.current;
 
@@ -109,12 +109,12 @@ export const useVerticalScrollController = (
   return {
     trackerVisible,
     trackerRef: trackerY,
-    onResize,
-    onMove,
-    onUp,
-    onScroll,
-    onDragStart,
-    onTrackerMouseEnter,
-    onTrackerMouseLeave,
+    resize,
+    dragging,
+    dragEnd,
+    scroll,
+    dragStart,
+    trackerMouseEnter: onTrackerMouseEnter,
+    trackerMouseLeave: onTrackerMouseLeave,
   };
 };

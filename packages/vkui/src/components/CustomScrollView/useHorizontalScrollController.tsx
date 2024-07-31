@@ -38,7 +38,7 @@ export const useHorizontalScrollController = (
     setHorizontalTrackerPosition((clientWidth.current - trackerWidth.current) * progress);
   };
 
-  const onResize = (barX: HTMLDivElement | null) => {
+  const resize = (barX: HTMLDivElement | null) => {
     if (!boxRef.current || !barX || !trackerX.current) {
       return;
     }
@@ -69,7 +69,7 @@ export const useHorizontalScrollController = (
     }
   };
 
-  const onMove = (e: React.MouseEvent) => {
+  const dragging = (e: React.MouseEvent) => {
     const diff = e.clientX - startX.current;
     const position = Math.min(
       Math.max(trackerLeft.current + diff, 0),
@@ -78,13 +78,13 @@ export const useHorizontalScrollController = (
     setScrollPositionFromTracker(position);
   };
 
-  const onUp = () => {
+  const dragEnd = () => {
     if (autoHideScrollbar) {
       onTrackerDragStop();
     }
   };
 
-  const onScroll = () => {
+  const scroll = () => {
     if (!boxRef.current) {
       return;
     }
@@ -94,7 +94,7 @@ export const useHorizontalScrollController = (
     setTrackerPositionFromScroll(boxRef.current.scrollLeft);
   };
 
-  const onDragStart = (e: React.MouseEvent) => {
+  const dragStart = (e: React.MouseEvent) => {
     startX.current = e.clientX;
     trackerLeft.current = lastTrackerLeft.current;
 
@@ -106,12 +106,12 @@ export const useHorizontalScrollController = (
   return {
     trackerVisible,
     trackerRef: trackerX,
-    onResize,
-    onMove,
-    onUp,
-    onScroll,
-    onDragStart,
-    onTrackerMouseEnter,
-    onTrackerMouseLeave,
+    resize,
+    dragging,
+    dragEnd,
+    scroll,
+    dragStart,
+    trackerMouseEnter: onTrackerMouseEnter,
+    trackerMouseLeave: onTrackerMouseLeave,
   };
 };
