@@ -101,6 +101,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   useIsomorphicLayoutEffect(
     function collectFocusableNodesRef() {
       if (!ref.current) {
+        /* istanbul ignore next: невозможный кейс */
         return;
       }
       const parentNode = ref.current;
@@ -123,6 +124,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
       const autoFocusToFirstNode = () => {
         if (!ref.current || !focusableNodesRef.current.length) {
+          /* istanbul ignore next: невозможный кейс */
           return;
         }
         const activeElement = getActiveElementByAnotherElement(ref.current);
@@ -182,6 +184,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
   useIsomorphicLayoutEffect(() => {
     if (!ref.current) {
+      /* istanbul ignore next: невозможный кейс */
       return;
     }
 
@@ -195,6 +198,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
       switch (pressedKeyResult) {
         case Keys.TAB: {
           if (!focusableNodesRef.current.length) {
+            /* istanbul ignore next: невозможный кейс */
             return false;
           }
 
