@@ -668,7 +668,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       const selected = index === selectedOptionIndex;
 
       return (
-        <React.Fragment key={`${option.value}`}>
+        <React.Fragment key={`${typeof option.value}-${option.value}`}>
           {renderOptionProp({
             option,
             hovered,
