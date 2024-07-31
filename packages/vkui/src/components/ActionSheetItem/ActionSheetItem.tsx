@@ -2,11 +2,13 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
+import { Keys, pressedKey } from '../../lib/accessibility';
 import { ActionSheetContext, type ActionSheetContextType } from '../ActionSheet/ActionSheetContext';
 import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
+import { isRealClickEvent } from './helpers';
 import { Radio } from './subcomponents/Radio/Radio';
 import styles from './ActionSheetItem.module.css';
 
@@ -74,8 +76,11 @@ export const ActionSheetItem = ({
   ...restProps
 }: ActionSheetItemProps): React.ReactNode => {
   const platform = usePlatform();
-  const { onItemClick = () => noop, mode: actionSheetMode } =
-    React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
+  const {
+    onItemClick = () => noop,
+    mode: actionSheetMode,
+    onClose: onActionSheetClose,
+  } = React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
   const { sizeY } = useAdaptivityWithJSMediaQueries();
 
   const Component: React.ElementType | undefined = selectable ? 'label' : undefined;
@@ -83,20 +88,45 @@ export const ActionSheetItem = ({
   const isRich = subtitle || meta || selectable;
   const isCentered = !isRich && !before && platform === 'ios';
 
+  const onItemClickHandler = React.useCallback(
+    (e: React.MouseEvent) => {
+      onItemClick({
+        action: onClick,
+        immediateAction: onImmediateClick,
+        autoClose: !autoCloseDisabled,
+        isCancelItem: Boolean(isCancelItem),
+      })?.(e);
+    },
+    [autoCloseDisabled, isCancelItem, onClick, onImmediateClick, onItemClick],
+  );
+
+  const onKeyDown: React.KeyboardEventHandler<HTMLElement> = React.useCallback(
+    (event) => {
+      if (pressedKey(event) === Keys.ENTER) {
+        onActionSheetClose?.();
+      }
+    },
+    [onActionSheetClose],
+  );
+
+  const onItemClickImpl: React.MouseEventHandler<HTMLElement> = React.useCallback(
+    (event) => {
+      if (selectable) {
+        if (isRealClickEvent(event)) {
+          onItemClickHandler(event);
+        }
+      } else {
+        onItemClickHandler(event);
+      }
+    },
+    [onItemClickHandler, selectable],
+  );
+
   return (
     <Tappable
       {...(Component && { Component })}
       {...restProps}
-      onClick={
-        selectable
-          ? onClick
-          : onItemClick({
-              action: onClick,
-              immediateAction: onImmediateClick,
-              autoClose: !autoCloseDisabled,
-              isCancelItem: Boolean(isCancelItem),
-            })
-      }
+      onClick={onItemClickImpl}
       activeMode={platform === 'ios' ? styles['ActionSheetItem--active'] : undefined}
       className={classNames(
         styles['ActionSheetItem'],
@@ -109,6 +139,7 @@ export const ActionSheetItem = ({
         selectable && styles['ActionSheetItem--selectable'],
         className,
       )}
+      onKeyDown={onKeyDown}
     >
       {before && <div className={styles['ActionSheetItem__before']}>{before}</div>}
       <div
@@ -146,12 +177,6 @@ export const ActionSheetItem = ({
               name={name}
               value={value}
               onChange={onChange}
-              onClick={onItemClick({
-                action: noop,
-                immediateAction: noop,
-                autoClose: !autoCloseDisabled,
-                isCancelItem: Boolean(isCancelItem),
-              })}
               defaultChecked={defaultChecked}
               checked={checked}
               disabled={restProps.disabled}

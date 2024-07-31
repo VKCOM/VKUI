@@ -1,4 +1,4 @@
-import kebabCase from 'lodash/kebabCase';
+import { kebabCase } from 'lodash-es';
 import { onlyText } from 'react-children-utilities';
 
 export const getDeprecatedFromComponentTags = (component) => {

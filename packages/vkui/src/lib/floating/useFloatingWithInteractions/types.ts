@@ -80,6 +80,10 @@ export interface UseFloatingWithInteractionsProps {
    * Вызывается при каждом изменении видимости всплывающего элемента.
    */
   onShownChange?: OnShownChange;
+  /**
+   * Вызывается при каждом изменении видимости всплывающего элемента, но после завершении анимации.
+   */
+  onShownChanged?: OnShownChange;
 }
 
 export type ReferenceProps<T = HTMLElement> = Omit<

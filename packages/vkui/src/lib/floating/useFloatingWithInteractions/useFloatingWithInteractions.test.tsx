@@ -87,17 +87,20 @@ describe(useFloatingWithInteractions, () => {
       'should shown by $openBy event and hidden by $closeBy event (trigger: $trigger)',
       async ({ trigger, openBy, closeBy }) => {
         const onShownChange = jest.fn();
+        const onShownChanged = jest.fn();
         const { result } = renderHook(() =>
           useFloatingWithInteractions<HTMLButtonElement>({
             defaultShown: false,
             trigger: trigger,
             onShownChange,
+            onShownChanged,
           }),
         );
         const { rerender } = render(<TestComponent hookResultRef={result} />);
         await waitFor(() => {
           expect(result.current.shown).toBeFalsy();
           expect(onShownChange).not.toHaveBeenCalled();
+          expect(onShownChanged).not.toHaveBeenCalled();
         });
 
         await fireEventPatch(result.current.refs.reference.current, openBy);
@@ -106,6 +109,8 @@ describe(useFloatingWithInteractions, () => {
           expect(result.current.shown).toBeTruthy();
           expect(onShownChange).toHaveBeenCalledTimes(1);
           expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
+          expect(onShownChanged).toHaveBeenCalledTimes(1);
+          expect(onShownChanged).toHaveBeenLastCalledWith(true, trigger);
         });
 
         let closeReason: ShownChangeReason = trigger;
