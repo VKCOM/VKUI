@@ -1,5 +1,5 @@
+import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { stopPropagation } from '../../lib/utils';
 import { ScrollProps } from './types';
 import { useDragAndDrop } from './useDragAndDrop';
@@ -31,12 +31,14 @@ export const ScrollY = ({
     onVerticalDragEnd,
   );
 
-  useIsomorphicLayoutEffect(() => {
-    barHandlers.current = {
+  React.useImperativeHandle(
+    barHandlers,
+    () => ({
       resize: verticalScrollResize,
       scroll: verticalScroll,
-    };
-  }, [verticalScrollResize, verticalScroll, barHandlers]);
+    }),
+    [verticalScrollResize, verticalScroll],
+  );
 
   return (
     <div className={styles['CustomScrollView__barY']} ref={barY} onClick={stopPropagation}>

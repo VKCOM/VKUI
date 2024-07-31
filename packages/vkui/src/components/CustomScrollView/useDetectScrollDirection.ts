@@ -1,44 +1,33 @@
-import { useCallback } from 'react';
 import * as React from 'react';
 import { TimeoutId } from '../../types';
+
+type ScrollDirection = 'vertical' | 'horizontal';
 
 /**
  * Хук определяет в каком измерении происходит скролл(в горизонтальном или вертикальном)
  */
-export const useDetectScrollDirection = (boxRef: React.RefObject<HTMLDivElement>) => {
+export const useDetectScrollDirection = () => {
   const lastScrollLeft = React.useRef(0);
   const lastScrollTop = React.useRef(0);
-  const [scrollDirection, setScrollDirection] = React.useState<'vertical' | 'horizontal' | null>(
-    null,
-  );
 
   const timeoutId = React.useRef<TimeoutId>(null);
+  const scrollDirectionRef = React.useRef<ScrollDirection | null>(null);
 
-  const updateDirection = (direction: 'vertical' | 'horizontal') => {
-    setScrollDirection(direction);
-    timeoutId.current = setTimeout(() => setScrollDirection(null), 200);
-  };
-
-  const onScroll = useCallback(() => {
-    if (!boxRef || !boxRef.current) {
-      return;
+  return React.useCallback((event: React.UIEvent<HTMLElement>) => {
+    if (timeoutId.current) {
+      clearTimeout(timeoutId.current);
     }
-    timeoutId.current && clearTimeout(timeoutId.current);
-
-    const scrollTop = boxRef.current.scrollTop;
-    const scrollLeft = boxRef.current.scrollLeft;
-
+    const { scrollTop, scrollLeft } = event.currentTarget;
     if (scrollTop !== lastScrollTop.current) {
-      updateDirection('vertical');
+      scrollDirectionRef.current = 'vertical';
+      lastScrollTop.current = scrollTop;
     } else if (scrollLeft !== lastScrollLeft.current) {
-      updateDirection('horizontal');
+      scrollDirectionRef.current = 'horizontal';
+      lastScrollLeft.current = scrollLeft;
     }
-    lastScrollLeft.current = scrollLeft;
-    lastScrollTop.current = scrollTop;
-  }, [boxRef]);
-
-  return {
-    scrollDirection,
-    onScroll,
-  };
+    if (scrollDirectionRef.current !== null) {
+      timeoutId.current = setTimeout(() => (scrollDirectionRef.current = null), 200);
+    }
+    return scrollDirectionRef.current;
+  }, []);
 };

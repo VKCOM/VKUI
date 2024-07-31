@@ -71,7 +71,7 @@ export const CustomScrollView = ({
   const boxRef = useExternRef(externalBoxRef);
   const boxContentRef = React.useRef<HTMLDivElement>(null);
 
-  const { scrollDirection, onScroll: detectScrollDirection } = useDetectScrollDirection(boxRef);
+  const detectScrollDirection = useDetectScrollDirection();
 
   const barYHandlers = React.useRef<BarHandlers | null>(null);
   const barXHandlers = React.useRef<BarHandlers | null>(null);
@@ -86,14 +86,14 @@ export const CustomScrollView = ({
   });
 
   const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
-    detectScrollDirection();
-    if (!scrollDirection) {
-      return;
-    }
-    if (scrollDirection === 'horizontal') {
-      barXHandlers.current?.scroll();
-    } else {
-      barYHandlers.current?.scroll();
+    const scrollDirection = detectScrollDirection(event);
+    switch (scrollDirection) {
+      case 'horizontal':
+        barXHandlers.current?.scroll();
+        break;
+      case 'vertical':
+        barYHandlers.current?.scroll();
+        break;
     }
     onScrollProp?.(event);
   };
