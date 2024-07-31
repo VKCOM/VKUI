@@ -54,8 +54,7 @@ describe('Checkbox', () => {
     );
 
     await React.act(async () => await userEvent.click(screen.getByText('Check')));
-    // eslint-disable-next-line
-    expect((screen.getByRole('checkbox') as HTMLInputElement).indeterminate).toBeFalsy();
+    expect((screen.getByRole<HTMLInputElement>('checkbox')).indeterminate).toBeFalsy();
   });
 
   it('check not reset indeterminate when click to checkbox', async () => {
