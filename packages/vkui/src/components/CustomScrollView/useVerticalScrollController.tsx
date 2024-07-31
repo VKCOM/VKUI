@@ -29,7 +29,7 @@ export const useVerticalScrollController = (
   const setVerticalTrackerPosition = (scrollTop: number) => {
     lastTrackerTop.current = scrollTop;
     if (trackerY.current !== null) {
-      (trackerY.current.style as any)['transform'] = `translate(0, ${scrollTop}px)`;
+      trackerY.current.style.transform = `translate(0, ${scrollTop}px)`;
     }
   };
 
