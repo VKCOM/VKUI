@@ -29,7 +29,7 @@ export const useHorizontalScrollController = (
   const setHorizontalTrackerPosition = (scrollLeft: number) => {
     lastTrackerLeft.current = scrollLeft;
     if (trackerX.current !== null) {
-      (trackerX.current.style as any)['transform'] = `translate(${scrollLeft}px, 0)`;
+      trackerX.current.style.transform = `translate(${scrollLeft}px, 0)`;
     }
   };
 
