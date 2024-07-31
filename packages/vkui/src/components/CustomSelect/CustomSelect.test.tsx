@@ -1312,7 +1312,7 @@ describe('CustomSelect', () => {
 
     await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
 
-    expect(setScrollTop).toBeCalledWith(40);
+    expect(setScrollTop).toHaveBeenCalledWith(40);
   });
 
   it('check scroll to up', async () => {
@@ -1345,7 +1345,7 @@ describe('CustomSelect', () => {
 
     await triggerKeydownEvent(inputRef.current!, 'ArrowUp', 'ArrowUp');
 
-    expect(setScrollTop).toBeCalledWith(0);
+    expect(setScrollTop).toHaveBeenCalledWith(0);
   });
 
   it('should not hover disabled option', async () => {
@@ -1410,7 +1410,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(errorStub).toBeCalledWith(
+    expect(errorStub).toHaveBeenCalledWith(
       '%c[VKUI/CustomSelect] Некоторые значения ваших опций имеют разные типы. onChange всегда возвращает строковый тип.',
       undefined,
     );

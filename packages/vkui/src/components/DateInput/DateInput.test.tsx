@@ -117,7 +117,7 @@ describe('DateInput', () => {
 
     const resultDate = new Date(date);
     resultDate.setDate(date.getDate() - 1);
-    expect(onChange).toBeCalledWith(resultDate);
+    expect(onChange).toHaveBeenCalledWith(resultDate);
 
     expect(container.contains(document.activeElement)).toBeFalsy();
   });
