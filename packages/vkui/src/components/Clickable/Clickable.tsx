@@ -5,8 +5,8 @@ import {
   useFocusVisibleClassName,
 } from '../../hooks/useFocusVisibleClassName';
 import { mergeCalls } from '../../lib/mergeCalls';
+import { clickByKeyboardHandler } from '../../lib/utils';
 import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
-import { useKeyboard } from './useKeyboard';
 import {
   ClickableLockStateContext,
   DEFAULT_ACTIVE_EFFECT_DELAY,
@@ -74,18 +74,21 @@ const RealClickable = <T,>({
     activated,
   });
 
-  const keyboardHandlers = useKeyboard();
-
-  const handlers = mergeCalls(focusEvents, stateEvents, keyboardHandlers, {
-    onPointerEnter,
-    onPointerLeave,
-    onPointerDown,
-    onPointerCancel,
-    onPointerUp,
-    onBlur,
-    onFocus,
-    onKeyDown,
-  });
+  const handlers = mergeCalls(
+    focusEvents,
+    stateEvents,
+    { onKeyDown: clickByKeyboardHandler },
+    {
+      onPointerEnter,
+      onPointerLeave,
+      onPointerDown,
+      onPointerCancel,
+      onPointerUp,
+      onBlur,
+      onFocus,
+      onKeyDown,
+    },
+  );
 
   return (
     <RootComponent

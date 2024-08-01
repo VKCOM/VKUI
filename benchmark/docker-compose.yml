@@ -5,8 +5,9 @@ services:
     user: root
     working_dir: /repo/benchmark
     command: sh -c "
+      corepack enable &&
       YARN_ENABLE_SCRIPTS=false yarn install --immutable &&
-      yarn run runtime:start:ci ${UPDATE_SNAPSHOTS_FLAG:-}
+      yarn run runtime:start:ci
       "
     volumes:
       - ../:/repo
