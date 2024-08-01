@@ -291,14 +291,6 @@ export const ChipsSelect = <Option extends ChipOption>({
   };
 
   const focusOptionByIndex = (index: number, oldIndex: number | null) => {
-    const length = options.length;
-
-    if (index < 0) {
-      index = length - 1;
-    } else if (index >= length) {
-      index = 0;
-    }
-
     if (index === oldIndex) {
       /* istanbul ignore next: нет представления как воспроизвести */
       return;

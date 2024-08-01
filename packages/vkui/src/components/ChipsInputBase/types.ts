@@ -9,7 +9,7 @@ import type {
 import { FormFieldProps } from '../FormField/FormField';
 import { FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
 
-export type NavigateTo = 'first' | 'prev' | 'next' | 'last';
+export type NavigateTo = 'prev' | 'next' | 'last';
 
 export type ChipOptionValue = string | number;
 

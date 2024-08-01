@@ -109,8 +109,6 @@ const filter = <T extends CustomSelectOptionInterface>(
     : options;
 };
 
-const defaultOptions: CustomSelectOptionInterface[] = [];
-
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
 
 export interface CustomSelectOptionInterface {
@@ -252,7 +250,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     autoHideScrollbarDelay,
     searchable = false,
     renderOption: renderOptionProp = defaultRenderOptionFn,
-    options: optionsProp = defaultOptions as OptionInterfaceT[],
+    options: optionsProp,
     emptyText = 'Ничего не найдено',
     filterFn = defaultFilterFn,
     icon: iconProp,
@@ -702,7 +700,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const resolvedContent = React.useMemo(() => {
     const defaultDropdownContent =
-      options?.length > 0 ? (
+      options.length > 0 ? (
         <div ref={optionsWrapperRef}>{options.map(renderOption)}</div>
       ) : (
         <Footnote className={styles['CustomSelect__empty']}>{emptyText}</Footnote>
