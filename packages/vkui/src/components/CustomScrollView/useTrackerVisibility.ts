@@ -23,6 +23,10 @@ export const useTrackerVisibility = (
   const isMouseOver = React.useRef(false);
   const isTrackerDragging = React.useRef(false);
 
+  React.useEffect(() => {
+    setVisibility(autoHideScrollbar ? 'hidden' : 'visible');
+  }, [autoHideScrollbar]);
+
   const onTrackerDragStart = React.useCallback(() => {
     isTrackerDragging.current = true;
     setVisibility('visible');
