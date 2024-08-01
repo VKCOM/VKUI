@@ -1,9 +1,12 @@
+import { Icon20CopyOutline, Icon20TrashSimpleOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
 import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
 import { Div } from '../Div/Div';
+import { Flex } from '../Flex/Flex';
+import { IconButton } from '../IconButton/IconButton';
 import { Textarea, type TextareaProps } from './Textarea';
 
 export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
@@ -42,6 +45,22 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
         {
           mode: ['plain'],
           placeholder: ['placeholder'],
+        },
+        {
+          after: [
+            <Flex key="flex" direction="column">
+              <IconButton label="Скопировать">
+                <Icon20CopyOutline />
+              </IconButton>
+              <IconButton label="Очистить">
+                <Icon20TrashSimpleOutline />
+              </IconButton>
+            </Flex>,
+          ],
+          defaultValue: [
+            'Музыка\nСпорт\nФотография\nПлавание\nПрограммирование\nПутешествия\nКниги\nСериалы\nФильмы\nНастольные игры',
+          ],
+          afterAlign: ['start', 'end'],
         },
       ]}
     >
