@@ -522,7 +522,7 @@ export const ChipsSelect = <Option extends ChipOption>({
               );
             }
             return (
-              <React.Fragment key={`${typeof option.value}-${option.label}`}>
+              <React.Fragment key={`${typeof option.value}-${option.value}`}>
                 {renderOption(
                   {
                     id: dropdownItemId,
