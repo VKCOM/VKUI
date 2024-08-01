@@ -1,6 +1,25 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, renderHook } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { Gallery } from './Gallery';
+import { useAutoPlay } from './hooks';
+
+const mockTimer = () => {
+  const timeoutStub = jest
+    .spyOn(window, 'setTimeout')
+    // @ts-expect-error: TS2345 Ругается на тип возвращаемого значения
+    .mockImplementation((fn) => {
+      fn();
+      return 1;
+    });
+
+  const clearTimeoutStub = jest.spyOn(window, 'clearTimeout').mockImplementation(noop);
+
+  return {
+    timeoutStub,
+    clearTimeoutStub,
+  };
+};
 
 describe('Gallery', () => {
   baselineComponent(Gallery);
@@ -43,5 +62,81 @@ describe('Gallery', () => {
       render(<Gallery onChange={setIndex} slideIndex={10} />);
       expect(setIndex).not.toHaveBeenCalled();
     });
+
+    it('check auto play in controlled component', () => {
+      jest.useFakeTimers();
+      const { timeoutStub, clearTimeoutStub } = mockTimer();
+      let index;
+      const setIndex = (v: number) => (index = v);
+      render(
+        <Gallery onChange={setIndex} slideIndex={0} timeout={100}>
+          <div />
+          <div />
+        </Gallery>,
+      );
+
+      expect(index).toBe(1);
+      expect(timeoutStub).toHaveBeenCalledTimes(1);
+      expect(clearTimeoutStub).toHaveBeenCalledTimes(0);
+    });
+
+    it('check auto play in uncontrolled component', () => {
+      jest.useFakeTimers();
+      const { timeoutStub, clearTimeoutStub } = mockTimer();
+      let index;
+      const setIndex = (v: number) => (index = v);
+      render(
+        <Gallery onChange={setIndex} timeout={100}>
+          <div />
+          <div />
+        </Gallery>,
+      );
+
+      expect(index).toBe(1);
+      expect(timeoutStub).toHaveBeenCalledTimes(1);
+      expect(clearTimeoutStub).toHaveBeenCalledTimes(0);
+    });
+  });
+});
+
+describe(useAutoPlay, () => {
+  it('should call callback when fire event visibilitychange', () => {
+    jest.useFakeTimers();
+    const callback = jest.fn();
+
+    const { timeoutStub, clearTimeoutStub } = mockTimer();
+
+    let visibilityState: Document['visibilityState'] = 'visible';
+
+    jest.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
+
+    renderHook(() => useAutoPlay(100, 0, callback));
+    expect(timeoutStub.mock.calls[0][1]).toBe(100);
+
+    fireEvent(document, new Event('visibilitychange'));
+
+    expect(timeoutStub).toHaveBeenCalledTimes(2);
+    expect(clearTimeoutStub).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(2);
+
+    visibilityState = 'hidden';
+
+    fireEvent(document, new Event('visibilitychange'));
+    expect(timeoutStub).toHaveBeenCalledTimes(2);
+    expect(clearTimeoutStub).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenCalledTimes(2);
+  });
+
+  it('should not call callback when timeout = 0', () => {
+    jest.useFakeTimers();
+    const callback = jest.fn();
+
+    const { timeoutStub, clearTimeoutStub } = mockTimer();
+
+    renderHook(() => useAutoPlay(0, 0, callback));
+
+    expect(timeoutStub).toHaveBeenCalledTimes(0);
+    expect(clearTimeoutStub).toHaveBeenCalledTimes(0);
+    expect(callback).toHaveBeenCalledTimes(0);
   });
 });

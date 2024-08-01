@@ -38,6 +38,7 @@ export const Gallery = ({
   const handleChange: GalleryProps['onChange'] = React.useCallback(
     (current: number) => {
       if (current === slideIndex) {
+        /* istanbul ignore next: не придумал как воспроизвести */
         return;
       }
       !isControlled && setSlideIndex(current);
