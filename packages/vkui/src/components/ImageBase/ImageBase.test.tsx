@@ -205,7 +205,7 @@ describe(ImageBase, () => {
     expect(getImageBaseRootEl()).toHaveClass(styles['ImageBase--transparent-background']);
   });
 
-  it('check set widthSize and heightSize is string format12 ', () => {
+  it('check dev error when use incorrect size of icon', () => {
     process.env.NODE_ENV = 'development';
     const logStub = jest.spyOn(console, 'log').mockImplementation(noop);
     render(<ImageBaseTest fallbackIcon={<Icon20Add />} size={28} />);
