@@ -3,96 +3,123 @@ import { renderHook } from '@testing-library/react';
 import { useCSSKeyframesAnimationController } from './useCSSKeyframesAnimationController';
 
 describe(useCSSKeyframesAnimationController, () => {
-  describe.each([false, true])('`disableInitAnimation` prop is `%s`', (disableInitAnimation) => {
-    const callbacks = {
-      onEnter: jest.fn(),
-      onEntering: jest.fn(),
-      onEntered: jest.fn(),
-      onExit: jest.fn(),
-      onExiting: jest.fn(),
-      onExited: jest.fn(),
-    };
+  const callbacks = {
+    onEnter: jest.fn(),
+    onEntering: jest.fn(),
+    onEntered: jest.fn(),
+    onExit: jest.fn(),
+    onExiting: jest.fn(),
+    onExited: jest.fn(),
+  };
 
-    beforeEach(() => {
-      for (const key in callbacks) {
-        if (callbacks.hasOwnProperty(key)) {
-          callbacks[key].mockClear();
-        }
+  beforeEach(() => {
+    for (const key in callbacks) {
+      if (callbacks.hasOwnProperty(key)) {
+        callbacks[key].mockClear();
       }
-    });
+    }
+  });
 
-    it('should enter', () => {
-      const { result } = renderHook(() =>
-        useCSSKeyframesAnimationController('enter', callbacks, disableInitAnimation),
+  describe.each([
+    { callbacks, disableInitAnimation: false },
+    { callbacks, disableInitAnimation: true },
+    { callbacks: undefined, disableInitAnimation: false },
+    { callbacks: undefined, disableInitAnimation: true },
+  ])('`disableInitAnimation` prop is `%s`', ({ callbacks, disableInitAnimation }) => {
+    it('should enter and exit', () => {
+      const { result, rerender } = renderHook((state: 'enter' | 'exit' = 'enter') =>
+        useCSSKeyframesAnimationController(state, callbacks, disableInitAnimation),
       );
 
-      !disableInitAnimation && expect(result.current[0]).toBe('enter');
+      if (disableInitAnimation) {
+        expect(result.current[0]).not.toBe('enter');
+        callbacks && expect(callbacks.onEnter).toHaveBeenCalledTimes(0);
+      } else {
+        expect(result.current[0]).toBe('enter');
+        callbacks && expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
+      }
 
-      act(result.current[1].onAnimationStart);
-      if (!disableInitAnimation) {
+      act(() => result.current[1].onAnimationStart());
+
+      if (disableInitAnimation) {
+        expect(result.current[0]).not.toBe('entering');
+        callbacks && expect(callbacks.onEntering).toHaveBeenCalledTimes(0);
+      } else {
         expect(result.current[0]).toBe('entering');
-        expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+        callbacks && expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
       }
 
-      act(result.current[1].onAnimationEnd);
+      act(() => result.current[1].onAnimationEnd());
+
       expect(result.current[0]).toBe('entered');
-      expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-    });
-
-    it('should exit', () => {
-      const { result } = renderHook(() =>
-        useCSSKeyframesAnimationController('exit', callbacks, disableInitAnimation),
-      );
-
-      !disableInitAnimation && expect(result.current[0]).toBe('exit');
-
-      act(result.current[1].onAnimationStart);
-      if (!disableInitAnimation) {
-        expect(result.current[0]).toBe('exiting');
-        expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
+      if (disableInitAnimation) {
+        callbacks && expect(callbacks.onEntered).toHaveBeenCalledTimes(0);
+      } else {
+        callbacks && expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
       }
-
-      act(result.current[1].onAnimationEnd);
-      expect(result.current[0]).toBe('exited');
-      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-    });
-
-    it.each([true, false])('should exit after enter (withCallbacks: %s)', (withCallbacks) => {
-      const { rerender, result } = renderHook((state: 'enter' | 'exit' = 'enter') =>
-        useCSSKeyframesAnimationController(state, withCallbacks ? callbacks : undefined),
-      );
-
-      act(result.current[1].onAnimationStart);
-      act(result.current[1].onAnimationEnd);
-
-      expect(result.current[0]).toBe('entered');
 
       rerender('exit');
-      expect(callbacks.onExit).toHaveBeenCalledTimes(withCallbacks ? 1 : 0);
 
-      act(result.current[1].onAnimationStart);
-      act(result.current[1].onAnimationEnd);
+      expect(result.current[0]).toBe('exit');
+      callbacks && expect(callbacks.onExit).toHaveBeenCalledTimes(1);
+
+      act(() => result.current[1].onAnimationStart());
+
+      expect(result.current[0]).toBe('exiting');
+      callbacks && expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
+
+      act(() => result.current[1].onAnimationEnd());
 
       expect(result.current[0]).toBe('exited');
+      callbacks && expect(callbacks.onExited).toHaveBeenCalledTimes(1);
     });
 
-    it.each([true, false])('should enter after exit (withCallbacks: %s)', (withCallbacks) => {
-      const { rerender, result } = renderHook((state: 'enter' | 'exit' = 'exit') =>
-        useCSSKeyframesAnimationController(state, withCallbacks ? callbacks : undefined),
+    it('should exit and enter', () => {
+      const { result, rerender } = renderHook((state: 'enter' | 'exit' = 'exit') =>
+        useCSSKeyframesAnimationController(state, callbacks, disableInitAnimation),
       );
 
-      act(result.current[1].onAnimationStart);
-      act(result.current[1].onAnimationEnd);
+      if (disableInitAnimation) {
+        expect(result.current[0]).not.toBe('exit');
+        callbacks && expect(callbacks.onExit).toHaveBeenCalledTimes(0);
+      } else {
+        expect(result.current[0]).toBe('exit');
+        callbacks && expect(callbacks.onExit).toHaveBeenCalledTimes(1);
+      }
+
+      act(() => result.current[1].onAnimationStart());
+
+      if (disableInitAnimation) {
+        expect(result.current[0]).not.toBe('exiting');
+        callbacks && expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
+      } else {
+        expect(result.current[0]).toBe('exiting');
+        callbacks && expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
+      }
+
+      act(() => result.current[1].onAnimationEnd());
 
       expect(result.current[0]).toBe('exited');
+      if (disableInitAnimation) {
+        callbacks && expect(callbacks.onExited).toHaveBeenCalledTimes(0);
+      } else {
+        callbacks && expect(callbacks.onExited).toHaveBeenCalledTimes(1);
+      }
 
       rerender('enter');
-      expect(callbacks.onEnter).toHaveBeenCalledTimes(withCallbacks ? 1 : 0);
 
-      act(result.current[1].onAnimationStart);
-      act(result.current[1].onAnimationEnd);
+      expect(result.current[0]).toBe('enter');
+      callbacks && expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
+
+      act(() => result.current[1].onAnimationStart());
+
+      expect(result.current[0]).toBe('entering');
+      callbacks && expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+
+      act(() => result.current[1].onAnimationEnd());
 
       expect(result.current[0]).toBe('entered');
+      callbacks && expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
     });
   });
 });

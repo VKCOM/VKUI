@@ -59,3 +59,18 @@ const setCancelableScreenSpinner = () => {
   </SplitCol>
 </SplitLayout>;
 ```
+
+## Подкомпоненты
+
+```jsx { "props": { "layout": false, "iframe": false } }
+<Flex margin="auto" gap="m">
+  <ScreenSpinner.Container>
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  <ScreenSpinner.Container state="cancelable">
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+</Flex>
+```
