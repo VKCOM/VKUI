@@ -42,6 +42,7 @@ export const useHorizontalScrollController = (
 
   const resize = () => {
     if (!boxRef.current || !barX.current || !trackerX.current) {
+      /* istanbul ignore next: невозможный кейс */
       return;
     }
     const localClientWidth = boxRef.current.clientWidth;
@@ -87,13 +88,12 @@ export const useHorizontalScrollController = (
   };
 
   const scroll = () => {
-    if (!boxRef.current) {
-      return;
+    if (boxRef.current) {
+      if (autoHideScrollbar) {
+        onTargetScroll();
+      }
+      setTrackerPositionFromScroll(boxRef.current.scrollLeft);
     }
-    if (autoHideScrollbar) {
-      onTargetScroll();
-    }
-    setTrackerPositionFromScroll(boxRef.current.scrollLeft);
   };
 
   const dragStart = (e: React.MouseEvent) => {

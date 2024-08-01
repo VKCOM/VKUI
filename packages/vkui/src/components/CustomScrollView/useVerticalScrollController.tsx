@@ -42,6 +42,7 @@ export const useVerticalScrollController = (
 
   const resize = () => {
     if (!boxRef.current || !barY.current || !trackerY.current) {
+      /* istanbul ignore next: невозможный кейс */
       return;
     }
     const localClientHeight = boxRef.current.clientHeight;
@@ -89,14 +90,12 @@ export const useVerticalScrollController = (
   };
 
   const scroll = () => {
-    if (!boxRef.current) {
-      return;
+    if (boxRef.current) {
+      if (autoHideScrollbar) {
+        onTargetScroll();
+      }
+      setTrackerPositionFromScroll(boxRef.current.scrollTop);
     }
-    if (autoHideScrollbar) {
-      onTargetScroll();
-    }
-
-    setTrackerPositionFromScroll(boxRef.current.scrollTop);
   };
 
   const dragStart = (e: React.MouseEvent) => {

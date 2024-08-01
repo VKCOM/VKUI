@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import {Icon12Add, Icon16Clear, Icon20Add, Icon96GoodsCollection} from '@vkontakte/icons';
+import { Icon12Add, Icon16Clear, Icon20Add, Icon96GoodsCollection } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
@@ -38,14 +38,14 @@ const getImageBaseImgEl = (elParent = getImageBaseRootEl()) => within(elParent).
 
 let logStub: jest.SpyInstance | null = null;
 beforeEach(() => {
-  process.env.NODE_ENV = 'development'
-  logStub = jest.spyOn(console, 'log').mockImplementation(noop)
-})
+  process.env.NODE_ENV = 'development';
+  logStub = jest.spyOn(console, 'log').mockImplementation(noop);
+});
 
 afterEach(() => {
-  process.env.NODE_ENV = 'test'
-  logStub?.mockRestore()
-})
+  process.env.NODE_ENV = 'test';
+  logStub?.mockRestore();
+});
 
 describe(ImageBase, () => {
   baselineComponent(ImageBase);

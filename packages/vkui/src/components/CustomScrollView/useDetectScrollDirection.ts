@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { TimeoutId } from '../../types';
 
 type ScrollDirection = 'vertical' | 'horizontal';
 
@@ -10,24 +9,16 @@ export const useDetectScrollDirection = () => {
   const lastScrollLeft = React.useRef(0);
   const lastScrollTop = React.useRef(0);
 
-  const timeoutId = React.useRef<TimeoutId>(null);
-  const scrollDirectionRef = React.useRef<ScrollDirection | null>(null);
-
   return React.useCallback((event: React.UIEvent<HTMLElement>) => {
-    if (timeoutId.current) {
-      clearTimeout(timeoutId.current);
-    }
     const { scrollTop, scrollLeft } = event.currentTarget;
+    let scrollDirection: ScrollDirection | null = null;
     if (scrollTop !== lastScrollTop.current) {
-      scrollDirectionRef.current = 'vertical';
+      scrollDirection = 'vertical';
       lastScrollTop.current = scrollTop;
     } else if (scrollLeft !== lastScrollLeft.current) {
-      scrollDirectionRef.current = 'horizontal';
+      scrollDirection = 'horizontal';
       lastScrollLeft.current = scrollLeft;
     }
-    if (scrollDirectionRef.current !== null) {
-      timeoutId.current = setTimeout(() => (scrollDirectionRef.current = null), 200);
-    }
-    return scrollDirectionRef.current;
+    return scrollDirection;
   }, []);
 };

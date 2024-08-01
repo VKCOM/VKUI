@@ -11,20 +11,18 @@ export const useDragAndDrop = (
   const [isPressed, setIsPressed] = React.useState(false);
 
   const onDragEndImpl = (e: React.MouseEvent) => {
-    if (!isPressed) {
-      return;
+    if (isPressed) {
+      e.preventDefault();
+      onDragEnd(e);
+      unsubscribe();
     }
-    e.preventDefault();
-    onDragEnd(e);
-    unsubscribe();
   };
 
   const onDragMoveImpl = (e: React.MouseEvent) => {
-    if (!isPressed) {
-      return;
+    if (isPressed) {
+      e.preventDefault();
+      onDragMove(e);
     }
-    e.preventDefault();
-    onDragMove(e);
   };
 
   const listeners = [
