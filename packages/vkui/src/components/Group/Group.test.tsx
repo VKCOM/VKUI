@@ -100,7 +100,7 @@ describe('Group', () => {
         <div />
       </Group>,
     );
-    expect(container.getElementsByClassName(styles['Group__separator'])[0]).toHaveClass(
+    expect(container.getElementsByClassName(styles['Group__separator--separator'])[0]).toHaveClass(
       styles['Group__separator--force'],
     );
   });

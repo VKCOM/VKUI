@@ -96,7 +96,7 @@ export function validateFallbackIcon(imageSize: number, iconProp: IconProp): voi
 
 const mapOfExpectedSize = new Set<number>(imageBaseSizes);
 
-const arrayOfSizes = Object.keys(mapOfExpectedSize).map((str) => Number(str));
+const arrayOfSizes = Array.from(mapOfExpectedSize);
 const maxSize = arrayOfSizes.reduce((maxSize, size) => (size > maxSize ? size : maxSize), 0);
 
 export function validateSize(imageSize: number): void {
