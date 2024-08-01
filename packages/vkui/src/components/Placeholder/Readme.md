@@ -86,7 +86,7 @@ const onNavClick = (e) => {
 </View>;
 ```
 
-## Покомпоненты
+## Подкомпоненты
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 <Placeholder.Container>

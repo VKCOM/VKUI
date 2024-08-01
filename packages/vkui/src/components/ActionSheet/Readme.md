@@ -32,8 +32,6 @@ const onClose = () => {
   setOpenedPopoutName(null);
 };
 
-const [filter, setFilter] = useState('best');
-const onChange = (e) => setFilter(e.target.value);
 const baseTargetRef = React.useRef(null);
 const iconsTargetRef = React.useRef(null);
 const subtitleTargetRef = React.useRef(null);
@@ -140,9 +138,13 @@ const openSubtitle = () =>
     </ActionSheet>,
   );
 
-const openSelectable = () =>
-  openActionSheet(
-    'selectable',
+const SelectableActionSheet = () => {
+  const [filter, setFilter] = useState('best');
+  const onChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  return (
     <ActionSheet onClose={onClose} toggleRef={selectableTargetRef}>
       <ActionSheetItem
         onChange={onChange}
@@ -189,8 +191,11 @@ const openSelectable = () =>
       >
         Друзья по вузу
       </ActionSheetItem>
-    </ActionSheet>,
+    </ActionSheet>
   );
+};
+
+const openSelectable = () => openActionSheet('selectable', <SelectableActionSheet />);
 
 const openTitle = () =>
   openActionSheet(
