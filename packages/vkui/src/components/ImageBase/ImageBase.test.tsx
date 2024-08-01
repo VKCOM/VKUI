@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import { Icon12Add, Icon16Clear, Icon20Add, Icon96GoodsCollection } from '@vkontakte/icons';
+import {Icon12Add, Icon16Clear, Icon20Add, Icon96GoodsCollection} from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
@@ -35,6 +35,17 @@ const ImageBaseTest = (props: ImageBaseProps) => (
 const getImageBaseRootEl = () => screen.getByTestId(TEST_LOCATORS.ROOT);
 
 const getImageBaseImgEl = (elParent = getImageBaseRootEl()) => within(elParent).getByRole('img');
+
+let logStub: jest.SpyInstance | null = null;
+beforeEach(() => {
+  process.env.NODE_ENV = 'development'
+  logStub = jest.spyOn(console, 'log').mockImplementation(noop)
+})
+
+afterEach(() => {
+  process.env.NODE_ENV = 'test'
+  logStub?.mockRestore()
+})
 
 describe(ImageBase, () => {
   baselineComponent(ImageBase);
@@ -206,12 +217,8 @@ describe(ImageBase, () => {
   });
 
   it('check dev error when use incorrect size of icon', () => {
-    process.env.NODE_ENV = 'development';
-    const logStub = jest.spyOn(console, 'log').mockImplementation(noop);
     render(<ImageBaseTest fallbackIcon={<Icon20Add />} size={28} />);
     expect(logStub).toHaveBeenCalledTimes(1);
-    jest.resetAllMocks();
-    process.env.NODE_ENV = 'test';
   });
 });
 
@@ -287,10 +294,8 @@ describe(validateFallbackIcon, () => {
   ])(
     'should error $expectError with imageSize $imageSize and $icon',
     ({ imageSize, icon, expectError }) => {
-      const logStub = jest.spyOn(console, 'log').mockImplementation(noop);
       validateFallbackIcon(imageSize, { name: 'fallbackIcon', value: icon });
       expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
-      jest.resetAllMocks();
     },
   );
 });
@@ -303,10 +308,8 @@ describe(validateSize, () => {
     [Math.min(...imageBaseSizes) - 1, true],
     [21, true],
   ])('should log error with size %s', (size, expectError) => {
-    const logStub = jest.spyOn(console, 'log').mockImplementation(noop);
     validateSize(size);
     expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
-    jest.resetAllMocks();
   });
 });
 
@@ -330,10 +333,8 @@ describe(validateBadgeIcon, () => {
   ])(
     `should expect error $expectError with imageSize $imageSize`,
     ({ imageSize, icon, expectError }) => {
-      const logStub = jest.spyOn(console, 'log').mockImplementation(noop);
       validateBadgeIcon(imageSize, { name: 'badgeIcon', value: icon });
       expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
-      jest.resetAllMocks();
     },
   );
 });
@@ -353,10 +354,8 @@ describe(validateOverlayIcon, () => {
   ])(
     `should expect error $expectError with imageSize $imageSize`,
     ({ imageSize, icon, expectError }) => {
-      const logStub = jest.spyOn(console, 'log').mockImplementation(noop);
       validateOverlayIcon(imageSize, { name: 'badgeIcon', value: icon });
       expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
-      jest.resetAllMocks();
     },
   );
 });
