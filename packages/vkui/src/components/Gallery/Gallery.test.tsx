@@ -5,13 +5,10 @@ import { Gallery } from './Gallery';
 import { useAutoPlay } from './hooks';
 
 const mockTimer = () => {
-  const timeoutStub = jest
-    .spyOn(window, 'setTimeout')
-    // @ts-expect-error: TS2345 Ругается на тип возвращаемого значения
-    .mockImplementation((fn) => {
-      fn();
-      return 1;
-    });
+  const timeoutStub = jest.spyOn(window, 'setTimeout').mockImplementation((fn) => {
+    fn();
+    return 1 as unknown as NodeJS.Timeout;
+  });
 
   const clearTimeoutStub = jest.spyOn(window, 'clearTimeout').mockImplementation(noop);
 
