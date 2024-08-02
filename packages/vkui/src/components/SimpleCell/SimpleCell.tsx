@@ -95,7 +95,7 @@ export const SimpleCell = ({
   subtitle,
   extraSubtitle,
   className,
-  chevronSize = 'm',
+  chevronSize,
   ...restProps
 }: SimpleCellProps): React.ReactNode => {
   const platform = usePlatform();

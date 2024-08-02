@@ -1,7 +1,10 @@
 import { render, screen } from '@testing-library/react';
+import { Platform } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { SimpleCell } from './SimpleCell';
+import styles from './SimpleCell.module.css';
 
 describe('SimpleCell', () => {
   baselineComponent((props) => <SimpleCell {...props}>SimpleCell</SimpleCell>);
@@ -20,5 +23,16 @@ describe('SimpleCell', () => {
       </AdaptivityProvider>,
     );
     expect(screen.getByText('English').tagName.toLowerCase()).toMatch('span');
+  });
+
+  it('check chevron showed', () => {
+    const { container } = render(
+      <ConfigProvider platform={Platform.IOS}>
+        <SimpleCell expandable="auto">Язык</SimpleCell>
+      </ConfigProvider>,
+    );
+    expect(
+      container.getElementsByClassName(styles['SimpleCell__chevronIcon'])[0],
+    ).toBeInTheDocument();
   });
 });
