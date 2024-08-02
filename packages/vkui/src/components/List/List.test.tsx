@@ -233,10 +233,10 @@ describe('List', () => {
     const list = screen.getByTestId('list');
 
     isScrollRunning = true;
-    dragCell('cell-0', [5, 124], () => {
+    dragCell('cell-0', [5, 140], noop, () => {
       fireEvent.scroll(list);
     });
 
-    expect(swappedItems).toEqual({ from: 0, to: 1 });
+    expect(swappedItems).toEqual({ from: 0, to: 2 });
   });
 });
