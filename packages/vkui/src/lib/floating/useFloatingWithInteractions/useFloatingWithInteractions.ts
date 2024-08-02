@@ -51,7 +51,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   onShownChange: onShownChangeProp,
   onShownChanged: onShownChangedProp,
 }: UseFloatingWithInteractionsProps): UseFloatingWithInteractionsReturn<T> => {
-  const memoizedValue = React.useMemo(
+  const memoizedValue = React.useMemo<LocalState | undefined>(
     () => (shownProp !== undefined ? { shown: shownProp } : undefined),
     [shownProp],
   );
@@ -93,7 +93,11 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const commitShownLocalState = React.useCallback(
     (nextShown: boolean, reason: ShownChangeReason) => {
       setShownLocalState((prevState) => {
-        if (prevState.shown !== nextShown || prevState.reason !== reason) {
+        if (
+          prevState === undefined ||
+          prevState.shown !== nextShown ||
+          prevState.reason !== reason
+        ) {
           return {
             shown: nextShown,
             reason,

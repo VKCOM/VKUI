@@ -38,22 +38,31 @@ export interface UseCustomEnsuredControlProps<V> {
   onChange?: (this: void, v: V) => any;
 }
 
+/*
+ * prevState может быть undefined, если
+ * некотролируемое value вдруг стало контролируемым
+ * (value = undefined ---> value = true)
+ * Если в этот момент был вызван onChange и preservedControlledValueRef ещё не был
+ * обновлён, то мы не можем доверять предыдующему значению (prevValue)
+ * */
+type SetStateAction<V> = V | ((prevState: V | undefined) => V);
+
 export function useCustomEnsuredControl<V = any>({
   value,
   defaultValue,
   disabled,
   onChange: onChangeProp,
-}: UseCustomEnsuredControlProps<V>): [V, React.Dispatch<React.SetStateAction<V>>] {
+}: UseCustomEnsuredControlProps<V>): [V, React.Dispatch<SetStateAction<V>>] {
   const isControlled = value !== undefined;
   const [localValue, setLocalValue] = React.useState(defaultValue);
-  const preservedControlledValueRef = React.useRef(value);
+  const preservedControlledValueRef = React.useRef<V | undefined>();
 
   useIsomorphicLayoutEffect(() => {
     preservedControlledValueRef.current = value;
   });
 
   const onChange = React.useCallback(
-    (nextValue: V | ((prevValue: any) => V)) => {
+    (nextValue: SetStateAction<V>) => {
       if (disabled) {
         return;
       }
