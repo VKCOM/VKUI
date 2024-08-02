@@ -1,149 +1,50 @@
+/* stylelint-disable selector-max-universal */
+
+/**
+ * - sizeX="compact" -> mode="plain"
+ * - sizeX="regular" -> mode="card"
+ */
 .Group {
+  --vkui_internal--Group_padding: 0;
+
   color: var(--vkui--color_text_primary);
   padding-block: 8px;
 }
 
-.Group__header:empty {
-  display: none;
+.Group--padding-s {
+  --vkui_internal--Group_padding: 4px;
 }
 
-.Group--mode-plain:not(:first-of-type) > .Group__header {
-  margin-block-start: -8px;
+.Group--padding-m {
+  --vkui_internal--Group_padding: 8px;
 }
 
-@media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none:not(:first-of-type) > .Group__header {
-    margin-block-start: -8px;
-  }
-}
-
-.Group--mode-card > .Group__header {
-  margin-block-start: -4px;
-}
-
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none > .Group__header {
-    margin-block-start: -4px;
-  }
-}
-
-.Group__separator--spacing,
-.Group__separator--separator {
-  display: none;
-}
-
-.Group__separator--spacing {
+.Group--mode-card,
+.Group--sizeX-regular.Group--mode-none {
+  padding: var(--vkui_internal--Group_padding);
   position: relative;
-  box-sizing: border-box;
-}
-
-/* stylelint-disable-next-line selector-max-universal */
-.Group--mode-plain + * + .Group__separator--separator {
-  display: block;
-}
-
-@media (--sizeX-compact) {
-  /* stylelint-disable-next-line selector-max-universal */
-  .Group--sizeX-none.Group--mode-none + * + .Group__separator--separator {
-    display: block;
-  }
-}
-
-.Group--mode-card + .Group__separator--spacing {
-  display: block;
-  block-size: 16px;
-  padding-block: 8px;
-  padding-inline: 0;
-}
-
-.Group--sizeX-compact.Group--mode-card + .Group__separator--spacing {
-  display: block;
-  block-size: 8px;
-  padding-block: 4px;
-}
-
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none + .Group__separator--spacing {
-    display: block;
-    block-size: 16px;
-    padding-block: 8px;
-    padding-inline: 0;
-  }
-}
-@media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-card + .Group__separator--spacing {
-    block-size: 8px;
-    padding-block: 4px;
-  }
-}
-
-.Group:last-of-type ~ .Group__separator {
-  display: none;
-}
-
-.Group:last-of-type ~ .Group__separator--force,
-.Group--mode-card:last-of-type + .Group__separator--spacing {
-  display: block;
-}
-
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none:last-of-type + .Group__separator--spacing {
-    display: block;
-  }
-}
-
-.Group--mode-card.Group--padding-s {
-  padding: 4px;
-}
-
-.Group--mode-card.Group--padding-m {
-  padding: 8px;
-}
-
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--inside-modal.Group--padding-s,
-  .Group--sizeX-none.Group--mode-none.Group--padding-s {
-    padding: 4px;
-  }
-
-  .Group--sizeX-none.Group--inside-modal.Group--padding-m,
-  .Group--sizeX-none.Group--mode-none.Group--padding-m {
-    padding: 8px;
-  }
-}
-
-.Group--sizeX-compact,
-.Group--sizeX-compact.Group--mode-card {
-  padding-inline: 0;
-}
-
-@media (--sizeX-compact) {
-  .Group--sizeX-none,
-  .Group--sizeX-none.Group--mode-card {
-    padding-inline: 0;
-  }
-}
-
-.Group--mode-card {
   background: var(--vkui--color_background_content);
   border-radius: var(--vkui--size_border_radius_paper--regular);
-  position: relative;
+}
+
+@media (--sizeX-regular) {
+  .Group--sizeX-none.Group--mode-none {
+    padding: var(--vkui_internal--Group_padding);
+    position: relative;
+    background: var(--vkui--color_background_content);
+    border-radius: var(--vkui--size_border_radius_paper--regular);
+  }
 }
 
 .Group--sizeX-compact.Group--mode-card {
+  padding-inline: 0;
   border-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none.Group--mode-card {
+    padding-inline: 0;
     border-radius: var(--vkui--size_border_radius_promo--regular);
-  }
-}
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none {
-    background: var(--vkui--color_background_content);
-    border-radius: var(--vkui--size_border_radius_paper--regular);
-    position: relative;
   }
 }
 
@@ -170,7 +71,8 @@
  * например поверх Tooltip
  * См. пример: Slider c пропом withTooltip
  */
-.Group--mode-card::before {
+.Group--mode-card::before,
+.Group--sizeX-regular.Group--mode-none::before {
   content: '';
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -206,23 +108,6 @@
   }
 }
 
-.Group--mode-plain + .Group__separator + .Group__separator {
-  padding-block: 8px;
-}
-
-@media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none + .Group__separator + .Group__separator {
-    padding-block: 8px;
-  }
-}
-
-.Group__description {
-  display: block;
-  padding-block: 4px 16px;
-  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
-  color: var(--vkui--color_text_secondary);
-}
-
 .Group .Group {
   padding-inline: 0;
 }
@@ -235,11 +120,158 @@
   padding-block-end: 0;
 }
 
+/**
+ * Header
+ */
+.Group__header:empty {
+  display: none;
+}
+
+.Group--mode-plain:not(:first-of-type) > .Group__header,
+.Group--sizeX-compact.Group--mode-none:not(:first-of-type) > .Group__header {
+  margin-block-start: -8px;
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-none:not(:first-of-type) > .Group__header {
+    margin-block-start: -8px;
+  }
+}
+
+.Group--mode-card > .Group__header,
+.Group--sizeX-regular.Group--mode-none > .Group__header {
+  margin-block-start: -4px;
+}
+
+@media (--sizeX-regular) {
+  .Group--sizeX-none.Group--mode-none > .Group__header {
+    margin-block-start: -4px;
+  }
+}
+
+/**
+ * Description
+ */
+.Group__description {
+  display: block;
+  padding-block: 4px 16px;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+  color: var(--vkui--color_text_secondary);
+}
+
+/**
+ * Separator
+ */
+.Group__separator {
+  display: none;
+}
+
+.Group__separator::before {
+  content: '';
+  display: block;
+  margin-inline: var(--vkui--size_base_padding_horizontal--regular);
+  block-size: var(--vkui--size_border--regular);
+  background: var(--vkui--color_separator_primary);
+  transform-origin: center top;
+}
+
+.Group--mode-plain + * + .Group__separator,
+.Group--sizeX-compact.Group--mode-none + * + .Group__separator {
+  display: block;
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-none + * + .Group__separator {
+    display: block;
+  }
+}
+
+.Group--mode-plain + .Group__separator + .Group__separator,
+.Group--sizeX-compact.Group--mode-none + .Group__separator + .Group__separator {
+  padding-block: 8px;
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-none + .Group__separator + .Group__separator {
+    padding-block: 8px;
+  }
+}
+
+.Group--mode-plain:last-of-type ~ .Group__separator:not(.Group__separator--force),
+.Group--sizeX-compact.Group--mode-none:last-of-type
+  ~ .Group__separator:not(.Group__separator--force) {
+  display: none;
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-none:last-of-type
+    ~ .Group__separator:not(.Group__separator--force) {
+    display: none;
+  }
+}
+
+/**
+* Spacing
+*/
+.Group__spacing {
+  display: none;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.Group--mode-card + .Group__spacing,
+.Group--sizeX-regular.Group--mode-none + .Group__spacing {
+  display: block;
+  block-size: 16px;
+  padding-block: 8px;
+}
+
+@media (--sizeX-regular) {
+  .Group--sizeX-none.Group--mode-none + .Group__spacing {
+    display: block;
+    block-size: 16px;
+    padding-block: 8px;
+  }
+}
+
+.Group--sizeX-compact.Group--mode-card + .Group__spacing {
+  block-size: 8px;
+  padding-block: 4px;
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-card + .Group__spacing {
+    block-size: 8px;
+    padding-block: 4px;
+  }
+}
+
+.Group--mode-card:last-of-type ~ .Group__spacing,
+.Group--sizeX-regular.Group--mode-none:last-of-type ~ .Group__spacing {
+  display: none;
+}
+
+@media (--sizeX-regular) {
+  .Group--sizeX-none.Group--mode-none:last-of-type ~ .Group__spacing {
+    display: none;
+  }
+}
+
+.Group--mode-card:last-of-type + .Group__spacing,
+.Group--sizeX-regular.Group--mode-none:last-of-type + .Group__spacing {
+  display: block;
+}
+
+@media (--sizeX-regular) {
+  .Group--sizeX-none.Group--mode-none:last-of-type + .Group__spacing {
+    display: block;
+  }
+}
+
 /*
  * CMP:
  * PanelHeader
  */
-/* stylelint-disable selector-max-universal */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader--vkcom) ~ .Group:first-of-type,
 :global(.vkuiInternalPanelHeader--vkcom) + * .Group:first-of-type {

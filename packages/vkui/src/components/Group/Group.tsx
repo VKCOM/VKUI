@@ -7,7 +7,6 @@ import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { Separator } from '../Separator/Separator';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Group.module.css';
 
@@ -120,7 +119,6 @@ export const Group = ({
         baseClassName={classNames(
           'vkuiInternalGroup',
           styles['Group'],
-          isInsideModal && styles['Group--inside-modal'],
           sizeX !== 'regular' && sizeXClassNames[sizeX],
           mode && stylesMode[mode],
           stylesPadding[padding],
@@ -133,19 +131,14 @@ export const Group = ({
         )}
       </RootComponent>
 
+      {separator !== 'hide' && <div className={styles['Group__spacing']} />}
       {separator !== 'hide' && (
-        <React.Fragment>
-          <div
-            className={classNames(styles['Group__separator'], styles['Group__separator--spacing'])}
-          />
-          <Separator
-            className={classNames(
-              styles['Group__separator'],
-              styles['Group__separator--separator'],
-              separator === 'show' && styles['Group__separator--force'],
-            )}
-          />
-        </React.Fragment>
+        <div
+          className={classNames(
+            styles['Group__separator'],
+            separator === 'show' && styles['Group__separator--force'],
+          )}
+        />
       )}
     </>
   );
