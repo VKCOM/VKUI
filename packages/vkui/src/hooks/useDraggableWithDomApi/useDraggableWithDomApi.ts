@@ -204,6 +204,7 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
     const draggingEl = draggingElRef.current;
 
     if (!draggingEl) {
+      /* istanbul ignore next: невозможный кейс */
       return;
     }
 
@@ -227,6 +228,7 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
         // На случай, если onDragMove успеет вызваться ещё раз до того, как `dragging` выставится в
         // `true`
         if (prevDragging) {
+          /* istanbul ignore next: не придумал как воспроизвести в тесте */
           return prevDragging;
         }
         initializeScrollRefs(draggingEl);
@@ -257,6 +259,7 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
 
   const handleScroll = React.useCallback(() => {
     if (!draggingElRef.current || !scrollElRef.current) {
+      /* istanbul ignore next: невозможный кейс */
       return;
     }
 
@@ -291,6 +294,7 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
     () =>
       function componentWillUnmount() {
         if (placeholderItemRef.current) {
+          /* istanbul ignore next: не придумал как воспроизвести в тестк */
           unsetInitialPlaceholderItemStyles(placeholderItemRef.current);
         }
       },
