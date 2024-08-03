@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { fireEvent, render, renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { AlignType } from '../../../types';
