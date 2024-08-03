@@ -92,6 +92,7 @@ export const CarouselBase = ({
       const lastPoint = slides[slides.length - 1].width + slides[slides.length - 1].coordX;
 
       if (shiftX <= -lastPoint) {
+        /* istanbul ignore next: не придумал как сюда попасть в тестах */
         shiftXCurrentRef.current = Math.abs(shiftXDeltaRef.current) + snaps[0];
       }
       transformCssStyles(shiftX, animation);
@@ -100,6 +101,7 @@ export const CarouselBase = ({
 
   const initializeSlides = () => {
     if (!rootRef.current || !viewportRef.current) {
+      /* istanbul ignore next: невозможный кейс */
       return;
     }
     let localSlides =

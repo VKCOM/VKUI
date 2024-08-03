@@ -58,7 +58,7 @@ export function getShiftedIndexes(
   return shiftedSlideIndexes;
 }
 
-export function calculateLoopPoints(
+function calculateLoopPoints(
   indexes: number[],
   edge: 'start' | 'end',
   slidesManager: SlidesManagerState,
