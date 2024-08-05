@@ -5,7 +5,6 @@ import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
-import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { warnOnce } from '../../lib/warnOnce';
 import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
@@ -534,7 +533,10 @@ class ModalRootTouchComponent extends React.Component<
     cancelAnimationFrame(this.frameIds[frameId]);
 
     this.frameIds[frameId] = requestAnimationFrame(() => {
-      setTransformStyle(modalState.innerElement, `translate3d(0, ${percent}%, 0)`);
+      if (!modalState.innerElement) {
+        return;
+      }
+      modalState.innerElement.style.transform = `translate3d(0, ${percent}%, 0)`;
     });
   }
 

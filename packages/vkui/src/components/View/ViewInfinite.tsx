@@ -523,13 +523,11 @@ class ViewInfiniteComponent extends React.Component<
     if (isNext) {
       return {
         transform: `translate3d(${nextPanelTranslate}, 0, 0)`,
-        WebkitTransform: `translate3d(${nextPanelTranslate}, 0, 0)`,
       };
     }
     if (isPrev) {
       return {
         transform: `translate3d(${prevPanelTranslate}, 0, 0)`,
-        WebkitTransform: `translate3d(${prevPanelTranslate}, 0, 0)`,
         boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})`,
       };
     }
