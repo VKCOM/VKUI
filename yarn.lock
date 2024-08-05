@@ -1532,13 +1532,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/cascade-layer-name-parser@npm:^1.0.13":
-  version: 1.0.13
-  resolution: "@csstools/cascade-layer-name-parser@npm:1.0.13"
+"@csstools/cascade-layer-name-parser@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@csstools/cascade-layer-name-parser@npm:2.0.0"
   peerDependencies:
-    "@csstools/css-parser-algorithms": ^2.7.1
-    "@csstools/css-tokenizer": ^2.4.1
-  checksum: 10/7f243147d1ba8ee20ce66a049020e844a6b069b502e9d6cd301bbf23344777ccbfa8cd8d808d06d7a3ba20585181eb47a149a5ce1d43387494b0ead0638d8a23
+    "@csstools/css-parser-algorithms": ^3.0.0
+    "@csstools/css-tokenizer": ^3.0.0
+  checksum: 10/b55a2cff27f660e2c749ec8e01763a446f67ca6fc413b358062c583357ecc831cba3818719f8820ff60eceef6c92ec8ed4a7dce7552f949ec54732bb19289863
   languageName: node
   linkType: hard
 
@@ -1551,10 +1551,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@csstools/css-parser-algorithms@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@csstools/css-parser-algorithms@npm:3.0.0"
+  peerDependencies:
+    "@csstools/css-tokenizer": ^3.0.0
+  checksum: 10/15dbd553bd025118c0ad182fbb7385d3918ce040ba63cae6dae753c346c23c551daccd052d9b8775be3c79ad374f00d67caa54ac4510c1b75af928e140459c7e
+  languageName: node
+  linkType: hard
+
 "@csstools/css-tokenizer@npm:^2.4.1":
   version: 2.4.1
   resolution: "@csstools/css-tokenizer@npm:2.4.1"
   checksum: 10/a368e5c96d3b11e147f95951e336105480acfa457cdbc6fdf97e8873ff92ab9ee6b4b6224ac1b263f08798802f6b29b8977a502d070f9ab695c9b9905b964198
+  languageName: node
+  linkType: hard
+
+"@csstools/css-tokenizer@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@csstools/css-tokenizer@npm:3.0.0"
+  checksum: 10/64078771bc287c01a8f2e4ad399a6c171487fe997f205a9e869e9c619966547075c3c00ce760ea6fb9e339201a110def51c69ebba6d827784c6f9b684fa70174
   languageName: node
   linkType: hard
 
@@ -1568,12 +1584,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/postcss-global-data@npm:2.1.1":
-  version: 2.1.1
-  resolution: "@csstools/postcss-global-data@npm:2.1.1"
+"@csstools/media-query-list-parser@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@csstools/media-query-list-parser@npm:3.0.0"
+  peerDependencies:
+    "@csstools/css-parser-algorithms": ^3.0.0
+    "@csstools/css-tokenizer": ^3.0.0
+  checksum: 10/aca8b11c16c89d846ba605751842b4e88e246e5e39061bb0d1ae9bab84edd40969f4cad0aa0de96cc8c372b370ff6a609ffdf3ecb73dda70e55edb39c1814f8f
+  languageName: node
+  linkType: hard
+
+"@csstools/postcss-global-data@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@csstools/postcss-global-data@npm:3.0.0"
   peerDependencies:
     postcss: ^8.4
-  checksum: 10/8330c831d3da5b83ba1b91bfc5bf66ac87aa7736891330a747d2cab4b7cb64a2fe9528c34500e62846edc3453cd94398a66b4542891cb99d37349c7acece12cf
+  checksum: 10/e9eace3246c6fb8122e4586f37abd5b5f44b9b5ad989f85cacb05d771f4c5fbe3f43f397d59fd443e5dbeac88f71ea3af558e260a0275759b64db6331a17ddf4
   languageName: node
   linkType: hard
 
@@ -4587,7 +4613,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-monorepo@workspace:."
   dependencies:
-    "@csstools/postcss-global-data": "npm:2.1.1"
+    "@csstools/postcss-global-data": "npm:3.0.0"
     "@playwright/experimental-ct-react": "npm:1.45.1"
     "@playwright/test": "npm:1.45.1"
     "@project-docs/styleguide": "workspace:1.0.0"
@@ -4643,11 +4669,11 @@ __metadata:
     mini-css-extract-plugin: "npm:^2.9.0"
     postcss: "npm:^8.4.40"
     postcss-cli: "npm:^11.0.0"
-    postcss-custom-media: "npm:^10.0.8"
-    postcss-gap-properties: "npm:^5.0.1"
+    postcss-custom-media: "npm:^11.0.0"
+    postcss-gap-properties: "npm:^6.0.0"
     postcss-import: "npm:^16.1.0"
     postcss-loader: "npm:^8.1.1"
-    postcss-logical: "npm:^7.0.1"
+    postcss-logical: "npm:^8.0.0"
     postcss-modules: "npm:^6.0.0"
     postcss-value-parser: "npm:^4.2.0"
     prettier: "npm:^3.3.2"
@@ -13402,17 +13428,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-custom-media@npm:^10.0.8":
-  version: 10.0.8
-  resolution: "postcss-custom-media@npm:10.0.8"
+"postcss-custom-media@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "postcss-custom-media@npm:11.0.0"
   dependencies:
-    "@csstools/cascade-layer-name-parser": "npm:^1.0.13"
-    "@csstools/css-parser-algorithms": "npm:^2.7.1"
-    "@csstools/css-tokenizer": "npm:^2.4.1"
-    "@csstools/media-query-list-parser": "npm:^2.1.13"
+    "@csstools/cascade-layer-name-parser": "npm:^2.0.0"
+    "@csstools/css-parser-algorithms": "npm:^3.0.0"
+    "@csstools/css-tokenizer": "npm:^3.0.0"
+    "@csstools/media-query-list-parser": "npm:^3.0.0"
   peerDependencies:
     postcss: ^8.4
-  checksum: 10/ad770a7b4b2eddf93c6b18b3c6a8da1e918fe3098c4c0e648b901f3cd2a9190fe4a604b0fb1fb948f28ac0c7e152678548dc687228dd140323caa2eba9c1ac36
+  checksum: 10/5beb8d89913b5d8cd8e8b68e0588b33be03e421e70cf131b7255efa4d38e143b3b94f62d76c7af4ee07148c0ee7af29e130a5c5e195524bc79bb6805bfd3f09b
   languageName: node
   linkType: hard
 
@@ -13454,12 +13480,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-gap-properties@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "postcss-gap-properties@npm:5.0.1"
+"postcss-gap-properties@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "postcss-gap-properties@npm:6.0.0"
   peerDependencies:
     postcss: ^8.4
-  checksum: 10/82d3cee4d21220cb20201b4d9f15dedbcdc16bd108ce259bf8c848a0b3bd34fb88d1cf8e5e7799ca7afe136579270cc0af9a0883927c4809c9139b4cd969e0d0
+  checksum: 10/8fa8a208fe254ddfcb0442072a6232576efa1fc3deea917be6d3a0c25dfcb855cc6806572e42a098aa0276a5ad3917f19b269409f5ce1f22d233c0072d72f823
   languageName: node
   linkType: hard
 
@@ -13544,14 +13570,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-logical@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "postcss-logical@npm:7.0.1"
+"postcss-logical@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "postcss-logical@npm:8.0.0"
   dependencies:
     postcss-value-parser: "npm:^4.2.0"
   peerDependencies:
     postcss: ^8.4
-  checksum: 10/15e671ec72e12e304aef2ab2a999408e5957e7084fe687eb3957854e3343de2c3243a6d30b2a3c8fe19c627f453bf136d4e06584f1f8f1799d77cc641c7da5b4
+  checksum: 10/bdaceacdc80b9b03e2af9e8eb5c195a96cd0a525836a362db357574293189c5ec0f581c71d1ec97856cfbb9ebd4239c24a0593e1f4e32b59aa878a98b5a6ae27
   languageName: node
   linkType: hard
 
