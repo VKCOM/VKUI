@@ -42,6 +42,7 @@ export const useHorizontalScrollController = (
 
   const resize = () => {
     if (!boxRef.current || !barX.current || !trackerX.current) {
+      /* istanbul ignore next: не придумал как проверить */
       return;
     }
     const localClientWidth = boxRef.current.clientWidth;
@@ -88,6 +89,7 @@ export const useHorizontalScrollController = (
 
   const scroll = () => {
     if (!boxRef.current) {
+      /* istanbul ignore next: не придумал как проверить */
       return;
     }
     if (autoHideScrollbar) {

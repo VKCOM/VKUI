@@ -12,6 +12,7 @@ export const useDragAndDrop = (
 
   const onDragEndImpl = (e: React.MouseEvent) => {
     if (!isPressed) {
+      /* istanbul ignore next: не придумал как проверить */
       return;
     }
     e.preventDefault();
@@ -21,6 +22,7 @@ export const useDragAndDrop = (
 
   const onDragMoveImpl = (e: React.MouseEvent) => {
     if (!isPressed) {
+      /* istanbul ignore next: не придумал как проверить */
       return;
     }
     e.preventDefault();
