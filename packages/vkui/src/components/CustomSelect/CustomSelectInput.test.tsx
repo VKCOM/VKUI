@@ -47,7 +47,7 @@ describe(CustomSelectInput, () => {
     const ref = {
       current: null,
     };
-    render(<CustomSelectInput getRootRef={ref} data-testid="input" {...props} />);
+    render(<CustomSelectInput getRootRef={ref} {...props} />);
     expect(ref.current!).toHaveClass(className);
   });
 });
