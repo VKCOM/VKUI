@@ -239,49 +239,51 @@ const App = () => {
           <CellButton onClick={() => changeActiveModal(MODAL_PAGE_USER_INFO)}>
             Информация о пользователе
           </CellButton>
+        </Group>
 
-          <Group>
-            <FormItem top="Страна">
-              <SelectMimicry
-                placeholder="Выбрать страну"
-                onClick={() => changeActiveModal(MODAL_PAGE_COUNTRIES)}
-              />
-            </FormItem>
-            <FormItem top="Город">
-              <SelectMimicry placeholder="Выбрать город" disabled />
-            </FormItem>
-          </Group>
+        <Group>
+          <FormItem top="Страна">
+            <SelectMimicry
+              placeholder="Выбрать страну"
+              onClick={() => changeActiveModal(MODAL_PAGE_COUNTRIES)}
+            />
+          </FormItem>
+          <FormItem top="Город">
+            <SelectMimicry placeholder="Выбрать город" disabled />
+          </FormItem>
+        </Group>
 
-          <Group>
-            <FormItem top="Пол">
-              <Radio name="sex" value={0} defaultChecked>
-                Любой
-              </Radio>
-              <Radio name="sex" value={1}>
-                Мужской
-              </Radio>
-              <Radio name="sex" value={2}>
-                Женский
-              </Radio>
-            </FormItem>
-          </Group>
+        <Group>
+          <FormItem top="Пол">
+            <Radio name="sex" value={0} defaultChecked>
+              Любой
+            </Radio>
+            <Radio name="sex" value={1}>
+              Мужской
+            </Radio>
+            <Radio name="sex" value={2}>
+              Женский
+            </Radio>
+          </FormItem>
+        </Group>
 
-          <Group>
-            <FormItem top="Школа">
-              <SelectMimicry placeholder="Выбрать школу" disabled />
-            </FormItem>
-            <FormItem top="Университет">
-              <SelectMimicry placeholder="Выбрать университет" disabled />
-            </FormItem>
-          </Group>
+        <Group>
+          <FormItem top="Школа">
+            <SelectMimicry placeholder="Выбрать школу" disabled />
+          </FormItem>
+          <FormItem top="Университет">
+            <SelectMimicry placeholder="Выбрать университет" disabled />
+          </FormItem>
+        </Group>
 
-          <Group>
-            <FormItem top="Дополнительно">
-              <Checkbox>С фотографией</Checkbox>
-              <Checkbox>Сейчас на сайте</Checkbox>
-            </FormItem>
-          </Group>
+        <Group>
+          <FormItem top="Дополнительно">
+            <Checkbox>С фотографией</Checkbox>
+            <Checkbox>Сейчас на сайте</Checkbox>
+          </FormItem>
+        </Group>
 
+        <Group>
           <FormItem top="Работа">
             <Input placeholder="Место работы" />
           </FormItem>
