@@ -1,6 +1,6 @@
 /* stylelint-disable selector-max-universal */
 
-/**
+/*
  * Автоопределение mode:
  *
  * - sizeX="compact" (mobile)  -> mode="plain"
@@ -67,7 +67,7 @@
   }
 }
 
-/**
+/*
  * Изменено с ::after на ::before
  * потому что при ::after абсолютно позиционированный элемент накладывается
  * поверх любого другого абсолютно позиционированного элемента внутри Group,
@@ -111,19 +111,7 @@
   }
 }
 
-.Group .Group {
-  padding-inline: 0;
-}
-
-.Group .Group:first-of-type {
-  padding-block-start: 0;
-}
-
-.Group .Group:last-of-type {
-  padding-block-end: 0;
-}
-
-/**
+/*
  * Header
  */
 .Group__header:empty {
@@ -152,7 +140,7 @@
   }
 }
 
-/**
+/*
  * Description
  */
 .Group__description {
@@ -162,7 +150,7 @@
   color: var(--vkui--color_text_secondary);
 }
 
-/**
+/*
  * Separator (sibling)
  *
  * ⚠️ Находится за пределами Group
@@ -174,54 +162,31 @@
   box-sizing: border-box;
 }
 
-.Group:last-of-type + .Group__separator-sibling {
+.Group:last-of-type + .Group__separator-sibling:not(.Group__separator-sibling--forced) {
   display: none !important; /* stylelint-disable-line declaration-no-important -- гарантировано прячем последний разделитель */
 }
 
 .Group__separator-sibling::before {
   display: var(--vkui_internal--Group__separator_hr);
   content: '';
-  margin-inline: var(--vkui--size_base_padding_horizontal--regular);
   block-size: var(--vkui--size_border--regular);
   background: var(--vkui--color_separator_primary);
 }
 
 /* разделитель при mode="plain" */
-.Group--mode-plain .Group__separator-sibling:not(.Group__separator-sibling--forced),
-.Group--sizeX-compact.Group--mode-none
-  .Group__separator-sibling:not(.Group__separator-sibling--forced) {
-  display: none;
-}
-
-@media (--sizeX-compact) {
-  .Group--sizeX-compact.Group--mode-none
-    .Group__separator-sibling:not(.Group__separator-sibling--forced) {
-    display: none;
-  }
-}
-
 .Group--mode-plain + .Group__separator-sibling,
 .Group--sizeX-compact.Group--mode-none + .Group__separator-sibling {
   --vkui_internal--Group__separator_hr: block;
 
-  display: block;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+  padding-block: var(--vkui--spacing_size_m);
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none.Group--mode-none + .Group__separator-sibling {
     --vkui_internal--Group__separator_hr: block;
 
-    display: block;
-  }
-}
-
-.Group--mode-plain + .Group__separator-sibling + .Group__separator-sibling,
-.Group--sizeX-compact.Group--mode-none + .Group__separator-sibling + .Group__separator-sibling {
-  padding-block: var(--vkui--spacing_size_m);
-}
-
-@media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none + .Group__separator-sibling + .Group__separator-sibling {
+    padding-inline: var(--vkui--size_base_padding_horizontal--regular);
     padding-block: var(--vkui--spacing_size_m);
   }
 }
@@ -253,19 +218,39 @@
 }
 
 /*
- * CMP:
- * ModalPage
+ * Group вложенный в ModalPage
+ *
+ * note: ModalPage форсирует mode="plain" для Group
  */
 @media (--sizeX-regular) {
-  .Group--inside-modal {
+  .Group--mode-plain-inside-modal {
     padding: var(--vkui--spacing_size_m);
   }
 
-  .Group--inside-modal + .Group__separator-sibling::before {
-    margin-inline: calc(
+  .Group--mode-plain-inside-modal + .Group__separator-sibling {
+    padding-inline: calc(
       var(--vkui--size_base_padding_horizontal--regular) + var(--vkui--spacing_size_m)
     );
   }
+}
+
+/*
+ * Group вложенный в Group
+ */
+.Group .Group {
+  padding-inline: 0;
+}
+
+.Group .Group + .Group__separator-sibling {
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+}
+
+.Group .Group:first-of-type {
+  padding-block-start: 0;
+}
+
+.Group .Group:last-of-type {
+  padding-block-end: 0;
 }
 
 /*

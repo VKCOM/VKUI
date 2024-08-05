@@ -141,7 +141,7 @@ export const Group = ({
           'vkuiInternalGroup',
           styles['Group'],
           sizeX !== 'regular' && sizeXClassNames[sizeX],
-          mode === 'plain' && isInsideModal && styles['Group--inside-modal'],
+          mode === 'plain' && isInsideModal && styles['Group--mode-plain-inside-modal'],
           stylesMode[mode],
           stylesPadding[padding],
         )}
