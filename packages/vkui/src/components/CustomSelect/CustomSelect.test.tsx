@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
+import { noop } from '@vkontakte/vkjs';
+import { baselineComponent, userEvent, waitForFloatingPosition } from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
@@ -23,6 +24,42 @@ const CustomSelectControlled = ({
     onChangeStub?.(event);
   };
   return <CustomSelect {...restProps} options={options} value={value} onChange={handleChange} />;
+};
+
+const checkDropdownOpened = (opened = true) => {
+  if (opened) {
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+  } else {
+    expect(() => screen.getByRole('listbox')).toThrow();
+  }
+};
+
+const triggerKeydownEvent = async (input: HTMLElement, key: string, code: string) => {
+  await React.act(async () => {
+    fireEvent.keyDown(input, {
+      key,
+      code,
+    });
+  });
+};
+
+const mockPropertiesToScroll = (defaultScrollTop = 0) => {
+  const setScrollTopStub = jest.fn();
+
+  const dropdownScroll = screen.getByRole('listbox').firstElementChild
+    ?.firstElementChild as HTMLElement;
+  jest.spyOn(dropdownScroll, 'offsetHeight', 'get').mockImplementation(() => 200);
+  jest.spyOn(dropdownScroll, 'scrollTop', 'get').mockImplementation(() => defaultScrollTop);
+  jest.spyOn(dropdownScroll, 'scrollTop', 'set').mockImplementation(setScrollTopStub);
+
+  const optionHeight = 40;
+
+  screen.getAllByRole('option').forEach((option, index) => {
+    jest.spyOn(option, 'offsetTop', 'get').mockImplementation(() => optionHeight * index);
+    jest.spyOn(option, 'offsetHeight', 'get').mockImplementation(() => optionHeight);
+  });
+
+  return setScrollTopStub;
 };
 
 describe('CustomSelect', () => {
@@ -1122,5 +1159,262 @@ describe('CustomSelect', () => {
       />,
     );
     expect(inputRef.current).not.toBeNull();
+  });
+
+  it('check input should close popover and reset selected option', async () => {
+    jest.useFakeTimers();
+    const inputRef: React.RefObject<HTMLInputElement> = {
+      current: null,
+    };
+
+    const { container } = render(
+      <CustomSelect
+        searchable={true}
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+        defaultValue="0"
+        getSelectInputRef={inputRef}
+      />,
+    );
+
+    const optionsHasFocused = () => {
+      return !!container.querySelector('[data-hovered="true"]');
+    };
+
+    checkDropdownOpened(false);
+
+    // Вводим текст в инпут
+    // И проверяем, что дропдаун открылся, а также что нет option в фокусе
+    await triggerKeydownEvent(inputRef.current!, 'К', 'KeyR');
+    checkDropdownOpened();
+    expect(optionsHasFocused()).toBeFalsy();
+
+    // Нажимаем стрелку вниз, тем самым фокусируемся на первом option
+    await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
+    checkDropdownOpened();
+    expect(optionsHasFocused()).toBeTruthy();
+
+    // Вводим еще текст, тем самым сбрасываем фокус с option
+    await triggerKeydownEvent(inputRef.current!, 'т', 'KeyN');
+    checkDropdownOpened();
+    expect(optionsHasFocused()).toBeFalsy();
+
+    // Нажимаем escape, тем самым закрывая дропдаун
+    await triggerKeydownEvent(inputRef.current!, 'Escape', 'Escape');
+    checkDropdownOpened(false);
+  });
+
+  it.each(['ArrowUp', 'ArrowDown', 'Backspace', 'Delete', ' ', 'Spacebar', 'Enter'])(
+    'should open dropdown when keydown %s',
+    async (key) => {
+      jest.useFakeTimers();
+      const inputRef: React.RefObject<HTMLInputElement> = {
+        current: null,
+      };
+      render(
+        <CustomSelect
+          searchable={true}
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+          defaultValue="0"
+          getSelectInputRef={inputRef}
+        />,
+      );
+
+      await React.act(async () => await userEvent.type(inputRef.current!, `{${key}}`));
+      checkDropdownOpened(true);
+    },
+  );
+
+  it('should render wrapper when use renderDropdown prop', () => {
+    render(
+      <CustomSelect
+        renderDropdown={({ defaultDropdownContent }) => (
+          <div data-testid="wrapper">{defaultDropdownContent}</div>
+        )}
+        data-testid="select"
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+        defaultValue="0"
+      />,
+    );
+    fireEvent.click(screen.getByTestId('select'));
+
+    expect(screen.getByTestId('wrapper')).toBeInTheDocument();
+    expect(screen.getAllByRole('option').length).toBe(4);
+  });
+
+  it('should call onInputChange callback when change input', async () => {
+    jest.useFakeTimers();
+    const inputRef: React.RefObject<HTMLInputElement> = {
+      current: null,
+    };
+    const onInputChange = jest.fn();
+    render(
+      <CustomSelect
+        getSelectInputRef={inputRef}
+        onInputChange={onInputChange}
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+        defaultValue="0"
+      />,
+    );
+    fireEvent.change(inputRef.current!, { target: { value: 'Ка' } });
+    expect(onInputChange).toBeCalledTimes(1);
+
+    fireEvent.change(inputRef.current!, { target: { value: 'Кат' } });
+    expect(onInputChange).toBeCalledTimes(2);
+  });
+
+  it('check scroll to bottom to element', async () => {
+    const inputRef: React.RefObject<HTMLInputElement> = {
+      current: null,
+    };
+
+    render(
+      <CustomSelect
+        data-testid="select"
+        getSelectInputRef={inputRef}
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+          { value: '4', label: 'Категория 3' },
+          { value: '5', label: 'Категория 3' },
+          { value: '6', label: 'Категория 3' },
+          { value: '7', label: 'Категория 3' },
+        ]}
+        defaultValue="4"
+      />,
+    );
+    fireEvent.click(screen.getByTestId('select'));
+
+    const setScrollTop = mockPropertiesToScroll();
+
+    expect(setScrollTop).toBeCalledTimes(0);
+
+    await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
+
+    expect(setScrollTop).toBeCalledWith(40);
+  });
+
+  it('check scroll to up', async () => {
+    const inputRef: React.RefObject<HTMLInputElement> = {
+      current: null,
+    };
+
+    render(
+      <CustomSelect
+        data-testid="select"
+        getSelectInputRef={inputRef}
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+          { value: '4', label: 'Категория 3' },
+          { value: '5', label: 'Категория 3' },
+          { value: '6', label: 'Категория 3' },
+          { value: '7', label: 'Категория 3' },
+        ]}
+        defaultValue="1"
+      />,
+    );
+    fireEvent.click(screen.getByTestId('select'));
+
+    const setScrollTop = mockPropertiesToScroll(40);
+
+    expect(setScrollTop).toBeCalledTimes(0);
+
+    await triggerKeydownEvent(inputRef.current!, 'ArrowUp', 'ArrowUp');
+
+    expect(setScrollTop).toBeCalledWith(0);
+  });
+
+  it('should not hover disabled option', async () => {
+    const inputRef: React.RefObject<HTMLInputElement> = {
+      current: null,
+    };
+    render(
+      <CustomSelect
+        getSelectInputRef={inputRef}
+        data-testid="select"
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1', disabled: true },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+      />,
+    );
+    fireEvent.click(screen.getByTestId('select'));
+    const option = screen.getByRole('option', { name: 'Категория 1' });
+
+    await React.act(async () => fireEvent.mouseMove(option, { clientY: 20 }));
+
+    expect(option.getAttribute('data-hovered')).toBe('false');
+  });
+
+  it('should not call select option when not focus to option', async () => {
+    const inputRef: React.RefObject<HTMLInputElement> = {
+      current: null,
+    };
+    const onChange = jest.fn();
+    render(
+      <CustomSelect
+        getSelectInputRef={inputRef}
+        onChange={onChange}
+        data-testid="select"
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+      />,
+    );
+    fireEvent.click(screen.getByTestId('select'));
+
+    await triggerKeydownEvent(inputRef.current!, ' ', 'Space');
+
+    expect(onChange).toBeCalledTimes(0);
+  });
+
+  it('check dev error when use different type of values', () => {
+    process.env.NODE_ENV = 'development';
+    const errorStub = jest.spyOn(global.console, 'error').mockImplementationOnce(noop);
+
+    render(
+      <CustomSelect
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: '1', label: 'Josh' },
+        ]}
+      />,
+    );
+
+    expect(errorStub).toBeCalledWith(
+      '%c[VKUI/CustomSelect] Некоторые значения ваших опций имеют разные типы. onChange всегда возвращает строковый тип.',
+      undefined,
+    );
+
+    process.env.NODE_ENV = 'test';
   });
 });
