@@ -298,5 +298,35 @@ describe(FocusTrap, () => {
 
       await waitFor(() => expect(result.getByTestId('button-show-trap')).toHaveFocus());
     });
+
+    it('check autoFocus to root', async () => {
+      const rootFocus = jest.fn();
+      const buttonFocus = jest.fn();
+      const mockElementFocus = (element: HTMLElement | null, focusFn: VoidFunction) => {
+        if (element) {
+          jest.spyOn(element, 'focus').mockImplementation(focusFn);
+        }
+      };
+
+      render(
+        <>
+          <FocusTrap
+            autoFocus="root"
+            getRootRef={(element) => mockElementFocus(element, rootFocus)}
+          >
+            <Button
+              data-testid="button-in-trap"
+              getRootRef={(element) => mockElementFocus(element, buttonFocus)}
+            >
+              Кнопка в FocusTrap
+            </Button>
+          </FocusTrap>
+        </>,
+      );
+      await waitFor(() => {
+        expect(rootFocus).toHaveBeenCalledTimes(1);
+        expect(buttonFocus).toHaveBeenCalledTimes(0);
+      });
+    });
   });
 });
