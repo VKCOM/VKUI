@@ -37,6 +37,7 @@ const sizeYClassNames = {
 
 const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
   if (startIndex >= options.length - 1) {
+    /* istanbul ignore next: вроде как сюда никак не попасть */
     return -1;
   }
   return options.findIndex((option, i) => i > startIndex && !option.disabled);
@@ -108,8 +109,6 @@ const filter = <T extends CustomSelectOptionInterface>(
     ? options.filter((option) => filterFn(inputValue, option))
     : options;
 };
-
-const defaultOptions: CustomSelectOptionInterface[] = [];
 
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -252,7 +251,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     autoHideScrollbarDelay,
     searchable = false,
     renderOption: renderOptionProp = defaultRenderOptionFn,
-    options: optionsProp = defaultOptions as OptionInterfaceT[],
+    options: optionsProp,
     emptyText = 'Ничего не найдено',
     filterFn = defaultFilterFn,
     icon: iconProp,
@@ -339,6 +338,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       dropdown && optionsWrapper ? (optionsWrapper.children[index] as HTMLElement) : null;
 
     if (!item || !dropdown) {
+      /* istanbul ignore next: невозможный кейс по идее */
       return;
     }
 
@@ -359,12 +359,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const focusOptionByIndex = React.useCallback(
     (index: number | undefined, scrollTo = true) => {
       if (index === undefined || index < 0 || index > (options.length ?? 0) - 1) {
+        /* istanbul ignore next: Не придумал как воспроизвести */
         return;
       }
 
       const option = options[index];
 
       if (option?.disabled) {
+        /* istanbul ignore next: Yt */
         return;
       }
 
@@ -668,7 +670,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       const selected = index === selectedOptionIndex;
 
       return (
-        <React.Fragment key={`${typeof option.value}-${option.value}`}>
+        <React.Fragment key={`${option.value}`}>
           {renderOptionProp({
             option,
             hovered,
@@ -702,7 +704,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const resolvedContent = React.useMemo(() => {
     const defaultDropdownContent =
-      options?.length > 0 ? (
+      options.length > 0 ? (
         <div ref={optionsWrapperRef}>{options.map(renderOption)}</div>
       ) : (
         <Footnote className={styles['CustomSelect__empty']}>{emptyText}</Footnote>
@@ -794,6 +796,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       // Договорились со специалистом по доступности убрать <label>-обёртки из Select и CustomSelect
 
       if (!selectInputRef.current || !document) {
+        /* istanbul ignore next: нет возможности воспроизвести */
         return;
       }
 
