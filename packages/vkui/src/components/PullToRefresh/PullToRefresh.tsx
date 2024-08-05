@@ -242,7 +242,6 @@ export const PullToRefresh = ({
           <PullToRefreshSpinner
             style={{
               transform: spinnerTransform,
-              WebkitTransform: spinnerTransform,
               opacity: watching || refreshing || canRefresh ? 1 : 0,
             }}
             on={refreshing}
@@ -254,7 +253,6 @@ export const PullToRefresh = ({
           className={styles['PullToRefresh__content']}
           style={{
             transform: contentTransform,
-            WebkitTransform: contentTransform,
           }}
         >
           {children}
