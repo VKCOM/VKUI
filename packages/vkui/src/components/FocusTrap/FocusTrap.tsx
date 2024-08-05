@@ -71,7 +71,10 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
         nodes.push(focusableEl);
       }
     });
-
+    if (nodes.length === 0) {
+      // Чтобы фокус был хотя бы на родителе
+      nodes.push(parentNode);
+    }
     focusableNodesRef.current = nodes;
   };
 
