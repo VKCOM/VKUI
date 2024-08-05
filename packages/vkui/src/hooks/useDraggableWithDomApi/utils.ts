@@ -73,6 +73,7 @@ export const unsetInitialDraggingItemStyles = ({ el }: DraggingItem): void => {
 
 export const setInitialPlaceholderItemStyles = ({ el, draggingElRect }: PlaceholderItem): void => {
   if (el.firstElementChild) {
+    /* istanbul ignore next: не придумал как воспроизвести */
     return;
   }
   const { width, height } = draggingElRect;
