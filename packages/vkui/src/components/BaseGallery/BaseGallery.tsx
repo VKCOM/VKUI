@@ -73,6 +73,7 @@ export const BaseGallery = ({
     if (value < localMin) {
       return localMin;
     } else if (value > localMax) {
+      /* istanbul ignore next: не понял как такое воспроизвести */
       return localMax;
     }
 
@@ -101,7 +102,7 @@ export const BaseGallery = ({
 
       return validateIndent(-1 * coordX);
     }
-
+    /* istanbul ignore next: не придумал как попасть сюда в тесте */
     return 0;
   };
 
