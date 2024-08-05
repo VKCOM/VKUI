@@ -87,12 +87,13 @@ export const useHorizontalScrollController = (
   };
 
   const scroll = () => {
-    if (boxRef.current) {
-      if (autoHideScrollbar) {
-        onTargetScroll();
-      }
-      setTrackerPositionFromScroll(boxRef.current.scrollLeft);
+    if (!boxRef.current) {
+      return;
     }
+    if (autoHideScrollbar) {
+      onTargetScroll();
+    }
+    setTrackerPositionFromScroll(boxRef.current.scrollLeft);
   };
 
   const dragStart = (e: React.MouseEvent) => {

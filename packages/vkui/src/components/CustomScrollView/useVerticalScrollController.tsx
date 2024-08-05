@@ -89,12 +89,13 @@ export const useVerticalScrollController = (
   };
 
   const scroll = () => {
-    if (boxRef.current) {
-      if (autoHideScrollbar) {
-        onTargetScroll();
-      }
-      setTrackerPositionFromScroll(boxRef.current.scrollTop);
+    if (!boxRef.current) {
+      return;
     }
+    if (autoHideScrollbar) {
+      onTargetScroll();
+    }
+    setTrackerPositionFromScroll(boxRef.current.scrollTop);
   };
 
   const dragStart = (e: React.MouseEvent) => {
