@@ -27,6 +27,7 @@ export const calcMin = ({
         return viewportOffsetWidth - (containerWidth - viewportOffsetWidth) / 2 - layerWidth;
       }
   }
+  /* istanbul ignore next: невозможный кейс */
   return undefined;
 };
 
