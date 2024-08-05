@@ -2,6 +2,7 @@ const path = require('path');
 const postcssGlobalData = require('@csstools/postcss-global-data');
 const restructureVariable = require('@project-tools/postcss-restructure-variable');
 const autoprefixer = require('autoprefixer');
+const browserslist = require('browserslist');
 const cssnano = require('cssnano');
 const postcssCustomMedia = require('postcss-custom-media');
 const postcssGapProperties = require('postcss-gap-properties');
@@ -11,6 +12,8 @@ const cssModules = require('postcss-modules');
 const { VKUI_PACKAGE, VKUI_TOKENS_CSS, generateScopedName } = require('../../../shared');
 
 const rootDirectory = path.join(__dirname, '../../..');
+
+const browsers = browserslist.readConfig(path.join(rootDirectory, '.browserslistrc'));
 
 function getMinimizerOptions(isVKUIPackageBuild = false) {
   return {
@@ -67,7 +70,9 @@ function makePostcssPlugins({
     }),
 
     // Автопрефиксер
-    autoprefixer(),
+    autoprefixer({
+      overrideBrowserslist: browsers.defaults,
+    }),
 
     // Обработка CustomMedia
     postcssCustomMedia(),
