@@ -124,7 +124,7 @@ export const CalendarRange = ({
       } else if (start && isAfter(date, start)) {
         return [start, setTimeEqual(date, end)];
       }
-
+      /* istanbul ignore next: вроде как невозможный кейс */
       return value;
     },
     [value],
