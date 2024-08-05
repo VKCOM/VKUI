@@ -95,7 +95,6 @@ export const useVerticalScrollController = (
     if (autoHideScrollbar) {
       onTargetScroll();
     }
-
     setTrackerPositionFromScroll(boxRef.current.scrollTop);
   };
 
