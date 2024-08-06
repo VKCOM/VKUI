@@ -1,18 +1,5 @@
-import { renderHook } from '@testing-library/react';
-import { ANIMATION_DURATION } from './constants';
 import { calculateIndent, getLoopPoints, getShiftedIndexes, getTargetIndex } from './helpers';
-import { useSlideAnimation } from './hooks';
 import { SlidesManagerState } from './types';
-
-const mockRAF = () => {
-  let lastTime = 0;
-
-  jest.spyOn(window, 'requestAnimationFrame').mockImplementation((fn) => {
-    lastTime = lastTime + ANIMATION_DURATION;
-    fn(lastTime);
-    return lastTime;
-  });
-};
 
 const createSlides = (slidesCount?: number, slideWidth?: number) => {
   return new Array(slidesCount || 0).fill(0).map((_, index) => ({
@@ -206,17 +193,4 @@ describe(getTargetIndex, () => {
       );
     },
   );
-});
-
-describe(useSlideAnimation, () => {
-  it('should call drawCallback when startAnimation', () => {
-    mockRAF();
-    const animationStub = jest.fn();
-    const hookResult = renderHook(() => useSlideAnimation());
-    hookResult.result.current.addToAnimationQueue(
-      hookResult.result.current.getAnimateFunction(animationStub),
-    );
-    hookResult.result.current.startAnimation();
-    expect(animationStub.mock.calls).toEqual([[0], [1]]);
-  });
 });

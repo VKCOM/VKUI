@@ -1,9 +1,9 @@
-import { HasAlign } from '../../types';
+import { AlignType } from '../../types';
 import { LayoutState } from './types';
 
 interface CalcMin extends Partial<LayoutState> {
   isCenterWithCustomWidth: boolean;
-  align: HasAlign['align'];
+  align: AlignType;
 }
 
 export const calcMin = ({
@@ -27,8 +27,6 @@ export const calcMin = ({
         return viewportOffsetWidth - (containerWidth - viewportOffsetWidth) / 2 - layerWidth;
       }
   }
-  /* istanbul ignore next: невозможный кейс */
-  return undefined;
 };
 
 interface CalcMax extends Partial<LayoutState> {

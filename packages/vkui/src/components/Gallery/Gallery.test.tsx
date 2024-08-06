@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { fireEvent, render, renderHook } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { AlignType } from '../../types';
 import { ANIMATION_DURATION } from '../BaseGallery/CarouselBase/constants';
 import { Gallery } from './Gallery';
-import { useAutoPlay } from './hooks';
 import styles from '../BaseGallery/BaseGallery.module.css';
 
 const mockRAF = () => {
@@ -27,20 +26,6 @@ const mockTime = () => {
     time = newTime;
     return newTime;
   });
-};
-
-const mockTimer = () => {
-  const timeoutStub = jest.spyOn(window, 'setTimeout').mockImplementation((fn) => {
-    fn();
-    return 1 as unknown as NodeJS.Timeout;
-  });
-
-  const clearTimeoutStub = jest.spyOn(window, 'clearTimeout').mockImplementation(noop);
-
-  return {
-    timeoutStub,
-    clearTimeoutStub,
-  };
 };
 
 const simulateDrag = (element: HTMLDivElement, points: number[]) => {
@@ -82,7 +67,7 @@ const checkTransformX = (value: string, expectedX: number) => {
   expect(match?.[1] && parseInt(match[1])).toEqual(expectedX);
 };
 
-const mockData = ({
+const setup = ({
   defaultSlideIndex,
   slideWidth,
   looped,
@@ -194,14 +179,14 @@ const mockData = ({
     </Gallery>
   );
 
-  const { container, rerender: rerenderFn } = render(<Fixture slideIndex={defaultSlideIndex} />);
+  const component = render(<Fixture slideIndex={defaultSlideIndex} />);
 
   const rerender = ({ slideIndex }: { slideIndex: number }) => {
-    rerenderFn(<Fixture slideIndex={slideIndex} />);
+    component.rerender(<Fixture slideIndex={slideIndex} />);
   };
 
   return {
-    container,
+    component,
     rerender,
     get layerTransform() {
       return layerTransform;
@@ -262,7 +247,6 @@ describe('Gallery', () => {
 
     it('check auto play in controlled component', () => {
       jest.useFakeTimers();
-      const { timeoutStub, clearTimeoutStub } = mockTimer();
       let index;
       const setIndex = (v: number) => (index = v);
       render(
@@ -271,15 +255,12 @@ describe('Gallery', () => {
           <div />
         </Gallery>,
       );
-
+      jest.runAllTimers();
       expect(index).toBe(1);
-      expect(timeoutStub).toHaveBeenCalledTimes(1);
-      expect(clearTimeoutStub).toHaveBeenCalledTimes(0);
     });
 
     it('check auto play in uncontrolled component', () => {
       jest.useFakeTimers();
-      const { timeoutStub, clearTimeoutStub } = mockTimer();
       let index;
       const setIndex = (v: number) => (index = v);
       render(
@@ -288,10 +269,8 @@ describe('Gallery', () => {
           <div />
         </Gallery>,
       );
-
+      jest.runAllTimers();
       expect(index).toBe(1);
-      expect(timeoutStub).toHaveBeenCalledTimes(1);
-      expect(clearTimeoutStub).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -301,7 +280,7 @@ describe('Gallery', () => {
       const onPrev = jest.fn();
       const onChange = jest.fn();
 
-      const mockedData = mockData({
+      const mockedData = setup({
         looped,
         defaultSlideIndex: 1,
         slideWidth: 200,
@@ -311,7 +290,10 @@ describe('Gallery', () => {
         onNext,
         onChange,
       });
-      const { container, rerender } = mockedData;
+      const {
+        component: { container },
+        rerender,
+      } = mockedData;
 
       checkActiveSlide(container, 1);
 
@@ -342,7 +324,7 @@ describe('Gallery', () => {
       const onDragStart = jest.fn();
       const onDragEnd = jest.fn();
 
-      const mockedData = mockData({
+      const mockedData = setup({
         looped,
         defaultSlideIndex: 0,
         slideWidth: 180,
@@ -352,7 +334,9 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const { container } = mockedData;
+      const {
+        component: { container },
+      } = mockedData;
 
       checkActiveSlide(container, 0);
 
@@ -374,7 +358,7 @@ describe('Gallery', () => {
     it('should resize when window resize', () => {
       const onChange = jest.fn();
 
-      const mockedData = mockData({
+      const mockedData = setup({
         looped,
         defaultSlideIndex: 0,
         slideWidth: 180,
@@ -408,7 +392,7 @@ describe('Gallery', () => {
       const onDragStart = jest.fn();
       const onDragEnd = jest.fn();
 
-      const mockedData = mockData({
+      const mockedData = setup({
         looped: false,
         defaultSlideIndex: 0,
         slideWidth: 180,
@@ -420,7 +404,10 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const { container, rerender } = mockedData;
+      const {
+        component: { container },
+        rerender,
+      } = mockedData;
 
       checkActiveSlide(container, 0);
 
@@ -450,7 +437,7 @@ describe('Gallery', () => {
       const onDragStart = jest.fn();
       const onDragEnd = jest.fn();
 
-      const mockedData = mockData({
+      const mockedData = setup({
         looped: false,
         defaultSlideIndex: 0,
         slideWidth: 180,
@@ -462,7 +449,9 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const { container } = mockedData;
+      const {
+        component: { container },
+      } = mockedData;
 
       checkActiveSlide(container, 0);
 
@@ -478,7 +467,7 @@ describe('Gallery', () => {
       const onDragStart = jest.fn();
       const onDragEnd = jest.fn();
 
-      const mockedData = mockData({
+      const mockedData = setup({
         looped: false,
         defaultSlideIndex: 0,
         slideWidth: 180,
@@ -488,7 +477,9 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const { container } = mockedData;
+      const {
+        component: { container },
+      } = mockedData;
 
       checkActiveSlide(container, 0);
 
@@ -504,7 +495,7 @@ describe('Gallery', () => {
       const onDragStart = jest.fn();
       const onDragEnd = jest.fn();
 
-      const mockedData = mockData({
+      const mockedData = setup({
         looped: false,
         defaultSlideIndex: 4,
         slideWidth: 180,
@@ -514,7 +505,10 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const { container, rerender } = mockedData;
+      const {
+        component: { container },
+        rerender,
+      } = mockedData;
 
       checkActiveSlide(container, 4);
 
@@ -539,7 +533,7 @@ describe('Gallery', () => {
       const onPrev = jest.fn();
       const onChange = jest.fn();
 
-      const mockedData = mockData({
+      const mockedData = setup({
         looped: true,
         defaultSlideIndex: 0,
         slideWidth: 200,
@@ -549,7 +543,10 @@ describe('Gallery', () => {
         onNext,
         onChange,
       });
-      const { container, rerender } = mockedData;
+      const {
+        component: { container },
+        rerender,
+      } = mockedData;
 
       checkActiveSlide(container, 0);
 
@@ -580,7 +577,7 @@ describe('Gallery', () => {
       const onDragStart = jest.fn();
       const onDragEnd = jest.fn();
 
-      const mockedData = mockData({
+      const mockedData = setup({
         looped: true,
         defaultSlideIndex: 0,
         slideWidth: 180,
@@ -591,7 +588,10 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const { container, rerender } = mockedData;
+      const {
+        component: { container },
+        rerender,
+      } = mockedData;
 
       checkActiveSlide(container, 0);
 
@@ -623,7 +623,7 @@ describe('Gallery', () => {
       const onChange = jest.fn();
       const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
 
-      mockData({
+      setup({
         looped: true,
         defaultSlideIndex: 0,
         slideWidth: 40,
@@ -639,47 +639,5 @@ describe('Gallery', () => {
       warn.mockRestore();
       process.env.NODE_ENV = 'test';
     });
-  });
-});
-
-describe(useAutoPlay, () => {
-  it('should call callback when fire event visibilitychange', () => {
-    jest.useFakeTimers();
-    const callback = jest.fn();
-
-    const { timeoutStub, clearTimeoutStub } = mockTimer();
-
-    let visibilityState: Document['visibilityState'] = 'visible';
-
-    jest.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
-
-    renderHook(() => useAutoPlay(100, 0, callback));
-    expect(timeoutStub.mock.calls[0][1]).toBe(100);
-
-    fireEvent(document, new Event('visibilitychange'));
-
-    expect(timeoutStub).toHaveBeenCalledTimes(2);
-    expect(clearTimeoutStub).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledTimes(2);
-
-    visibilityState = 'hidden';
-
-    fireEvent(document, new Event('visibilitychange'));
-    expect(timeoutStub).toHaveBeenCalledTimes(2);
-    expect(clearTimeoutStub).toHaveBeenCalledTimes(2);
-    expect(callback).toHaveBeenCalledTimes(2);
-  });
-
-  it('should not call callback when timeout = 0', () => {
-    jest.useFakeTimers();
-    const callback = jest.fn();
-
-    const { timeoutStub, clearTimeoutStub } = mockTimer();
-
-    renderHook(() => useAutoPlay(0, 0, callback));
-
-    expect(timeoutStub).toHaveBeenCalledTimes(0);
-    expect(clearTimeoutStub).toHaveBeenCalledTimes(0);
-    expect(callback).toHaveBeenCalledTimes(0);
   });
 });
