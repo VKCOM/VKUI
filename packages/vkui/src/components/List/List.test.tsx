@@ -37,14 +37,9 @@ const mockTimers = () => {
     fn(1);
     return 1;
   });
-
-  jest.spyOn(window, 'setTimeout').mockImplementation((fn) => {
-    fn();
-    return 1 as unknown as NodeJS.Timeout;
-  });
 };
 
-const mockCellData = (element: HTMLDivElement, index: number) => {
+const setupCell = (element: HTMLDivElement, index: number) => {
   let transform = '';
   jest.spyOn(element.style, 'setProperty').mockImplementation((property, value) => {
     if (property === 'transform') {
@@ -78,17 +73,101 @@ const mockCellData = (element: HTMLDivElement, index: number) => {
   };
 };
 
+const setupList = (element: HTMLDivElement) => {
+  let listScrollTop = 0;
+  jest.spyOn(element, 'scrollTop', 'get').mockImplementation(() => listScrollTop);
+  jest
+    .spyOn(element, 'scrollTop', 'set')
+    .mockImplementation((newScrollTop) => (listScrollTop = newScrollTop));
+  return {
+    get listScrollTop() {
+      return listScrollTop;
+    },
+    set listScrollTop(newScrollTop) {
+      listScrollTop = newScrollTop;
+    },
+  };
+};
+
 const getCellDraggerById = (testId: string) => {
   const cellToDrag = screen.getByTestId(testId);
   return cellToDrag.querySelector<HTMLElement>(`.${draggerStyles['CellDragger']}`)!;
 };
 
-const dragCell = (
-  testId: string,
-  breakPoints: number[],
-  afterFirstMove: VoidFunction = noop,
-  afterDragging: VoidFunction = noop,
-) => {
+const setup = ({ cellsCount = 3 }: { cellsCount?: number }) => {
+  mockTimers();
+  let listSetup: ReturnType<typeof setupList>;
+  let list;
+  let swappedItems: SwappedItemRange | null = null;
+
+  const onDragFinish = (swappedItemRange: SwappedItemRange) => {
+    swappedItems = swappedItemRange;
+  };
+  const cellToMockedData: Record<string, ReturnType<typeof setupCell>> = {};
+
+  const component = render(
+    <List
+      data-testid="list"
+      getRootRef={(element) => {
+        if (!element) {
+          return;
+        }
+        list = element;
+        listSetup = setupList(element);
+      }}
+    >
+      {new Array(cellsCount).fill(0).map((_, index) => {
+        return (
+          <Cell
+            getRootRef={(element) => {
+              if (!element) {
+                return;
+              }
+              cellToMockedData[`cell-${index}`] = setupCell(element, index);
+            }}
+            key={index}
+            draggable
+            data-testid={`cell-${index}`}
+            onDragFinish={onDragFinish}
+          >
+            {index} Item
+          </Cell>
+        );
+      })}
+    </List>,
+  );
+
+  return {
+    component,
+    get list() {
+      return list!;
+    },
+    get swappedItems() {
+      return swappedItems;
+    },
+    get listScrollTop() {
+      return listSetup!.listScrollTop;
+    },
+    set listScrollTop(newScrollTop) {
+      listSetup!.listScrollTop = newScrollTop;
+    },
+    getCellSetup: (id: string) => {
+      return cellToMockedData[id];
+    },
+  };
+};
+
+const dragCell = ({
+  testId,
+  breakPoints,
+  afterDragging,
+  afterMove = {},
+}: {
+  testId: string;
+  breakPoints: number[];
+  afterMove?: Record<number, VoidFunction>;
+  afterDragging?: VoidFunction;
+}) => {
   const dragger = getCellDraggerById(testId);
   fireEvent.mouseDown(dragger);
 
@@ -97,17 +176,22 @@ const dragCell = (
       clientY: breakPoint,
       shiftY: breakPoint,
     });
-    if (index === 0) {
-      afterFirstMove();
-    }
+    afterMove[index]?.();
   });
-  afterDragging();
+  afterDragging && afterDragging();
 
   fireEvent.mouseUp(dragger);
 };
 
 describe('List', () => {
   baselineComponent(List);
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
   it('should have style gap', async () => {
     render(
@@ -124,119 +208,71 @@ describe('List', () => {
   });
 
   it('check dnd is working', async () => {
-    const cellsCount = 3;
-    mockTimers();
+    const setupData = setup({});
+    const { getCellSetup } = setupData;
 
-    let swappedItems: SwappedItemRange | null = null;
-
-    const onDragFinish = (swappedItemRange: SwappedItemRange) => {
-      swappedItems = swappedItemRange;
-    };
-    const cellToMockedData: Record<string, ReturnType<typeof mockCellData>> = {};
-
-    render(
-      <List data-testid="list">
-        {new Array(cellsCount).fill(0).map((_, index) => {
-          return (
-            <Cell
-              getRootRef={(element) => {
-                if (!element) {
-                  return;
-                }
-                cellToMockedData[`cell-${index}`] = mockCellData(element, index);
-              }}
-              key={index}
-              draggable
-              data-testid={`cell-${index}`}
-              onDragFinish={onDragFinish}
-            >
-              {index} Item
-            </Cell>
-          );
-        })}
-      </List>,
-    );
-
-    dragCell(
-      'cell-0',
-      [5, 140, 140, 124],
-      () => {
-        const cell1Data = cellToMockedData['cell-1'];
-        expect(cell1Data.transform).toBe('translateY(50px)');
-        const cell2Data = cellToMockedData['cell-2'];
+    dragCell({
+      testId: 'cell-0',
+      breakPoints: [5, 140, 140, 124],
+      afterDragging: () => {
+        const cell1Data = getCellSetup('cell-1');
+        expect(cell1Data.transform).toBe('');
+        const cell2Data = getCellSetup('cell-2');
         expect(cell2Data.transform).toBe('translateY(50px)');
       },
-      () => {
-        const cell1Data = cellToMockedData['cell-1'];
+      afterMove: {
+        0: () => {
+          const cell1Data = getCellSetup('cell-1');
+          expect(cell1Data.transform).toBe('translateY(50px)');
+          const cell2Data = getCellSetup('cell-2');
+          expect(cell2Data.transform).toBe('translateY(50px)');
+        },
+      },
+    });
+
+    expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
+
+    dragCell({
+      testId: 'cell-2',
+      breakPoints: [140, 140, 75, 140, 75],
+      afterDragging: () => {
+        const cell1Data = getCellSetup('cell-0');
         expect(cell1Data.transform).toBe('');
-        const cell2Data = cellToMockedData['cell-2'];
+        const cell2Data = getCellSetup('cell-1');
         expect(cell2Data.transform).toBe('translateY(50px)');
       },
-    );
-
-    expect(swappedItems).toEqual({ from: 0, to: 1 });
-
-    dragCell(
-      'cell-2',
-      [140, 140, 75, 140, 75],
-      () => {
-        const cell1Data = cellToMockedData['cell-0'];
-        expect(cell1Data.transform).toBe('');
-        const cell2Data = cellToMockedData['cell-1'];
-        expect(cell2Data.transform).toBe('');
+      afterMove: {
+        0: () => {
+          const cell1Data = getCellSetup('cell-0');
+          expect(cell1Data.transform).toBe('');
+          const cell2Data = getCellSetup('cell-1');
+          expect(cell2Data.transform).toBe('');
+        },
       },
-      () => {
-        const cell1Data = cellToMockedData['cell-0'];
-        expect(cell1Data.transform).toBe('');
-        const cell2Data = cellToMockedData['cell-1'];
-        expect(cell2Data.transform).toBe('translateY(50px)');
-      },
-    );
+    });
 
-    expect(swappedItems).toEqual({ from: 2, to: 1 });
+    expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
   });
 
   it('check dnd with scroll working', () => {
-    const cellsCount = 3;
-    mockTimers();
+    const setupData = setup({});
 
-    let swappedItems: SwappedItemRange | null = null;
+    isScrollRunning = false;
+    setupData.listScrollTop = 50;
 
-    const onDragFinish = (swappedItemRange: SwappedItemRange) => {
-      swappedItems = swappedItemRange;
-    };
-    const cellToMockedData: Record<string, ReturnType<typeof mockCellData>> = {};
-
-    render(
-      <List data-testid="list">
-        {new Array(cellsCount).fill(0).map((_, index) => {
-          return (
-            <Cell
-              getRootRef={(element) => {
-                if (!element) {
-                  return;
-                }
-                cellToMockedData[`cell-${index}`] = mockCellData(element, index);
-              }}
-              key={index}
-              draggable
-              data-testid={`cell-${index}`}
-              onDragFinish={onDragFinish}
-            >
-              {index} Item
-            </Cell>
-          );
-        })}
-      </List>,
-    );
-
-    const list = screen.getByTestId('list');
-
-    isScrollRunning = true;
-    dragCell('cell-0', [5, 140], noop, () => {
-      fireEvent.scroll(list);
+    dragCell({
+      testId: 'cell-0',
+      breakPoints: [5, 70, 90],
+      afterMove: {
+        1: () => {
+          jest.runAllTimers();
+          isScrollRunning = true;
+          setupData.listScrollTop = 30;
+          fireEvent.scroll(setupData.list);
+        },
+      },
     });
 
-    expect(swappedItems).toEqual({ from: 0, to: 2 });
+    expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
   });
 });
