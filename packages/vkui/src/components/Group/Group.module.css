@@ -162,10 +162,6 @@
   box-sizing: border-box;
 }
 
-.Group:last-of-type + .Group__separator-sibling:not(.Group__separator-sibling--forced) {
-  display: none !important; /* stylelint-disable-line declaration-no-important -- гарантировано прячем последний разделитель */
-}
-
 .Group__separator-sibling::before {
   display: var(--vkui_internal--Group__separator_hr);
   content: '';
@@ -188,6 +184,17 @@
 
     padding-inline: var(--vkui--size_base_padding_horizontal--regular);
     padding-block: var(--vkui--spacing_size_m);
+  }
+}
+
+.Group--mode-plain:last-of-type + .Group__separator-sibling:not(.Group__separator-sibling--forced) {
+  display: none;
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-none:last-of-type
+    + .Group__separator-sibling:not(.Group__separator-sibling--forced) {
+    display: none;
   }
 }
 
