@@ -28,6 +28,10 @@ export const CellPlayground = (props: ComponentPlaygroundProps) => {
           children: ['Мария Саломея Склодовская-Кюри', 'Артур Стамбульцян'],
           multiline: [true, false],
         },
+        {
+          mode: ['selectable'],
+          children: ['Мария Саломея Склодовская-Кюри'],
+        },
       ]}
     >
       {(props: CellProps) => <Cell {...props} />}
