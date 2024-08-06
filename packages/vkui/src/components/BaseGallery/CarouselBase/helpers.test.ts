@@ -83,7 +83,7 @@ describe(calculateIndent, () => {
       result: 0,
     },
   ])(
-    'should return $result when slidesManager $slidesManager, targetIndex $targetIndex and isCenterWithCustomWidth $isCenterWithCustomWidth',
+    'should return $result when targetIndex $targetIndex and isCenterWithCustomWidth $isCenterWithCustomWidth',
     ({ slidesManager, result, isCenterWithCustomWidth, targetIndex }) => {
       expect(calculateIndent(targetIndex, slidesManager, isCenterWithCustomWidth)).toBe(result);
     },
@@ -105,7 +105,7 @@ describe(getShiftedIndexes, () => {
       result: [3, 2, 1],
     },
   ])(
-    'should return $result with direction $direction, slides $slides, availableWidth $availableWidth',
+    'should return $result with direction $direction, availableWidth $availableWidth',
     ({ direction, slides, availableWidth, result }) => {
       expect(getShiftedIndexes(direction, slides, availableWidth)).toEqual(result);
     },
@@ -137,7 +137,7 @@ describe(getLoopPoints, () => {
       result: [-1000, -1000],
     },
   ])(
-    'should return correct result $result with slidesManager $slidesManager, containerWidth $containerWidth',
+    'should return correct result $result with containerWidth $containerWidth',
     ({ slidesManager, result, containerWidth }) => {
       expect(
         getLoopPoints(slidesManager, containerWidth).map(({ target }) => {
@@ -186,7 +186,7 @@ describe(getTargetIndex, () => {
       resultIndex: 0,
     },
   ])(
-    'should return $resultIndex with slides $slides, slideIndex $slideIndex, currentShiftX $currentShiftX, currentShiftXDelta $currentShiftXDelta',
+    'should return $resultIndex with slideIndex $slideIndex, currentShiftX $currentShiftX, currentShiftXDelta $currentShiftXDelta',
     ({ slides, slideIndex, currentShiftX, currentShiftXDelta, resultIndex }) => {
       expect(getTargetIndex(slides, slideIndex, currentShiftX, currentShiftXDelta)).toBe(
         resultIndex,
