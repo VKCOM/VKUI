@@ -1,37 +1,38 @@
 import * as React from 'react';
 import { act } from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, mountTest, userEvent, waitCSSTransitionEnd } from '../../testing/utils';
+import { Button } from '../Button/Button';
 import { ModalCard } from '../ModalCard/ModalCard';
 import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
+import { withModalRootContext } from './withModalRootContext';
 import styles from './ModalRoot.module.css';
 
 const clickFade = async () =>
   await userEvent.click(document.querySelector(`.${styles.ModalRoot__mask}`)!);
 let rafSpies: jest.SpyInstance[];
 
+beforeEach(() => {
+  jest.useFakeTimers();
+  rafSpies = [
+    jest
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation((cb) => window.setTimeout(() => cb(Date.now()))),
+    jest.spyOn(window, 'cancelAnimationFrame').mockImplementation((id) => window.clearTimeout(id)),
+  ];
+});
+afterEach(() => {
+  jest.clearAllTimers();
+  jest.useRealTimers();
+  rafSpies.forEach((m) => m.mockRestore());
+});
+
 describe.each([
   ['ModalRootTouch', ModalRootTouch],
   ['ModalRootDesktop', ModalRootDesktop],
 ] as const)('%s', (name, ModalRoot: any) => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-    rafSpies = [
-      jest
-        .spyOn(window, 'requestAnimationFrame')
-        .mockImplementation((cb) => window.setTimeout(() => cb(Date.now()))),
-      jest
-        .spyOn(window, 'cancelAnimationFrame')
-        .mockImplementation((id) => window.clearTimeout(id)),
-    ];
-  });
-  afterEach(() => {
-    jest.clearAllTimers();
-    jest.useRealTimers();
-    rafSpies.forEach((m) => m.mockRestore());
-  });
   baselineComponent<any>(ModalRoot, { forward: false, a11y: false, getRootRef: false });
   describe('With ModalPage', () =>
     mountTest(() => (
@@ -297,3 +298,132 @@ describe.each([
 function getFirstHTMLElementChild(el: HTMLElement | null) {
   return el && el.firstElementChild instanceof HTMLElement ? el.firstElementChild : null;
 }
+
+describe(ModalRootTouch, () => {
+  describe('check correct update height', () => {
+    const updateHeightSetup = async ({
+      content,
+      defaultModalContentClientHeight,
+      defaultContentInScrollHeight,
+    }: {
+      content: React.ReactElement;
+      defaultModalContentClientHeight: number;
+      defaultContentInScrollHeight: number;
+    }) => {
+      let modalContentClientHeight = defaultModalContentClientHeight;
+      let contentInScrollHeight = defaultContentInScrollHeight;
+      let innerElementTransform = '';
+
+      const Fixture = () => {
+        return (
+          <ModalRootTouch activeModal="modal-page">
+            <ModalPage
+              id="modal-page"
+              data-testid="modal-page"
+              key="1"
+              getRootRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                jest
+                  .spyOn((element.firstElementChild! as HTMLElement).style, 'transform', 'set')
+                  .mockImplementation((newTransform) => (innerElementTransform = newTransform));
+                jest
+                  .spyOn(element, 'offsetHeight', 'get')
+                  .mockImplementation(() => modalContentClientHeight);
+              }}
+              getModalContentRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                jest
+                  .spyOn(element, 'clientHeight', 'get')
+                  .mockImplementation(() => modalContentClientHeight);
+                jest
+                  .spyOn(element.firstElementChild!, 'scrollHeight', 'get')
+                  .mockImplementation(() => contentInScrollHeight);
+              }}
+            >
+              {content}
+            </ModalPage>
+          </ModalRootTouch>
+        );
+      };
+
+      const component = render(<Fixture />, {
+        baseElement: document.documentElement,
+      });
+      act(jest.runAllTimers);
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('modal-page')));
+
+      return {
+        component,
+        set modalContentClientHeight(height: number) {
+          modalContentClientHeight = height;
+        },
+        set contentInScrollHeight(height: number) {
+          contentInScrollHeight = height;
+        },
+        get innerElementTransform() {
+          return innerElementTransform;
+        },
+      };
+    };
+
+    it('should update modal height without expandable', async () => {
+      const ModalPageContent = withModalRootContext(({ updateModalHeight }) => {
+        return (
+          <div>
+            <Button onClick={updateModalHeight} data-testid="update-height">
+              Обновить
+            </Button>
+          </div>
+        );
+      });
+
+      const mockedData = await updateHeightSetup({
+        content: <ModalPageContent />,
+        defaultContentInScrollHeight: 700,
+        defaultModalContentClientHeight: 800,
+      });
+
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 12.5%, 0)');
+
+      mockedData.modalContentClientHeight = 1000;
+      mockedData.contentInScrollHeight = 700;
+
+      fireEvent.click(mockedData.component.getByTestId('update-height'));
+      act(jest.runAllTimers);
+
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 30%, 0)');
+    });
+
+    it('should update modal height with expandable', async () => {
+      const ModalPageContent = withModalRootContext(({ updateModalHeight }) => {
+        return (
+          <div>
+            <Button onClick={updateModalHeight} data-testid="update-height">
+              Обновить
+            </Button>
+          </div>
+        );
+      });
+
+      const mockedData = await updateHeightSetup({
+        content: <ModalPageContent />,
+        defaultModalContentClientHeight: 600,
+        defaultContentInScrollHeight: 800,
+      });
+
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 25%, 0)');
+
+      mockedData.modalContentClientHeight = 700;
+      mockedData.contentInScrollHeight = 1000;
+
+      fireEvent.click(mockedData.component.getByTestId('update-height'));
+      act(jest.runAllTimers);
+
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 25%, 0)');
+    });
+  });
+});
