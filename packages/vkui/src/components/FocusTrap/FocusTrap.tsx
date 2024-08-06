@@ -84,7 +84,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
     recalculateFocusableNodesRef(parentNode);
 
-    if (arraysEquals(oldFocusableNodes, focusableNodesRef.current)) {
+    if (arraysEquals(oldFocusableNodes, focusableNodesRef.current) || !autoFocus) {
       return;
     }
 
