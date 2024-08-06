@@ -85,7 +85,10 @@ export const Cell: React.FC<CellProps> & {
   const dragger = draggable ? (
     <CellDragger
       elRef={rootElRef}
-      className={classNames(styles['Cell__dragger'], !before && styles['Cell__control--noBefore'])}
+      className={classNames(
+        styles['Cell__dragger'],
+        !before && !selectable && styles['Cell__control--noBefore'],
+      )}
       disabled={disabled}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
