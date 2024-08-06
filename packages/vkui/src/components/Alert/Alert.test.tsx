@@ -2,6 +2,7 @@ import { act } from 'react';
 import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
+import { getDocumentBody } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import {
   baselineComponent,
@@ -12,6 +13,12 @@ import {
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Alert, type AlertProps } from './Alert';
+import styles from './Alert.module.css';
+import buttonStyles from '../Button/Button.module.css';
+import captionStyles from '../Typography/Caption/Caption.module.css';
+import footnoteStyles from '../Typography/Footnote/Footnote.module.css';
+import titleStyles from '../Typography/Title/Title.module.css';
+import typographyStyles from '../Typography/Typography.module.css';
 
 describe('Alert', () => {
   fakeTimers();
@@ -129,6 +136,91 @@ describe('Alert', () => {
     expect(screen.getByTestId('allow-test-id')).toHaveTextContent('Allow');
     expect(screen.getByTestId('deny-test-id')).toHaveTextContent('Deny');
   });
+  it.each([
+    {
+      href: '#',
+      expectedTag: 'A',
+    },
+    {
+      href: undefined,
+      expectedTag: 'BUTTON',
+    },
+  ])(
+    'action should use "$expectedTag" tag when use href "$href" ',
+    async ({ href, expectedTag }) => {
+      const result = render(
+        <ConfigProvider platform={Platform.IOS}>
+          <Alert
+            onClose={jest.fn()}
+            actions={[
+              { 'title': 'Allow', 'mode': 'default', 'data-testid': 'allow-test-id', href },
+            ]}
+          />
+        </ConfigProvider>,
+      );
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(screen.getByTestId('allow-test-id').tagName).toBe(expectedTag);
+    },
+  );
+
+  it.each([
+    {
+      mode: 'destructive' as const,
+      className: styles['Alert__action--mode-destructive'],
+    },
+    {
+      mode: 'cancel' as const,
+      className: styles['Alert__action--mode-cancel'],
+    },
+  ])(
+    'should have className "$className" with mode "$mode" in IOS platform',
+    async ({ mode, className }) => {
+      const result = render(
+        <ConfigProvider platform={Platform.IOS}>
+          <Alert
+            onClose={jest.fn()}
+            actions={[{ 'title': 'Allow', mode, 'data-testid': 'allow-test-id' }]}
+          />
+        </ConfigProvider>,
+      );
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(screen.getByTestId('allow-test-id')).toHaveClass(className);
+    },
+  );
+
+  it.each([
+    {
+      mode: 'cancel' as const,
+      className: styles['Alert__button--mode-cancel'],
+      buttonClassName: buttonStyles['Button--mode-secondary'],
+    },
+    {
+      mode: 'destructive' as const,
+      className: undefined,
+      buttonClassName: buttonStyles['Button--mode-primary'],
+    },
+  ])(
+    'should have className "$className" ans "$buttonClassName" with mode "$mode" in VKCOM platform',
+    async ({ mode, className, buttonClassName }) => {
+      const result = render(
+        <ConfigProvider platform={Platform.VKCOM}>
+          <Alert
+            onClose={jest.fn()}
+            actions={[{ 'title': 'Allow', mode, 'data-testid': 'allow-test-id' }]}
+          />
+        </ConfigProvider>,
+      );
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      className && expect(screen.getByTestId('allow-test-id')).toHaveClass(className);
+      expect(screen.getByTestId('allow-test-id')).toHaveClass(buttonClassName);
+    },
+  );
 
   it.each<AlertProps['dismissButtonMode']>(['outside', 'inside'])(
     'passes data-testid to dismiss button in %s dismissButtonMode',
@@ -147,6 +239,72 @@ describe('Alert', () => {
       expect(screen.getByTestId('dismiss-button-test-id')).toHaveTextContent(
         'Закрыть предупреждение',
       );
+    },
+  );
+
+  it.each([
+    {
+      align: 'left' as const,
+      className: styles['Alert__actions--align-left'],
+    },
+    {
+      align: 'center' as const,
+      className: styles['Alert__actions--align-center'],
+    },
+    {
+      align: 'right' as const,
+      className: styles['Alert__actions--align-right'],
+    },
+  ])(
+    'actions wrapper should have className "$className" when use align "$align"',
+    async ({ align, className }) => {
+      const result = render(<Alert onClose={jest.fn()} actionsAlign={align} />);
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      const actionsWrapper = getDocumentBody().getElementsByClassName(styles['Alert__actions'])[0];
+      expect(actionsWrapper).toHaveClass(className);
+    },
+  );
+
+  it.each([
+    {
+      header: 'Header',
+      headerClassNames: [titleStyles['Title--level-3'], typographyStyles['Typography--weight-1']],
+      text: 'Text',
+      textClassNames: [captionStyles['Caption--level-1']],
+      platform: Platform.IOS,
+    },
+    {
+      header: 'Header',
+      headerClassNames: [titleStyles['Title--level-2'], typographyStyles['Typography--weight-2']],
+      text: 'Text',
+      textClassNames: [footnoteStyles['Footnote']],
+      platform: Platform.VKCOM,
+    },
+    {
+      header: 'Header',
+      headerClassNames: [titleStyles['Title--level-2'], typographyStyles['Typography--weight-2']],
+      text: 'Text',
+      textClassNames: [typographyStyles['Typography--weight-3']],
+      platform: Platform.ANDROID,
+    },
+  ])(
+    `should have header classNames "$headerClassNames" and text classNames "$textClassNames" when use platform "$platform"`,
+    async ({ header, text, headerClassNames, textClassNames, platform }) => {
+      const result = render(
+        <ConfigProvider platform={platform}>
+          <Alert onClose={jest.fn()} header={header} text={text} />
+        </ConfigProvider>,
+      );
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      const headerElement = result.container.getElementsByClassName(styles['Alert__header'])[0];
+      const textElement = result.container.getElementsByClassName(styles['Alert__text'])[0];
+
+      headerClassNames.forEach((className) => expect(headerElement).toHaveClass(className));
+      textClassNames.forEach((className) => expect(textElement).toHaveClass(className));
     },
   );
 });
