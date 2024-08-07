@@ -1,149 +1,53 @@
+/* stylelint-disable selector-max-universal */
+
+/*
+ * Автоопределение mode:
+ *
+ * - sizeX="compact" (mobile)  -> mode="plain"
+ * - sizeX="regular" (desktop) -> mode="card"
+ */
 .Group {
+  --vkui_internal--Group_padding_size: 0;
+
   color: var(--vkui--color_text_primary);
-  padding-block: 8px;
+  padding-block: var(--vkui--spacing_size_m);
 }
 
-.Group__header:empty {
-  display: none;
+.Group--padding-s {
+  --vkui_internal--Group_padding_size: var(--vkui--spacing_size_xs);
 }
 
-.Group--mode-plain:not(:first-of-type) > .Group__header {
-  margin-block-start: -8px;
+.Group--padding-m {
+  --vkui_internal--Group_padding_size: var(--vkui--spacing_size_m);
 }
 
-@media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none:not(:first-of-type) > .Group__header {
-    margin-block-start: -8px;
-  }
-}
-
-.Group--mode-card > .Group__header {
-  margin-block-start: -4px;
-}
-
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none > .Group__header {
-    margin-block-start: -4px;
-  }
-}
-
-.Group__separator--spacing,
-.Group__separator--separator {
-  display: none;
-}
-
-.Group__separator--spacing {
+/* разделитель при mode="card" */
+.Group--mode-card,
+.Group--sizeX-regular.Group--mode-none {
+  padding: var(--vkui_internal--Group_padding_size);
   position: relative;
-  box-sizing: border-box;
-}
-
-/* stylelint-disable-next-line selector-max-universal */
-.Group--mode-plain + * + .Group__separator--separator {
-  display: block;
-}
-
-@media (--sizeX-compact) {
-  /* stylelint-disable-next-line selector-max-universal */
-  .Group--sizeX-none.Group--mode-none + * + .Group__separator--separator {
-    display: block;
-  }
-}
-
-.Group--mode-card + .Group__separator--spacing {
-  display: block;
-  block-size: 16px;
-  padding-block: 8px;
-  padding-inline: 0;
-}
-
-.Group--sizeX-compact.Group--mode-card + .Group__separator--spacing {
-  display: block;
-  block-size: 8px;
-  padding-block: 4px;
-}
-
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none + .Group__separator--spacing {
-    display: block;
-    block-size: 16px;
-    padding-block: 8px;
-    padding-inline: 0;
-  }
-}
-@media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-card + .Group__separator--spacing {
-    block-size: 8px;
-    padding-block: 4px;
-  }
-}
-
-.Group:last-of-type ~ .Group__separator {
-  display: none;
-}
-
-.Group:last-of-type ~ .Group__separator--force,
-.Group--mode-card:last-of-type + .Group__separator--spacing {
-  display: block;
-}
-
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none:last-of-type + .Group__separator--spacing {
-    display: block;
-  }
-}
-
-.Group--mode-card.Group--padding-s {
-  padding: 4px;
-}
-
-.Group--mode-card.Group--padding-m {
-  padding: 8px;
-}
-
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--inside-modal.Group--padding-s,
-  .Group--sizeX-none.Group--mode-none.Group--padding-s {
-    padding: 4px;
-  }
-
-  .Group--sizeX-none.Group--inside-modal.Group--padding-m,
-  .Group--sizeX-none.Group--mode-none.Group--padding-m {
-    padding: 8px;
-  }
-}
-
-.Group--sizeX-compact,
-.Group--sizeX-compact.Group--mode-card {
-  padding-inline: 0;
-}
-
-@media (--sizeX-compact) {
-  .Group--sizeX-none,
-  .Group--sizeX-none.Group--mode-card {
-    padding-inline: 0;
-  }
-}
-
-.Group--mode-card {
   background: var(--vkui--color_background_content);
   border-radius: var(--vkui--size_border_radius_paper--regular);
-  position: relative;
+}
+
+@media (--sizeX-regular) {
+  .Group--sizeX-none.Group--mode-none {
+    padding: var(--vkui_internal--Group_padding_size);
+    position: relative;
+    background: var(--vkui--color_background_content);
+    border-radius: var(--vkui--size_border_radius_paper--regular);
+  }
 }
 
 .Group--sizeX-compact.Group--mode-card {
+  padding-inline: 0;
   border-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none.Group--mode-card {
+    padding-inline: 0;
     border-radius: var(--vkui--size_border_radius_promo--regular);
-  }
-}
-@media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none {
-    background: var(--vkui--color_background_content);
-    border-radius: var(--vkui--size_border_radius_paper--regular);
-    position: relative;
   }
 }
 
@@ -163,14 +67,15 @@
   }
 }
 
-/**
+/*
  * Изменено с ::after на ::before
  * потому что при ::after абсолютно позиционированный элемент накладывается
  * поверх любого другого абсолютно позиционированного элемента внутри Group,
  * например поверх Tooltip
  * См. пример: Slider c пропом withTooltip
  */
-.Group--mode-card::before {
+.Group--mode-card::before,
+.Group--sizeX-regular.Group--mode-none::before {
   content: '';
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -206,25 +111,145 @@
   }
 }
 
-.Group--mode-plain + .Group__separator + .Group__separator {
-  padding-block: 8px;
+/*
+ * Header
+ */
+.Group__header:empty {
+  display: none;
+}
+
+.Group--mode-plain:not(:first-of-type) > .Group__header,
+.Group--sizeX-compact.Group--mode-none:not(:first-of-type) > .Group__header {
+  margin-block-start: calc(-1 * var(--vkui--spacing_size_m));
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none + .Group__separator + .Group__separator {
-    padding-block: 8px;
+  .Group--sizeX-none.Group--mode-none:not(:first-of-type) > .Group__header {
+    margin-block-start: calc(-1 * var(--vkui--spacing_size_m));
   }
 }
 
+.Group--mode-card > .Group__header,
+.Group--sizeX-regular.Group--mode-none > .Group__header {
+  margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
+}
+
+@media (--sizeX-regular) {
+  .Group--sizeX-none.Group--mode-none > .Group__header {
+    margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
+  }
+}
+
+/*
+ * Description
+ */
 .Group__description {
   display: block;
-  padding-block: 4px 16px;
+  padding-block: var(--vkui--spacing_size_xs) var(--vkui--spacing_size_2xl);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   color: var(--vkui--color_text_secondary);
 }
 
+/*
+ * Separator (sibling)
+ *
+ * ⚠️ Находится за пределами Group
+ */
+.Group__separator-sibling {
+  --vkui_internal--Group__separator_hr: none;
+
+  position: relative;
+  box-sizing: border-box;
+}
+
+.Group__separator-sibling::before {
+  display: var(--vkui_internal--Group__separator_hr);
+  content: '';
+  block-size: var(--vkui--size_border--regular);
+  background: var(--vkui--color_separator_primary);
+}
+
+/* разделитель при mode="plain" */
+.Group--mode-plain + .Group__separator-sibling,
+.Group--sizeX-compact.Group--mode-none + .Group__separator-sibling {
+  --vkui_internal--Group__separator_hr: block;
+
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+  padding-block: var(--vkui--spacing_size_m);
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-none + .Group__separator-sibling {
+    --vkui_internal--Group__separator_hr: block;
+
+    padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+    padding-block: var(--vkui--spacing_size_m);
+  }
+}
+
+.Group--mode-plain:last-of-type + .Group__separator-sibling:not(.Group__separator-sibling--forced) {
+  display: none;
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-none:last-of-type
+    + .Group__separator-sibling:not(.Group__separator-sibling--forced) {
+    display: none;
+  }
+}
+
+/* разделитель при mode="card" */
+.Group--mode-card + .Group__separator-sibling,
+.Group--sizeX-regular.Group--mode-none + .Group__separator-sibling {
+  block-size: var(--vkui--spacing_size_2xl);
+  padding-block: calc(var(--vkui--spacing_size_2xl) / 2);
+}
+
+@media (--sizeX-regular) {
+  .Group--sizeX-none.Group--mode-none + .Group__separator-sibling {
+    block-size: var(--vkui--spacing_size_2xl);
+    padding-block: calc(var(--vkui--spacing_size_2xl) / 2);
+  }
+}
+
+.Group--sizeX-compact.Group--mode-card + .Group__separator-sibling {
+  block-size: var(--vkui--spacing_size_m);
+  padding-block: calc(var(--vkui--spacing_size_m) / 2);
+}
+
+@media (--sizeX-compact) {
+  .Group--sizeX-none.Group--mode-card + .Group__separator-sibling {
+    block-size: var(--vkui--spacing_size_m);
+    padding-block: calc(var(--vkui--spacing_size_m) / 2);
+  }
+}
+
+/*
+ * Group вложенный в ModalPage
+ *
+ * note: ModalPage форсирует mode="plain" для Group
+ */
+@media (--sizeX-regular) {
+  .Group--mode-plain-inside-modal {
+    padding: var(--vkui--spacing_size_m);
+  }
+
+  .Group--mode-plain-inside-modal + .Group__separator-sibling {
+    padding-inline: calc(
+      var(--vkui--size_base_padding_horizontal--regular) + var(--vkui--spacing_size_m)
+    );
+  }
+}
+
+/*
+ * Group вложенный в Group
+ */
 .Group .Group {
   padding-inline: 0;
+}
+
+.Group .Group + .Group__separator-sibling {
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .Group .Group:first-of-type {
@@ -239,7 +264,6 @@
  * CMP:
  * PanelHeader
  */
-/* stylelint-disable selector-max-universal */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader--vkcom) ~ .Group:first-of-type,
 :global(.vkuiInternalPanelHeader--vkcom) + * .Group:first-of-type {
@@ -248,4 +272,3 @@
   border-start-end-radius: 0;
   border-start-start-radius: 0;
 }
-/* stylelint-enable selector-max-universal */
