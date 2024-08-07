@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { isFunction } from '@vkontakte/vkjs';
-import { warnOnce } from '../../lib/warnOnce';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
+import { warnOnce } from '../lib/warnOnce';
 
 export interface UseEnsuredControlProps<V, E extends React.ChangeEvent<any>> {
   value?: V;
