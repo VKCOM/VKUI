@@ -1,3 +1,4 @@
+import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
@@ -29,12 +30,18 @@ const checkTransformY = (value: string, y: number) => {
   expect(Math.floor(yValue)).toBe(y);
 };
 
-const simulateDrag = (
-  element: HTMLElement,
-  { startY = 0, endY = 0, startX = 0, endX = 0 },
-  checkAfterDragStart: () => void = noop,
-  checkAfterDragEnd: () => void = noop,
-) => {
+const simulateDrag = ({
+  element,
+  position = {},
+  checkAfterDragStart = noop,
+  checkAfterDragEnd = noop,
+}: {
+  element: HTMLElement;
+  position: { startY?: number; endY?: number; startX?: number; endX?: number };
+  checkAfterDragStart: VoidFunction;
+  checkAfterDragEnd: VoidFunction;
+}) => {
+  const { startY = 0, startX = 0, endY = 0, endX = 0 } = position;
   fireEvent.mouseDown(element, {
     clientY: startY,
     clientX: startX,
@@ -55,14 +62,7 @@ const simulateDrag = (
   fireEvent.resize(window);
 };
 
-const mockTimeout = () => {
-  jest.spyOn(window, 'setTimeout').mockImplementation((fn) => {
-    fn();
-    return 1 as unknown as NodeJS.Timeout;
-  });
-};
-
-const mockScrollData = ({
+const setup = ({
   container,
   clientHeight,
   scrollWidth,
@@ -241,7 +241,7 @@ describe(CustomScrollView, () => {
         <span>content</span>
       </CustomScrollView>,
     );
-    const mockedData = mockScrollData({
+    const mockedData = setup({
       container,
       clientHeight: 300,
       scrollHeight: 300,
@@ -257,6 +257,7 @@ describe(CustomScrollView, () => {
   });
 
   it('check scroll by dragging horizontal and vertical tracker', () => {
+    jest.useFakeTimers();
     const { container } = render(
       <CustomScrollView
         data-testid="scroll-view"
@@ -267,14 +268,13 @@ describe(CustomScrollView, () => {
         <span>content</span>
       </CustomScrollView>,
     );
-    const mockedData = mockScrollData({
+    const mockedData = setup({
       container,
       clientHeight: 300,
       scrollHeight: 480,
       clientWidth: 993,
       scrollWidth: 1464,
     });
-    mockTimeout();
 
     // форсим перерисовку и пересчет размеров уже с замоканными значениями
     fireEvent.resize(window);
@@ -289,24 +289,31 @@ describe(CustomScrollView, () => {
     checkTransformX(mockedData.trackerXTransform, 0);
     checkTransformY(mockedData.trackerYTransform, 0);
 
-    simulateDrag(
-      mockedData.trackerY,
-      { endY: 100 },
-      () =>
-        expect(mockedData.trackerY).not.toHaveClass(styles['CustomScrollView__trackerY--hidden']),
-      () => expect(mockedData.trackerY).toHaveClass(styles['CustomScrollView__trackerY--hidden']),
-    );
+    simulateDrag({
+      element: mockedData.trackerY,
+      position: { endY: 100 },
+      checkAfterDragStart: () => {
+        expect(mockedData.trackerY).not.toHaveClass(styles['CustomScrollView__trackerY--hidden']);
+      },
+      checkAfterDragEnd: () => {
+        React.act(jest.runAllTimers);
+        expect(mockedData.trackerY).toHaveClass(styles['CustomScrollView__trackerY--hidden']);
+      },
+    });
 
     checkSize(mockedData.scrollTop, 160);
     checkTransformY(mockedData.trackerYTransform, 100);
 
-    simulateDrag(
-      mockedData.trackerX,
-      { endX: 100 },
-      () =>
+    simulateDrag({
+      element: mockedData.trackerX,
+      position: { endX: 100 },
+      checkAfterDragStart: () =>
         expect(mockedData.trackerX).not.toHaveClass(styles['CustomScrollView__trackerX--hidden']),
-      () => expect(mockedData.trackerX).toHaveClass(styles['CustomScrollView__trackerX--hidden']),
-    );
+      checkAfterDragEnd: () => {
+        React.act(jest.runAllTimers);
+        expect(mockedData.trackerX).toHaveClass(styles['CustomScrollView__trackerX--hidden']);
+      },
+    });
 
     checkSize(mockedData.scrollLeft, 147);
     checkTransformX(mockedData.trackerXTransform, 100);
@@ -325,14 +332,13 @@ describe(CustomScrollView, () => {
         <span>content</span>
       </CustomScrollView>,
     );
-    const mockedData = mockScrollData({
+    const mockedData = setup({
       container,
       clientHeight: 300,
       scrollHeight: 480,
       clientWidth: 993,
       scrollWidth: 1464,
     });
-    mockTimeout();
 
     // форсим перерисовку и пересчет размеров уже с замоканными значениями
     fireEvent.resize(window);

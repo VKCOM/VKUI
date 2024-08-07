@@ -16,7 +16,6 @@ export const useDetectScrollDirection = () => {
       lastScrollLeft.current = scrollLeft;
       return 'horizontal';
     }
-    /* istanbul ignore next: не придумал как проверить */
     return null;
   }, []);
 };

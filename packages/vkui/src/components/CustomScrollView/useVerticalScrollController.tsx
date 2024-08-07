@@ -42,7 +42,6 @@ export const useVerticalScrollController = (
 
   const resize = () => {
     if (!boxRef.current || !barY.current || !trackerY.current) {
-      /* istanbul ignore next: не придумал как проверить */
       return;
     }
     const localClientHeight = boxRef.current.clientHeight;
@@ -91,7 +90,6 @@ export const useVerticalScrollController = (
 
   const scroll = () => {
     if (!boxRef.current) {
-      /* istanbul ignore next: не придумал как проверить */
       return;
     }
     if (autoHideScrollbar) {
