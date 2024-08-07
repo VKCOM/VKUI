@@ -93,11 +93,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const commitShownLocalState = React.useCallback(
     (nextShown: boolean, reason: ShownChangeReason) => {
       setShownLocalState((prevState) => {
-        if (
-          prevState === undefined ||
-          prevState.shown !== nextShown ||
-          prevState.reason !== reason
-        ) {
+        if (prevState.shown !== nextShown || prevState.reason !== reason) {
           return {
             shown: nextShown,
             reason,
