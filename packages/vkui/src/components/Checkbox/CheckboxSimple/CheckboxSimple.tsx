@@ -7,7 +7,7 @@ import styles from './CheckboxSimple.module.css';
 
 const sizeYClassNames = {
   none: styles['CheckboxSimple--sizeY-none'],
-  ['compact']: styles['CheckboxSimple--sizeY-compact'],
+  compact: styles['CheckboxSimple--sizeY-compact'],
 };
 
 export function CheckboxSimple({

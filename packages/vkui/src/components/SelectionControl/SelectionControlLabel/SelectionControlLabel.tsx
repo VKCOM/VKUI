@@ -7,7 +7,7 @@ import styles from './SelectionControlLabel.module.css';
 
 const sizeYClassNames = {
   none: styles['SelectionControlLabel--sizeY-none'],
-  ['compact']: styles['SelectionControlLabel--sizeY-compact'],
+  compact: styles['SelectionControlLabel--sizeY-compact'],
 };
 
 interface SelectionControlLabelProps extends React.ComponentProps<'div'> {

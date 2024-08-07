@@ -10,7 +10,7 @@ import styles from './SelectionControl.module.css';
 
 const sizeYClassNames = {
   none: styles['SelectionControl--sizeY-none'],
-  ['compact']: styles['SelectionControl--sizeY-compact'],
+  compact: styles['SelectionControl--sizeY-compact'],
 };
 
 export interface SelectionControlProps
