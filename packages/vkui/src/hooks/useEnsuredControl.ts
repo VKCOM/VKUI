@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { isFunction } from '@vkontakte/vkjs';
+import { warnOnce } from '../../lib/warnOnce';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 export interface UseEnsuredControlProps<V, E extends React.ChangeEvent<any>> {
@@ -8,6 +9,8 @@ export interface UseEnsuredControlProps<V, E extends React.ChangeEvent<any>> {
   disabled?: boolean | undefined;
   onChange?: (this: void, e: E) => any;
 }
+
+const warn = warnOnce('GridAvatar');
 
 export function useEnsuredControl<V, E extends React.ChangeEvent<any>>({
   onChange: onChangeProp,
@@ -82,6 +85,15 @@ export function useCustomEnsuredControl<V = any>({
             return resolvedValue;
           });
         } else if (onChangeProp) {
+          if (process.env.NODE_ENV === 'development') {
+            if (preservedControlledValueRef.current === undefined) {
+              warn(
+                `Похоже, что при вызове onChange с аргументом nextValue в виде коллбэка, состояние компонента было переведено из неконтролируемого ("undefined") в контролируемое. Пожалуйста, старайтесь сохранять либо неконтролируемое состояние, либо контролируемое на всём промежутке жизненного цикла компонента, чтобы получать предсказуемо значение prevValue в коллбэке nextValue((prevValue: V) => V)`,
+                'error',
+              );
+            }
+          }
+
           const prevValue =
             preservedControlledValueRef.current === undefined
               ? currentFallbackValueRef.current
