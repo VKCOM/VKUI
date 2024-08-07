@@ -3,7 +3,7 @@
   color: var(--vkui--color_text_primary);
   min-inline-size: 0; /* см. https://github.com/VKCOM/VKUI/issues/5687 */
   word-break: break-word;
-  margin-block: 12px;
+  margin-block: var(--vkui--spacing_size_xl);
   margin-inline-start: 12px;
 }
 
@@ -34,11 +34,11 @@
 }
 
 .SelectionControlLabel--sizeY-compact {
-  margin-block: 8px;
+  margin-block: var(--vkui--spacing_size_m);
 }
 
 @media (--sizeY-compact) {
   .SelectionControlLabel--sizeY-none {
-    margin-block: 8px;
+    margin-block: var(--vkui--spacing_size_m);
   }
 }
