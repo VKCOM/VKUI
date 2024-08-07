@@ -26,6 +26,7 @@ jobs:
       package_vkui: ${{ steps.changes.outputs.package_vkui }}
       docs_styleguide: ${{ steps.changes.outputs.docs_styleguide }}
       docs_storybook: ${{ steps.changes.outputs.docs_storybook }}
+      dependencies: ${{ steps.changes.outputs.dependencies }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,18 +45,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Enable Corepack
-        run: corepack enable
-        shell: bash
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
+      - name: Node setup
+        uses: ./.github/actions/node-setup
 
       - name: Run Stylelint
         run: yarn run lint:style
@@ -106,18 +97,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Enable Corepack
-        run: corepack enable
-        shell: bash
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
+      - name: Node setup
+        uses: ./.github/actions/node-setup
 
       - name: Download Playwright blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v4
@@ -160,18 +141,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Enable Corepack
-        run: corepack enable
-        shell: bash
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
+      - name: Node setup
+        uses: ./.github/actions/node-setup
 
       - uses: andresz1/size-limit-action@v1.8.0
         with:
@@ -192,18 +163,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Enable Corepack
-        run: corepack enable
-        shell: bash
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
+      - name: Node setup
+        uses: ./.github/actions/node-setup
 
       - name: Build
         run: yarn run docs:styleguide:build
@@ -223,18 +184,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Enable Corepack
-        run: corepack enable
-        shell: bash
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
+      - name: Node setup
+        uses: ./.github/actions/node-setup
 
       - name: Build
         run: yarn docs:storybook:build
@@ -255,3 +206,25 @@ jobs:
     uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: upload
+
+  check_dependencies:
+    if: ${{ needs.changed_files.outputs.dependencies == 'true' }}
+    needs: changed_files
+    runs-on: ubuntu-latest
+    name: Check dependencies
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: YARN_ENABLE_SCRIPTS=false yarn install --immutable --check-cache --check-resolutions
