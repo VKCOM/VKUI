@@ -109,6 +109,44 @@ describe(FocusTrap, () => {
     expect(screen.getByTestId('first')).toHaveFocus();
   });
 
+  it('no focus when autoFocus=false', async () => {
+    render(<ActionSheetTest autoFocus={false} />);
+    await mountActionSheetViaClick();
+
+    expect(screen.getByTestId('toggle')).toHaveFocus();
+  });
+
+  it('preserve focus when autoFocus=false with dynamic content', async () => {
+    const Template = (props: { childIds: string[] }) => {
+      return (
+        <>
+          <FocusTrap autoFocus={false}>
+            <div>
+              {props.childIds.map((childId) => (
+                <Button key={childId} data-testid={childId}>
+                  Кнопка {childId}
+                </Button>
+              ))}
+            </div>
+          </FocusTrap>
+          <input type="text" data-testid="element-to-focus" />
+        </>
+      );
+    };
+
+    const result = render(<Template childIds={['first', 'middle', 'last']} />);
+    const input = result.getByTestId('element-to-focus');
+
+    input.focus();
+    expect(input).toHaveFocus();
+
+    await act(async () => {
+      result.rerender(<Template childIds={['first', 'last']} />);
+    });
+
+    expect(input).toHaveFocus();
+  });
+
   it('always calls passed onClose on ESCAPE press', async () => {
     const onClose = jest.fn();
     render(<ActionSheetTest onClose={onClose} />);
