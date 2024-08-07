@@ -4,7 +4,7 @@
 - Если нужен выбор диапазона дат, используйте [CalendarRange](#!/CalendarRange).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-import { format } from '../../lib/date';
+import { lightFormat } from 'date-fns';
 
 const Example = () => {
   const [value, setValue] = useState(() => new Date());
@@ -19,7 +19,7 @@ const Example = () => {
 
   return (
     <FormLayoutGroup mode="vertical">
-      <FormItem top="Выбранная дата">{format(value, 'YYYY-MM-DD HH:mm:ss')}</FormItem>
+      <FormItem top="Выбранная дата">{lightFormat(value, 'yyyy-MM-dd HH:mm:ss')}</FormItem>
       <FormItem top="Выбор времени">
         <Checkbox checked={enableTime} onChange={(e) => setEnableTime(e.target.checked)}>
           Включено
