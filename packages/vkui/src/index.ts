@@ -407,6 +407,7 @@ export {
 } from './hooks/useAdaptivityWithJSMediaQueries';
 export { useAppearance } from './hooks/useAppearance';
 export { usePagination } from './hooks/usePagination';
+export { useOrientationChange } from './hooks/useOrientationChange';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
