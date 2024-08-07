@@ -74,7 +74,8 @@ export const ContentCard = ({
   fetchPriority,
   hasHover = false,
   hasActive = false,
-  Component = 'li',
+  // TODO: https://github.com/VKCOM/VKUI/issues/7336
+  Component = 'div',
   ...restProps
 }: ContentCardProps): React.ReactNode => {
   return (

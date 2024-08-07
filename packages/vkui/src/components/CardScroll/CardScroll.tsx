@@ -29,7 +29,8 @@ export const CardScroll = ({
   size = 's',
   showArrows = true,
   noSpaces = false,
-  Component = 'ul',
+  // TODO: https://github.com/VKCOM/VKUI/issues/7336
+  Component = 'div',
   ...restProps
 }: CardScrollProps): React.ReactNode => {
   const refContainer = React.useRef<HTMLDivElement>(null);
