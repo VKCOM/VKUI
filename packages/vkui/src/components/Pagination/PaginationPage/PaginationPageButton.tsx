@@ -21,7 +21,7 @@ export interface PaginationPageButtonProps extends PaginationPageButtonOpts {
   renderPageButton?: (props: CustomPaginationPageButtonProps) => React.ReactNode;
 }
 
-export const getTappablePropsFromPaginationPage = (
+const getTappablePropsFromPaginationPage = (
   opts: PaginationPageButtonOpts,
 ): TappableProps & { 'data-page': number } => {
   const {
