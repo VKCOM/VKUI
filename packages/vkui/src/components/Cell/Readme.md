@@ -52,9 +52,6 @@ const reorderList = ({ from, to }, list, updateListFn) => {
       <Cell mode="selectable" disabled before={<Avatar />}>
         Михаил Лихачев
       </Cell>
-      <Cell mode="selectable" disabled>
-        Михаил Лихачев
-      </Cell>
     </Group>
 
     <Group header={<Header subtitle={<code>Cell.Checkbox</code>}>Выделение</Header>}>
@@ -90,7 +87,7 @@ const reorderList = ({ from, to }, list, updateListFn) => {
         {draggingList.map((item) => (
           <Cell
             key={item}
-            // before={<Avatar />}
+            before={<Avatar />}
             draggable
             onDragFinish={({ from, to }) =>
               reorderList({ from, to }, draggingList, updateDraggingList)
