@@ -33,7 +33,7 @@ export interface FlexItemProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   /**
    * Изначальный размер элемента, эквивалентно `flex-basis`
    */
-  flexBasis?: number;
+  flexBasis?: number | string;
 }
 
 export const FlexItem = ({
