@@ -5,7 +5,6 @@ import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
-import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { warnOnce } from '../../lib/warnOnce';
 import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
@@ -61,7 +60,6 @@ class ModalRootTouchComponent extends React.Component<
     this.frameIds = {};
   }
 
-  private documentScrolling = false;
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
   private readonly viewportRef = React.createRef<HTMLDivElement>();
   private maskAnimationFrame: number | undefined = undefined;
@@ -139,46 +137,17 @@ class ModalRootTouchComponent extends React.Component<
 
   /* Отключает скролл документа */
   toggleDocumentScrolling(enabled: boolean) {
-    if (this.documentScrolling === enabled) {
-      return;
-    }
-    this.documentScrolling = enabled;
-
     if (enabled) {
       // восстанавливаем значение overscroll behavior
       // eslint-disable-next-line no-restricted-properties
       this.document.documentElement.classList.remove('vkui--disable-overscroll-behavior');
-
-      // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
-      // https://github.com/VKCOM/VKUI/issues/444
-      this.window.removeEventListener('touchmove', this.preventTouch, {
-        // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions нет поля passive
-        passive: false,
-      });
     } else {
       // отключаем нативный pull-to-refresh при открытом модальном окне
       // чтобы он не срабатывал при закрытии модалки смахиванием вниз
       // eslint-disable-next-line no-restricted-properties
       this.document.documentElement.classList.add('vkui--disable-overscroll-behavior');
-
-      this.window.addEventListener('touchmove', this.preventTouch, {
-        passive: false,
-      });
     }
   }
-
-  preventTouch = (event: any) => {
-    if (!event) {
-      return false;
-    }
-    while (event.originalEvent) {
-      event = event.originalEvent;
-    }
-    if (event.preventDefault) {
-      event.preventDefault();
-    }
-    return false;
-  };
 
   checkPageContentHeight() {
     const modalState = this.props.getModalState(this.props.activeModal);
@@ -534,7 +503,10 @@ class ModalRootTouchComponent extends React.Component<
     cancelAnimationFrame(this.frameIds[frameId]);
 
     this.frameIds[frameId] = requestAnimationFrame(() => {
-      setTransformStyle(modalState.innerElement, `translate3d(0, ${percent}%, 0)`);
+      if (!modalState.innerElement) {
+        return;
+      }
+      modalState.innerElement.style.transform = `translate3d(0, ${percent}%, 0)`;
     });
   }
 

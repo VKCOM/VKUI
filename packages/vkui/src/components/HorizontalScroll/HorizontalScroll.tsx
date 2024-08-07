@@ -103,7 +103,7 @@ function doScroll({
   onScrollEnd,
   onScrollStart,
   initialScrollWidth,
-  scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
+  scrollAnimationDuration,
   textDirection,
 }: ScrollContext) {
   if (!scrollElement || !getScrollPosition) {
@@ -136,11 +136,6 @@ function doScroll({
   const startTime = now();
 
   (function scroll() {
-    if (!scrollElement) {
-      onScrollEnd();
-      return;
-    }
-
     const time = now();
     const elapsed = Math.min((time - startTime) / scrollAnimationDuration, 1);
 
@@ -182,10 +177,10 @@ export const HorizontalScroll = ({
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
-  const [directionRef, textDirection = 'ltr'] = useDirection<HTMLDivElement>();
-
-  const setCanScrollStart = textDirection === 'ltr' ? setCanScrollLeft : setCanScrollRight;
-  const setCanScrollEnd = textDirection === 'ltr' ? setCanScrollRight : setCanScrollLeft;
+  const [directionRef, textDirection] = useDirection<HTMLDivElement>();
+  const direction = textDirection || 'ltr';
+  const setCanScrollStart = direction === 'ltr' ? setCanScrollLeft : setCanScrollRight;
+  const setCanScrollEnd = direction === 'ltr' ? setCanScrollRight : setCanScrollLeft;
 
   const isCustomScrollingRef = React.useRef(false);
 
@@ -209,14 +204,14 @@ export const HorizontalScroll = ({
           onScrollStart: () => (isCustomScrollingRef.current = true),
           initialScrollWidth: scrollElement?.firstElementChild?.scrollWidth || 0,
           scrollAnimationDuration,
-          textDirection,
+          textDirection: direction,
         }),
       );
       if (animationQueue.current.length === 1) {
         animationQueue.current[0]();
       }
     },
-    [scrollerRef, scrollAnimationDuration, textDirection, setCanScrollEnd],
+    [scrollerRef, scrollAnimationDuration, direction, setCanScrollEnd],
   );
 
   const scrollToLeft = React.useCallback(() => {

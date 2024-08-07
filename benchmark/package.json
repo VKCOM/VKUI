@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@playwright/test": "1.45.1",
-    "@swc/core": "^1.6.13",
+    "@swc/core": "^1.7.6",
     "@vkontakte/vkui": "workspace:packages/vkui",
     "cli-table3": "^0.6.1",
     "css-loader": "^6.10.0",
@@ -20,7 +20,7 @@
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.9.0",
     "playwright": "1.45.1",
-    "postcss": "^8.4.39",
+    "postcss": "^8.4.40",
     "postcss-modules": "^6.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

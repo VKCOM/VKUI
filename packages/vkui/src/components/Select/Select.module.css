@@ -21,6 +21,7 @@
 }
 
 .Select__container {
+  align-self: center;
   flex-grow: 1;
   flex-shrink: 1;
   padding-inline: 12px 0;

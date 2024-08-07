@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, debounce } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
@@ -7,7 +7,6 @@ import { useDOM } from '../../lib/dom';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { debounce } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import {
@@ -109,8 +108,6 @@ const filter = <T extends CustomSelectOptionInterface>(
     ? options.filter((option) => filterFn(inputValue, option))
     : options;
 };
-
-const defaultOptions: CustomSelectOptionInterface[] = [];
 
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -253,7 +250,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     autoHideScrollbarDelay,
     searchable = false,
     renderOption: renderOptionProp = defaultRenderOptionFn,
-    options: optionsProp = defaultOptions as OptionInterfaceT[],
+    options: optionsProp,
     emptyText = 'Ничего не найдено',
     filterFn = defaultFilterFn,
     icon: iconProp,
@@ -282,6 +279,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const handleRootRef = useExternRef(containerRef, getRootRef);
   const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
   const selectElRef = useExternRef(getRef);
+  const optionsWrapperRef = React.useRef<HTMLDivElement>(null);
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
@@ -334,10 +332,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const scrollToElement = React.useCallback((index: number, center = false) => {
     const dropdown = scrollBoxRef.current;
+    const optionsWrapper = optionsWrapperRef.current;
     const item =
-      dropdown && dropdown.firstElementChild
-        ? (dropdown.firstElementChild.children[index] as HTMLElement)
-        : null;
+      dropdown && optionsWrapper ? (optionsWrapper.children[index] as HTMLElement) : null;
 
     if (!item || !dropdown) {
       return;
@@ -669,7 +666,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       const selected = index === selectedOptionIndex;
 
       return (
-        <React.Fragment key={`${option.value}`}>
+        <React.Fragment key={`${typeof option.value}-${option.value}`}>
           {renderOptionProp({
             option,
             hovered,
@@ -703,8 +700,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const resolvedContent = React.useMemo(() => {
     const defaultDropdownContent =
-      options?.length > 0 ? (
-        options.map(renderOption)
+      options.length > 0 ? (
+        <div ref={optionsWrapperRef}>{options.map(renderOption)}</div>
       ) : (
         <Footnote className={styles['CustomSelect__empty']}>{emptyText}</Footnote>
       );

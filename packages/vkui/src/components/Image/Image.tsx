@@ -6,7 +6,7 @@ import styles from './Image.module.css';
 
 export type { ImageBadgeProps, ImageBaseOverlayProps as ImageOverlayProps };
 
-export const IMAGE_DEFAULT_SIZE = 48;
+const IMAGE_DEFAULT_SIZE = 48;
 
 export interface ImageProps extends Omit<ImageBaseProps, 'badge'> {
   /**
