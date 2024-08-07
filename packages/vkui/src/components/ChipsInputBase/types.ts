@@ -9,7 +9,7 @@ import type {
 import { FormFieldProps } from '../FormField/FormField';
 import { FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
 
-export type NavigateTo = 'first' | 'prev' | 'next' | 'last';
+export type NavigateTo = 'prev' | 'next' | 'last';
 
 export type ChipOptionValue = string | number;
 
@@ -123,7 +123,7 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
  */
 export interface ChipsInputBasePrivateProps<O extends ChipOption = ChipOption>
   extends ChipsInputBaseProps<O>,
-    Pick<FormFieldProps, 'mode' | 'status' | 'before' | 'after'> {
+    Pick<FormFieldProps, 'mode' | 'status' | 'before' | 'after' | 'maxHeight'> {
   onClear: () => void;
   onAddChipOption: (value: string) => void;
   onRemoveChipOption: (value: O | ChipOptionValue) => void;

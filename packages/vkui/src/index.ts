@@ -106,6 +106,8 @@ export { AspectRatio } from './components/AspectRatio/AspectRatio';
 export type { AspectRatioProps } from './components/AspectRatio/AspectRatio';
 export { Flex } from './components/Flex/Flex';
 export type { FlexProps } from './components/Flex/Flex';
+export { SimpleGrid } from './components/SimpleGrid/SimpleGrid';
+export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
 
 /**
  * Popouts
@@ -122,8 +124,11 @@ export type {
 export { ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';
 export { ActionSheetDefaultIosCloseItem } from './components/ActionSheet/ActionSheetDefaultIosCloseItem';
-export { ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
-export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
+export { ScreenSpinner, ScreenSpinnerContext } from './components/ScreenSpinner/ScreenSpinner';
+export type {
+  ScreenSpinnerProps,
+  ScreenSpinnerContextProps,
+} from './components/ScreenSpinner/ScreenSpinner';
 export { Snackbar } from './components/Snackbar/Snackbar';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
 export { Tooltip } from './components/Tooltip/Tooltip';
@@ -402,6 +407,7 @@ export {
 } from './hooks/useAdaptivityWithJSMediaQueries';
 export { useAppearance } from './hooks/useAppearance';
 export { usePagination } from './hooks/usePagination';
+export { useOrientationChange } from './hooks/useOrientationChange';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { debounce } from '@vkontakte/vkjs';
+import { debounce, noop } from '@vkontakte/vkjs';
 import { getWindow, isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
@@ -49,6 +49,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   // controlled
   shown: shownProp,
   onShownChange: onShownChangeProp,
+  onShownChanged: onShownChangedProp,
 }: UseFloatingWithInteractionsProps): UseFloatingWithInteractionsReturn<T> => {
   const memoizedValue = React.useMemo(
     () => (shownProp !== undefined ? { shown: shownProp } : undefined),
@@ -64,6 +65,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       }
     }),
   });
+  const onShownChanged = useStableCallback(onShownChangedProp ? onShownChangedProp : noop);
   const [shownFinalState, setShownFinalState] = React.useState(() => shownLocalState.shown);
   const [willBeHide, setWillBeHide] = React.useState(false);
 
@@ -215,6 +217,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     if (willBeHide) {
       setShownFinalState(false);
       setWillBeHide(false);
+      onShownChanged(false, shownLocalState.reason);
     }
   };
 
@@ -288,6 +291,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
       if (shownLocalState.shown) {
         setShownFinalState(true);
+        onShownChanged(true, shownLocalState.reason);
       } else if (hasCSSAnimation.current && !willBeHide) {
         setWillBeHide(true);
       } else {
@@ -298,7 +302,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
         clearTimeout(blurTimeoutRef.current);
       };
     },
-    [shownLocalState, shownFinalState, willBeHide],
+    [shownLocalState, shownFinalState, willBeHide, onShownChanged],
   );
 
   const referencePropsRef = React.useRef<ReferenceProps>({});

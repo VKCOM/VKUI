@@ -4,21 +4,22 @@ import {
   Icon12OnlineMobile as Icon12OnlineMobileLib,
 } from '@vkontakte/icons';
 
-export const Icon12Circle = ({
-  width = 12,
-  height = 12,
-  ...restProps
-}: React.ComponentProps<typeof Icon12CircleLib>): React.ReactNode => {
+type IconsProps = Omit<React.ComponentProps<typeof Icon12CircleLib>, 'width' | 'height'> & {
+  width: number;
+  height: number;
+};
+
+export const Icon12Circle = ({ width, height, ...restProps }: IconsProps): React.ReactNode => {
   return (
     <Icon12CircleLib {...restProps} width={width >= 24 ? 15 : 12} height={height >= 24 ? 15 : 12} />
   );
 };
 
 export const Icon12OnlineMobile = ({
-  width = 8,
-  height = 12,
+  width,
+  height,
   ...restProps
-}: React.ComponentProps<typeof Icon12OnlineMobileLib>): React.ReactNode => {
+}: IconsProps): React.ReactNode => {
   return (
     <Icon12OnlineMobileLib
       {...restProps}

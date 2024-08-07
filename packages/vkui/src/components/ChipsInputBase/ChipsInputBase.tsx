@@ -37,6 +37,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   after,
   status,
   mode,
+  maxHeight,
 
   // option
   value = DEFAULT_VALUE,
@@ -223,6 +224,7 @@ export const ChipsInputBase = <O extends ChipOption>({
       status={status}
       mode={mode}
       className={className}
+      maxHeight={maxHeight}
       onClick={disabled ? undefined : handleRootClick}
     >
       <div
@@ -240,7 +242,7 @@ export const ChipsInputBase = <O extends ChipOption>({
         onKeyDown={disabled ? undefined : handleListboxKeyDown}
       >
         {value.map((option, index) => (
-          <React.Fragment key={`${typeof option.value}-${option.label}`}>
+          <React.Fragment key={`${typeof option.value}-${option.value}`}>
             {renderChip(
               {
                 'Component': 'div',

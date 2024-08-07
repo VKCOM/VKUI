@@ -289,11 +289,7 @@ export const BaseGallery = ({
   const indent = shiftState.dragging ? calculateDragIndent() : shiftState.shiftX;
 
   const layerStyle = {
-    WebkitTransform: `translateX(${indent}px)`,
     transform: `translateX(${indent}px)`,
-    WebkitTransition: shiftState.animation
-      ? `-webkit-transform ${ANIMATION_DURATION}s cubic-bezier(.1, 0, .25, 1)`
-      : 'none',
     transition: shiftState.animation
       ? `transform ${ANIMATION_DURATION}s cubic-bezier(.1, 0, .25, 1)`
       : 'none',

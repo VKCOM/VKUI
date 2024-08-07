@@ -88,7 +88,7 @@ export const ActionSheet = ({
       },
     [],
   );
-  const contextValue = useObjectMemo({ onItemClick, mode });
+  const contextValue = useObjectMemo({ onItemClick, mode, onClose: onCloseWithOther });
 
   const DropdownComponent = mode === 'menu' ? ActionSheetDropdownMenu : ActionSheetDropdownSheet;
 

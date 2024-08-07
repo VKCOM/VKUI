@@ -70,7 +70,7 @@
   position: absolute;
   inset: 0;
   block-size: 100%;
-  -webkit-appearance: none; /* не используем textfield из-за бага в iOS 15.1 http://www.openradar.me/FB9744107 */
+  appearance: none; /* не используем textfield из-за бага в iOS 15.1 http://www.openradar.me/FB9744107 */
   border: 0;
   margin: 0;
   padding: 0;

@@ -116,8 +116,7 @@ export const CalendarRange = ({
         return [date, null];
       }
 
-      const start = value[0];
-      const end = value[1];
+      const [start, end] = value;
       if ((start && isSameDay(date, start)) || (end && isSameDay(date, end))) {
         return [setTimeEqual(date, start), setTimeEqual(date, end)];
       } else if (start && isBefore(date, start)) {

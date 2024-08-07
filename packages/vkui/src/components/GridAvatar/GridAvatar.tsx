@@ -6,7 +6,7 @@ import styles from './GridAvatar.module.css';
 
 export { GridAvatarBadgeProps };
 
-export const GRID_AVATAR_DEFAULT_SIZE = 48;
+const GRID_AVATAR_DEFAULT_SIZE = 48;
 
 export const MAX_GRID_LENGTH = 4;
 

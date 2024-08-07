@@ -3,11 +3,16 @@ import { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Gradient.module.css';
 
+const modeStyles = {
+  overlay: styles['Gradient--mode-overlay'],
+  tint: styles['Gradient--mode-tint'],
+};
+
 export interface GradientProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Тип градиента
    */
-  mode?: 'tint' | 'default';
+  mode?: 'tint' | 'default' | 'overlay';
   /**
    * Направление градиента
    */
@@ -28,7 +33,7 @@ export const Gradient = ({
       {...restProps}
       baseClassName={classNames(
         styles['Gradient'],
-        mode !== 'default' && styles['Gradient--mode-tint'],
+        mode !== 'default' && modeStyles[mode],
         to === 'bottom' && styles['Gradient--to-bottom'],
       )}
     />

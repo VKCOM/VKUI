@@ -7,7 +7,6 @@
   padding: 18px;
   box-sizing: border-box;
   color: var(--vkui--color_icon_contrast);
-  transition: opacity 0.15s ease-out;
 }
 
 .ModalDismissButton::before {
@@ -17,6 +16,7 @@
   background: var(--vkui--color_overlay_secondary);
   border-radius: 50%;
   position: absolute;
+  transition: background-color 0.15s ease-out;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- fixes icon misplacement on Safari in some cases */
@@ -25,9 +25,9 @@
 }
 
 .ModalDismissButton--hover::before {
-  opacity: var(--vkui--opacity_disable_accessibility);
+  background: var(--vkui--color_overlay_secondary--hover);
 }
 
 .ModalDismissButton--active::before {
-  opacity: var(--vkui--opacity_disable);
+  background: var(--vkui--color_overlay_secondary--active);
 }
