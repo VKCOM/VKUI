@@ -29,7 +29,7 @@ export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>
 export const CardGrid = ({
   size = 's',
   spaced = false,
-  // TODO: https://github.com/VKCOM/VKUI/issues/7336
+  // TODO [>=v7]: поменять тег на ul
   Component = 'div',
   ...restProps
 }: CardGridProps): React.ReactNode => {
