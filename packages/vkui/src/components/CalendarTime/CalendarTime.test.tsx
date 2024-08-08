@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { setHours, setMinutes } from '../../lib/date';
+import { setHours, setMinutes } from 'date-fns';
 import { userEvent } from '../../testing/utils';
 import { CalendarTime } from './CalendarTime';
 import styles from './CalendarTime.module.css';
@@ -50,6 +50,6 @@ describe('CalendarTime', () => {
     const unselectedMinuteOption = screen.getByRole('option', { selected: false, name: '55' });
     await userEvent.click(unselectedMinuteOption);
 
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
   });
 });
