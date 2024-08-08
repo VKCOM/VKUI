@@ -73,6 +73,8 @@
     "date-fns": "^3.6.0"
   },
   "devDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "storybook": "8.2.7"
   },
   "size-limit": [
