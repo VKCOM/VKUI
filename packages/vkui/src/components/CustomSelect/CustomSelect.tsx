@@ -167,7 +167,7 @@ type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterface>(
   props: SelectProps<OptionInterfaceT>,
 ): React.ReactNode {
-  const [opened, setOpened] = React.useState(false);
+  let [opened, setOpened] = React.useState(false);
   const {
     before,
     name,
@@ -218,7 +218,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const handleRootRef = useExternRef(containerRef, getRootRef);
   const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
   const selectElRef = useExternRef(getRef);
-  const optionsWrapperRef = React.useRef<HTMLDivElement>(null);
+  const optionsWrapperRef = React.useRef<HTMLUListElement>(null);
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
@@ -625,6 +625,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       return (
         <React.Fragment key={`${typeof option.value}-${option.value}`}>
           {renderOptionProp({
+            Component: 'li',
             option,
             hovered,
             children: option.label,
@@ -658,7 +659,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const resolvedContent = React.useMemo(() => {
     const defaultDropdownContent =
       options.length > 0 ? (
-        <div ref={optionsWrapperRef}>{options.map(renderOption)}</div>
+        <ul
+          className={styles['CustomSelect__options-list']}
+          ref={optionsWrapperRef}
+          id={popupAriaId}
+          role="listbox"
+        >
+          {options.map(renderOption)}
+        </ul>
       ) : (
         <Footnote className={styles['CustomSelect__empty']}>{emptyText}</Footnote>
       );
@@ -668,7 +676,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     } else {
       return defaultDropdownContent;
     }
-  }, [emptyText, options, renderDropdown, renderOption]);
+  }, [emptyText, options, renderDropdown, renderOption, popupAriaId]);
 
   const selectInputRef = useExternRef(getSelectInputRef);
   const focusOnInputTimerRef = React.useRef<ReturnType<typeof setTimeout>>();
@@ -787,7 +795,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const selectInputAriaProps: React.HTMLAttributes<HTMLElement> = {
     'role': 'combobox',
     'aria-controls': popupAriaId,
-    'aria-owns': popupAriaId,
     'aria-expanded': opened,
     ['aria-activedescendant']:
       ariaActiveDescendantId && opened ? `${popupAriaId}-${ariaActiveDescendantId}` : undefined,
@@ -864,9 +871,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           autoHideScrollbar={autoHideScrollbar}
           autoHideScrollbarDelay={autoHideScrollbarDelay}
           noMaxHeight={noMaxHeight}
-          role="listbox"
-          id={popupAriaId}
-          aria-labelledby={ariaLabelledBy}
           tabIndex={-1}
         >
           {resolvedContent}
