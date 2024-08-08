@@ -101,7 +101,6 @@ export const BaseGallery = ({
 
       return validateIndent(-1 * coordX);
     }
-
     return 0;
   };
 
