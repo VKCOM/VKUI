@@ -6,7 +6,7 @@
 > ⚠️ Данный компонент предназначен для использования на desktop. При использовании на ios/android работа компонента не гарантируется
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-import { format, addDays } from '../../lib/date';
+import { addDays } from 'date-fns';
 
 const Example = () => {
   const [value, setValue] = useState([new Date(), addDays(new Date(), 10)]);

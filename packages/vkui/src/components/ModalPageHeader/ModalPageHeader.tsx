@@ -32,29 +32,31 @@ export const ModalPageHeader = ({
   const { labelId } = React.useContext(ModalPageContext);
 
   return (
-    <div
-      className={classNames(
-        styles['ModalPageHeader'],
-        platform !== 'vkcom' && styles['ModalPageHeader--withGaps'],
-        isDesktop && styles['ModalPageHeader--desktop'],
-      )}
-      ref={getRootRef}
-    >
-      <PanelHeader
-        className={classNames('vkuiInternalModalPageHeader__in', className)}
-        typographyProps={{
-          Component: 'h2',
-          id: labelId,
-          ...typographyProps,
-        }}
-        {...restProps}
-        fixed={false}
-        delimiter="none"
-        transparent
+    <>
+      <div
+        className={classNames(
+          styles['ModalPageHeader'],
+          platform !== 'vkcom' && styles['ModalPageHeader--withGaps'],
+          isDesktop && styles['ModalPageHeader--desktop'],
+        )}
+        ref={getRootRef}
       >
-        {children}
-      </PanelHeader>
+        <PanelHeader
+          className={classNames('vkuiInternalModalPageHeader__in', className)}
+          typographyProps={{
+            Component: 'h2',
+            id: labelId,
+            ...typographyProps,
+          }}
+          {...restProps}
+          fixed={false}
+          delimiter="none"
+          transparent
+        >
+          {children}
+        </PanelHeader>
+      </div>
       {!noSeparator && <Separator wide={sizeX === 'regular'} />}
-    </div>
+    </>
   );
 };

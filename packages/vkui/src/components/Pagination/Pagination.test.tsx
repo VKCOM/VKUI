@@ -1,3 +1,4 @@
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { Tappable } from '../Tappable/Tappable';
@@ -37,4 +38,33 @@ describe('Pagination', () => {
     undefined,
     'with href',
   );
+
+  it('check navigation by click', () => {
+    const onChange = jest.fn();
+    const Fixture = ({ page }: { page: number }) => {
+      return (
+        <Pagination
+          currentPage={page}
+          navigationButtonsStyle="caption"
+          siblingCount={0}
+          boundaryCount={1}
+          totalPages={100}
+          disabled={false}
+          onChange={onChange}
+        />
+      );
+    };
+
+    const { rerender } = render(<Fixture page={0} />);
+    fireEvent.click(screen.getByText('3'));
+    expect(onChange.mock.calls[0][0]).toBe(3);
+
+    rerender(<Fixture page={3} />);
+    fireEvent.click(screen.getByText('Вперёд'));
+    expect(onChange.mock.calls[1][0]).toBe(4);
+
+    rerender(<Fixture page={4} />);
+    fireEvent.click(screen.getByText('Назад'));
+    expect(onChange.mock.calls[2][0]).toBe(3);
+  });
 });

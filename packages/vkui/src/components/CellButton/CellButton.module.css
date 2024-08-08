@@ -42,9 +42,9 @@
 }
 
 .CellButton {
-  --vkui_internal--icon_color: var(--vkui--color_icon_accent);
+  --vkui_internal--icon_color: var(--vkui--color_icon_accent_themed);
 
-  color: var(--vkui--color_text_accent);
+  color: var(--vkui--color_text_accent_themed);
 }
 
 .CellButton--mode-danger {

@@ -5,28 +5,20 @@
   <Panel id="switch">
     <PanelHeader>Switch</PanelHeader>
     <Group>
-      <SimpleCell Component="label" after={<Switch />}>
-        Комментарии к записям
-      </SimpleCell>
-      <SimpleCell Component="label" after={<Switch defaultChecked />}>
-        Ссылки
-      </SimpleCell>
-      <SimpleCell Component="label" disabled after={<Switch disabled />}>
-        Фотоальбомы
-      </SimpleCell>
-    </Group>
-    <Group header={<Header mode="secondary">Компактный вид</Header>}>
-      <AdaptivityProvider sizeY="compact">
-        <SimpleCell Component="label" after={<Switch />}>
-          Комментарии к записям
-        </SimpleCell>
-        <SimpleCell Component="label" after={<Switch defaultChecked />}>
-          Ссылки
-        </SimpleCell>
-        <SimpleCell Component="label" disabled after={<Switch disabled />}>
-          Фотоальбомы
-        </SimpleCell>
-      </AdaptivityProvider>
+      <SelectionControl>
+        <SelectionControl.Label>Комментарии к записям</SelectionControl.Label>
+        <Switch />
+      </SelectionControl>
+
+      <SelectionControl>
+        <SelectionControl.Label>Ссылки</SelectionControl.Label>
+        <Switch defaultChecked />
+      </SelectionControl>
+
+      <SelectionControl disabled>
+        <SelectionControl.Label>Фотоальбомы</SelectionControl.Label>
+        <Switch disabled />
+      </SelectionControl>
     </Group>
   </Panel>
 </View>

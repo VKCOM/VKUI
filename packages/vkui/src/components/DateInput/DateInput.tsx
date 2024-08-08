@@ -164,7 +164,7 @@ export const DateInput = ({
       }
 
       let formattedValue = `${internalValue[0]}.${internalValue[1]}.${internalValue[2]}`;
-      let mask = 'DD.MM.YYYY';
+      let mask = 'dd.MM.yyyy';
       if (enableTime) {
         formattedValue += ` ${internalValue[3]}:${internalValue[4]}`;
         mask += ' HH:mm';
@@ -243,7 +243,7 @@ export const DateInput = ({
       <input
         type="hidden"
         name={name}
-        value={value ? format(value, enableTime ? 'DD.MM.YYYYTHH:mm' : 'DD.MM.YYYY') : ''}
+        value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
       />
       <Text
         className={styles['DateInput__input']}
