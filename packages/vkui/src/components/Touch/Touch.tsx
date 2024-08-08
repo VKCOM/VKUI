@@ -94,6 +94,8 @@ export const Touch = ({
     }
   };
 
+  React.useEffect(() => cleanupTargetNativeGestureEvents, []);
+
   /**
    * Note: используем `useStableCallback()`, чтобы не терялась область видимости `onEnd`/`onEndX`/`onEndY`.
    */
@@ -187,12 +189,13 @@ export const Touch = ({
 
     gestureRef.current = initGesture(coordX(nativeEvent), coordY(nativeEvent));
 
+    const shouldCallDirectionHandlerOnlyIsSlide = false;
     dispatchUserHandlers(
       event,
       gestureRef.current,
       [onStart, onStartX, onStartY],
       stopPropagation,
-      false,
+      shouldCallDirectionHandlerOnlyIsSlide,
     );
 
     const eventOptions = { capture: useCapture, passive: false };
@@ -270,8 +273,6 @@ export const Touch = ({
 
     didSlide.current = false;
   };
-
-  React.useEffect(() => cleanupTargetNativeGestureEvents, []);
 
   return (
     <Component
