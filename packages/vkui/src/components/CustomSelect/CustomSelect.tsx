@@ -787,7 +787,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const selectInputAriaProps: React.HTMLAttributes<HTMLElement> = {
     'role': 'combobox',
     'aria-controls': popupAriaId,
-    'aria-owns': popupAriaId,
     'aria-expanded': opened,
     ['aria-activedescendant']:
       ariaActiveDescendantId && opened ? `${popupAriaId}-${ariaActiveDescendantId}` : undefined,
