@@ -93,6 +93,20 @@ export const RichCell: React.FC<RichCellProps> & {
 }: RichCellProps) => {
   const { sizeY = 'none' } = useAdaptivity();
 
+  const afterRender = () => {
+    if (!after && !afterCaption) {
+      return;
+    }
+    return (
+      <div
+        className={classNames(styles['RichCell__content-after'], alignAfterClassNames[afterAlign])}
+      >
+        {after && <div className={styles['RichCell__after-children']}>{after}</div>}
+        {afterCaption && <div className={styles['RichCell__after-caption']}>{afterCaption}</div>}
+      </div>
+    );
+  };
+
   return (
     <Tappable
       {...restProps}
@@ -120,21 +134,12 @@ export const RichCell: React.FC<RichCellProps> & {
               </Subhead>
             )}
           </div>
+          {afterAlign === 'start' && afterRender()}
         </div>
         {bottom && <div className={styles['RichCell__bottom']}>{bottom}</div>}
         {actions && <div className={styles['RichCell__actions']}>{actions}</div>}
       </div>
-      {(after || afterCaption) && (
-        <div
-          className={classNames(
-            styles['RichCell__content-after'],
-            alignAfterClassNames[afterAlign],
-          )}
-        >
-          {after && <div className={styles['RichCell__after-children']}>{after}</div>}
-          {afterCaption && <div className={styles['RichCell__after-caption']}>{afterCaption}</div>}
-        </div>
-      )}
+      {afterAlign !== 'start' && afterRender()}
     </Tappable>
   );
 };
