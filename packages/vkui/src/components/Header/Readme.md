@@ -120,6 +120,55 @@ const Example = () => {
             Большой заголовок
           </Header>
         </Group>
+        <Group>
+          <Header
+            mode="primary"
+            before={<Icon28UserCircleFillBlue />}
+            beforeTitle={<Icon16LockOutline />}
+            afterTitle={<Icon16UnlockOutline />}
+            beforeSubtitle={<Icon12Tag />}
+            afterSubtitle={<Icon12Fire />}
+            subtitle="SOHN — Conrad"
+            subtitleComponent="h3"
+            indicator={
+              <Counter size="s" mode="prominent">
+                3
+              </Counter>
+            }
+            aside={
+              <Link>
+                Показать все
+                {platform === 'vkcom' && <Icon12ChevronOutline />}
+              </Link>
+            }
+          >
+            Плейлисты
+          </Header>
+          <Header
+            mode="primary"
+            before={<Icon28UserCircleFillBlue />}
+            beforeTitle={<Icon16LockOutline />}
+            afterTitle={<Icon16UnlockOutline />}
+            beforeSubtitle={<Icon12Tag />}
+            afterSubtitle={<Icon12Fire />}
+            subtitle="SOHN — Conrad"
+            subtitleComponent="h3"
+            multiline
+            indicator={
+              <Counter size="s" mode="prominent">
+                3
+              </Counter>
+            }
+            aside={
+              <Link>
+                Показать все
+                {platform === 'vkcom' && <Icon12ChevronOutline />}
+              </Link>
+            }
+          >
+            Плейлисты
+          </Header>
+        </Group>
       </Panel>
     </View>
   );

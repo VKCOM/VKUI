@@ -6,6 +6,46 @@
   font-family: var(--vkui--font_family_base);
 }
 
+.Header__before,
+.Header__subtitleBefore,
+.Header__subtitleAfter,
+.Header__content__before,
+.Header__content__after {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.Header__before {
+  align-self: center;
+  margin-inline-end: var(--vkui--spacing_size_m);
+  margin-block-start: var(--vkui--spacing_size_3xs);
+}
+
+.Header__before--withSubtitle {
+  margin-block-start: var(--vkui--spacing_size_s);
+}
+
+.Header__subtitleWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.Header__subtitleBefore {
+  margin-inline-end: var(--vkui--spacing_size_xs);
+}
+
+.Header__subtitleAfter {
+  margin-inline-start: var(--vkui--spacing_size_xs);
+}
+
+.Header__content__before {
+  margin-inline-end: var(--vkui--spacing_size_xs);
+}
+
+.Header__content__after {
+  margin-inline-start: var(--vkui--spacing_size_xs);
+}
+
 .Header__main {
   flex: 1 0 0;
   min-inline-size: 0;
@@ -27,6 +67,7 @@
 .Header__content--multiline {
   white-space: initial;
   word-break: break-word;
+  flex-grow: 1;
 }
 
 .Header__subtitle {
@@ -41,7 +82,7 @@
 
 .Header__indicator {
   color: var(--vkui--color_text_secondary);
-  margin-inline-start: 6px;
+  margin-inline-start: var(--vkui--spacing_size_xs);
   flex-shrink: 0;
 }
 
@@ -104,12 +145,12 @@
   margin-block-end: 9px;
 }
 
-.Header__subtitle {
+.Header__subtitleWrapper {
   margin-block-end: 7px;
 }
 
 /* Компенсируем 1 пиксель из-за паддинга в .Header--mode-primary */
-.Header--mode-primary .Header__subtitle {
+.Header--mode-primary .Header__subtitleWrapper {
   margin-block-end: 6px;
 }
 
@@ -147,7 +188,7 @@
 :global(.vkuiInternalGroup--mode-card)
   > :global(.vkuiInternalTappable):first-child
   > .Header:not(.Header--mode-tertiary) {
-  margin-block-start: -4px;
+  margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
 }
 
 @media (--sizeX-regular) {
@@ -157,7 +198,7 @@
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
     > :global(.vkuiInternalTappable):first-child
     > .Header:not(.Header--mode-tertiary) {
-    margin-block-start: -4px;
+    margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
   }
 }
 
