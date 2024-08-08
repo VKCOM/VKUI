@@ -22,6 +22,20 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
+const mockDate = () => {
+  const startGestureDate = new Date(2024, 7, 5);
+  jest.useFakeTimers();
+  jest.setSystemTime(startGestureDate);
+  const endGestureDate = new Date(startGestureDate);
+
+  return {
+    next: (ms = 500) => {
+      endGestureDate.setMilliseconds(endGestureDate.getMilliseconds() + ms);
+      jest.setSystemTime(endGestureDate);
+    },
+  };
+};
+
 describe.each([
   ['ModalRootTouch', ModalRootTouch],
   ['ModalRootDesktop', ModalRootDesktop],
@@ -420,21 +434,7 @@ describe(ModalRootTouch, () => {
     });
   });
 
-  describe('touch move events check', () => {
-    const mockDate = () => {
-      const startGestureDate = new Date(2024, 7, 5);
-      jest.useFakeTimers();
-      jest.setSystemTime(startGestureDate);
-      const endGestureDate = new Date(startGestureDate);
-
-      return {
-        next: (ms = 500) => {
-          endGestureDate.setMilliseconds(endGestureDate.getMilliseconds() + ms);
-          jest.setSystemTime(endGestureDate);
-        },
-      };
-    };
-
+  describe('touch move events check to modal page', () => {
     const touchMoveSetup = async ({
       onClose,
       settlingHeight,
@@ -601,6 +601,81 @@ describe(ModalRootTouch, () => {
       date.next();
       fireEvent.mouseUp(mockedData.header, {
         client: 250,
+      });
+      act(jest.runAllTimers);
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('touch move events check to modal сфкв', () => {
+    const touchMoveSetup = async ({ onClose }: { onClose: VoidFunction }) => {
+      let content: HTMLDivElement;
+      let transform = '';
+      Object.defineProperty(window, 'innerHeight', {
+        writable: true,
+        configurable: true,
+        value: 720,
+      });
+      const Fixture = () => {
+        return (
+          <ModalRootTouch activeModal="modal-card">
+            <ModalCard
+              id="modal-card"
+              data-testid="modal-card"
+              key="1"
+              onClose={onClose}
+              getRootRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                content = element.firstElementChild as HTMLDivElement;
+                jest.spyOn(content, 'offsetHeight', 'get').mockImplementation(() => 320);
+                jest
+                  .spyOn(content.style, 'transform', 'set')
+                  .mockImplementation((newTransform) => (transform = newTransform));
+              }}
+            >
+              <div></div>
+            </ModalCard>
+          </ModalRootTouch>
+        );
+      };
+
+      const component = render(<Fixture />, {
+        baseElement: document.documentElement,
+      });
+      act(jest.runAllTimers);
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('modal-card')));
+
+      return {
+        component,
+        get transform() {
+          return transform;
+        },
+        get content() {
+          return content;
+        },
+      };
+    };
+
+    it('should close modal card by touch', async () => {
+      const date = mockDate();
+      const onClose = jest.fn();
+      const mockedData = await touchMoveSetup({
+        onClose,
+      });
+      expect(mockedData.transform).toBe('translate3d(0, 0%, 0)');
+      fireEvent.mouseDown(mockedData.content, {
+        clientY: 400,
+      });
+      fireEvent.mouseMove(mockedData.content, {
+        clientY: 500,
+      });
+      act(jest.runAllTimers);
+      date.next();
+      expect(mockedData.transform).toBe('translate3d(0, 31.25%, 0)');
+      fireEvent.mouseUp(mockedData.content, {
+        clientY: 500,
       });
       act(jest.runAllTimers);
       expect(onClose).toHaveBeenCalledTimes(1);
