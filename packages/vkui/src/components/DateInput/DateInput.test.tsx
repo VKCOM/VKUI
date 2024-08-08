@@ -37,7 +37,9 @@ describe('DateInput', () => {
         changeMinutesLabel=""
       />,
     );
-    expect(getInputsLike(container).length).toBe(3);
+    const inputLikes = getInputsLike(container);
+    const normalizedDate = convertInputsToNumbers(inputLikes);
+    expect(normalizedDate).toEqual([31, 7, 2024]);
   });
 
   it('should be correct input value with time', () => {
