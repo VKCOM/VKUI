@@ -1,0 +1,28 @@
+.ModalPageBackdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: rgba(0, 0, 0);
+  opacity: 0.4;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ModalPageBackdrop--visible {
+  animation: modal-page-backdrop-fade-in 0.2s ease-in;
+}
+
+.ModalPageBackdrop--invisible {
+  animation: modal-page-backdrop-fade-out 0.1s ease-out forwards;
+}
+
+@keyframes modal-page-backdrop-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes modal-page-backdrop-fade-out {
+  to {
+    opacity: 0;
+  }
+}

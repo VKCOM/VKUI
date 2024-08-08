@@ -11,6 +11,7 @@ const clearDisableScrollStyle = (node: HTMLElement) => {
     top: '',
     left: '',
     right: '',
+    overscrollBehavior: '',
     overflowY: '',
     overflowX: '',
   });
@@ -93,9 +94,12 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
       top: `-${scrollY}px`,
       left: `-${scrollX}px`,
       right: '0',
+      overscrollBehavior: 'none',
       overflowY,
       overflowX,
     });
+    // eslint-disable-next-line no-restricted-properties
+    document!.documentElement.classList.add('vkui--disable-overscroll-behavior');
     setScrollLock(true);
   }, [document, window]);
 
@@ -104,6 +108,8 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     const scrollX = document!.body.style.left;
 
     clearDisableScrollStyle(document!.body);
+    // eslint-disable-next-line no-restricted-properties
+    document!.documentElement.classList.remove('vkui--disable-overscroll-behavior');
     window!.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
     setScrollLock(false);
   }, [document, window]);

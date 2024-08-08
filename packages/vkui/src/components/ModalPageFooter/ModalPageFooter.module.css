@@ -1,0 +1,14 @@
+.ModalPageFooter {
+  inline-size: 100%;
+
+  /* см. `.ModalPageV2__children {}` */
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
+  background-color: var(--vkui--color_background_modal);
+}
+
+.ModalPageFooter__inner {
+  padding-block: 16px;
+  padding-inline: 24px;
+}

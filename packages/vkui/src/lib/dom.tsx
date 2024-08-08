@@ -13,6 +13,7 @@ export {
   getNodeScroll,
   isHTMLElement,
   isElement,
+  getParentNode,
 } from '@vkontakte/vkui-floating-ui/utils/dom';
 
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
@@ -257,4 +258,9 @@ export const initializeBrowserGesturePreventionEffect = (window: Window): VoidFu
     window.document.documentElement.classList.remove('vkui--disable-overscroll-behavior'); // eslint-disable-line no-restricted-properties
     window.removeEventListener('touchmove', handleWindowTouchMove, options);
   };
+};
+
+export const hasSelectionWithRangeType = (targetEl: HTMLElement) => {
+  const selection = getWindow(targetEl).getSelection();
+  return selection ? selection.type === 'Range' : false;
 };

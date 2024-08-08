@@ -1,5 +1,10 @@
 .ModalPageHeader {
   --vkui_internal--safe_area_inset_top: 0;
+
+  /* см. `.ModalPageV2__children {}` */
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
 }
 
 .ModalPageHeader--withGaps {
