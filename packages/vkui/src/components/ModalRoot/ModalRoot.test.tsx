@@ -9,24 +9,17 @@ import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
 import { withModalRootContext } from './withModalRootContext';
 import styles from './ModalRoot.module.css';
+import modalPageStyles from '../ModalPage/ModalPage.module.css';
 
 const clickFade = async () =>
   await userEvent.click(document.querySelector(`.${styles.ModalRoot__mask}`)!);
-let rafSpies: jest.SpyInstance[];
 
 beforeEach(() => {
   jest.useFakeTimers();
-  rafSpies = [
-    jest
-      .spyOn(window, 'requestAnimationFrame')
-      .mockImplementation((cb) => window.setTimeout(() => cb(Date.now()))),
-    jest.spyOn(window, 'cancelAnimationFrame').mockImplementation((id) => window.clearTimeout(id)),
-  ];
 });
 afterEach(() => {
   jest.clearAllTimers();
   jest.useRealTimers();
-  rafSpies.forEach((m) => m.mockRestore());
 });
 
 describe.each([
@@ -424,6 +417,193 @@ describe(ModalRootTouch, () => {
       act(jest.runAllTimers);
 
       expect(mockedData.innerElementTransform).toBe('translate3d(0, 25%, 0)');
+    });
+  });
+
+  describe('touch move events check', () => {
+    const mockDate = () => {
+      const startGestureDate = new Date(2024, 7, 5);
+      jest.useFakeTimers();
+      jest.setSystemTime(startGestureDate);
+      const endGestureDate = new Date(startGestureDate);
+
+      return {
+        next: (ms = 500) => {
+          endGestureDate.setMilliseconds(endGestureDate.getMilliseconds() + ms);
+          jest.setSystemTime(endGestureDate);
+        },
+      };
+    };
+
+    const touchMoveSetup = async ({
+      onClose,
+      settlingHeight,
+      modalPageHeight = 664,
+      modalPageContentClientHeight,
+      contentScrollHeight,
+    }: {
+      onClose: VoidFunction;
+      settlingHeight?: number;
+      modalPageHeight?: number;
+      modalPageContentClientHeight: number;
+      contentScrollHeight: number;
+    }) => {
+      let innerElementTransform = '';
+
+      Object.defineProperty(window, 'innerHeight', {
+        writable: true,
+        configurable: true,
+        value: 720,
+      });
+
+      const Fixture = () => {
+        return (
+          <ModalRootTouch activeModal="modal-page">
+            <ModalPage
+              id="modal-page"
+              data-testid="modal-page"
+              key="1"
+              settlingHeight={settlingHeight}
+              onClose={onClose}
+              getRootRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                jest
+                  .spyOn((element.firstElementChild as HTMLDivElement).style, 'transform', 'set')
+                  .mockImplementation((newTransform) => (innerElementTransform = newTransform));
+                jest
+                  .spyOn(element, 'offsetHeight', 'get')
+                  .mockImplementation(() => modalPageHeight);
+              }}
+              getModalContentRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                jest
+                  .spyOn(element, 'clientHeight', 'get')
+                  .mockImplementation(() => modalPageContentClientHeight);
+                jest
+                  .spyOn(element.firstElementChild!, 'scrollHeight', 'get')
+                  .mockImplementation(() => contentScrollHeight);
+              }}
+            >
+              <div></div>
+            </ModalPage>
+          </ModalRootTouch>
+        );
+      };
+
+      const component = render(<Fixture />, {
+        baseElement: document.documentElement,
+      });
+
+      const header = component.container.getElementsByClassName(
+        modalPageStyles['ModalPage__header'],
+      )[0];
+      act(jest.runAllTimers);
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('modal-page')));
+
+      return {
+        component,
+        get header() {
+          return header;
+        },
+        get innerElementTransform() {
+          return innerElementTransform;
+        },
+      };
+    };
+
+    it('should hide modal page by touch', async () => {
+      const date = mockDate();
+
+      const onClose = jest.fn();
+
+      const mockedData = await touchMoveSetup({
+        onClose,
+        modalPageContentClientHeight: 608,
+        contentScrollHeight: 1291,
+      });
+      fireEvent.mouseDown(mockedData.header, {
+        clientY: 250,
+      });
+      fireEvent.mouseMove(mockedData.header, {
+        clientY: 350,
+      });
+      date.next();
+      fireEvent.mouseUp(mockedData.header, {
+        client: 350,
+      });
+
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('should expand and then collapse modal page by touch', async () => {
+      const date = mockDate();
+
+      const onClose = jest.fn();
+
+      const mockedData = await touchMoveSetup({
+        onClose,
+        modalPageContentClientHeight: 608,
+        contentScrollHeight: 1291,
+      });
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 25%, 0)');
+      fireEvent.mouseDown(mockedData.header, {
+        clientY: 250,
+      });
+      fireEvent.mouseMove(mockedData.header, {
+        clientY: 190,
+      });
+      date.next();
+      fireEvent.mouseUp(mockedData.header, {
+        client: 190,
+      });
+      act(jest.runAllTimers);
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 0%, 0)');
+
+      fireEvent.mouseDown(mockedData.header, {
+        clientY: 95,
+      });
+      fireEvent.mouseMove(mockedData.header, {
+        clientY: 180,
+      });
+      date.next();
+      fireEvent.mouseUp(mockedData.header, {
+        client: 180,
+      });
+      act(jest.runAllTimers);
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 25%, 0)');
+
+      expect(onClose).toHaveBeenCalledTimes(0);
+    });
+
+    it('should close modal page when settlingHeight 100 by touch', async () => {
+      const date = mockDate();
+
+      const onClose = jest.fn();
+
+      const mockedData = await touchMoveSetup({
+        onClose,
+        settlingHeight: 100,
+        modalPageContentClientHeight: 600,
+        contentScrollHeight: 1200,
+      });
+
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 0%, 0)');
+      fireEvent.mouseDown(mockedData.header, {
+        clientY: 95,
+      });
+      fireEvent.mouseMove(mockedData.header, {
+        clientY: 250,
+      });
+      date.next();
+      fireEvent.mouseUp(mockedData.header, {
+        client: 250,
+      });
+      act(jest.runAllTimers);
+      expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
 });
