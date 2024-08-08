@@ -19,12 +19,6 @@
   display: none;
 }
 
-.CustomSelect__options-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
 .CustomSelect__empty {
   padding-block: 12px;
   padding-inline: 0;

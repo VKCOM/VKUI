@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import { HTMLAttributesWithRootRef } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -13,9 +13,7 @@ const sizeYClassNames = {
   ['regular']: styles['CustomSelectOption--sizeY-regular'],
 };
 
-export interface CustomSelectOptionProps
-  extends HTMLAttributesWithRootRef<HTMLDivElement>,
-    HasComponent {
+export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Добавляет описание под основным блоком.
    */
@@ -88,9 +86,9 @@ export const CustomSelectOption = ({
 
   return (
     <Paragraph
-      Component="div"
       {...restProps}
       onClick={disabled ? undefined : onClick}
+      Component="div"
       role="option"
       aria-disabled={disabled}
       aria-selected={selected}
