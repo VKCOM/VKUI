@@ -1,5 +1,5 @@
-name: Setup
-description: It setting up the repository environment
+name: Workflow / Setup NodeJS
+description: It setting up the NodeJS
 
 runs:
   using: composite
@@ -13,8 +13,6 @@ runs:
       with:
         node-version-file: '.nvmrc'
         cache: 'yarn'
-        always-auth: true
-        registry-url: 'https://registry.npmjs.org'
 
     - name: Install dependencies
       run: YARN_ENABLE_SCRIPTS=false YARN_ENABLE_HARDENED_MODE=0 yarn install --immutable
