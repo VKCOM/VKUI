@@ -2,9 +2,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../../testing/utils';
 import { Image } from '../../Image/Image';
 import {
+  FloatElementIndentation,
+  FloatElementPlacement,
   ImageBaseFloatElement,
-  PositionedComponentIndentation,
-  PositionedComponentPlacement,
 } from './ImageBaseFloatElement';
 import styles from './ImageBaseFloatElement.module.css';
 
@@ -24,27 +24,27 @@ describe(ImageBaseFloatElement, () => {
       />,
     );
 
-    expect(screen.getByTestId('component')).not.toHaveClass(styles['PositionedComponent--hidden']);
+    expect(screen.getByTestId('component')).not.toHaveClass(styles['FloatElement--hidden']);
 
     expect(
       screen
         .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--PositionedComponent_inset_block_start'),
+        .style.getPropertyValue('--vkui_internal--FloatElement_inset_block_start'),
     ).toBe('10px');
     expect(
       screen
         .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--PositionedComponent_inset_block_end'),
+        .style.getPropertyValue('--vkui_internal--FloatElement_inset_block_end'),
     ).toBe('10px');
     expect(
       screen
         .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--PositionedComponent_inset_inline_start'),
+        .style.getPropertyValue('--vkui_internal--FloatElement_inset_inline_start'),
     ).toBe('20px');
     expect(
       screen
         .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--PositionedComponent_inset_inline_end'),
+        .style.getPropertyValue('--vkui_internal--FloatElement_inset_inline_end'),
     ).toBe('20px');
   });
 
@@ -66,7 +66,7 @@ describe(ImageBaseFloatElement, () => {
       </>,
     );
 
-    expect(screen.getByTestId('component')).toHaveClass(styles['PositionedComponent--hidden']);
+    expect(screen.getByTestId('component')).toHaveClass(styles['FloatElement--hidden']);
 
     fireEvent(
       screen.getByTestId('image'),
@@ -76,7 +76,7 @@ describe(ImageBaseFloatElement, () => {
       }),
     );
 
-    expect(screen.getByTestId('component')).not.toHaveClass(styles['PositionedComponent--hidden']);
+    expect(screen.getByTestId('component')).not.toHaveClass(styles['FloatElement--hidden']);
 
     fireEvent(
       screen.getByTestId('image'),
@@ -86,7 +86,7 @@ describe(ImageBaseFloatElement, () => {
       }),
     );
 
-    expect(screen.getByTestId('component')).toHaveClass(styles['PositionedComponent--hidden']);
+    expect(screen.getByTestId('component')).toHaveClass(styles['FloatElement--hidden']);
   });
 
   it('check visibility on image hover without use Image', async () => {
@@ -106,7 +106,7 @@ describe(ImageBaseFloatElement, () => {
       </>,
     );
 
-    expect(screen.getByTestId('component')).toHaveClass(styles['PositionedComponent--hidden']);
+    expect(screen.getByTestId('component')).toHaveClass(styles['FloatElement--hidden']);
 
     fireEvent(
       containerRef.current!,
@@ -116,7 +116,7 @@ describe(ImageBaseFloatElement, () => {
       }),
     );
 
-    expect(screen.getByTestId('component')).not.toHaveClass(styles['PositionedComponent--hidden']);
+    expect(screen.getByTestId('component')).not.toHaveClass(styles['FloatElement--hidden']);
 
     fireEvent(
       containerRef.current!,
@@ -126,21 +126,21 @@ describe(ImageBaseFloatElement, () => {
       }),
     );
 
-    expect(screen.getByTestId('component')).toHaveClass(styles['PositionedComponent--hidden']);
+    expect(screen.getByTestId('component')).toHaveClass(styles['FloatElement--hidden']);
   });
 
   const placementFixtures = Object.entries({
-    'top-start': styles['PositionedComponent--position-topStart'],
-    'top': styles['PositionedComponent--position-top'],
-    'top-end': styles['PositionedComponent--position-topEnd'],
-    'bottom-start': styles['PositionedComponent--position-bottomStart'],
-    'bottom': styles['PositionedComponent--position-bottom'],
-    'bottom-end': styles['PositionedComponent--position-bottomEnd'],
-    'middle-start': styles['PositionedComponent--position-middleStart'],
-    'middle': styles['PositionedComponent--position-middle'],
-    'middle-end': styles['PositionedComponent--position-middleEnd'],
+    'top-start': styles['FloatElement--position-topStart'],
+    'top': styles['FloatElement--position-top'],
+    'top-end': styles['FloatElement--position-topEnd'],
+    'bottom-start': styles['FloatElement--position-bottomStart'],
+    'bottom': styles['FloatElement--position-bottom'],
+    'bottom-end': styles['FloatElement--position-bottomEnd'],
+    'middle-start': styles['FloatElement--position-middleStart'],
+    'middle': styles['FloatElement--position-middle'],
+    'middle-end': styles['FloatElement--position-middleEnd'],
   }).map(([placement, className]) => ({
-    placement: placement as PositionedComponentPlacement,
+    placement: placement as FloatElementPlacement,
     className,
   }));
 
@@ -150,17 +150,17 @@ describe(ImageBaseFloatElement, () => {
   });
 
   const horizontalIndentationFixtures = Object.entries({
-    '2xs': styles['PositionedComponent--horizontalIndent-2xs'],
-    'xs': styles['PositionedComponent--horizontalIndent-xs'],
-    's': styles['PositionedComponent--horizontalIndent-s'],
-    'm': styles['PositionedComponent--horizontalIndent-m'],
-    'l': styles['PositionedComponent--horizontalIndent-l'],
-    'xl': styles['PositionedComponent--horizontalIndent-xl'],
-    '2xl': styles['PositionedComponent--horizontalIndent-2xl'],
-    '3xl': styles['PositionedComponent--horizontalIndent-3xl'],
-    '4xl': styles['PositionedComponent--horizontalIndent-4xl'],
+    '2xs': styles['FloatElement--horizontalIndent-2xs'],
+    'xs': styles['FloatElement--horizontalIndent-xs'],
+    's': styles['FloatElement--horizontalIndent-s'],
+    'm': styles['FloatElement--horizontalIndent-m'],
+    'l': styles['FloatElement--horizontalIndent-l'],
+    'xl': styles['FloatElement--horizontalIndent-xl'],
+    '2xl': styles['FloatElement--horizontalIndent-2xl'],
+    '3xl': styles['FloatElement--horizontalIndent-3xl'],
+    '4xl': styles['FloatElement--horizontalIndent-4xl'],
   }).map(([indent, className]) => ({
-    indent: indent as Exclude<PositionedComponentIndentation, string | number>,
+    indent: indent as Exclude<FloatElementIndentation, string | number>,
     className,
   }));
 
@@ -175,17 +175,17 @@ describe(ImageBaseFloatElement, () => {
   );
 
   const verticalIndentationFixtures = Object.entries({
-    '2xs': styles['PositionedComponent--verticalIndent-2xs'],
-    'xs': styles['PositionedComponent--verticalIndent-xs'],
-    's': styles['PositionedComponent--verticalIndent-s'],
-    'm': styles['PositionedComponent--verticalIndent-m'],
-    'l': styles['PositionedComponent--verticalIndent-l'],
-    'xl': styles['PositionedComponent--verticalIndent-xl'],
-    '2xl': styles['PositionedComponent--verticalIndent-2xl'],
-    '3xl': styles['PositionedComponent--verticalIndent-3xl'],
-    '4xl': styles['PositionedComponent--verticalIndent-4xl'],
+    '2xs': styles['FloatElement--verticalIndent-2xs'],
+    'xs': styles['FloatElement--verticalIndent-xs'],
+    's': styles['FloatElement--verticalIndent-s'],
+    'm': styles['FloatElement--verticalIndent-m'],
+    'l': styles['FloatElement--verticalIndent-l'],
+    'xl': styles['FloatElement--verticalIndent-xl'],
+    '2xl': styles['FloatElement--verticalIndent-2xl'],
+    '3xl': styles['FloatElement--verticalIndent-3xl'],
+    '4xl': styles['FloatElement--verticalIndent-4xl'],
   }).map(([indent, className]) => ({
-    indent: indent as Exclude<PositionedComponentIndentation, string | number>,
+    indent: indent as Exclude<FloatElementIndentation, string | number>,
     className,
   }));
 
@@ -211,13 +211,13 @@ describe(ImageBaseFloatElement, () => {
     expect(
       screen
         .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--PositionedComponent_horizontal_indent'),
+        .style.getPropertyValue('--vkui_internal--FloatElement_horizontal_indent'),
     ).toBe('15px');
 
     expect(
       screen
         .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--PositionedComponent_vertical_indent'),
+        .style.getPropertyValue('--vkui_internal--FloatElement_vertical_indent'),
     ).toBe('10px');
   });
 
@@ -233,13 +233,13 @@ describe(ImageBaseFloatElement, () => {
     expect(
       screen
         .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--PositionedComponent_horizontal_indent'),
+        .style.getPropertyValue('--vkui_internal--FloatElement_horizontal_indent'),
     ).toBe('10%');
 
     expect(
       screen
         .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--PositionedComponent_vertical_indent'),
+        .style.getPropertyValue('--vkui_internal--FloatElement_vertical_indent'),
     ).toBe('5%');
   });
 });

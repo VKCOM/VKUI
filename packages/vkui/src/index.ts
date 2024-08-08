@@ -60,9 +60,9 @@ export type {
   ImageBaseBadgeProps,
   ImageBaseOverlayProps,
   ImageBaseFloatElementProps,
-  PositionedComponentPlacement,
-  PositionedComponentPosition,
-  PositionedComponentIndentation,
+  FloatElementPlacement,
+  FloatElementPosition,
+  FloatElementIndentation,
 } from './components/ImageBase/ImageBase';
 
 /**

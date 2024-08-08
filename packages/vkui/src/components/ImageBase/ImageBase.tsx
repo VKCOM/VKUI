@@ -7,11 +7,11 @@ import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from 
 import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
 import {
+  type FloatElementIndentation,
+  type FloatElementPlacement,
+  type FloatElementPosition,
   ImageBaseFloatElement,
   type ImageBaseFloatElementProps,
-  type PositionedComponentIndentation,
-  type PositionedComponentPlacement,
-  type PositionedComponentPosition,
 } from './ImageBaseFloatElement/ImageBaseFloatElement';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import { ImageBaseContext } from './context';
@@ -26,9 +26,9 @@ export type {
   ImageBaseOverlayProps,
   ImageBaseContextProps,
   ImageBaseFloatElementProps,
-  PositionedComponentPlacement,
-  PositionedComponentPosition,
-  PositionedComponentIndentation,
+  FloatElementPlacement,
+  FloatElementPosition,
+  FloatElementIndentation,
 };
 
 export {
@@ -134,7 +134,7 @@ const sizeToNumber = (size: number | string | undefined): number | undefined => 
 export const ImageBase: React.FC<ImageBaseProps> & {
   Badge: typeof ImageBaseBadge;
   Overlay: typeof ImageBaseOverlay;
-  PositionedComponent: typeof ImageBaseFloatElement;
+  FloatElement: typeof ImageBaseFloatElement;
 } = ({
   alt,
   crossOrigin,
@@ -278,5 +278,5 @@ ImageBase.Badge.displayName = 'ImageBase.Badge';
 ImageBase.Overlay = ImageBaseOverlay;
 ImageBase.Overlay.displayName = 'ImageBase.Overlay';
 
-ImageBase.PositionedComponent = ImageBaseFloatElement;
-ImageBase.PositionedComponent.displayName = 'ImageBase.PositionedComponent';
+ImageBase.FloatElement = ImageBaseFloatElement;
+ImageBase.FloatElement.displayName = 'ImageBase.FloatElement';

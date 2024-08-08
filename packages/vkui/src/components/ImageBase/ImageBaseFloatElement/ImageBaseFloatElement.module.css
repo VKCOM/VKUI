@@ -1,138 +1,138 @@
-.PositionedComponent {
+.FloatElement {
   position: absolute;
   z-index: var(--vkui_internal--z_index_image_base_positioned_element);
   transition: opacity 0.3s ease-in-out;
-  inset-inline-start: var(--vkui_internal--PositionedComponent_inset_inline_start, initial);
-  inset-inline-end: var(--vkui_internal--PositionedComponent_inset_inline_end, initial);
-  inset-block-start: var(--vkui_internal--PositionedComponent_inset_block_start, initial);
-  inset-block-end: var(--vkui_internal--PositionedComponent_inset_block_end, initial);
+  inset-inline-start: var(--vkui_internal--FloatElement_inset_inline_start, initial);
+  inset-inline-end: var(--vkui_internal--FloatElement_inset_inline_end, initial);
+  inset-block-start: var(--vkui_internal--FloatElement_inset_block_start, initial);
+  inset-block-end: var(--vkui_internal--FloatElement_inset_block_end, initial);
 
-  --vkui_internal--PositionedComponent_horizontal_indent: 0;
-  --vkui_internal--PositionedComponent_vertical_indent: 0;
+  --vkui_internal--FloatElement_horizontal_indent: 0;
+  --vkui_internal--FloatElement_vertical_indent: 0;
 }
 
-.PositionedComponent--horizontalIndent-2xs {
-  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_2xs);
+.FloatElement--horizontalIndent-2xs {
+  --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_2xs);
 }
 
-.PositionedComponent--horizontalIndent-xs {
-  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_xs);
+.FloatElement--horizontalIndent-xs {
+  --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_xs);
 }
 
-.PositionedComponent--horizontalIndent-s {
-  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_s);
+.FloatElement--horizontalIndent-s {
+  --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_s);
 }
 
-.PositionedComponent--horizontalIndent-m {
-  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_m);
+.FloatElement--horizontalIndent-m {
+  --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_m);
 }
 
-.PositionedComponent--horizontalIndent-l {
-  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_l);
+.FloatElement--horizontalIndent-l {
+  --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_l);
 }
 
-.PositionedComponent--horizontalIndent-xl {
-  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_xl);
+.FloatElement--horizontalIndent-xl {
+  --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_xl);
 }
 
-.PositionedComponent--horizontalIndent-2xl {
-  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_2xl);
+.FloatElement--horizontalIndent-2xl {
+  --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_2xl);
 }
 
-.PositionedComponent--horizontalIndent-3xl {
-  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_3xl);
+.FloatElement--horizontalIndent-3xl {
+  --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_3xl);
 }
 
-.PositionedComponent--horizontalIndent-4xl {
-  --vkui_internal--PositionedComponent_horizontal_indent: var(--vkui--spacing_size_4xl);
+.FloatElement--horizontalIndent-4xl {
+  --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_4xl);
 }
 
-.PositionedComponent--verticalIndent-2xs {
-  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_2xs);
+.FloatElement--verticalIndent-2xs {
+  --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_2xs);
 }
 
-.PositionedComponent--verticalIndent-xs {
-  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_xs);
+.FloatElement--verticalIndent-xs {
+  --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_xs);
 }
 
-.PositionedComponent--verticalIndent-s {
-  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_s);
+.FloatElement--verticalIndent-s {
+  --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_s);
 }
 
-.PositionedComponent--verticalIndent-m {
-  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_m);
+.FloatElement--verticalIndent-m {
+  --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_m);
 }
 
-.PositionedComponent--verticalIndent-l {
-  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_l);
+.FloatElement--verticalIndent-l {
+  --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_l);
 }
 
-.PositionedComponent--verticalIndent-xl {
-  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_xl);
+.FloatElement--verticalIndent-xl {
+  --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_xl);
 }
 
-.PositionedComponent--verticalIndent-2xl {
-  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_2xl);
+.FloatElement--verticalIndent-2xl {
+  --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_2xl);
 }
 
-.PositionedComponent--verticalIndent-3xl {
-  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_3xl);
+.FloatElement--verticalIndent-3xl {
+  --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_3xl);
 }
 
-.PositionedComponent--verticalIndent-4xl {
-  --vkui_internal--PositionedComponent_vertical_indent: var(--vkui--spacing_size_4xl);
+.FloatElement--verticalIndent-4xl {
+  --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_4xl);
 }
 
-.PositionedComponent--hidden {
+.FloatElement--hidden {
   opacity: 0;
 }
 
-.PositionedComponent--position-topStart {
-  inset-inline-start: var(--vkui_internal--PositionedComponent_horizontal_indent);
-  inset-block-start: var(--vkui_internal--PositionedComponent_vertical_indent);
+.FloatElement--position-topStart {
+  inset-inline-start: var(--vkui_internal--FloatElement_horizontal_indent);
+  inset-block-start: var(--vkui_internal--FloatElement_vertical_indent);
 }
 
-.PositionedComponent--position-top {
+.FloatElement--position-top {
   inset-inline-start: 50%;
-  inset-block-start: var(--vkui_internal--PositionedComponent_vertical_indent);
+  inset-block-start: var(--vkui_internal--FloatElement_vertical_indent);
   transform: translateX(-50%);
 }
 
-.PositionedComponent--position-topEnd {
-  inset-inline-end: var(--vkui_internal--PositionedComponent_horizontal_indent);
-  inset-block-start: var(--vkui_internal--PositionedComponent_vertical_indent);
+.FloatElement--position-topEnd {
+  inset-inline-end: var(--vkui_internal--FloatElement_horizontal_indent);
+  inset-block-start: var(--vkui_internal--FloatElement_vertical_indent);
 }
 
-.PositionedComponent--position-bottomStart {
-  inset-inline-start: var(--vkui_internal--PositionedComponent_horizontal_indent);
-  inset-block-end: var(--vkui_internal--PositionedComponent_vertical_indent);
+.FloatElement--position-bottomStart {
+  inset-inline-start: var(--vkui_internal--FloatElement_horizontal_indent);
+  inset-block-end: var(--vkui_internal--FloatElement_vertical_indent);
 }
 
-.PositionedComponent--position-bottom {
+.FloatElement--position-bottom {
   inset-inline-start: 50%;
-  inset-block-end: var(--vkui_internal--PositionedComponent_vertical_indent);
+  inset-block-end: var(--vkui_internal--FloatElement_vertical_indent);
   transform: translateX(-50%);
 }
 
-.PositionedComponent--position-bottomEnd {
-  inset-block-end: var(--vkui_internal--PositionedComponent_vertical_indent);
-  inset-inline-end: var(--vkui_internal--PositionedComponent_horizontal_indent);
+.FloatElement--position-bottomEnd {
+  inset-block-end: var(--vkui_internal--FloatElement_vertical_indent);
+  inset-inline-end: var(--vkui_internal--FloatElement_horizontal_indent);
 }
 
-.PositionedComponent--position-middleStart {
-  inset-inline-start: var(--vkui_internal--PositionedComponent_horizontal_indent);
+.FloatElement--position-middleStart {
+  inset-inline-start: var(--vkui_internal--FloatElement_horizontal_indent);
   inset-block-start: 50%;
   transform: translateY(-50%);
 }
 
-.PositionedComponent--position-middle {
+.FloatElement--position-middle {
   inset-inline-start: 50%;
   inset-block-start: 50%;
   transform: translate(-50%, -50%);
 }
 
-.PositionedComponent--position-middleEnd {
-  inset-inline-end: var(--vkui_internal--PositionedComponent_horizontal_indent);
+.FloatElement--position-middleEnd {
+  inset-inline-end: var(--vkui_internal--FloatElement_horizontal_indent);
   inset-block-start: 50%;
   transform: translateY(-50%);
 }

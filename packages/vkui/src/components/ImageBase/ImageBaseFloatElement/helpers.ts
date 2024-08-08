@@ -1,6 +1,6 @@
-import { PositionedComponentIndentation } from './ImageBaseFloatElement';
+import { FloatElementIndentation } from './ImageBaseFloatElement';
 
-function isIndentSizeConstant(indent: PositionedComponentIndentation) {
+function isIndentSizeConstant(indent: FloatElementIndentation) {
   return (
     indent === '2xs' ||
     indent === 'xs' ||
@@ -14,7 +14,7 @@ function isIndentSizeConstant(indent: PositionedComponentIndentation) {
   );
 }
 
-function calculateIndent(indent: PositionedComponentIndentation) {
+function calculateIndent(indent: FloatElementIndentation) {
   if (isIndentSizeConstant(indent)) {
     return;
   }
@@ -22,7 +22,7 @@ function calculateIndent(indent: PositionedComponentIndentation) {
 }
 
 export const resolveIndent = (
-  indent: PositionedComponentIndentation | undefined,
+  indent: FloatElementIndentation | undefined,
   cssProperty: string,
   classNames: Record<string, string>,
 ): [React.CSSProperties | undefined, string | undefined] => {

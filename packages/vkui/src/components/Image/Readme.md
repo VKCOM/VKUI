@@ -55,7 +55,7 @@ const OthersFeatures = () => {
   );
 };
 
-const WithPositionedComponents = () => {
+const WithFloatElements = () => {
   const [showContextMenu, setShowContextMenu] = useState(true);
   const [contextMenuOpened, setContextMenuOpened] = useState(false);
   const [contextMenuVisibility, setContextMenuVisibility] = useState('on-image-hover');
@@ -86,14 +86,14 @@ const WithPositionedComponents = () => {
       <Flex margin="auto" gap={'m'}>
         <Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн">
           {showContextMenu && (
-            <Image.PositionedComponent
+            <Image.FloatElement
               position="top-end"
               horizontalIndent="l"
               verticalIndent="l"
               visibility={contextMenuOpened ? 'always' : contextMenuVisibility}
             >
               <ContextMenu onShownChange={setContextMenuOpened} />
-            </Image.PositionedComponent>
+            </Image.FloatElement>
           )}
         </Image>
       </Flex>
@@ -111,7 +111,7 @@ const Example = () => {
 
         <OthersFeatures />
 
-        <WithPositionedComponents />
+        <WithFloatElements />
       </Panel>
     </View>
   );
