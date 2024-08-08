@@ -12,7 +12,8 @@ import styles from './Group.module.css';
 
 const sizeXClassNames = {
   none: classNames(styles['Group--sizeX-none'], 'vkuiInternalGroup--sizeX-none'),
-  ['compact']: styles['Group--sizeX-compact'],
+  regular: styles['Group--sizeX-regular'],
+  compact: styles['Group--sizeX-compact'],
 };
 
 const stylesMode = {
@@ -140,7 +141,7 @@ export const Group = ({
         baseClassName={classNames(
           'vkuiInternalGroup',
           styles['Group'],
-          sizeX !== 'regular' && sizeXClassNames[sizeX],
+          sizeXClassNames[sizeX],
           mode === 'plain' && isInsideModal && styles['Group--mode-plain-inside-modal'],
           stylesMode[mode],
           stylesPadding[padding],
