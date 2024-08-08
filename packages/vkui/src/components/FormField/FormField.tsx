@@ -17,6 +17,22 @@ const stylesStatus = {
   valid: styles['FormField--status-valid'],
 };
 
+const iconAlignClassNames = {
+  center: undefined,
+  start: styles['FormField__icon--align-start'],
+  end: styles['FormField__icon--align-end'],
+};
+
+const renderIcon = (icon: React.ReactNode, align: FieldIconsAlign, className: string) => {
+  return (
+    <div className={styles['FormField__iconWrapper']}>
+      <span className={classNames(iconAlignClassNames[align], className)}>{icon}</span>
+    </div>
+  );
+};
+
+export type FieldIconsAlign = 'start' | 'center' | 'end';
+
 export interface FormFieldProps {
   status?: 'default' | 'error' | 'valid';
   /**
@@ -29,6 +45,10 @@ export interface FormFieldProps {
    */
   before?: React.ReactNode;
   /**
+   * Вертикальное выравнивание иконки слева
+   */
+  beforeAlign?: FieldIconsAlign;
+  /**
    * Добавляет иконку справа.
    *
    * Рекомендации:
@@ -38,12 +58,20 @@ export interface FormFieldProps {
    */
   after?: React.ReactNode;
   /**
+   * Вертикальное выравнивание иконки справа
+   */
+  afterAlign?: FieldIconsAlign;
+  /**
    * Режим отображения.
    *
    * - `default` — показывает фон, обводку и, при наличии, текст-подсказку.
    * - `plain` — показывает только текст-подсказку.
    */
   mode?: 'default' | 'plain';
+  /**
+   * Максимальная высота поля
+   */
+  maxHeight?: number;
 }
 
 interface FormFieldOwnProps
@@ -64,9 +92,13 @@ export const FormField = ({
   getRootRef,
   before,
   after,
+  beforeAlign = 'center',
+  afterAlign = 'center',
   disabled,
   mode = 'default',
   className,
+  maxHeight,
+  style,
   ...restProps
 }: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef);
@@ -93,6 +125,14 @@ export const FormField = ({
     <Component
       {...restProps}
       ref={elRef}
+      style={
+        maxHeight !== undefined
+          ? {
+              ...style,
+              maxHeight,
+            }
+          : style
+      }
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={classNames(
@@ -106,13 +146,16 @@ export const FormField = ({
         className,
       )}
     >
-      {before && <span className={styles['FormField__before']}>{before}</span>}
-      {children}
-      {after && (
-        <span className={classNames(styles['FormField__after'], 'vkuiInternalFormField__after')}>
-          {after}
-        </span>
-      )}
+      <div className={styles['FormField_scrollContainer']}>
+        {before && renderIcon(before, beforeAlign, styles['FormField__before'])}
+        <div className={styles['FormField__content']}>{children}</div>
+        {after &&
+          renderIcon(
+            after,
+            afterAlign,
+            classNames(styles['FormField__after'], 'vkuiInternalFormField__after'),
+          )}
+      </div>
       <span aria-hidden className={styles['FormField__border']} />
     </Component>
   );

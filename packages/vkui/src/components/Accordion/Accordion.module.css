@@ -22,12 +22,12 @@
 }
 
 .AccordionContent__in--enter {
-  animation-name: animation-expand;
+  animation-name: animation-accordion-expand;
 }
 
 @media (--reduce-motion) {
   .AccordionContent__in--enter {
-    animation-name: animation-fade-in;
+    animation-name: animation-accordion-fade-in;
   }
 }
 
@@ -36,12 +36,12 @@
 }
 
 .AccordionContent__in--exit {
-  animation-name: animation-collapse;
+  animation-name: animation-accordion-collapse;
 }
 
 @media (--reduce-motion) {
   .AccordionContent__in--exit {
-    animation-name: animation-fade-out;
+    animation-name: animation-accordion-fade-out;
   }
 }
 
@@ -49,7 +49,7 @@
   block-size: 0;
 }
 
-@keyframes animation-expand {
+@keyframes animation-accordion-expand {
   0% {
     block-size: 0;
   }
@@ -58,7 +58,7 @@
     block-size: var(--vkui_internal--AccordionContent_height);
   }
 }
-@keyframes animation-collapse {
+@keyframes animation-accordion-collapse {
   0% {
     block-size: var(--vkui_internal--AccordionContent_height);
   }
@@ -67,7 +67,7 @@
     block-size: 0;
   }
 }
-@keyframes animation-fade-in {
+@keyframes animation-accordion-fade-in {
   0% {
     opacity: 0;
     block-size: var(--vkui_internal--AccordionContent_height);
@@ -83,7 +83,7 @@
     block-size: var(--vkui_internal--AccordionContent_height);
   }
 }
-@keyframes animation-fade-out {
+@keyframes animation-accordion-fade-out {
   0% {
     opacity: 1;
     block-size: var(--vkui_internal--AccordionContent_height);

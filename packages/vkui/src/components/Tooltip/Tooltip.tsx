@@ -55,6 +55,10 @@ export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTool
    * Отключает закрытие по клику.
    */
   disableCloseAfterClick?: boolean;
+  /**
+   * Отключает появление при фокусе.
+   */
+  disableTriggerOnFocus?: boolean;
 }
 
 /**
@@ -69,6 +73,7 @@ export const Tooltip = ({
   offsetByCrossAxis = 0,
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
+  disableTriggerOnFocus = false,
 
   // useFloatingWithInteractions
   defaultShown,
@@ -131,7 +136,7 @@ export const Tooltip = ({
     shown: shownProp,
     onShownChange,
     placement: strictPlacement,
-    trigger: ['hover', 'focus'],
+    trigger: disableTriggerOnFocus ? 'hover' : ['hover', 'focus'],
     hoverDelay,
     closeAfterClick: !disableCloseAfterClick,
     disableInteractive: !enableInteractive,

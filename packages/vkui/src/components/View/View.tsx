@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
 import { blurActiveElement, canUseDOM, useDOM } from '../../lib/dom';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { useScroll } from '../AppRoot/ScrollContext';
@@ -14,6 +13,7 @@ import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionCont
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { useSplitCol } from '../SplitCol/SplitColContext';
 import { Touch, TouchEvent } from '../Touch/Touch';
+import { useLayoutEffectCall } from './useLayoutEffectCall';
 import {
   getSwipeBackPredicates,
   hasHorizontalScrollableElementWithScrolledToLeft,
@@ -72,7 +72,7 @@ export const View = ({
 }: ViewProps): React.ReactNode => {
   const id = getNavId({ nav, id: restProps.id });
   const scrolls = React.useRef(scrollsCache[id as string] || {});
-  const afterTransition = React.useRef(noop);
+  const layoutEffectCall = useLayoutEffectCall();
 
   React.useEffect(() => () => {
     if (id) {
@@ -143,7 +143,7 @@ export const View = ({
       setAnimated(false);
       setIsBack(isBackTransition);
 
-      afterTransition.current = () => {
+      layoutEffectCall(() => {
         scroll?.scrollTo(0, isBackTransition ? scrolls.current[activePanelProp] : 0);
         onTransition &&
           onTransition({
@@ -151,15 +151,10 @@ export const View = ({
             from: prevPanel,
             to: activePanelProp,
           });
-      };
+      });
     },
-    [activePanelProp, onTransition, scroll],
+    [activePanelProp, layoutEffectCall, onTransition, scroll],
   );
-
-  useIsomorphicLayoutEffect(() => {
-    afterTransition.current();
-    afterTransition.current = noop;
-  }, [afterTransition.current]);
 
   const onAnimationEnd = React.useCallback(() => {
     if (prevPanel !== null) {
@@ -298,13 +293,11 @@ export const View = ({
     if (isNext) {
       return {
         transform: `translate3d(${nextPanelTranslate}, 0, 0)`,
-        WebkitTransform: `translate3d(${nextPanelTranslate}, 0, 0)`,
       };
     }
     if (isPrev) {
       return {
         transform: `translate3d(${prevPanelTranslate}, 0, 0)`,
-        WebkitTransform: `translate3d(${prevPanelTranslate}, 0, 0)`,
       };
     }
 
@@ -350,7 +343,7 @@ export const View = ({
         .find((id) => id === prevActivePanel || id === activePanelProp);
 
       const isBackTransition = firstLayerId === activePanelProp;
-      scrolls.current[prevActivePanel] = scroll?.getScroll().y;
+      scrolls.current[prevActivePanel] = scroll?.getScroll({ compensateKeyboardHeight: false }).y;
 
       if (disableAnimation) {
         flushTransition(prevActivePanel, isBackTransition);
@@ -384,7 +377,7 @@ export const View = ({
       setVisiblePanels([nextPanel]);
       setIsBack(true);
 
-      afterTransition.current = () => {
+      layoutEffectCall(() => {
         if (nextPanel !== null) {
           scroll?.scrollTo(0, scrolls.current[nextPanel]);
         }
@@ -394,7 +387,7 @@ export const View = ({
             from: prevPanel,
             to: nextPanel,
           });
-      };
+      });
     }
 
     // Началась анимация завершения свайпа назад.
@@ -426,6 +419,7 @@ export const View = ({
     scroll,
     swipeBackNextPanel,
     swipeBackResult,
+    layoutEffectCall,
   ]);
 
   React.useEffect(

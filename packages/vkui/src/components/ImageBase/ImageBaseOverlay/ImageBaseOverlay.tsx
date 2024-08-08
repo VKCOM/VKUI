@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useKeyboard } from '../../../components/Clickable/useKeyboard';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useAppearance } from '../../../hooks/useAppearance';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
+import { clickByKeyboardHandler } from '../../../lib/utils';
 import { ImageBaseContext } from '../context';
 import { validateOverlayIcon } from '../validators';
 import { useNonInteractiveOverlayProps } from './hooks';
@@ -41,7 +41,6 @@ const ImageBaseOverlayInteractive = ({
 }: ImageBaseOverlayInteractiveProps & { overlayShown?: boolean }) => {
   const { focusVisible, ...focusEvents } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'inside' });
-  const keyboardHandlers = useKeyboard();
 
   return (
     <>
@@ -56,8 +55,8 @@ const ImageBaseOverlayInteractive = ({
           className,
         )}
         ref={getRootRef}
+        onKeyDown={clickByKeyboardHandler}
         {...focusEvents}
-        {...keyboardHandlers}
       >
         {children}
       </div>

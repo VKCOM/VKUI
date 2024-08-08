@@ -83,6 +83,7 @@ export const useChipsInput = <O extends ChipOption>({
   addOption: (newValue: O | string) => void;
   addOptionFromInput: (inputValue: string) => void;
   removeOption: (newValue: O | ChipOptionValue) => void;
+  clearOptions: () => void;
   inputRef: React.RefObject<HTMLInputElement & SimulateReactInputTargetState>;
   inputValue: string;
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => any;
@@ -157,6 +158,11 @@ export const useChipsInput = <O extends ChipOption>({
     setValue(defaultValue);
   }, [defaultValue, setValue]);
 
+  const clearOptions = React.useCallback(() => {
+    setValue(DEFAULT_VALUE);
+    clearInput();
+  }, [clearInput, setValue]);
+
   useNativeFormResetListener(inputRef, reset);
 
   return {
@@ -169,5 +175,6 @@ export const useChipsInput = <O extends ChipOption>({
     inputValue,
     onInputChange: setInputChange,
     clearInput,
+    clearOptions,
   };
 };

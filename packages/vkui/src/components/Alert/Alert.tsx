@@ -65,7 +65,7 @@ export interface AlertProps extends React.HTMLAttributes<HTMLElement>, HasRootRe
  * @see https://vkcom.github.io/VKUI/#/Alert
  */
 export const Alert = ({
-  actions = [],
+  actions,
   actionsLayout = 'horizontal',
   children,
   className,

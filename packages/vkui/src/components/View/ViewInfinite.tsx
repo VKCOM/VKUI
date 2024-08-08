@@ -178,7 +178,10 @@ class ViewInfiniteComponent extends React.Component<
       const prevScrolls = this.scrolls[prevProps.activePanel] || [];
       const scrolls = {
         ...this.scrolls,
-        [prevProps.activePanel]: [...prevScrolls, this.props.scroll?.getScroll().y],
+        [prevProps.activePanel]: [
+          ...prevScrolls,
+          this.props.scroll?.getScroll({ compensateKeyboardHeight: false }).y,
+        ],
       };
       this.scrolls = scrolls;
 
@@ -520,13 +523,11 @@ class ViewInfiniteComponent extends React.Component<
     if (isNext) {
       return {
         transform: `translate3d(${nextPanelTranslate}, 0, 0)`,
-        WebkitTransform: `translate3d(${nextPanelTranslate}, 0, 0)`,
       };
     }
     if (isPrev) {
       return {
         transform: `translate3d(${prevPanelTranslate}, 0, 0)`,
-        WebkitTransform: `translate3d(${prevPanelTranslate}, 0, 0)`,
         boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})`,
       };
     }

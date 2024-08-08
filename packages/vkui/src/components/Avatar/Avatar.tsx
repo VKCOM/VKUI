@@ -14,7 +14,7 @@ export type {
   ImageBaseOverlayProps as AvatarOverlayProps,
 };
 
-export const AVATAR_DEFAULT_SIZE = 48;
+const AVATAR_DEFAULT_SIZE = 48;
 
 const COLORS_NUMBER_TO_TEXT_MAP = {
   1: 'red',

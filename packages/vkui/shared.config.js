@@ -16,7 +16,6 @@ module.exports.URLS = {
 const ROOT_DIR = 'packages/vkui';
 const TS_CONFIG_FOR_DIST = `${ROOT_DIR}/tsconfig.dist.json`;
 const SRC_DIR = `${ROOT_DIR}/src`;
-const JS_MAIN_EXPORT = `${SRC_DIR}/vkui.js`;
 const JS_BREAKPOINTS = `${SRC_DIR}/lib/adaptivity/breakpoints.ts`;
 const COMPONENTS_DIR = `${SRC_DIR}/components`;
 const STYLES_DIR = `${SRC_DIR}/styles`;
@@ -29,7 +28,6 @@ const TEST_UTILS_DIR = `${SRC_DIR}/testing`;
 module.exports.PATHS = {
   ROOT_DIR,
   SRC_DIR,
-  JS_MAIN_EXPORT,
   JS_BREAKPOINTS,
   TS_CONFIG_FOR_DIST,
   COMPONENTS_DIR,

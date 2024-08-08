@@ -1,4 +1,4 @@
-import escape from 'lodash/escape';
+import { escape } from 'lodash-es';
 import {
   DEFAULT_THEME_FOR_PLATFORM,
   DEFAULT_THEME_NAMES,

@@ -106,6 +106,8 @@ export { AspectRatio } from './components/AspectRatio/AspectRatio';
 export type { AspectRatioProps } from './components/AspectRatio/AspectRatio';
 export { Flex } from './components/Flex/Flex';
 export type { FlexProps } from './components/Flex/Flex';
+export { SimpleGrid } from './components/SimpleGrid/SimpleGrid';
+export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
 
 /**
  * Popouts
@@ -122,8 +124,11 @@ export type {
 export { ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';
 export { ActionSheetDefaultIosCloseItem } from './components/ActionSheet/ActionSheetDefaultIosCloseItem';
-export { ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
-export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
+export { ScreenSpinner, ScreenSpinnerContext } from './components/ScreenSpinner/ScreenSpinner';
+export type {
+  ScreenSpinnerProps,
+  ScreenSpinnerContextProps,
+} from './components/ScreenSpinner/ScreenSpinner';
 export { Snackbar } from './components/Snackbar/Snackbar';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
 export { Tooltip } from './components/Tooltip/Tooltip';
@@ -203,7 +208,7 @@ export type { ImageProps, ImageBadgeProps, ImageOverlayProps } from './component
 export { Progress } from './components/Progress/Progress';
 export type { ProgressProps } from './components/Progress/Progress';
 export { Search } from './components/Search/Search';
-export type { SearchProps } from './components/Search/Search';
+export type { SearchProps, RenderIconButtonFn } from './components/Search/Search';
 export { Tabs } from './components/Tabs/Tabs';
 export type { TabsProps } from './components/Tabs/Tabs';
 export { TabsItem } from './components/TabsItem/TabsItem';
@@ -270,7 +275,7 @@ export type { FormItemTopLabelProps } from './components/FormItem/FormItemTop/Fo
 export type { FormItemTopAsideProps } from './components/FormItem/FormItemTop/FormItemTopAside';
 export type { FormItemProps } from './components/FormItem/FormItem';
 export { FormField } from './components/FormField/FormField';
-export type { FormFieldProps } from './components/FormField/FormField';
+export type { FormFieldProps, FieldIconsAlign } from './components/FormField/FormField';
 export { FormLayoutGroup } from './components/FormLayoutGroup/FormLayoutGroup';
 export type { FormLayoutGroupProps } from './components/FormLayoutGroup/FormLayoutGroup';
 export { FormStatus } from './components/FormStatus/FormStatus';
@@ -289,10 +294,13 @@ export { ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
 export { ChipsSelect } from './components/ChipsSelect/ChipsSelect';
 export type { ChipsSelectProps } from './components/ChipsSelect/ChipsSelect';
+export type { FormFieldClearButtonProps } from './components/FormFieldClearButton/FormFieldClearButton';
 export { Slider } from './components/Slider/Slider';
 export type { SliderBaseProps, SliderProps, SliderMultipleProps } from './components/Slider/Slider';
 export { Textarea } from './components/Textarea/Textarea';
 export type { TextareaProps } from './components/Textarea/Textarea';
+export { SelectionControl } from './components/SelectionControl/SelectionControl';
+export type { SelectionControlProps } from './components/SelectionControl/SelectionControl';
 export { Radio } from './components/Radio/Radio';
 export type { RadioProps } from './components/Radio/Radio';
 export { RadioGroup } from './components/RadioGroup/RadioGroup';
@@ -401,6 +409,7 @@ export {
 } from './hooks/useAdaptivityWithJSMediaQueries';
 export { useAppearance } from './hooks/useAppearance';
 export { usePagination } from './hooks/usePagination';
+export { useOrientationChange } from './hooks/useOrientationChange';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';

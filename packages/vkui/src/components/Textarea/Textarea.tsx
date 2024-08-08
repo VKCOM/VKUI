@@ -2,7 +2,10 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
+import { useDOM } from '../../lib/dom';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
@@ -18,9 +21,8 @@ export interface TextareaProps
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onResize'>,
     HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
-    Pick<React.CSSProperties, 'maxHeight'>,
     HasAlign,
-    Pick<FormFieldProps, 'status' | 'mode'> {
+    FormFieldProps {
   grow?: boolean;
   onResize?: (el: HTMLTextAreaElement) => void;
   defaultValue?: string;
@@ -42,14 +44,22 @@ export const Textarea = ({
   onChange,
   align,
   mode,
+  after,
+  before,
+  afterAlign,
+  beforeAlign,
+  value,
   ...restProps
 }: TextareaProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
+  const platform = usePlatform();
+  const { window } = useDOM();
 
   const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);
   const elementRef = useExternRef(getRef, refResizeTextarea);
 
-  React.useEffect(resize, [resize, sizeY]);
+  React.useEffect(resize, [resize, sizeY, platform, value]);
+  useGlobalEventListener(window, 'resize', resize);
 
   return (
     <FormField
@@ -65,11 +75,16 @@ export const Textarea = ({
       disabled={restProps.disabled}
       status={status}
       mode={mode}
+      after={after}
+      before={before}
+      afterAlign={afterAlign}
+      beforeAlign={beforeAlign}
+      maxHeight={maxHeight}
     >
       <UnstyledTextField
         {...restProps}
+        value={value}
         as="textarea"
-        style={{ maxHeight }}
         rows={rows}
         className={styles['Textarea__el']}
         onChange={callMultiple(onChange, resize)}
