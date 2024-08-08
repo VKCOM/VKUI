@@ -10,8 +10,6 @@ export interface UseEnsuredControlProps<V, E extends React.ChangeEvent<any>> {
   onChange?: (this: void, e: E) => any;
 }
 
-const warn = warnOnce('GridAvatar');
-
 export function useEnsuredControl<V, E extends React.ChangeEvent<any>>({
   onChange: onChangeProp,
   disabled,
@@ -40,6 +38,8 @@ export interface UseCustomEnsuredControlProps<V> {
   disabled?: boolean | undefined;
   onChange?: (this: void, v: V) => any;
 }
+
+const warn = warnOnce('useCustomEnsuredControl');
 
 export function useCustomEnsuredControl<V = any>({
   value,
