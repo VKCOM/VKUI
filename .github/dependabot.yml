@@ -44,6 +44,7 @@ updates:
       playwright:
         patterns:
           - '@playwright/*'
+          - 'playwright'
       eslint:
         patterns:
           - 'eslint*'
