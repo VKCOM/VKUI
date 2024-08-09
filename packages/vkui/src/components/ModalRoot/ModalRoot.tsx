@@ -60,7 +60,6 @@ class ModalRootTouchComponent extends React.Component<
     this.frameIds = {};
   }
 
-  private documentScrolling = false;
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
   private readonly viewportRef = React.createRef<HTMLDivElement>();
   private maskAnimationFrame: number | undefined = undefined;
@@ -138,46 +137,17 @@ class ModalRootTouchComponent extends React.Component<
 
   /* Отключает скролл документа */
   toggleDocumentScrolling(enabled: boolean) {
-    if (this.documentScrolling === enabled) {
-      return;
-    }
-    this.documentScrolling = enabled;
-
     if (enabled) {
       // восстанавливаем значение overscroll behavior
       // eslint-disable-next-line no-restricted-properties
       this.document.documentElement.classList.remove('vkui--disable-overscroll-behavior');
-
-      // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
-      // https://github.com/VKCOM/VKUI/issues/444
-      this.window.removeEventListener('touchmove', this.preventTouch, {
-        // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions нет поля passive
-        passive: false,
-      });
     } else {
       // отключаем нативный pull-to-refresh при открытом модальном окне
       // чтобы он не срабатывал при закрытии модалки смахиванием вниз
       // eslint-disable-next-line no-restricted-properties
       this.document.documentElement.classList.add('vkui--disable-overscroll-behavior');
-
-      this.window.addEventListener('touchmove', this.preventTouch, {
-        passive: false,
-      });
     }
   }
-
-  preventTouch = (event: any) => {
-    if (!event) {
-      return false;
-    }
-    while (event.originalEvent) {
-      event = event.originalEvent;
-    }
-    if (event.preventDefault) {
-      event.preventDefault();
-    }
-    return false;
-  };
 
   checkPageContentHeight() {
     const modalState = this.props.getModalState(this.props.activeModal);

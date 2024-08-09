@@ -20,7 +20,7 @@ export interface PaginationNavigationButtonProps extends PaginationNavigationBut
 /**
  * @private
  */
-export const getButtonPropsFromPaginationNavigationButton = (
+const getButtonPropsFromPaginationNavigationButton = (
   opts: PaginationNavigationButtonOpts,
 ): ButtonProps & { 'data-page': number | undefined } => {
   const icon: React.ReactElement | null =

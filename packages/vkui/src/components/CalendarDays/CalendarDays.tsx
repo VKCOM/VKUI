@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { isSameDay, isSameMonth } from 'date-fns';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
-import { isSameDay, isSameMonth } from '../../lib/date';
 import { HTMLAttributesWithRootRef } from '../../types';
 import { CalendarDay, CalendarDayElementProps } from '../CalendarDay/CalendarDay';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';

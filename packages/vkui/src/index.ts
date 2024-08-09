@@ -299,6 +299,8 @@ export { Slider } from './components/Slider/Slider';
 export type { SliderBaseProps, SliderProps, SliderMultipleProps } from './components/Slider/Slider';
 export { Textarea } from './components/Textarea/Textarea';
 export type { TextareaProps } from './components/Textarea/Textarea';
+export { SelectionControl } from './components/SelectionControl/SelectionControl';
+export type { SelectionControlProps } from './components/SelectionControl/SelectionControl';
 export { Radio } from './components/Radio/Radio';
 export type { RadioProps } from './components/Radio/Radio';
 export { RadioGroup } from './components/RadioGroup/RadioGroup';
@@ -407,6 +409,7 @@ export {
 } from './hooks/useAdaptivityWithJSMediaQueries';
 export { useAppearance } from './hooks/useAppearance';
 export { usePagination } from './hooks/usePagination';
+export { useOrientationChange } from './hooks/useOrientationChange';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';

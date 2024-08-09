@@ -85,7 +85,10 @@ export const Cell: React.FC<CellProps> & {
   const dragger = draggable ? (
     <CellDragger
       elRef={rootElRef}
-      className={styles['Cell__dragger']}
+      className={classNames(
+        styles['Cell__dragger'],
+        !before && !selectable && styles['Cell__control--noBefore'],
+      )}
       disabled={disabled}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
@@ -104,7 +107,15 @@ export const Cell: React.FC<CellProps> & {
       disabled,
       onChange,
     };
-    checkbox = <CellCheckbox className={styles['Cell__checkbox']} {...checkboxProps} />;
+    checkbox = (
+      <CellCheckbox
+        className={classNames(
+          styles['Cell__checkbox'],
+          !before && styles['Cell__control--noBefore'],
+        )}
+        {...checkboxProps}
+      />
+    );
   }
 
   const simpleCellDisabled =
