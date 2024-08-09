@@ -41,7 +41,7 @@
     "clear": "yarn run -T shx rm -rf dist/*",
     "docker:clear-playwright-cache": "../../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker rm -f && docker volume rm vkui_package_vkui_playwright_cache",
     "postcss": "yarn run -T cross-env NODE_ENV=production concurrently 'yarn:postcss:*'",
-    "postcss:bundle": "yarn run -T webpack --config webpack.styles.config.js",
+    "postcss:bundle": "yarn run -T rspack --config rspack.styles.config.ts",
     "postcss:modules": "yarn run -T postcss './src/**/*.css' --base ./src --dir ./dist/cssm --config ./cssm",
     "swc-base": "yarn run -T cross-env NODE_ENV=production swc src/ --config-file package.swcrc --extensions .tsx,.jsx,.ts,.js --strip-leading-paths",
     "swc:es6": "yarn swc-base -d dist -s",
@@ -73,7 +73,8 @@
     "date-fns": "^3.6.0"
   },
   "devDependencies": {
-    "storybook": "8.2.7"
+    "storybook": "8.2.7",
+    "ts-node": "^10.9.2"
   },
   "size-limit": [
     {
