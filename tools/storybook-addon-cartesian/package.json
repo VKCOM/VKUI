@@ -30,6 +30,7 @@
     "@swc/core": "*",
     "react": "*",
     "react-dom": "*",
-    "storybook": "8.2.7"
+    "storybook": "8.2.7",
+    "typescript": "*"
   }
 }
