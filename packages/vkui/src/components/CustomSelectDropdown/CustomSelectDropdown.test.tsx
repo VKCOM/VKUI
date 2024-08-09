@@ -1,26 +1,25 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { PlacementWithAuto, usePlacementChangeCallback } from '../../lib/floating';
+import { usePrevious } from '../../hooks/usePrevious';
+import { usePlacementChangeCallback } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { CustomSelectDropdown, CustomSelectDropdownProps } from './CustomSelectDropdown';
 import styles from './CustomSelectDropdown.module.css';
-
-let lastInitialPlacement: PlacementWithAuto | undefined = undefined;
 
 jest.mock(
   '../../lib/floating/usePlacementChangeCallback',
   () =>
     ({
       usePlacementChangeCallback: (initialPlacement, _, onPlacementChange) => {
+        const prevPlacement = usePrevious(initialPlacement);
         useIsomorphicLayoutEffect(() => {
-          if (lastInitialPlacement !== initialPlacement) {
-            lastInitialPlacement !== undefined &&
+          if (prevPlacement !== initialPlacement) {
+            prevPlacement !== undefined &&
               initialPlacement !== 'auto' &&
               initialPlacement !== 'auto-end' &&
               initialPlacement !== 'auto-start' &&
               onPlacementChange &&
               onPlacementChange(initialPlacement);
-            lastInitialPlacement = initialPlacement;
           }
         }, [initialPlacement, onPlacementChange]);
       },
@@ -51,7 +50,6 @@ describe('CustomSelectDropdown', () => {
 
     const props: CustomSelectDropdownProps = {
       targetRef: React.createRef(),
-      // @ts-expect-error: TS2353 TS ругается, что нет такого поля
       ['data-testid']: 'dropdown',
       placement: 'top',
       onPlacementChange,
@@ -63,7 +61,7 @@ describe('CustomSelectDropdown', () => {
     rerender(<CustomSelectDropdown {...props} placement="bottom" />);
     expect(screen.getByTestId('dropdown')).toHaveClass(styles['CustomSelectDropdown--bottom']);
 
-    expect(onPlacementChange).toBeCalledTimes(2);
+    expect(onPlacementChange).toBeCalledTimes(1);
   });
 
   it('should have className when noMaxHeight = true', () => {
@@ -74,6 +72,7 @@ describe('CustomSelectDropdown', () => {
         noMaxHeight={true}
       />,
     );
+    expect(styles['CustomSelectDropdown__in--withMaxHeight']).toBeTruthy();
     expect(screen.getByTestId('dropdown').firstElementChild).not.toHaveClass(
       styles['CustomSelectDropdown__in--withMaxHeight'],
     );

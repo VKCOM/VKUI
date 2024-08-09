@@ -37,7 +37,6 @@ const sizeYClassNames = {
 
 const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
   if (startIndex >= options.length - 1) {
-    /* istanbul ignore next: вроде как сюда никак не попасть */
     return -1;
   }
   return options.findIndex((option, i) => i > startIndex && !option.disabled);
@@ -338,7 +337,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       dropdown && optionsWrapper ? (optionsWrapper.children[index] as HTMLElement) : null;
 
     if (!item || !dropdown) {
-      /* istanbul ignore next: невозможный кейс по идее */
       return;
     }
 
@@ -359,14 +357,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const focusOptionByIndex = React.useCallback(
     (index: number | undefined, scrollTo = true) => {
       if (index === undefined || index < 0 || index > (options.length ?? 0) - 1) {
-        /* istanbul ignore next: Не придумал как воспроизвести */
         return;
       }
 
       const option = options[index];
 
       if (option?.disabled) {
-        /* istanbul ignore next: Yt */
         return;
       }
 
@@ -670,7 +666,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       const selected = index === selectedOptionIndex;
 
       return (
-        <React.Fragment key={`${option.value}`}>
+        <React.Fragment key={`${typeof option.value}-${option.value}`}>
           {renderOptionProp({
             option,
             hovered,
@@ -796,7 +792,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       // Договорились со специалистом по доступности убрать <label>-обёртки из Select и CustomSelect
 
       if (!selectInputRef.current || !document) {
-        /* istanbul ignore next: нет возможности воспроизвести */
         return;
       }
 
