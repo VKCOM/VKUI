@@ -1,30 +1,24 @@
+import { useRef, useState } from 'react';
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
-import { usePrevious } from '../../hooks/usePrevious';
-import { usePlacementChangeCallback } from '../../lib/floating';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { CustomSelectDropdown, CustomSelectDropdownProps } from './CustomSelectDropdown';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { Placement, useFloating } from '../../lib/floating';
+import { Button } from '../Button/Button';
+import { CustomSelectDropdown } from './CustomSelectDropdown';
 import styles from './CustomSelectDropdown.module.css';
 
-jest.mock(
-  '../../lib/floating/usePlacementChangeCallback',
-  () =>
-    ({
-      usePlacementChangeCallback: (initialPlacement, _, onPlacementChange) => {
-        const prevPlacement = usePrevious(initialPlacement);
-        useIsomorphicLayoutEffect(() => {
-          if (prevPlacement !== initialPlacement) {
-            prevPlacement !== undefined &&
-              initialPlacement !== 'auto' &&
-              initialPlacement !== 'auto-end' &&
-              initialPlacement !== 'auto-start' &&
-              onPlacementChange &&
-              onPlacementChange(initialPlacement);
-          }
-        }, [initialPlacement, onPlacementChange]);
-      },
-    }) satisfies { usePlacementChangeCallback: typeof usePlacementChangeCallback },
-);
+jest.mock('../../lib/floating', () => {
+  const originalModule = jest.requireActual('../../lib/floating');
+  return {
+    ...originalModule,
+    useFloating: (...args: Parameters<typeof useFloating>) => {
+      const result = originalModule['useFloating'](args);
+      return {
+        ...result,
+        placement: args[0]?.placement,
+      };
+    },
+  };
+});
 
 describe('CustomSelectDropdown', () => {
   it('Displays only spinner if fetching: true', () => {
@@ -48,18 +42,32 @@ describe('CustomSelectDropdown', () => {
   it('should call onPlacementChange callback when placement is changed', async () => {
     const onPlacementChange = jest.fn();
 
-    const props: CustomSelectDropdownProps = {
-      targetRef: React.createRef(),
-      ['data-testid']: 'dropdown',
-      placement: 'top',
-      onPlacementChange,
+    const Fixture = () => {
+      const ref = useRef<HTMLDivElement>(null);
+      const [placement, setPlacement] = useState<Placement>('bottom');
+      return (
+        <>
+          <div ref={ref}></div>
+          <CustomSelectDropdown
+            targetRef={ref}
+            placement={placement}
+            data-testid="dropdown"
+            onPlacementChange={onPlacementChange}
+          />
+          <Button onClick={() => setPlacement('top')} data-testid="change-placement">
+            Change Placement
+          </Button>
+        </>
+      );
     };
 
-    const { rerender } = render(<CustomSelectDropdown {...props} />);
-    expect(screen.getByTestId('dropdown')).toHaveClass(styles['CustomSelectDropdown--top']);
+    render(<Fixture />);
 
-    rerender(<CustomSelectDropdown {...props} placement="bottom" />);
     expect(screen.getByTestId('dropdown')).toHaveClass(styles['CustomSelectDropdown--bottom']);
+
+    fireEvent.click(screen.getByTestId('change-placement'));
+
+    expect(screen.getByTestId('dropdown')).toHaveClass(styles['CustomSelectDropdown--top']);
 
     expect(onPlacementChange).toBeCalledTimes(1);
   });
