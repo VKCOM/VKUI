@@ -51,7 +51,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   onShownChange: onShownChangeProp,
   onShownChanged: onShownChangedProp,
 }: UseFloatingWithInteractionsProps): UseFloatingWithInteractionsReturn<T> => {
-  const memoizedValue = React.useMemo(
+  const memoizedValue = React.useMemo<LocalState | undefined>(
     () => (shownProp !== undefined ? { shown: shownProp } : undefined),
     [shownProp],
   );
