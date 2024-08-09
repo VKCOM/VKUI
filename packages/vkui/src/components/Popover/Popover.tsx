@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { usePatchChildren } from '../../hooks/usePatchChildren';
-import { injectAriaExpandedPropByRole } from '../../lib/accessibility';
 import { animationFadeClassNames, transformOriginClassNames } from '../../lib/animation';
 import {
   type FloatingComponentProps,
@@ -11,6 +9,7 @@ import {
   useFloatingWithInteractions,
   usePlacementChangeCallback,
 } from '../../lib/floating';
+import { warnOnce } from '../../lib/warnOnce';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import {
@@ -23,7 +22,11 @@ import {
   type FloatingArrowProps as FloatingArrowPropsPrivate,
 } from '../FloatingArrow/FloatingArrow';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { PopoverWithAnchor } from './PopoverWithAnchor';
+import { PopoverWithChildren } from './PopoverWithChildren';
 import styles from './Popover.module.css';
+
+const warn = warnOnce('Popover');
 
 /**
  * @alias
@@ -121,6 +124,10 @@ export interface PopoverProps
    * Используется для того, чтобы не удалять поповер из DOM дерева при скрытии.
    */
   keepMounted?: boolean;
+  /**
+   * Элемент используется вместо `children`. При передаче его, `children` можно не передавать
+   */
+  anchorRef?: React.RefObject<HTMLElement> | HTMLElement;
 }
 
 /**
@@ -148,6 +155,7 @@ export const Popover = ({
   disableCloseOnEscKey,
   keepMounted = false,
   customMiddlewares,
+  anchorRef,
   // uncontrolled
   defaultShown = false,
   // controlled
@@ -216,12 +224,6 @@ export const Popover = ({
 
   usePlacementChangeCallback(expectedPlacement, resolvedPlacement, onPlacementChange);
 
-  const [, child] = usePatchChildren<HTMLDivElement>(
-    children,
-    injectAriaExpandedPropByRole(referenceProps, shown, role),
-    refs.setReference,
-  );
-
   let popover: React.ReactNode = null;
   if (shown || keepMounted) {
     const hidden = keepMounted && !shown;
@@ -275,10 +277,32 @@ export const Popover = ({
     );
   }
 
+  if (process.env.NODE_ENV === 'development' && !children && !anchorRef) {
+    warn('В компонент не передан ни children ни anchorRef', 'error');
+  }
+
+  if (anchorRef) {
+    return (
+      <PopoverWithAnchor
+        popover={popover}
+        referenceProps={referenceProps}
+        refs={refs}
+        shown={shown}
+        role={role}
+        anchorRef={anchorRef}
+      />
+    );
+  }
+
   return (
-    <React.Fragment>
-      {child}
-      {popover}
-    </React.Fragment>
+    <PopoverWithChildren
+      popover={popover}
+      referenceProps={referenceProps}
+      refs={refs}
+      shown={shown}
+      role={role}
+    >
+      {children}
+    </PopoverWithChildren>
   );
 };
