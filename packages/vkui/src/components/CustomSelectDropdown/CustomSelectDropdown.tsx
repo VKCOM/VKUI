@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
-import { HTMLAttributesWithRootRef } from '../../types';
+import { HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
 import { CustomScrollView, CustomScrollViewProps } from '../CustomScrollView/CustomScrollView';
 import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import { Popper } from '../Popper/Popper';
@@ -14,7 +14,8 @@ export interface CustomSelectDropdownProps
       CustomScrollViewProps,
       'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
     >,
-    TrackerOptionsProps {
+    TrackerOptionsProps,
+    HasDataAttribute {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
   scrollBoxRef?: React.Ref<HTMLDivElement>;
