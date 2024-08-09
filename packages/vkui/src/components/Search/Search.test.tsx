@@ -8,6 +8,14 @@ const getInput = () => screen.getByRole('searchbox');
 const getClearIcon = () => document.querySelector(`.${styles.Search__icon}`)!;
 const getFindButton = () => document.querySelector(`.${styles.Search__findButton}`)!;
 
+jest.mock('../../lib/touch', () => {
+  const originalModule = jest.requireActual('../../lib/touch');
+  return {
+    ...originalModule,
+    touchEnabled: () => true,
+  };
+});
+
 describe(Search, () => {
   baselineComponent(Search);
 
@@ -162,4 +170,17 @@ describe(Search, () => {
     act(jest.runAllTimers);
     expect(cb).toHaveBeenCalled();
   });
+
+  it.each([fireEvent.click, fireEvent.pointerDown])(
+    'should clear value by click clear button',
+    async (clickFn) => {
+      let value = '';
+      const { container } = render(<Search onChange={(e) => (value = e.target.value)} />);
+      await userEvent.type(getInput(), 'user');
+      expect(value).toEqual('user');
+      const clearButton = container.getElementsByClassName(styles['Search__icon'])[0];
+      clickFn(clearButton);
+      expect(value).toEqual('');
+    },
+  );
 });
