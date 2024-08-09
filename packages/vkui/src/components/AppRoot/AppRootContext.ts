@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { noop } from '@vkontakte/vkjs';
+import { Signal } from '../../lib/signal';
 
 export interface AppRootContextInterface {
   appRoot: React.RefObject<HTMLElement>;
@@ -8,6 +10,7 @@ export interface AppRootContextInterface {
   keyboardInput: boolean;
   disablePortal: boolean;
   layout?: 'card' | 'plain';
+  openModalsSignal: Signal;
 }
 
 /**
@@ -22,6 +25,7 @@ export const DEFAULT_APP_ROOT_CONTEXT_VALUE: AppRootContextInterface = {
   embedded: false,
   keyboardInput: false,
   disablePortal: false,
+  openModalsSignal: { subscribe: () => noop, dispatch: noop },
 };
 
 export const AppRootContext: React.Context<AppRootContextInterface> =

@@ -6,6 +6,7 @@ import {
 } from '../../../components/AppRoot/AppRootContext';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
 import { fireEventPatch, userEvent } from '../../../testing/utils';
+import { createSignal, Signal } from '../../signal';
 import type { ShownChangeReason } from './types';
 import { useFloatingWithInteractions } from './useFloatingWithInteractions';
 
@@ -32,6 +33,7 @@ const TestComponent = ({
   keyboardInput = false,
   autoFocus = false, // for multiple trigger [click, focus]
   Content,
+  openModalsSignal = createSignal(),
 }: {
   restoreFocus?: boolean;
   hookResultRef: {
@@ -40,11 +42,14 @@ const TestComponent = ({
   keyboardInput?: boolean;
   autoFocus?: boolean;
   Content?: ComponentType<{ onClose: VoidFunction }>;
+  openModalsSignal?: Signal;
 }) => {
   const { shown, refs, referenceProps, floatingProps, onClose } = hookResultRef.current;
 
   return (
-    <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput }}>
+    <AppRootContext.Provider
+      value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, openModalsSignal, keyboardInput }}
+    >
       <button ref={refs.reference} {...referenceProps}>
         Reference
       </button>
@@ -249,6 +254,35 @@ describe(useFloatingWithInteractions, () => {
         });
       },
     );
+
+    it('check close callback called when modal opened', async () => {
+      const onShownChange = jest.fn();
+      const openModalsSignal = createSignal();
+
+      const Button = () => {
+        const { refs, referenceProps } = useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: ['click'],
+          onShownChange,
+        });
+
+        return (
+          <button ref={refs.reference} {...referenceProps}>
+            Reference
+          </button>
+        );
+      };
+      render(
+        <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, openModalsSignal }}>
+          <Button />
+        </AppRootContext.Provider>,
+      );
+
+      act(() => openModalsSignal.dispatch());
+
+      expect(onShownChange).toBeCalledTimes(1);
+      expect(onShownChange).toBeCalledWith(false, 'open-modal');
+    });
 
     it('should work correctly with trigger=[click, focus]', async () => {
       const onShownChange = jest.fn();

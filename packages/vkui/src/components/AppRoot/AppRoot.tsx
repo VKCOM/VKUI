@@ -4,6 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { getDocumentBody } from '../../lib/dom';
+import { createSignal } from '../../lib/signal';
 import { useTokensClassName } from '../../lib/tokens';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
@@ -198,6 +199,8 @@ export const AppRoot = ({
     [scroll],
   );
 
+  const openModalsSignal = React.useMemo(() => createSignal(), []);
+
   const content = (
     <AppRootContext.Provider
       value={{
@@ -210,6 +213,7 @@ export const AppRoot = ({
         get keyboardInput() {
           return isKeyboardInputActiveRef.current;
         },
+        openModalsSignal,
       }}
     >
       <ScrollController elRef={appRootRef}>{children}</ScrollController>

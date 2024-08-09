@@ -12,6 +12,7 @@ export type ManualTriggerType = 'manual';
 export type TriggerType = ManualTriggerType | InteractiveTriggerType | InteractiveTriggerType[];
 
 export type ShownChangeReason =
+  | 'open-modal'
   | 'click-outside'
   | 'escape-key'
   | 'click'
