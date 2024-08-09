@@ -73,26 +73,16 @@ describe('CustomSelectDropdown', () => {
   });
 
   it('should not have className when noMaxHeight = true', () => {
-    render(
-      <CustomSelectDropdown
-        targetRef={React.createRef()}
-        data-testid="dropdown"
-        noMaxHeight={true}
-      />,
-    );
+    const props = {
+      'targetRef': React.createRef<HTMLDivElement>(),
+      'data-testid': 'dropdown',
+    };
+    const { rerender } = render(<CustomSelectDropdown {...props} noMaxHeight />);
     expect(screen.getByTestId('dropdown').firstElementChild).not.toHaveClass(
       styles['CustomSelectDropdown__in--withMaxHeight'],
     );
-  });
 
-  it('should have className when noMaxHeight = false', () => {
-    render(
-      <CustomSelectDropdown
-        targetRef={React.createRef()}
-        data-testid="dropdown"
-        noMaxHeight={false}
-      />,
-    );
+    rerender(<CustomSelectDropdown {...props} noMaxHeight={false} />);
     expect(screen.getByTestId('dropdown').firstElementChild).toHaveClass(
       styles['CustomSelectDropdown__in--withMaxHeight'],
     );
