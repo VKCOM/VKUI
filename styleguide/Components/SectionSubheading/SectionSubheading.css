@@ -2,13 +2,12 @@
   margin-top: 36px;
   margin-bottom: 18px;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .SectionSubheading__link {
-  position: absolute;
-  right: 100%;
-  padding-right: 6px;
-  top: 3px;
+  padding-left: 6px;
   color: var(--vkui--color_icon_secondary);
   opacity: 0;
 }
