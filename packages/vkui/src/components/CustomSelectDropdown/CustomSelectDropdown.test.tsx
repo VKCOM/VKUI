@@ -64,7 +64,7 @@ describe('CustomSelectDropdown', () => {
     expect(onPlacementChange).toBeCalledTimes(1);
   });
 
-  it('should have className when noMaxHeight = true', () => {
+  it('should not have className when noMaxHeight = true', () => {
     render(
       <CustomSelectDropdown
         targetRef={React.createRef()}
@@ -72,8 +72,20 @@ describe('CustomSelectDropdown', () => {
         noMaxHeight={true}
       />,
     );
-    expect(styles['CustomSelectDropdown__in--withMaxHeight']).toBeTruthy();
     expect(screen.getByTestId('dropdown').firstElementChild).not.toHaveClass(
+      styles['CustomSelectDropdown__in--withMaxHeight'],
+    );
+  });
+
+  it('should have className when noMaxHeight = false', () => {
+    render(
+      <CustomSelectDropdown
+        targetRef={React.createRef()}
+        data-testid="dropdown"
+        noMaxHeight={false}
+      />,
+    );
+    expect(screen.getByTestId('dropdown').firstElementChild).toHaveClass(
       styles['CustomSelectDropdown__in--withMaxHeight'],
     );
   });
