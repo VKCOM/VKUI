@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getMillisecondsToTomorrow, isSameDay } from '../lib/date';
+import { differenceInMilliseconds, endOfToday, isSameDay } from 'date-fns';
 import { useDOM } from '../lib/dom';
 
 /**
@@ -26,7 +26,7 @@ export function useTodayDate(listenDayChangesForUpdate = false): Date {
       if (document.visibilityState === 'visible') {
         const now = new Date();
 
-        const timeToDayChange = getMillisecondsToTomorrow(now);
+        const timeToDayChange = differenceInMilliseconds(endOfToday(), now);
 
         // Удаляем старый таймаут
         window.clearTimeout(timeout);

@@ -14,10 +14,10 @@ import { HasComponent, HasRootRef } from '../../types';
 
 const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
 export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
-  extends AllHTMLAttributes<T>,
+  extends Omit<AllHTMLAttributes<T>, 'autoFocus'>,
     HasRootRef<T>,
     HasComponent {
-  autoFocus?: boolean;
+  autoFocus?: boolean | 'root';
   restoreFocus?: boolean | (() => boolean);
   mount?: boolean;
   timeout?: number;
@@ -71,7 +71,6 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
         nodes.push(focusableEl);
       }
     });
-
     if (nodes.length === 0) {
       // Чтобы фокус был хотя бы на родителе
       nodes.push(parentNode);
@@ -84,7 +83,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
 
     recalculateFocusableNodesRef(parentNode);
 
-    if (arraysEquals(oldFocusableNodes, focusableNodesRef.current)) {
+    if (!autoFocus || arraysEquals(oldFocusableNodes, focusableNodesRef.current)) {
       return;
     }
 
@@ -121,16 +120,20 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
         return;
       }
 
-      const autoFocusToFirstNode = () => {
+      const autoFocusToNode = () => {
         if (!ref.current || !focusableNodesRef.current.length) {
           return;
         }
         const activeElement = getActiveElementByAnotherElement(ref.current);
         if (!contains(ref.current, activeElement)) {
-          focusableNodesRef.current[0].focus();
+          if (autoFocus === 'root') {
+            ref.current?.focus();
+          } else {
+            focusableNodesRef.current[0].focus();
+          }
         }
       };
-      const timeoutId = setTimeout(autoFocusToFirstNode, timeout);
+      const timeoutId = setTimeout(autoFocusToNode, timeout);
       return () => {
         clearTimeout(timeoutId);
       };

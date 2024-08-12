@@ -1,4 +1,3 @@
-import { clamp as clampNumber } from '../helpers/math';
 import {
   addDays,
   addWeeks,
@@ -14,7 +13,8 @@ import {
   startOfWeek,
   subDays,
   subWeeks,
-} from './date';
+} from 'date-fns';
+import { clamp as clampNumber } from '../helpers/math';
 
 export const DEFAULT_MAX_YEAR = 9999;
 // 100 - из-за ограничений dayjs https://github.com/iamkun/dayjs/issues/2591
@@ -74,9 +74,10 @@ export const getDaysNames = (
   const formatter = new Intl.DateTimeFormat(locale, {
     weekday: 'short',
   });
-  return eachDayOfInterval(startOfWeek(now, weekStartsOn), endOfWeek(now, weekStartsOn)).map(
-    (day) => formatter.format(day),
-  );
+  return eachDayOfInterval({
+    start: startOfWeek(now, { weekStartsOn }),
+    end: endOfWeek(now, { weekStartsOn }),
+  }).map((day) => formatter.format(day));
 };
 
 export const navigateDate = (date?: Date | null, key?: string): Date => {
@@ -101,8 +102,8 @@ export const navigateDate = (date?: Date | null, key?: string): Date => {
 };
 
 export const getWeeks = (viewDate: Date, weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6): Date[][] => {
-  const start = startOfWeek(startOfMonth(viewDate), weekStartsOn);
-  const end = endOfWeek(endOfMonth(viewDate), weekStartsOn);
+  const start = startOfWeek(startOfMonth(viewDate), { weekStartsOn });
+  const end = endOfWeek(endOfMonth(viewDate), { weekStartsOn });
 
   let count = 0;
   let current = start;

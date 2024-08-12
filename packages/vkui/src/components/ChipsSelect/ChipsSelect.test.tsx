@@ -1,4 +1,4 @@
-import { render, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import {
   baselineComponent,
   fakeTimers,
@@ -458,5 +458,20 @@ describe('ChipsSelect', () => {
 
     await userEvent.type(inputLocator, '{ArrowUp}');
     expect(firstOptionLocator).toHaveAttribute('data-hovered', 'true');
+  });
+
+  it('should render wrapper to dropdown content with renderDropdown', () => {
+    render(
+      <ChipsSelect
+        options={[FIRST_OPTION, SECOND_OPTION, THIRD_OPTION]}
+        dropdownTestId="dropdown"
+        renderDropdown={({ defaultDropdownContent }) => {
+          return <div data-testid="wrapper">{defaultDropdownContent}</div>;
+        }}
+      />,
+    );
+    const inputLocator = screen.getByRole('combobox');
+    fireEvent.click(inputLocator);
+    expect(screen.getByTestId('wrapper')).toBeInTheDocument();
   });
 });

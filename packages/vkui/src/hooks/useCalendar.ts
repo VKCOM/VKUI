@@ -1,15 +1,7 @@
 import * as React from 'react';
+import { addMonths, endOfDay, isAfter, isBefore, isSameDay, startOfDay, subMonths } from 'date-fns';
 import { CalendarProps } from '../components/Calendar/Calendar';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, isDayMinMaxRestricted } from '../lib/calendar';
-import {
-  addMonths,
-  endOfDay,
-  isAfter,
-  isBefore,
-  isSameDay,
-  startOfDay,
-  subMonths,
-} from '../lib/date';
 
 export interface UseCalendarDependencies
   extends Pick<
