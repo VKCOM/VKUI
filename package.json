@@ -19,7 +19,7 @@
     "@swc/cli": "^0.4.0",
     "@swc/core": "1.7.6",
     "@swc/jest": "^0.2.36",
-    "@testing-library/dom": "^10.1.0",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
