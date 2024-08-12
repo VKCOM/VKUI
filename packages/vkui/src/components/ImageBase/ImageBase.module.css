@@ -31,7 +31,6 @@
 }
 
 .ImageBase__img {
-  z-index: var(--vkui_internal--z_index_image_base_img);
   display: block;
   inline-size: 100%;
   block-size: 100%;
