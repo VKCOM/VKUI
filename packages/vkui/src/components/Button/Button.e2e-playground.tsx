@@ -70,7 +70,7 @@ export const ButtonPlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: ButtonProps) => <Button {...props}>Кнопка</Button>}
+      {(props: ButtonProps) => <Button {...props}>Кнопкаа</Button>}
     </ComponentPlayground>
   );
 };
