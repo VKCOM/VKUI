@@ -128,7 +128,7 @@ export function generateCustomScreenshotName(
 
     expectCallCount,
 
-    'snap.png',
+    'snap.webp',
   ]
     .join(' ')
     .toLocaleLowerCase();

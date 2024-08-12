@@ -1,4 +1,5 @@
 import type { Page, PlaywrightWorkerOptions } from '@playwright/test';
+import sharp from 'sharp';
 import { DEFAULT_CROP_TO_CONTENT_SELECTOR } from './constants';
 import { ScreenshotWithClipToContentOptions } from './types';
 
@@ -47,9 +48,13 @@ export async function screenshotWithClipToContent(
     height: Math.max(clip.height, viewportSize.height),
   });
 
-  return page.screenshot({
+  const screenshot = await page.screenshot({
     clip,
     fullPage: true,
     animations: 'disabled',
   });
+
+  const webp = await sharp(screenshot).webp().toBuffer();
+
+  return webp;
 }

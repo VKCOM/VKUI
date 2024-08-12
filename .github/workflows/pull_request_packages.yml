@@ -12,7 +12,7 @@ on:
       - '**/*.md'
       - '!packages/vkui/src/**/*.md'
       - '!styleguide/pages/**/*.md'
-      - '**/__image_snapshots__/*.png'
+      - '**/__image_snapshots__/*.webp'
 
 concurrency:
   group: pr-packages-${{ github.event.pull_request.number }}
