@@ -607,7 +607,7 @@ describe(ModalRootTouch, () => {
     });
   });
 
-  describe('touch move events check to modal сфкв', () => {
+  describe('modal card touch move events', () => {
     const touchMoveSetup = async ({ onClose }: { onClose: VoidFunction }) => {
       let content: HTMLDivElement;
       let transform = '';
