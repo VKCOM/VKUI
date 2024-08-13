@@ -26,7 +26,6 @@
 .RichCell__in {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   flex-grow: 1;
   max-inline-size: 100%;
   min-inline-size: 0;
