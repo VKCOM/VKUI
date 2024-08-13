@@ -91,21 +91,15 @@ export interface ImageBaseFloatElementProps extends HTMLAttributesWithRootRef<HT
    * Режим отображения компонента:
    *
    * - `"always"`: Всегда
-   * - `"on-image-hover"`: При наведении на картинку
+   * - `"on-hover"`: При наведении на картинку
    */
-  visibility?: 'always' | 'on-image-hover';
-  /**
-   * `ref` на контейнер, в который встраивается компонент.
-   * Используется в случае использования компонента отдельно от `Image`
-   */
-  containerRef?: React.RefObject<HTMLElement | null>;
+  visibility?: 'always' | 'on-hover';
 }
 
 export const ImageBaseFloatElement = ({
   position,
   visibility = 'always',
   style,
-  containerRef,
   className,
   horizontalIndent,
   verticalIndent,
@@ -116,15 +110,15 @@ export const ImageBaseFloatElement = ({
 
   useIsomorphicLayoutEffect(
     function resetHidden() {
-      setHidden(visibility === 'on-image-hover');
+      setHidden(visibility === 'on-hover');
     },
     [visibility],
   );
 
   React.useEffect(
     function updateHiddenSubscribe() {
-      const wrapper = (containerRef && containerRef.current) || imageWrapperRef.current;
-      if (wrapper && visibility === 'on-image-hover') {
+      const wrapper = imageWrapperRef.current;
+      if (wrapper && visibility === 'on-hover') {
         const onMouseOver = () => setHidden(false);
         const onMouseOut = () => setHidden(true);
 
@@ -138,7 +132,7 @@ export const ImageBaseFloatElement = ({
       }
       return;
     },
-    [visibility, imageWrapperRef, containerRef],
+    [visibility, imageWrapperRef],
   );
 
   const positionStyle = React.useMemo(

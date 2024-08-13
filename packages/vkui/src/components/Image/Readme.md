@@ -58,7 +58,7 @@ const OthersFeatures = () => {
 const WithFloatElements = () => {
   const [showContextMenu, setShowContextMenu] = useState(true);
   const [contextMenuOpened, setContextMenuOpened] = useState(false);
-  const [contextMenuVisibility, setContextMenuVisibility] = useState('on-image-hover');
+  const [contextMenuVisibility, setContextMenuVisibility] = useState('on-hover');
 
   return (
     <Group header={<Header mode="secondary">C позиционированными компонентами</Header>}>
@@ -75,7 +75,7 @@ const WithFloatElements = () => {
           <Select
             options={[
               { label: 'Всегда', value: 'always' },
-              { label: 'При наведении на картинку', value: 'on-image-hover' },
+              { label: 'При наведении на картинку', value: 'on-hover' },
             ]}
             value={contextMenuVisibility}
             disabled={!showContextMenu}
