@@ -5743,7 +5743,7 @@ __metadata:
     finalhandler: "npm:1.2.0"
     html-webpack-plugin: "npm:^5.5.0"
     mini-css-extract-plugin: "npm:^2.9.0"
-    playwright: "npm:1.45.1"
+    playwright: "npm:1.46.0"
     postcss: "npm:^8.4.41"
     postcss-modules: "npm:^6.0.0"
     react: "npm:^18.3.1"
@@ -13398,36 +13398,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.45.1":
-  version: 1.45.1
-  resolution: "playwright-core@npm:1.45.1"
-  bin:
-    playwright-core: cli.js
-  checksum: 10/206a5ecd2de7b8cefa5136331fa22012416b37eb2c471e3105c09a8a17a10621efa900acb6a780314f06aa2a3d6651aad3a323fa360d046ccce8f3844b3ca615
-  languageName: node
-  linkType: hard
-
 "playwright-core@npm:1.46.0":
   version: 1.46.0
   resolution: "playwright-core@npm:1.46.0"
   bin:
     playwright-core: cli.js
   checksum: 10/1fd237d01380be0d650ae7df73fb796eae9c208e0746bb110db270139f1d2a96bf3b8856c394a48720b30e145614a10f275ab08627d0c95ba2160dc0402a90cb
-  languageName: node
-  linkType: hard
-
-"playwright@npm:1.45.1":
-  version: 1.45.1
-  resolution: "playwright@npm:1.45.1"
-  dependencies:
-    fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.45.1"
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    playwright: cli.js
-  checksum: 10/092d510a79ca8fb1d0c1a83460735b9eaf02261a48df2ae1b025f95ee31e2be9d962ddc62c7e5c0d2c44e5b982b66aaf3fe24243f736ab14dbfd2d6e88897824
   languageName: node
   linkType: hard
 
