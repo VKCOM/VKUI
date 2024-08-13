@@ -54,7 +54,7 @@ describe(ImageBaseFloatElement, () => {
         <Image size={96} src="test" alt="Приложение шторм онлайн" data-testid="image">
           <ImageBaseFloatElement
             data-testid="component"
-            visibility="on-image-hover"
+            visibility="on-hover"
             position={{
               insetBlockStart: '10px',
               insetBlockEnd: '10px',
@@ -80,46 +80,6 @@ describe(ImageBaseFloatElement, () => {
 
     fireEvent(
       screen.getByTestId('image'),
-      new MouseEvent('mouseout', {
-        bubbles: true,
-        cancelable: true,
-      }),
-    );
-
-    expect(screen.getByTestId('component')).toHaveClass(styles['FloatElement--hidden']);
-  });
-
-  it('check visibility on image hover without use Image', async () => {
-    const containerRef: React.RefObject<HTMLDivElement> = {
-      current: null,
-    };
-    render(
-      <>
-        <div ref={containerRef}>
-          <ImageBaseFloatElement
-            data-testid="component"
-            visibility="on-image-hover"
-            containerRef={containerRef}
-            position="top"
-          />
-        </div>
-      </>,
-    );
-
-    expect(screen.getByTestId('component')).toHaveClass(styles['FloatElement--hidden']);
-
-    fireEvent(
-      containerRef.current!,
-      new MouseEvent('mouseover', {
-        bubbles: true,
-        cancelable: true,
-      }),
-    );
-
-    expect(screen.getByTestId('component')).not.toHaveClass(styles['FloatElement--hidden']);
-
-    fireEvent(
-      containerRef.current!,
       new MouseEvent('mouseout', {
         bubbles: true,
         cancelable: true,
