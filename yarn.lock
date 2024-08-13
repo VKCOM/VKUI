@@ -4405,12 +4405,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/prettier-config@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@vkontakte/prettier-config@npm:0.2.0"
+"@vkontakte/prettier-config@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@vkontakte/prettier-config@npm:0.2.1"
   peerDependencies:
     prettier: ^3.0.0
-  checksum: 10/6cf0f9ea27343f2bd0f50fcc3409f0d54c974b13de7e512a4e4232aa7b152d2610a4a1044898c5c73fc48ffa3c056713409d66452aa52f3bf93a688ead99ea1c
+  checksum: 10/97dc607d6c57b2f6b37c64248597694357c061040e35cbe1d968efd939b23b01e0de1dce48655f8395ff213ac210fb2504186b41159d84d0910fefb89c03584b
   languageName: node
   linkType: hard
 
@@ -4523,7 +4523,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.5.0"
     "@typescript-eslint/parser": "npm:^7.5.0"
     "@vkontakte/eslint-plugin": "npm:^2.0.0"
-    "@vkontakte/prettier-config": "npm:^0.2.0"
+    "@vkontakte/prettier-config": "npm:^0.2.1"
     "@vkontakte/stylelint-config": "npm:^4.1.0"
     "@vkontakte/vkui-tokens": "npm:4.51.0"
     autoprefixer: "npm:^10.4.20"
