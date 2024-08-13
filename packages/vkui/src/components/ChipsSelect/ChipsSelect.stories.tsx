@@ -1,16 +1,22 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Icon12Download } from '@vkontakte/icons';
+import { getFormFieldIconsPresets } from '../../lib/presets/getFormFieldIconsPresets';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import type { ChipOption } from '../ChipsInputBase/types';
 import { FormItem } from '../FormItem/FormItem';
 import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
+
+const iconsPresets = getFormFieldIconsPresets();
 
 const story: Meta<ChipsSelectProps<ChipOption>> = {
   title: 'Forms/ChipsSelect',
   component: ChipsSelect,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   args: { onChange: fn(), onChangeStart: fn(), onInputChange: fn() },
+  argTypes: {
+    before: iconsPresets,
+  },
 };
 
 export default story;

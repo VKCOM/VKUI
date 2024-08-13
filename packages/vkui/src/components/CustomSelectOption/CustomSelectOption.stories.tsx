@@ -1,6 +1,9 @@
 import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
 import type { PartialStoryFn } from '@storybook/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createFieldWithPresets } from '../../storybook/createFieldWithPressets';
+import { getAvatarUrl } from '../../testing/mock';
+import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption, CustomSelectOptionProps } from './CustomSelectOption';
 
 const withListBox = (Story: PartialStoryFn<ReactRenderer>) => (
@@ -9,10 +12,24 @@ const withListBox = (Story: PartialStoryFn<ReactRenderer>) => (
   </div>
 );
 
+const iconsPresets = createFieldWithPresets({
+  iconSizes: ['12', '16', '20', '24', '28', '32', '36', '44'],
+  sizeIconsCount: 3,
+  additionalPresets: {
+    Avatar20: <Avatar size={20} src={getAvatarUrl('user_xyz')} />,
+    Avatar28: <Avatar size={28} src={getAvatarUrl('user_xyz')} />,
+    Avatar40: <Avatar size={40} src={getAvatarUrl('user_xyz')} />,
+  },
+});
+
 const story: Meta<CustomSelectOptionProps> = {
   title: 'Forms/CustomSelectOption',
   component: CustomSelectOption,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  argTypes: {
+    before: iconsPresets,
+    after: iconsPresets,
+  },
 };
 
 export default story;
