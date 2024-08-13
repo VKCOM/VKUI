@@ -13,7 +13,7 @@
     "@swc/core": "^1.7.10",
     "@vkontakte/vkui": "workspace:packages/vkui",
     "cli-table3": "^0.6.1",
-    "css-loader": "^6.10.0",
+    "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.0",
     "dotenv": "^16.4.5",
     "finalhandler": "1.2.0",
@@ -27,6 +27,6 @@
     "serve-static": "1.15.0",
     "swc-loader": "^0.2.6",
     "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.91.0"
+    "webpack": "^5.93.0"
   }
 }
