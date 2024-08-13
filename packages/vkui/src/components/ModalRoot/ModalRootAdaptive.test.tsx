@@ -21,10 +21,6 @@ jest.mock('./ModalRoot', () => ({
 }));
 
 describe(ModalRoot, () => {
-  const checkUseDesktopComponent = (desktop: boolean) => {
-    expect(screen.getByTestId(desktop ? 'ModalRootDesktop' : 'ModalRootTouch')).toBeInTheDocument();
-  };
-
   it('check use correct component to render modal root', () => {
     isDesktop = true;
     const { rerender } = render(
@@ -32,7 +28,7 @@ describe(ModalRoot, () => {
         <></>
       </ModalRoot>,
     );
-    checkUseDesktopComponent(true);
+    expect(screen.getByTestId('ModalRootDesktop')).toBeInTheDocument();
 
     isDesktop = false;
     rerender(
@@ -40,6 +36,6 @@ describe(ModalRoot, () => {
         <></>
       </ModalRoot>,
     );
-    checkUseDesktopComponent(false);
+    expect(screen.getByTestId('ModalRootTouch')).toBeInTheDocument();
   });
 });
