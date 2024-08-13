@@ -66,7 +66,7 @@
         <Cell before={<Avatar />} subtitle="Музыкант" onClick={noop}>
           Robbie Williams
         </Cell>
-        <Cell before={<Avatar />} subtitle="Издательский дом">
+        <Cell before={<Avatar />} subtitle="Издательский дом" onClick={noop}>
           ПостНаука
         </Cell>
       </List>
