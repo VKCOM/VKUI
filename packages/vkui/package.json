@@ -75,7 +75,7 @@
   "devDependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "storybook": "8.2.8"
+    "storybook": "8.2.9"
   },
   "size-limit": [
     {
