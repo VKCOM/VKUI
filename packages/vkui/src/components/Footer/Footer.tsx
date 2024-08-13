@@ -16,7 +16,7 @@ export const Footer = ({
   role: roleProp,
   ...restProps
 }: FooterProps): React.ReactNode => {
-  const role = roleProp ?? Component === 'footer' ? 'contentinfo' : undefined;
+  const role = roleProp ?? (Component === 'footer' ? 'contentinfo' : undefined);
   return (
     <Footnote
       Component={Component}
