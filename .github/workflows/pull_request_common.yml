@@ -27,6 +27,21 @@ jobs:
               repo: context.repo.repo,
               labels: ["patch"]
             })
+  check-dependabot-pr:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.action == 'opened' && github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Report lint results
+        if: ${{ !cancelled() }}
+        uses: VKCOM/gh-actions/VKUI/add-dependabot-pr-milestone@main
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
   lint_codes_format:
     runs-on: ubuntu-latest
