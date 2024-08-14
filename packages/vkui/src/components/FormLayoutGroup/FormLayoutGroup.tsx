@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { HTMLAttributesWithRootRef } from '../../types';
@@ -44,7 +44,7 @@ export const FormLayoutGroup = ({
   removable,
   segmented,
   removePlaceholder = 'Удалить',
-  onRemove = noop,
+  onRemove,
   getRootRef,
   ...restProps
 }: FormLayoutGroupProps): React.ReactNode => {
@@ -89,7 +89,7 @@ export const FormLayoutGroup = ({
           removePlaceholder={removePlaceholder}
           onRemove={(e) => {
             if (rootEl?.current) {
-              onRemove(e, rootEl.current);
+              onRemove?.(e, rootEl.current);
             }
           }}
           indent={removable === 'indent'}

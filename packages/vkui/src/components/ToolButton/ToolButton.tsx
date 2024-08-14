@@ -1,4 +1,4 @@
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import {
   AdaptiveIconRenderer,
@@ -52,7 +52,6 @@ export const ToolButton = ({
   mode = 'primary',
   appearance = 'accent',
   direction = 'row',
-  onClick = noop,
   className,
   children,
   IconCompact,
@@ -69,7 +68,6 @@ export const ToolButton = ({
       activeMode={styles['ToolButton--active']}
       Component={restProps.href ? 'a' : 'button'}
       focusVisibleMode="outside"
-      onClick={onClick}
       className={classNames(
         className,
         styles['ToolButton'],
