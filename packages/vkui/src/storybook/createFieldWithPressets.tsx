@@ -40,9 +40,11 @@ export const createFieldWithPresets = <T extends string>({
   requiredIcons?: IconName[];
   additionalPresets?: Record<T, React.ReactNode>;
 }) => {
-  const options: Array<IconName | T> = [];
+  const options: Array<IconName | T> = ['None'];
   // @ts-expect-error: TS2740 ts ругается, что объект должен быть заполнен полями
-  const mapping: Record<IconName | T, React.ReactNode> = {};
+  const mapping: Record<IconName | T, React.ReactNode> = {
+    None: null,
+  };
   const typedIcons = icons as Record<IconName, any>;
   const sizeToCountMap: Record<string, number> = {};
 
@@ -65,10 +67,8 @@ export const createFieldWithPresets = <T extends string>({
     mapping[typedPresetName] = typedNode;
   });
 
-  options.unshift('None');
-  mapping['None'] = null;
-
   return {
+    control: 'select' as const,
     options,
     mapping,
   };

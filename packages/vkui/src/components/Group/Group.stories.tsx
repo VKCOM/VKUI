@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import {
+  Icon28AddOutline,
   Icon28CheckShieldDeviceOutline,
   Icon28DevicesOutline,
   Icon28KeyOutline,
@@ -29,7 +30,7 @@ export const Playground: Story = {
   args: {
     header: <Header>Header</Header>,
     description: 'Description',
-    children: <CellButton {...BasicCellButton.args} />,
+    children: <CellButton {...BasicCellButton.args} before={<Icon28AddOutline />} />,
   },
 };
 
