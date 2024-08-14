@@ -73,7 +73,6 @@ export const Cell: React.FC<CellProps> & {
   removeButtonTestId,
   ...restProps
 }: CellProps) => {
-  console.log('before', before);
   const [dragging, setDragging] = React.useState(false);
   const selectable = mode === 'selectable';
   const removable = mode === 'removable';
