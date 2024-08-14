@@ -38,9 +38,13 @@ export const createFieldWithPresets = <T extends string>({
   // @ts-expect-error: TS2740 ts ругается, что объект должен быть заполнен полями
   additionalPresets = {},
 }: {
+  // Список размеров используемых иконок
   iconSizes?: IconSize[];
+  // Количество иконок каждого заданного размера
   sizeIconsCount?: number;
+  // Обязательные иконки, которые должны быть
   requiredIcons?: IconName[];
+  // Дополнительные пресеты. Например Avatar, IconButton, Badge и т.д
   additionalPresets?: Record<T, React.ReactNode>;
 }) => {
   const options: Array<IconName | T | 'None'> = ['None'];
@@ -60,6 +64,9 @@ export const createFieldWithPresets = <T extends string>({
   });
 
   requiredIcons.forEach((iconName) => {
+    if (requiredIcons.includes(iconName)) {
+      return;
+    }
     options.push(iconName);
     const Icon = icons[iconName] as any;
     mapping[iconName] = <Icon />;
