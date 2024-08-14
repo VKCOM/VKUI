@@ -2,6 +2,7 @@ import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
+import { createFieldWithPresets } from '../../storybook/createFieldWithPressets';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Div } from '../Div/Div';
@@ -14,9 +15,8 @@ const story: Meta<BannerProps> = {
   component: Banner,
   parameters: CanvasFullLayout,
   argTypes: {
-    actions: {
-      options: ['ButtonPrimary', 'ButtonSecondary', 'ButtonsGroup'],
-      mapping: {
+    actions: createFieldWithPresets({
+      additionalPresets: {
         ButtonPrimary: <Button>Подробнее</Button>,
         ButtonSecondary: <Button mode="secondary">Отмена</Button>,
         ButtonsGroup: (
@@ -26,7 +26,7 @@ const story: Meta<BannerProps> = {
           </ButtonGroup>
         ),
       },
-    },
+    }),
   },
 };
 
