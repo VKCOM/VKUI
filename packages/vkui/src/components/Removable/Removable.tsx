@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getTextFromChildren } from '../../lib/children';
@@ -155,7 +155,7 @@ interface RemovableOwnProps
  */
 export const Removable = ({
   children,
-  onRemove = noop,
+  onRemove,
   removePlaceholder = 'Удалить',
   align = 'center',
   indent = false,
@@ -167,7 +167,7 @@ export const Removable = ({
 
   const onRemoveClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    onRemove(e);
+    onRemove?.(e);
   };
 
   const removePlaceholderString: string = getTextFromChildren(removePlaceholder);

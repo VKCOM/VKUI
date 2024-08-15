@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -52,7 +52,7 @@ export const Cell: React.FC<CellProps> & {
   Checkbox: typeof CellCheckbox;
 } = ({
   mode,
-  onRemove = noop,
+  onRemove,
   removePlaceholder = 'Удалить',
   onDragFinish,
   before,
@@ -167,7 +167,7 @@ export const Cell: React.FC<CellProps> & {
         style={style}
         getRootRef={rootElRef}
         removePlaceholder={removePlaceholder}
-        onRemove={(e) => onRemove(e, rootElRef.current)}
+        onRemove={(e) => onRemove?.(e, rootElRef.current)}
         toggleButtonTestId={toggleButtonTestId}
         removeButtonTestId={removeButtonTestId}
       >
