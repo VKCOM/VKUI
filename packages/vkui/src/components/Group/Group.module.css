@@ -4,27 +4,33 @@
  * Автоопределение mode:
  *
  * - sizeX="compact" (mobile)  -> mode="plain"
+ *
  * - sizeX="regular" (desktop) -> mode="card"
  */
 .Group {
-  --vkui_internal--Group_padding_size: 0;
+  --vkui_internal--Group_padding_inline: 0;
+  --vkui_internal--Group_padding_block: var(--vkui--spacing_size_m);
+  --vkui_internal--Group_card_mode_padding_size: 0;
 
   color: var(--vkui--color_text_primary);
-  padding-block: var(--vkui--spacing_size_m);
+  padding-block: var(--vkui_internal--Group_padding_block);
+  padding-inline: var(--vkui_internal--Group_padding_inline);
 }
 
 .Group--padding-s {
-  --vkui_internal--Group_padding_size: var(--vkui--spacing_size_xs);
+  --vkui_internal--Group_card_mode_padding_size: var(--vkui--spacing_size_xs);
 }
 
 .Group--padding-m {
-  --vkui_internal--Group_padding_size: var(--vkui--spacing_size_m);
+  --vkui_internal--Group_card_mode_padding_size: var(--vkui--spacing_size_m);
 }
 
 /* разделитель при mode="card" */
 .Group--mode-card,
 .Group--sizeX-regular.Group--mode-none {
-  padding: var(--vkui_internal--Group_padding_size);
+  --vkui_internal--Group_padding_inline: var(--vkui_internal--Group_card_mode_padding_size);
+  --vkui_internal--Group_padding_block: var(--vkui_internal--Group_card_mode_padding_size);
+
   position: relative;
   background: var(--vkui--color_background_content);
   border-radius: var(--vkui--size_border_radius_paper--regular);
@@ -32,7 +38,9 @@
 
 @media (--sizeX-regular) {
   .Group--sizeX-none.Group--mode-none {
-    padding: var(--vkui_internal--Group_padding_size);
+    --vkui_internal--Group_padding_inline: var(--vkui_internal--Group_card_mode_padding_size);
+    --vkui_internal--Group_padding_block: var(--vkui_internal--Group_card_mode_padding_size);
+
     position: relative;
     background: var(--vkui--color_background_content);
     border-radius: var(--vkui--size_border_radius_paper--regular);
@@ -40,13 +48,15 @@
 }
 
 .Group--sizeX-compact.Group--mode-card {
-  padding-inline: 0;
+  --vkui_internal--Group_padding_inline: 0;
+
   border-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
 @media (--sizeX-compact) {
   .Group--sizeX-none.Group--mode-card {
-    padding-inline: 0;
+    --vkui_internal--Group_padding_inline: 0;
+
     border-radius: var(--vkui--size_border_radius_promo--regular);
   }
 }
@@ -231,7 +241,8 @@
  */
 @media (--sizeX-regular) {
   .Group--mode-plain-inside-modal {
-    padding: var(--vkui--spacing_size_m);
+    --vkui_internal--Group_padding_inline: var(--vkui--spacing_size_m);
+    --vkui_internal--Group_padding_block: var(--vkui--spacing_size_m);
   }
 
   .Group--mode-plain-inside-modal + .Group__separator-sibling {
@@ -245,7 +256,7 @@
  * Group вложенный в Group
  */
 .Group .Group {
-  padding-inline: 0;
+  --vkui_internal--Group_padding_inline: 0;
 }
 
 .Group .Group + .Group__separator-sibling {
@@ -258,6 +269,28 @@
 
 .Group .Group:last-of-type {
   padding-block-end: 0;
+}
+
+/*
+ * Group.ExpandedContent
+ * компенсирующий отступы Group в зависимости
+ * от режима: inline / block
+ */
+
+.Group__expanded-content--inline {
+  margin-inline: calc(-1 * var(--vkui_internal--Group_padding_inline));
+}
+
+.Group__expanded-content--block {
+  margin-inline: calc(-1 * var(--vkui_internal--Group_padding_block));
+}
+
+.Group .Group:first-of-type .Group__expanded-content--block {
+  margin-inline-start: 0;
+}
+
+.Group .Group:last-of-type .Group__expanded-content--block {
+  margin-inline-start: 0;
 }
 
 /*
