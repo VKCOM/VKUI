@@ -57,8 +57,6 @@ function useGroupMode(
   return 'none';
 }
 
-export const GroupModeContext: React.Context<GroupMode> = React.createContext<GroupMode>('none');
-
 export type GroupContainerProps = HTMLAttributesWithRootRef<HTMLElement> &
   HasComponent & {
     /**
@@ -130,7 +128,7 @@ export const GroupContainer: React.FC<GroupContainerProps> = ({
       break;
   }
   return (
-    <GroupModeContext.Provider value={mode}>
+    <>
       <RootComponent
         Component="section"
         {...restProps}
@@ -147,7 +145,7 @@ export const GroupContainer: React.FC<GroupContainerProps> = ({
         {children}
       </RootComponent>
       {siblingSeparatorElement}
-    </GroupModeContext.Provider>
+    </>
   );
 };
 GroupContainer.displayName = 'GroupContainer';
