@@ -39,7 +39,12 @@ jobs:
 
       - name: Get @vkontakte/vkui dependencies
         id: dependencies
-        run: echo "value=$(node -p "Object.keys(require('./packages/vkui/package.json').dependencies)")" >> $GITHUB_OUTPUT
+        run: |
+          DEPENDENCIES_OBJECT=$(node -p "require('./packages/vkui/package.json').dependencies")
+          DEPENDENCIES_ARRAY=$(node -p "Object.keys($DEPENDENCIES_OBJECT)")
+          DEPENDENCIES_ARRAY_JSON=$(node -p "JSON.stringify($DEPENDENCIES_ARRAY)")
+
+          echo "value='$DEPENDENCIES_ARRAY_JSON'" >> $GITHUB_OUTPUT
 
       - name: Fetch Dependabot metadata
         id: metadata
