@@ -37,8 +37,33 @@ jobs:
       - name: Node setup
         uses: ./.github/actions/node-setup
 
-      - name: Report lint results
-        if: ${{ !cancelled() }}
+      - name: Get @vkontakte/vkui dependencies
+        id: dependencies
+        run: echo "value=$(node -p "Object.keys(require('./packages/vkui/package.json').dependencies)")" >> $GITHUB_OUTPUT
+
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+         github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Check if PR updates relevant dependencies
+        id: check_deps
+        run: |
+          RELEVANT_DEPS=(${{ steps.dependencies.outputs.value }})
+          UPDATE_NEEDED=false
+
+          for DEP in "${RELEVANT_DEPS[@]}"; do
+            if [[ "${{ steps.metadata.outputs.dependency-names }}" == *"$DEP"* ]]; then
+              UPDATE_NEEDED=true
+              break
+            fi
+          done
+
+          echo "update_needed=$UPDATE_NEEDED" >> $GITHUB_OUTPUT
+
+      - name: Add milestone to PR
+        if: ${{ !cancelled() && steps.check_deps.outputs.update_needed == 'true' }}
         uses: VKCOM/gh-actions/VKUI/add-dependabot-pr-milestone@main
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
