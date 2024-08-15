@@ -281,7 +281,7 @@
 }
 
 .Group__expanded-content--block {
-  margin-inline: calc(-1 * var(--vkui_internal--Group_padding_block));
+  margin-block: calc(-1 * var(--vkui_internal--Group_padding_block));
 }
 
 .Group .Group:first-of-type .Group__expanded-content--block {
