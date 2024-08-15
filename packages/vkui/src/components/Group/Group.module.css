@@ -4,7 +4,6 @@
  * Автоопределение mode:
  *
  * - sizeX="compact" (mobile)  -> mode="plain"
- *
  * - sizeX="regular" (desktop) -> mode="card"
  */
 .Group {
