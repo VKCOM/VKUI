@@ -169,3 +169,41 @@ const SharedContent = () => {
   </Group.Description>
 </Group.Container>
 ```
+
+<br />
+
+## `<Group.ExpandedContent>`
+
+Компенсирует внутренние отступы `Group` по горизонтали `direction="inline"` или по вертикали `direction="block"`
+Позволяет вложить внутрь `Group` контент, игнорируя внутреннии отступы `Group`.
+
+```jsx
+const recentFriends = getRandomUsers(20);
+
+<Group header={<Header mode="secondary">Недавние</Header>}>
+  <Header mode="primary">HorizontalScroll не учитывает отступы Group по горизонтали</Header>
+
+  <Group.ExpandedContent direction="inline">
+    <HorizontalScroll showArrows inline>
+      {recentFriends.map((item) => {
+        return (
+          <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
+            <Avatar size={56} src={item.photo_200} />
+          </HorizontalCell>
+        );
+      })}
+    </HorizontalScroll>
+  </Group.ExpandedContent>
+
+  <Header mode="primary">Здесь контент учитывает отступы Group по горизонтали</Header>
+  <HorizontalScroll showArrows inline>
+    {recentFriends.map((item) => {
+      return (
+        <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
+          <Avatar size={56} src={item.photo_200} />
+        </HorizontalCell>
+      );
+    })}
+  </HorizontalScroll>
+</Group>;
+```
