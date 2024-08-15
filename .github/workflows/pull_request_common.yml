@@ -45,7 +45,7 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@v1
         with:
-         github-token: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: Check if PR updates relevant dependencies
         id: check_deps
