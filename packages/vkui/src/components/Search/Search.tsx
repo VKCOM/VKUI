@@ -61,7 +61,7 @@ export const Search = ({
   after = 'Отмена',
   getRef,
   icon: iconProp,
-  onIconClick = noop,
+  onIconClick,
   style,
   autoComplete = 'off',
   onChange,
@@ -115,7 +115,7 @@ export const Search = ({
   }, [inputRef]);
 
   const onIconClickStart: React.PointerEventHandler<HTMLElement> = React.useCallback(
-    (e) => onIconClick(e),
+    (e) => onIconClick?.(e),
     [onIconClick],
   );
 
