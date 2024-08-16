@@ -69,11 +69,11 @@ jobs:
         if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         run: |
           BRANCH_NAME_PREFIX = "update-vkui-floating-ui-"
-          VERSION_POSTFIX = ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
-          BRANCH_NAME = $BRANCH_NAME_PREFIX$VERSION_POSTFIX
+          VERSION_POSTFIX = "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
+          BRANCH_NAME = "${BRANCH_NAME_PREFIX}${VERSION_POSTFIX}"
 
-          git checkout -b $BRANCH_NAME
-          git push origin $BRANCH_NAME
+          git checkout -b "$BRANCH_NAME"
+          git push origin "$BRANCH_NAME"
 
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
@@ -90,9 +90,9 @@ jobs:
               ref: ${{ steps.create_new_branch.outputs.branch_name }},
               inputs: {
                 package_name: '@vkontakte/vkui-floating-ui',
-                custom_version: ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
-                latest: 'true',
-                close_milestone: 'false',
+                custom_version: "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
+                latest: true,
+                close_milestone: false,
               }
             })
 
