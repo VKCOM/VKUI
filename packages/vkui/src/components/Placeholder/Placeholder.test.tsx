@@ -10,10 +10,10 @@ describe('Placeholder', () => {
   it('check correct render elements', () => {
     render(
       <Placeholder data-testid="container" stretched>
-        <Placeholder.Icon data-testid="icon" />
-        <Placeholder.Header data-testid="header" />
-        <Placeholder.Actions data-testid="actions" />
-        <Placeholder.Text data-testid="text" />
+        <Placeholder.Icon data-testid="icon">Icon</Placeholder.Icon>
+        <Placeholder.Header data-testid="header">Header</Placeholder.Header>
+        <Placeholder.Actions data-testid="actions">Actions</Placeholder.Actions>
+        <Placeholder.Text data-testid="text">Text</Placeholder.Text>
       </Placeholder>,
     );
     expect(screen.getByTestId('container')).toHaveClass(
@@ -27,5 +27,10 @@ describe('Placeholder', () => {
     expect(screen.getByTestId('header')).toHaveClass(styles['Placeholder__header']);
     expect(screen.getByTestId('text')).toHaveClass(styles['Placeholder__text']);
     expect(screen.getByTestId('actions')).toHaveClass(styles['Placeholder__action']);
+
+    expect(screen.getByText('Icon')).toBeInTheDocument();
+    expect(screen.getByText('Header')).toBeInTheDocument();
+    expect(screen.getByText('Actions')).toBeInTheDocument();
+    expect(screen.getByText('Text')).toBeInTheDocument();
   });
 });
