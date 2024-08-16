@@ -172,10 +172,10 @@ const SharedContent = () => {
 
 <br />
 
-## `<Group.ExpandedContent>`
+## <Group.ExpandedContent>
 
-Компенсирует внутренние отступы `Group` по горизонтали `direction="inline"` или по вертикали `direction="block"`
-Позволяет вложить внутрь `Group` контент, игнорируя внутреннии отступы `Group`.
+Компенсирует внутренние отступы `Group` по горизонтали `direction="inline"` или по вертикали `direction="block"`.
+Позволяет вложить внутрь `Group` контент, игнорируя внутренние отступы `Group`.
 
 ```jsx
 const recentFriends = getRandomUsers(20);
