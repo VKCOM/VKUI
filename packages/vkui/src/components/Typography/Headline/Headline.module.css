@@ -8,12 +8,14 @@
 .Headline--sizeY-compact.Headline--level-1 {
   font-size: var(--vkui--font_headline1--font_size--compact);
   line-height: var(--vkui--font_headline1--line_height--compact);
+  font-weight: var(--vkui--font_headline1--font_weight--compact);
 }
 
 @media (--sizeY-compact) {
   .Headline--sizeY-none.Headline--level-1 {
     font-size: var(--vkui--font_headline1--font_size--compact);
     line-height: var(--vkui--font_headline1--line_height--compact);
+    font-weight: var(--vkui--font_headline1--font_weight--compact);
   }
 }
 
@@ -27,11 +29,13 @@
 .Headline--sizeY-compact.Headline--level-2 {
   font-size: var(--vkui--font_headline2--font_size--compact);
   line-height: var(--vkui--font_headline2--line_height--compact);
+  font-weight: var(--vkui--font_headline2--font_weight--compact);
 }
 
 @media (--sizeY-compact) {
   .Headline--sizeY-none.Headline--level-2 {
     font-size: var(--vkui--font_headline2--font_size--compact);
     line-height: var(--vkui--font_headline2--line_height--compact);
+    font-weight: var(--vkui--font_headline2--font_weight--compact);
   }
 }
