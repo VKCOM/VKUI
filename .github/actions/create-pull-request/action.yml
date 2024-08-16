@@ -1,0 +1,50 @@
+name: Create pull request
+description: Create pull request
+
+inputs:
+  token:
+    description: token for write access to repository
+    required: true
+  title:
+    description: title of pull request
+    required: true
+  body:
+    description: body of pull request
+    required: true
+  head:
+    description: head of pull request
+    required: true
+  base:
+    description: base of pull request
+    required: true
+
+outputs:
+  pull_request_number:
+    value: ${{ steps.create_pull_request.outputs.pull_request_number }}
+
+runs:
+  using: composite
+  steps:
+    - name: Create pull request
+      id: create_pull_request
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const token = core.getInput('token', { required: true });
+          const title = core.getInput('title', { required: true });
+          const body = core.getInput('body', { required: true });
+          const head = core.getInput('head', { required: true });
+          const base = core.getInput('base', { required: true });
+
+          const octokit = github.getOctokit(token);
+          const { owner, repo } = github.context.repo;
+          const { data: pr } = await octokit.rest.pulls.create({
+            owner,
+            repo,
+            title,
+            body,
+            head,
+            base,
+          });
+
+          core.setOutput('pull_request_number', pr.number);
