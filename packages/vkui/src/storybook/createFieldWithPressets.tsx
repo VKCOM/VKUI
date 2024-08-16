@@ -26,7 +26,7 @@ const fillIconsMap = () => {
       return;
     }
     const iconsBySize = sizeToIconsMap.get(size);
-    const Icon = node as any;
+    const Icon = node;
     if (iconsBySize) {
       iconsBySize.set(typedIconName, <Icon />);
     } else {
@@ -74,7 +74,7 @@ export const createFieldWithPresets = <CustomPresetName extends string>({
       return;
     }
     options.push(iconName);
-    const Icon = icons[iconName] as any;
+    const Icon = icons[iconName];
     mapping[iconName] = <Icon />;
   });
 
