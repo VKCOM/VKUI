@@ -72,6 +72,8 @@ jobs:
           VERSION_POSTFIX = "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
           BRANCH_NAME = "${BRANCH_NAME_PREFIX}${VERSION_POSTFIX}"
 
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
           git checkout -b "$BRANCH_NAME"
           git push origin "$BRANCH_NAME"
 
@@ -130,7 +132,7 @@ jobs:
           head: ${{ steps.create_new_branch.outputs.branch_name }}
           base: "master"
 
-      # Добавить вызов экшена с добавлением майлстоуна следующей минорной версии
+      # Добавляем майлстоун следующей минорной версии
       - name: Add next minor version milestone to pull request
         if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         uses: ./.github/actions/add-next-minor-milestone
