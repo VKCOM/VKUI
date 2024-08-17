@@ -70,7 +70,7 @@ export const createFieldWithPresets = <CustomPresetName extends string>({
   });
 
   requiredIcons.forEach((iconName) => {
-    if (requiredIcons.includes(iconName)) {
+    if (options.includes(iconName)) {
       return;
     }
     options.push(iconName);
