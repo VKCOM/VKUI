@@ -31,16 +31,17 @@
 }
 
 .ImageBase__img {
-  position: absolute;
-  z-index: var(--vkui_internal--z_index_image_base_img);
-  inset-block-start: 0;
-  inset-inline-start: 0;
   display: block;
   inline-size: 100%;
   block-size: 100%;
   border: 0;
   border-radius: inherit;
   visibility: hidden;
+}
+
+.ImageBase__img--keepRatio {
+  inline-size: auto;
+  block-size: auto;
 }
 
 .ImageBase__img--objectFit-contain {

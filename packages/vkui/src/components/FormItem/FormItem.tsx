@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
@@ -89,7 +89,7 @@ export const FormItem: React.FC<FormItemProps> & {
   bottom,
   status = 'default',
   removable,
-  onRemove = noop,
+  onRemove,
   removePlaceholder = 'Удалить',
   getRootRef,
   htmlFor,
@@ -154,7 +154,7 @@ export const FormItem: React.FC<FormItemProps> & {
             align="start"
             onRemove={(e) => {
               if (rootEl?.current) {
-                onRemove(e, rootEl.current);
+                onRemove?.(e, rootEl.current);
               }
             }}
             removePlaceholder={removePlaceholder}

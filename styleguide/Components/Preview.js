@@ -13,7 +13,7 @@ import {
   SplitLayout,
   usePlatform,
 } from '@vkui';
-import { BREAKPOINTS } from '@vkui/shared/breakpoints';
+import { BREAKPOINTS } from '@vkui/lib/adaptivity';
 import { getVKUIConfigProviderTokensClassNamesWithGlobalAppearance } from '../lib/theme';
 import { useLoadThemeTokens } from '../lib/theme/useLoadThemeTokens';
 import { useViewPortSize } from '../utils';

@@ -18,3 +18,7 @@
   border-start-start-radius: 0;
   border-start-end-radius: 0;
 }
+
+.ChipsSelect__dropdown-icon {
+  margin-inline-end: 8px;
+}

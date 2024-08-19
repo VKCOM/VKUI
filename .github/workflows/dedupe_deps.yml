@@ -17,11 +17,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
+      - name: Node setup
+        uses: ./.github/actions/node-setup
 
       - name: Dedupe deps
         run: yarn dedupe

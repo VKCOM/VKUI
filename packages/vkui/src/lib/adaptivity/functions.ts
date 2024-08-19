@@ -1,7 +1,7 @@
 import type { Exact } from '../../types';
 import { type PlatformType } from '../platform';
+import { BREAKPOINTS } from './breakpoints';
 import {
-  BREAKPOINTS,
   SizeTypeValues,
   VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP,
   ViewHeight,

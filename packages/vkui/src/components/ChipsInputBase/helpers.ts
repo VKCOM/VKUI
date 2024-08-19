@@ -48,11 +48,8 @@ export const getNextChipOptionIndexByNavigateToProp = (
   navigateTo: NavigateTo,
   length: number,
 ): number => {
-  const FIRST_INDEX = 0;
   const LAST_INDEX = length - 1;
   switch (navigateTo) {
-    case 'first':
-      return FIRST_INDEX;
     case 'prev':
       const prevIndex = currentIndex - 1;
       return prevIndex < 0 ? LAST_INDEX : prevIndex;

@@ -1,0 +1,31 @@
+services:
+  benchmark:
+    image: ${IMAGE}
+    ipc: host
+    user: root
+    working_dir: /repo/benchmark
+    command: sh -c "
+      corepack enable &&
+      YARN_ENABLE_SCRIPTS=false yarn install --immutable &&
+      yarn run runtime:start:ci
+      "
+    volumes:
+      - ../:/repo
+      # Исключаем node_modules.
+      - /repo/node_modules
+      # Кешируем установленные внутри контейнера node_modules и кэш директории.
+      - benchmark_yarn_cache:/yarn
+      - benchmark_root_node_modules_cache:/repo/node_modules
+      # Исключаем всё то, что не потребуется в контейнере.
+      - /repo/benchmark/.swc
+      - /repo/benchmark/runtime/tmp/static
+      - /repo/packages/vkui/.swc
+      - /repo/packages/vkui/dist
+      - /repo/.git
+      - /repo/.husky
+      - /repo/.cache
+      - /repo/.swc
+
+volumes:
+  benchmark_yarn_cache:
+  benchmark_root_node_modules_cache:

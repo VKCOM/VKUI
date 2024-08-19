@@ -22,18 +22,18 @@ export interface FlexItemProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   /**
    * Для задания выравнивания, отлично от родительского, эквивалентно `align-self`
    */
-  alignSelf: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
+  alignSelf?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
   /**
    * Позволяет задать предопределенные значения шортката `flex`
    * `grow` соответствует значению `1 0 auto`
    * `shrink` соответствует значению `0 1 auto`
    * `content` соответствует значению `0 0 auto`
    */
-  flex: 'grow' | 'shrink' | 'content' | 'fixed';
+  flex?: 'grow' | 'shrink' | 'content' | 'fixed';
   /**
    * Изначальный размер элемента, эквивалентно `flex-basis`
    */
-  flexBasis: number;
+  flexBasis?: number | string;
 }
 
 export const FlexItem = ({
@@ -47,7 +47,7 @@ export const FlexItem = ({
   return (
     <RootComponent
       {...rest}
-      style={{ ...style, flexBasis }}
+      style={{ flexBasis, ...style }}
       baseClassName={classNames(
         styles.FlexItem,
         alignSelf && alignSelfClassNames[alignSelf],

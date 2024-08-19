@@ -89,7 +89,6 @@ export const SegmentedControl = ({
             style={{
               width: `${100 / options.length}%`,
               transform: translateX,
-              WebkitTransform: translateX,
             }}
           />
         )}

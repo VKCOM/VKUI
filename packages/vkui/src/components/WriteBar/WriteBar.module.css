@@ -34,7 +34,7 @@
   border: 0;
   resize: none;
   color: var(--vkui--color_text_primary);
-  -webkit-appearance: none;
+  appearance: none;
   max-block-size: 120px;
 }
 
@@ -104,6 +104,6 @@
 
 .WriteBar--ios .WriteBar__textarea {
   block-size: 36px;
-  padding-block: 6px 6px;
+  padding-block: 6px;
   padding-inline: 12px 0;
 }

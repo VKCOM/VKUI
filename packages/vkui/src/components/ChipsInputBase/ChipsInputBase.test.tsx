@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { baselineComponent, userEvent, withRegExp } from '../../testing/utils';
 import { ChipsInputBase } from './ChipsInputBase';
 import type { ChipsInputBasePrivateProps } from './types';
@@ -36,10 +36,12 @@ describe(ChipsInputBase, () => {
 
   const onAddChipOption = jest.fn();
   const onRemoveChipOption = jest.fn();
+  const onClearOptions = jest.fn();
 
   beforeEach(() => {
     onAddChipOption.mockClear();
     onRemoveChipOption.mockClear();
+    onClearOptions.mockClear();
 
     jest.useFakeTimers();
   });
@@ -55,6 +57,7 @@ describe(ChipsInputBase, () => {
         value={[RED_OPTION]}
         onAddChipOption={onAddChipOption}
         onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
       />,
     );
     expect(result.queryByText('Красный')).not.toBeNull();
@@ -66,6 +69,7 @@ describe(ChipsInputBase, () => {
         value={[]}
         onAddChipOption={onAddChipOption}
         onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
       />,
     );
     await userEvent.type(result.getByTestId('chips-input'), 'Красный{enter}');
@@ -79,6 +83,7 @@ describe(ChipsInputBase, () => {
         value={[]}
         onAddChipOption={onAddChipOption}
         onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
       />,
     );
     await userEvent.type(result.getByTestId('chips-input'), 'Красный');
@@ -92,6 +97,7 @@ describe(ChipsInputBase, () => {
         value={[RED_OPTION]}
         onAddChipOption={onAddChipOption}
         onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
       />,
     );
     const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
@@ -106,6 +112,7 @@ describe(ChipsInputBase, () => {
         value={[RED_OPTION]}
         onAddChipOption={onAddChipOption}
         onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
       />,
     );
     await userEvent.tab();
@@ -125,6 +132,7 @@ describe(ChipsInputBase, () => {
           value={[RED_OPTION]}
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
         />,
       );
       await userEvent.tab();
@@ -143,6 +151,7 @@ describe(ChipsInputBase, () => {
           value={[]}
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
         />,
       );
       const containerEl = result.getByRole('listbox').closest('div')!;
@@ -150,17 +159,18 @@ describe(ChipsInputBase, () => {
       expect(result.getByTestId('chips-input')).toHaveFocus();
     });
 
-    it('focuses to first chip after clicking to container', async () => {
+    it('focuses to input after clicking to container', async () => {
       const result = render(
         <ChipsInputBaseTest
           value={[RED_OPTION]}
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
         />,
       );
       const containerEl = result.getByRole('listbox').closest('div')!;
       await userEvent.click(containerEl);
-      expect(result.getByRole('option', { name: withRegExp(RED_OPTION.label) })).toHaveFocus();
+      expect(result.getByTestId('chips-input')).toHaveFocus();
     });
 
     it('focuses on input field on clicking on them', async () => {
@@ -169,6 +179,7 @@ describe(ChipsInputBase, () => {
           value={[RED_OPTION]}
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
         />,
       );
       await userEvent.click(result.getByTestId('chips-input'));
@@ -181,6 +192,7 @@ describe(ChipsInputBase, () => {
           value={[RED_OPTION]}
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
         />,
       );
       const chipLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
@@ -195,6 +207,7 @@ describe(ChipsInputBase, () => {
           inputValue="0"
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
         />,
       );
       const chipsInputLocator = result.getByTestId('chips-input');
@@ -213,6 +226,7 @@ describe(ChipsInputBase, () => {
           value={[RED_OPTION, BLUE_OPTION, YELLOW_OPTION]}
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
         />,
       );
       const [chipRedLocator, chipBlueLocator, chipYellowLocator] = value.map(({ label }) =>
@@ -245,6 +259,7 @@ describe(ChipsInputBase, () => {
           value={[RED_OPTION, BLUE_OPTION, YELLOW_OPTION]}
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
         />,
       );
       const chipsInputLocator = result.getByTestId('chips-input');
@@ -288,6 +303,7 @@ describe(ChipsInputBase, () => {
           value={value}
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
         />,
       );
       const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
@@ -311,6 +327,7 @@ describe(ChipsInputBase, () => {
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
           onBlur={onBlur}
+          onClear={onClearOptions}
         />,
       );
 
@@ -331,6 +348,7 @@ describe(ChipsInputBase, () => {
         ]}
         onAddChipOption={onAddChipOption}
         onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
       />,
     );
 
@@ -359,6 +377,7 @@ describe(ChipsInputBase, () => {
         ]}
         onAddChipOption={onAddChipOption}
         onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
       />,
     );
 
@@ -373,5 +392,22 @@ describe(ChipsInputBase, () => {
     const yellowOption = screen.getByRole('option', { name: /Жёлтый/ });
     expect(yellowOption.getAttribute('aria-readonly')).toBeTruthy();
     expect(yellowOption.getAttribute('aria-disabled')).toBeTruthy();
+  });
+
+  it('should call onClear callback when click to clear button', () => {
+    render(
+      <ChipsInputBaseTest
+        value={[RED_OPTION, BLUE_OPTION, YELLOW_OPTION]}
+        clearButtonTestId="clear-button"
+        clearButtonShown={true}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+      />,
+    );
+    expect(screen.getByTestId('clear-button')).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('clear-button'));
+
+    expect(onClearOptions).toBeCalledTimes(1);
   });
 });

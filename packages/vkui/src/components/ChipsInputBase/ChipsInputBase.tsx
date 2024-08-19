@@ -10,6 +10,7 @@ import {
   getActiveElementByAnotherElement,
 } from '../../lib/dom';
 import { FormField } from '../FormField/FormField';
+import { FormFieldClearButton } from '../FormFieldClearButton/FormFieldClearButton';
 import { Text } from '../Typography/Text/Text';
 import { DEFAULT_INPUT_VALUE, DEFAULT_VALUE, renderChipDefault } from './constants';
 import {
@@ -36,6 +37,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   after,
   status,
   mode,
+  maxHeight,
 
   // option
   value = DEFAULT_VALUE,
@@ -53,6 +55,12 @@ export const ChipsInputBase = <O extends ChipOption>({
   addOnBlur,
   onBlur,
   onInputChange,
+
+  // clear
+  ClearButton = FormFieldClearButton,
+  clearButtonShown,
+  clearButtonTestId,
+  onClear,
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -181,12 +189,29 @@ export const ChipsInputBase = <O extends ChipOption>({
       return;
     }
 
-    if (valueLength > 0 && listboxRef.current) {
-      moveFocusToChipOption(0, 'first', listboxRef.current);
-    } else if (inputRef.current) {
+    if (inputRef.current) {
       inputRef.current.focus();
     }
   };
+
+  const clearButton = React.useMemo(() => {
+    if (clearButtonShown) {
+      return <ClearButton onClick={onClear} disabled={disabled} data-testid={clearButtonTestId} />;
+    }
+    return undefined;
+  }, [ClearButton, clearButtonShown, clearButtonTestId, disabled, onClear]);
+
+  const afterItems = React.useMemo(() => {
+    if (clearButton || after) {
+      return (
+        <>
+          {clearButton}
+          {after}
+        </>
+      );
+    }
+    return undefined;
+  }, [after, clearButton]);
 
   return (
     <FormField
@@ -195,10 +220,11 @@ export const ChipsInputBase = <O extends ChipOption>({
       style={style}
       disabled={disabled}
       before={before}
-      after={after}
+      after={afterItems}
       status={status}
       mode={mode}
       className={className}
+      maxHeight={maxHeight}
       onClick={disabled ? undefined : handleRootClick}
     >
       <div
@@ -216,7 +242,7 @@ export const ChipsInputBase = <O extends ChipOption>({
         onKeyDown={disabled ? undefined : handleListboxKeyDown}
       >
         {value.map((option, index) => (
-          <React.Fragment key={`${typeof option.value}-${option.label}`}>
+          <React.Fragment key={`${typeof option.value}-${option.value}`}>
             {renderChip(
               {
                 'Component': 'div',

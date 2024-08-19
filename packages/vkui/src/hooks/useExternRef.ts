@@ -32,6 +32,15 @@ class ExternalRef<T> implements React.MutableRefObject<T | null> {
     this.#element = el;
     this.#externRefs.forEach((ref) => setRef(el, ref));
   }
+
+  /**
+   * React проверяет наличие свойства current у объектов через hasOwnProperty
+   *
+   * https://github.com/facebook/react/blob/c3cdbec0a78d39b5ff7329384cb41c4573a38212/packages/react-reconciler/src/ReactFiberCommitWork.js#L1612
+   */
+  hasOwnProperty(v: PropertyKey): v is keyof ExternalRef<T> {
+    return v === 'current';
+  }
 }
 
 export function useExternRef<T>(

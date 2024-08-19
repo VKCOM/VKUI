@@ -10,7 +10,7 @@
     "test:ci": "echo no test:ci"
   },
   "devDependencies": {
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "prop-types": "^15.8.1",
     "react": "*",
     "react-children-utilities": "^2.10.0",

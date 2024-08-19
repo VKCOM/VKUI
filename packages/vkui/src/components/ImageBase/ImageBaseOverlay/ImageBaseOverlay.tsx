@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useKeyboard } from '../../../components/Clickable/useKeyboard';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useAppearance } from '../../../hooks/useAppearance';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
+import { clickByKeyboardHandler } from '../../../lib/utils';
 import { ImageBaseContext } from '../context';
 import { validateOverlayIcon } from '../validators';
 import { useNonInteractiveOverlayProps } from './hooks';
@@ -14,6 +14,18 @@ import type {
   ImageBaseOverlayNonInteractiveProps,
 } from './types';
 import styles from './ImageBaseOverlay.module.css';
+
+function DevelopmentCheck({ children }: Pick<ImageBaseOverlayInteractiveProps, 'children'>) {
+  const { size } = React.useContext(ImageBaseContext);
+
+  if (process.env.NODE_ENV === 'development') {
+    if (children) {
+      validateOverlayIcon(size, { name: 'children', value: children });
+    }
+  }
+
+  return null;
+}
 
 export type ImageBaseOverlayProps =
   | ImageBaseOverlayInteractiveProps
@@ -29,33 +41,27 @@ const ImageBaseOverlayInteractive = ({
 }: ImageBaseOverlayInteractiveProps & { overlayShown?: boolean }) => {
   const { focusVisible, ...focusEvents } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'inside' });
-  const keyboardHandlers = useKeyboard();
-
-  if (process.env.NODE_ENV === 'development') {
-    if (children) {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { size } = React.useContext(ImageBaseContext);
-      validateOverlayIcon(size, { name: 'children', value: children });
-    }
-  }
 
   return (
-    <div
-      {...restProps}
-      tabIndex={0}
-      role="button"
-      className={classNames(
-        styles['ImageBaseOverlay--clickable'],
-        (focusVisible || overlayShown) && styles['ImageBaseOverlay--visible'],
-        focusVisibleClassNames,
-        className,
-      )}
-      ref={getRootRef}
-      {...focusEvents}
-      {...keyboardHandlers}
-    >
-      {children}
-    </div>
+    <>
+      <div
+        {...restProps}
+        tabIndex={0}
+        role="button"
+        className={classNames(
+          styles['ImageBaseOverlay--clickable'],
+          (focusVisible || overlayShown) && styles['ImageBaseOverlay--visible'],
+          focusVisibleClassNames,
+          className,
+        )}
+        ref={getRootRef}
+        onKeyDown={clickByKeyboardHandler}
+        {...focusEvents}
+      >
+        {children}
+      </div>
+      {process.env.NODE_ENV === 'development' && <DevelopmentCheck>{children}</DevelopmentCheck>}
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 .Textarea {
   overflow: hidden;
   position: relative;
+  max-block-size: 204px;
 }
 
 .Textarea__el {
@@ -9,7 +10,6 @@
   display: block;
   padding: 12px;
   inline-size: 100%;
-  max-block-size: 204px;
   box-sizing: border-box;
   color: var(--vkui--color_text_primary);
 }
@@ -18,12 +18,12 @@
   inline-size: initial;
 }
 
-.Textarea--sizeY-compact .Textarea__el {
+.Textarea--sizeY-compact {
   max-block-size: 196px;
 }
 
 @media (--sizeY-compact) {
-  .Textarea--sizeY-none .Textarea__el {
+  .Textarea--sizeY-none {
     max-block-size: 196px;
   }
 }

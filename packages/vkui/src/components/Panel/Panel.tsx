@@ -37,6 +37,10 @@ export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, N
    * Тип `plain` — соответствует фону по умолчанию.
    */
   mode?: 'plain' | 'card';
+  /**
+   * Отключает задний фон
+   */
+  disableBackground?: boolean;
 }
 
 /**
@@ -47,6 +51,7 @@ export const Panel = ({
   children,
   nav,
   mode: modeProp,
+  disableBackground,
   ...restProps
 }: PanelProps): React.ReactNode => {
   const { sizeX = 'none' } = useAdaptivity();
@@ -61,6 +66,7 @@ export const Panel = ({
           styles['Panel'],
           sizeXClassNames[sizeX],
           centered && 'vkuiInternalPanel--centered',
+          disableBackground && styles['Panel--disableBackground'],
           stylesMode[mode],
         )}
       >

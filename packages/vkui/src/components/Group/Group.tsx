@@ -7,13 +7,13 @@ import { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { Separator } from '../Separator/Separator';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './Group.module.css';
 
 const sizeXClassNames = {
   none: classNames(styles['Group--sizeX-none'], 'vkuiInternalGroup--sizeX-none'),
-  ['compact']: styles['Group--sizeX-compact'],
+  regular: styles['Group--sizeX-regular'],
+  compact: styles['Group--sizeX-compact'],
 };
 
 const stylesMode = {
@@ -60,7 +60,7 @@ export interface GroupProps extends HTMLAttributesWithRootRef<HTMLElement> {
   header?: React.ReactNode;
   description?: React.ReactNode;
   /**
-    `show` - разделитель всегда показывается,
+    `show` (только для `mode="plain"`) - разделитель всегда показывается
     `hide` - разделитель всегда спрятан,
     `auto` - разделитель рисуется автоматически между соседними группами.
    */
@@ -111,6 +111,27 @@ export const Group = ({
 
   const tabIndex = isTabPanel && tabIndexProp === undefined ? 0 : tabIndexProp;
 
+  let siblingSeparatorElement: React.ReactNode = null;
+  switch (separator) {
+    case 'auto':
+      siblingSeparatorElement = <div className={styles['Group__separator-sibling']} />;
+      break;
+    case 'show':
+      siblingSeparatorElement = (
+        <div
+          className={classNames(
+            styles['Group__separator-sibling'],
+            mode === 'plain' || mode === 'none'
+              ? styles['Group__separator-sibling--forced']
+              : undefined,
+          )}
+        />
+      );
+      break;
+    case 'hide':
+      break;
+  }
+
   return (
     <>
       <RootComponent
@@ -120,9 +141,9 @@ export const Group = ({
         baseClassName={classNames(
           'vkuiInternalGroup',
           styles['Group'],
-          isInsideModal && styles['Group--inside-modal'],
-          sizeX !== 'regular' && sizeXClassNames[sizeX],
-          mode && stylesMode[mode],
+          sizeXClassNames[sizeX],
+          mode === 'plain' && isInsideModal && styles['Group--mode-plain-inside-modal'],
+          stylesMode[mode],
           stylesPadding[padding],
         )}
       >
@@ -132,21 +153,7 @@ export const Group = ({
           <Footnote className={styles['Group__description']}>{description}</Footnote>
         )}
       </RootComponent>
-
-      {separator !== 'hide' && (
-        <React.Fragment>
-          <div
-            className={classNames(styles['Group__separator'], styles['Group__separator--spacing'])}
-          />
-          <Separator
-            className={classNames(
-              styles['Group__separator'],
-              styles['Group__separator--separator'],
-              separator === 'show' && styles['Group__separator--force'],
-            )}
-          />
-        </React.Fragment>
-      )}
+      {siblingSeparatorElement}
     </>
   );
 };

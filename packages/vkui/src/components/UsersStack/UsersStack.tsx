@@ -18,11 +18,21 @@ const stylesDirection = {
   'column': styles['UsersStack--direction-column'],
 };
 
+export type UsersStackRenderWrapperProps = {
+  children: React.ReactElement;
+  ['data-src']: string;
+};
+
+export type UsersStackPhoto = {
+  src: string;
+  renderWrapper?: (props: UsersStackRenderWrapperProps) => React.ReactElement;
+};
+
 export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Массив ссылок на фотографии
+   * Массив ссылок на фотографии либо массив структур типа `UsersStackPhoto`:
    */
-  photos?: string[];
+  photos?: string[] | UsersStackPhoto[];
   /**
    * Размер аватарок
    */
@@ -140,12 +150,15 @@ export const UsersStack = ({
     const hrefID = `#${id}`;
     const maskID = `UsersStackMask${cmpId}${i}`;
 
-    return (
+    const isPhotoType = typeof photo === 'object';
+    const photoSrc = isPhotoType ? photo.src : photo;
+
+    let photoElement = (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={styles['UsersStack__photo']}
-        key={i}
         aria-hidden
+        display="block"
       >
         <defs>
           <PathElement id={id} direction={direction} photoSize={photoSize} />
@@ -155,21 +168,35 @@ export const UsersStack = ({
         </clipPath>
         <g clipPath={`url(#${maskID})`}>
           <use href={hrefID} className={styles['UsersStack__fill']} />
-          <image href={photo} width={photoSize} height={photoSize} />
+          <image href={photoSrc} width={photoSize} height={photoSize} />
           <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
         </g>
       </svg>
     );
+    if (isPhotoType && photo.renderWrapper) {
+      photoElement = photo.renderWrapper({
+        'children': photoElement,
+        'data-src': photoSrc,
+      });
+    }
+
+    return (
+      <div className={styles['UsersStack__photoWrapper']} key={i}>
+        {photoElement}
+      </div>
+    );
   });
 
   const othersElement = canShowOthers ? (
-    <CounterTypography
-      caps
-      weight="1"
-      className={classNames(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
-    >
-      +{count}
-    </CounterTypography>
+    <div className={styles['UsersStack__photoWrapper']}>
+      <CounterTypography
+        caps
+        weight="1"
+        className={classNames(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
+      >
+        +{count}
+      </CounterTypography>
+    </div>
   ) : null;
 
   return (

@@ -75,6 +75,12 @@ const ActionSheetTest = ({
   );
 };
 
+const mockElementFocus = (element: HTMLElement | null, focusFn: VoidFunction) => {
+  if (element) {
+    jest.spyOn(element, 'focus').mockImplementation(focusFn);
+  }
+};
+
 describe(FocusTrap, () => {
   fakeTimers();
   baselineComponent(FocusTrap);
@@ -107,6 +113,44 @@ describe(FocusTrap, () => {
     await mountActionSheetViaClick();
 
     expect(screen.getByTestId('first')).toHaveFocus();
+  });
+
+  it('no focus when autoFocus=false', async () => {
+    render(<ActionSheetTest autoFocus={false} />);
+    await mountActionSheetViaClick();
+
+    expect(screen.getByTestId('toggle')).toHaveFocus();
+  });
+
+  it('preserve focus when autoFocus=false with dynamic content', async () => {
+    const Template = (props: { childIds: string[] }) => {
+      return (
+        <>
+          <FocusTrap autoFocus={false}>
+            <div>
+              {props.childIds.map((childId) => (
+                <Button key={childId} data-testid={childId}>
+                  Кнопка {childId}
+                </Button>
+              ))}
+            </div>
+          </FocusTrap>
+          <input type="text" data-testid="element-to-focus" />
+        </>
+      );
+    };
+
+    const result = render(<Template childIds={['first', 'middle', 'last']} />);
+    const input = result.getByTestId('element-to-focus');
+
+    input.focus();
+    expect(input).toHaveFocus();
+
+    await act(async () => {
+      result.rerender(<Template childIds={['first', 'last']} />);
+    });
+
+    expect(input).toHaveFocus();
   });
 
   it('always calls passed onClose on ESCAPE press', async () => {
@@ -297,6 +341,44 @@ describe(FocusTrap, () => {
       });
 
       await waitFor(() => expect(result.getByTestId('button-show-trap')).toHaveFocus());
+    });
+
+    it('check autoFocus to root', async () => {
+      const rootFocus = jest.fn();
+      const buttonFocus = jest.fn();
+
+      render(
+        <>
+          <FocusTrap
+            autoFocus="root"
+            getRootRef={(element) => mockElementFocus(element, rootFocus)}
+          >
+            <Button
+              data-testid="button-in-trap"
+              getRootRef={(element) => mockElementFocus(element, buttonFocus)}
+            >
+              Кнопка в FocusTrap
+            </Button>
+          </FocusTrap>
+        </>,
+      );
+      await waitFor(() => {
+        expect(rootFocus).toHaveBeenCalledTimes(1);
+        expect(buttonFocus).toHaveBeenCalledTimes(0);
+      });
+    });
+    it('should autofocus to container when dont have another active elements', async () => {
+      const rootFocus = jest.fn();
+      render(
+        <>
+          <FocusTrap autoFocus getRootRef={(element) => mockElementFocus(element, rootFocus)}>
+            <div />
+          </FocusTrap>
+        </>,
+      );
+      await waitFor(() => {
+        expect(rootFocus).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });
