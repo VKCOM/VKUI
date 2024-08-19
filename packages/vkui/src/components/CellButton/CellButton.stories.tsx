@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../storybook/createFieldWithPressets';
+import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
 import { getAvatarUrl } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { Switch } from '../Switch/Switch';

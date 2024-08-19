@@ -2,7 +2,7 @@ import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../storybook/createFieldWithPressets';
+import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Div } from '../Div/Div';

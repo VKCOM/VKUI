@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Icon16Delete } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../storybook/createFieldWithPressets';
+import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
 import { IconButton } from '../IconButton/IconButton';
 import { File, FileProps } from './File';
 

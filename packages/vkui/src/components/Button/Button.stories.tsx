@@ -8,7 +8,7 @@ import {
   Icon24ChevronCompactRight,
 } from '@vkontakte/icons';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../storybook/createFieldWithPressets';
+import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
 import { Counter } from '../Counter/Counter';
 import { Button, ButtonProps } from './Button';
 

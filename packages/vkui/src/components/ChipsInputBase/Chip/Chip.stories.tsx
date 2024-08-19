@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
-import { createFieldWithPresets } from '../../../storybook/createFieldWithPressets';
+import { createFieldWithPresets } from '../../../testing/createFieldWithPresets';
 import { getAvatarUrl } from '../../../testing/mock';
 import { Avatar } from '../../Avatar/Avatar';
 import type { ChipProps } from '../types';

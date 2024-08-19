@@ -1,7 +1,7 @@
 import { Icon16Clear, Icon28MessageOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { IconButton } from '../../components/IconButton/IconButton';
-import { createFieldWithPresets } from '../../storybook/createFieldWithPressets';
+import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
 
 export const getFormFieldIconsPresets = () => {
   return createFieldWithPresets({

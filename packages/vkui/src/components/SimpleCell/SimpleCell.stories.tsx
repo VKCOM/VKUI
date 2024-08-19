@@ -3,7 +3,7 @@ import { Icon28MessageOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../storybook/createFieldWithPressets';
+import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
 import { Avatar } from '../Avatar/Avatar';
 import { Badge } from '../Badge/Badge';
 import { Group } from '../Group/Group';

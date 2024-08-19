@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../storybook/createFieldWithPressets';
+import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
 import { getAvatarUrl } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
