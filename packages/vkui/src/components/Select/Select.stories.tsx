@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { getFormFieldIconsPresets } from '../../lib/presets/getFormFieldIconsPresets';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFormFieldIconsPresets } from '../../testing/getFormFieldIconsPresets';
 import { SelectProps } from '../CustomSelect/CustomSelect';
 import { Select } from './Select';
 

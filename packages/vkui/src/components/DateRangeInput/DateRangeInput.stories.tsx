@@ -1,7 +1,7 @@
 import { useArgs } from '@storybook/preview-api';
 import { Meta, StoryObj } from '@storybook/react';
-import { getFormFieldIconsPresets } from '../../lib/presets/getFormFieldIconsPresets';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFormFieldIconsPresets } from '../../testing/getFormFieldIconsPresets';
 import { DateRangeInput, DateRangeInputProps } from './DateRangeInput';
 
 type StoryDateRangeInputProps = DateRangeInputProps & { startDate: number; endDate: number };

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { getFormFieldIconsPresets } from '../../lib/presets/getFormFieldIconsPresets';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFormFieldIconsPresets } from '../../testing/getFormFieldIconsPresets';
 import { SelectMimicry, SelectMimicryProps } from './SelectMimicry';
 
 const iconsPresets = getFormFieldIconsPresets();
