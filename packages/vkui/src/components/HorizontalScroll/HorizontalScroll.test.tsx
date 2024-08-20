@@ -112,7 +112,7 @@ describe('HorizontalScroll', () => {
 
     await waitFor(() => {
       expect(mockedData.scrollLeft).toBe(300);
-      expect(() => screen.getByTestId('ScrollArrowRight')).toThrow();
+      expect(screen.queryByTestId('ScrollArrowRight')).toBeNull();
     });
   });
 
