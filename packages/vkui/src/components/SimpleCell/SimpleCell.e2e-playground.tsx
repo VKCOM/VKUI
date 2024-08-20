@@ -102,6 +102,16 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
           before: [<Icon28MessageOutline key="icon" />],
           children: ['Title'],
         },
+        {
+          before: [<Switch key="switch" />],
+          children: ['Title'],
+          after: [
+            <IconButton key="icon-w28">
+              <Icon28MessageOutline />
+            </IconButton>,
+          ],
+          disabled: [true],
+        },
       ]}
     >
       {(props: SimpleCellProps) => <SimpleCell {...props} />}
