@@ -67,7 +67,7 @@ export type { CustomSelectClearButtonProps, CustomSelectOptionInterface, CustomS
 export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
 > extends NativeSelectProps,
-    FormFieldProps,
+    Omit<FormFieldProps, 'maxHeight'>,
     TrackerOptionsProps,
     Pick<
       CustomSelectDropdownProps,
