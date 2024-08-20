@@ -23,7 +23,7 @@ export interface CustomSelectInputProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
-    Omit<FormFieldProps, 'mode' | 'type'> {
+    Omit<FormFieldProps, 'mode' | 'type' | 'maxHeight'> {
   selectType?: SelectType;
   multiline?: boolean;
   labelTextTestId?: string;
