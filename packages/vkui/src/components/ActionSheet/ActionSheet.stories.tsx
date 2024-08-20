@@ -118,11 +118,11 @@ export const WithSelectable: Story = {
   ...Base,
   args: {
     items: [
-      { selectable: true, children: 'Лучшие друзья', defaultChecked: true },
-      { selectable: true, children: 'Родственники' },
-      { selectable: true, children: 'Коллеги' },
-      { selectable: true, children: 'Друзья по школе' },
-      { selectable: true, children: 'Друзья по вузу' },
+      { name: 'menu', selectable: true, children: 'Лучшие друзья', defaultChecked: true },
+      { name: 'menu', selectable: true, children: 'Родственники' },
+      { name: 'menu', selectable: true, children: 'Коллеги' },
+      { name: 'menu', selectable: true, children: 'Друзья по школе' },
+      { name: 'menu', selectable: true, children: 'Друзья по вузу' },
     ],
   },
 };
