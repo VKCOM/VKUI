@@ -7,10 +7,6 @@
   box-shadow: var(--vkui--elevation3);
 }
 
-.Cell--selectable.Cell--disabled {
-  opacity: var(--vkui--opacity_disable_accessibility);
-}
-
 .Cell__checkbox,
 .Cell__dragger {
   position: relative;

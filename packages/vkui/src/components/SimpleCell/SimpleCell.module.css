@@ -16,6 +16,10 @@
   text-overflow: initial;
 }
 
+.SimpleCell--disabled {
+  opacity: var(--vkui--opacity_disable_accessibility);
+}
+
 .SimpleCell__before {
   display: flex;
   align-items: center;

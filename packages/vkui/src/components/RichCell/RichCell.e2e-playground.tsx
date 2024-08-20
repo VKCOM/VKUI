@@ -18,6 +18,7 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
           text: ['Text text text text text text'],
           caption: ['Caption caption caption caption'],
           after: ['After'],
+          afterAlign: ['start', 'center', 'end'],
           afterCaption: ['After Caption'],
           bottom: [
             <UsersStack key="stack" photos={['', '', '']}>

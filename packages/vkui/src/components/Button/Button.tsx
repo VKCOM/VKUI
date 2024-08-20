@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasAlign } from '../../types';
@@ -70,7 +70,7 @@ export const Button = ({
   after,
   getRootRef,
   loading,
-  onClick = noop,
+  onClick,
   className,
   disableSpinnerAnimation,
   rounded,
