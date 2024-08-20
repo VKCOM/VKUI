@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
+import { createFieldWithPresets } from '../../testing/presets';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { SubnavigationButton, SubnavigationButtonProps } from './SubnavigationButton';

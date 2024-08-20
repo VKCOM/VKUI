@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
+import { createFieldWithPresets } from '../../testing/presets';
 import { ActionSheetItem, ActionSheetItemProps } from './ActionSheetItem';
 
 const story: Meta<ActionSheetItemProps> = {

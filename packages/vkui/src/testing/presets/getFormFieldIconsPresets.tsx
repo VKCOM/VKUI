@@ -1,6 +1,6 @@
 import { Icon16Clear, Icon28MessageOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
-import { IconButton } from '../components/IconButton/IconButton';
+import { IconButton } from '../../components/IconButton/IconButton';
 import { createFieldWithPresets } from './createFieldWithPresets';
 
 export const getFormFieldIconsPresets = () => {

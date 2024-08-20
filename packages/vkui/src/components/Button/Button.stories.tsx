@@ -1,7 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
+import { createFieldWithPresets } from '../../testing/presets';
 import { Counter } from '../Counter/Counter';
 import { Button, ButtonProps } from './Button';
 

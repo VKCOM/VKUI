@@ -1,8 +1,8 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
 import { getAvatarUrl } from '../../testing/mock';
+import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { MiniInfoCell, MiniInfoCellProps } from './MiniInfoCell';

@@ -1,8 +1,8 @@
 import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
 import type { PartialStoryFn } from '@storybook/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { createFieldWithPresets } from '../../testing/createFieldWithPresets';
 import { getAvatarUrl } from '../../testing/mock';
+import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption, CustomSelectOptionProps } from './CustomSelectOption';
 
