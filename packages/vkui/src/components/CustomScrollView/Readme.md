@@ -1,6 +1,6 @@
 Компонент, заменяющий браузерную полосу прокрутки на кастомную
 
-```jsx { "props": { "layout": false, "adaptivity": true, "iframe": false } }
+```jsx
 const WithVerticalScroll = () => {
   return (
     <CustomScrollView
