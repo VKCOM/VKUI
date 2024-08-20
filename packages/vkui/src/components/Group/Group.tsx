@@ -26,6 +26,7 @@ export const Group: React.FC<GroupProps> & {
   );
 };
 
+Group.displayName = 'Group';
 Group.Container = GroupContainer;
 Group.Container.displayName = 'Group.Container';
 Group.Header = GroupHeader;
