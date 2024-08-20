@@ -25,6 +25,9 @@ jobs:
 
   check-dependabot-pr:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     if: ${{ github.event.action == 'opened' && github.actor == 'dependabot[bot]' }}
     steps:
       - name: Checkout code
@@ -46,7 +49,7 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@v2
         with:
-          github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check if PR updates relevant dependencies
         id: check_deps
@@ -77,6 +80,10 @@ jobs:
 
   check-and-autopublish-vkui-floating-ui:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
     if: ${{ github.actor == 'dependabot[bot]' && github.event.action == 'opened'}}
 
     steps:
@@ -90,7 +97,7 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@v2
         with:
-          github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check if @floating-ui/react-dom was updated in vkui-floating-ui
         id: check_floating_ui_updated
@@ -178,7 +185,7 @@ jobs:
         if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         uses: ./.github/actions/create-pull-request
         with:
-          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           title: "Update @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
           body: "This PR updates @vkontakte/vkui-floating-ui to version ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }} following the update of @floating-ui/react-dom to ${{ steps.check_floating_ui_updated.outputs.new_version }}.",
           head: ${{ steps.create_new_branch.outputs.branch_name }}
