@@ -30,21 +30,15 @@ runs:
       uses: actions/github-script@v7
       with:
         script: |
-          const token = core.getInput('token', { required: true });
-          const title = core.getInput('title', { required: true });
-          const body = core.getInput('body', { required: true });
-          const head = core.getInput('head', { required: true });
-          const base = core.getInput('base', { required: true });
-
-          const octokit = github.getOctokit(token);
+          const octokit = github.getOctokit(${{ inputs.token }});
           const { owner, repo } = github.context.repo;
           const { data: pr } = await octokit.rest.pulls.create({
             owner,
             repo,
-            title,
-            body,
-            head,
-            base,
+            title: ${{ inputs.title }},
+            body: ${{ inputs.body }},
+            head: ${{ inputs.head }},
+            base: ${{ inputs.base }},
           });
 
           core.setOutput('pull_request_number', pr.number);
