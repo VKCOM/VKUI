@@ -4,7 +4,7 @@ import { fn } from '@storybook/test';
 import { Icon24User } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { cities, getRandomUsers } from '../../testing/mock';
-import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { getFormFieldIconsPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { Div } from '../Div/Div';
