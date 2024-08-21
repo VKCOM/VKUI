@@ -33,8 +33,6 @@ export interface CustomSelectDropdownProps
   noMaxHeight?: boolean;
 }
 
-const calcIsTop = (placement: Placement) => placement.startsWith('top');
-
 export const CustomSelectDropdown = ({
   children,
   targetRef,
@@ -53,11 +51,8 @@ export const CustomSelectDropdown = ({
   overscrollBehavior,
   ...restProps
 }: CustomSelectDropdownProps): React.ReactNode => {
-  const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
-
   const onPlacementChange = React.useCallback(
     (placement: Placement) => {
-      setIsTop(calcIsTop(placement));
       if (parentOnPlacementChange) {
         parentOnPlacementChange(placement);
       }
@@ -76,7 +71,9 @@ export const CustomSelectDropdown = ({
         styles['CustomSelectDropdown'],
         'vkuiInternalCustomSelectDropdown',
         offsetDistance === 0 &&
-          (isTop ? styles['CustomSelectDropdown--top'] : styles['CustomSelectDropdown--bottom']),
+          (placement.includes('top')
+            ? styles['CustomSelectDropdown--top']
+            : styles['CustomSelectDropdown--bottom']),
         autoWidth &&
           classNames(
             styles['CustomSelectDropdown--wide'],
