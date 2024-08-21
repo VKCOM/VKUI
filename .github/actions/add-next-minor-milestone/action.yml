@@ -5,6 +5,9 @@ inputs:
   pull_request_number:
     description: number of pull request
     required: true
+  token:
+    description: github token
+    required: true
 
 runs:
   using: composite
@@ -12,5 +15,5 @@ runs:
     - name: Add milestone to PR
       uses: VKCOM/gh-actions/VKUI/add-next-minor-milestone@main
       with:
-        token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+        token: ${{ inputs.pull_request_number }}
         pull_request_number: ${{ inputs.pull_request_number }}

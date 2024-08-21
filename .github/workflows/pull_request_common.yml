@@ -76,6 +76,7 @@ jobs:
         if: ${{ !cancelled() && steps.check_deps.outputs.update_needed == 'true' }}
         uses: VKCOM/gh-actions/VKUI/add-next-minor-milestone@main
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           pull_request_number: ${{ github.event.pull_request.number }}
 
   check-and-autopublish-vkui-floating-ui:
@@ -196,6 +197,7 @@ jobs:
         if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         uses: ./.github/actions/add-next-minor-milestone
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           pull_request_number: ${{ steps.create_pull_request.outputs.pull_request_number }}
 
       # Добавляем label к созданному pull request
