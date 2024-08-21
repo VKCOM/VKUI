@@ -55,7 +55,7 @@ export interface DateInputProps
       | 'maxDateTime'
     >,
     HasRootRef<HTMLDivElement>,
-    FormFieldProps {
+    Omit<FormFieldProps, 'maxHeight'> {
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
   clearFieldLabel?: string;
