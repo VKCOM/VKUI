@@ -18,7 +18,7 @@
     "dotenv": "^16.4.5",
     "finalhandler": "1.2.0",
     "html-webpack-plugin": "^5.5.0",
-    "mini-css-extract-plugin": "^2.9.0",
+    "mini-css-extract-plugin": "^2.9.1",
     "playwright": "1.46.0",
     "postcss": "^8.4.41",
     "postcss-modules": "^6.0.0",
