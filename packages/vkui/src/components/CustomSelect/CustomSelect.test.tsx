@@ -1496,7 +1496,7 @@ describe('CustomSelect', () => {
     expect(document.querySelector(`.${styles['CustomSelect--pop-up']}`)).not.toBeNull();
 
     // закрываем дропдаун и меняем позиционирование вниз
-    await userEvent.click(document.body);
+    fireEvent.blur(screen.getByTestId('select'));
     placementStub = 'bottom';
     component.rerender(
       <CustomSelect
