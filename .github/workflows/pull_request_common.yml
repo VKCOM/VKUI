@@ -27,6 +27,60 @@ jobs:
               repo: context.repo.repo,
               labels: ["patch"]
             })
+  check-dependabot-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    if: ${{ github.event.action == 'opened' && github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Get @vkontakte/vkui dependencies
+        id: dependencies
+        run: |
+          DEPENDENCIES_OBJECT=$(node -p "require('./packages/vkui/package.json').dependencies")
+          DEPENDENCIES_ARRAY=$(node -p "Object.keys($DEPENDENCIES_OBJECT)")
+          DEPENDENCIES_ARRAY_JSON=$(node -p "JSON.stringify($DEPENDENCIES_ARRAY)")
+
+          echo "value='$DEPENDENCIES_ARRAY_JSON'" >> $GITHUB_OUTPUT
+
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if PR updates relevant dependencies
+        id: check_deps
+        run: |
+
+          # ```sh
+          # @npmcli/template-oss, @octokit/rest
+          # ```
+          # =>
+          # ```sh
+          # @npmcli/template-oss @octokit/rest
+          # ```
+          UPDATED_DEPS=$(echo ${{ steps.metadata.outputs.dependency-names }} | sed "s/,/ /g")
+          RELEVANT_DEPS=${{ steps.dependencies.outputs.value }}
+
+          for UPDATED_DEP in $UPDATED_DEPS; do
+            if [[ $RELEVANT_DEPS =~ $UPDATED_DEP ]]; then
+              echo "update_needed=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+          done
+
+      - name: Add milestone to PR
+        if: ${{ !cancelled() && steps.check_deps.outputs.update_needed == 'true' }}
+        uses: VKCOM/gh-actions/VKUI/add-next-minor-milestone@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   lint_codes_format:
     runs-on: ubuntu-latest

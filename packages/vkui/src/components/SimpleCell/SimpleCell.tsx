@@ -57,7 +57,7 @@ export interface SimpleCellOwnProps extends HasComponent {
    */
   after?: React.ReactNode;
   /**
-   * Убирает анимацию нажатия
+   * Помечает ячейку неактивной
    */
   disabled?: boolean;
   /**
@@ -110,6 +110,7 @@ export const SimpleCell = ({
       {...restProps}
       className={classNames(
         styles['SimpleCell'],
+        restProps.disabled && styles['SimpleCell--disabled'],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         multiline && styles['SimpleCell--mult'],
         className,
