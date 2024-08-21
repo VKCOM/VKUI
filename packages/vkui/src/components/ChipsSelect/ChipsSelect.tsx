@@ -578,7 +578,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         <CustomSelectDropdown
           data-testid={dropdownTestId}
           targetRef={rootRef}
-          placement={placementProp}
+          placement={dropdownVerticalPlacement}
           scrollBoxRef={dropdownScrollBoxRef}
           onPlacementChange={onDropdownPlacementChange}
           onMouseLeave={onDropdownMouseLeave}
