@@ -1,5 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { Tabs, TabsProps } from '../Tabs/Tabs';
+import { Tabs, type TabsProps } from '../Tabs/Tabs';
 import { TabsItem } from './TabsItem';
 
 export const TabsItemWithStatePlayground = (props: ComponentPlaygroundProps) => {

@@ -1,4 +1,4 @@
-import { coordX, coordY, VKUITouchEvent } from './functions';
+import { coordX, coordY, type VKUITouchEvent } from './functions';
 
 // Настоящего Touch нет в jsdom: https://github.com/jsdom/jsdom/issues/1508
 const touch = (ops: Partial<TouchInit>) => ops as Touch;

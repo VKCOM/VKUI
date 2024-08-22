@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getFetchPriorityProp } from '../../lib/utils';
-import { HasComponent, HasRef, HasRootRef } from '../../types';
-import { Card, CardProps } from '../Card/Card';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import type { HasComponent, HasRef, HasRootRef } from '../../types';
+import { Card, type CardProps } from '../Card/Card';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';

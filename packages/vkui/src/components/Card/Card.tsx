@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Card.module.css';
 

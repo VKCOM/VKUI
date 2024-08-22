@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
-import { ActionSheetItem, ActionSheetItemProps } from './ActionSheetItem';
+import { ActionSheetItem, type ActionSheetItemProps } from './ActionSheetItem';
 
 const story: Meta<ActionSheetItemProps> = {
   title: 'Popouts/ActionSheetItem',

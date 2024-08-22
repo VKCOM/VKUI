@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Avatar } from '../Avatar/Avatar';
@@ -6,7 +6,7 @@ import { Cell } from '../Cell/Cell';
 import { Group } from '../Group/Group';
 import { List } from '../List/List';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
-import { Footer, FooterProps } from './Footer';
+import { Footer, type FooterProps } from './Footer';
 
 const story: Meta<FooterProps> = {
   title: 'Blocks/Footer',

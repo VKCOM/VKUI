@@ -1,6 +1,6 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Card } from '../Card/Card';
-import { CardGrid, CardGridProps } from './CardGrid';
+import { CardGrid, type CardGridProps } from './CardGrid';
 
 const getCardPaddingBottom = (size: Exclude<CardGridProps['size'], undefined>) =>
   ({

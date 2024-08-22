@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -8,7 +8,7 @@ import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Group } from '../Group/Group';
 import { UsersStack } from '../UsersStack/UsersStack';
-import { RichCell, RichCellProps } from './RichCell';
+import { RichCell, type RichCellProps } from './RichCell';
 
 const story: Meta<RichCellProps> = {
   title: 'Blocks/RichCell',

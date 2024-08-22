@@ -2,9 +2,9 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import {
   AdaptiveIconRenderer,
-  AdaptiveIconRendererProps,
+  type AdaptiveIconRendererProps,
 } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import styles from './ToolButton.module.css';
 
 const stylesMode = {

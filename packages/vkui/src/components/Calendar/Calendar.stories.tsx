@@ -1,7 +1,7 @@
 import { useArgs } from '@storybook/preview-api';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Calendar, CalendarProps } from './Calendar';
+import { Calendar, type CalendarProps } from './Calendar';
 
 const story: Meta<CalendarProps> = {
   title: 'Forms/Calendar',

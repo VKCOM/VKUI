@@ -1,5 +1,5 @@
 import { useArgs } from '@storybook/preview-api';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {
   Icon16Dropdown,
   Icon20NewsfeedOutline,
@@ -19,7 +19,7 @@ import {
   WithCounter as CounterTabsItemStory,
   WithNumberStatus as NumberStatusTabsItemStory,
 } from '../TabsItem/TabsItem.stories';
-import { Tabs, TabsProps } from './Tabs';
+import { Tabs, type TabsProps } from './Tabs';
 
 type StoryTabsProps = TabsProps & { selected: string };
 

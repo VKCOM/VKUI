@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { animate, DrawInterface } from '../../../lib/animate';
+import { animate, type DrawInterface } from '../../../lib/animate';
 import { cubicBezier } from '../../../lib/fx';
 import { ANIMATION_DURATION } from './constants';
 

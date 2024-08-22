@@ -12,7 +12,7 @@ import {
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { ActionSheet, ActionSheetProps } from './ActionSheet';
+import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 import popoutWrapperStyles from '../PopoutWrapper/PopoutWrapper.module.css';
 
 const ActionSheetDesktop = ({ onClose = jest.fn(), ...restProps }: Partial<ActionSheetProps>) => {

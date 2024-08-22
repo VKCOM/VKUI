@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon56MentionOutline, Icon56UsersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Button } from '../Button/Button';
@@ -9,7 +9,7 @@ import { Placeholder } from '../Placeholder/Placeholder';
 import { Separator } from '../Separator/Separator';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { View } from '../View/View';
-import { SplitCol, SplitColProps } from './SplitCol';
+import { SplitCol, type SplitColProps } from './SplitCol';
 
 const story: Meta<SplitColProps> = {
   title: 'Layout/SplitCol',

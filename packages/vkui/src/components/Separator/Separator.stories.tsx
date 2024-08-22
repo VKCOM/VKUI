@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28Notifications, Icon28SlidersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Spacing } from '../Spacing/Spacing';
-import { Separator, SeparatorProps } from './Separator';
+import { Separator, type SeparatorProps } from './Separator';
 
 const story: Meta<SeparatorProps> = {
   title: 'Blocks/Separator',

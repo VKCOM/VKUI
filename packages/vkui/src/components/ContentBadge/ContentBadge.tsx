@@ -3,7 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { TypographyProps } from '../Typography/Typography';
+import type { TypographyProps } from '../Typography/Typography';
 import { ContentBadgeContext } from './ContentBadgeContext';
 import { ContentBadgeSlotIcon } from './ContentBadgeSlotIcon';
 import type { ContentBadgeModeType, ContentBadgeSizeType } from './types';

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
-import { RichCell, RichCellProps } from './RichCell';
+import { RichCell, type RichCellProps } from './RichCell';
 import styles from './RichCell.module.css';
 
 describe('RichCell', () => {

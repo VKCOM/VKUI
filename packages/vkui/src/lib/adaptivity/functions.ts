@@ -2,12 +2,12 @@ import type { Exact } from '../../types';
 import { type PlatformType } from '../platform';
 import { BREAKPOINTS } from './breakpoints';
 import {
-  SizeTypeValues,
+  type SizeTypeValues,
   VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP,
   ViewHeight,
-  ViewHeightType,
+  type ViewHeightType,
   ViewWidth,
-  ViewWidthType,
+  type ViewWidthType,
 } from './constants';
 import type { CSSBreakpointsClassNames, MediaQueries } from './types';
 

@@ -4,7 +4,7 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
-import { CustomSelectOption, CustomSelectOptionProps } from './CustomSelectOption';
+import { CustomSelectOption, type CustomSelectOptionProps } from './CustomSelectOption';
 
 const withListBox = (Story: PartialStoryFn<ReactRenderer>) => (
   <div role="listbox" aria-label="Список администраторов">

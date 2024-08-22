@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Input } from '../Input/Input';
 import { Textarea } from '../Textarea/Textarea';
-import { FormItem, FormItemProps } from './FormItem';
+import { FormItem, type FormItemProps } from './FormItem';
 
 const story: Meta<FormItemProps> = {
   title: 'Forms/FormItem',

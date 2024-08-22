@@ -1,5 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { ScrollArrow, ScrollArrowProps } from './ScrollArrow';
+import { ScrollArrow, type ScrollArrowProps } from './ScrollArrow';
 
 export const ScrollArrowPlayground = (props: ComponentPlaygroundProps) => {
   return (

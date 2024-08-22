@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24Cancel, Icon24Done } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
@@ -9,7 +9,7 @@ import { Div } from '../Div/Div';
 import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
-import { ModalPageHeader, ModalPageHeaderProps } from './ModalPageHeader';
+import { ModalPageHeader, type ModalPageHeaderProps } from './ModalPageHeader';
 
 const story: Meta<ModalPageHeaderProps> = {
   title: 'Modals/ModalPageHeader',

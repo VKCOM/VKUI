@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { isEqual } from '@vkontakte/vkjs';
-import { SimulateReactInputTargetState } from '../../lib/react';
+import { type SimulateReactInputTargetState } from '../../lib/react';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import {

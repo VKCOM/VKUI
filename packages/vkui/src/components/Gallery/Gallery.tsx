@@ -3,7 +3,7 @@ import { clamp } from '../../helpers/math';
 import { useIsClient } from '../../hooks/useIsClient';
 import { BaseGallery } from '../BaseGallery/BaseGallery';
 import { CarouselBase } from '../BaseGallery/CarouselBase/CarouselBase';
-import { BaseGalleryProps } from '../BaseGallery/types';
+import type { BaseGalleryProps } from '../BaseGallery/types';
 import { useAutoPlay } from './hooks';
 
 export interface GalleryProps extends BaseGalleryProps {

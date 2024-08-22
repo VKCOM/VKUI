@@ -2,9 +2,9 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasAlign } from '../../types';
+import type { HasAlign } from '../../types';
 import { Spinner } from '../Spinner/Spinner';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import '../Spinner/Spinner.module.css';
 import styles from './Button.module.css';
 

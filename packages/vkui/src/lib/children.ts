@@ -1,7 +1,7 @@
 // copied from react-children-utilities
 // @see https://github.com/fernandopasik/react-children-utilities/tree/main
 
-import * as React from 'react';
+import type * as React from 'react';
 import { Children, isValidElement } from 'react';
 
 export const childToString = (child?: React.ReactNode): string => {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28AddOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -6,10 +6,10 @@ import { PanelHeaderBack as PanelHeaderBackCmp } from '../PanelHeaderBack/PanelH
 import { PanelHeaderClose as PanelHeaderCloseCmp } from '../PanelHeaderClose/PanelHeaderClose';
 import {
   PanelHeaderEdit as PanelHeaderEditCmp,
-  PanelHeaderEditProps,
+  type PanelHeaderEditProps,
 } from '../PanelHeaderEdit/PanelHeaderEdit';
 import { PanelHeaderSubmit as PanelHeaderSubmitCmp } from '../PanelHeaderSubmit/PanelHeaderSubmit';
-import { PanelHeaderButton, PanelHeaderButtonProps } from './PanelHeaderButton';
+import { PanelHeaderButton, type PanelHeaderButtonProps } from './PanelHeaderButton';
 
 const story: Meta<PanelHeaderButtonProps> = {
   title: 'Layout/PanelHeaderButton',

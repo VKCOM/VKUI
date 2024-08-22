@@ -7,9 +7,9 @@ import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
-import { Touch, TouchEvent } from '../Touch/Touch';
+import { Touch, type TouchEvent } from '../Touch/Touch';
 import { calcMax, calcMin } from './helpers';
-import { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
+import type { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
 import styles from './BaseGallery.module.css';
 
 const ANIMATION_DURATION = 0.24;

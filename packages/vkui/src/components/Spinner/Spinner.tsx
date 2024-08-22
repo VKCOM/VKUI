@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from '@vkontakte/icons';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { useReducedMotion } from '../../lib/animation';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Spinner.module.css';

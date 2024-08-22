@@ -9,7 +9,7 @@ import { isRefObject } from '../../lib/isRefObject';
 import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { Popper } from '../Popper/Popper';
-import { SharedDropdownProps } from './types';
+import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
 const warn = warnOnce('ActionSheet');

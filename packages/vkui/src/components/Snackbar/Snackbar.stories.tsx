@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { Image } from '../Image/Image';
-import { Snackbar, SnackbarProps } from './Snackbar';
+import { Snackbar, type SnackbarProps } from './Snackbar';
 
 const story: Meta<SnackbarProps> = {
   title: 'Popouts/Snackbar',

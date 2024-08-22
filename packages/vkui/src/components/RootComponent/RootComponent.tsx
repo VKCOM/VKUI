@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRootRef } from '../../types';
 
 export interface RootComponentProps<T>
   extends React.AllHTMLAttributes<T>,

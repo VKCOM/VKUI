@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Icon12Download } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import type { ChipOption } from '../ChipsInputBase/types';
 import { FormItem } from '../FormItem/FormItem';
-import { ChipsSelect, ChipsSelectProps } from './ChipsSelect';
+import { ChipsSelect, type ChipsSelectProps } from './ChipsSelect';
 
 const iconsPresets = getFormFieldIconsPresets();
 

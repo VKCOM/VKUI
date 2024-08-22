@@ -5,7 +5,7 @@ import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import { HasRef, HasRootRef } from '../../types';
+import type { HasRef, HasRootRef } from '../../types';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 

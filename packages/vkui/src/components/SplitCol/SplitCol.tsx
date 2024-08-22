@@ -6,7 +6,7 @@ import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { ViewWidth, viewWidthToClassName } from '../../lib/adaptivity';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { SplitColContext } from './SplitColContext';
 import styles from './SplitCol.module.css';

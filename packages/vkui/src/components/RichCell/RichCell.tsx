@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { RichCellIcon } from './RichCellIcon/RichCellIcon';
 import styles from './RichCell.module.css';

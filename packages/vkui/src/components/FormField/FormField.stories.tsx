@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { Group } from '../Group/Group';
-import { FormField, FormFieldProps } from './FormField';
+import { FormField, type FormFieldProps } from './FormField';
 
 const iconsPresets = getFormFieldIconsPresets();
 

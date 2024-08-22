@@ -1,12 +1,12 @@
-import { act, ComponentProps, useState } from 'react';
+import { act, type ComponentProps, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { Platform, PlatformType } from '../../lib/platform';
+import { Platform, type PlatformType } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Group } from '../Group/Group';
 import { TabsItem } from '../TabsItem/TabsItem';
-import { Tabs, TabsProps } from './Tabs';
+import { Tabs, type TabsProps } from './Tabs';
 import styles from './Tabs.module.css';
 
 function TestTabs(props: { disabledKeys?: string[]; role?: string }) {

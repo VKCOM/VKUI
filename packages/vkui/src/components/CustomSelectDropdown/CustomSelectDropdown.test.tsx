@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { Placement, useFloating } from '../../lib/floating';
+import type { Placement, useFloating } from '../../lib/floating';
 import { Button } from '../Button/Button';
 import { CustomSelectDropdown } from './CustomSelectDropdown';
 import styles from './CustomSelectDropdown.module.css';

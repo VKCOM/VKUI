@@ -9,7 +9,7 @@ import {
   waitCSSKeyframesAnimation,
   waitCSSTransitionEnd,
 } from '../../testing/utils';
-import { HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Gallery } from '../Gallery/Gallery';

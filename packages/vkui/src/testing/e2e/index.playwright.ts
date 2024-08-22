@@ -13,7 +13,7 @@
  */
 
 // 1. Расширяем Playwright под свои нужды.
-import { devices, expect, test as testBase } from '@playwright/experimental-ct-react';
+import { type devices, expect, test as testBase } from '@playwright/experimental-ct-react';
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { screenshotWithClipToContent } from './screenshotWithClipToContent';
 import type {

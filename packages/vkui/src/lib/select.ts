@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { SelectType } from '../components/Select/Select';
+import type * as React from 'react';
+import type { SelectType } from '../components/Select/Select';
 import { getTextFromChildren } from './children';
 
 export type Option = {

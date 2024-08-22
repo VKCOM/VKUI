@@ -7,9 +7,9 @@ import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { AppRoot, AppRootProps } from './AppRoot';
+import { AppRoot, type AppRootProps } from './AppRoot';
 import { AppRootContext } from './AppRootContext';
-import { ScrollContext, ScrollContextInterface, useScrollLock } from './ScrollContext';
+import { ScrollContext, type ScrollContextInterface, useScrollLock } from './ScrollContext';
 import { CUSTOM_PROPERTY_INSET_PREFIX } from './helpers';
 import styles from './AppRoot.module.css';
 

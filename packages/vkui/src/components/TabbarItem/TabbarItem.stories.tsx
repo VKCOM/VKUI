@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { Tabbar } from '../Tabbar/Tabbar';
-import { TabbarItem, TabbarItemProps } from './TabbarItem';
+import { TabbarItem, type TabbarItemProps } from './TabbarItem';
 
 const story: Meta<TabbarItemProps> = {
   title: 'Layout/TabbarItem',

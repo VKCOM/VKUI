@@ -1,7 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
-import { Headline, HeadlineProps } from './Headline';
+import { Headline, type HeadlineProps } from './Headline';
 
 const story: Meta<HeadlineProps> = {
   title: 'Typography/Headline',

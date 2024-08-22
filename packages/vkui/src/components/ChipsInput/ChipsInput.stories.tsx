@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import type { ChipOption } from '../ChipsInputBase/types';
 import { FormItem } from '../FormItem/FormItem';
-import { ChipsInput, ChipsInputProps } from './ChipsInput';
+import { ChipsInput, type ChipsInputProps } from './ChipsInput';
 
 const iconsPresets = getFormFieldIconsPresets();
 

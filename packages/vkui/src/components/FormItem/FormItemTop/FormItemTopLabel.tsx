@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasComponent, HasRootRef } from '../../../types';
+import type { HasComponent, HasRootRef } from '../../../types';
 import { Subhead } from '../../Typography/Subhead/Subhead';
 import { FormItemContext } from '../context';
 import styles from '../FormItem.module.css';

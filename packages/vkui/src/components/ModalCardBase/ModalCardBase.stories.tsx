@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
-import { ModalCardBase, ModalCardBaseProps } from './ModalCardBase';
+import { ModalCardBase, type ModalCardBaseProps } from './ModalCardBase';
 
 const story: Meta<ModalCardBaseProps> = {
   title: 'Blocks/ModalCardBase',

@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Button } from '../Button/Button';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { Alert, AlertProps } from './Alert';
+import { Alert, type AlertProps } from './Alert';
 
 const story: Meta<AlertProps> = {
   title: 'Popouts/Alert',

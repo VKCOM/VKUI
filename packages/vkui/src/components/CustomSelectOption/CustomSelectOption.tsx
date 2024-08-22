@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';

@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { HasChildren, HTMLAttributesWithRootRef } from '../../../types';
+import type { HasChildren, HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from './FlexItem.module.css';
 

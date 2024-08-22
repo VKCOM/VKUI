@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -7,7 +7,7 @@ import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
 import { Switch } from '../Switch/Switch';
-import { Cell, CellProps } from './Cell';
+import { Cell, type CellProps } from './Cell';
 
 const story: Meta<CellProps> = {
   title: 'Blocks/Cell',

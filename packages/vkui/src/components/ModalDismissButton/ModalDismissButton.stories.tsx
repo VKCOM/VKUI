@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { ModalDismissButton, ModalDismissButtonProps } from './ModalDismissButton';
+import { ModalDismissButton, type ModalDismissButtonProps } from './ModalDismissButton';
 
 const story: Meta<ModalDismissButtonProps> = {
   title: 'Modals/ModalDismissButton',

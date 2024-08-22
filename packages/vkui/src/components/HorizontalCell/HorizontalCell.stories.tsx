@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
@@ -6,7 +6,7 @@ import { getAvatarUrl } from '../../testing/mock';
 import { Flex } from '../Flex/Flex';
 import { Group } from '../Group/Group';
 import { Image } from '../Image/Image';
-import { HorizontalCell, HorizontalCellProps } from './HorizontalCell';
+import { HorizontalCell, type HorizontalCellProps } from './HorizontalCell';
 
 const story: Meta<HorizontalCellProps> = {
   title: 'Blocks/HorizontalCell',

@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Clickable, ClickableProps } from './Clickable';
+import { Clickable, type ClickableProps } from './Clickable';
 
 const story: Meta<ClickableProps> = {
   title: 'Blocks/Clickable',

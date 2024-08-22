@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
-import { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
-import { TouchEvent, TouchEventHandler } from '../Touch/Touch';
+import type * as React from 'react';
+import type { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
+import type { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
+import type { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 
 export interface GallerySlidesState {
   coordX: number;

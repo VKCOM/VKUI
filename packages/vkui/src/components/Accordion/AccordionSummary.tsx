@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon24ChevronDown, Icon24ChevronUp } from '@vkontakte/icons';
 import { callMultiple } from '../../lib/callMultiple';
-import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
+import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { AccordionContext } from './AccordionContext';
 import styles from './Accordion.module.css';
 

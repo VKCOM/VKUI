@@ -5,10 +5,10 @@ import { useCalendar } from '../../hooks/useCalendar';
 import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import { HTMLAttributesWithRootRef } from '../../types';
-import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
-import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
-import { CalendarTime, CalendarTimeProps } from '../CalendarTime/CalendarTime';
+import type { HTMLAttributesWithRootRef } from '../../types';
+import { CalendarDays, type CalendarDaysProps } from '../CalendarDays/CalendarDays';
+import { CalendarHeader, type CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
+import { CalendarTime, type CalendarTimeProps } from '../CalendarTime/CalendarTime';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Calendar.module.css';
 

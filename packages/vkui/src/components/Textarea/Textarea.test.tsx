@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
-import { AlignType } from '../../types';
+import type { AlignType } from '../../types';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Textarea } from './Textarea';

@@ -1,7 +1,7 @@
 import { useArgs } from '@storybook/preview-api';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { CalendarRange, CalendarRangeProps } from './CalendarRange';
+import { CalendarRange, type CalendarRangeProps } from './CalendarRange';
 
 type StoryCalendarRangeProps = CalendarRangeProps & { startDate: number; endDate: number };
 

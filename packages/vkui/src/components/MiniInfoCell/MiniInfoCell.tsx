@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon16Chevron } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';

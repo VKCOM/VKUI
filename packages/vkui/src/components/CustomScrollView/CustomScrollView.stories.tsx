@@ -1,8 +1,8 @@
-import { Meta, ReactRenderer, StoryObj } from '@storybook/react';
-import { PartialStoryFn } from '@storybook/types';
+import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
+import type { PartialStoryFn } from '@storybook/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Div } from '../Div/Div';
-import { CustomScrollView, CustomScrollViewProps } from './CustomScrollView';
+import { CustomScrollView, type CustomScrollViewProps } from './CustomScrollView';
 
 const Wrapper = (Story: PartialStoryFn<ReactRenderer>) => (
   <div

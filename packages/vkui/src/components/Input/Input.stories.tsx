@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
-import { Input, InputProps } from './Input';
+import { Input, type InputProps } from './Input';
 
 const iconsPresets = getFormFieldIconsPresets();
 

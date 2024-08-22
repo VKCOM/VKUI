@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {
   Icon56MentionOutline,
   Icon56MessageReadOutline,
@@ -23,7 +23,7 @@ import { Placeholder } from '../Placeholder/Placeholder';
 import { Separator } from '../Separator/Separator';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { View } from '../View/View';
-import { SplitLayout, SplitLayoutProps } from './SplitLayout';
+import { SplitLayout, type SplitLayoutProps } from './SplitLayout';
 
 const story: Meta<SplitLayoutProps> = {
   title: 'Layout/SplitLayout',
