@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
+import { CardGrid } from '../CardGrid/CardGrid';
 import { ContentCard, ContentCardProps } from './ContentCard';
 
 const ContentCardTest = (props: ContentCardProps) => (
@@ -15,7 +16,11 @@ const card = () => screen.getByTestId('card');
 const img = () => card().querySelector('img');
 
 describe('ContentCard', () => {
-  baselineComponent((props) => <ContentCard src="/image.png" {...props} text="ContentCard" />);
+  baselineComponent((props) => (
+    <CardGrid>
+      <ContentCard src="/image.png" {...props} text="ContentCard" />
+    </CardGrid>
+  ));
 
   it('[img] renders img if src is passed', () => {
     render(<ContentCardTest src="/image.png" />);
