@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { CSSCustomProperties } from '../../types';
-import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
+import type { CSSCustomProperties } from '../../types';
+import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './AspectRatio.module.css';
 
 export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {

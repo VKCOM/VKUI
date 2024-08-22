@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useDOM } from '../../lib/dom';
-import { HasComponent, HTMLAttributesWithRootRef } from '../../types';
-import { HorizontalScroll, HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
+import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import { HorizontalScroll, type HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardScroll.module.css';
 

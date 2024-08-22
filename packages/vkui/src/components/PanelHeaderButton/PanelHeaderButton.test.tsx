@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
-import { PanelHeaderButton, PanelHeaderButtonProps } from './PanelHeaderButton';
+import { PanelHeaderButton, type PanelHeaderButtonProps } from './PanelHeaderButton';
 
 const PanelHeaderButtonTest = (props: PanelHeaderButtonProps) => (
   <PanelHeaderButton data-testid="button" {...props} />

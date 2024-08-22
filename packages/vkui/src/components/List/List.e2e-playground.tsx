@@ -1,7 +1,7 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Avatar } from '../Avatar/Avatar';
 import { Cell } from '../Cell/Cell';
-import { List, ListProps } from './List';
+import { List, type ListProps } from './List';
 
 export const ListPlayground = (props: ComponentPlaygroundProps) => {
   return (

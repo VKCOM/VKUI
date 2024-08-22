@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 export const useNativeFormResetListener = (

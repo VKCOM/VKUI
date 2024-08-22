@@ -4,7 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { SegmentedControlOption } from './SegmentedControlOption/SegmentedControlOption';
 import styles from './SegmentedControl.module.css';

@@ -1,4 +1,4 @@
-import { LiteralUnion } from '../../types';
+import type { LiteralUnion } from '../../types';
 import styles from '../../styles/gaps.module.css';
 
 type GapPresets = '2xs' | 'xs' | 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';

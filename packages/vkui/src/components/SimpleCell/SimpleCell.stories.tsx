@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28MessageOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
@@ -9,7 +9,7 @@ import { Badge } from '../Badge/Badge';
 import { Group } from '../Group/Group';
 import { IconButton } from '../IconButton/IconButton';
 import { Switch } from '../Switch/Switch';
-import { SimpleCell, SimpleCellProps } from './SimpleCell';
+import { SimpleCell, type SimpleCellProps } from './SimpleCell';
 
 const story: Meta<SimpleCellProps> = {
   title: 'Blocks/SimpleCell',

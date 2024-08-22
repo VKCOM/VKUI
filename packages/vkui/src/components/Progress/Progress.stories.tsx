@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Progress, ProgressProps } from './Progress';
+import { Progress, type ProgressProps } from './Progress';
 
 const story: Meta<ProgressProps> = {
   title: 'Blocks/Progress',

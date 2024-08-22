@@ -7,15 +7,15 @@ import type { PlacementWithAuto } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
+import type { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import {
   CustomSelectDropdown,
-  CustomSelectDropdownProps,
+  type CustomSelectDropdownProps,
 } from '../CustomSelectDropdown/CustomSelectDropdown';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
-import { FormFieldProps } from '../FormField/FormField';
-import { NativeSelectProps } from '../NativeSelect/NativeSelect';
-import { SelectType } from '../Select/Select';
+import type { FormFieldProps } from '../FormField/FormField';
+import type { NativeSelectProps } from '../NativeSelect/NativeSelect';
+import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import {
   CustomSelectClearButton,

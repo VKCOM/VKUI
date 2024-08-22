@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Spacing.module.css';
 

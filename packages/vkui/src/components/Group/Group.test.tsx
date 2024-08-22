@@ -1,15 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { SizeTypeValues } from '../../lib/adaptivity';
+import type { SizeTypeValues } from '../../lib/adaptivity';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import {
   AppRootContext,
-  AppRootContextInterface,
+  type AppRootContextInterface,
   DEFAULT_APP_ROOT_CONTEXT_VALUE,
 } from '../AppRoot/AppRootContext';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
-import { Group, GroupProps } from './Group';
+import { Group, type GroupProps } from './Group';
 import styles from './Group.module.css';
 
 describe('Group', () => {

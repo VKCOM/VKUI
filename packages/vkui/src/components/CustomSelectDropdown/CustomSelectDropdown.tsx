@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
-import { HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
-import { CustomScrollView, CustomScrollViewProps } from '../CustomScrollView/CustomScrollView';
-import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
+import type { HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
+import { CustomScrollView, type CustomScrollViewProps } from '../CustomScrollView/CustomScrollView';
+import type { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import { Popper } from '../Popper/Popper';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './CustomSelectDropdown.module.css';

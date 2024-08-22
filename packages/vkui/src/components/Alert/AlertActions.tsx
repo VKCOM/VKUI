@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { AlertActionInterface, AlertProps } from './Alert';
+import type { AlertActionInterface, AlertProps } from './Alert';
 import { AlertAction } from './AlertAction';
 import styles from './Alert.module.css';
 

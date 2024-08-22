@@ -1,5 +1,5 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -8,7 +8,7 @@ import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Div } from '../Div/Div';
 import { Group } from '../Group/Group';
 import { Image } from '../Image/Image';
-import { Banner, BannerProps } from './Banner';
+import { Banner, type BannerProps } from './Banner';
 
 const story: Meta<BannerProps> = {
   title: 'Blocks/Banner',

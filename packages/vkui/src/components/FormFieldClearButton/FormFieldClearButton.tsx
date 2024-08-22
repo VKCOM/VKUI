@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { stopPropagation } from '../../lib/utils';
-import { HasDataAttribute } from '../../types';
+import type { HasDataAttribute } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 
 export interface FormFieldClearButtonProps extends HasDataAttribute {

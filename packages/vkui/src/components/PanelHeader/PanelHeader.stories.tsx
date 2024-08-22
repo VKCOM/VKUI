@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {
   Icon24GearOutline,
   Icon24NotificationOutline,
@@ -25,7 +25,7 @@ import { Tabs } from '../Tabs/Tabs';
 import { TabsItem } from '../TabsItem/TabsItem';
 import { View } from '../View/View';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import { PanelHeader, PanelHeaderProps } from './PanelHeader';
+import { PanelHeader, type PanelHeaderProps } from './PanelHeader';
 
 const story: Meta<PanelHeaderProps> = {
   title: 'Layout/PanelHeader',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PlatformType } from '../../lib/platform';
+import type { PlatformType } from '../../lib/platform';
 import { TokensClassProvider } from '../../lib/tokens';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 

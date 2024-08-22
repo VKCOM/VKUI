@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
-import { CustomSelectInput, CustomSelectInputProps } from './CustomSelectInput';
+import { CustomSelectInput, type CustomSelectInputProps } from './CustomSelectInput';
 import styles from './CustomSelectInput.module.css';
 
 describe(CustomSelectInput, () => {

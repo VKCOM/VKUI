@@ -3,16 +3,16 @@ import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
 import { blurActiveElement, useDOM } from '../../lib/dom';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScroll } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { NavViewIdContext } from '../NavIdContext/NavIdContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { useSplitCol } from '../SplitCol/SplitColContext';
-import { Touch, TouchEvent } from '../Touch/Touch';
+import { Touch, type TouchEvent } from '../Touch/Touch';
 import { useLayoutEffectCall } from './useLayoutEffectCall';
 import {
   getSwipeBackPredicates,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
@@ -8,7 +8,7 @@ import {
 } from '../../testing/icons';
 import { getAvatarUrl } from '../../testing/mock';
 import { imageBaseSizes } from '../ImageBase/types';
-import { Avatar, AvatarProps } from './Avatar';
+import { Avatar, type AvatarProps } from './Avatar';
 
 type AvatarStoryProps = AvatarProps & { badge: React.ReactNode; overlay: React.ReactNode };
 

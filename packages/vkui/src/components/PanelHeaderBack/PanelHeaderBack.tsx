@@ -9,9 +9,12 @@ import {
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { PlatformType } from '../../lib/platform';
+import type { PlatformType } from '../../lib/platform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
-import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import {
+  PanelHeaderButton,
+  type PanelHeaderButtonProps,
+} from '../PanelHeaderButton/PanelHeaderButton';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from '../PanelHeaderButton/PanelHeaderButton.module.css';
 

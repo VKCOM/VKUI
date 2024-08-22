@@ -2,7 +2,7 @@ import * as React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
-import { AlignType } from '../../types';
+import type { AlignType } from '../../types';
 import { ANIMATION_DURATION } from '../BaseGallery/CarouselBase/constants';
 import { Gallery } from './Gallery';
 import styles from '../BaseGallery/BaseGallery.module.css';

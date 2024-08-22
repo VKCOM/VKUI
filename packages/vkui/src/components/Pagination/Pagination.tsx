@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { PaginationPageType, usePagination } from '../../hooks/usePagination';
+import { type PaginationPageType, usePagination } from '../../hooks/usePagination';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';

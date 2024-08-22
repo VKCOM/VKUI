@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Text } from '../Typography/Text/Text';

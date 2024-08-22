@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Button } from '../Button/Button';
@@ -11,7 +11,7 @@ import { Spinner } from '../Spinner/Spinner';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { ModalRoot } from './ModalRootAdaptive';
-import { ModalRootProps } from './types';
+import type { ModalRootProps } from './types';
 import { useModalRootContext } from './useModalRootContext';
 
 const story: Meta<ModalRootProps> = {

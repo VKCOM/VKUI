@@ -2,10 +2,10 @@ import * as React from 'react';
 import { IconButton, WithTooltipPure } from '@storybook/components';
 import { GridIcon } from '@storybook/icons';
 import { useArgs, useArgTypes, useParameter } from '@storybook/manager-api';
-import { ArgTypes } from '@storybook/types';
+import type { ArgTypes } from '@storybook/types';
 import { OptionsContainer } from './OptionsContainer';
 import { BooleanOpts } from './constants';
-import { CartesianConfigParameter, OptionNamesProp, OptionsProp } from './types';
+import type { CartesianConfigParameter, OptionNamesProp, OptionsProp } from './types';
 
 const getOptionsFromArgTypes = (argTypes: ArgTypes) =>
   Object.entries(argTypes).reduce<OptionsProp>((options, [argName, argValue]) => {

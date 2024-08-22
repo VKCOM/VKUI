@@ -3,7 +3,7 @@ import { Icon20Cancel, Icon24Dismiss } from '@vkontakte/icons';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './ModalCardBase.module.css';
 

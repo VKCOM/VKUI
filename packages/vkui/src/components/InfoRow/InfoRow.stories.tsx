@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
 import { Header } from '../Header/Header';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
-import { InfoRow, InfoRowProps } from './InfoRow';
+import { InfoRow, type InfoRowProps } from './InfoRow';
 
 const story: Meta<InfoRowProps> = {
   title: 'Blocks/InfoRow',

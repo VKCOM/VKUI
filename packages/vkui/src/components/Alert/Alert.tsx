@@ -5,14 +5,19 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { stopPropagation } from '../../lib/utils';
-import { AlignType, AnchorHTMLAttributesOnly, HasDataAttribute, HasRootRef } from '../../types';
+import type {
+  AlignType,
+  AnchorHTMLAttributesOnly,
+  HasDataAttribute,
+  HasRootRef,
+} from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
-import { ButtonProps } from '../Button/Button';
+import type { ButtonProps } from '../Button/Button';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { IconButton } from '../IconButton/IconButton';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
-import { AlertActionProps } from './AlertAction';
+import type { AlertActionProps } from './AlertAction';
 import { AlertActions } from './AlertActions';
 import { AlertHeader, AlertText } from './AlertTypography';
 import styles from './Alert.module.css';

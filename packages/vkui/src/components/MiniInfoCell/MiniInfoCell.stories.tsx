@@ -1,11 +1,11 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { UsersStack } from '../UsersStack/UsersStack';
-import { MiniInfoCell, MiniInfoCellProps } from './MiniInfoCell';
+import { MiniInfoCell, type MiniInfoCellProps } from './MiniInfoCell';
 
 const story: Meta<MiniInfoCellProps> = {
   title: 'Blocks/MiniInfoCell',

@@ -1,4 +1,4 @@
-import { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
+import { type CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 
 export type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
 

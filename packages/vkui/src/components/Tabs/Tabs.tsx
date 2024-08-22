@@ -4,7 +4,7 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { pressedKey } from '../../lib/accessibility';
 import { useDOM } from '../../lib/dom';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Tabs.module.css';
 

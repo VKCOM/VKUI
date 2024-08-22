@@ -1,13 +1,13 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getAvatarUrl, getRandomUser } from '../../testing/mock';
 import { Tooltip } from '../Tooltip/Tooltip';
 import {
   UsersStack,
-  UsersStackPhoto,
-  UsersStackProps,
-  UsersStackRenderWrapperProps,
+  type UsersStackPhoto,
+  type UsersStackProps,
+  type UsersStackRenderWrapperProps,
 } from './UsersStack';
 
 const story: Meta<UsersStackProps> = {

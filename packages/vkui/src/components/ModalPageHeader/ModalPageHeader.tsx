@@ -2,9 +2,9 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasRef, HasRootRef } from '../../types';
+import type { HasRef, HasRootRef } from '../../types';
 import { ModalPageContext } from '../ModalPage/ModalPageContext';
-import { PanelHeader, PanelHeaderProps } from '../PanelHeader/PanelHeader';
+import { PanelHeader, type PanelHeaderProps } from '../PanelHeader/PanelHeader';
 import { Separator } from '../Separator/Separator';
 import styles from './ModalPageHeader.module.css';
 

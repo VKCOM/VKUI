@@ -1,4 +1,4 @@
-import { HasComponent, HTMLAttributesWithRootRef } from '../../../types';
+import type { HasComponent, HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from '../FormItem.module.css';
 

@@ -1,4 +1,4 @@
-import { WarnOnceHandler } from './warnOnce';
+import type { WarnOnceHandler } from './warnOnce';
 
 export interface NavIdProps {
   /** Уникальный идентификатор навигационного элемента (вместо id) */

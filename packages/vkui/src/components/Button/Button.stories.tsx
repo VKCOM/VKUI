@@ -1,9 +1,9 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Counter } from '../Counter/Counter';
-import { Button, ButtonProps } from './Button';
+import { Button, type ButtonProps } from './Button';
 
 type StoryButtonProps = ButtonProps & { addBefore: boolean; addAfter: boolean };
 

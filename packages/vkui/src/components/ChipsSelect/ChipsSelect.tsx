@@ -15,7 +15,7 @@ import {
 import type { ChipOption, ChipsInputBaseProps } from '../ChipsInputBase/types';
 import {
   CustomSelectDropdown,
-  CustomSelectDropdownProps,
+  type CustomSelectDropdownProps,
 } from '../CustomSelectDropdown/CustomSelectDropdown';
 import {
   CustomSelectOption,

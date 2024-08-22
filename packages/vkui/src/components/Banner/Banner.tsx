@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';

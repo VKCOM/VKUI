@@ -3,7 +3,7 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useKeyboard } from '../../hooks/useKeyboard';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Spacing } from '../Spacing/Spacing';

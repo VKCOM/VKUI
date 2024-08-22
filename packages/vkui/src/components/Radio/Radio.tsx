@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
-import { type TappableProps } from '../Tappable/Tappable';
+import type { TappableProps } from '../Tappable/Tappable';
 import { RadioInput } from './RadioInput/RadioInput';
 import styles from './Radio.module.css';
 

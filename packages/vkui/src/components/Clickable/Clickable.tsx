@@ -1,16 +1,16 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import {
-  FocusVisibleModeProps,
+  type FocusVisibleModeProps,
   useFocusVisibleClassName,
 } from '../../hooks/useFocusVisibleClassName';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { clickByKeyboardHandler } from '../../lib/utils';
-import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
+import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 import {
   ClickableLockStateContext,
   DEFAULT_ACTIVE_EFFECT_DELAY,
-  StateProps,
+  type StateProps,
   useState,
 } from './useState';
 import styles from './Clickable.module.css';

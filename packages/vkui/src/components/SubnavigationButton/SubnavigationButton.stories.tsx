@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
-import { SubnavigationButton, SubnavigationButtonProps } from './SubnavigationButton';
+import { SubnavigationButton, type SubnavigationButtonProps } from './SubnavigationButton';
 
 const story: Meta<SubnavigationButtonProps> = {
   title: 'Blocks/SubnavigationButton',

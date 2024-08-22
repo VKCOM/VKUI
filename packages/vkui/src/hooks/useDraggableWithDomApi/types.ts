@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type { TouchEvent } from '../../components/Touch/Touch';
 
 export type Direction = 'up' | 'down';

@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
-import { NativeSelect, NativeSelectProps } from './NativeSelect';
+import { NativeSelect, type NativeSelectProps } from './NativeSelect';
 
 const story: Meta<NativeSelectProps> = {
   title: 'Forms/NativeSelect',

@@ -1,6 +1,6 @@
-import { GallerySlidesState } from '../types';
+import type { GallerySlidesState } from '../types';
 import { SLIDE_THRESHOLD } from './constants';
-import { LoopPoint, SlidesManagerState } from './types';
+import type { LoopPoint, SlidesManagerState } from './types';
 
 /*
  * Считает отступ слоя галереи

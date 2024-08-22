@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { HasAlign, HasRef, HasRootRef } from '../../types';
-import { FormField, FormFieldProps } from '../FormField/FormField';
+import type { HasAlign, HasRef, HasRootRef } from '../../types';
+import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
 import styles from './Input.module.css';
 

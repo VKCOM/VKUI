@@ -9,10 +9,10 @@ import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
 import { UIPanGestureRecognizer } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { Basic, BasicProps } from './subcomponents/Basic/Basic';
+import { Basic, type BasicProps } from './subcomponents/Basic/Basic';
 import type { ShiftData, SnackbarPlacement } from './types';
 import {
   getInitialShiftData,

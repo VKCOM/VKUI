@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeTypeValues } from '../../lib/adaptivity';
+import type { SizeTypeValues } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';

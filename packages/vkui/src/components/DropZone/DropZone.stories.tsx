@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon56CameraOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
 import { Placeholder } from '../Placeholder/Placeholder';
-import { DropZone, DropZoneProps } from './DropZone';
+import { DropZone, type DropZoneProps } from './DropZone';
 
 const story: Meta<DropZoneProps> = {
   title: 'Forms/DropZone',

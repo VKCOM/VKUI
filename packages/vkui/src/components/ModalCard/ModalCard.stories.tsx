@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon56MoneyTransferOutline, Icon56NotificationOutline } from '@vkontakte/icons';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -11,7 +11,7 @@ import { Image } from '../Image/Image';
 import { Spacing } from '../Spacing/Spacing';
 import { Textarea } from '../Textarea/Textarea';
 import { UsersStack } from '../UsersStack/UsersStack';
-import { ModalCard, ModalCardProps } from './ModalCard';
+import { ModalCard, type ModalCardProps } from './ModalCard';
 
 const story: Meta<ModalCardProps> = {
   title: 'Modals/ModalCard',

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { stopPropagation } from '../../lib/utils';
-import { ScrollProps } from './types';
+import type { ScrollProps } from './types';
 import { useDragAndDrop } from './useDragAndDrop';
 import { useHorizontalScrollController } from './useHorizontalScrollController';
 import styles from './CustomScrollView.module.css';

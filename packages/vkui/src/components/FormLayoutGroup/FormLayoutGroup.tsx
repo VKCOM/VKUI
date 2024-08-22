@@ -2,8 +2,8 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { HTMLAttributesWithRootRef } from '../../types';
-import { Removable, RemovableProps } from '../Removable/Removable';
+import type { HTMLAttributesWithRootRef } from '../../types';
+import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './FormLayoutGroup.module.css';
 

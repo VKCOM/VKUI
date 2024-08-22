@@ -1,6 +1,6 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardGrid.module.css';
 

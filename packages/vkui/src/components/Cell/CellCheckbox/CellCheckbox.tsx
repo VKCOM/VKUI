@@ -11,10 +11,10 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../../hooks/usePlatform';
-import { HasRef, HasRootRef } from '../../../types';
+import type { HasRef, HasRootRef } from '../../../types';
 import { AdaptiveIconRenderer } from '../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
-import { CellProps } from '../Cell';
+import type { CellProps } from '../Cell';
 import styles from './CellCheckbox.module.css';
 
 const CheckBoxOn = () => (

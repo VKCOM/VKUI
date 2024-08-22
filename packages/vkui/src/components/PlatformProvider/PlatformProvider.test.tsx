@@ -3,7 +3,7 @@
 import { render } from '@testing-library/react';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import {
-  ConfigProviderContextInterface,
+  type ConfigProviderContextInterface,
   useConfigProvider,
 } from '../ConfigProvider/ConfigProviderContext';
 import { PlatformProvider } from './PlatformProvider';

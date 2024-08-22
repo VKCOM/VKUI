@@ -11,7 +11,7 @@ import {
   getFallbackIconSizeByImageBaseSize,
   getOverlayIconSizeByImageBaseSize,
   ImageBase,
-  ImageBaseProps,
+  type ImageBaseProps,
 } from './ImageBase';
 import { imageBaseSizes } from './types';
 import {

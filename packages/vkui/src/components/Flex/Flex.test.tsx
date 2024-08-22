@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
-import { Flex, FlexProps } from './Flex';
+import { Flex, type FlexProps } from './Flex';
 import styles from './Flex.module.css';
 import gapStyles from '../../styles/gaps.module.css';
 

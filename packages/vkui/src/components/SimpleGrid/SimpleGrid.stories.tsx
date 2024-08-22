@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { ContentCard } from '../ContentCard/ContentCard';
-import { SimpleGrid, SimpleGridProps } from './SimpleGrid';
+import { SimpleGrid, type SimpleGridProps } from './SimpleGrid';
 
 const story: Meta<SimpleGridProps> = {
   title: 'Layout/SimpleGrid',

@@ -1,6 +1,6 @@
 import { usePrevious } from '../../hooks/usePrevious';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
-import { OnPlacementChange, Placement, PlacementWithAuto } from './types/common';
+import type { OnPlacementChange, Placement, PlacementWithAuto } from './types/common';
 
 export function usePlacementChangeCallback(
   initialPlacement: PlacementWithAuto,

@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { AppearanceProvider, AppearanceProviderProps } from './AppearanceProvider';
+import { AppearanceProvider, type AppearanceProviderProps } from './AppearanceProvider';
 
 const story: Meta<AppearanceProviderProps> = {
   title: 'Service/AppearanceProvider',

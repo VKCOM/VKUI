@@ -5,7 +5,7 @@ import { useDirection } from '../../hooks/useDirection';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
-import { HasRef, HTMLAttributesWithRootRef } from '../../types';
+import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';

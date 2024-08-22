@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import styles from './Link.module.css';
 
 export interface LinkProps extends TappableProps {

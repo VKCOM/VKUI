@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon12Add } from '@vkontakte/icons';
 import { Button } from '../../../components/Button/Button';
 import { baselineComponent, userEvent } from '../../../testing/utils';
-import { ImageBaseOverlay, ImageBaseOverlayProps } from './ImageBaseOverlay';
+import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay';
 import styles from './ImageBaseOverlay.module.css';
 
 const ImageBaseOverlayClickableTest = (props: Omit<ImageBaseOverlayProps, 'children'>) => (

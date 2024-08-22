@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
-import { TabsItem, TabsItemProps } from './TabsItem';
+import { TabsItem, type TabsItemProps } from './TabsItem';
 
 const story: Meta<TabsItemProps> = {
   title: 'Blocks/TabsItem',

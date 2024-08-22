@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import {
   ConfigProviderContext,
-  ConfigProviderContextInterface,
+  type ConfigProviderContextInterface,
   useConfigProvider,
 } from './ConfigProviderContext';
 

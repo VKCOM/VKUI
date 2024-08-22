@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Tappable, TappableProps } from './Tappable';
+import { Tappable, type TappableProps } from './Tappable';
 
 const story: Meta<TappableProps> = {
   title: 'Blocks/Tappable',

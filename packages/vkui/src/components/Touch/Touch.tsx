@@ -2,9 +2,15 @@ import * as React from 'react';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useDOM } from '../../lib/dom';
-import { coordX, coordY, getSupportedEvents, touchEnabled, VKUITouchEvent } from '../../lib/touch';
+import {
+  coordX,
+  coordY,
+  getSupportedEvents,
+  touchEnabled,
+  type VKUITouchEvent,
+} from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRootRef } from '../../types';
 
 export interface TouchProps
   extends React.AllHTMLAttributes<HTMLElement>,
