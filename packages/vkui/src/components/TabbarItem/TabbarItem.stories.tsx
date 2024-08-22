@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { getIconArgBySize, getIconComponent, IconName } from '../../storybook/Icons';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createFieldWithPresets } from '../../testing/presets';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { Tabbar } from '../Tabbar/Tabbar';
@@ -12,11 +12,13 @@ const story: Meta<TabbarItemProps> = {
   component: TabbarItem,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
-    children: getIconArgBySize(/^Icon28/),
-    indicator: {
-      options: ['None', 'Badge', 'Counter'],
-      mapping: {
-        None: null,
+    children: createFieldWithPresets({
+      iconSizes: ['28'],
+      requiredIcons: ['Icon28MessageOutline'],
+      sizeIconsCount: 15,
+    }),
+    indicator: createFieldWithPresets({
+      additionalPresets: {
         Badge: <Badge mode="prominent">Есть обновления</Badge>,
         Counter: (
           <Counter size="s" mode="prominent">
@@ -24,20 +26,18 @@ const story: Meta<TabbarItemProps> = {
           </Counter>
         ),
       },
-    },
+    }),
   },
   decorators: [withVKUILayout],
 };
 
 export default story;
 
-type Story = StoryObj<Omit<TabbarItemProps, 'children'> & { children?: IconName }>;
+type Story = StoryObj<TabbarItemProps>;
 
 const Playground: Story = {
-  render: ({ children, ...args }) => {
-    const Icon = getIconComponent(children);
-
-    return <TabbarItem {...args}>{Icon}</TabbarItem>;
+  render: ({ ...args }) => {
+    return <TabbarItem {...args} />;
   },
 };
 
