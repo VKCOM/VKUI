@@ -39,7 +39,6 @@ export const CustomSelectDropdown = ({
   scrollBoxRef,
   placement = 'bottom',
   fetching,
-  onPlacementChange: parentOnPlacementChange,
   offsetDistance = 0,
   autoWidth = false,
   forcePortal = true,
@@ -51,21 +50,11 @@ export const CustomSelectDropdown = ({
   overscrollBehavior,
   ...restProps
 }: CustomSelectDropdownProps): React.ReactNode => {
-  const onPlacementChange = React.useCallback(
-    (placement: Placement) => {
-      if (parentOnPlacementChange) {
-        parentOnPlacementChange(placement);
-      }
-    },
-    [parentOnPlacementChange],
-  );
-
   return (
     <Popper
       targetRef={targetRef}
       offsetByMainAxis={offsetDistance}
       sameWidth={!autoWidth}
-      onPlacementChange={onPlacementChange}
       placement={placement}
       className={classNames(
         styles['CustomSelectDropdown'],
