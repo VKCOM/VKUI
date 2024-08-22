@@ -21,3 +21,7 @@
 # eslint: add curly & eqeqeq rules
 # https://github.com/VKCOM/VKUI/pull/4450/commits/d097bd0981e57982c5aac2ed823b4f0f3397cfaf
 d097bd0981e57982c5aac2ed823b4f0f3397cfaf
+
+# chore(eslint): turn on @typescript-eslint/consistent-type-imports
+# https://github.com/VKCOM/VKUI/pull/7429/commits/c208be6cfd9de0161f1470519ab80a4ae2c04777
+c208be6cfd9de0161f1470519ab80a4ae2c04777
