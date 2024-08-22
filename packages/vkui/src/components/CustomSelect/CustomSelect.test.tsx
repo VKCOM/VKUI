@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { Placement, useFloating } from '../../lib/floating';
+import type { Placement, useFloating } from '../../lib/floating';
 import { baselineComponent, userEvent, waitForFloatingPosition } from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';

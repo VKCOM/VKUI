@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import { Placement, useFloating } from '../../lib/floating';
+import type { Placement, useFloating } from '../../lib/floating';
 import {
   baselineComponent,
   fakeTimers,
