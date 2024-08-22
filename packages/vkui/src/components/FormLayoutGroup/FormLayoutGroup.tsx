@@ -64,11 +64,7 @@ export const FormLayoutGroup = ({
             styles['FormLayoutGroup--mode-horizontal'],
             'vkuiInternalFormLayoutGroup--mode-horizontal',
           ),
-        mode === 'vertical' &&
-          classNames(
-            styles['FormLayoutGroup--mode-vertical'],
-            'vkuiInternalFormLayoutGroup--mode-vertical',
-          ),
+        mode === 'vertical' && 'vkuiInternalFormLayoutGroup--mode-vertical',
         isRemovable &&
           classNames(
             styles['FormLayoutGroup--removable'],
