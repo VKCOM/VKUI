@@ -135,6 +135,7 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-error) .FormField__border,
+:global(.vkuiInternalFormItem--status-error) .FormField--mode-default .FormField__border,
 .FormField--status-error .FormField__border,
 .FormField--mode-default.FormField--status-error .FormField__border {
   border-color: var(--vkui--color_stroke_negative);
@@ -149,6 +150,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-valid) .FormField__border,
+:global(.vkuiInternalFormItem--status-valid) .FormField--mode-default .FormField__border,
 .FormField--status-valid .FormField__border,
 .FormField--mode-default.FormField--status-valid .FormField__border {
   border-color: var(--vkui--color_stroke_positive);
