@@ -7,7 +7,10 @@ import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
 
-const getCustomSelectValue = () => screen.getByTestId('labelTextTestId').textContent;
+const checkCustomSelectLabelValue = (label: string) => {
+  expect(screen.getByTestId('labelTextTestId').textContent).toEqual(label);
+  expect(screen.getByRole<HTMLInputElement>('combobox').value).toEqual(label);
+};
 
 const CustomSelectControlled = ({
   options,
@@ -89,39 +92,49 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(getCustomSelectValue()).toEqual('');
+    checkCustomSelectLabelValue('');
 
     fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
 
-    expect(getCustomSelectValue()).toEqual('Josh');
+    checkCustomSelectLabelValue('Josh');
   });
 
   it('works correctly as controlled component', () => {
     const SelectController = () => {
-      const [value, setValue] = useState(0);
+      const [value, setValue] = useState('0');
       const options = [
-        { value: 0, label: 'Mike' },
-        { value: 1, label: 'Josh' },
+        { value: '0', label: 'Mike' },
+        { value: '1', label: 'Josh' },
       ];
       return (
-        <CustomSelect
-          labelTextTestId="labelTextTestId"
-          options={options}
-          value={value}
-          onChange={(e) => setValue(Number(e.target.value))}
-        />
+        <React.Fragment>
+          <CustomSelect
+            labelTextTestId="labelTextTestId"
+            options={options}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <button onClick={() => setValue('')}>Clear controlled value</button>
+        </React.Fragment>
       );
     };
     render(<SelectController />);
-    expect(getCustomSelectValue()).toEqual('Mike');
+
+    checkCustomSelectLabelValue('Mike');
+
     fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
-    expect(getCustomSelectValue()).toEqual('Josh');
+
+    checkCustomSelectLabelValue('Josh');
+
+    fireEvent.click(screen.getByRole('button', { name: /Clear controlled value/ }));
+
+    checkCustomSelectLabelValue('');
   });
 
   it('works correctly with pinned value', () => {
@@ -132,12 +145,14 @@ describe('CustomSelect', () => {
 
     render(<CustomSelect labelTextTestId="labelTextTestId" options={options} value={0} />);
 
-    expect(getCustomSelectValue()).toEqual('Mike');
+    checkCustomSelectLabelValue('Mike');
+
     fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
-    expect(getCustomSelectValue()).toEqual('Mike');
+
+    checkCustomSelectLabelValue('Mike');
   });
 
   it('correctly reacts on options change', () => {
@@ -152,7 +167,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(getCustomSelectValue()).toEqual('Josh');
+    checkCustomSelectLabelValue('Josh');
 
     rerender(
       <CustomSelect
@@ -165,7 +180,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(getCustomSelectValue()).toEqual('Josh');
+    checkCustomSelectLabelValue('Josh');
 
     rerender(
       <CustomSelect
@@ -178,7 +193,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(getCustomSelectValue()).toEqual('Felix');
+    checkCustomSelectLabelValue('Felix');
   });
 
   it('correctly converts from controlled to uncontrolled state', () => {
@@ -193,7 +208,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(getCustomSelectValue()).toEqual('Josh');
+    checkCustomSelectLabelValue('Josh');
 
     rerender(
       <CustomSelect
@@ -205,17 +220,17 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(getCustomSelectValue()).toEqual('Josh');
+    checkCustomSelectLabelValue('Josh');
 
     fireEvent.click(screen.getByTestId('labelTextTestId'));
     const unselectedOption = screen.getByRole('option', { selected: false, name: 'Mike' });
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
 
-    expect(getCustomSelectValue()).toEqual('Mike');
+    checkCustomSelectLabelValue('Mike');
   });
 
-  it('accept defaultValue', () => {
+  it('accepts defaultValue', () => {
     render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
@@ -227,7 +242,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(getCustomSelectValue()).toEqual('Josh');
+    checkCustomSelectLabelValue('Josh');
   });
 
   it('is searchable', async () => {
@@ -243,6 +258,8 @@ describe('CustomSelect', () => {
       />,
     );
 
+    checkCustomSelectLabelValue('');
+
     fireEvent.click(screen.getByTestId('labelTextTestId'));
     await waitFor(() => expect(screen.getByTestId('inputTestId')).toHaveFocus());
 
@@ -256,7 +273,8 @@ describe('CustomSelect', () => {
       key: 'Enter',
       code: 'Enter',
     });
-    expect(getCustomSelectValue()).toEqual('Mike');
+
+    checkCustomSelectLabelValue('Mike');
   });
 
   it('is custom searchable', () => {
@@ -277,6 +295,8 @@ describe('CustomSelect', () => {
       />,
     );
 
+    checkCustomSelectLabelValue('');
+
     fireEvent.click(screen.getByTestId('inputTestId'));
     fireEvent.change(screen.getByTestId('inputTestId'), {
       target: { value: 'usa' },
@@ -289,7 +309,8 @@ describe('CustomSelect', () => {
       key: 'Enter',
       code: 'Enter',
     });
-    expect(getCustomSelectValue()).toEqual('New York');
+
+    checkCustomSelectLabelValue('New York');
   });
 
   it('is searchable and keeps search results up to date during props.options updates', async () => {
@@ -330,6 +351,7 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
+        labelTextTestId="labelTextTestId"
         data-testid="inputTestId"
         value={1}
         options={[
@@ -338,6 +360,8 @@ describe('CustomSelect', () => {
         ]}
       />,
     );
+
+    checkCustomSelectLabelValue('Josh');
 
     fireEvent.click(screen.getByTestId('inputTestId'));
 
@@ -352,6 +376,7 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
+        labelTextTestId="labelTextTestId"
         data-testid="inputTestId"
         value={1}
         options={[
@@ -367,6 +392,7 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
+        labelTextTestId="labelTextTestId"
         data-testid="inputTestId"
         value={3}
         options={[
@@ -379,6 +405,7 @@ describe('CustomSelect', () => {
     );
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Joe');
+    checkCustomSelectLabelValue('Joe');
   });
 
   // см. https://github.com/VKCOM/VKUI/issues/3600
@@ -398,6 +425,8 @@ describe('CustomSelect', () => {
       />,
     );
 
+    checkCustomSelectLabelValue('Категория 3');
+
     fireEvent.click(screen.getByTestId('inputTestId'));
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
@@ -410,7 +439,7 @@ describe('CustomSelect', () => {
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
 
-    expect(getCustomSelectValue()).toEqual('Категория 2');
+    checkCustomSelectLabelValue('Категория 2');
   });
 
   it('fires onOpen and onClose correctly', async () => {
@@ -496,7 +525,7 @@ describe('CustomSelect', () => {
 
     await waitForFloatingPosition();
 
-    expect(getCustomSelectValue()).toEqual('Bob');
+    checkCustomSelectLabelValue('Bob');
 
     fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'Enter',
@@ -512,7 +541,7 @@ describe('CustomSelect', () => {
       code: 'Enter',
     });
 
-    expect(getCustomSelectValue()).toEqual('Josh');
+    checkCustomSelectLabelValue('Josh');
 
     rerender(
       <CustomSelect
@@ -540,7 +569,7 @@ describe('CustomSelect', () => {
       code: 'Enter',
     });
 
-    expect(getCustomSelectValue()).toEqual('Bob');
+    checkCustomSelectLabelValue('Bob');
   });
 
   // https://github.com/VKCOM/VKUI/issues/4066
@@ -577,6 +606,8 @@ describe('CustomSelect', () => {
       />,
     );
 
+    checkCustomSelectLabelValue('Josh');
+
     rerender(
       <CustomSelect
         allowClearButton
@@ -591,7 +622,7 @@ describe('CustomSelect', () => {
     );
 
     expect(onChange).toHaveBeenCalledTimes(0);
-    expect(getCustomSelectValue()).toEqual('');
+    checkCustomSelectLabelValue('');
   });
 
   it('clear value with default clear button', async () => {
@@ -613,10 +644,11 @@ describe('CustomSelect', () => {
     );
 
     expect(onChange).toHaveBeenCalledTimes(0);
-    expect(getCustomSelectValue()).toEqual('Mike');
+    checkCustomSelectLabelValue('Mike');
+
     expect(screen.getByTestId('inputTestId')).not.toHaveFocus();
     fireEvent.click(screen.getByRole('button', { hidden: true }));
-    expect(getCustomSelectValue()).toEqual('');
+    checkCustomSelectLabelValue('');
     // focus goes to select input
     await waitFor(() => expect(screen.getByTestId('inputTestId')).toHaveFocus());
 
@@ -639,10 +671,10 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(getCustomSelectValue()).toEqual('Mike');
+    checkCustomSelectLabelValue('Mike');
     fireEvent.click(screen.getByTestId('clearButtonTestId'));
-    expect(getCustomSelectValue()).toEqual('');
 
+    checkCustomSelectLabelValue('');
     expect(onChange).toHaveBeenCalledTimes(2);
   });
 
@@ -686,7 +718,7 @@ describe('CustomSelect', () => {
     );
 
     expect(onChange).toHaveBeenCalledTimes(0);
-    expect(getCustomSelectValue()).toEqual('Mike');
+    checkCustomSelectLabelValue('Mike');
 
     fireEvent.click(screen.getByTestId('labelTextTestId'));
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
@@ -725,7 +757,7 @@ describe('CustomSelect', () => {
     );
 
     expect(onChange).toHaveBeenCalledTimes(0);
-    expect(getCustomSelectValue()).toEqual('Mike');
+    checkCustomSelectLabelValue('Mike');
 
     // clear input
     fireEvent.click(screen.getByRole('button', { hidden: true }));
@@ -795,7 +827,7 @@ describe('CustomSelect', () => {
     );
 
     expect(onChange).toHaveBeenCalledTimes(0);
-    expect(getCustomSelectValue()).toEqual('Mike');
+    checkCustomSelectLabelValue('Mike');
 
     // первый клик по не выбранной опции без изменения value
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -850,15 +882,15 @@ describe('CustomSelect', () => {
         labelTextTestId="labelTextTestId"
         initialValue="0"
         options={[
-          { value: 0, label: 'Mike' },
-          { value: 1, label: 'Josh' },
+          { value: '0', label: 'Mike' },
+          { value: '1', label: 'Josh' },
         ]}
         onChangeStub={onChangeStub}
       />,
     );
 
     expect(onChangeStub).toHaveBeenCalledTimes(0);
-    expect(getCustomSelectValue()).toEqual('Mike');
+    checkCustomSelectLabelValue('Mike');
 
     // первый клик по не выбранной опции с изменением value
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -927,7 +959,7 @@ describe('CustomSelect', () => {
     );
 
     expect(onChange).toHaveBeenCalledTimes(0);
-    expect(getCustomSelectValue()).toEqual('');
+    checkCustomSelectLabelValue('');
 
     // первый клик по не выбранной опции без изменения value
     fireEvent.click(screen.getByTestId('inputTestId'));
@@ -1073,34 +1105,22 @@ describe('CustomSelect', () => {
     );
   });
 
-  it('shows input placeholder for screen readers only if option is not selected', () => {
-    // Это позволяет скринридеру зачитывать placeholder, если опция не выбрана.
-    const { rerender } = render(
+  it('has placeholder', () => {
+    render(
       <CustomSelect
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
+        labelTextTestId="labelTextTestId"
         placeholder="Не выбрано"
-        allowClearButton
       />,
     );
 
+    // input placeholder
     expect(screen.queryByPlaceholderText('Не выбрано')).toBeTruthy();
-
-    rerender(
-      <CustomSelect
-        options={[
-          { value: 0, label: 'Mike' },
-          { value: 1, label: 'Josh' },
-        ]}
-        value={0}
-        placeholder="Не выбрано"
-        allowClearButton
-      />,
-    );
-
-    expect(screen.queryByPlaceholderText('Не выбрано')).toBeFalsy();
+    // элемент поверх скрытого инпута
+    expect(screen.getByTestId('labelTextTestId').textContent).toEqual('Не выбрано');
   });
 
   it('native select is reachable via nativeSelectTestId', () => {

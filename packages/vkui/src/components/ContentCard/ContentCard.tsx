@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getFetchPriorityProp } from '../../lib/utils';
-import { HasRef, HasRootRef } from '../../types';
+import { HasComponent, HasRef, HasRootRef } from '../../types';
 import { Card, CardProps } from '../Card/Card';
 import { Tappable, TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
@@ -12,6 +12,7 @@ import styles from './ContentCard.module.css';
 
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
+    HasComponent,
     Omit<TappableProps, 'getRootRef' | 'crossOrigin'>,
     Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
     HasRef<HTMLImageElement> {
@@ -73,12 +74,15 @@ export const ContentCard = ({
   fetchPriority,
   hasHover = false,
   hasActive = false,
+  // TODO [>=7]: поменять тег на li https://github.com/VKCOM/VKUI/issues/7336
+  Component = 'div',
   ...restProps
 }: ContentCardProps): React.ReactNode => {
   return (
     <Card
       mode={mode}
       getRootRef={getRootRef}
+      Component={Component}
       style={style}
       className={classNames(restProps.disabled && styles['ContentCard--disabled'], className)}
     >

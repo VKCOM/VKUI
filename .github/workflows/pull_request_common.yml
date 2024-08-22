@@ -29,6 +29,9 @@ jobs:
             })
   check-dependabot-pr:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     if: ${{ github.event.action == 'opened' && github.actor == 'dependabot[bot]' }}
     steps:
       - name: Checkout code
@@ -50,7 +53,7 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@v2
         with:
-          github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check if PR updates relevant dependencies
         id: check_deps
@@ -77,7 +80,7 @@ jobs:
         if: ${{ !cancelled() && steps.check_deps.outputs.update_needed == 'true' }}
         uses: VKCOM/gh-actions/VKUI/add-next-minor-milestone@main
         with:
-          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   lint_codes_format:
     runs-on: ubuntu-latest

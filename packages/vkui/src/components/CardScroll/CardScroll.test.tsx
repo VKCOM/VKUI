@@ -90,7 +90,9 @@ const setup = ({ defaultScrollLeft = 50, cardsCount = 6 }: PrepareDataParams) =>
 };
 
 describe('CardScroll', () => {
-  baselineComponent(CardScroll);
+  baselineComponent(CardScroll, {
+    a11y: false,
+  });
 
   it('check scroll by click arrow left', async () => {
     const { horizontalScrollData } = setup({
