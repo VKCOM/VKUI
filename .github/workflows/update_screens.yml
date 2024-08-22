@@ -107,6 +107,8 @@ jobs:
 
   collect_all_chnages_and_push:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     needs: [update_screens]
     name: 'Collect updated screenshots and push changes'
     steps:
