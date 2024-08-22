@@ -56,3 +56,23 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           directory: packages/vkui/
+
+  update-release-notes:
+    if: ${{ github.event.pull_request.merged == true
+      && github.event.pull_request.base.ref == 'master'}}
+    runs-on: ubuntu-latest
+    name: Update release notes
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.pull_request.base.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update release notes script
+        uses: VKCOM/gh-actions/VKUI/auto-update-release-notes@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull_request_number: ${{ github.event.pull_request.number }}
