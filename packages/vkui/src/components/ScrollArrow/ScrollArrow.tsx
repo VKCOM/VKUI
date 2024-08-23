@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon16Chevron, Icon24Chevron } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../types';
+import type { HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './ScrollArrow.module.css';

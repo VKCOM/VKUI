@@ -4,7 +4,7 @@ import { type SizeTypeValues } from '../../../lib/adaptivity';
 import { Tappable, type TappableProps } from '../../Tappable/Tappable';
 import { Text } from '../../Typography/Text/Text';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
-import { PaginationProps } from '../Pagination';
+import type { PaginationProps } from '../Pagination';
 import { getPageLabelDefault } from '../utils';
 import { getPaginationPageClassNames } from './usePaginationPageClasses';
 import styles from './PaginationPage.module.css';
@@ -21,7 +21,7 @@ export interface PaginationPageButtonProps extends PaginationPageButtonOpts {
   renderPageButton?: (props: CustomPaginationPageButtonProps) => React.ReactNode;
 }
 
-export const getTappablePropsFromPaginationPage = (
+const getTappablePropsFromPaginationPage = (
   opts: PaginationPageButtonOpts,
 ): TappableProps & { 'data-page': number } => {
   const {

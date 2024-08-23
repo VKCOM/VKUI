@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { ConfigProvider } from '../components/ConfigProvider/ConfigProvider';
-import { HasChildren } from '../types';
+import type { HasChildren } from '../types';
 import { usePlatform } from './usePlatform';
 
 describe(usePlatform, () => {

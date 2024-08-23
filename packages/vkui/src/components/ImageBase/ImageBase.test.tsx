@@ -1,10 +1,25 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
+import { Icon12Add, Icon16Clear, Icon20Add, Icon96GoodsCollection } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
 } from '../../testing/icons';
 import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
-import { ImageBase, ImageBaseProps } from './ImageBase';
+import {
+  getBadgeIconSizeByImageBaseSize,
+  getFallbackIconSizeByImageBaseSize,
+  getOverlayIconSizeByImageBaseSize,
+  ImageBase,
+  type ImageBaseProps,
+} from './ImageBase';
+import { imageBaseSizes } from './types';
+import {
+  validateBadgeIcon,
+  validateFallbackIcon,
+  validateOverlayIcon,
+  validateSize,
+} from './validators';
 import styles from './ImageBase.module.css';
 
 const TEST_LOCATORS = {
@@ -20,6 +35,17 @@ const ImageBaseTest = (props: ImageBaseProps) => (
 const getImageBaseRootEl = () => screen.getByTestId(TEST_LOCATORS.ROOT);
 
 const getImageBaseImgEl = (elParent = getImageBaseRootEl()) => within(elParent).getByRole('img');
+
+let logStub: jest.SpyInstance | null = null;
+beforeEach(() => {
+  process.env.NODE_ENV = 'development';
+  logStub = jest.spyOn(console, 'log').mockImplementation(noop);
+});
+
+afterEach(() => {
+  process.env.NODE_ENV = 'test';
+  logStub?.mockRestore();
+});
 
 describe(ImageBase, () => {
   baselineComponent(ImageBase);
@@ -46,6 +72,9 @@ describe(ImageBase, () => {
 
     rerender(<ImageBaseTest src="#" objectFit="scale-down" />);
     expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--objectFit-scaleDown']);
+
+    rerender(<ImageBaseTest src="#" objectFit="fill" />);
+    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img']);
   });
 
   it('should show fallback icon if `src` is not passed', () => {
@@ -156,6 +185,179 @@ describe(ImageBase, () => {
     // make sure we ignore img.onLoad that is fired for some reason after we manually handled the complete state.
     expect(onLoadMock).toHaveBeenCalledTimes(1);
   });
+
+  it('should have className with keepRatio', () => {
+    render(<ImageBaseTest src="#" keepAspectRatio={true} />);
+
+    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--keepRatio']);
+  });
+
+  it('check set widthSize and heightSize in string format', () => {
+    render(<ImageBaseTest src="#" widthSize="100px" heightSize="200px" />);
+
+    expect(getImageBaseRootEl()).toHaveStyle('width: 100px; height: 200px');
+  });
+
+  it('check set widthSize and heightSize in number format', () => {
+    render(<ImageBaseTest src="#" widthSize={100} heightSize={200} />);
+
+    expect(getImageBaseRootEl()).toHaveStyle('width: 100px; height: 200px');
+  });
+
+  it('check set widthSize and heightSize in incorrect format', () => {
+    render(<ImageBaseTest src="#" widthSize="100" heightSize="200" />);
+
+    expect(getImageBaseRootEl()).not.toHaveStyle('width: 100px; height: 200px');
+  });
+
+  it('should have specific className with withTransparentBackground prop', () => {
+    render(<ImageBaseTest src="#" withTransparentBackground={true} />);
+
+    expect(getImageBaseRootEl()).toHaveClass(styles['ImageBase--transparent-background']);
+  });
+
+  it('check dev error when use incorrect size of icon', () => {
+    render(<ImageBaseTest fallbackIcon={<Icon20Add />} size={28} />);
+    expect(logStub).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe(getOverlayIconSizeByImageBaseSize, () => {
+  it.each([
+    [20, 12],
+    [24, 16],
+    [28, 18],
+    [40, 20],
+    [48, 24],
+    [88, 28],
+    [89, getOverlayIconSizeByImageBaseSize.MAX_SIZE],
+  ])('should return correct icon size by image size %s', (imageSize, expectedSize) => {
+    expect(getOverlayIconSizeByImageBaseSize(imageSize)).toBe(expectedSize);
+  });
+});
+
+describe(getFallbackIconSizeByImageBaseSize, () => {
+  it.each([
+    [20, 12],
+    [28, 16],
+    [32, 20],
+    [44, 24],
+    [64, 28],
+    [65, getFallbackIconSizeByImageBaseSize.MAX_SIZE],
+  ])('should return correct icon size by image size %s', (imageSize, expectedSize) => {
+    expect(getFallbackIconSizeByImageBaseSize(imageSize)).toBe(expectedSize);
+  });
+});
+
+describe(getBadgeIconSizeByImageBaseSize, () => {
+  it.each([
+    [36, 12],
+    [48, 16],
+    [64, 20],
+    [65, getBadgeIconSizeByImageBaseSize.MAX_SIZE],
+  ])('should return correct icon size by image size %s', (imageSize, expectedSize) => {
+    expect(getBadgeIconSizeByImageBaseSize(imageSize)).toBe(expectedSize);
+  });
+});
+
+const MockedIcon = ({ width }: { width?: number }) => {
+  return <div style={{ width }} />;
+};
+
+describe(validateFallbackIcon, () => {
+  it.each([
+    {
+      imageSize: 28,
+      icon: <Icon16Clear />,
+      expectError: false,
+    },
+    {
+      imageSize: 28,
+      icon: <Icon16Clear width={20} />,
+      expectError: true,
+    },
+    {
+      imageSize: 28,
+      icon: <MockedIcon width={16} />,
+      expectError: false,
+    },
+    {
+      imageSize: 28,
+      icon: <MockedIcon />,
+      expectError: false,
+    },
+    {
+      imageSize: 67,
+      icon: <Icon96GoodsCollection />,
+      expectError: false,
+    },
+  ])(
+    'should error $expectError with imageSize $imageSize and $icon',
+    ({ imageSize, icon, expectError }) => {
+      validateFallbackIcon(imageSize, { name: 'fallbackIcon', value: icon });
+      expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
+    },
+  );
+});
+
+describe(validateSize, () => {
+  const fixtures: Array<[number, boolean]> = imageBaseSizes.map((size) => [size, false]);
+  it.each<[number, boolean]>([
+    ...fixtures,
+    [Math.max(...imageBaseSizes) + 1, false],
+    [Math.min(...imageBaseSizes) - 1, true],
+    [21, true],
+  ])('should log error with size %s', (size, expectError) => {
+    validateSize(size);
+    expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
+  });
+});
+
+describe(validateBadgeIcon, () => {
+  it.each([
+    {
+      imageSize: 20,
+      icon: <Icon16Clear />,
+      expectError: true,
+    },
+    {
+      imageSize: 36,
+      icon: <Icon12Add />,
+      expectError: false,
+    },
+    {
+      imageSize: 37,
+      icon: <Icon12Add />,
+      expectError: true,
+    },
+  ])(
+    `should expect error $expectError with imageSize $imageSize`,
+    ({ imageSize, icon, expectError }) => {
+      validateBadgeIcon(imageSize, { name: 'badgeIcon', value: icon });
+      expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
+    },
+  );
+});
+
+describe(validateOverlayIcon, () => {
+  it.each([
+    {
+      imageSize: 20,
+      icon: <Icon12Add />,
+      expectError: false,
+    },
+    {
+      imageSize: 21,
+      icon: <Icon12Add />,
+      expectError: true,
+    },
+  ])(
+    `should expect error $expectError with imageSize $imageSize`,
+    ({ imageSize, icon, expectError }) => {
+      validateOverlayIcon(imageSize, { name: 'badgeIcon', value: icon });
+      expect(logStub).toHaveBeenCalledTimes(expectError ? 1 : 0);
+    },
+  );
 });
 
 describe(ImageBase.Badge, () => {

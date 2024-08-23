@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeTypeValues } from '../../lib/adaptivity';
-import { NavIdProps } from '../../lib/getNavId';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { SizeTypeValues } from '../../lib/adaptivity';
+import type { NavIdProps } from '../../lib/getNavId';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 import { NavPanelIdContext } from '../NavIdContext/NavIdContext';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';

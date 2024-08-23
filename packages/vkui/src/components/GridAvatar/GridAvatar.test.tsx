@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { baselineComponent } from '../../testing/utils';
-import { GridAvatar, GridAvatarProps, MAX_GRID_LENGTH } from './GridAvatar';
+import { GridAvatar, type GridAvatarProps, MAX_GRID_LENGTH } from './GridAvatar';
 import styles from './GridAvatar.module.css';
 import gridAvatarBadgeStyles from './GridAvatarBadge/GridAvatarBadge.module.css';
 
@@ -25,8 +26,15 @@ describe(GridAvatar, () => {
   baselineComponent(GridAvatar);
 
   it(`should not show more than ${MAX_GRID_LENGTH} items in grid`, () => {
+    process.env.NODE_ENV = 'development';
+    const error = jest.spyOn(console, 'error').mockImplementation(noop);
     render(<GridAvatarTest src={['#01', '#02', '#03', '#04', '#05']} />);
+    expect(error).toHaveBeenCalledWith(
+      `%c[VKUI/GridAvatar] Длина массива src (5) больше максимальной (4)`,
+      undefined,
+    );
     expect(getGridAvatarItemEls().length).toBe(MAX_GRID_LENGTH);
+    process.env.NODE_ENV = 'test';
   });
 });
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type { MediaQueries } from '../../lib/adaptivity';
 import { rubberbandIfOutOfBounds } from '../../lib/animation';
 import type { ShiftData, SnackbarPlacement } from './types';
@@ -30,7 +30,8 @@ export function getInitialShiftData(
 ): ShiftData {
   return {
     shifted: false,
-    isDesktop: mediaQueries.smallTabletPlus.matches, // eslint-disable-line no-restricted-properties
+    direction: null,
+    isDesktop: mediaQueries.smallTabletPlus.matches, // eslint-disable-line no-restricted-properties,
     x: 0,
     y: 0,
     width,
@@ -55,7 +56,11 @@ export function getMovedShiftData(
       shiftData.y = rubberbandIfOutOfBounds(nextShift.y, 0, shiftData.height);
     }
   } else if (placement.startsWith('bottom')) {
-    shiftData.x = rubberbandIfOutOfBounds(nextShift.x, -shiftData.width, 0);
+    shiftData.x = nextShift.x;
+
+    const movingToLeft = nextShift.x < 0 ? -1 : null;
+    const movingToRight = nextShift.x > 0 ? 1 : null;
+    shiftData.direction = movingToLeft || movingToRight;
   }
 
   if (placement.startsWith('top')) {
@@ -100,9 +105,12 @@ export function shouldBeClosedByShiftData(
         relativeClientRect.y > 0 ? velocity.y > MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE : false;
     }
   } else if (placement.startsWith('bottom')) {
-    shouldBeClosedThreshold.x = relativeClientRect.x < -relativeClientRect.width / 2;
+    shouldBeClosedThreshold.x =
+      relativeClientRect.x < -relativeClientRect.width / 2 ||
+      relativeClientRect.x > relativeClientRect.width / 2;
     shouldBeClosedByVelocity.x =
-      relativeClientRect.x < 0 ? velocity.x < -MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE : false;
+      (relativeClientRect.x < 0 && velocity.x < -MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE) ||
+      (relativeClientRect.x > 0 && velocity.x > MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE);
   }
 
   if (placement.startsWith('top')) {

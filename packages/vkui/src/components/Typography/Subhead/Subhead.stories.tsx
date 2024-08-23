@@ -1,7 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
-import { Subhead, SubheadProps } from './Subhead';
+import { Subhead, type SubheadProps } from './Subhead';
 
 const story: Meta<SubheadProps> = {
   title: 'Typography/Subhead',

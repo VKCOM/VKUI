@@ -1,16 +1,20 @@
-import { act, ComponentProps, useState } from 'react';
+import { act, type ComponentProps, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { classNames, noop } from '@vkontakte/vkjs';
+import { Platform, type PlatformType } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Group } from '../Group/Group';
 import { TabsItem } from '../TabsItem/TabsItem';
-import { Tabs } from './Tabs';
+import { Tabs, type TabsProps } from './Tabs';
+import styles from './Tabs.module.css';
 
-function TestTabs(props: { disabledKeys?: string[] }) {
+function TestTabs(props: { disabledKeys?: string[]; role?: string }) {
   const [currentTab, setCurrentTab] = useState('first');
 
   return (
     <div>
-      <Tabs>
+      <Tabs role={props.role}>
         <TabsItem
           id="tab-first"
           data-testid="first"
@@ -99,6 +103,44 @@ function pressKey(key: string) {
 describe(Tabs, () => {
   baselineComponent(Tabs);
 
+  describe('classNames checks', () => {
+    it.each<{ props: Partial<TabsProps>; platform: PlatformType; className: string }>([
+      {
+        props: {
+          mode: 'accent',
+        },
+        platform: Platform.ANDROID,
+        className: classNames(styles['Tabs--withGaps'], 'vkuiInternalTabs--withGaps'),
+      },
+      {
+        props: {
+          mode: 'secondary',
+        },
+        platform: Platform.ANDROID,
+        className: classNames(styles['Tabs--withGaps'], 'vkuiInternalTabs--withGaps'),
+      },
+      {
+        props: {
+          mode: 'default',
+        },
+        platform: Platform.ANDROID,
+        className: styles['Tabs--mode-default'],
+      },
+      {
+        props: {},
+        platform: Platform.VKCOM,
+        className: 'vkuiInternalTabs--vkcom',
+      },
+    ])('should have className $className', ({ props, platform, className }) => {
+      render(
+        <ConfigProvider platform={platform}>
+          <Tabs {...props}></Tabs>
+        </ConfigProvider>,
+      );
+      expect(screen.getByRole('tablist')).toHaveClass(className);
+    });
+  });
+
   describe('Mouse handlers', () => {
     it('select element on click', () => {
       renderTestTabs();
@@ -185,6 +227,53 @@ describe(Tabs, () => {
       pressKey('ArrowDown');
       expect(isTabSelected(screen.getByTestId('second'))).toBeTruthy();
       expect(document.activeElement).toEqual(screen.getByTestId('content-second'));
+    });
+    it('should not change focused tab when role !== tabslist', () => {
+      renderTestTabs({
+        role: 'combobox',
+      });
+      act(() => screen.getByTestId('second').focus());
+      pressKey('Enter');
+      pressKey('ArrowDown');
+      expect(isTabSelected(screen.getByTestId('first'))).toBeTruthy();
+    });
+    it('should not changed focused tab by ArrowDown without aria-controls', () => {
+      render(
+        <Tabs>
+          <TabsItem id="invalid-tab" data-testid="invalid" selected={true} onClick={noop}>
+            Invalid
+          </TabsItem>
+        </Tabs>,
+      );
+      act(() => {
+        screen.getByTestId('invalid').focus();
+        screen.getByTestId('invalid').click();
+      });
+      pressKey('Enter');
+      pressKey('ArrowDown');
+      expect(isTabSelected(screen.getByTestId('invalid'))).toBeTruthy();
+    });
+    it('should not changed focused tab by ArrowDown without content', () => {
+      render(
+        <Tabs>
+          <TabsItem
+            id="invalid-tab"
+            data-testid="invalid"
+            selected={true}
+            onClick={noop}
+            aria-controls="invalid-content"
+          >
+            Invalid
+          </TabsItem>
+        </Tabs>,
+      );
+      act(() => {
+        screen.getByTestId('invalid').focus();
+        screen.getByTestId('invalid').click();
+      });
+      pressKey('Enter');
+      pressKey('ArrowDown');
+      expect(isTabSelected(screen.getByTestId('invalid'))).toBeTruthy();
     });
   });
 });

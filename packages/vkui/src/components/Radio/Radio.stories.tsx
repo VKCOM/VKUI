@@ -1,11 +1,15 @@
-import { Meta, StoryObj } from '@storybook/react';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Radio, RadioProps } from './Radio';
+import type { Meta, StoryObj } from '@storybook/react';
+import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
+import { Radio, type RadioProps } from './Radio';
 
 const story: Meta<RadioProps> = {
   title: 'Forms/Radio',
   component: Radio,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  argTypes: {
+    titleAfter: StringArg,
+    description: StringArg,
+  },
 };
 
 export default story;

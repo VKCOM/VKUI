@@ -1,17 +1,24 @@
-import { Meta, StoryObj } from '@storybook/react';
-import { getIconArgBySize, getIconComponent, IconArgType, IconName } from '../../storybook/Icons';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { ActionSheetItem, ActionSheetItemProps } from './ActionSheetItem';
-
-const CheckIconArg = getIconArgBySize(/^Icon2[04]Check/);
+import { createFieldWithPresets } from '../../testing/presets';
+import { ActionSheetItem, type ActionSheetItemProps } from './ActionSheetItem';
 
 const story: Meta<ActionSheetItemProps> = {
   title: 'Popouts/ActionSheetItem',
   component: ActionSheetItem,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
-    before: IconArgType,
-    iconChecked: CheckIconArg,
+    before: createFieldWithPresets({
+      iconSizes: ['16', '20', '24', '28'],
+      requiredIcons: ['Icon28EditOutline'],
+    }),
+    iconChecked: createFieldWithPresets({
+      requiredIcons: ['Icon20CheckCircleOn', 'Icon24CheckCircleOn'],
+    }),
+    after: createFieldWithPresets({
+      iconSizes: ['16', '20', '24', '28'],
+      requiredIcons: ['Icon28EditOutline'],
+    }),
     meta: StringArg,
     subtitle: StringArg,
   },
@@ -19,25 +26,11 @@ const story: Meta<ActionSheetItemProps> = {
 
 export default story;
 
-type Story = StoryObj<
-  Omit<ActionSheetItemProps, 'before' | 'iconChecked'> & {
-    before?: IconName;
-    iconChecked?: IconName;
-  }
->;
+type Story = StoryObj<ActionSheetItemProps>;
 
 export const Playground: Story = {
-  render: function Render({ before, iconChecked, ...args }) {
-    const Icon = getIconComponent(before);
-    const CheckIcon = getIconComponent(iconChecked);
-    return (
-      <ActionSheetItem
-        style={{ border: '1px dashed red' }}
-        before={Icon}
-        iconChecked={CheckIcon}
-        {...args}
-      />
-    );
+  render: function Render({ ...args }) {
+    return <ActionSheetItem style={{ border: '1px dashed red' }} {...args} />;
   },
   args: {
     children: 'Сохранить в закладках',

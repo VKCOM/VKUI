@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import { WriteBar, WriteBarProps } from './WriteBar';
+import { WriteBar, type WriteBarProps } from './WriteBar';
 
 const getInput = () => screen.getByRole('textbox');
 

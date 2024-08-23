@@ -15,7 +15,7 @@ import {
 import type { ChipOption, ChipsInputBaseProps } from '../ChipsInputBase/types';
 import {
   CustomSelectDropdown,
-  CustomSelectDropdownProps,
+  type CustomSelectDropdownProps,
 } from '../CustomSelectDropdown/CustomSelectDropdown';
 import {
   CustomSelectOption,
@@ -113,6 +113,15 @@ export interface ChipsSelectProps<O extends ChipOption>
 
   renderOption?: (props: CustomSelectOptionProps, option: O) => React.ReactNode;
   /**
+   * Рендер-проп для кастомного рендера содержимого дропдауна.
+   * В `defaultDropdownContent` содержится список опций.
+   */
+  renderDropdown?: ({
+    defaultDropdownContent,
+  }: {
+    defaultDropdownContent: React.ReactNode;
+  }) => React.ReactNode;
+  /**
    * Событие срабатывающее перед onChange
    */
   onChangeStart?: (event: React.MouseEvent | React.KeyboardEvent, option: O) => void;
@@ -121,6 +130,11 @@ export interface ChipsSelectProps<O extends ChipOption>
    * Отступ от выпадающего списка
    */
   dropdownOffsetDistance?: number;
+
+  /**
+   * Если `true`, то справа будет отображаться кнопка для очистки значения
+   */
+  allowClearButton?: boolean;
 }
 
 /**
@@ -151,6 +165,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   onClose,
   onOpen,
   overscrollBehavior,
+  renderDropdown,
 
   // ChipsInputProps
   getRef,
@@ -171,6 +186,8 @@ export const ChipsSelect = <Option extends ChipOption>({
   onBlur: onBlurProp,
   onKeyDown: onKeyDownProp,
   dropdownOffsetDistance = 0,
+  allowClearButton,
+  clearButtonTestId,
   ...restProps
 }: ChipsSelectProps<Option>): React.ReactNode => {
   const {
@@ -180,6 +197,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     addOptionFromInput,
     addOption,
     removeOption,
+    clearOptions,
     // input
     inputRef: inputRefHook,
     inputValue,
@@ -283,14 +301,6 @@ export const ChipsSelect = <Option extends ChipOption>({
   };
 
   const focusOptionByIndex = (index: number, oldIndex: number | null) => {
-    const length = options.length;
-
-    if (index < 0) {
-      index = length - 1;
-    } else if (index >= length) {
-      index = 0;
-    }
-
     if (index === oldIndex) {
       /* istanbul ignore next: нет представления как воспроизвести */
       return;
@@ -416,6 +426,99 @@ export const ChipsSelect = <Option extends ChipOption>({
     opened ? dropdownScrollBoxRef : null,
   );
 
+  const dropdownContent = React.useMemo(() => {
+    const defaultDropdownContent = options.map((option, index) => {
+      const dropdownItemId = `${dropdownId}-${index}`;
+
+      if (isEmptyOptionPreset(option)) {
+        return (
+          <Footnote key="empty-text" className={styles['ChipsSelect__empty']}>
+            {option.placeholder}
+          </Footnote>
+        );
+      }
+      if (isCreateNewOptionPreset(option)) {
+        return (
+          <CustomSelectOption
+            key="create-new-option"
+            id={dropdownItemId}
+            hovered={focusedOptionIndex === index}
+            onMouseDown={() => addOptionFromInput(inputValue)}
+            onMouseEnter={() => setFocusedOptionIndex(index)}
+          >
+            {option.actionText}
+          </CustomSelectOption>
+        );
+      }
+      return (
+        <React.Fragment key={`${typeof option.value}-${option.value}`}>
+          {renderOption(
+            {
+              id: dropdownItemId,
+              disabled: option.disabled,
+              hovered: focusedOption
+                ? getOptionValue(option) === getOptionValue(focusedOption)
+                : false,
+              children: option.label,
+              selected: !!value.find(
+                (selectedOption: Option) =>
+                  getOptionValue(selectedOption) === getOptionValue(option),
+              ),
+              getRootRef(node) {
+                if (node) {
+                  chipsSelectOptions[index] = node;
+                }
+              },
+              onMouseDown(event: React.MouseEvent<HTMLDivElement>) {
+                if (option.disabled) {
+                  return;
+                }
+                if (onChangeStart) {
+                  onChangeStart(event, option);
+                }
+
+                if (!event.defaultPrevented) {
+                  closeAfterSelect && setOpened(false);
+                  addOption(option);
+                  clearInput();
+                }
+              },
+              onMouseEnter() {
+                setFocusedOptionIndex(index);
+              },
+            },
+            option,
+          )}
+        </React.Fragment>
+      );
+    });
+
+    if (renderDropdown) {
+      return renderDropdown({
+        defaultDropdownContent,
+      });
+    }
+    return defaultDropdownContent;
+  }, [
+    addOption,
+    addOptionFromInput,
+    chipsSelectOptions,
+    clearInput,
+    closeAfterSelect,
+    dropdownId,
+    focusedOption,
+    focusedOptionIndex,
+    getOptionValue,
+    inputValue,
+    onChangeStart,
+    options,
+    renderDropdown,
+    renderOption,
+    setFocusedOptionIndex,
+    setOpened,
+    value,
+  ]);
+
   const openedClassNames = React.useMemo(
     () =>
       (opened &&
@@ -427,23 +530,35 @@ export const ChipsSelect = <Option extends ChipOption>({
     [dropdownOffsetDistance, opened, dropdownVerticalPlacement],
   );
 
+  const clearButtonShown = allowClearButton && (!!value.length || !!inputValue.length);
+
   return (
     <>
       <ChipsInputBase
         {...restProps}
         disabled={disabled}
         readOnly={readOnly}
+        clearButtonShown={clearButtonShown}
+        clearButtonTestId={clearButtonTestId}
         // FormFieldProps
         id={labelledbyId}
         getRootRef={rootRef}
         className={classNames(styles['ChipsSelect'], openedClassNames, className)}
         status={status}
-        after={dropdownIconProp || <DropdownIcon opened={opened} />}
+        after={
+          dropdownIconProp || (
+            <DropdownIcon
+              opened={opened}
+              className={clearButtonShown ? styles['ChipsSelect__dropdown-icon'] : undefined}
+            />
+          )
+        }
         // option
         value={value}
         onAddChipOption={addOptionFromInput}
         onRemoveChipOption={removeOption}
         renderChip={renderChip}
+        onClear={clearOptions}
         // input
         getRef={inputRef}
         inputValue={inputValue}
@@ -478,71 +593,7 @@ export const ChipsSelect = <Option extends ChipOption>({
           role="listbox"
           aria-labelledby={labelledbyId}
         >
-          {options.map((option, index) => {
-            const dropdownItemId = `${dropdownId}-${index}`;
-
-            if (isEmptyOptionPreset(option)) {
-              return (
-                <Footnote key="empty-text" className={styles['ChipsSelect__empty']}>
-                  {option.placeholder}
-                </Footnote>
-              );
-            }
-            if (isCreateNewOptionPreset(option)) {
-              return (
-                <CustomSelectOption
-                  key="create-new-option"
-                  id={dropdownItemId}
-                  hovered={focusedOptionIndex === index}
-                  onMouseDown={() => addOptionFromInput(inputValue)}
-                  onMouseEnter={() => setFocusedOptionIndex(index)}
-                >
-                  {option.actionText}
-                </CustomSelectOption>
-              );
-            }
-            return (
-              <React.Fragment key={`${typeof option.value}-${option.label}`}>
-                {renderOption(
-                  {
-                    id: dropdownItemId,
-                    disabled: option.disabled,
-                    hovered: focusedOption
-                      ? getOptionValue(option) === getOptionValue(focusedOption)
-                      : false,
-                    children: option.label,
-                    selected: !!value.find(
-                      (selectedOption: Option) =>
-                        getOptionValue(selectedOption) === getOptionValue(option),
-                    ),
-                    getRootRef(node) {
-                      if (node) {
-                        chipsSelectOptions[index] = node;
-                      }
-                    },
-                    onMouseDown(event: React.MouseEvent<HTMLDivElement>) {
-                      if (option.disabled) {
-                        return;
-                      }
-                      if (onChangeStart) {
-                        onChangeStart(event, option);
-                      }
-
-                      if (!event.defaultPrevented) {
-                        closeAfterSelect && setOpened(false);
-                        addOption(option);
-                        clearInput();
-                      }
-                    },
-                    onMouseEnter() {
-                      setFocusedOptionIndex(index);
-                    },
-                  },
-                  option,
-                )}
-              </React.Fragment>
-            );
-          })}
+          {dropdownContent}
         </CustomSelectDropdown>
       )}
     </>

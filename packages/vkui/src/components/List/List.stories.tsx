@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28PrivacyOutline, Icon28SettingsOutline, Icon28UserOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Cell } from '../Cell/Cell';
 import { Group } from '../Group/Group';
-import { List, ListProps } from './List';
+import { List, type ListProps } from './List';
 
 const story: Meta<ListProps> = {
   title: 'Blocks/List',

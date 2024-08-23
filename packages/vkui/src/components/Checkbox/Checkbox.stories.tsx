@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { Checkbox, CheckboxProps } from './Checkbox';
+import { Checkbox, type CheckboxProps } from './Checkbox';
 
 const story: Meta<CheckboxProps> = {
   title: 'Forms/Checkbox',

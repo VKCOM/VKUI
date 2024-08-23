@@ -43,6 +43,7 @@ updates:
           - 'css-loader'
       playwright:
         patterns:
+          - 'playwright'
           - '@playwright/*'
       eslint:
         patterns:

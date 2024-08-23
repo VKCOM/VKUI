@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
@@ -7,7 +7,7 @@ import {
   Playground as BasicRadioStory,
   WithDescription as RadioWithDescriptionStory,
 } from '../Radio/Radio.stories';
-import { RadioGroup, RadioGroupProps } from './RadioGroup';
+import { RadioGroup, type RadioGroupProps } from './RadioGroup';
 
 const story: Meta<RadioGroupProps> = {
   title: 'Forms/RadioGroup',

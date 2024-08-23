@@ -32,8 +32,6 @@ const onClose = () => {
   setOpenedPopoutName(null);
 };
 
-const [filter, setFilter] = useState('best');
-const onChange = (e) => setFilter(e.target.value);
 const baseTargetRef = React.useRef(null);
 const iconsTargetRef = React.useRef(null);
 const subtitleTargetRef = React.useRef(null);
@@ -140,57 +138,32 @@ const openSubtitle = () =>
     </ActionSheet>,
   );
 
-const openSelectable = () =>
-  openActionSheet(
-    'selectable',
-    <ActionSheet onClose={onClose} toggleRef={selectableTargetRef}>
-      <ActionSheetItem
-        onChange={onChange}
-        checked={filter === 'best'}
-        name="filter"
-        value="best"
-        selectable
-      >
-        Лучшие друзья
-      </ActionSheetItem>
-      <ActionSheetItem
-        onChange={onChange}
-        checked={filter === 'relatives'}
-        name="filter"
-        value="relatives"
-        selectable
-      >
-        Родственники
-      </ActionSheetItem>
-      <ActionSheetItem
-        onChange={onChange}
-        checked={filter === 'collegues'}
-        name="filter"
-        value="collegues"
-        selectable
-      >
-        Коллеги
-      </ActionSheetItem>
-      <ActionSheetItem
-        onChange={onChange}
-        checked={filter === 'school'}
-        name="filter"
-        value="school"
-        selectable
-      >
-        Друзья по школе
-      </ActionSheetItem>
-      <ActionSheetItem
-        onChange={onChange}
-        checked={filter === 'university'}
-        name="filter"
-        value="university"
-        selectable
-      >
-        Друзья по вузу
-      </ActionSheetItem>
-    </ActionSheet>,
+const SelectableActionSheet = () => {
+  const [filter, setFilter] = useState('Нормальная');
+  const onChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  const speeds = ['0.25x', '0.5x', '0.75x', 'Нормальная', '1.25x', '1.5x', '2x', '3x'];
+
+  return (
+    <ActionSheet header="Изменить скорость видео" onClose={onClose} toggleRef={selectableTargetRef}>
+      {speeds.map((speed) => (
+        <ActionSheetItem
+          onChange={onChange}
+          checked={filter === speed}
+          name="filter"
+          value={speed}
+          selectable
+        >
+          {speed}
+        </ActionSheetItem>
+      ))}
+    </ActionSheet>
   );
+};
+
+const openSelectable = () => openActionSheet('selectable', <SelectableActionSheet />);
 
 const openTitle = () =>
   openActionSheet(

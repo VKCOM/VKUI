@@ -13,7 +13,7 @@
   background: rgba(0, 0, 0, 0.4);
   user-select: none;
   transition: opacity 167ms ease-out;
-  animation: animation-fade-in 0.32s ease;
+  animation: animation-modalroot-fade-in 0.32s ease;
 }
 
 .ModalRoot--touched .ModalRoot__mask {
@@ -48,7 +48,7 @@
   box-sizing: border-box;
 }
 
-@keyframes animation-fade-in {
+@keyframes animation-modalroot-fade-in {
   from {
     opacity: 0;
   }

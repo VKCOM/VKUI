@@ -1,4 +1,4 @@
-import { ValuesOfObject } from '../../types';
+import type { ValuesOfObject } from '../../types';
 
 /**
  * Public API.

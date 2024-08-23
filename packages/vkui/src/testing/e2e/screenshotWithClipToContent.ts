@@ -1,6 +1,6 @@
 import type { Page, PlaywrightWorkerOptions } from '@playwright/test';
 import { DEFAULT_CROP_TO_CONTENT_SELECTOR } from './constants';
-import { ScreenshotWithClipToContentOptions } from './types';
+import type { ScreenshotWithClipToContentOptions } from './types';
 
 export async function screenshotWithClipToContent(
   page: Page,

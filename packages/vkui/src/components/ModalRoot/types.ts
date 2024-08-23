@@ -1,6 +1,6 @@
-import { DOMContextInterface } from '../../lib/dom';
-import { HasPlatform } from '../../types';
-import { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
+import type { DOMContextInterface } from '../../lib/dom';
+import type { HasPlatform } from '../../types';
+import type { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 
 export type ModalType = 'page' | 'card';
 

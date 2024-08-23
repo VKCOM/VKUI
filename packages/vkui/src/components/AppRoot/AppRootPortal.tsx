@@ -3,7 +3,7 @@ import { useAppearance } from '../../hooks/useAppearance';
 import { useIsClient } from '../../hooks/useIsClient';
 import { createPortal } from '../../lib/createPortal';
 import { isRefObject } from '../../lib/isRefObject';
-import { HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
 import { AppRootContext, type AppRootContextInterface } from './AppRootContext';
 

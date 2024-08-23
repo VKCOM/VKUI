@@ -1,7 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { Spinner, SpinnerProps } from './Spinner';
+import { Spinner, type SpinnerProps } from './Spinner';
 
 const story: Meta<SpinnerProps> = {
   title: 'Blocks/Spinner',

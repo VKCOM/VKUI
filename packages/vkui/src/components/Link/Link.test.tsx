@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
-import { Link, LinkProps } from './Link';
+import { Link, type LinkProps } from './Link';
 
 const LinkTest = (props: LinkProps) => (
   <Link data-testid="link" {...props}>

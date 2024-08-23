@@ -1,10 +1,10 @@
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import {
   AdaptiveIconRenderer,
-  AdaptiveIconRendererProps,
+  type AdaptiveIconRendererProps,
 } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import styles from './ToolButton.module.css';
 
 const stylesMode = {
@@ -52,7 +52,6 @@ export const ToolButton = ({
   mode = 'primary',
   appearance = 'accent',
   direction = 'row',
-  onClick = noop,
   className,
   children,
   IconCompact,
@@ -69,7 +68,6 @@ export const ToolButton = ({
       activeMode={styles['ToolButton--active']}
       Component={restProps.href ? 'a' : 'button'}
       focusVisibleMode="outside"
-      onClick={onClick}
       className={classNames(
         className,
         styles['ToolButton'],

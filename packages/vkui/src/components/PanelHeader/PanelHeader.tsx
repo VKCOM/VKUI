@@ -3,7 +3,12 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasComponent, HasDataAttribute, HasRef, HTMLAttributesWithRootRef } from '../../types';
+import type {
+  HasComponent,
+  HasDataAttribute,
+  HasRef,
+  HTMLAttributesWithRootRef,
+} from '../../types';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';

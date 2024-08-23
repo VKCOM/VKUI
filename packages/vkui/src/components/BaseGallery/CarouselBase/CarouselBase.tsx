@@ -8,12 +8,12 @@ import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffec
 import { warnOnce } from '../../../lib/warnOnce';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ScrollArrow } from '../../ScrollArrow/ScrollArrow';
-import { Touch, TouchEvent } from '../../Touch/Touch';
-import { BaseGalleryProps, GallerySlidesState } from '../types';
+import { Touch, type TouchEvent } from '../../Touch/Touch';
+import { type BaseGalleryProps, type GallerySlidesState } from '../types';
 import { ANIMATION_DURATION, CONTROL_ELEMENTS_STATE, SLIDES_MANAGER_STATE } from './constants';
 import { calculateIndent, getLoopPoints, getTargetIndex } from './helpers';
 import { useSlideAnimation } from './hooks';
-import { ControlElementsState, SlidesManagerState } from './types';
+import type { ControlElementsState, SlidesManagerState } from './types';
 import styles from '../BaseGallery.module.css';
 
 const stylesBullets = {

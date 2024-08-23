@@ -2,20 +2,20 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
-import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { canUseDOM, type DOMProps, withDOM } from '../../lib/dom';
+import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasPlatform, HTMLAttributesWithRootRef } from '../../types';
-import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import type { HasPlatform, HTMLAttributesWithRootRef } from '../../types';
+import { ScrollContext, type ScrollContextInterface } from '../AppRoot/ScrollContext';
 import {
   ConfigProviderContext,
-  ConfigProviderContextInterface,
+  type ConfigProviderContextInterface,
 } from '../ConfigProvider/ConfigProviderContext';
 import { NavViewIdContext } from '../NavIdContext/NavIdContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
-import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitColContext';
-import { Touch, TouchEvent } from '../Touch/Touch';
+import { SplitColContext, type SplitColContextProps } from '../SplitCol/SplitColContext';
+import { Touch, type TouchEvent } from '../Touch/Touch';
 import {
   getSwipeBackPredicates,
   hasHorizontalScrollableElementWithScrolledToLeft,
@@ -178,7 +178,10 @@ class ViewInfiniteComponent extends React.Component<
       const prevScrolls = this.scrolls[prevProps.activePanel] || [];
       const scrolls = {
         ...this.scrolls,
-        [prevProps.activePanel]: [...prevScrolls, this.props.scroll?.getScroll().y],
+        [prevProps.activePanel]: [
+          ...prevScrolls,
+          this.props.scroll?.getScroll({ compensateKeyboardHeight: false }).y,
+        ],
       };
       this.scrolls = scrolls;
 
@@ -520,13 +523,11 @@ class ViewInfiniteComponent extends React.Component<
     if (isNext) {
       return {
         transform: `translate3d(${nextPanelTranslate}, 0, 0)`,
-        WebkitTransform: `translate3d(${nextPanelTranslate}, 0, 0)`,
       };
     }
     if (isPrev) {
       return {
         transform: `translate3d(${prevPanelTranslate}, 0, 0)`,
-        WebkitTransform: `translate3d(${prevPanelTranslate}, 0, 0)`,
         boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})`,
       };
     }

@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { Typography, TypographyProps } from '../Typography';
+import { Typography, type TypographyProps } from '../Typography';
 import styles from './Title.module.css';
 
 const stylesLevel = {

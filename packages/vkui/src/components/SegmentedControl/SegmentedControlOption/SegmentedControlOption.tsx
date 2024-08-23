@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
-import { HasRef, HasRootRef } from '../../../types';
+import type { HasRef, HasRootRef } from '../../../types';
 import { Clickable } from '../../Clickable/Clickable';
 import { Headline } from '../../Typography/Headline/Headline';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';

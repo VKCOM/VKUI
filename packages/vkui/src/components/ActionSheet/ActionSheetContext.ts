@@ -11,6 +11,7 @@ export type ItemClickHandler<T extends Element = Element> = (options: {
 
 export type ActionSheetContextType<T extends Element = Element> = {
   onItemClick?: ItemClickHandler<T>;
+  onClose?: () => void;
   mode?: 'sheet' | 'menu';
 };
 

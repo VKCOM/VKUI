@@ -3,11 +3,11 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import { HasRef, HasRootRef } from '../../types';
+import type { HasRef, HasRootRef } from '../../types';
 import { useResizeTextarea } from '../Textarea/useResizeTextarea';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
-import { TypographyProps } from '../Typography/Typography';
+import type { TypographyProps } from '../Typography/Typography';
 import styles from './WriteBar.module.css';
 
 export interface WriteBarProps

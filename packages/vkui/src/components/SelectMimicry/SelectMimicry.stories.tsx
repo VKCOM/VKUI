@@ -1,6 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { SelectMimicry, SelectMimicryProps } from './SelectMimicry';
+import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { SelectMimicry, type SelectMimicryProps } from './SelectMimicry';
+
+const iconsPresets = getFormFieldIconsPresets();
 
 type StorySelectMimicryProps = SelectMimicryProps & { selectValue: string };
 
@@ -20,6 +23,8 @@ const story: Meta<StorySelectMimicryProps> = {
       control: { type: 'select' },
       options: ['Россия', 'Италия', 'Англия'],
     },
+    after: iconsPresets,
+    before: iconsPresets,
   },
 };
 

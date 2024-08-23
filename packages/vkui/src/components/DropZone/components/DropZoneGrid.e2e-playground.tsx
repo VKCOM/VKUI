@@ -2,7 +2,7 @@ import { Icon56CameraOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Placeholder } from '../../Placeholder/Placeholder';
 import { DropZone } from '../DropZone';
-import { DropZoneGridProps } from './DropZoneGrid';
+import type { DropZoneGridProps } from './DropZoneGrid';
 
 const Item = () => (
   <DropZone>

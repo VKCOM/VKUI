@@ -34,7 +34,7 @@
   border: 0;
   resize: none;
   color: var(--vkui--color_text_primary);
-  -webkit-appearance: none;
+  appearance: none;
   max-block-size: 120px;
 }
 

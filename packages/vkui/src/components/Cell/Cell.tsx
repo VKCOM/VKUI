@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types';
-import { Removable, RemovableProps } from '../Removable/Removable';
-import { SimpleCell, SimpleCellProps } from '../SimpleCell/SimpleCell';
-import { CellCheckbox, CellCheckboxProps } from './CellCheckbox/CellCheckbox';
+import type { HasRootRef } from '../../types';
+import { Removable, type RemovableProps } from '../Removable/Removable';
+import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
+import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox/CellCheckbox';
 import { CellDragger } from './CellDragger/CellDragger';
 import { DEFAULT_DRAGGABLE_LABEL } from './constants';
 import styles from './Cell.module.css';
@@ -52,7 +52,7 @@ export const Cell: React.FC<CellProps> & {
   Checkbox: typeof CellCheckbox;
 } = ({
   mode,
-  onRemove = noop,
+  onRemove,
   removePlaceholder = 'Удалить',
   onDragFinish,
   before,
@@ -85,8 +85,10 @@ export const Cell: React.FC<CellProps> & {
   const dragger = draggable ? (
     <CellDragger
       elRef={rootElRef}
-      className={styles['Cell__dragger']}
-      disabled={disabled}
+      className={classNames(
+        styles['Cell__dragger'],
+        !before && !selectable && styles['Cell__control--noBefore'],
+      )}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
     >
@@ -104,12 +106,18 @@ export const Cell: React.FC<CellProps> & {
       disabled,
       onChange,
     };
-    checkbox = <CellCheckbox className={styles['Cell__checkbox']} {...checkboxProps} />;
+    checkbox = (
+      <CellCheckbox
+        className={classNames(
+          styles['Cell__checkbox'],
+          !before && styles['Cell__control--noBefore'],
+        )}
+        {...checkboxProps}
+      />
+    );
   }
 
-  const simpleCellDisabled =
-    (draggable && !selectable) || (removable && !restProps.onClick) || disabled;
-  const hasActive = !simpleCellDisabled && !dragging;
+  const hasActive = !disabled && !dragging;
 
   const cellClasses = classNames(
     styles['Cell'],
@@ -117,15 +125,19 @@ export const Cell: React.FC<CellProps> & {
     platform === 'ios' && styles['Cell--ios'],
     removable && styles['Cell--removable'],
     Component === 'label' && styles['Cell--selectable'],
-    disabled && styles['Cell--disabled'],
   );
 
   const simpleCellProps: SimpleCellProps = {
     hasActive: hasActive,
     hasHover: hasActive && !removable,
+    disabled,
     ...restProps,
     className: styles['Cell__content'],
-    Component: Component,
+    // чтобы свойство, если не определено, не присутствовало в
+    // restProps явно как {'Component': undefined} и ниже не переопределяло
+    // возможное значение commonProps.Component = 'a' при слиянии двух объектов, как
+    // {...commonProps, ...restProps}
+    ...(Component && { Component }),
     before: (
       <React.Fragment>
         {draggable && platform !== 'ios' && dragger}
@@ -141,10 +153,6 @@ export const Cell: React.FC<CellProps> & {
     ),
   };
 
-  if (restProps.onClick) {
-    simpleCellProps.disabled = simpleCellDisabled;
-  }
-
   if (removable) {
     return (
       <Removable
@@ -152,16 +160,16 @@ export const Cell: React.FC<CellProps> & {
         style={style}
         getRootRef={rootElRef}
         removePlaceholder={removePlaceholder}
-        onRemove={(e) => onRemove(e, rootElRef.current)}
+        onRemove={(e) => onRemove?.(e, rootElRef.current)}
         toggleButtonTestId={toggleButtonTestId}
         removeButtonTestId={removeButtonTestId}
+        disabled={disabled}
       >
         {platform === 'ios' ? (
           ({ isRemoving }) => {
-            if (simpleCellProps.onClick) {
-              simpleCellProps.disabled = isRemoving || !simpleCellProps.disabled;
-            }
-            return <SimpleCell {...simpleCellProps} />;
+            return (
+              <SimpleCell {...simpleCellProps} {...(isRemoving ? { onClick: undefined } : {})} />
+            );
           }
         ) : (
           <SimpleCell {...simpleCellProps} />

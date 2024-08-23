@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { SimpleCell } from '../../components/SimpleCell/SimpleCell';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Switch, SwitchProps } from './Switch';
+import { Switch, type SwitchProps } from './Switch';
 
 const story: Meta<SwitchProps> = {
   title: 'Blocks/Switch',

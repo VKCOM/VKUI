@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { ConfigProvider, ConfigProviderProps } from './ConfigProvider';
+import { ConfigProvider, type ConfigProviderProps } from './ConfigProvider';
 import { useConfigProvider } from './ConfigProviderContext';
 
 const story: Meta<ConfigProviderProps> = {

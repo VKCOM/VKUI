@@ -7,15 +7,16 @@
   box-shadow: var(--vkui--elevation3);
 }
 
-.Cell--selectable.Cell--disabled {
-  opacity: var(--vkui--opacity_disable_accessibility);
-}
-
 .Cell__checkbox,
 .Cell__dragger {
   position: relative;
   flex-shrink: 0;
   margin-inline-end: var(--vkui--spacing_size_2xl);
+}
+
+.Cell__control--noBefore {
+  /* Когда в before нет ничего, кроме dragger или checkbox, нужно добавлять компенсированный отступ */
+  margin-inline-end: calc(var(--vkui--spacing_size_2xl) - var(--vkui--spacing_size_xl));
 }
 
 .Cell__content {
@@ -50,6 +51,11 @@
 
 .Cell--ios .Cell__checkbox {
   margin-inline-end: var(--vkui--spacing_size_xl);
+}
+
+.Cell--ios .Cell__control--noBefore {
+  /* Когда в before нет ничего, кроме dragger или checkbox, оставляем только отступ у before в SimpleCell */
+  margin-inline-end: 0;
 }
 
 .Cell--ios.Cell--removable .Cell__content {

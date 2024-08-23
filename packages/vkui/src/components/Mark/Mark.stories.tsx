@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
-import { Mark, MarkProps } from './Mark';
+import { Mark, type MarkProps } from './Mark';
 
 const story: Meta<MarkProps> = {
   title: 'Blocks/Mark',

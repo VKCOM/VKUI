@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { FormItem } from '../FormItem/FormItem';
 import { Input } from '../Input/Input';
 import { Select } from '../Select/Select';
-import { FormLayoutGroup, FormLayoutGroupProps } from './FormLayoutGroup';
+import { FormLayoutGroup, type FormLayoutGroupProps } from './FormLayoutGroup';
 
 const story: Meta<FormLayoutGroupProps> = {
   title: 'Forms/FormLayoutGroup',

@@ -1,7 +1,7 @@
 import type { PlaywrightWorkerOptions } from '@playwright/test';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import type { AppearanceType } from '../../lib/appearance';
-import { PlatformType } from '../../lib/platform';
+import type { PlatformType } from '../../lib/platform';
 import type { ComponentPlaygroundProps } from './ComponentPlayground';
 
 export interface VKUITestOptions {

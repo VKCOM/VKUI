@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { useCalendar } from '../../hooks/useCalendar';
-import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import {
   addMonths,
   endOfDay,
@@ -11,10 +9,12 @@ import {
   isWithinInterval,
   startOfDay,
   subMonths,
-} from '../../lib/date';
-import { HTMLAttributesWithRootRef } from '../../types';
-import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
-import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
+} from 'date-fns';
+import { useCalendar } from '../../hooks/useCalendar';
+import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
+import type { HTMLAttributesWithRootRef } from '../../types';
+import { CalendarDays, type CalendarDaysProps } from '../CalendarDays/CalendarDays';
+import { CalendarHeader, type CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CalendarRange.module.css';
 
@@ -48,7 +48,7 @@ const getIsDaySelected = (day: Date, value?: DateRangeType) => {
     return false;
   }
 
-  return Boolean(isWithinInterval(day, startOfDay(value[0]), endOfDay(value[1])));
+  return isWithinInterval(day, { start: startOfDay(value[0]), end: endOfDay(value[1]) });
 };
 
 /**
@@ -116,8 +116,7 @@ export const CalendarRange = ({
         return [date, null];
       }
 
-      const start = value[0];
-      const end = value[1];
+      const [start, end] = value;
       if ((start && isSameDay(date, start)) || (end && isSameDay(date, end))) {
         return [setTimeEqual(date, start), setTimeEqual(date, end)];
       } else if (start && isBefore(date, start)) {
@@ -125,7 +124,6 @@ export const CalendarRange = ({
       } else if (start && isAfter(date, start)) {
         return [start, setTimeEqual(date, end)];
       }
-
       return value;
     },
     [value],

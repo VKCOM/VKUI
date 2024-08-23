@@ -1,16 +1,22 @@
 import * as React from 'react';
 import { act } from 'react';
-import { type EventType, fireEvent, render, RenderResult, screen } from '@testing-library/react';
+import {
+  type EventType,
+  fireEvent,
+  render,
+  type RenderResult,
+  screen,
+} from '@testing-library/react';
 // eslint-disable-next-line no-restricted-imports -- используем здесь setup
 import userEventLib from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
 import { configureAxe, toHaveNoViolations } from 'jest-axe';
-import { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
+import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
 import { isHTMLElement } from '../lib/dom';
-import { ImgOnlyAttributes } from '../lib/utils';
-import { HasChildren } from '../types';
+import type { ImgOnlyAttributes } from '../lib/utils';
+import type { HasChildren } from '../types';
 
 export const testIf = (condition: boolean) => (condition ? it : it.skip);
 

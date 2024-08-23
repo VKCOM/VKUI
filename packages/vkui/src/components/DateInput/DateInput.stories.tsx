@@ -1,7 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { DateInput, DateInputProps } from './DateInput';
+import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { DateInput, type DateInputProps } from './DateInput';
+
+const iconsPresets = getFormFieldIconsPresets();
 
 const story: Meta<DateInputProps> = {
   title: 'Forms/DateInput',
@@ -12,6 +15,8 @@ const story: Meta<DateInputProps> = {
     value: {
       control: { type: 'date' },
     },
+    after: iconsPresets,
+    before: iconsPresets,
   },
 };
 

@@ -1,6 +1,6 @@
-import { GallerySlidesState } from '../types';
+import type { GallerySlidesState } from '../types';
 import { SLIDE_THRESHOLD } from './constants';
-import { LoopPoint, SlidesManagerState } from './types';
+import type { LoopPoint, SlidesManagerState } from './types';
 
 /*
  * Считает отступ слоя галереи
@@ -58,7 +58,7 @@ export function getShiftedIndexes(
   return shiftedSlideIndexes;
 }
 
-export function calculateLoopPoints(
+function calculateLoopPoints(
   indexes: number[],
   edge: 'start' | 'end',
   slidesManager: SlidesManagerState,

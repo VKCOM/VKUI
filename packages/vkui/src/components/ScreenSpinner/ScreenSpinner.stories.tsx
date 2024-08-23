@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { ScreenSpinner, ScreenSpinnerProps } from './ScreenSpinner';
+import { ScreenSpinner, type ScreenSpinnerProps } from './ScreenSpinner';
 
 const story: Meta<ScreenSpinnerProps> = {
   title: 'Popouts/ScreenSpinner',

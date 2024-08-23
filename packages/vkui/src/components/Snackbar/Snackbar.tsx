@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
@@ -9,10 +9,10 @@ import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
 import { UIPanGestureRecognizer } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { Basic, BasicProps } from './subcomponents/Basic/Basic';
+import { Basic, type BasicProps } from './subcomponents/Basic/Basic';
 import type { ShiftData, SnackbarPlacement } from './types';
 import {
   getInitialShiftData,
@@ -49,8 +49,10 @@ export interface SnackbarProps
    * > Note: в мобильном режиме:
    * > - `"top-start"`/`"top-end"` перебивается на `"top"`, чтобы поведение было схожим с нативными
    * >   уведомлениями;
-   * > - `"bottom"`/`"bottom-end"` перебивается на "bottom-start", чтобы избежать вызова системных
+   * > - `"bottom"` перебивается на `"bottom-start"`, чтобы избежать вызова системных
    * >   функций, таких как **Pull To Refresh** и **Режим управления одной рукой**.
+   * > - `"bottom-start"`/`"bottom-end"` закрываются смахиванием в любое из направлений
+   * >   по горизонтальной оси.
    */
   placement?: SnackbarPlacement;
   /**
@@ -87,7 +89,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   before,
   after,
   duration = 4000,
-  onActionClick = noop,
+  onActionClick,
   onClose,
   mode = 'default',
   subtitle,
@@ -126,7 +128,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   }, []);
 
   const updateShiftAxisCSSProperties = React.useCallback(
-    (x: number | null, y: number | null) => {
+    (x: number | null, y: number | null, direction: number | null) => {
       rafRef.current = requestAnimationFrame(() => {
         if (rootRef.current) {
           x === null
@@ -135,6 +137,13 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
           y === null
             ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_shift_y')
             : rootRef.current.style.setProperty('--vkui_internal--snackbar_shift_y', `${y}px`);
+          direction === null
+            ? rootRef.current.style.removeProperty('--vkui_internal--snackbar_direction')
+            : /* istanbul ignore next: TODO чтобы протестировать кейс, нужно мокать useMediaQueries(), чтобы перебивать mediaQueries.smallTabletPlus.matches */
+              rootRef.current.style.setProperty(
+                '--vkui_internal--snackbar_direction',
+                `${direction}`,
+              );
         }
       });
     },
@@ -148,7 +157,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const handleActionClick = (event: React.MouseEvent) => {
     close();
     if (action) {
-      onActionClick(event);
+      onActionClick?.(event);
     }
   };
 
@@ -174,7 +183,11 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       );
 
       if (shiftDataRef.current.shifted) {
-        updateShiftAxisCSSProperties(shiftDataRef.current.x, shiftDataRef.current.y);
+        updateShiftAxisCSSProperties(
+          shiftDataRef.current.x,
+          shiftDataRef.current.y,
+          shiftDataRef.current.direction,
+        );
       }
     }
   };
@@ -218,7 +231,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
         panGestureRecognizer.current = null;
 
         if (open) {
-          updateShiftAxisCSSProperties(null, null);
+          updateShiftAxisCSSProperties(null, null, null);
         }
       }
     },

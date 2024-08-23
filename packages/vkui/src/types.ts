@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { PlatformType } from './lib/platform';
+import type * as React from 'react';
+import type { PlatformType } from './lib/platform';
 
 export type AnyFunction = (...args: any[]) => any;
 

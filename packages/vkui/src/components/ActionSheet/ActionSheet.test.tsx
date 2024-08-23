@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { act } from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
@@ -12,7 +12,7 @@ import {
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { ActionSheet, ActionSheetProps } from './ActionSheet';
+import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 import popoutWrapperStyles from '../PopoutWrapper/PopoutWrapper.module.css';
 
 const ActionSheetDesktop = ({ onClose = jest.fn(), ...restProps }: Partial<ActionSheetProps>) => {
@@ -127,7 +127,16 @@ describe(ActionSheet, () => {
         </ActionSheet>,
       );
       await waitForFloatingPosition();
-      await userEvent.click(screen.getByTestId('item'));
+      // эмулируем настоящее событие клика(отличается оно тем, что clientX и clientY != 0)
+      // @see packages/vkui/src/components/ActionSheetItem/helpers.ts
+      fireEvent(
+        screen.getByTestId('item'),
+        new MouseEvent('click', {
+          clientX: 1,
+          clientY: 1,
+          bubbles: true,
+        }),
+      );
       act(jest.runAllTimers);
 
       if (onCloseHandler.mock.calls.length > 0) {

@@ -6,7 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './FixedLayout.module.css';
@@ -19,7 +19,7 @@ const stylesVertical = {
   ),
 };
 
-export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
   vertical?: 'top' | 'bottom';
   /**
    * Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.
@@ -83,8 +83,8 @@ export const FixedLayout = ({
       setWidth(
         `${
           colRef.current.clientWidth -
-          parseFloat(computedStyle.paddingLeft) -
-          parseFloat(computedStyle.paddingRight)
+          parseFloat(computedStyle.paddingLeft || '0') -
+          parseFloat(computedStyle.paddingRight || '0')
         }px`,
       );
     } else {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type {
   HasAlign,
   HasComponent,
@@ -6,9 +6,10 @@ import type {
   HasRef,
   HTMLAttributesWithRootRef,
 } from '../../types';
-import { FormFieldProps } from '../FormField/FormField';
+import { type FormFieldProps } from '../FormField/FormField';
+import { type FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
 
-export type NavigateTo = 'first' | 'prev' | 'next' | 'last';
+export type NavigateTo = 'prev' | 'next' | 'last';
 
 export type ChipOptionValue = string | number;
 
@@ -102,6 +103,19 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
    * @default Используется [Chip](#/Chip)
    */
   renderChip?: RenderChip;
+  /**
+   * Показывать ли кнопку для очистки значения
+   */
+  clearButtonShown?: boolean;
+  /**
+   * (e2e) testId кнопки очистки
+   */
+  clearButtonTestId?: string;
+  /**
+   * Кастомная кнопка для очистки значения.
+   * Должна принимать обязательное свойство `onClick`
+   */
+  ClearButton?: React.ComponentType<FormFieldClearButtonProps>;
 }
 
 /**
@@ -109,7 +123,8 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
  */
 export interface ChipsInputBasePrivateProps<O extends ChipOption = ChipOption>
   extends ChipsInputBaseProps<O>,
-    Pick<FormFieldProps, 'mode' | 'status' | 'before' | 'after'> {
+    Pick<FormFieldProps, 'mode' | 'status' | 'before' | 'after' | 'maxHeight'> {
+  onClear: () => void;
   onAddChipOption: (value: string) => void;
   onRemoveChipOption: (value: O | ChipOptionValue) => void;
 }

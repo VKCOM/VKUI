@@ -1,7 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { FormStatus, FormStatusProps } from './FormStatus';
+import { FormStatus, type FormStatusProps } from './FormStatus';
 
 const story: Meta<FormStatusProps> = {
   title: 'Forms/FormStatus',

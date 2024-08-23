@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollSaver } from './ScrollSaver';
 import styles from './Epic.module.css';

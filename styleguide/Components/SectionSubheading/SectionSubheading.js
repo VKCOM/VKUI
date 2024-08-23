@@ -9,6 +9,7 @@ export const SectionSubheading = ({ children, className, level = 2, href, ...res
 
   return (
     <Heading {...restProps} level={level} className={classNames('SectionSubheading', className)}>
+      <span className="SectionSubheading__text">{children}</span>
       {href && id && (
         <Fragment>
           <a className="SectionSubheading__link" href={href}>
@@ -17,7 +18,6 @@ export const SectionSubheading = ({ children, className, level = 2, href, ...res
           <a className="SectionSubheading__anchor" id={id} />
         </Fragment>
       )}
-      <span className="SectionSubheading__text">{children}</span>
     </Heading>
   );
 };

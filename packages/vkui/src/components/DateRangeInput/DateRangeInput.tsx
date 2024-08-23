@@ -1,15 +1,20 @@
 import * as React from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { isAfter } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
 import { callMultiple } from '../../lib/callMultiple';
-import { format, isAfter, isMatch, parse } from '../../lib/date';
+import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
-import { HasRootRef } from '../../types';
-import { CalendarRange, CalendarRangeProps, DateRangeType } from '../CalendarRange/CalendarRange';
-import { FormField, FormFieldProps } from '../FormField/FormField';
+import type { HasRootRef } from '../../types';
+import {
+  CalendarRange,
+  type CalendarRangeProps,
+  type DateRangeType,
+} from '../CalendarRange/CalendarRange';
+import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
@@ -44,7 +49,7 @@ export interface DateRangeInputProps
       | 'nextMonthIcon'
     >,
     HasRootRef<HTMLDivElement>,
-    FormFieldProps {
+    Omit<FormFieldProps, 'maxHeight'> {
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
   clearFieldLabel?: string;
@@ -159,7 +164,7 @@ export const DateRangeInput = ({
       }
       const formattedStartValue = `${internalValue[0]}.${internalValue[1]}.${internalValue[2]}`;
       const formattedEndValue = `${internalValue[3]}.${internalValue[4]}.${internalValue[5]}`;
-      const mask = 'DD.MM.YYYY';
+      const mask = 'dd.MM.yyyy';
 
       if (!isMatch(formattedStartValue, mask)) {
         isStartValid = false;
@@ -258,8 +263,8 @@ export const DateRangeInput = ({
         name={name}
         value={
           value
-            ? `${value[0] ? format(value[0], 'DD.MM.YYYY') : ''} - ${
-                value[1] ? format(value[1], 'DD.MM.YYYY') : ''
+            ? `${value[0] ? format(value[0], 'dd.MM.yyyy') : ''} - ${
+                value[1] ? format(value[1], 'dd.MM.yyyy') : ''
               }`
             : ''
         }

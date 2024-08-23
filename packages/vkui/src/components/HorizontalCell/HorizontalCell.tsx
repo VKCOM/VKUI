@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { HasRef, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
+import type { HasRef, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';

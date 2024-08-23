@@ -3,7 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HasRef, HasRootRef } from '../../types';
+import type { HasRef, HasRootRef } from '../../types';
 import { AccordionContext } from './AccordionContext';
 import styles from './Accordion.module.css';
 

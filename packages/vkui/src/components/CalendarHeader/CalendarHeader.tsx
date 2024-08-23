@@ -5,9 +5,9 @@ import {
   Icon20ChevronRightOutline,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { addMonths, setMonth, setYear, subMonths } from 'date-fns';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../lib/calendar';
-import { addMonths, setMonth, setYear, subMonths } from '../../lib/date';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { CustomSelect } from '../CustomSelect/CustomSelect';

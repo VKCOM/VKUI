@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { HasAlign, HasRef, HasRootRef } from '../../types';
-import { FormField, FormFieldProps } from '../FormField/FormField';
+import type { HasAlign, HasRef, HasRootRef } from '../../types';
+import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
 import styles from './Input.module.css';
 
@@ -16,7 +16,7 @@ export interface InputProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
-    FormFieldProps {}
+    Omit<FormFieldProps, 'maxHeight'> {}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Input

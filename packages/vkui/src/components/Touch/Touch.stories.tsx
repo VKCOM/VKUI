@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Touch, TouchEvent, TouchProps } from './Touch';
+import { Touch, type TouchEvent, type TouchProps } from './Touch';
 
 const story: Meta<TouchProps> = {
   title: 'Service/Touch',

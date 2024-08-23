@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
-import { Image, ImageProps } from './Image';
+import { Image, type ImageProps } from './Image';
 
 const story: Meta<ImageProps> = {
   title: 'Blocks/Image',

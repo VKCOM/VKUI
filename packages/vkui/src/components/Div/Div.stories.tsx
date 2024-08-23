@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
-import { Div, DivProps } from './Div';
+import { Div, type DivProps } from './Div';
 
 const story: Meta<DivProps> = {
   title: 'Blocks/Div',

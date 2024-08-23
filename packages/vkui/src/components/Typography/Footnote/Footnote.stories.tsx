@@ -1,7 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
-import { Footnote, FootnoteProps } from './Footnote';
+import { Footnote, type FootnoteProps } from './Footnote';
 
 const story: Meta<FootnoteProps> = {
   title: 'Typography/Footnote',

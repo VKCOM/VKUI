@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { CellButton } from '../CellButton/CellButton';
@@ -7,7 +7,7 @@ import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { View } from '../View/View';
-import { Root, RootProps } from './Root';
+import { Root, type RootProps } from './Root';
 
 const story: Meta<RootProps> = {
   title: 'Layout/Root',

@@ -1,6 +1,16 @@
 `ModalRoot` – контейнер для модальных страниц и карточек.
 Модальные страницы и карточки поддерживают различные жесты: раскрытие на весь экран, закрытие смахиванием вниз.
 
+> ⚠️ **Safari < 16**
+>
+> В мобильной версии [`ModalPage`](#/ModalPage)/[`ModalCard`](#/ModalCard) адаптируется в **Bottom sheets**.
+>
+> В **Safari < 16** их сворачивание может вызвать функцию **pull-to-refresh**. Попытка блокировать это
+> поведение приводит к другим проблемам, например, блокирование скролла (cм. https://github.com/VKCOM/VKUI/issues/335).
+>
+> В **Safari >= 16** проблема с блокированием **pull-to-refresh** решается в одно свойство [`overscroll-behavior-y: none;`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-y).
+> Это свойство выставляется на `html` при открытии модального окна и удаляется при закрытии.
+
 ## Структура
 
 Этот компонент должен быть передан в качестве свойства `modal` компоненту [`SplitLayout`](#/SplitLayout).
@@ -239,7 +249,9 @@ const App = () => {
           <CellButton onClick={() => changeActiveModal(MODAL_PAGE_USER_INFO)}>
             Информация о пользователе
           </CellButton>
+        </Group>
 
+        <Group>
           <FormItem top="Страна">
             <SelectMimicry
               placeholder="Выбрать страну"
@@ -249,7 +261,9 @@ const App = () => {
           <FormItem top="Город">
             <SelectMimicry placeholder="Выбрать город" disabled />
           </FormItem>
+        </Group>
 
+        <Group>
           <FormItem top="Пол">
             <Radio name="sex" value={0} defaultChecked>
               Любой
@@ -261,19 +275,25 @@ const App = () => {
               Женский
             </Radio>
           </FormItem>
+        </Group>
 
+        <Group>
           <FormItem top="Школа">
             <SelectMimicry placeholder="Выбрать школу" disabled />
           </FormItem>
           <FormItem top="Университет">
             <SelectMimicry placeholder="Выбрать университет" disabled />
           </FormItem>
+        </Group>
 
+        <Group>
           <FormItem top="Дополнительно">
             <Checkbox>С фотографией</Checkbox>
             <Checkbox>Сейчас на сайте</Checkbox>
           </FormItem>
+        </Group>
 
+        <Group>
           <FormItem top="Работа">
             <Input placeholder="Место работы" />
           </FormItem>
@@ -432,7 +452,7 @@ const App = () => {
         actions={
           <React.Fragment>
             <Spacing size={16} />
-            <ButtonGroup gap="s" stretched>
+            <ButtonGroup gap="m" stretched>
               <Button
                 key="deny"
                 size="l"
@@ -465,7 +485,7 @@ const App = () => {
         actions={
           <React.Fragment>
             <Spacing size={8} />
-            <ButtonGroup gap="l" mode="vertical" stretched>
+            <ButtonGroup gap="m" mode="vertical" stretched>
               <Button
                 key="join"
                 size="l"

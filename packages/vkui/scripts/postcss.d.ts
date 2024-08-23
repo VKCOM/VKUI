@@ -1,4 +1,4 @@
-import postcss from 'postcss';
+import type postcss from 'postcss';
 
 interface MakePostcssPluginsOptions {
   isVKUIPackageBuild: boolean;

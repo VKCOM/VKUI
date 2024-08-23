@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { ModalElements, ModalsStateEntry, ModalType } from './types';
+import type { ModalElements, ModalsStateEntry, ModalType } from './types';
 
 export type ModalRegistryEntry = ModalElements & Required<Pick<ModalsStateEntry, 'type' | 'id'>>;
 type ModalRefs = { [k in keyof ModalElements]: (e: ModalElements[k]) => void };

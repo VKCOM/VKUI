@@ -7,9 +7,9 @@ import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
-import { Touch, TouchEvent } from '../Touch/Touch';
+import { Touch, type TouchEvent } from '../Touch/Touch';
 import { calcMax, calcMin } from './helpers';
-import { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
+import type { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
 import styles from './BaseGallery.module.css';
 
 const ANIMATION_DURATION = 0.24;
@@ -101,7 +101,6 @@ export const BaseGallery = ({
 
       return validateIndent(-1 * coordX);
     }
-
     return 0;
   };
 
@@ -289,11 +288,7 @@ export const BaseGallery = ({
   const indent = shiftState.dragging ? calculateDragIndent() : shiftState.shiftX;
 
   const layerStyle = {
-    WebkitTransform: `translateX(${indent}px)`,
     transform: `translateX(${indent}px)`,
-    WebkitTransition: shiftState.animation
-      ? `-webkit-transform ${ANIMATION_DURATION}s cubic-bezier(.1, 0, .25, 1)`
-      : 'none',
     transition: shiftState.animation
       ? `transform ${ANIMATION_DURATION}s cubic-bezier(.1, 0, .25, 1)`
       : 'none',

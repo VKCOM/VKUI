@@ -22,15 +22,8 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
 
-      - name: Enable Corepack
-        run: corepack enable
-        shell: bash
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-      - run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
+      - name: Node setup
+        uses: ./.github/actions/node-setup
 
       - name: Run tests for all workspaces
         if: ${{ !inputs.workspace }}

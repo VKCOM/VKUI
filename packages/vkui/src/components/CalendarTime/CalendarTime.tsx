@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { setHours, setMinutes } from '../../lib/date';
+import { setHours, setMinutes } from 'date-fns';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
 import { CustomSelect } from '../CustomSelect/CustomSelect';

@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';
 import { Avatar } from '../../Avatar/Avatar';
 import { Group } from '../../Group/Group';
 import { Cell } from '../Cell';
-import { CellCheckbox, CellCheckboxProps } from './CellCheckbox';
+import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox';
 
 const story: Meta<CellCheckboxProps> = {
   title: 'Blocks/Cell/Checkbox',

@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
-import { Search, SearchProps } from './Search';
+import { Search, type SearchProps } from './Search';
 
 const story: Meta<SearchProps> = {
   title: 'Blocks/Search',
