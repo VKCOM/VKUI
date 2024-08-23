@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { Icon16Cancel } from '@vkontakte/icons';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { DefaultIcon } from '../FloatingArrow/DefaultIcon';
 import { FloatingArrow, type FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './TooltipBase.module.css';
 
 export const TOOLTIP_MAX_WIDTH = 220;
@@ -58,6 +61,14 @@ export interface TooltipBaseProps
    * Передача `null` полностью сбрасывает установку `max-width` на элемент.
    */
   maxWidth?: number | string | null;
+  /**
+   * Скрытый текст для кнопки закрытия.
+   */
+  closeIconLabel?: string;
+  /**
+   * Обработчик нажатия на кнопку закрытия. При передаче, показывается иконка.
+   */
+  onCloseIconClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 /**
@@ -73,6 +84,8 @@ export const TooltipBase = ({
   text,
   header,
   maxWidth = TOOLTIP_MAX_WIDTH,
+  closeIconLabel = 'Закрыть',
+  onCloseIconClick,
   className,
   ...restProps
 }: TooltipBaseProps): React.ReactNode => {
@@ -97,8 +110,22 @@ export const TooltipBase = ({
         className={styles['TooltipBase__content']}
         style={maxWidth !== null ? { maxWidth } : undefined}
       >
-        {header && <Subhead weight="2">{header}</Subhead>}
-        {text && <Subhead>{text}</Subhead>}
+        <div>
+          {hasReactNode(header) && <Subhead weight="2">{header}</Subhead>}
+          {hasReactNode(text) && <Subhead>{text}</Subhead>}
+        </div>
+        {typeof onCloseIconClick === 'function' && (
+          <Tappable
+            Component="button"
+            className={styles['TooltipBase__closeButton']}
+            hoverMode="opacity"
+            activeMode="opacity"
+            onClick={onCloseIconClick}
+          >
+            <VisuallyHidden>{closeIconLabel}</VisuallyHidden>
+            <Icon16Cancel display="block" />
+          </Tappable>
+        )}
       </div>
     </RootComponent>
   );

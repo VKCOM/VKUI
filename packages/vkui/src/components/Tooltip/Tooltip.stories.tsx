@@ -23,3 +23,16 @@ export const Playground: Story = {
     text: 'Привет',
   },
 };
+
+export const InteractiveTooltipWithCloseAction: Story = {
+  render: (args) => (
+    <Tooltip {...args}>
+      <Button style={{ margin: 20 }}>Наведи</Button>
+    </Tooltip>
+  ),
+  args: {
+    text: 'Привет',
+    enableInteractive: true,
+    closable: true,
+  },
+};

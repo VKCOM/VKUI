@@ -36,7 +36,10 @@ type AllowedFloatingComponentProps = Pick<
   | 'disableFlipMiddleware'
 >;
 
-type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
+type AllowedTooltipBaseProps = Omit<
+  TooltipBaseProps,
+  'arrowProps' | 'closeIconLabel' | 'onCloseIconClick'
+>;
 
 type AllowedFloatingArrowProps = {
   /**
