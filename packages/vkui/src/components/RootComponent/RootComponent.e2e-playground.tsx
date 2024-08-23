@@ -7,7 +7,7 @@ export const RootComponentPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          // TODO: Добавить until-found
+          // TODO: Добавить until-found и hidden
           // https://github.com/facebook/react/issues/24740
           hidden: [false, true],
           children: ['text'],
