@@ -1,7 +1,7 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Div } from '../Div/Div';
 import { Header } from '../Header/Header';
-import { Group, GroupProps } from './Group';
+import { Group, type GroupProps } from './Group';
 
 export const GroupPlayground = (props: ComponentPlaygroundProps) => {
   return (
