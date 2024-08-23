@@ -1540,16 +1540,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-parser-algorithms@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@csstools/css-parser-algorithms@npm:3.0.0"
-  peerDependencies:
-    "@csstools/css-tokenizer": ^3.0.0
-  checksum: 10/15dbd553bd025118c0ad182fbb7385d3918ce040ba63cae6dae753c346c23c551daccd052d9b8775be3c79ad374f00d67caa54ac4510c1b75af928e140459c7e
-  languageName: node
-  linkType: hard
-
-"@csstools/css-parser-algorithms@npm:^3.0.1":
+"@csstools/css-parser-algorithms@npm:^3.0.0, @csstools/css-parser-algorithms@npm:^3.0.1":
   version: 3.0.1
   resolution: "@csstools/css-parser-algorithms@npm:3.0.1"
   peerDependencies:
@@ -1558,31 +1549,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-tokenizer@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@csstools/css-tokenizer@npm:3.0.0"
-  checksum: 10/64078771bc287c01a8f2e4ad399a6c171487fe997f205a9e869e9c619966547075c3c00ce760ea6fb9e339201a110def51c69ebba6d827784c6f9b684fa70174
-  languageName: node
-  linkType: hard
-
-"@csstools/css-tokenizer@npm:^3.0.1":
+"@csstools/css-tokenizer@npm:^3.0.0, @csstools/css-tokenizer@npm:^3.0.1":
   version: 3.0.1
   resolution: "@csstools/css-tokenizer@npm:3.0.1"
   checksum: 10/81ae01b2d3ec40ed3dc78f8507cbfdfe1dbc4ae3f8c8e29b8bb4414216a8c7a7a936fa0faa3d11a1e49ad72209aec7c05ad8450a4ffc30ba288aa074b4a0e3b3
   languageName: node
   linkType: hard
 
-"@csstools/media-query-list-parser@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@csstools/media-query-list-parser@npm:3.0.0"
-  peerDependencies:
-    "@csstools/css-parser-algorithms": ^3.0.0
-    "@csstools/css-tokenizer": ^3.0.0
-  checksum: 10/aca8b11c16c89d846ba605751842b4e88e246e5e39061bb0d1ae9bab84edd40969f4cad0aa0de96cc8c372b370ff6a609ffdf3ecb73dda70e55edb39c1814f8f
-  languageName: node
-  linkType: hard
-
-"@csstools/media-query-list-parser@npm:^3.0.1":
+"@csstools/media-query-list-parser@npm:^3.0.0, @csstools/media-query-list-parser@npm:^3.0.1":
   version: 3.0.1
   resolution: "@csstools/media-query-list-parser@npm:3.0.1"
   peerDependencies:
@@ -3930,12 +3904,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 22.2.0
-  resolution: "@types/node@npm:22.2.0"
+"@types/node@npm:*, @types/node@npm:^22.4.2":
+  version: 22.4.2
+  resolution: "@types/node@npm:22.4.2"
   dependencies:
-    undici-types: "npm:~6.13.0"
-  checksum: 10/2957c5c81f1a07a1210f28382adae65c11070c301e395fa819448516f1a2a710054b29e0ec7d8e28624afbcd90dae810403a497109545dea835b554fc76edf6c
+    undici-types: "npm:~6.19.2"
+  checksum: 10/b166dbf77da448c61e800d5adb3e6b1f6df0677edc5d0f686f7a17cf6a2500eb4966a23112cb37378be3344ce3156aec8cf4918fc49dc8cd401724aaeec74cc0
   languageName: node
   linkType: hard
 
@@ -3945,15 +3919,6 @@ __metadata:
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 10/d2fe84adf087a4184217b666f675e99678060d15f84882a4a1c3e49c3dca521a7e99a201a3c073c2b60b00419f1f4c3b357d8f7397f65e400dc3b77b0145a1da
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^22.4.2":
-  version: 22.4.2
-  resolution: "@types/node@npm:22.4.2"
-  dependencies:
-    undici-types: "npm:~6.19.2"
-  checksum: 10/b166dbf77da448c61e800d5adb3e6b1f6df0677edc5d0f686f7a17cf6a2500eb4966a23112cb37378be3344ce3156aec8cf4918fc49dc8cd401724aaeec74cc0
   languageName: node
   linkType: hard
 
@@ -9810,14 +9775,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore@npm:^5.2.0, ignore@npm:^5.2.4, ignore@npm:^5.3.1":
-  version: 5.3.1
-  resolution: "ignore@npm:5.3.1"
-  checksum: 10/0a884c2fbc8c316f0b9f92beaf84464253b73230a4d4d286697be45fca081199191ca33e1c2e82d9e5f851f5e9a48a78e25a35c951e7eb41e59f150db3530065
-  languageName: node
-  linkType: hard
-
-"ignore@npm:^5.3.2":
+"ignore@npm:^5.2.0, ignore@npm:^5.2.4, ignore@npm:^5.3.1, ignore@npm:^5.3.2":
   version: 5.3.2
   resolution: "ignore@npm:5.3.2"
   checksum: 10/cceb6a457000f8f6a50e1196429750d782afce5680dd878aa4221bd79972d68b3a55b4b1458fc682be978f4d3c6a249046aa0880637367216444ab7b014cfc98
@@ -13806,17 +13764,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-selector-parser@npm:^6.0.2, postcss-selector-parser@npm:^6.0.4, postcss-selector-parser@npm:^6.1.1":
-  version: 6.1.1
-  resolution: "postcss-selector-parser@npm:6.1.1"
-  dependencies:
-    cssesc: "npm:^3.0.0"
-    util-deprecate: "npm:^1.0.2"
-  checksum: 10/ce2af36b56d9333a6873498d3b6ee858466ceb3e9560f998eeaf294e5c11cafffb122d307f3c2904ee8f87d12c71c5ab0b26ca4228b97b6c70b7d1e7cd9b5737
-  languageName: node
-  linkType: hard
-
-"postcss-selector-parser@npm:^6.1.2":
+"postcss-selector-parser@npm:^6.0.2, postcss-selector-parser@npm:^6.0.4, postcss-selector-parser@npm:^6.1.1, postcss-selector-parser@npm:^6.1.2":
   version: 6.1.2
   resolution: "postcss-selector-parser@npm:6.1.2"
   dependencies:
@@ -16955,13 +16903,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.13.0":
-  version: 6.13.0
-  resolution: "undici-types@npm:6.13.0"
-  checksum: 10/da52e37cbc6da3a75da86fa08dd795ca8924430deb91005eb884b840e46e19013ccd4c1c289f70018e8cf0c338add24a500e7c3acfcd49b1ffb27ff9f91e38b9
-  languageName: node
-  linkType: hard
-
 "undici-types@npm:~6.19.2":
   version: 6.19.6
   resolution: "undici-types@npm:6.19.6"
@@ -17625,44 +17566,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.91.0":
-  version: 5.92.1
-  resolution: "webpack@npm:5.92.1"
-  dependencies:
-    "@types/eslint-scope": "npm:^3.7.3"
-    "@types/estree": "npm:^1.0.5"
-    "@webassemblyjs/ast": "npm:^1.12.1"
-    "@webassemblyjs/wasm-edit": "npm:^1.12.1"
-    "@webassemblyjs/wasm-parser": "npm:^1.12.1"
-    acorn: "npm:^8.7.1"
-    acorn-import-attributes: "npm:^1.9.5"
-    browserslist: "npm:^4.21.10"
-    chrome-trace-event: "npm:^1.0.2"
-    enhanced-resolve: "npm:^5.17.0"
-    es-module-lexer: "npm:^1.2.1"
-    eslint-scope: "npm:5.1.1"
-    events: "npm:^3.2.0"
-    glob-to-regexp: "npm:^0.4.1"
-    graceful-fs: "npm:^4.2.11"
-    json-parse-even-better-errors: "npm:^2.3.1"
-    loader-runner: "npm:^4.2.0"
-    mime-types: "npm:^2.1.27"
-    neo-async: "npm:^2.6.2"
-    schema-utils: "npm:^3.2.0"
-    tapable: "npm:^2.1.1"
-    terser-webpack-plugin: "npm:^5.3.10"
-    watchpack: "npm:^2.4.1"
-    webpack-sources: "npm:^3.2.3"
-  peerDependenciesMeta:
-    webpack-cli:
-      optional: true
-  bin:
-    webpack: bin/webpack.js
-  checksum: 10/76fcfbebcc0719c4734c65a01dcef7a0f18f3f2647484e8a7e8606adbd128ac42756bb3a8b7e2d486fe97f6286ebdc7b937ccdf3cf1d21b4684134bb89bbed89
-  languageName: node
-  linkType: hard
-
-"webpack@npm:^5.93.0":
+"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.91.0, webpack@npm:^5.93.0":
   version: 5.93.0
   resolution: "webpack@npm:5.93.0"
   dependencies:
