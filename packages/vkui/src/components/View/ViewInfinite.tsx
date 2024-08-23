@@ -15,7 +15,7 @@ import { NavViewIdContext } from '../NavIdContext/NavIdContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { SplitColContext, type SplitColContextProps } from '../SplitCol/SplitColContext';
-import { Touch, type TouchEvent } from '../Touch/Touch';
+import { type CustomTouchEvent, Touch } from '../Touch/Touch';
 import {
   getSwipeBackPredicates,
   hasHorizontalScrollableElementWithScrolledToLeft,
@@ -401,7 +401,7 @@ class ViewInfiniteComponent extends React.Component<
     });
   }
 
-  handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: TouchEvent) => {
+  handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: CustomTouchEvent) => {
     if (this.state.browserSwipe) {
       return;
     }
@@ -413,7 +413,7 @@ class ViewInfiniteComponent extends React.Component<
     }
   };
 
-  handleTouchMoveXForIOSSwipeBackSimulation = (event: TouchEvent) => {
+  handleTouchMoveXForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     if (this.swipeBackPrevented || swipeBackExcluded(event)) {
       return;
     }
@@ -480,7 +480,7 @@ class ViewInfiniteComponent extends React.Component<
     }
   };
 
-  handleTouchEndForIOSSwipeBackSimulation = (event: TouchEvent) => {
+  handleTouchEndForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     this.swipeBackPrevented = false;
 
     if (this.state.swipingBack && this.window) {

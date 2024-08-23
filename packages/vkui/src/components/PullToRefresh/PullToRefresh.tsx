@@ -8,14 +8,14 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { AnyFunction, HasChildren } from '../../types';
 import { type ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
-import { Touch, type TouchEvent as TouchEventInternal, type TouchProps } from '../Touch/Touch';
+import { type CustomTouchEvent, Touch, type TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { PullToRefreshSpinner } from './PullToRefreshSpinner';
 import styles from './PullToRefresh.module.css';
 
 const WAIT_FETCHING_TIMEOUT_MS = 1000;
 
-function cancelEvent(event: TouchEventInternal) {
+function cancelEvent(event: CustomTouchEvent) {
   /* istanbul ignore if: неясно в какой ситуации `event` из `Touch` может быть не определён */
   if (!event) {
     return false;
@@ -160,7 +160,7 @@ export const PullToRefresh = ({
 
   const startYRef = React.useRef(0);
 
-  const onTouchStart = (event: TouchEventInternal) => {
+  const onTouchStart = (event: CustomTouchEvent) => {
     if (refreshing) {
       cancelEvent(event);
       return;
@@ -170,7 +170,7 @@ export const PullToRefresh = ({
   };
 
   const iosRefreshStartedRef = React.useRef(false);
-  const onTouchMove = (event: TouchEventInternal) => {
+  const onTouchMove = (event: CustomTouchEvent) => {
     const { isY, shiftY } = event;
     const { start, max } = initParams;
     const pageYOffset = scroll?.getScroll().y;
