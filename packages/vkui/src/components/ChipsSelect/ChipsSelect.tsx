@@ -235,8 +235,17 @@ export const ChipsSelect = <Option extends ChipOption>({
 
   // Связано с CustomSelectDropdownProps
   const [dropdownVerticalPlacement, setDropdownVerticalPlacement] = React.useState<
-    Extract<Placement, 'top' | 'bottom'> | undefined
+    'top' | 'bottom'
   >(placementProp);
+
+  const onDropdownPlacementChange = React.useCallback((placement: Placement) => {
+    if (placement.startsWith('top')) {
+      setDropdownVerticalPlacement('top');
+    } else if (placement.startsWith('bottom')) {
+      setDropdownVerticalPlacement('bottom');
+    }
+  }, []);
+
   const dropdownId = React.useId();
   const dropdownCurrentItemId =
     focusedOptionIndex !== null ? `${dropdownId}-${focusedOptionIndex}` : undefined;
@@ -393,15 +402,6 @@ export const ChipsSelect = <Option extends ChipOption>({
     }
   }, [options, focusedOptionIndex, setFocusedOption]);
 
-  const onDropdownPlacementChange = React.useCallback((placement: Placement) => {
-    /* istanbul ignore next:  */
-    if (placement.startsWith('top')) {
-      setDropdownVerticalPlacement('top');
-    } else if (placement.startsWith('bottom')) {
-      setDropdownVerticalPlacement('bottom');
-    }
-  }, []);
-
   const onDropdownMouseLeave = React.useCallback(() => {
     setFocusedOptionIndex(null);
   }, [setFocusedOptionIndex]);
@@ -420,7 +420,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     () =>
       (opened &&
         dropdownOffsetDistance === 0 &&
-        (dropdownVerticalPlacement?.includes('top')
+        (dropdownVerticalPlacement.includes('top')
           ? styles['ChipsSelect--pop-up']
           : styles['ChipsSelect--pop-down'])) ||
       undefined,
@@ -475,7 +475,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         <CustomSelectDropdown
           data-testid={dropdownTestId}
           targetRef={rootRef}
-          placement={placementProp}
+          placement={dropdownVerticalPlacement}
           scrollBoxRef={dropdownScrollBoxRef}
           onPlacementChange={onDropdownPlacementChange}
           onMouseLeave={onDropdownMouseLeave}

@@ -1,10 +1,29 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import type { Placement, useFloating } from '../../lib/floating';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
+import styles from './CustomSelectDropdown.module.css';
+
+let placementStub: Placement | undefined = undefined;
+jest.mock('../../lib/floating', () => {
+  const originalModule = jest.requireActual('../../lib/floating');
+  return {
+    ...originalModule,
+    useFloating: (...args: Parameters<typeof useFloating>) => {
+      const result = originalModule['useFloating'](args);
+      return {
+        ...result,
+        get placement() {
+          return placementStub ?? result.placement;
+        },
+      };
+    },
+  };
+});
 
 const checkCustomSelectLabelValue = (label: string) => {
   expect(screen.getByTestId('labelTextTestId').textContent).toEqual(label);
@@ -29,6 +48,9 @@ const CustomSelectControlled = ({
 };
 
 describe('CustomSelect', () => {
+  afterEach(() => {
+    placementStub = undefined;
+  });
   baselineComponent((props) => (
     <CustomSelect aria-label="Choose your user" {...props} options={[]} />
   ));
@@ -1142,5 +1164,66 @@ describe('CustomSelect', () => {
       />,
     );
     expect(inputRef.current).not.toBeNull();
+  });
+
+  it('checks CustomSelect placement class for borders when dropdown is opened and closed during  placement change', async () => {
+    const component = render(
+      <CustomSelect
+        data-testid="select"
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+      />,
+    );
+    fireEvent.click(screen.getByTestId('select'));
+    await waitForFloatingPosition();
+
+    // dropdown по умолчанию открыт вниз и класс для границ выставлен верно
+    expect(document.querySelector(`.${styles['CustomSelect--pop-down']}`)).not.toBeNull();
+
+    // меняем позиционирование дропдауна вверх
+    placementStub = 'top';
+    component.rerender(
+      <CustomSelect
+        data-testid="select"
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+      />,
+    );
+
+    // dropdown открыт вверх и класс для границ выставлен верно
+    expect(document.querySelector(`.${styles['CustomSelect--pop-up']}`)).not.toBeNull();
+
+    // закрываем дропдаун и меняем позиционирование вниз
+    fireEvent.blur(screen.getByTestId('select'));
+    placementStub = 'bottom';
+    component.rerender(
+      <CustomSelect
+        data-testid="select"
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+      />,
+    );
+
+    // снова открываем дропдаун
+    // в этот момент внутренне состояние placement CustomSelect указывает вверх
+    // но floating-ui возвращает "bottom", а значит и внутренне состояние и
+    // границы CustomSelect должны быть выставлены соответственно вниз
+    fireEvent.click(screen.getByTestId('select'));
+    await waitForFloatingPosition();
+
+    // дропдаун открыт вниз и класс для границ выставлен верно
+    expect(document.querySelector(`.${styles['CustomSelect--pop-down']}`)).not.toBeNull();
   });
 });
