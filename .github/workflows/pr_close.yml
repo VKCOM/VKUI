@@ -174,7 +174,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: "Update @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
-          body: "This PR updates @vkontakte/vkui-floating-ui to version ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }} following the update of @floating-ui/react-dom to ${{ steps.check_floating_ui_updated.outputs.new_version }}.",
+          body: "This PR updates @vkontakte/vkui-floating-ui to version ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }} following the update of @floating-ui/react-dom to ${{ steps.check_floating_ui_updated.outputs.new_version }}."
           head: ${{ steps.create_new_branch.outputs.branch_name }}
           base: "master"
 
