@@ -93,6 +93,12 @@ jobs:
             echo "floating_ui_updated=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Get vkui-floating-ui version
+        id: get_version
+        run: |
+          echo "floating_ui_version=$(node -p "require('./packages/vkui-floating-ui/package.json').version")" >> $GITHUB_OUTPUT
+
+
       # Рассчитываем новую версию @vkui-floating-ui
       - name: Calculate new version of vkui-floating-ui
         id: calc_new_version_vkui_floating_ui
@@ -101,6 +107,7 @@ jobs:
         with:
           prev_version: ${{ steps.check_floating_ui_updated.outputs.prev_version }}
           new_version: ${{ steps.check_floating_ui_updated.outputs.new_version }}
+          floating_ui_version: ${{ steps.get_version.outputs.floating_ui_version }}
 
       # Создаем бранч где будут изменения
       - name: Create branch to update version
