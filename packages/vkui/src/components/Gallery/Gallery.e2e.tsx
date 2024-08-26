@@ -20,7 +20,7 @@ test.describe('Gallery', () => {
     const gallery = page.getByTestId('gallery');
 
     await gallery.hover();
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(300);
 
     await expectScreenshotClippedToContent();
   });
