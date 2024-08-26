@@ -28,8 +28,7 @@
   --vkui_internal--Switch__track_height: 32px;
   --vkui_internal--Switch__track_color: var(--vkui--color_background);
   --vkui_internal--Switch__track_color_duration: 67ms;
-  /* prettier-ignore */
-  --vkui_internal--Switch__track_shadow: inset 0 0 0 var(--vkui_internal--Switch__track_outline_width) var(--vkui--color_field_border_alpha);
+  --vkui_internal--Switch__track_shadow_visibility: 1;
 
   /* Switch__handle */
   --vkui_internal--Switch__handle_width: 28px;
@@ -47,29 +46,29 @@
 
 .Switch--default.Switch--sizeY-compact {
   /* Switch__track */
-  --vkui_internal--Switch__track_width: 42px;
-  --vkui_internal--Switch__track_height: 26px;
+  --vkui_internal--Switch__track_width: 32px;
+  --vkui_internal--Switch__track_height: 20px;
 
   /* Switch__handle */
-  --vkui_internal--Switch__handle_width: 22px;
-  --vkui_internal--Switch__handle_widthNoUnit--checked: 20;
-  --vkui_internal--Switch__handle_widthNoUnit--not-checked: 12;
-  --vkui_internal--Switch__handle_height: 22px;
-  --vkui_internal--Switch__handle_heightNoUnit: 22;
+  --vkui_internal--Switch__handle_width: 16.5px;
+  --vkui_internal--Switch__handle_widthNoUnit--checked: 16;
+  --vkui_internal--Switch__handle_widthNoUnit--not-checked: 10;
+  --vkui_internal--Switch__handle_height: 16.5px;
+  --vkui_internal--Switch__handle_heightNoUnit: 16.5;
 }
 
 @media (--sizeY-compact) {
   .Switch--default.Switch--sizeY-none {
     /* Switch__track */
-    --vkui_internal--Switch__track_width: 42px;
-    --vkui_internal--Switch__track_height: 26px;
+    --vkui_internal--Switch__track_width: 32px;
+    --vkui_internal--Switch__track_height: 20px;
 
     /* Switch__handle */
-    --vkui_internal--Switch__handle_width: 22px;
-    --vkui_internal--Switch__handle_widthNoUnit--checked: 20;
-    --vkui_internal--Switch__handle_widthNoUnit--not-checked: 12;
-    --vkui_internal--Switch__handle_height: 22px;
-    --vkui_internal--Switch__handle_heightNoUnit: 22;
+    --vkui_internal--Switch__handle_width: 16.5px;
+    --vkui_internal--Switch__handle_widthNoUnit--checked: 16;
+    --vkui_internal--Switch__handle_widthNoUnit--not-checked: 10;
+    --vkui_internal--Switch__handle_height: 16.5px;
+    --vkui_internal--Switch__handle_heightNoUnit: 16.5;
   }
 }
 
@@ -80,7 +79,6 @@
   --vkui_internal--Switch__track_height: 31px;
   --vkui_internal--Switch__track_color: var(--vkui--color_track_background);
   --vkui_internal--Switch__track_color_duration: 200ms;
-  --vkui_internal--Switch__track_shadow: none;
 
   /* Switch__handle */
   --vkui_internal--Switch__handle_width: 27px;
@@ -141,6 +139,7 @@
   --vkui_internal--Switch__handle_shift_x: calc(var(--vkui_internal--Switch__track_width) - var(--vkui_internal--Switch__handle_width) - var(--vkui_internal--Switch__track_outline_width));
   /* prettier-ignore */
   --vkui_internal--Switch__handle_scale: calc(var(--vkui_internal--Switch__handle_widthNoUnit--checked) / var(--vkui_internal--Switch__handle_heightNoUnit));
+  --vkui_internal--Switch__track_shadow_visibility: 0;
   --vkui_internal--Switch__handle_color: var(--vkui--color_icon_contrast);
 }
 
@@ -157,8 +156,18 @@
   block-size: var(--vkui_internal--Switch__track_height);
   border-radius: var(--vkui_internal--Switch__track_shape);
   background-color: var(--vkui_internal--Switch__track_color);
-  box-shadow: var(--vkui_internal--Switch__track_shadow);
   transition: background-color var(--vkui_internal--Switch__track_color_duration) linear;
+}
+
+.Switch--default .Switch__track::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: var(--vkui_internal--Switch__track_shadow_visibility);
+  border-radius: inherit;
+  border: var(--vkui_internal--Switch__track_outline_width) solid
+    var(--vkui--color_field_border_alpha);
+  transition: opacity var(--vkui_internal--Switch__track_color_duration) linear;
 }
 
 .Switch__handle {
@@ -214,8 +223,8 @@
 
 @media (--sizeY-compact) {
   .Switch__handle--withRipple::before {
-    inline-size: 32px;
-    block-size: 32px;
+    inline-size: 24px;
+    block-size: 24px;
   }
 }
 
