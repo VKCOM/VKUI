@@ -2,7 +2,7 @@
 
 ## Шаг 1
 
-Подготовьте [SPA React приложение](https://ru.reactjs.org/docs/create-a-new-react-app.html).
+Подготовьте [SPA React приложение](https://react.dev/learn/start-a-new-react-project).
 
 Вы можете использовать любые шаблоны и сборщики, в том числе и Create React App.
 **Обратите внимание:** VKUI поддерживает Typescript.

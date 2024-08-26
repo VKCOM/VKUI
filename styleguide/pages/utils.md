@@ -27,7 +27,7 @@ withPlatform(MyComponent);
 ```
 
 Способ определения платформы вне компонента устарел, так как мы начинаем поддерживать
-[SSR](https://reactjs.org/docs/react-dom-server.html).
+[SSR](https://react.dev/reference/react-dom/server).
 
 ## calcInitialsAvatarColor
 
