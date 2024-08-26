@@ -21,7 +21,7 @@ jobs:
         uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
-          label: "patch"
+          label: 'patch'
 
   check-dependabot-pr:
     runs-on: ubuntu-latest

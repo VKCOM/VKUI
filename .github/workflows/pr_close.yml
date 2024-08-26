@@ -98,7 +98,6 @@ jobs:
         run: |
           echo "floating_ui_version=$(node -p "require('./packages/vkui-floating-ui/package.json').version")" >> $GITHUB_OUTPUT
 
-
       # Рассчитываем новую версию @vkui-floating-ui
       - name: Calculate new version of vkui-floating-ui
         id: calc_new_version_vkui_floating_ui
@@ -173,10 +172,10 @@ jobs:
         uses: ./.github/actions/create-pull-request
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: "Update @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
-          body: "This PR updates @vkontakte/vkui-floating-ui to version ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }} following the update of @floating-ui/react-dom to ${{ steps.check_floating_ui_updated.outputs.new_version }}."
+          title: 'Update @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
+          body: 'This PR updates @vkontakte/vkui-floating-ui to version ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }} following the update of @floating-ui/react-dom to ${{ steps.check_floating_ui_updated.outputs.new_version }}.'
           head: ${{ steps.create_new_branch.outputs.branch_name }}
-          base: "master"
+          base: 'master'
 
       # Добавляем майлстоун следующей минорной версии
       - name: Add next minor version milestone to pull request
@@ -192,4 +191,4 @@ jobs:
         uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ steps.create_pull_request.outputs.pull_request_number }}
-          label: "subpackage:@vkontakte/vkui-floating-ui"
+          label: 'subpackage:@vkontakte/vkui-floating-ui'
