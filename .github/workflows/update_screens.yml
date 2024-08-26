@@ -107,9 +107,6 @@ jobs:
 
   collect_all_chnages_and_push:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      contents: write
     needs: [update_screens]
     name: 'Collect updated screenshots and push changes'
     steps:
@@ -146,7 +143,7 @@ jobs:
         if: ${{ steps.unzip.outputs.found == 'true' && github.event_name == 'push' }}
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           title: 'ci(e2e): Update screenshots for ${{ github.ref_name }}'
           branch: ${{ github.ref_name }}-screenshots-updates
           commit-message: 'chore(e2e): update screenshots'
