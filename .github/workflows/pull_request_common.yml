@@ -57,7 +57,7 @@ jobs:
 
       - name: Check if PR updates relevant dependencies
         id: check_deps
-        if: {{ steps.metadata.outputs.package-name == "@vkontakte/vkui" }}
+        if: {{ steps.metadata.outputs.directory == "packages/vkui" }}
         run: |
 
           # ```sh
