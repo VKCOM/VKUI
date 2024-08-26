@@ -71,8 +71,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get vkui version
+        id: get_version
+        run: |
+          echo "vkui_version=$(node -p "require('./packages/vkui/package.json').version")" >> $GITHUB_OUTPUT
+
       - name: Update release notes script
         uses: VKCOM/gh-actions/VKUI/auto-update-release-notes@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          vkui_version: ${{ steps.get_version.outputs.vkui_version }}
           pull_request_number: ${{ github.event.pull_request.number }}
