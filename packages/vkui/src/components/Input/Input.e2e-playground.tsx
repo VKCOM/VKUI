@@ -16,7 +16,8 @@ export const InputPlayground = (props: ComponentPlaygroundProps) => {
           $adaptivity: 'y',
         },
         {
-          status: ['error', 'valid'],
+          status: ['default', 'error', 'valid'],
+          mode: ['default', 'plain'],
         },
       ]}
     >

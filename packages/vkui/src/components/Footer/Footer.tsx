@@ -9,9 +9,21 @@ export type FooterProps = React.AllHTMLAttributes<HTMLElement> & HasComponent;
 /**
  * @see https://vkcom.github.io/VKUI/#/Footer
  */
-export const Footer = ({ children, className, ...restProps }: FooterProps): React.ReactNode => {
+export const Footer = ({
+  children,
+  className,
+  Component = 'footer',
+  role: roleProp,
+  ...restProps
+}: FooterProps): React.ReactNode => {
+  const role = roleProp ?? (Component === 'footer' ? 'contentinfo' : undefined);
   return (
-    <Footnote Component="footer" {...restProps} className={classNames(styles['Footer'], className)}>
+    <Footnote
+      Component={Component}
+      role={role}
+      {...restProps}
+      className={classNames(styles['Footer'], className)}
+    >
       {children}
     </Footnote>
   );

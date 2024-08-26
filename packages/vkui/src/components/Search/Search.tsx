@@ -206,6 +206,7 @@ export const Search = ({
             onClick={onCancel}
             className={styles['Search__icon']}
             tabIndex={hasValue ? undefined : -1}
+            disabled={inputProps.disabled}
           >
             <VisuallyHidden>{clearLabel}</VisuallyHidden>
             {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Avatar } from '../Avatar/Avatar';
@@ -32,13 +33,13 @@ export const Example: Story = {
         <PanelHeader>Footer</PanelHeader>
         <Group>
           <List>
-            <Cell before={<Avatar />} subtitle="Веб-сайт">
+            <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={noop}>
               Команда ВКонтакте
             </Cell>
-            <Cell before={<Avatar />} subtitle="Музыкант">
+            <Cell before={<Avatar />} subtitle="Музыкант" onClick={noop}>
               Robbie Williams
             </Cell>
-            <Cell before={<Avatar />} subtitle="Издательский дом">
+            <Cell before={<Avatar />} subtitle="Издательский дом" onClick={noop}>
               ПостНаука
             </Cell>
           </List>

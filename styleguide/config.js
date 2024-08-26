@@ -281,7 +281,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/RadioGroup/RadioGroup.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Checkbox/Checkbox.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Input/Input.tsx`,
-            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ChipInputBase/Chip/Chip.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ChipsInputBase/Chip/Chip.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ChipsInput/ChipsInput.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Select/Select.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/NativeSelect/NativeSelect.tsx`,

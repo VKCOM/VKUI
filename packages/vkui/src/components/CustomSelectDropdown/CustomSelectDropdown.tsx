@@ -33,15 +33,12 @@ export interface CustomSelectDropdownProps
   noMaxHeight?: boolean;
 }
 
-const calcIsTop = (placement: Placement) => placement.startsWith('top');
-
 export const CustomSelectDropdown = ({
   children,
   targetRef,
   scrollBoxRef,
   placement = 'bottom',
   fetching,
-  onPlacementChange: parentOnPlacementChange,
   offsetDistance = 0,
   autoWidth = false,
   forcePortal = true,
@@ -53,30 +50,19 @@ export const CustomSelectDropdown = ({
   overscrollBehavior,
   ...restProps
 }: CustomSelectDropdownProps): React.ReactNode => {
-  const [isTop, setIsTop] = React.useState(() => calcIsTop(placement));
-
-  const onPlacementChange = React.useCallback(
-    (placement: Placement) => {
-      setIsTop(calcIsTop(placement));
-      if (parentOnPlacementChange) {
-        parentOnPlacementChange(placement);
-      }
-    },
-    [parentOnPlacementChange],
-  );
-
   return (
     <Popper
       targetRef={targetRef}
       offsetByMainAxis={offsetDistance}
       sameWidth={!autoWidth}
-      onPlacementChange={onPlacementChange}
       placement={placement}
       className={classNames(
         styles['CustomSelectDropdown'],
         'vkuiInternalCustomSelectDropdown',
         offsetDistance === 0 &&
-          (isTop ? styles['CustomSelectDropdown--top'] : styles['CustomSelectDropdown--bottom']),
+          (placement.includes('top')
+            ? styles['CustomSelectDropdown--top']
+            : styles['CustomSelectDropdown--bottom']),
         autoWidth &&
           classNames(
             styles['CustomSelectDropdown--wide'],

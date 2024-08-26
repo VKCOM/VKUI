@@ -1,9 +1,9 @@
 import { getOverflowAncestors } from '../../lib/floating';
-import { type TouchEvent } from '../Touch/Touch';
+import { type CustomTouchEvent } from '../Touch/Touch';
 
 const swipeBackExcludedSelector = 'input, textarea, [data-vkui-swipe-back=false]';
 
-export function swipeBackExcluded(e: TouchEvent): boolean {
+export function swipeBackExcluded(e: CustomTouchEvent): boolean {
   const target = e.originalEvent.target as HTMLElement;
   // eslint-disable-next-line no-restricted-properties
   return Boolean(target?.closest?.(swipeBackExcludedSelector));
