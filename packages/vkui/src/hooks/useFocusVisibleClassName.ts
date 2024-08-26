@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { LiteralUnion } from '../types';
+import type { LiteralUnion } from '../types';
 import styles from '../styles/focusVisible.module.css';
 
 export const focusVisiblePresetModeClassNames: Record<'inside' | 'outside', string> = {

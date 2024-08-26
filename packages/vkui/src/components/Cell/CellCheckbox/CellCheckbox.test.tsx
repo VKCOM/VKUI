@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { Platform } from '../../../lib/platform';
 import { baselineComponent } from '../../../testing/utils';
 import { ConfigProvider } from '../../ConfigProvider/ConfigProvider';
-import { CellCheckbox, CellCheckboxProps } from './CellCheckbox';
+import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox';
 import styles from './CellCheckbox.module.css';
 
 describe('CellCheckbox', () => {

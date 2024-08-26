@@ -1,5 +1,5 @@
 import type { SelectType } from '../Select/Select';
-import { Text, TextProps } from '../Typography/Text/Text';
+import { Text, type TextProps } from '../Typography/Text/Text';
 
 export interface SelectTypographyProps extends TextProps {
   selectType?: SelectType;

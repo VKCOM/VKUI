@@ -1,7 +1,7 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import {
   AdaptivityProvider,
-  AdaptivityProviderProps,
+  type AdaptivityProviderProps,
 } from '../AdaptivityProvider/AdaptivityProvider';
 import { DatePicker, type DatePickerProps } from './DatePicker';
 

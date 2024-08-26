@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Typography.module.css';
 

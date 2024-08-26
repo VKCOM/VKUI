@@ -1,16 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
-import {
-  Icon16Dropdown,
-  Icon20NewsfeedOutline,
-  Icon20PictureOutline,
-  Icon20ThumbsUpOutline,
-  Icon20UsersOutline,
-} from '@vkontakte/icons';
+import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createFieldWithPresets } from '../../testing/presets';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
-import { TabsItem, TabsItemProps } from './TabsItem';
+import { TabsItem, type TabsItemProps } from './TabsItem';
 
 const story: Meta<TabsItemProps> = {
   title: 'Blocks/TabsItem',
@@ -18,6 +12,32 @@ const story: Meta<TabsItemProps> = {
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   args: {
     onClick: noop,
+  },
+  argTypes: {
+    before: createFieldWithPresets({
+      iconSizes: ['20', '24'],
+      requiredIcons: [
+        'Icon20NewsfeedOutline',
+        'Icon20ThumbsUpOutline',
+        'Icon20UsersOutline',
+        'Icon20PictureOutline',
+      ],
+    }),
+    after: createFieldWithPresets({
+      iconSizes: ['16'],
+      requiredIcons: ['Icon16Dropdown'],
+    }),
+    status: createFieldWithPresets({
+      additionalPresets: {
+        Badge: <Badge mode="prominent">Есть обновления</Badge>,
+        Counter: (
+          <Counter mode="prominent" size="s">
+            3
+          </Counter>
+        ),
+        Number: 23,
+      },
+    }),
   },
 };
 
@@ -42,8 +62,8 @@ export const WithBeforeAfter: Story = {
   ...Playground,
   args: {
     children: 'Лента',
-    before: <Icon20NewsfeedOutline />,
-    after: <Icon16Dropdown />,
+    before: 'Icon20NewsfeedOutline',
+    after: 'Icon16Dropdown',
   },
 };
 
@@ -51,8 +71,8 @@ export const WithBadge: Story = {
   ...Playground,
   args: {
     children: 'Рекомендации',
-    before: <Icon20ThumbsUpOutline />,
-    after: <Icon16Dropdown />,
+    before: 'Icon20ThumbsUpOutline',
+    after: 'Icon16Dropdown',
     status: <Badge mode="prominent">Есть обновления</Badge>,
   },
 };
@@ -61,8 +81,8 @@ export const WithCounter: Story = {
   ...Playground,
   args: {
     children: 'Друзья',
-    before: <Icon20UsersOutline />,
-    after: <Icon16Dropdown />,
+    before: 'Icon20UsersOutline',
+    after: 'Icon16Dropdown',
     status: (
       <Counter mode="prominent" size="s">
         3
@@ -75,8 +95,8 @@ export const WithNumberStatus: Story = {
   ...Playground,
   args: {
     children: 'Фотографии',
-    before: <Icon20PictureOutline />,
-    after: <Icon16Dropdown />,
+    before: 'Icon20PictureOutline',
+    after: 'Icon16Dropdown',
     status: 23,
   },
 };

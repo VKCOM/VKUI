@@ -1,5 +1,12 @@
 import { useArgs } from '@storybook/preview-api';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
+import {
+  Icon16Dropdown,
+  Icon20NewsfeedOutline,
+  Icon20PictureOutline,
+  Icon20ThumbsUpOutline,
+  Icon20UsersOutline,
+} from '@vkontakte/icons';
 import { withSinglePanel } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
@@ -12,7 +19,7 @@ import {
   WithCounter as CounterTabsItemStory,
   WithNumberStatus as NumberStatusTabsItemStory,
 } from '../TabsItem/TabsItem.stories';
-import { Tabs, TabsProps } from './Tabs';
+import { Tabs, type TabsProps } from './Tabs';
 
 type StoryTabsProps = TabsProps & { selected: string };
 
@@ -47,21 +54,29 @@ export const Playground: Story = {
         />
         <TabsItem
           {...BeforeAfterTabsItemStory.args}
+          before={<Icon20NewsfeedOutline />}
+          after={<Icon16Dropdown />}
           selected={selected === 'news'}
           onClick={() => updateArg({ selected: 'news' })}
         />
         <TabsItem
           {...BadgeTabsItemStory.args}
+          before={<Icon20ThumbsUpOutline />}
+          after={<Icon16Dropdown />}
           selected={selected === 'recommendations'}
           onClick={() => updateArg({ selected: 'recommendations' })}
         />
         <TabsItem
           {...CounterTabsItemStory.args}
+          before={<Icon20UsersOutline />}
+          after={<Icon16Dropdown />}
           selected={selected === 'friends'}
           onClick={() => updateArg({ selected: 'friends' })}
         />
         <TabsItem
           {...NumberStatusTabsItemStory.args}
+          before={<Icon20PictureOutline />}
+          after={<Icon16Dropdown />}
           selected={selected === 'photos'}
           onClick={() => updateArg({ selected: 'photos' })}
         />
@@ -95,21 +110,29 @@ export const WithHorizontalScroll: Story = {
           />
           <TabsItem
             {...BeforeAfterTabsItemStory.args}
+            before={<Icon20NewsfeedOutline />}
+            after={<Icon16Dropdown />}
             selected={selected === 'news'}
             onClick={() => updateArg({ selected: 'news' })}
           />
           <TabsItem
             {...BadgeTabsItemStory.args}
+            before={<Icon20ThumbsUpOutline />}
+            after={<Icon16Dropdown />}
             selected={selected === 'recommendations'}
             onClick={() => updateArg({ selected: 'recommendations' })}
           />
           <TabsItem
             {...CounterTabsItemStory.args}
+            before={<Icon20UsersOutline />}
+            after={<Icon16Dropdown />}
             selected={selected === 'friends'}
             onClick={() => updateArg({ selected: 'friends' })}
           />
           <TabsItem
             {...NumberStatusTabsItemStory.args}
+            before={<Icon20PictureOutline />}
+            after={<Icon16Dropdown />}
             selected={selected === 'photos'}
             onClick={() => updateArg({ selected: 'photos' })}
           />

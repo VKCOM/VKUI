@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { PlatformProvider, PlatformProviderProps } from './PlatformProvider';
+import { PlatformProvider, type PlatformProviderProps } from './PlatformProvider';
 
 const story: Meta<PlatformProviderProps> = {
   title: 'Service/PlatformProvider',

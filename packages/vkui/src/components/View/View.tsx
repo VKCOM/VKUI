@@ -3,16 +3,16 @@ import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
 import { blurActiveElement, useDOM } from '../../lib/dom';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScroll } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { NavViewIdContext } from '../NavIdContext/NavIdContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { useSplitCol } from '../SplitCol/SplitColContext';
-import { Touch, TouchEvent } from '../Touch/Touch';
+import { type CustomTouchEvent, Touch } from '../Touch/Touch';
 import { useLayoutEffectCall } from './useLayoutEffectCall';
 import {
   getSwipeBackPredicates,
@@ -186,7 +186,7 @@ export const View = ({
     }
   }, [onSwipeBackCancel, onSwipeBackSuccess, swipeBackResult]);
 
-  const handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: TouchEvent) => {
+  const handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: CustomTouchEvent) => {
     if (browserSwipe) {
       return;
     }
@@ -198,7 +198,7 @@ export const View = ({
     }
   };
 
-  const handleTouchMoveXForIOSSwipeBackSimulation = (event: TouchEvent) => {
+  const handleTouchMoveXForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     if (swipeBackPrevented.current || swipeBackExcluded(event)) {
       return;
     }
@@ -259,7 +259,7 @@ export const View = ({
     }
   };
 
-  const handleTouchEndForIOSSwipeBackSimulation = (event: TouchEvent) => {
+  const handleTouchEndForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     swipeBackPrevented.current = false;
     if (swipingBack) {
       const speed = (swipeBackShift / event.duration) * 1000;

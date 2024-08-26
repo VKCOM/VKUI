@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type { MediaQueries } from '../../lib/adaptivity';
 import { rubberbandIfOutOfBounds } from '../../lib/animation';
 import type { ShiftData, SnackbarPlacement } from './types';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
-import { HasOnlyExpectedProps } from '../../types';
+import type { HasOnlyExpectedProps } from '../../types';
 import {
   CustomSelect,
   type CustomSelectOptionInterface,

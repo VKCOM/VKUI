@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './PullToRefresh.module.css';

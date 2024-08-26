@@ -1,4 +1,4 @@
-import { ActionSheetItem, ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
+import { ActionSheetItem, type ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 
 export const ActionSheetDefaultIosCloseItem = (props: ActionSheetItemProps): React.ReactNode => {
   return (

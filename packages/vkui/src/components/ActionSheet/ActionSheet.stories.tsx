@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {
   Icon28CopyOutline,
   Icon28DeleteOutline,
@@ -11,12 +11,12 @@ import {
   Icon28SubtitlesOutline,
 } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
-import { ActionSheetItem, ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
+import { ActionSheetItem, type ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { Button } from '../Button/Button';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { ActionSheet, ActionSheetProps } from './ActionSheet';
+import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
 const story: Meta<ActionSheetProps> = {
   title: 'Popouts/ActionSheet',

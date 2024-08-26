@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../../hooks/useAdaptivity';
-import { HTMLAttributesWithRootRef } from '../../../../types';
+import type { HTMLAttributesWithRootRef } from '../../../../types';
 import { RootComponent } from '../../../RootComponent/RootComponent';
 import { Paragraph } from '../../../Typography/Paragraph/Paragraph';
 import { Subhead } from '../../../Typography/Subhead/Subhead';

@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { HTMLAttributesWithRootRef } from '../../../types';
+import type { HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from './DropZoneGrid.module.css';
 

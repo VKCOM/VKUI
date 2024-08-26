@@ -1,22 +1,28 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Icon24User } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { cities, getRandomUsers } from '../../testing/mock';
+import { getFormFieldIconsPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { Div } from '../Div/Div';
 import { FormItem } from '../FormItem/FormItem';
 import { FormLayoutGroup } from '../FormLayoutGroup/FormLayoutGroup';
 import { Header } from '../Header/Header';
-import { CustomSelect, SelectProps } from './CustomSelect';
+import { CustomSelect, type SelectProps } from './CustomSelect';
+
+const iconsPresets = getFormFieldIconsPresets();
 
 const story: Meta<SelectProps> = {
   title: 'Forms/CustomSelect',
   component: CustomSelect,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   args: { onOpen: fn(), onClose: fn() },
+  argTypes: {
+    before: iconsPresets,
+  },
 };
 
 export default story;

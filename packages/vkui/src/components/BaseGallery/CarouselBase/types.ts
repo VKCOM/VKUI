@@ -1,4 +1,4 @@
-import { GallerySlidesState } from '../types';
+import type { GallerySlidesState } from '../types';
 
 export interface LoopPoint {
   /**

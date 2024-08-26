@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -24,7 +24,7 @@ import { Placeholder } from '../Placeholder/Placeholder';
 import { Radio } from '../Radio/Radio';
 import { SelectMimicry } from '../SelectMimicry/SelectMimicry';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
-import { ModalPage, ModalPageProps } from './ModalPage';
+import { ModalPage, type ModalPageProps } from './ModalPage';
 
 const story: Meta<ModalPageProps> = {
   title: 'Modals/ModalPage',

@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
+import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Badge.module.css';
 

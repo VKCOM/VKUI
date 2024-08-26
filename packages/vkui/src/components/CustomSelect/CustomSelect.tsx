@@ -3,19 +3,19 @@ import { classNames, debounce } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useDOM } from '../../lib/dom';
-import type { PlacementWithAuto } from '../../lib/floating';
+import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
+import type { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import {
   CustomSelectDropdown,
-  CustomSelectDropdownProps,
+  type CustomSelectDropdownProps,
 } from '../CustomSelectDropdown/CustomSelectDropdown';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
-import { FormFieldProps } from '../FormField/FormField';
-import { NativeSelectProps } from '../NativeSelect/NativeSelect';
-import { SelectType } from '../Select/Select';
+import type { FormFieldProps } from '../FormField/FormField';
+import type { NativeSelectProps } from '../NativeSelect/NativeSelect';
+import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import {
   CustomSelectClearButton,
@@ -230,9 +230,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     calculateInputValueFromOptions(optionsProp, nativeSelectValue),
   );
 
-  const [popperPlacement, setPopperPlacement] = React.useState<PlacementWithAuto | undefined>(
-    popupDirection,
-  );
+  const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
   const [options, setOptions] = React.useState(optionsProp);
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
     findSelectedIndex(optionsProp, props.value ?? defaultValue, allowClearButton),
@@ -266,7 +264,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     () =>
       (opened &&
         dropdownOffsetDistance === 0 &&
-        (popperPlacement?.includes('top')
+        (popperPlacement.includes('top')
           ? styles['CustomSelect--pop-up']
           : styles['CustomSelect--pop-down'])) ||
       undefined,
@@ -851,7 +849,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       {opened && (
         <CustomSelectDropdown
           targetRef={containerRef}
-          placement={popupDirection}
+          placement={popperPlacement}
           scrollBoxRef={setScrollBoxRef}
           onPlacementChange={setPopperPlacement}
           onMouseLeave={resetFocusedOption}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Decorator } from '@storybook/react';
+import type { Decorator } from '@storybook/react';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../components/AppRoot/AppRoot';
 import { ConfigProvider } from '../components/ConfigProvider/ConfigProvider';

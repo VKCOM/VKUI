@@ -11,7 +11,7 @@ import { useAdaptivityConditionalRender } from '../../../hooks/useAdaptivityCond
 import { useExternRef } from '../../../hooks/useExternRef';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { warnOnce } from '../../../lib/warnOnce';
-import { HasRef, HasRootRef } from '../../../types';
+import type { HasRef, HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';

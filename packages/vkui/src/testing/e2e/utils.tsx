@@ -4,7 +4,7 @@ import type {
   AdaptivityProps,
   SizeProps,
 } from '../../components/AdaptivityProvider/AdaptivityContext';
-import { BREAKPOINTS, ViewWidth, ViewWidthType } from '../../lib/adaptivity';
+import { BREAKPOINTS, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 
 export function getAdaptivePxWidth(viewWidth: ViewWidthType) {
   switch (viewWidth) {

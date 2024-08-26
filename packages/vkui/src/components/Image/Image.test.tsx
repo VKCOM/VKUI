@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { getAvatarUrl } from '../../testing/mock';
 import { baselineComponent } from '../../testing/utils';
-import { Image, ImageProps } from './Image';
+import { Image, type ImageProps } from './Image';
 import styles from './Image.module.css';
 import imageBadgeStyles from './ImageBadge/ImageBadge.module.css';
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ModalRootContextInterface } from './ModalRootContext';
+import type { ModalRootContextInterface } from './ModalRootContext';
 import { useModalRootContext } from './useModalRootContext';
 
 type PickedProps = Pick<ModalRootContextInterface, 'updateModalHeight'>;

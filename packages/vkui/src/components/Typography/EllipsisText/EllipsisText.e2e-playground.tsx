@@ -1,5 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { EllipsisText, EllipsisTextProps } from './EllipsisText';
+import { EllipsisText, type EllipsisTextProps } from './EllipsisText';
 
 export const EllipsisTextPlayground = (props: ComponentPlaygroundProps) => {
   return (

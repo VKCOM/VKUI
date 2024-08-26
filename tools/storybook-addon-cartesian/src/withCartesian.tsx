@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Decorator, ReactRenderer } from '@storybook/react';
+import type { Decorator, ReactRenderer } from '@storybook/react';
 import type { StoryContext, StrictArgs, StrictArgTypes } from '@storybook/types';
 
 const CartesianContainerStyle: React.CSSProperties = {

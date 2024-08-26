@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { baselineComponent } from '../../testing/utils';
-import { GridAvatar, GridAvatarProps, MAX_GRID_LENGTH } from './GridAvatar';
+import { GridAvatar, type GridAvatarProps, MAX_GRID_LENGTH } from './GridAvatar';
 import styles from './GridAvatar.module.css';
 import gridAvatarBadgeStyles from './GridAvatarBadge/GridAvatarBadge.module.css';
 

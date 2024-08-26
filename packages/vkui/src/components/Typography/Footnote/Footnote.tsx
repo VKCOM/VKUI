@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { HasCaps, Typography, TypographyProps } from '../Typography';
+import { type HasCaps, Typography, type TypographyProps } from '../Typography';
 import styles from './Footnote.module.css';
 
 export interface FootnoteProps extends TypographyProps, HasCaps {}

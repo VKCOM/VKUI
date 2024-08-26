@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
-import { HasRootRef } from '../../../types';
-import { RootComponentProps } from '../../RootComponent/RootComponent';
+import type { HasRootRef } from '../../../types';
+import type { RootComponentProps } from '../../RootComponent/RootComponent';
 import styles from './EllipsisText.module.css';
 
 export interface EllipsisTextProps

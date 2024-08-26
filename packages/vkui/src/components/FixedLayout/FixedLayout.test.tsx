@@ -1,9 +1,9 @@
-import { act, MutableRefObject } from 'react';
+import { act, type MutableRefObject } from 'react';
 import { render } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { SplitCol } from '../SplitCol/SplitCol';
-import { FixedLayout, FixedLayoutProps } from './FixedLayout';
+import { FixedLayout, type FixedLayoutProps } from './FixedLayout';
 import styles from './FixedLayout.module.css';
 
 let updateFunction: () => void;

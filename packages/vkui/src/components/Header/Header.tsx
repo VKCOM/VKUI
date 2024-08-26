@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';

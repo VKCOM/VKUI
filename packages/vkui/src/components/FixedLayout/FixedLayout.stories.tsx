@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Div } from '../Div/Div';
@@ -10,7 +10,7 @@ import { Separator } from '../Separator/Separator';
 import { Tabs } from '../Tabs/Tabs';
 import { TabsItem } from '../TabsItem/TabsItem';
 import { View } from '../View/View';
-import { FixedLayout, FixedLayoutProps } from './FixedLayout';
+import { FixedLayout, type FixedLayoutProps } from './FixedLayout';
 
 const story: Meta<FixedLayoutProps> = {
   title: 'Layout/FixedLayout',

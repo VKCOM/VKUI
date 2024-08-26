@@ -1,5 +1,5 @@
-import { AlignType } from '../../types';
-import { LayoutState } from './types';
+import type { AlignType } from '../../types';
+import type { LayoutState } from './types';
 
 interface CalcMin extends Partial<LayoutState> {
   isCenterWithCustomWidth: boolean;

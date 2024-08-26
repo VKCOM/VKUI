@@ -1,5 +1,5 @@
 import { useArgs } from '@storybook/preview-api';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
@@ -9,7 +9,7 @@ import {
   WithCounter as CounterSubnavigationButtonStory,
   WithIcon as IconSubnavigationButtonStory,
 } from '../SubnavigationButton/SubnavigationButton.stories';
-import { SubnavigationBar, SubnavigationBarProps } from './SubnavigationBar';
+import { SubnavigationBar, type SubnavigationBarProps } from './SubnavigationBar';
 
 type StorySubnavigationBarProps = SubnavigationBarProps & { selected: string };
 

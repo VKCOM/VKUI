@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { ContentCard, ContentCardProps } from './ContentCard';
+import { ContentCard, type ContentCardProps } from './ContentCard';
 
 const story: Meta<ContentCardProps> = {
   title: 'Blocks/ContentCard',

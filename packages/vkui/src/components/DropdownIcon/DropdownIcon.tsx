@@ -7,7 +7,7 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 
 export interface DropdownIconProps extends HTMLAttributesWithRootRef<SVGSVGElement> {
   opened?: boolean;

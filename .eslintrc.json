@@ -35,6 +35,12 @@
         }
       }
     ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "fixStyle": "inline-type-imports"
+      }
+    ],
 
     "no-shadow": "off", // [Reason] need using @typescript-eslint/no-shadow
     "no-restricted-globals": ["error", "window", "document"],

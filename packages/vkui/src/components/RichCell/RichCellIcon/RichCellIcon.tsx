@@ -1,4 +1,4 @@
-import { HTMLAttributesWithRootRef } from '../../../types';
+import type { HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from './RichCellIcon.module.css';
 

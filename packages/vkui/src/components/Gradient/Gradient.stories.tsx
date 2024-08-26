@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Gradient, GradientProps } from './Gradient';
+import { Gradient, type GradientProps } from './Gradient';
 
 const story: Meta<GradientProps> = {
   title: 'Blocks/Gradient',

@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { getRandomUsers, UserExtendedInterface } from '../../testing/mock';
+import { getRandomUsers, type UserExtendedInterface } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
 import { Header } from '../Header/Header';
 import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
 import { Spinner } from '../Spinner/Spinner';
-import { HorizontalScroll, HorizontalScrollProps } from './HorizontalScroll';
+import { HorizontalScroll, type HorizontalScrollProps } from './HorizontalScroll';
 
 const story: Meta<HorizontalScrollProps> = {
   title: 'Layout/HorizontalScroll/HorizontalScroll',

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getSizeX, isCompactByViewHeight, isCompactByViewWidth } from '../../lib/adaptivity';
-import { HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
 
 export interface AdaptivityProviderProps extends AdaptivityProps, HasChildren {}

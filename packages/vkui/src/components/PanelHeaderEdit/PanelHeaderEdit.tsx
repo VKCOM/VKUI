@@ -7,7 +7,10 @@ import {
 } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
-import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import {
+  PanelHeaderButton,
+  type PanelHeaderButtonProps,
+} from '../PanelHeaderButton/PanelHeaderButton';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 
 export interface PanelHeaderEditProps extends PanelHeaderButtonProps {

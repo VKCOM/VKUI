@@ -1,7 +1,7 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { Tappable } from '../../Tappable/Tappable';
-import { CheckboxProps } from '../Checkbox';
+import type { CheckboxProps } from '../Checkbox';
 import { CheckboxInput } from '../CheckboxInput/CheckboxInput';
 import styles from './CheckboxSimple.module.css';
 

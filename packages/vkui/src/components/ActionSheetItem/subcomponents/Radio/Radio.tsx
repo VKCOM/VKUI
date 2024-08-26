@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon20CheckCircleOn, Icon24CheckCircleOn } from '@vkontakte/icons';
-import { HasRef, HasRootRef } from '../../../../types';
+import type { HasRef, HasRootRef } from '../../../../types';
 import { AdaptiveIconRenderer } from '../../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { RootComponent } from '../../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../../VisuallyHidden/VisuallyHidden';

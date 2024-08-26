@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon56UsersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Placeholder, PlaceholderProps } from './Placeholder';
+import { Placeholder, type PlaceholderProps } from './Placeholder';
 
 const story: Meta<PlaceholderProps> = {
   title: 'Blocks/Placeholder',

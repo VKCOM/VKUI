@@ -3,9 +3,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import {
   SegmentedControl,
-  SegmentedControlOptionInterface,
-  SegmentedControlProps,
-  SegmentedControlValue,
+  type SegmentedControlOptionInterface,
+  type SegmentedControlProps,
+  type SegmentedControlValue,
 } from './SegmentedControl';
 
 const options: SegmentedControlOptionInterface[] = [

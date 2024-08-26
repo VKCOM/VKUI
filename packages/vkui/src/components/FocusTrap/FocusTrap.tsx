@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, useCallback, useRef, useState } from 'react';
+import { type AllHTMLAttributes, useCallback, useRef, useState } from 'react';
 import { arraysEquals } from '../../helpers/array';
 import { useExternRef } from '../../hooks/useExternRef';
 import { FOCUSABLE_ELEMENTS_LIST, Keys, pressedKey } from '../../lib/accessibility';
@@ -10,7 +10,7 @@ import {
   useDOM,
 } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRootRef } from '../../types';
 
 const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
 export interface FocusTrapProps<T extends HTMLElement = HTMLElement>

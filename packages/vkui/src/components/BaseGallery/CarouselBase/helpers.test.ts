@@ -1,5 +1,5 @@
 import { calculateIndent, getLoopPoints, getShiftedIndexes, getTargetIndex } from './helpers';
-import { SlidesManagerState } from './types';
+import type { SlidesManagerState } from './types';
 
 const createSlides = (slidesCount?: number, slideWidth?: number) => {
   return new Array(slidesCount || 0).fill(0).map((_, index) => ({

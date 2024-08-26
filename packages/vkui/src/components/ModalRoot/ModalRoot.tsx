@@ -3,18 +3,18 @@ import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
-import { DOMProps, withDOM } from '../../lib/dom';
+import { type DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { rubber } from '../../lib/touch';
 import { warnOnce } from '../../lib/warnOnce';
 import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
-import { Touch, TouchEvent } from '../Touch/Touch';
+import { type CustomTouchEvent, Touch } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
-import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
+import { ModalRootContext, type ModalRootContextInterface } from './ModalRootContext';
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
-import { ModalRootWithDOMProps, ModalsStateEntry, TranslateRange } from './types';
-import { ModalTransitionProps, withModalManager } from './useModalManager';
+import type { ModalRootWithDOMProps, ModalsStateEntry, TranslateRange } from './types';
+import { type ModalTransitionProps, withModalManager } from './useModalManager';
 import styles from './ModalRoot.module.css';
 
 const warn = warnOnce('ModalRoot');
@@ -242,7 +242,7 @@ class ModalRootTouchComponent extends React.Component<
     }
   }
 
-  onTouchMove = (e: TouchEvent) => {
+  onTouchMove = (e: CustomTouchEvent) => {
     if (this.props.exitingModal) {
       return;
     }
@@ -260,7 +260,7 @@ class ModalRootTouchComponent extends React.Component<
     }
   };
 
-  onPageTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
+  onPageTouchMove(event: CustomTouchEvent, modalState: ModalsStateEntry) {
     const { shiftY, originalEvent } = event;
     const target = originalEvent.target as HTMLElement;
 
@@ -317,7 +317,7 @@ class ModalRootTouchComponent extends React.Component<
     }
   }
 
-  onCardTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
+  onCardTouchMove(event: CustomTouchEvent, modalState: ModalsStateEntry) {
     const { originalEvent, shiftY } = event;
     const target = originalEvent.target as HTMLElement;
     if (modalState.innerElement?.contains(target)) {
@@ -336,7 +336,7 @@ class ModalRootTouchComponent extends React.Component<
     }
   }
 
-  onTouchEnd = (e: TouchEvent) => {
+  onTouchEnd = (e: CustomTouchEvent) => {
     const modalState = this.props.getModalState(this.props.activeModal);
 
     if (modalState?.type === 'page') {
@@ -348,7 +348,7 @@ class ModalRootTouchComponent extends React.Component<
     }
   };
 
-  onPageTouchEnd(event: TouchEvent, modalState: ModalsStateEntry) {
+  onPageTouchEnd(event: CustomTouchEvent, modalState: ModalsStateEntry) {
     const { startY, shiftY } = event;
 
     modalState.contentScrolled = false;
@@ -417,7 +417,7 @@ class ModalRootTouchComponent extends React.Component<
     );
   }
 
-  onCardTouchEnd({ duration }: TouchEvent, modalState: ModalsStateEntry) {
+  onCardTouchEnd({ duration }: CustomTouchEvent, modalState: ModalsStateEntry) {
     let setStateCallback;
 
     if (this.state.dragging) {

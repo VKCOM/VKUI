@@ -4,10 +4,10 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { useExternRef } from '../../hooks/useExternRef';
 import { useOrientationChange } from '../../hooks/useOrientationChange';
 import { usePlatform } from '../../hooks/usePlatform';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { multiRef } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';

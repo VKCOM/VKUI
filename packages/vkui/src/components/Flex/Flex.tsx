@@ -5,9 +5,9 @@ import {
   type GapsProp,
   rowGapClassNames,
 } from '../../lib/layouts';
-import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { FlexItem, FlexItemProps } from './FlexItem/FlexItem';
+import { FlexItem, type FlexItemProps } from './FlexItem/FlexItem';
 import styles from './Flex.module.css';
 
 export type { FlexItemProps };

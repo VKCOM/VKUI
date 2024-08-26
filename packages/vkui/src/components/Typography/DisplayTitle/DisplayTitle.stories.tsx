@@ -1,7 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
-import { DisplayTitle, DisplayTitleProps } from './DisplayTitle';
+import { DisplayTitle, type DisplayTitleProps } from './DisplayTitle';
 
 const story: Meta<DisplayTitleProps> = {
   title: 'Typography/DisplayTitle',
