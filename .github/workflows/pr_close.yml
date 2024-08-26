@@ -84,7 +84,7 @@ jobs:
         run: |
           UPDATED_DEPS=$(echo ${{ steps.metadata.outputs.dependency-names }} | sed "s/,/ /g")
 
-          if [[ "${{ steps.metadata.outputs.package-name }}" == "@vkontakte/vkui-floating-ui" &&
+          if [[ "${{ steps.metadata.outputs.directory }}" =~ "packages/vkui-floating-ui" &&
                 $UPDATED_DEPS =~ "@floating-ui/react-dom" ]]; then
             echo "floating_ui_updated=true" >> $GITHUB_OUTPUT
             echo "prev_version=${{ steps.metadata.outputs.previous-version }}" >> $GITHUB_OUTPUT
