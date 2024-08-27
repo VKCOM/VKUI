@@ -1,5 +1,5 @@
 import type * as React from 'react';
-import type { TouchEvent } from '../../components/Touch/Touch';
+import type { CustomTouchEvent } from '../../components/Touch/Touch';
 
 export type Direction = 'up' | 'down';
 
@@ -30,9 +30,9 @@ export interface UseDraggableProps<T extends HTMLElement = HTMLElement> {
 }
 
 export interface DraggableProps {
-  onDragStart: (this: void, event: TouchEvent) => void;
-  onDragEnd: (this: void, event: TouchEvent) => void;
-  onDragMove: (this: void, event: TouchEvent) => void;
+  onDragStart: (this: void, event: CustomTouchEvent) => void;
+  onDragEnd: (this: void, event: CustomTouchEvent) => void;
+  onDragMove: (this: void, event: CustomTouchEvent) => void;
 }
 
 export interface UseDraggable extends DraggableProps {

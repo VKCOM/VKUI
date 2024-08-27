@@ -8,7 +8,7 @@ import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffec
 import { warnOnce } from '../../../lib/warnOnce';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ScrollArrow } from '../../ScrollArrow/ScrollArrow';
-import { Touch, type TouchEvent } from '../../Touch/Touch';
+import { type CustomTouchEvent, Touch } from '../../Touch/Touch';
 import { type BaseGalleryProps, type GallerySlidesState } from '../types';
 import { ANIMATION_DURATION, CONTROL_ELEMENTS_STATE, SLIDES_MANAGER_STATE } from './constants';
 import { calculateIndent, getLoopPoints, getTargetIndex } from './helpers';
@@ -264,7 +264,7 @@ export const CarouselBase = ({
     onNextClick?.(event);
   };
 
-  const onStart = (e: TouchEvent) => {
+  const onStart = (e: CustomTouchEvent) => {
     e.originalEvent.stopPropagation();
     if (controlElementsState.isDraggable) {
       onDragStart?.(e);
@@ -273,7 +273,7 @@ export const CarouselBase = ({
     }
   };
 
-  const onMoveX = (e: TouchEvent) => {
+  const onMoveX = (e: CustomTouchEvent) => {
     if (controlElementsState.isDraggable) {
       e.originalEvent.preventDefault();
 
@@ -286,7 +286,7 @@ export const CarouselBase = ({
     }
   };
 
-  const onEnd = (e: TouchEvent) => {
+  const onEnd = (e: CustomTouchEvent) => {
     if (controlElementsState.isDraggable) {
       let targetIndex = slideIndex;
       if (e.isSlide) {

@@ -4,7 +4,7 @@ import { clamp } from '../../helpers/math';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { Touch, type TouchEvent, type TouchEventHandler } from '../Touch/Touch';
+import { type CustomTouchEvent, type CustomTouchEventHandler, Touch } from '../Touch/Touch';
 import { SliderThumb } from './SliderThumb/SliderThumb';
 import {
   extractSliderAriaAttributesFromRestProps,
@@ -61,14 +61,14 @@ export interface SliderProps extends SliderBaseProps {
   multiple?: false;
   value?: number;
   defaultValue?: number;
-  onChange?: (value: number, event: TouchEvent | React.ChangeEvent) => void;
+  onChange?: (value: number, event: CustomTouchEvent | React.ChangeEvent) => void;
 }
 
 export interface SliderMultipleProps extends SliderBaseProps {
   multiple: true;
   value?: [number, number];
   defaultValue?: [number, number];
-  onChange?: (value: [number, number], event: TouchEvent | React.ChangeEvent) => void;
+  onChange?: (value: [number, number], event: CustomTouchEvent | React.ChangeEvent) => void;
 }
 
 /**
@@ -121,7 +121,10 @@ export const Slider = ({
   const { ariaLabel, ariaValueText, ariaLabelledBy, ...restPropsWithoutAriaAttributes } =
     extractSliderAriaAttributesFromRestProps(restProps);
 
-  const changeValue = (nextValue: InternalValueState, event: TouchEvent | React.ChangeEvent) => {
+  const changeValue = (
+    nextValue: InternalValueState,
+    event: CustomTouchEvent | React.ChangeEvent,
+  ) => {
     if (disabled || (value[0] === nextValue[0] && value[1] === nextValue[1])) {
       return;
     }
@@ -137,7 +140,7 @@ export const Slider = ({
     }
   };
 
-  const handlePointerStart: TouchEventHandler = (event: TouchEvent) => {
+  const handlePointerStart: CustomTouchEventHandler = (event: CustomTouchEvent) => {
     if (!thumbsContainerRef.current) {
       return;
     }
@@ -186,7 +189,7 @@ export const Slider = ({
     setActiveThumb(gesture.dragging);
   };
 
-  const handlePointerMove: TouchEventHandler = (event: TouchEvent) => {
+  const handlePointerMove: CustomTouchEventHandler = (event: CustomTouchEvent) => {
     const { startX, containerWidth, dragging } = gesture;
 
     const { shiftX = 0 } = event;
@@ -199,7 +202,7 @@ export const Slider = ({
     event.originalEvent.preventDefault();
   };
 
-  const handlePointerEnd: TouchEventHandler = (event) => {
+  const handlePointerEnd: CustomTouchEventHandler = (event) => {
     gesture.dragging = null;
     event.originalEvent.stopPropagation();
     setActiveThumb(null);

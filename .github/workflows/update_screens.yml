@@ -99,6 +99,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      contents: write
     needs: [update_screens]
     name: 'Collect updated screenshots and push changes'
     steps:

@@ -12,7 +12,7 @@ import { NavViewIdContext } from '../NavIdContext/NavIdContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { useSplitCol } from '../SplitCol/SplitColContext';
-import { Touch, type TouchEvent } from '../Touch/Touch';
+import { type CustomTouchEvent, Touch } from '../Touch/Touch';
 import { useLayoutEffectCall } from './useLayoutEffectCall';
 import {
   getSwipeBackPredicates,
@@ -186,7 +186,7 @@ export const View = ({
     }
   }, [onSwipeBackCancel, onSwipeBackSuccess, swipeBackResult]);
 
-  const handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: TouchEvent) => {
+  const handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: CustomTouchEvent) => {
     if (browserSwipe) {
       return;
     }
@@ -198,7 +198,7 @@ export const View = ({
     }
   };
 
-  const handleTouchMoveXForIOSSwipeBackSimulation = (event: TouchEvent) => {
+  const handleTouchMoveXForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     if (swipeBackPrevented.current || swipeBackExcluded(event)) {
       return;
     }
@@ -259,7 +259,7 @@ export const View = ({
     }
   };
 
-  const handleTouchEndForIOSSwipeBackSimulation = (event: TouchEvent) => {
+  const handleTouchEndForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     swipeBackPrevented.current = false;
     if (swipingBack) {
       const speed = (swipeBackShift / event.duration) * 1000;
