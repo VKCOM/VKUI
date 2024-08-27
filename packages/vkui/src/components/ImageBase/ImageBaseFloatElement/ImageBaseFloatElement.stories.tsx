@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 import { Icon16MoreHorizontal, Icon28AddOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';
@@ -6,7 +6,7 @@ import { Button } from '../../Button/Button';
 import { CellButton } from '../../CellButton/CellButton';
 import { Popover } from '../../Popover/Popover';
 import { ImageBase } from '../ImageBase';
-import { ImageBaseFloatElement, ImageBaseFloatElementProps } from './ImageBaseFloatElement';
+import { ImageBaseFloatElement, type ImageBaseFloatElementProps } from './ImageBaseFloatElement';
 
 const ContextMenu = () => {
   return (

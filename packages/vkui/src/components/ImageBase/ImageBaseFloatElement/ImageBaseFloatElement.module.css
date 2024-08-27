@@ -11,75 +11,75 @@
   --vkui_internal--FloatElement_vertical_indent: 0;
 }
 
-.FloatElement--horizontalIndent-2xs {
+.FloatElement--inlineIndent-2xs {
   --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_2xs);
 }
 
-.FloatElement--horizontalIndent-xs {
+.FloatElement--inlineIndent-xs {
   --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_xs);
 }
 
-.FloatElement--horizontalIndent-s {
+.FloatElement--inlineIndent-s {
   --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_s);
 }
 
-.FloatElement--horizontalIndent-m {
+.FloatElement--inlineIndent-m {
   --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_m);
 }
 
-.FloatElement--horizontalIndent-l {
+.FloatElement--inlineIndent-l {
   --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_l);
 }
 
-.FloatElement--horizontalIndent-xl {
+.FloatElement--inlineIndent-xl {
   --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_xl);
 }
 
-.FloatElement--horizontalIndent-2xl {
+.FloatElement--inlineIndent-2xl {
   --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_2xl);
 }
 
-.FloatElement--horizontalIndent-3xl {
+.FloatElement--inlineIndent-3xl {
   --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_3xl);
 }
 
-.FloatElement--horizontalIndent-4xl {
+.FloatElement--inlineIndent-4xl {
   --vkui_internal--FloatElement_horizontal_indent: var(--vkui--spacing_size_4xl);
 }
 
-.FloatElement--verticalIndent-2xs {
+.FloatElement--blockIndent-2xs {
   --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_2xs);
 }
 
-.FloatElement--verticalIndent-xs {
+.FloatElement--blockIndent-xs {
   --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_xs);
 }
 
-.FloatElement--verticalIndent-s {
+.FloatElement--blockIndent-s {
   --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_s);
 }
 
-.FloatElement--verticalIndent-m {
+.FloatElement--blockIndent-m {
   --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_m);
 }
 
-.FloatElement--verticalIndent-l {
+.FloatElement--blockIndent-l {
   --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_l);
 }
 
-.FloatElement--verticalIndent-xl {
+.FloatElement--blockIndent-xl {
   --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_xl);
 }
 
-.FloatElement--verticalIndent-2xl {
+.FloatElement--blockIndent-2xl {
   --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_2xl);
 }
 
-.FloatElement--verticalIndent-3xl {
+.FloatElement--blockIndent-3xl {
   --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_3xl);
 }
 
-.FloatElement--verticalIndent-4xl {
+.FloatElement--blockIndent-4xl {
   --vkui_internal--FloatElement_vertical_indent: var(--vkui--spacing_size_4xl);
 }
 

@@ -112,8 +112,8 @@ const WithFloatElements = () => {
           {showContextMenu && (
             <Image.FloatElement
               position="top-end"
-              horizontalIndent="l"
-              verticalIndent="l"
+              inlineIndent="l"
+              blockIndent="l"
               visibility={contextMenuOpened ? 'always' : contextMenuVisibility}
             >
               <ContextMenu onShownChange={setContextMenuOpened} />

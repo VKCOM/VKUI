@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
-import { HTMLAttributesWithRootRef } from '../../../types';
+import { type HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ImageBaseContext } from '../context';
 import { resolveIndent } from './helpers';
@@ -50,28 +50,28 @@ const positionPlacementClassNames = {
   'middle-end': styles['FloatElement--position-middleEnd'],
 };
 
-const horizontalIndentClassNames = {
-  '2xs': styles['FloatElement--horizontalIndent-2xs'],
-  'xs': styles['FloatElement--horizontalIndent-xs'],
-  's': styles['FloatElement--horizontalIndent-s'],
-  'm': styles['FloatElement--horizontalIndent-m'],
-  'l': styles['FloatElement--horizontalIndent-l'],
-  'xl': styles['FloatElement--horizontalIndent-xl'],
-  '2xl': styles['FloatElement--horizontalIndent-2xl'],
-  '3xl': styles['FloatElement--horizontalIndent-3xl'],
-  '4xl': styles['FloatElement--horizontalIndent-4xl'],
+const inlineIndentClassNames = {
+  '2xs': styles['FloatElement--inlineIndent-2xs'],
+  'xs': styles['FloatElement--inlineIndent-xs'],
+  's': styles['FloatElement--inlineIndent-s'],
+  'm': styles['FloatElement--inlineIndent-m'],
+  'l': styles['FloatElement--inlineIndent-l'],
+  'xl': styles['FloatElement--inlineIndent-xl'],
+  '2xl': styles['FloatElement--inlineIndent-2xl'],
+  '3xl': styles['FloatElement--inlineIndent-3xl'],
+  '4xl': styles['FloatElement--inlineIndent-4xl'],
 };
 
-const verticalIndentClassNames = {
-  '2xs': styles['FloatElement--verticalIndent-2xs'],
-  'xs': styles['FloatElement--verticalIndent-xs'],
-  's': styles['FloatElement--verticalIndent-s'],
-  'm': styles['FloatElement--verticalIndent-m'],
-  'l': styles['FloatElement--verticalIndent-l'],
-  'xl': styles['FloatElement--verticalIndent-xl'],
-  '2xl': styles['FloatElement--verticalIndent-2xl'],
-  '3xl': styles['FloatElement--verticalIndent-3xl'],
-  '4xl': styles['FloatElement--verticalIndent-4xl'],
+const blockIndentClassNames = {
+  '2xs': styles['FloatElement--blockIndent-2xs'],
+  'xs': styles['FloatElement--blockIndent-xs'],
+  's': styles['FloatElement--blockIndent-s'],
+  'm': styles['FloatElement--blockIndent-m'],
+  'l': styles['FloatElement--blockIndent-l'],
+  'xl': styles['FloatElement--blockIndent-xl'],
+  '2xl': styles['FloatElement--blockIndent-2xl'],
+  '3xl': styles['FloatElement--blockIndent-3xl'],
+  '4xl': styles['FloatElement--blockIndent-4xl'],
 };
 
 export interface ImageBaseFloatElementProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -82,11 +82,11 @@ export interface ImageBaseFloatElementProps extends HTMLAttributesWithRootRef<HT
   /**
    * Отступ компонента от края контейнера по горизонтали
    */
-  horizontalIndent?: FloatElementIndentation;
+  inlineIndent?: FloatElementIndentation;
   /**
    * Отступ компонента от края контейнера по вертикали
    */
-  verticalIndent?: FloatElementIndentation;
+  blockIndent?: FloatElementIndentation;
   /**
    * Режим отображения компонента:
    *
@@ -101,8 +101,8 @@ export const ImageBaseFloatElement = ({
   visibility = 'always',
   style,
   className,
-  horizontalIndent,
-  verticalIndent,
+  inlineIndent,
+  blockIndent,
   ...restProps
 }: ImageBaseFloatElementProps) => {
   const [hidden, setHidden] = React.useState(visibility !== 'always');
@@ -148,30 +148,21 @@ export const ImageBaseFloatElement = ({
     [position],
   );
 
-  const [
-    horizontalIndentStyle,
-    verticalIndentStyle,
-    horizontalIndentClassName,
-    verticalIndentClassName,
-  ] = React.useMemo(() => {
-    const [horizontalIndentStyle, horizontalIndentClassName] = resolveIndent(
-      horizontalIndent,
-      '--vkui_internal--FloatElement_horizontal_indent',
-      horizontalIndentClassNames,
-    );
-    const [verticalIndentStyle, verticalIndentClassName] = resolveIndent(
-      verticalIndent,
-      '--vkui_internal--FloatElement_vertical_indent',
-      verticalIndentClassNames,
-    );
+  const [inlineIndentStyle, blockIndentStyle, inlineIndentClassName, blockIndentClassName] =
+    React.useMemo(() => {
+      const [inlineIndentStyle, inlineIndentClassName] = resolveIndent(
+        inlineIndent,
+        '--vkui_internal--FloatElement_horizontal_indent',
+        inlineIndentClassNames,
+      );
+      const [blockIndentStyle, blockIndentClassName] = resolveIndent(
+        blockIndent,
+        '--vkui_internal--FloatElement_vertical_indent',
+        blockIndentClassNames,
+      );
 
-    return [
-      horizontalIndentStyle,
-      verticalIndentStyle,
-      horizontalIndentClassName,
-      verticalIndentClassName,
-    ];
-  }, [horizontalIndent, verticalIndent]);
+      return [inlineIndentStyle, blockIndentStyle, inlineIndentClassName, blockIndentClassName];
+    }, [inlineIndent, blockIndent]);
 
   return (
     <RootComponent
@@ -179,15 +170,15 @@ export const ImageBaseFloatElement = ({
       style={{
         ...style,
         ...positionStyle,
-        ...horizontalIndentStyle,
-        ...verticalIndentStyle,
+        ...inlineIndentStyle,
+        ...blockIndentStyle,
       }}
       className={classNames(
         styles['FloatElement'],
         hidden && styles['FloatElement--hidden'],
         typeof position === 'string' && positionPlacementClassNames[position],
-        horizontalIndentClassName,
-        verticalIndentClassName,
+        inlineIndentClassName,
+        blockIndentClassName,
         className,
       )}
     />

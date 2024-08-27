@@ -2,8 +2,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../../testing/utils';
 import { Image } from '../../Image/Image';
 import {
-  FloatElementIndentation,
-  FloatElementPlacement,
+  type FloatElementIndentation,
+  type FloatElementPlacement,
   ImageBaseFloatElement,
 } from './ImageBaseFloatElement';
 import styles from './ImageBaseFloatElement.module.css';
@@ -110,15 +110,15 @@ describe(ImageBaseFloatElement, () => {
   });
 
   const horizontalIndentationFixtures = Object.entries({
-    '2xs': styles['FloatElement--horizontalIndent-2xs'],
-    'xs': styles['FloatElement--horizontalIndent-xs'],
-    's': styles['FloatElement--horizontalIndent-s'],
-    'm': styles['FloatElement--horizontalIndent-m'],
-    'l': styles['FloatElement--horizontalIndent-l'],
-    'xl': styles['FloatElement--horizontalIndent-xl'],
-    '2xl': styles['FloatElement--horizontalIndent-2xl'],
-    '3xl': styles['FloatElement--horizontalIndent-3xl'],
-    '4xl': styles['FloatElement--horizontalIndent-4xl'],
+    '2xs': styles['FloatElement--inlineIndent-2xs'],
+    'xs': styles['FloatElement--inlineIndent-xs'],
+    's': styles['FloatElement--inlineIndent-s'],
+    'm': styles['FloatElement--inlineIndent-m'],
+    'l': styles['FloatElement--inlineIndent-l'],
+    'xl': styles['FloatElement--inlineIndent-xl'],
+    '2xl': styles['FloatElement--inlineIndent-2xl'],
+    '3xl': styles['FloatElement--inlineIndent-3xl'],
+    '4xl': styles['FloatElement--inlineIndent-4xl'],
   }).map(([indent, className]) => ({
     indent: indent as Exclude<FloatElementIndentation, string | number>,
     className,
@@ -128,22 +128,22 @@ describe(ImageBaseFloatElement, () => {
     'should have horizontal indentation className %j',
     ({ indent, className }) => {
       render(
-        <ImageBaseFloatElement data-testid="component" position="top" horizontalIndent={indent} />,
+        <ImageBaseFloatElement data-testid="component" position="top" inlineIndent={indent} />,
       );
       expect(screen.getByTestId('component')).toHaveClass(className);
     },
   );
 
   const verticalIndentationFixtures = Object.entries({
-    '2xs': styles['FloatElement--verticalIndent-2xs'],
-    'xs': styles['FloatElement--verticalIndent-xs'],
-    's': styles['FloatElement--verticalIndent-s'],
-    'm': styles['FloatElement--verticalIndent-m'],
-    'l': styles['FloatElement--verticalIndent-l'],
-    'xl': styles['FloatElement--verticalIndent-xl'],
-    '2xl': styles['FloatElement--verticalIndent-2xl'],
-    '3xl': styles['FloatElement--verticalIndent-3xl'],
-    '4xl': styles['FloatElement--verticalIndent-4xl'],
+    '2xs': styles['FloatElement--blockIndent-2xs'],
+    'xs': styles['FloatElement--blockIndent-xs'],
+    's': styles['FloatElement--blockIndent-s'],
+    'm': styles['FloatElement--blockIndent-m'],
+    'l': styles['FloatElement--blockIndent-l'],
+    'xl': styles['FloatElement--blockIndent-xl'],
+    '2xl': styles['FloatElement--blockIndent-2xl'],
+    '3xl': styles['FloatElement--blockIndent-3xl'],
+    '4xl': styles['FloatElement--blockIndent-4xl'],
   }).map(([indent, className]) => ({
     indent: indent as Exclude<FloatElementIndentation, string | number>,
     className,
@@ -152,9 +152,7 @@ describe(ImageBaseFloatElement, () => {
   it.each(verticalIndentationFixtures)(
     'should have vertical indentation className %j',
     ({ indent, className }) => {
-      render(
-        <ImageBaseFloatElement data-testid="component" position="top" verticalIndent={indent} />,
-      );
+      render(<ImageBaseFloatElement data-testid="component" position="top" blockIndent={indent} />);
       expect(screen.getByTestId('component')).toHaveClass(className);
     },
   );
@@ -164,8 +162,8 @@ describe(ImageBaseFloatElement, () => {
       <ImageBaseFloatElement
         data-testid="component"
         position="top"
-        verticalIndent={10}
-        horizontalIndent={15}
+        blockIndent={10}
+        inlineIndent={15}
       />,
     );
     expect(
@@ -186,8 +184,8 @@ describe(ImageBaseFloatElement, () => {
       <ImageBaseFloatElement
         data-testid="component"
         position="top"
-        verticalIndent="5%"
-        horizontalIndent="10%"
+        blockIndent="5%"
+        inlineIndent="10%"
       />,
     );
     expect(
