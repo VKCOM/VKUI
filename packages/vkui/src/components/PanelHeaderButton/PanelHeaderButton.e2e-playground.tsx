@@ -1,10 +1,10 @@
 import { Icon28AddOutline } from '@vkontakte/icons';
-import { ComponentPlayground, ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
-import { PanelHeaderEdit, PanelHeaderEditProps } from '../PanelHeaderEdit/PanelHeaderEdit';
+import { PanelHeaderEdit, type PanelHeaderEditProps } from '../PanelHeaderEdit/PanelHeaderEdit';
 import { PanelHeaderSubmit } from '../PanelHeaderSubmit/PanelHeaderSubmit';
-import { PanelHeaderButton, PanelHeaderButtonProps } from './PanelHeaderButton';
+import { PanelHeaderButton, type PanelHeaderButtonProps } from './PanelHeaderButton';
 
 export const PanelHeaderButtonPlayground = (props: ComponentPlaygroundProps) => {
   return (

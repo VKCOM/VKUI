@@ -1,6 +1,6 @@
-import { ComponentPlayground, ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Avatar } from '../Avatar/Avatar';
-import { PanelHeaderContent, PanelHeaderContentProps } from './PanelHeaderContent';
+import { PanelHeaderContent, type PanelHeaderContentProps } from './PanelHeaderContent';
 
 export const PanelHeaderContentPlayground = (props: ComponentPlaygroundProps) => {
   return (
