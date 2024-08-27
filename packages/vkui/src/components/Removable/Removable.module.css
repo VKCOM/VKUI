@@ -17,6 +17,10 @@
   align-self: flex-start;
 }
 
+.Removable--disabled {
+  opacity: var(--vkui--opacity_disable_accessibility);
+}
+
 /**
  * iOS
  */

@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { ScrollArrow, ScrollArrowProps } from './ScrollArrow';
+import { ScrollArrow, type ScrollArrowProps } from './ScrollArrow';
 
 const story: Meta<ScrollArrowProps> = {
   title: 'Blocks/ScrollArrow',

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasComponent } from '../../types';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import type { HasComponent } from '../../types';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -57,7 +57,7 @@ export interface SimpleCellOwnProps extends HasComponent {
    */
   after?: React.ReactNode;
   /**
-   * Убирает анимацию нажатия
+   * Помечает ячейку неактивной
    */
   disabled?: boolean;
   /**
@@ -110,6 +110,7 @@ export const SimpleCell = ({
       {...restProps}
       className={classNames(
         styles['SimpleCell'],
+        restProps.disabled && styles['SimpleCell--disabled'],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         multiline && styles['SimpleCell--mult'],
         className,

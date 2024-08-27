@@ -1,15 +1,20 @@
-import { Meta, StoryObj } from '@storybook/react';
-import { Icon16Clear, Icon28MessageOutline } from '@vkontakte/icons';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { Group } from '../Group/Group';
-import { IconButton } from '../IconButton/IconButton';
-import { FormField, FormFieldProps } from './FormField';
+import { FormField, type FormFieldProps } from './FormField';
+
+const iconsPresets = getFormFieldIconsPresets();
 
 const story: Meta<FormFieldProps> = {
   title: 'Forms/FormField',
   component: FormField,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  argTypes: {
+    before: iconsPresets,
+    after: iconsPresets,
+  },
 };
 
 export default story;
@@ -38,16 +43,8 @@ export const Playground: Story = {
     </FormField>
   ),
   args: {
-    before: (
-      <IconButton label="Сообщения">
-        <Icon28MessageOutline />
-      </IconButton>
-    ),
-    after: (
-      <IconButton label="Очистить">
-        <Icon16Clear />
-      </IconButton>
-    ),
+    before: 'MessageButton',
+    after: 'DeleteIconButton',
   },
   decorators: [
     (Component, context) => (

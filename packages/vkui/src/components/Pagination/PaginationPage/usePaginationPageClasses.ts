@@ -1,6 +1,6 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { SizeTypeValues } from '../../../lib/adaptivity';
+import type { SizeTypeValues } from '../../../lib/adaptivity';
 import styles from './PaginationPage.module.css';
 
 export interface UsePaginationPageClassNamesProps {

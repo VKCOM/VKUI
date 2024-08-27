@@ -7,11 +7,11 @@ import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
+import { ActionSheetContext, type ItemClickHandler } from './ActionSheetContext';
 import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
 import { ActionSheetDropdownMenu } from './ActionSheetDropdownMenu';
 import { ActionSheetDropdownSheet } from './ActionSheetDropdownSheet';
-import { SharedDropdownProps } from './types';
+import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
 type CloseInitiators = 'action-item' | 'cancel-item' | 'other';

@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { LocaleProvider, LocaleProviderProps } from './LocaleProvider';
+import { LocaleProvider, type LocaleProviderProps } from './LocaleProvider';
 
 const story: Meta<LocaleProviderProps> = {
   title: 'Service/LocaleProvider',

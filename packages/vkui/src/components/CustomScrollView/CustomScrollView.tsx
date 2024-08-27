@@ -5,10 +5,10 @@ import { useExternRef } from '../../hooks/useExternRef';
 import type { HasRootRef } from '../../types';
 import { ScrollX } from './ScrollX';
 import { ScrollY } from './ScrollY';
-import { BarHandlers } from './types';
+import { type BarHandlers } from './types';
 import { useCustomScrollViewResize } from './useCustomScrollViewResize';
 import { useDetectScrollDirection } from './useDetectScrollDirection';
-import { TrackerOptionsProps } from './useTrackerVisibility';
+import { type TrackerOptionsProps } from './useTrackerVisibility';
 import styles from './CustomScrollView.module.css';
 
 function hasPointerClassName(hasPointer: boolean | undefined) {

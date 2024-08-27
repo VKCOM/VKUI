@@ -150,20 +150,62 @@ describe('Cell', () => {
       expect(removeStub).toHaveBeenCalledTimes(0);
       expect(clickStub).toHaveBeenCalledTimes(1);
     });
+
+    test('handles disabled', () => {
+      const removeStub = jest.fn();
+      const clickStub = jest.fn();
+
+      render(
+        <Cell
+          mode="removable"
+          onRemove={removeStub}
+          onClick={clickStub}
+          removeButtonTestId="removeButtonTestId"
+          disabled
+        >
+          Саша Колобов
+        </Cell>,
+      );
+
+      fireEvent.click(screen.getByTestId('removeButtonTestId'));
+      expect(removeStub).not.toHaveBeenCalled();
+      expect(clickStub).not.toHaveBeenCalled();
+
+      fireEvent.click(screen.getByText('Саша Колобов'));
+
+      expect(clickStub).not.toHaveBeenCalled();
+    });
   });
 
-  it('check selectable mode', () => {
-    render(
-      <Cell mode="selectable" data-testid="cell">
-        Саша Колобов
-      </Cell>,
-    );
-    const cell = screen.getByTestId('cell');
-    expect(cell.tagName).toBe('LABEL');
-    expect(cell.parentElement).toHaveClass(styles['Cell--selectable']);
+  describe("mode='selectable'", () => {
+    it('check selectable mode', () => {
+      render(
+        <Cell mode="selectable" data-testid="cell">
+          Саша Колобов
+        </Cell>,
+      );
+      const cell = screen.getByTestId('cell');
+      expect(cell.tagName).toBe('LABEL');
+      expect(cell.parentElement).toHaveClass(styles['Cell--selectable']);
 
-    const checkbox = getByRole(cell, 'checkbox');
-    expect(checkbox).toBeInTheDocument();
+      const checkbox = getByRole(cell, 'checkbox');
+      expect(checkbox).toBeInTheDocument();
+    });
+
+    it('handles disabled', () => {
+      const clickStub = jest.fn();
+      render(
+        <Cell mode="selectable" data-testid="cell" onClick={clickStub} disabled>
+          Саша Колобов
+        </Cell>,
+      );
+      fireEvent.click(screen.getByText('Саша Колобов'));
+      expect(clickStub).not.toHaveBeenCalled();
+
+      const cell = screen.getByTestId('cell');
+      const checkbox = getByRole(cell, 'checkbox');
+      expect(checkbox).not.toBeChecked();
+    });
   });
 
   it('check dragging className add when dragging cell', async () => {
@@ -205,29 +247,5 @@ describe('Cell', () => {
     expect(
       content.compareDocumentPosition(dragger) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
-  });
-
-  it('should have disabled classNames', () => {
-    render(
-      <Cell data-testid="list-xyz" draggable draggerLabel={label} disabled>
-        xyz
-      </Cell>,
-    );
-
-    const cell = screen.getByTestId('list-xyz');
-    const dragger = cell.querySelector<HTMLElement>(`.${styles['Cell__dragger']}`)!;
-    expect(dragger).toBeInTheDocument();
-
-    fireEvent.mouseDown(dragger, {
-      clientX: 0,
-      clientY: 0,
-    });
-    fireEvent.mouseMove(dragger, {
-      clientX: 0,
-      clientY: 100,
-    });
-
-    expect(cell.parentElement).not.toHaveClass(styles['Cell--dragging']);
-    expect(cell.parentElement).toHaveClass(styles['Cell--disabled']);
   });
 });

@@ -7,9 +7,9 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { callMultiple } from '../../lib/callMultiple';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
-import { HasRootRef } from '../../types';
-import { Calendar, CalendarProps } from '../Calendar/Calendar';
-import { FormField, FormFieldProps } from '../FormField/FormField';
+import type { HasRootRef } from '../../types';
+import { Calendar, type CalendarProps } from '../Calendar/Calendar';
+import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
@@ -55,7 +55,7 @@ export interface DateInputProps
       | 'maxDateTime'
     >,
     HasRootRef<HTMLDivElement>,
-    FormFieldProps {
+    Omit<FormFieldProps, 'maxHeight'> {
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
   clearFieldLabel?: string;

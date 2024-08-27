@@ -6,7 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
-import { HasComponent, HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './FixedLayout.module.css';

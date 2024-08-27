@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { PopoutWrapper, PopoutWrapperProps } from './PopoutWrapper';
+import { PopoutWrapper, type PopoutWrapperProps } from './PopoutWrapper';
 
 const story: Meta<PopoutWrapperProps> = {
   title: 'Popouts/PopoutWrapper',

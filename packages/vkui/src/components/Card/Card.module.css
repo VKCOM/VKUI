@@ -2,6 +2,8 @@
   position: relative;
   background: var(--vkui--color_background_secondary);
   border-radius: var(--vkui--size_card_border_radius--regular);
+  list-style-type: none;
+  display: block;
 }
 
 .Card--mode-shadow {

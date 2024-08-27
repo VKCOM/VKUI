@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon16Delete } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { IconButton, IconButtonProps } from './IconButton';
+import { IconButton, type IconButtonProps } from './IconButton';
 
 const story: Meta<IconButtonProps> = {
   title: 'Blocks/IconButton',

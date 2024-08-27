@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { getDocumentBody } from '../../lib/dom';
+import { Platform } from '../../lib/platform';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Checkbox } from './Checkbox';
 
 describe('Checkbox', () => {
@@ -42,5 +44,46 @@ describe('Checkbox', () => {
 
     await userEvent.tab();
     expect(getDocumentBody()).toHaveFocus();
+  });
+
+  it('check reset indeterminate when click to checkbox', () => {
+    render(
+      <ConfigProvider platform={Platform.VKCOM}>
+        <Checkbox defaultIndeterminate={true}>Check</Checkbox>
+      </ConfigProvider>,
+    );
+    fireEvent.click(screen.getByText('Check'));
+    expect(screen.getByRole<HTMLInputElement>('checkbox').indeterminate).toBeFalsy();
+  });
+
+  it('check not reset indeterminate when click to checkbox', () => {
+    render(<Checkbox indeterminate={true}>Check</Checkbox>);
+
+    fireEvent.click(screen.getByText('Check'));
+    expect(screen.getByRole<HTMLInputElement>('checkbox').indeterminate).toBeTruthy();
+  });
+
+  it('check dev errors', () => {
+    process.env.NODE_ENV = 'development';
+    const errorStub = jest.spyOn(console, 'error');
+    render(
+      <>
+        <Checkbox defaultIndeterminate={true} defaultChecked={true} />
+        <Checkbox indeterminate={true} checked={true} />
+        <Checkbox defaultChecked={true} checked={true} />
+      </>,
+    );
+    expect(errorStub.mock.calls[0]).toEqual([
+      '%c[VKUI/Checkbox] defaultIndeterminate и defaultChecked не могут быть true одновременно',
+      undefined,
+    ]);
+    expect(errorStub.mock.calls[1]).toEqual([
+      '%c[VKUI/Checkbox] indeterminate и checked не могут быть true одновременно',
+      undefined,
+    ]);
+    expect(errorStub.mock.calls[2]).toEqual([
+      '%c[VKUI/Checkbox] defaultChecked и checked не могут быть true одновременно',
+      undefined,
+    ]);
   });
 });

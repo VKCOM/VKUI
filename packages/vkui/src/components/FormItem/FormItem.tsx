@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { HasComponent, HasRootRef } from '../../types';
-import { Removable, RemovableProps } from '../Removable/Removable';
+import type { HasComponent, HasRootRef } from '../../types';
+import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { FormItemTop } from './FormItemTop/FormItemTop';
@@ -89,7 +89,7 @@ export const FormItem: React.FC<FormItemProps> & {
   bottom,
   status = 'default',
   removable,
-  onRemove = noop,
+  onRemove,
   removePlaceholder = 'Удалить',
   getRootRef,
   htmlFor,
@@ -154,7 +154,7 @@ export const FormItem: React.FC<FormItemProps> & {
             align="start"
             onRemove={(e) => {
               if (rootEl?.current) {
-                onRemove(e, rootEl.current);
+                onRemove?.(e, rootEl.current);
               }
             }}
             removePlaceholder={removePlaceholder}

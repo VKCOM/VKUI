@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Icon20Add, Icon24Add } from '@vkontakte/icons';
 import { baselineComponent } from '../../testing/utils';
-import { ToolButton, ToolButtonProps } from './ToolButton';
+import { ToolButton, type ToolButtonProps } from './ToolButton';
 
 const ToolButtonTest = (props: Omit<ToolButtonProps, 'IconCompact' | 'IconRegular'>) => (
   <ToolButton data-testid="custom-btn" IconCompact={Icon20Add} IconRegular={Icon24Add} {...props} />

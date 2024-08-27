@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
+import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import { baselineComponent } from '../../testing/utils';
 import { Cell } from '../Cell/Cell';
 import { List } from './List';

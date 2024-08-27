@@ -1,10 +1,10 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type { UseFloatingMiddlewaresBootstrapOptions } from '../useFloatingMiddlewaresBootstrap';
 import type {
   UseFloatingWithInteractionsProps,
   UseFloatingWithInteractionsReturn,
 } from '../useFloatingWithInteractions';
-import { OnPlacementChange } from './common';
+import type { OnPlacementChange } from './common';
 
 /**
  * @private используйте алиасы, если для какого-то компонента нужно экспортировать тип

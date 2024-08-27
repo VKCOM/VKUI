@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Button } from '../Button/Button';
 import { Div } from '../Div/Div';
-import { Popper, PopperProps } from './Popper';
+import { Popper, type PopperProps } from './Popper';
 
 const story: Meta<PopperProps> = {
   title: 'Poppers/Popper',

@@ -2,12 +2,12 @@ import { Icon24Reorder, Icon24ReorderIos } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import {
   type DraggableProps,
-  UseDraggableProps,
+  type UseDraggableProps,
   useDraggableWithDomApi,
 } from '../../../hooks/useDraggableWithDomApi';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
-import { HTMLAttributesWithRootRef } from '../../../types';
+import type { HTMLAttributesWithRootRef } from '../../../types';
 import { Touch } from '../../Touch/Touch';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CellDragger.module.css';

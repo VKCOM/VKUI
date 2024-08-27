@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
-import { ImageBaseBadge, ImageBaseBadgeProps } from './ImageBaseBadge';
+import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge';
 
 const story: Meta<ImageBaseBadgeProps> = {
   title: 'Blocks/ImageBaseBadge',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Spinner, SpinnerProps } from '../Spinner/Spinner';
+import { Spinner, type SpinnerProps } from '../Spinner/Spinner';
 
 export interface PanelSpinnerProps extends SpinnerProps {
   height?: number;

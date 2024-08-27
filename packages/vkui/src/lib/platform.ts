@@ -1,4 +1,4 @@
-import { BrowserInfo, computeBrowserInfo } from './browser';
+import { type BrowserInfo, computeBrowserInfo } from './browser';
 
 export const Platform = {
   ANDROID: 'android',

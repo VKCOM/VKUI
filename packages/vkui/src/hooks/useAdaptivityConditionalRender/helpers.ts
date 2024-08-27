@@ -1,9 +1,9 @@
 import {
-  SizeTypeValues,
+  type SizeTypeValues,
   tryToCheckIsDesktop,
-  ViewHeightType,
+  type ViewHeightType,
   ViewWidth,
-  ViewWidthType,
+  type ViewWidthType,
 } from '../../lib/adaptivity';
 import type { PlatformType } from '../../lib/platform';
 import type {

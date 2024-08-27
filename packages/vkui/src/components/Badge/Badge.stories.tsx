@@ -1,7 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { Badge, BadgeProps } from './Badge';
+import { Badge, type BadgeProps } from './Badge';
 
 const story: Meta<BadgeProps> = {
   title: 'Blocks/Badge',

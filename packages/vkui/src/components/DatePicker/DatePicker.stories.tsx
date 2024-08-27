@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { DatePicker, DatePickerProps } from './DatePicker';
+import { DatePicker, type DatePickerProps } from './DatePicker';
 
 const story: Meta<DatePickerProps> = {
   title: 'Forms/DatePicker',

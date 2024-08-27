@@ -1,5 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {
+  Icon28AddOutline,
   Icon28CheckShieldDeviceOutline,
   Icon28DevicesOutline,
   Icon28KeyOutline,
@@ -13,7 +14,7 @@ import { CellButton } from '../CellButton/CellButton';
 import { Playground as BasicCellButton } from '../CellButton/CellButton.stories';
 import { Header } from '../Header/Header';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
-import { Group, GroupProps } from './Group';
+import { Group, type GroupProps } from './Group';
 
 const story: Meta<GroupProps> = {
   title: 'Blocks/Group',
@@ -29,7 +30,7 @@ export const Playground: Story = {
   args: {
     header: <Header>Header</Header>,
     description: 'Description',
-    children: <CellButton {...BasicCellButton.args} />,
+    children: <CellButton {...BasicCellButton.args} before={<Icon28AddOutline />} />,
   },
 };
 

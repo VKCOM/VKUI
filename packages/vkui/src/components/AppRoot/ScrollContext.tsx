@@ -3,7 +3,7 @@ import { noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 
 const clearDisableScrollStyle = (node: HTMLElement) => {
   Object.assign(node.style, {

@@ -5,7 +5,7 @@ import { range } from '../../helpers/range';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
-import { HasOnlyExpectedProps, HTMLAttributesWithRootRef } from '../../types';
+import type { HasOnlyExpectedProps, HTMLAttributesWithRootRef } from '../../types';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
 import { Input, type InputProps } from '../Input/Input';
 import { RootComponent } from '../RootComponent/RootComponent';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
@@ -9,10 +9,10 @@ import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
 import { UIPanGestureRecognizer } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { Basic, BasicProps } from './subcomponents/Basic/Basic';
+import { Basic, type BasicProps } from './subcomponents/Basic/Basic';
 import type { ShiftData, SnackbarPlacement } from './types';
 import {
   getInitialShiftData,
@@ -89,7 +89,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   before,
   after,
   duration = 4000,
-  onActionClick = noop,
+  onActionClick,
   onClose,
   mode = 'default',
   subtitle,
@@ -157,7 +157,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const handleActionClick = (event: React.MouseEvent) => {
     close();
     if (action) {
-      onActionClick(event);
+      onActionClick?.(event);
     }
   };
 

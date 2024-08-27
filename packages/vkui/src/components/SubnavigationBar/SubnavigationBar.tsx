@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   HorizontalScroll,
-  HorizontalScrollProps,
-  ScrollPositionHandler,
+  type HorizontalScrollProps,
+  type ScrollPositionHandler,
 } from '../HorizontalScroll/HorizontalScroll';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './SubnavigationBar.module.css';

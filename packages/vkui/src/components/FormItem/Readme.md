@@ -67,17 +67,40 @@ const addressItems = [
   { label: 'Город', name: 'city' },
 ];
 
+const ERRORS_MAP = {
+  empty: 'Пожалуйста, введите электронную почту',
+  incorrect: 'Электронная почта некорректна',
+};
+
+const validateEmail = (email) => {
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  );
+};
+
 const Example = () => {
   const [email, setEmail] = React.useState('');
   const [purpose, setPurpose] = React.useState('');
   const [about, setAbout] = React.useState('');
+  const [emailError, setEmailError] = React.useState('empty');
   const [showPatronymic, setShowPatronymic] = React.useState(true);
+
+  const updateEmail = (value) => {
+    setEmail(value);
+    if (!value) {
+      setEmailError('empty');
+    } else if (!validateEmail(value)) {
+      setEmailError('incorrect');
+    } else {
+      setEmailError('');
+    }
+  };
 
   const onChange = (e) => {
     const { name, value } = e.currentTarget;
 
     const setStateAction = {
-      email: setEmail,
+      email: updateEmail,
       purpose: setPurpose,
       about: setAbout,
     }[name];
@@ -98,10 +121,8 @@ const Example = () => {
             <FormItem
               htmlFor="email"
               top="E-mail"
-              status={email ? 'valid' : 'error'}
-              bottom={
-                email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'
-              }
+              status={emailError ? 'error' : 'valid'}
+              bottom={emailError ? ERRORS_MAP[emailError] : 'Электронная почта введена верно!'}
               bottomId="email-type"
               required
             >

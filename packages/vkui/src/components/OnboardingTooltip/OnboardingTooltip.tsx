@@ -14,7 +14,7 @@ import {
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { DEFAULT_ARROW_HEIGHT, DEFAULT_ARROW_PADDING } from '../FloatingArrow/DefaultIcon';
-import { FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
+import type { FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { TOOLTIP_MAX_WIDTH, TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { onboardingTooltipContainerAttr } from './OnboardingTooltipContainer';

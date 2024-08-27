@@ -10,9 +10,9 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { touchEnabled } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HasRef, HasRootRef } from '../../types';
+import type { HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
-import { IconButton, IconButtonProps } from '../IconButton/IconButton';
+import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
 import { Headline } from '../Typography/Headline/Headline';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Search.module.css';
@@ -61,7 +61,7 @@ export const Search = ({
   after = 'Отмена',
   getRef,
   icon: iconProp,
-  onIconClick = noop,
+  onIconClick,
   style,
   autoComplete = 'off',
   onChange,
@@ -115,7 +115,7 @@ export const Search = ({
   }, [inputRef]);
 
   const onIconClickStart: React.PointerEventHandler<HTMLElement> = React.useCallback(
-    (e) => onIconClick(e),
+    (e) => onIconClick?.(e),
     [onIconClick],
   );
 
@@ -206,6 +206,7 @@ export const Search = ({
             onClick={onCancel}
             className={styles['Search__icon']}
             tabIndex={hasValue ? undefined : -1}
+            disabled={inputProps.disabled}
           >
             <VisuallyHidden>{clearLabel}</VisuallyHidden>
             {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}

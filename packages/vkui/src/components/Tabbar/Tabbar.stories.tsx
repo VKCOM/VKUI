@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {
   Icon28ClipOutline,
   Icon28MessageOutline,
@@ -12,7 +12,7 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { TabbarItem } from '../TabbarItem/TabbarItem';
-import { Tabbar, TabbarProps } from './Tabbar';
+import { Tabbar, type TabbarProps } from './Tabbar';
 
 const story: Meta<TabbarProps> = {
   title: 'Layout/Tabbar',

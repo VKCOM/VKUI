@@ -14,6 +14,30 @@ const Default = () => {
   );
 };
 
+const Responsive = () => {
+  const [size, setSize] = React.useState(100);
+  return (
+    <Group
+      header={
+        <Header mode="secondary">
+          Изображения без фиксированных размеров с сохранением пропорций
+        </Header>
+      }
+    >
+      <Flex margin="auto" direction="column" gap="m">
+        <Flex.Item flex="shrink">
+          <Button onClick={() => setSize((prev) => (prev >= 250 ? 100 : prev + 50))}>
+            Изменить размер
+          </Button>
+        </Flex.Item>
+        <div style={{ width: size }}>
+          <Image keepAspectRatio src={getAvatarUrl('app_zagadki', 200)} widthSize="100%" />
+        </div>
+      </Flex>
+    </Group>
+  );
+};
+
 /**
  * Какие значения принимают параметры смотрите в разделе "Свойства и методы".
  */
@@ -106,9 +130,8 @@ const Example = () => {
     <View activePanel="avatar">
       <Panel id="avatar">
         <PanelHeader>Image</PanelHeader>
-
         <Default />
-
+        <Responsive />
         <OthersFeatures />
 
         <WithFloatElements />

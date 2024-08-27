@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 import { AccordionContent } from './AccordionContent';
 import { AccordionContext } from './AccordionContext';
 import { AccordionSummary } from './AccordionSummary';

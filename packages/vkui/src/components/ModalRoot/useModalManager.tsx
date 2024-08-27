@@ -3,8 +3,8 @@ import { isFunction, noop } from '@vkontakte/vkjs';
 import { getNavId } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasChildren } from '../../types';
-import { ModalsState, ModalsStateEntry } from './types';
+import type { HasChildren } from '../../types';
+import type { ModalsState, ModalsStateEntry } from './types';
 
 interface ModalTransitionState {
   activeModal?: string | null;

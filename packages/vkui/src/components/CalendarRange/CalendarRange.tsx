@@ -12,9 +12,9 @@ import {
 } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
-import { HTMLAttributesWithRootRef } from '../../types';
-import { CalendarDays, CalendarDaysProps } from '../CalendarDays/CalendarDays';
-import { CalendarHeader, CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
+import type { HTMLAttributesWithRootRef } from '../../types';
+import { CalendarDays, type CalendarDaysProps } from '../CalendarDays/CalendarDays';
+import { CalendarHeader, type CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CalendarRange.module.css';
 

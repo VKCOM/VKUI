@@ -9,7 +9,7 @@ import {
   waitCSSKeyframesAnimation,
   waitCSSTransitionEnd,
 } from '../../testing/utils';
-import { HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Gallery } from '../Gallery/Gallery';
@@ -214,7 +214,7 @@ describe(View, () => {
       fireEvent.mouseUp(view);
       expect(events.onSwipeBack).not.toHaveBeenCalled();
       expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
-      await waitCSSTransitionEnd(getViewPanelById('p1'), { propertyName: 'transform' });
+      await waitCSSTransitionEnd(getViewPanelById('p2'), { propertyName: 'transform' });
       expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
     });
     it('should swipe back by start touch anywhere', async () => {
@@ -231,7 +231,7 @@ describe(View, () => {
       expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
 
       fireEvent.mouseUp(view);
-      await waitCSSTransitionEnd(getViewPanelById('p1'), {
+      await waitCSSTransitionEnd(getViewPanelById('p2'), {
         propertyName: 'transform',
       });
 
@@ -343,7 +343,7 @@ describe(View, () => {
 
         scrollToLeftAndSwipe(100);
         expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
-        await waitCSSTransitionEnd(getViewPanelById('p1'), { propertyName: 'transform' });
+        await waitCSSTransitionEnd(getViewPanelById('p2'), { propertyName: 'transform' });
         expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
         expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
 
@@ -386,7 +386,7 @@ describe(View, () => {
 
         scrollToLeftAndSwipe(0);
         expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
-        await waitCSSTransitionEnd(getViewPanelById('p1'), { propertyName: 'transform' });
+        await waitCSSTransitionEnd(getViewPanelById('p2'), { propertyName: 'transform' });
         expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
         expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
       });

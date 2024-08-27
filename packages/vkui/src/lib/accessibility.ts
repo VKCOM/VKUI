@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { HasChildren, ValuesOfObject } from '../types';
+import type * as React from 'react';
+import type { HasChildren, ValuesOfObject } from '../types';
 import { getTextFromChildren } from './children';
 
 export const FOCUSABLE_ELEMENTS_LIST: string[] = [

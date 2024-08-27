@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { usePlatform } from '../hooks/usePlatform';
 import { createWrapper } from '../testing/createWrapper';
-import { SSRWrapper, SSRWrapperProps } from './SSR';
+import { SSRWrapper, type SSRWrapperProps } from './SSR';
 
 describe.each<{
   props: SSRWrapperProps;

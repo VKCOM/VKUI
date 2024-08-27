@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28BlockOutline, Icon28UserOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Group } from '../Group/Group';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
-import { Spacing, SpacingProps } from './Spacing';
+import { Spacing, type SpacingProps } from './Spacing';
 
 const story: Meta<SpacingProps> = {
   title: 'Blocks/Spacing',

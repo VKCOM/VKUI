@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { OptionNamesProp, OptionsProp } from './types';
+import type { OptionNamesProp, OptionsProp } from './types';
 
 const ContainerStyle: React.CSSProperties = {
   margin: '6px',

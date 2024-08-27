@@ -1,16 +1,45 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
+import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
-import { Cell, CellProps } from './Cell';
+import { Switch } from '../Switch/Switch';
+import { Cell, type CellProps } from './Cell';
 
 const story: Meta<CellProps> = {
   title: 'Blocks/Cell',
   component: Cell,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  argTypes: {
+    before: createFieldWithPresets({
+      iconSizes: ['28'],
+      additionalPresets: {
+        AvatarWithUrl: <Avatar src={getAvatarUrl('user_xyz')} />,
+        Avatar: <Avatar />,
+      },
+    }),
+    after: createFieldWithPresets({
+      iconSizes: ['24', '28'],
+      additionalPresets: {
+        Switch: <Switch />,
+      },
+    }),
+    badgeBeforeTitle: createFieldWithPresets({
+      iconSizes: ['12'],
+    }),
+    badgeAfterTitle: createFieldWithPresets({
+      iconSizes: ['12'],
+    }),
+    badgeBeforeSubtitle: createFieldWithPresets({
+      iconSizes: ['12'],
+    }),
+    badgeAfterSubtitle: createFieldWithPresets({
+      iconSizes: ['12'],
+    }),
+  },
   decorators: [withSinglePanel, withVKUILayout],
   args: {
     onClick: noop,
@@ -24,7 +53,7 @@ type Story = StoryObj<CellProps>;
 export const Playground: Story = {
   args: {
     children: 'Игорь Федоров',
-    before: <Avatar src={getAvatarUrl('user_xyz')} />,
+    before: 'AvatarWithUrl',
   },
   decorators: [
     (Component, context) => (
@@ -38,7 +67,7 @@ export const Playground: Story = {
 export const Multiple: Story = {
   ...Playground,
   args: {
-    before: <Avatar />,
+    before: 'Avatar',
   },
   decorators: [
     (Component, context) => (

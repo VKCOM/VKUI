@@ -3,7 +3,7 @@ import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasAccessibleName } from '../../lib/accessibility';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './PanelHeaderButton.module.css';

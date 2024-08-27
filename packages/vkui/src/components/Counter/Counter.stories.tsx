@@ -1,8 +1,8 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import { Counter, CounterProps } from './Counter';
+import { Counter, type CounterProps } from './Counter';
 
 const story: Meta<CounterProps> = {
   title: 'Blocks/Counter',

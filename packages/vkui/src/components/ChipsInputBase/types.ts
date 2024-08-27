@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type {
   HasAlign,
   HasComponent,
@@ -6,8 +6,8 @@ import type {
   HasRef,
   HTMLAttributesWithRootRef,
 } from '../../types';
-import { FormFieldProps } from '../FormField/FormField';
-import { FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
+import { type FormFieldProps } from '../FormField/FormField';
+import { type FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
 
 export type NavigateTo = 'prev' | 'next' | 'last';
 

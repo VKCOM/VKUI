@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { isElement, useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 

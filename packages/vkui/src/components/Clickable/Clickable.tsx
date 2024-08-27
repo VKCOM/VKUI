@@ -1,16 +1,16 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import {
-  FocusVisibleModeProps,
+  type FocusVisibleModeProps,
   useFocusVisibleClassName,
 } from '../../hooks/useFocusVisibleClassName';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { clickByKeyboardHandler } from '../../lib/utils';
-import { RootComponent, RootComponentProps } from '../RootComponent/RootComponent';
+import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 import {
   ClickableLockStateContext,
   DEFAULT_ACTIVE_EFFECT_DELAY,
-  StateProps,
+  type StateProps,
   useState,
 } from './useState';
 import styles from './Clickable.module.css';
@@ -116,7 +116,10 @@ export function checkClickable<T>(props: ClickableProps<T>): boolean {
     (props.href !== undefined ||
       props.onClick !== undefined ||
       props.onClickCapture !== undefined ||
-      props.Component === 'label') &&
+      props.Component === 'a' ||
+      props.Component === 'button' ||
+      props.Component === 'label' ||
+      props.Component === 'input') &&
     !props.disabled
   );
 }

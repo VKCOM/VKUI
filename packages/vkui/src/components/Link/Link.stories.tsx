@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24ExternalLinkOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Link, LinkProps } from './Link';
+import { Link, type LinkProps } from './Link';
 
 const story: Meta<LinkProps> = {
   title: 'Blocks/Link',

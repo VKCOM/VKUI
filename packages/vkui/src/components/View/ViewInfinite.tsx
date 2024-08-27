@@ -2,20 +2,20 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
-import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { canUseDOM, type DOMProps, withDOM } from '../../lib/dom';
+import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
-import { HasPlatform, HTMLAttributesWithRootRef } from '../../types';
-import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import type { HasPlatform, HTMLAttributesWithRootRef } from '../../types';
+import { ScrollContext, type ScrollContextInterface } from '../AppRoot/ScrollContext';
 import {
   ConfigProviderContext,
-  ConfigProviderContextInterface,
+  type ConfigProviderContextInterface,
 } from '../ConfigProvider/ConfigProviderContext';
 import { NavViewIdContext } from '../NavIdContext/NavIdContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
-import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitColContext';
-import { Touch, TouchEvent } from '../Touch/Touch';
+import { SplitColContext, type SplitColContextProps } from '../SplitCol/SplitColContext';
+import { type CustomTouchEvent, Touch } from '../Touch/Touch';
 import {
   getSwipeBackPredicates,
   hasHorizontalScrollableElementWithScrolledToLeft,
@@ -401,7 +401,7 @@ class ViewInfiniteComponent extends React.Component<
     });
   }
 
-  handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: TouchEvent) => {
+  handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: CustomTouchEvent) => {
     if (this.state.browserSwipe) {
       return;
     }
@@ -413,7 +413,7 @@ class ViewInfiniteComponent extends React.Component<
     }
   };
 
-  handleTouchMoveXForIOSSwipeBackSimulation = (event: TouchEvent) => {
+  handleTouchMoveXForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     if (this.swipeBackPrevented || swipeBackExcluded(event)) {
       return;
     }
@@ -480,7 +480,7 @@ class ViewInfiniteComponent extends React.Component<
     }
   };
 
-  handleTouchEndForIOSSwipeBackSimulation = (event: TouchEvent) => {
+  handleTouchEndForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     this.swipeBackPrevented = false;
 
     if (this.state.swipingBack && this.window) {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {
   Icon28ClipOutline,
   Icon28MessageOutline,
@@ -25,7 +25,7 @@ import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { Tabbar } from '../Tabbar/Tabbar';
 import { TabbarItem } from '../TabbarItem/TabbarItem';
 import { View } from '../View/View';
-import { Epic, EpicProps } from './Epic';
+import { Epic, type EpicProps } from './Epic';
 
 const story: Meta<EpicProps> = {
   title: 'Layout/Epic',

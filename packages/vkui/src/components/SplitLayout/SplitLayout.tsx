@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasRef, HTMLAttributesWithRootRef } from '../../types';
+import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
 import styles from './SplitLayout.module.css';
 

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
@@ -9,7 +9,7 @@ import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { View } from '../View/View';
-import { PanelHeaderContent, PanelHeaderContentProps } from './PanelHeaderContent';
+import { PanelHeaderContent, type PanelHeaderContentProps } from './PanelHeaderContent';
 
 const story: Meta<PanelHeaderContentProps> = {
   title: 'Layout/PanelHeaderContent',

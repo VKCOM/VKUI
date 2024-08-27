@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
@@ -22,7 +22,7 @@ export const Chip = ({
   Component = 'span',
   value = '',
   removable = true,
-  onRemove = noop,
+  onRemove,
   removeLabel = 'Удалить',
   before,
   after,
@@ -54,7 +54,7 @@ export const Chip = ({
 
   const onRemoveWrapper = React.useCallback(
     (event: React.MouseEvent) => {
-      onRemove(event, value);
+      onRemove?.(event, value);
     },
     [onRemove, value],
   );

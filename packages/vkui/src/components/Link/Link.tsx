@@ -1,5 +1,5 @@
-import { classNames, noop } from '@vkontakte/vkjs';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { classNames } from '@vkontakte/vkjs';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import styles from './Link.module.css';
 
 export interface LinkProps extends TappableProps {
@@ -16,13 +16,11 @@ export const Link = ({
   hasVisited,
   children,
   className,
-  onClick = noop,
   ...restProps
 }: LinkProps): React.ReactNode => {
   return (
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
-      onClick={onClick}
       {...restProps}
       className={classNames(styles['Link'], hasVisited && styles['Link--has-visited'], className)}
       hasHover={false}

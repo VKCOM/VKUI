@@ -5,7 +5,7 @@ import {
   type GapsProp,
   rowGapClassNames,
 } from '../../lib/layouts';
-import { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './SimpleGrid.module.css';
 

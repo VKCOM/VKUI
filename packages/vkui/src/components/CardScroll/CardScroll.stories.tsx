@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { isArray } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Card as BasicCard } from '../Card/Card';
 import { Playground as BasicCardStory } from '../Card/Card.stories';
 import { Group } from '../Group/Group';
-import { CardScroll, CardScrollProps } from './CardScroll';
+import { CardScroll, type CardScrollProps } from './CardScroll';
 
 type StoryCardScrollProps = CardScrollProps & { count: number };
 
