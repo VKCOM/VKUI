@@ -25,6 +25,26 @@ export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, Has
    */
   indicator?: React.ReactNode;
   multiline?: boolean;
+  /**
+   * Иконка слева (рекомендуется использовать размер 28px)
+   */
+  before?: React.ReactNode;
+  /**
+   * Иконка слева от title (рекомендуется использовать размер 16px)
+   */
+  beforeTitle?: React.ReactNode;
+  /**
+   * Иконка справа от title (рекомендуется использовать размер 16px)
+   */
+  afterTitle?: React.ReactNode;
+  /**
+   * Иконка слева от subtitle (рекомендуется использовать размер 12px)
+   */
+  beforeSubtitle?: React.ReactNode;
+  /**
+   * Иконка справа от subtitle (рекомендуется использовать размер 12px)
+   */
+  afterSubtitle?: React.ReactNode;
 }
 
 type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode' | 'size' | 'className'> &
@@ -83,6 +103,11 @@ export const Header = ({
   indicator,
   aside,
   multiline,
+  before,
+  beforeTitle,
+  afterTitle,
+  beforeSubtitle,
+  afterSubtitle,
   ...restProps
 }: HeaderProps): React.ReactNode => {
   return (
@@ -96,6 +121,16 @@ export const Header = ({
         hasReactNode(subtitle) && styles['Header--with-subtitle'],
       )}
     >
+      {before && (
+        <div
+          className={classNames(
+            styles['Header__before'],
+            subtitle && styles['Header__before--withSubtitle'],
+          )}
+        >
+          {before}
+        </div>
+      )}
       <div className={styles['Header__main']}>
         <HeaderContent
           className={styles['Header__content']}
@@ -103,6 +138,7 @@ export const Header = ({
           mode={mode}
           size={size}
         >
+          {beforeTitle && <div className={styles['Header__content__before']}>{beforeTitle}</div>}
           <span
             className={classNames(
               styles['Header__content-in'],
@@ -111,23 +147,31 @@ export const Header = ({
           >
             {children}
           </span>
+          {afterTitle && <div className={styles['Header__content__after']}>{afterTitle}</div>}
           {hasReactNode(indicator) && (
             <Footnote className={styles['Header__indicator']} weight="2">
               {indicator}
             </Footnote>
           )}
         </HeaderContent>
-
         {hasReactNode(subtitle) && (
-          <Subhead
-            className={classNames(
-              styles['Header__subtitle'],
-              multiline && styles['Header__content--multiline'],
+          <div className={styles['Header__subtitleWrapper']}>
+            {beforeSubtitle && (
+              <div className={styles['Header__subtitleBefore']}>{beforeSubtitle}</div>
             )}
-            Component={subtitleComponent}
-          >
-            {subtitle}
-          </Subhead>
+            <Subhead
+              className={classNames(
+                styles['Header__subtitle'],
+                multiline && styles['Header__content--multiline'],
+              )}
+              Component={subtitleComponent}
+            >
+              {subtitle}
+            </Subhead>
+            {afterSubtitle && (
+              <div className={styles['Header__subtitleAfter']}>{afterSubtitle}</div>
+            )}
+          </div>
         )}
       </div>
 
