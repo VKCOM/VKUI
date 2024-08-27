@@ -1,9 +1,11 @@
-import {test} from "@vkui-e2e/test";
+import { test } from '@vkui-e2e/test';
 import {
   PanelHeaderBackPlayground,
   PanelHeaderButtonPlayground,
-  PanelHeaderClosePlayground, PanelHeaderEditPlayground, PanelHeaderSubmitPlayground
-} from "./PanelHeaderButton.e2e-playground";
+  PanelHeaderClosePlayground,
+  PanelHeaderEditPlayground,
+  PanelHeaderSubmitPlayground,
+} from './PanelHeaderButton.e2e-playground';
 
 test('PanelHeaderButton', async ({
   mount,
@@ -40,7 +42,6 @@ test('PanelHeaderEdit', async ({
   await mount(<PanelHeaderEditPlayground {...componentPlaygroundProps} />);
   await expectScreenshotClippedToContent();
 });
-
 
 test('PanelHeaderSubmit', async ({
   mount,

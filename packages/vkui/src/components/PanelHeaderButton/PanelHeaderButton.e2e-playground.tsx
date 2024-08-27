@@ -1,10 +1,10 @@
-import {Icon28AddOutline} from "@vkontakte/icons";
-import {ComponentPlayground, ComponentPlaygroundProps} from "@vkui-e2e/playground-helpers";
-import {PanelHeaderBack} from "../PanelHeaderBack/PanelHeaderBack";
-import {PanelHeaderClose} from "../PanelHeaderClose/PanelHeaderClose";
-import {PanelHeaderEdit, PanelHeaderEditProps} from "../PanelHeaderEdit/PanelHeaderEdit";
-import {PanelHeaderSubmit} from "../PanelHeaderSubmit/PanelHeaderSubmit";
-import {PanelHeaderButton, PanelHeaderButtonProps} from "./PanelHeaderButton";
+import { Icon28AddOutline } from '@vkontakte/icons';
+import { ComponentPlayground, ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
+import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
+import { PanelHeaderEdit, PanelHeaderEditProps } from '../PanelHeaderEdit/PanelHeaderEdit';
+import { PanelHeaderSubmit } from '../PanelHeaderSubmit/PanelHeaderSubmit';
+import { PanelHeaderButton, PanelHeaderButtonProps } from './PanelHeaderButton';
 
 export const PanelHeaderButtonPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -18,9 +18,7 @@ export const PanelHeaderButtonPlayground = (props: ComponentPlaygroundProps) => 
         },
       ]}
     >
-      {(props: PanelHeaderButtonProps) => (
-        <PanelHeaderButton {...props} />
-      )}
+      {(props: PanelHeaderButtonProps) => <PanelHeaderButton {...props} />}
     </ComponentPlayground>
   );
 };
@@ -35,9 +33,7 @@ export const PanelHeaderClosePlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: PanelHeaderButtonProps) => (
-        <PanelHeaderClose {...props} />
-      )}
+      {(props: PanelHeaderButtonProps) => <PanelHeaderClose {...props} />}
     </ComponentPlayground>
   );
 };
@@ -53,9 +49,7 @@ export const PanelHeaderBackPlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: PanelHeaderButtonProps) => (
-        <PanelHeaderBack {...props} />
-      )}
+      {(props: PanelHeaderButtonProps) => <PanelHeaderBack {...props} />}
     </ComponentPlayground>
   );
 };
@@ -75,9 +69,7 @@ export const PanelHeaderEditPlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: PanelHeaderEditProps) => (
-        <PanelHeaderEdit {...props} />
-      )}
+      {(props: PanelHeaderEditProps) => <PanelHeaderEdit {...props} />}
     </ComponentPlayground>
   );
 };
@@ -89,12 +81,10 @@ export const PanelHeaderSubmitPlayground = (props: ComponentPlaygroundProps) => 
       propSets={[
         {
           children: [undefined, 'Children'],
-        }
+        },
       ]}
     >
-      {(props: PanelHeaderButtonProps) => (
-        <PanelHeaderSubmit {...props} />
-      )}
+      {(props: PanelHeaderButtonProps) => <PanelHeaderSubmit {...props} />}
     </ComponentPlayground>
   );
 };
