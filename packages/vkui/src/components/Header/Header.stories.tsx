@@ -1,11 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import {
-  Icon12Fire,
-  Icon12Tag,
-  Icon16LockOutline,
-  Icon16UnlockOutline,
-  Icon28UserCircleFillBlue,
-} from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -19,6 +12,26 @@ const story: Meta<HeaderProps> = {
   component: Header,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
+    before: createFieldWithPresets({
+      iconSizes: ['28'],
+      requiredIcons: ['Icon28UserCircleFillBlue'],
+    }),
+    beforeTitle: createFieldWithPresets({
+      iconSizes: ['16'],
+      requiredIcons: ['Icon16LockOutline'],
+    }),
+    afterTitle: createFieldWithPresets({
+      iconSizes: ['16'],
+      requiredIcons: ['Icon16UnlockOutline'],
+    }),
+    beforeSubtitle: createFieldWithPresets({
+      iconSizes: ['12'],
+      requiredIcons: ['Icon12Tag'],
+    }),
+    afterSubtitle: createFieldWithPresets({
+      iconSizes: ['12'],
+      requiredIcons: ['Icon12Fire'],
+    }),
     aside: createFieldWithPresets({
       iconSizes: [],
       additionalPresets: {
@@ -95,11 +108,11 @@ export const WithAllFeatures: Story = {
   ...Playground,
   args: {
     ...Playground.args,
-    before: <Icon28UserCircleFillBlue />,
-    beforeTitle: <Icon16LockOutline />,
-    afterTitle: <Icon16UnlockOutline />,
-    beforeSubtitle: <Icon12Tag />,
-    afterSubtitle: <Icon12Fire />,
+    before: 'Icon28UserCircleFillBlue',
+    beforeTitle: 'Icon16LockOutline',
+    afterTitle: 'Icon16UnlockOutline',
+    beforeSubtitle: 'Icon12Tag',
+    afterSubtitle: 'Icon12Fire',
     subtitle: 'SOHN — Conrad',
     aside: <Link>Показать все</Link>,
   },

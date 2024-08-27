@@ -28,23 +28,23 @@ export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, Has
   /**
    * Иконка слева (рекомендуется использовать размер 28px)
    */
-  before?: React.ReactElement;
+  before?: React.ReactNode;
   /**
    * Иконка слева от title (рекомендуется использовать размер 16px)
    */
-  beforeTitle?: React.ReactElement;
+  beforeTitle?: React.ReactNode;
   /**
    * Иконка справа от title (рекомендуется использовать размер 16px)
    */
-  afterTitle?: React.ReactElement;
+  afterTitle?: React.ReactNode;
   /**
    * Иконка слева от subtitle (рекомендуется использовать размер 12px)
    */
-  beforeSubtitle?: React.ReactElement;
+  beforeSubtitle?: React.ReactNode;
   /**
    * Иконка справа от subtitle (рекомендуется использовать размер 12px)
    */
-  afterSubtitle?: React.ReactElement;
+  afterSubtitle?: React.ReactNode;
 }
 
 type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode' | 'size' | 'className'> &
