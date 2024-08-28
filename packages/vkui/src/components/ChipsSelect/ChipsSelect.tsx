@@ -1,3 +1,4 @@
+import { type MouseEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -426,6 +427,16 @@ export const ChipsSelect = <Option extends ChipOption>({
     opened ? dropdownScrollBoxRef : null,
   );
 
+  const onDropdownIconClick: MouseEventHandler<SVGSVGElement> = React.useCallback(
+    (e) => {
+      if (opened) {
+        e.preventDefault();
+        setOpened(false);
+      }
+    },
+    [opened, setOpened],
+  );
+
   const dropdownContent = React.useMemo(() => {
     const defaultDropdownContent = options.map((option, index) => {
       const dropdownItemId = `${dropdownId}-${index}`;
@@ -549,7 +560,11 @@ export const ChipsSelect = <Option extends ChipOption>({
           dropdownIconProp || (
             <DropdownIcon
               opened={opened}
-              className={clearButtonShown ? styles['ChipsSelect__dropdown-icon'] : undefined}
+              onClick={onDropdownIconClick}
+              className={classNames(
+                styles['ChipsSelect__dropdown-icon'],
+                clearButtonShown && styles['ChipsSelect__dropdown-icon--withOffset'],
+              )}
             />
           )
         }
