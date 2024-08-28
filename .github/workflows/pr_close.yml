@@ -57,15 +57,12 @@ jobs:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           directory: packages/vkui/
 
-  check-and-autopublish-vkui-floating-ui:
+  is-updated-vkui-floating-ui:
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged == true
-      && github.event.pull_request.user.login == 'dependabot[bot]'
-      && github.event.pull_request.base.ref == 'master'}}
-    permissions:
-      issues: write
-      pull-requests: write
-      contents: write
+    outputs:
+      result: ${{ steps.check_floating_ui_updated.outputs.floating_ui_updated }}
+      prev_floating_ui_version: ${{ steps.check_floating_ui_updated.outputs.prev_version }}
+      new_floating_ui_version: ${{ steps.check_floating_ui_updated.outputs.new_version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -79,7 +76,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check if @floating-ui/react-dom was updated in vkui-floating-ui
+      - name: Check if vkui-floating-ui was updated
         id: check_floating_ui_updated
         if: ${{ steps.metadata.outputs.directory == 'packages/vkui-floating-ui' }}
         run: |
@@ -93,6 +90,24 @@ jobs:
             echo "floating_ui_updated=false" >> $GITHUB_OUTPUT
           fi
 
+  autopublish-vkui-floating-ui:
+    runs-on: ubuntu-latest
+    needs: is-updated-vkui-floating-ui
+    if: ${{ github.event.pull_request.merged == true
+      && github.event.pull_request.user.login == 'dependabot[bot]'
+      && github.event.pull_request.base.ref == 'master'
+      && needs.is-updated-vkui-floating-ui.outputs.result == 'true' }}
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
       - name: Get vkui-floating-ui version
         id: get_version
         run: |
@@ -101,17 +116,15 @@ jobs:
       # Рассчитываем новую версию @vkui-floating-ui
       - name: Calculate new version of vkui-floating-ui
         id: calc_new_version_vkui_floating_ui
-        if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         uses: VKCOM/gh-actions/VKUI/bump-vkui-floating-ui-version@main
         with:
-          prev_origin_version: ${{ steps.check_floating_ui_updated.outputs.prev_version }}
-          new_origin_version: ${{ steps.check_floating_ui_updated.outputs.new_version }}
+          prev_origin_version: ${{ needs.is-updated-vkui-floating-ui.outputs.prev_floating_ui_version }}
+          new_origin_version: ${{ needs.is-updated-vkui-floating-ui.outputs.new_floating_ui_version }}
           current_version: ${{ steps.get_version.outputs.floating_ui_version }}
 
       # Создаем бранч где будут изменения
       - name: Create branch to update version
         id: create_new_branch
-        if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         run: |
           BRANCH_NAME_PREFIX = "update-vkui-floating-ui-"
           VERSION_POSTFIX = "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
@@ -126,7 +139,6 @@ jobs:
 
       # Запускаем форкфлоу скрипта публикации
       - name: Publish new version
-        if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         uses: actions/github-script@v7
         with:
           script: |
@@ -145,14 +157,12 @@ jobs:
 
       # Обновляем версию vkui-floating-ui в vkui
       - name: update vkui-floating-ui version in vkui
-        if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         uses: actions/github-script@v7
         run: |
           yarn workspace @vkontakte/vkui add @vkontakte/vkui-floating-ui@${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
 
       # Пушим изменения с обновлением версии в зависимостях vkui-floating-ui
       - name: Commit updates
-        if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         run: |
           git add -A
           git commit -m 'update @vkontakte/vkui-floating-ui version in @vkontakte/vkui'
@@ -161,7 +171,6 @@ jobs:
       # Создаем pull request с изменениями в ветке
       - name: Create PR with changes
         id: create_pull_request
-        if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -175,7 +184,6 @@ jobs:
 
       # Добавляем майлстоун следующей минорной версии
       - name: Add next minor version milestone to pull request
-        if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         uses: ./.github/actions/add-next-minor-milestone
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
