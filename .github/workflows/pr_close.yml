@@ -122,20 +122,22 @@ jobs:
           new_origin_version: ${{ needs.is-updated-vkui-floating-ui.outputs.new_floating_ui_version }}
           current_version: ${{ steps.get_version.outputs.floating_ui_version }}
 
-      # Создаем бранч где будут изменения
-      - name: Create branch to update version
-        id: create_new_branch
+      - name: Define branch name for new version release
         run: |
-          BRANCH_NAME_PREFIX = "update-vkui-floating-ui-"
-          VERSION_POSTFIX = "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
-          BRANCH_NAME = "${BRANCH_NAME_PREFIX}${VERSION_POSTFIX}"
+          BRANCH_NAME_PREFIX="release/vkui-floating-ui-"
+          VERSION_POSTFIX="${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
+          echo "RELASE_BRANCH_NAME="${BRANCH_NAME_PREFIX}${VERSION_POSTFIX}"" >> "$GITHUB_ENV"
 
+      - name: Set Git credentials
+        run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
-          git checkout -b "$BRANCH_NAME"
-          git push origin "$BRANCH_NAME"
 
-          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+      - name: Create branch for new version release
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.RELASE_BRANCH_NAME }}
 
       # Запускаем форкфлоу скрипта публикации
       - name: Publish new version
