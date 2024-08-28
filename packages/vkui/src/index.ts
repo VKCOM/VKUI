@@ -132,7 +132,11 @@ export type {
 export { Snackbar } from './components/Snackbar/Snackbar';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
 export { Tooltip } from './components/Tooltip/Tooltip';
-export type { TooltipProps } from './components/Tooltip/Tooltip';
+export type {
+  TooltipProps,
+  TooltipOnShownChange,
+  TooltipArrowProps,
+} from './components/Tooltip/Tooltip';
 
 /**
  * Modals
