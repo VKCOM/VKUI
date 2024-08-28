@@ -126,7 +126,7 @@ jobs:
         run: |
           BRANCH_NAME_PREFIX="release/vkui-floating-ui-"
           VERSION_POSTFIX="${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
-          echo "RELASE_BRANCH_NAME="${BRANCH_NAME_PREFIX}${VERSION_POSTFIX}"" >> "$GITHUB_ENV"
+          echo "RELEASE_BRANCH_NAME="${BRANCH_NAME_PREFIX}${VERSION_POSTFIX}"" >> "$GITHUB_ENV"
 
       - name: Set Git credentials
         run: |
@@ -137,7 +137,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ env.RELASE_BRANCH_NAME }}
+          branch: ${{ env.RELEASE_BRANCH_NAME }}
 
       # Запускаем форкфлоу скрипта публикации
       - name: Publish new version
@@ -148,7 +148,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'publish.yml',
-              ref: ${{ steps.create_new_branch.outputs.branch_name }},
+              ref: ${{ env.RELEASE_BRANCH_NAME }},
               inputs: {
                 package_name: '@vkontakte/vkui-floating-ui',
                 custom_version: "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
@@ -169,7 +169,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: master
-          branch: ${{ steps.create_new_branch.outputs.branch_name }}
+          branch: ${{ env.RELEASE_BRANCH_NAME }}
           commit-message: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
           delete-branch: true
           title: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
