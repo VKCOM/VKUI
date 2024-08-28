@@ -9,7 +9,6 @@ export const ScreenSpinnerLoadingPlayground = (props: ComponentPlaygroundProps) 
       propSets={[
         {
           state: ['loading', 'cancelable'],
-          size: ['regular', 'small', 'medium', 'large'],
         },
       ]}
     >
