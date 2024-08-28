@@ -243,6 +243,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   const rootRef = useExternRef(getRootRef);
   const inputRef = useExternRef(getRef, inputRefHook);
 
+  console.log('placementProp', placementProp);
   // Связано с CustomSelectDropdownProps
   const [dropdownVerticalPlacement, setDropdownVerticalPlacement] = React.useState<
     'top' | 'bottom'
