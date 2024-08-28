@@ -179,7 +179,7 @@ jobs:
           delete-branch: true
           title: 'bump(deps): @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
           body: ''
-          labels: ['subpackage:@vkontakte/vkui-floating-ui', 'dependencies']
+          labels: subpackage:@vkontakte/vkui-floating-ui, dependencies
 
       # Добавляем майлстоун следующей минорной версии
       - name: Add next minor version milestone to pull request
