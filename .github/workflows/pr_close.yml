@@ -178,7 +178,7 @@ jobs:
 
       # Добавляем майлстоун следующей минорной версии
       - name: Add next minor version milestone to pull request
-        uses: ./.github/actions/add-next-minor-milestone
+        uses: VKCOM/gh-actions/VKUI/add-next-minor-milestone@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull_request_number: ${{ steps.create_pull_request.outputs.pull-request-number }}
