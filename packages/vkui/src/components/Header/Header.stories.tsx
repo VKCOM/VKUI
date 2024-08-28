@@ -12,6 +12,26 @@ const story: Meta<HeaderProps> = {
   component: Header,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
+    before: createFieldWithPresets({
+      iconSizes: ['28'],
+      requiredIcons: ['Icon28UserCircleFillBlue'],
+    }),
+    beforeTitle: createFieldWithPresets({
+      iconSizes: ['16'],
+      requiredIcons: ['Icon16LockOutline'],
+    }),
+    afterTitle: createFieldWithPresets({
+      iconSizes: ['16'],
+      requiredIcons: ['Icon16UnlockOutline'],
+    }),
+    beforeSubtitle: createFieldWithPresets({
+      iconSizes: ['12'],
+      requiredIcons: ['Icon12Tag'],
+    }),
+    afterSubtitle: createFieldWithPresets({
+      iconSizes: ['12'],
+      requiredIcons: ['Icon12Fire'],
+    }),
     aside: createFieldWithPresets({
       iconSizes: [],
       additionalPresets: {
@@ -82,4 +102,18 @@ export const WithCounter: Story = {
     withSinglePanel,
     withVKUILayout,
   ],
+};
+
+export const WithAllFeatures: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    before: 'Icon28UserCircleFillBlue',
+    beforeTitle: 'Icon16LockOutline',
+    afterTitle: 'Icon16UnlockOutline',
+    beforeSubtitle: 'Icon12Tag',
+    afterSubtitle: 'Icon12Fire',
+    subtitle: 'SOHN — Conrad',
+    aside: <Link>Показать все</Link>,
+  },
 };
