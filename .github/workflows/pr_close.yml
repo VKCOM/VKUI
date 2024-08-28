@@ -180,11 +180,3 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull_request_number: ${{ steps.create_pull_request.outputs.pull_request_number }}
-
-      # Добавляем label к созданному pull request
-      - name: Add label to Pull Request
-        if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
-        uses: ./.github/actions/add-label-to-pull-request
-        with:
-          issue_number: ${{ steps.create_pull_request.outputs.pull-request-number }}
-          label: 'subpackage:@vkontakte/vkui-floating-ui'
