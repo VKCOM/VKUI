@@ -102,11 +102,11 @@ jobs:
       - name: Calculate new version of vkui-floating-ui
         id: calc_new_version_vkui_floating_ui
         if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
-        uses: VKCOM/gh-actions/VKUI/calculate-updated-floating-ui-version@main
+        uses: VKCOM/gh-actions/VKUI/bump-vkui-floating-ui-version@main
         with:
-          prev_version: ${{ steps.check_floating_ui_updated.outputs.prev_version }}
-          new_version: ${{ steps.check_floating_ui_updated.outputs.new_version }}
-          floating_ui_version: ${{ steps.get_version.outputs.floating_ui_version }}
+          prev_origin_version: ${{ steps.check_floating_ui_updated.outputs.prev_version }}
+          new_origin_version: ${{ steps.check_floating_ui_updated.outputs.new_version }}
+          current_version: ${{ steps.get_version.outputs.floating_ui_version }}
 
       # Создаем бранч где будут изменения
       - name: Create branch to update version
@@ -147,15 +147,8 @@ jobs:
       - name: update vkui-floating-ui version in vkui
         if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         uses: actions/github-script@v7
-        with:
-          new_version: ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
-          script: |
-            const fs = require('fs');
-            const newVKUIFloatingUIVersion = core.getInput('new_version');
-            const packagePath = "packages/vkui/package.json";
-            const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
-            packageJson.dependencies["@vkontakte/vkui-floating-ui"] = newVKUIFloatingUIVersion;
-            fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
+        run: |
+          yarn workspace @vkontakte/vkui add @vkontakte/vkui-floating-ui@${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
 
       # Пушим изменения с обновлением версии в зависимостях vkui-floating-ui
       - name: Commit updates
@@ -169,13 +162,16 @@ jobs:
       - name: Create PR with changes
         id: create_pull_request
         if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
-        uses: ./.github/actions/create-pull-request
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: 'Update @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
-          body: 'This PR updates @vkontakte/vkui-floating-ui to version ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }} following the update of @floating-ui/react-dom to ${{ steps.check_floating_ui_updated.outputs.new_version }}.'
-          head: ${{ steps.create_new_branch.outputs.branch_name }}
-          base: 'master'
+          base: master
+          branch: ${{ steps.create_new_branch.outputs.branch_name }}
+          commit-message: 'bump(deps): @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
+          delete-branch: true
+          title: 'bump(deps): @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
+          body: ''
+          labels: 'subpackage:@vkontakte/vkui-floating-ui', 'dependencies'
 
       # Добавляем майлстоун следующей минорной версии
       - name: Add next minor version milestone to pull request
@@ -190,5 +186,5 @@ jobs:
         if: steps.check_floating_ui_updated.outputs.floating_ui_updated == 'true'
         uses: ./.github/actions/add-label-to-pull-request
         with:
-          issue_number: ${{ steps.create_pull_request.outputs.pull_request_number }}
+          issue_number: ${{ steps.create_pull_request.outputs.pull-request-number }}
           label: 'subpackage:@vkontakte/vkui-floating-ui'
