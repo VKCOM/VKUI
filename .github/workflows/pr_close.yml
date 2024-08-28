@@ -160,13 +160,6 @@ jobs:
         run: |
           yarn workspace @vkontakte/vkui add @vkontakte/vkui-floating-ui@${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
 
-      # Пушим изменения с обновлением версии в зависимостях vkui-floating-ui
-      - name: Commit updates
-        run: |
-          git add -A
-          git commit -m 'update @vkontakte/vkui-floating-ui version in @vkontakte/vkui'
-          git push
-
       # Создаем pull request с изменениями в ветке
       - name: Create PR with changes
         id: create_pull_request
