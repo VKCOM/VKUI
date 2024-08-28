@@ -1,5 +1,4 @@
 name: Add next minor milestone to pull request
-description: Add next minor milestone to pull request
 
 inputs:
   pull_request_number:

@@ -1,5 +1,4 @@
 name: Add Label to pull request
-description: Add Label to pull request
 
 inputs:
   issue_number:
