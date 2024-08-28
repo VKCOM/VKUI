@@ -175,9 +175,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: master
           branch: ${{ steps.create_new_branch.outputs.branch_name }}
-          commit-message: 'bump(deps): @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
+          commit-message: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
           delete-branch: true
-          title: 'bump(deps): @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
+          title: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
           body: ''
           labels: subpackage:@vkontakte/vkui-floating-ui, dependencies
 
