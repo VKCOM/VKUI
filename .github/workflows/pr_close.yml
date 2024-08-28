@@ -157,7 +157,6 @@ jobs:
 
       # Обновляем версию vkui-floating-ui в vkui
       - name: update vkui-floating-ui version in vkui
-        uses: actions/github-script@v7
         run: |
           yarn workspace @vkontakte/vkui add @vkontakte/vkui-floating-ui@${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
 
