@@ -1,10 +1,30 @@
 import * as React from 'react';
 import { act } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { HorizontalScroll } from './HorizontalScroll';
+
+const setup = (element: HTMLElement, startScrollLeft = 0) => {
+  let scrollLeft = startScrollLeft;
+  jest.spyOn(element, 'scrollLeft', 'get').mockImplementation(() => scrollLeft);
+  jest.spyOn(element, 'scrollLeft', 'set').mockImplementation((newValue) => {
+    scrollLeft = newValue;
+  });
+
+  jest.spyOn(element, 'scrollWidth', 'get').mockImplementation(() => 300);
+
+  jest.spyOn(element, 'offsetWidth', 'get').mockImplementation(() => 200);
+
+  jest.spyOn(element.firstElementChild!, 'scrollWidth', 'get').mockImplementation(() => 500);
+
+  return {
+    get scrollLeft() {
+      return scrollLeft;
+    },
+  };
+};
 
 describe('HorizontalScroll', () => {
   baselineComponent(HorizontalScroll);
@@ -36,11 +56,11 @@ describe('HorizontalScroll', () => {
       </HorizontalScroll>,
     );
     // no arrow button on the screen on first render
-    expect(screen.queryByTestId('ScrollArrow')).toBeFalsy();
+    expect(screen.queryByTestId('ScrollArrowRight')).toBeFalsy();
 
     fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
 
-    await screen.findByTestId('ScrollArrow');
+    await screen.findByTestId('ScrollArrowRight');
   });
 
   it('disables navigation to arrows by keyboard', async () => {
@@ -70,6 +90,91 @@ describe('HorizontalScroll', () => {
     expect(document.activeElement).toBe(document.body);
 
     act(jest.runAllTimers);
+  });
+
+  it('click on arrow right should change scrollLeft', async () => {
+    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+      current: null,
+    };
+    render(
+      <HorizontalScroll getRef={ref} data-testid="horizontal-scroll">
+        <div style={{ width: '1800px', height: '50px' }} />
+      </HorizontalScroll>,
+    );
+
+    const mockedData = setup(ref.current!);
+
+    fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
+
+    const arrowRight = screen.getByTestId('ScrollArrowRight');
+    fireEvent.click(arrowRight);
+    fireEvent.click(arrowRight);
+
+    await waitFor(() => {
+      expect(mockedData.scrollLeft).toBe(300);
+      expect(screen.queryByTestId('ScrollArrowRight')).toBeNull();
+    });
+  });
+
+  it('click on arrow left should change scrollLeft', async () => {
+    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+      current: null,
+    };
+    render(
+      <HorizontalScroll getRef={ref} data-testid="horizontal-scroll">
+        <div style={{ width: '1800px', height: '50px' }} />
+      </HorizontalScroll>,
+    );
+
+    const mockedData = setup(ref.current!, 300);
+
+    fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
+
+    const arrowLeft = screen.getByTestId('ScrollArrowLeft');
+    fireEvent.click(arrowLeft);
+
+    await waitFor(() => {
+      expect(mockedData.scrollLeft).toBe(100);
+    });
+
+    fireEvent.click(arrowLeft);
+    await waitFor(() => {
+      expect(mockedData.scrollLeft).toBe(0);
+    });
+  });
+
+  it('use custom scroll function to left and right', async () => {
+    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+      current: null,
+    };
+    render(
+      <HorizontalScroll
+        getRef={ref}
+        data-testid="horizontal-scroll"
+        getScrollToLeft={(left) => left - 100}
+        getScrollToRight={(left) => left + 250}
+      >
+        <div style={{ width: '1800px', height: '50px' }} />
+      </HorizontalScroll>,
+    );
+
+    const mockedData = setup(ref.current!, 50);
+
+    fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
+
+    const arrowRight = screen.getByTestId('ScrollArrowRight');
+    fireEvent.click(arrowRight);
+
+    await waitFor(() => {
+      expect(mockedData.scrollLeft).toBe(300);
+    });
+
+    const arrowLeft = screen.getByTestId('ScrollArrowLeft');
+    fireEvent.click(arrowLeft);
+
+    await waitFor(() => {
+      expect(mockedData.scrollLeft).toBe(200);
+    });
   });
 });
 
