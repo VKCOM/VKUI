@@ -7,7 +7,7 @@ import {
 test.describe('CustomScrollView', () => {
   test.use({ onlyForPlatforms: ['vkcom'] });
 
-  test('CustomScrollView with vertical scroll', async ({
+  test('with vertical scroll', async ({
     mount,
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
@@ -16,7 +16,7 @@ test.describe('CustomScrollView', () => {
     await expectScreenshotClippedToContent();
   });
 
-  test('CustomScrollView with vertical and horizontal scroll', async ({
+  test('with vertical and horizontal scroll', async ({
     mount,
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
