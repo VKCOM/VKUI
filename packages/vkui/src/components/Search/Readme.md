@@ -1,4 +1,4 @@
-Надстройка над `<input type="text" />`. Компонент принимает все валидные для этого элемента свойства.
+Надстройка над `<input type="search" />`. Компонент принимает все валидные для этого элемента свойства.
 
 ```jsx { "props": { "layout": false, "adaptivity": true, "showCustomPanelHeaderAfterProps": true } }
 const thematics = [

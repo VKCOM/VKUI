@@ -11,6 +11,7 @@
   overflow: hidden !important;
   border: 0 !important;
   opacity: 0;
+  user-select: none;
 }
 
 /* Чтобы фокус скринридера, попавший на скрытый инпут был виден.

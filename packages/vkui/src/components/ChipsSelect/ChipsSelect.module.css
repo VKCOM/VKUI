@@ -20,5 +20,9 @@
 }
 
 .ChipsSelect__dropdown-icon {
+  cursor: pointer;
+}
+
+.ChipsSelect__dropdown-icon--withOffset {
   margin-inline-end: 8px;
 }
