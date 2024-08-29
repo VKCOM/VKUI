@@ -18,12 +18,10 @@ test.describe('CustomScrollView', () => {
 
   test('CustomScrollView with vertical and horizontal scroll', async ({
     mount,
-    page,
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
     await mount(<CustomScrollViewWithBothScrollsPlayground {...componentPlaygroundProps} />);
-    await page.waitForTimeout(500);
     await expectScreenshotClippedToContent();
   });
 });
