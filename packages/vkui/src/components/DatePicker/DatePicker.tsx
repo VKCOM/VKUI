@@ -205,17 +205,14 @@ const DatePickerNative = ({
     InputProps
   > = restProps;
 
-  if (value) {
-    // контролируемый компонент
-    inputProps.value = convertToInputFormat(value);
-  } else {
-    // неконтролируемый компонент
-    inputProps.defaultValue = convertToInputFormat(defaultValue);
-  }
+  const valueProps = value
+    ? { value: convertToInputFormat(value) }
+    : { defaultValue: convertToInputFormat(defaultValue) };
 
   return (
     <Input
       {...inputProps}
+      {...valueProps}
       type="date"
       onChange={onStringChange}
       min={convertToInputFormat(min)}
