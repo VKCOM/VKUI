@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { CardScroll } from './CardScroll';
