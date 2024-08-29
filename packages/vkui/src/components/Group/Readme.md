@@ -140,3 +140,32 @@ const SharedContent = () => {
 
 <Example />;
 ```
+
+<br />
+
+## Подкомпоненты
+
+`<Group.Container>` служит оберткой, отвечающей за скругления и отступы внутри группы. Принимает все основные свойства `Group`, кроме `header` и `description`.
+
+> Обратите внимание, что `<Group.Container>` также отвечает за установку разделителя и отступов между соседними группами.
+> Если вы не хотите, чтобы между группами автоматически появлялся разделитель, то используйте свойство `separator="hide"`.
+
+`<Group.Header>` отвечает за отрисовку заголовка. Соответствует свойству `Header` у `Group`.
+
+`<Group.Description>` отвечает за отрисовку подписи в нижней части группы. Соответствует свойству `description` у `Group`.
+
+Пример использования:
+
+```jsx static
+<Group.Container>
+  <Group.Header>
+    <Header>Адреса</Header>
+  </Group.Header>
+  <CellButton onClick={noop}>Добавить домашний адрес</CellButton>
+  <CellButton onClick={noop}>Добавить рабочий адрес</CellButton>
+  <Group.Description>
+    Для использования в мини-приложениях, Delivery Club, VK Taxi и других сервисах ВКонтакте.
+    Эти адреса видны только Вам.
+  </Group.Description>
+</Group.Container>
+```
