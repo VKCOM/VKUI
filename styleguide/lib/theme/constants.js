@@ -1,8 +1,11 @@
 import { Platform } from '@vkui';
 
-export const VKUI_TOKENS_THEMES_BASE_URL = 'https://unpkg.com/@vkontakte/vkui-tokens@4/themes';
-
-export const VKUI_TOKENS_THEMES_META_URL = `${VKUI_TOKENS_THEMES_BASE_URL}/?meta`;
+export const VKUI_TOKENS_THEMES_BASE_URL =
+  'https://cdn.jsdelivr.net/npm/@vkontakte/vkui-tokens@4/themes';
+export const VKUI_TOKENS_VERSION_URL =
+  'https://data.jsdelivr.com/v1/packages/npm/@vkontakte/vkui-tokens/resolved?specifier=4';
+export const VKUI_TOKENS_THEMES_META_URL =
+  'https://data.jsdelivr.com/v1/packages/npm/@vkontakte/vkui-tokens';
 
 /**
  * Эти темы поддерживают только appearance="dark", но при этом не имеют постфикса `Dark`.
