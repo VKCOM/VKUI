@@ -6,24 +6,48 @@ import {
   IGNORE_TOKENS_WITH_PREFIX,
   INVERTED_THEME_NAME,
   VKUI_TOKENS_THEMES_META_URL,
+  VKUI_TOKENS_VERSION_URL,
 } from './constants';
 import { onlyVariablesLocalImportRule, onlyVariablesLocalURL } from './functions';
 
 export const useLoadThemeNames = () => {
-  const { data, error } = useFetch(VKUI_TOKENS_THEMES_META_URL);
+  const { data: versionData, error: versionError } = useFetch(VKUI_TOKENS_VERSION_URL);
+
+  const { data, error: metaDataError } = useFetch(
+    versionData && versionData.version
+      ? `${VKUI_TOKENS_THEMES_META_URL}@${versionData.version}`
+      : null,
+  );
+
+  const error = metaDataError || versionError;
 
   return React.useMemo(() => {
     if (!data) {
       return { isLoading: true, themeNames: [], error };
     }
 
-    const filteredData = data.files
-      .map(({ path }) => path.replace('/themes/', ''))
-      .filter(
-        (themeNameRaw) =>
-          !IGNORE_TOKENS_WITH_PREFIX.some((i) => themeNameRaw.startsWith(i)) ||
-          !DEFAULT_THEME_NAMES.includes(themeNameRaw),
-      );
+    const files = data.files;
+    const themes = files.find((file) => file.name === 'themes');
+    if (!themes) {
+      const errorMessage =
+        'В структуре пакета @vkontakte/vkui-tokens не получается найти папкy "themes"';
+
+      console.warn(errorMessage);
+      return {
+        isLoading: true,
+        themeNames: [],
+        error: new Error(errorMessage),
+      };
+    }
+
+    const themesFiles = themes.files;
+    const themesNames = themesFiles.map((theme) => theme.name);
+
+    const filteredData = themesNames.filter(
+      (themeNameRaw) =>
+        !IGNORE_TOKENS_WITH_PREFIX.some((i) => themeNameRaw.startsWith(i)) ||
+        !DEFAULT_THEME_NAMES.includes(themeNameRaw),
+    );
 
     filteredData.unshift(...DEFAULT_THEME_NAMES);
 
