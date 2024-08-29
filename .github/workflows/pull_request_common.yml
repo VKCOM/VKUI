@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Add labels
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Patch
         if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
         uses: ./.github/actions/add-label-to-pull-request
