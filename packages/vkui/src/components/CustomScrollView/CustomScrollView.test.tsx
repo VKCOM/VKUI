@@ -6,6 +6,15 @@ import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import { CustomScrollView } from './CustomScrollView';
 import styles from './CustomScrollView.module.css';
 
+/**
+ * Конвертирует неконечное значение прокрутки (Infinity, -Infinity, NaN) в 0
+ *
+ * @see https://drafts.csswg.org/cssom-view/#normalize-non-finite-values
+ */
+function normalizeNonFiniteScroll(x: number) {
+  return Number.isFinite(x) ? x : 0.0;
+}
+
 const parseTransform = (value: string): [number, number] => {
   const match = value.match(/translate\((.+),(.+)\)/);
   if (!match) {
@@ -92,17 +101,29 @@ const setup = ({
   jest.spyOn(box, 'clientWidth', 'get').mockReturnValue(clientWidth);
   jest.spyOn(box, 'scrollWidth', 'get').mockReturnValue(scrollWidth);
 
-  let scrollTop = 0;
-  jest.spyOn(box, 'scrollTop', 'get').mockImplementation(() => scrollTop);
-  jest
-    .spyOn(box, 'scrollTop', 'set')
-    .mockImplementation((newScrollTop) => (scrollTop = newScrollTop));
+  // https://drafts.csswg.org/cssom-view/#dom-window-scroll
+  Object.defineProperty(box, 'scroll', {
+    value: (arg1: number | ScrollToOptions, arg2: number | undefined) => {
+      const scrollTo = (options: ScrollToOptions) => {
+        if (options.left) {
+          box.scrollLeft = normalizeNonFiniteScroll(options.left);
+        }
+        if (options.top) {
+          box.scrollTop = normalizeNonFiniteScroll(options.top);
+        }
+      };
 
-  let scrollLeft = 0;
-  jest.spyOn(box, 'scrollLeft', 'get').mockImplementation(() => scrollLeft);
-  jest
-    .spyOn(box, 'scrollLeft', 'set')
-    .mockImplementation((newScrollLeft) => (scrollLeft = newScrollLeft));
+      if (typeof arg1 === 'number') {
+        scrollTo({
+          left: arg1,
+          top: arg2,
+        });
+      } else {
+        scrollTo(arg1);
+      }
+    },
+    writable: false,
+  });
 
   let trackerYHeight = '';
   jest
@@ -141,16 +162,16 @@ const setup = ({
     trackerX,
     trackerY,
     set scrollTop(newValue: number) {
-      scrollTop = newValue;
+      box.scrollTop = newValue;
     },
     get scrollTop() {
-      return scrollTop;
+      return box.scrollTop;
     },
     get scrollLeft() {
-      return scrollLeft;
+      return box.scrollLeft;
     },
     set scrollLeft(newValue: number) {
-      scrollLeft = newValue;
+      box.scrollLeft = newValue;
     },
     get trackerYHeight() {
       return trackerYHeight;
