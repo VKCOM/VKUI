@@ -23,6 +23,13 @@ jobs:
           issue_number: ${{ github.event.pull_request.number }}
           label: 'patch'
 
+      - name: VKUI-tokens
+        if: ${{ github.actor == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}
+        uses: ./.github/actions/add-label-to-pull-request
+        with:
+          issue_number: ${{ github.event.pull_request.number }}
+          label: 'vkui-tokens'
+
   check-dependabot-pr:
     runs-on: ubuntu-latest
     permissions:
@@ -36,24 +43,32 @@ jobs:
       - name: Node setup
         uses: ./.github/actions/node-setup
 
-      - name: Get @vkontakte/vkui dependencies
-        id: dependencies
-        run: |
-          DEPENDENCIES_OBJECT=$(node -p "require('./packages/vkui/package.json').dependencies")
-          DEPENDENCIES_ARRAY=$(node -p "Object.keys($DEPENDENCIES_OBJECT)")
-          DEPENDENCIES_ARRAY_JSON=$(node -p "JSON.stringify($DEPENDENCIES_ARRAY)")
-
-          echo "value='$DEPENDENCIES_ARRAY_JSON'" >> $GITHUB_OUTPUT
-
       - name: Fetch Dependabot metadata
         id: metadata
         uses: dependabot/fetch-metadata@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get @vkontakte/vkui dependencies
+        id: dependencies
+        run: |
+          if [[ steps.metadata.outputs.directory == '/' ]]; then
+            echo "value=@vkontakte/vkui-tokens" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          if [[ steps.metadata.outputs.directory == 'packages/vkui' ]]; then
+            DEPENDENCIES_OBJECT=$(node -p "require('./packages/vkui/package.json').dependencies")
+            DEPENDENCIES_ARRAY=$(node -p "Object.keys($DEPENDENCIES_OBJECT)")
+            DEPENDENCIES_ARRAY_JSON=$(node -p "JSON.stringify($DEPENDENCIES_ARRAY)")
+
+            echo "value='$DEPENDENCIES_ARRAY_JSON'" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
       - name: Check if PR updates relevant dependencies
         id: check_deps
-        if: ${{ steps.metadata.outputs.directory == 'packages/vkui' }}
+        if: ${{ steps.dependencies.outputs.value != '' }}
         run: |
 
           # ```sh
