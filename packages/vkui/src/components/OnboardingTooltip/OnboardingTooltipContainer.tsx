@@ -13,8 +13,11 @@ export const OnboardingTooltipContainer: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<OnboardingTooltipContainerProps> & React.RefAttributes<HTMLDivElement>
 > = React.forwardRef<HTMLDivElement, OnboardingTooltipContainerProps>(
   ({ fixed = false, Component = 'div', ...props }, ref) => {
-    props[onboardingTooltipContainerAttr] = fixed ? 'fixed' : 'true';
-    return <Component {...props} ref={ref} />;
+    const dataProps = {
+      [onboardingTooltipContainerAttr]: fixed ? 'fixed' : 'true',
+    };
+
+    return <Component {...dataProps} {...props} ref={ref} />;
   },
 );
 
