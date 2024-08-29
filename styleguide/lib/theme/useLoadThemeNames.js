@@ -28,6 +28,18 @@ export const useLoadThemeNames = () => {
 
     const files = data.files;
     const themes = files.find((file) => file.name === 'themes');
+    if (!themes) {
+      const errorMessage =
+        'В структуре пакета @vkontakte/vkui-tokens не получается найти папкy "themes"';
+
+      console.warn(errorMessage);
+      return {
+        isLoading: true,
+        themeNames: [],
+        error: new Error(errorMessage),
+      };
+    }
+
     const themesFiles = themes.files;
     const themesNames = themesFiles.map((theme) => theme.name);
 
