@@ -13,7 +13,7 @@
 }
 
 .ScreenSpinner--mode-overlay {
-  background-color: var(--vkui--color_overlay_primary);
+  background-color: var(--vkui--color_avatar_overlay);
   color: var(--vkui--color_icon_contrast);
 }
 

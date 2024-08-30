@@ -1,16 +1,12 @@
 import * as React from 'react';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
-import { type SpinnerProps } from '../Spinner/Spinner';
 import { ScreenSpinnerContainer } from './ScreenSpinnerContainer';
 import { ScreenSpinnerLoader } from './ScreenSpinnerLoader';
 import { ScreenSpinnerSwapIcon } from './ScreenSpinnerSwapIcon';
+import type { ScreenSpinnerProps } from './types';
 
-export interface ScreenSpinnerProps extends SpinnerProps {
-  state?: 'loading' | 'cancelable' | 'done' | 'error';
-  mode?: 'shadow' | 'overlay';
-  cancelLabel?: string;
-}
+export type { ScreenSpinnerProps };
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ScreenSpinner
