@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon16Clear, Icon16SearchOutline, Icon24Cancel } from '@vkontakte/icons';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { useBooleanState } from '../../hooks/useBooleanState';
@@ -92,6 +92,8 @@ export const Search = ({
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
   const platform = usePlatform();
 
+  const hasAfter = platform === 'ios' && hasReactNode(after);
+
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocusedTrue();
     inputProps.onFocus && inputProps.onFocus(e);
@@ -164,7 +166,7 @@ export const Search = ({
         sizeY === 'compact' && styles['Search--sizeY-compact'],
         isFocused && styles['Search--focused'],
         hasValue && styles['Search--has-value'],
-        after && styles['Search--has-after'],
+        hasAfter && styles['Search--has-after'],
         iconProp && styles['Search--has-icon'],
         inputProps.disabled && styles['Search--disabled'],
         !noPadding && styles['Search--withPadding'],
@@ -225,18 +227,21 @@ export const Search = ({
           )}
         </div>
       </div>
-      {platform === 'ios' && after && (
-        <Button
-          mode="tertiary"
-          size="m"
-          className={styles['Search__after']}
-          focusVisibleMode="inside"
-          onClick={onCancel}
-          onFocus={setFocusedTrue}
-          onBlur={setFocusedFalse}
-        >
-          <span className={styles['Search__afterText']}>{after}</span>
-        </Button>
+      {hasAfter && (
+        <div className={styles['Search__after']}>
+          <Button
+            mode="tertiary"
+            size="m"
+            focusVisibleMode="inside"
+            hoverMode="opacity"
+            activeMode="opacity"
+            onClick={onCancel}
+            onFocus={setFocusedTrue}
+            onBlur={setFocusedFalse}
+          >
+            {after}
+          </Button>
+        </div>
       )}
     </div>
   );

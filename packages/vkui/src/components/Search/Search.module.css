@@ -26,9 +26,10 @@
 }
 
 .Search__field {
-  flex: 2;
   position: relative;
   display: flex;
+  flex-grow: 2;
+  flex-basis: 0%;
   block-size: var(--vkui_internal--search_height);
   background-color: var(--vkui--color_search_field_background);
   border-radius: var(--vkui--size_border_radius--regular);
@@ -158,30 +159,33 @@
 }
 
 .Search__after {
-  flex: 0;
-  transform-origin: left;
-  min-inline-size: initial;
+  position: relative;
+  display: flex;
+  flex-grow: 0;
+  flex-basis: 0%;
+  min-inline-size: 0;
   max-inline-size: min-content;
+  transition: flex-grow 0.3s var(--vkui--animation_easing_platform);
   pointer-events: none;
-  transition-timing-function: var(--vkui--animation_easing_platform);
-  transition-duration: 0.3s;
-  transition-property: flex, margin-inline;
-  overflow: hidden;
-  margin-inline: 0;
 }
 
 .Search--focused .Search__after,
 .Search--has-value .Search__after {
-  flex: 1;
+  flex-grow: 1;
   pointer-events: initial;
-  margin-inline: 4px calc(4px - var(--vkui--size_base_padding_horizontal--regular));
 }
 
-.Search__afterText {
+.Search__after::before,
+.Search__after::after {
+  content: '';
+  flex-shrink: 0;
   display: block;
-  white-space: nowrap;
-  text-overflow: clip;
-  overflow: hidden;
+  inline-size: 4px;
+  block-size: 100%;
+}
+
+.Search--withPadding .Search__after::after {
+  margin-inline-end: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
 .Search__findButton {
