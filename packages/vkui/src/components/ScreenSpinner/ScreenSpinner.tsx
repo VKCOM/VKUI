@@ -12,8 +12,20 @@ import { Icon48CancelCircle } from './Icon48CancelCircle';
 import { Icon48DoneOutline } from './Icon48DoneOutline';
 import styles from './ScreenSpinner.module.css';
 
+const stateClassNames = {
+  cancelable: styles['ScreenSpinner--state-cancelable'],
+  done: styles['ScreenSpinner--state-done'],
+  error: styles['ScreenSpinner--state-error'],
+};
+
+const modeClassNames = {
+  shadow: styles['ScreenSpinner--mode-shadow'],
+  overlay: styles['ScreenSpinner--mode-overlay'],
+};
+
 export interface ScreenSpinnerProps extends SpinnerProps {
   state?: 'loading' | 'cancelable' | 'done' | 'error';
+  mode?: 'shadow' | 'overlay';
   cancelLabel?: string;
 }
 
@@ -26,19 +38,13 @@ export const ScreenSpinnerContext: React.Context<ScreenSpinnerContextProps> =
     state: 'loading',
   });
 
-const stateClassNames = {
-  cancelable: styles['ScreenSpinner--state-cancelable'],
-  done: styles['ScreenSpinner--state-done'],
-  error: styles['ScreenSpinner--state-error'],
-};
-
 const ScreenSpinnerLoader: React.FC<SpinnerProps> = ({
   size = 'large',
   children = 'Пожалуйста, подождите...',
   ...restProps
 }: SpinnerProps) => {
   return (
-    <Spinner className={styles['ScreenSpinner__spinner']} size={size} {...restProps}>
+    <Spinner className={styles['ScreenSpinner__spinner']} size={size} noColor {...restProps}>
       {children}
     </Spinner>
   );
@@ -101,10 +107,11 @@ const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
 ScreenSpinnerSwapIcon.displayName = 'ScreenSpinner.SwapIcon';
 
 type ScreenSpinnerContainerProps = HTMLAttributesWithRootRef<HTMLSpanElement> &
-  Pick<ScreenSpinnerProps, 'state'>;
+  Pick<ScreenSpinnerProps, 'state' | 'mode'>;
 
 const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
   state = 'loading',
+  mode = 'shadow',
   ...restProps
 }: ScreenSpinnerContainerProps) => {
   return (
@@ -112,6 +119,7 @@ const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
       <RootComponent
         baseClassName={classNames(
           styles['ScreenSpinner'],
+          modeClassNames[mode],
           state !== 'loading' && stateClassNames[state],
         )}
         {...restProps}
@@ -135,13 +143,14 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
   state = 'loading',
   onClick,
   cancelLabel,
+  mode = 'shadow',
   ...restProps
 }: ScreenSpinnerProps): React.ReactNode => {
   useScrollLock();
 
   return (
     <PopoutWrapper className={className} style={style} noBackground>
-      <ScreenSpinnerContainer state={state}>
+      <ScreenSpinnerContainer state={state} mode={mode}>
         <ScreenSpinnerLoader {...restProps} />
         <ScreenSpinnerSwapIcon onClick={onClick} cancelLabel={cancelLabel} />
       </ScreenSpinnerContainer>

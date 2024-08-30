@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from '@vkontakte/icons';
-import { hasReactNode } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useReducedMotion } from '../../lib/animation';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -10,6 +10,10 @@ import styles from './Spinner.module.css';
 export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
   size?: 'small' | 'regular' | 'medium' | 'large';
   disableAnimation?: boolean;
+  /**
+   * Задать цвет можно будет через свойство color родителя
+   */
+  noColor?: boolean;
 }
 
 /**
@@ -20,6 +24,7 @@ export const Spinner: React.FC<SpinnerProps> = React.memo(
     size = 'regular',
     children = 'Загружается...',
     disableAnimation = false,
+    noColor = false,
     ...restProps
   }: SpinnerProps) => {
     const isReducedMotion = useReducedMotion();
@@ -72,7 +77,7 @@ export const Spinner: React.FC<SpinnerProps> = React.memo(
         Component="span"
         role="status"
         {...restProps}
-        baseClassName={styles['Spinner']}
+        baseClassName={classNames(styles['Spinner'], noColor && styles['Spinner--no-color'])}
       >
         <SpinnerIcon>{svgAnimateElement}</SpinnerIcon>
         {hasReactNode(children) && <VisuallyHidden>{children}</VisuallyHidden>}
