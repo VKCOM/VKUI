@@ -3,19 +3,28 @@
   --vkui_internal--flex_original_margin_block: 0px;
 
   display: flex;
-  margin-block: calc(
-      -1 * var(--vkui_internal--row_gap) + var(--vkui_internal--flex_original_margin_block)
-    )
-    var(--vkui_internal--flex_original_margin_block);
-  margin-inline: calc(
-      -1 * var(--vkui_internal--column_gap) + var(--vkui_internal--flex_original_margin_inline)
-    )
-    var(--vkui_internal--flex_original_margin_inline);
 }
 
 .Flex--margin-auto {
   --vkui_internal--flex_original_margin_inline: var(--vkui--size_base_padding_horizontal--regular);
   --vkui_internal--flex_original_margin_block: var(--vkui--size_base_padding_vertical--regular);
+
+  margin-block: var(--vkui--size_base_padding_horizontal--regular);
+  margin-inline: var(--vkui--size_base_padding_vertical--regular);
+}
+
+.Flex--withGaps {
+  margin-block-start: calc(
+    -1 * var(--vkui_internal--row_gap) + var(--vkui_internal--flex_original_margin_block)
+  );
+  margin-inline-start: calc(
+    -1 * var(--vkui_internal--column_gap) + var(--vkui_internal--flex_original_margin_inline)
+  );
+}
+
+.Flex > .Flex--margin-auto {
+  margin-block: 0;
+  margin-inline: 0;
 }
 
 .Flex--direction-column {
@@ -83,7 +92,7 @@
 }
 
 /* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
-.Flex > * {
-  margin-block: var(--vkui_internal--row_gap) 0;
-  margin-inline: var(--vkui_internal--column_gap) 0;
+.Flex--withGaps > * {
+  margin-block-start: var(--vkui_internal--row_gap);
+  margin-inline-start: var(--vkui_internal--column_gap);
 }
