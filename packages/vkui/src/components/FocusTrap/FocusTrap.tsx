@@ -1,6 +1,7 @@
 import { type AllHTMLAttributes, useCallback, useRef, useState } from 'react';
 import { arraysEquals } from '../../helpers/array';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMutationObserver } from '../../hooks/useMutationObserver';
 import { FOCUSABLE_ELEMENTS_LIST, Keys, pressedKey } from '../../lib/accessibility';
 import {
   contains,
@@ -97,22 +98,11 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
     }
   };
 
-  useIsomorphicLayoutEffect(
-    function collectFocusableNodesRef() {
-      if (!ref.current) {
-        return;
-      }
-      const parentNode = ref.current;
-      const observer = new MutationObserver(() => onMutateParentHandler(parentNode));
-      observer.observe(ref.current, {
-        subtree: true,
-        childList: true,
-      });
-      recalculateFocusableNodesRef(parentNode);
-      return () => observer.disconnect();
-    },
-    [ref],
-  );
+  useMutationObserver(ref, () => ref.current && onMutateParentHandler(ref.current));
+
+  useIsomorphicLayoutEffect(() => {
+    ref.current && recalculateFocusableNodesRef(ref.current);
+  }, [ref]);
 
   useIsomorphicLayoutEffect(
     function tryToAutoFocusToFirstNode() {
