@@ -74,7 +74,7 @@ export interface FormFieldProps {
   maxHeight?: number;
 }
 
-interface FormFieldOwnProps
+export interface FormFieldOwnProps
   extends React.AllHTMLAttributes<HTMLElement>,
     HasRootRef<HTMLElement>,
     HasComponent,
