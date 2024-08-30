@@ -3,6 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../../hooks/useGlobalEventListener';
+import { useMutationObserver } from '../../../hooks/useMutationObserver';
 import { useDOM } from '../../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../../lib/warnOnce';
@@ -248,9 +249,9 @@ export const CarouselBase = ({
     [slideIndex],
   );
 
-  useIsomorphicLayoutEffect(() => {
-    initializeSlides();
-  }, [children, align, slideWidth]);
+  useMutationObserver(layerRef, initializeSlides);
+
+  useIsomorphicLayoutEffect(initializeSlides, [align, slideWidth]);
 
   const slideLeft = (event: React.MouseEvent) => {
     onChange?.(
