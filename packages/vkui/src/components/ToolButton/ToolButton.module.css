@@ -5,7 +5,7 @@
   text-decoration: none;
   border: 0;
   margin: 0;
-  padding: 10px;
+  padding: var(--vkui--spacing_size_m);
   border-radius: var(--vkui--size_border_radius_paper--regular);
   inline-size: 100%;
   flex-grow: 1;
@@ -15,6 +15,10 @@
   font-family: var(--vkui--font_caption1--font_family--regular);
   font-size: var(--vkui--font_caption1--font_size--regular);
   line-height: var(--vkui--font_caption1--line_height--regular);
+}
+
+.ToolButton--padding-size-xl {
+  padding: var(--vkui--spacing_size_xl);
 }
 
 .ToolButton--rounded {
@@ -71,15 +75,15 @@
 }
 
 .ToolButton--mode-primary.ToolButton--appearance-neutral {
-  background-color: var(--vkui--color_background_secondary);
+  background-color: var(--vkui--color_background_modal_inverse);
 }
 
 .ToolButton--mode-primary.ToolButton--appearance-neutral.ToolButton--hover {
-  background-color: var(--vkui--color_background_secondary--hover);
+  background-color: var(--vkui--color_background_modal_inverse--hover);
 }
 
 .ToolButton--mode-primary.ToolButton--appearance-neutral.ToolButton--active {
-  background-color: var(--vkui--color_background_secondary--active);
+  background-color: var(--vkui--color_background_modal_inverse--active);
 }
 
 /* Mode = Secondary */
@@ -122,7 +126,8 @@
   color: var(--vkui--color_text_primary);
 }
 
-.ToolButton--mode-primary.ToolButton--appearance-accent {
+.ToolButton--mode-primary.ToolButton--appearance-accent,
+.ToolButton--mode-primary.ToolButton--appearance-neutral {
   color: var(--vkui--color_text_contrast_themed);
 }
 
