@@ -67,7 +67,9 @@ export const useHorizontalScrollController = (
   const setScrollPositionFromTracker = (trackerLeft: number) => {
     const progress = trackerLeft / (clientWidth.current - trackerWidth.current);
     if (boxRef.current !== null) {
-      boxRef.current.scrollLeft = (scrollWidth.current - clientWidth.current) * progress;
+      boxRef.current.scroll({
+        left: (scrollWidth.current - clientWidth.current) * progress,
+      });
     }
   };
 
