@@ -9,7 +9,7 @@
     "runtime:start:ci": "yarn run -T playwright test --config runtime/playwright.config.ts"
   },
   "dependencies": {
-    "@playwright/test": "1.46.0",
+    "@playwright/test": "1.46.1",
     "@swc/core": "^1.7.22",
     "@vkontakte/vkui": "workspace:packages/vkui",
     "cli-table3": "^0.6.1",
