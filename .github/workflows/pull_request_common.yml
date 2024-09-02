@@ -55,12 +55,12 @@ jobs:
       - name: Get @vkontakte/vkui dependencies
         id: dependencies
         run: |
-          if [[ steps.metadata.outputs.directory == '/' ]]; then
+          if [[ ${{ steps.metadata.outputs.directory }} == "/" ]]; then
             echo "value=@vkontakte/vkui-tokens" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          if [[ steps.metadata.outputs.directory == 'packages/vkui' ]]; then
+          if [[ ${{ steps.metadata.outputs.directory }} == "packages/vkui" ]]; then
             DEPENDENCIES_OBJECT=$(node -p "require('./packages/vkui/package.json').dependencies")
             DEPENDENCIES_ARRAY=$(node -p "Object.keys($DEPENDENCIES_OBJECT)")
             DEPENDENCIES_ARRAY_JSON=$(node -p "JSON.stringify($DEPENDENCIES_ARRAY)")
