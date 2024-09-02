@@ -20,8 +20,11 @@ export interface ActionSheetOnCloseOptions {
 }
 
 export interface ActionSheetProps
-  extends Pick<SharedDropdownProps, 'toggleRef' | 'popupOffsetDistance' | 'placement'>,
-    React.HTMLAttributes<HTMLDivElement> {
+  extends Pick<
+      SharedDropdownProps,
+      'toggleRef' | 'popupOffsetDistance' | 'placement' | 'autoFocus'
+    >,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus'> {
   header?: React.ReactNode;
   text?: React.ReactNode;
   /**
