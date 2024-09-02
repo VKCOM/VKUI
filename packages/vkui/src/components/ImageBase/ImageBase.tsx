@@ -248,7 +248,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
           />
         )}
         {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
-        {children}
+        {children && <div className={styles['ImageBase__children']}>{children}</div>}
         {!noBorder && <div aria-hidden className={styles['ImageBase__border']} />}
       </Clickable>
     </ImageBaseContext.Provider>
