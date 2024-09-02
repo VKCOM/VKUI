@@ -182,3 +182,29 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull_request_number: ${{ steps.create_pull_request.outputs.pull-request-number }}
+
+  update-release-notes:
+    if: ${{ github.event.pull_request.merged == true
+      && github.event.pull_request.base.ref == 'master'}}
+    runs-on: ubuntu-latest
+    name: Update release notes
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.pull_request.base.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get vkui version
+        id: get_version
+        run: |
+          echo "vkui_version=$(node -p "require('./packages/vkui/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Update release notes script
+        uses: VKCOM/gh-actions/VKUI/auto-update-release-notes@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          vkui_version: ${{ steps.get_version.outputs.vkui_version }}
+          pull_request_number: ${{ github.event.pull_request.number }}
