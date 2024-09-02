@@ -27,30 +27,6 @@ export const rowGapClassNames: Record<GapPresets, string> = {
   '4xl': styles['-row-gap--4xl'],
 };
 
-export const columnGapTokens: Record<GapPresets, string> = {
-  '2xs': 'var(--vkui--spacing_size_2xs)',
-  'xs': ' var(--vkui--spacing_size_xs)',
-  's': ' var(--vkui--spacing_size_s)',
-  'm': ' var(--vkui--spacing_size_m)',
-  'l': ' var(--vkui--spacing_size_l)',
-  'xl': ' var(--vkui--spacing_size_xl)',
-  '2xl': 'var(--vkui--spacing_size_2xl)',
-  '3xl': 'var(--vkui--spacing_size_3xl)',
-  '4xl': 'var(--vkui--spacing_size_4xl)',
-};
-
-export const rowGapTokens: Record<GapPresets, string> = {
-  '2xs': 'var(--vkui--spacing_size_2xs)',
-  'xs': 'var(--vkui--spacing_size_xs)',
-  's': 'var(--vkui--spacing_size_s)',
-  'm': 'var(--vkui--spacing_size_m)',
-  'l': 'var(--vkui--spacing_size_l)',
-  'xl': 'var(--vkui--spacing_size_xl)',
-  '2xl': 'var(--vkui--spacing_size_2xl)',
-  '3xl': 'var(--vkui--spacing_size_3xl)',
-  '4xl': 'var(--vkui--spacing_size_4xl)',
-};
-
 export type GapProp = LiteralUnion<GapPresets, number>;
 
 export type GapsProp = GapProp | [GapProp, GapProp];
