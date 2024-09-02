@@ -204,47 +204,6 @@ export const ElementScrollController = ({
   return <ScrollContext.Provider value={scrollController}>{children}</ScrollContext.Provider>;
 };
 
-/**
- * Вызывает функцию effect, до блокировки прокрутки
- * @param effect функция, которая может возвращать функцию очистки
- * @param deps effect обновится только при изменении значений в списке.
- */
-export const useScrollLockEffect = (
-  effect: React.EffectCallback,
-  deps: React.DependencyList,
-): void => {
-  const destructorRef = React.useRef<ReturnType<React.EffectCallback>>(noop);
-  const { isScrollLock, beforeScrollLockFnSetRef } = useScroll();
-
-  // Изменяем effectCallback только при изменении deps
-  const effectCallback = React.useCallback(() => {
-    destructorRef.current = effect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
-
-  // Добавляем effectCallback в список функций, которые необходимо вызвать
-  // до блокировки
-  React.useEffect(() => {
-    const beforeSet = beforeScrollLockFnSetRef?.current;
-    if (!beforeSet) {
-      return noop;
-    }
-
-    beforeSet.add(effectCallback);
-
-    return () => {
-      beforeSet.delete(effectCallback);
-    };
-  }, [beforeScrollLockFnSetRef, effectCallback]);
-
-  // Вызываем сбрасывающую функцию, после отключения блокировки
-  React.useEffect(() => {
-    if (!isScrollLock && destructorRef.current) {
-      destructorRef.current();
-    }
-  }, [isScrollLock]);
-};
-
 export const useScrollLock = (enabled = true): void => {
   const { enableScrollLock, disableScrollLock, isScrollLock } = useScroll();
   useIsomorphicLayoutEffect(() => {
