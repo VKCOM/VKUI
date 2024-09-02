@@ -1,7 +1,9 @@
+import { Children } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import {
   calculateGap,
   columnGapClassNames,
+  type GapProp,
   type GapsProp,
   rowGapClassNames,
 } from '../../lib/layouts';
@@ -83,17 +85,11 @@ export const Flex: React.FC<FlexProps> & {
   direction = 'row',
   style: styleProp,
   reverse = false,
+  children,
   ...props
 }: FlexProps) => {
-  const [columnGap, rowGap] = calculateGap(gap);
-  const style: CSSCustomProperties = {};
-
-  if (typeof rowGap === 'number') {
-    style['--vkui_internal--row_gap'] = `${rowGap}px`;
-  }
-  if (typeof columnGap === 'number') {
-    style['--vkui_internal--column_gap'] = `${columnGap}px`;
-  }
+  const withGaps = Children.count(children) > 1 && gap;
+  const [columnGap, rowGap] = calculateGap(withGaps ? gap : undefined);
 
   return (
     <RootComponent
@@ -104,14 +100,36 @@ export const Flex: React.FC<FlexProps> & {
         reverse && styles['Flex--reverse'],
         direction !== 'row' && styles['Flex--direction-column'],
         margin !== 'none' && styles['Flex--margin-auto'],
-        typeof columnGap === 'string' && columnGapClassNames[columnGap],
-        typeof rowGap === 'string' && rowGapClassNames[rowGap],
         align && alignClassNames[align],
         justify && justifyClassNames[justify],
+        withGaps && styles['Flex--withGaps'],
+        withGaps && getGapsPresets(rowGap, columnGap),
       )}
-      style={{ ...styleProp, ...style }}
-    />
+      style={withGaps ? { ...getGapsByUser(rowGap, columnGap), ...styleProp } : styleProp}
+    >
+      {children}
+    </RootComponent>
   );
 };
+
+function getGapsPresets(rowGap?: GapProp, columnGap?: GapProp) {
+  return classNames(
+    typeof rowGap === 'string' && rowGapClassNames[rowGap],
+    typeof columnGap === 'string' && columnGapClassNames[columnGap],
+  );
+}
+
+function getGapsByUser(rowGap?: GapProp, columnGap?: GapProp) {
+  const style: CSSCustomProperties = {};
+
+  if (typeof rowGap === 'number') {
+    style['--vkui_internal--row_gap'] = `${rowGap}px`;
+  }
+  if (typeof columnGap === 'number') {
+    style['--vkui_internal--column_gap'] = `${columnGap}px`;
+  }
+
+  return style;
+}
 
 Flex.Item = FlexItem;

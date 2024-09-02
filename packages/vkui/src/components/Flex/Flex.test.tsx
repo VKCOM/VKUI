@@ -7,14 +7,25 @@ import gapStyles from '../../styles/gaps.module.css';
 describe(Flex, () => {
   baselineComponent(Flex);
 
-  it('should have css custom variable with gaps values', () => {
+  it('should have css custom variable with gaps values for several child', () => {
     render(
       <Flex gap={[15, 20]} data-testid="flex">
+        <div></div>
         <div></div>
       </Flex>,
     );
     expect(screen.getByTestId('flex')).toHaveStyle('--vkui_internal--row_gap: 20px');
     expect(screen.getByTestId('flex')).toHaveStyle('--vkui_internal--column_gap: 15px');
+  });
+
+  it('should not have css custom variable with gaps values for one child', () => {
+    render(
+      <Flex gap={[15, 20]} data-testid="flex">
+        <div></div>
+      </Flex>,
+    );
+    expect(screen.getByTestId('flex')).not.toHaveStyle('--vkui_internal--row_gap: 20px');
+    expect(screen.getByTestId('flex')).not.toHaveStyle('--vkui_internal--column_gap: 15px');
   });
 
   describe('check correct classNames', () => {
@@ -70,6 +81,7 @@ describe(Flex, () => {
     ])('should have className $className with props $props', ({ props, className }) => {
       render(
         <Flex {...props} data-testid="flex">
+          <div></div>
           <div></div>
         </Flex>,
       );
