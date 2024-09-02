@@ -170,16 +170,16 @@ export const Tooltip = ({
 
   let tooltip: React.ReactNode = null;
   if (shown) {
-    referenceProps['aria-describedby'] = tooltipId;
-    floatingProps.style.zIndex = zIndex;
-    if (styleProp) {
-      Object.assign(floatingProps.style, styleProp);
-    }
     tooltip = (
       <AppRootPortal usePortal={usePortal}>
         <TooltipBase
           {...popperProps}
           {...floatingProps}
+          style={{
+            ...floatingProps.style,
+            zIndex,
+            ...styleProp,
+          }}
           id={tooltipId}
           getRootRef={tooltipRef}
           appearance={appearance}
@@ -201,7 +201,14 @@ export const Tooltip = ({
       </AppRootPortal>
     );
   }
-  const [, child] = usePatchChildren(children, referenceProps, refs.setReference);
+  const [, child] = usePatchChildren(
+    children,
+    {
+      ...referenceProps,
+      ...(shown && { 'aria-describedby': tooltipId }),
+    },
+    refs.setReference,
+  );
 
   useGlobalEscKeyDown(shown, onEscapeKeyDown);
 
