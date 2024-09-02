@@ -16,14 +16,25 @@
   background-color: transparent;
 }
 
+.ImageBase__children,
 .ImageBase__border {
-  pointer-events: none;
   position: absolute;
-  z-index: var(--vkui_internal--z_index_image_base_border);
   inset-inline-start: 0;
   inset-block-start: 0;
   inline-size: 100%;
   block-size: 100%;
+}
+
+.ImageBase__children {
+  display: inherit;
+  align-items: inherit;
+  justify-content: inherit;
+  border-radius: inherit;
+}
+
+.ImageBase__border {
+  pointer-events: none;
+  z-index: var(--vkui_internal--z_index_image_base_border);
   box-sizing: border-box;
   transform-origin: left top;
   border: var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha);
