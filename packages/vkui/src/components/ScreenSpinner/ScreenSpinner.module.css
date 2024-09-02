@@ -1,9 +1,15 @@
 .ScreenSpinner {
   position: relative;
-  inline-size: 88px;
-  block-size: 88px;
+  box-sizing: border-box;
   border-radius: var(--vkui--size_border_radius--regular);
   animation: screen-spinner-intro 0.3s ease;
+  padding-block: var(--vkui--spacing_size_2xl);
+  padding-inline: var(--vkui--spacing_size_2xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-inline-size: 150px;
 }
 
 .ScreenSpinner--mode-shadow {
@@ -17,14 +23,36 @@
   color: var(--vkui--color_icon_contrast);
 }
 
+.ScreenSpinner__subtitle {
+  color: var(--vkui--color_text_secondary);
+  margin-block-start: var(--vkui--spacing_size_xs);
+  text-align: center;
+}
+
+.ScreenSpinner--mode-overlay .ScreenSpinner__subtitle {
+  color: var(--vkui--color_text_contrast);
+}
+
 .ScreenSpinner__spinner {
   opacity: 1;
+}
+
+.ScreenSpinner__spinner--transition {
   transition: opacity 0.1s ease;
 }
 
 .ScreenSpinner--state-done .ScreenSpinner__spinner,
 .ScreenSpinner--state-error .ScreenSpinner__spinner {
   opacity: 0;
+}
+
+.ScreenSpinner__icon-slot {
+  inline-size: 56px;
+  block-size: 56px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ScreenSpinner__icon {

@@ -3,7 +3,7 @@
   "name": "@project-docs/styleguide",
   "version": "1.0.0",
   "scripts": {
-    "start": "cross-env SANDBOX=styleguide NODE_ENV=development styleguidist server --config=config.js",
+    "start": "cross-env SANDBOX=styleguide NODE_ENV=development styleguidist server --config=config.js --port=10888",
     "start:props": "cross-env VKUI_STYLEGUIDE_PROPSPARSER=1 yarn start",
     "build": "cross-env SANDBOX=styleguide NODE_ENV=production styleguidist build --config=config.js",
     "test": "echo no test",

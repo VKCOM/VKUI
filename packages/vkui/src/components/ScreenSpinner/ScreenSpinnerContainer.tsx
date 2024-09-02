@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { Footnote } from '../Typography/Footnote/Footnote';
 import { ScreenSpinnerContext } from './context';
 import { type ScreenSpinnerProps } from './types';
 import styles from './ScreenSpinner.module.css';
@@ -18,15 +19,17 @@ const modeClassNames = {
 };
 
 type ScreenSpinnerContainerProps = HTMLAttributesWithRootRef<HTMLSpanElement> &
-  Pick<ScreenSpinnerProps, 'state' | 'mode'>;
+  Pick<ScreenSpinnerProps, 'state' | 'mode' | 'subtitle'>;
 
 export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
   state = 'loading',
   mode = 'shadow',
+  subtitle,
+  children,
   ...restProps
 }: ScreenSpinnerContainerProps) => {
   return (
-    <ScreenSpinnerContext.Provider value={{ state }}>
+    <ScreenSpinnerContext.Provider value={{ state, subtitle }}>
       <RootComponent
         baseClassName={classNames(
           styles['ScreenSpinner'],
@@ -34,7 +37,12 @@ export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
           state !== 'loading' && stateClassNames[state],
         )}
         {...restProps}
-      />
+      >
+        <div className={styles['ScreenSpinner__icon-slot']}>{children}</div>
+        {hasReactNode(subtitle) && (
+          <Footnote className={styles.ScreenSpinner__subtitle}>{subtitle}</Footnote>
+        )}
+      </RootComponent>
     </ScreenSpinnerContext.Provider>
   );
 };
