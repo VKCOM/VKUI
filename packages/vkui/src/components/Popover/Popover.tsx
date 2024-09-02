@@ -23,6 +23,7 @@ import {
   type FloatingArrowProps as FloatingArrowPropsPrivate,
 } from '../FloatingArrow/FloatingArrow';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
+import type { FocusTrapProps } from '../FocusTrap/FocusTrap';
 import styles from './Popover.module.css';
 
 /**
@@ -82,7 +83,7 @@ type AllowedFloatingComponentProps = Pick<
  * @public
  */
 export interface PopoverProps
-  extends AllowedFloatingComponentProps,
+  extends Omit<AllowedFloatingComponentProps, 'autoFocus'>,
     Omit<HTMLAttributesWithRootRef<HTMLDivElement>, keyof FloatingComponentProps> {
   /**
    * Отключает у всплывающего элемента стилизацию по умолчанию.
@@ -121,6 +122,7 @@ export interface PopoverProps
    * Используется для того, чтобы не удалять поповер из DOM дерева при скрытии.
    */
   keepMounted?: boolean;
+  autoFocus?: FocusTrapProps['autoFocus'];
 }
 
 /**
