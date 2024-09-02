@@ -239,7 +239,7 @@ export const Search = ({
             onFocus={setFocusedTrue}
             onBlur={setFocusedFalse}
           >
-            {after}
+            <span className={styles['Search__afterTextClip']}>{after}</span>
           </Button>
         </div>
       )}

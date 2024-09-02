@@ -188,6 +188,13 @@
   margin-inline-end: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
+.Search__afterTextClip {
+  display: block;
+  text-overflow: clip;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .Search__findButton {
   min-inline-size: initial;
   max-inline-size: initial;
