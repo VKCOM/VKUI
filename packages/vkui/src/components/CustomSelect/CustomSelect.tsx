@@ -772,9 +772,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     // Чтобы в такой ситуации отключить blur инпута мы превентим mousedown событие обёртки
     const isInputFocused = document && document.activeElement === selectInputRef.current;
     const clickTarget = e.target as HTMLElement;
-    const wrapperClicked = containerRef.current?.contains(clickTarget);
     const inputClicked = selectInputRef.current?.contains(clickTarget);
-    if (isInputFocused && wrapperClicked && !inputClicked) {
+    if (isInputFocused && !inputClicked) {
       e.preventDefault();
     }
   };
