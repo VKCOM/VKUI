@@ -77,7 +77,7 @@
     "shx": "^0.3.4",
     "size-limit": "^11.1.4",
     "style-loader": "^4.0.0",
-    "stylelint": "^16.8.2",
+    "stylelint": "^16.9.0",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-media-use-custom-media": "^4.0.0",
     "stylelint-prettier": "^5.0.2",
