@@ -97,6 +97,10 @@ export const ImagePlayground = (props: ComponentPlaygroundProps) => {
           borderRadius: ['s'],
           borderEndEndRadius: ['l'],
         },
+        {
+          src: [base64Image],
+          children: ['CH'],
+        },
       ]}
     >
       {(props: ImageProps) => <Image {...props} />}
