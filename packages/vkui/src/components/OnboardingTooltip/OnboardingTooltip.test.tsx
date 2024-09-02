@@ -1,8 +1,8 @@
-import { Fragment, HtmlHTMLAttributes, ReactElement } from 'react';
+import { Fragment, type HtmlHTMLAttributes, type ReactElement } from 'react';
 import { render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
-import { HasRootRef } from '../../types';
-import { OnboardingTooltip, OnboardingTooltipProps } from './OnboardingTooltip';
+import type { HasRootRef } from '../../types';
+import { OnboardingTooltip, type OnboardingTooltipProps } from './OnboardingTooltip';
 import { OnboardingTooltipContainer } from './OnboardingTooltipContainer';
 
 const renderTooltip = async (jsx: ReactElement) => {

@@ -3,17 +3,18 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../../hooks/useGlobalEventListener';
+import { useMutationObserver } from '../../../hooks/useMutationObserver';
 import { useDOM } from '../../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../../lib/warnOnce';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ScrollArrow } from '../../ScrollArrow/ScrollArrow';
-import { Touch, TouchEvent } from '../../Touch/Touch';
-import { BaseGalleryProps, GallerySlidesState } from '../types';
+import { type CustomTouchEvent, Touch } from '../../Touch/Touch';
+import { type BaseGalleryProps, type GallerySlidesState } from '../types';
 import { ANIMATION_DURATION, CONTROL_ELEMENTS_STATE, SLIDES_MANAGER_STATE } from './constants';
 import { calculateIndent, getLoopPoints, getTargetIndex } from './helpers';
 import { useSlideAnimation } from './hooks';
-import { ControlElementsState, SlidesManagerState } from './types';
+import type { ControlElementsState, SlidesManagerState } from './types';
 import styles from '../BaseGallery.module.css';
 
 const stylesBullets = {
@@ -248,9 +249,9 @@ export const CarouselBase = ({
     [slideIndex],
   );
 
-  useIsomorphicLayoutEffect(() => {
-    initializeSlides();
-  }, [children, align, slideWidth]);
+  useMutationObserver(layerRef, initializeSlides);
+
+  useIsomorphicLayoutEffect(initializeSlides, [align, slideWidth]);
 
   const slideLeft = (event: React.MouseEvent) => {
     onChange?.(
@@ -264,7 +265,7 @@ export const CarouselBase = ({
     onNextClick?.(event);
   };
 
-  const onStart = (e: TouchEvent) => {
+  const onStart = (e: CustomTouchEvent) => {
     e.originalEvent.stopPropagation();
     if (controlElementsState.isDraggable) {
       onDragStart?.(e);
@@ -273,7 +274,7 @@ export const CarouselBase = ({
     }
   };
 
-  const onMoveX = (e: TouchEvent) => {
+  const onMoveX = (e: CustomTouchEvent) => {
     if (controlElementsState.isDraggable) {
       e.originalEvent.preventDefault();
 
@@ -286,7 +287,7 @@ export const CarouselBase = ({
     }
   };
 
-  const onEnd = (e: TouchEvent) => {
+  const onEnd = (e: CustomTouchEvent) => {
     if (controlElementsState.isDraggable) {
       let targetIndex = slideIndex;
       if (e.isSlide) {

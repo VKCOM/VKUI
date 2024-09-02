@@ -3,7 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
-import { SharedDropdownProps } from './types';
+import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
 const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();

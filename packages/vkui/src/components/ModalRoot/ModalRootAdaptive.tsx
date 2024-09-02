@@ -3,7 +3,7 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
-import { ModalRootProps } from './types';
+import type { ModalRootProps } from './types';
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalRoot

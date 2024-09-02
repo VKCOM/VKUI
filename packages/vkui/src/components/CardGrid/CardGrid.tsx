@@ -1,6 +1,6 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardGrid.module.css';
 
@@ -15,7 +15,7 @@ const stylesSize = {
   l: 'vkuiInternalCardGrid--size-l',
 };
 
-export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
   size?: 's' | 'm' | 'l';
   /**
    * Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа
@@ -29,6 +29,8 @@ export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>
 export const CardGrid = ({
   size = 's',
   spaced = false,
+  // TODO [>=7]: поменять тег на ul https://github.com/VKCOM/VKUI/issues/7336
+  Component = 'div',
   ...restProps
 }: CardGridProps): React.ReactNode => {
   const { sizeX = 'none' } = useAdaptivity();
@@ -36,6 +38,7 @@ export const CardGrid = ({
   return (
     <RootComponent
       {...restProps}
+      Component={Component}
       baseClassName={classNames(
         styles['CardGrid'],
         'vkuiInternalCardGrid',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUsers } from '../../testing/mock';
 import { Alert } from '../Alert/Alert';
@@ -20,7 +20,7 @@ import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
-import { View, ViewProps } from './View';
+import { View, type ViewProps } from './View';
 
 const story: Meta<ViewProps> = {
   title: 'Layout/View',

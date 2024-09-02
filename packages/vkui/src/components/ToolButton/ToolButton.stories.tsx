@@ -1,8 +1,8 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon20Add, Icon24Add } from '@vkontakte/icons';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { ToolButton, ToolButtonProps } from './ToolButton';
+import { ToolButton, type ToolButtonProps } from './ToolButton';
 
 const story: Meta<ToolButtonProps> = {
   title: 'Blocks/ToolButton',

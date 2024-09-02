@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Icon28SmileOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { WriteBarIcon } from '../WriteBarIcon/WriteBarIcon';
-import { WriteBar, WriteBarProps } from './WriteBar';
+import { WriteBar, type WriteBarProps } from './WriteBar';
 
 const story: Meta<WriteBarProps> = {
   title: 'Blocks/WriteBar',

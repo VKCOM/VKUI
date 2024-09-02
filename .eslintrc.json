@@ -6,7 +6,7 @@
     "node": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["import", "unicorn"],
+  "plugins": ["import", "unicorn", "eslint-plugin-react-compiler"],
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
@@ -33,6 +33,12 @@
         "ts-expect-error": {
           "descriptionFormat": "^: TS\\d+ .+$"
         }
+      }
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "fixStyle": "inline-type-imports"
       }
     ],
 
@@ -75,6 +81,7 @@
     "curly": "error", // Enforce consistent brace style
     "eqeqeq": "error", // Only type-safe equality operators
     "unicorn/expiring-todo-comments": ["error"],
-    "no-console": "error"
+    "no-console": "error",
+    "react-compiler/react-compiler": 2
   }
 }

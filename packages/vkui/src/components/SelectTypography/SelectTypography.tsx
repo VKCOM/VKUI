@@ -1,10 +1,7 @@
-import { HasChildren, HTMLAttributesWithRootRef } from '../../types';
 import type { SelectType } from '../Select/Select';
-import { Text } from '../Typography/Text/Text';
+import { Text, type TextProps } from '../Typography/Text/Text';
 
-export interface SelectTypographyProps
-  extends HTMLAttributesWithRootRef<HTMLSpanElement>,
-    HasChildren {
+export interface SelectTypographyProps extends TextProps {
   selectType?: SelectType;
 }
 

@@ -56,3 +56,155 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           directory: packages/vkui/
+
+  is-updated-vkui-floating-ui:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.merged == true
+      && github.event.pull_request.user.login == 'dependabot[bot]'
+      && github.event.pull_request.base.ref == 'master' }}
+    outputs:
+      result: ${{ steps.check_floating_ui_updated.outputs.floating_ui_updated }}
+      prev_floating_ui_version: ${{ steps.check_floating_ui_updated.outputs.prev_version }}
+      new_floating_ui_version: ${{ steps.check_floating_ui_updated.outputs.new_version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if vkui-floating-ui was updated
+        id: check_floating_ui_updated
+        if: ${{ steps.metadata.outputs.directory == 'packages/vkui-floating-ui' }}
+        run: |
+          UPDATED_DEPS=$(echo ${{ steps.metadata.outputs.dependency-names }} | sed "s/,/ /g")
+
+          if [[ $UPDATED_DEPS =~ "@floating-ui/react-dom" ]]; then
+            echo "floating_ui_updated=true" >> $GITHUB_OUTPUT
+            echo "prev_version=${{ steps.metadata.outputs.previous-version }}" >> $GITHUB_OUTPUT
+            echo "new_version=${{ steps.metadata.outputs.new-version }}" >> $GITHUB_OUTPUT
+          else
+            echo "floating_ui_updated=false" >> $GITHUB_OUTPUT
+          fi
+
+  autopublish-vkui-floating-ui:
+    runs-on: ubuntu-latest
+    needs: is-updated-vkui-floating-ui
+    if: ${{ needs.is-updated-vkui-floating-ui.outputs.result == 'true' }}
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Get vkui-floating-ui version
+        id: get_version
+        run: |
+          echo "floating_ui_version=$(node -p "require('./packages/vkui-floating-ui/package.json').version")" >> $GITHUB_OUTPUT
+
+      # Рассчитываем новую версию @vkui-floating-ui
+      - name: Calculate new version of vkui-floating-ui
+        id: calc_new_version_vkui_floating_ui
+        uses: VKCOM/gh-actions/VKUI/bump-vkui-floating-ui-version@main
+        with:
+          prev_origin_version: ${{ needs.is-updated-vkui-floating-ui.outputs.prev_floating_ui_version }}
+          new_origin_version: ${{ needs.is-updated-vkui-floating-ui.outputs.new_floating_ui_version }}
+          current_version: ${{ steps.get_version.outputs.floating_ui_version }}
+
+      - name: Define branch name for new version release
+        run: |
+          BRANCH_NAME_PREFIX="release/vkui-floating-ui-"
+          VERSION_POSTFIX="${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
+          echo "RELEASE_BRANCH_NAME="${BRANCH_NAME_PREFIX}${VERSION_POSTFIX}"" >> "$GITHUB_ENV"
+
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Create branch for new version release
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.RELEASE_BRANCH_NAME }}
+
+      # Запускаем форкфлоу скрипта публикации
+      - name: Publish new version
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'publish.yml',
+              ref: ${{ env.RELEASE_BRANCH_NAME }},
+              inputs: {
+                package_name: '@vkontakte/vkui-floating-ui',
+                custom_version: "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
+                latest: true,
+                close_milestone: false,
+              }
+            })
+
+      # Обновляем версию vkui-floating-ui в vkui
+      - name: update vkui-floating-ui version in vkui
+        run: |
+          yarn workspace @vkontakte/vkui add @vkontakte/vkui-floating-ui@${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
+
+      # Создаем pull request с изменениями в ветке
+      - name: Create PR with changes
+        id: create_pull_request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: master
+          branch: ${{ env.RELEASE_BRANCH_NAME }}
+          commit-message: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
+          delete-branch: true
+          title: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
+          body: ''
+          labels: subpackage:@vkontakte/vkui-floating-ui, dependencies
+
+      # Добавляем майлстоун следующей минорной версии
+      - name: Add next minor version milestone to pull request
+        uses: VKCOM/gh-actions/VKUI/add-next-minor-milestone@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull_request_number: ${{ steps.create_pull_request.outputs.pull-request-number }}
+
+  update-release-notes:
+    if: ${{ github.event.pull_request.merged == true
+      && github.event.pull_request.base.ref == 'master'}}
+    runs-on: ubuntu-latest
+    name: Update release notes
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.pull_request.base.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get vkui version
+        id: get_version
+        run: |
+          echo "vkui_version=$(node -p "require('./packages/vkui/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Update release notes script
+        uses: VKCOM/gh-actions/VKUI/auto-update-release-notes@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          vkui_version: ${{ steps.get_version.outputs.vkui_version }}
+          pull_request_number: ${{ github.event.pull_request.number }}

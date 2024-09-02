@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Gallery, GalleryProps } from './Gallery';
+import { Gallery, type GalleryProps } from './Gallery';
 
 const story: Meta<GalleryProps> = {
   title: 'Blocks/Gallery',

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
-import { Tooltip, TooltipProps } from './Tooltip';
+import { Tooltip, type TooltipProps } from './Tooltip';
 
 describe(Tooltip, () => {
   baselineComponent((props) => (

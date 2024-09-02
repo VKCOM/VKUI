@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
-import { Skeleton, SkeletonProps } from './Skeleton';
+import { Skeleton, type SkeletonProps } from './Skeleton';
 import styles from './Skeleton.module.css';
 
 describe('Skeleton', () => {

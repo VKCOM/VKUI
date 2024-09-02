@@ -1,30 +1,36 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
+import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { Image } from '../Image/Image';
-import { Snackbar, SnackbarProps } from './Snackbar';
+import { Snackbar, type SnackbarProps } from './Snackbar';
 
 const story: Meta<SnackbarProps> = {
   title: 'Popouts/Snackbar',
   component: Snackbar,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
-    before: {
-      options: ['None', 'Icon24', 'Icon28', 'Avatar', 'Image'],
-      mapping: {
-        None: null,
-        Icon24: <Icon24ThumbsUpOutline fill="var(--vkui--color_icon_accent)" />,
-        Icon28: <Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)" />,
+    before: createFieldWithPresets({
+      iconSizes: ['24', '28'],
+      additionalPresets: {
+        Icon24ThumbsUpOutline: <Icon24ThumbsUpOutline fill="var(--vkui--color_icon_accent)" />,
+        Icon28ErrorCircleOutline: (
+          <Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)" />
+        ),
         Avatar: <Avatar size={32} src={getAvatarUrl()} />,
         Image: <Image size={40} src={getAvatarUrl('app_shorm_online')} />,
       },
-    },
-    after: {
-      control: { type: 'boolean' },
-    },
+    }),
+    after: createFieldWithPresets({
+      iconSizes: ['24'],
+      sizeIconsCount: 10,
+      additionalPresets: {
+        Avatar: <Avatar size={32} src={getAvatarUrl()} />,
+      },
+    }),
     subtitle: StringArg,
     offsetY: StringArg,
   },
@@ -35,9 +41,8 @@ export default story;
 type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean }>;
 
 export const Playground: Story = {
-  render: function Render({ after, onClose, ...args }) {
+  render: function Render({ onClose, ...args }) {
     const [open, setOpen] = React.useState(true);
-    const After = after ? <Avatar size={32} src={getAvatarUrl()} /> : undefined;
 
     const handleClose = () => {
       setOpen(false);
@@ -47,12 +52,12 @@ export const Playground: Story = {
     return (
       <>
         <button onClick={() => setOpen(true)}>Открыть</button>
-        {open ? <Snackbar after={After} onClose={handleClose} {...args} /> : null}
+        {open ? <Snackbar onClose={handleClose} {...args} /> : null}
       </>
     );
   },
   args: {
-    before: 'Icon24',
+    before: 'Icon24ThumbsUpOutline',
     action: 'Поделиться',
     children: 'Этот сервис рекомендует один друг',
   },

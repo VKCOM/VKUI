@@ -5,7 +5,7 @@ import { range } from '../../helpers/range';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
-import { HasOnlyExpectedProps, HTMLAttributesWithRootRef } from '../../types';
+import type { HasOnlyExpectedProps, HTMLAttributesWithRootRef } from '../../types';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
 import { Input, type InputProps } from '../Input/Input';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -205,17 +205,14 @@ const DatePickerNative = ({
     InputProps
   > = restProps;
 
-  if (value) {
-    // контролируемый компонент
-    inputProps.value = convertToInputFormat(value);
-  } else {
-    // неконтролируемый компонент
-    inputProps.defaultValue = convertToInputFormat(defaultValue);
-  }
+  const valueProps = value
+    ? { value: convertToInputFormat(value) }
+    : { defaultValue: convertToInputFormat(defaultValue) };
 
   return (
     <Input
       {...inputProps}
+      {...valueProps}
       type="date"
       onChange={onStringChange}
       min={convertToInputFormat(min)}

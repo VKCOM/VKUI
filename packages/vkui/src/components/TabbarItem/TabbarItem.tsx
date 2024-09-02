@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
-import { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';

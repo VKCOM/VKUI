@@ -1,37 +1,45 @@
 import * as React from 'react';
 import { act } from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, mountTest, userEvent, waitCSSTransitionEnd } from '../../testing/utils';
+import { Button } from '../Button/Button';
 import { ModalCard } from '../ModalCard/ModalCard';
 import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
+import { withModalRootContext } from './withModalRootContext';
 import styles from './ModalRoot.module.css';
+import modalPageStyles from '../ModalPage/ModalPage.module.css';
 
 const clickFade = async () =>
   await userEvent.click(document.querySelector(`.${styles.ModalRoot__mask}`)!);
-let rafSpies: jest.SpyInstance[];
+
+beforeEach(() => {
+  jest.useFakeTimers();
+});
+afterEach(() => {
+  jest.clearAllTimers();
+  jest.useRealTimers();
+});
+
+const mockDate = () => {
+  const startGestureDate = new Date(2024, 7, 5);
+  jest.useFakeTimers();
+  jest.setSystemTime(startGestureDate);
+  const endGestureDate = new Date(startGestureDate);
+
+  return {
+    next: (ms = 500) => {
+      endGestureDate.setMilliseconds(endGestureDate.getMilliseconds() + ms);
+      jest.setSystemTime(endGestureDate);
+    },
+  };
+};
 
 describe.each([
   ['ModalRootTouch', ModalRootTouch],
   ['ModalRootDesktop', ModalRootDesktop],
 ] as const)('%s', (name, ModalRoot: any) => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-    rafSpies = [
-      jest
-        .spyOn(window, 'requestAnimationFrame')
-        .mockImplementation((cb) => window.setTimeout(() => cb(Date.now()))),
-      jest
-        .spyOn(window, 'cancelAnimationFrame')
-        .mockImplementation((id) => window.clearTimeout(id)),
-    ];
-  });
-  afterEach(() => {
-    jest.clearAllTimers();
-    jest.useRealTimers();
-    rafSpies.forEach((m) => m.mockRestore());
-  });
   baselineComponent<any>(ModalRoot, { forward: false, a11y: false, getRootRef: false });
   describe('With ModalPage', () =>
     mountTest(() => (
@@ -297,3 +305,380 @@ describe.each([
 function getFirstHTMLElementChild(el: HTMLElement | null) {
   return el && el.firstElementChild instanceof HTMLElement ? el.firstElementChild : null;
 }
+
+describe(ModalRootTouch, () => {
+  describe('check correct update height', () => {
+    const updateHeightSetup = async ({
+      content,
+      defaultModalContentClientHeight,
+      defaultContentInScrollHeight,
+    }: {
+      content: React.ReactElement;
+      defaultModalContentClientHeight: number;
+      defaultContentInScrollHeight: number;
+    }) => {
+      let modalContentClientHeight = defaultModalContentClientHeight;
+      let contentInScrollHeight = defaultContentInScrollHeight;
+      let innerElementTransform = '';
+
+      const Fixture = () => {
+        return (
+          <ModalRootTouch activeModal="modal-page">
+            <ModalPage
+              id="modal-page"
+              data-testid="modal-page"
+              key="1"
+              getRootRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                jest
+                  .spyOn((element.firstElementChild! as HTMLElement).style, 'transform', 'set')
+                  .mockImplementation((newTransform) => (innerElementTransform = newTransform));
+                jest
+                  .spyOn(element, 'offsetHeight', 'get')
+                  .mockImplementation(() => modalContentClientHeight);
+              }}
+              getModalContentRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                jest
+                  .spyOn(element, 'clientHeight', 'get')
+                  .mockImplementation(() => modalContentClientHeight);
+                jest
+                  .spyOn(element.firstElementChild!, 'scrollHeight', 'get')
+                  .mockImplementation(() => contentInScrollHeight);
+              }}
+            >
+              {content}
+            </ModalPage>
+          </ModalRootTouch>
+        );
+      };
+
+      const component = render(<Fixture />, {
+        baseElement: document.documentElement,
+      });
+      act(jest.runAllTimers);
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('modal-page')));
+
+      return {
+        component,
+        set modalContentClientHeight(height: number) {
+          modalContentClientHeight = height;
+        },
+        set contentInScrollHeight(height: number) {
+          contentInScrollHeight = height;
+        },
+        get innerElementTransform() {
+          return innerElementTransform;
+        },
+      };
+    };
+
+    it('should update modal height without expandable', async () => {
+      const ModalPageContent = withModalRootContext(({ updateModalHeight }) => {
+        return (
+          <div>
+            <Button onClick={updateModalHeight} data-testid="update-height">
+              Обновить
+            </Button>
+          </div>
+        );
+      });
+
+      const mockedData = await updateHeightSetup({
+        content: <ModalPageContent />,
+        defaultContentInScrollHeight: 700,
+        defaultModalContentClientHeight: 800,
+      });
+
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 12.5%, 0)');
+
+      mockedData.modalContentClientHeight = 1000;
+      mockedData.contentInScrollHeight = 700;
+
+      fireEvent.click(mockedData.component.getByTestId('update-height'));
+      act(jest.runAllTimers);
+
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 30%, 0)');
+    });
+
+    it('should update modal height with expandable', async () => {
+      const ModalPageContent = withModalRootContext(({ updateModalHeight }) => {
+        return (
+          <div>
+            <Button onClick={updateModalHeight} data-testid="update-height">
+              Обновить
+            </Button>
+          </div>
+        );
+      });
+
+      const mockedData = await updateHeightSetup({
+        content: <ModalPageContent />,
+        defaultModalContentClientHeight: 600,
+        defaultContentInScrollHeight: 800,
+      });
+
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 25%, 0)');
+
+      mockedData.modalContentClientHeight = 700;
+      mockedData.contentInScrollHeight = 1000;
+
+      fireEvent.click(mockedData.component.getByTestId('update-height'));
+      act(jest.runAllTimers);
+
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 25%, 0)');
+    });
+  });
+
+  describe('touch move events check to modal page', () => {
+    const touchMoveSetup = async ({
+      onClose,
+      settlingHeight,
+      modalPageHeight = 664,
+      modalPageContentClientHeight,
+      contentScrollHeight,
+    }: {
+      onClose: VoidFunction;
+      settlingHeight?: number;
+      modalPageHeight?: number;
+      modalPageContentClientHeight: number;
+      contentScrollHeight: number;
+    }) => {
+      let innerElementTransform = '';
+
+      Object.defineProperty(window, 'innerHeight', {
+        writable: true,
+        configurable: true,
+        value: 720,
+      });
+
+      const Fixture = () => {
+        return (
+          <ModalRootTouch activeModal="modal-page">
+            <ModalPage
+              id="modal-page"
+              data-testid="modal-page"
+              key="1"
+              settlingHeight={settlingHeight}
+              onClose={onClose}
+              getRootRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                jest
+                  .spyOn((element.firstElementChild as HTMLDivElement).style, 'transform', 'set')
+                  .mockImplementation((newTransform) => (innerElementTransform = newTransform));
+                jest
+                  .spyOn(element, 'offsetHeight', 'get')
+                  .mockImplementation(() => modalPageHeight);
+              }}
+              getModalContentRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                jest
+                  .spyOn(element, 'clientHeight', 'get')
+                  .mockImplementation(() => modalPageContentClientHeight);
+                jest
+                  .spyOn(element.firstElementChild!, 'scrollHeight', 'get')
+                  .mockImplementation(() => contentScrollHeight);
+              }}
+            >
+              <div></div>
+            </ModalPage>
+          </ModalRootTouch>
+        );
+      };
+
+      const component = render(<Fixture />, {
+        baseElement: document.documentElement,
+      });
+
+      const header = component.container.getElementsByClassName(
+        modalPageStyles['ModalPage__header'],
+      )[0];
+      act(jest.runAllTimers);
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('modal-page')));
+
+      return {
+        component,
+        get header() {
+          return header;
+        },
+        get innerElementTransform() {
+          return innerElementTransform;
+        },
+      };
+    };
+
+    it('should hide modal page by touch', async () => {
+      const date = mockDate();
+
+      const onClose = jest.fn();
+
+      const mockedData = await touchMoveSetup({
+        onClose,
+        modalPageContentClientHeight: 608,
+        contentScrollHeight: 1291,
+      });
+      fireEvent.mouseDown(mockedData.header, {
+        clientY: 250,
+      });
+      fireEvent.mouseMove(mockedData.header, {
+        clientY: 350,
+      });
+      date.next();
+      fireEvent.mouseUp(mockedData.header, {
+        client: 350,
+      });
+
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('should expand and then collapse modal page by touch', async () => {
+      const date = mockDate();
+
+      const onClose = jest.fn();
+
+      const mockedData = await touchMoveSetup({
+        onClose,
+        modalPageContentClientHeight: 608,
+        contentScrollHeight: 1291,
+      });
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 25%, 0)');
+      fireEvent.mouseDown(mockedData.header, {
+        clientY: 250,
+      });
+      fireEvent.mouseMove(mockedData.header, {
+        clientY: 190,
+      });
+      date.next();
+      fireEvent.mouseUp(mockedData.header, {
+        client: 190,
+      });
+      act(jest.runAllTimers);
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 0%, 0)');
+
+      fireEvent.mouseDown(mockedData.header, {
+        clientY: 95,
+      });
+      fireEvent.mouseMove(mockedData.header, {
+        clientY: 180,
+      });
+      date.next();
+      fireEvent.mouseUp(mockedData.header, {
+        client: 180,
+      });
+      act(jest.runAllTimers);
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 25%, 0)');
+
+      expect(onClose).toHaveBeenCalledTimes(0);
+    });
+
+    it('should close modal page when settlingHeight 100 by touch', async () => {
+      const date = mockDate();
+
+      const onClose = jest.fn();
+
+      const mockedData = await touchMoveSetup({
+        onClose,
+        settlingHeight: 100,
+        modalPageContentClientHeight: 600,
+        contentScrollHeight: 1200,
+      });
+
+      expect(mockedData.innerElementTransform).toBe('translate3d(0, 0%, 0)');
+      fireEvent.mouseDown(mockedData.header, {
+        clientY: 95,
+      });
+      fireEvent.mouseMove(mockedData.header, {
+        clientY: 250,
+      });
+      date.next();
+      fireEvent.mouseUp(mockedData.header, {
+        client: 250,
+      });
+      act(jest.runAllTimers);
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('modal card touch move events', () => {
+    const touchMoveSetup = async ({ onClose }: { onClose: VoidFunction }) => {
+      let content: HTMLDivElement;
+      let transform = '';
+      Object.defineProperty(window, 'innerHeight', {
+        writable: true,
+        configurable: true,
+        value: 720,
+      });
+      const Fixture = () => {
+        return (
+          <ModalRootTouch activeModal="modal-card">
+            <ModalCard
+              id="modal-card"
+              data-testid="modal-card"
+              key="1"
+              onClose={onClose}
+              getRootRef={(element) => {
+                if (!element) {
+                  return;
+                }
+                content = element.firstElementChild as HTMLDivElement;
+                jest.spyOn(content, 'offsetHeight', 'get').mockImplementation(() => 320);
+                jest
+                  .spyOn(content.style, 'transform', 'set')
+                  .mockImplementation((newTransform) => (transform = newTransform));
+              }}
+            >
+              <div></div>
+            </ModalCard>
+          </ModalRootTouch>
+        );
+      };
+
+      const component = render(<Fixture />, {
+        baseElement: document.documentElement,
+      });
+      act(jest.runAllTimers);
+      await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('modal-card')));
+
+      return {
+        component,
+        get transform() {
+          return transform;
+        },
+        get content() {
+          return content;
+        },
+      };
+    };
+
+    it('should close modal card by touch', async () => {
+      const date = mockDate();
+      const onClose = jest.fn();
+      const mockedData = await touchMoveSetup({
+        onClose,
+      });
+      expect(mockedData.transform).toBe('translate3d(0, 0%, 0)');
+      fireEvent.mouseDown(mockedData.content, {
+        clientY: 400,
+      });
+      fireEvent.mouseMove(mockedData.content, {
+        clientY: 500,
+      });
+      act(jest.runAllTimers);
+      date.next();
+      expect(mockedData.transform).toBe('translate3d(0, 31.25%, 0)');
+      fireEvent.mouseUp(mockedData.content, {
+        clientY: 500,
+      });
+      act(jest.runAllTimers);
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+  });
+});

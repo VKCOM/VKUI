@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { HasRootRef } from '../../../types';
+import type * as React from 'react';
+import type { HasRootRef } from '../../../types';
 import type { ImageBaseExpectedIconProps } from '../types';
 
 export interface ImageBaseOverlayCommonProps

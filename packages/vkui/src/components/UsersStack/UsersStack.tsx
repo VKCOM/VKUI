@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';

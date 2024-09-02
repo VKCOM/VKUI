@@ -16,17 +16,87 @@ jobs:
     runs-on: ubuntu-latest
     name: Add labels
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Patch
         if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
-        uses: actions/github-script@v7
+        uses: ./.github/actions/add-label-to-pull-request
         with:
-          script: |
-            github.rest.issues.addLabels({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: ["patch"]
-            })
+          issue_number: ${{ github.event.pull_request.number }}
+          label: 'patch'
+
+      - name: VKUI-tokens
+        if: ${{ github.actor == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}
+        uses: ./.github/actions/add-label-to-pull-request
+        with:
+          issue_number: ${{ github.event.pull_request.number }}
+          label: 'vkui-tokens'
+
+  check-dependabot-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    if: ${{ github.event.action == 'opened' && github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get @vkontakte/vkui dependencies
+        id: dependencies
+        run: |
+          if [[ ${{ steps.metadata.outputs.directory }} == "/" ]]; then
+            echo "value=@vkontakte/vkui-tokens" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          if [[ ${{ steps.metadata.outputs.directory }} == "packages/vkui" ]]; then
+            DEPENDENCIES_OBJECT=$(node -p "require('./packages/vkui/package.json').dependencies")
+            DEPENDENCIES_ARRAY=$(node -p "Object.keys($DEPENDENCIES_OBJECT)")
+            DEPENDENCIES_ARRAY_JSON=$(node -p "JSON.stringify($DEPENDENCIES_ARRAY)")
+
+            echo "value='$DEPENDENCIES_ARRAY_JSON'" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+      - name: Check if PR updates relevant dependencies
+        id: check_deps
+        if: ${{ steps.dependencies.outputs.value != '' }}
+        run: |
+
+          # ```sh
+          # @npmcli/template-oss, @octokit/rest
+          # ```
+          # =>
+          # ```sh
+          # @npmcli/template-oss @octokit/rest
+          # ```
+          UPDATED_DEPS=$(echo ${{ steps.metadata.outputs.dependency-names }} | sed "s/,/ /g")
+          RELEVANT_DEPS=${{ steps.dependencies.outputs.value }}
+
+          for UPDATED_DEP in $UPDATED_DEPS; do
+            if [[ $RELEVANT_DEPS =~ $UPDATED_DEP ]]; then
+              echo "update_needed=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+          done
+
+      - name: Add milestone to PR
+        if: ${{ !cancelled() && steps.check_deps.outputs.update_needed == 'true' }}
+        uses: VKCOM/gh-actions/VKUI/add-next-minor-milestone@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull_request_number: ${{ github.event.pull_request.number }}
 
   lint_codes_format:
     runs-on: ubuntu-latest

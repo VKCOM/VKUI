@@ -2,9 +2,9 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { SizeType } from '../../lib/adaptivity';
 import { mergeCalls } from '../../lib/mergeCalls';
-import { checkClickable, Clickable, ClickableProps } from '../Clickable/Clickable';
+import { checkClickable, Clickable, type ClickableProps } from '../Clickable/Clickable';
 import { Ripple, useMaybeNeedRipple, useRipple } from './Ripple';
-import { activeClass, DEFAULT_STATE_MODE, hoverClass, StateProps } from './state';
+import { activeClass, DEFAULT_STATE_MODE, hoverClass, type StateProps } from './state';
 import styles from './Tappable.module.css';
 
 const sizeXClassNames = {

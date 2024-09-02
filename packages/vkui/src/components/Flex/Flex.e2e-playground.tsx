@@ -10,7 +10,7 @@ export const FlexPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           children: [[<ChildNode key="1" />, <ChildNode key="2" />]],
-          gap: ['m'],
+          gap: ['m', undefined],
           margin: ['auto'],
         },
         {

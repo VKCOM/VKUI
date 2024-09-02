@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
+import { SegmentedControl, type SegmentedControlProps } from './SegmentedControl';
 
 const story: Meta<SegmentedControlProps> = {
   title: 'Forms/SegmentedControl',

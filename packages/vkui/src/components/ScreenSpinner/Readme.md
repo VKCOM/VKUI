@@ -40,7 +40,7 @@ const setErrorScreenSpinner = () => {
 };
 
 const setCancelableScreenSpinner = () => {
-  setPopout(<ScreenSpinner state="cancelable" onClick={clearPopout} />);
+  setPopout(<ScreenSpinner state="cancelable" mode="overlay" onClick={clearPopout} />);
 };
 
 <SplitLayout popout={popout} aria-live="polite" aria-busy={!!popout}>

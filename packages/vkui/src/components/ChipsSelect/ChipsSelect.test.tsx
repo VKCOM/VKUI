@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
+import type { Placement, useFloating } from '../../lib/floating';
 import {
   baselineComponent,
   fakeTimers,
@@ -8,6 +9,7 @@ import {
 } from '../../testing/utils';
 import type { ChipOption } from '../ChipsInputBase/types';
 import { ChipsSelect } from './ChipsSelect';
+import styles from './ChipsSelect.module.css';
 
 const FIRST_OPTION = { value: 'red', label: 'Красный' };
 
@@ -17,7 +19,27 @@ const THIRD_OPTION = { value: 'navarin', label: 'Наваринского пла
 
 const colors: ChipOption[] = [FIRST_OPTION, SECOND_OPTION, THIRD_OPTION];
 
+let placementStub: Placement | undefined = undefined;
+jest.mock('../../lib/floating', () => {
+  const originalModule = jest.requireActual('../../lib/floating');
+  return {
+    ...originalModule,
+    useFloating: (...args: Parameters<typeof useFloating>) => {
+      const result = originalModule['useFloating'](args);
+      return {
+        ...result,
+        get placement() {
+          return placementStub ?? result.placement;
+        },
+      };
+    },
+  };
+});
+
 describe('ChipsSelect', () => {
+  afterEach(() => {
+    placementStub = undefined;
+  });
   baselineComponent(ChipsSelect, { a11y: false });
 
   fakeTimers();
@@ -473,5 +495,50 @@ describe('ChipsSelect', () => {
     const inputLocator = screen.getByRole('combobox');
     fireEvent.click(inputLocator);
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
+  });
+
+  it('checks ChipsSelect placement class for borders when dropdown is opened and closed during  placement change', async () => {
+    const component = render(<ChipsSelect options={[FIRST_OPTION, SECOND_OPTION, THIRD_OPTION]} />);
+    fireEvent.click(screen.getByRole('combobox'));
+    await waitForFloatingPosition();
+
+    // dropdown по умолчанию открыт вниз и класс для границ выставлен верно
+    expect(document.querySelector(`.${styles['ChipsSelect--pop-down']}`)).not.toBeNull();
+
+    // меняем позиционирование дропдауна вверх
+    placementStub = 'top';
+    component.rerender(<ChipsSelect options={[FIRST_OPTION, SECOND_OPTION, THIRD_OPTION]} />);
+
+    // dropdown открыт вверх и класс для границ выставлен верно
+    expect(document.querySelector(`.${styles['ChipsSelect--pop-up']}`)).not.toBeNull();
+
+    // закрываем дропдаун и меняем позиционирование вниз
+    await userEvent.click(document.body);
+    placementStub = 'bottom';
+    component.rerender(<ChipsSelect options={[FIRST_OPTION, SECOND_OPTION, THIRD_OPTION]} />);
+
+    // снова открываем дропдаун
+    // в этот момент внутренне состояние placement CustomSelect указывает вверх
+    // но floating-ui возвращает "bottom", а значит и внутренне состояние и
+    // границы CustomSelect должны быть выставлены соответственно вниз
+    fireEvent.click(screen.getByRole('combobox'));
+    await waitForFloatingPosition();
+
+    // дропдаун открыт вниз и класс для границ выставлен верно
+    expect(document.querySelector(`.${styles['ChipsSelect--pop-down']}`)).not.toBeNull();
+  });
+
+  it('check close dropdown when click to dropdown icon', async () => {
+    const result = render(
+      <ChipsSelect creatable="Добавить новую опцию" options={[]} dropdownTestId="dropdown" />,
+    );
+    const getDropdownIcon = () =>
+      result.container.getElementsByClassName(styles['ChipsSelect__dropdown-icon'])[0];
+    expect(screen.queryByTestId('dropdown')).toBeFalsy();
+    fireEvent.click(getDropdownIcon());
+    await waitForFloatingPosition();
+    expect(screen.queryByTestId('dropdown')).toBeTruthy();
+    fireEvent.click(getDropdownIcon());
+    expect(screen.queryByTestId('dropdown')).toBeFalsy();
   });
 });

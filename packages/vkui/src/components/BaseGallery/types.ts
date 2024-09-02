@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
-import { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
-import { TouchEvent, TouchEventHandler } from '../Touch/Touch';
+import type * as React from 'react';
+import type { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
+import type { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
+import type { CustomTouchEvent, CustomTouchEventHandler } from '../Touch/Touch';
 
 export interface GallerySlidesState {
   coordX: number;
@@ -31,8 +31,8 @@ export interface BaseGalleryProps
     HasRef<HTMLElement> {
   slideWidth?: string | number;
   slideIndex?: number;
-  onDragStart?: TouchEventHandler;
-  onDragEnd?: (e: TouchEvent, targetIndex: number) => void;
+  onDragStart?: CustomTouchEventHandler;
+  onDragEnd?: (e: CustomTouchEvent, targetIndex: number) => void;
   onChange?: (current: number) => void;
   /**
    * Будет вызвано при клике на кнопку-стрелку влево

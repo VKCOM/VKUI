@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../types';
+import type { HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
-import { type TappableProps } from '../Tappable/Tappable';
-import { CheckboxInput, CheckboxInputProps } from './CheckboxInput/CheckboxInput';
+import type { TappableProps } from '../Tappable/Tappable';
+import { CheckboxInput, type CheckboxInputProps } from './CheckboxInput/CheckboxInput';
 import { CheckboxSimple } from './CheckboxSimple/CheckboxSimple';
 
 export interface CheckboxProps

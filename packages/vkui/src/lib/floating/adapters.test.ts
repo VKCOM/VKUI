@@ -1,5 +1,5 @@
 import { noop } from '@vkontakte/vkjs';
-import { autoUpdate } from '@vkontakte/vkui-floating-ui/react-dom';
+import type { autoUpdate } from '@vkontakte/vkui-floating-ui/react-dom';
 import { autoUpdateFloatingElement } from './adapters';
 
 const autoUpdateLibDisposerStub = jest.fn();

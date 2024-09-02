@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SizeTypeValues, ViewHeightType, ViewWidthType } from '../../lib/adaptivity';
+import type { SizeTypeValues, ViewHeightType, ViewWidthType } from '../../lib/adaptivity';
 
 export interface SizeProps {
   sizeX?: SizeTypeValues;

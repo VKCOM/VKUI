@@ -5,7 +5,7 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getTextFromChildren } from '../../lib/children';
 import { useDOM } from '../../lib/dom';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
@@ -29,6 +29,10 @@ export interface RemovableProps {
    * (test) testId кнопки удаления
    */
   removeButtonTestId?: string;
+  /**
+   * Ячейка превращается в неактивную
+   */
+  disabled?: boolean;
 }
 
 interface RemovableIosOwnProps extends RemovableProps {
@@ -46,6 +50,7 @@ const RemovableIos = ({
   children: childrenProp,
   toggleButtonTestId,
   removeButtonTestId,
+  disabled,
 }: RemovableIosOwnProps) => {
   const { window } = useDOM();
 
@@ -97,7 +102,7 @@ const RemovableIos = ({
           'vkuiInternalRemovable__action',
         )}
         onClick={onRemoveActivateClick}
-        disabled={removeOffset > 0}
+        disabled={removeOffset > 0 || disabled}
         data-testid={toggleButtonTestId}
       >
         <VisuallyHidden>{removePlaceholderString}</VisuallyHidden>
@@ -161,6 +166,7 @@ export const Removable = ({
   indent = false,
   toggleButtonTestId,
   removeButtonTestId,
+  disabled,
   ...restProps
 }: RemovableOwnProps): React.ReactNode => {
   const platform = usePlatform();
@@ -192,6 +198,7 @@ export const Removable = ({
             onClick={onRemoveClick}
             label={removePlaceholderString}
             data-testid={removeButtonTestId}
+            disabled={disabled}
           >
             <Icon24Cancel role="presentation" />
           </IconButton>
@@ -207,6 +214,7 @@ export const Removable = ({
           removePlaceholderString={removePlaceholderString}
           toggleButtonTestId={toggleButtonTestId}
           removeButtonTestId={removeButtonTestId}
+          disabled={disabled}
         >
           {children}
         </RemovableIos>

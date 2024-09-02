@@ -1,4 +1,4 @@
-import { ControlElementsState, SlidesManagerState } from './types';
+import type { ControlElementsState, SlidesManagerState } from './types';
 
 export const ANIMATION_DURATION = 240;
 

@@ -185,7 +185,10 @@ export const ChipsInputBase = <O extends ChipOption>({
   };
 
   const handleRootClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (contains(event.currentTarget, getActiveElementByAnotherElement(event.currentTarget))) {
+    if (
+      event.defaultPrevented ||
+      contains(event.currentTarget, getActiveElementByAnotherElement(event.currentTarget))
+    ) {
       return;
     }
 

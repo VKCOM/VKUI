@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 import { ScrollContext } from '../AppRoot/ScrollContext';
 
 export interface ScrollSaverProps extends HasChildren {

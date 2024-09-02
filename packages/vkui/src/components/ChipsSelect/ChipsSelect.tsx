@@ -1,3 +1,4 @@
+import { type MouseEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -15,7 +16,7 @@ import {
 import type { ChipOption, ChipsInputBaseProps } from '../ChipsInputBase/types';
 import {
   CustomSelectDropdown,
-  CustomSelectDropdownProps,
+  type CustomSelectDropdownProps,
 } from '../CustomSelectDropdown/CustomSelectDropdown';
 import {
   CustomSelectOption,
@@ -245,8 +246,17 @@ export const ChipsSelect = <Option extends ChipOption>({
 
   // Связано с CustomSelectDropdownProps
   const [dropdownVerticalPlacement, setDropdownVerticalPlacement] = React.useState<
-    Extract<Placement, 'top' | 'bottom'> | undefined
+    'top' | 'bottom'
   >(placementProp);
+
+  const onDropdownPlacementChange = React.useCallback((placement: Placement) => {
+    if (placement.startsWith('top')) {
+      setDropdownVerticalPlacement('top');
+    } else if (placement.startsWith('bottom')) {
+      setDropdownVerticalPlacement('bottom');
+    }
+  }, []);
+
   const dropdownId = React.useId();
   const dropdownCurrentItemId =
     focusedOptionIndex !== null ? `${dropdownId}-${focusedOptionIndex}` : undefined;
@@ -403,15 +413,6 @@ export const ChipsSelect = <Option extends ChipOption>({
     }
   }, [options, focusedOptionIndex, setFocusedOption]);
 
-  const onDropdownPlacementChange = React.useCallback((placement: Placement) => {
-    /* istanbul ignore next:  */
-    if (placement.startsWith('top')) {
-      setDropdownVerticalPlacement('top');
-    } else if (placement.startsWith('bottom')) {
-      setDropdownVerticalPlacement('bottom');
-    }
-  }, []);
-
   const onDropdownMouseLeave = React.useCallback(() => {
     setFocusedOptionIndex(null);
   }, [setFocusedOptionIndex]);
@@ -424,6 +425,16 @@ export const ChipsSelect = <Option extends ChipOption>({
     handleClickOutside,
     opened ? rootRef : null,
     opened ? dropdownScrollBoxRef : null,
+  );
+
+  const onDropdownIconClick: MouseEventHandler<SVGSVGElement> = React.useCallback(
+    (e) => {
+      if (opened) {
+        e.preventDefault();
+        setOpened(false);
+      }
+    },
+    [opened, setOpened],
   );
 
   const dropdownContent = React.useMemo(() => {
@@ -523,7 +534,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     () =>
       (opened &&
         dropdownOffsetDistance === 0 &&
-        (dropdownVerticalPlacement?.includes('top')
+        (dropdownVerticalPlacement.includes('top')
           ? styles['ChipsSelect--pop-up']
           : styles['ChipsSelect--pop-down'])) ||
       undefined,
@@ -549,7 +560,11 @@ export const ChipsSelect = <Option extends ChipOption>({
           dropdownIconProp || (
             <DropdownIcon
               opened={opened}
-              className={clearButtonShown ? styles['ChipsSelect__dropdown-icon'] : undefined}
+              onClick={onDropdownIconClick}
+              className={classNames(
+                styles['ChipsSelect__dropdown-icon'],
+                clearButtonShown && styles['ChipsSelect__dropdown-icon--withOffset'],
+              )}
             />
           )
         }
@@ -578,7 +593,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         <CustomSelectDropdown
           data-testid={dropdownTestId}
           targetRef={rootRef}
-          placement={placementProp}
+          placement={dropdownVerticalPlacement}
           scrollBoxRef={dropdownScrollBoxRef}
           onPlacementChange={onDropdownPlacementChange}
           onMouseLeave={onDropdownMouseLeave}

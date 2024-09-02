@@ -3,7 +3,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasAccessibleName } from '../../lib/accessibility';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
-import { Tappable, TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './IconButton.module.css';
 

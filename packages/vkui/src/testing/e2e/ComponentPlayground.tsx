@@ -4,7 +4,7 @@ import { AdaptivityProvider } from '../../components/AdaptivityProvider/Adaptivi
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import type { AppearanceType } from '../../lib/appearance';
-import { PlatformType } from '../../lib/platform';
+import type { PlatformType } from '../../lib/platform';
 import { AppDefaultWrapper, type AppWrapperProps } from './AppDefaultWrapper';
 import { TEST_CLASS_NAMES } from './constants';
 import { getAdaptivePxWidth, multiCartesian, prettyProps } from './utils';

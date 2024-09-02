@@ -1,7 +1,7 @@
 import { useArgs } from '@storybook/preview-api';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Pagination, PaginationProps } from './Pagination';
+import { Pagination, type PaginationProps } from './Pagination';
 
 const story: Meta<PaginationProps> = {
   title: 'Blocks/Pagination',

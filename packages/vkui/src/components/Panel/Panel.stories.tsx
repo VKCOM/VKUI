@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28MusicOutline, Icon28UserOutline, Icon28UsersOutline } from '@vkontakte/icons';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
@@ -11,7 +11,7 @@ import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { Search } from '../Search/Search';
 import { Spinner } from '../Spinner/Spinner';
 import { View } from '../View/View';
-import { Panel, PanelProps } from './Panel';
+import { Panel, type PanelProps } from './Panel';
 
 const story: Meta<PanelProps> = {
   title: 'Layout/Panel',

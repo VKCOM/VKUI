@@ -2,7 +2,7 @@ import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
-import { ActionSheetItem, ActionSheetItemProps } from './ActionSheetItem';
+import { ActionSheetItem, type ActionSheetItemProps } from './ActionSheetItem';
 
 const ActionSheetItemTest = (props: ActionSheetItemProps) => (
   <ActionSheetItem data-testid="item" {...props} />

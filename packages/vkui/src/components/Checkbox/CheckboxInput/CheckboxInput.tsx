@@ -11,10 +11,14 @@ import { useAdaptivityConditionalRender } from '../../../hooks/useAdaptivityCond
 import { useExternRef } from '../../../hooks/useExternRef';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { warnOnce } from '../../../lib/warnOnce';
-import { HasRef, HasRootRef } from '../../../types';
+import type { HasRef, HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';
+
+function setIndeterminate(el: HTMLInputElement, indeterminate: boolean) {
+  el.indeterminate = indeterminate;
+}
 
 export interface CheckboxInputProps
   extends React.ComponentProps<'input'>,
@@ -44,7 +48,7 @@ export function CheckboxInput({
     const indeterminateValue = indeterminate === undefined ? defaultIndeterminate : indeterminate;
 
     if (inputRef.current) {
-      inputRef.current.indeterminate = Boolean(indeterminateValue);
+      setIndeterminate(inputRef.current, Boolean(indeterminateValue));
     }
   }, [defaultIndeterminate, indeterminate, inputRef]);
 
@@ -56,10 +60,10 @@ export function CheckboxInput({
         restProps.checked === undefined &&
         inputRef.current
       ) {
-        inputRef.current.indeterminate = false;
+        setIndeterminate(inputRef.current, false);
       }
       if (indeterminate !== undefined && inputRef.current) {
-        inputRef.current.indeterminate = indeterminate;
+        setIndeterminate(inputRef.current, Boolean(indeterminate));
       }
       onChange && onChange(event);
     },

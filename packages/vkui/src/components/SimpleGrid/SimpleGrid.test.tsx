@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { classNames } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
-import { SimpleGrid, SimpleGridProps } from './SimpleGrid';
+import { SimpleGrid, type SimpleGridProps } from './SimpleGrid';
 import styles from './SimpleGrid.module.css';
 import gapsStyles from '../../styles/gaps.module.css';
 

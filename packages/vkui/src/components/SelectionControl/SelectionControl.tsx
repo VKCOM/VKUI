@@ -2,7 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types';
+import type { HasRootRef } from '../../types';
 import { DEFAULT_ACTIVE_EFFECT_DELAY } from '../Clickable/useState';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { SelectionControlLabel } from './SelectionControlLabel/SelectionControlLabel';

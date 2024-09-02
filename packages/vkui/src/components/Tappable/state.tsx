@@ -1,4 +1,4 @@
-import { LiteralUnion } from '../../types';
+import type { LiteralUnion } from '../../types';
 import styles from './Tappable.module.css';
 
 type StateMode = 'opacity' | 'background' | 'none';

@@ -1,7 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
-import { Paragraph, ParagraphProps } from './Paragraph';
+import { Paragraph, type ParagraphProps } from './Paragraph';
 
 const story: Meta<ParagraphProps> = {
   title: 'Typography/Paragraph',

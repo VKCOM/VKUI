@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { DisableCartesianParam } from '../../storybook/constants';
 import { Button } from '../Button/Button';
-import { Tooltip, TooltipProps } from './Tooltip';
+import { Tooltip, type TooltipProps } from './Tooltip';
 
 const story: Meta<TooltipProps> = {
   title: 'Poppers/Tooltip',
@@ -21,5 +21,18 @@ export const Playground: Story = {
   ),
   args: {
     text: 'Привет',
+  },
+};
+
+export const InteractiveTooltipWithCloseAction: Story = {
+  render: (args) => (
+    <Tooltip {...args}>
+      <Button style={{ margin: 20 }}>Наведи</Button>
+    </Tooltip>
+  ),
+  args: {
+    text: 'Привет',
+    enableInteractive: true,
+    closable: true,
   },
 };

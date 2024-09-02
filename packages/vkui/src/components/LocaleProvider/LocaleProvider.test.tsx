@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import {
-  ConfigProviderContextInterface,
+  type ConfigProviderContextInterface,
   useConfigProvider,
 } from '../ConfigProvider/ConfigProviderContext';
 import { LocaleProvider } from './LocaleProvider';

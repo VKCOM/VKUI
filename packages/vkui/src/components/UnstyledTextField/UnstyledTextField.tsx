@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HasRootRef } from '../../types';
+import type { HasRootRef } from '../../types';
 import { Text } from '../Typography/Text/Text';
 import styles from './UnstyledTextField.module.css';
 

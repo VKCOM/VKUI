@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { fakeTimers, userEvent } from '../../testing/utils';
-import { CalendarDay, CalendarDayProps } from './CalendarDay';
+import { CalendarDay, type CalendarDayProps } from './CalendarDay';
 import styles from './CalendarDay.module.css';
 
 const day = new Date('1970-01-01');

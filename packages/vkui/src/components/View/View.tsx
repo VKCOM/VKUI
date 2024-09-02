@@ -2,17 +2,17 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
-import { blurActiveElement, canUseDOM, useDOM } from '../../lib/dom';
-import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { blurActiveElement, useDOM } from '../../lib/dom';
+import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScroll } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { NavViewIdContext } from '../NavIdContext/NavIdContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { NavTransitionDirectionProvider } from '../NavTransitionDirectionContext/NavTransitionDirectionContext';
 import { useSplitCol } from '../SplitCol/SplitColContext';
-import { Touch, TouchEvent } from '../Touch/Touch';
+import { type CustomTouchEvent, Touch } from '../Touch/Touch';
 import { useLayoutEffectCall } from './useLayoutEffectCall';
 import {
   getSwipeBackPredicates,
@@ -156,11 +156,11 @@ export const View = ({
     [activePanelProp, layoutEffectCall, onTransition, scroll],
   );
 
-  const onAnimationEnd = React.useCallback(() => {
+  const handleAnimatedTargetAnimationEnd = () => {
     if (prevPanel !== null) {
       flushTransition(prevPanel, Boolean(isBack));
     }
-  }, [flushTransition, isBack, prevPanel]);
+  };
 
   const onSwipeBackSuccess = React.useCallback(() => {
     onSwipeBack && onSwipeBack();
@@ -186,7 +186,7 @@ export const View = ({
     }
   }, [onSwipeBackCancel, onSwipeBackSuccess, swipeBackResult]);
 
-  const handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: TouchEvent) => {
+  const handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext = (event: CustomTouchEvent) => {
     if (browserSwipe) {
       return;
     }
@@ -198,7 +198,7 @@ export const View = ({
     }
   };
 
-  const handleTouchMoveXForIOSSwipeBackSimulation = (event: TouchEvent) => {
+  const handleTouchMoveXForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     if (swipeBackPrevented.current || swipeBackExcluded(event)) {
       return;
     }
@@ -259,7 +259,7 @@ export const View = ({
     }
   };
 
-  const handleTouchEndForIOSSwipeBackSimulation = (event: TouchEvent) => {
+  const handleTouchEndForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     swipeBackPrevented.current = false;
     if (swipingBack) {
       const speed = (swipeBackShift / event.duration) * 1000;
@@ -275,56 +275,41 @@ export const View = ({
     }
   };
 
-  const calcPanelSwipeStyles = (panelId: string | undefined): React.CSSProperties => {
-    if (!canUseDOM || !window) {
-      return {};
-    }
-
-    const isPrev = panelId === swipeBackPrevPanel;
-    const isNext = panelId === swipeBackNextPanel;
-
+  const calcPanelSwipeStyles = (isPrev: boolean, isNext: boolean): React.CSSProperties => {
     if ((!isPrev && !isNext) || swipeBackResult) {
       return {};
     }
 
-    let prevPanelTranslate = `${swipeBackShift}px`;
-    let nextPanelTranslate = `${-50 + (swipeBackShift * 100) / window.innerWidth / 2}%`;
-
     if (isNext) {
-      return {
-        transform: `translate3d(${nextPanelTranslate}, 0, 0)`,
-      };
+      return window
+        ? {
+            transform: `translate3d(${-50 + (swipeBackShift * 100) / window.innerWidth / 2}%, 0, 0)`,
+          }
+        : {};
     }
+
     if (isPrev) {
-      return {
-        transform: `translate3d(${prevPanelTranslate}, 0, 0)`,
-      };
+      return { transform: `translate3d(${swipeBackShift}px, 0, 0)` };
     }
 
     return {};
   };
 
-  const calcPanelSwipeBackOverlayStyles = (panelId?: string): React.CSSProperties => {
-    if (!canUseDOM || !window) {
+  const calcPanelSwipeBackOverlayStyles = (isNext: boolean): React.CSSProperties => {
+    if (!window || !isNext) {
       return {};
     }
-
-    const isNext = panelId === swipeBackNextPanel;
-    if (!isNext) {
-      return {};
-    }
-
-    const calculatedOpacity = 1 - swipeBackShift / window.innerWidth;
     const opacityOnSwipeEnd =
       swipeBackResult === 'success' ? 0 : swipeBackResult === 'fail' ? 1 : null;
 
     return {
       display: 'block',
-      opacity: opacityOnSwipeEnd === null ? calculatedOpacity : opacityOnSwipeEnd,
+      opacity:
+        opacityOnSwipeEnd === null ? 1 - swipeBackShift / window.innerWidth : opacityOnSwipeEnd,
     };
   };
 
-  const onTransitionEnd = (event: React.TransitionEvent<HTMLDivElement>) => {
+  const handleSwipeBackTargetTransitionEnd = (event: React.TransitionEvent<HTMLDivElement>) => {
     if (event.propertyName.includes('transform')) {
       swipingBackTransitionEndHandler();
     }
@@ -482,7 +467,7 @@ export const View = ({
 
             const isSwipeBackPrev = panelId === swipeBackPrevPanel;
             const isSwipeBackNext = panelId === swipeBackNextPanel;
-            const isSwipeBackTarget = !prevSwipeBackResult && swipeBackResult && isSwipeBackNext;
+            const isSwipeBackTarget = swipeBackResult && isSwipeBackPrev;
 
             let scrollCompensateStyle: React.CSSProperties | undefined = undefined;
 
@@ -507,16 +492,16 @@ export const View = ({
                   swipeBackResult === 'success' && styles['View__panel--swipe-back-success'],
                   swipeBackResult === 'fail' && styles['View__panel--swipe-back-failed'],
                 )}
-                onTransitionEnd={isSwipeBackTarget ? onTransitionEnd : undefined}
-                onAnimationEnd={isAnimatedTarget ? onAnimationEnd : undefined}
+                onTransitionEnd={isSwipeBackTarget ? handleSwipeBackTargetTransitionEnd : undefined}
+                onAnimationEnd={isAnimatedTarget ? handleAnimatedTargetAnimationEnd : undefined}
                 ref={(el) => panelId !== undefined && (panelNodes.current[panelId] = el)}
-                style={calcPanelSwipeStyles(panelId)}
+                style={calcPanelSwipeStyles(isSwipeBackPrev, isSwipeBackNext)}
                 key={panelId}
               >
                 {platform === 'ios' && (
                   <div
                     className={styles['View__panel-overlay']}
-                    style={calcPanelSwipeBackOverlayStyles(panelId)}
+                    style={calcPanelSwipeBackOverlayStyles(isSwipeBackNext)}
                   />
                 )}
                 <div className={styles['View__panel-in']} style={scrollCompensateStyle}>

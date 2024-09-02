@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Avatar } from '../Avatar/Avatar';
@@ -11,7 +11,7 @@ import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { View } from '../View/View';
-import { OnboardingTooltip, OnboardingTooltipProps } from './OnboardingTooltip';
+import { OnboardingTooltip, type OnboardingTooltipProps } from './OnboardingTooltip';
 import { OnboardingTooltipContainer } from './OnboardingTooltipContainer';
 
 const story: Meta<OnboardingTooltipProps> = {

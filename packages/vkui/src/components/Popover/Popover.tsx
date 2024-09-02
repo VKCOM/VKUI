@@ -227,9 +227,6 @@ export const Popover = ({
   let popover: React.ReactNode = null;
   if (shown || keepMounted) {
     const hidden = keepMounted && !shown;
-    if (!hidden) {
-      floatingProps.style.zIndex = String(zIndex);
-    }
 
     let arrow: React.ReactElement | null = null;
     if (withArrow) {
@@ -252,6 +249,10 @@ export const Popover = ({
           ref={refs.setFloating}
           className={classNames(styles['Popover'], hidden && styles['Popover--hidden'])}
           {...floatingProps}
+          style={{
+            zIndex: !hidden ? zIndex : undefined,
+            ...floatingProps.style,
+          }}
         >
           <FocusTrap
             {...restPopoverProps}

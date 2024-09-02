@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24Play } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Banner } from '../Banner/Banner';
 import { Button } from '../Button/Button';
 import { Image } from '../Image/Image';
-import { Flex, FlexProps } from './Flex';
+import { Flex, type FlexProps } from './Flex';
 
 const story: Meta<FlexProps> = {
   title: 'Layout/Flex',

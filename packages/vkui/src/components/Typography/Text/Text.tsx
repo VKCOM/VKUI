@@ -1,6 +1,6 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { Typography, TypographyProps } from '../Typography';
+import { Typography, type TypographyProps } from '../Typography';
 import styles from './Text.module.css';
 
 const sizeYClassNames = {

@@ -39,7 +39,7 @@ export const Setting = ({
       className={classNames('Setting', className, disabled && 'Setting--disabled')}
       weight="3"
     >
-      {hint ? (
+      {hint && !disabled ? (
         <Tooltip placement="top" enableInteractive text={hint} maxWidth={hintMaxWidth}>
           <span className="Setting__label Setting__label--has-hint">
             {label} <Icon12InfoCircle className="Setting__labelHint" />

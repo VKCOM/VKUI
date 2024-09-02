@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Touch, TouchEvent, TouchProps } from './Touch';
+import { type CustomTouchEvent, Touch, type TouchProps } from './Touch';
 
 const story: Meta<TouchProps> = {
   title: 'Service/Touch',
@@ -68,7 +68,7 @@ export const Playground: Story = {
       return value > limit ? limit : value < -limit ? -limit : value;
     };
 
-    const onMove = (e: TouchEvent) => {
+    const onMove = (e: CustomTouchEvent) => {
       const shiftX = startX.current + e.shiftX;
       const shiftY = startY.current + e.shiftY;
 
@@ -76,7 +76,7 @@ export const Playground: Story = {
       setShiftY(getValueWithLimit(shiftY, limitY));
     };
 
-    const onEnd = (e: TouchEvent) => {
+    const onEnd = (e: CustomTouchEvent) => {
       const shiftX = startX.current + e.shiftX;
       const shiftY = startY.current + e.shiftY;
 

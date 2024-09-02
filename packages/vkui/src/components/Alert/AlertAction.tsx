@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { AnchorHTMLAttributesOnly } from '../../types';
-import { Button, ButtonProps } from '../Button/Button';
+import type { AnchorHTMLAttributesOnly } from '../../types';
+import { Button, type ButtonProps } from '../Button/Button';
 import { Tappable } from '../Tappable/Tappable';
-import { AlertActionInterface } from './Alert';
+import type { AlertActionInterface } from './Alert';
 import styles from './Alert.module.css';
 
 export interface AlertActionProps

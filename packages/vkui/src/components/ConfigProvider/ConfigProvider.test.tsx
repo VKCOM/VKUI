@@ -5,7 +5,10 @@ import { render } from '@testing-library/react';
 import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from './ConfigProvider';
-import { ConfigProviderContext, ConfigProviderContextInterface } from './ConfigProviderContext';
+import {
+  ConfigProviderContext,
+  type ConfigProviderContextInterface,
+} from './ConfigProviderContext';
 import { ConfigProviderOverride } from './ConfigProviderOverride';
 
 describe(ConfigProvider, () => {

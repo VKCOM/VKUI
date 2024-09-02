@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Icon16Dropdown, Icon20PictureOutline, Icon24PictureOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
-import { TabsItem, TabsItemProps } from '../TabsItem/TabsItem';
+import { TabsItem, type TabsItemProps } from '../TabsItem/TabsItem';
 import { Tabs, TabsModeContext, type TabsProps } from './Tabs';
 
 function useIconByMode() {

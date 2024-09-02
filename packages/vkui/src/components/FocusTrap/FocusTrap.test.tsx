@@ -8,7 +8,7 @@ import {
   waitCSSKeyframesAnimation,
   waitForFloatingPosition,
 } from '../../testing/utils';
-import { ActionSheet, ActionSheetProps } from '../ActionSheet/ActionSheet';
+import { ActionSheet, type ActionSheetProps } from '../ActionSheet/ActionSheet';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
@@ -18,7 +18,7 @@ import { Panel } from '../Panel/Panel';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { View } from '../View/View';
-import { FocusTrap, FocusTrapProps } from './FocusTrap';
+import { FocusTrap, type FocusTrapProps } from './FocusTrap';
 
 const _children = ['first', 'middle', 'last'].map((item) => (
   <ActionSheetItem key={item} data-testid={item}>

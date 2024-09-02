@@ -4,7 +4,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
-import { HasComponent, HasRootRef } from '../../types';
+import type { HasComponent, HasRootRef } from '../../types';
 import styles from './FormField.module.css';
 
 const sizeYClassNames = {
@@ -74,7 +74,7 @@ export interface FormFieldProps {
   maxHeight?: number;
 }
 
-interface FormFieldOwnProps
+export interface FormFieldOwnProps
   extends React.AllHTMLAttributes<HTMLElement>,
     HasRootRef<HTMLElement>,
     HasComponent,

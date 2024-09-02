@@ -1,4 +1,4 @@
-import { FocusEvent, useCallback, useContext, useState } from 'react';
+import { type FocusEvent, useCallback, useContext, useState } from 'react';
 import { AppRootContext } from '../components/AppRoot/AppRootContext';
 
 export function useFocusVisible(withKeyboardInputCheck = true): {

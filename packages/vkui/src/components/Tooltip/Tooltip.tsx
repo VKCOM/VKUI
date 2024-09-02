@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
@@ -7,13 +7,14 @@ import { animationFadeClassNames } from '../../lib/animation';
 import {
   type FloatingComponentProps,
   getArrowCoordsByMiddlewareData,
+  type OnShownChange,
   useFloatingMiddlewaresBootstrap,
   useFloatingWithInteractions,
   usePlacementChangeCallback,
 } from '../../lib/floating';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { type FloatingArrowProps as FloatingArrowPropsPrivate } from '../FloatingArrow/FloatingArrow';
 import { TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
-import { Subhead } from '../Typography/Subhead/Subhead';
 
 type AllowedFloatingComponentProps = Pick<
   FloatingComponentProps,
@@ -33,7 +34,22 @@ type AllowedFloatingComponentProps = Pick<
   | 'disableFlipMiddleware'
 >;
 
-type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps'>;
+type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps' | 'onCloseIconClick'>;
+
+/**
+ * @alias
+ * @public
+ */
+export type TooltipArrowProps = Omit<
+  FloatingArrowPropsPrivate,
+  'getRootRef' | 'coords' | 'placement' | 'Icon'
+>;
+
+/**
+ * @alias
+ * @public
+ */
+export type TooltipOnShownChange = OnShownChange;
 
 export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTooltipBaseProps {
   /**
@@ -47,6 +63,12 @@ export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTool
    * Добавляет возможность наводить на тултип.
    */
   enableInteractive?: boolean;
+  /**
+   * Добавляет возможность закрыть тултип через иконку-крестик.
+   *
+   * > Работает в сочетании с `enableInteractive` или при использовании `shown` и `onShownChange`.
+   */
+  closable?: boolean;
   /**
    * Скрывает стрелку, указывающую на якорный элемент.
    */
@@ -95,12 +117,11 @@ export const Tooltip = ({
   // TooltipBaseProps
   id: idProp,
   getRootRef,
-  text,
-  header,
   appearance = 'neutral',
   style: styleProp,
   className,
   zIndex = 'var(--vkui--z_index_popout)',
+  closable,
   onPlacementChange,
   ...popperProps
 }: TooltipProps): React.ReactNode => {
@@ -130,6 +151,7 @@ export const Tooltip = ({
     referenceProps,
     floatingProps,
     middlewareData,
+    onClose,
     onEscapeKeyDown,
   } = useFloatingWithInteractions({
     defaultShown,
@@ -148,16 +170,16 @@ export const Tooltip = ({
 
   let tooltip: React.ReactNode = null;
   if (shown) {
-    referenceProps['aria-describedby'] = tooltipId;
-    floatingProps.style.zIndex = zIndex;
-    if (styleProp) {
-      Object.assign(floatingProps.style, styleProp);
-    }
     tooltip = (
       <AppRootPortal usePortal={usePortal}>
         <TooltipBase
           {...popperProps}
           {...floatingProps}
+          style={{
+            ...floatingProps.style,
+            zIndex,
+            ...styleProp,
+          }}
           id={tooltipId}
           getRootRef={tooltipRef}
           appearance={appearance}
@@ -170,21 +192,23 @@ export const Tooltip = ({
                   getRootRef: setArrowRef,
                 }
           }
-          text={
-            <React.Fragment>
-              {hasReactNode(header) && <Subhead weight="2">{header}</Subhead>}
-              {hasReactNode(text) && <Subhead>{text}</Subhead>}
-            </React.Fragment>
-          }
           className={classNames(
             willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
             className,
           )}
+          onCloseIconClick={closable ? onClose : undefined}
         />
       </AppRootPortal>
     );
   }
-  const [, child] = usePatchChildren(children, referenceProps, refs.setReference);
+  const [, child] = usePatchChildren(
+    children,
+    {
+      ...referenceProps,
+      ...(shown && { 'aria-describedby': tooltipId }),
+    },
+    refs.setReference,
+  );
 
   useGlobalEscKeyDown(shown, onEscapeKeyDown);
 

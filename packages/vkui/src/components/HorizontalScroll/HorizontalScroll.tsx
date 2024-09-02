@@ -5,7 +5,7 @@ import { useDirection } from '../../hooks/useDirection';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
-import { HasRef, HTMLAttributesWithRootRef } from '../../types';
+import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';
@@ -291,7 +291,7 @@ export const HorizontalScroll = ({
     >
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
         <ScrollArrow
-          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrow' : undefined}
+          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrowLeft' : undefined}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="left"
@@ -306,7 +306,7 @@ export const HorizontalScroll = ({
       )}
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
         <ScrollArrow
-          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrow' : undefined}
+          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrowRight' : undefined}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="right"

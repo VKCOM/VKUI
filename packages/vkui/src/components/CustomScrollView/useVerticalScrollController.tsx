@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CustomScrollBarController } from './types';
+import type { CustomScrollBarController } from './types';
 import { useTrackerVisibility } from './useTrackerVisibility';
 
 export const useVerticalScrollController = (
@@ -68,7 +68,9 @@ export const useVerticalScrollController = (
   const setScrollPositionFromTracker = (trackerTop: number) => {
     const progress = trackerTop / (clientHeight.current - trackerHeight.current);
     if (boxRef.current !== null) {
-      boxRef.current.scrollTop = (scrollHeight.current - clientHeight.current) * progress;
+      boxRef.current.scroll({
+        top: (scrollHeight.current - clientHeight.current) * progress,
+      });
     }
   };
 

@@ -1,5 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {
+  Icon28AddOutline,
   Icon28CheckShieldDeviceOutline,
   Icon28DevicesOutline,
   Icon28KeyOutline,
@@ -13,7 +14,7 @@ import { CellButton } from '../CellButton/CellButton';
 import { Playground as BasicCellButton } from '../CellButton/CellButton.stories';
 import { Header } from '../Header/Header';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
-import { Group, GroupProps } from './Group';
+import { Group, type GroupProps } from './Group';
 
 const story: Meta<GroupProps> = {
   title: 'Blocks/Group',
@@ -29,7 +30,7 @@ export const Playground: Story = {
   args: {
     header: <Header>Header</Header>,
     description: 'Description',
-    children: <CellButton {...BasicCellButton.args} />,
+    children: <CellButton {...BasicCellButton.args} before={<Icon28AddOutline />} />,
   },
 };
 
@@ -65,6 +66,24 @@ export const Example: Story = {
         >
           <CellButton onClick={noop}>Добавить домашний адрес</CellButton>
           <CellButton onClick={noop}>Добавить рабочий адрес</CellButton>
+        </Group>
+        <Group.Container>
+          <Group.Header>
+            <Header>Подкомпонентный подход: Адреса</Header>
+          </Group.Header>
+          <CellButton onClick={noop}>Добавить домашний адрес</CellButton>
+          <CellButton onClick={noop}>Добавить рабочий адрес</CellButton>
+          <Group.Description>
+            Для использования в мини-приложениях, Delivery Club, VK Taxi и других сервисах
+            ВКонтакте. Эти адреса видны только Вам.
+          </Group.Description>
+        </Group.Container>
+        <Group>
+          <Header>Контент игнорирует боковые отступы Group</Header>
+          <Group.ExpandedContent>
+            <CellButton onClick={noop}>Добавить домашний адрес</CellButton>
+            <CellButton onClick={noop}>Добавить рабочий адрес</CellButton>
+          </Group.ExpandedContent>
         </Group>
       </>
     ),

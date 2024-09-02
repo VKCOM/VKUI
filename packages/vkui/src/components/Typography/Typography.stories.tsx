@@ -1,7 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
-import { HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 import {
   Playground as CaptionStory,
   WithCaps as CaptionWithCapsStory,

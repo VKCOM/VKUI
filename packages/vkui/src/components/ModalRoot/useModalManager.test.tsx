@@ -211,7 +211,7 @@ describe(useModalManager, () => {
       const handle = renderHook(() =>
         useModalManager(
           'm1',
-          <MockModal id="m1" onOpened={onOpenedOfComponent} />,
+          <MockModal id="m1" onOpened={onOpenedOfComponent} settlingHeight={100} />,
           noop,
           onOpenedOfArgument,
         ),
@@ -229,6 +229,18 @@ describe(useModalManager, () => {
         handle.result.current.onEntered('m1');
       });
       expect(onOpened).toHaveBeenCalledTimes(1);
+    });
+
+    it('should show error when activeModal does not exist', () => {
+      process.env.NODE_ENV = 'development';
+      const error = jest.spyOn(console, 'error').mockImplementation(noop);
+      renderHook(() => useModalManager('m2', <MockModal id="m1" />, noop));
+      expect(error).toHaveBeenCalledWith(
+        '%c[VKUI/ModalRoot] Переход невозможен - модальное окно (страница) m2 не существует',
+        undefined,
+      );
+      error.mockClear();
+      process.env.NODE_ENV = 'test';
     });
   });
 

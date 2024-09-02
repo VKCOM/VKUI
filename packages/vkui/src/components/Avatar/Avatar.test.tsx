@@ -4,7 +4,7 @@ import {
   IconExampleForFallbackBasedOnImageBaseSize,
 } from '../../testing/icons';
 import { baselineComponent } from '../../testing/utils';
-import { Avatar, AvatarProps } from './Avatar';
+import { Avatar, type AvatarProps } from './Avatar';
 import { getInitialsFontSize } from './helpers';
 import styles from './Avatar.module.css';
 import avatarBadgeStyles from './AvatarBadge/AvatarBadge.module.css';

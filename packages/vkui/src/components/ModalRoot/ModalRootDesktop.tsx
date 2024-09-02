@@ -9,8 +9,8 @@ import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
-import { ModalRootContext, ModalRootContextInterface } from './ModalRootContext';
-import { ModalRootWithDOMProps, ModalsStateEntry } from './types';
+import { ModalRootContext, type ModalRootContextInterface } from './ModalRootContext';
+import type { ModalRootWithDOMProps, ModalsStateEntry } from './types';
 import { useModalManager } from './useModalManager';
 import styles from './ModalRoot.module.css';
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {
   Icon16Dropdown,
   Icon24Done,
@@ -18,7 +18,7 @@ import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { PanelHeaderContent } from '../PanelHeaderContent/PanelHeaderContent';
 import { View } from '../View/View';
-import { PanelHeaderContext, PanelHeaderContextProps } from './PanelHeaderContext';
+import { PanelHeaderContext, type PanelHeaderContextProps } from './PanelHeaderContext';
 
 const story: Meta<PanelHeaderContextProps> = {
   title: 'Layout/PanelHeaderContext',

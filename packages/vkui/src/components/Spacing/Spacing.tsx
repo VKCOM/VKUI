@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Spacing.module.css';
 
@@ -30,30 +30,18 @@ export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
 /**
  * @see https://vkcom.github.io/VKUI/#/Spacing
  */
-export const Spacing = ({
-  size = 'm',
-  style,
-  className,
-  ...restProps
-}: SpacingProps): React.ReactNode => {
-  if (typeof size === 'string') {
-    className = className ? classNames(sizesClassNames[size], className) : sizesClassNames[size];
-  } else {
-    if (style) {
-      // @ts-expect-error: TS7053 В React.CSSProperties не учитывается Custom Properties
-      style[CUSTOM_CSS_TOKEN_FOR_USER_GAP] = size;
-    } else {
-      // @ts-expect-error: TS2353 В React.CSSProperties не учитывается Custom Properties
-      style = { [CUSTOM_CSS_TOKEN_FOR_USER_GAP]: size };
-    }
-  }
-
+export const Spacing = ({ size = 'm', style, ...restProps }: SpacingProps): React.ReactNode => {
   return (
     <RootComponent
       {...restProps}
-      style={style}
-      className={className}
-      baseClassName={styles['Spacing']}
+      style={{
+        ...(typeof size === 'number' && { [CUSTOM_CSS_TOKEN_FOR_USER_GAP]: size }),
+        ...style,
+      }}
+      baseClassName={classNames(
+        styles['Spacing'],
+        typeof size === 'string' && sizesClassNames[size],
+      )}
     />
   );
 };

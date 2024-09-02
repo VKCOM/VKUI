@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { PanelHeader, PanelHeaderProps } from './PanelHeader';
+import { PanelHeader, type PanelHeaderProps } from './PanelHeader';
 
 const PanelHeaderTest = (props: PanelHeaderProps) => (
   <PanelHeader data-testid="header" {...props} />

@@ -7,9 +7,14 @@
   color: var(--vkui--color_icon_medium);
 }
 
+.Spinner--no-color {
+  color: currentColor;
+}
+
 /**
  * CMP:
  * PanelHeader
+ * TODO [>=7]: удалить
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader) .Spinner {

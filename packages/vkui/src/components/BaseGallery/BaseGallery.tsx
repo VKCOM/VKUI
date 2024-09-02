@@ -7,9 +7,9 @@ import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
-import { Touch, TouchEvent } from '../Touch/Touch';
+import { type CustomTouchEvent, Touch } from '../Touch/Touch';
 import { calcMax, calcMin } from './helpers';
-import { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
+import type { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
 import styles from './BaseGallery.module.css';
 
 const ANIMATION_DURATION = 0.24;
@@ -205,7 +205,7 @@ export const BaseGallery = ({
   /*
    * Получает индекс слайда, к которому будет осуществлен переход
    */
-  const getTarget = (e: TouchEvent) => {
+  const getTarget = (e: CustomTouchEvent) => {
     const expectDeltaX = (shiftState.deltaX / e.duration) * 240 * 0.6;
     const shift =
       shiftState.shiftX + shiftState.deltaX + expectDeltaX - (layoutState.current.max ?? 0);
@@ -237,7 +237,7 @@ export const BaseGallery = ({
 
   const isDraggable = !dragDisabled && !layoutState.current.isFullyVisible;
 
-  const onStart = (e: TouchEvent) => {
+  const onStart = (e: CustomTouchEvent) => {
     e.originalEvent.stopPropagation();
     if (isDraggable) {
       onDragStart?.(e);
@@ -245,7 +245,7 @@ export const BaseGallery = ({
     }
   };
 
-  const onMoveX = (e: TouchEvent) => {
+  const onMoveX = (e: CustomTouchEvent) => {
     if (isDraggable) {
       e.originalEvent.preventDefault();
 
@@ -261,7 +261,7 @@ export const BaseGallery = ({
     }
   };
 
-  const onEnd = (e: TouchEvent) => {
+  const onEnd = (e: CustomTouchEvent) => {
     if (isDraggable) {
       const targetIndex = e.isSlide ? getTarget(e) : slideIndex ?? 0;
       onDragEnd?.(e, targetIndex);
