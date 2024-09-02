@@ -95,6 +95,7 @@
   transition: none !important;
   caret-color: transparent !important;
   -webkit-font-smoothing: antialiased !important;
+  font-family: var(--vkui--font_family_base);
 }
 
 [class*='--light'] {
