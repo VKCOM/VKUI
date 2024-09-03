@@ -12,8 +12,7 @@ export interface CardProps extends HTMLAttributesWithRootRef<HTMLDivElement>, Ha
  */
 export const Card = ({
   mode = 'tint',
-  // TODO [>=7]: поменять тег на li https://github.com/VKCOM/VKUI/issues/7336
-  Component = 'div',
+  Component = 'li',
   ...restProps
 }: CardProps): React.ReactNode => {
   const withBorder = mode === 'outline' || mode === 'outline-tint';

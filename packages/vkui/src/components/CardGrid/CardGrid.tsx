@@ -29,8 +29,7 @@ export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>
 export const CardGrid = ({
   size = 's',
   spaced = false,
-  // TODO [>=7]: поменять тег на ul https://github.com/VKCOM/VKUI/issues/7336
-  Component = 'div',
+  Component = 'ul',
   ...restProps
 }: CardGridProps): React.ReactNode => {
   const { sizeX = 'none' } = useAdaptivity();
