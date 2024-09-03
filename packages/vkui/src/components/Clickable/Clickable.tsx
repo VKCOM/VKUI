@@ -1,4 +1,5 @@
-import { classNames } from '@vkontakte/vkjs';
+import * as React from 'react';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import {
   type FocusVisibleModeProps,
@@ -32,6 +33,7 @@ const NonClickable = <T,>({
   hasActive,
   hasHover,
   hovered,
+  unlockParentHover,
   activated,
   activeEffectDelay,
   ...restProps
@@ -51,6 +53,8 @@ const RealClickable = <T,>({
   hasActive = true,
   hovered,
   activated,
+  hasHoverWithChild,
+  unlockParentHover,
   onPointerEnter,
   onPointerLeave,
   onPointerDown,
@@ -64,7 +68,12 @@ const RealClickable = <T,>({
   const { focusVisible, ...focusEvents } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: focusVisibleMode });
 
-  const { stateClassName, setLockBubblingImmediate, ...stateEvents } = useState({
+  const {
+    stateClassName,
+    setLockHoverBubblingImmediate,
+    setLockActiveBubblingImmediate,
+    ...stateEvents
+  } = useState({
     activeClassName,
     hoverClassName,
     activeEffectDelay,
@@ -72,6 +81,7 @@ const RealClickable = <T,>({
     hasActive,
     hovered,
     activated,
+    unlockParentHover,
   });
 
   const handlers = mergeCalls(
@@ -90,6 +100,14 @@ const RealClickable = <T,>({
     },
   );
 
+  const lockStateContextValue = React.useMemo(
+    () => ({
+      lockHoverStateBubbling: hasHoverWithChild ? noop : setLockHoverBubblingImmediate,
+      lockActiveStateBubbling: setLockActiveBubblingImmediate,
+    }),
+    [setLockHoverBubblingImmediate, setLockActiveBubblingImmediate, hasHoverWithChild],
+  );
+
   return (
     <RootComponent
       baseClassName={classNames(
@@ -101,7 +119,7 @@ const RealClickable = <T,>({
       {...handlers}
       {...restProps}
     >
-      <ClickableLockStateContext.Provider value={setLockBubblingImmediate}>
+      <ClickableLockStateContext.Provider value={lockStateContextValue}>
         {children}
       </ClickableLockStateContext.Provider>
     </RootComponent>
