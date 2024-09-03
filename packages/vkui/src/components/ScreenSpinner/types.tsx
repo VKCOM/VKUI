@@ -1,7 +1,7 @@
 import type { SpinnerProps } from '../Spinner/Spinner';
 
-export interface ScreenSpinnerProps extends SpinnerProps {
+export type ScreenSpinnerProps = Omit<SpinnerProps, 'size'> & {
   state?: 'loading' | 'cancelable' | 'done' | 'error';
   mode?: 'shadow' | 'overlay';
   cancelLabel?: string;
-}
+};
