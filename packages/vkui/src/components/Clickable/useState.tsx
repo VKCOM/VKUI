@@ -30,13 +30,13 @@ export interface StateProps {
    * Присваивается родителькому компоненту.
    *
    * @example
-   * <Tappable hasHoverWithChild>
+   * <Tappable hasHoverWithChildren>
    *   <IconButton />
    *   <IconButton />
    *   <IconButton />
    * </Tappable>
    */
-  hasHoverWithChild?: boolean;
+  hasHoverWithChildren?: boolean;
 
   /**
    * Позволяет родительскому компоненту показывать hovered-состояние при наведении

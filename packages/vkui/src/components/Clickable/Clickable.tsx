@@ -53,7 +53,7 @@ const RealClickable = <T,>({
   hasActive = true,
   hovered,
   activated,
-  hasHoverWithChild,
+  hasHoverWithChildren,
   unlockParentHover,
   onPointerEnter,
   onPointerLeave,
@@ -102,10 +102,10 @@ const RealClickable = <T,>({
 
   const lockStateContextValue = React.useMemo(
     () => ({
-      lockHoverStateBubbling: hasHoverWithChild ? noop : setLockHoverBubblingImmediate,
+      lockHoverStateBubbling: hasHoverWithChildren ? noop : setLockHoverBubblingImmediate,
       lockActiveStateBubbling: setLockActiveBubblingImmediate,
     }),
-    [setLockHoverBubblingImmediate, setLockActiveBubblingImmediate, hasHoverWithChild],
+    [setLockHoverBubblingImmediate, setLockActiveBubblingImmediate, hasHoverWithChildren],
   );
 
   return (
