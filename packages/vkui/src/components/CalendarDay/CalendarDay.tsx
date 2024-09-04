@@ -29,7 +29,7 @@ export interface CalendarDayProps extends CalendarDayElementProps {
   onChange: (value: Date) => void;
   onEnter?: (value: Date) => void;
   onLeave?: (value: Date) => void;
-  // функция отрисовку контента дня
+  // Функция отрисовки контента в ячейке дня
   renderDayContent?: (day: Date) => React.ReactNode;
 }
 
