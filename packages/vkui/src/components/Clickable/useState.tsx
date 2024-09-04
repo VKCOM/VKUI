@@ -131,7 +131,6 @@ function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: U
 
   return {
     isHovered,
-    hoveredState: hoveredStateLocal,
     onPointerEnter: hasHover ? onPointerEnter : noop,
     onPointerLeave: hasHover ? onPointerLeave : noop,
   };
@@ -204,7 +203,6 @@ function useActive({
 
   return {
     isActivated,
-    activatedState,
     onPointerLeave: hasActive ? onPointerCancel : noop,
     onPointerDown: hasActive ? onPointerDown : noop,
     onPointerCancel: hasActive ? onPointerCancel : noop,
@@ -280,14 +278,14 @@ export function useState({
   const [lockActiveStateRef, setParentStateLockActiveBubbling, setLockActiveBubblingImmediate] =
     useLockRef(lockActiveStateBubbling);
 
-  const { isHovered, hoveredState, ...hoverEvent } = useHover({
+  const { isHovered, ...hoverEvent } = useHover({
     hasHover,
     hovered,
     lockState: lockHoverState,
     setParentStateLock: setParentStateLockHoverBubbling,
   });
 
-  const { isActivated, activatedState, ...activeEvent } = useActive({
+  const { isActivated, ...activeEvent } = useActive({
     ...restProps,
     lockStateRef: lockActiveStateRef,
     setParentStateLock: setParentStateLockActiveBubbling,
