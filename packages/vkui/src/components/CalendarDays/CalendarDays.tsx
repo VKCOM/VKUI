@@ -8,7 +8,7 @@ import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDay,
   type CalendarDayElementProps,
-  CalendarDayProps,
+  type CalendarDayProps,
 } from '../CalendarDay/CalendarDay';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { RootComponent } from '../RootComponent/RootComponent';
