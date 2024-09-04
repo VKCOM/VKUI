@@ -229,7 +229,7 @@ function useLockState(
 ): readonly [boolean, (v: boolean) => void, (...args: any[]) => void] {
   const [lockState, setLockState] = React.useState(false);
 
-  const setParentStateLockBubblingImmediate = React.useCallback(
+  const setStateLockBubblingImmediate = React.useCallback(
     (isLock: boolean) => {
       setLockState(isLock);
       setParentStateLockBubbling(isLock);
@@ -237,7 +237,7 @@ function useLockState(
     [setParentStateLockBubbling],
   );
 
-  return [lockState, setParentStateLockBubbling, setParentStateLockBubblingImmediate] as const;
+  return [lockState, setParentStateLockBubbling, setStateLockBubblingImmediate] as const;
 }
 
 function useLockRef(
@@ -245,7 +245,7 @@ function useLockRef(
 ): readonly [React.MutableRefObject<boolean>, (v: boolean) => void, (...args: any[]) => void] {
   const lockStateRef = React.useRef(false);
 
-  const setParentStateLockBubblingImmediate = React.useCallback(
+  const setStateLockBubblingImmediate = React.useCallback(
     (isLock: boolean) => {
       lockStateRef.current = isLock;
       setParentStateLockBubbling(isLock);
@@ -253,7 +253,7 @@ function useLockRef(
     [setParentStateLockBubbling],
   );
 
-  return [lockStateRef, setParentStateLockBubbling, setParentStateLockBubblingImmediate] as const;
+  return [lockStateRef, setParentStateLockBubbling, setStateLockBubblingImmediate] as const;
 }
 
 /**
