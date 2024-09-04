@@ -73,20 +73,6 @@ export const DEFAULT_ACTIVE_EFFECT_DELAY = 600;
 
 const ACTIVE_DELAY = 70;
 
-function calculateIsHovered({
-  hasHover,
-  lockState,
-  hoveredStateControlled,
-  hoveredStateLocal,
-}: {
-  hasHover: boolean;
-  lockState: boolean;
-  hoveredStateControlled: boolean;
-  hoveredStateLocal: boolean;
-}): boolean {
-  return hasHover && !lockState && (hoveredStateControlled || hoveredStateLocal);
-}
-
 interface UseHoverProps extends Pick<StateProps, 'hovered' | 'hasHover'> {
   /**
    * Блокирование активации состояний
@@ -101,20 +87,23 @@ interface UseHoverProps extends Pick<StateProps, 'hovered' | 'hasHover'> {
 function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: UseHoverProps) {
   const [hoveredStateLocal, setHoveredStateLocal] = React.useState(false);
 
-  const prevHoverRef = React.useRef<boolean | undefined>(undefined);
+  const prevIsHoveredRef = React.useRef<boolean | undefined>(undefined);
 
   const handleHover = React.useCallback(
     (isHover: boolean) => {
       setHoveredStateLocal(isHover);
 
-      const isHovered = calculateIsHovered({
-        hasHover,
-        lockState,
-        hoveredStateControlled: Boolean(hovered),
-        hoveredStateLocal: isHover,
+      const isHovered = calculateStateValue({
+        hasState: hasHover,
+        isLocked: lockState,
+        stateValueControlled: Boolean(hovered),
+        stateValueLocal: isHover,
       });
-      if (prevHoverRef.current === undefined || isHovered !== prevHoverRef.current) {
-        prevHoverRef.current = isHovered;
+
+      // проверка сделана чтобы реже вызывать обновление состояния
+      // контекста родителя
+      if (isHovered !== prevIsHoveredRef.current) {
+        prevIsHoveredRef.current = isHovered;
         setParentStateLock(isHovered);
       }
     },
@@ -133,11 +122,11 @@ function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: U
     handleHover(false);
   };
 
-  const isHovered = calculateIsHovered({
-    hasHover,
-    lockState,
-    hoveredStateControlled: Boolean(hovered),
-    hoveredStateLocal,
+  const isHovered = calculateStateValue({
+    hasState: hasHover,
+    isLocked: lockState,
+    stateValueControlled: Boolean(hovered),
+    stateValueLocal: hoveredStateLocal,
   });
 
   return {
@@ -146,20 +135,6 @@ function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: U
     onPointerEnter: hasHover ? onPointerEnter : noop,
     onPointerLeave: hasHover ? onPointerLeave : noop,
   };
-}
-
-function calculateIsActive({
-  hasActive,
-  lockState,
-  activeStateControlled,
-  activeStateLocal,
-}: {
-  hasActive: boolean;
-  lockState: boolean;
-  activeStateControlled: boolean;
-  activeStateLocal: boolean;
-}): boolean {
-  return hasActive && !lockState && (activeStateControlled || activeStateLocal);
 }
 
 interface UseActiveProps extends Pick<StateProps, 'activated' | 'activeEffectDelay' | 'hasActive'> {
@@ -220,11 +195,11 @@ function useActive({
     setActivated(false, activeEffectDelay);
   };
 
-  const isActivated = calculateIsActive({
-    hasActive,
-    lockState: lockStateRef.current,
-    activeStateControlled: Boolean(activated),
-    activeStateLocal: activatedState,
+  const isActivated = calculateStateValue({
+    hasState: hasActive,
+    isLocked: lockStateRef.current,
+    stateValueControlled: Boolean(activated),
+    stateValueLocal: activatedState,
   });
 
   return {
@@ -330,4 +305,19 @@ export function useState({
     setLockActiveBubblingImmediate,
     ...handlers,
   };
+}
+
+// Общая функция для определения конечного состояния active/hovered
+function calculateStateValue({
+  hasState,
+  isLocked,
+  stateValueControlled,
+  stateValueLocal,
+}: {
+  hasState: boolean;
+  isLocked: boolean;
+  stateValueControlled: boolean;
+  stateValueLocal: boolean;
+}): boolean {
+  return hasState && !isLocked && (stateValueControlled || stateValueLocal);
 }
