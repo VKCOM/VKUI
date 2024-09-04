@@ -15,7 +15,8 @@
   background: var(--vkui--color_background_contrast_themed);
 }
 
-.Card--mode-outline {
+.Card--mode-outline,
+.Card--mode-plain {
   background: var(--vkui--color_background_contrast_themed);
 }
 
