@@ -1,6 +1,7 @@
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { CalendarRange, type CalendarRangeProps } from './CalendarRange';
 
 type StoryCalendarRangeProps = CalendarRangeProps & { startDate: number; endDate: number };
@@ -32,6 +33,7 @@ const story: Meta<StoryCalendarRangeProps> = {
       },
       control: { type: 'date' },
     },
+    renderDayContent: createCalendarDayRenderField(),
   },
 };
 

@@ -47,6 +47,7 @@ export interface DateRangeInputProps
       | 'changeDayLabel'
       | 'prevMonthIcon'
       | 'nextMonthIcon'
+      | 'renderDayContent'
     >,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'> {
@@ -139,6 +140,7 @@ export const DateRangeInput = ({
   prevMonthIcon,
   nextMonthIcon,
   disableCalendar = false,
+  renderDayContent,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -342,6 +344,7 @@ export const DateRangeInput = ({
             changeDayLabel={changeDayLabel}
             prevMonthIcon={prevMonthIcon}
             nextMonthIcon={nextMonthIcon}
+            renderDayContent={renderDayContent}
           />
         </Popper>
       )}
