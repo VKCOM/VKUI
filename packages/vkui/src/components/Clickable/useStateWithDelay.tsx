@@ -16,6 +16,24 @@ type DispatchWithDelay<S> = (value: S, delay?: number) => void;
  *   setCount(count + 1, 500)
  * }
  * ```
+ *
+ * Есть возможность передать функцию-коллбэк, которая будет
+ * вызвана сразу после вызова setState с новым значением стейта
+ * в качестве аргумента.
+ *
+ * ```ts
+ * const onCountChange = React.useCallback((count) => {
+ *   // обработчик нового значения count
+ *   // будет вызван через 500мс
+ * }, []);
+ *
+ *
+ * const [count, setCount] = useStateWithDelay(initialState, 0, onCountChange);
+ *
+ * const click = () => {
+ *   setCount(count + 1, 500)
+ * }
+ * ```
  */
 export function useStateWithDelay<S>(
   initialState: S | (() => S),
