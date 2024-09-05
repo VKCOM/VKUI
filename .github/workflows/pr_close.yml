@@ -21,6 +21,44 @@ jobs:
       action: upload
       override_pr_number: ${{ inputs.pr_number_by_workflow_dispatch }}
 
+  v6:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'v6')
+    concurrency: ci-stable
+    runs-on: ubuntu-latest
+    name: v6 Patch
+    steps:
+      - name: Checkout (for forked PR)
+        if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
+        uses: actions/checkout@v4
+
+      - name: Checkout (for maintainer's PR)
+        if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Make patch
+        uses: VKCOM/gh-actions/VKUI/patch@main
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          directory: packages/vkui/
+          targetBranch: v6
+          needScreenshots: true
+
   patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
     concurrency: ci-stable
