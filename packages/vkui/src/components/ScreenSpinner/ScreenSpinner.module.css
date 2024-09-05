@@ -23,7 +23,8 @@
 }
 
 .ScreenSpinner--state-done .ScreenSpinner__spinner,
-.ScreenSpinner--state-error .ScreenSpinner__spinner {
+.ScreenSpinner--state-error .ScreenSpinner__spinner,
+.ScreenSpinner--state-custom .ScreenSpinner__spinner {
   opacity: 0;
 }
 
