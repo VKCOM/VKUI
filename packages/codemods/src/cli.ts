@@ -54,7 +54,7 @@ export const runCli = async (): Promise<Cli> => {
     .option('--all', 'apply all available codemods')
     .option(
       '-tv --transforms-version <transformsVersion>',
-      'vkui major version transforms(available versions: "6", "7")',
+      'vkui major version transforms (available versions: "6", "7")',
     )
     .option('-p --path <paths>', 'path to files in which to apply the codemods')
     .option('--dry-run', 'no changes are made to files')
