@@ -49,18 +49,6 @@
 
 /**
  * CMP:
- * PanelHeaderButton
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeaderButton) .Counter {
-  position: absolute;
-  padding: 0;
-  inset-block-start: 8px;
-  inset-inline-end: 2px;
-}
-
-/**
- * CMP:
  * TabbarItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
