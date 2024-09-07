@@ -74,27 +74,27 @@ export const runCli = async (): Promise<Cli> => {
   let codemodName = program.args[0];
   const transformsVersion = options.transformsVersion || autoDetectVKUIVersion();
 
-  if (transformsVersion) {
-    if (options.list) {
-      const codemods = getAvailableCodemods(transformsVersion);
-      logger.info(codemods);
-      process.exit(0);
-    }
-
-    if (!codemodName && !options.all) {
-      const codemods = getAvailableCodemods(transformsVersion);
-      codemodName = await promptAvailableCodemods(codemods);
-    }
-
-    return {
-      flags: options,
-      codemodName,
-      transformsVersion,
-    };
-  } else {
+  if (!transformsVersion) {
     logger.error(
       'Problem determining the major version of vkui, try specifying it using the --transforms-version',
     );
     process.exit(0);
   }
+
+  if (options.list) {
+    const codemods = getAvailableCodemods(transformsVersion);
+    logger.info(codemods);
+    process.exit(0);
+  }
+
+  if (!codemodName && !options.all) {
+    const codemods = getAvailableCodemods(transformsVersion);
+    codemodName = await promptAvailableCodemods(codemods);
+  }
+
+  return {
+    flags: options,
+    codemodName,
+    transformsVersion,
+  };
 };
