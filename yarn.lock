@@ -5581,7 +5581,7 @@ __metadata:
     css-loader: "npm:^6.10.0"
     css-minimizer-webpack-plugin: "npm:^7.0.0"
     dotenv: "npm:^16.4.5"
-    finalhandler: "npm:1.2.0"
+    finalhandler: "npm:1.3.0"
     html-webpack-plugin: "npm:^5.5.0"
     mini-css-extract-plugin: "npm:^2.9.1"
     playwright: "npm:1.46.1"
@@ -8628,6 +8628,21 @@ __metadata:
     statuses: "npm:2.0.1"
     unpipe: "npm:~1.0.0"
   checksum: 10/635718cb203c6d18e6b48dfbb6c54ccb08ea470e4f474ddcef38c47edcf3227feec316f886dd701235997d8af35240cae49856721ce18f539ad038665ebbf163
+  languageName: node
+  linkType: hard
+
+"finalhandler@npm:1.3.0":
+  version: 1.3.0
+  resolution: "finalhandler@npm:1.3.0"
+  dependencies:
+    debug: "npm:2.6.9"
+    encodeurl: "npm:~1.0.2"
+    escape-html: "npm:~1.0.3"
+    on-finished: "npm:2.4.1"
+    parseurl: "npm:~1.3.3"
+    statuses: "npm:2.0.1"
+    unpipe: "npm:~1.0.0"
+  checksum: 10/3c583371f75652e2d3c974340f223bb75c28bdd3c538fd9a06912431e85a4330fb197aabc5a215e9cc41dd84a1d3edbfc3aa5e9ec85ce1da1839c0a129a0ea2d
   languageName: node
   linkType: hard
 
