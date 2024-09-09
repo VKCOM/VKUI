@@ -78,7 +78,7 @@ export const runCli = async (): Promise<Cli> => {
     logger.error(
       'Problem determining the major version of vkui, try specifying it using the --transforms-version',
     );
-    process.exit(0);
+    process.exit(1);
   }
 
   if (options.list) {
