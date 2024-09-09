@@ -24,9 +24,10 @@ export interface TypographyProps
   weight?: '1' | '2' | '3';
   /**
    * Включает акцентный тип начертания шрифта.
+   * Используются токены fontWeightAccent[1, 2, 3]
    * Используется только вместе с `weight`
    */
-  accent?: boolean;
+  useAccent?: boolean;
   /**
    * Убирает внешние отступы
    */
@@ -39,7 +40,9 @@ export interface TypographyProps
 
 export const Typography = ({
   weight,
-  accent = true,
+
+  // TODO [>=7]: сделать по умолчанию false (нужен будет кодмод)
+  useAccent = true,
   Component = 'span',
   normalize,
   inline,
@@ -52,7 +55,7 @@ export const Typography = ({
       normalize && styles['Typography--normalize'],
       inline && styles['Typography--inline'],
       weight && stylesWeight[weight],
-      weight && accent && styles['Typography--accent'],
+      weight && useAccent && styles['Typography--accent'],
     )}
     {...restProps}
   />
