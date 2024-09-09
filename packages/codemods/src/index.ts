@@ -30,7 +30,7 @@ function runJSCodeShift(
       '--no-babel',
       '--fail-on-error',
       '-t',
-      `${TRANSFORM_DIR}/${transformsVersion}/${codemodName}.js`,
+      `${TRANSFORM_DIR}/v${transformsVersion}/${codemodName}.js`,
       ...args,
       workingDirectory,
     ],
