@@ -66,9 +66,18 @@ async function promptConfirmation(): Promise<boolean> {
   return confirmation;
 }
 
-async function verifyConfiguration(workingDirectory: string, codemodName?: string) {
+async function verifyConfiguration({
+  workingDirectory,
+  transformsVersion,
+  codemodName,
+}: {
+  workingDirectory: string;
+  codemodName?: string;
+  transformsVersion: string;
+}) {
   logger.info(`Please ${chalk.cyan('verify')} the following information:
         working directory: ${workingDirectory}
+        target major vkui version: ${transformsVersion}
         codemod to apply: ${codemodName ? codemodName : chalk.red('all')}
       `);
   const confirmed = await promptConfirmation();
@@ -85,7 +94,11 @@ const run = async () => {
   if (codemodName && workingDirectory) {
     const codemodes = getAvailableCodemods(transformsVersion);
     if (codemodes.includes(codemodName)) {
-      await verifyConfiguration(workingDirectory, codemodName);
+      await verifyConfiguration({
+        workingDirectory,
+        transformsVersion,
+        codemodName,
+      });
       logger.info("\n 🚀 Let's go!");
       runJSCodeShift(codemodName, transformsVersion, workingDirectory, flags);
     } else {
@@ -96,7 +109,7 @@ const run = async () => {
     }
   }
   if (flags.all && workingDirectory) {
-    await verifyConfiguration(workingDirectory);
+    await verifyConfiguration({ workingDirectory, transformsVersion });
     logger.info("\n 🚀 Let's go!");
     const codemodes = getAvailableCodemods(transformsVersion);
     codemodes.forEach((codemod) => {
@@ -112,7 +125,7 @@ const run = async () => {
     Do not forget to run ${chalk.cyan.bold(
       'prettier',
     )} to eliminate unwanted code formatting after applying migrations.
-    Happy coding with ${chalk.green.bold('v6')}!`,
+    Happy coding with ${chalk.green.bold(`v${transformsVersion}`)}!`,
   );
 };
 
