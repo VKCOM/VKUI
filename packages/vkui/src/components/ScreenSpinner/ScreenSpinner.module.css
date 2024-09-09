@@ -1,15 +1,22 @@
 .ScreenSpinner {
   position: relative;
   box-sizing: border-box;
-  border-radius: var(--vkui--size_border_radius--regular);
-  animation: screen-spinner-intro 0.3s ease;
+  inline-size: 88px;
+  block-size: 88px;
   padding-block: var(--vkui--spacing_size_2xl);
   padding-inline: var(--vkui--spacing_size_2xl);
+  border-radius: var(--vkui--size_border_radius--regular);
+  animation: screen-spinner-intro 0.3s ease;
+}
+
+.ScreenSpinner--has-subtitle {
+  inline-size: fit-content;
+  block-size: fit-content;
+  max-inline-size: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  max-inline-size: 150px;
 }
 
 .ScreenSpinner--mode-shadow {

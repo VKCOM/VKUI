@@ -35,6 +35,7 @@ export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
           styles['ScreenSpinner'],
           modeClassNames[mode],
           state !== 'loading' && stateClassNames[state],
+          hasReactNode(subtitle) && styles['ScreenSpinner--has-subtitle'],
         )}
         {...restProps}
       >
