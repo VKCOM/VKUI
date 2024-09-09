@@ -15,6 +15,10 @@ updates:
       # Для разработки v6 фиксируем 18 версию.
       - dependency-name: '@types/react*'
         update-types: ['version-update:semver-major']
+      # Игнорируем https://www.npmjs.com/package/eslint-plugin-react-compiler/v/0.0.0 (это самый первый релиз),
+      # чтобы использовать только экспериментальные версии и версии выше.
+      - dependency-name: 'eslint-plugin-react-compiler'
+        versions: ['0.0.0']
     groups:
       react:
         patterns:
