@@ -40,7 +40,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.10.0",
     "css-minimizer-webpack-plugin": "^7.0.0",
-    "cssnano": "^7.0.5",
+    "cssnano": "^7.0.6",
     "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
