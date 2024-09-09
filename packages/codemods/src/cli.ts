@@ -2,8 +2,8 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 import prompts from 'prompts';
 import getAvailableCodemods from './getAvailableCodemods.js';
-import logger from './helpers/logger.js';
 import pkg from '../package.json';
+import logger from './helpers/logger.js';
 
 export interface CliOptions {
   list: boolean;
