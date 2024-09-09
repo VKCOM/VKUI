@@ -2581,37 +2581,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@size-limit/file@npm:^11.1.4":
-  version: 11.1.4
-  resolution: "@size-limit/file@npm:11.1.4"
+"@size-limit/file@npm:^11.1.5":
+  version: 11.1.5
+  resolution: "@size-limit/file@npm:11.1.5"
   peerDependencies:
-    size-limit: 11.1.4
-  checksum: 10/6f2670af16434d4755a215b784a1177143f3627469b4ada6e9403fc479c1e9df46f0b331ea1af2121e246e936340e881459061fedc0fbf5adf5dee1de8e8175a
+    size-limit: 11.1.5
+  checksum: 10/5587ef990161cc5ace5ce81d95fcc602a82e03657dd56579ae85503aa4cd50b5a9cb262e819e79ec8959d36afaa79b663aed5100924860e3ba29a8366820d5fb
   languageName: node
   linkType: hard
 
-"@size-limit/webpack-css@npm:^11.1.4":
-  version: 11.1.4
-  resolution: "@size-limit/webpack-css@npm:11.1.4"
+"@size-limit/webpack-css@npm:^11.1.5":
+  version: 11.1.5
+  resolution: "@size-limit/webpack-css@npm:11.1.5"
   dependencies:
-    css-loader: "npm:^7.1.1"
+    css-loader: "npm:^7.1.2"
     css-minimizer-webpack-plugin: "npm:^7.0.0"
     style-loader: "npm:^4.0.0"
   peerDependencies:
-    size-limit: 11.1.4
-  checksum: 10/b77a0e683b31895e5d48d10a60b072d545044ce2e47ef8dd5e410127686fc5cea41a88397361597e3bae36bdd283b012c31fdc3be505a0084dcc76b74aa2640f
+    size-limit: 11.1.5
+  checksum: 10/b0a3142ddc75e58db58cd2934eb397b438345c04dce72c72b8fdcd282f81c83e5eca97d0f2f4288cb6ab689fe5464b10bfd221dc645a41f481e8be6cd0ca1039
   languageName: node
   linkType: hard
 
-"@size-limit/webpack@npm:^11.1.4":
-  version: 11.1.4
-  resolution: "@size-limit/webpack@npm:11.1.4"
+"@size-limit/webpack@npm:^11.1.5":
+  version: 11.1.5
+  resolution: "@size-limit/webpack@npm:11.1.5"
   dependencies:
     nanoid: "npm:^5.0.7"
-    webpack: "npm:^5.91.0"
+    webpack: "npm:^5.94.0"
   peerDependencies:
-    size-limit: 11.1.4
-  checksum: 10/e2d40158d4fc1be884cfa79755d62a3b9db73e9899d2d15d52ef3929fb0e35bc188e74bc6989c0e77c9e6ac4aa7feb4f66fb74ccd6100e0b9c7c4a5a5fbd0038
+    size-limit: 11.1.5
+  checksum: 10/31c9b26bde8a0e164647f50d4b37ca01c24c2b62ad4ee058341851d5731aff50f41f87f4e2c18d02534ba2d4ad0dbcfce5742bb96eb5890a5013a3c8974f7ced
   languageName: node
   linkType: hard
 
@@ -4478,9 +4478,9 @@ __metadata:
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0"
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0"
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
-    "@size-limit/file": "npm:^11.1.4"
-    "@size-limit/webpack": "npm:^11.1.4"
-    "@size-limit/webpack-css": "npm:^11.1.4"
+    "@size-limit/file": "npm:^11.1.5"
+    "@size-limit/webpack": "npm:^11.1.5"
+    "@size-limit/webpack-css": "npm:^11.1.5"
     "@swc/cli": "npm:^0.4.0"
     "@swc/core": "npm:1.7.22"
     "@swc/jest": "npm:^0.2.36"
@@ -4541,7 +4541,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     semver: "npm:^7.6.3"
     shx: "npm:^0.3.4"
-    size-limit: "npm:^11.1.4"
+    size-limit: "npm:^11.1.5"
     style-loader: "npm:^4.0.0"
     stylelint: "npm:^16.9.0"
     stylelint-config-standard: "npm:^36.0.1"
@@ -6719,7 +6719,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^7.1.1":
+"css-loader@npm:^7.1.2":
   version: 7.1.2
   resolution: "css-loader@npm:7.1.2"
   dependencies:
@@ -8600,6 +8600,18 @@ __metadata:
   dependencies:
     walk-up-path: "npm:^3.0.1"
   checksum: 10/043a9b5bbec41d2e452b6c81943b235f0f89358acb1f0fbcfa7ecba80df53434f8e1d663d964c919447fbd0c6f8f8e7dc477fd31a1dd1d7217bfaeeae14fcbb0
+  languageName: node
+  linkType: hard
+
+"fdir@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "fdir@npm:6.3.0"
+  peerDependencies:
+    picomatch: ^3 || ^4
+  peerDependenciesMeta:
+    picomatch:
+      optional: true
+  checksum: 10/baa3a476a8407cc77bc77e3c946aea5ca0aa48f080f2c434b70196a37ddcd57bbc4c12d75164f9e6d947f6e148c297c9fa65f507178d0e9204d98ef83d776dcc
   languageName: node
   linkType: hard
 
@@ -11150,7 +11162,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jiti@npm:^1.20.0, jiti@npm:^1.21.0":
+"jiti@npm:^1.20.0, jiti@npm:^1.21.6":
   version: 1.21.6
   resolution: "jiti@npm:1.21.6"
   bin:
@@ -13192,10 +13204,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"picocolors@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "picocolors@npm:1.1.0"
+  checksum: 10/a2ad60d94d185c30f2a140b19c512547713fb89b920d32cc6cf658fa786d63a37ba7b8451872c3d9fc34883971fb6e5878e07a20b60506e0bb2554dce9169ccb
+  languageName: node
+  linkType: hard
+
 "picomatch@npm:^2.0.4, picomatch@npm:^2.2.1, picomatch@npm:^2.2.3, picomatch@npm:^2.3.1":
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
   checksum: 10/60c2595003b05e4535394d1da94850f5372c9427ca4413b71210f437f7b2ca091dbd611c45e8b37d10036fa8eade25c1b8951654f9d3973bfa66a2ff4d3b08bc
+  languageName: node
+  linkType: hard
+
+"picomatch@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "picomatch@npm:4.0.2"
+  checksum: 10/ce617b8da36797d09c0baacb96ca8a44460452c89362d7cb8f70ca46b4158ba8bc3606912de7c818eb4a939f7f9015cef3c766ec8a0c6bfc725fdc078e39c717
   languageName: node
   linkType: hard
 
@@ -15644,20 +15670,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"size-limit@npm:^11.1.4":
-  version: 11.1.4
-  resolution: "size-limit@npm:11.1.4"
+"size-limit@npm:^11.1.5":
+  version: 11.1.5
+  resolution: "size-limit@npm:11.1.5"
   dependencies:
     bytes-iec: "npm:^3.1.1"
     chokidar: "npm:^3.6.0"
-    globby: "npm:^14.0.1"
-    jiti: "npm:^1.21.0"
-    lilconfig: "npm:^3.1.1"
+    jiti: "npm:^1.21.6"
+    lilconfig: "npm:^3.1.2"
     nanospinner: "npm:^1.1.0"
-    picocolors: "npm:^1.0.1"
+    picocolors: "npm:^1.1.0"
+    tinyglobby: "npm:^0.2.6"
   bin:
     size-limit: bin.js
-  checksum: 10/153828b0b2d0bc7b772c51bac666d862b8b709c4c37d3915fb90cb4dfe61e79120d4f82e8cf6d74ccbe6f0b547dc33a3f1a269f0fe76f3e88241f7c17051eb94
+  checksum: 10/094d0d42368bef370eb47661b5c690c8b62b084827382f4966787d5834c4e0e48fd1e50d259ae90d6117deefff20fff268fca2503b3bcd4f1484753f8d2f1587
   languageName: node
   linkType: hard
 
@@ -16674,6 +16700,16 @@ __metadata:
   version: 1.0.3
   resolution: "tiny-warning@npm:1.0.3"
   checksum: 10/da62c4acac565902f0624b123eed6dd3509bc9a8d30c06e017104bedcf5d35810da8ff72864400ad19c5c7806fc0a8323c68baf3e326af7cb7d969f846100d71
+  languageName: node
+  linkType: hard
+
+"tinyglobby@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "tinyglobby@npm:0.2.6"
+  dependencies:
+    fdir: "npm:^6.3.0"
+    picomatch: "npm:^4.0.2"
+  checksum: 10/5954b30e4243a7b728ecf1798071031cfadfb1b69e4faf2c86f1dc8142851f2fde299f272f23937c1efbbb68afd6297f9d0354b4d1c1cfdb35313daa6efbee1f
   languageName: node
   linkType: hard
 
@@ -17744,7 +17780,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.91.0, webpack@npm:^5.94.0":
+"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.94.0":
   version: 5.94.0
   resolution: "webpack@npm:5.94.0"
   dependencies:
