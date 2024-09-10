@@ -144,3 +144,78 @@ export const createAttributeManipulator = (
     },
   };
 };
+
+export const renameComponent = ({
+  j,
+  source,
+  componentName,
+  localComponentName,
+  newComponentName,
+  alias,
+}: {
+  j: JSCodeshift;
+  source: Collection;
+  componentName: string;
+  localComponentName: string;
+  newComponentName: string;
+  alias: string;
+}) => {
+  source
+    .find(j.ImportDeclaration, { source: { value: alias } })
+    .find(j.ImportSpecifier, { imported: { name: componentName } })
+    .forEach(({ value: specifier }) => {
+      if (specifier.type === 'ImportSpecifier' && specifier.imported.name === componentName) {
+        specifier.imported.name = newComponentName;
+      }
+    });
+
+  if (componentName === localComponentName) {
+    source.findJSXElements().forEach((path) => {
+      if (
+        path.node.openingElement.name.type === 'JSXIdentifier' &&
+        path.node.openingElement.name.name === localComponentName
+      ) {
+        path.node.openingElement.name.name = newComponentName;
+      }
+      if (
+        path.node.closingElement?.name.type === 'JSXIdentifier' &&
+        path.node.closingElement.name.name === localComponentName
+      ) {
+        path.node.closingElement.name.name = newComponentName;
+      }
+    });
+  }
+};
+
+export const renameType = ({
+  j,
+  source,
+  typeName,
+  localTypeName,
+  newTypeName,
+  alias,
+}: {
+  j: JSCodeshift;
+  source: Collection;
+  typeName: string;
+  localTypeName: string;
+  newTypeName: string;
+  alias: string;
+}) => {
+  source
+    .find(j.ImportDeclaration, { source: { value: alias } })
+    .find(j.ImportSpecifier, { imported: { name: typeName } })
+    .forEach(({ value: specifier }) => {
+      if (specifier.type === 'ImportSpecifier' && specifier.imported.name === typeName) {
+        specifier.imported.name = newTypeName;
+      }
+    });
+
+  if (localTypeName === typeName) {
+    source.find(j.TSTypeReference).forEach((path) => {
+      if (path.node.typeName.type === 'Identifier' && path.node.typeName.name === typeName) {
+        path.node.typeName.name = newTypeName;
+      }
+    });
+  }
+};
