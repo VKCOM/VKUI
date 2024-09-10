@@ -14,8 +14,8 @@ describe(Flex, () => {
         <div></div>
       </Flex>,
     );
-    expect(screen.getByTestId('flex')).toHaveStyle('--vkui_internal--row_gap: 20px');
-    expect(screen.getByTestId('flex')).toHaveStyle('--vkui_internal--column_gap: 15px');
+    expect(screen.getByTestId('flex')).toHaveStyle('--vkui_internal--row_gap: 15px');
+    expect(screen.getByTestId('flex')).toHaveStyle('--vkui_internal--column_gap: 20px');
   });
 
   it('should not have css custom variable with gaps values for one child', () => {
