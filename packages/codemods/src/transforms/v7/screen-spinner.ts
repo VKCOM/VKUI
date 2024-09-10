@@ -1,6 +1,6 @@
-import {API, ASTPath, Collection, FileInfo, JSXAttribute} from "jscodeshift";
-import {getImportInfo} from "../../codemod-helpers";
-import {JSCodeShiftOptions} from "../../types";
+import { API, ASTPath, Collection, FileInfo, JSXAttribute } from 'jscodeshift';
+import { getImportInfo } from '../../codemod-helpers';
+import { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
 
@@ -15,7 +15,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   }
 
   function removeSizeProp(attribute: ASTPath<JSXAttribute>) {
-    attribute.node.name.name === 'size' && j(attribute).remove()
+    attribute.node.name.name === 'size' && j(attribute).remove();
   }
 
   // Обработка ScreenSpinner
@@ -25,7 +25,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === localName,
     )
     .find(j.JSXAttribute)
-    .forEach(removeSizeProp)
+    .forEach(removeSizeProp);
 
   // Обработка ScreenSpinner.Loader
   source
@@ -34,12 +34,12 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         name: {
           type: 'JSXMemberExpression',
           object: { name: localName },
-          property: { name: 'Loader' }
-        }
-      }
+          property: { name: 'Loader' },
+        },
+      },
     })
     .find(j.JSXAttribute)
-    .forEach(removeSizeProp)
+    .forEach(removeSizeProp);
 
   return source.toSource();
 }
