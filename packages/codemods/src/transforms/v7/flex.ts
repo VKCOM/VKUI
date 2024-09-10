@@ -1,4 +1,4 @@
-import { API, FileInfo, JSXAttribute } from 'jscodeshift';
+import { API, FileInfo } from 'jscodeshift';
 import { swapGapPropElements } from './common/swapGapPropElements';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
