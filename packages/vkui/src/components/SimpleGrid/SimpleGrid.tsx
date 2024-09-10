@@ -31,9 +31,7 @@ export interface SimpleGridProps extends HTMLAttributesWithRootRef<HTMLDivElemen
   /**
    * Отступы между элементами.
    * Значение из списка предопределённых пресетов или число, которое будет приведено к пикселям.
-   * Через массив можно задать отступ между столбцами и строками [column, row], если они отличаются.
-   *
-   * TODO [>=7]: порядок следования будет [row, column]
+   * Через массив можно задать отступ между столбцами и строками [row, column], если они отличаются.
    */
   gap?: GapsProp;
   /**
@@ -64,7 +62,7 @@ export const SimpleGrid = ({
   ...props
 }: SimpleGridProps) => {
   const style: CSSCustomProperties = {};
-  const [columnGap, rowGap] = calculateGap(gap);
+  const [rowGap, columnGap] = calculateGap(gap);
   if (typeof rowGap === 'number') {
     style['--vkui_internal--row_gap'] = `${rowGap}px`;
   }
