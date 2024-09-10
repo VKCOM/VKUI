@@ -27,7 +27,7 @@ const CUSTOM_PROPERTY_GRADIENT_LEFT = '--vkui_internal--skeleton_gradient_left';
  */
 function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
   const [isAnimationStarted, setIsAnimationStarted] = React.useState<boolean>(false);
-  const timer = React.useRef<NodeJS.Timeout | undefined>(undefined);
+  const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const syncAnimation = React.useCallback(() => {
     clearTimeout(timer.current);
