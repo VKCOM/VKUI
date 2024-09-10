@@ -27,7 +27,7 @@ export interface TypographyProps
    * Используются токены fontWeightAccent[1, 2, 3]
    * Используется только вместе с `weight`
    */
-  useAccent?: boolean;
+  useAccentWeight?: boolean;
   /**
    * Убирает внешние отступы
    */
@@ -42,7 +42,7 @@ export const Typography = ({
   weight,
 
   // TODO [>=7]: сделать по умолчанию false (нужен будет кодмод)
-  useAccent = true,
+  useAccentWeight = true,
   Component = 'span',
   normalize,
   inline,
@@ -55,7 +55,7 @@ export const Typography = ({
       normalize && styles['Typography--normalize'],
       inline && styles['Typography--inline'],
       weight && stylesWeight[weight],
-      weight && useAccent && styles['Typography--accent'],
+      weight && useAccentWeight && styles['Typography--accent'],
     )}
     {...restProps}
   />
