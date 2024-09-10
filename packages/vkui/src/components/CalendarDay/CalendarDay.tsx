@@ -29,6 +29,8 @@ export interface CalendarDayProps extends CalendarDayElementProps {
   onChange: (value: Date) => void;
   onEnter?: (value: Date) => void;
   onLeave?: (value: Date) => void;
+  // Функция отрисовки контента в ячейке дня
+  renderDayContent?: (day: Date) => React.ReactNode;
 }
 
 export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
@@ -52,6 +54,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     size,
     className,
     children,
+    renderDayContent,
     ...restProps
   }: CalendarDayProps) => {
     const { locale } = useConfigProvider();
@@ -73,6 +76,18 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
         ref.current.focus();
       }
     }, [focused]);
+
+    const content = React.useMemo(() => {
+      if (renderDayContent) {
+        return renderDayContent(day);
+      }
+      return (
+        <div className={styles['CalendarDay__day-number']}>
+          <VisuallyHidden>{children ?? label}</VisuallyHidden>
+          <span aria-hidden>{day.getDate()}</span>
+        </div>
+      );
+    }, [renderDayContent, day, children, label]);
 
     if (hidden) {
       return <div className={styles['CalendarDay__hidden']} />;
@@ -116,10 +131,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
               active && !disabled && styles['CalendarDay__inner--active'],
             )}
           >
-            <div className={styles['CalendarDay__day-number']}>
-              <VisuallyHidden>{children ?? label}</VisuallyHidden>
-              <span aria-hidden>{day.getDate()}</span>
-            </div>
+            {content}
           </div>
         </div>
       </Tappable>

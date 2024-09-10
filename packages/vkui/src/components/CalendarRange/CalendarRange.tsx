@@ -31,7 +31,7 @@ export interface CalendarRangeProps
       | 'prevMonthIcon'
       | 'nextMonthIcon'
     >,
-    Pick<CalendarDaysProps, 'listenDayChangesForUpdate'> {
+    Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'> {
   value?: DateRangeType;
   disablePast?: boolean;
   disableFuture?: boolean;
@@ -71,6 +71,7 @@ export const CalendarRange = ({
   prevMonthIcon,
   nextMonthIcon,
   listenDayChangesForUpdate,
+  renderDayContent,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
   const {
@@ -222,6 +223,7 @@ export const CalendarRange = ({
           isHintedDaySelectionStart={isHintedDaySelectionStart}
           isDayDisabled={isDayDisabled}
           listenDayChangesForUpdate={listenDayChangesForUpdate}
+          renderDayContent={renderDayContent}
           aria-label={changeDayLabel}
         />
       </div>
@@ -260,6 +262,7 @@ export const CalendarRange = ({
           isHintedDaySelectionStart={isHintedDaySelectionStart}
           isDayDisabled={isDayDisabled}
           listenDayChangesForUpdate={listenDayChangesForUpdate}
+          renderDayContent={renderDayContent}
           tabIndex={0}
           onBlur={resetSelectedDay}
         />

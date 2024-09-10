@@ -28,7 +28,7 @@ export interface CalendarProps
       | 'prevMonthProps'
       | 'nextMonthProps'
     >,
-    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate'> {
+    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'> {
   value?: Date;
   /**
    * Запрещает выбор даты в прошлом.
@@ -109,6 +109,7 @@ export const Calendar = ({
   nextMonthProps,
   dayProps,
   listenDayChangesForUpdate,
+  renderDayContent,
   minDateTime,
   maxDateTime,
   ...props
@@ -224,6 +225,7 @@ export const Calendar = ({
         size={size}
         dayProps={dayProps}
         listenDayChangesForUpdate={listenDayChangesForUpdate}
+        renderDayContent={renderDayContent}
       />
       {enableTime && value && size !== 's' && (
         <div className={styles['Calendar__time']}>
