@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
-import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
+import { Dot } from '../Dot/Dot';
 import { Tabbar } from '../Tabbar/Tabbar';
 import { TabbarItem, type TabbarItemProps } from './TabbarItem';
 
@@ -19,7 +19,7 @@ const story: Meta<TabbarItemProps> = {
     }),
     indicator: createFieldWithPresets({
       additionalPresets: {
-        Badge: <Badge mode="prominent">Есть обновления</Badge>,
+        Badge: <Dot mode="prominent">Есть обновления</Dot>,
         Counter: (
           <Counter size="s" mode="prominent">
             3

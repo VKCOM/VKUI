@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
-import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
+import { Dot } from '../Dot/Dot';
 import { SubnavigationButton, type SubnavigationButtonProps } from './SubnavigationButton';
 
 const story: Meta<SubnavigationButtonProps> = {
@@ -22,7 +22,7 @@ const story: Meta<SubnavigationButtonProps> = {
     after: createFieldWithPresets({
       additionalPresets: {
         Counter: <Counter size="s">3</Counter>,
-        Badge: <Badge />,
+        Badge: <Dot />,
       },
     }),
   },

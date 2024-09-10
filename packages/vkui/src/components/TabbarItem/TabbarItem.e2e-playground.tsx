@@ -1,6 +1,6 @@
 import { Icon28MessageOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { Badge } from '../Badge/Badge';
+import { Dot } from '../Dot/Dot';
 import { Tabbar, type TabbarProps } from '../Tabbar/Tabbar';
 import { TabbarItem, type TabbarItemProps } from './TabbarItem';
 
@@ -13,7 +13,7 @@ export const TabbarItemPlayground = (playgroundProps: ComponentPlaygroundProps) 
           mode: ['vertical', 'horizontal'],
           text: ['Message'],
           children: [<Icon28MessageOutline key="icon" />],
-          indicator: [undefined, <Badge key="badge" />],
+          indicator: [undefined, <Dot key="badge" />],
           disabled: [false, true],
         },
         {

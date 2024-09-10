@@ -81,7 +81,7 @@ export interface ContentBadgeProps
  * @since 6.1.0
  * @see https://vkcom.github.io/VKUI/#/ContentBadge
  *
- * TODO [>=7]: переименовать в Badge
+ * TODO [>=7]: переименовать в Dot
  */
 export const ContentBadge: React.FC<ContentBadgeProps> & {
   SlotIcon: typeof ContentBadgeSlotIcon;

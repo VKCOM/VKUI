@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
-import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
+import { Dot } from '../Dot/Dot';
 import { TabsItem, type TabsItemProps } from './TabsItem';
 
 const story: Meta<TabsItemProps> = {
@@ -29,7 +29,7 @@ const story: Meta<TabsItemProps> = {
     }),
     status: createFieldWithPresets({
       additionalPresets: {
-        Badge: <Badge mode="prominent">Есть обновления</Badge>,
+        Badge: <Dot mode="prominent">Есть обновления</Dot>,
         Counter: (
           <Counter mode="prominent" size="s">
             3
@@ -73,7 +73,7 @@ export const WithBadge: Story = {
     children: 'Рекомендации',
     before: 'Icon20ThumbsUpOutline',
     after: 'Icon16Dropdown',
-    status: <Badge mode="prominent">Есть обновления</Badge>,
+    status: <Dot mode="prominent">Есть обновления</Dot>,
   },
 };
 

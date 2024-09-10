@@ -3,8 +3,8 @@ import { Icon16Dropdown, Icon20PictureOutline, Icon24PictureOutline } from '@vko
 import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import type { HasChildren } from '../../types';
-import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
+import { Dot } from '../Dot/Dot';
 import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
 import { TabsItem, type TabsItemProps } from '../TabsItem/TabsItem';
 import { Tabs, TabsModeContext, type TabsProps } from './Tabs';
@@ -62,7 +62,7 @@ const Scrollable = ({ disabled }: { disabled?: boolean }) => {
         <TabsItem
           onClick={noop}
           before={beforeIconByMode}
-          status={<Badge mode="prominent">Есть новые</Badge>}
+          status={<Dot mode="prominent">Есть новые</Dot>}
           after={<Icon16Dropdown />}
           disabled={disabled}
         >
@@ -107,8 +107,8 @@ export const TabsPlayground = (props: ComponentPlaygroundProps) => {
             <Unscrollable key="tabs">
               <TabsItem onClick={noop}>Лента</TabsItem>
             </Unscrollable>,
-            <Unscrollable key="tabs" status={<Badge mode="prominent">Есть обновления</Badge>} />,
-            <Unscrollable key="tabs" status={<Badge mode="prominent">Есть обновления</Badge>}>
+            <Unscrollable key="tabs" status={<Dot mode="prominent">Есть обновления</Dot>} />,
+            <Unscrollable key="tabs" status={<Dot mode="prominent">Есть обновления</Dot>}>
               <TabsItem onClick={noop}>Лента</TabsItem>
             </Unscrollable>,
             <Unscrollable

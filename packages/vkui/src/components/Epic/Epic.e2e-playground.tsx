@@ -9,8 +9,8 @@ import {
 import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Platform } from '../../lib/platform';
-import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
+import { Dot } from '../Dot/Dot';
 import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
@@ -50,7 +50,7 @@ const EpicTabbar = () => {
         onClick={noop}
         selected={false}
         data-story="profile"
-        indicator={<Badge mode="prominent">Есть обновления</Badge>}
+        indicator={<Dot mode="prominent">Есть обновления</Dot>}
         text="Профиль"
       >
         <Icon28UserCircleOutline />

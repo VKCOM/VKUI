@@ -1,4 +1,4 @@
-.Badge {
+.Dot {
   display: block;
   flex-grow: 0;
   flex-shrink: 0;
@@ -7,11 +7,11 @@
   border-radius: 50%;
 }
 
-.Badge--mode-new {
+.Dot--mode-new {
   background-color: var(--vkui--color_icon_accent);
 }
 
-.Badge--mode-prominent {
+.Dot--mode-prominent {
   background-color: var(--vkui--color_accent_red);
 }
 
@@ -20,7 +20,7 @@
  * TabbarItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabbarItem__label) .Badge {
+:global(.vkuiInternalTabbarItem__label) .Dot {
   position: absolute;
   inset-block-start: -2px;
   inset-inline-end: -2px;

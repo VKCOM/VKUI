@@ -21,11 +21,11 @@ export interface SimpleCellOwnProps extends HasComponent {
    */
   before?: React.ReactNode;
   /**
-   * Иконка 12 или `<Badge />`. Добавится слева от текста `children`.
+   * Иконка 12 или `<Dot />`. Добавится слева от текста `children`.
    */
   badgeBeforeTitle?: React.ReactNode;
   /**
-   * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
+   * Иконка 12 или `<Dot />`. Добавится справа от текста `children`.
    */
   badgeAfterTitle?: React.ReactNode;
   /**

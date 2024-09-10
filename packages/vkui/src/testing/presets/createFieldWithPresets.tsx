@@ -51,7 +51,7 @@ export const createFieldWithPresets = <CustomPresetName extends string>({
   sizeIconsCount?: number;
   // Обязательные иконки, которые должны быть
   requiredIcons?: IconName[];
-  // Дополнительные пресеты. Например Avatar, IconButton, Badge и т.д
+  // Дополнительные пресеты. Например Avatar, IconButton, Dot и т.д
   additionalPresets?: { [K in CustomPresetName]?: React.ReactNode };
 }) => {
   const options: Array<IconName | CustomPresetName | 'None'> = ['None'];

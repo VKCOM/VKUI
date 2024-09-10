@@ -44,7 +44,7 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
    */
   before?: React.ReactNode;
   /**
-   * Рекомендуется использовать только `<Counter size="s" />` или `<Badge />`
+   * Рекомендуется использовать только `<Counter size="s" />` или `<Dot />`
    */
   after?: React.ReactNode;
   expandable?: boolean;

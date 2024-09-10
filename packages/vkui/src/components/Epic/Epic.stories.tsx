@@ -12,9 +12,9 @@ import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { Badge } from '../Badge/Badge';
 import { Cell } from '../Cell/Cell';
 import { Counter } from '../Counter/Counter';
+import { Dot } from '../Dot/Dot';
 import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
@@ -155,7 +155,7 @@ export const Example: Story = {
                     onClick={onStoryChange}
                     selected={activeStory === 'profile'}
                     data-story="profile"
-                    indicator={<Badge mode="prominent">Есть обновления</Badge>}
+                    indicator={<Dot mode="prominent">Есть обновления</Dot>}
                     text="Профиль"
                   >
                     <Icon28UserCircleOutline />

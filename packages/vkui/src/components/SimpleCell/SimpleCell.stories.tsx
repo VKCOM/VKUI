@@ -5,7 +5,7 @@ import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators'
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
-import { Badge } from '../Badge/Badge';
+import { Dot } from '../Dot/Dot';
 import { Group } from '../Group/Group';
 import { IconButton } from '../IconButton/IconButton';
 import { Switch } from '../Switch/Switch';
@@ -47,28 +47,28 @@ const story: Meta<SimpleCellProps> = {
       sizeIconsCount: 10,
       requiredIcons: ['Icon12Verified'],
       additionalPresets: {
-        Badge: <Badge>Badge</Badge>,
+        Badge: <Dot>Badge</Dot>,
       },
     }),
     badgeBeforeTitle: createFieldWithPresets({
       iconSizes: ['12'],
       sizeIconsCount: 10,
       additionalPresets: {
-        Badge: <Badge>Badge</Badge>,
+        Badge: <Dot>Badge</Dot>,
       },
     }),
     badgeBeforeSubtitle: createFieldWithPresets({
       iconSizes: ['12'],
       sizeIconsCount: 10,
       additionalPresets: {
-        Badge: <Badge>Badge</Badge>,
+        Badge: <Dot>Badge</Dot>,
       },
     }),
     badgeAfterSubtitle: createFieldWithPresets({
       iconSizes: ['12'],
       sizeIconsCount: 10,
       additionalPresets: {
-        Badge: <Badge>Badge</Badge>,
+        Badge: <Dot>Badge</Dot>,
       },
     }),
   },

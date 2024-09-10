@@ -2,22 +2,22 @@
 
 ## Цифровая доступность (a11y)
 
-Чтобы `Badge` был доступным для ассистивных технологий, у него должен быть текст, который сможет прочитать скринридер. Этот текст можно передать в `children`.
+Чтобы `Dot` был доступным для ассистивных технологий, у него должен быть текст, который сможет прочитать скринридер. Этот текст можно передать в `children`.
 
 ```jsx
 const Example = () => {
   const [tab, setTab] = React.useState('dialogs');
 
   return (
-    <View activePanel="badge">
-      <Panel id="badge">
+    <View activePanel="dot">
+      <Panel id="dot">
         <PanelHeader>Бейдж</PanelHeader>
 
         <Group header={<Header mode="secondary">В пунктах меню</Header>}>
           <Cell
             expandable
             before={<Icon28Notifications />}
-            badgeAfterTitle={<Badge>Есть новые</Badge>}
+            badgeAfterTitle={<Dot>Есть новые</Dot>}
             onClick={noop}
           >
             Уведомления
@@ -29,14 +29,14 @@ const Example = () => {
             <TabsItem
               selected={tab === 'dialogs'}
               onClick={() => setTab('dialogs')}
-              after={<Badge mode="prominent">Есть новые</Badge>}
+              after={<Dot mode="prominent">Есть новые</Dot>}
             >
               Диалоги
             </TabsItem>
             <TabsItem
               selected={tab === 'messages'}
               onClick={() => setTab('messages')}
-              after={<Badge mode="prominent">Есть новые</Badge>}
+              after={<Dot mode="prominent">Есть новые</Dot>}
             >
               Сообщения
             </TabsItem>
@@ -57,7 +57,7 @@ const Example = () => {
           >
             <Icon28MessageOutline />
           </TabbarItem>
-          <TabbarItem indicator={<Badge mode="prominent">Новый раздел</Badge>} text="Клипы">
+          <TabbarItem indicator={<Dot mode="prominent">Новый раздел</Dot>} text="Клипы">
             <Icon28ClipOutline />
           </TabbarItem>
         </Tabbar>

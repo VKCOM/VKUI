@@ -213,7 +213,7 @@ const baseConfig = {
           name: 'Blocks',
           components: () => [
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Tappable/Tappable.tsx`,
-            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Badge/Badge.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Dot/Dot.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ContentBadge/ContentBadge.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ButtonGroup/ButtonGroup.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/Button/Button.tsx`,

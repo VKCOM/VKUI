@@ -18,7 +18,7 @@ export interface TabbarItemProps
    */
   text?: React.ReactNode;
   /**
-   * Индикатор над иконкой. Принимает `<Badge mode="prominent" />` или `<Counter size="s" mode="prominent" />`
+   * Индикатор над иконкой. Принимает `<Dot mode="prominent" />` или `<Counter size="s" mode="prominent" />`
    */
   indicator?: React.ReactNode;
 }

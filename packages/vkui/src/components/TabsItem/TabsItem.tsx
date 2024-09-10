@@ -52,7 +52,7 @@ export interface TabsItemProps
   /**
    * Добавляет элемент слева от `after`.
    *
-   * - `React.ReactElement` – либо [`Badge`](https://vkcom.github.io/VKUI/#/Badge) с параметром `mode="prominent"`.
+   * - `React.ReactElement` – либо [`Dot`](https://vkcom.github.io/VKUI/#/Badge) с параметром `mode="prominent"`.
    *   либо [`Counter`](https://vkcom.github.io/VKUI/#/Counter) с параметрами `mode="prominent" size="s"`.
    * - `number` – для показа текстового блока с переданным числом.
    */

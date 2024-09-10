@@ -156,8 +156,8 @@ export type { ModalDismissButtonProps } from './components/ModalDismissButton/Mo
 /**
  * Blocks
  */
-export { Badge } from './components/Badge/Badge';
-export type { BadgeProps } from './components/Badge/Badge';
+export { Dot } from './components/Dot/Dot';
+export type { DotProps } from './components/Dot/Dot';
 export { ContentBadge } from './components/ContentBadge/ContentBadge';
 export type { ContentBadgeProps } from './components/ContentBadge/ContentBadge';
 export { ButtonGroup } from './components/ButtonGroup/ButtonGroup';
