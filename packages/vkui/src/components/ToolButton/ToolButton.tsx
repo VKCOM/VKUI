@@ -72,6 +72,7 @@ export const ToolButton = ({
         className,
         styles['ToolButton'],
         rounded && getRoundedClassName(direction, hasChildren),
+        hasChildren && direction === 'row' && styles['ToolButton--withFakeEndIcon'],
         stylesMode[mode],
         stylesAppearance[appearance],
         stylesDirection[direction],
@@ -91,9 +92,7 @@ export function getRoundedClassName(
 ): string | undefined {
   switch (direction) {
     case 'row':
-      return hasChildren
-        ? classNames(styles['ToolButton--rounded'], styles['ToolButton--padding-size-xl'])
-        : styles['ToolButton--rounded'];
+      return styles['ToolButton--rounded'];
     case 'column':
       return hasChildren ? undefined : styles['ToolButton--rounded'];
   }

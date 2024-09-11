@@ -11,14 +11,13 @@
   flex-grow: 1;
   flex-basis: 0;
   align-items: center;
-  justify-content: center;
   font-family: var(--vkui--font_caption1--font_family--regular);
   font-size: var(--vkui--font_caption1--font_size--regular);
   line-height: var(--vkui--font_caption1--line_height--regular);
 }
 
-.ToolButton--padding-size-xl {
-  padding: var(--vkui--spacing_size_xl);
+.ToolButton--withFakeEndIcon {
+  padding-inline-end: var(--vkui--spacing_size_xl);
 }
 
 .ToolButton--rounded {
@@ -46,10 +45,12 @@
 /* ToolButton's directions */
 .ToolButton--direction-row {
   flex-direction: row;
+  justify-content: flex-start;
 }
 
 .ToolButton--direction-column {
   flex-direction: column;
+  justify-content: center;
 }
 
 .ToolButton--direction-row .ToolButton__text {
