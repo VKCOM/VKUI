@@ -11,7 +11,7 @@ const stylesLevel = {
 
 const sizeYClassNames = {
   none: styles['Title--sizeY-none'],
-  ['compact']: styles['Title--sizeY-compact'],
+  compact: styles['Title--sizeY-compact'],
 };
 
 export interface TitleProps extends TypographyProps {
