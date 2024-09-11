@@ -41,7 +41,9 @@ export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
       >
         <div className={styles['ScreenSpinner__icon-slot']}>{children}</div>
         {hasReactNode(caption) && (
-          <Footnote className={styles.ScreenSpinner__caption}>{caption}</Footnote>
+          <Footnote className={styles.ScreenSpinner__caption} aria-hidden>
+            {caption}
+          </Footnote>
         )}
       </RootComponent>
     </ScreenSpinnerContext.Provider>
