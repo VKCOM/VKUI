@@ -6,13 +6,38 @@
 }
 
 .Text--sizeY-compact {
-  font-size: var(--vkui--font_text--font_size--compact);
-  line-height: var(--vkui--font_text--line_height--compact);
+  font-size: var(--vkui--font_text--font_size--compact, var(--vkui--font_text--font_size--regular));
+  line-height: var(
+    --vkui--font_text--line_height--compact,
+    var(--vkui--font_text--line_height--regular)
+  );
+  font-weight: var(
+    --vkui--font_text--font_weight--compact,
+    var(--vkui--font_text--font_weight--regular)
+  );
+  font-family: var(
+    --vkui--font_text--font_family--compact,
+    var(--vkui--font_text--font_family--regular)
+  );
 }
 
 @media (--sizeY-compact) {
   .Text--sizeY-none {
-    font-size: var(--vkui--font_text--font_size--compact);
-    line-height: var(--vkui--font_text--line_height--compact);
+    font-size: var(
+      --vkui--font_text--font_size--compact,
+      var(--vkui--font_text--font_size--regular)
+    );
+    line-height: var(
+      --vkui--font_text--line_height--compact,
+      var(--vkui--font_text--line_height--regular)
+    );
+    font-weight: var(
+      --vkui--font_text--font_weight--compact,
+      var(--vkui--font_text--font_weight--regular)
+    );
+    font-family: var(
+      --vkui--font_text--font_family--compact,
+      var(--vkui--font_text--font_family--regular)
+    );
   }
 }
