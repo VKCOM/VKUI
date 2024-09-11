@@ -21,7 +21,7 @@ import {
   CustomSelectClearButton,
   type CustomSelectClearButtonProps,
 } from './CustomSelectClearButton';
-import { CustomSelectInput } from './CustomSelectInput';
+import { CustomSelectInput, type CustomSelectInputProps } from './CustomSelectInput';
 import {
   calculateInputValueFromOptions,
   defaultRenderOptionFn,
@@ -72,7 +72,8 @@ export interface SelectProps<
     Pick<
       CustomSelectDropdownProps,
       'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
-    > {
+    >,
+    Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'readOnly'> {
   /**
    * ref на внутрений компонент input
    */
@@ -89,7 +90,7 @@ export interface SelectProps<
   /**
    * Событие изменения текстового поля
    */
-  onInputChange?: (e: React.ChangeEvent) => void;
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   options: OptionInterfaceT[];
   /**
    * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
