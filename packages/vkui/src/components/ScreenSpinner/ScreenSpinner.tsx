@@ -22,14 +22,14 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
   onClick,
   cancelLabel,
   mode,
-  subtitle,
+  caption,
   ...restProps
 }: ScreenSpinnerProps): React.ReactNode => {
   useScrollLock();
 
   return (
     <PopoutWrapper className={className} style={style} noBackground>
-      <ScreenSpinnerContainer state={state} mode={mode} subtitle={subtitle}>
+      <ScreenSpinnerContainer state={state} mode={mode} caption={caption}>
         <ScreenSpinnerLoader {...restProps} />
         <ScreenSpinnerSwapIcon onClick={onClick} cancelLabel={cancelLabel} />
       </ScreenSpinnerContainer>

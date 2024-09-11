@@ -19,29 +19,29 @@ const modeClassNames = {
 };
 
 type ScreenSpinnerContainerProps = HTMLAttributesWithRootRef<HTMLSpanElement> &
-  Pick<ScreenSpinnerProps, 'state' | 'mode' | 'subtitle'>;
+  Pick<ScreenSpinnerProps, 'state' | 'mode' | 'caption'>;
 
 export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
   state = 'loading',
   mode = 'shadow',
-  subtitle,
+  caption,
   children,
   ...restProps
 }: ScreenSpinnerContainerProps) => {
   return (
-    <ScreenSpinnerContext.Provider value={{ state, subtitle }}>
+    <ScreenSpinnerContext.Provider value={{ state, caption }}>
       <RootComponent
         baseClassName={classNames(
           styles['ScreenSpinner'],
           modeClassNames[mode],
           state !== 'loading' && stateClassNames[state],
-          hasReactNode(subtitle) && styles['ScreenSpinner--has-subtitle'],
+          hasReactNode(caption) && styles['ScreenSpinner--has-caption'],
         )}
         {...restProps}
       >
         <div className={styles['ScreenSpinner__icon-slot']}>{children}</div>
-        {hasReactNode(subtitle) && (
-          <Footnote className={styles.ScreenSpinner__subtitle}>{subtitle}</Footnote>
+        {hasReactNode(caption) && (
+          <Footnote className={styles.ScreenSpinner__caption}>{caption}</Footnote>
         )}
       </RootComponent>
     </ScreenSpinnerContext.Provider>

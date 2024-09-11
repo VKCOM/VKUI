@@ -10,13 +10,13 @@ export const ScreenSpinnerLoader: React.FC<SpinnerProps> = ({
   children,
   ...restProps
 }: SpinnerProps) => {
-  const { subtitle } = React.useContext(ScreenSpinnerContext);
-  const a11yText = children ? children : subtitle ?? 'Пожалуйста, подождите...';
+  const { caption } = React.useContext(ScreenSpinnerContext);
+  const a11yText = children ? children : caption ?? 'Пожалуйста, подождите...';
   return (
     <Spinner
       className={classNames(
         styles['ScreenSpinner__spinner'],
-        !subtitle && styles['ScreenSpinner__spinner--transition'],
+        !caption && styles['ScreenSpinner__spinner--transition'],
       )}
       size={size}
       noColor
