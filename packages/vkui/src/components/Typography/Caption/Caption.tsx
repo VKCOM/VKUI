@@ -11,7 +11,7 @@ const stylesLevel = {
 
 const sizeYClassNames = {
   none: styles['Caption--sizeY-none'],
-  ['compact']: styles['Caption--sizeY-compact'],
+  compact: styles['Caption--sizeY-compact'],
 };
 
 export interface CaptionProps extends TypographyProps, HasCaps {
