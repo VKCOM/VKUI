@@ -11,6 +11,7 @@ export const ScreenSpinnerLoader: React.FC<SpinnerProps> = ({
   ...restProps
 }: SpinnerProps) => {
   const { caption } = React.useContext(ScreenSpinnerContext);
+  // TODO [>=7]: см. https://github.com/VKCOM/VKUI/pull/7505#discussion_r1754153438
   const a11yText = children ? children : caption ?? 'Пожалуйста, подождите...';
   return (
     <Spinner
