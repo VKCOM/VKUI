@@ -45,7 +45,7 @@ const WriteBarTypography = (props: TypographyProps) => {
     return <Title {...props} level="3" weight="3" />;
   }
 
-  return <Headline {...props} />;
+  return <Headline weight="3" {...props} />;
 };
 
 /**

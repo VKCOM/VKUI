@@ -13,6 +13,7 @@
     "!./src/**/*.*.ts",
     "!./src/**/*.*.tsx",
     "!./src/vkui.js",
+    "!./src/styles/missedThemeTokens.css",
     "!./src/testing/",
     "!./src/storybook/"
   ],
