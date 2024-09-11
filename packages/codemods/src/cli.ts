@@ -1,9 +1,10 @@
 import chalk from 'chalk';
 import { Command } from 'commander';
 import prompts from 'prompts';
+import { autoDetectVKUIVersion } from './autoDetectVKUIVersion';
 import getAvailableCodemods from './getAvailableCodemods.js';
-import logger from './helpers/logger.js';
 import pkg from '../package.json';
+import logger from './helpers/logger.js';
 
 export interface CliOptions {
   list: boolean;
@@ -13,11 +14,13 @@ export interface CliOptions {
   debug: boolean;
   all: boolean;
   alias: string;
+  transformsVersion: string;
 }
 
 export interface Cli {
   flags: CliOptions;
   codemodName: string;
+  transformsVersion: string;
 }
 
 const trimStringValue = (value: string | undefined) =>
@@ -49,6 +52,10 @@ export const runCli = async (): Promise<Cli> => {
     .usage(`${chalk.green('[codemod-name]')}`)
     .option('-l --list', 'list available codemods')
     .option('--all', 'apply all available codemods')
+    .option(
+      '-tv --transforms-version <transformsVersion>',
+      'vkui major version transforms (available versions: "6", "7")',
+    )
     .option('-p --path <paths>', 'path to files in which to apply the codemods')
     .option('--dry-run', 'no changes are made to files')
     .option(
@@ -65,20 +72,29 @@ export const runCli = async (): Promise<Cli> => {
   const options = program.opts() as CliOptions;
 
   let codemodName = program.args[0];
+  const transformsVersion = options.transformsVersion || autoDetectVKUIVersion();
+
+  if (!transformsVersion) {
+    logger.error(
+      'Problem determining the major version of vkui, try specifying it using the --transforms-version',
+    );
+    process.exit(1);
+  }
 
   if (options.list) {
-    const codemods = getAvailableCodemods();
+    const codemods = getAvailableCodemods(transformsVersion);
     logger.info(codemods);
     process.exit(0);
   }
 
   if (!codemodName && !options.all) {
-    const codemods = getAvailableCodemods();
+    const codemods = getAvailableCodemods(transformsVersion);
     codemodName = await promptAvailableCodemods(codemods);
   }
 
   return {
     flags: options,
     codemodName,
+    transformsVersion,
   };
 };

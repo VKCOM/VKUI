@@ -4,7 +4,7 @@ import { useDOM } from '../lib/dom';
 
 export const useWaitTransitionFinish = (): ((
   element: HTMLElement | undefined | null,
-  eventHandler: VoidFunction,
+  eventHandler: (e?: TransitionEvent) => void,
   durationFallback: number,
 ) => void) => {
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -19,7 +19,7 @@ export const useWaitTransitionFinish = (): ((
   const waitTransitionFinish = React.useCallback(
     (
       element: HTMLElement | undefined | null,
-      eventHandler: VoidFunction,
+      eventHandler: (e?: TransitionEvent) => void,
       durationFallback: number,
     ) => {
       if (element) {

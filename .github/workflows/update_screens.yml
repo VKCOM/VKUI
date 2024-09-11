@@ -134,7 +134,7 @@ jobs:
 
       - name: Create pull request with updated screenshots
         if: ${{ steps.unzip.outputs.found == 'true' && github.event_name == 'push' }}
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: 'ci(e2e): Update screenshots for ${{ github.ref_name }}'
