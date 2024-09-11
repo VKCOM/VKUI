@@ -20,23 +20,8 @@ const setLoadingScreenSpinner = () => {
 };
 
 const setDoneScreenSpinner = () => {
-  setPopout(<ScreenSpinner state="loading" />);
-
-  setTimeout(() => {
-    setPopout(<ScreenSpinner state="done" caption="Вы подписались на сообщество" />);
-
-    setTimeout(clearPopout, 1000);
-  }, 2000);
-};
-
-const setDoneSubScreenSpinner = () => {
-  setPopout(<ScreenSpinner state="loading" />);
-
-  setTimeout(() => {
-    setPopout(<ScreenSpinner state="done">Успешно</ScreenSpinner>);
-
-    setTimeout(clearPopout, 1000);
-  }, 2000);
+  setPopout(<ScreenSpinner state="done" caption="Вы подписались на сообщество" />);
+  setTimeout(clearPopout, 3000);
 };
 
 const setErrorScreenSpinner = () => {
@@ -65,7 +50,6 @@ const setCancelableScreenSpinner = () => {
         <Group>
           <CellButton onClick={setLoadingScreenSpinner}>Запустить долгий процесс</CellButton>
           <CellButton onClick={setDoneScreenSpinner}>Запустить успешный процесс</CellButton>
-          <CellButton onClick={setDoneSubScreenSpinner}>Запустить успешный процесс sub</CellButton>
           <CellButton onClick={setErrorScreenSpinner}>Запустить процесс с ошибкой</CellButton>
           <CellButton onClick={setCancelableScreenSpinner}>Запустить отменяемый процесс</CellButton>
         </Group>
