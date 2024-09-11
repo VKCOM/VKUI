@@ -8,11 +8,9 @@
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 <Flex aria-busy={true} aria-live="polite" direction="column" gap={32} margin="auto">
-  <Spinner size="large" />
-  <Spinner size="medium" />
-  <Spinner size="regular" />
-  <Spinner size="small">
-    Кастомный текст вместо "Загружается...", который озвучит скринридер
-  </Spinner>
+  <Spinner size="xl" />
+  <Spinner size="l" />
+  <Spinner size="m" />
+  <Spinner size="s">Кастомный текст вместо "Загружается...", который озвучит скринридер</Spinner>
 </Flex>
 ```

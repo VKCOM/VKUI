@@ -12,7 +12,7 @@ import styles from './Header.module.css';
 
 export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, HasComponent {
   mode?: 'primary' | 'secondary' | 'tertiary';
-  size?: 'regular' | 'large';
+  size?: 'm' | 'l';
   subtitle?: React.ReactNode;
   /* Позволяет задать тип элемента в который будет обёрнут subtitle */
   subtitleComponent?: React.ElementType;
@@ -51,7 +51,7 @@ type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode' | 'size' | 'clas
   HasComponent;
 
 const HeaderContent = ({ mode, size, ...restProps }: HeaderContentProps) => {
-  const isLarge = size === 'large';
+  const isLarge = size === 'l';
 
   const platform = usePlatform();
   if (platform === 'ios') {
@@ -95,7 +95,7 @@ const stylesMode = {
  */
 export const Header = ({
   mode = 'primary',
-  size = 'regular',
+  size = 'm',
   Component = 'h2',
   children,
   subtitle,
@@ -116,7 +116,7 @@ export const Header = ({
       baseClassName={classNames(
         styles['Header'],
         stylesMode[mode],
-        size === 'large' && styles['Header--large'],
+        size === 'l' && styles['Header--large'],
         isPrimitiveReactNode(indicator) && styles['Header--pi'],
         hasReactNode(subtitle) && styles['Header--with-subtitle'],
       )}
