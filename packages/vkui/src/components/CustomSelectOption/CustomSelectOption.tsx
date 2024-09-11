@@ -10,7 +10,7 @@ import styles from './CustomSelectOption.module.css';
 
 const sizeYClassNames = {
   none: styles['CustomSelectOption--sizeY-none'],
-  ['regular']: styles['CustomSelectOption--sizeY-regular'],
+  regular: styles['CustomSelectOption--sizeY-regular'],
 };
 
 export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLDivElement> {

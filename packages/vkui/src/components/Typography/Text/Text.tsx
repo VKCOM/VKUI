@@ -5,7 +5,7 @@ import styles from './Text.module.css';
 
 const sizeYClassNames = {
   none: styles['Text--sizeY-none'],
-  ['compact']: styles['Text--sizeY-compact'],
+  compact: styles['Text--sizeY-compact'],
 };
 
 export type TextProps = TypographyProps;

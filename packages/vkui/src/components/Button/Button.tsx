@@ -39,7 +39,7 @@ const stylesAlign = {
 
 const sizeYClassNames = {
   none: styles['Button--sizeY-none'],
-  ['regular']: styles['Button--sizeY-regular'],
+  regular: styles['Button--sizeY-regular'],
 };
 
 export interface VKUIButtonProps extends HasAlign {

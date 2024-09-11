@@ -11,7 +11,7 @@ import styles from './SegmentedControl.module.css';
 
 const sizeYClassNames = {
   none: styles['SegmentedControl--sizeY-none'],
-  ['regular']: styles['SegmentedControl--sizeY-regular'],
+  regular: styles['SegmentedControl--sizeY-regular'],
 };
 
 export type SegmentedControlValue = string | number | undefined;
