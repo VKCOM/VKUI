@@ -9,7 +9,7 @@
 }
 
 /* Мы утяжеляем селектор, чтобы перебить другие селекторы */
-.Typography--weight-1.Typography--weight-1.Typography--weight-1 {
+.Typography--weight-1.Typography--weight-1.Typography--weight-1.Typography--weight-1 {
   font-weight: var(--vkui--font_weight_base1);
 }
 
@@ -17,7 +17,7 @@
   font-weight: var(--vkui--font_weight_accent1);
 }
 
-.Typography--weight-2.Typography--weight-2.Typography--weight-2 {
+.Typography--weight-2.Typography--weight-2.Typography--weight-2.Typography--weight-2 {
   font-weight: var(--vkui--font_weight_base2);
 }
 
@@ -25,7 +25,7 @@
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-.Typography--weight-3.Typography--weight-3.Typography--weight-3 {
+.Typography--weight-3.Typography--weight-3.Typography--weight-3.Typography--weight-3 {
   font-weight: var(--vkui--font_weight_base3);
 }
 
