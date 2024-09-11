@@ -53,7 +53,7 @@
   text-transform: uppercase;
 }
 
-.footnote_caps--sizeY-compact.footnote_caps--caps {
+.Footnote--sizeY-compact.Footnote--caps {
   font-size: var(
     --vkui--font_footnote_caps--font_size--compact,
     var(--vkui--font_footnote_caps--font_size--regular)
@@ -73,7 +73,7 @@
 }
 
 @media (--sizeY-compact) {
-  .footnote_caps--sizeY-none.footnote_caps--caps {
+  .Footnote--sizeY-none.Footnote--caps {
     font-size: var(
       --vkui--font_footnote_caps--font_size--compact,
       var(--vkui--font_footnote_caps--font_size--regular)
