@@ -5,7 +5,7 @@ import styles from './Paragraph.module.css';
 
 const sizeYClassNames = {
   none: styles['Paragraph--sizeY-none'],
-  ['compact']: styles['Paragraph--sizeY-compact'],
+  compact: styles['Paragraph--sizeY-compact'],
 };
 
 export type ParagraphProps = TypographyProps;
