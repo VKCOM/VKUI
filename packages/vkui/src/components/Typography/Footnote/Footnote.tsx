@@ -5,7 +5,7 @@ import styles from './Footnote.module.css';
 
 const sizeYClassNames = {
   none: styles['Footnote--sizeY-none'],
-  ['compact']: styles['Footnote--sizeY-compact'],
+  compact: styles['Footnote--sizeY-compact'],
 };
 
 export interface FootnoteProps extends TypographyProps, HasCaps {}
