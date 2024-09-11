@@ -30,7 +30,7 @@ export function AspectRatio({
   ...props
 }: AspectRatioProps): JSX.Element {
   const style: React.CSSProperties & CSSCustomProperties = {
-    ['--vkui_internal--aspect_ratio']: String(ratio),
+    '--vkui_internal--aspect_ratio': String(ratio),
   };
 
   return (

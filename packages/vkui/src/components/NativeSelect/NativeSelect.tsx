@@ -14,7 +14,7 @@ import styles from '../Select/Select.module.css';
 
 const sizeYClassNames = {
   none: styles['Select--sizeY-none'],
-  ['compact']: styles['Select--sizeY-compact'],
+  compact: styles['Select--sizeY-compact'],
 };
 
 export interface NativeSelectProps

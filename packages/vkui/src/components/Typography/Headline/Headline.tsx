@@ -10,7 +10,7 @@ const stylesLevel = {
 
 const sizeYClassNames = {
   none: styles['Headline--sizeY-none'],
-  ['compact']: styles['Headline--sizeY-compact'],
+  compact: styles['Headline--sizeY-compact'],
 };
 
 export interface HeadlineProps extends TypographyProps {

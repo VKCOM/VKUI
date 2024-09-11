@@ -15,7 +15,7 @@ import styles from './TabsItem.module.css';
 
 const sizeYClassNames = {
   none: styles['TabsItem--sizeY-none'],
-  ['compact']: styles['TabsItem--sizeY-compact'],
+  compact: styles['TabsItem--sizeY-compact'],
 };
 
 const stylesMode = {
