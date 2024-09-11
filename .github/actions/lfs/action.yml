@@ -1,0 +1,31 @@
+name: Workflow / Checkout LFS objects
+description: Get lfs from cache
+
+runs:
+  using: composite
+  steps:
+    # см. https://github.com/actions/checkout/issues/1169
+    - name: Set safe directory
+      shell: bash
+      run: git config --global --add safe.directory /__w/VKUI/VKUI
+
+    # см. https://github.com/microsoft/playwright/issues/21920
+    - name: Install git lfs
+      shell: bash
+      run: |
+        curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+        apt-get install -y git-lfs
+
+    - name: Create LFS file list
+      shell: bash
+      run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+    - name: Restore LFS cache
+      uses: actions/cache@v4
+      with:
+        path: .git/lfs
+        key: lfs-${{ hashFiles('.lfs-assets-id') }}
+
+    - name: Checkout LFS objects
+      shell: bash
+      run: git lfs pull

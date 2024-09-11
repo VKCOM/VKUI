@@ -17,6 +17,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Создаем кэш для ветки один раз
+      - name: Checkout LFS objects
+        uses: ./.github/actions/lfs
+
       - uses: ./.github/actions/get-playwright-docker-image
         id: result
 
@@ -37,35 +41,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # см. https://github.com/actions/checkout/issues/1169
-      - name: Set safe directory
-        run: git config --global --add safe.directory /__w/VKUI/VKUI
-
-      # см. https://github.com/microsoft/playwright/issues/21920
-      - name: Install git lfs
-        run: |
-          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-          apt-get install -y git-lfs
-
-      - name: Install rsync
-        run: |
-          apt-get install -y rsync
-
-      - name: Install zip
-        run: |
-          apt-get install -y zip
-
-      - name: Create LFS file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-      - name: Restore LFS cache
-        uses: actions/cache@v4
-        with:
-          path: .git/lfs
-          key: lfs-${{ hashFiles('.lfs-assets-id') }}
-
       - name: Checkout LFS objects
-        run: git lfs pull
+        uses: ./.github/actions/lfs
+
+      - name: Install rsync && zip
+        run: |
+          apt-get install -y rsync zip
 
       - name: Node setup
         uses: ./.github/actions/node-setup
