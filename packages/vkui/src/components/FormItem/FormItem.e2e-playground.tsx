@@ -99,8 +99,9 @@ export const FormItemTopAsidePlayground = (props: ComponentPlaygroundProps) => {
           children: [<Input key={0} placeholder="Введите ваше значение" />],
         },
         {
+          topMultiline: [true],
           topLabel: [
-            <FormItem.TopLabel key="0" multiline>
+            <FormItem.TopLabel key="0">
               Дополнительная информация с достаточно длинным описанием
             </FormItem.TopLabel>,
           ],
