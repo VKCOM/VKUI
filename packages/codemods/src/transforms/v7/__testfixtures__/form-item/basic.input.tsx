@@ -13,7 +13,49 @@ const App = () => {
           </FormItem.Top>
         }
       >
-        <Textarea id="about" name="about" />
+        <div/>
+      </FormItem>
+
+      <FormItem
+        topNode={
+          <FormItem.Top>
+            <FormItem.TopLabel htmlFor="about" multiline>Дополнительная информация</FormItem.TopLabel>
+            <FormItem.TopAside>0/100</FormItem.TopAside>
+          </FormItem.Top>
+        }
+      >
+        <div/>
+      </FormItem>
+
+      <FormItem
+        top={
+          <FormItem.Top>
+            <FormItem.TopLabel htmlFor="about" multiline={true}>Дополнительная информация</FormItem.TopLabel>
+            <FormItem.TopAside>0/100</FormItem.TopAside>
+          </FormItem.Top>
+        }
+        topMultiline={false}
+      >
+        <div/>
+      </FormItem>
+
+      <FormItem
+        top={
+          <FormItem.Top>
+            <FormItem.TopLabel htmlFor="about" multiline={false}>Дополнительная информация</FormItem.TopLabel>
+            <FormItem.TopAside>0/100</FormItem.TopAside>
+          </FormItem.Top>
+        }
+        topMultiline={true}
+      >
+        <div/>
+      </FormItem>
+
+      <FormItem>
+        <FormItem.Top>
+          <FormItem.TopLabel htmlFor="about" multiline>Дополнительная информация</FormItem.TopLabel>
+          <FormItem.TopAside>0/100</FormItem.TopAside>
+        </FormItem.Top>
       </FormItem>
     </React.Fragment>
   );
