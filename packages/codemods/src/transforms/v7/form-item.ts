@@ -1,4 +1,4 @@
-import { API, FileInfo, JSXAttribute, JSXElement, JSXExpressionContainer } from 'jscodeshift';
+import { API, FileInfo, JSXAttribute, JSXElement } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
 
