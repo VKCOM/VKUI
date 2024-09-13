@@ -109,6 +109,28 @@ const appearance = useAppearance();
 <Div>{appearance === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
 ```
 
+> Стоит иметь ввиду, что некоторые компоненты делегируют цвет фона родителю выше, например, это
+> компонент [Cell](#/Cell) и его производные.
+>
+> На примере [Cell](#/Cell) рассмотрим решение проблемы через допустимое определения фона посредством
+> `className` или `style`:
+>
+> ```jsx static
+> <Group header={<Header>Настройка тем</Header>}>
+>   <Cell mode="selectable">Системная тема</Cell>
+>   <AppearanceProvider value="dark">
+>     <Cell mode="selectable" style={{ backgroundColor: 'var(--vkui--color_background_content)' }}>
+>       Тёмная тема
+>     </Cell>
+>   </AppearanceProvider>
+>   <AppearanceProvider value="light">
+>     <Cell mode="selectable" style={{ backgroundColor: 'var(--vkui--color_background_content)' }}>
+>       Светлая тема
+>     </Cell>
+>   </AppearanceProvider>
+> </Group>
+> ```
+
 <br/>
 
 ### [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens)
