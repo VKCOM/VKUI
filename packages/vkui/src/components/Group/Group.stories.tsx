@@ -67,6 +67,24 @@ export const Example: Story = {
           <CellButton onClick={noop}>Добавить домашний адрес</CellButton>
           <CellButton onClick={noop}>Добавить рабочий адрес</CellButton>
         </Group>
+        <Group.Container>
+          <Group.Header>
+            <Header>Подкомпонентный подход: Адреса</Header>
+          </Group.Header>
+          <CellButton onClick={noop}>Добавить домашний адрес</CellButton>
+          <CellButton onClick={noop}>Добавить рабочий адрес</CellButton>
+          <Group.Description>
+            Для использования в мини-приложениях, Delivery Club, VK Taxi и других сервисах
+            ВКонтакте. Эти адреса видны только Вам.
+          </Group.Description>
+        </Group.Container>
+        <Group>
+          <Header>Контент игнорирует боковые отступы Group</Header>
+          <Group.ExpandedContent>
+            <CellButton onClick={noop}>Добавить домашний адрес</CellButton>
+            <CellButton onClick={noop}>Добавить рабочий адрес</CellButton>
+          </Group.ExpandedContent>
+        </Group>
       </>
     ),
     withSinglePanel,

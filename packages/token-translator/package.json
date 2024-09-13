@@ -14,15 +14,15 @@
     "node": ">12.0.0"
   },
   "dependencies": {
-    "@types/node": "^22.5.0",
-    "postcss": "^8.4.41",
+    "@types/node": "^22.5.4",
+    "postcss": "^8.4.45",
     "postcss-less": "^6.0.0",
     "postcss-scss": "^4.0.9",
     "postcss-value-parser": "^4.2.0",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "@swc/core": "1.7.18",
+    "@swc/core": "1.7.24",
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.12",
     "@types/postcss-less": "^4.0.6",

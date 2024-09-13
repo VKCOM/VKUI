@@ -23,6 +23,7 @@ import {
   type FloatingArrowProps as FloatingArrowPropsPrivate,
 } from '../FloatingArrow/FloatingArrow';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
+import type { FocusTrapProps } from '../FocusTrap/FocusTrap';
 import styles from './Popover.module.css';
 
 /**
@@ -82,7 +83,7 @@ type AllowedFloatingComponentProps = Pick<
  * @public
  */
 export interface PopoverProps
-  extends AllowedFloatingComponentProps,
+  extends Omit<AllowedFloatingComponentProps, 'autoFocus'>,
     Omit<HTMLAttributesWithRootRef<HTMLDivElement>, keyof FloatingComponentProps> {
   /**
    * Отключает у всплывающего элемента стилизацию по умолчанию.
@@ -121,6 +122,7 @@ export interface PopoverProps
    * Используется для того, чтобы не удалять поповер из DOM дерева при скрытии.
    */
   keepMounted?: boolean;
+  autoFocus?: FocusTrapProps['autoFocus'];
 }
 
 /**
@@ -225,9 +227,6 @@ export const Popover = ({
   let popover: React.ReactNode = null;
   if (shown || keepMounted) {
     const hidden = keepMounted && !shown;
-    if (!hidden) {
-      floatingProps.style.zIndex = String(zIndex);
-    }
 
     let arrow: React.ReactElement | null = null;
     if (withArrow) {
@@ -250,6 +249,10 @@ export const Popover = ({
           ref={refs.setFloating}
           className={classNames(styles['Popover'], hidden && styles['Popover--hidden'])}
           {...floatingProps}
+          style={{
+            zIndex: !hidden ? zIndex : undefined,
+            ...floatingProps.style,
+          }}
         >
           <FocusTrap
             {...restPopoverProps}

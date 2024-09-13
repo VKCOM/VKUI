@@ -100,9 +100,9 @@ export const Alert = ({
     closing ? 'exit' : 'enter',
     {
       onExited() {
-        onClose();
         itemActionCallbackRef.current();
         itemActionCallbackRef.current = noop;
+        onClose();
       },
     },
   );

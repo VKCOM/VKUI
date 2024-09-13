@@ -1,0 +1,23 @@
+name: Add Label to pull request
+
+inputs:
+  issue_number:
+    description: number of issue
+    required: true
+  label:
+    description: label to adding
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Add label
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.addLabels({
+            issue_number: ${{ inputs.issue_number }},
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: ["${{ inputs.label }}"]
+          })
