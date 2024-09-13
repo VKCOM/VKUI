@@ -25,7 +25,6 @@ export const HorizontalScrollMobilePlayground = (props: ComponentPlaygroundProps
           showArrows: ['always'],
           arrowSize: ['m', 'l'],
           children: [items],
-          inline: [true],
         },
       ]}
     >
@@ -44,7 +43,6 @@ export const HorizontalScrollSmallTabletPlayground = (props: ComponentPlayground
           arrowSize: ['m', 'l'],
           arrowOffsetY: [-10],
           children: [items],
-          inline: [true],
         },
       ]}
     >
@@ -69,7 +67,6 @@ export const HorizontalScrollWithHasMousePlayground = ({
               }
               element.scrollLeft = 32;
             }}
-            inline
           >
             {items}
           </HorizontalScroll>
@@ -95,7 +92,6 @@ export const HorizontalScrollWithoutHasMousePlayground = ({
               }
               element.scrollLeft = 32;
             }}
-            inline
           >
             {items}
           </HorizontalScroll>

@@ -25,6 +25,8 @@
 }
 
 .HorizontalScroll__in-wrapper {
+  display: flex;
+  align-items: stretch;
   transition: transform 0.2s;
 }
 
@@ -60,14 +62,6 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs) .HorizontalScroll {
   min-inline-size: 100%;
-}
-
-/* TODO [>=7]: убрать, использовать inline-mode */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs) .HorizontalScroll__in-wrapper,
-.HorizontalScroll--inline .HorizontalScroll__in-wrapper {
-  display: flex;
-  align-items: stretch;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */

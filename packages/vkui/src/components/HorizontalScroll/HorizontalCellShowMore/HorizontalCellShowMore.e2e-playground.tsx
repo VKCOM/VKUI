@@ -22,7 +22,7 @@ export const HorizontalCellShowMorePlayground = (props: ComponentPlaygroundProps
       ]}
     >
       {(props: HorizontalCellShowMoreProps) => (
-        <HorizontalScroll inline>
+        <HorizontalScroll>
           <AlbumItems height={props.height} />
           <HorizontalCellShowMore {...props} />
         </HorizontalScroll>
@@ -72,9 +72,9 @@ export const HorizontalCellShowMoreMobilePlayground = (props: ComponentPlaygroun
       ]}
     >
       {(props: HorizontalCellShowMoreProps) => (
-        <HorizontalScroll inline>
-          <div style={{ display: 'flex' }}>{smallCells}</div>
-          <HorizontalCellShowMore {...props} compensateLastCellIndent />
+        <HorizontalScroll>
+          {smallCells}
+          <HorizontalCellShowMore {...props} />
         </HorizontalScroll>
       )}
     </ComponentPlayground>
