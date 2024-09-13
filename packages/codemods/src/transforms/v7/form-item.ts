@@ -61,7 +61,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     return undefined;
   }
 
-  source.find(j.JSXElement, { openingElement: { name: { name: 'FormItem' } } }).forEach((path) => {
+  source.find(j.JSXElement, { openingElement: { name: { name: localName } } }).forEach((path) => {
     const formItem = path.node;
     let topMultiline: JSXAttribute | undefined;
     let topLabelMultiline: boolean | undefined;
