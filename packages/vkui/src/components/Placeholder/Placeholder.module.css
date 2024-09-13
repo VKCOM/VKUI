@@ -14,7 +14,6 @@
 
 .Placeholder--stretched {
   flex: 1 0;
-  padding-block: inherit;
   block-size: 100%;
 }
 
