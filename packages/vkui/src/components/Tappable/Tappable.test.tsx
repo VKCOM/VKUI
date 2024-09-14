@@ -199,7 +199,6 @@ describe(Tappable, () => {
       expect(waveCount()).toBe(0);
     });
 
-    // TODO (@SevereCloud): пофиксить тест
     it('activates on click', async () => {
       render(<TappableTest onClick={noop} />);
       await userEvent.click(tappable());
@@ -208,14 +207,13 @@ describe(Tappable, () => {
       expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
     });
 
-    // TODO (@SevereCloud): пофиксить тест
-    it.skip('activates during longtap', async () => {
+    it('activates during longtap', async () => {
       render(<TappableTest onClick={noop} />);
-      fireEvent.mouseDown(tappable());
+      fireEvent.pointerDown(tappable());
       expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
       await waitFor(() => expect(tappable()).toHaveClass(styles['Tappable--activated-background']));
 
-      fireEvent.mouseUp(tappable());
+      fireEvent.pointerUp(tappable());
       expect(tappable()).toHaveClass(styles['Tappable--activated-background']);
     });
 
@@ -311,34 +309,130 @@ describe(Tappable, () => {
     });
 
     describe('nested hover', () => {
-      it('unhovers on child hover', async () => {
+      it('unhovers parent on child hover', async () => {
         const result = render(
-          <Tappable data-testid="x" onClick={noop}>
-            <Tappable data-testid="c" onClick={noop} />
+          <Tappable data-testid="parent" onClick={noop}>
+            <Tappable data-testid="children" onClick={noop} />
           </Tappable>,
         );
-        await userEvent.hover(screen.getByTestId('x'));
-        expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('c')).not.toHaveClass(styles['Tappable--hovered-background']);
+        await userEvent.hover(screen.getByTestId('parent'));
+        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('children')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
 
-        await userEvent.hover(screen.getByTestId('c'));
-        expect(result.getByTestId('x')).not.toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('c')).toHaveClass(styles['Tappable--hovered-background']);
+        await userEvent.hover(screen.getByTestId('children'));
+        expect(result.getByTestId('parent')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+        expect(result.getByTestId('children')).toHaveClass(styles['Tappable--hovered-background']);
 
-        await userEvent.hover(screen.getByTestId('x'));
-        expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('c')).not.toHaveClass(styles['Tappable--hovered-background']);
+        await userEvent.hover(screen.getByTestId('parent'));
+        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('children')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+      });
+
+      it('hovers parent on every child hover when parent has hasHoverWithChildren', async () => {
+        const result = render(
+          <Tappable data-testid="parent" onClick={noop} hasHoverWithChildren>
+            <Tappable data-testid="children-1" onClick={noop} />
+            <Tappable data-testid="children-2" onClick={noop} />
+          </Tappable>,
+        );
+
+        // hover на родителе
+        await userEvent.hover(screen.getByTestId('parent'));
+        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('children-1')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+        expect(result.getByTestId('children-2')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+
+        // hover на первом дочернем элементе: родитель тоже имеет hover
+        await userEvent.hover(screen.getByTestId('children-1'));
+        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('children-1')).toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+        expect(result.getByTestId('children-2')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+
+        // hover на родителе, дочерние hover не имеют
+        await userEvent.hover(screen.getByTestId('parent'));
+        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('children-1')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+        expect(result.getByTestId('children-2')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+
+        // hover на втором дочернем элементе: родитель тоже имеет hover
+        await userEvent.hover(screen.getByTestId('children-2'));
+        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('children-1')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+        expect(result.getByTestId('children-2')).toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+      });
+
+      it('hovers parent only on child hover with unlockParentHover', async () => {
+        const result = render(
+          <Tappable data-testid="parent" onClick={noop}>
+            <Tappable data-testid="children-1" onClick={noop} unlockParentHover />
+            <Tappable data-testid="children-2" onClick={noop} />
+          </Tappable>,
+        );
+
+        // hover на родителе
+        await userEvent.hover(screen.getByTestId('parent'));
+        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('children-1')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+        expect(result.getByTestId('children-2')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+
+        // hover на первом дочернем элементе: родитель имеет hover
+        await userEvent.hover(screen.getByTestId('children-1'));
+        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('children-1')).toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+        expect(result.getByTestId('children-2')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+
+        // hover на втором дочернем элементе: родитель не имеет hover
+        await userEvent.hover(screen.getByTestId('children-2'));
+        expect(result.getByTestId('parent')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+        expect(result.getByTestId('children-1')).not.toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
+        expect(result.getByTestId('children-2')).toHaveClass(
+          styles['Tappable--hovered-background'],
+        );
       });
 
       describe('handles disabled children', () => {
         it('hovers on disabled child hover', async () => {
           const result = render(
-            <Tappable onClick={noop} data-testid="x">
-              <Tappable onClick={noop} data-testid="c" disabled />
+            <Tappable onClick={noop} data-testid="parent">
+              <Tappable onClick={noop} data-testid="children" disabled />
             </Tappable>,
           );
-          await userEvent.hover(screen.getByTestId('c'));
-          expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
+          await userEvent.hover(screen.getByTestId('children'));
+          expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
         });
       });
     });

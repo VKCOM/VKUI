@@ -12,7 +12,7 @@ const sizeYClassNames = {
     styles['FormLayoutGroup--sizeY-none'],
     'vkuiInternalFormLayoutGroup--sizeY-none',
   ),
-  ['compact']: classNames(
+  compact: classNames(
     styles['FormLayoutGroup--sizeY-compact'],
     'vkuiInternalFormLayoutGroup--sizeY-compact',
   ),

@@ -21,4 +21,11 @@ export const Playground: Story = {
     IconCompact: Icon20Add,
     IconRegular: Icon24Add,
   },
+  decorators: [
+    (Component, context) => (
+      <div>
+        <Component {...context.args} />
+      </div>
+    ),
+  ],
 };

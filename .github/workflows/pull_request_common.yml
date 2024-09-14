@@ -20,7 +20,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Patch
-        if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
+        # TODO [>=7]: заменить условие после релиза v7 на ${ { startsWith(github.event.pull_request.title, 'fix') }}
+        if: false
         uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}

@@ -1,5 +1,5 @@
 {
-  "version": "6.6.0",
+  "version": "6.7.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "main": "dist/cjs/index.js",
@@ -13,6 +13,7 @@
     "!./src/**/*.*.ts",
     "!./src/**/*.*.tsx",
     "!./src/vkui.js",
+    "!./src/styles/missedThemeTokens.css",
     "!./src/testing/",
     "!./src/storybook/"
   ],

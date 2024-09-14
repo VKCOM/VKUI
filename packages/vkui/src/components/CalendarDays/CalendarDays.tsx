@@ -5,14 +5,19 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { CalendarDay, type CalendarDayElementProps } from '../CalendarDay/CalendarDay';
+import {
+  CalendarDay,
+  type CalendarDayElementProps,
+  type CalendarDayProps,
+} from '../CalendarDay/CalendarDay';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './CalendarDays.module.css';
 
 export interface CalendarDaysProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
+    Pick<CalendarDayProps, 'renderDayContent'> {
   value?: Date | Array<Date | null>;
   viewDate: Date;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -55,6 +60,7 @@ export const CalendarDays = ({
   dayProps,
   listenDayChangesForUpdate = false,
   getRootRef,
+  renderDayContent,
   ...props
 }: CalendarDaysProps): React.ReactNode => {
   const { locale } = useConfigProvider();
@@ -122,6 +128,7 @@ export const CalendarDays = ({
                 hinted={isDayHinted?.(day)}
                 sameMonth={sameMonth}
                 size={size}
+                renderDayContent={renderDayContent}
                 {...dayProps}
               />
             );

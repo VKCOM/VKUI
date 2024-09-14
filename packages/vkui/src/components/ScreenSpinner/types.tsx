@@ -8,5 +8,9 @@ export type ScreenSpinnerProps = Omit<SpinnerProps, 'size'> & {
    */
   customIcon?: React.ReactNode;
   mode?: 'shadow' | 'overlay';
+  /**
+   * Текст под иконкой
+   */
+  caption?: React.ReactNode;
   cancelLabel?: string;
 };

@@ -1,9 +1,22 @@
 .ScreenSpinner {
   position: relative;
+  box-sizing: border-box;
   inline-size: 88px;
   block-size: 88px;
+  padding-block: var(--vkui--spacing_size_2xl);
+  padding-inline: var(--vkui--spacing_size_2xl);
   border-radius: var(--vkui--size_border_radius--regular);
   animation: screen-spinner-intro 0.3s ease;
+}
+
+.ScreenSpinner--has-caption {
+  inline-size: fit-content;
+  block-size: fit-content;
+  max-inline-size: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .ScreenSpinner--mode-shadow {
@@ -17,8 +30,21 @@
   color: var(--vkui--color_icon_contrast);
 }
 
+.ScreenSpinner__caption {
+  color: var(--vkui--color_text_secondary);
+  margin-block-start: var(--vkui--spacing_size_xs);
+  text-align: center;
+}
+
+.ScreenSpinner--mode-overlay .ScreenSpinner__caption {
+  color: var(--vkui--color_text_contrast);
+}
+
 .ScreenSpinner__spinner {
   opacity: 1;
+}
+
+.ScreenSpinner__spinner--transition {
   transition: opacity 0.1s ease;
 }
 
@@ -26,6 +52,15 @@
 .ScreenSpinner--state-error .ScreenSpinner__spinner,
 .ScreenSpinner--state-custom .ScreenSpinner__spinner {
   opacity: 0;
+}
+
+.ScreenSpinner__icon-slot {
+  inline-size: 56px;
+  block-size: 56px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ScreenSpinner__icon {

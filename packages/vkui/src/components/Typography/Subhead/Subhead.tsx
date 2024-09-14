@@ -5,7 +5,7 @@ import styles from './Subhead.module.css';
 
 const sizeYClassNames = {
   none: styles['Subhead--sizeY-none'],
-  ['compact']: styles['Subhead--sizeY-compact'],
+  compact: styles['Subhead--sizeY-compact'],
 };
 
 export type SubheadProps = TypographyProps;

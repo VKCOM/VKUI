@@ -19,6 +19,7 @@ import { Playground as TitleStory } from './Title/Title.stories';
 
 interface TypographyOverview {
   weight: '1' | '2' | '3';
+  accent: true;
 }
 
 const story: Meta<TypographyOverview> = {
@@ -29,6 +30,7 @@ const story: Meta<TypographyOverview> = {
       control: 'inline-radio',
       options: ['1', '2', '3'],
     },
+    accent: { control: 'boolean' },
   },
   decorators: [withCartesian],
 };

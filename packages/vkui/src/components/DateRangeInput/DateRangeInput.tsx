@@ -26,7 +26,7 @@ import dateInputStyles from '../DateInput/DateInput.module.css';
 
 const sizeYClassNames = {
   none: styles['DateRangeInput--sizeY-none'],
-  ['compact']: styles['DateRangeInput--sizeY-compact'],
+  compact: styles['DateRangeInput--sizeY-compact'],
 };
 
 export interface DateRangeInputProps
@@ -47,6 +47,7 @@ export interface DateRangeInputProps
       | 'changeDayLabel'
       | 'prevMonthIcon'
       | 'nextMonthIcon'
+      | 'renderDayContent'
     >,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'> {
@@ -139,6 +140,7 @@ export const DateRangeInput = ({
   prevMonthIcon,
   nextMonthIcon,
   disableCalendar = false,
+  renderDayContent,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -342,6 +344,7 @@ export const DateRangeInput = ({
             changeDayLabel={changeDayLabel}
             prevMonthIcon={prevMonthIcon}
             nextMonthIcon={nextMonthIcon}
+            renderDayContent={renderDayContent}
           />
         </Popper>
       )}
