@@ -1,4 +1,4 @@
-import { API, ASTPath, Collection, FileInfo, JSXAttribute } from 'jscodeshift';
+import { API, ASTPath, FileInfo, JSXAttribute } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
 
