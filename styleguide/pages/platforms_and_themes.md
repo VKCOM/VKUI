@@ -112,21 +112,27 @@ const appearance = useAppearance();
 > Стоит иметь ввиду, что некоторые компоненты делегируют цвет фона родителю выше, например, это
 > компонент [Cell](#/Cell) и его производные.
 >
-> На примере [Cell](#/Cell) рассмотрим решение проблемы через допустимое определения фона посредством
-> `className` или `style`:
+> На примере [SimpleCell](#/SimpleCell) рассмотрим решение проблемы через допустимое определения
+> фона посредством `className` или `style`:
 >
 > ```jsx static
 > <Group header={<Header>Настройка тем</Header>}>
->   <Cell mode="selectable">Системная тема</Cell>
+>   <SimpleCell before={<Icon20PalleteOutline />}>Системная тема</SimpleCell>
 >   <AppearanceProvider value="dark">
->     <Cell mode="selectable" style={{ backgroundColor: 'var(--vkui--color_background_content)' }}>
+>     <SimpleCell
+>       before={<Icon20MoonOutline />}
+>       style={{ backgroundColor: 'var(--vkui--color_background_content)' }}
+>     >
 >       Тёмная тема
->     </Cell>
+>     </SimpleCell>
 >   </AppearanceProvider>
 >   <AppearanceProvider value="light">
->     <Cell mode="selectable" style={{ backgroundColor: 'var(--vkui--color_background_content)' }}>
+>     <SimpleCell
+>       before={<Icon20SunOutline />}
+>       style={{ backgroundColor: 'var(--vkui--color_background_content)' }}
+>     >
 >       Светлая тема
->     </Cell>
+>     </SimpleCell>
 >   </AppearanceProvider>
 > </Group>
 > ```
