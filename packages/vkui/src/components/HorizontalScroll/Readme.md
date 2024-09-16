@@ -150,7 +150,7 @@ const AlbumItems = () => {
   ));
 };
 
-const usersList = getRandomUsers(10);
+const usersList = getRandomUsers(3);
 
 const RandomUsers = () => {
   return usersList.map((user) => (

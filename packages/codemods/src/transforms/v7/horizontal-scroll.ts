@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { report } from '../../report';
@@ -17,7 +16,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     return source.toSource();
   }
 
-  const horizontalScrollComponent = source
+  source
     .find(j.JSXOpeningElement)
     .filter(
       (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === localName,

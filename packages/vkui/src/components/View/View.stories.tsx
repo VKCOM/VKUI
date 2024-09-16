@@ -76,7 +76,7 @@ const ProfilePanelContent = ({
         header={<Header>HorizontalScroll</Header>}
         description="Свайпбэк срабатывает либо если мы тянем за левый край экрана, либо если позиция горизонтального скролла равна нулю"
       >
-        <HorizontalScroll inline>
+        <HorizontalScroll>
           {getRandomUsers(15).map((user) => (
             <HorizontalCell key={user.id} size="s" header={user.first_name}>
               <Avatar size={56} src={user.photo_100} />
