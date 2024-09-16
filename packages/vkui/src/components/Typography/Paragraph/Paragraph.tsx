@@ -1,6 +1,12 @@
 import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { Typography, type TypographyProps } from '../Typography';
 import styles from './Paragraph.module.css';
+
+const sizeYClassNames = {
+  none: styles['Paragraph--sizeY-none'],
+  compact: styles['Paragraph--sizeY-compact'],
+};
 
 export type ParagraphProps = TypographyProps;
 
@@ -16,12 +22,18 @@ export const Paragraph = ({
   inline = false,
   ...restProps
 }: ParagraphProps): React.ReactNode => {
+  const { sizeY = 'none' } = useAdaptivity();
+
   return (
     <Typography
       Component={Component}
       normalize={normalize}
       inline={inline}
-      className={classNames(className, styles['Paragraph'])}
+      className={classNames(
+        className,
+        styles['Paragraph'],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
+      )}
       {...restProps}
     />
   );

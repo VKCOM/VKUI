@@ -8,7 +8,7 @@ import styles from './RichCell.module.css';
 
 const sizeYClassNames = {
   none: styles['RichCell--sizeY-none'],
-  ['compact']: styles['RichCell--sizeY-compact'],
+  compact: styles['RichCell--sizeY-compact'],
 };
 
 const alignAfterClassNames = {

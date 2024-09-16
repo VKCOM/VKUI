@@ -8,7 +8,7 @@ import styles from './Input.module.css';
 
 const sizeYClassNames = {
   none: styles['Input--sizeY-none'],
-  ['compact']: styles['Input--sizeY-compact'],
+  compact: styles['Input--sizeY-compact'],
 };
 
 export interface InputProps

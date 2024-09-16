@@ -7,7 +7,7 @@ export const ParagraphPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          weight: ['3', '2', '1'],
+          weight: [undefined, '3', '2', '1'],
         },
         {
           normalize: [true],

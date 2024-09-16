@@ -26,7 +26,7 @@ import dateInputStyles from '../DateInput/DateInput.module.css';
 
 const sizeYClassNames = {
   none: styles['DateRangeInput--sizeY-none'],
-  ['compact']: styles['DateRangeInput--sizeY-compact'],
+  compact: styles['DateRangeInput--sizeY-compact'],
 };
 
 export interface DateRangeInputProps
