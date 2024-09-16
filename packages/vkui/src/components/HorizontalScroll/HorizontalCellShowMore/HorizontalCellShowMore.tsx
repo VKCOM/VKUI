@@ -38,12 +38,6 @@ export interface HorizontalCellShowMoreProps
    * */
   children?: SubheadProps['children'];
   /**
-   * Позволяет компенсировать особый правый отступ у предшествующего элементa `HorizontalCell`,
-   * в том случае, если тот элемент последний в родителе.
-   * Если `HorizontalCellShowMore` находится на одном уровне с остальными `HorizontalCell`, то этот проп использовать не нужно.
-   */
-  compensateLastCellIndent?: boolean;
-  /**
    * Выравнивание по центру относительно родителя
    */
   centered?: boolean;
@@ -54,7 +48,6 @@ export const HorizontalCellShowMore = ({
   style,
   getRef,
   getRootRef,
-  compensateLastCellIndent,
   height,
   size = 's',
   children = size === 's' ? 'Все' : 'Показать все',
@@ -66,7 +59,6 @@ export const HorizontalCellShowMore = ({
       style={style}
       className={classNames(
         styles['HorizontalCellShowMore'],
-        compensateLastCellIndent && styles['HorizontalCellShowMore--compensate-last-cell-indent'],
         centered && styles['HorizontalCellShowMore--centered'],
         sizeClassNames[size],
         className,

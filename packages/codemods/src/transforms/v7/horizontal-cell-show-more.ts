@@ -5,7 +5,7 @@ import { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
 
-const componentName = 'HorizontalScroll';
+const componentName = 'HorizontalCellShowMore';
 export default function transformer(file: FileInfo, api: API, options: JSCodeShiftOptions) {
   const { alias } = options;
   const j = api.jscodeshift;
@@ -22,7 +22,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === localName,
     )
     .find(j.JSXAttribute)
-    .filter((attribute) => attribute.node.name.name === 'inline')
+    .filter((attribute) => attribute.node.name.name === 'compensateLastCellIndent')
     .forEach((attribute) => {
       const node = attribute.node;
 
@@ -35,7 +35,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         if (node.value.expression.value) {
           j(attribute).remove();
         } else {
-          report(api, `Manual changes required for ${componentName}'s "inline" prop.`);
+          report(
+            api,
+            `Manual changes required for ${componentName}'s "compensateLastCellIndent" prop. You might not need it anymore.`,
+          );
         }
       }
     });

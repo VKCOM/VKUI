@@ -177,17 +177,3 @@ const RandomUsers = () => {
   <HorizontalCellShowMore />
 </HorizontalScroll>
 ```
-
-Или как последний элемент `HorizontalScroll`, но тогда надо компенсировать отступы высталяемые
-`HorizontalCell` с помощью свойства `compensateLastCellIndent`.
-
-```tsx static
-<HorizontalScroll>
-  <ListWrapper>
-    <HorizontalCell>1</HorizontalCell>
-    <HorizontalCell>2</HorizontalCell>
-    <HorizontalCell>3</HorizontalCell>
-  </ListWrapper>
-  <HorizontalCellShowMore compensateLastCellIndent />
-</HorizontalScroll>
-```
