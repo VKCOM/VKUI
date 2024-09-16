@@ -171,12 +171,10 @@ const RandomUsers = () => {
 
 ```tsx static
 <HorizontalScroll>
-  <ListWrapper>
-    <HorizontalCell>1</HorizontalCell>
-    <HorizontalCell>2</HorizontalCell>
-    <HorizontalCell>3</HorizontalCell>
-    <HorizontalCellShowMore />
-  </ListWrapper>
+  <HorizontalCell>1</HorizontalCell>
+  <HorizontalCell>2</HorizontalCell>
+  <HorizontalCell>3</HorizontalCell>
+  <HorizontalCellShowMore />
 </HorizontalScroll>
 ```
 
