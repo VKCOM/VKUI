@@ -4000,6 +4000,7 @@ __metadata:
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
     "@storybook/react": "npm:8.3.0"
+    "@storybook/react-webpack5": "npm:8.3.0"
     "@swc/helpers": "npm:^0.5.13"
     "@vkontakte/icons": "npm:^2.115.0"
     "@vkontakte/vkjs": "npm:^1.3.0"
