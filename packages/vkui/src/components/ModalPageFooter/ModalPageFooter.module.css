@@ -2,9 +2,7 @@
   inline-size: 100%;
 
   /* см. `.ModalPageV2__children {}` */
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: auto;
+  flex: 0 0 auto;
   background-color: var(--vkui--color_background_modal);
 }
 

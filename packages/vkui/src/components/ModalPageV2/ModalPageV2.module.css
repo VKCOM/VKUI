@@ -6,6 +6,7 @@
 }
 
 .ModalPageV2 {
+  --vkui_internal_ModalPage--animation-duration: 0.3s;
   --vkui_internal_ModalPage--transform-default: none;
 
   inline-size: 100%;
@@ -59,11 +60,13 @@
   }
 
   .ModalPageV2--enter {
-    animation: animation-slide-up 0.2s ease-out 0.1s backwards;
+    animation: animation-slide-up var(--vkui_internal_ModalPage--animation-duration)
+      var(--vkui--animation_easing_platform) 0.1s backwards;
   }
 
   .ModalPageV2--exit {
-    animation: animation-slide-down 0.1s ease-in forwards;
+    animation: animation-slide-down var(--vkui_internal_ModalPage--animation-duration)
+      var(--vkui--animation_easing_platform) forwards;
   }
 
   .ModalPageV2__container::after {

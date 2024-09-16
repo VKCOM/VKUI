@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -164,6 +164,9 @@ export const DynamicModalPage: Story = {
                 consequences, or one who avoids a pain that produces no resultant pleasure?
               </Div>
             )}
+            <FormItem>
+              <Textarea placeholder="Some text" />
+            </FormItem>
           </ModalPageContent>
           <ModalPageFooter>
             <Button stretched>Button</Button>
