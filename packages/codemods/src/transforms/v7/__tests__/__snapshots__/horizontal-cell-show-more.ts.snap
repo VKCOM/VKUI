@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`horizontal-cell-show-more transforms correctly 1`] = `
-"import { HorizontalCell, HorizontalCellShowMore, HorizontalScroll } from '@vkontakte/vkui';
+"import { HorizontalCellShowMore, HorizontalScroll } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
