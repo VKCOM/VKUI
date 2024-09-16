@@ -117,15 +117,18 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: vkui-floating-ui package.json changed
-        id: vkui-floating-ui-package-changed
-        uses: ./.github/actions/check-file-changed
+      - name: Find changes
+        uses: dorny/paths-filter@v3
+        id: file_changes
         with:
-          file_path: 'packages/vkui-floating-ui/package.json'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filters: |
+            vkui_floating_ui_package:
+              - 'packages/vkui-floating-ui/package.json'
 
       - name: Check if vkui-floating-ui was updated
         id: check_floating_ui_updated
-        if: ${{ steps.vkui-floating-ui-package-changed.outputs.result == 'true' }}
+        if: ${{ steps.file_changes.outputs.vkui_floating_ui_package == 'true' }}
         run: |
           UPDATED_DEPS=$(echo ${{ steps.metadata.outputs.dependency-names }} | sed "s/,/ /g")
 

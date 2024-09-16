@@ -53,27 +53,26 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Root package.json changed
-        id: root-package-changed
-        uses: ./.github/actions/check-file-changed
+      - name: Find changes
+        uses: dorny/paths-filter@v3
+        id: file_changes
         with:
-          file_path: 'package.json'
-
-      - name: VKUI package.json changed
-        id: vkui-package-changed
-        uses: ./.github/actions/check-file-changed
-        with:
-          file_path: 'packages/vkui/package.json'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filters: |
+            root_package:
+              - 'package.json'
+            vkui_package:
+              - 'packages/vkui/package.json'
 
       - name: Get @vkontakte/vkui dependencies
         id: dependencies
         run: |
-          if [[ ${{ steps.root-package-changed.outputs.result }} == 'true' ]]; then
+          if [[ ${{ steps.file_changes.outputs.root_package }} == 'true' ]]; then
             echo "value=@vkontakte/vkui-tokens" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          if [[ ${{ steps.vkui-package-changed.outputs.result }} == 'true' ]]; then
+          if [[ ${{ steps.file_changes.outputs.vkui_package }} == 'true' ]]; then
             DEPENDENCIES_OBJECT=$(node -p "require('./packages/vkui/package.json').dependencies")
             DEPENDENCIES_ARRAY=$(node -p "Object.keys($DEPENDENCIES_OBJECT)")
             DEPENDENCIES_ARRAY_JSON=$(node -p "JSON.stringify($DEPENDENCIES_ARRAY)")
