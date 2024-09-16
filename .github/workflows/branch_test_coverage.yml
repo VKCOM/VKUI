@@ -20,6 +20,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Создаем кэш для LFS в мастере, чтобы другие ветки могли его получить.
+  # Кэш требуется для того, чтобы не превышать лимиты GitHub
+  lfs:
+    runs-on: ubuntu-latest
+    name: Create LFS cache
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Checkout LFS objects
+        uses: ./.github/actions/lfs
+
   test:
     name: Call reusable unit tests workflow
     uses: ./.github/workflows/reusable_workflow_test.yml

@@ -21,6 +21,7 @@ const COMPONENTS_DIR = `${SRC_DIR}/components`;
 const STYLES_DIR = `${SRC_DIR}/styles`;
 const CSS_CONSTANTS = `${STYLES_DIR}/constants.css`;
 const CSS_DYNAMIC_TOKENS = `${STYLES_DIR}/dynamicTokens.css`;
+const CSS_MISSED_THEME_TOKENS = `${STYLES_DIR}/missedThemeTokens.css`;
 const CSS_CUSTOM_MEDIAS = `${STYLES_DIR}/customMedias.generated.css`;
 const TYPES_DIR = `${SRC_DIR}/types`;
 const TEST_UTILS_DIR = `${SRC_DIR}/testing`;
@@ -34,6 +35,7 @@ module.exports.PATHS = {
   STYLES_DIR,
   CSS_CONSTANTS,
   CSS_DYNAMIC_TOKENS,
+  CSS_MISSED_THEME_TOKENS,
   CSS_CUSTOM_MEDIAS,
   TYPES_DIR,
   TEST_UTILS_DIR,

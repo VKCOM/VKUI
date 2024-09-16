@@ -10,7 +10,7 @@ const stylesLevel = {
 
 const sizeYClassNames = {
   none: styles['Headline--sizeY-none'],
-  ['compact']: styles['Headline--sizeY-compact'],
+  compact: styles['Headline--sizeY-compact'],
 };
 
 export interface HeadlineProps extends TypographyProps {
@@ -24,7 +24,6 @@ export interface HeadlineProps extends TypographyProps {
  */
 export const Headline = ({
   className,
-  weight = '3',
   level = '1',
   Component = 'span',
   normalize = true,
@@ -38,7 +37,6 @@ export const Headline = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      weight={weight}
       className={classNames(
         className,
         sizeY !== 'regular' && sizeYClassNames[sizeY],

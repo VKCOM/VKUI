@@ -20,7 +20,7 @@ import styles from './DateInput.module.css';
 
 const sizeYClassNames = {
   none: styles['DateInput--sizeY-none'],
-  ['compact']: styles['DateInput--sizeY-compact'],
+  compact: styles['DateInput--sizeY-compact'],
 };
 
 export interface DateInputProps
@@ -53,6 +53,7 @@ export interface DateInputProps
       | 'nextMonthIcon'
       | 'minDateTime'
       | 'maxDateTime'
+      | 'renderDayContent'
     >,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'> {
@@ -145,6 +146,7 @@ export const DateInput = ({
   prevMonthIcon,
   nextMonthIcon,
   disableCalendar = false,
+  renderDayContent,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -330,6 +332,7 @@ export const DateInput = ({
             changeYearLabel={changeYearLabel}
             changeDayLabel={changeDayLabel}
             showNeighboringMonth={showNeighboringMonth}
+            renderDayContent={renderDayContent}
             size={size}
             viewDate={viewDate}
             onHeaderChange={onHeaderChange}

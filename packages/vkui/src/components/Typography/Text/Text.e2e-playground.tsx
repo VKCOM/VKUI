@@ -7,7 +7,7 @@ export const TextPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          weight: ['3'],
+          weight: [undefined, '3'],
           $adaptivity: 'y',
         },
         {

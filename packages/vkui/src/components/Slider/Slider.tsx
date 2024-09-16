@@ -21,7 +21,7 @@ import styles from './Slider.module.css';
 
 const sizeYClassNames = {
   none: styles['Slider--sizeY-none'],
-  ['compact']: styles['Slider--sizeY-compact'],
+  compact: styles['Slider--sizeY-compact'],
 };
 
 const sizeClassNames = {

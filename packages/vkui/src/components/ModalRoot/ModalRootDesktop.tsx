@@ -144,7 +144,19 @@ export const ModalRootDesktop = ({
     // Анимация закрытия модального окна
     if (!activeModal) {
       requestAnimationFrame(() => {
-        waitTransitionFinish(prevModalState?.innerElement, () => onExited(id), timeout);
+        waitTransitionFinish(
+          prevModalState?.innerElement,
+          (event) => {
+            // Исключаем дочерние элементы
+            if (event && event.target === prevModalState?.innerElement) {
+              onExited(id);
+            } else if (!event) {
+              // Вызвался по тайм-ауту
+              onExited(id);
+            }
+          },
+          timeout,
+        );
         animateModalOpacity(prevModalState, false);
         setMaskOpacity(prevModalState, 0);
       });

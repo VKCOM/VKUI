@@ -90,6 +90,30 @@ describe('Alert', () => {
       });
       expect(onClose).toHaveBeenCalledTimes(1);
     });
+
+    it('should call onClose last', async () => {
+      const callOrder: Array<'action' | 'onClose'> = [];
+      const action = jest.fn().mockImplementation(() => callOrder.push('action'));
+      const onClose = jest.fn().mockImplementation(() => callOrder.push('onClose'));
+      const result = render(
+        <Alert
+          onClose={onClose}
+          actions={[
+            {
+              action,
+              'title': 'Item',
+              'data-testid': '__action__',
+              'mode': 'default',
+            },
+          ]}
+        />,
+      );
+      await userEvent.click(result.getByTestId('__action__'));
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(callOrder).toEqual(['action', 'onClose']);
+    });
   });
 
   describe('calls action after close by default', () => {

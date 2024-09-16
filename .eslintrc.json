@@ -82,6 +82,7 @@
     "eqeqeq": "error", // Only type-safe equality operators
     "unicorn/expiring-todo-comments": ["error"],
     "no-console": "error",
-    "react-compiler/react-compiler": 2
+    "react-compiler/react-compiler": 2,
+    "no-useless-computed-key": "error"
   }
 }

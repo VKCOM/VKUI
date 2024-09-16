@@ -6,7 +6,7 @@ import styles from './CardGrid.module.css';
 
 const sizeXClassNames = {
   none: styles['CardGrid--sizeX-none'],
-  ['compact']: styles['CardGrid--sizeX-compact'],
+  compact: styles['CardGrid--sizeX-compact'],
 };
 
 const stylesSize = {
