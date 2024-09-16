@@ -20,7 +20,7 @@ export interface BadgeProps extends RootComponentProps<HTMLSpanElement> {
 export const Badge = ({ mode = 'new', children, ...restProps }: BadgeProps): React.ReactNode => (
   <RootComponent
     Component="span"
-    baseClassName={classNames(styles['Badge'], stylesMode[mode])}
+    baseClassName={classNames(styles['Badge'], 'vkuiInternalBadge', stylesMode[mode])}
     {...restProps}
   >
     {children && <VisuallyHidden>{children}</VisuallyHidden>}

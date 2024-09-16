@@ -13,8 +13,8 @@ import styles from './Panel.module.css';
 
 const sizeXClassNames = {
   none: styles['Panel--sizeX-none'],
-  ['compact']: styles['Panel--sizeX-compact'],
-  ['regular']: styles['Panel--sizeX-regular'],
+  compact: styles['Panel--sizeX-compact'],
+  regular: styles['Panel--sizeX-regular'],
 };
 
 const stylesMode = {

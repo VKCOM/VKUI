@@ -36,7 +36,7 @@ export interface ToolButtonProps extends TappableProps, AdaptiveIconRendererProp
   /**
    * Задаёт `50%` закругления для контейнера.
    *
-   * > Note: игнорируется при передаче `children`.
+   * > Note: игнорируется при `direction="column"` если передан `children`.
    */
   rounded?: boolean;
 }
@@ -71,7 +71,8 @@ export const ToolButton = ({
       className={classNames(
         className,
         styles['ToolButton'],
-        rounded && !hasChildren && styles['ToolButton--rounded'],
+        rounded && getRoundedClassName(direction, hasChildren),
+        hasChildren && direction === 'row' && styles['ToolButton--withFakeEndIcon'],
         stylesMode[mode],
         stylesAppearance[appearance],
         stylesDirection[direction],
@@ -84,3 +85,15 @@ export const ToolButton = ({
     </Tappable>
   );
 };
+
+export function getRoundedClassName(
+  direction: 'row' | 'column',
+  hasChildren: boolean,
+): string | undefined {
+  switch (direction) {
+    case 'row':
+      return styles['ToolButton--rounded'];
+    case 'column':
+      return hasChildren ? undefined : styles['ToolButton--rounded'];
+  }
+}

@@ -9,7 +9,7 @@ import styles from './FormField.module.css';
 
 const sizeYClassNames = {
   none: styles['FormField--sizeY-none'],
-  ['compact']: styles['FormField--sizeY-compact'],
+  compact: styles['FormField--sizeY-compact'],
 };
 
 const stylesStatus = {
