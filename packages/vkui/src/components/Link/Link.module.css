@@ -25,7 +25,6 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .Link :global(.vkuiIcon) {
-  margin-inline-start: 4px;
   display: inline-block;
   vertical-align: middle;
 }
