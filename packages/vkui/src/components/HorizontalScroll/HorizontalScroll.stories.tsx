@@ -52,7 +52,7 @@ export const Playground: Story = {
 
     return (
       <HorizontalScroll {...args} inline>
-        {commonFriends.length === 0 && <Spinner size="regular" style={{ height: 88 }} />}
+        {commonFriends.length === 0 && <Spinner size="m" style={{ height: 88 }} />}
         {commonFriends.length > 0 && (
           <React.Fragment>
             {commonFriends.map((item) => {

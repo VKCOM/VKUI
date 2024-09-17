@@ -8,7 +8,7 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Spinner.module.css';
 
 export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
-  size?: 'small' | 'regular' | 'medium' | 'large';
+  size?: 's' | 'm' | 'l' | 'xl';
   disableAnimation?: boolean;
   /**
    * Задать цвет можно будет через свойство color родителя
@@ -21,7 +21,7 @@ export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
  */
 export const Spinner: React.FC<SpinnerProps> = React.memo(
   ({
-    size = 'regular',
+    size = 'm',
     children = 'Загружается...',
     disableAnimation = false,
     noColor = false,
@@ -29,10 +29,10 @@ export const Spinner: React.FC<SpinnerProps> = React.memo(
   }: SpinnerProps) => {
     const isReducedMotion = useReducedMotion();
     const SpinnerIcon = {
-      small: Icon16Spinner,
-      regular: Icon24Spinner,
-      medium: Icon32Spinner,
-      large: Icon44Spinner,
+      s: Icon16Spinner,
+      m: Icon24Spinner,
+      l: Icon32Spinner,
+      xl: Icon44Spinner,
     }[size];
     let svgAnimateElement: React.ReactNode = null;
 
@@ -57,7 +57,7 @@ export const Spinner: React.FC<SpinnerProps> = React.memo(
           />
         );
       } else {
-        const center = { small: 8, regular: 12, medium: 16, large: 22 }[size];
+        const center = { s: 8, m: 12, l: 16, xl: 22 }[size];
         svgAnimateElement = (
           <animateTransform
             attributeType="XML"

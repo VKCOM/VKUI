@@ -54,7 +54,7 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           mode: ['primary'],
-          size: ['regular', 'large'],
+          size: ['m', 'l'],
         },
         {
           mode: ['primary'],

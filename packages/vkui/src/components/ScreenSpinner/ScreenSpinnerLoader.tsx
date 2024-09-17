@@ -18,7 +18,7 @@ export const ScreenSpinnerLoader: React.FC<Omit<SpinnerProps, 'size'>> = ({
         styles['ScreenSpinner__spinner'],
         !caption && styles['ScreenSpinner__spinner--transition'],
       )}
-      size="large"
+      size="xl"
       noColor
       {...restProps}
     >
