@@ -102,6 +102,19 @@ const App = () => {
       >
         <div/>
       </FormItem>
+
+      {/* test 8: remove unnecessary attribute */}
+      <FormItem
+        topMultiline={false}
+        top={
+          <FormItem.Top>
+            <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
+            <FormItem.TopAside>0/100</FormItem.TopAside>
+          </FormItem.Top>
+        }
+      >
+        <div/>
+      </FormItem>
     </React.Fragment>
   );
 };

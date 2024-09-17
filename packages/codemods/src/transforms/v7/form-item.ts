@@ -64,6 +64,24 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     let topLabelMultiline: JSXExpressionContainer | true | undefined;
     const formItemAttributes = formItem.openingElement.attributes;
 
+    const prettifyTopMultilineAttribute = () => {
+      // Избавляемся от лишнего:
+      // если topMultiline={false} можно убрать аттрибут
+      // если topMultiline={true} можно убрать {true}
+      if (topMultiline && formItemAttributes?.includes(topMultiline)) {
+        if (
+          topMultiline?.value?.type === 'JSXExpressionContainer' &&
+          topMultiline.value.expression.type === 'BooleanLiteral'
+        ) {
+          if (topMultiline.value.expression.value) {
+            topMultiline.value = null;
+          } else {
+            formItemAttributes.splice(formItemAttributes.indexOf(topMultiline), 1);
+          }
+        }
+      }
+    };
+
     // Проверяем существующий topMultiline проп
     formItemAttributes?.forEach((attr) => {
       if (attr.type === 'JSXAttribute' && attr.name.name === 'topMultiline') {
@@ -100,50 +118,22 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       }
     }
     if (!topLabelMultiline) {
+      prettifyTopMultilineAttribute();
       return;
     }
-
+    const newTopMultilineValue = topLabelMultiline === true ? null : topLabelMultiline;
     // Обновляем или добавляем topMultiline проп
     if (topMultiline) {
-      // Если у FormItem задан topMultiline
-      if (!topLabelMultiline) {
-        // Если у FormItemTopLabel multiline не задан, значит
-        // topMultiline нужно вообще убрать из FormItem
-        formItemAttributes?.splice(formItemAttributes.indexOf(topMultiline), 1);
-      } else if (topLabelMultiline === true) {
-        // Если у FormItemTopLabel multiline == true, значит
-        // У FormField у topMultiline можно убрать значение
-        topMultiline.value = null;
-      } else {
-        // Для остальных случаев для topMultiline устанавливаем то же
-        // самое значение, что было в FormItemTopLabel multiline
-        topMultiline.value = topLabelMultiline;
-      }
+      // Если у FormItem задан topMultiline -> переопределяем
+      topMultiline.value = newTopMultilineValue;
     } else if (topLabelMultiline) {
       // Если у FormItem не задан topMultiline
       // добавляем его в аргументы
-      const newAttribute = j.jsxAttribute(
-        j.jsxIdentifier('topMultiline'),
-        topLabelMultiline === true ? null : topLabelMultiline,
+      formItemAttributes?.push(
+        j.jsxAttribute(j.jsxIdentifier('topMultiline'), newTopMultilineValue),
       );
-      formItemAttributes?.push(newAttribute);
     }
-
-    // Избавляемся от лишнего:
-    // если topMultiline={false} можно убрать аттрибут
-    // если topMultiline={true} можно убрать {true}
-    if (topMultiline && formItemAttributes?.includes(topMultiline)) {
-      if (
-        topMultiline?.value?.type === 'JSXExpressionContainer' &&
-        topMultiline.value.expression.type === 'BooleanLiteral'
-      ) {
-        if (topMultiline.value.expression.value) {
-          topMultiline.value = null;
-        } else {
-          formItemAttributes.splice(formItemAttributes.indexOf(topMultiline), 1);
-        }
-      }
-    }
+    prettifyTopMultilineAttribute();
   });
 
   return source.toSource();
