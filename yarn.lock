@@ -3884,6 +3884,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     storybook: "npm:8.3.0"
+    ts-node: "npm:*"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -15658,7 +15659,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.9.2":
+"ts-node@npm:*, ts-node@npm:^10.9.2":
   version: 10.9.2
   resolution: "ts-node@npm:10.9.2"
   dependencies:
