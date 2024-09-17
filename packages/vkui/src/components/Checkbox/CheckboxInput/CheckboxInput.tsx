@@ -16,6 +16,12 @@ import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';
 
+type VendorIconOnCompactType = typeof Icon20CheckBoxOn;
+type VendorIconOnRegularType = typeof Icon24CheckBoxOn;
+type VendorIconOffCompactType = typeof Icon20CheckBoxOff;
+type VendorIconOffRegularType = typeof Icon24CheckBoxOff;
+type VendorIconIndetermanateType = typeof Icon20CheckBoxIndetermanate;
+
 function setIndeterminate(el: HTMLInputElement, indeterminate: boolean) {
   el.indeterminate = indeterminate;
 }
@@ -26,6 +32,17 @@ export interface CheckboxInputProps
     HasRef<HTMLInputElement> {
   indeterminate?: boolean;
   defaultIndeterminate?: boolean;
+  IconOnCompact?: React.ComponentType<React.SVGProps<SVGSVGElement>> | VendorIconOnCompactType;
+  IconOnRegular?: React.ComponentType<React.SVGAttributes<SVGSVGElement>> | VendorIconOnRegularType;
+  IconOffCompact?:
+    | React.ComponentType<React.SVGAttributes<SVGSVGElement>>
+    | VendorIconOffCompactType;
+  IconOffRegular?:
+    | React.ComponentType<React.SVGAttributes<SVGSVGElement>>
+    | VendorIconOffRegularType;
+  IconIndetermanate?:
+    | React.ComponentType<React.SVGAttributes<SVGSVGElement>>
+    | VendorIconIndetermanateType;
 }
 
 const warn = warnOnce('Checkbox');
@@ -38,6 +55,11 @@ export function CheckboxInput({
   indeterminate,
   defaultIndeterminate,
   onChange,
+  IconOnCompact = Icon20CheckBoxOn,
+  IconOnRegular = Icon24CheckBoxOn,
+  IconOffCompact = Icon20CheckBoxOff,
+  IconOffRegular = Icon24CheckBoxOff,
+  IconIndetermanate = Icon20CheckBoxIndetermanate,
   ...restProps
 }: CheckboxInputProps) {
   const inputRef = useExternRef(getRef);
@@ -100,11 +122,11 @@ export function CheckboxInput({
         getRootRef={inputRef}
       />
       {platform === 'vkcom' ? (
-        <Icon20CheckBoxOn className={styles['CheckboxInput__icon--on']} />
+        <IconOnCompact className={styles['CheckboxInput__icon--on']} />
       ) : (
         <React.Fragment>
           {adaptiveSizeY.compact && (
-            <Icon20CheckBoxOn
+            <IconOnCompact
               className={classNames(
                 styles['CheckboxInput__icon--on'],
                 adaptiveSizeY.compact.className,
@@ -112,7 +134,7 @@ export function CheckboxInput({
             />
           )}
           {adaptiveSizeY.regular && (
-            <Icon24CheckBoxOn
+            <IconOnRegular
               className={classNames(
                 styles['CheckboxInput__icon--on'],
                 adaptiveSizeY.regular.className,
@@ -122,11 +144,11 @@ export function CheckboxInput({
         </React.Fragment>
       )}
       {platform === 'vkcom' ? (
-        <Icon20CheckBoxOff className={styles['CheckboxInput__icon--off']} />
+        <IconOffCompact className={styles['CheckboxInput__icon--off']} />
       ) : (
         <React.Fragment>
           {adaptiveSizeY.compact && (
-            <Icon20CheckBoxOff
+            <IconOffCompact
               className={classNames(
                 styles['CheckboxInput__icon--off'],
                 adaptiveSizeY.compact.className,
@@ -134,7 +156,7 @@ export function CheckboxInput({
             />
           )}
           {adaptiveSizeY.regular && (
-            <Icon24CheckBoxOff
+            <IconOffRegular
               className={classNames(
                 styles['CheckboxInput__icon--off'],
                 adaptiveSizeY.regular.className,
@@ -144,7 +166,7 @@ export function CheckboxInput({
         </React.Fragment>
       )}
       {platform === 'vkcom' ? (
-        <Icon20CheckBoxIndetermanate
+        <IconIndetermanate
           width={20}
           height={20}
           className={styles['CheckboxInput__icon--indeterminate']}
@@ -152,7 +174,7 @@ export function CheckboxInput({
       ) : (
         <React.Fragment>
           {adaptiveSizeY.compact && (
-            <Icon20CheckBoxIndetermanate
+            <IconIndetermanate
               className={classNames(
                 styles['CheckboxInput__icon--indeterminate'],
                 adaptiveSizeY.compact.className,
@@ -162,7 +184,7 @@ export function CheckboxInput({
             />
           )}
           {adaptiveSizeY.regular && (
-            <Icon20CheckBoxIndetermanate
+            <IconIndetermanate
               className={classNames(
                 styles['CheckboxInput__icon--indeterminate'],
                 adaptiveSizeY.regular.className,
