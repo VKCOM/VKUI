@@ -2,9 +2,19 @@
   "version": "6.7.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
-  "main": "dist/cjs/index.js",
-  "module": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./dist/vkui.css": "./dist/vkui.css",
+    "./dist/components.css": "./dist/components.css",
+    "./dist/cssm": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/cssm/index.js"
+    },
+    "./dist/cssm/styles/themes.css": "./dist/cssm/styles/themes.css"
+  },
   "files": [
     "./dist",
     "./src",
@@ -19,7 +29,6 @@
   ],
   "sideEffects": [
     "./dist/index.js",
-    "./dist/cjs/index.js",
     "./dist/cssm/index.js",
     "*.css"
   ],
@@ -46,11 +55,8 @@
     "postcss:modules": "yarn run -T postcss './src/**/*.css' --base ./src --dir ./dist/cssm --config ./cssm",
     "swc-base": "yarn run -T cross-env NODE_ENV=production swc src/ --config-file package.swcrc --extensions .tsx,.jsx,.ts,.js --strip-leading-paths",
     "swc:es6": "yarn swc-base -d dist -s",
-    "swc:cjs": "yarn swc-base -d dist/cjs -s -C module.type=commonjs",
     "swc:cssm": "yarn swc-base -d dist/cssm -s --config-file ./cssm/cssm.swcrc",
     "tsc:es6": "yarn run -T cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration -p tsconfig.dist.json",
-    "tsc:cssm": "yarn run -T cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cssm/ -p tsconfig.dist.json",
-    "tsc:cjs": "yarn run -T cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/cjs/ -p tsconfig.dist.json",
     "test": "yarn run -T jest",
     "test:ci": "yarn test --ci --silent --outputFile ../../test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_output'",
     "test:e2e": "../../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
