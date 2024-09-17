@@ -5,13 +5,13 @@ import '@vkontakte/vkui/dist/vkui.css';
 const App = () => {
   return (
     <React.Fragment>
-      <HorizontalScroll inline>
+      <HorizontalScroll>
         <div />
         <div />
         <div />
         <HorizontalCellShowMore onClick={() => {}} compensateLastCellIndent size="m" height={88} />
       </HorizontalScroll>
-      <HorizontalScroll inline>
+      <HorizontalScroll>
         <div />
         <div />
         <div />
