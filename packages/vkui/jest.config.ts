@@ -1,13 +1,11 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
+import type { Config } from 'jest';
 
 const swcConfig = JSON.parse(fs.readFileSync(`${__dirname}/package.swcrc`, 'utf-8'));
 swcConfig.exclude = [];
 
-/**
- * @type {import('jest').Config}
- */
-const config = {
+const config: Config = {
   transform: {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { ...swcConfig }],
   },
@@ -31,4 +29,5 @@ const config = {
   testEnvironment: 'jsdom',
 };
 
-module.exports = config;
+// eslint-disable-next-line import/no-default-export -- требуется для jest
+export default config;

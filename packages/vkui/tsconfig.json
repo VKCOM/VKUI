@@ -31,7 +31,7 @@
     "playwright/index.tsx",
     "scripts/*.js",
     "scripts/*.mjs",
-    "./jest.setup.ts"
+    "./jest.*.ts"
   ],
   "files": ["./global.d.ts", "types/env.d.ts"]
 }
