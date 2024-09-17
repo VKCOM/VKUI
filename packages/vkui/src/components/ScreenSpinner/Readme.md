@@ -42,6 +42,12 @@ const setCancelableScreenSpinner = () => {
   setPopout(<ScreenSpinner state="cancelable" mode="overlay" onClick={clearPopout} />);
 };
 
+const setScreenSpinnerWithCustomIcon = () => {
+  setPopout(<ScreenSpinner state="custom" customIcon={<Icon56KeyOutline />} />);
+
+  setTimeout(clearPopout, 20000);
+};
+
 <SplitLayout popout={popout} aria-live="polite" aria-busy={!!popout}>
   <SplitCol>
     <View activePanel="spinner">
@@ -52,6 +58,9 @@ const setCancelableScreenSpinner = () => {
           <CellButton onClick={setDoneScreenSpinner}>Запустить успешный процесс</CellButton>
           <CellButton onClick={setErrorScreenSpinner}>Запустить процесс с ошибкой</CellButton>
           <CellButton onClick={setCancelableScreenSpinner}>Запустить отменяемый процесс</CellButton>
+          <CellButton onClick={setScreenSpinnerWithCustomIcon}>
+            Запустить спинер с кастомной иконкой
+          </CellButton>
         </Group>
       </Panel>
     </View>
@@ -68,6 +77,10 @@ const setCancelableScreenSpinner = () => {
     <ScreenSpinner.SwapIcon />
   </ScreenSpinner.Container>
   <ScreenSpinner.Container state="cancelable">
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  <ScreenSpinner.Container state="custom" customIcon={<Icon56CheckCircleOutline />}>
     <ScreenSpinner.Loader />
     <ScreenSpinner.SwapIcon />
   </ScreenSpinner.Container>

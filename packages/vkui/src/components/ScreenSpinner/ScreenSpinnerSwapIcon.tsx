@@ -45,21 +45,29 @@ export const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
   cancelLabel,
   ...restProps
 }: ScreenSpinnerSwapIconProps) => {
-  const { state } = React.useContext(ScreenSpinnerContext);
+  const { state, customIcon } = React.useContext(ScreenSpinnerContext);
 
   if (state === 'cancelable') {
     return <ScreenSpinnerCancelIcon aria-label={cancelLabel} {...restProps} />;
   }
 
-  const Icon = {
-    loading: () => null,
-    done: Icon48DoneOutline,
-    error: Icon48CancelCircle,
-  }[state];
+  const getContent = () => {
+    if (state === 'custom') {
+      return customIcon;
+    }
+
+    const Icon = {
+      loading: () => null,
+      done: Icon48DoneOutline,
+      error: Icon48CancelCircle,
+    }[state];
+
+    return <Icon />;
+  };
 
   return (
     <RootComponent baseClassName={styles['ScreenSpinner__icon']} {...restProps}>
-      <Icon />
+      {getContent()}
     </RootComponent>
   );
 };

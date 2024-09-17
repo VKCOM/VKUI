@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`screen-spinner transforms correctly 1`] = `
+"import { ScreenSpinner } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <ScreenSpinner state="loading" />
+      <ScreenSpinner.Container>
+        <ScreenSpinner.Loader />
+        <ScreenSpinner.SwapIcon />
+      </ScreenSpinner.Container>
+    </React.Fragment>)
+  );
+};"
+`;

@@ -11,6 +11,7 @@ const stateClassNames = {
   cancelable: styles['ScreenSpinner--state-cancelable'],
   done: styles['ScreenSpinner--state-done'],
   error: styles['ScreenSpinner--state-error'],
+  custom: styles['ScreenSpinner--state-custom'],
 };
 
 const modeClassNames = {
@@ -19,17 +20,18 @@ const modeClassNames = {
 };
 
 type ScreenSpinnerContainerProps = HTMLAttributesWithRootRef<HTMLSpanElement> &
-  Pick<ScreenSpinnerProps, 'state' | 'mode' | 'caption'>;
+  Pick<ScreenSpinnerProps, 'state' | 'mode' | 'caption' | 'customIcon'>;
 
 export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
   state = 'loading',
   mode = 'shadow',
+  customIcon,
   caption,
   children,
   ...restProps
 }: ScreenSpinnerContainerProps) => {
   return (
-    <ScreenSpinnerContext.Provider value={{ state, caption }}>
+    <ScreenSpinnerContext.Provider value={{ state, caption, customIcon }}>
       <RootComponent
         baseClassName={classNames(
           styles['ScreenSpinner'],

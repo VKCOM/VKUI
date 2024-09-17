@@ -1,12 +1,16 @@
 import type * as React from 'react';
 import type { SpinnerProps } from '../Spinner/Spinner';
 
-export interface ScreenSpinnerProps extends SpinnerProps {
-  state?: 'loading' | 'cancelable' | 'done' | 'error';
+export type ScreenSpinnerProps = Omit<SpinnerProps, 'size'> & {
+  state?: 'loading' | 'cancelable' | 'done' | 'error' | 'custom';
+  /**
+   * Кастомная иконка, работает совместно со `state="custom"`
+   */
+  customIcon?: React.ReactNode;
   mode?: 'shadow' | 'overlay';
   /**
    * Текст под иконкой
    */
   caption?: React.ReactNode;
   cancelLabel?: string;
-}
+};
