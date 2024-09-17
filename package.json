@@ -144,5 +144,6 @@
       "packages/*",
       "tools/*"
     ]
-  }
+  },
+  "prettier": "@vkontakte/prettier-config"
 }
