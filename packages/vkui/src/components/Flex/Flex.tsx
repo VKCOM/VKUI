@@ -47,9 +47,7 @@ export interface FlexProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Отступы между элементами.
    * Значение из списка предопределённых пресетов или число, которое будет приведено к пикселям.
-   * Через массив можно задать отступ между столбцами и строками [column, row], если они отличаются.
-   *
-   * TODO [>=7]: порядок следования будет [row, column]
+   * Через массив можно задать отступ между столбцами и строками [row, column], если они отличаются.
    */
   gap?: GapsProp;
   /**
@@ -89,7 +87,7 @@ export const Flex: React.FC<FlexProps> & {
   ...props
 }: FlexProps) => {
   const withGaps = Children.count(children) > 1 && gap;
-  const [columnGap, rowGap] = calculateGap(withGaps ? gap : undefined);
+  const [rowGap, columnGap] = calculateGap(withGaps ? gap : undefined);
 
   return (
     <RootComponent

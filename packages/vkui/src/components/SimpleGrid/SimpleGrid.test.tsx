@@ -15,7 +15,7 @@ describe('SimpleGrid', () => {
       </SimpleGrid>,
     );
     expect(screen.getByTestId('grid')).toHaveStyle(
-      '--vkui_internal--row_gap: 15px; --vkui_internal--column_gap: 10px; --vkui_internal--grid_columns: 2; --vkui_internal--min_col_width: 150px',
+      '--vkui_internal--row_gap: 10px; --vkui_internal--column_gap: 15px; --vkui_internal--grid_columns: 2; --vkui_internal--min_col_width: 150px',
     );
   });
 
@@ -24,7 +24,7 @@ describe('SimpleGrid', () => {
       props: {
         gap: ['l', 'm'],
       },
-      className: classNames(gapsStyles['-column-gap--l'], gapsStyles['-row-gap--m']),
+      className: classNames(gapsStyles['-column-gap--m'], gapsStyles['-row-gap--l']),
     },
     {
       props: {
