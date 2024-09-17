@@ -29,8 +29,7 @@ export const CardScroll = ({
   size = 's',
   showArrows = true,
   noSpaces = false,
-  // TODO [>=7]: поменять тег на ul https://github.com/VKCOM/VKUI/issues/7336
-  Component = 'div',
+  Component = 'ul',
   ...restProps
 }: CardScrollProps): React.ReactNode => {
   const refContainer = React.useRef<HTMLDivElement>(null);

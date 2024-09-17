@@ -74,8 +74,7 @@ export const ContentCard = ({
   fetchPriority,
   hasHover = false,
   hasActive = false,
-  // TODO [>=7]: поменять тег на li https://github.com/VKCOM/VKUI/issues/7336
-  Component = 'div',
+  Component = 'li',
   ...restProps
 }: ContentCardProps): React.ReactNode => {
   return (
