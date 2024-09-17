@@ -84,7 +84,7 @@ export const FormItem: React.FC<FormItemProps> & {
   children,
   top,
   topId,
-  topMultiline,
+  topMultiline = false,
   topComponent: topComponentProp,
   bottom,
   status = 'default',
@@ -108,12 +108,7 @@ export const FormItem: React.FC<FormItemProps> & {
         topNode
       ) : hasReactNode(top) ? (
         <FormItemTop>
-          <FormItemTopLabel
-            htmlFor={htmlFor}
-            Component={topComponentProp}
-            multiline={topMultiline}
-            id={topId}
-          >
+          <FormItemTopLabel htmlFor={htmlFor} Component={topComponentProp} id={topId}>
             {top}
           </FormItemTopLabel>
         </FormItemTop>

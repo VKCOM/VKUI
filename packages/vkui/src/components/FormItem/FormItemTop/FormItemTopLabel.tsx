@@ -8,13 +8,7 @@ import styles from '../FormItem.module.css';
 export interface FormItemTopLabelProps
   extends React.AllHTMLAttributes<HTMLElement>,
     HasRootRef<HTMLElement>,
-    HasComponent {
-  /**
-   * Многострочный вывод заголовка.
-   * TODO [>=7]: удалить и вседа брать из контекста
-   */
-  multiline?: boolean;
-}
+    HasComponent {}
 
 /**
  * Отвечает за отрисовку заголовка поля. По умолчанию компонент представлен тегом `label`, если передано свойство `htmlFor`.
@@ -27,17 +21,16 @@ export const FormItemTopLabel: React.FC<FormItemTopLabelProps> = ({
   children,
   Component: componentProp,
   htmlFor,
-  multiline,
   ...restProps
 }: FormItemTopLabelProps) => {
   const component = componentProp || (htmlFor && 'label') || 'span';
-  const { required, topMultiline: multilineContext } = React.useContext(FormItemContext);
+  const { required, topMultiline } = React.useContext(FormItemContext);
 
   return (
     <Subhead
       className={classNames(
         styles['FormItemTop__label'],
-        (multiline ?? multilineContext) && styles['FormItemTop__label--multiline'],
+        topMultiline && styles['FormItemTop__label--multiline'],
       )}
       Component={component}
       htmlFor={htmlFor}
