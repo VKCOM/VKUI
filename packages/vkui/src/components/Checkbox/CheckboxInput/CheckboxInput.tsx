@@ -16,11 +16,11 @@ import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';
 
-type VendorIconOnCompactType = typeof Icon20CheckBoxOn;
-type VendorIconOnRegularType = typeof Icon24CheckBoxOn;
-type VendorIconOffCompactType = typeof Icon20CheckBoxOff;
-type VendorIconOffRegularType = typeof Icon24CheckBoxOff;
-type VendorIconIndetermanateType = typeof Icon20CheckBoxIndetermanate;
+type VendorIconType = typeof Icon20CheckBoxOn;
+
+export type CheckboxInputIconType =
+  | React.ComponentType<React.SVGProps<SVGSVGElement>>
+  | VendorIconType;
 
 function setIndeterminate(el: HTMLInputElement, indeterminate: boolean) {
   el.indeterminate = indeterminate;
@@ -32,17 +32,11 @@ export interface CheckboxInputProps
     HasRef<HTMLInputElement> {
   indeterminate?: boolean;
   defaultIndeterminate?: boolean;
-  IconOnCompact?: React.ComponentType<React.SVGProps<SVGSVGElement>> | VendorIconOnCompactType;
-  IconOnRegular?: React.ComponentType<React.SVGAttributes<SVGSVGElement>> | VendorIconOnRegularType;
-  IconOffCompact?:
-    | React.ComponentType<React.SVGAttributes<SVGSVGElement>>
-    | VendorIconOffCompactType;
-  IconOffRegular?:
-    | React.ComponentType<React.SVGAttributes<SVGSVGElement>>
-    | VendorIconOffRegularType;
-  IconIndetermanate?:
-    | React.ComponentType<React.SVGAttributes<SVGSVGElement>>
-    | VendorIconIndetermanateType;
+  IconOnCompact?: CheckboxInputIconType;
+  IconOnRegular?: CheckboxInputIconType;
+  IconOffCompact?: CheckboxInputIconType;
+  IconOffRegular?: CheckboxInputIconType;
+  IconIndeterminate?: CheckboxInputIconType;
 }
 
 const warn = warnOnce('Checkbox');
@@ -59,7 +53,7 @@ export function CheckboxInput({
   IconOnRegular = Icon24CheckBoxOn,
   IconOffCompact = Icon20CheckBoxOff,
   IconOffRegular = Icon24CheckBoxOff,
-  IconIndetermanate = Icon20CheckBoxIndetermanate,
+  IconIndeterminate = Icon20CheckBoxIndetermanate,
   ...restProps
 }: CheckboxInputProps) {
   const inputRef = useExternRef(getRef);
@@ -166,7 +160,7 @@ export function CheckboxInput({
         </React.Fragment>
       )}
       {platform === 'vkcom' ? (
-        <IconIndetermanate
+        <IconIndeterminate
           width={20}
           height={20}
           className={styles['CheckboxInput__icon--indeterminate']}
@@ -174,7 +168,7 @@ export function CheckboxInput({
       ) : (
         <React.Fragment>
           {adaptiveSizeY.compact && (
-            <IconIndetermanate
+            <IconIndeterminate
               className={classNames(
                 styles['CheckboxInput__icon--indeterminate'],
                 adaptiveSizeY.compact.className,
@@ -184,7 +178,7 @@ export function CheckboxInput({
             />
           )}
           {adaptiveSizeY.regular && (
-            <IconIndetermanate
+            <IconIndeterminate
               className={classNames(
                 styles['CheckboxInput__icon--indeterminate'],
                 adaptiveSizeY.regular.className,
