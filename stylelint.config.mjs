@@ -1,7 +1,13 @@
-const path = require('path');
-const { VKUI_PACKAGE } = require('./shared');
+import path from 'node:path';
+import url from 'node:url';
+import shared from './shared.js';
 
-module.exports = {
+const filename = url.fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
+
+const { VKUI_PACKAGE } = shared;
+
+const config = {
   extends: ['stylelint-config-standard', '@vkontakte/stylelint-config'],
   plugins: [
     '@project-tools/stylelint-plugin-vkui',
@@ -55,11 +61,11 @@ module.exports = {
       true,
       {
         importFrom: [
-          path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_CONSTANTS),
-          path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_DYNAMIC_TOKENS),
-          path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_MISSED_THEME_TOKENS),
+          path.join(dirname, VKUI_PACKAGE.PATHS.CSS_CONSTANTS),
+          path.join(dirname, VKUI_PACKAGE.PATHS.CSS_DYNAMIC_TOKENS),
+          path.join(dirname, VKUI_PACKAGE.PATHS.CSS_MISSED_THEME_TOKENS),
           path.join(
-            __dirname,
+            dirname,
             'node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css',
           ),
         ],
@@ -68,7 +74,7 @@ module.exports = {
     'csstools/media-use-custom-media': [
       'known',
       {
-        importFrom: path.join(__dirname, VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS),
+        importFrom: path.join(dirname, VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS),
       },
     ],
     'selector-pseudo-class-disallowed-list': ['global'],
@@ -81,3 +87,5 @@ module.exports = {
     'csstools/use-logical': 'always',
   },
 };
+
+export default config;
