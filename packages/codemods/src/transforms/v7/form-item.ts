@@ -1,4 +1,4 @@
-import { API, FileInfo, JSXAttribute, JSXElement } from 'jscodeshift';
+import { API, FileInfo, JSXAttribute, JSXElement, JSXExpressionContainer } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
 
@@ -14,21 +14,18 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     return source.toSource();
   }
 
-  function processTopLabel(element: JSXElement): boolean | undefined {
+  function processTopLabel(element: JSXElement): JSXExpressionContainer | true | undefined {
     if (
       element.openingElement.name.type === 'JSXMemberExpression' &&
       element.openingElement.name.property?.name === 'TopLabel'
     ) {
-      let multilineValue: boolean | undefined;
+      let multilineValue: JSXExpressionContainer | true | undefined;
       element.openingElement.attributes = element.openingElement.attributes?.filter((attr) => {
         if (attr.type === 'JSXAttribute' && attr.name.name === 'multiline') {
           if (!attr.value) {
             multilineValue = true;
-          } else if (
-            attr.value?.type === 'JSXExpressionContainer' &&
-            attr.value.expression.type === 'BooleanLiteral'
-          ) {
-            multilineValue = attr.value.expression.value;
+          } else if (attr.value?.type === 'JSXExpressionContainer') {
+            multilineValue = attr.value;
           }
           return false;
         }
@@ -39,7 +36,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     return undefined;
   }
 
-  function findTopLabelRecursive(element: JSXElement): boolean | undefined {
+  function findTopLabelRecursive(element: JSXElement): JSXExpressionContainer | true | undefined {
     let result = processTopLabel(element);
     if (result !== undefined) {
       return result;
@@ -64,7 +61,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   source.find(j.JSXElement, { openingElement: { name: { name: localName } } }).forEach((path) => {
     const formItem = path.node;
     let topMultiline: JSXAttribute | undefined;
-    let topLabelMultiline: boolean | undefined;
+    let topLabelMultiline: JSXExpressionContainer | true | undefined;
     const formItemAttributes = formItem.openingElement.attributes;
 
     // Проверяем существующий topMultiline проп
@@ -102,28 +99,49 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         }
       }
     }
+    if (!topLabelMultiline) {
+      return;
+    }
 
     // Обновляем или добавляем topMultiline проп
-    if (topLabelMultiline !== undefined) {
-      if (topMultiline) {
-        // Если у FormItem задан topMultiline
-        if (
-          topLabelMultiline ||
-          (topMultiline.value?.type === 'JSXExpressionContainer' &&
-            topMultiline.value.expression.type === 'BooleanLiteral' &&
-            !topMultiline.value.expression.value)
-        ) {
-          // Если у FormItem задан topMultiline=false, а у TopLabel multiline=true,
-          // значит свойство можно сократить до topMultiline
+    if (topMultiline) {
+      // Если у FormItem задан topMultiline
+      if (!topLabelMultiline) {
+        // Если у FormItemTopLabel multiline не задан, значит
+        // topMultiline нужно вообще убрать из FormItem
+        formItemAttributes?.splice(formItemAttributes.indexOf(topMultiline), 1);
+      } else if (topLabelMultiline === true) {
+        // Если у FormItemTopLabel multiline == true, значит
+        // У FormField у topMultiline можно убрать значение
+        topMultiline.value = null;
+      } else {
+        // Для остальных случаев для topMultiline устанавливаем то же
+        // самое значение, что было в FormItemTopLabel multiline
+        topMultiline.value = topLabelMultiline;
+      }
+    } else if (topLabelMultiline) {
+      // Если у FormItem не задан topMultiline
+      // добавляем его в аргументы
+      const newAttribute = j.jsxAttribute(
+        j.jsxIdentifier('topMultiline'),
+        topLabelMultiline === true ? null : topLabelMultiline,
+      );
+      formItemAttributes?.push(newAttribute);
+    }
+
+    // Избавляемся от лишнего:
+    // если topMultiline={false} можно убрать аттрибут
+    // если topMultiline={true} можно убрать {true}
+    if (topMultiline && formItemAttributes?.includes(topMultiline)) {
+      if (
+        topMultiline?.value?.type === 'JSXExpressionContainer' &&
+        topMultiline.value.expression.type === 'BooleanLiteral'
+      ) {
+        if (topMultiline.value.expression.value) {
           topMultiline.value = null;
-        } else if (!topLabelMultiline) {
-          // Если у FormItem задан topMultiline, а у TopLabel задан multiline=false,
-          // то можно удалить этой свойство, так как оно задано по умолчанию
-          formItemAttributes?.splice(formItemAttributes.indexOf(topMultiline), 1);
+        } else {
+          formItemAttributes.splice(formItemAttributes.indexOf(topMultiline), 1);
         }
-      } else if (topLabelMultiline) {
-        // Если у FormItem не задан topMultiline
-        formItemAttributes?.push(j.jsxAttribute(j.jsxIdentifier('topMultiline')));
       }
     }
   });
