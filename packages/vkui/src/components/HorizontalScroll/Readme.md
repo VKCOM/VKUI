@@ -44,7 +44,7 @@ const HorizontalScrollExample = () => {
             getScrollToRight={(i) => i + 120}
             inline
           >
-            {commonFriends.length === 0 && <Spinner size="regular" style={{ height: 88 }} />}
+            {commonFriends.length === 0 && <Spinner size="m" style={{ height: 88 }} />}
             {commonFriends.length > 0 && (
               <Fragment>
                 {commonFriends.map((item) => {

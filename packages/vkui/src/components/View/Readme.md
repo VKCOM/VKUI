@@ -287,7 +287,7 @@ const Content = () => {
     function simulateDataLoadingWhenMovingForwards() {
       let timerId = null;
       const loadData = () => {
-        setSpinner(<Spinner size="large" style={{ margin: '20px 0' }} />);
+        setSpinner(<Spinner size="xl" style={{ margin: '20px 0' }} />);
         timerId = setTimeout(() => setSpinner(null), 1000);
       };
 
