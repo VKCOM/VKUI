@@ -21,7 +21,7 @@ import {
   CustomSelectClearButton,
   type CustomSelectClearButtonProps,
 } from './CustomSelectClearButton';
-import { CustomSelectInput } from './CustomSelectInput';
+import { CustomSelectInput, type CustomSelectInputProps } from './CustomSelectInput';
 import {
   calculateInputValueFromOptions,
   defaultRenderOptionFn,
@@ -34,7 +34,7 @@ import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
   none: styles['CustomSelect--sizeY-none'],
-  ['compact']: styles['CustomSelect--sizeY-compact'],
+  compact: styles['CustomSelect--sizeY-compact'],
 };
 
 const warn = warnOnce('CustomSelect');
@@ -72,7 +72,8 @@ export interface SelectProps<
     Pick<
       CustomSelectDropdownProps,
       'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
-    > {
+    >,
+    Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'readOnly'> {
   /**
    * ref на внутрений компонент input
    */
@@ -89,7 +90,7 @@ export interface SelectProps<
   /**
    * Событие изменения текстового поля
    */
-  onInputChange?: (e: React.ChangeEvent) => void;
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   options: OptionInterfaceT[];
   /**
    * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
@@ -178,7 +179,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     style,
     onChange,
     children,
-    onInputChange: onInputChangeProp,
+    'onInputChange': onInputChangeProp,
     renderDropdown,
     onOpen,
     onClose,
@@ -188,17 +189,17 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     autoHideScrollbar,
     autoHideScrollbarDelay,
     searchable = false,
-    renderOption: renderOptionProp = defaultRenderOptionFn,
-    options: optionsProp,
+    'renderOption': renderOptionProp = defaultRenderOptionFn,
+    'options': optionsProp,
     emptyText = 'Ничего не найдено',
     filterFn = defaultFilterFn,
-    icon: iconProp,
+    'icon': iconProp,
     ClearButton = CustomSelectClearButton,
     allowClearButton = false,
     dropdownOffsetDistance = 0,
     dropdownAutoWidth = false,
     noMaxHeight = false,
-    ['aria-labelledby']: ariaLabelledBy,
+    'aria-labelledby': ariaLabelledBy,
     clearButtonTestId,
     nativeSelectTestId,
     defaultValue,
@@ -789,7 +790,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     'role': 'combobox',
     'aria-controls': popupAriaId,
     'aria-expanded': opened,
-    ['aria-activedescendant']:
+    'aria-activedescendant':
       ariaActiveDescendantId && opened ? `${popupAriaId}-${ariaActiveDescendantId}` : undefined,
     'aria-labelledby': ariaLabelledBy,
     'aria-haspopup': 'listbox',

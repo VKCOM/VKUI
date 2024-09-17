@@ -17,7 +17,7 @@
         "runtime": "automatic"
       }
     },
-    "target": "es2015",
+    "target": "es2017",
 
     "experimental": {
       "plugins": [

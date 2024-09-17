@@ -14,7 +14,7 @@ import styles from './Textarea.module.css';
 
 const sizeYClassNames = {
   none: styles['Textarea--sizeY-none'],
-  ['compact']: styles['Textarea--sizeY-compact'],
+  compact: styles['Textarea--sizeY-compact'],
 };
 
 export interface TextareaProps

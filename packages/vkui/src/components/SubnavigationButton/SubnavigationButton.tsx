@@ -27,7 +27,7 @@ const sizeStyles = {
 
 const sizeYClassNames = {
   none: styles['SubnavigationButton--sizeY-none'],
-  ['compact']: styles['SubnavigationButton--sizeY-compact'],
+  compact: styles['SubnavigationButton--sizeY-compact'],
 };
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {

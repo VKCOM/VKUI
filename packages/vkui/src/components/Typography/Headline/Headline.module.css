@@ -6,14 +6,34 @@
 }
 
 .Headline--sizeY-compact.Headline--level-1 {
-  font-size: var(--vkui--font_headline1--font_size--compact);
-  line-height: var(--vkui--font_headline1--line_height--compact);
+  font-size: var(
+    --vkui--font_headline1--font_size--compact,
+    var(--vkui--font_headline1--font_size--regular)
+  );
+  line-height: var(
+    --vkui--font_headline1--line_height--compact,
+    var(--vkui--font_headline1--line_height--regular)
+  );
+  font-weight: var(
+    --vkui--font_headline1--font_weight--compact,
+    var(--vkui--font_headline1--font_weight--regular)
+  );
 }
 
 @media (--sizeY-compact) {
   .Headline--sizeY-none.Headline--level-1 {
-    font-size: var(--vkui--font_headline1--font_size--compact);
-    line-height: var(--vkui--font_headline1--line_height--compact);
+    font-size: var(
+      --vkui--font_headline1--font_size--compact,
+      var(--vkui--font_headline1--font_size--regular)
+    );
+    line-height: var(
+      --vkui--font_headline1--line_height--compact,
+      var(--vkui--font_headline1--line_height--regular)
+    );
+    font-weight: var(
+      --vkui--font_headline1--font_weight--compact,
+      var(--vkui--font_headline1--font_weight--regular)
+    );
   }
 }
 
@@ -25,13 +45,33 @@
 }
 
 .Headline--sizeY-compact.Headline--level-2 {
-  font-size: var(--vkui--font_headline2--font_size--compact);
-  line-height: var(--vkui--font_headline2--line_height--compact);
+  font-size: var(
+    --vkui--font_headline2--font_size--compact,
+    var(--vkui--font_headline2--font_size--regular)
+  );
+  line-height: var(
+    --vkui--font_headline2--line_height--compact,
+    var(--vkui--font_headline2--line_height--regular)
+  );
+  font-weight: var(
+    --vkui--font_headline2--font_weight--compact,
+    var(--vkui--font_headline2--font_weight--regular)
+  );
 }
 
 @media (--sizeY-compact) {
   .Headline--sizeY-none.Headline--level-2 {
-    font-size: var(--vkui--font_headline2--font_size--compact);
-    line-height: var(--vkui--font_headline2--line_height--compact);
+    font-size: var(
+      --vkui--font_headline2--font_size--compact,
+      var(--vkui--font_headline2--font_size--regular)
+    );
+    line-height: var(
+      --vkui--font_headline2--line_height--compact,
+      var(--vkui--font_headline2--line_height--regular)
+    );
+    font-weight: var(
+      --vkui--font_headline2--font_weight--compact,
+      var(--vkui--font_headline2--font_weight--regular)
+    );
   }
 }

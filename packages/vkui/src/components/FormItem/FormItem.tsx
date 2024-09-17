@@ -15,7 +15,7 @@ import styles from './FormItem.module.css';
 
 const sizeYClassNames = {
   none: classNames(styles['FormItem--sizeY-none'], 'vkuiInternalFormItem--sizeY-none'),
-  ['compact']: classNames(styles['FormItem--sizeY-compact'], 'vkuiInternalFormItem--sizeY-compact'),
+  compact: classNames(styles['FormItem--sizeY-compact'], 'vkuiInternalFormItem--sizeY-compact'),
 };
 
 const stylesStatus = {

@@ -12,7 +12,7 @@ import styles from './SimpleCell.module.css';
 
 const sizeYClassNames = {
   none: styles['SimpleCell--sizeY-none'],
-  ['compact']: styles['SimpleCell--sizeY-compact'],
+  compact: styles['SimpleCell--sizeY-compact'],
 };
 
 export interface SimpleCellOwnProps extends HasComponent {
