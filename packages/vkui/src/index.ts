@@ -310,6 +310,7 @@ export { RadioGroup } from './components/RadioGroup/RadioGroup';
 export type { RadioGroupProps } from './components/RadioGroup/RadioGroup';
 export { Checkbox } from './components/Checkbox/Checkbox';
 export type { CheckboxProps } from './components/Checkbox/Checkbox';
+export type { CheckboxInputIconType } from './components/Checkbox/CheckboxInput/CheckboxInput';
 export { Select } from './components/Select/Select';
 export { SelectMimicry } from './components/SelectMimicry/SelectMimicry';
 export type { SelectMimicryProps } from './components/SelectMimicry/SelectMimicry';
