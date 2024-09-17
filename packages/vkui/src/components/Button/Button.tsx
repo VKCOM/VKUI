@@ -108,7 +108,7 @@ export const Button = ({
     >
       {loading && (
         <Spinner
-          size="small"
+          size="s"
           className={styles.Button__spinner}
           disableAnimation={disableSpinnerAnimation}
         />

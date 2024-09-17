@@ -83,7 +83,7 @@ export const CustomSelectDropdown = ({
       >
         {fetching ? (
           <div className={styles['CustomSelectDropdown__fetching']}>
-            <Spinner size="small" />
+            <Spinner size="s" />
           </div>
         ) : (
           children

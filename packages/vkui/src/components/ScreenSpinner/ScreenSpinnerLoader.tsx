@@ -6,7 +6,7 @@ import { ScreenSpinnerContext } from './context';
 import styles from './ScreenSpinner.module.css';
 
 export const ScreenSpinnerLoader: React.FC<SpinnerProps> = ({
-  size = 'large',
+  size = 'xl',
   children,
   ...restProps
 }: SpinnerProps) => {

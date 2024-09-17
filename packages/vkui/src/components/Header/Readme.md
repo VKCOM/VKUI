@@ -116,7 +116,7 @@ const Example = () => {
           </Header>
         </Group>
         <Group>
-          <Header mode="primary" size="large">
+          <Header mode="primary" size="l">
             Большой заголовок
           </Header>
         </Group>

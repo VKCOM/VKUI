@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`header transforms correctly 1`] = `
+"import { Header } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <Header mode="primary" multiline size="l">
+        Кто может писать мне личные сообщения
+      </Header>
+      <Header mode="secondary" multiline size="m">
+        Кто может писать мне личные сообщения
+      </Header>
+    </React.Fragment>)
+  );
+};"
+`;
