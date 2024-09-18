@@ -220,7 +220,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
   const selectElRef = useExternRef(getRef);
   const optionsWrapperRef = React.useRef<HTMLDivElement>(null);
-  const selectInputRef = useExternRef(getSelectInputRef);
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
@@ -423,8 +422,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const onFocus = React.useCallback(() => {
     const event = new Event('focusin', { bubbles: true });
     selectElRef.current?.dispatchEvent(event);
-    selectInputRef.current?.select();
-  }, [selectElRef, selectInputRef]);
+  }, [selectElRef]);
 
   const onClick = React.useCallback(() => {
     if (opened) {
@@ -671,6 +669,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [emptyText, options, renderDropdown, renderOption]);
 
+  const selectInputRef = useExternRef(getSelectInputRef);
   const focusOnInputTimerRef = React.useRef<ReturnType<typeof setTimeout>>();
   const focusOnInput = React.useCallback(() => {
     clearTimeout(focusOnInputTimerRef.current);
@@ -772,9 +771,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     // но вне инпута (например по иконке дропдауна), будет убирать фокус с инпута.
     // Чтобы в такой ситуации отключить blur инпута мы превентим mousedown событие обёртки
     const isInputFocused = document && document.activeElement === selectInputRef.current;
-    const clickTarget = e.target as HTMLElement;
-    const inputClicked = selectInputRef.current?.contains(clickTarget);
-    if (isInputFocused && !inputClicked) {
+    if (isInputFocused) {
       e.preventDefault();
     }
   };
