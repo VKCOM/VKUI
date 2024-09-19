@@ -11,7 +11,12 @@ import { RootComponent } from '../../RootComponent/RootComponent';
 import { ScrollArrow } from '../../ScrollArrow/ScrollArrow';
 import { type CustomTouchEvent, Touch } from '../../Touch/Touch';
 import { type BaseGalleryProps, type GallerySlidesState } from '../types';
-import { ANIMATION_DURATION, CONTROL_ELEMENTS_STATE, SLIDES_MANAGER_STATE } from './constants';
+import {
+  ANIMATION_DURATION,
+  CONTROL_ELEMENTS_STATE,
+  SLIDE_THRESHOLD,
+  SLIDES_MANAGER_STATE,
+} from './constants';
 import { calculateIndent, getLoopPoints, getTargetIndex } from './helpers';
 import { useSlideAnimation } from './hooks';
 import type { ControlElementsState, SlidesManagerState } from './types';
@@ -253,7 +258,14 @@ export const CarouselBase = ({
 
   useIsomorphicLayoutEffect(initializeSlides, [align, slideWidth]);
 
+  const calculateMinDeltaXToSlide = () => {
+    return slidesManager.current.slides[slideIndex].width * SLIDE_THRESHOLD;
+  };
+
   const slideLeft = (event: React.MouseEvent) => {
+    if (slideIndex > 0) {
+      shiftXCurrentRef.current += calculateMinDeltaXToSlide();
+    }
     onChange?.(
       (slideIndex - 1 + slidesManager.current.slides.length) % slidesManager.current.slides.length,
     );
@@ -261,6 +273,9 @@ export const CarouselBase = ({
   };
 
   const slideRight = (event: React.MouseEvent) => {
+    if (slideIndex < slidesManager.current.slides.length - 1) {
+      shiftXCurrentRef.current -= calculateMinDeltaXToSlide();
+    }
     onChange?.((slideIndex + 1) % slidesManager.current.slides.length);
     onNextClick?.(event);
   };
