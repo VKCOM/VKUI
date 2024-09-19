@@ -40,9 +40,7 @@ export interface TypographyProps
 
 export const Typography = ({
   weight,
-
-  // TODO [>=7]: сделать по умолчанию false (нужен будет кодмод)
-  useAccentWeight = true,
+  useAccentWeight,
   Component = 'span',
   normalize,
   inline,
