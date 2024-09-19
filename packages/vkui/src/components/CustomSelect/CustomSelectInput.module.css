@@ -2,10 +2,11 @@
   position: relative;
 }
 
-.CustomSelectInput__input {
+.CustomSelectInput__el {
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;
+  z-index: var(--vkui_internal--z_index_form_field_element);
   inline-size: 100%;
   block-size: var(--vkui--size_field_height--regular);
   line-height: var(--vkui--size_field_height--regular);
@@ -15,90 +16,63 @@
   box-sizing: border-box;
   box-shadow: none;
   appearance: none;
-  color: inherit;
+  color: var(--vkui--color_text_primary);
   padding-block: 0;
   padding-inline: 12px;
   background: transparent;
-  /*
-   * По типy option.label может принимать React-компонент,
-   * но React-компонент нельзя отрендерить как value в input.
-   * Поэтому мы всегда стараемся прятать input и поверх рисовать конейнер,
-   * в который можно положить label как строку или как React-компонент.
-   * В то же время у input в value лежит текстовое представление
-   * React компонента специально для скринридера.
-   */
-  opacity: 0;
 }
 
-/*
- * Но в режиме searchable, в фокусе мы наоборот, намеренно показываем
- * input и прячем декоративный label, так как нам важно дать пользователю
- * возможность изменить значение input для поиска.
- * А пользователям скринридера надо дать возможность прочитать выбранное значение.
- */
-.CustomSelectInput__input:not(:read-only):focus {
-  opacity: 1;
-}
-
-.CustomSelectInput__input:read-only:not(:disabled) {
+.CustomSelectInput__el--cursor-pointer {
   cursor: pointer;
 }
 
-.CustomSelectInput--sizeY-compact .CustomSelectInput__input {
+.CustomSelectInput--sizeY-compact .CustomSelectInput__el {
   block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .CustomSelectInput--sizeY-none .CustomSelectInput__input {
+  .CustomSelectInput--sizeY-none .CustomSelectInput__el {
     block-size: var(--vkui--size_field_height--compact);
   }
 }
 
-.CustomSelectInput--hasBefore .CustomSelectInput__input {
+.CustomSelectInput--hasBefore .CustomSelectInput__el {
   padding-inline-start: 0;
 }
 
-.CustomSelectInput--hasAfter .CustomSelectInput__input {
+.CustomSelectInput--hasAfter .CustomSelectInput__el {
   padding-inline-end: 0;
 }
 
-.CustomSelectInput__input::placeholder {
-  color: var(--vkui--color_text_secondary);
-  /* Для Firefox: взято из Input.module.css */
-  opacity: 1;
+.CustomSelectInput__el:disabled {
+  opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.CustomSelectInput__label-wrapper {
+.CustomSelectInput__container {
+  z-index: var(--vkui_internal--z_index_form_field_element);
   inline-size: 100%;
   max-block-size: 100%;
   padding-inline: 12px 0;
+  color: var(--vkui--color_text_primary);
   box-sizing: border-box;
   overflow: hidden;
   pointer-events: none;
 }
 
-.CustomSelectInput__input:focus:not(:read-only) ~ .CustomSelectInput__label-wrapper {
-  display: none;
-}
-
-.CustomSelectInput__input:disabled ~ .CustomSelectInput__label-wrapper {
-  opacity: var(--vkui--opacity_disable_accessibility);
-}
-
-.CustomSelectInput--hasBefore .CustomSelectInput__label-wrapper {
+.CustomSelectInput--hasBefore .CustomSelectInput__container {
   padding-inline-start: 0;
 }
 
-.CustomSelectInput--multiline .CustomSelectInput__label-wrapper {
+.CustomSelectInput--multiline .CustomSelectInput__container {
   padding-block: 12px;
 }
 
-.CustomSelectInput--sizeY-compact.CustomSelectInput--multiline .CustomSelectInput__label-wrapper {
+.CustomSelectInput--sizeY-compact.CustomSelectInput--multiline .CustomSelectInput__container {
   padding-block: 8px;
 }
 
 @media (--sizeY-compact) {
-  .CustomSelectInput--sizeY-none.CustomSelectInput--multiline .CustomSelectInput__label-wrapper {
+  .CustomSelectInput--sizeY-none.CustomSelectInput--multiline .CustomSelectInput__container {
     padding-block: 8px;
   }
 }
@@ -110,34 +84,40 @@
   align-items: center;
   flex: 1;
   overflow: hidden;
-  color: var(--vkui--color_text_primary);
-}
-
-.CustomSelectInput--empty .CustomSelectInput__label-wrapper {
-  color: var(--vkui--color_text_secondary);
 }
 
 .CustomSelectInput--hasBefore .CustomSelectInput__input-group {
   border-radius: 0;
 }
 
-.CustomSelectInput__label {
+.CustomSelectInput__title {
   display: block;
 }
 
-.CustomSelectInput:not(.CustomSelectInput--multiline) .CustomSelectInput__label {
+.CustomSelectInput:not(.CustomSelectInput--multiline) .CustomSelectInput__title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.CustomSelectInput--align-right .CustomSelectInput__label,
-.CustomSelectInput--align-right .CustomSelectInput__input {
+.CustomSelectInput--empty .CustomSelectInput__title {
+  color: var(--vkui--color_text_secondary);
+}
+
+/* Для доступности placeholder в инпуте задан, но визуально не виден, потому что
+ * для комфортного управления видом плейсходера мы рендерим его отдельно, так же как и лэйбл
+ */
+.CustomSelectInput__el::placeholder {
+  opacity: 0;
+}
+
+.CustomSelectInput--align-right .CustomSelectInput__title,
+.CustomSelectInput--align-right .CustomSelectInput__el {
   text-align: end;
 }
 
-.CustomSelectInput--align-center .CustomSelectInput__label,
-.CustomSelectInput--align-center .CustomSelectInput__input {
+.CustomSelectInput--align-center .CustomSelectInput__title,
+.CustomSelectInput--align-center .CustomSelectInput__el {
   text-align: center;
 }
 
@@ -146,6 +126,6 @@
  * CalendarHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCalendarHeader__picker) .CustomSelectInput__label-wrapper {
+:global(.vkuiInternalCalendarHeader__picker) .CustomSelectInput__container {
   padding-inline-end: 4px;
 }
