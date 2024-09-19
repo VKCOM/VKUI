@@ -2,11 +2,6 @@
   display: flex;
 }
 
-.HorizontalCellShowMore--compensate-last-cell-indent {
-  /* Компенсация бокового отступа, заданного в последнем HorizontalCell:last-child::after */
-  margin-inline-start: calc(-1 * var(--vkui_internal--side_cell_gap));
-}
-
 .HorizontalCellShowMore--centered {
   margin-block: auto;
 }

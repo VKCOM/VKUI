@@ -184,7 +184,7 @@ const recentFriends = getRandomUsers(20);
   <Header mode="primary">HorizontalScroll не учитывает отступы Group по горизонтали</Header>
 
   <Group.ExpandedContent direction="inline">
-    <HorizontalScroll showArrows inline>
+    <HorizontalScroll showArrows>
       {recentFriends.map((item) => {
         return (
           <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
@@ -196,7 +196,7 @@ const recentFriends = getRandomUsers(20);
   </Group.ExpandedContent>
 
   <Header mode="primary">Здесь контент учитывает отступы Group по горизонтали</Header>
-  <HorizontalScroll showArrows inline>
+  <HorizontalScroll showArrows>
     {recentFriends.map((item) => {
       return (
         <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
