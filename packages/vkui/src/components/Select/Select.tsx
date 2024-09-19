@@ -69,8 +69,8 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
           className={classNames(className, deviceType.mobile.className)}
           {...nativeProps}
         >
-          {options.map(({ label, value }) => (
-            <option value={value} key={`${value}`}>
+          {options.map(({ label, value, disabled }) => (
+            <option value={value} key={`${value}`} disabled={disabled}>
               {label}
             </option>
           ))}
