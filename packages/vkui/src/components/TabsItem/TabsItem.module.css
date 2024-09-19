@@ -17,7 +17,7 @@
   margin-block: 8px;
 }
 
-.TabsItem--withGaps:not(:first-of-type) {
+.TabsItem--withGaps:not(:first-child) {
   margin-inline-start: 6px;
 }
 
