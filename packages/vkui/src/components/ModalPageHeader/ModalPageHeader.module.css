@@ -1,15 +1,15 @@
 .host {
   --vkui_internal--safe_area_inset_top: 0;
 
-  /* см. `.ModalPageV2__children {}` */
+  /* см. `.children {}` в `ModalPageV2` */
   flex: 0 0 auto;
 }
 
-.withGaps {
+.hostWithGaps {
   padding-inline: 4px;
 }
 
-.desktop.withGaps {
+.hostDesktop.hostWithGaps {
   padding-inline: 8px;
 }
 

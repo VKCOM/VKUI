@@ -1,4 +1,4 @@
-.ModalPageContent {
-  /* см. `.ModalPageV2__children {}` */
+.host {
+  /* см. `.children {}` в `ModalPageV2` */
   flex: 1 1 100%;
 }

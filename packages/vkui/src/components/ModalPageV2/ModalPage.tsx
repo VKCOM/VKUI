@@ -5,30 +5,30 @@ import { useKeyboard } from '../../hooks/useKeyboard';
 import { isSmallTablePlus } from '../../lib/adaptivity';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { BottomSheetController } from '../../lib/bottomSheet';
-import { hasSelectionWithRangeType } from '../../lib/dom';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { ModalPageBackdrop } from '../ModalPageBackdrop/ModalPageBackdrop';
-import type { ModalPageV2Props } from './types';
-import styles from './ModalPageV2.module.css';
+import { ModalPageRoot } from '../ModalPageRoot/ModalPageRoot';
+import type { ModalPageProps } from './types';
+import styles from './ModalPage.module.css';
 
 const animationStateClassNames = {
-  enter: styles['ModalPageV2--enter'],
-  entering: styles['ModalPageV2--enter'],
+  enter: styles['hostStateEnter'],
+  entering: styles['hostStateEnter'],
   entered: undefined,
-  exit: styles['ModalPageV2--exit'],
-  exiting: styles['ModalPageV2--exit'],
+  exit: styles['hostStateExit'],
+  exiting: styles['hostStateExit'],
   exited: undefined,
 };
 
 const desktopMaxWidthClassName = {
-  s: styles['ModalPageV2--maxWidth-s'],
-  m: styles['ModalPageV2--maxWidth-m'],
-  l: styles['ModalPageV2--maxWidth-l'],
+  s: styles['hostMaxWidthS'],
+  m: styles['hostMaxWidthM'],
+  l: styles['hostMaxWidthL'],
 };
 
-export const ModalPageV2 = ({
+export const ModalPage = ({
   open,
   desktopMaxWidth = 's',
   // height,
@@ -47,7 +47,7 @@ export const ModalPageV2 = ({
   onClose = noop,
   onClosed = noop,
   ...restProps
-}: ModalPageV2Props) => {
+}: ModalPageProps) => {
   const { isOpened: disableTouchForTextfieldFocused } = useKeyboard();
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     open ? 'enter' : 'exit',
@@ -70,7 +70,7 @@ export const ModalPageV2 = ({
   const initialOffset = 100 - settlingHeight;
   const initialStyle =
     initialOffset !== 0
-      ? { '--vkui_internal_ModalPage--transform-default': `translateY(${initialOffset}%)` }
+      ? { '--vkui_internal_ModalPage--transform-default': `translate3d(0, ${initialOffset}%, 0)` }
       : null;
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -113,8 +113,7 @@ export const ModalPageV2 = ({
   const handleTouchStart = (event: React.TouchEvent<HTMLElement>) => {
     if (
       // FIXME надо проверять на desktop иначе, текущий брейкпоинт не учитывает landscape
-      isSmallTablePlus(event.currentTarget) ||
-      hasSelectionWithRangeType(event.currentTarget)
+      isSmallTablePlus(event.currentTarget)
     ) {
       return;
     }
@@ -145,10 +144,6 @@ export const ModalPageV2 = ({
       }
 
       const handleTouchMove = function (this: HTMLElement, event: TouchEvent) {
-        if (hasSelectionWithRangeType(this)) {
-          return;
-        }
-
         if (bsController.current) {
           bsController.current.panMove(event);
         }
@@ -176,7 +171,7 @@ export const ModalPageV2 = ({
   useScrollLock(!hidden);
 
   return (
-    <div className={styles.ModalPageV2Root} hidden={hidden} aria-hidden={hidden}>
+    <ModalPageRoot hidden={hidden}>
       {backdrop}
       <FocusTrap
         {...restProps}
@@ -187,14 +182,14 @@ export const ModalPageV2 = ({
         aria-modal="true"
         className={classNames(
           className,
-          styles.ModalPageV2,
+          styles.host,
           typeof desktopMaxWidth === 'string' && desktopMaxWidthClassName[desktopMaxWidth],
           animationStateClassNames[animationState],
         )}
       >
         <div
           ref={touchableContainerRef}
-          className={styles.ModalPageV2__container}
+          className={styles.container}
           style={{
             maxWidth: typeof desktopMaxWidth === 'number' ? desktopMaxWidth : undefined,
             // height,
@@ -203,10 +198,10 @@ export const ModalPageV2 = ({
           onTouchStart={touchable ? handleTouchStart : undefined}
           onTouchEnd={touchable ? handleTouchEnd : undefined}
         >
-          <div className={styles.ModalPageV2__children}>{children}</div>
+          <div className={styles.children}>{children}</div>
         </div>
         {closeButton}
       </FocusTrap>
-    </div>
+    </ModalPageRoot>
   );
 };

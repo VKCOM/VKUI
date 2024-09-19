@@ -7,14 +7,17 @@ export interface ModalPageBackdropProps extends HasRootRef<HTMLDivElement> {
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
+/**
+ * @private
+ */
 export const ModalPageBackdrop = ({ visible, getRootRef, onClick }: ModalPageBackdropProps) => {
   return (
     <div
       ref={getRootRef}
       aria-hidden="true"
       className={classNames(
-        styles['ModalPageBackdrop'],
-        visible ? styles['ModalPageBackdrop--visible'] : styles['ModalPageBackdrop--invisible'],
+        styles.host,
+        visible ? styles.hostStateVisible : styles.hostStateInvisible,
       )}
       onClick={onClick}
     />

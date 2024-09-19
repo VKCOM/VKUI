@@ -1,12 +1,12 @@
-.ModalPageFooter {
+.host {
   inline-size: 100%;
 
-  /* см. `.ModalPageV2__children {}` */
+  /* см. `.children {}` в `ModalPageV2` */
   flex: 0 0 auto;
   background-color: var(--vkui--color_background_modal);
 }
 
-.ModalPageFooter__inner {
+.inner {
   padding-block: 16px;
   padding-inline: 24px;
 }

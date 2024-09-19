@@ -1,4 +1,4 @@
-.ModalPageBackdrop {
+.host {
   position: absolute;
   inset: 0;
   z-index: -1;
@@ -8,11 +8,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.ModalPageBackdrop--visible {
+.hostStateVisible {
   animation: modal-page-backdrop-fade-in 0.2s ease-in;
 }
 
-.ModalPageBackdrop--invisible {
+.hostStateInvisible {
   animation: modal-page-backdrop-fade-out 0.1s ease-out forwards;
 }
 

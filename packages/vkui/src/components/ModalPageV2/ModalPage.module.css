@@ -1,32 +1,25 @@
-.ModalPageV2Root:not([hidden]) {
-  position: fixed;
-  inset: 0;
-  z-index: var(--vkui--z_index_modal);
-  overflow: hidden;
-}
-
-.ModalPageV2 {
+.host {
   --vkui_internal_ModalPage--animation-duration: 0.3s;
   --vkui_internal_ModalPage--transform-default: none;
 
   inline-size: 100%;
   outline: none;
 
-  /* Для ограничения высоты `.ModalPageV2__container`. */
+  /* Для ограничения высоты `.container`. */
   display: flex;
 }
 
-.ModalPageV2__container {
+.container {
   position: relative;
   inline-size: 100%;
 
-  /* Для срабатывания `height: 100%` у `.ModalPageV2__children`. */
+  /* Для срабатывания `height: 100%` у `.children`. */
   display: flex;
   flex-direction: column;
   transform: var(--vkui_internal_ModalPage--transform-default);
 }
 
-.ModalPageV2__children {
+.children {
   border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
   border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
   background-color: var(--vkui--color_background_modal);
@@ -37,9 +30,9 @@
   /*
    * Удерживает высоту в пределах 100% родителя при переполнении контента.
    *
-   * - см. `.ModalPageHeader {}`
-   * - см. `.ModalPageContent {}`
-   * - см. `.ModalPageFooter {}`
+   * - см. `ModalPageHeader`
+   * - см. `ModalPageContent`
+   * - см. `ModalPageFooter`
    */
   display: flex;
   flex-shrink: 1;
@@ -48,7 +41,7 @@
 
 /* Mobile */
 @media (--viewWidth-smallTabletMinus) {
-  .ModalPageV2 {
+  .host {
     position: absolute;
     inset-inline: 0;
     inset-block: auto var(--vkui_internal--safe_area_inset_bottom);
@@ -59,23 +52,23 @@
     max-block-size: calc(100% - var(--vkui_internal--safe_area_inset_top));
   }
 
-  .ModalPageV2--enter {
-    animation: animation-slide-up var(--vkui_internal_ModalPage--animation-duration)
+  .hostStateEnter {
+    animation: modal-page-animation-slide-up var(--vkui_internal_ModalPage--animation-duration)
       var(--vkui--animation_easing_platform) 0.1s backwards;
   }
 
-  .ModalPageV2--exit {
-    animation: animation-slide-down var(--vkui_internal_ModalPage--animation-duration)
+  .hostStateExit {
+    animation: modal-page-animation-slide-down var(--vkui_internal_ModalPage--animation-duration)
       var(--vkui--animation_easing_platform) forwards;
   }
 
-  .ModalPageV2__container::after {
+  .container::after {
     content: '';
     position: absolute;
     z-index: -1;
     inset-block-start: 100%;
     inset-inline-start: 0;
-    margin-block-start: -1px; /* убирает зазор под `.ModalPageV2__children`  */
+    margin-block-start: -1px; /* убирает зазор под `.children`  */
     inline-size: 100%;
     block-size: 50%;
     background-color: var(--vkui--color_background_modal);
@@ -90,64 +83,58 @@
 
 /* Desktop */
 @media (--viewWidth-smallTabletPlus) {
-  .ModalPageV2Root:not([hidden]) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .ModalPageV2 {
+  .host {
     position: relative;
     max-block-size: calc(100% - 64px);
   }
 
-  .ModalPageV2--enter {
-    animation: animation-fade-in 0.2s ease-in 0.1s backwards;
+  .hostStateEnter {
+    animation: modal-page-animation-fade-in 0.2s ease-in 0.1s backwards;
   }
 
-  .ModalPageV2--exit {
-    animation: animation-fade-out 0.1s ease-out forwards;
+  .hostStateExit {
+    animation: modal-page-animation-fade-out 0.1s ease-out forwards;
   }
 
-  .ModalPageV2__container {
+  .container {
     box-shadow: var(--vkui--elevation3);
   }
 
-  .ModalPageV2__children {
+  .children {
     border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
     border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
   }
 
-  .ModalPageV2--maxWidth-s {
+  .hostMaxWidthS {
     max-inline-size: var(--vkui--size_popup_small--regular);
   }
 
-  .ModalPageV2--maxWidth-m {
+  .hostMaxWidthM {
     max-inline-size: var(--vkui--size_popup_medium--regular);
   }
 
-  .ModalPageV2--maxWidth-l {
+  .hostMaxWidthL {
     max-inline-size: var(--vkui--size_popup_large--regular);
   }
 }
 
-@keyframes animation-fade-in {
+@keyframes modal-page-animation-fade-in {
   from {
     opacity: 0;
   }
 }
-@keyframes animation-fade-out {
+@keyframes modal-page-animation-fade-out {
   to {
     opacity: 0;
   }
 }
-@keyframes animation-slide-up {
+@keyframes modal-page-animation-slide-up {
   from {
-    transform: translateY(100%);
+    transform: translate3d(0, 100%, 0);
   }
 }
-@keyframes animation-slide-down {
+@keyframes modal-page-animation-slide-down {
   to {
-    transform: translateY(100%);
+    transform: translate3d(0, 100%, 0);
   }
 }

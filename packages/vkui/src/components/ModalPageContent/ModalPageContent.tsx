@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { CustomScrollView } from '../CustomScrollView/CustomScrollView';
@@ -8,7 +7,7 @@ export type ModalPageContentProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
 export const ModalPageContent = ({ children, className, ...restProps }: ModalPageContentProps) => {
   return (
-    <CustomScrollView className={classNames(className, styles.ModalPageContent)} {...restProps}>
+    <CustomScrollView className={classNames(className, styles.host)} {...restProps}>
       {children}
     </CustomScrollView>
   );

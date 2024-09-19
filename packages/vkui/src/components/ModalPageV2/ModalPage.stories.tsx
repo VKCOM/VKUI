@@ -21,18 +21,18 @@ import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
 import { Textarea } from '../Textarea/Textarea';
-import { ModalPageV2 } from './ModalPageV2';
-import type { CloseEventPayload, ModalPageV2Props } from './types';
+import { ModalPage } from './ModalPage';
+import type { CloseEventPayload, ModalPageProps } from './types';
 
-const story: Meta<ModalPageV2Props> = {
-  title: 'Experimental/ModalPageV2',
-  component: ModalPageV2,
+const story: Meta<ModalPageProps> = {
+  title: 'Experimental/ModalPage',
+  component: ModalPage,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;
 
-type Story = StoryObj<ModalPageV2Props>;
+type Story = StoryObj<ModalPageProps>;
 
 const AndroidCloseButton = ({
   className,
@@ -70,7 +70,7 @@ export const DynamicModalPage: Story = {
     return (
       <div>
         <Button onClick={() => setOpen((prev) => !prev)}>Открыть модалку</Button>
-        <ModalPageV2 id="test" open={open} onClose={handleModalClose} settlingHeight={100}>
+        <ModalPage id="test" open={open} onClose={handleModalClose} settlingHeight={100}>
           <ModalPageHeader
             before={
               sizeX.compact &&
@@ -171,7 +171,7 @@ export const DynamicModalPage: Story = {
           <ModalPageFooter>
             <Button stretched>Button</Button>
           </ModalPageFooter>
-        </ModalPageV2>
+        </ModalPage>
       </div>
     );
   },

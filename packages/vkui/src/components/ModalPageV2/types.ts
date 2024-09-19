@@ -8,7 +8,7 @@ export type CloseEventPayload =
   | { reason: Extract<CloseReason, 'swipe-down'> }
   | (KeyboardEvent & { reason: Extract<CloseReason, 'escape-key'> });
 
-export interface ModalPageV2Props extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface ModalPageProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   open: boolean;
   /**
    * Задаёт контенту максимальную ширину на десктопе.

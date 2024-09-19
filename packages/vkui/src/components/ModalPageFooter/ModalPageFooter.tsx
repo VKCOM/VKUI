@@ -13,9 +13,9 @@ export const ModalPageFooter = ({
   ...restProps
 }: ModalPageFooterProps) => {
   return (
-    <RootComponent baseClassName={styles.ModalPageFooter} {...restProps}>
+    <RootComponent baseClassName={styles.host} {...restProps}>
       {!noSeparator && <Separator wide />}
-      <div className={styles.ModalPageFooter__inner}>{children}</div>
+      <div className={styles.inner}>{children}</div>
     </RootComponent>
   );
 };

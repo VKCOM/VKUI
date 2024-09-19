@@ -260,7 +260,7 @@ export const initializeBrowserGesturePreventionEffect = (window: Window): VoidFu
   };
 };
 
-export const hasSelectionWithRangeType = (targetEl: HTMLElement) => {
-  const selection = getWindow(targetEl).getSelection();
+export const hasSelectionWithRangeType = (node: unknown) => {
+  const selection = getWindow(node).getSelection();
   return selection ? selection.type === 'Range' : false;
 };

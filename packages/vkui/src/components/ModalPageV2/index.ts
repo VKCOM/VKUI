@@ -1,2 +1,2 @@
-export { ModalPageV2 } from './ModalPageV2';
-export type { CloseReason, ModalPageV2Props } from './types';
+export { ModalPage as ModalPageV2 } from './ModalPage';
+export type { CloseReason, ModalPageProps as ModalPageV2Props } from './types';

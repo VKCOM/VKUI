@@ -1,13 +1,17 @@
-import { CSSAnimationController } from '../animation';
+import { CSSAnimationController, type CSSAnimationControllerProps } from '../animation';
 
 export class CSSAnimationBackdropController extends CSSAnimationController {
   private readonly initialValue: number;
 
   constructor(
     public readonly el: HTMLElement,
-    private readonly opacityCSSPropertyKey = 'opacity',
+    public readonly opacityCSSPropertyKey = 'opacity',
+    public readonly props: CSSAnimationControllerProps = {
+      duration: '300ms',
+      easing: 'ease-in-out',
+    },
   ) {
-    super(el);
+    super(el, props);
 
     const initialValueRaw = getComputedStyle(el).getPropertyValue(opacityCSSPropertyKey);
 
@@ -34,7 +38,7 @@ export class CSSAnimationBackdropController extends CSSAnimationController {
     return this;
   }
 
-  unsetInlineStyles = () => {
+  handleTransitionEnd = () => {
     this.clearTransition();
     this.el.style.removeProperty(this.opacityCSSPropertyKey);
     this.inlineStylesModified = false;
@@ -51,14 +55,14 @@ export class CSSAnimationBackdropController extends CSSAnimationController {
   }
 
   private setTransition() {
-    this.el.addEventListener('transitionend', this.unsetInlineStyles, { once: true });
-    this.el.style.setProperty('transition', 'opacity 300ms ease-in-out');
+    this.el.addEventListener('transitionend', this.handleTransitionEnd, { once: true });
+    this.el.style.setProperty('transition', `opacity ${this.props.duration} ${this.props.easing}`);
     this.waitingTransitionEnd = true;
   }
 
   private clearTransition() {
     if (this.waitingTransitionEnd) {
-      this.el.removeEventListener('transitionend', this.unsetInlineStyles);
+      this.el.removeEventListener('transitionend', this.handleTransitionEnd);
       this.el.style.removeProperty('transition');
       this.waitingTransitionEnd = false;
     }
