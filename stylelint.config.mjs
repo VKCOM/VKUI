@@ -1,9 +1,5 @@
 import path from 'node:path';
-import url from 'node:url';
 import shared from './shared.js';
-
-const filename = url.fileURLToPath(import.meta.url);
-const dirname = path.dirname(filename);
 
 const { VKUI_PACKAGE } = shared;
 
@@ -61,11 +57,11 @@ const config = {
       true,
       {
         importFrom: [
-          path.join(dirname, VKUI_PACKAGE.PATHS.CSS_CONSTANTS),
-          path.join(dirname, VKUI_PACKAGE.PATHS.CSS_DYNAMIC_TOKENS),
-          path.join(dirname, VKUI_PACKAGE.PATHS.CSS_MISSED_THEME_TOKENS),
+          path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_CONSTANTS),
+          path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_DYNAMIC_TOKENS),
+          path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_MISSED_THEME_TOKENS),
           path.join(
-            dirname,
+            import.meta.dirname,
             'node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css',
           ),
         ],
@@ -74,7 +70,7 @@ const config = {
     'csstools/media-use-custom-media': [
       'known',
       {
-        importFrom: path.join(dirname, VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS),
+        importFrom: path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS),
       },
     ],
     'selector-pseudo-class-disallowed-list': ['global'],
