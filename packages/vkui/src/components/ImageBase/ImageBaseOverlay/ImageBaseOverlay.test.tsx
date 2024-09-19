@@ -1,17 +1,21 @@
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon12Add } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { Button } from '../../../components/Button/Button';
 import { baselineComponent, userEvent } from '../../../testing/utils';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay';
 import styles from './ImageBaseOverlay.module.css';
 
-const ImageBaseOverlayClickableTest = (props: Omit<ImageBaseOverlayProps, 'children'>) => (
+const ImageBaseOverlayClickableTest = ({
+  onClick,
+  ...restProps
+}: Omit<ImageBaseOverlayProps, 'children'>) => (
   <ImageBaseOverlay
     data-testid="overlay"
     aria-label="Интерактивная Кнопка"
-    {...props}
-    disableInteractive={false}
+    onClick={onClick || noop}
+    {...restProps}
   >
     <Icon12Add />
   </ImageBaseOverlay>
@@ -20,7 +24,7 @@ const ImageBaseOverlayClickableTest = (props: Omit<ImageBaseOverlayProps, 'child
 const ImageBaseOverlayNonClickableTest = (
   props: Omit<ImageBaseOverlayProps, 'children' | 'onClick'>,
 ) => (
-  <ImageBaseOverlay data-testid="overlay" {...props} disableInteractive>
+  <ImageBaseOverlay data-testid="overlay" {...props}>
     <Button data-testid="button1">Button</Button>
     <Button data-testid="button2">Button</Button>
   </ImageBaseOverlay>
@@ -60,7 +64,7 @@ describe(ImageBaseOverlay, () => {
 
   describe('works as clickable element', () => {
     it('appears as clickable element', () => {
-      render(<ImageBaseOverlayClickableTest />);
+      render(<ImageBaseOverlayClickableTest onClick={noop} />);
 
       const element = screen.getByTestId('overlay');
 
@@ -72,9 +76,7 @@ describe(ImageBaseOverlay, () => {
 
     it('handles onClick prop', () => {
       const handleClick = jest.fn();
-      render(
-        <ImageBaseOverlayClickableTest onClick={handleClick} disableInteractive={undefined} />,
-      );
+      render(<ImageBaseOverlayClickableTest onClick={handleClick} />);
 
       fireEvent.click(screen.getByTestId('overlay'));
       expect(handleClick).toHaveBeenCalledTimes(1);
