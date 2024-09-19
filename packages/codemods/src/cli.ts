@@ -3,8 +3,8 @@ import { Command } from 'commander';
 import prompts from 'prompts';
 import { autoDetectVKUIVersion } from './autoDetectVKUIVersion';
 import getAvailableCodemods from './getAvailableCodemods.js';
-import pkg from '../package.json';
 import logger from './helpers/logger.js';
+import pkg from '../package.json';
 
 export interface CliOptions {
   list: boolean;
