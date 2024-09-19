@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const { withCustomConfig } = require('react-docgen-typescript');
 const ts = require('typescript');
-const { VKUI_PACKAGE } = require('../shared');
+const { VKUI_PACKAGE } = require('./cjs/shared');
 
 let languageService = null;
 // eslint-disable-next-line no-undef

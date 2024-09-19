@@ -1,5 +1,5 @@
 /* eslint no-console: 0 */
-import path from 'path';
+import path from 'node:path';
 import {
   Appearance,
   defineConfig,
@@ -12,7 +12,7 @@ import {
 } from '@vkui-e2e/test';
 import dotenv from 'dotenv';
 import { makePostcssPlugins } from './scripts/postcss';
-import * as tsconfig from './tsconfig.json';
+import tsconfig from './tsconfig.json' with { type: 'json' };
 
 // см. `.env`
 dotenv.config();
@@ -20,7 +20,7 @@ dotenv.config();
 const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).reduce<
   Record<string, string>
 >((aliases, [name, paths]) => {
-  aliases[name] = path.join(__dirname, paths[0]);
+  aliases[name] = path.join(import.meta.dirname, paths[0]);
   return aliases;
 }, {});
 
@@ -31,7 +31,7 @@ const DEFAULT_REPORTERS: ReporterDescription[] = [['json', { outputFile: 'e2e-re
  */
 // eslint-disable-next-line import/no-default-export
 export default defineConfig<VKUITestOptions>({
-  testDir: path.join(__dirname, './src'),
+  testDir: path.join(import.meta.dirname, './src'),
   testMatch: generateTestMatch(),
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */

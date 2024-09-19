@@ -1,18 +1,18 @@
-import path from 'node:path';
-import postcssGlobalData from '@csstools/postcss-global-data';
-import restructureVariable from '@project-tools/postcss-restructure-variable';
-import autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
-import postcssCustomMedia from 'postcss-custom-media';
-import postcssGapProperties from 'postcss-gap-properties';
-import cssImport from 'postcss-import';
-import postcssLogical from 'postcss-logical';
-import cssModules from 'postcss-modules';
-import { generateScopedName, VKUI_PACKAGE, VKUI_TOKENS_CSS } from '../../../shared.js';
+const path = require('path');
+const postcssGlobalData = require('@csstools/postcss-global-data');
+const restructureVariable = require('@project-tools/postcss-restructure-variable');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+const postcssCustomMedia = require('postcss-custom-media');
+const postcssGapProperties = require('postcss-gap-properties');
+const cssImport = require('postcss-import');
+const postcssLogical = require('postcss-logical');
+const cssModules = require('postcss-modules');
+const { VKUI_PACKAGE, VKUI_TOKENS_CSS, generateScopedName } = require('./shared');
 
-const rootDirectory = path.join(import.meta.dirname, '../../..');
+const rootDirectory = path.join(__dirname, '../..');
 
-export function getMinimizerOptions(isVKUIPackageBuild = false) {
+function getMinimizerOptions(isVKUIPackageBuild = false) {
   return {
     preset: [
       'default',
@@ -30,17 +30,7 @@ export function getMinimizerOptions(isVKUIPackageBuild = false) {
   };
 }
 
-/**
- * Конфигурация postcss плагинов
- * @param {Object} config - Конфигурация.
- * @param {boolean | undefined} config.isVKUIPackageBuild - Сборка пакета.
- * @param {boolean | undefined} config.isProduction - Продакшн сборка.
- * @param {boolean | undefined} config.isCssModulesFile - Сборка module.css файлов.
- * @param {boolean | undefined} config.isESNext - Отдельная сборка cssm.
- * @param {boolean | undefined} config.disableMinimizer - Отключает cssnano.
- * @returns {import('postcss').Plugin[]}
- */
-export function makePostcssPlugins({
+function makePostcssPlugins({
   isVKUIPackageBuild = false,
   isProduction = process.env.NODE_ENV === 'production',
   isCssModulesFile = false,
@@ -104,3 +94,8 @@ export function makePostcssPlugins({
 
   return plugins;
 }
+
+module.exports = {
+  getMinimizerOptions,
+  makePostcssPlugins,
+};

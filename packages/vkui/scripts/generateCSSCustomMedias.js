@@ -25,7 +25,7 @@ const outputSourceFilePath = path.resolve(
  * @link https://github.com/Microsoft/TypeScript-wiki/blob/main/Using-the-Compiler-API.md#a-simple-transform-function
  * @link https://2ality.com/2019/10/eval-via-import.html#evaluating-simple-code-via-import()
  *
- * @returns {Promise<import('../src/lib/adaptivity').CSSCustomMedias>}
+ * @returns {Promise<import('../src/lib/adaptivity/index.js').CSSCustomMedias>}
  */
 export const getCustomMedias = async () => {
   const sourceTS = fs.readFileSync(inputSourceFilePath, 'utf-8').toString();

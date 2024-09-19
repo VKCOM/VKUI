@@ -1,7 +1,7 @@
-const path = require('path');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { getMinimizerOptions, makePostcssPlugins } = require('./scripts/postcss');
+import path from 'node:path';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { getMinimizerOptions, makePostcssPlugins } from './scripts/postcss.js';
 
 /**
  * Конфигурация для css
@@ -29,14 +29,14 @@ function makeCssRuleUse({ isCssModulesFile = false } = {}) {
 }
 
 /** @type {import('webpack').Configuration} */
-module.exports = {
+const config = {
   mode: 'production',
   entry: {
     vkui: ['./src/styles/themes.css', './src/index.ts'],
     components: './src/index.ts',
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(import.meta.dirname, 'dist'),
     filename: '[name].js.tmp',
   },
   module: {
@@ -88,3 +88,6 @@ module.exports = {
     warnings: true,
   },
 };
+
+// eslint-disable-next-line import/no-default-export -- требуется для webpack
+export default config;

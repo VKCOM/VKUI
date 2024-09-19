@@ -1,7 +1,7 @@
-import path from 'node:path';
-import webpack from 'webpack';
-import { merge } from 'webpack-merge';
-import { makePostcssPlugins } from './packages/vkui/scripts/postcss.js';
+const path = require('path');
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
+const { makePostcssPlugins } = require('./postcss');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -111,7 +111,7 @@ if (sandbox) {
 
 const config = {
   output: {
-    path: path.resolve(import.meta.dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     libraryTarget: 'umd',
     globalObject: `typeof self !== 'undefined' ? self : this`,
@@ -148,4 +148,4 @@ const prodConfig = {
   mode: 'production',
 };
 
-export default isProduction ? merge(config, prodConfig) : merge(config, devConfig);
+module.exports = isProduction ? merge(config, prodConfig) : merge(config, devConfig);

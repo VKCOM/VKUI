@@ -1,6 +1,6 @@
 const path = require('path');
 const { argv } = require('yargs');
-const { VKUI_PACKAGE } = require('../shared');
+const { VKUI_PACKAGE } = require('./cjs/shared');
 const { reactDocgenTypescript } = require('./propsParser.config');
 
 /**

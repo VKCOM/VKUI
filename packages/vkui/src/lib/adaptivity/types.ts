@@ -33,7 +33,7 @@ export type MediaQueries = Record<JSBreakpoints, MediaQueryList>;
 type SizeTypeValue = ValuesOfObject<typeof SizeType>;
 
 /**
- * Используется в `packages/vkui/scripts/generateCSSCustomMedias.mjs`, который отвечает за генерацию
+ * Используется в `packages/vkui/scripts/generateCSSCustomMedias.js`, который отвечает за генерацию
  * `packages/vkui/styles/customMedias.generated.css`.
  */
 export type CSSCustomMedias = Record<

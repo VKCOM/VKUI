@@ -109,7 +109,14 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
 export { expect, defineConfig, devices } from '@playwright/experimental-ct-react';
 export type { PlaywrightTestConfig, ReporterDescription } from '@playwright/test';
 export { Appearance } from '../../lib/appearance';
-export { Platform } from '../../lib/platform';
+
+// export { Platform } from '../../lib/platform';
+// node пытается импортировать vkjs, но не может сделать это из-за неполноценных путей для esm
+export const Platform = {
+  ANDROID: 'android',
+  IOS: 'ios',
+  VKCOM: 'vkcom',
+} as const;
 
 // 3. Вычленяем типы, которые не экспортируются самим Playwright.
 export type TestProject = Exclude<PlaywrightTestConfig<VKUITestOptions>['projects'], undefined>;

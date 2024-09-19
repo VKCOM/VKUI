@@ -2,6 +2,7 @@
   "private": true,
   "version": "0.0.0",
   "name": "@vkontakte/vkui-monorepo",
+  "type": "module",
   "dependencies": {
     "@project-docs/styleguide": "workspace:1.0.0",
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0",
