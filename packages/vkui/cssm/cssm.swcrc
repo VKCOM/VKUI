@@ -3,7 +3,8 @@
   "exclude": ["\\.(test|spec|e2e|e2e-playground|stories)\\.[jt]sx?$", "testing/", "storybook/"],
 
   "module": {
-    "type": "es6"
+    "type": "es6",
+    "resolveFully": true
   },
 
   "jsc": {
@@ -17,6 +18,10 @@
         "runtime": "automatic"
       }
     },
-    "target": "esnext"
+    "target": "esnext",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules", "src/*"]
+    }
   }
 }
