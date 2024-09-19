@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`typography transforms correctly 1`] = `
+"import { Typography } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const flag = false;
+  const calculateUseAccentWeight = () => false;
+  return (
+    (<React.Fragment>
+      <Typography useAccentWeight />
+      <Typography useAccentWeight />
+      <Typography useAccentWeight />
+      <Typography />
+      <Typography useAccentWeight={flag && calculateUseAccentWeight} />
+    </React.Fragment>)
+  );
+};"
+`;
