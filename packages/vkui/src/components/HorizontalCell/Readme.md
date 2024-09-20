@@ -150,37 +150,27 @@ const Example = () => {
         <PanelHeader>HorizontalCell</PanelHeader>
         <Group header={<Header>Возможные друзья</Header>}>
           <HorizontalScroll>
-            <Flex noWrap>
-              <UserItems />
-            </Flex>
+            <UserItems />
           </HorizontalScroll>
         </Group>
         <Group header={<Header aside={<Link>Показать все</Link>}>Мини-приложения</Header>}>
           <HorizontalScroll>
-            <Flex noWrap>
-              <MiniAppItems />
-            </Flex>
+            <MiniAppItems />
           </HorizontalScroll>
         </Group>
         <Group header={<Header aside={<Link>Показать все</Link>}>Игры</Header>}>
           <HorizontalScroll>
-            <Flex noWrap>
-              <GamesItems />
-            </Flex>
+            <GamesItems />
           </HorizontalScroll>
         </Group>
         <Group header={<Header aside={<Link>Показать все</Link>}>Плейлисты</Header>}>
           <HorizontalScroll>
-            <Flex noWrap>
-              <PlaylistItems />
-            </Flex>
+            <PlaylistItems />
           </HorizontalScroll>
         </Group>
         <Group header={<Header aside={<Link>Показать все</Link>}>Альбомы</Header>}>
           <HorizontalScroll>
-            <Flex noWrap>
-              <AlbumItems />
-            </Flex>
+            <AlbumItems />
           </HorizontalScroll>
         </Group>
       </Panel>

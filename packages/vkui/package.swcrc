@@ -3,7 +3,8 @@
   "exclude": ["\\.(test|spec|e2e|e2e-playground|stories)\\.[jt]sx?$", "testing/", "storybook/"],
 
   "module": {
-    "type": "es6"
+    "type": "es6",
+    "resolveFully": true
   },
 
   "jsc": {
@@ -18,6 +19,10 @@
       }
     },
     "target": "es2017",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules", "src/*"]
+    },
 
     "experimental": {
       "plugins": [

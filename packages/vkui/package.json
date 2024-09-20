@@ -2,6 +2,8 @@
   "version": "6.7.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -45,7 +47,7 @@
     "copy-essensial-files": "cp ../../LICENSE . && cp ../../README.md .",
     "size": "yarn clear && yarn build:no-types && size-limit",
     "size:ci": "YARN_ENABLE_SCRIPTS=false yarn install --immutable && yarn build:no-types",
-    "build": "yarn run -T concurrently 'yarn:build:*'",
+    "build": "yarn clear && yarn run -T concurrently 'yarn:build:*'",
     "build:types": "yarn run -T concurrently 'yarn:tsc:*'",
     "build:no-types": "yarn run -T concurrently 'yarn:swc:*' 'yarn:postcss'",
     "clear": "yarn run -T shx rm -rf dist/*",

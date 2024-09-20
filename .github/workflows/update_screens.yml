@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - v6
       - '*-stable'
 
 run-name: Update screenshots for ${{ github.ref_name }}

@@ -4,6 +4,7 @@ import type { Config } from 'jest';
 
 const swcConfig = JSON.parse(fs.readFileSync(`${__dirname}/package.swcrc`, 'utf-8'));
 swcConfig.exclude = [];
+swcConfig.module.resolveFully = false;
 
 const config: Config = {
   transform: {
