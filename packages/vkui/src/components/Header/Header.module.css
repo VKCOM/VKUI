@@ -18,7 +18,7 @@
 .Header__before {
   align-self: center;
   margin-inline-end: var(--vkui--spacing_size_m);
-  margin-block-start: var(--vkui--spacing_size_3xs);
+  margin-block-start: var(--vkui--spacing_size_2xs);
 }
 
 .Header__before--withSubtitle {

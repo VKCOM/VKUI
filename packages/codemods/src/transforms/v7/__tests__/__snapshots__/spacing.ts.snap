@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`spacing transforms correctly 1`] = `
+"import { Separator, Spacing } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <Spacing size="2xs">
+        <Separator/>
+      </Spacing>
+      <Spacing size="2xs" />
+      <Spacing size={"2xs"} />
+    </React.Fragment>)
+  );
+};"
+`;
