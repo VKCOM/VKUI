@@ -1,8 +1,16 @@
 import { getParentNode, isHTMLElement } from '../dom';
 
+const EVENT_OPTIONS = { once: true, capture: true, passive: false };
+
 export class UIScrollableChildrenObserver {
+  isScrolling = false;
+
   get isScrollable() {
     return this.scrollableEl !== null;
+  }
+
+  get hasXScroll() {
+    return this.availableOverflow.x;
   }
 
   get hasYScroll() {
@@ -13,82 +21,71 @@ export class UIScrollableChildrenObserver {
     return this.scrollableEl ? this.scrollableEl.scrollTop > 0 : false;
   }
 
-  isScrolling = false;
+  observeOnce(rootEl: HTMLElement, targetEl: HTMLElement) {
+    if (this.observed) {
+      return;
+    }
 
-  observe(rootEl: HTMLElement, targetEl: HTMLElement) {
-    const overflowAncestor = UIScrollableChildrenObserver.getNearestOverflowAncestor(
-      rootEl,
-      targetEl,
-    );
+    this.observed = true;
+    const overflowAncestor = getNearestOverflowAncestor(rootEl, targetEl);
 
     if (overflowAncestor) {
-      const { x, y } = UIScrollableChildrenObserver.getAvailableOverflow(overflowAncestor);
+      const { x, y } = getAvailableOverflow(overflowAncestor);
       this.availableOverflow.x = x;
       this.availableOverflow.y = y;
       this.scrollableEl = overflowAncestor;
-      this.scrollableEl.addEventListener(
-        'scroll',
-        this.handleScroll,
-        UIScrollableChildrenObserver.EVENT_OPTIONS,
-      );
+      this.scrollableEl.addEventListener('scroll', this.handleScroll, EVENT_OPTIONS);
     }
   }
 
-  disconnect() {
-    this.isScrolling = false;
-    this.availableOverflow.x = false;
-    this.availableOverflow.y = false;
+  unobserve() {
+    this.observed = false;
 
     if (this.scrollableEl) {
-      this.scrollableEl.removeEventListener(
-        'scroll',
-        this.handleScroll,
-        UIScrollableChildrenObserver.EVENT_OPTIONS,
-      );
+      this.scrollableEl.removeEventListener('scroll', this.handleScroll, EVENT_OPTIONS);
       this.scrollableEl = null;
+      this.isScrolling = false;
+      this.availableOverflow.x = false;
+      this.availableOverflow.y = false;
     }
   }
 
+  private observed = false;
   private scrollableEl: HTMLElement | null = null;
+  private readonly availableOverflow = { x: false, y: false };
   private readonly handleScroll = () => {
     this.isScrolling = true;
   };
-  private readonly availableOverflow = { x: false, y: false };
+}
 
-  private static readonly EVENT_OPTIONS = { capture: true, passive: false };
+function getNearestOverflowAncestor(rootNode: Node, targetNode: Node): HTMLElement | null {
+  const parentNode = getParentNode(targetNode);
+
+  if (rootNode === parentNode) {
+    return null;
+  }
+
   /**
    * Функция из `@floating/utils/dom` не подходит, т.к. ей удовлетворяет любой заданный `overflow`.
    *
    * @see https://github.com/floating-ui/floating-ui/blob/%40floating-ui/dom%401.6.3/packages/utils/src/dom.ts#L52
    */
-  private static isOverflowElement(element: Element): boolean {
+  const isOverflowElement = (element: Element) => {
     const { overflow, overflowX, overflowY, display } = getComputedStyle(element);
     return (
       /auto|scroll/.test(overflow + overflowY + overflowX) &&
       !['inline', 'contents'].includes(display)
     );
+  };
+
+  if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
+    return parentNode;
   }
 
-  private static getNearestOverflowAncestor(rootNode: Node, targetNode: Node): HTMLElement | null {
-    const parentNode = getParentNode(targetNode);
+  return getNearestOverflowAncestor(rootNode, parentNode);
+}
 
-    if (rootNode === parentNode) {
-      return null;
-    }
-
-    if (isHTMLElement(parentNode) && UIScrollableChildrenObserver.isOverflowElement(parentNode)) {
-      return parentNode;
-    }
-
-    return UIScrollableChildrenObserver.getNearestOverflowAncestor(rootNode, parentNode);
-  }
-
-  private static getAvailableOverflow(overflowAncestor: HTMLElement) {
-    const { clientWidth, scrollWidth, clientHeight, scrollHeight } = overflowAncestor;
-
-    return {
-      x: clientWidth < scrollWidth,
-      y: clientHeight < scrollHeight,
-    };
-  }
+function getAvailableOverflow(overflowAncestor: HTMLElement) {
+  const { clientWidth, scrollWidth, clientHeight, scrollHeight } = overflowAncestor;
+  return { x: clientWidth < scrollWidth, y: clientHeight < scrollHeight };
 }

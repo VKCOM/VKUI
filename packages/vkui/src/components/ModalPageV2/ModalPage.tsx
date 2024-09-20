@@ -58,8 +58,8 @@ export const ModalPage = ({
     !open,
   );
   const opened = animationState === 'entered';
-  const hidden = animationState === 'exited';
   const closable = closableProp && opened;
+  const hidden = animationState === 'exited';
 
   const { opened: keyboardOpened } = useVirtualKeyboardState(opened);
   const touchable = !keyboardOpened && closable;

@@ -5,7 +5,7 @@ import { CSSAnimationBackdropController } from './CSSAnimationBackdropController
 import { CSSAnimationTargetController } from './CSSAnimationTargetController';
 import { UIScrollableChildrenObserver } from './UIScrollableChildrenObserver';
 
-const MINIMUM_DISTANCE_FOR_MOVING_START = 10;
+const MINIMUM_DISTANCE_FOR_MOVING_START = 12;
 const MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE = 1300;
 
 export class BottomSheetController {
@@ -68,7 +68,7 @@ export class BottomSheetController {
         }
 
         const { y1, y2 } = this.panGestureRecognizer;
-        const offsetPercent = y2 - y1;
+        const offsetPercent = y2 - y1 - MINIMUM_DISTANCE_FOR_MOVING_START;
         this.nextShiftY = (offsetPercent / this.targetEl.offsetHeight) * 100;
         this.nextShiftY += this.currentShiftY;
         this.nextShiftY = rubberbandIfOutOfBounds(this.nextShiftY, 0, 100);
@@ -102,14 +102,14 @@ export class BottomSheetController {
     this.nextShiftY = 0;
     this.pannedEl = null;
     this.panGestureRecognizer.reset();
-    this.scrollableChildrenObserver.disconnect();
+    this.scrollableChildrenObserver.unobserve();
   }
 
   destroy() {
     this.animationBackdropController.handleTransitionEnd();
     this.animationTargetController.handleTransitionEnd();
     this.panGestureRecognizer.reset();
-    this.scrollableChildrenObserver.disconnect();
+    this.scrollableChildrenObserver.unobserve();
   }
 
   private canStartMoving(panDirection?: 'up' | 'down') {
@@ -120,14 +120,7 @@ export class BottomSheetController {
       return false;
     }
 
-    if (this.pannedEl) {
-      this.scrollableChildrenObserver.observe(this.targetEl, this.pannedEl);
-    }
-
-    if (
-      this.scrollableChildrenObserver.isScrolling ||
-      this.scrollableChildrenObserver.isYScrolled
-    ) {
+    if (this.checkScrollablePredicates()) {
       return false;
     }
 
@@ -142,6 +135,36 @@ export class BottomSheetController {
       default:
         return true;
     }
+  }
+
+  private checkScrollablePredicates() {
+    if (!this.pannedEl) {
+      return false;
+    }
+
+    this.scrollableChildrenObserver.observeOnce(this.targetEl, this.pannedEl);
+
+    if (!this.scrollableChildrenObserver.isScrollable) {
+      return false;
+    }
+
+    if (this.scrollableChildrenObserver.isScrolling) {
+      return true;
+    }
+
+    if (this.scrollableChildrenObserver.hasXScroll) {
+      const delta = this.panGestureRecognizer.delta();
+
+      if (Math.abs(delta.x) > Math.abs(delta.y)) {
+        return true;
+      }
+    }
+
+    if (this.scrollableChildrenObserver.hasYScroll) {
+      return this.scrollableChildrenObserver.isYScrolled;
+    }
+
+    return false;
   }
 
   private getPanDirection() {
