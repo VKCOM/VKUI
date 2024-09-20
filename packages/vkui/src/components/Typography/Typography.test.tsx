@@ -40,6 +40,18 @@ describe('Typography', () => {
       hasClassName: `${styles['Typography--weight-3']} ${styles['Typography--accent']}`,
     },
     {
+      props: { weight: '1', useAccentWeight: false },
+      hasClassName: `${styles['Typography--weight-1']}`,
+    },
+    {
+      props: { weight: '2', useAccentWeight: false },
+      hasClassName: `${styles['Typography--weight-2']}`,
+    },
+    {
+      props: { weight: '3', useAccentWeight: false },
+      hasClassName: `${styles['Typography--weight-3']}`,
+    },
+    {
       props: { normalize: true, inline: true },
       hasClassName: `${styles['Typography--normalize']} ${styles['Typography--inline']}`,
     },
