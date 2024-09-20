@@ -7,11 +7,6 @@
   box-sizing: border-box;
 }
 
-.Spacing--3xs {
-  /* TODO [>=7]: удалить deprecated токен */
-  --vkui_internal--Spacing_gap: var(--vkui--spacing_size_3xs);
-}
-
 .Spacing--2xs {
   --vkui_internal--Spacing_gap: var(--vkui--spacing_size_2xs);
 }

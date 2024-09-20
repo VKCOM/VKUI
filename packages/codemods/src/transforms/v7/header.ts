@@ -16,6 +16,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
 
   remapSizePropValue({
     j,
+    api,
     source,
     componentName: localName,
     sizesMap: {
