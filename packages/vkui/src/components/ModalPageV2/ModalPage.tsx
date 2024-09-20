@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
-import { useKeyboard } from '../../hooks/useKeyboard';
+import { useVirtualKeyboardState } from '../../hooks/useKeyboard';
 import { isSmallTablePlus } from '../../lib/adaptivity';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { BottomSheetController } from '../../lib/bottomSheet';
@@ -48,7 +48,6 @@ export const ModalPage = ({
   onClosed = noop,
   ...restProps
 }: ModalPageProps) => {
-  const { isOpened: disableTouchForTextfieldFocused } = useKeyboard();
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     open ? 'enter' : 'exit',
     {
@@ -61,7 +60,9 @@ export const ModalPage = ({
   const opened = animationState === 'entered';
   const hidden = animationState === 'exited';
   const closable = closableProp && opened;
-  const touchable = !disableTouchForTextfieldFocused && closable;
+
+  const { opened: keyboardOpened } = useVirtualKeyboardState(opened);
+  const touchable = !keyboardOpened && closable;
 
   const bsController = React.useRef<BottomSheetController | null>(null);
   const backdropRef = React.useRef<HTMLDivElement>(null);
