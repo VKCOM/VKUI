@@ -17,15 +17,15 @@ describe('Typography', () => {
     },
     {
       props: { weight: '1' },
-      hasClassName: `${styles['Typography--weight-1']} ${styles['Typography--accent']}`,
+      hasClassName: `${styles['Typography--weight-1']}`,
     },
     {
       props: { weight: '2' },
-      hasClassName: `${styles['Typography--weight-2']} ${styles['Typography--accent']}`,
+      hasClassName: `${styles['Typography--weight-2']}`,
     },
     {
       props: { weight: '3' },
-      hasClassName: `${styles['Typography--weight-3']} ${styles['Typography--accent']}`,
+      hasClassName: `${styles['Typography--weight-3']}`,
     },
     {
       props: { weight: '1', useAccentWeight: true },
@@ -38,18 +38,6 @@ describe('Typography', () => {
     {
       props: { weight: '3', useAccentWeight: true },
       hasClassName: `${styles['Typography--weight-3']} ${styles['Typography--accent']}`,
-    },
-    {
-      props: { weight: '1', useAccentWeight: false },
-      hasClassName: `${styles['Typography--weight-1']}`,
-    },
-    {
-      props: { weight: '2', useAccentWeight: false },
-      hasClassName: `${styles['Typography--weight-2']}`,
-    },
-    {
-      props: { weight: '3', useAccentWeight: false },
-      hasClassName: `${styles['Typography--weight-3']}`,
     },
     {
       props: { normalize: true, inline: true },
