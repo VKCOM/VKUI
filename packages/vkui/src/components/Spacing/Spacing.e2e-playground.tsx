@@ -20,6 +20,9 @@ export const SpacingPlayground = (props: ComponentPlaygroundProps) => {
           <Separator />
           <Spacing size={size} />
           <Separator />
+          <Spacing size={size}>
+            <Separator />
+          </Spacing>
         </Div>
       )}
     </ComponentPlayground>
