@@ -46,7 +46,7 @@ export interface ImageBaseOverlayInteractiveProps extends ImageBaseOverlayCommon
 export interface ImageBaseOverlayNonInteractiveProps extends ImageBaseOverlayCommonProps {
   /**
    * По умолчанию сам компонент является интерактивным элементом. Передав значение равное `'undefined'` или не передав этот параметр вовсе, можно отключить
-   * такое поведение, что дает возможность передавать отдельные интерактивные элементы в `children`.*
+   * такое поведение, что дает возможность передавать отдельные интерактивные элементы в `children`.
    */
   onClick?: undefined;
   children: React.ReactNode;
