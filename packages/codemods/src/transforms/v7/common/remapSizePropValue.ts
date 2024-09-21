@@ -1,11 +1,14 @@
-import { Collection, JSCodeshift } from 'jscodeshift';
+import { API, Collection, JSCodeshift } from 'jscodeshift';
+import { report } from '../../../report';
 
 export const remapSizePropValue = ({
   j,
   source,
   sizesMap,
   componentName,
+  api,
 }: {
+  api: API;
   j: JSCodeshift;
   source: Collection;
   sizesMap: Record<string, string>;
@@ -22,8 +25,23 @@ export const remapSizePropValue = ({
       return attributeName === 'size';
     })
     .forEach((attribute) => {
+      let nodeToReplaceValue;
+      if (attribute.node.value?.type === 'JSXExpressionContainer') {
+        const expression = attribute.node.value.expression;
+        if (expression.type === 'StringLiteral') {
+          nodeToReplaceValue = expression;
+        }
+      }
       if (attribute.node.value?.type === 'StringLiteral') {
-        attribute.node.value.value = sizesMap[attribute.node.value.value];
+        nodeToReplaceValue = attribute.node.value;
+      }
+      if (nodeToReplaceValue) {
+        const newValue = sizesMap[nodeToReplaceValue.value];
+        if (newValue) {
+          nodeToReplaceValue.value = newValue;
+        }
+      } else {
+        report(api, `Manual changes required for ${componentName}'s "size" prop.`);
       }
     });
 };

@@ -9,7 +9,8 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { alias } = options;
   const j = api.jscodeshift;
   const source = j(file.source);
-  const { localName } = getImportInfo(j, file, 'Spinner', alias);
+  const { localName } = getImportInfo(j, file, 'Spacing', alias);
+
   if (!localName) {
     return source.toSource();
   }
@@ -20,10 +21,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     source,
     componentName: localName,
     sizesMap: {
-      large: 'xl',
-      medium: 'l',
-      regular: 'm',
-      small: 's',
+      '3xs': '2xs',
     },
   });
 
