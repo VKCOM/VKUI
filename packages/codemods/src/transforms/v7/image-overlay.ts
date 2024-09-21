@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { API, FileInfo, JSXAttribute, JSXSpreadAttribute } from 'jscodeshift';
-import { getImportInfo } from '../../codemod-helpers';
+import { getImportInfo, removeAttribute } from '../../codemod-helpers';
 import { report } from '../../report';
 import { JSCodeShiftOptions } from '../../types';
 
@@ -35,6 +35,13 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     );
   };
 
+  const showDisableInteractivePropReport = (localName: string) => {
+    showReport(
+      localName,
+      `"disableInteractive" has been removed, please use "onClick" if you want to make ${localName}.Overlay interactive`,
+    );
+  };
+
   const calcDisableInteractiveValue = (
     disableInteractiveAttribute: JSXAttribute,
   ): boolean | null => {
@@ -52,13 +59,6 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       }
     }
     return null;
-  };
-
-  const removeAttribute = (
-    attributes: Array<JSXAttribute | JSXSpreadAttribute> | undefined,
-    attribute: JSXAttribute,
-  ) => {
-    attributes?.splice(attributes?.indexOf(attribute), 1);
   };
 
   const handleImageComponent = (localName: string) => {
@@ -91,7 +91,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         if (!disableInteractiveAttribute) {
           // Проверяем наличие onClick, и если его нет, то пользователь должен добавить onClick
           if (!onClickAttribute) {
-            showReport(localName, `need to add ${chalk.white.bgBlue('onClick')} prop`);
+            showReport(
+              localName,
+              `If you want to make ${localName}.Overlay interactive please add "onClick" prop`,
+            );
           }
           return;
         }
@@ -100,7 +103,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         if (disableInteractiveValue === null) {
           // Если у disableInteractive используется сложное выражение
           // То пользователь сам должен удалить этот проп, как ему нужно
-          showReport(localName, `need to remove ${chalk.white.bgBlue('disableInteractive')} prop`);
+          showDisableInteractivePropReport(localName);
         }
 
         // Удаляем аттрибут disableInteractive
@@ -116,7 +119,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         }
         if (!onClickAttribute) {
           // Если disableInteractive = false и onClick пропа нет, то пользователь должен его добавить
-          showReport(localName, `need to add ${chalk.white.bgBlue('onClick')} prop`);
+          showDisableInteractivePropReport(localName);
           return;
         }
         // Если disableInteractive = false и onClick не пустой надо обработать следующие кейс:
@@ -127,7 +130,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
           const expression = onClickAttribute.value.expression;
           if (expression.type === 'Identifier') {
             if (expression.name === 'undefined') {
-              showReport(localName, `need to add ${chalk.white.bgBlue('onClick')} prop`);
+              showDisableInteractivePropReport(localName);
             }
             return;
           }
@@ -135,7 +138,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
             return;
           }
         }
-        showReport(localName, `validate ${chalk.white.bgBlue('onClick')} prop value`);
+        showReport(
+          localName,
+          `"disableInteractive" has been removed, please validate that "onClick" prop value not falsy`,
+        );
       });
   };
 
