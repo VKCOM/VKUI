@@ -7,7 +7,6 @@ import styles from './Spacing.module.css';
 export const CUSTOM_CSS_TOKEN_FOR_USER_GAP = '--vkui_internal--Spacing_gap';
 
 export const sizesClassNames: Record<SpacingSize, string> = {
-  '3xs': styles['Spacing--3xs'],
   '2xs': styles['Spacing--2xs'],
   'xs': styles['Spacing--xs'],
   's': styles['Spacing--s'],
@@ -19,7 +18,7 @@ export const sizesClassNames: Record<SpacingSize, string> = {
   '4xl': styles['Spacing--4xl'],
 };
 
-export type SpacingSize = 's' | 'm' | 'l' | '3xs' | '2xs' | 'xs' | 'xl' | '2xl' | '3xl' | '4xl';
+export type SpacingSize = 's' | 'm' | 'l' | '2xs' | 'xs' | 'xl' | '2xl' | '3xl' | '4xl';
 
 export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
