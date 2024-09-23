@@ -15,7 +15,7 @@
 }
 
 /* Хак для того, чтобы убрать системный тултип в Safari */
-.EllipsisText__content:after {
+.EllipsisText__content::after {
   content: '';
   display: block;
 }
