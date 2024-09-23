@@ -34,7 +34,7 @@ export const Spacing = ({ size = 'm', style, ...restProps }: SpacingProps): Reac
     <RootComponent
       {...restProps}
       style={{
-        ...(typeof size === 'number' && { [CUSTOM_CSS_TOKEN_FOR_USER_GAP]: size }),
+        ...(typeof size === 'number' && { [CUSTOM_CSS_TOKEN_FOR_USER_GAP]: `${size}px` }),
         ...style,
       }}
       baseClassName={classNames(

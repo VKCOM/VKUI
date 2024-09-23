@@ -2,8 +2,7 @@
   --vkui_internal--Spacing_gap: 0;
 
   position: relative;
-  block-size: var(--vkui_internal--Spacing_gap);
-  padding-block: calc(1px * var(--vkui_internal--Spacing_gap) / 2);
+  padding-block: calc(var(--vkui_internal--Spacing_gap) / 2);
   box-sizing: border-box;
 }
 
