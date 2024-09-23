@@ -11,6 +11,13 @@
   white-space: nowrap;
   flex: 0 0 auto;
   max-inline-size: inherit;
+  position: relative;
+}
+
+/* Хак для того, чтобы убрать системный тултип в Safari */
+.EllipsisText__content:after {
+  content: "";
+  display: block;
 }
 
 .EllipsisText__content--multiline {

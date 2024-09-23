@@ -20,7 +20,7 @@
 <HorizontalCell
   size="l"
   header={
-    <EllipsisText maxWidth={100} maxLines={2}>
+    <EllipsisText maxWidth={100} maxLines={2} tooltipEnabled>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit
     </EllipsisText>
   }

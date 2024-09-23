@@ -47,8 +47,8 @@ export class CustomResizeObserver {
     this.updateFunction = updateFunction;
   }
 
-  observe(element: HTMLElement): void {
-    if (isPositioned(element)) {
+  observe(element: HTMLElement, forceUseIframe = false): void {
+    if (forceUseIframe || isPositioned(element)) {
       return this.observeUsingIframe(element);
     }
     return this.observeUsingMutationObserver(element);

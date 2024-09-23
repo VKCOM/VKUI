@@ -9,6 +9,11 @@ import { useStableCallback } from './useStableCallback';
 export function useResizeObserver(
   ref: React.MutableRefObject<HTMLElement | null> | React.RefObject<HTMLElement | null> | null,
   callback: (element: HTMLElement) => void,
+  options: {
+    forceUseIframe: boolean;
+  } = {
+    forceUseIframe: false,
+  },
 ): void {
   const stableCallback = useStableCallback(callback);
 
@@ -20,11 +25,11 @@ export function useResizeObserver(
       }
       const element = ref.current;
       const observer = new CustomResizeObserver(() => stableCallback(element));
-      observer.observe(element);
+      observer.observe(element, options.forceUseIframe);
       observer.appendToTheDOM();
 
       return () => observer.disconnect();
     },
-    [ref, stableCallback],
+    [options.forceUseIframe, ref, stableCallback],
   );
 }
