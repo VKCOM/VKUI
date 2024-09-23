@@ -18,7 +18,7 @@ npx @vkontakte/vkui-codemods
 
 Инструмент представляет собой консольное приложение, с помощью которого вы можете выбрать необходимые изменения и применить их, доступны следующие команды:
 
-```
+```console
 $ npx @vkontakte/vkui-codemods --help
 
 Usage: @vkontakte/vkui-codemod [codemod-name]
