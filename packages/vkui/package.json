@@ -50,7 +50,7 @@
     "build": "yarn clear && yarn run -T concurrently 'yarn:build:*'",
     "build:types": "yarn run -T concurrently 'yarn:tsc:*'",
     "build:no-types": "yarn run -T concurrently 'yarn:swc:*' 'yarn:postcss'",
-    "clear": "yarn run -T shx rm -rf dist/*",
+    "clear": "yarn run -T shx rm -rf dist/* || yarn run -T shx true",
     "docker:clear-playwright-cache": "../../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker rm -f && docker volume rm vkui_package_vkui_playwright_cache",
     "postcss": "yarn run -T cross-env NODE_ENV=production concurrently 'yarn:postcss:*'",
     "postcss:bundle": "yarn run -T webpack --config webpack.styles.config.js",
