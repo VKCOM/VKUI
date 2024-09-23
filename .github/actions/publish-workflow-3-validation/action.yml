@@ -6,17 +6,18 @@ inputs:
     description: package's name
     required: true
 
+defaults:
+  run:
+    shell: bash
+
 runs:
   using: composite
   steps:
     - name: Run linters
       run: yarn run lint
-      shell: bash
 
     - name: Run build
       run: yarn workspace ${{ inputs.package_name }} run build
-      shell: bash
 
     - name: Run tests and linters
       run: yarn workspace ${{ inputs.package_name }} run test
-      shell: bash
