@@ -2,12 +2,14 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
+import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CustomSelectInput.module.css';
 
@@ -26,8 +28,6 @@ export interface CustomSelectInputProps
   multiline?: boolean;
   labelTextTestId?: string;
   fetching?: boolean;
-  searchable?: boolean;
-  selectedOptionLabel?: React.ReactElement | string;
 }
 
 /**
@@ -43,35 +43,42 @@ export const CustomSelectInput = ({
   before,
   after,
   status,
-  selectedOptionLabel,
+  children,
+  placeholder,
   selectType = 'default',
   multiline,
   disabled,
   fetching,
   labelTextTestId,
-  searchable,
-  ...restInputProps
+  ...restProps
 }: CustomSelectInputProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
-  const handleRootRef = useExternRef(getRootRef);
+  const title = children || placeholder;
+  const showLabelOrPlaceholder = !Boolean(restProps.value);
 
-  const platform = usePlatform();
+  const handleRootRef = useExternRef(getRootRef);
+  const focusWithin = useFocusWithin(handleRootRef);
 
   const input = (
-    <SelectTypography
-      selectType={selectType}
+    <Text
       type="text"
-      {...restInputProps}
+      {...restProps}
       disabled={disabled && !fetching}
-      readOnly={restInputProps.readOnly || !searchable || (disabled && fetching)}
+      readOnly={restProps.readOnly || (disabled && fetching)}
       Component="input"
       normalize={false}
-      className={styles['CustomSelectInput__input']}
+      className={classNames(
+        styles['CustomSelectInput__el'],
+        (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) &&
+          styles['CustomSelectInput__el--cursor-pointer'],
+      )}
       getRootRef={getRef}
+      placeholder={children ? '' : placeholder}
     />
   );
 
+  const platform = usePlatform();
   return (
     <FormField
       Component="div"
@@ -80,7 +87,7 @@ export const CustomSelectInput = ({
         styles['CustomSelectInput'],
         align === 'right' && styles['CustomSelectInput--align-right'],
         align === 'center' && styles['CustomSelectInput--align-center'],
-        !selectedOptionLabel && styles['CustomSelectInput--empty'],
+        !children && styles['CustomSelectInput--empty'],
         multiline && styles['CustomSelectInput--multiline'],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         before && styles['CustomSelectInput--hasBefore'],
@@ -95,6 +102,16 @@ export const CustomSelectInput = ({
       status={status}
     >
       <div className={styles['CustomSelectInput__input-group']}>
+        <div
+          className={classNames(styles['CustomSelectInput__container'], className)}
+          tabIndex={-1}
+          aria-hidden
+          data-testid={labelTextTestId}
+        >
+          <SelectTypography selectType={selectType} className={styles['CustomSelectInput__title']}>
+            {showLabelOrPlaceholder && title}
+          </SelectTypography>
+        </div>
         {/* Чтобы отключить autosuggestion в iOS, тултипы которого начинают всплывать даже когда input
          * в режиме readonly, мы оборачиваем инпут в VisuallyHidden.
          * Тултипы появляются при каждом клике на input.
@@ -104,17 +121,11 @@ export const CustomSelectInput = ({
          * Делаем это только для режима read-only. Потому что проблема именно в режиме read-only.
          * Обертка вокруг инпута обрабатывает клики и передаёт фокус, так что на взаимодействии с инпутом это никак не скажется.
          **/}
-        {!searchable && platform === 'ios' ? <VisuallyHidden>{input}</VisuallyHidden> : input}
-        <div
-          className={classNames(styles['CustomSelectInput__label-wrapper'], className)}
-          tabIndex={-1}
-          aria-hidden
-          data-testid={labelTextTestId}
-        >
-          <SelectTypography selectType={selectType} className={styles['CustomSelectInput__label']}>
-            {selectedOptionLabel || restInputProps.placeholder}
-          </SelectTypography>
-        </div>
+        {restProps.readOnly && platform === 'ios' ? (
+          <VisuallyHidden>{input}</VisuallyHidden>
+        ) : (
+          input
+        )}
       </div>
     </FormField>
   );
