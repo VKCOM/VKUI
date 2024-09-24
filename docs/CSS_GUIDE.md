@@ -4,7 +4,7 @@
 
 ### Используйте camelCase для имён классов
 
-Для всех `.module.css` файлов активирован линтер, который проверяет, чтобы локальные классы были в camelCase . Именно эти классы затем будут импортировать в JS и именно они затем будут отображаться в инспекторе браузера, если вы решите посмотреть какой-то элемент. Такой формат выбран в том числе для удобства написания и отладки кода.
+Для всех `.module.css` файлов активирован линтер, который проверяет, чтобы локальные классы были в camelCase. Именно эти классы затем будут импортироваться в JS и именно они затем будут отображаться в инспекторе браузера, если вы решите посмотреть какой-то элемент. Такой формат выбран в том числе для удобства написания и отладки кода.
 
 ### Модификаторы
 
@@ -35,17 +35,17 @@ import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import styles from './Component.module.css';
 
 const animationStateClassNames = {
-  enter: styles.enter,
-  entering: styles.enter,
-  entered: styles.entered,
-  exit: styles.exit,
-  exiting: styles.exit,
-  exited: styles.exited,
+  enter: styles.hostEnter,
+  entering: styles.hostEnter,
+  entered: styles.hostEntered,
+  exit: styles.hostExit,
+  exiting: styles.hostExit,
+  exited: styles.hostExited,
 };
 
 const platformClassNames = {
-  android: styles.android,
-  vkcom: styles.vkcom,
+  android: styles.hostAndroid,
+  vkcom: styles.hostVKCOM,
 };
 
 const Component = ({ className, children }) => {
