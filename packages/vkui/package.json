@@ -78,7 +78,7 @@
     "@swc/helpers": "^0.5.13",
     "@vkontakte/icons": "^2.115.0",
     "@vkontakte/vkjs": "^1.3.0",
-    "@vkontakte/vkui-floating-ui": "^0.2.1",
+    "@vkontakte/vkui-floating-ui": "^0.2.3",
     "date-fns": "^4.1.0"
   },
   "devDependencies": {

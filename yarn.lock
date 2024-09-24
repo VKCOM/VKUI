@@ -1165,7 +1165,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^2.1.0, @floating-ui/react-dom@npm:^2.1.2":
+"@floating-ui/react-dom@npm:^2.1.2":
   version: 2.1.2
   resolution: "@floating-ui/react-dom@npm:2.1.2"
   dependencies:
@@ -3715,16 +3715,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/vkui-floating-ui@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "@vkontakte/vkui-floating-ui@npm:0.2.1"
+"@vkontakte/vkui-floating-ui@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "@vkontakte/vkui-floating-ui@npm:0.2.3"
   dependencies:
-    "@floating-ui/react-dom": "npm:^2.1.0"
-    "@swc/helpers": "npm:^0.5.11"
+    "@floating-ui/react-dom": "npm:^2.1.2"
+    "@swc/helpers": "npm:^0.5.13"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 10/a3897dde1a1da14e11214030e91b1b9f92ae70d1db36ea81b52d0a18c9368cefbb06bf5a381c27692188a7b3c732aed6bdf61e5a79b134082de2d9bc1d7ff522
+  checksum: 10/999636860ca07d2f7f6bca63c3f388858a7e18091a50c44da0756adfb1ee16c7fc224e0710e250ee51d3a8eaa0fd0d11ac00224c33e276ecc91e14da9dd92801
   languageName: node
   linkType: hard
 
@@ -3881,7 +3881,7 @@ __metadata:
     "@swc/helpers": "npm:^0.5.13"
     "@vkontakte/icons": "npm:^2.115.0"
     "@vkontakte/vkjs": "npm:^1.3.0"
-    "@vkontakte/vkui-floating-ui": "npm:^0.2.1"
+    "@vkontakte/vkui-floating-ui": "npm:^0.2.3"
     date-fns: "npm:^4.1.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
