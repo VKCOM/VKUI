@@ -122,6 +122,9 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const handleFocusOnReference = useStableCallback(() => {
     // Повторный вызов события фокуса - следствие клика на reference-элемент
     if (shownLocalState.shown) {
+      if (!closeAfterClick) {
+        return;
+      }
       commitShownLocalState(false, 'focus');
       return;
     }
