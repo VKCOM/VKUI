@@ -42,7 +42,7 @@
   margin-inline-end: calc(
     -1 * var(--vkui_internal--SimpleCell-before-inline-padding-end, var(--vkui--spacing_size_xl))
   );
-  padding-inline-end: 8px;
+  padding-inline-end: var(--vkui--spacing_size_m);
 }
 
 .CellButton {
