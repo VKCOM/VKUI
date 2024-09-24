@@ -38,6 +38,10 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .CellButton--centered :global(.vkuiIcon) {
+  /* компенсируем отступ заданные в SimpleCell__before */
+  margin-inline-end: calc(
+    -1 * var(--vkui_internal--SimpleCell-before-inline-padding-end, var(--vkui--spacing_size_xl))
+  );
   padding-inline-end: 8px;
 }
 

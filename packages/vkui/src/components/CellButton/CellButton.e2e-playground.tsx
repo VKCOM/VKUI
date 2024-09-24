@@ -12,6 +12,7 @@ export const CellButtonPlayground = (props: ComponentPlaygroundProps) => {
         {
           centered: [true],
           children: ['Создать что-нибудь'],
+          before: [undefined, <Icon24Add key="add" />],
         },
         {
           mode: [undefined, 'danger'],
