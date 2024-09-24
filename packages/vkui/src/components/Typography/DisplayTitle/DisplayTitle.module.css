@@ -1,11 +1,11 @@
-.DisplayTitle--level-1 {
+.level1 {
   font-size: var(--vkui--font_display_title1--font_size--regular);
   line-height: var(--vkui--font_display_title1--line_height--regular);
   font-weight: var(--vkui--font_display_title1--font_weight--regular);
   font-family: var(--vkui--font_display_title1--font_family--regular);
 }
 
-.DisplayTitle--sizeY-compact.DisplayTitle--level-1 {
+.sizeYCompact.level1 {
   font-size: var(
     --vkui--font_display_title1--font_size--compact,
     var(--vkui--font_display_title1--font_size--regular)
@@ -25,7 +25,7 @@
 }
 
 @media (--sizeY-compact) {
-  .DisplayTitle--sizeY-none.DisplayTitle--level-1 {
+  .sizeYNone.level1 {
     font-size: var(
       --vkui--font_display_title1--font_size--compact,
       var(--vkui--font_display_title1--font_size--regular)
@@ -45,14 +45,14 @@
   }
 }
 
-.DisplayTitle--level-2 {
+.level2 {
   font-size: var(--vkui--font_display_title2--font_size--regular);
   line-height: var(--vkui--font_display_title2--line_height--regular);
   font-weight: var(--vkui--font_display_title2--font_weight--regular);
   font-family: var(--vkui--font_display_title2--font_family--regular);
 }
 
-.DisplayTitle--sizeY-compact.DisplayTitle--level-2 {
+.sizeYCompact.level2 {
   font-size: var(
     --vkui--font_display_title2--font_size--compact,
     var(--vkui--font_display_title2--font_size--regular)
@@ -72,7 +72,7 @@
 }
 
 @media (--sizeY-compact) {
-  .DisplayTitle--sizeY-none.DisplayTitle--level-2 {
+  .sizeYNone.level2 {
     font-size: var(
       --vkui--font_display_title2--font_size--compact,
       var(--vkui--font_display_title2--font_size--regular)
@@ -92,14 +92,14 @@
   }
 }
 
-.DisplayTitle--level-3 {
+.level3 {
   font-size: var(--vkui--font_display_title3--font_size--regular);
   line-height: var(--vkui--font_display_title3--line_height--regular);
   font-weight: var(--vkui--font_display_title3--font_weight--regular);
   font-family: var(--vkui--font_display_title3--font_family--regular);
 }
 
-.DisplayTitle--sizeY-compact.DisplayTitle--level-3 {
+.sizeYCompact.level3 {
   font-size: var(
     --vkui--font_display_title3--font_size--compact,
     var(--vkui--font_display_title3--font_size--regular)
@@ -119,7 +119,7 @@
 }
 
 @media (--sizeY-compact) {
-  .DisplayTitle--sizeY-none.DisplayTitle--level-3 {
+  .sizeYNone.level3 {
     font-size: var(
       --vkui--font_display_title3--font_size--compact,
       var(--vkui--font_display_title3--font_size--regular)
@@ -139,14 +139,14 @@
   }
 }
 
-.DisplayTitle--level-4 {
+.level4 {
   font-size: var(--vkui--font_display_title4--font_size--regular);
   line-height: var(--vkui--font_display_title4--line_height--regular);
   font-weight: var(--vkui--font_display_title4--font_weight--regular);
   font-family: var(--vkui--font_display_title4--font_family--regular);
 }
 
-.DisplayTitle--sizeY-compact.DisplayTitle--level-4 {
+.sizeYCompact.level4 {
   font-size: var(
     --vkui--font_display_title4--font_size--compact,
     var(--vkui--font_display_title4--font_size--regular)
@@ -166,7 +166,7 @@
 }
 
 @media (--sizeY-compact) {
-  .DisplayTitle--sizeY-none.DisplayTitle--level-4 {
+  .sizeYNone.level4 {
     font-size: var(
       --vkui--font_display_title4--font_size--compact,
       var(--vkui--font_display_title4--font_size--regular)

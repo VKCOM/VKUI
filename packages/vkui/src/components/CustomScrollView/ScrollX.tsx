@@ -41,12 +41,9 @@ export const ScrollX = ({
   );
 
   return (
-    <div className={styles['CustomScrollView__barX']} ref={barX} onClick={stopPropagation}>
+    <div className={styles.barX} ref={barX} onClick={stopPropagation}>
       <div
-        className={classNames(
-          styles['CustomScrollView__trackerX'],
-          !horizontalTrackerVisible && styles['CustomScrollView__trackerX--hidden'],
-        )}
+        className={classNames(styles.trackerX, !horizontalTrackerVisible && styles.trackerXHidden)}
         onMouseEnter={autoHideScrollbar ? onHorizontalTrackerMouseEnter : undefined}
         onMouseLeave={autoHideScrollbar ? onHorizontalTrackerMouseLeave : undefined}
         ref={trackerX}

@@ -6,8 +6,8 @@ import { CheckboxInput } from '../CheckboxInput/CheckboxInput';
 import styles from './CheckboxSimple.module.css';
 
 const sizeYClassNames = {
-  none: styles['CheckboxSimple--sizeY-none'],
-  compact: styles['CheckboxSimple--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export function CheckboxSimple({
@@ -28,11 +28,7 @@ export function CheckboxSimple({
 
   return (
     <Tappable
-      className={classNames(
-        className,
-        styles['CheckboxSimple'],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-      )}
+      className={classNames(className, styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
       style={style}
       disabled={restProps.disabled}
       getRootRef={getRootRef}

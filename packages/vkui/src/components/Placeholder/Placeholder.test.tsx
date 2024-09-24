@@ -17,16 +17,12 @@ describe('Placeholder', () => {
       </Placeholder>,
     );
     expect(screen.getByTestId('container')).toHaveClass(
-      classNames(
-        styles['Placeholder'],
-        styles['Placeholder--stretched'],
-        styles['Placeholder--withPadding'],
-      ),
+      classNames(styles.host, styles.stretched, styles.withPadding),
     );
-    expect(screen.getByTestId('icon')).toHaveClass(styles['Placeholder__icon']);
-    expect(screen.getByTestId('header')).toHaveClass(styles['Placeholder__header']);
-    expect(screen.getByTestId('text')).toHaveClass(styles['Placeholder__text']);
-    expect(screen.getByTestId('actions')).toHaveClass(styles['Placeholder__action']);
+    expect(screen.getByTestId('icon')).toHaveClass(styles.icon);
+    expect(screen.getByTestId('header')).toHaveClass(styles.header);
+    expect(screen.getByTestId('text')).toHaveClass(styles.text);
+    expect(screen.getByTestId('actions')).toHaveClass(styles.action);
 
     expect(screen.getByText('Icon')).toBeInTheDocument();
     expect(screen.getByText('Header')).toBeInTheDocument();

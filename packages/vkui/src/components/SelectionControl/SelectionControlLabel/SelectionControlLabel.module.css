@@ -1,4 +1,4 @@
-.SelectionControlLabel {
+.host {
   flex-grow: 1;
   color: var(--vkui--color_text_primary);
   min-inline-size: 0; /* см. https://github.com/VKCOM/VKUI/issues/5687 */
@@ -7,38 +7,38 @@
   margin-inline-start: 12px;
 }
 
-.SelectionControlLabel:first-child {
+.host:first-child {
   margin-inline-start: 0;
 }
 
-.SelectionControlLabel__description {
+.description {
   color: var(--vkui--color_text_secondary);
   display: block;
   margin-block-start: 2px;
 }
 
-.SelectionControlLabel__titleLayout {
+.titleLayout {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.SelectionControlLabel__title {
+.title {
   min-inline-size: 0; /* см. https://github.com/VKCOM/VKUI/issues/5687 */
 }
 
-.SelectionControlLabel__titleAfter {
+.titleAfter {
   margin-inline-start: 4px;
   flex-shrink: 0;
   color: var(--vkui--color_icon_tertiary);
 }
 
-.SelectionControlLabel--sizeY-compact {
+.sizeYCompact {
   margin-block: var(--vkui--spacing_size_m);
 }
 
 @media (--sizeY-compact) {
-  .SelectionControlLabel--sizeY-none {
+  .sizeYNone {
     margin-block: var(--vkui--spacing_size_m);
   }
 }

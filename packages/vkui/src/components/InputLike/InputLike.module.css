@@ -1,9 +1,9 @@
-.InputLike__mask {
+.mask {
   position: relative;
   font-family: var(--vkui--font_family_base);
 }
 
-.InputLike__mask::after {
+.mask::after {
   content: '';
   position: absolute;
   inline-size: calc(100% - 0.1em);
@@ -13,21 +13,21 @@
   border-block-end: solid 1px var(--vkui--color_text_secondary);
 }
 
-.InputLike__mask:last-child {
+.mask:last-child {
   margin-inline-end: 1px;
 }
 
-.InputLike__last_character {
+.lastCharacter {
   /* stylelint-disable-next-line declaration-no-important */
   letter-spacing: 1px !important;
 }
 
-.InputLike__divider {
+.divider {
   color: var(--vkui--color_text_secondary);
   /* stylelint-disable-next-line declaration-no-important */
   letter-spacing: 1px !important;
 }
 
-.InputLike--full + .InputLike__divider {
+.full + .divider {
   color: var(--vkui--color_text_primary);
 }

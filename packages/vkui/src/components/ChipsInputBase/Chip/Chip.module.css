@@ -1,4 +1,4 @@
-.Chip {
+.host {
   display: inline-flex;
   align-items: center;
   border: var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha);
@@ -8,8 +8,8 @@
   box-sizing: border-box;
 }
 
-.Chip__in,
-.Chip__removable {
+.in,
+.removable {
   position: relative;
   display: flex;
   align-items: center;
@@ -17,16 +17,16 @@
   border-radius: inherit;
 }
 
-.Chip__in {
+.in {
   padding-inline-start: 8px;
   overflow: hidden;
 }
 
-.Chip__in:last-of-type {
+.in:last-of-type {
   padding-inline-end: 8px;
 }
 
-.Chip__content {
+.content {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -40,7 +40,7 @@
   font-family: var(--vkui--font_paragraph--font_family--regular);
 }
 
-.Chip--sizeY-compact .Chip__content {
+.sizeYCompact .content {
   /* Typography/Footnote */
   font-size: var(--vkui--font_footnote--font_size--regular);
   line-height: var(--vkui--font_footnote--line_height--regular);
@@ -49,7 +49,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Chip--sizeY-none .Chip__content {
+  .sizeYNone .content {
     /* Typography/Footnote */
     font-size: var(--vkui--font_footnote--font_size--regular);
     line-height: var(--vkui--font_footnote--line_height--regular);
@@ -58,12 +58,12 @@
   }
 }
 
-.Chip__removable {
+.removable {
   flex-grow: 0;
   flex-shrink: 0;
 }
 
-.Chip__remove {
+.remove {
   flex: 0 0 100%;
   padding: 5px;
   transform: translateX(-1px);
@@ -75,20 +75,20 @@
   cursor: pointer;
 }
 
-.Chip__before {
+.before {
   margin-inline-end: 6px;
 }
 
-.Chip__after {
+.after {
   margin-inline-start: 6px;
 }
 
-.Chip--sizeY-compact {
+.sizeYCompact {
   block-size: 28px;
 }
 
 @media (--sizeY-compact) {
-  .Chip--sizeY-none {
+  .sizeYNone {
     block-size: 28px;
   }
 }

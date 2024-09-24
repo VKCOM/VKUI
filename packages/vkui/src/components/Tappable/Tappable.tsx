@@ -8,16 +8,16 @@ import { activeClass, DEFAULT_STATE_MODE, hoverClass, type StateProps } from './
 import styles from './Tappable.module.css';
 
 const sizeXClassNames = {
-  none: styles['Tappable--sizeX-none'],
-  compact: styles['Tappable--sizeX-compact'],
+  none: styles.sizeXNone,
+  compact: styles.sizeXCompact,
 };
 
 function hasPointerClassName(hasPointer: boolean | undefined) {
   switch (hasPointer) {
     case undefined:
-      return styles['Tappable--hasPointer-none'];
+      return styles.hasPointerNone;
     case false:
-      return styles['Tappable--hasPointer-false'];
+      return styles.hasPointerFalse;
   }
 
   return undefined;
@@ -59,9 +59,9 @@ export const Tappable = ({
     <Clickable
       baseClassName={classNames(
         baseClassName,
-        styles['Tappable'],
+        styles.host,
         sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
-        borderRadiusMode === 'inherit' && styles['Tappable--borderRadiusInherit'],
+        borderRadiusMode === 'inherit' && styles.borderRadiusInherit,
         hasPointerClassName(hasPointer),
       )}
       hoverClassName={hoverClass(hoverMode)}

@@ -7,9 +7,9 @@ import { Subhead, type SubheadProps } from '../../Typography/Subhead/Subhead';
 import styles from './HorizontalCellShowMore.module.css';
 
 const sizeClassNames = {
-  s: styles['HorizontalCellShowMore--size-s'],
-  m: styles['HorizontalCellShowMore--size-m'],
-  l: styles['HorizontalCellShowMore--size-l'],
+  s: styles.sizeS,
+  m: styles.sizeM,
+  l: styles.sizeL,
 };
 
 export interface HorizontalCellShowMoreProps
@@ -58,8 +58,8 @@ export const HorizontalCellShowMore = ({
     <div
       style={style}
       className={classNames(
-        styles['HorizontalCellShowMore'],
-        centered && styles['HorizontalCellShowMore--centered'],
+        styles.host,
+        centered && styles.centered,
         sizeClassNames[size],
         className,
       )}
@@ -67,18 +67,15 @@ export const HorizontalCellShowMore = ({
     >
       <Tappable
         style={size === 's' ? undefined : { height }}
-        className={styles['HorizontalCellShowMore__body']}
+        className={styles.body}
         getRootRef={getRef}
         activeMode="opacity"
         hoverMode="opacity"
         {...restProps}
       >
-        <Icon28ChevronRightCircle
-          className={styles['HorizontalCellShowMore__icon']}
-          fill="currentColor"
-        />
+        <Icon28ChevronRightCircle className={styles.icon} fill="currentColor" />
 
-        <Subhead className={styles['HorizontalCellShowMore__text']} weight="2">
+        <Subhead className={styles.text} weight="2">
           {children}
         </Subhead>
       </Tappable>

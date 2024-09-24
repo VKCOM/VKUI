@@ -9,7 +9,7 @@ function RadioIcon24(props: React.ComponentProps<'svg'>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden {...props}>
       <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
-      <circle cx="12" cy="12" r="7" className={styles['RadioInput__pin']} fill="currentColor" />
+      <circle cx="12" cy="12" r="7" className={styles.pin} fill="currentColor" />
     </svg>
   );
 }
@@ -18,14 +18,14 @@ function RadioIcon20(props: React.ComponentProps<'svg'>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden {...props}>
       <circle cx="10" cy="10" r="7.75" stroke="currentColor" strokeWidth="1.5" fill="none" />
-      <circle cx="10" cy="10" r="5.5" className={styles['RadioInput__pin']} fill="currentColor" />
+      <circle cx="10" cy="10" r="5.5" className={styles.pin} fill="currentColor" />
     </svg>
   );
 }
 
 function RadioIcon() {
   return (
-    <div className={styles['RadioInput__icon']}>
+    <div className={styles.icon}>
       <AdaptiveIconRenderer IconCompact={RadioIcon20} IconRegular={RadioIcon24} />
     </div>
   );
@@ -49,7 +49,7 @@ export function RadioInput({
         {...restProps}
         Component="input"
         type="radio"
-        baseClassName={styles['RadioInput__input']}
+        baseClassName={styles.input}
         getRootRef={getRef}
       />
       <RadioIcon />

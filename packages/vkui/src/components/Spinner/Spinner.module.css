@@ -1,4 +1,4 @@
-.Spinner {
+.host {
   inline-size: 100%;
   block-size: 100%;
   display: flex;
@@ -7,7 +7,7 @@
   color: var(--vkui--color_icon_medium);
 }
 
-.Spinner--no-color {
+.noColor {
   color: currentColor;
 }
 
@@ -17,6 +17,6 @@
  * TODO [>=7]: удалить
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader) .Spinner {
+:global(.vkuiInternalPanelHeader) .host {
   color: currentColor;
 }

@@ -98,19 +98,19 @@ describe('FixedLayout', () => {
         props: {
           filled: true,
         },
-        className: styles['FixedLayout--filled'],
+        className: styles.filled,
       },
       {
         props: {
           vertical: 'top',
         },
-        className: styles['FixedLayout--vertical-top'],
+        className: styles.verticalTop,
       },
       {
         props: {
           vertical: 'bottom',
         },
-        className: styles['FixedLayout--vertical-bottom'],
+        className: styles.verticalBottom,
       },
     ])('should have className $className when use props $props', ({ props, className }) => {
       const layoutRef: MutableRefObject<HTMLDivElement | null> = {

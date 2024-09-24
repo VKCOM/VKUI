@@ -1,10 +1,10 @@
-.RootComponent[hidden='hidden'],
-.RootComponent--hidden {
+.host[hidden='hidden'],
+.hidden {
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }
 
-.RootComponent[hidden='until-found'] {
+.host[hidden='until-found'] {
   /* stylelint-disable-next-line declaration-no-important */
   content-visibility: hidden !important;
 }

@@ -17,49 +17,49 @@ describe('Typography', () => {
     },
     {
       props: { weight: '1' },
-      hasClassName: `${styles['Typography--weight-1']}`,
+      hasClassName: `${styles.weight1}`,
     },
     {
       props: { weight: '2' },
-      hasClassName: `${styles['Typography--weight-2']}`,
+      hasClassName: `${styles.weight2}`,
     },
     {
       props: { weight: '3' },
-      hasClassName: `${styles['Typography--weight-3']}`,
+      hasClassName: `${styles.weight3}`,
     },
     {
       props: { weight: '1', useAccentWeight: true },
-      hasClassName: `${styles['Typography--weight-1']} ${styles['Typography--accent']}`,
+      hasClassName: `${styles.weight1} ${styles.accent}`,
     },
     {
       props: { weight: '2', useAccentWeight: true },
-      hasClassName: `${styles['Typography--weight-2']} ${styles['Typography--accent']}`,
+      hasClassName: `${styles.weight2} ${styles.accent}`,
     },
     {
       props: { weight: '3', useAccentWeight: true },
-      hasClassName: `${styles['Typography--weight-3']} ${styles['Typography--accent']}`,
+      hasClassName: `${styles.weight3} ${styles.accent}`,
     },
     {
       props: { weight: '1', useAccentWeight: false },
-      hasClassName: `${styles['Typography--weight-1']}`,
+      hasClassName: `${styles.weight1}`,
     },
     {
       props: { weight: '2', useAccentWeight: false },
-      hasClassName: `${styles['Typography--weight-2']}`,
+      hasClassName: `${styles.weight2}`,
     },
     {
       props: { weight: '3', useAccentWeight: false },
-      hasClassName: `${styles['Typography--weight-3']}`,
+      hasClassName: `${styles.weight3}`,
     },
     {
       props: { normalize: true, inline: true },
-      hasClassName: `${styles['Typography--normalize']} ${styles['Typography--inline']}`,
+      hasClassName: `${styles.normalize} ${styles.inline}`,
     },
   ])('it should have className $hasClassName with props $props', ({ props, hasClassName }) => {
     render(<Typography {...props}>Test</Typography>);
 
     expect(screen.getByText('Test')).toHaveClass(
-      `${styles['Typography']} ${hasClassName} ${rootComponentStyles['RootComponent']}`,
+      `${styles.host} ${hasClassName} ${rootComponentStyles.host}`,
       {
         exact: true,
       },

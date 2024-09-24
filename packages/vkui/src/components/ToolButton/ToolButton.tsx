@@ -8,25 +8,25 @@ import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import styles from './ToolButton.module.css';
 
 const stylesMode = {
-  primary: styles['ToolButton--mode-primary'],
-  secondary: styles['ToolButton--mode-secondary'],
-  tertiary: styles['ToolButton--mode-tertiary'],
-  outline: styles['ToolButton--mode-outline'],
+  primary: styles.modePrimary,
+  secondary: styles.modeSecondary,
+  tertiary: styles.modeTertiary,
+  outline: styles.modeOutline,
 };
 
 const stylesAppearance = {
-  accent: styles['ToolButton--appearance-accent'],
-  neutral: styles['ToolButton--appearance-neutral'],
+  accent: styles.appearanceAccent,
+  neutral: styles.appearanceNeutral,
 };
 
 const stylesDirection = {
-  row: styles['ToolButton--direction-row'],
-  column: styles['ToolButton--direction-column'],
+  row: styles.directionRow,
+  column: styles.directionColumn,
 };
 
 const sizeYClassNames = {
-  none: styles['ToolButton--sizeY-none'],
-  regular: styles['ToolButton--sizeY-regular'],
+  none: styles.sizeYNone,
+  regular: styles.sizeYRegular,
 };
 
 export interface ToolButtonProps extends TappableProps, AdaptiveIconRendererProps {
@@ -64,15 +64,15 @@ export const ToolButton = ({
 
   return (
     <Tappable
-      hoverMode={styles['ToolButton--hover']}
-      activeMode={styles['ToolButton--active']}
+      hoverMode={styles.hover}
+      activeMode={styles.active}
       Component={restProps.href ? 'a' : 'button'}
       focusVisibleMode="outside"
       className={classNames(
         className,
-        styles['ToolButton'],
+        styles.host,
         rounded && getRoundedClassName(direction, hasChildren),
-        hasChildren && direction === 'row' && styles['ToolButton--withFakeEndIcon'],
+        hasChildren && direction === 'row' && styles.withFakeEndIcon,
         stylesMode[mode],
         stylesAppearance[appearance],
         stylesDirection[direction],
@@ -81,7 +81,7 @@ export const ToolButton = ({
       {...restProps}
     >
       <AdaptiveIconRenderer IconCompact={IconCompact} IconRegular={IconRegular} />
-      {hasChildren && <span className={styles['ToolButton__text']}>{children}</span>}
+      {hasChildren && <span className={styles.text}>{children}</span>}
     </Tappable>
   );
 };
@@ -92,8 +92,8 @@ export function getRoundedClassName(
 ): string | undefined {
   switch (direction) {
     case 'row':
-      return styles['ToolButton--rounded'];
+      return styles.rounded;
     case 'column':
-      return hasChildren ? undefined : styles['ToolButton--rounded'];
+      return hasChildren ? undefined : styles.rounded;
   }
 }

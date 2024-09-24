@@ -1,4 +1,4 @@
-.Root {
+.host {
   --vkui_internal--root_animation_opacity_initial: 0;
   --vkui_internal--root_animation_transform_initial: scale(1.05);
   --vkui_internal--root_animation_duration: 0.3s;
@@ -8,40 +8,40 @@
   position: relative;
 }
 
-.Root--ios {
+.ios {
   --vkui_internal--root_animation_opacity_initial: 1;
   --vkui_internal--root_animation_transform_initial: translate3d(0, 100%, 0);
   --vkui_internal--root_animation_duration: 0.6s;
 }
 
-.Root--transition {
+.transition {
   pointer-events: none;
 }
 
-.Root__view {
+.view {
   inline-size: 100%;
   block-size: 100%;
   position: relative;
 }
 
-.Root__view--show-forward {
+.viewShowForward {
   /* prettier-ignore */
   animation: root-animation-show-forward var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform);
 }
 
-.Root__view--hide-back {
+.viewHideBack {
   /* prettier-ignore */
   animation: root-animation-hide-back var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform) forwards;
 }
 
-.Root--transition .Root__view {
+.transition .view {
   position: fixed;
   inset-inline-start: 0;
   inset-block-start: 0;
   overflow: hidden;
 }
 
-.Root__scrollCompensation {
+.scrollCompensation {
   inline-size: 100%;
   block-size: 100%;
 }
@@ -50,8 +50,8 @@
  * iOS
  */
 
-.Root--ios .Root__view--show-back::after,
-.Root--ios .Root__view--hide-forward::after {
+.ios .viewShowBack::after,
+.ios .viewHideForward::after {
   position: absolute;
   inline-size: 100%;
   block-size: 100%;
@@ -62,22 +62,22 @@
   background-color: #000;
 }
 
-.Root--ios .Root__view--show-back::after {
+.ios .viewShowBack::after {
   /* prettier-ignore */
   animation: root-ios-overlay-animation-show-back var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform) forwards;
 }
 
-.Root--ios .Root__view--hide-forward::after {
+.ios .viewHideForward::after {
   /* prettier-ignore */
   animation: root-ios-overlay-animation-hide-forward var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform);
 }
 
 @media (--reduce-motion) {
-  .Root {
+  .host {
     --vkui_internal--root_animation_transform_initial: 1;
   }
 
-  .Root--ios {
+  .ios {
     --vkui_internal--root_animation_opacity_initial: 0;
     --vkui_internal--root_animation_transform_initial: 1;
   }

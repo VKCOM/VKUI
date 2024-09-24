@@ -1,11 +1,11 @@
-.Subhead {
+.host {
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
   font-weight: var(--vkui--font_subhead--font_weight--regular);
   font-family: var(--vkui--font_subhead--font_family--regular);
 }
 
-.Subhead--sizeY-compact {
+.sizeYCompact {
   font-size: var(
     --vkui--font_subhead--font_size--compact,
     var(--vkui--font_subhead--font_size--regular)
@@ -25,7 +25,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Subhead--sizeY-none {
+  .sizeYNone {
     font-size: var(
       --vkui--font_subhead--font_size--compact,
       var(--vkui--font_subhead--font_size--regular)

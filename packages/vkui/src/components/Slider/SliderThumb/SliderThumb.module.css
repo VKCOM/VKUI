@@ -1,4 +1,4 @@
-.SliderThumb {
+.host {
   position: absolute;
   z-index: 1;
   box-sizing: border-box;
@@ -12,23 +12,23 @@
   transition: background-color 0.15s ease-out;
 }
 
-.SliderThumb--focus-visible {
+.focusVisible {
   outline: var(--vkui_internal--outline);
   outline-offset: calc(-1 * var(--vkui--size_border--regular));
 }
 
-.SliderThumb--hover {
+.hover {
   background-color: var(--vkui--color_background_contrast--hover);
 }
 
-.SliderThumb--active {
+.active {
   background-color: var(--vkui--color_background_contrast--active);
 }
 
 /**
  * Задаём ширину и высоту родителя, чтобы скринридер правильно выделял элемент (скопировано с MUI).
  */
-.SliderThumb__nativeInput {
+.nativeInput {
   direction: ltr;
   position: absolute;
   inline-size: 100%;

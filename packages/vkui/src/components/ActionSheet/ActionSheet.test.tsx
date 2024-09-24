@@ -197,9 +197,7 @@ describe(ActionSheet, () => {
       const result = render(<ActionSheetMobile onClose={onClose} />);
       await waitForFloatingPosition();
       await userEvent.click(
-        result.container.querySelector<HTMLElement>(
-          `.${popoutWrapperStyles['PopoutWrapper__overlay']}`,
-        )!,
+        result.container.querySelector<HTMLElement>(`.${popoutWrapperStyles.overlay}`)!,
       );
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
       expect(onClose).toHaveBeenCalledTimes(1);

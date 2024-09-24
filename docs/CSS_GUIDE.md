@@ -2,13 +2,27 @@
 
 ## Соглашения
 
-- Используем БЭМ-нотацию
-- Блок начинается с заглавной буквы: `.Checkbox`
-- Многословный блок разделяется через camelCase: `.ButtonGroup`
-- Элемент от блока отделяется двумя подчеркиваниями: `.Checkbox__in`
-- Многословные элементы разделяются через kebab-case: `.Banner__before-title`
-- Модификатор отделяется двумя дефисами: `.Input--plain` (см. **Работа с модификаторами**)
-- Многословные модификаторы разделяются через kebab-case или camelCase: `.Checkbox--sizeX-regular`
+### Используйте camelCase для имён классов
+
+Для всех `.module.css` файлов активирован линтер, который проверяет, чтобы локальные классы были в camelCase . Именно эти классы затем будут импортировать в JS и именно они затем будут отображаться в инспекторе браузера, если вы решите посмотреть какой-то элемент. Такой формат выбран в том числе для удобства написания и отладки кода.
+
+### Модификаторы
+
+У модификаторов элемента должен быть префикс с названием этого элемента. Например,
+
+```css
+.container {
+}
+.containerPrimary {
+}
+.containerSecondary {
+}
+
+.text {
+}
+.textWithShadow {
+}
+```
 
 ### Работа с модификаторами
 
@@ -21,17 +35,17 @@ import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import styles from './Component.module.css';
 
 const animationStateClassNames = {
-  enter: styles['Component--enter'],
-  entering: styles['Component--enter'],
-  entered: styles['Component--entered'],
-  exit: styles['Component--exit'],
-  exiting: styles['Component--exit'],
-  exited: styles['Component--exited'],
+  enter: styles.enter,
+  entering: styles.enter,
+  entered: styles.entered,
+  exit: styles.exit,
+  exiting: styles.exit,
+  exited: styles.exited,
 };
 
 const platformClassNames = {
-  android: styles['Component--android'],
-  vkcom: styles['Component--vkcom'],
+  android: styles.android,
+  vkcom: styles.vkcom,
 };
 
 const Component = ({ className, children }) => {
@@ -41,7 +55,7 @@ const Component = ({ className, children }) => {
     <div
       className={classNames(
         className,
-        styles.Component,
+        styles.host,
         animationStateClassNames[animationState],
         platform !== 'ios' && platformClassNames[platform],
       )}
@@ -63,7 +77,7 @@ import styles from './Component.module.css';
 const Component = ({ objectFit, children }) => {
   return (
     <div
-      className={classNames(className, styles.Component)}
+      className={classNames(className, styles.host)}
       style={objectFit ? { '--vkui_internal_Component_object-fit': objectFit } : undefined}
     >
       {children}
@@ -73,28 +87,10 @@ const Component = ({ objectFit, children }) => {
 ```
 
 ```css
-.Component {
+.host {
   --vkui_internal_Component_object-fit: initial;
 
   object-fit: var(--vkui_internal_Component_object-fit);
-}
-```
-
-## Связность стилей
-
-Если компонент состоит из других компонентов, то для их модификации используем БЭМ-миксин. Пример:
-
-```tsx
-// Button.tsx
-<button className={styles.Button}>
-  <Text className={styles.Button__text}>{children}</Text>
-</button>
-```
-
-```css
-/* Button.module.css */
-.Button__text {
-  padding: 8px;
 }
 ```
 
@@ -110,7 +106,7 @@ const Component = ({ objectFit, children }) => {
 
 ```jsx
 // Cell.tsx
-<div className={classNames(styles.Cell, 'vkuiInternalCell')}>{before}</div>
+<div className={classNames(styles.host, 'vkuiInternalCell')}>{before}</div>
 ```
 
 В `before` может быть `<Avatar />` или иконка из библиотеки `@vkontakte/icons`. И нам необходимо
@@ -121,7 +117,7 @@ const Component = ({ objectFit, children }) => {
 
 ```css
 /* Avatar.module.css */
-:global(.vkuiInternalCell) .Avatar {
+:global(.vkuiInternalCell) .host {
   margin-inline-end: 8px;
 }
 ```
@@ -131,7 +127,7 @@ const Component = ({ objectFit, children }) => {
 
 ```css
 /* Cell.module.css */
-.Cell :global(.vkuiIcon) {
+.host :global(.vkuiIcon) {
   margin-inline-end: 10px;
 }
 ```
@@ -142,14 +138,14 @@ const Component = ({ objectFit, children }) => {
 
 ```css
 /* Text.module.css */
-.Text {
+.host {
   margin: 0;
 }
 ```
 
 ```css
 /* Button.module.css */
-.Button__text {
+.text {
   margin: 4px 0;
 }
 ```
@@ -175,7 +171,7 @@ const Component = ({ objectFit, children }) => {
 
 ```css
 /* Placeholder.module.css */
-.Placeholder {
+.host {
   padding: 16px;
 }
 ```
@@ -195,8 +191,7 @@ Button мы тоже наделяем возможностью рендерит�
 
 ```css
 /* Button.module.css */
-
-.Button {
+.host {
   /* ... */
   display: inline-block;
 }
@@ -213,8 +208,8 @@ Button мы тоже наделяем возможностью рендерит�
 ### Обращения к элементам другого блока
 
 ```css
-/* Banner.css */
-.Banner .Button__in {
+/* Banner.module.css */
+.host .vkuiButton__in {
   padding-top: 4px;
 }
 ```

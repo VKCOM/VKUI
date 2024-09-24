@@ -188,15 +188,15 @@ export const CalendarRange = ({
   );
 
   return (
-    <RootComponent {...props} baseClassName={styles['CalendarRange']}>
-      <div className={styles['CalendarRange__inner']}>
+    <RootComponent {...props} baseClassName={styles.host}>
+      <div className={styles.inner}>
         <CalendarHeader
           viewDate={viewDate}
           onChange={setViewDate}
           nextMonthHidden
           onPrevMonth={setPrevMonth}
           disablePickers={disablePickers}
-          className={styles['CalendarRange__header']}
+          className={styles.header}
           prevMonthLabel={prevMonthLabel}
           nextMonthLabel={nextMonthLabel}
           changeMonthLabel={changeMonthLabel}
@@ -227,14 +227,14 @@ export const CalendarRange = ({
           aria-label={changeDayLabel}
         />
       </div>
-      <div className={styles['CalendarRange__inner']}>
+      <div className={styles.inner}>
         <CalendarHeader
           viewDate={secondViewDate}
           onChange={onRightPartViewDateChange}
           prevMonthHidden
           onNextMonth={setNextMonth}
           disablePickers={disablePickers}
-          className={styles['CalendarRange__header']}
+          className={styles.header}
           prevMonthLabel={prevMonthLabel}
           nextMonthLabel={nextMonthLabel}
           changeMonthLabel={changeMonthLabel}

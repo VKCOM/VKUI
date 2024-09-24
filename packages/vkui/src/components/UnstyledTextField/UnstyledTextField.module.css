@@ -1,4 +1,4 @@
-.UnstyledTextField {
+.host {
   margin: 0;
   border: 0;
   box-shadow: none;
@@ -9,11 +9,11 @@
   resize: none;
 }
 
-.UnstyledTextField--noPadding {
+.noPadding {
   padding: 0;
 }
 
-.UnstyledTextField:focus {
+.host:focus {
   outline: none;
 }
 
@@ -22,11 +22,11 @@
  *
  * см. https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
  */
-.UnstyledTextField::-webkit-outer-spin-button,
-.UnstyledTextField::-webkit-inner-spin-button {
+.host::-webkit-outer-spin-button,
+.host::-webkit-inner-spin-button {
   appearance: none;
 }
 
-.UnstyledTextField[type='number'] {
+.host[type='number'] {
   appearance: textfield;
 }

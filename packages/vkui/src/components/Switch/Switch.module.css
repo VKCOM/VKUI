@@ -1,4 +1,4 @@
-.Switch {
+.host {
   /* Switch__track */
   --vkui_internal--Switch__track_shape: calc(var(--vkui_internal--Switch__track_width) / 2);
   --vkui_internal--Switch__track_outline_width: 2px;
@@ -16,12 +16,12 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.Switch--disabled {
+.disabled {
   cursor: not-allowed;
   opacity: var(--vkui_internal--Switch_disabled);
 }
 
-.Switch--default {
+.default {
   --vkui_internal--Switch_disabled: 0.5;
   /* Switch__track */
   --vkui_internal--Switch__track_width: 52px;
@@ -44,7 +44,7 @@
   --vkui_internal--Switch__handle_shadow: none;
 }
 
-.Switch--default.Switch--sizeY-compact {
+.default.sizeYCompact {
   /* Switch__track */
   --vkui_internal--Switch__track_width: 32px;
   --vkui_internal--Switch__track_height: 20px;
@@ -58,7 +58,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Switch--default.Switch--sizeY-none {
+  .default.sizeYNone {
     /* Switch__track */
     --vkui_internal--Switch__track_width: 32px;
     --vkui_internal--Switch__track_height: 20px;
@@ -72,7 +72,7 @@
   }
 }
 
-.Switch--ios {
+.ios {
   --vkui_internal--Switch_disabled: 0.7;
   /* Switch__track */
   --vkui_internal--Switch__track_width: 51px;
@@ -98,7 +98,7 @@
     inset 0 0 0 0.5px rgba(0, 0, 0, 0.04);
 }
 
-.Switch--ios.Switch--sizeY-compact {
+.ios.sizeYCompact {
   /* Switch__track */
   --vkui_internal--Switch__track_width: 47px;
   --vkui_internal--Switch__track_height: 27px;
@@ -112,7 +112,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Switch--ios.Switch--sizeY-none {
+  .ios.sizeYNone {
     /* Switch__track */
     --vkui_internal--Switch__track_width: 47px;
     --vkui_internal--Switch__track_height: 27px;
@@ -126,11 +126,11 @@
   }
 }
 
-.Switch__inputFake {
+.inputFake {
   display: block;
 }
 
-.Switch__inputNative:checked + .Switch__inputFake {
+.inputNative:checked + .inputFake {
   /* Switch__track */
   --vkui_internal--Switch__track_color: var(--vkui--color_background_accent);
 
@@ -143,13 +143,13 @@
   --vkui_internal--Switch__handle_color: var(--vkui--color_icon_contrast);
 }
 
-.Switch--default:not(.Switch--disabled) .Switch__inputFake:active {
+.default:not(.disabled) .inputFake:active {
   /* Switch__handle */
   --vkui_internal--Switch__handle_scale: 1;
   --vkui_internal--Switch__handle_shift_x_easing: cubic-bezier(0.2, 0, 0, 1);
 }
 
-.Switch__track {
+.track {
   position: relative;
   display: block;
   inline-size: var(--vkui_internal--Switch__track_width);
@@ -159,7 +159,7 @@
   transition: background-color var(--vkui_internal--Switch__track_color_duration) linear;
 }
 
-.Switch--default .Switch__track::before {
+.default .track::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -170,7 +170,7 @@
   transition: opacity var(--vkui_internal--Switch__track_color_duration) linear;
 }
 
-.Switch__handle {
+.handle {
   position: absolute;
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -183,7 +183,7 @@
   transition: transform var(--vkui_internal--Switch__handle_shift_x_duration) var(--vkui_internal--Switch__handle_shift_x_easing);
 }
 
-.Switch__handle::after {
+.handle::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -197,7 +197,7 @@
   transition-duration: var(--vkui_internal--Switch__handle_scale_duration), var(--vkui_internal--Switch__handle_color_duration);
 }
 
-.Switch__handle--withRipple::before {
+.handleWithRipple::before {
   --vkui_internal--Switch__handleRipple_opacity: 0;
   --vkui_internal--Switch__handleRipple_opacity_duration: 15ms;
   --vkui_internal--Switch__handleRipple_color: var(--vkui--color_icon_medium);
@@ -222,7 +222,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Switch__handle--withRipple::before {
+  .handleWithRipple::before {
     inline-size: 24px;
     block-size: 24px;
   }
@@ -230,26 +230,26 @@
 
 /* устройства с мышкой */
 @media (--hover-has) {
-  .Switch__inputFake:hover .Switch__handle--withRipple::before {
+  .inputFake:hover .handleWithRipple::before {
     --vkui_internal--Switch__handleRipple_opacity: 0.08;
   }
 }
 
-.Switch__inputFake:active .Switch__handle--withRipple::before {
+.inputFake:active .handleWithRipple::before {
   --vkui_internal--Switch__handleRipple_opacity: 0.12;
 }
 
-.Switch__inputNative:checked + .Switch__inputFake .Switch__handle--withRipple::before {
+.inputNative:checked + .inputFake .handleWithRipple::before {
   --vkui_internal--Switch__handleRipple_color: var(--vkui--color_background_accent);
 }
 
 /* тач-устройства */
 @media (--hover-has-not) {
-  .Switch__handle--withRipple::before {
+  .handleWithRipple::before {
     --vkui_internal--Switch__handleRipple_opacity_duration: 375ms;
   }
 
-  .Switch__inputFake:active .Switch__handle--withRipple::before {
+  .inputFake:active .handleWithRipple::before {
     --vkui_internal--Switch__handleRipple_opacity_duration: 105ms;
   }
 }
@@ -259,6 +259,6 @@
  * SimpleCell
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalSimpleCell__after) > .Switch {
+:global(.vkuiInternalSimpleCell__after) > .host {
   margin-inline-start: 12px;
 }

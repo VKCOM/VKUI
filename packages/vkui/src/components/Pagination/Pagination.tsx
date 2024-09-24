@@ -188,8 +188,8 @@ export const Pagination = ({
   return (
     <RootComponent Component="nav" role="navigation" {...resetProps}>
       <VisuallyHidden Component={navigationLabelComponent}>{navigationLabel}</VisuallyHidden>
-      <ul className={styles['Pagination__list']}>
-        <li className={styles['Pagination__prevButtonContainer']}>
+      <ul className={styles.list}>
+        <li className={styles.prevButtonContainer}>
           <PaginationNavigationButton
             type="prev"
             style={navigationButtonsStyle}
@@ -203,7 +203,7 @@ export const Pagination = ({
           />
         </li>
         {pages.map(renderPages)}
-        <li className={styles['Pagination__nextButtonContainer']}>
+        <li className={styles.nextButtonContainer}>
           <PaginationNavigationButton
             type="next"
             style={navigationButtonsStyle}

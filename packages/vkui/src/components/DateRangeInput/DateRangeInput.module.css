@@ -1,4 +1,4 @@
-.DateRangeInput__input {
+.input {
   flex-grow: 1;
   align-self: center;
   margin-inline: 10px 14px;
@@ -9,12 +9,12 @@
   font-variant-numeric: tabular-nums;
 }
 
-.DateRangeInput--sizeY-compact .DateRangeInput__input {
+.sizeYCompact .input {
   margin-inline-end: 22px;
 }
 
 @media (--sizeY-compact) {
-  .DateRangeInput--sizeY-none .DateRangeInput__input {
+  .sizeYNone .input {
     margin-inline-end: 22px;
   }
 }

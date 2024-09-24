@@ -440,11 +440,11 @@ export const View = ({
         Component="section"
         {...restProps}
         className={classNames(
-          styles['View'],
-          platform === 'ios' && classNames(styles['View--ios'], 'vkuiInternalView--ios'),
-          !disableAnimation && animated && styles['View--animated'],
-          !disableAnimation && swipingBack && styles['View--swiping-back'],
-          disableAnimation && styles['View--no-motion'],
+          styles.host,
+          platform === 'ios' && classNames(styles.ios, 'vkuiInternalView--ios'),
+          !disableAnimation && animated && styles.animated,
+          !disableAnimation && swipingBack && styles.swipingBack,
+          disableAnimation && styles.noMotion,
           className,
         )}
         onMoveX={
@@ -456,7 +456,7 @@ export const View = ({
         }
         onEnd={iOSSwipeBackSimulationEnabled ? handleTouchEndForIOSSwipeBackSimulation : undefined}
       >
-        <div className={styles['View__panels']}>
+        <div className={styles.panels}>
           {panels.map((panel: React.ReactElement) => {
             const panelId = getNavId(panel.props, warn);
 
@@ -481,16 +481,16 @@ export const View = ({
             return (
               <div
                 className={classNames(
-                  styles['View__panel'],
+                  styles.panel,
 
-                  isPanelActive && styles['View__panel--active'],
-                  isPanelPrev && styles['View__panel--prev'],
-                  isPanelNext && styles['View__panel--next'],
+                  isPanelActive && styles.panelActive,
+                  isPanelPrev && styles.panelPrev,
+                  isPanelNext && styles.panelNext,
 
-                  isSwipeBackPrev && styles['View__panel--swipe-back-prev'],
-                  isSwipeBackNext && styles['View__panel--swipe-back-next'],
-                  swipeBackResult === 'success' && styles['View__panel--swipe-back-success'],
-                  swipeBackResult === 'fail' && styles['View__panel--swipe-back-failed'],
+                  isSwipeBackPrev && styles.panelSwipeBackPrev,
+                  isSwipeBackNext && styles.panelSwipeBackNext,
+                  swipeBackResult === 'success' && styles.panelSwipeBackSuccess,
+                  swipeBackResult === 'fail' && styles.panelSwipeBackFailed,
                 )}
                 onTransitionEnd={isSwipeBackTarget ? handleSwipeBackTargetTransitionEnd : undefined}
                 onAnimationEnd={isAnimatedTarget ? handleAnimatedTargetAnimationEnd : undefined}
@@ -500,11 +500,11 @@ export const View = ({
               >
                 {platform === 'ios' && (
                   <div
-                    className={styles['View__panel-overlay']}
+                    className={styles.panelOverlay}
                     style={calcPanelSwipeBackOverlayStyles(isSwipeBackNext)}
                   />
                 )}
-                <div className={styles['View__panel-in']} style={scrollCompensateStyle}>
+                <div className={styles.panelIn} style={scrollCompensateStyle}>
                   <NavTransitionDirectionProvider isBack={swipingBack || isBack}>
                     <NavTransitionProvider
                       entering={panelId === nextPanel || panelId === swipeBackNextPanel}

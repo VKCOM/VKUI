@@ -1,4 +1,4 @@
-.FormField {
+.host {
   position: relative;
   display: flex;
   box-sizing: border-box;
@@ -10,7 +10,7 @@
   inline-size: 100%;
 }
 
-.FormField_scrollContainer {
+.scrollContainer {
   display: flex;
   inline-size: 100%;
   align-items: flex-start;
@@ -19,30 +19,30 @@
   min-block-size: inherit;
 }
 
-.FormField__content {
+.content {
   min-block-size: inherit;
   display: flex;
   flex-grow: 1;
   min-inline-size: 0;
 }
 
-.FormField--sizeY-compact {
+.sizeYCompact {
   min-block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .FormField--sizeY-none {
+  .sizeYNone {
     min-block-size: var(--vkui--size_field_height--compact);
   }
 }
 
 /* stylelint-disable-next-line selector-max-universal */
-.FormField > * {
+.host > * {
   border-radius: inherit;
   z-index: var(--vkui_internal--z_index_form_field_element);
 }
 
-.FormField__iconWrapper {
+.iconWrapper {
   flex-shrink: 0;
   block-size: 100%;
   display: flex;
@@ -50,8 +50,8 @@
   inset-block-start: 0;
 }
 
-.FormField__before,
-.FormField__after {
+.before,
+.after {
   display: flex;
   align-items: center;
   align-content: center;
@@ -61,35 +61,35 @@
   color: var(--vkui--color_icon_secondary);
 }
 
-.FormField--sizeY-compact .FormField__before,
-.FormField--sizeY-compact .FormField__after {
+.sizeYCompact .before,
+.sizeYCompact .after {
   min-inline-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .FormField--sizeY-none .FormField__before,
-  .FormField--sizeY-none .FormField__after {
+  .sizeYNone .before,
+  .sizeYNone .after {
     min-inline-size: var(--vkui--size_field_height--compact);
   }
 }
 
-.FormField__icon--align-start {
+.iconAlignStart {
   align-self: flex-start;
 }
 
-.FormField__icon--align-end {
+.iconAlignEnd {
   align-self: flex-end;
 }
 
-.FormField__before {
+.before {
   color: var(--vkui--color_icon_accent);
 }
 
-.FormField__after {
+.after {
   color: var(--vkui--color_icon_secondary);
 }
 
-.FormField__border {
+.border {
   pointer-events: none;
   position: absolute;
   z-index: var(--vkui_internal--z_index_form_field_border);
@@ -103,19 +103,19 @@
   border-radius: inherit;
 }
 
-.FormField--mode-default .FormField__border {
+.modeDefault .border {
   border-color: var(--vkui--color_field_border_alpha);
 }
 
-.FormField--mode-default {
+.modeDefault {
   background-color: var(--vkui--color_field_background);
 }
 
-.FormField--hover {
+.hover {
   background-color: var(--vkui--color_field_background);
 }
 
-.FormField--mode-default.FormField--hover .FormField__border {
+.modeDefault.hover .border {
   border-color: var(--vkui--color_field_border_alpha--hover);
   z-index: var(--vkui_internal--z_index_form_field_border_hover);
 }
@@ -124,7 +124,7 @@
  * useFocusVisibleClassName()
  */
 /* increase specificity for selects */
-.FormField--focus-visible.FormField--focus-visible .FormField__border {
+.focusVisible.focusVisible .border {
   border-color: var(--vkui--color_stroke_accent);
 }
 
@@ -134,38 +134,38 @@
  * [start]
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--status-error) .FormField--mode-default .FormField__border,
-:global(.vkuiInternalFormItem--status-error) .FormField--focus-visible .FormField__border,
-.FormField--status-error.FormField--mode-default .FormField__border,
-.FormField--status-error.FormField--focus-visible .FormField__border {
+:global(.vkuiInternalFormItem--status-error) .modeDefault .border,
+:global(.vkuiInternalFormItem--status-error) .focusVisible .border,
+.statusError.modeDefault .border,
+.statusError.focusVisible .border {
   border-color: var(--vkui--color_stroke_negative);
   z-index: var(--vkui_internal--z_index_form_field_status);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--status-error) .FormField,
-.FormField--status-error {
+:global(.vkuiInternalFormItem--status-error) .host,
+.statusError {
   background-color: var(--vkui--color_background_negative_tint);
 }
 
 /* increase specificity to cover --mode-default case */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--status-valid) .FormField--mode-default .FormField__border,
-:global(.vkuiInternalFormItem--status-valid) .FormField--focus-visible .FormField__border,
-.FormField--status-valid.FormField--mode-default .FormField__border,
-.FormField--status-valid.FormField--focus-visible .FormField__border {
+:global(.vkuiInternalFormItem--status-valid) .modeDefault .border,
+:global(.vkuiInternalFormItem--status-valid) .focusVisible .border,
+.statusValid.modeDefault .border,
+.statusValid.focusVisible .border {
   border-color: var(--vkui--color_stroke_positive);
   z-index: var(--vkui_internal--z_index_form_field_status);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--status-valid) .FormField:not(.FormField--mode-default),
-.FormField--status-valid:not(.FormField--mode-default) {
+:global(.vkuiInternalFormItem--status-valid) .host:not(.modeDefault),
+.statusValid:not(.modeDefault) {
   background-color: var(--vkui--color_background_positive_tint);
 }
 /* [end] */
 
-.FormField--disabled {
+.disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
   cursor: default;
   pointer-events: none;
@@ -176,7 +176,7 @@
  * NativeSelect
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalNativeSelect) .FormField__after {
+:global(.vkuiInternalNativeSelect) .after {
   pointer-events: none;
 }
 
@@ -185,7 +185,7 @@
  * CalendarHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCalendarHeader__picker) .FormField__after {
+:global(.vkuiInternalCalendarHeader__picker) .after {
   min-inline-size: 12px;
   padding-inline-end: 8px;
 }
@@ -195,7 +195,7 @@
  * FormLayoutGroup
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormLayoutGroup--segmented) .FormField {
+:global(.vkuiInternalFormLayoutGroup--segmented) .host {
   z-index: auto;
   isolation: auto;
   border-radius: 0;
@@ -206,7 +206,7 @@
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-horizontal
       .vkuiInternalFormItem
   ):first-of-type
-  .FormField {
+  .host {
   border-start-start-radius: var(--vkui--size_border_radius--regular);
   border-end-start-radius: var(--vkui--size_border_radius--regular);
 }
@@ -216,7 +216,7 @@
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-horizontal
       .vkuiInternalFormItem
   ):last-of-type
-  .FormField {
+  .host {
   border-start-end-radius: var(--vkui--size_border_radius--regular);
   border-end-end-radius: var(--vkui--size_border_radius--regular);
 }
@@ -226,7 +226,7 @@
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-vertical
       .vkuiInternalFormItem
   ):first-of-type
-  .FormField {
+  .host {
   border-start-start-radius: var(--vkui--size_border_radius--regular);
   border-start-end-radius: var(--vkui--size_border_radius--regular);
 }
@@ -236,7 +236,7 @@
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-vertical
       .vkuiInternalFormItem
   ):last-of-type
-  .FormField {
+  .host {
   border-end-start-radius: var(--vkui--size_border_radius--regular);
   border-end-end-radius: var(--vkui--size_border_radius--regular);
 }

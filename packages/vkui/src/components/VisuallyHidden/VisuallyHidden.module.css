@@ -1,5 +1,5 @@
 /* stylelint-disable declaration-no-important */
-.VisuallyHidden {
+.host {
   position: absolute !important;
   block-size: 1px !important;
   inline-size: 1px !important;
@@ -16,7 +16,7 @@
 
 /* Чтобы фокус скринридера, попавший на скрытый инпут был виден.
  * Особенно актуально для Android TalkBack */
-.VisuallyHidden--focusable-input {
+.focusableInput {
   inset-inline-start: 0;
   inset-block-start: 0;
   block-size: 100% !important;

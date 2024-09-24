@@ -41,7 +41,7 @@ describe(ImageBaseOverlay, () => {
     expect(element).toHaveFocus();
     act(jest.runAllTimers);
     await userEvent.tab();
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).toBeNull();
+    expect(document.querySelector(`.${styles.visible}`)).toBeNull();
   });
 
   it('focus event works as expected with noInteractive', async () => {
@@ -52,14 +52,14 @@ describe(ImageBaseOverlay, () => {
     await userEvent.tab();
     expect(button1).toHaveFocus();
     act(jest.runAllTimers);
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.visible}`)).not.toBeNull();
     await userEvent.tab();
     expect(button2).toHaveFocus();
     act(jest.runAllTimers);
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.visible}`)).not.toBeNull();
     await userEvent.tab();
     act(jest.runAllTimers);
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).toBeNull();
+    expect(document.querySelector(`.${styles.visible}`)).toBeNull();
   });
 
   describe('works as clickable element', () => {
@@ -71,7 +71,7 @@ describe(ImageBaseOverlay, () => {
       expect(element.tagName.toLowerCase()).toMatch('div');
       expect(element).toHaveAttribute('role', 'button');
       expect(element).toHaveAttribute('tabindex', '0');
-      expect(document.querySelector(`.${styles['ImageBaseOverlay--clickable']}`)).not.toBeNull();
+      expect(document.querySelector(`.${styles.clickable}`)).not.toBeNull();
     });
 
     it('handles onClick prop', () => {
@@ -107,7 +107,7 @@ describe(ImageBaseOverlay, () => {
       expect(element.tagName.toLowerCase()).toMatch('div');
       expect(element).not.toHaveAttribute('role', 'button');
       expect(element).not.toHaveAttribute('tabindex', '0');
-      expect(document.querySelector(`.${styles['ImageBaseOverlay--clickable']}`)).toBeNull();
+      expect(document.querySelector(`.${styles.clickable}`)).toBeNull();
     });
   });
 });

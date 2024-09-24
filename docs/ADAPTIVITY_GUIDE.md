@@ -32,8 +32,8 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import styles from './Component.module.css';
 
 const sizeXClassNames = {
-  none: styles['Component--sizeX-none'], // означает, что sizeX не определён в AdaptivityProvider – используем `@media`
-  compact: styles['Component--sizeX-compact'],
+  none: styles.hostSizeXNone, // означает, что sizeX не определён в AdaptivityProvider – используем `@media`
+  compact: styles.hostSizeXCompact,
 };
 
 const Component = () => {
@@ -42,7 +42,7 @@ const Component = () => {
   return (
     <div
       className={classNames(
-        styles.Component,
+        styles.host,
         // компонент слушает только compact
         sizeX !== 'regular' && sizeXClassNames[sizeX],
       )}
@@ -54,18 +54,18 @@ const Component = () => {
 _Component.module.css_
 
 ```css
-/* Равносильно модификатору `Component--sizeX-regular` */
-.Component {
+/* Равносильно модификатору `sizeXRegular` */
+.host {
   color: red;
   padding: 20px;
 }
 
-.Component--sizeX-compact {
+.sizeXCompact {
   padding: 10px;
 }
 
 @media (--sizeX-compact) {
-  .Component--sizeX-none {
+  .sizeXNone {
     padding: 10px;
   }
 }
@@ -91,9 +91,9 @@ import { ViewWidth, viewWidthToClassName } from '../../../lib/adaptivity';
 import styles from './Component.module.css';
 
 const viewWidthClassNames = {
-  none: styles['Component--viewWidth-none'], // означает, что viewWidth не определён в AdaptivityProvider – используем `@media`
-  smallTabletMinus: styles['Component--viewWidth-smallTabletMinus'],
-  smallTabletPlus: styles['Component--viewWidth-smallTabletPlus'],
+  none: styles.viewWidthNone, // означает, что viewWidth не определён в AdaptivityProvider – используем `@media`
+  smallTabletMinus: styles.viewWidthSmallTabletMinus,
+  smallTabletPlus: styles.viewWidthSmallTabletPlus,
 };
 
 const Component = () => {
@@ -110,26 +110,26 @@ const Component = () => {
 _Component.module.css_
 
 ```css
-.Component {
+.host {
   color: red;
 }
 
-.Component--viewWidth-smallTabletPlus {
+.viewWidthSmallTabletPlus {
   color: blue;
 }
 
 @media (--viewWidth-smallTabletPlus) {
-  .Component--viewWidth-none {
+  .viewWidthNone {
     color: blue;
   }
 }
 
-.Component--viewWidth-smallTabletMinus {
+.viewWidthSmallTabletMinus {
   color: green;
 }
 
 @media (--viewWidth-smallTabletMinus) {
-  .Component--viewWidth-none {
+  .viewWidthNone {
     color: green;
   }
 }
@@ -148,23 +148,21 @@ _Component.module.css_
 В процессе перевода существующих компонентов на новую систему адаптивности возникли места, в которых пришлось отступить
 от стандартного поведения.
 
-- `.Group--mode-none`
+- `.modeNone`
 
-  В компоненте [Group](../packages/vkui/src/components/Group/Group.tsx) появился класс `.Group--mode-none`. Он означает, что у `Group`
-  не передан `mode` и не удалось вычислить его автоматически. `.Group--mode-none` должен вести себя как
-  `.Group--mode-card` при `sizeX=regular` и как `.Group--mode-plain` при `sizeX=compact`. Пример использования:
+  В компоненте [Group](../packages/vkui/src/components/Group/Group.tsx) появился класс `.modeNone`. Он означает, что у `Group`
+  не передан `mode` и не удалось вычислить его автоматически. `.modeNone` должен вести себя как
+  `.modeCard` при `sizeX=regular` и как `.modePlain` при `sizeX=compact`. Пример использования:
 
   ```css
-  .Group--mode-card .CardGrid {
-    padding-left: 8px;
-    padding-right: 8px;
+  .modeCard .in {
+    padding-inline: 8px;
   }
 
   @media (--sizeX-regular) {
-    /* Применяем стили `.Group--mode-card`, если не задан `mode` и `sizeX=regular` */
-    .Group--mode-none .CardGrid {
-      padding-left: 8px;
-      padding-right: 8px;
+    /* Применяем стили `.modeCard`, если не задан `mode` и `sizeX=regular` */
+    .modeNone .in {
+      padding-inline: 8px;
     }
   }
   ```

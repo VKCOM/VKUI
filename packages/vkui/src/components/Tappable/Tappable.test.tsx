@@ -180,7 +180,7 @@ describe(Tappable, () => {
     afterEach(() => jest.clearAllMocks());
 
     it('shows waves on android', async () => {
-      const waveCount = () => document.querySelectorAll(`.${styles.Tappable__wave}`).length;
+      const waveCount = () => document.querySelectorAll(`.${styles.wave}`).length;
       render(
         <AdaptivityProvider hasPointer={false}>
           <ConfigProvider platform="android">
@@ -202,19 +202,19 @@ describe(Tappable, () => {
     it('activates on click', async () => {
       render(<TappableTest onClick={noop} />);
       await userEvent.click(tappable());
-      await waitFor(() => expect(tappable()).toHaveClass(styles['Tappable--activated-background']));
+      await waitFor(() => expect(tappable()).toHaveClass(styles.activatedBackground));
       act(jest.runOnlyPendingTimers);
-      expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
+      expect(tappable()).not.toHaveClass(styles.activatedBackground);
     });
 
     it('activates during longtap', async () => {
       render(<TappableTest onClick={noop} />);
       fireEvent.pointerDown(tappable());
-      expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
-      await waitFor(() => expect(tappable()).toHaveClass(styles['Tappable--activated-background']));
+      expect(tappable()).not.toHaveClass(styles.activatedBackground);
+      await waitFor(() => expect(tappable()).toHaveClass(styles.activatedBackground));
 
       fireEvent.pointerUp(tappable());
-      expect(tappable()).toHaveClass(styles['Tappable--activated-background']);
+      expect(tappable()).toHaveClass(styles.activatedBackground);
     });
 
     it('does not activate on child Tappable click', async () => {
@@ -225,10 +225,8 @@ describe(Tappable, () => {
       );
       const child = result.getByTestId('child');
       await userEvent.click(child);
-      expect(child).toHaveClass(styles['Tappable--activated-background']);
-      expect(result.getByTestId('parent')).not.toHaveClass(
-        styles['Tappable--activated-background'],
-      );
+      expect(child).toHaveClass(styles.activatedBackground);
+      expect(result.getByTestId('parent')).not.toHaveClass(styles.activatedBackground);
       act(jest.runAllTimers);
     });
 
@@ -238,7 +236,7 @@ describe(Tappable, () => {
         fireEvent.mouseDown(tappable(), { clientX: 10 });
         act(jest.runOnlyPendingTimers);
         fireEvent.mouseMove(tappable(), { clientX: 40 });
-        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
+        expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
 
       it('on multi-touch', () => {
@@ -253,7 +251,7 @@ describe(Tappable, () => {
           touches: [{}, {}],
           changedTouches: [{}],
         });
-        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
+        expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
 
       it('on disable', () => {
@@ -261,7 +259,7 @@ describe(Tappable, () => {
         fireEvent.mouseDown(tappable());
         act(jest.runOnlyPendingTimers);
         h.rerender(<TappableTest disabled />);
-        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
+        expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
 
       it('on hasActive=false', () => {
@@ -269,7 +267,7 @@ describe(Tappable, () => {
         fireEvent.mouseDown(tappable());
         act(jest.runAllTimers);
         h.rerender(<TappableTest hasActive={false} />);
-        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
+        expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
 
       it('on child hover', async () => {
@@ -281,7 +279,7 @@ describe(Tappable, () => {
         fireEvent.mouseDown(tappable());
         act(jest.runAllTimers);
         await userEvent.hover(screen.getByTestId('c'));
-        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
+        expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
     });
   });
@@ -289,22 +287,22 @@ describe(Tappable, () => {
   describe('hover', () => {
     it('is not hovered by default', () => {
       const result = render(<Tappable onClick={noop} data-testid="x" />);
-      expect(result.getByTestId('x')).not.toHaveClass(styles['Tappable--hovered-background']);
+      expect(result.getByTestId('x')).not.toHaveClass(styles.hoveredBackground);
     });
 
     it('tracks mouse', async () => {
       const result = render(<Tappable onClick={noop} data-testid="x" />);
       await userEvent.hover(screen.getByTestId('x'));
-      expect(result.getByTestId('x')).toHaveClass(styles['Tappable--hovered-background']);
+      expect(result.getByTestId('x')).toHaveClass(styles.hoveredBackground);
       await userEvent.unhover(screen.getByTestId('x'));
-      expect(result.getByTestId('x')).not.toHaveClass(styles['Tappable--hovered-background']);
+      expect(result.getByTestId('x')).not.toHaveClass(styles.hoveredBackground);
     });
 
     describe('no hover when disabled', () => {
       it('does not hover when disabled', async () => {
         const result = render(<Tappable onClick={noop} data-testid="x" disabled />);
         await userEvent.hover(screen.getByTestId('x'));
-        expect(result.getByTestId('x')).not.toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('x')).not.toHaveClass(styles.hoveredBackground);
       });
     });
 
@@ -316,22 +314,16 @@ describe(Tappable, () => {
           </Tappable>,
         );
         await userEvent.hover(screen.getByTestId('parent'));
-        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('children')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
+        expect(result.getByTestId('parent')).toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children')).not.toHaveClass(styles.hoveredBackground);
 
         await userEvent.hover(screen.getByTestId('children'));
-        expect(result.getByTestId('parent')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
-        expect(result.getByTestId('children')).toHaveClass(styles['Tappable--hovered-background']);
+        expect(result.getByTestId('parent')).not.toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children')).toHaveClass(styles.hoveredBackground);
 
         await userEvent.hover(screen.getByTestId('parent'));
-        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('children')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
+        expect(result.getByTestId('parent')).toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children')).not.toHaveClass(styles.hoveredBackground);
       });
 
       it('hovers parent on every child hover when parent has hasHoverWithChildren', async () => {
@@ -344,43 +336,27 @@ describe(Tappable, () => {
 
         // hover на родителе
         await userEvent.hover(screen.getByTestId('parent'));
-        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('children-1')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
-        expect(result.getByTestId('children-2')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
+        expect(result.getByTestId('parent')).toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-1')).not.toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-2')).not.toHaveClass(styles.hoveredBackground);
 
         // hover на первом дочернем элементе: родитель тоже имеет hover
         await userEvent.hover(screen.getByTestId('children-1'));
-        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('children-1')).toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
-        expect(result.getByTestId('children-2')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
+        expect(result.getByTestId('parent')).toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-1')).toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-2')).not.toHaveClass(styles.hoveredBackground);
 
         // hover на родителе, дочерние hover не имеют
         await userEvent.hover(screen.getByTestId('parent'));
-        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('children-1')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
-        expect(result.getByTestId('children-2')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
+        expect(result.getByTestId('parent')).toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-1')).not.toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-2')).not.toHaveClass(styles.hoveredBackground);
 
         // hover на втором дочернем элементе: родитель тоже имеет hover
         await userEvent.hover(screen.getByTestId('children-2'));
-        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('children-1')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
-        expect(result.getByTestId('children-2')).toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
+        expect(result.getByTestId('parent')).toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-1')).not.toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-2')).toHaveClass(styles.hoveredBackground);
       });
 
       it('hovers parent only on child hover with unlockParentHover', async () => {
@@ -393,35 +369,21 @@ describe(Tappable, () => {
 
         // hover на родителе
         await userEvent.hover(screen.getByTestId('parent'));
-        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('children-1')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
-        expect(result.getByTestId('children-2')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
+        expect(result.getByTestId('parent')).toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-1')).not.toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-2')).not.toHaveClass(styles.hoveredBackground);
 
         // hover на первом дочернем элементе: родитель имеет hover
         await userEvent.hover(screen.getByTestId('children-1'));
-        expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
-        expect(result.getByTestId('children-1')).toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
-        expect(result.getByTestId('children-2')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
+        expect(result.getByTestId('parent')).toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-1')).toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-2')).not.toHaveClass(styles.hoveredBackground);
 
         // hover на втором дочернем элементе: родитель не имеет hover
         await userEvent.hover(screen.getByTestId('children-2'));
-        expect(result.getByTestId('parent')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
-        expect(result.getByTestId('children-1')).not.toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
-        expect(result.getByTestId('children-2')).toHaveClass(
-          styles['Tappable--hovered-background'],
-        );
+        expect(result.getByTestId('parent')).not.toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-1')).not.toHaveClass(styles.hoveredBackground);
+        expect(result.getByTestId('children-2')).toHaveClass(styles.hoveredBackground);
       });
 
       describe('handles disabled children', () => {
@@ -432,7 +394,7 @@ describe(Tappable, () => {
             </Tappable>,
           );
           await userEvent.hover(screen.getByTestId('children'));
-          expect(result.getByTestId('parent')).toHaveClass(styles['Tappable--hovered-background']);
+          expect(result.getByTestId('parent')).toHaveClass(styles.hoveredBackground);
         });
       });
     });

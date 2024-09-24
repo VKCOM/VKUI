@@ -6,9 +6,9 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Progress.module.css';
 
 const stylesAppearance = {
-  accent: styles['Progress--appearance-accent'],
-  positive: styles['Progress--appearance-positive'],
-  negative: styles['Progress--appearance-negative'],
+  accent: styles.appearanceAccent,
+  positive: styles.appearancePositive,
+  negative: styles.appearanceNegative,
 };
 
 function progressCustomHeightStyle(height: number | undefined): React.CSSProperties | undefined {
@@ -66,9 +66,9 @@ export const Progress = ({
       role="progressbar"
       aria-valuemin={PROGRESS_MIN_VALUE}
       aria-valuemax={PROGRESS_MAX_VALUE}
-      baseClassName={classNames(styles['Progress'], stylesAppearance[appearance])}
+      baseClassName={classNames(styles.host, stylesAppearance[appearance])}
     >
-      <div className={styles['Progress__in']} style={{ width: `${progress}%` }} />
+      <div className={styles.in} style={{ width: `${progress}%` }} />
     </RootComponent>
   );
 };

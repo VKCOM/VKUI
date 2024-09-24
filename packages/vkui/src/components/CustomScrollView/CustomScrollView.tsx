@@ -14,19 +14,19 @@ import styles from './CustomScrollView.module.css';
 function hasPointerClassName(hasPointer: boolean | undefined) {
   switch (hasPointer) {
     case true:
-      return styles['CustomScrollView--hasPointer-true'];
+      return styles.hasPointerTrue;
     case false:
-      return styles['CustomScrollView--hasPointer-false'];
+      return styles.hasPointerFalse;
     case undefined:
     default:
-      return styles['CustomScrollView--hasPointer-none'];
+      return styles.hasPointerNone;
   }
 }
 
 const overscrollBehaviorClassNames = {
   auto: undefined,
-  contain: styles['CustomScrollView__box--overscrollBehavior-contain'],
-  none: styles['CustomScrollView__box--overscrollBehavior-none'],
+  contain: styles.boxOverscrollBehaviorContain,
+  none: styles.boxOverscrollBehaviorNone,
 };
 
 export interface CustomScrollViewProps
@@ -100,21 +100,21 @@ export const CustomScrollView = ({
 
   return (
     <div
-      className={classNames(className, styles['CustomScrollView'], hasPointerClassName(hasPointer))}
+      className={classNames(className, styles.host, hasPointerClassName(hasPointer))}
       ref={getRootRef}
       {...restProps}
     >
       <div
         className={classNames(
-          styles['CustomScrollView__box'],
-          enableHorizontalScroll && styles['CustomScrollView__box--horizontalEnabled'],
+          styles.box,
+          enableHorizontalScroll && styles.boxHorizontalEnabled,
           overscrollBehaviorClassNames[overscrollBehavior],
         )}
         tabIndex={-1}
         ref={boxRef}
         onScroll={onScroll}
       >
-        <div ref={boxContentRef} className={styles['CustomScrollView__box-content']}>
+        <div ref={boxContentRef} className={styles.boxContent}>
           {children}
         </div>
       </div>

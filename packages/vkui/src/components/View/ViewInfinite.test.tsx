@@ -464,7 +464,7 @@ describe(ViewInfinite, () => {
 });
 
 function getViewPanelById(panelTestId: string) {
-  return screen.getByTestId(panelTestId).closest<HTMLElement>(`.${styles['View__panel']}`)!;
+  return screen.getByTestId(panelTestId).closest<HTMLElement>(`.${styles.panel}`)!;
 }
 
 function setupSwipeBack({

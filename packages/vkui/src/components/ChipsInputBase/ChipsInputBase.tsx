@@ -24,8 +24,8 @@ import type { ChipOption, ChipOptionValue, ChipsInputBasePrivateProps, NavigateT
 import styles from './ChipsInputBase.module.css';
 
 const sizeYClassNames = {
-  none: styles['ChipsInputBase--sizeY-none'],
-  compact: styles['ChipsInputBase--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 } as const;
 
 export const ChipsInputBase = <O extends ChipOption>({
@@ -232,9 +232,9 @@ export const ChipsInputBase = <O extends ChipOption>({
     >
       <div
         className={classNames(
-          styles['ChipsInputBase'],
+          styles.host,
           sizeY !== 'regular' && sizeYClassNames[sizeY],
-          withPlaceholder && styles['ChipsInputBase--hasPlaceholder'],
+          withPlaceholder && styles.hasPlaceholder,
         )}
         // для a11y
         ref={listboxRef}
@@ -253,7 +253,7 @@ export const ChipsInputBase = <O extends ChipOption>({
                 'label': option.label,
                 'disabled': option.disabled || disabled,
                 'readOnly': option.readOnly || readOnly,
-                'className': styles['ChipsInputBase__chip'],
+                'className': styles.chip,
                 'onRemove': handleChipRemove,
                 // чтобы можно было легче найти этот чип в DOM
                 'data-index': index,
@@ -279,7 +279,7 @@ export const ChipsInputBase = <O extends ChipOption>({
           type="text"
           id={idProp || `chips-input-base-generated-id-${idGenerated}`}
           getRootRef={inputRef}
-          className={styles['ChipsInputBase__el']}
+          className={styles.el}
           disabled={disabled}
           readOnly={readOnly}
           placeholder={withPlaceholder ? placeholder : undefined}

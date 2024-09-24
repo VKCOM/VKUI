@@ -72,24 +72,18 @@ export const CellCheckbox = ({
   const IconOn = typeIcon === 'circle' ? CheckCircleOn : CheckBoxOn;
 
   return (
-    <span className={classNames(styles['CellCheckbox'], className)} style={style} ref={getRootRef}>
+    <span className={classNames(styles.host, className)} style={style} ref={getRootRef}>
       <VisuallyHidden
         {...restProps}
         Component="input"
         type="checkbox"
-        className={styles['CellCheckbox__input']}
+        className={styles.input}
         getRootRef={getRef}
       />
-      <span
-        className={classNames(styles['CellCheckbox__icon'], styles['CellCheckbox__icon--off'])}
-        aria-hidden
-      >
+      <span className={classNames(styles.icon, styles.iconOff)} aria-hidden>
         <IconOff />
       </span>
-      <span
-        className={classNames(styles['CellCheckbox__icon'], styles['CellCheckbox__icon--on'])}
-        aria-hidden
-      >
+      <span className={classNames(styles.icon, styles.iconOn)} aria-hidden>
         <IconOn />
       </span>
     </span>

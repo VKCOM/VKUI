@@ -21,10 +21,10 @@ export const Card = ({
       {...restProps}
       Component={Component}
       baseClassName={classNames(
-        styles['Card'],
-        mode === 'outline' && styles['Card--mode-outline'],
-        mode === 'shadow' && styles['Card--mode-shadow'],
-        withBorder && styles['Card--withBorder'],
+        styles.host,
+        mode === 'outline' && styles.modeOutline,
+        mode === 'shadow' && styles.modeShadow,
+        withBorder && styles.withBorder,
       )}
     />
   );

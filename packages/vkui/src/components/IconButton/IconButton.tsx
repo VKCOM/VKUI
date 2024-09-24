@@ -8,8 +8,8 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './IconButton.module.css';
 
 const sizeYClassNames = {
-  none: styles['IconButton--sizeY-none'],
-  compact: styles['IconButton--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 } as const;
 
 export interface IconButtonProps extends TappableProps {
@@ -52,9 +52,9 @@ export const IconButton = ({
       Component={restProps.href ? 'a' : 'button'}
       {...restProps}
       className={classNames(
-        styles['IconButton'],
+        styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        platform === 'ios' && styles['IconButton--ios'],
+        platform === 'ios' && styles.ios,
         className,
       )}
     >

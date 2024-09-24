@@ -20,11 +20,7 @@ export const PaginationPageEllipsis = ({
 
   return (
     <Text
-      className={classNames(
-        paginationClassNames,
-        styles['PaginationPage--type-ellipsis'],
-        className,
-      )}
+      className={classNames(paginationClassNames, styles.typeEllipsis, className)}
       {...restProps}
     >
       &#8230;

@@ -28,17 +28,14 @@ export const FormItemTopLabel: React.FC<FormItemTopLabelProps> = ({
 
   return (
     <Subhead
-      className={classNames(
-        styles['FormItemTop__label'],
-        topMultiline && styles['FormItemTop__label--multiline'],
-      )}
+      className={classNames(styles.label, topMultiline && styles.labelMultiline)}
       Component={component}
       htmlFor={htmlFor}
       {...restProps}
     >
       {children}
       {required && (
-        <span className={styles['FormItemTop__label--required']} aria-hidden>
+        <span className={styles.labelRequired} aria-hidden>
           *
         </span>
       )}

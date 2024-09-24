@@ -1,10 +1,10 @@
-.Textarea {
+.host {
   overflow: hidden;
   position: relative;
   max-block-size: 204px;
 }
 
-.Textarea__el {
+.el {
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
   display: block;
@@ -14,38 +14,38 @@
   color: var(--vkui--color_text_primary);
 }
 
-.Textarea__el[cols] {
+.el[cols] {
   inline-size: initial;
 }
 
-.Textarea--sizeY-compact {
+.sizeYCompact {
   max-block-size: 196px;
 }
 
 @media (--sizeY-compact) {
-  .Textarea--sizeY-none {
+  .sizeYNone {
     max-block-size: 196px;
   }
 }
 
-.Textarea__el::placeholder {
+.el::placeholder {
   color: var(--vkui--color_text_secondary);
   /* Для Firefox */
   opacity: 1;
 }
 
-.Textarea__el:disabled {
+.el:disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.Textarea__el:disabled::placeholder {
+.el:disabled::placeholder {
   color: var(--vkui--color_text_secondary);
 }
 
-.Textarea--align-center .Textarea__el {
+.alignCenter .el {
   text-align: center;
 }
 
-.Textarea--align-right .Textarea__el {
+.alignRight .el {
   text-align: end;
 }

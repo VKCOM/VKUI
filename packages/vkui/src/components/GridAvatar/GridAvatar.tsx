@@ -36,15 +36,11 @@ export const GridAvatar: React.FC<GridAvatarProps> & { Badge: typeof GridAvatarB
   }
 
   return (
-    <ImageBase {...restProps} size={size} className={classNames(styles['GridAvatar'], className)}>
-      <div className={styles['GridAvatar__in']} aria-hidden>
+    <ImageBase {...restProps} size={size} className={classNames(styles.host, className)}>
+      <div className={styles.in} aria-hidden>
         {src.map((url, index) =>
           index < MAX_GRID_LENGTH ? (
-            <div
-              key={index}
-              className={styles['GridAvatar__item']}
-              style={{ backgroundImage: `url(${url})` }}
-            />
+            <div key={index} className={styles.item} style={{ backgroundImage: `url(${url})` }} />
           ) : null,
         )}
       </div>

@@ -4,18 +4,18 @@ import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from './FlexItem.module.css';
 
 const flexClassNames = {
-  grow: styles['FlexItem--flex-grow'],
-  shrink: styles['FlexItem--flex-shrink'],
-  content: styles['FlexItem--flex-content'],
-  fixed: styles['FlexItem--flex-fixed'],
+  grow: styles.flexGrow,
+  shrink: styles.flexShrink,
+  content: styles.flexContent,
+  fixed: styles.flexFixed,
 };
 
 const alignSelfClassNames = {
-  start: styles['FlexItem--align-self-start'],
-  end: styles['FlexItem--align-self-end'],
-  center: styles['FlexItem--align-self-center'],
-  baseline: styles['FlexItem--align-self-baseline'],
-  stretch: styles['FlexItem--align-self-stretch'],
+  start: styles.alignSelfStart,
+  end: styles.alignSelfEnd,
+  center: styles.alignSelfCenter,
+  baseline: styles.alignSelfBaseline,
+  stretch: styles.alignSelfStretch,
 };
 
 export interface FlexItemProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasChildren {
@@ -51,7 +51,7 @@ export const FlexItem = ({
       {...rest}
       style={{ flexBasis, ...style }}
       baseClassName={classNames(
-        styles.FlexItem,
+        styles.host,
         alignSelf && alignSelfClassNames[alignSelf],
         flex && flexClassNames[flex],
       )}

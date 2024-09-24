@@ -11,8 +11,7 @@ import { withModalRootContext } from './withModalRootContext';
 import styles from './ModalRoot.module.css';
 import modalPageStyles from '../ModalPage/ModalPage.module.css';
 
-const clickFade = async () =>
-  await userEvent.click(document.querySelector(`.${styles.ModalRoot__mask}`)!);
+const clickFade = async () => await userEvent.click(document.querySelector(`.${styles.mask}`)!);
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -178,9 +177,7 @@ describe.each([
     act(jest.runAllTimers);
 
     // check if mask is present
-    expect(document.querySelector<HTMLElement>(`.${styles.ModalRoot__mask}`)?.style.opacity).toBe(
-      '1',
-    );
+    expect(document.querySelector<HTMLElement>(`.${styles.mask}`)?.style.opacity).toBe('1');
 
     // onClose is working
     await clickFade();
@@ -498,9 +495,7 @@ describe(ModalRootTouch, () => {
         baseElement: document.documentElement,
       });
 
-      const header = component.container.getElementsByClassName(
-        modalPageStyles['ModalPage__header'],
-      )[0];
+      const header = component.container.getElementsByClassName(modalPageStyles.header)[0];
       act(jest.runAllTimers);
       await waitCSSTransitionEnd(getFirstHTMLElementChild(component.getByTestId('modal-page')));
 

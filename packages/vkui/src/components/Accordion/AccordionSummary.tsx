@@ -37,7 +37,7 @@ export const AccordionSummary: React.FC<AccordionSummaryProps> = ({
   const icon = (
     // Обертка нужна для правильной работы с отступами в SimpleCell
     <span className="vkuiIcon">
-      <Icon className={styles['AccordionSummary__icon']} />
+      <Icon className={styles.icon} />
     </span>
   );
 

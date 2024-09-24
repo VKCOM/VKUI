@@ -1,10 +1,10 @@
-.EllipsisText {
+.host {
   display: inline-flex;
   min-inline-size: 0;
   max-inline-size: 100%;
 }
 
-.EllipsisText__content {
+.content {
   min-inline-size: 1em;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -13,7 +13,7 @@
   max-inline-size: inherit;
 }
 
-.EllipsisText__content--multiline {
+.contentMultiline {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -ms-box-orient: vertical;

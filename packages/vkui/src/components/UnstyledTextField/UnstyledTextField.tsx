@@ -50,11 +50,7 @@ export const UnstyledTextField = ({
   <Text
     Component={as}
     normalize={false}
-    className={classNames(
-      styles.UnstyledTextField,
-      noPadding && styles['UnstyledTextField--noPadding'],
-      className,
-    )}
+    className={classNames(styles.host, noPadding && styles.noPadding, className)}
     {...restProps}
   />
 );

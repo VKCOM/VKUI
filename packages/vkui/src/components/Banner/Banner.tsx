@@ -108,31 +108,31 @@ export const Banner = ({
   const content = (
     <>
       {mode === 'image' && background && (
-        <div aria-hidden className={styles['Banner__bg']}>
+        <div aria-hidden className={styles.bg}>
           {background}
         </div>
       )}
 
-      {before && <div className={styles['Banner__before']}>{before}</div>}
+      {before && <div className={styles.before}>{before}</div>}
 
-      <div className={styles['Banner__content']}>
+      <div className={styles.content}>
         {hasReactNode(header) && (
           <HeaderTypography Component="div" weight="2" level={size === 'm' ? '2' : '1'}>
             {header}
           </HeaderTypography>
         )}
         {hasReactNode(subheader) && (
-          <SubheaderTypography Component="div" className={styles['Banner__subheader']}>
+          <SubheaderTypography Component="div" className={styles.subheader}>
             {subheader}
           </SubheaderTypography>
         )}
         {hasReactNode(text) && (
-          <Text Component="div" className={styles['Banner__text']}>
+          <Text Component="div" className={styles.text}>
             {text}
           </Text>
         )}
         {hasReactNode(actions) && React.Children.count(actions) > 0 && (
-          <div className={styles['Banner__actions']}>{actions}</div>
+          <div className={styles.actions}>{actions}</div>
         )}
       </div>
     </>
@@ -143,34 +143,34 @@ export const Banner = ({
       Component="section"
       {...restProps}
       baseClassName={classNames(
-        styles['Banner'],
-        platform === 'ios' && styles['Banner--ios'],
-        mode === 'image' && styles['Banner--mode-image'],
-        size === 'm' && styles['Banner--size-m'],
-        mode === 'image' && imageTheme === 'dark' && styles['Banner--inverted'],
+        styles.host,
+        platform === 'ios' && styles.ios,
+        mode === 'image' && styles.modeImage,
+        size === 'm' && styles.sizeM,
+        mode === 'image' && imageTheme === 'dark' && styles.inverted,
       )}
     >
       {asideMode === 'expand' ? (
         <Tappable
-          className={styles['Banner__in']}
+          className={styles.in}
           activeMode={platform === 'ios' ? 'opacity' : 'background'}
           onClick={noop}
         >
           {content}
 
-          <div className={styles['Banner__aside']}>
-            <Icon24Chevron className={styles['Banner__expand']} />
+          <div className={styles.aside}>
+            <Icon24Chevron className={styles.expand} />
           </div>
         </Tappable>
       ) : (
-        <div className={styles['Banner__in']}>
+        <div className={styles.in}>
           {content}
 
           {asideMode === 'dismiss' && (
-            <div className={styles['Banner__aside']}>
+            <div className={styles.aside}>
               <IconButton
                 label={dismissLabel}
-                className={styles['Banner__dismiss']}
+                className={styles.dismiss}
                 onClick={onDismiss}
                 hoverMode="opacity"
                 hasActive={false}

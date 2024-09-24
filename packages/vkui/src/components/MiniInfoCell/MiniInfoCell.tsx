@@ -8,15 +8,15 @@ import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './MiniInfoCell.module.css';
 
 const stylesMode = {
-  add: styles['MiniInfoCell--mode-add'],
-  accent: styles['MiniInfoCell--mode-accent'],
-  more: styles['MiniInfoCell--mode-more'],
+  add: styles.modeAdd,
+  accent: styles.modeAccent,
+  more: styles.modeMore,
 };
 
 const stylesTextWrap = {
-  nowrap: styles['MiniInfoCell--textWrap-nowrap'],
-  full: styles['MiniInfoCell--textWrap-full'],
-  short: styles['MiniInfoCell--textWrap-short'],
+  nowrap: styles.textWrapNowrap,
+  full: styles.textWrapFull,
+  short: styles.textWrapShort,
 };
 
 export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -71,7 +71,7 @@ export const MiniInfoCell = ({
   ...restProps
 }: MiniInfoCellProps): React.ReactNode => {
   const cellClasses = classNames(
-    styles['MiniInfoCell'],
+    styles.host,
     stylesTextWrap[textWrap],
     mode !== 'base' && stylesMode[mode],
     className,
@@ -79,17 +79,14 @@ export const MiniInfoCell = ({
 
   const cellContent = (
     <React.Fragment>
-      {hasReactNode(before) && <span className={styles['MiniInfoCell__before']}>{before}</span>}
-      <div className={styles['MiniInfoCell__middle']}>
-        <Paragraph
-          className={styles['MiniInfoCell__content']}
-          weight={mode === 'more' ? '2' : undefined}
-        >
+      {hasReactNode(before) && <span className={styles.before}>{before}</span>}
+      <div className={styles.middle}>
+        <Paragraph className={styles.content} weight={mode === 'more' ? '2' : undefined}>
           {children}
         </Paragraph>
         {expandable && <Icon16Chevron />}
       </div>
-      {hasReactNode(after) && <span className={styles['MiniInfoCell__after']}>{after}</span>}
+      {hasReactNode(after) && <span className={styles.after}>{after}</span>}
     </React.Fragment>
   );
 

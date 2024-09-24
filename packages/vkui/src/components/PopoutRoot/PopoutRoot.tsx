@@ -12,7 +12,7 @@ export const PopoutRootPopout = ({
   className,
   ...restProps
 }: React.HTMLAttributes<HTMLDivElement>): React.ReactNode => (
-  <div className={classNames(styles['PopoutRoot__popout'], className)} {...restProps} />
+  <div className={classNames(styles.popout, className)} {...restProps} />
 );
 
 /**
@@ -22,7 +22,7 @@ export const PopoutRootModal = ({
   className,
   ...restProps
 }: React.HTMLAttributes<HTMLDivElement>): React.ReactNode => (
-  <div className={classNames(styles['PopoutRoot__modal'], className)} {...restProps} />
+  <div className={classNames(styles.modal, className)} {...restProps} />
 );
 
 export interface PopoutRootProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -40,7 +40,7 @@ export const PopoutRoot = ({
   ...restProps
 }: PopoutRootProps): React.ReactNode => {
   return (
-    <RootComponent {...restProps} baseClassName={styles['PopoutRoot']}>
+    <RootComponent {...restProps} baseClassName={styles.host}>
       {children}
       <AppRootPortal>
         {!!popout && <PopoutRootPopout>{popout}</PopoutRootPopout>}

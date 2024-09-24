@@ -8,6 +8,6 @@ export const GroupHeader: React.FC<GroupHeaderProps> = ({
   className,
   ...restProps
 }: GroupHeaderProps): React.ReactNode => (
-  <div className={classNames(className, styles['Group__header'])} {...restProps} />
+  <div className={classNames(className, styles.header)} {...restProps} />
 );
 GroupHeader.displayName = 'GroupHeader';

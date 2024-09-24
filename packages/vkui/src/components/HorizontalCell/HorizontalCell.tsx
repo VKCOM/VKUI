@@ -9,9 +9,9 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './HorizontalCell.module.css';
 
 const stylesSize = {
-  s: styles['HorizontalCell--size-s'],
-  m: styles['HorizontalCell--size-m'],
-  l: styles['HorizontalCell--size-l'],
+  s: styles.sizeS,
+  m: styles.sizeM,
+  l: styles.sizeL,
 };
 
 interface CellTypographyProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -64,20 +64,16 @@ export const HorizontalCell = ({
     <div
       ref={getRootRef}
       style={style}
-      className={classNames(styles['HorizontalCell'], stylesSize[size], className)}
+      className={classNames(styles.host, stylesSize[size], className)}
     >
-      <Tappable className={styles['HorizontalCell__body']} getRootRef={getRef} {...restProps}>
-        {hasReactNode(children) && (
-          <div className={styles['HorizontalCell__image']}>{children}</div>
-        )}
+      <Tappable className={styles.body} getRootRef={getRef} {...restProps}>
+        {hasReactNode(children) && <div className={styles.image}>{children}</div>}
         {(header || subtitle || extraSubtitle) && (
-          <div className={styles['HorizontalCell__content']}>
+          <div className={styles.content}>
             {hasReactNode(header) && <CellTypography size={size}>{header}</CellTypography>}
-            {hasReactNode(subtitle) && (
-              <Footnote className={styles['HorizontalCell__subtitle']}>{subtitle}</Footnote>
-            )}
+            {hasReactNode(subtitle) && <Footnote className={styles.subtitle}>{subtitle}</Footnote>}
             {hasReactNode(extraSubtitle) && (
-              <Footnote className={styles['HorizontalCell__subtitle']}>{extraSubtitle}</Footnote>
+              <Footnote className={styles.subtitle}>{extraSubtitle}</Footnote>
             )}
           </div>
         )}

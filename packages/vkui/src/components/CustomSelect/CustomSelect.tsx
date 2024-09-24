@@ -31,8 +31,8 @@ import { CustomSelectInput, type CustomSelectInputProps } from './CustomSelectIn
 import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
-  none: styles['CustomSelect--sizeY-none'],
-  compact: styles['CustomSelect--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
@@ -323,9 +323,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     () =>
       (opened &&
         dropdownOffsetDistance === 0 &&
-        (popperPlacement.includes('top')
-          ? styles['CustomSelect--pop-up']
-          : styles['CustomSelect--pop-down'])) ||
+        (popperPlacement.includes('top') ? styles.popUp : styles.popDown)) ||
       undefined,
     [dropdownOffsetDistance, opened, popperPlacement],
   );
@@ -703,7 +701,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       options.length > 0 ? (
         <div ref={optionsWrapperRef}>{options.map(renderOption)}</div>
       ) : (
-        <Footnote className={styles['CustomSelect__empty']}>{emptyText}</Footnote>
+        <Footnote className={styles.empty}>{emptyText}</Footnote>
       );
 
     if (typeof renderDropdown === 'function') {
@@ -740,7 +738,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
     return (
       <ClearButton
-        className={iconProp === undefined ? styles['CustomSelect--clear-icon'] : undefined}
+        className={iconProp === undefined ? styles.clearIcon : undefined}
         onClick={function clearSelectState() {
           setNativeSelectValue('');
           setInputValue('');
@@ -766,7 +764,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
     return (
       <DropdownIcon
-        className={clearButtonShown ? styles['CustomSelect__dropdown-icon'] : undefined}
+        className={clearButtonShown ? styles.dropdownIcon : undefined}
         opened={opened}
       />
     );
@@ -843,11 +841,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   return (
     <div
-      className={classNames(
-        styles['CustomSelect'],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-        className,
-      )}
+      className={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
       style={style}
       ref={handleRootRef}
       onClick={passClickAndFocusToInputOnClick}
@@ -889,7 +883,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onClick={props.onClick}
         value={nativeSelectValue}
         aria-hidden
-        className={styles['CustomSelect__control']}
+        className={styles.control}
         data-testid={nativeSelectTestId}
         required={required}
       >

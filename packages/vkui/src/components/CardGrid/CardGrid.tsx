@@ -5,8 +5,8 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardGrid.module.css';
 
 const sizeXClassNames = {
-  none: styles['CardGrid--sizeX-none'],
-  compact: styles['CardGrid--sizeX-compact'],
+  none: styles.sizeXNone,
+  compact: styles.sizeXCompact,
 };
 
 const stylesSize = {
@@ -39,9 +39,9 @@ export const CardGrid = ({
       {...restProps}
       Component={Component}
       baseClassName={classNames(
-        styles['CardGrid'],
+        styles.host,
         'vkuiInternalCardGrid',
-        spaced && styles['CardGrid--spaced'],
+        spaced && styles.spaced,
         stylesSize[size],
         sizeX !== 'regular' && sizeXClassNames[sizeX],
       )}

@@ -4,8 +4,8 @@ import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from './DropZoneGrid.module.css';
 
 const directionStyle = {
-  row: styles['DropZoneGrid--row'],
-  column: styles['DropZoneGrid--column'],
+  row: styles.row,
+  column: styles.column,
 };
 
 export interface DropZoneGridProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -16,10 +16,7 @@ export const DropZoneGrid: React.FC<DropZoneGridProps> = ({
   direction = 'column',
   ...props
 }: DropZoneGridProps) => (
-  <RootComponent
-    baseClassName={classNames(styles['DropZoneGrid'], directionStyle[direction])}
-    {...props}
-  />
+  <RootComponent baseClassName={classNames(styles.host, directionStyle[direction])} {...props} />
 );
 
 DropZoneGrid.displayName = 'DropZoneGrid';
