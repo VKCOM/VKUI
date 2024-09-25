@@ -400,16 +400,22 @@
 }
 
 .Button--mode-secondary.Button--appearance-overlay {
-  background-color: var(--vkui--color_background_contrast_secondary_alpha);
+  background-color: var(--vkui--color_overlay_primary);
 }
 
-.Button--mode-secondary.Button--appearance-overlay.Button--hover,
+.Button--mode-secondary.Button--appearance-overlay.Button--hover {
+  background-color: var(--vkui--color_overlay_primary--hover);
+}
+
+.Button--mode-secondary.Button--appearance-overlay.Button--active {
+  background-color: var(--vkui--color_overlay_primary--active);
+}
+
 .Button--mode-tertiary.Button--appearance-overlay.Button--hover,
 .Button--mode-outline.Button--appearance-overlay.Button--hover {
   background-color: var(--vkui--color_background_contrast_secondary_alpha--hover);
 }
 
-.Button--mode-secondary.Button--appearance-overlay.Button--active,
 .Button--mode-tertiary.Button--appearance-overlay.Button--active,
 .Button--mode-outline.Button--appearance-overlay.Button--active {
   background-color: var(--vkui--color_background_contrast_secondary_alpha--active);
