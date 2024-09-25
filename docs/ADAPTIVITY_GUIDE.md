@@ -155,7 +155,7 @@ _Component.module.css_
   `.modeCard` при `sizeX=regular` и как `.modePlain` при `sizeX=compact`. Пример использования:
 
   ```css
-  .modeCard .in {
+  .modeCard .сomponent {
     padding-inline: 8px;
   }
 
