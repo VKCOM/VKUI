@@ -35,7 +35,6 @@ const ImageBaseOverlayInteractive = ({
   children,
   className,
   getRootRef,
-  disableInteractive,
   overlayShown,
   ...restProps
 }: ImageBaseOverlayInteractiveProps & { overlayShown?: boolean }) => {
@@ -68,7 +67,6 @@ const ImageBaseOverlayInteractive = ({
 const ImageBaseOverlayNonInteractive = ({
   className,
   getRootRef,
-  disableInteractive,
   overlayShown: overlayShownProps,
   ...restProps
 }: ImageBaseOverlayNonInteractiveProps & { overlayShown?: boolean }) => {
@@ -115,7 +113,7 @@ export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
   };
 
   // Не делаем деструктуризацию пропа, потому что Typescript не вывозит
-  if (restProps.disableInteractive) {
+  if (!restProps.onClick) {
     return <ImageBaseOverlayNonInteractive {...restProps} {...commonProps} />;
   }
 
