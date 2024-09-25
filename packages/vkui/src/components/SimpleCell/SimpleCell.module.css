@@ -1,4 +1,6 @@
 .SimpleCell {
+  --vkui_internal--SimpleCell-before-inline-padding-end: var(--vkui--spacing_size_xl);
+
   display: flex;
   align-items: center;
   min-block-size: 48px;
@@ -24,7 +26,7 @@
   display: flex;
   align-items: center;
   padding-block: var(--vkui--spacing_size_s);
-  padding-inline-end: var(--vkui--spacing_size_xl);
+  padding-inline-end: var(--vkui_internal--SimpleCell-before-inline-padding-end);
   color: var(--vkui_internal--icon_color, var(--vkui--color_icon_accent));
 }
 
