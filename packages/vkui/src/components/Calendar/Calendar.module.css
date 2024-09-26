@@ -1,4 +1,4 @@
-.Calendar {
+.host {
   display: flex;
   flex-direction: column;
   background: var(--vkui--color_background_contrast_themed);
@@ -10,7 +10,7 @@
   padding: 12px;
 }
 
-.Calendar__time {
+.time {
   border-block-start: 1px solid var(--vkui--color_separator_primary);
   margin-block: 12px 0;
   margin-inline: -12px;
@@ -18,15 +18,15 @@
   padding-inline: 12px;
 }
 
-.Calendar__header {
+.header {
   margin-block-end: 4px;
 }
 
-.Calendar--size-s {
+.sizeS {
   inline-size: 220px;
   padding: 8px;
 }
 
-.Calendar--size-s .Calendar__header {
+.sizeS .header {
   margin-block-end: 0;
 }

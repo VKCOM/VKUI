@@ -19,7 +19,7 @@ function getMaskElements(length: number) {
   const result = [];
   for (let index = 0; index < length; index += 1) {
     result.push(
-      <span key={index} className={styles['InputLike__mask']}>
+      <span key={index} className={styles.mask}>
         {MASK_SYMBOL}
       </span>,
     );
@@ -48,7 +48,7 @@ export const InputLike: React.FC<InputLikeProps> = ({
   return (
     <RootComponent
       Component="span"
-      baseClassName={value?.length === length ? styles['InputLike--full'] : undefined}
+      baseClassName={value?.length === length ? styles.full : undefined}
       tabIndex={0}
       onClick={callMultiple(onClick, handleElementSelect)}
       onFocus={callMultiple(stopPropagation, onFocus)}
@@ -57,7 +57,7 @@ export const InputLike: React.FC<InputLikeProps> = ({
       {label && <VisuallyHidden>{label}</VisuallyHidden>}
       {value?.slice(0, length - 1)}
       {value?.slice(length - 1) && (
-        <span key={index} className={styles['InputLike__last_character']}>
+        <span key={index} className={styles.lastCharacter}>
           {value.slice(length - 1)}
         </span>
       )}

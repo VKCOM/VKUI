@@ -55,30 +55,30 @@ export const TabbarItem = ({
       disabled={disabled}
       href={href}
       baseClassName={classNames(
-        styles['TabbarItem'],
-        platform === 'ios' && styles['TabbarItem--ios'],
-        platform === 'android' && styles['TabbarItem--android'],
-        selected && styles['TabbarItem--selected'],
+        styles.host,
+        platform === 'ios' && styles.ios,
+        platform === 'android' && styles.android,
+        selected && styles.selected,
       )}
     >
       <Tappable
         role="presentation"
         disabled={disabled}
-        activeMode={platform === 'ios' ? styles['TabbarItem__tappable--active'] : 'background'}
+        activeMode={platform === 'ios' ? styles.tappableActive : 'background'}
         activeEffectDelay={platform === 'ios' ? 0 : 300}
         hasHover={false}
-        className={styles['TabbarItem__tappable']}
+        className={styles.tappable}
         onClick={noop}
       />
-      <div className={styles['TabbarItem__in']}>
-        <div className={styles['TabbarItem__icon']}>
+      <div className={styles.in}>
+        <div className={styles.icon}>
           {children}
           <div className="vkuiInternalTabbarItem__label">
             {hasReactNode(indicator) && indicator}
           </div>
         </div>
         {text && (
-          <Footnote Component="div" className={styles['TabbarItem__text']} weight="2">
+          <Footnote Component="div" className={styles.text} weight="2">
             {text}
           </Footnote>
         )}

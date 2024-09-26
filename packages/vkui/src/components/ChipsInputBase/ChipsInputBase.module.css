@@ -1,4 +1,4 @@
-.ChipsInputBase {
+.host {
   --vkui_internal--chips_input_base_container_gap: 4px;
 
   flex-grow: 1;
@@ -14,12 +14,12 @@
   overflow: hidden;
 }
 
-.ChipsInputBase__chip {
+.chip {
   max-inline-size: calc(100% - var(--vkui_internal--chips_input_base_container_gap));
   margin: 2px;
 }
 
-.ChipsInputBase__el {
+.el {
   flex: 1;
   position: relative;
   inline-size: 100%;
@@ -33,33 +33,33 @@
   appearance: none;
 }
 
-.ChipsInputBase__el:not(:read-only):focus {
+.el:not(:read-only):focus {
   min-inline-size: 64px;
 }
 
-.ChipsInputBase__el::-ms-clear {
+.el::-ms-clear {
   display: none;
 }
 
-.ChipsInputBase__el:disabled {
+.el:disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.ChipsInputBase__el::placeholder {
+.el::placeholder {
   color: var(--vkui--color_text_secondary);
   /* Для Firefox */
   opacity: 1;
 }
 
-.ChipsInputBase__el:disabled::placeholder {
+.el:disabled::placeholder {
   color: var(--vkui--color_text_secondary);
 }
 
-.ChipsInputBase__el[readonly] {
+.el[readonly] {
   cursor: default;
 }
 
-.ChipsInputBase--hasPlaceholder .ChipsInputBase__el {
+.hasPlaceholder .el {
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-inline: calc(12px - var(--vkui_internal--chips_input_base_container_gap)) 0;
@@ -68,12 +68,12 @@
 /**
  * sizeY COMPACT
  */
-.ChipsInputBase--sizeY-compact {
+.sizeYCompact {
   --vkui_internal--chips_input_base_container_gap: 2px;
 }
 
 @media (--sizeY-compact) {
-  .ChipsInputBase--sizeY-none {
+  .sizeYNone {
     --vkui_internal--chips_input_base_container_gap: 2px;
   }
 }

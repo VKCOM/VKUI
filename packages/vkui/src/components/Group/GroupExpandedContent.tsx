@@ -5,8 +5,8 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Group.module.css';
 
 const stylesDirection = {
-  inline: styles['Group__expanded-content--inline'],
-  block: styles['Group__expanded-content--block'],
+  inline: styles.expandedContentInline,
+  block: styles.expandedContentBlock,
 };
 
 export type GroupExpandedContentProps = HTMLAttributesWithRootRef<HTMLElement> &
@@ -21,7 +21,7 @@ export const GroupExpandedContent: React.FC<GroupExpandedContentProps> = ({
     <RootComponent
       Component="div"
       {...restProps}
-      baseClassName={classNames(styles['Group__expanded-content'], stylesDirection[direction])}
+      baseClassName={classNames(styles.expandedContent, stylesDirection[direction])}
     />
   );
 };

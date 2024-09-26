@@ -14,13 +14,13 @@ import { FormItemContext } from './context';
 import styles from './FormItem.module.css';
 
 const sizeYClassNames = {
-  none: classNames(styles['FormItem--sizeY-none'], 'vkuiInternalFormItem--sizeY-none'),
-  compact: classNames(styles['FormItem--sizeY-compact'], 'vkuiInternalFormItem--sizeY-compact'),
+  none: classNames(styles.sizeYNone, 'vkuiInternalFormItem--sizeY-none'),
+  compact: classNames(styles.sizeYCompact, 'vkuiInternalFormItem--sizeY-compact'),
 };
 
 const stylesStatus = {
-  error: classNames(styles['FormItem--status-error'], 'vkuiInternalFormItem--status-error'),
-  valid: classNames(styles['FormItem--status-valid'], 'vkuiInternalFormItem--status-valid'),
+  error: classNames(styles.statusError, 'vkuiInternalFormItem--status-error'),
+  valid: classNames(styles.statusValid, 'vkuiInternalFormItem--status-valid'),
 };
 
 export interface FormItemProps
@@ -116,7 +116,7 @@ export const FormItem: React.FC<FormItemProps> & {
       {children}
       {hasReactNode(bottom) && (
         <Footnote
-          className={styles['FormItem__bottom']}
+          className={styles.bottom}
           id={bottomId}
           role={status === 'error' ? 'alert' : undefined}
         >
@@ -133,14 +133,13 @@ export const FormItem: React.FC<FormItemProps> & {
       {...restProps}
       getRootRef={rootEl}
       baseClassName={classNames(
-        styles['FormItem'],
-        !noPadding && styles['FormItem--withPadding'],
+        styles.host,
+        !noPadding && styles.withPadding,
         'vkuiInternalFormItem',
         status !== 'default' && stylesStatus[status],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        hasReactNode(top) &&
-          classNames(styles['FormItem--withTop'], 'vkuiInternalFormItem--withTop'),
-        removable && classNames(styles['FormItem--removable'], 'vkuiInternalFormItem--removable'),
+        hasReactNode(top) && classNames(styles.withTop, 'vkuiInternalFormItem--withTop'),
+        removable && classNames(styles.withRemovable, 'vkuiInternalFormItem--removable'),
       )}
     >
       <FormItemContext.Provider value={context}>
@@ -155,12 +154,7 @@ export const FormItem: React.FC<FormItemProps> & {
             removePlaceholder={removePlaceholder}
             indent={removable === 'indent'}
           >
-            <div
-              className={classNames(
-                styles['FormItem__removable'],
-                'vkuiInternalFormItem__removable',
-              )}
-            >
+            <div className={classNames(styles.removable, 'vkuiInternalFormItem__removable')}>
               {wrappedChildren}
             </div>
           </Removable>

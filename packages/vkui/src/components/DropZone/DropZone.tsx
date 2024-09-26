@@ -40,7 +40,7 @@ export const DropZone: React.FC<DropZoneProps> & {
 
   return (
     <RootComponent
-      baseClassName={classNames(styles['DropZone'], active && styles['DropZone--active'])}
+      baseClassName={classNames(styles.host, active && styles.active)}
       onDragOver={callMultiple(onDragOver, onActive)}
       onDragLeave={callMultiple(onDragLeave, offActive)}
       onDrop={callMultiple(onDrop, offActive)}

@@ -15,9 +15,9 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
 }
 
 const modeClassNames = {
-  'primary': styles['Separator--mode-primary'],
-  'secondary': styles['Separator--mode-secondary'],
-  'primary-alpha': styles['Separator--mode-primaryAlpha'],
+  'primary': styles.modePrimary,
+  'secondary': styles.modeSecondary,
+  'primary-alpha': styles.modePrimaryAlpha,
 };
 
 /**
@@ -30,8 +30,8 @@ export const Separator = ({
 }: SeparatorProps): React.ReactNode => (
   <RootComponent
     {...restProps}
-    baseClassName={classNames(!wide && styles['Separator--padded'], modeClassNames[mode])}
+    baseClassName={classNames(!wide && styles.padded, modeClassNames[mode])}
   >
-    <hr className={styles['Separator__in']} />
+    <hr className={styles.in} />
   </RootComponent>
 );

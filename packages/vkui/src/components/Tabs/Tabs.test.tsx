@@ -110,21 +110,21 @@ describe(Tabs, () => {
           mode: 'accent',
         },
         platform: Platform.ANDROID,
-        className: classNames(styles['Tabs--withGaps'], 'vkuiInternalTabs--withGaps'),
+        className: classNames(styles.withGaps, 'vkuiInternalTabs--withGaps'),
       },
       {
         props: {
           mode: 'secondary',
         },
         platform: Platform.ANDROID,
-        className: classNames(styles['Tabs--withGaps'], 'vkuiInternalTabs--withGaps'),
+        className: classNames(styles.withGaps, 'vkuiInternalTabs--withGaps'),
       },
       {
         props: {
           mode: 'default',
         },
         platform: Platform.ANDROID,
-        className: styles['Tabs--mode-default'],
+        className: styles.modeDefault,
       },
       {
         props: {},

@@ -14,10 +14,7 @@ export const ScreenSpinnerLoader: React.FC<Omit<SpinnerProps, 'size'>> = ({
   const a11yText = children ? children : caption ?? 'Пожалуйста, подождите...';
   return (
     <Spinner
-      className={classNames(
-        styles['ScreenSpinner__spinner'],
-        !caption && styles['ScreenSpinner__spinner--transition'],
-      )}
+      className={classNames(styles.spinner, !caption && styles.spinnerTransition)}
       size="xl"
       noColor
       {...restProps}

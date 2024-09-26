@@ -233,7 +233,7 @@ export const Popover = ({
       const { arrow: arrowCoords } = middlewareData;
       arrow = (
         <FloatingArrow
-          iconClassName={noStyling ? undefined : styles['Popover__arrow']}
+          iconClassName={noStyling ? undefined : styles.arrow}
           {...arrowProps}
           coords={arrowCoords}
           placement={resolvedPlacement}
@@ -247,7 +247,7 @@ export const Popover = ({
       <AppRootPortal usePortal={usePortal}>
         <div
           ref={refs.setFloating}
-          className={classNames(styles['Popover'], hidden && styles['Popover--hidden'])}
+          className={classNames(styles.host, hidden && styles.hidden)}
           {...floatingProps}
           style={{
             zIndex: !hidden ? zIndex : undefined,
@@ -258,8 +258,8 @@ export const Popover = ({
             {...restPopoverProps}
             role={role}
             className={classNames(
-              styles['Popover__in'],
-              noStyling ? undefined : styles['Popover__in--withStyling'],
+              styles.in,
+              noStyling ? undefined : styles.inWithStyling,
               willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
               transformOriginClassNames[resolvedPlacement],
               className,

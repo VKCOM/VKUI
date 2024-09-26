@@ -185,17 +185,14 @@ export const Calendar = ({
   );
 
   return (
-    <RootComponent
-      {...props}
-      baseClassName={classNames(styles['Calendar'], size === 's' && styles['Calendar--size-s'])}
-    >
+    <RootComponent {...props} baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}>
       <CalendarHeader
         viewDate={externalViewDate || viewDate}
         onChange={setViewDate}
         onNextMonth={setNextMonth}
         onPrevMonth={setPrevMonth}
         disablePickers={disablePickers || size === 's'}
-        className={styles['Calendar__header']}
+        className={styles.header}
         prevMonthLabel={prevMonthLabel}
         nextMonthLabel={nextMonthLabel}
         changeMonthLabel={changeMonthLabel}
@@ -228,7 +225,7 @@ export const Calendar = ({
         renderDayContent={renderDayContent}
       />
       {enableTime && value && size !== 's' && (
-        <div className={styles['Calendar__time']}>
+        <div className={styles.time}>
           <CalendarTime
             value={value}
             onChange={onChange}

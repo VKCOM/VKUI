@@ -6,15 +6,15 @@ describe('GroupExpandedContent', () => {
   it.each<{ direction: GroupExpandedContentProps['direction']; className: string }>([
     {
       direction: undefined,
-      className: styles['Group__expanded-content--inline'],
+      className: styles.expandedContentInline,
     },
     {
       direction: 'inline',
-      className: styles['Group__expanded-content--inline'],
+      className: styles.expandedContentInline,
     },
     {
       direction: 'block',
-      className: styles['Group__expanded-content--block'],
+      className: styles.expandedContentBlock,
     },
   ])(
     'should have className "$className" with direction "$direction"',

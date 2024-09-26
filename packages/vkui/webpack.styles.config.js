@@ -53,7 +53,7 @@ module.exports = {
                 [
                   'swc-plugin-css-modules',
                   {
-                    generate_scoped_name: 'vkui[local]',
+                    generate_scoped_name: 'vkui[folder]__[local]',
                   },
                 ],
               ],

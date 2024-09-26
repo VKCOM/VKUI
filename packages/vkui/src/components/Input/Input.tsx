@@ -7,8 +7,8 @@ import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
 import styles from './Input.module.css';
 
 const sizeYClassNames = {
-  none: styles['Input--sizeY-none'],
-  compact: styles['Input--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface InputProps
@@ -40,12 +40,12 @@ export const Input = ({
     <FormField
       style={style}
       className={classNames(
-        styles['Input'],
-        align === 'right' && styles['Input--align-right'],
-        align === 'center' && styles['Input--align-center'],
+        styles.host,
+        align === 'right' && styles.alignRight,
+        align === 'center' && styles.alignCenter,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        before && styles['Input--hasBefore'],
-        after && styles['Input--hasAfter'],
+        before && styles.hasBefore,
+        after && styles.hasAfter,
         className,
       )}
       getRootRef={getRootRef}
@@ -59,7 +59,7 @@ export const Input = ({
         {...restProps}
         as="input"
         type={type}
-        className={styles['Input__el']}
+        className={styles.el}
         getRootRef={getRef}
       />
     </FormField>

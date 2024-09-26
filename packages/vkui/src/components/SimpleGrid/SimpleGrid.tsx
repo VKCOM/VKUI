@@ -10,17 +10,17 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './SimpleGrid.module.css';
 
 const marginClassNames = {
-  'auto': styles['SimpleGrid--margin-auto'],
-  'auto-inline': styles['SimpleGrid--margin-auto-inline'],
-  'auto-block': styles['SimpleGrid--margin-auto-block'],
+  'auto': styles.marginAuto,
+  'auto-inline': styles.marginAutoInline,
+  'auto-block': styles.marginAutoBlock,
 };
 
 const alignClassNames = {
-  start: styles['SimpleGrid--align-start'],
-  end: styles['SimpleGrid--align-end'],
-  center: styles['SimpleGrid--align-center'],
-  stretch: styles['SimpleGrid--align-stretch'],
-  baseline: styles['SimpleGrid--align-baseline'],
+  start: styles.alignStart,
+  end: styles.alignEnd,
+  center: styles.alignCenter,
+  stretch: styles.alignStretch,
+  baseline: styles.alignBaseline,
 };
 
 export interface SimpleGridProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -78,10 +78,10 @@ export const SimpleGrid = ({
     <RootComponent
       {...props}
       baseClassName={classNames(
-        styles.SimpleGrid,
+        styles.host,
         margin !== 'none' && marginClassNames[margin],
         alignClassNames[align],
-        minColWidth && styles['SimpleGrid--with-min-width'],
+        minColWidth && styles.withMinWidth,
         typeof columnGap === 'string' && columnGapClassNames[columnGap],
         typeof rowGap === 'string' && rowGapClassNames[rowGap],
       )}

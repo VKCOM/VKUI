@@ -12,9 +12,7 @@ describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
 
   const getParts = () => {
-    return getDocumentBody().getElementsByClassName(
-      styles['CalendarRange__inner'],
-    ) as HTMLCollectionOf<HTMLElement>;
+    return getDocumentBody().getElementsByClassName(styles.inner) as HTMLCollectionOf<HTMLElement>;
   };
 
   const clickDayInPart = (part: HTMLElement, date: string) => {
@@ -22,7 +20,7 @@ describe('CalendarRange', () => {
   };
 
   const getCalendarDayBlock = (part: HTMLElement, date: string) => {
-    return getByText(part, date).closest(`.${dayStyles['CalendarDay']}`) as HTMLElement;
+    return getByText(part, date).closest(`.${dayStyles.host}`) as HTMLElement;
   };
 
   const getLeftPart = () => {
@@ -40,7 +38,7 @@ describe('CalendarRange', () => {
   };
 
   const triggerKeyDownEvent = (key: string) => {
-    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles['CalendarDays'])[0], {
+    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[0], {
       key,
       code: key,
     });
@@ -68,7 +66,7 @@ describe('CalendarRange', () => {
     );
 
     const getSelect = (index: number) => {
-      const headers = result.container.getElementsByClassName(styles['CalendarRange__header']);
+      const headers = result.container.getElementsByClassName(styles.header);
       expect(headers.length).toBe(2);
       const header = headers[index];
       return header.querySelector('select');
@@ -127,12 +125,8 @@ describe('CalendarRange', () => {
     const [leftPart] = getParts();
     clickDayInPart(leftPart, '1');
 
-    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(
-      dayStyles['CalendarDay--selection-start'],
-    );
-    expect(getCalendarDayBlock(leftPart, '1')).not.toHaveClass(
-      dayStyles['CalendarDay--selection-end'],
-    );
+    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(dayStyles.selectionStart);
+    expect(getCalendarDayBlock(leftPart, '1')).not.toHaveClass(dayStyles.selectionEnd);
   });
 
   it('check range working', async () => {
@@ -143,10 +137,8 @@ describe('CalendarRange', () => {
     const [leftPart] = getParts();
     clickDayInPart(leftPart, '3');
 
-    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(
-      dayStyles['CalendarDay--selection-start'],
-    );
-    expect(getCalendarDayBlock(leftPart, '3')).toHaveClass(dayStyles['CalendarDay--selection-end']);
+    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(dayStyles.selectionStart);
+    expect(getCalendarDayBlock(leftPart, '3')).toHaveClass(dayStyles.selectionEnd);
   });
 
   it('check reverse range select working', async () => {
@@ -170,11 +162,7 @@ describe('CalendarRange', () => {
       />,
     );
 
-    expect(getCalendarDayBlock(getLeftPart(), '30')).toHaveClass(
-      dayStyles['CalendarDay--selection-start'],
-    );
-    expect(getCalendarDayBlock(getRightPart(), '1')).toHaveClass(
-      dayStyles['CalendarDay--selection-end'],
-    );
+    expect(getCalendarDayBlock(getLeftPart(), '30')).toHaveClass(dayStyles.selectionStart);
+    expect(getCalendarDayBlock(getRightPart(), '1')).toHaveClass(dayStyles.selectionEnd);
   });
 });

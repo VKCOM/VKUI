@@ -30,19 +30,19 @@ describe('SimpleGrid', () => {
       props: {
         minColWidth: 100,
       },
-      className: styles['SimpleGrid--with-min-width'],
+      className: styles.withMinWidth,
     },
     {
       props: {
         align: 'center',
       },
-      className: styles['SimpleGrid--align-center'],
+      className: styles.alignCenter,
     },
     {
       props: {
         margin: 'auto-block',
       },
-      className: styles['SimpleGrid--margin-auto-block'],
+      className: styles.marginAutoBlock,
     },
   ])('should have className $className with props $props', ({ props, className }) => {
     render(

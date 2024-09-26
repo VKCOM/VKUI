@@ -1,4 +1,4 @@
-.SelectionControl {
+.host {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -13,21 +13,21 @@
  * FormItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem) .SelectionControl {
+:global(.vkuiInternalFormItem) .host {
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
-.SelectionControl[disabled] {
+.host[disabled] {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.SelectionControl--sizeY-compact {
+.sizeYCompact {
   min-block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .SelectionControl--sizeY-none {
+  .sizeYNone {
     min-block-size: var(--vkui--size_field_height--compact);
   }
 }

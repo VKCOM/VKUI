@@ -1,8 +1,8 @@
-.DropZone {
+.host {
   position: relative;
 }
 
-.DropZone::before {
+.host::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -10,7 +10,7 @@
   border: 1px dashed var(--vkui--color_separator_primary);
 }
 
-.DropZone--active::before {
+.active::before {
   border-color: var(--vkui--color_stroke_accent_themed);
   border-width: 2px;
 }

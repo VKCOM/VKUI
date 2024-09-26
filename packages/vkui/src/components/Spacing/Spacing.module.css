@@ -1,4 +1,4 @@
-.Spacing {
+.host {
   --vkui_internal--Spacing_gap: 0;
 
   position: relative;
@@ -6,38 +6,38 @@
   box-sizing: border-box;
 }
 
-.Spacing--2xs {
+.size2XS {
   --vkui_internal--Spacing_gap: var(--vkui--spacing_size_2xs);
 }
 
-.Spacing--xs {
+.sizeXS {
   --vkui_internal--Spacing_gap: var(--vkui--spacing_size_xs);
 }
 
-.Spacing--s {
+.sizeS {
   --vkui_internal--Spacing_gap: var(--vkui--spacing_size_s);
 }
 
-.Spacing--m {
+.sizeM {
   --vkui_internal--Spacing_gap: var(--vkui--spacing_size_m);
 }
 
-.Spacing--l {
+.sizeL {
   --vkui_internal--Spacing_gap: var(--vkui--spacing_size_l);
 }
 
-.Spacing--xl {
+.sizeXL {
   --vkui_internal--Spacing_gap: var(--vkui--spacing_size_xl);
 }
 
-.Spacing--2xl {
+.size2XL {
   --vkui_internal--Spacing_gap: var(--vkui--spacing_size_2xl);
 }
 
-.Spacing--3xl {
+.size3XL {
   --vkui_internal--Spacing_gap: var(--vkui--spacing_size_3xl);
 }
 
-.Spacing--4xl {
+.size4XL {
   --vkui_internal--Spacing_gap: var(--vkui--spacing_size_4xl);
 }

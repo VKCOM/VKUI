@@ -1,4 +1,4 @@
-.Button {
+.host {
   position: relative;
   display: inline-block;
   box-sizing: border-box;
@@ -14,37 +14,37 @@
     color 0.15s ease-out;
 }
 
-.Button--rounded {
+.rounded {
   border-radius: var(--vkui--size_border_radius_rounded--regular);
 }
 
-.Button--loading {
+.loading {
   cursor: progress;
 }
 
-.Button--singleIcon {
+.singleIcon {
   inline-size: var(--vkui--size_button_small_height--compact);
   min-inline-size: initial;
 }
 
-.Button--sizeY-regular.Button--singleIcon {
+.sizeYRegular.singleIcon {
   inline-size: var(--vkui--size_button_small_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--singleIcon {
+  .sizeYNone.singleIcon {
     inline-size: var(--vkui--size_button_small_height--regular);
   }
 }
 
-.Button--stretched {
+.stretched {
   display: block;
   inline-size: 100%;
   flex-grow: 1;
   flex-basis: 0;
 }
 
-.Button__in {
+.in {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,332 +54,330 @@
   box-sizing: border-box;
 }
 
-.Button--align-left .Button__in {
+.alignLeft .in {
   justify-content: flex-start;
   text-align: start;
 }
 
-.Button--align-center {
+.alignCenter {
 }
 
-.Button--align-right .Button__in {
+.alignRight .in {
   justify-content: flex-end;
   text-align: end;
 }
 
-.Button[disabled] {
+.host[disabled] {
   opacity: var(--vkui--opacity_disable);
 }
 
-.Button--mode-primary[disabled]:not(.Button--appearance-overlay):not(
-    .Button--appearance-negative
-  ):not(.Button--appearance-positive),
-.Button--mode-secondary[disabled]:not(.Button--appearance-overlay),
-.Button--mode-tertiary[disabled]:not(.Button--appearance-overlay),
-.Button--mode-outline[disabled]:not(.Button--appearance-overlay) {
+.modePrimary[disabled]:not(.appearanceOverlay):not(.appearanceNegative):not(.appearancePositive),
+.modeSecondary[disabled]:not(.appearanceOverlay),
+.modeTertiary[disabled]:not(.appearanceOverlay),
+.modeOutline[disabled]:not(.appearanceOverlay) {
   opacity: 0.64;
 }
 
-.Button--with-icon {
+.withIcon {
 }
 
-.Button__content {
+.content {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-.Button--size-s .Button__content:first-child {
+.sizeS .content:first-child {
   padding-inline-start: var(--vkui--size_button_base_small_padding_horizontal--regular);
 }
 
-.Button--size-s .Button__content:last-child,
-.Button--size-s .Button__after {
+.sizeS .content:last-child,
+.sizeS .after {
   padding-inline-end: var(--vkui--size_button_base_small_padding_horizontal--regular);
 }
 
-.Button--size-m .Button__content:first-child {
+.sizeM .content:first-child {
   padding-inline-start: var(--vkui--size_button_base_medium_padding_horizontal--regular);
 }
 
-.Button--size-m .Button__content:last-child,
-.Button--size-m .Button__after {
+.sizeM .content:last-child,
+.sizeM .after {
   padding-inline-end: var(--vkui--size_button_base_medium_padding_horizontal--regular);
 }
 
-.Button--size-l .Button__content:first-child {
+.sizeL .content:first-child {
   padding-inline-start: var(--vkui--size_button_base_large_padding_horizontal--regular);
 }
 
-.Button--size-l .Button__content:last-child,
-.Button--size-l .Button__after {
+.sizeL .content:last-child,
+.sizeL .after {
   padding-inline-end: var(--vkui--size_button_base_large_padding_horizontal--regular);
 }
 
-.Button--size-s .Button__before {
+.sizeS .before {
   padding-inline-start: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
 }
 
-.Button--size-m .Button__before {
+.sizeM .before {
   padding-inline-start: var(--vkui--size_button_base_medium_padding_horizontal_icon--regular);
 }
 
-.Button--size-l .Button__before {
+.sizeL .before {
   padding-inline-start: var(--vkui--size_button_base_large_padding_horizontal_icon--regular);
 }
 
-.Button--mode-tertiary.Button--size-s .Button__content:first-child {
+.modeTertiary.sizeS .content:first-child {
   padding-inline-start: var(--vkui--size_button_tertiary_small_padding_horizontal--regular);
 }
 
-.Button--mode-tertiary.Button--size-s .Button__content:last-child,
-.Button--mode-tertiary.Button--size-s .Button__after {
+.modeTertiary.sizeS .content:last-child,
+.modeTertiary.sizeS .after {
   padding-inline-end: var(--vkui--size_button_tertiary_small_padding_horizontal--regular);
 }
 
-.Button--mode-tertiary.Button--size-m .Button__content:first-child {
+.modeTertiary.sizeM .content:first-child {
   padding-inline-start: var(--vkui--size_button_tertiary_medium_padding_horizontal--regular);
 }
 
-.Button--mode-tertiary.Button--size-m .Button__content:last-child,
-.Button--mode-tertiary.Button--size-m .Button__after {
+.modeTertiary.sizeM .content:last-child,
+.modeTertiary.sizeM .after {
   padding-inline-end: var(--vkui--size_button_tertiary_medium_padding_horizontal--regular);
 }
 
-.Button--mode-tertiary.Button--size-l .Button__content:first-child {
+.modeTertiary.sizeL .content:first-child {
   padding-inline-start: var(--vkui--size_button_tertiary_large_padding_horizontal--regular);
 }
 
-.Button--mode-tertiary.Button--size-l .Button__content:last-child,
-.Button--mode-tertiary.Button--size-l .Button__after {
+.modeTertiary.sizeL .content:last-child,
+.modeTertiary.sizeL .after {
   padding-inline-end: var(--vkui--size_button_tertiary_large_padding_horizontal--regular);
 }
 
-.Button--mode-tertiary.Button--size-s .Button__before {
+.modeTertiary.sizeS .before {
   padding-inline-start: var(--vkui--size_button_tertiary_small_padding_horizontal_icon--regular);
 }
 
-.Button--mode-tertiary.Button--size-m .Button__before {
+.modeTertiary.sizeM .before {
   padding-inline-start: var(--vkui--size_button_tertiary_medium_padding_horizontal_icon--regular);
 }
 
-.Button--mode-tertiary.Button--size-l .Button__before {
+.modeTertiary.sizeL .before {
   padding-inline-start: var(--vkui--size_button_tertiary_large_padding_horizontal_icon--regular);
 }
 
-.Button--singleIcon .Button__after,
-.Button--singleIcon .Button__before,
-.Button--mode-tertiary.Button--singleIcon .Button__after,
-.Button--mode-tertiary.Button--singleIcon .Button__before {
+.singleIcon .after,
+.singleIcon .before,
+.modeTertiary.singleIcon .after,
+.modeTertiary.singleIcon .before {
   margin-inline: auto;
   padding-inline: 0;
 }
 
-.Button--mode-link {
+.modeLink {
   background: none;
   min-inline-size: initial;
 }
 
-.Button--mode-link .Button__after,
-.Button--mode-link .Button__before,
-.Button--mode-link .Button__content:first-child,
-.Button--mode-link .Button__content:last-child,
-.Button--stretched .Button__after:only-child,
-.Button--stretched .Button__before:only-child {
+.modeLink .after,
+.modeLink .before,
+.modeLink .content:first-child,
+.modeLink .content:last-child,
+.stretched .after:only-child,
+.stretched .before:only-child {
   padding-inline: 0;
 }
 
-.Button__spinner {
+.spinner {
   color: currentColor;
   position: absolute;
   inset: 0;
 }
 
-.Button__spinner + .Button__in {
+.spinner + .in {
   visibility: hidden;
 }
 
 /* Button's backgrounds */
 /* Mode  = Primary */
-.Button--mode-primary.Button--appearance-accent {
+.modePrimary.appearanceAccent {
   background-color: var(--vkui--color_background_accent_themed);
 }
 
-.Button--mode-primary.Button--appearance-accent.Button--hover {
+.modePrimary.appearanceAccent.hover {
   background-color: var(--vkui--color_background_accent_themed--hover);
 }
 
-.Button--mode-primary.Button--appearance-accent.Button--active {
+.modePrimary.appearanceAccent.active {
   background-color: var(--vkui--color_background_accent_themed--active);
 }
 
-.Button--mode-primary.Button--appearance-positive {
+.modePrimary.appearancePositive {
   background-color: var(--vkui--color_background_positive);
 }
 
-.Button--mode-primary.Button--appearance-positive.Button--hover {
+.modePrimary.appearancePositive.hover {
   background-color: var(--vkui--color_background_positive--hover);
 }
 
-.Button--mode-primary.Button--appearance-positive.Button--active {
+.modePrimary.appearancePositive.active {
   background-color: var(--vkui--color_background_positive--active);
 }
 
-.Button--mode-primary.Button--appearance-negative {
+.modePrimary.appearanceNegative {
   background-color: var(--vkui--color_background_negative);
 }
 
-.Button--mode-primary.Button--appearance-negative.Button--hover {
+.modePrimary.appearanceNegative.hover {
   background-color: var(--vkui--color_background_negative--hover);
 }
 
-.Button--mode-primary.Button--appearance-negative.Button--active {
+.modePrimary.appearanceNegative.active {
   background-color: var(--vkui--color_background_negative--active);
 }
 
-.Button--mode-primary.Button--appearance-neutral {
+.modePrimary.appearanceNeutral {
   background-color: var(--vkui--color_background_secondary);
 }
 
-.Button--mode-primary.Button--appearance-neutral.Button--hover {
+.modePrimary.appearanceNeutral.hover {
   background-color: var(--vkui--color_background_secondary--hover);
 }
 
-.Button--mode-primary.Button--appearance-neutral.Button--active {
+.modePrimary.appearanceNeutral.active {
   background-color: var(--vkui--color_background_secondary--active);
 }
 
-.Button--mode-primary.Button--appearance-accent-invariable {
+.modePrimary.appearanceAccentInvariable {
   background-color: var(--vkui--color_background_accent);
 }
 
-.Button--mode-primary.Button--appearance-accent-invariable.Button--hover {
+.modePrimary.appearanceAccentInvariable.hover {
   background-color: var(--vkui--color_background_accent--hover);
 }
 
-.Button--mode-primary.Button--appearance-accent-invariable.Button--active {
+.modePrimary.appearanceAccentInvariable.active {
   background-color: var(--vkui--color_background_accent--active);
 }
 
 /* Mode = Secondary */
-.Button--mode-secondary {
+.modeSecondary {
   background-color: var(--vkui--color_background_secondary_alpha);
 }
 
-.Button--mode-secondary.Button--hover {
+.modeSecondary.hover {
   background-color: var(--vkui--color_background_secondary_alpha--hover);
 }
 
-.Button--mode-secondary.Button--active {
+.modeSecondary.active {
   background-color: var(--vkui--color_background_secondary_alpha--active);
 }
 
 /* Mode = Tertiary */
-.Button--mode-tertiary,
-.Button--mode-outline {
+.modeTertiary,
+.modeOutline {
   background-color: var(--vkui--color_transparent);
 }
 
-.Button--mode-tertiary.Button--hover,
-.Button--mode-outline.Button--hover {
+.modeTertiary.hover,
+.modeOutline.hover {
   background-color: var(--vkui--color_transparent--hover);
 }
 
-.Button--mode-tertiary.Button--active,
-.Button--mode-outline.Button--active {
+.modeTertiary.active,
+.modeOutline.active {
   background-color: var(--vkui--color_transparent--active);
 }
 
 /*
   Buttons text colors
 */
-.Button.Button--appearance-accent {
+.host.appearanceAccent {
   color: var(--vkui--color_text_accent_themed);
 }
 
-.Button.Button--appearance-positive {
+.host.appearancePositive {
   color: var(--vkui--color_text_positive);
 }
 
-.Button.Button--appearance-negative {
+.host.appearanceNegative {
   color: var(--vkui--color_text_negative);
 }
 
-.Button.Button--appearance-neutral {
+.host.appearanceNeutral {
   color: var(--vkui--color_text_primary);
 }
 
-.Button.Button--appearance-accent-invariable {
+.host.appearanceAccentInvariable {
   color: var(--vkui--color_text_accent);
 }
 
-.Button--mode-primary.Button--appearance-accent {
+.modePrimary.appearanceAccent {
   color: var(--vkui--color_text_contrast_themed);
 }
 
-.Button--mode-primary.Button--appearance-negative,
-.Button--mode-primary.Button--appearance-positive,
-.Button--mode-primary.Button--appearance-accent-invariable {
+.modePrimary.appearanceNegative,
+.modePrimary.appearancePositive,
+.modePrimary.appearanceAccentInvariable {
   color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-link.Button--hover {
+.modeLink.hover {
   opacity: 0.8;
 }
 
-.Button--mode-link.Button--active {
+.modeLink.active {
   opacity: 0.7;
 }
 
 /*
   Outline buttons borders
 */
-.Button--mode-outline.Button--appearance-accent,
-.Button--mode-outline.Button--appearance-accent.Button--hover,
-.Button--mode-outline.Button--appearance-accent.Button--active {
+.modeOutline.appearanceAccent,
+.modeOutline.appearanceAccent.hover,
+.modeOutline.appearanceAccent.active {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_accent_themed);
 }
 
-.Button--mode-outline.Button--appearance-positive {
+.modeOutline.appearancePositive {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_positive);
 }
 
-.Button--mode-outline.Button--appearance-positive.Button--hover {
+.modeOutline.appearancePositive.hover {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_positive--hover);
 }
 
-.Button--mode-outline.Button--appearance-positive.Button--active {
+.modeOutline.appearancePositive.active {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_positive--active);
 }
 
-.Button--mode-outline.Button--appearance-negative {
+.modeOutline.appearanceNegative {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_negative);
 }
 
-.Button--mode-outline.Button--appearance-negative.Button--hover {
+.modeOutline.appearanceNegative.hover {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_negative--hover);
 }
 
-.Button--mode-outline.Button--appearance-negative.Button--active {
+.modeOutline.appearanceNegative.active {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_negative--active);
 }
 
-.Button--mode-outline.Button--appearance-neutral {
+.modeOutline.appearanceNeutral {
   box-shadow: inset 0 0 0 1px var(--vkui--color_field_border_alpha);
 }
 
-.Button--mode-outline.Button--appearance-neutral.Button--hover {
+.modeOutline.appearanceNeutral.hover {
   background-color: var(--vkui--color_background_secondary--hover);
   box-shadow: unset;
 }
 
-.Button--mode-outline.Button--appearance-neutral.Button--active {
+.modeOutline.appearanceNeutral.active {
   background-color: var(--vkui--color_background_secondary--active);
   box-shadow: unset;
 }
 
-.Button--mode-outline.Button--appearance-accent-invariable {
+.modeOutline.appearanceAccentInvariable {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_accent);
 }
 
@@ -387,158 +385,158 @@
   Overlay colors section, separately
   Background colors
 */
-.Button--mode-primary.Button--appearance-overlay {
+.modePrimary.appearanceOverlay {
   background-color: var(--vkui--color_background_contrast);
 }
 
-.Button--mode-primary.Button--appearance-overlay.Button--hover {
+.modePrimary.appearanceOverlay.hover {
   background-color: var(--vkui--color_background_contrast--hover);
 }
 
-.Button--mode-primary.Button--appearance-overlay.Button--active {
+.modePrimary.appearanceOverlay.active {
   background-color: var(--vkui--color_background_contrast--active);
 }
 
-.Button--mode-secondary.Button--appearance-overlay {
+.modeSecondary.appearanceOverlay {
   background-color: var(--vkui--color_overlay_primary);
 }
 
-.Button--mode-secondary.Button--appearance-overlay.Button--hover {
+.modeSecondary.appearanceOverlay.hover {
   background-color: var(--vkui--color_overlay_primary--hover);
 }
 
-.Button--mode-secondary.Button--appearance-overlay.Button--active {
+.modeSecondary.appearanceOverlay.active {
   background-color: var(--vkui--color_overlay_primary--active);
 }
 
-.Button--mode-tertiary.Button--appearance-overlay.Button--hover,
-.Button--mode-outline.Button--appearance-overlay.Button--hover {
+.modeTertiary.appearanceOverlay.hover,
+.modeOutline.appearanceOverlay.hover {
   background-color: var(--vkui--color_background_contrast_secondary_alpha--hover);
 }
 
-.Button--mode-tertiary.Button--appearance-overlay.Button--active,
-.Button--mode-outline.Button--appearance-overlay.Button--active {
+.modeTertiary.appearanceOverlay.active,
+.modeOutline.appearanceOverlay.active {
   background-color: var(--vkui--color_background_contrast_secondary_alpha--active);
 }
 
 /* Text colors */
-.Button--mode-primary.Button--appearance-overlay {
+.modePrimary.appearanceOverlay {
   color: var(--vkui--color_text_primary_invariably);
 }
 
-.Button--mode-primary.Button--appearance-overlay.Button--hover {
+.modePrimary.appearanceOverlay.hover {
   color: var(--vkui--color_text_primary_invariably--hover);
 }
 
-.Button--mode-primary.Button--appearance-overlay.Button--active {
+.modePrimary.appearanceOverlay.active {
   color: var(--vkui--color_text_primary_invariably--active);
 }
 
-.Button--mode-secondary.Button--appearance-overlay,
-.Button--mode-tertiary.Button--appearance-overlay,
-.Button--mode-outline.Button--appearance-overlay,
-.Button--mode-link.Button--appearance-overlay {
+.modeSecondary.appearanceOverlay,
+.modeTertiary.appearanceOverlay,
+.modeOutline.appearanceOverlay,
+.modeLink.appearanceOverlay {
   color: var(--vkui--color_text_contrast);
 }
 
 /* Borders */
-.Button--mode-outline.Button--appearance-overlay {
+.modeOutline.appearanceOverlay {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_contrast);
 }
 
-.Button--mode-outline.Button--appearance-overlay.Button--hover {
+.modeOutline.appearanceOverlay.hover {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_contrast--hover);
 }
 
-.Button--mode-outline.Button--appearance-overlay.Button--active {
+.modeOutline.appearanceOverlay.active {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_contrast--active);
 }
 
-.Button__before:not(:last-child) + .Button__content {
+.before:not(:last-child) + .content {
   margin-inline-start: 6px;
 }
 
-.Button__after:not(:first-child) {
+.after:not(:first-child) {
   margin-inline-start: 6px;
 }
 
-.Button--size-l .Button__before:not(:last-child) + .Button__content {
+.sizeL .before:not(:last-child) + .content {
   margin-inline-start: 8px;
 }
 
-.Button--size-l .Button__after:not(:first-child) {
+.sizeL .after:not(:first-child) {
   margin-inline-start: 8px;
 }
 
 /* Fonts sizes  */
-.Button--size-s .Button__content {
+.sizeS .content {
   font-family: var(--vkui--font_subhead--font_family--regular);
   font-size: var(--vkui--font_subhead--font_size--compact);
   line-height: var(--vkui--font_subhead--line_height--compact);
 }
 
-.Button--sizeY-regular.Button--size-s .Button__content {
+.sizeYRegular.sizeS .content {
   font-family: var(--vkui--font_subhead--font_family--regular);
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-s .Button__content {
+  .sizeYNone.sizeS .content {
     font-family: var(--vkui--font_subhead--font_family--regular);
     font-size: var(--vkui--font_subhead--font_size--regular);
     line-height: var(--vkui--font_subhead--line_height--regular);
   }
 }
 
-.Button--size-m .Button__content {
+.sizeM .content {
   font-family: var(--vkui--font_headline2--font_family--regular);
   font-size: var(--vkui--font_headline2--font_size--compact);
   line-height: var(--vkui--font_headline2--line_height--compact);
 }
 
-.Button--sizeY-regular.Button--size-m .Button__content {
+.sizeYRegular.sizeM .content {
   font-family: var(--vkui--font_headline2--font_family--regular);
   font-size: var(--vkui--font_headline2--font_size--regular);
   line-height: var(--vkui--font_headline2--line_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-m .Button__content {
+  .sizeYNone.sizeM .content {
     font-family: var(--vkui--font_headline2--font_family--regular);
     font-size: var(--vkui--font_headline2--font_size--regular);
     line-height: var(--vkui--font_headline2--line_height--regular);
   }
 }
 
-.Button--size-l .Button__content {
+.sizeL .content {
   font-family: var(--vkui--font_headline1--font_family--regular);
   font-size: var(--vkui--font_headline1--font_size--compact);
   line-height: var(--vkui--font_headline1--line_height--compact);
 }
 
-.Button--sizeY-regular.Button--size-l .Button__content {
+.sizeYRegular.sizeL .content {
   font-family: var(--vkui--font_headline1--font_family--regular);
   font-size: var(--vkui--font_headline1--font_size--regular);
   line-height: var(--vkui--font_headline1--line_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-l .Button__content {
+  .sizeYNone.sizeL .content {
     font-family: var(--vkui--font_headline1--font_family--regular);
     font-size: var(--vkui--font_headline1--font_size--regular);
     line-height: var(--vkui--font_headline1--line_height--regular);
   }
 }
 
-.Button--sizeY-regular.Button--size-l.Button--ios .Button__content {
+.sizeYRegular.sizeL.ios .content {
   font-family: var(--vkui--font_title3--font_family--regular);
   font-size: var(--vkui--font_title3--font_size--regular);
   line-height: var(--vkui--font_title3--line_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-l.Button--ios .Button__content {
+  .sizeYNone.sizeL.ios .content {
     font-family: var(--vkui--font_title3--font_family--regular);
     font-size: var(--vkui--font_title3--font_size--regular);
     line-height: var(--vkui--font_title3--line_height--regular);
@@ -546,68 +544,68 @@
 }
 
 /* Sizes */
-.Button--size-m {
+.sizeM {
   min-block-size: var(--vkui--size_button_medium_height--compact);
 }
 
-.Button--sizeY-regular.Button--size-m {
+.sizeYRegular.sizeM {
   min-block-size: var(--vkui--size_button_medium_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-m {
+  .sizeYNone.sizeM {
     min-block-size: var(--vkui--size_button_medium_height--regular);
   }
 }
 
-.Button--size-m.Button--singleIcon {
+.sizeM.singleIcon {
   inline-size: var(--vkui--size_button_medium_height--compact);
 }
 
-.Button--sizeY-regular.Button--size-m.Button--singleIcon {
+.sizeYRegular.sizeM.singleIcon {
   inline-size: var(--vkui--size_button_medium_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-m.Button--singleIcon {
+  .sizeYNone.sizeM.singleIcon {
     inline-size: var(--vkui--size_button_medium_height--regular);
   }
 }
 
-.Button--size-l {
+.sizeL {
   min-block-size: var(--vkui--size_button_large_height--compact);
 }
 
-.Button--sizeY-regular.Button--size-l {
+.sizeYRegular.sizeL {
   min-block-size: var(--vkui--size_button_large_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-l {
+  .sizeYNone.sizeL {
     min-block-size: var(--vkui--size_button_large_height--regular);
   }
 }
 
-.Button--size-l.Button--singleIcon {
+.sizeL.singleIcon {
   inline-size: var(--vkui--size_button_large_height--compact);
 }
 
-.Button--sizeY-regular.Button--size-l.Button--singleIcon {
+.sizeYRegular.sizeL.singleIcon {
   inline-size: var(--vkui--size_button_large_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none.Button--size-l.Button--singleIcon {
+  .sizeYNone.sizeL.singleIcon {
     inline-size: var(--vkui--size_button_large_height--regular);
   }
 }
 
-.Button--sizeY-regular {
+.sizeYRegular {
   min-block-size: var(--vkui--size_button_small_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .Button--sizeY-none {
+  .sizeYNone {
     min-block-size: var(--vkui--size_button_small_height--regular);
   }
 }
@@ -616,62 +614,62 @@
  * Impact:
  * Counter
  */
-.Button--mode-primary.Button--appearance-accent {
+.modePrimary.appearanceAccent {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_content);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_accent_themed);
 }
 
-.Button--mode-secondary.Button--appearance-accent,
-.Button--mode-tertiary.Button--appearance-accent,
-.Button--mode-outline.Button--appearance-accent {
+.modeSecondary.appearanceAccent,
+.modeTertiary.appearanceAccent,
+.modeOutline.appearanceAccent {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_accent_themed);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast_themed);
 }
 
-.Button--mode-primary.Button--appearance-positive {
+.modePrimary.appearancePositive {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_contrast);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_positive);
 }
 
-.Button--mode-secondary.Button--appearance-positive,
-.Button--mode-tertiary.Button--appearance-positive,
-.Button--mode-outline.Button--appearance-positive {
+.modeSecondary.appearancePositive,
+.modeTertiary.appearancePositive,
+.modeOutline.appearancePositive {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_positive);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-primary.Button--appearance-negative {
+.modePrimary.appearanceNegative {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_contrast);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_negative);
 }
 
-.Button--mode-secondary.Button--appearance-negative,
-.Button--mode-tertiary.Button--appearance-negative,
-.Button--mode-outline.Button--appearance-negative {
+.modeSecondary.appearanceNegative,
+.modeTertiary.appearanceNegative,
+.modeOutline.appearanceNegative {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_negative);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-primary.Button--appearance-neutral {
+.modePrimary.appearanceNeutral {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_contrast);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_primary_invariably);
 }
 
-.Button--mode-secondary.Button--appearance-neutral,
-.Button--mode-tertiary.Button--appearance-neutral,
-.Button--mode-outline.Button--appearance-neutral {
+.modeSecondary.appearanceNeutral,
+.modeTertiary.appearanceNeutral,
+.modeOutline.appearanceNeutral {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_accent);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-primary.Button--appearance-overlay {
+.modePrimary.appearanceOverlay {
   --vkui_internal--counter_inherit_background: var(--vkui--color_icon_primary_invariably);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast);
 }
 
-.Button--mode-secondary.Button--appearance-overlay,
-.Button--mode-tertiary.Button--appearance-overlay,
-.Button--mode-outline.Button--appearance-overlay {
+.modeSecondary.appearanceOverlay,
+.modeTertiary.appearanceOverlay,
+.modeOutline.appearanceOverlay {
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_contrast);
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_primary_invariably);
 }

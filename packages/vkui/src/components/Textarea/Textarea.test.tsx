@@ -20,8 +20,8 @@ describe(Textarea, () => {
   ));
 
   it.each<[AlignType, string]>([
-    ['right', styles['Textarea--align-right']],
-    ['center', styles['Textarea--align-center']],
+    ['right', styles.alignRight],
+    ['center', styles.alignCenter],
   ])(`should have className when align %s`, (align, className) => {
     const ref = {
       current: null,

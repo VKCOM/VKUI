@@ -1,4 +1,4 @@
-.HorizontalScroll {
+.host {
   position: relative;
 
   /**
@@ -9,7 +9,7 @@
   isolation: isolate;
 }
 
-.HorizontalScroll__in {
+.in {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 
@@ -20,38 +20,38 @@
   scrollbar-width: none;
 }
 
-.HorizontalScroll__in::-webkit-scrollbar {
+.in::-webkit-scrollbar {
   display: none;
 }
 
-.HorizontalScroll__in-wrapper {
+.inWrapper {
   display: flex;
   align-items: stretch;
   transition: transform 0.2s;
 }
 
-.HorizontalScroll__arrow {
+.arrow {
   z-index: var(--vkui_internal--z_index_horizontal_scroll_arrow);
   position: absolute;
   inset-block-start: 0;
   opacity: 0;
 }
 
-.HorizontalScroll:hover .HorizontalScroll__arrow {
+.host:hover .arrow {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.HorizontalScroll--withConstArrows .HorizontalScroll__arrow,
-.HorizontalScroll--withConstArrows:hover .HorizontalScroll__arrow,
-.HorizontalScroll .HorizontalScroll__arrow:hover {
+.withConstArrows .arrow,
+.withConstArrows:hover .arrow,
+.host .arrow:hover {
   opacity: 1;
 }
 
-.HorizontalScroll__arrowLeft:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
+.arrowLeft:hover ~ .in .inWrapper {
   transform: translateX(8px);
 }
 
-.HorizontalScroll__arrowRight:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
+.arrowRight:hover ~ .in .inWrapper {
   transform: translateX(-8px);
 }
 
@@ -60,13 +60,13 @@
  * Tabs
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs) .HorizontalScroll {
+:global(.vkuiInternalTabs) .host {
   min-inline-size: 100%;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs--withGaps) .HorizontalScroll__in-wrapper::after,
-:global(.vkuiInternalTabs--withGaps) .HorizontalScroll__in-wrapper::before {
+:global(.vkuiInternalTabs--withGaps) .inWrapper::after,
+:global(.vkuiInternalTabs--withGaps) .inWrapper::before {
   display: block;
   inline-size: var(--vkui--size_base_padding_horizontal--regular);
   flex-shrink: 0;

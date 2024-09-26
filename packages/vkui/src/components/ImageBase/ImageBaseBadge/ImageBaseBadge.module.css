@@ -1,4 +1,4 @@
-.ImageBaseBadge {
+.host {
   position: absolute;
   z-index: var(--vkui_internal--z_index_image_base_badge);
   inset-inline-end: 0;
@@ -10,12 +10,12 @@
   padding: 2px;
 }
 
-.ImageBaseBadge--background-stroke {
+.backgroundStroke {
   /* цвет фона для скрывания элементов */
   background-color: var(--vkui_internal--background, var(--vkui--color_background_content));
 }
 
-.ImageBaseBadge--background-shadow::before {
+.backgroundShadow::before {
   content: '';
   position: absolute;
   inset: 2px;

@@ -6,12 +6,12 @@ import styles from './ContentBadge.module.css';
 
 const iconsClassNames = {
   m: null,
-  l: styles['ContentBadge__icon-slot--size-l'],
+  l: styles.iconSlotSizeL,
 };
 
 const singleIconClassNames = {
-  m: styles['ContentBadge__singleIcon-slot--size-m'],
-  l: styles['ContentBadge__singleIcon-slot--size-l'],
+  m: styles.singleIconSlotSizeM,
+  l: styles.singleIconSlotSizeL,
 };
 
 export type ContentBadgeSlotIconProps = HTMLAttributesWithRootRef<HTMLDivElement>;

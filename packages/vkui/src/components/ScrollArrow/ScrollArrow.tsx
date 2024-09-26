@@ -7,15 +7,15 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './ScrollArrow.module.css';
 
 const stylesSize = {
-  m: styles['ScrollArrow--size-m'],
-  l: styles['ScrollArrow--size-l'],
+  m: styles.sizeM,
+  l: styles.sizeL,
 };
 
 const stylesDirection = {
-  up: styles['ScrollArrow--direction-up'],
-  right: styles['ScrollArrow--direction-right'],
-  down: styles['ScrollArrow--direction-down'],
-  left: styles['ScrollArrow--direction-left'],
+  up: styles.directionUp,
+  right: styles.directionRight,
+  down: styles.directionDown,
+  left: styles.directionLeft,
 };
 
 const labelDirection = {
@@ -31,7 +31,7 @@ const ArrowIcon = ({ size }: Pick<ScrollArrowProps, 'size'>) => {
     Icon = Icon16Chevron;
   }
 
-  return <Icon className={styles['ScrollArrow__defaultIcon']} />;
+  return <Icon className={styles.defaultIcon} />;
 };
 
 export interface ScrollArrowProps
@@ -72,15 +72,11 @@ export const ScrollArrow = ({
     <RootComponent
       Component="button"
       type="button"
-      baseClassName={classNames(
-        styles['ScrollArrow'],
-        stylesSize[size],
-        stylesDirection[direction],
-      )}
+      baseClassName={classNames(styles.host, stylesSize[size], stylesDirection[direction])}
       {...restProps}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}
-      <span className={styles['ScrollArrow__icon']} style={offsetY ? { top: offsetY } : undefined}>
+      <span className={styles.icon} style={offsetY ? { top: offsetY } : undefined}>
         {children}
       </span>
     </RootComponent>

@@ -546,13 +546,12 @@ class ModalRootTouchComponent extends React.Component<
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
             className={classNames(
-              styles['ModalRoot'],
+              styles.host,
               this.props.configProvider?.hasCustomPanelHeaderAfter &&
-                styles['ModalRoot--hasCustomPanelHeaderAfterSlot'],
-              touchDown &&
-                classNames(styles['ModalRoot--touched'], 'vkuiInternalModalRoot--touched'),
+                styles.hasCustomPanelHeaderAfterSlot,
+              touchDown && classNames(styles.touched, 'vkuiInternalModalRoot--touched'),
               !!(enteringModal || exitingModal) &&
-                classNames(styles['ModalRoot--switching'], 'vkuiInternalModalRoot--switching'),
+                classNames(styles.switching, 'vkuiInternalModalRoot--switching'),
             )}
             onMove={this.onTouchMove}
             onEnd={this.onTouchEnd}
@@ -560,11 +559,11 @@ class ModalRootTouchComponent extends React.Component<
           >
             <div
               data-testid={modalOverlayTestId}
-              className={styles['ModalRoot__mask']}
+              className={styles.mask}
               onClick={this.props.onExit}
               ref={this.maskElementRef}
             />
-            <div className={styles['ModalRoot__viewport']} ref={this.viewportRef}>
+            <div className={styles.viewport} ref={this.viewportRef}>
               {this.getModals().map((Modal) => {
                 const modalId = getNavId(Modal.props, warn);
                 const _modalState = this.props.getModalState(modalId);
@@ -582,7 +581,7 @@ class ModalRootTouchComponent extends React.Component<
                     onClose={this.props.onExit}
                     timeout={this.timeout}
                     className={classNames(
-                      styles['ModalRoot__modal'],
+                      styles.modal,
 
                       dragging && 'vkuiInternalModalRoot__modal--dragging',
 

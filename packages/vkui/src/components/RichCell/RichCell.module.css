@@ -1,4 +1,4 @@
-.RichCell {
+.host {
   display: flex;
   padding-block: var(--vkui--spacing_size_m);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
@@ -9,21 +9,21 @@
   font-family: var(--vkui--font_family_base);
 }
 
-.RichCell--sizeY-compact {
+.sizeYCompact {
   min-block-size: 60px;
 }
 
 @media (--sizeY-compact) {
-  .RichCell--sizeY-none {
+  .sizeYNone {
     min-block-size: 60px;
   }
 }
 
-.RichCell__before {
+.before {
   margin-inline-end: var(--vkui--spacing_size_xl);
 }
 
-.RichCell__in {
+.in {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,17 +32,17 @@
   min-inline-size: 0;
 }
 
-.RichCell__content {
+.content {
   display: flex;
   word-break: break-word;
 }
 
-.RichCell__content-before {
+.contentBefore {
   flex-grow: 1;
   min-inline-size: 0;
 }
 
-.RichCell__content-after {
+.contentAfter {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -51,90 +51,90 @@
   box-sizing: border-box;
 }
 
-.RichCell__content-after--align-start {
+.contentAfterAlignStart {
   align-self: flex-start;
 }
 
-.RichCell__content-after--align-center {
+.contentAfterAlignCenter {
   align-self: center;
 }
 
-.RichCell__content-after--align-end {
+.contentAfterAlignEnd {
   align-self: flex-end;
 }
 
-.RichCell__after-children {
+.afterChildren {
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-.RichCell__after-caption {
+.afterCaption {
   margin-block-start: var(--vkui--spacing_size_2xs);
   font-size: var(--vkui--font_footnote--font_size--regular);
   line-height: var(--vkui--font_footnote--line_height--regular);
   color: var(--vkui--color_text_secondary);
 }
 
-.RichCell--sizeY-compact .RichCell__after-caption {
+.sizeYCompact .afterCaption {
   font-size: var(--vkui--font_caption1--font_size--regular);
   line-height: var(--vkui--font_caption1--line_height--regular);
 }
 
 @media (--sizeY-compact) {
-  .RichCell--sizeY-none .RichCell__after-caption {
+  .sizeYNone .afterCaption {
     font-size: var(--vkui--font_caption1--font_size--regular);
     line-height: var(--vkui--font_caption1--line_height--regular);
   }
 }
 
-.RichCell__subhead {
+.subhead {
   color: var(--vkui--color_text_secondary);
 }
 
-.RichCell__caption {
+.caption {
   margin-block-start: 1px;
   color: var(--vkui--color_text_secondary);
 }
 
-.RichCell__children {
+.children {
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-.RichCell--text-ellipsis .RichCell__subhead,
-.RichCell--text-ellipsis .RichCell__children,
-.RichCell--text-ellipsis .RichCell__text,
-.RichCell--text-ellipsis .RichCell__caption {
+.textEllipsis .subhead,
+.textEllipsis .children,
+.textEllipsis .text,
+.textEllipsis .caption {
   white-space: nowrap;
   text-overflow: ellipsis;
   max-inline-size: 100%;
   overflow: hidden;
 }
 
-.RichCell__bottom {
+.bottom {
   margin-block-start: var(--vkui--spacing_size_s);
 }
 
-.RichCell__actions {
+.actions {
   margin-block-start: var(--vkui--spacing_size_m);
 }
 
-.RichCell__children,
-.RichCell__text,
-.RichCell__after-children {
+.children,
+.text,
+.afterChildren {
   font-size: var(--vkui--font_paragraph--font_size--regular);
   line-height: var(--vkui--font_paragraph--line_height--regular);
 }
 
-.RichCell--sizeY-compact .RichCell__children,
-.RichCell--sizeY-compact .RichCell__text,
-.RichCell--sizeY-compact .RichCell__after-children {
+.sizeYCompact .children,
+.sizeYCompact .text,
+.sizeYCompact .afterChildren {
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
 }
 
 @media (--sizeY-compact) {
-  .RichCell--sizeY-none .RichCell__children,
-  .RichCell--sizeY-none .RichCell__text,
-  .RichCell--sizeY-none .RichCell__after-children {
+  .sizeYNone .children,
+  .sizeYNone .text,
+  .sizeYNone .afterChildren {
     font-size: var(--vkui--font_subhead--font_size--regular);
     line-height: var(--vkui--font_subhead--line_height--regular);
   }
@@ -145,12 +145,12 @@
  * FormItem
  **/
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem) .RichCell {
+:global(.vkuiInternalFormItem) .host {
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
 @media (--sizeY-compact) {
-  .RichCell--sizeY-none {
+  .sizeYNone {
     min-block-size: 60px;
   }
 }

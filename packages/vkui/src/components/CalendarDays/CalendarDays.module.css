@@ -1,25 +1,25 @@
-.CalendarDays {
+.host {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   flex-grow: 1;
 }
 
-.CalendarDays__row {
+.row {
   display: flex;
   justify-content: center;
   flex-grow: 1;
 }
 
-.CalendarDays__row:not(:last-child) {
+.row:not(:last-child) {
   margin-block-end: 4px;
 }
 
-.CalendarDays__row--size-s:not(:last-child) {
+.rowSizeS:not(:last-child) {
   margin-block-end: 0;
 }
 
-.CalendarDays__weekday {
+.weekday {
   text-transform: capitalize;
   color: var(--vkui--color_text_subhead);
   block-size: 32px;

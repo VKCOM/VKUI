@@ -15,20 +15,20 @@ import styles from './Flex.module.css';
 export type { FlexItemProps };
 
 const justifyClassNames = {
-  'start': styles['Flex--justify-start'],
-  'end': styles['Flex--justify-end'],
-  'center': styles['Flex--justify-center'],
-  'space-around': styles['Flex--justify-space-around'],
-  'space-between': styles['Flex--justify-space-between'],
-  'space-evenly': styles['Flex--justify-space-evenly'],
+  'start': styles.justifyStart,
+  'end': styles.justifyEnd,
+  'center': styles.justifyCenter,
+  'space-around': styles.justifySpaceAround,
+  'space-between': styles.justifySpaceBetween,
+  'space-evenly': styles.justifySpaceEvenly,
 };
 
 const alignClassNames = {
-  start: styles['Flex--align-start'],
-  end: styles['Flex--align-end'],
-  center: styles['Flex--align-center'],
-  stretch: styles['Flex--align-stretch'],
-  baseline: styles['Flex--align-baseline'],
+  start: styles.alignStart,
+  end: styles.alignEnd,
+  center: styles.alignCenter,
+  stretch: styles.alignStretch,
+  baseline: styles.alignBaseline,
 };
 
 type FlexContentProps =
@@ -93,14 +93,14 @@ export const Flex: React.FC<FlexProps> & {
     <RootComponent
       {...props}
       baseClassName={classNames(
-        styles.Flex,
-        !noWrap && styles['Flex--wrap'],
-        reverse && styles['Flex--reverse'],
-        direction !== 'row' && styles['Flex--direction-column'],
-        margin !== 'none' && styles['Flex--margin-auto'],
+        styles.host,
+        !noWrap && styles.wrap,
+        reverse && styles.reverse,
+        direction !== 'row' && styles.directionColumn,
+        margin !== 'none' && styles.marginAuto,
         align && alignClassNames[align],
         justify && justifyClassNames[justify],
-        withGaps && styles['Flex--withGaps'],
+        withGaps && styles.withGaps,
         withGaps && getGapsPresets(rowGap, columnGap),
       )}
       style={withGaps ? { ...getGapsByUser(rowGap, columnGap), ...styleProp } : styleProp}

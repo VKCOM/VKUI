@@ -105,19 +105,9 @@ export interface RippleProps {
 
 export const Ripple = ({ needRipple = true, clicks }: RippleProps): React.ReactNode => {
   return (
-    <span
-      aria-hidden
-      className={classNames(
-        styles['Tappable__stateLayer'],
-        needRipple && styles['Tappable__ripple'],
-      )}
-    >
+    <span aria-hidden className={classNames(styles.stateLayer, needRipple && styles.ripple)}>
       {clicks.map((wave) => (
-        <span
-          key={wave.id}
-          className={styles['Tappable__wave']}
-          style={{ top: wave.y, left: wave.x }}
-        />
+        <span key={wave.id} className={styles.wave} style={{ top: wave.y, left: wave.x }} />
       ))}
     </span>
   );

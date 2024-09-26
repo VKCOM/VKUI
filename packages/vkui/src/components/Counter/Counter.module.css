@@ -1,4 +1,4 @@
-.Counter {
+.host {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,39 +7,39 @@
   box-sizing: border-box;
 }
 
-.Counter--mode-primary {
+.modePrimary {
   background: var(--vkui--color_background_accent);
   color: var(--vkui--color_text_contrast);
 }
 
-.Counter--mode-secondary {
+.modeSecondary {
   background: var(--vkui--color_icon_secondary);
   color: var(--vkui--color_text_contrast_themed);
 }
 
-.Counter--mode-prominent {
+.modeProminent {
   background: var(--vkui--color_accent_red);
   color: var(--vkui--color_text_contrast);
 }
 
-.Counter--mode-contrast {
+.modeContrast {
   background: var(--vkui--color_background_content);
   color: var(--vkui--color_text_accent_themed);
 }
 
-.Counter--size-m {
+.sizeM {
   block-size: 24px;
   min-inline-size: 24px;
   border-radius: 12px;
 }
 
-.Counter--size-s {
+.sizeS {
   block-size: 18px;
   min-inline-size: 18px;
   border-radius: 9px;
 }
 
-.Counter--mode-inherit {
+.modeInherit {
   background-color: var(
     --vkui_internal--counter_inherit_background,
     var(--vkui--color_icon_secondary)
@@ -52,7 +52,7 @@
  * TabbarItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabbarItem__label) .Counter {
+:global(.vkuiInternalTabbarItem__label) .host {
   position: absolute;
   inset-block-start: -2px;
   inset-inline-end: -9px;

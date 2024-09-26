@@ -13,11 +13,7 @@ export const AvatarBadge: React.FC<AvatarBadgeProps> = ({
   return (
     <ImageBase.Badge
       {...restProps}
-      className={classNames(
-        styles['AvatarBadge'],
-        size < 96 && styles['AvatarBadge--shifted'],
-        className,
-      )}
+      className={classNames(styles.host, size < 96 && styles.shifted, className)}
     />
   );
 };

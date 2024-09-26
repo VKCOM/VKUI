@@ -1,4 +1,4 @@
-.CustomSelectDropdown {
+.host {
   overflow: hidden;
   background-color: var(--vkui--color_background_contrast_themed);
   box-sizing: border-box;
@@ -7,17 +7,17 @@
   border-radius: 8px;
 }
 
-.CustomSelectDropdown--wide {
+.wide {
   inline-size: 100%;
 }
 
-.CustomSelectDropdown--bottom {
+.bottom {
   border-block-start: 0;
   border-start-start-radius: 0;
   border-start-end-radius: 0;
 }
 
-.CustomSelectDropdown--top {
+.top {
   inset-block-end: 100%;
   border-block-end: 0;
   border-end-start-radius: 0;
@@ -25,12 +25,12 @@
   box-shadow: var(--vkui--elevation1_invert_y);
 }
 
-.CustomSelectDropdown__fetching {
+.fetching {
   padding-block: 12px;
   padding-inline: 0;
 }
 
-.CustomSelectDropdown__in--withMaxHeight {
+.inWithMaxHeight {
   max-block-size: 160px;
 }
 
@@ -39,6 +39,6 @@
  * CalendarHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCalendarHeader__pickers) .CustomSelectDropdown__in--withMaxHeight {
+:global(.vkuiInternalCalendarHeader__pickers) .inWithMaxHeight {
   max-block-size: 184px;
 }

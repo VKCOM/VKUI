@@ -186,7 +186,7 @@ describe('Cell', () => {
       );
       const cell = screen.getByTestId('cell');
       expect(cell.tagName).toBe('LABEL');
-      expect(cell.parentElement).toHaveClass(styles['Cell--selectable']);
+      expect(cell.parentElement).toHaveClass(styles.selectable);
 
       const checkbox = getByRole(cell, 'checkbox');
       expect(checkbox).toBeInTheDocument();
@@ -216,7 +216,7 @@ describe('Cell', () => {
     );
 
     const cell = screen.getByTestId('list-xyz');
-    const dragger = cell.querySelector<HTMLElement>(`.${styles['Cell__dragger']}`)!;
+    const dragger = cell.querySelector<HTMLElement>(`.${styles.dragger}`)!;
     expect(dragger).toBeInTheDocument();
 
     fireEvent.mouseDown(dragger, {
@@ -228,7 +228,7 @@ describe('Cell', () => {
       clientY: 100,
     });
 
-    expect(cell.parentElement).toHaveClass(styles['Cell--dragging']);
+    expect(cell.parentElement).toHaveClass(styles.dragging);
   });
 
   it('check that dragger after the content in IOS', () => {
@@ -240,7 +240,7 @@ describe('Cell', () => {
       </ConfigProvider>,
     );
     const cell = screen.getByTestId('list-xyz');
-    const dragger = cell.querySelector<HTMLElement>(`.${styles['Cell__dragger']}`)!;
+    const dragger = cell.querySelector<HTMLElement>(`.${styles.dragger}`)!;
     const content = screen.getByTestId('content');
 
     // Проверяем, что dragger находится в DOM дереве после контента, значит в after

@@ -9,37 +9,37 @@ import '../Spinner/Spinner.module.css';
 import styles from './Button.module.css';
 
 const stylesSize = {
-  s: styles['Button--size-s'],
-  m: styles['Button--size-m'],
-  l: styles['Button--size-l'],
+  s: styles.sizeS,
+  m: styles.sizeM,
+  l: styles.sizeL,
 };
 
 const stylesMode = {
-  primary: styles['Button--mode-primary'],
-  secondary: styles['Button--mode-secondary'],
-  tertiary: styles['Button--mode-tertiary'],
-  outline: styles['Button--mode-outline'],
-  link: styles['Button--mode-link'],
+  primary: styles.modePrimary,
+  secondary: styles.modeSecondary,
+  tertiary: styles.modeTertiary,
+  outline: styles.modeOutline,
+  link: styles.modeLink,
 };
 
 const stylesAppearance = {
-  'accent': styles['Button--appearance-accent'],
-  'positive': styles['Button--appearance-positive'],
-  'negative': styles['Button--appearance-negative'],
-  'neutral': styles['Button--appearance-neutral'],
-  'overlay': styles['Button--appearance-overlay'],
-  'accent-invariable': styles['Button--appearance-accent-invariable'],
+  'accent': styles.appearanceAccent,
+  'positive': styles.appearancePositive,
+  'negative': styles.appearanceNegative,
+  'neutral': styles.appearanceNeutral,
+  'overlay': styles.appearanceOverlay,
+  'accent-invariable': styles.appearanceAccentInvariable,
 };
 
 const stylesAlign = {
-  left: styles['Button--align-left'],
-  center: styles['Button--align-center'],
-  right: styles['Button--align-right'],
+  left: styles.alignLeft,
+  center: styles.alignCenter,
+  right: styles.alignRight,
 };
 
 const sizeYClassNames = {
-  none: styles['Button--sizeY-none'],
-  regular: styles['Button--sizeY-regular'],
+  none: styles.sizeYNone,
+  regular: styles.sizeYRegular,
 };
 
 export interface VKUIButtonProps extends HasAlign {
@@ -83,40 +83,36 @@ export const Button = ({
 
   return (
     <Tappable
-      hoverMode={styles['Button--hover']}
-      activeMode={styles['Button--active']}
+      hoverMode={styles.hover}
+      activeMode={styles.active}
       Component={restProps.href ? 'a' : 'button'}
       focusVisibleMode="outside"
       {...restProps}
       onClick={loading ? undefined : onClick}
       className={classNames(
         className,
-        styles.Button,
+        styles.host,
         stylesSize[size],
         stylesMode[mode],
         stylesAppearance[appearance],
         stylesAlign[align],
         sizeY !== 'compact' && sizeYClassNames[sizeY],
-        platform === 'ios' && styles['Button--ios'],
-        stretched && styles['Button--stretched'],
-        hasIcons && styles['Button--with-icon'],
-        hasIconOnly && !stretched && styles['Button--singleIcon'],
-        loading && styles['Button--loading'],
-        rounded && styles['Button--rounded'],
+        platform === 'ios' && styles.ios,
+        stretched && styles.stretched,
+        hasIcons && styles.withIcon,
+        hasIconOnly && !stretched && styles.singleIcon,
+        loading && styles.loading,
+        rounded && styles.rounded,
       )}
       getRootRef={getRootRef}
     >
       {loading && (
-        <Spinner
-          size="s"
-          className={styles.Button__spinner}
-          disableAnimation={disableSpinnerAnimation}
-        />
+        <Spinner size="s" className={styles.spinner} disableAnimation={disableSpinnerAnimation} />
       )}
-      <span className={styles.Button__in}>
+      <span className={styles.in}>
         {hasReactNode(before) && (
           <span
-            className={styles.Button__before}
+            className={styles.before}
             role="presentation"
             data-testid={process.env.NODE_ENV === 'test' ? 'before' : undefined}
           >
@@ -125,7 +121,7 @@ export const Button = ({
         )}
         {hasReactNode(children) && (
           <span
-            className={styles.Button__content}
+            className={styles.content}
             data-testid={process.env.NODE_ENV === 'test' ? 'children' : undefined}
           >
             {children}
@@ -133,7 +129,7 @@ export const Button = ({
         )}
         {hasReactNode(after) && (
           <span
-            className={styles.Button__after}
+            className={styles.after}
             role="presentation"
             data-testid={process.env.NODE_ENV === 'test' ? 'after' : undefined}
           >

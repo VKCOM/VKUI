@@ -62,19 +62,19 @@ describe(ImageBase, () => {
 
   it('should have style objectFit ', () => {
     const { rerender } = render(<ImageBaseTest src="#" objectFit="contain" />);
-    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--objectFit-contain']);
+    expect(getImageBaseImgEl()).toHaveClass(styles.imgObjectFitContain);
 
     rerender(<ImageBaseTest src="#" objectFit="cover" />);
-    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--objectFit-cover']);
+    expect(getImageBaseImgEl()).toHaveClass(styles.imgObjectFitCover);
 
     rerender(<ImageBaseTest src="#" objectFit="none" />);
-    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--objectFit-none']);
+    expect(getImageBaseImgEl()).toHaveClass(styles.imgObjectFitNone);
 
     rerender(<ImageBaseTest src="#" objectFit="scale-down" />);
-    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--objectFit-scaleDown']);
+    expect(getImageBaseImgEl()).toHaveClass(styles.imgObjectFitScaleDown);
 
     rerender(<ImageBaseTest src="#" objectFit="fill" />);
-    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img']);
+    expect(getImageBaseImgEl()).toHaveClass(styles.img);
   });
 
   it('should show fallback icon if `src` is not passed', () => {
@@ -189,7 +189,7 @@ describe(ImageBase, () => {
   it('should have className with keepRatio', () => {
     render(<ImageBaseTest src="#" keepAspectRatio={true} />);
 
-    expect(getImageBaseImgEl()).toHaveClass(styles['ImageBase__img--keepRatio']);
+    expect(getImageBaseImgEl()).toHaveClass(styles.imgKeepRatio);
   });
 
   it('check set widthSize and heightSize in string format', () => {
@@ -213,7 +213,7 @@ describe(ImageBase, () => {
   it('should have specific className with withTransparentBackground prop', () => {
     render(<ImageBaseTest src="#" withTransparentBackground={true} />);
 
-    expect(getImageBaseRootEl()).toHaveClass(styles['ImageBase--transparent-background']);
+    expect(getImageBaseRootEl()).toHaveClass(styles.transparentBackground);
   });
 
   it('check dev error when use incorrect size of icon', () => {

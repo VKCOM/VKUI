@@ -7,10 +7,10 @@ import inputLikeStyles from '../InputLike/InputLike.module.css';
 const date = new Date(2024, 6, 31, 11, 20);
 
 const getInputsLike = (container: HTMLElement) => {
-  const dateInput = container.getElementsByClassName(styles['DateInput__input'])[0];
+  const dateInput = container.getElementsByClassName(styles.input)[0];
   return Array.prototype.filter.call(
     dateInput.children,
-    (child) => !child.classList.contains(inputLikeStyles['InputLike__divider']),
+    (child) => !child.classList.contains(inputLikeStyles.divider),
   );
 };
 

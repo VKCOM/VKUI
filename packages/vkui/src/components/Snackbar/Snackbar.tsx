@@ -23,20 +23,20 @@ import {
 import styles from './Snackbar.module.css';
 
 const placementClassNames = {
-  'top-start': styles['Snackbar--placement-top-start'],
-  'top': styles['Snackbar--placement-top'],
-  'top-end': styles['Snackbar--placement-top-end'],
-  'bottom-start': styles['Snackbar--placement-bottom-start'],
-  'bottom': styles['Snackbar--placement-bottom'],
-  'bottom-end': styles['Snackbar--placement-bottom-end'],
+  'top-start': styles.placementTopStart,
+  'top': styles.placementTop,
+  'top-end': styles.placementTopEnd,
+  'bottom-start': styles.placementBottomStart,
+  'bottom': styles.placementBottom,
+  'bottom-end': styles.placementBottomEnd,
 };
 
 const animationStateClassNames = {
-  enter: styles['Snackbar--state-enter'],
-  entering: styles['Snackbar--state-entering'],
-  entered: styles['Snackbar--state-entered'],
-  exit: styles['Snackbar--state-exit'],
-  exiting: styles['Snackbar--state-exiting'],
+  enter: styles.stateEnter,
+  entering: styles.stateEntering,
+  entered: styles.stateEntered,
+  exit: styles.stateExit,
+  exiting: styles.stateExiting,
   exited: undefined,
 };
 
@@ -251,9 +251,9 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       {...restProps}
       role="presentation"
       baseClassName={classNames(
-        styles['Snackbar'],
-        platform === 'ios' && styles['Snackbar--ios'],
-        touched && styles['Snackbar--touched'],
+        styles.host,
+        platform === 'ios' && styles.ios,
+        touched && styles.touched,
         placementClassNames[placement],
         animationStateClassNames[animationState],
       )}
@@ -262,7 +262,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
     >
       <div
         role="alert"
-        className={styles['Snackbar__in']}
+        className={styles.in}
         ref={inRef}
         // mobile
         onTouchStart={handleTouchStart}

@@ -13,5 +13,5 @@ export type MarkProps = HTMLAttributesWithRootRef<HTMLDivElement>;
  * @see https://vkcom.github.io/VKUI/#/Mark
  */
 export const Mark = (props: MarkProps): React.ReactNode => (
-  <RootComponent baseClassName={styles['Mark']} Component="mark" {...props} />
+  <RootComponent baseClassName={styles.host} Component="mark" {...props} />
 );

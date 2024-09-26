@@ -17,5 +17,5 @@ module.exports = {
     './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
   ],
 
-  generateScopedName: 'vkui[local]',
+  generateScopedName: 'vkui[folder]__[local]',
 };

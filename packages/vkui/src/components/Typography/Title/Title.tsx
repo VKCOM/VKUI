@@ -4,14 +4,14 @@ import { Typography, type TypographyProps } from '../Typography';
 import styles from './Title.module.css';
 
 const stylesLevel = {
-  '1': styles['Title--level-1'],
-  '2': styles['Title--level-2'],
-  '3': styles['Title--level-3'],
+  '1': styles.level1,
+  '2': styles.level2,
+  '3': styles.level3,
 };
 
 const sizeYClassNames = {
-  none: styles['Title--sizeY-none'],
-  compact: styles['Title--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface TitleProps extends TypographyProps {

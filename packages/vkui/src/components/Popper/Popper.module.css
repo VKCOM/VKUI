@@ -11,6 +11,6 @@
  *
  * Второй и последующие вызовы исправляют ситуацию.
  */
-.Popper {
+.host {
   z-index: var(--vkui--z_index_popout);
 }

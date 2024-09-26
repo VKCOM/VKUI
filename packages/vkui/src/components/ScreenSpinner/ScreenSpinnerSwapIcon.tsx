@@ -33,7 +33,7 @@ const ScreenSpinnerCancelIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
   };
 
   return (
-    <RootComponent baseClassName={styles['ScreenSpinner__icon']} {...clickableProps} {...restProps}>
+    <RootComponent baseClassName={styles.icon} {...clickableProps} {...restProps}>
       <Icon24Cancel />
     </RootComponent>
   );
@@ -66,7 +66,7 @@ export const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
   };
 
   return (
-    <RootComponent baseClassName={styles['ScreenSpinner__icon']} {...restProps}>
+    <RootComponent baseClassName={styles.icon} {...restProps}>
       {getContent()}
     </RootComponent>
   );

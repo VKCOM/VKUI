@@ -1,4 +1,4 @@
-.Skeleton {
+.host {
   --vkui_internal--skeleton_color_from: var(--vkui--color_skeleton_from);
   --vkui_internal--skeleton_color_to: var(--vkui--color_skeleton_to);
   --vkui_internal--skeleton_animation_duration: 1.5s;
@@ -15,17 +15,17 @@
 }
 
 /* Если скелетон находится внутри другого скелетона он меняет цвет */
-.Skeleton .Skeleton {
+.host .host {
   --vkui_internal--skeleton_color_from: var(--vkui--color_background_content);
   --vkui_internal--skeleton_color_to: var(--vkui--color_background_tertiary);
 }
 
-.Skeleton .Skeleton .Skeleton {
+.host .host .host {
   --vkui_internal--skeleton_color_from: var(--vkui--color_skeleton_from);
   --vkui_internal--skeleton_color_to: var(--vkui--color_skeleton_to);
 }
 
-.Skeleton::before {
+.host::before {
   position: absolute;
   inset-inline-start: var(--vkui_internal--skeleton_gradient_left);
   inset-block-start: 0;
@@ -52,7 +52,7 @@
   }
 }
 
-.Skeleton--disableAnimation::before {
+.disableAnimation::before {
   /**
    * Safari тратит время не пересчет анимации даже если элемент скрыт
    * Для повышения производительности анимацию необходимо выключить
@@ -62,7 +62,7 @@
 }
 
 @media (--reduce-motion) {
-  .Skeleton::before {
+  .host::before {
     animation-name: none;
     background-image: none;
   }

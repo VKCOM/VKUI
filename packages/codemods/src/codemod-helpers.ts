@@ -1,3 +1,4 @@
+import { JSXSpreadAttribute } from 'jscodeshift';
 import type {
   API,
   Collection,
@@ -90,6 +91,13 @@ export function swapBooleanValue(
       }
     });
 }
+
+export const removeAttribute = (
+  attributes: Array<JSXAttribute | JSXSpreadAttribute> | undefined,
+  attribute: JSXAttribute,
+) => {
+  attributes?.splice(attributes?.indexOf(attribute), 1);
+};
 
 interface AttributeManipulatorAPI {
   keyTo?: string | ((k?: string) => string);

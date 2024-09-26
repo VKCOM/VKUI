@@ -1,4 +1,4 @@
-.View {
+.host {
   --vkui_internal--view_animation_translateY_initial: 80px;
 
   position: relative;
@@ -8,17 +8,17 @@
 }
 
 @media (--reduce-motion) {
-  .View {
+  .host {
     --vkui_internal--view_animation_translateY_initial: 0;
   }
 }
 
-.View--animated,
-.View--swiping-back {
+.animated,
+.swipingBack {
   overflow: hidden;
 }
 
-.View__panel-overlay {
+.panelOverlay {
   display: none;
   position: absolute;
   inline-size: 100%;
@@ -30,49 +30,49 @@
   z-index: var(--vkui_internal--z_index_panel_header_fade);
 }
 
-.View__panel--prev .View__panel-overlay {
+.panelPrev .panelOverlay {
   display: block;
   animation: animation-ios-overlay-fade-in 0.6s var(--vkui--animation_easing_platform);
 }
 
-.View__panel--next .View__panel-overlay {
+.panelNext .panelOverlay {
   display: block;
   animation: animation-ios-overlay-fade-out 0.6s var(--vkui--animation_easing_platform) forwards;
 }
 
-.View__panel--active .View__panel-overlay,
-.View__panel--prev ~ .View__panel--next .View__panel-overlay,
-.View__panel--next ~ .View__panel--prev .View__panel-overlay {
+.panelActive .panelOverlay,
+.panelPrev ~ .panelNext .panelOverlay,
+.panelNext ~ .panelPrev .panelOverlay {
   display: none;
 }
 
-.View__panel--swipe-back-next .View__panel-overlay {
+.panelSwipeBackNext .panelOverlay {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.View__panel--swipe-back-next.View__panel--swipe-back-success .View__panel-overlay,
-.View__panel--swipe-back-next.View__panel--swipe-back-failed .View__panel-overlay {
+.panelSwipeBackNext.panelSwipeBackSuccess .panelOverlay,
+.panelSwipeBackNext.panelSwipeBackFailed .panelOverlay {
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
 }
 
 @media (--reduce-motion) {
-  .View__panel--prev .View__panel-overlay,
-  .View__panel--next .View__panel-overlay {
+  .panelPrev .panelOverlay,
+  .panelNext .panelOverlay {
     display: none;
     animation: none;
   }
 }
 
-.View__panels {
+.panels {
   block-size: 100%;
   inline-size: 100%;
 }
 
-.View__panel-in {
+.panelIn {
   block-size: 100%;
 }
 
-.View__panel {
+.panel {
   position: relative;
   inline-size: 100%;
   block-size: 100%;
@@ -80,15 +80,15 @@
   isolation: isolate;
 }
 
-.View--animated .View__panel,
-.View--animated .View__header,
-.View--swiping-back .View__panel,
-.View--swiping-back .View__header {
+.animated .panel,
+.animated .header,
+.swipingBack .panel,
+.swipingBack .header {
   pointer-events: none;
 }
 
-.View--animated .View__panel,
-.View--swiping-back .View__panel {
+.animated .panel,
+.swipingBack .panel {
   position: fixed;
   inset-block-start: 0;
   inset-inline-start: 0;
@@ -99,23 +99,23 @@
  * Panel swipe back
  */
 
-.View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-success,
-.View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-failed,
-.View--ios .View__panel--swipe-back-next.View__panel--swipe-back-success,
-.View--ios .View__panel--swipe-back-next.View__panel--swipe-back-failed {
+.ios .panelSwipeBackPrev.panelSwipeBackSuccess,
+.ios .panelSwipeBackPrev.panelSwipeBackFailed,
+.ios .panelSwipeBackNext.panelSwipeBackSuccess,
+.ios .panelSwipeBackNext.panelSwipeBackFailed {
   transition: transform 0.3s var(--vkui--animation_easing_platform);
 }
 
-.View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-failed,
-.View--ios .View__panel--swipe-back-next.View__panel--swipe-back-success {
+.ios .panelSwipeBackPrev.panelSwipeBackFailed,
+.ios .panelSwipeBackNext.panelSwipeBackSuccess {
   transform: translate3d(0, 0, 0);
 }
 
-.View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-success {
+.ios .panelSwipeBackPrev.panelSwipeBackSuccess {
   transform: translate3d(100%, 0, 0);
 }
 
-.View--ios .View__panel--swipe-back-next.View__panel--swipe-back-failed {
+.ios .panelSwipeBackNext.panelSwipeBackFailed {
   transform: translate3d(-50%, 0, 0);
 }
 
@@ -123,43 +123,43 @@
  * Panel transition
  */
 
-.View__panel--next ~ .View__panel--prev {
+.panelNext ~ .panelPrev {
   animation: animation-view-prev-back 0.3s var(--vkui--animation_easing_platform) forwards;
 }
 
-.View__panel--prev ~ .View__panel--next {
+.panelPrev ~ .panelNext {
   animation: animation-view-next-forward 0.3s var(--vkui--animation_easing_platform);
 }
 
-.View--ios .View__panel--prev {
+.ios .panelPrev {
   animation: animation-ios-prev-forward 0.6s var(--vkui--animation_easing_platform);
 }
 
-.View--ios .View__panel--next {
+.ios .panelNext {
   animation: animation-ios-next-back 0.6s var(--vkui--animation_easing_platform);
 }
 
-.View--ios .View__panel--prev ~ .View__panel--next {
+.ios .panelPrev ~ .panelNext {
   animation: animation-ios-next-forward 0.6s var(--vkui--animation_easing_platform);
 }
 
-.View--ios .View__panel--next ~ .View__panel--prev {
+.ios .panelNext ~ .panelPrev {
   animation: animation-ios-prev-back 0.6s var(--vkui--animation_easing_platform) forwards;
 }
 
 @media (--reduce-motion) {
-  .View--ios .View__panel--prev,
-  .View--ios .View__panel--next {
+  .ios .panelPrev,
+  .ios .panelNext {
     animation: none;
   }
 
-  .View--ios .View__panel--next ~ .View__panel--prev {
+  .ios .panelNext ~ .panelPrev {
     animation-name: animation-view-prev-back;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
   }
 
-  .View--ios .View__panel--prev ~ .View__panel--next {
+  .ios .panelPrev ~ .panelNext {
     animation-name: animation-view-next-forward;
     animation-duration: 0.3s;
     animation-fill-mode: none;
@@ -167,9 +167,9 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.View--no-motion .View__panel,
-.View--ios.View--no-motion .View__panel,
-.View--ios.View--no-motion .View__panel :global(.vkuiInternalPanel__in) {
+.noMotion .panel,
+.ios.noMotion .panel,
+.ios.noMotion .panel :global(.vkuiInternalPanel__in) {
   animation: none;
 }
 

@@ -25,8 +25,8 @@ export const RootComponent = <T,>({
     className={classNames(
       className,
       baseClassName,
-      styles['RootComponent'],
-      restProps.hidden === true && styles['RootComponent--hidden'],
+      styles.host,
+      restProps.hidden === true && styles.hidden,
     )}
     {...restProps}
   />

@@ -12,11 +12,11 @@ export const getPaginationPageClassNames = (
   opts: UsePaginationPageClassNamesProps & { sizeY?: SizeTypeValues },
 ): string => {
   return classNames(
-    styles['PaginationPage'],
-    opts.sizeY == null && styles['PaginationPage--sizeY-none'],
-    opts.sizeY === 'compact' && styles['PaginationPage--sizeY-compact'],
-    opts.isCurrent && styles['PaginationPage--current'],
-    opts.disabled && styles['PaginationPage--disabled'],
+    styles.host,
+    opts.sizeY == null && styles.sizeYNone,
+    opts.sizeY === 'compact' && styles.sizeYCompact,
+    opts.isCurrent && styles.current,
+    opts.disabled && styles.disabled,
   );
 };
 

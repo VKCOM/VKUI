@@ -1,4 +1,4 @@
-.TabbarItem {
+.host {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,7 +13,7 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabbar) .TabbarItem {
+:global(.vkuiInternalTabbar) .host {
   flex-shrink: 0;
   max-inline-size: 100%;
   min-inline-size: 0;
@@ -21,15 +21,15 @@
   flex-basis: 0;
 }
 
-.TabbarItem--selected {
+.selected {
   color: var(--vkui--color_text_accent_themed);
 }
 
-.TabbarItem__tappable {
+.tappable {
   position: absolute;
 }
 
-.TabbarItem__in {
+.in {
   display: flex;
   padding-block: 4px 2px;
   padding-inline: 2px;
@@ -43,25 +43,25 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabbar--layout-vertical) .TabbarItem__in {
+:global(.vkuiInternalTabbar--layout-vertical) .in {
   flex-direction: column;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabbar--layout-horizontal) .TabbarItem__in {
+:global(.vkuiInternalTabbar--layout-horizontal) .in {
   flex-direction: row;
 }
 
-.TabbarItem__icon {
+.icon {
   color: var(--vkui--color_icon_secondary);
   position: relative;
 }
 
-.TabbarItem--selected .TabbarItem__icon {
+.selected .icon {
   color: var(--vkui--color_icon_accent_themed);
 }
 
-.TabbarItem__text {
+.text {
   white-space: nowrap;
   max-inline-size: 100%;
   overflow: hidden;
@@ -69,7 +69,7 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabbar--layout-vertical) .TabbarItem__text {
+:global(.vkuiInternalTabbar--layout-vertical) .text {
   --vkui--font_footnote--font_size--regular: 10px;
   --vkui--font_footnote--line_height--regular: 12px;
 
@@ -77,7 +77,7 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabbar--layout-horizontal) .TabbarItem__text {
+:global(.vkuiInternalTabbar--layout-horizontal) .text {
   margin-inline-start: 8px;
 }
 
@@ -85,18 +85,18 @@
  * Android
  */
 
-.TabbarItem--android .TabbarItem__tappable {
+.android .tappable {
   inline-size: calc(100% + 16px);
   padding-block-end: calc(100% + 16px);
   border-radius: 50%;
 }
 
-.TabbarItem--android:first-child {
+.android:first-child {
   border-start-start-radius: 0;
   border-end-start-radius: 0;
 }
 
-.TabbarItem--android:last-child {
+.android:last-child {
   border-start-end-radius: 0;
   border-end-end-radius: 0;
 }
@@ -105,17 +105,17 @@
  * iOS
  */
 
-.TabbarItem--ios .TabbarItem__tappable {
+.ios .tappable {
   inline-size: 100%;
   block-size: 100%;
   inset-block-start: 0;
   inset-inline-start: 0;
 }
 
-.TabbarItem--ios .TabbarItem__in {
+.ios .in {
   transition: transform 0.07s var(--vkui--animation_easing_platform);
 }
 
-.TabbarItem--ios .TabbarItem__tappable--active + .TabbarItem__in {
+.ios .tappableActive + .in {
   transform: scale(0.96);
 }

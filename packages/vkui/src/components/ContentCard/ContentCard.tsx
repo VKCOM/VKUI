@@ -83,18 +83,18 @@ export const ContentCard = ({
       getRootRef={getRootRef}
       Component={Component}
       style={style}
-      className={classNames(restProps.disabled && styles['ContentCard--disabled'], className)}
+      className={classNames(restProps.disabled && styles.disabled, className)}
     >
       <Tappable
         {...restProps}
         hasHover={hasHover}
         hasActive={hasActive}
-        className={styles['ContentCard__tappable']}
+        className={styles.tappable}
       >
         {(src || srcSet) && (
           <img
             ref={getRef}
-            className={styles['ContentCard__img']}
+            className={styles.img}
             src={src}
             srcSet={srcSet}
             alt={alt}
@@ -110,34 +110,20 @@ export const ContentCard = ({
             width="100%"
           />
         )}
-        <div className={styles['ContentCard__body']}>
+        <div className={styles.body}>
           {hasReactNode(subtitle) && (
-            <Caption
-              className={classNames(styles['ContentCard__text'], styles['ContentCard__subtitle'])}
-              weight="1"
-              level="3"
-              caps
-            >
+            <Caption className={classNames(styles.text, styles.subtitle)} weight="1" level="3" caps>
               {subtitle}
             </Caption>
           )}
           {hasReactNode(header) && (
-            <Headline
-              className={styles['ContentCard__text']}
-              weight="2"
-              level="1"
-              Component={headerComponent}
-            >
+            <Headline className={styles.text} weight="2" level="1" Component={headerComponent}>
               {header}
             </Headline>
           )}
-          {hasReactNode(text) && <Text className={styles['ContentCard__text']}>{text}</Text>}
+          {hasReactNode(text) && <Text className={styles.text}>{text}</Text>}
           {hasReactNode(caption) && (
-            <Footnote
-              className={classNames(styles['ContentCard__text'], styles['ContentCard__caption'])}
-            >
-              {caption}
-            </Footnote>
+            <Footnote className={classNames(styles.text, styles.caption)}>{caption}</Footnote>
           )}
         </div>
       </Tappable>

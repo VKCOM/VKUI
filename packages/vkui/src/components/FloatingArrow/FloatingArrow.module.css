@@ -1,8 +1,8 @@
-.FloatingArrow {
+.host {
   position: absolute;
 }
 
-.FloatingArrow__in {
+.in {
   content: '';
   display: block;
 
@@ -10,16 +10,16 @@
   transform: translateY(1px);
 }
 
-.FloatingArrow--placement-right {
+.placementRight {
   transform: rotate(90deg) translate(50%, -50%);
   transform-origin: right;
 }
 
-.FloatingArrow--placement-bottom {
+.placementBottom {
   transform: rotate(180deg);
 }
 
-.FloatingArrow--placement-left {
+.placementLeft {
   transform: rotate(-90deg) translate(-50%, -50%);
   transform-origin: left;
 }

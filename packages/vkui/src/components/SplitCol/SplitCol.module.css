@@ -1,4 +1,4 @@
-.SplitCol {
+.host {
   block-size: 100%;
   inline-size: 1px;
   flex-grow: 1;
@@ -6,19 +6,19 @@
   position: relative;
 }
 
-.SplitCol--viewWidth-smallTabletPlus.SplitCol--spaced-auto {
+.viewWidthSmallTabletPlus.spacedAuto {
   margin-block: 0;
   margin-inline: var(--vkui--size_split_col_padding_horizontal--regular);
 }
 
 @media (--viewWidth-smallTabletPlus) {
-  .SplitCol--viewWidth-none.SplitCol--spaced-auto {
+  .viewWidthNone.spacedAuto {
     margin-block: 0;
     margin-inline: var(--vkui--size_split_col_padding_horizontal--regular);
   }
 }
 
-.SplitCol--viewWidth-tabletMinus.SplitCol--stretched-on-mobile {
+.viewWidthTabletMinus.stretchedOnMobile {
   /* stylelint-disable-next-line declaration-no-important */
   inline-size: 100% !important;
   /* stylelint-disable-next-line declaration-no-important */
@@ -26,7 +26,7 @@
 }
 
 @media (--viewWidth-tabletMinus) {
-  .SplitCol--viewWidth-none.SplitCol--stretched-on-mobile {
+  .viewWidthNone.stretchedOnMobile {
     /* stylelint-disable-next-line declaration-no-important */
     inline-size: 100% !important;
     /* stylelint-disable-next-line declaration-no-important */
@@ -34,14 +34,14 @@
   }
 }
 
-.SplitCol--fixed {
+.fixed {
   block-size: 100%;
   inline-size: 1px;
   flex-grow: 1;
   flex-shrink: 1;
 }
 
-.SplitCol__fixedInner {
+.fixedInner {
   block-size: inherit;
   inline-size: inherit;
   min-inline-size: inherit;

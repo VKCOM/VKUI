@@ -118,9 +118,9 @@ export const ModalCardBase = ({
       {...restProps}
       baseClassName={classNames(
         'vkuiInternalModalCardBase',
-        platform === 'ios' && styles['ModalCardBase--ios'],
-        isDesktop && styles['ModalCardBase--desktop'],
-        withSafeZone && styles['ModalCardBase--withSafeZone'],
+        platform === 'ios' && styles.ios,
+        isDesktop && styles.desktop,
+        withSafeZone && styles.withSafeZone,
       )}
       style={{
         ...style,
@@ -129,25 +129,20 @@ export const ModalCardBase = ({
     >
       <div
         className={classNames(
-          styles['ModalCardBase__container'],
-          isSoftwareKeyboardOpened && styles['ModalCardBase__container--softwareKeyboardOpened'],
+          styles.container,
+          isSoftwareKeyboardOpened && styles.containerSoftwareKeyboardOpened,
         )}
       >
-        {hasReactNode(icon) && <div className={styles['ModalCardBase__icon']}>{icon}</div>}
+        {hasReactNode(icon) && <div className={styles.icon}>{icon}</div>}
         {hasReactNode(header) && (
-          <Title
-            level="2"
-            weight="2"
-            className={styles['ModalCardBase__header']}
-            Component={headerComponent}
-          >
+          <Title level="2" weight="2" className={styles.header} Component={headerComponent}>
             {header}
           </Title>
         )}
         {hasHeader && hasSubheader && <Spacing size={8} />}
         {hasSubheader && (
           <AdaptivityContext.Provider value={{ sizeY: 'regular' }}>
-            <Subhead className={styles['ModalCardBase__subheader']} Component={subheaderComponent}>
+            <Subhead className={styles.subheader} Component={subheaderComponent}>
               {subheader}
             </Subhead>
           </AdaptivityContext.Provider>
@@ -155,7 +150,7 @@ export const ModalCardBase = ({
 
         {children}
 
-        {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
+        {hasReactNode(actions) && <div className={styles.actions}>{actions}</div>}
 
         {dismissButtonMode !== 'none' && (
           <ModalCardBaseCloseButton

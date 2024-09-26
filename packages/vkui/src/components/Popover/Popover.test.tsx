@@ -143,17 +143,13 @@ describe(Popover, () => {
 
     const result = render(<Fixture />);
     await waitForFloatingPosition();
-    expect(result.getByTestId('popover')).toHaveClass(styles['Popover__in--withStyling']);
-    expect(result.getByTestId('popover-arrow').firstElementChild).toHaveClass(
-      styles['Popover__arrow'],
-    );
+    expect(result.getByTestId('popover')).toHaveClass(styles.inWithStyling);
+    expect(result.getByTestId('popover-arrow').firstElementChild).toHaveClass(styles.arrow);
 
     result.rerender(<Fixture noStyling />);
     await waitForFloatingPosition();
-    expect(result.getByTestId('popover')).not.toHaveClass(styles['Popover__in--withStyling']);
-    expect(result.getByTestId('popover-arrow').firstElementChild).not.toHaveClass(
-      styles['Popover__arrow'],
-    );
+    expect(result.getByTestId('popover')).not.toHaveClass(styles.inWithStyling);
+    expect(result.getByTestId('popover-arrow').firstElementChild).not.toHaveClass(styles.arrow);
   });
 
   it('should call onClose by content', async () => {
@@ -207,7 +203,7 @@ describe(Popover, () => {
     const result = render(getFixture());
     await waitForFloatingPosition();
 
-    expect(result.getByTestId('popover').parentElement).not.toHaveClass(styles['Popover--hidden']);
+    expect(result.getByTestId('popover').parentElement).not.toHaveClass(styles.hidden);
 
     shown = false;
     result.rerender(getFixture());
@@ -215,6 +211,6 @@ describe(Popover, () => {
     await waitForFloatingPosition();
 
     expect(result.getByTestId('popover')).toBeInTheDocument();
-    expect(result.getByTestId('popover').parentElement).toHaveClass(styles['Popover--hidden']);
+    expect(result.getByTestId('popover').parentElement).toHaveClass(styles.hidden);
   });
 });

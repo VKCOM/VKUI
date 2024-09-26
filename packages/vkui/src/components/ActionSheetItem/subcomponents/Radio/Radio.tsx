@@ -34,7 +34,7 @@ export const Radio = ({
         Component="input"
         getRootRef={getRef}
         type="radio"
-        className={styles['ActionSheetItemRadio__input']}
+        className={styles.input}
         {...restProps}
       />
       {children}

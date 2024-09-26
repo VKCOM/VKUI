@@ -62,23 +62,23 @@ describe(Avatar, () => {
     render(<AvatarTest gradientColor={1} />);
     const elAvatar = getAvatarRootEl();
 
-    expect(elAvatar).toHaveClass(styles['Avatar--gradient-red']);
-    expect(elAvatar).toHaveClass(styles['Avatar--has-gradient']);
+    expect(elAvatar).toHaveClass(styles.gradientRed);
+    expect(elAvatar).toHaveClass(styles.hasGradient);
   });
 
   it('should have gradient className with gradient constant string', () => {
     render(<AvatarTest gradientColor="red" />);
     const elAvatar = getAvatarRootEl();
 
-    expect(elAvatar).toHaveClass(styles['Avatar--gradient-red']);
-    expect(elAvatar).toHaveClass(styles['Avatar--has-gradient']);
+    expect(elAvatar).toHaveClass(styles.gradientRed);
+    expect(elAvatar).toHaveClass(styles.hasGradient);
   });
 
   it('should not have gradient className with custom gradient', () => {
     render(<AvatarTest gradientColor="custom" />);
     const elAvatar = getAvatarRootEl();
 
-    expect(elAvatar).toHaveClass(styles['Avatar--has-gradient']);
+    expect(elAvatar).toHaveClass(styles.hasGradient);
   });
 });
 
@@ -92,7 +92,7 @@ describe(Avatar.Badge, () => {
       </AvatarTest>,
     );
 
-    expect(getAvatarBadgeEl()).toHaveClass(avatarBadgeStyles['AvatarBadge--shifted']);
+    expect(getAvatarBadgeEl()).toHaveClass(avatarBadgeStyles.shifted);
   });
 });
 
@@ -104,7 +104,7 @@ describe(Avatar.BadgeWithPreset, () => {
       </AvatarTest>,
     );
     const badge = getAvatarBadgeEl();
-    expect(badge).toHaveClass(avatarBadgeStyles['AvatarBadge--preset-onlineMobile']);
+    expect(badge).toHaveClass(avatarBadgeStyles.presetOnlineMobile);
 
     checkIconSize(8, 12);
 
@@ -125,7 +125,7 @@ describe(Avatar.BadgeWithPreset, () => {
     );
     const badge = getAvatarBadgeEl();
 
-    expect(badge).toHaveClass(avatarBadgeStyles['AvatarBadge--preset-online']);
+    expect(badge).toHaveClass(avatarBadgeStyles.presetOnline);
 
     checkIconSize(12, 12);
 

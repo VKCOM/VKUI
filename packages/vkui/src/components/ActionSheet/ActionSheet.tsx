@@ -111,21 +111,21 @@ export const ActionSheet = ({
         className={mode === 'menu' ? className : undefined}
         style={mode === 'menu' ? style : undefined}
       >
-        <div className={styles['ActionSheet__content-wrapper']}>
+        <div className={styles.contentWrapper}>
           {(header || text) && (
-            <div className={styles['ActionSheet__header']}>
+            <div className={styles.header}>
               {header && (
-                <Footnote weight="2" className={styles['ActionSheet__title']}>
+                <Footnote weight="2" className={styles.title}>
                   {header}
                 </Footnote>
               )}
-              {text && <Footnote className={styles['ActionSheet__text']}>{text}</Footnote>}
+              {text && <Footnote className={styles.text}>{text}</Footnote>}
             </div>
           )}
           {children}
         </div>
         {platform === 'ios' && mode === 'sheet' && (
-          <div className={styles['ActionSheet__close-item-wrapper--ios']}>
+          <div className={styles.closeItemWrapperIos}>
             {iosCloseItem ?? <ActionSheetDefaultIosCloseItem />}
           </div>
         )}

@@ -75,30 +75,28 @@ export const WriteBar = ({
     <div
       ref={getRootRef}
       className={classNames(
-        styles['WriteBar'],
-        platform === 'ios' && styles['WriteBar--ios'],
-        shadow && styles['WriteBar--shadow'],
+        styles.host,
+        platform === 'ios' && styles.ios,
+        shadow && styles.shadow,
         className,
       )}
       style={style}
     >
-      <div className={styles['WriteBar__form']}>
-        {hasReactNode(before) && <div className={styles['WriteBar__before']}>{before}</div>}
+      <div className={styles.form}>
+        {hasReactNode(before) && <div className={styles.before}>{before}</div>}
 
-        <div className={styles['WriteBar__formIn']}>
+        <div className={styles.formIn}>
           <WriteBarTypography
             {...restProps}
             Component="textarea"
-            className={styles['WriteBar__textarea']}
+            className={styles.textarea}
             onChange={callMultiple(onChange, resize)}
             getRootRef={textareaRef}
           />
-          {hasReactNode(inlineAfter) && (
-            <div className={styles['WriteBar__inlineAfter']}>{inlineAfter}</div>
-          )}
+          {hasReactNode(inlineAfter) && <div className={styles.inlineAfter}>{inlineAfter}</div>}
         </div>
 
-        {hasReactNode(after) && <div className={styles['WriteBar__after']}>{after}</div>}
+        {hasReactNode(after) && <div className={styles.after}>{after}</div>}
       </div>
     </div>
   );

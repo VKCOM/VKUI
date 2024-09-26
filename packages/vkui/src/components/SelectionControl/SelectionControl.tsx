@@ -9,8 +9,8 @@ import { SelectionControlLabel } from './SelectionControlLabel/SelectionControlL
 import styles from './SelectionControl.module.css';
 
 const sizeYClassNames = {
-  none: styles['SelectionControl--sizeY-none'],
-  compact: styles['SelectionControl--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface SelectionControlProps
@@ -31,10 +31,7 @@ export const SelectionControl = (restProps: SelectionControlProps): React.ReactN
   return (
     <Tappable
       Component="label"
-      baseClassName={classNames(
-        styles['SelectionControl'],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-      )}
+      baseClassName={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
       activeEffectDelay={platform === 'ios' ? 100 : DEFAULT_ACTIVE_EFFECT_DELAY}
       {...restProps}
     />

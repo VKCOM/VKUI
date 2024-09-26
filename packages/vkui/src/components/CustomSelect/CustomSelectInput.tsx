@@ -14,8 +14,8 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CustomSelectInput.module.css';
 
 const sizeYClassNames = {
-  none: styles['CustomSelectInput--sizeY-none'],
-  compact: styles['CustomSelectInput--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface CustomSelectInputProps
@@ -69,9 +69,8 @@ export const CustomSelectInput = ({
       Component="input"
       normalize={false}
       className={classNames(
-        styles['CustomSelectInput__el'],
-        (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) &&
-          styles['CustomSelectInput__el--cursor-pointer'],
+        styles.el,
+        (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) && styles.elCursorPointer,
       )}
       getRootRef={getRef}
       placeholder={children ? '' : placeholder}
@@ -84,14 +83,14 @@ export const CustomSelectInput = ({
       Component="div"
       style={style}
       className={classNames(
-        styles['CustomSelectInput'],
-        align === 'right' && styles['CustomSelectInput--align-right'],
-        align === 'center' && styles['CustomSelectInput--align-center'],
-        !children && styles['CustomSelectInput--empty'],
-        multiline && styles['CustomSelectInput--multiline'],
+        styles.host,
+        align === 'right' && styles.alignRight,
+        align === 'center' && styles.alignCenter,
+        !children && styles.empty,
+        multiline && styles.multiline,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        before && styles['CustomSelectInput--hasBefore'],
-        after && styles['CustomSelectInput--hasAfter'],
+        before && styles.hasBefore,
+        after && styles.hasAfter,
         className,
       )}
       getRootRef={handleRootRef}
@@ -101,14 +100,14 @@ export const CustomSelectInput = ({
       mode={getFormFieldModeFromSelectType(selectType)}
       status={status}
     >
-      <div className={styles['CustomSelectInput__input-group']}>
+      <div className={styles.inputGroup}>
         <div
-          className={classNames(styles['CustomSelectInput__container'], className)}
+          className={classNames(styles.container, className)}
           tabIndex={-1}
           aria-hidden
           data-testid={labelTextTestId}
         >
-          <SelectTypography selectType={selectType} className={styles['CustomSelectInput__title']}>
+          <SelectTypography selectType={selectType} className={styles.title}>
             {showLabelOrPlaceholder && title}
           </SelectTypography>
         </div>

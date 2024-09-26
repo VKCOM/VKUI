@@ -21,11 +21,11 @@ describe('CellCheckbox', () => {
             <CellCheckbox type={type} />
           </ConfigProvider>,
         );
-        const iconsOff = container.getElementsByClassName(styles['CellCheckbox__icon--off'])[0];
+        const iconsOff = container.getElementsByClassName(styles.iconOff)[0];
         expect(iconsOff.querySelector('.vkuiIcon--check_circle_off_20')).toBeInTheDocument();
         expect(iconsOff.querySelector('.vkuiIcon--check_circle_off_24')).toBeInTheDocument();
 
-        const iconsOn = container.getElementsByClassName(styles['CellCheckbox__icon--on'])[0];
+        const iconsOn = container.getElementsByClassName(styles.iconOn)[0];
         expect(iconsOn.querySelector('.vkuiIcon--check_circle_on_20')).toBeInTheDocument();
         expect(iconsOn.querySelector('.vkuiIcon--check_circle_on_24')).toBeInTheDocument();
       });
