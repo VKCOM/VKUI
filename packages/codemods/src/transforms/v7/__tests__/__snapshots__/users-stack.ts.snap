@@ -10,7 +10,7 @@ const App = () => {
       {/* direction="row" -> avatarsPosition="start" */}
       <UsersStack
         photos={[]}
-        avatarsPosition="start"
+        avatarsPosition="inline-start"
         size="s"
       >
         Иван и ещё 2 ваших друга подписаны
@@ -18,7 +18,7 @@ const App = () => {
       {/* direction="row-reverse" -> avatarsPosition="end" */}
       <UsersStack
         photos={[]}
-        avatarsPosition="end"
+        avatarsPosition="inline-end"
         size="m"
       >
         Иван и ещё 2 ваших друга подписаны
@@ -26,7 +26,7 @@ const App = () => {
       {/* direction="column" -> avatarsPosition="top" */}
       <UsersStack
         photos={[]}
-        avatarsPosition="top"
+        avatarsPosition="block-start"
         size="l"
       >
         Иван и ещё 2 ваших друга подписаны
