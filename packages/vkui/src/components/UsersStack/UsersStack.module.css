@@ -58,7 +58,7 @@
   flex: 1;
 }
 
-.avatarsPositionBlockTop .text {
+.avatarsPositionBlockStart .text {
   text-align: center;
   margin-block-start: 8px;
 }
