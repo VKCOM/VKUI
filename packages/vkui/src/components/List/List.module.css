@@ -1,8 +1,8 @@
-.List {
+.host {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
 
-.List__placeholder {
+.placeholder {
   display: none;
 }

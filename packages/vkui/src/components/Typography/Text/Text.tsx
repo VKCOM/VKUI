@@ -4,8 +4,8 @@ import { Typography, type TypographyProps } from '../Typography';
 import styles from './Text.module.css';
 
 const sizeYClassNames = {
-  none: styles['Text--sizeY-none'],
-  compact: styles['Text--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export type TextProps = TypographyProps;
@@ -29,11 +29,7 @@ export const Text = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      className={classNames(
-        className,
-        styles['Text'],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-      )}
+      className={classNames(className, styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
       {...restProps}
     />
   );

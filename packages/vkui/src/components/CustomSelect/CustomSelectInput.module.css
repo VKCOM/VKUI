@@ -1,8 +1,8 @@
-.CustomSelectInput {
+.host {
   position: relative;
 }
 
-.CustomSelectInput__el {
+.el {
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;
@@ -22,33 +22,33 @@
   background: transparent;
 }
 
-.CustomSelectInput__el--cursor-pointer {
+.elCursorPointer {
   cursor: pointer;
 }
 
-.CustomSelectInput--sizeY-compact .CustomSelectInput__el {
+.sizeYCompact .el {
   block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .CustomSelectInput--sizeY-none .CustomSelectInput__el {
+  .sizeYNone .el {
     block-size: var(--vkui--size_field_height--compact);
   }
 }
 
-.CustomSelectInput--hasBefore .CustomSelectInput__el {
+.hasBefore .el {
   padding-inline-start: 0;
 }
 
-.CustomSelectInput--hasAfter .CustomSelectInput__el {
+.hasAfter .el {
   padding-inline-end: 0;
 }
 
-.CustomSelectInput__el:disabled {
+.el:disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.CustomSelectInput__container {
+.container {
   z-index: var(--vkui_internal--z_index_form_field_element);
   inline-size: 100%;
   max-block-size: 100%;
@@ -59,25 +59,25 @@
   pointer-events: none;
 }
 
-.CustomSelectInput--hasBefore .CustomSelectInput__container {
+.hasBefore .container {
   padding-inline-start: 0;
 }
 
-.CustomSelectInput--multiline .CustomSelectInput__container {
+.multiline .container {
   padding-block: 12px;
 }
 
-.CustomSelectInput--sizeY-compact.CustomSelectInput--multiline .CustomSelectInput__container {
+.sizeYCompact.multiline .container {
   padding-block: 8px;
 }
 
 @media (--sizeY-compact) {
-  .CustomSelectInput--sizeY-none.CustomSelectInput--multiline .CustomSelectInput__container {
+  .sizeYNone.multiline .container {
     padding-block: 8px;
   }
 }
 
-.CustomSelectInput__input-group {
+.inputGroup {
   position: relative;
   display: flex;
   align-self: stretch;
@@ -86,38 +86,38 @@
   overflow: hidden;
 }
 
-.CustomSelectInput--hasBefore .CustomSelectInput__input-group {
+.hasBefore .inputGroup {
   border-radius: 0;
 }
 
-.CustomSelectInput__title {
+.title {
   display: block;
 }
 
-.CustomSelectInput:not(.CustomSelectInput--multiline) .CustomSelectInput__title {
+.host:not(.multiline) .title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.CustomSelectInput--empty .CustomSelectInput__title {
+.empty .title {
   color: var(--vkui--color_text_secondary);
 }
 
 /* Для доступности placeholder в инпуте задан, но визуально не виден, потому что
  * для комфортного управления видом плейсходера мы рендерим его отдельно, так же как и лэйбл
  */
-.CustomSelectInput__el::placeholder {
+.el::placeholder {
   opacity: 0;
 }
 
-.CustomSelectInput--align-right .CustomSelectInput__title,
-.CustomSelectInput--align-right .CustomSelectInput__el {
+.alignRight .title,
+.alignRight .el {
   text-align: end;
 }
 
-.CustomSelectInput--align-center .CustomSelectInput__title,
-.CustomSelectInput--align-center .CustomSelectInput__el {
+.alignCenter .title,
+.alignCenter .el {
   text-align: center;
 }
 
@@ -126,6 +126,6 @@
  * CalendarHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCalendarHeader__picker) .CustomSelectInput__container {
+:global(.vkuiInternalCalendarHeader__picker) .container {
   padding-inline-end: 4px;
 }

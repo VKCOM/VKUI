@@ -45,7 +45,7 @@ export const Radio = ({
   return (
     <SelectionControl
       style={style}
-      className={classNames(styles['Radio'], className)}
+      className={classNames(styles.host, className)}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
       hoverMode={hoverMode}

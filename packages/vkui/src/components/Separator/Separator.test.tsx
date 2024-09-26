@@ -10,14 +10,14 @@ describe('Separator', () => {
     const getSeparator = () => screen.getByTestId('separator');
     const { rerender } = render(<Separator mode="primary" data-testid="separator" />);
 
-    expect(getSeparator()).toHaveClass(styles['Separator--mode-primary']);
+    expect(getSeparator()).toHaveClass(styles.modePrimary);
 
     rerender(<Separator mode="secondary" data-testid="separator" />);
 
-    expect(getSeparator()).toHaveClass(styles['Separator--mode-secondary']);
+    expect(getSeparator()).toHaveClass(styles.modeSecondary);
 
     rerender(<Separator mode="primary-alpha" data-testid="separator" />);
 
-    expect(getSeparator()).toHaveClass(styles['Separator--mode-primaryAlpha']);
+    expect(getSeparator()).toHaveClass(styles.modePrimaryAlpha);
   });
 });

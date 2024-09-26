@@ -11,9 +11,9 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './ModalCard.module.css';
 
 const platformClassNames = {
-  ios: styles['ModalCard--ios'],
-  android: styles['ModalCard--android'],
-  vkcom: styles['ModalCard--vkcom'],
+  ios: styles.ios,
+  android: styles.android,
+  vkcom: styles.vkcom,
 };
 
 export interface ModalCardProps extends NavIdProps, ModalCardBaseProps {}
@@ -60,15 +60,15 @@ export const ModalCard = ({
       aria-labelledby={contextValue.labelId}
       id={id}
       baseClassName={classNames(
-        styles['ModalCard'],
+        styles.host,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        isDesktop && styles['ModalCard--desktop'],
+        isDesktop && styles.desktop,
       )}
     >
       <ModalCardBase
-        className={styles['ModalCard__in']}
+        className={styles.in}
         getRootRef={refs.innerElement}
         icon={icon}
         header={header}

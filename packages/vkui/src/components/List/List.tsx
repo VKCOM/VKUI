@@ -25,7 +25,7 @@ export const List = ({
   return (
     <RootComponent
       role="list"
-      className={classNames(styles.List, className)}
+      className={classNames(styles.host, className)}
       style={{
         ...style,
         gridGap: gap,
@@ -36,7 +36,7 @@ export const List = ({
       <div
         aria-hidden
         {...DATA_DRAGGABLE_PLACEHOLDER_REACT_PROP}
-        className={styles['List__placeholder']}
+        className={styles.placeholder}
       ></div>
     </RootComponent>
   );

@@ -7,15 +7,15 @@ import styles from './Spacing.module.css';
 export const CUSTOM_CSS_TOKEN_FOR_USER_GAP = '--vkui_internal--Spacing_gap';
 
 export const sizesClassNames: Record<SpacingSize, string> = {
-  '2xs': styles['Spacing--2xs'],
-  'xs': styles['Spacing--xs'],
-  's': styles['Spacing--s'],
-  'm': styles['Spacing--m'],
-  'l': styles['Spacing--l'],
-  'xl': styles['Spacing--xl'],
-  '2xl': styles['Spacing--2xl'],
-  '3xl': styles['Spacing--3xl'],
-  '4xl': styles['Spacing--4xl'],
+  '2xs': styles.size2XS,
+  'xs': styles.sizeXS,
+  's': styles.sizeS,
+  'm': styles.sizeM,
+  'l': styles.sizeL,
+  'xl': styles.sizeXL,
+  '2xl': styles.size2XL,
+  '3xl': styles.size3XL,
+  '4xl': styles.size4XL,
 };
 
 export type SpacingSize = 's' | 'm' | 'l' | '2xs' | 'xs' | 'xl' | '2xl' | '3xl' | '4xl';
@@ -37,10 +37,7 @@ export const Spacing = ({ size = 'm', style, ...restProps }: SpacingProps): Reac
         ...(typeof size === 'number' && { [CUSTOM_CSS_TOKEN_FOR_USER_GAP]: `${size}px` }),
         ...style,
       }}
-      baseClassName={classNames(
-        styles['Spacing'],
-        typeof size === 'string' && sizesClassNames[size],
-      )}
+      baseClassName={classNames(styles.host, typeof size === 'string' && sizesClassNames[size])}
     />
   );
 };

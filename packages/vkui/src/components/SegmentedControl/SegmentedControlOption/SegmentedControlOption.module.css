@@ -1,4 +1,4 @@
-.SegmentedControlOption {
+.host {
   block-size: 100%;
   border: 0;
   border-radius: inherit;
@@ -16,10 +16,10 @@
   flex: 1;
 }
 
-.SegmentedControlOption--hover {
+.hover {
   opacity: 0.5;
 }
 
-.SegmentedControlOption__before {
+.before {
   margin-inline-end: 6px;
 }

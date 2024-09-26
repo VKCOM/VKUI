@@ -159,7 +159,7 @@ export const OnboardingTooltip = ({
                 }
           }
         />
-        <div className={styles['OnboardingTooltip__overlay']} onClickCapture={onClose} />
+        <div className={styles.overlay} onClickCapture={onClose} />
       </>,
       tooltipContainer,
     );

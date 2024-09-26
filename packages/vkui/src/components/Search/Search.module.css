@@ -1,4 +1,4 @@
-.Search {
+.host {
   display: flex;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
@@ -6,7 +6,7 @@
   --vkui_internal--search_height: var(--vkui--size_search_height--regular);
 }
 
-.Search--withPadding {
+.withPadding {
   padding-block: 8px;
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
@@ -15,17 +15,17 @@
   sizeY-compact
  */
 
-.Search--sizeY-compact {
+.sizeYCompact {
   --vkui_internal--search_height: var(--vkui--size_search_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .Search--sizeY-none {
+  .sizeYNone {
     --vkui_internal--search_height: var(--vkui--size_search_height--compact);
   }
 }
 
-.Search__field {
+.field {
   position: relative;
   display: flex;
   flex-grow: 2;
@@ -40,22 +40,22 @@
   overflow: hidden;
 }
 
-.Search__field:hover {
+.field:hover {
   background-color: var(--vkui--color_search_field_background--hover);
 }
 
-.Search__field:active {
+.field:active {
   background-color: var(--vkui--color_search_field_background--active);
 }
 
-.Search__label {
+.label {
   position: absolute;
   cursor: text;
   inset: 0;
   opacity: 0;
 }
 
-.Search__input {
+.input {
   padding-inline-start: 12px;
   color: var(--vkui--color_icon_medium);
   display: flex;
@@ -67,7 +67,7 @@
   position: relative;
 }
 
-.Search__nativeInput {
+.nativeInput {
   position: absolute;
   inset: 0;
   block-size: 100%;
@@ -86,43 +86,43 @@
   color: var(--vkui--color_text_primary);
 }
 
-.Search__nativeInput::-webkit-search-decoration,
-.Search__nativeInput::-webkit-search-cancel-button,
-.Search__nativeInput::-webkit-search-results-button,
-.Search__nativeInput::-webkit-search-results-decoration {
+.nativeInput::-webkit-search-decoration,
+.nativeInput::-webkit-search-cancel-button,
+.nativeInput::-webkit-search-results-button,
+.nativeInput::-webkit-search-results-decoration {
   display: none;
 }
 
-.Search__nativeInput:focus {
+.nativeInput:focus {
   outline: var(--vkui_internal--outline-reset);
 }
 
-.Search--has-after .Search__nativeInput {
+.hasAfter .nativeInput {
   border-start-end-radius: 0;
   border-end-end-radius: 0;
 }
 
-.Search--disabled {
+.disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
   pointer-events: none;
   cursor: default;
 }
 
-.Search__nativeInput:disabled {
+.nativeInput:disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.Search__nativeInput::placeholder {
+.nativeInput::placeholder {
   color: var(--vkui--color_text_secondary);
   /* Для Firefox */
   opacity: 1;
 }
 
-.Search__nativeInput:disabled::placeholder {
+.nativeInput:disabled::placeholder {
   color: var(--vkui--color_text_secondary);
 }
 
-.Search__controls {
+.controls {
   position: relative;
   display: flex;
   align-items: center;
@@ -135,16 +135,16 @@
   --vkui_internal--search_icon_size: calc(var(--vkui_internal--search_height) + 4px);
 }
 
-.Search--has-icon .Search__controls {
+.hasIcon .controls {
   /* Исключаем параметр icon из расчёта, чтобы он оставался видимым */
   transform: translate3d(calc(100% - var(--vkui_internal--search_icon_size)), 0, 0);
 }
 
-.Search--has-value .Search__controls {
+.hasValue .controls {
   transform: translate3d(0, 0, 0);
 }
 
-.Search__icon {
+.icon {
   inline-size: var(--vkui_internal--search_icon_size);
   display: flex;
   align-items: center;
@@ -154,11 +154,11 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Search__icon :global(.vkuiIcon) {
+.icon :global(.vkuiIcon) {
   padding: 0;
 }
 
-.Search__after {
+.after {
   position: relative;
   display: flex;
   flex-grow: 0;
@@ -169,14 +169,14 @@
   pointer-events: none;
 }
 
-.Search--focused .Search__after,
-.Search--has-value .Search__after {
+.focused .after,
+.hasValue .after {
   flex-grow: 1;
   pointer-events: initial;
 }
 
-.Search__after::before,
-.Search__after::after {
+.after::before,
+.after::after {
   content: '';
   flex-shrink: 0;
   display: block;
@@ -184,24 +184,24 @@
   block-size: 100%;
 }
 
-.Search--withPadding .Search__after::after {
+.withPadding .after::after {
   margin-inline-end: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
-.Search__afterTextClip {
+.afterTextClip {
   display: block;
   text-overflow: clip;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.Search__findButton {
+.findButton {
   min-inline-size: initial;
   max-inline-size: initial;
   inline-size: initial;
 }
 
 /* FIXME поменять на `:global(.vkuiInternalGroup--mode-plain)` */
-.Group--mode-plain .Search {
+.modePlain .host {
   padding-block-start: 4px;
 }

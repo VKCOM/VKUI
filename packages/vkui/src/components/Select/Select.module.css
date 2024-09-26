@@ -1,11 +1,11 @@
-.Select {
+.host {
   position: relative;
   cursor: pointer;
   box-sizing: border-box;
   font-family: var(--vkui--font_family_base);
 }
 
-.Select__el {
+.el {
   display: block;
   position: absolute;
   appearance: none;
@@ -20,7 +20,7 @@
   font-family: inherit;
 }
 
-.Select__container {
+.container {
   align-self: center;
   flex-grow: 1;
   flex-shrink: 1;
@@ -32,43 +32,43 @@
   overflow: hidden;
 }
 
-.Select--hasBefore .Select__container {
+.hasBefore .container {
   padding-inline-start: 0;
 }
 
-.Select--multiline .Select__container {
+.multiline .container {
   padding-block: 12px;
 }
 
-.Select--sizeY-compact.Select--multiline .Select__container {
+.sizeYCompact.multiline .container {
   padding-block: 8px;
 }
 
 @media (--sizeY-compact) {
-  .Select--sizeY-none.Select--multiline .Select__container {
+  .sizeYNone.multiline .container {
     padding-block: 8px;
   }
 }
 
-.Select__title {
+.title {
   display: block;
 }
 
-.Select:not(.Select--multiline) .Select__title {
+.host:not(.multiline) .title {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.Select--empty .Select__title {
+.empty .title {
   color: var(--vkui--color_text_secondary);
 }
 
-.Select--align-right .Select__title {
+.alignRight .title {
   text-align: end;
 }
 
-.Select--align-center .Select__title {
+.alignCenter .title {
   text-align: center;
 }
 
@@ -77,6 +77,6 @@
  * CalendarHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCalendarHeader__picker) .Select__container {
+:global(.vkuiInternalCalendarHeader__picker) .container {
   padding-inline-end: 4px;
 }

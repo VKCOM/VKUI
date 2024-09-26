@@ -93,9 +93,9 @@ describe(Snackbar, () => {
         <Snackbar onClose={jest.fn()}>Text message</Snackbar>
       </PlatformProvider>,
     );
-    expect(result.getByRole('presentation')).toHaveClass(styles['Snackbar--ios']);
+    expect(result.getByRole('presentation')).toHaveClass(styles.ios);
     result.rerender(<Snackbar onClose={jest.fn()}>Text message</Snackbar>);
-    expect(result.getByRole('presentation')).not.toHaveClass(styles['Snackbar--ios']);
+    expect(result.getByRole('presentation')).not.toHaveClass(styles.ios);
   });
 
   it('renders in horizontal layout on desktop if layout prop is set', () => {
@@ -108,7 +108,7 @@ describe(Snackbar, () => {
     );
 
     // renders in vertical layout on desktop by default
-    expect(container.querySelector(`.${basicStyles['Snackbar--layout-none']}`)).not.toBeNull();
+    expect(container.querySelector(`.${basicStyles.layoutNone}`)).not.toBeNull();
 
     rerender(
       <Snackbar layout="horizontal" action="Close me" onClose={jest.fn()}>
@@ -116,10 +116,8 @@ describe(Snackbar, () => {
       </Snackbar>,
     );
     // renders in horizontal layout on desktop according to layout prop
-    expect(container.querySelector(`.${basicStyles['Snackbar--layout-vertical']}`)).toBeNull();
-    expect(
-      container.querySelector(`.${basicStyles['Snackbar--layout-horizontal']}`),
-    ).not.toBeNull();
+    expect(container.querySelector(`.${basicStyles.layoutVertical}`)).toBeNull();
+    expect(container.querySelector(`.${basicStyles.layoutHorizontal}`)).not.toBeNull();
   });
 
   it('should be closed after timeout', async () => {

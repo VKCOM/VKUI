@@ -23,8 +23,8 @@ import type { ControlElementsState, SlidesManagerState } from './types';
 import styles from '../BaseGallery.module.css';
 
 const stylesBullets = {
-  dark: styles['BaseGallery__bullets--dark'],
-  light: styles['BaseGallery__bullets--light'],
+  dark: styles.bulletsDark,
+  light: styles.bulletsLight,
 };
 
 const warn = warnOnce('Gallery');
@@ -335,14 +335,14 @@ export const CarouselBase = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['BaseGallery'],
-        slideWidth === 'custom' && styles['BaseGallery--custom-width'],
-        isDraggable && styles['BaseGallery--draggable'],
+        styles.host,
+        slideWidth === 'custom' && styles.customWidth,
+        isDraggable && styles.draggable,
       )}
       getRootRef={rootRef}
     >
       <Touch
-        className={styles['BaseGallery__viewport']}
+        className={styles.viewport}
         onStartX={onStart}
         onMoveX={onMoveX}
         onEnd={onEnd}
@@ -350,13 +350,9 @@ export const CarouselBase = ({
         getRootRef={viewportRef}
         noSlideClick
       >
-        <div className={styles['BaseGallery__layer']} ref={layerRef}>
+        <div className={styles.layer} ref={layerRef}>
           {React.Children.map(children, (item: React.ReactNode, i: number) => (
-            <div
-              className={styles['BaseGallery__slide']}
-              key={`slide-${i}`}
-              ref={(el) => setSlideRef(el, i)}
-            >
+            <div className={styles.slide} key={`slide-${i}`} ref={(el) => setSlideRef(el, i)}>
               {item}
             </div>
           ))}
@@ -364,16 +360,10 @@ export const CarouselBase = ({
       </Touch>
 
       {bullets && (
-        <div
-          aria-hidden
-          className={classNames(styles['BaseGallery__bullets'], stylesBullets[bullets])}
-        >
+        <div aria-hidden className={classNames(styles.bullets, stylesBullets[bullets])}>
           {React.Children.map(children, (_item: React.ReactNode, index: number) => (
             <div
-              className={classNames(
-                styles['BaseGallery__bullet'],
-                index === slideIndex && styles['BaseGallery__bullet--active'],
-              )}
+              className={classNames(styles.bullet, index === slideIndex && styles.bulletActive)}
               key={index}
             />
           ))}
@@ -382,7 +372,7 @@ export const CarouselBase = ({
 
       {showArrows && hasPointer && canSlideLeft && (
         <ScrollArrow
-          className={styles['BaseGallery__arrow']}
+          className={styles.arrow}
           direction="left"
           onClick={slideLeft}
           size={arrowSize}
@@ -390,7 +380,7 @@ export const CarouselBase = ({
       )}
       {showArrows && hasPointer && canSlideRight && (
         <ScrollArrow
-          className={styles['BaseGallery__arrow']}
+          className={styles.arrow}
           direction="right"
           onClick={slideRight}
           size={arrowSize}

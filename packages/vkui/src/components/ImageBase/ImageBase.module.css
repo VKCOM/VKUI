@@ -1,4 +1,4 @@
-.ImageBase {
+.host {
   position: relative;
   display: flex;
   align-items: center;
@@ -11,13 +11,13 @@
   isolation: isolate;
 }
 
-.ImageBase--loaded,
-.ImageBase--transparent-background {
+.loaded,
+.transparentBackground {
   background-color: transparent;
 }
 
-.ImageBase__children,
-.ImageBase__border {
+.children,
+.border {
   position: absolute;
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -25,14 +25,14 @@
   block-size: 100%;
 }
 
-.ImageBase__children {
+.children {
   display: inherit;
   align-items: inherit;
   justify-content: inherit;
   border-radius: inherit;
 }
 
-.ImageBase__border {
+.border {
   pointer-events: none;
   z-index: var(--vkui_internal--z_index_image_base_border);
   box-sizing: border-box;
@@ -41,7 +41,7 @@
   border-radius: inherit;
 }
 
-.ImageBase__img {
+.img {
   display: block;
   inline-size: 100%;
   block-size: 100%;
@@ -50,32 +50,32 @@
   visibility: hidden;
 }
 
-.ImageBase__img--keepRatio {
+.imgKeepRatio {
   inline-size: auto;
   block-size: auto;
 }
 
-.ImageBase__img--objectFit-contain {
+.imgObjectFitContain {
   object-fit: contain;
 }
 
-.ImageBase__img--objectFit-cover {
+.imgObjectFitCover {
   object-fit: cover;
 }
 
-.ImageBase__img--objectFit-none {
+.imgObjectFitNone {
   object-fit: none;
 }
 
-.ImageBase__img--objectFit-scaleDown {
+.imgObjectFitScaleDown {
   object-fit: scale-down;
 }
 
-.ImageBase--loaded .ImageBase__img {
+.loaded .img {
   visibility: visible;
 }
 
-.ImageBase__fallback {
+.fallback {
   position: absolute;
 
   /* Расcчитываем на центрирование через родительский `display: flex` */
@@ -88,11 +88,11 @@
  * PanelHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader__before) .ImageBase {
+:global(.vkuiInternalPanelHeader__before) .host {
   margin-inline-start: 8px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader__after) .ImageBase {
+:global(.vkuiInternalPanelHeader__after) .host {
   margin-inline-end: 8px;
 }

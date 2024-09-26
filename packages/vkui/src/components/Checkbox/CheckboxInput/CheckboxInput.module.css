@@ -1,30 +1,30 @@
-.CheckboxInput {
+.host {
   color: var(--vkui--color_icon_accent);
 }
 
-.CheckboxInput__icon--on,
-.CheckboxInput__icon--indeterminate {
+.iconOn,
+.iconIndeterminate {
   display: none;
 }
 
-.CheckboxInput__icon--off {
+.iconOff {
   color: var(--vkui--color_icon_tertiary);
 }
 
-.CheckboxInput__input:checked ~ .CheckboxInput__icon--on {
+.input:checked ~ .iconOn {
   display: flex;
 }
 
-.CheckboxInput__input:indeterminate ~ .CheckboxInput__icon--indeterminate,
-.CheckboxInput__input:checked ~ .CheckboxInput__icon--off {
+.input:indeterminate ~ .iconIndeterminate,
+.input:checked ~ .iconOff {
   display: none;
 }
 
-.CheckboxInput__input:indeterminate ~ .CheckboxInput__icon--indeterminate {
+.input:indeterminate ~ .iconIndeterminate {
   display: flex;
 }
 
-.CheckboxInput__input:indeterminate ~ .CheckboxInput__icon--on,
-.CheckboxInput__input:indeterminate ~ .CheckboxInput__icon--off {
+.input:indeterminate ~ .iconOn,
+.input:indeterminate ~ .iconOff {
   display: none;
 }

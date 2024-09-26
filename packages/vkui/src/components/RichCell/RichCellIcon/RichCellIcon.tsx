@@ -5,5 +5,5 @@ import styles from './RichCellIcon.module.css';
 export type RichCellIconProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
 export const RichCellIcon = (props: RichCellIconProps): React.ReactNode => {
-  return <RootComponent baseClassName={styles['RichCellIcon']} {...props} />;
+  return <RootComponent baseClassName={styles.host} {...props} />;
 };

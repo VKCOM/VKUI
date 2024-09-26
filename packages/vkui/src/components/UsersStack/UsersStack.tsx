@@ -7,15 +7,15 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './UsersStack.module.css';
 
 const stylesSize = {
-  s: styles['UsersStack--size-s'],
-  m: styles['UsersStack--size-m'],
-  l: styles['UsersStack--size-l'],
+  s: styles.sizeS,
+  m: styles.sizeM,
+  l: styles.sizeL,
 };
 
 const stylesDirection = {
-  'row': styles['UsersStack--direction-row'],
-  'row-reverse': styles['UsersStack--direction-row-reverse'],
-  'column': styles['UsersStack--direction-column'],
+  'row': styles.directionRow,
+  'row-reverse': styles.directionRowReverse,
+  'column': styles.directionColumn,
 };
 
 export type UsersStackRenderWrapperProps = {
@@ -154,12 +154,7 @@ export const UsersStack = ({
     const photoSrc = isPhotoType ? photo.src : photo;
 
     let photoElement = (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className={styles['UsersStack__photo']}
-        aria-hidden
-        display="block"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" className={styles.photo} aria-hidden display="block">
         <defs>
           <PathElement id={id} direction={direction} photoSize={photoSize} />
         </defs>
@@ -167,7 +162,7 @@ export const UsersStack = ({
           <use href={hrefID} />
         </clipPath>
         <g clipPath={`url(#${maskID})`}>
-          <use href={hrefID} className={styles['UsersStack__fill']} />
+          <use href={hrefID} className={styles.fill} />
           <image href={photoSrc} width={photoSize} height={photoSize} />
           <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
         </g>
@@ -181,19 +176,15 @@ export const UsersStack = ({
     }
 
     return (
-      <div className={styles['UsersStack__photoWrapper']} key={i}>
+      <div className={styles.photoWrapper} key={i}>
         {photoElement}
       </div>
     );
   });
 
   const othersElement = canShowOthers ? (
-    <div className={styles['UsersStack__photoWrapper']}>
-      <CounterTypography
-        caps
-        weight="1"
-        className={classNames(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
-      >
+    <div className={styles.photoWrapper}>
+      <CounterTypography caps weight="1" className={classNames(styles.photo, styles.photoOthers)}>
         +{count}
       </CounterTypography>
     </div>
@@ -202,17 +193,15 @@ export const UsersStack = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles['UsersStack'], stylesSize[size], stylesDirection[direction])}
+      baseClassName={classNames(styles.host, stylesSize[size], stylesDirection[direction])}
     >
       {(photosElements.length > 0 || othersElement) && (
-        <div className={styles['UsersStack__photos']} aria-hidden>
+        <div className={styles.photos} aria-hidden>
           {photosElements}
           {othersElement}
         </div>
       )}
-      {hasReactNode(children) && (
-        <Footnote className={styles['UsersStack__text']}>{children}</Footnote>
-      )}
+      {hasReactNode(children) && <Footnote className={styles.text}>{children}</Footnote>}
     </RootComponent>
   );
 };

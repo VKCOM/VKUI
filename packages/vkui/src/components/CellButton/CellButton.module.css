@@ -1,4 +1,4 @@
-.CellButton {
+.host {
   box-sizing: border-box;
   text-decoration: none;
   margin: 0;
@@ -14,30 +14,30 @@
  * FormItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem) .CellButton {
+:global(.vkuiInternalFormItem) .host {
   inline-size: 100%;
   box-sizing: content-box;
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
-.CellButton[disabled] {
+.host[disabled] {
   opacity: 0.4;
 }
 
-.CellButton--centered {
+.centered {
   justify-content: center;
   text-align: center;
 }
 
 /* stylelint-disable-next-line selector-max-universal -- отключаем растягивание элементов внутри */
-.CellButton--centered > * {
+.centered > * {
   flex-grow: initial;
   max-inline-size: initial;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.CellButton--centered :global(.vkuiIcon) {
+.centered :global(.vkuiIcon) {
   /* компенсируем отступ заданные в SimpleCell__before */
   margin-inline-end: calc(
     -1 * var(--vkui_internal--SimpleCell-before-inline-padding-end, var(--vkui--spacing_size_xl))
@@ -45,13 +45,13 @@
   padding-inline-end: var(--vkui--spacing_size_m);
 }
 
-.CellButton {
+.host {
   --vkui_internal--icon_color: var(--vkui--color_icon_accent_themed);
 
   color: var(--vkui--color_text_accent_themed);
 }
 
-.CellButton--mode-danger {
+.modeDanger {
   --vkui_internal--icon_color: var(--vkui--color_text_negative);
 
   color: var(--vkui--color_text_negative);

@@ -27,7 +27,7 @@ describe('CustomSelectDropdown', () => {
         <div data-testid="test-content">test</div>
       </CustomSelectDropdown>,
     );
-    expect(document.querySelector('.vkuiCustomSelectDropdown__fetching')).not.toBeNull();
+    expect(document.querySelector(`.${styles.fetching}`)).not.toBeNull();
   });
 
   it('Displays children if fetching: false', () => {
@@ -63,11 +63,11 @@ describe('CustomSelectDropdown', () => {
 
     render(<Fixture />);
 
-    expect(screen.getByTestId('dropdown')).toHaveClass(styles['CustomSelectDropdown--bottom']);
+    expect(screen.getByTestId('dropdown')).toHaveClass(styles.bottom);
 
     fireEvent.click(screen.getByTestId('change-placement'));
 
-    expect(screen.getByTestId('dropdown')).toHaveClass(styles['CustomSelectDropdown--top']);
+    expect(screen.getByTestId('dropdown')).toHaveClass(styles.top);
 
     expect(onPlacementChange).toBeCalledTimes(1);
   });
@@ -79,12 +79,10 @@ describe('CustomSelectDropdown', () => {
     };
     const { rerender } = render(<CustomSelectDropdown {...props} noMaxHeight />);
     expect(screen.getByTestId('dropdown').firstElementChild).not.toHaveClass(
-      styles['CustomSelectDropdown__in--withMaxHeight'],
+      styles.inWithMaxHeight,
     );
 
     rerender(<CustomSelectDropdown {...props} noMaxHeight={false} />);
-    expect(screen.getByTestId('dropdown').firstElementChild).toHaveClass(
-      styles['CustomSelectDropdown__in--withMaxHeight'],
-    );
+    expect(screen.getByTestId('dropdown').firstElementChild).toHaveClass(styles.inWithMaxHeight);
   });
 });

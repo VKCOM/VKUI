@@ -1,4 +1,4 @@
-.Card {
+.host {
   position: relative;
   background: var(--vkui--color_background_secondary);
   border-radius: var(--vkui--size_card_border_radius--regular);
@@ -6,7 +6,7 @@
   display: block;
 }
 
-.Card--mode-shadow {
+.modeShadow {
   box-shadow: var(
     --vkui--elevation3,
     0 2px 24px 0 rgba(0, 0, 0, 0.08),
@@ -15,11 +15,11 @@
   background: var(--vkui--color_background_contrast_themed);
 }
 
-.Card--mode-outline {
+.modeOutline {
   background: var(--vkui--color_background_contrast_themed);
 }
 
-.Card--withBorder::after {
+.withBorder::after {
   position: absolute;
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -38,28 +38,28 @@
  * CardScroll
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardScroll) .Card {
+:global(.vkuiInternalCardScroll) .host {
   margin-inline-end: var(--vkui--size_cardgrid_padding--regular);
   flex-shrink: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardScroll) .Card:last-of-type {
+:global(.vkuiInternalCardScroll) .host:last-of-type {
   margin-inline-end: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardScroll--size-s) .Card {
+:global(.vkuiInternalCardScroll--size-s) .host {
   inline-size: 40%;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardScroll--size-m) .Card {
+:global(.vkuiInternalCardScroll--size-m) .host {
   inline-size: 62%;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardScroll--size-l) .Card {
+:global(.vkuiInternalCardScroll--size-l) .host {
   inline-size: calc(100% - var(--vkui--size_base_padding_horizontal--regular) * 2);
   margin-inline-end: var(--vkui--size_base_padding_horizontal--regular);
 }
@@ -70,10 +70,10 @@
  * SplitCol
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .Card,
+:global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .host,
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
   :global(.vkuiInternalCardScroll--size-l)
-  .Card {
+  .host {
   inline-size: calc(100% - 32px);
   margin-inline-end: 16px;
 }
@@ -82,17 +82,17 @@
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
     :global(.vkuiInternalCardScroll--size-l)
-    .Card {
+    .host {
     inline-size: calc(100% - 32px);
     margin-inline-end: 16px;
   }
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .Card:last-of-type,
+:global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .host:last-of-type,
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
   :global(.vkuiInternalCardScroll--size-l)
-  .Card:last-of-type {
+  .host:last-of-type {
   margin-inline-end: 0;
 }
 
@@ -100,7 +100,7 @@
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
     :global(.vkuiInternalCardScroll--size-l)
-    .Card:last-of-type {
+    .host:last-of-type {
     margin-inline-end: 0;
   }
 }
@@ -108,12 +108,12 @@
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--mode-none)
     :global(.vkuiInternalCardScroll--size-l)
-    .Card:last-of-type {
+    .host:last-of-type {
     margin-inline-end: 0;
   }
 
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalGroup--mode-none) :global(.vkuiInternalCardScroll--size-l) .Card {
+  :global(.vkuiInternalGroup--mode-none) :global(.vkuiInternalCardScroll--size-l) .host {
     inline-size: calc(100% - 32px);
     margin-inline-end: 16px;
   }
@@ -124,47 +124,47 @@
  * CardGrid
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardGrid) .Card {
+:global(.vkuiInternalCardGrid) .host {
   margin-inline-end: var(--vkui--size_cardgrid_padding--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardGrid--size-l) .Card {
+:global(.vkuiInternalCardGrid--size-l) .host {
   inline-size: 100%;
   margin-inline-end: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardGrid--size-l) .Card:not(:first-child) {
+:global(.vkuiInternalCardGrid--size-l) .host:not(:first-child) {
   margin-block-start: var(--vkui--size_cardgrid_padding--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardGrid--size-m) .Card {
+:global(.vkuiInternalCardGrid--size-m) .host {
   inline-size: calc(50% - (var(--vkui--size_cardgrid_padding--regular) / 2));
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardGrid--size-m) .Card:nth-child(n + 3) {
+:global(.vkuiInternalCardGrid--size-m) .host:nth-child(n + 3) {
   margin-block-start: var(--vkui--size_cardgrid_padding--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardGrid--size-m) .Card:nth-child(2n) {
+:global(.vkuiInternalCardGrid--size-m) .host:nth-child(2n) {
   margin-inline-end: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardGrid--size-s) .Card {
+:global(.vkuiInternalCardGrid--size-s) .host {
   inline-size: calc((100% - 2 * var(--vkui--size_cardgrid_padding--regular)) / 3);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardGrid--size-s) .Card:nth-child(n + 4) {
+:global(.vkuiInternalCardGrid--size-s) .host:nth-child(n + 4) {
   margin-block-start: var(--vkui--size_cardgrid_padding--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCardGrid--size-s) .Card:nth-child(3n) {
+:global(.vkuiInternalCardGrid--size-s) .host:nth-child(3n) {
   margin-inline-end: 0;
 }

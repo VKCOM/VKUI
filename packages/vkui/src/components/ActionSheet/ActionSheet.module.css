@@ -1,4 +1,4 @@
-.ActionSheet {
+.host {
   --vkui_internal--actionsheet_animation_opacity_initial: 1;
   --vkui_internal--actionsheet_animation_translateY_initial: 100%;
 
@@ -9,13 +9,13 @@
 }
 
 @media (--reduce-motion) {
-  .ActionSheet {
+  .host {
     --vkui_internal--actionsheet_animation_opacity_initial: 0;
     --vkui_internal--actionsheet_animation_translateY_initial: 0%;
   }
 }
 
-.ActionSheet__content-wrapper {
+.contentWrapper {
   padding-block: 8px;
   padding-inline: 0;
   overflow: hidden;
@@ -24,41 +24,41 @@
   background: var(--vkui--color_background_modal);
 }
 
-.ActionSheet__header {
+.header {
   color: var(--vkui--color_text_subhead);
   padding-block: 16px;
   padding-inline: 16px;
 }
 
-.ActionSheet--opening {
+.opening {
   /* prettier-ignore */
   animation: animation-actionsheet-slide-up var(--vkui--animation_duration_m) var(--vkui--animation_easing_platform);
 }
 
-.ActionSheet--closing {
+.closing {
   opacity: 0;
   /* prettier-ignore */
   animation: animation-actionsheet-slide-down var(--vkui--animation_duration_m) var(--vkui--animation_easing_platform);
 }
 
-.ActionSheet__title + .ActionSheet__text {
+.title + .text {
   margin-block-start: 8px;
 }
 
 /**
  * iOS
  */
-.ActionSheet--ios {
+.ios {
   padding: 8px;
   background: transparent;
 }
 
-.ActionSheet--ios .ActionSheet__content-wrapper {
+.ios .contentWrapper {
   border-radius: 14px;
   padding: 0;
 }
 
-.ActionSheet__close-item-wrapper--ios {
+.closeItemWrapperIos {
   margin-block: 8px var(--vkui_internal--safe_area_inset_bottom);
   overflow: hidden;
   border-radius: 14px;
@@ -66,24 +66,24 @@
   background: var(--vkui--color_background_modal);
 }
 
-.ActionSheet--ios.ActionSheet--closing {
+.ios.closing {
   transform: translateY(100%);
 }
 
-.ActionSheet--ios .ActionSheet__header {
+.ios .header {
   position: relative;
   text-align: center;
 }
 
-.ActionSheet--ios .ActionSheet__title {
+.ios .title {
   position: relative;
 }
 
-.ActionSheet--ios .ActionSheet__text {
+.ios .text {
   position: relative;
 }
 
-.ActionSheet--ios .ActionSheet__header::before {
+.ios .header::before {
   position: absolute;
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -97,7 +97,7 @@
  * Compact
  */
 
-.ActionSheet--sizeY-compact .ActionSheet__header {
+.sizeYCompact .header {
   padding-block: 12px;
 }
 
@@ -105,7 +105,7 @@
  * Desktop version
  */
 
-.ActionSheet--menu {
+.menu {
   --vkui_internal--actionsheet_animation_opacity_initial: 0;
   --vkui_internal--actionsheet_animation_translateY_initial: 5%;
 
@@ -115,13 +115,13 @@
   max-inline-size: 100%;
 }
 
-.ActionSheet--menu.ActionSheet--ios .ActionSheet__content-wrapper {
+.menu.ios .contentWrapper {
   border-radius: 14px;
   padding: 0;
 }
 
 @media (--reduce-motion) {
-  .ActionSheet--menu {
+  .menu {
     --vkui_internal--actionsheet_animation_translateY_initial: 0%;
   }
 }

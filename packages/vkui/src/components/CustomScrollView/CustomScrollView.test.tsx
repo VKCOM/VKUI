@@ -84,17 +84,13 @@ const setup = ({
   clientWidth: number;
   scrollWidth: number;
 }) => {
-  const box = container.getElementsByClassName(styles['CustomScrollView__box'])[0] as HTMLElement;
+  const box = container.getElementsByClassName(styles.box)[0] as HTMLElement;
 
-  const barY = container.getElementsByClassName(styles['CustomScrollView__barY'])[0] as HTMLElement;
-  const trackerY = container.getElementsByClassName(
-    styles['CustomScrollView__trackerY'],
-  )[0] as HTMLElement;
+  const barY = container.getElementsByClassName(styles.barY)[0] as HTMLElement;
+  const trackerY = container.getElementsByClassName(styles.trackerY)[0] as HTMLElement;
 
-  const barX = container.getElementsByClassName(styles['CustomScrollView__barX'])[0] as HTMLElement;
-  const trackerX = container.getElementsByClassName(
-    styles['CustomScrollView__trackerX'],
-  )[0] as HTMLElement;
+  const barX = container.getElementsByClassName(styles.barX)[0] as HTMLElement;
+  const trackerX = container.getElementsByClassName(styles.trackerX)[0] as HTMLElement;
 
   jest.spyOn(box, 'clientHeight', 'get').mockReturnValue(clientHeight);
   jest.spyOn(box, 'scrollHeight', 'get').mockReturnValue(scrollHeight);
@@ -205,9 +201,7 @@ describe(CustomScrollView, () => {
         </CustomScrollView>
       </AdaptivityContext.Provider>,
     );
-    expect(screen.getByTestId('scroll-view')).toHaveClass(
-      styles['CustomScrollView--hasPointer-false'],
-    );
+    expect(screen.getByTestId('scroll-view')).toHaveClass(styles.hasPointerFalse);
   });
 
   it('should have overscroll specific className', () => {
@@ -219,12 +213,8 @@ describe(CustomScrollView, () => {
       </CustomScrollView>,
     );
 
-    expect(getBoxElement()).not.toHaveClass(
-      styles['CustomScrollView__box--overscrollBehavior-contain'],
-    );
-    expect(getBoxElement()).not.toHaveClass(
-      styles['CustomScrollView__box--overscrollBehavior-none'],
-    );
+    expect(getBoxElement()).not.toHaveClass(styles.boxOverscrollBehaviorContain);
+    expect(getBoxElement()).not.toHaveClass(styles.boxOverscrollBehaviorNone);
 
     rerender(
       <CustomScrollView data-testid="scroll-view" overscrollBehavior="contain">
@@ -232,12 +222,8 @@ describe(CustomScrollView, () => {
       </CustomScrollView>,
     );
 
-    expect(getBoxElement()).toHaveClass(
-      styles['CustomScrollView__box--overscrollBehavior-contain'],
-    );
-    expect(getBoxElement()).not.toHaveClass(
-      styles['CustomScrollView__box--overscrollBehavior-none'],
-    );
+    expect(getBoxElement()).toHaveClass(styles.boxOverscrollBehaviorContain);
+    expect(getBoxElement()).not.toHaveClass(styles.boxOverscrollBehaviorNone);
 
     rerender(
       <CustomScrollView data-testid="scroll-view" overscrollBehavior="none">
@@ -245,10 +231,8 @@ describe(CustomScrollView, () => {
       </CustomScrollView>,
     );
 
-    expect(getBoxElement()).not.toHaveClass(
-      styles['CustomScrollView__box--overscrollBehavior-contain'],
-    );
-    expect(getBoxElement()).toHaveClass(styles['CustomScrollView__box--overscrollBehavior-none']);
+    expect(getBoxElement()).not.toHaveClass(styles.boxOverscrollBehaviorContain);
+    expect(getBoxElement()).toHaveClass(styles.boxOverscrollBehaviorNone);
   });
 
   it('bars should have display none when scroll doesnt need', () => {
@@ -304,8 +288,8 @@ describe(CustomScrollView, () => {
     checkSize(mockedData.trackerXWidth, 673);
     expect(mockedData.trackerXDisplay).toBe('');
     expect(mockedData.trackerYDisplay).toBe('');
-    expect(mockedData.trackerY).toHaveClass(styles['CustomScrollView__trackerY--hidden']);
-    expect(mockedData.trackerX).toHaveClass(styles['CustomScrollView__trackerX--hidden']);
+    expect(mockedData.trackerY).toHaveClass(styles.trackerYHidden);
+    expect(mockedData.trackerX).toHaveClass(styles.trackerXHidden);
 
     checkTransformX(mockedData.trackerXTransform, 0);
     checkTransformY(mockedData.trackerYTransform, 0);
@@ -314,11 +298,11 @@ describe(CustomScrollView, () => {
       element: mockedData.trackerY,
       position: { endY: 100 },
       checkAfterDragStart: () => {
-        expect(mockedData.trackerY).not.toHaveClass(styles['CustomScrollView__trackerY--hidden']);
+        expect(mockedData.trackerY).not.toHaveClass(styles.trackerYHidden);
       },
       checkAfterDragEnd: () => {
         React.act(jest.runAllTimers);
-        expect(mockedData.trackerY).toHaveClass(styles['CustomScrollView__trackerY--hidden']);
+        expect(mockedData.trackerY).toHaveClass(styles.trackerYHidden);
       },
     });
 
@@ -328,11 +312,10 @@ describe(CustomScrollView, () => {
     simulateDrag({
       element: mockedData.trackerX,
       position: { endX: 100 },
-      checkAfterDragStart: () =>
-        expect(mockedData.trackerX).not.toHaveClass(styles['CustomScrollView__trackerX--hidden']),
+      checkAfterDragStart: () => expect(mockedData.trackerX).not.toHaveClass(styles.trackerXHidden),
       checkAfterDragEnd: () => {
         React.act(jest.runAllTimers);
-        expect(mockedData.trackerX).toHaveClass(styles['CustomScrollView__trackerX--hidden']);
+        expect(mockedData.trackerX).toHaveClass(styles.trackerXHidden);
       },
     });
 
@@ -368,8 +351,8 @@ describe(CustomScrollView, () => {
     checkSize(mockedData.trackerXWidth, 673);
     expect(mockedData.trackerXDisplay).toBe('');
     expect(mockedData.trackerYDisplay).toBe('');
-    expect(mockedData.trackerY).toHaveClass(styles['CustomScrollView__trackerY--hidden']);
-    expect(mockedData.trackerX).toHaveClass(styles['CustomScrollView__trackerX--hidden']);
+    expect(mockedData.trackerY).toHaveClass(styles.trackerYHidden);
+    expect(mockedData.trackerX).toHaveClass(styles.trackerXHidden);
 
     checkTransformX(mockedData.trackerXTransform, 0);
     checkTransformY(mockedData.trackerYTransform, 0);

@@ -27,15 +27,13 @@ export const AvatarBadgeWithPreset: React.FC<AvatarBadgeWithPresetProps> = ({
   const { size } = React.useContext(ImageBaseContext);
   const badgeSize = getBadgeIconSizeByImageBaseSize(size);
   const isOnlinePreset = preset === 'online';
-  const presetClassName = isOnlinePreset
-    ? styles['AvatarBadge--preset-online']
-    : styles['AvatarBadge--preset-onlineMobile'];
+  const presetClassName = isOnlinePreset ? styles.presetOnline : styles.presetOnlineMobile;
   const Icon = isOnlinePreset ? Icon12Circle : Icon12OnlineMobile;
 
   return (
     <ImageBase.Badge
       background="stroke"
-      className={classNames(styles['AvatarBadge'], presetClassName, className)}
+      className={classNames(styles.host, presetClassName, className)}
       {...restProps}
     >
       <Icon width={badgeSize} height={badgeSize} />

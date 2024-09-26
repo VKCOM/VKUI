@@ -11,8 +11,8 @@ import type { ChipProps } from '../types';
 import styles from './Chip.module.css';
 
 const sizeYClassNames = {
-  none: styles['Chip--sizeY-none'],
-  compact: styles['Chip--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 } as const;
 
 /**
@@ -64,7 +64,7 @@ export const Chip = ({
       {...restProps}
       Component={Component}
       className={classNames(
-        styles['Chip'],
+        styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         focusVisibleClassName,
         className,
@@ -74,17 +74,17 @@ export const Chip = ({
       onFocus={disabled ? undefined : handleFocus}
       onBlur={disabled ? undefined : handleBlur}
     >
-      <div className={styles['Chip__in']}>
-        {hasReactNode(before) && <div className={styles['Chip__before']}>{before}</div>}
-        <Footnote className={styles['Chip__content']}>{children}</Footnote>
-        {hasReactNode(after) && <div className={styles['Chip__after']}>{after}</div>}
+      <div className={styles.in}>
+        {hasReactNode(before) && <div className={styles.before}>{before}</div>}
+        <Footnote className={styles.content}>{children}</Footnote>
+        {hasReactNode(after) && <div className={styles.after}>{after}</div>}
       </div>
       {!readOnly && removable && (
-        <div className={styles['Chip__removable']}>
+        <div className={styles.removable}>
           <button
             tabIndex={-1} // [reason]: чтобы можно было выставлять состояние фокуса только программно через `*.focus()`
             disabled={disabled}
-            className={styles['Chip__remove']}
+            className={styles.remove}
             onClick={disabled ? undefined : onRemoveWrapper}
           >
             <VisuallyHidden>

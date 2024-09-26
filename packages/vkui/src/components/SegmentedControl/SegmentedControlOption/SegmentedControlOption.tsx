@@ -27,17 +27,15 @@ export const SegmentedControlOption = ({
 }: SegmentedControlOptionProps): React.ReactNode => (
   <Clickable
     Component="label"
-    baseClassName={styles['SegmentedControlOption']}
-    hoverClassName={styles['SegmentedControlOption--hover']}
-    activeClassName={styles['SegmentedControlOption--hover']}
+    baseClassName={styles.host}
+    hoverClassName={styles.hover}
+    activeClassName={styles.hover}
     className={className}
     getRootRef={getRootRef}
     style={style}
   >
     <VisuallyHidden {...restProps} Component="input" getRootRef={getRef} type="radio" />
-    {hasReactNode(before) && (
-      <div className={styles['SegmentedControlOption__before']}>{before}</div>
-    )}
+    {hasReactNode(before) && <div className={styles.before}>{before}</div>}
     <Headline level="2" weight="2">
       {children}
     </Headline>

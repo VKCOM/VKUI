@@ -1,4 +1,4 @@
-.Snackbar__body {
+.body {
   --vkui_internal--snackbar-body_layout_vertical_action_shift: calc(
     -1 * (
         var(--vkui--size_button_small_height--compact) -
@@ -16,7 +16,7 @@
   border-radius: var(--vkui--size_card_border_radius--regular);
 }
 
-.Snackbar--sizeY-regular {
+.sizeYRegular {
   --vkui_internal--snackbar-body_layout_vertical_action_shift: calc(
     -1 * (
         var(--vkui--size_button_small_height--regular) -
@@ -26,7 +26,7 @@
 }
 
 @media (--sizeY-regular) {
-  .Snackbar--sizeY-none {
+  .sizeYNone {
     --vkui_internal--snackbar-body_layout_vertical_action_shift: calc(
       -1 * (
           var(--vkui--size_button_small_height--regular) -
@@ -36,25 +36,25 @@
   }
 }
 
-.Snackbar--mode-dark {
+.modeDark {
   background: var(--vkui--color_background_contrast_inverse);
 }
 
-.Snackbar__before {
+.before {
   margin-inline-end: 12px;
 }
 
-.Snackbar__after {
+.after {
   margin-inline-start: 12px;
 }
 
-.Snackbar__content {
+.content {
   flex: 1;
   display: flex;
   align-items: center;
 }
 
-.Snackbar__content-text {
+.contentText {
   flex: 1;
   color: var(--vkui--color_text_primary);
   inline-size: 100%;
@@ -64,47 +64,47 @@
   overflow: hidden;
 }
 
-.Snackbar__content-subtitle {
+.contentSubtitle {
   color: var(--vkui--color_text_subhead);
   margin-block-start: 2px;
 }
 
-.Snackbar--mode-dark .Snackbar__content-text {
+.modeDark .contentText {
   color: var(--vkui--color_text_contrast);
 }
 
 /* layout */
-.Snackbar--layout-horizontal .Snackbar__action {
+.layoutHorizontal .action {
   position: relative;
   margin-inline-start: 12px;
 }
 
-.Snackbar--layout-vertical .Snackbar__content {
+.layoutVertical .content {
   flex-direction: column;
   align-items: flex-start;
 }
 
-.Snackbar--layout-vertical .Snackbar__action {
+.layoutVertical .action {
   min-block-size: initial;
   margin-block-start: 2px;
   margin-block-end: var(--vkui_internal--snackbar-body_layout_vertical_action_shift);
 }
 
 @media (--viewWidth-smallTabletMinus) {
-  .Snackbar--layout-none .Snackbar__action {
+  .layoutNone .action {
     position: relative;
     margin-inline-start: 12px;
   }
 }
 @media (--viewWidth-smallTabletPlus) {
-  .Snackbar--layout-none .Snackbar__content,
-  .Snackbar--layout-vertical-mq .Snackbar__content {
+  .layoutNone .content,
+  .layoutVerticalMq .content {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .Snackbar--layout-none .Snackbar__action,
-  .Snackbar--layout-vertical-mq .Snackbar__action {
+  .layoutNone .action,
+  .layoutVerticalMq .action {
     min-block-size: initial;
     margin-block-start: 2px;
     margin-block-end: var(--vkui_internal--snackbar-body_layout_vertical_action_shift);

@@ -1,27 +1,27 @@
-.UsersStack {
+.host {
   display: flex;
   align-items: center;
   color: var(--vkui--color_text_secondary);
 }
 
-.UsersStack--direction-row-reverse {
+.directionRowReverse {
   flex-direction: row-reverse;
 }
 
-.UsersStack--direction-column {
+.directionColumn {
   flex-direction: column;
   justify-content: center;
 }
 
-.UsersStack__photos {
+.photos {
   display: flex;
 }
 
-.UsersStack__fill {
+.fill {
   fill: var(--vkui--color_image_placeholder_alpha);
 }
 
-.UsersStack__photo--others {
+.photoOthers {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,43 +30,43 @@
   border-radius: 50%;
 }
 
-.UsersStack--size-s .UsersStack__photo {
+.sizeS .photo {
   inline-size: 16px;
   block-size: 16px;
 }
 
-.UsersStack--size-m .UsersStack__photo {
+.sizeM .photo {
   inline-size: 24px;
   block-size: 24px;
 }
 
-.UsersStack--size-l .UsersStack__photo {
+.sizeL .photo {
   inline-size: 32px;
   block-size: 32px;
 }
 
-.UsersStack__photoWrapper {
+.photoWrapper {
   display: flex;
 }
 
-.UsersStack__photoWrapper:not(:first-child) {
+.photoWrapper:not(:first-child) {
   margin-inline-start: -2px;
 }
 
-.UsersStack__text {
+.text {
   min-inline-size: 0;
   flex: 1;
 }
 
-.UsersStack--direction-column .UsersStack__text {
+.directionColumn .text {
   text-align: center;
   margin-block-start: 8px;
 }
 
-.UsersStack--direction-row .UsersStack__text {
+.directionRow .text {
   margin-inline-start: 8px;
 }
 
-.UsersStack--direction-row-reverse .UsersStack__text {
+.directionRowReverse .text {
   margin-inline-end: 8px;
 }

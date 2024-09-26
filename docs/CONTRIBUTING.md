@@ -42,7 +42,7 @@ git config blame.ignoreRevsFile .git-blame-ignore-revs
   > Не используем композицию, т.к. в ней нет необходимости,
   > а также в будущем она может усложнить переход на другое решение.
 
-- CSS-классы названы по БЭМ: `.Component__element-name--modificator`. [Гайд по написанию стилей](https://github.com/VKCOM/VKUI/blob/master/docs/CSS_GUIDE.md)
+- CSS-классы должны быть в формате camelCase: `elementNameModification`. [Гайд по написанию стилей](https://github.com/VKCOM/VKUI/blob/master/docs/CSS_GUIDE.md)
 - Свойства `className` и `style` навешиваются на корневой элемент компонента
 - Свойства, не используемые в коде компонента, навешиваются на **главный** элемент компонента. По умолчанию главным является корневой элемент:
 
@@ -58,11 +58,7 @@ git config blame.ignoreRevsFile .git-blame-ignore-revs
   const Input = ({ mode, style, className, ...restProps }) => {
     return (
       <div
-        className={classNames(
-          className,
-          styles.Input,
-          mode === 'default' && styles['Input--mode-default'],
-        )}
+        className={classNames(className, styles.host, mode === 'default' && styles.modeDefault)}
         style={style}
       >
         <input {...restProps} />
@@ -78,11 +74,7 @@ git config blame.ignoreRevsFile .git-blame-ignore-revs
 
   const Component = ({ mode = 'default', className, ...restProps }) => (
     <div
-      className={classNames(
-        className,
-        styles.Component,
-        mode === 'default' && styles['Component--mode-default'],
-      )}
+      className={classNames(className, styles.host, mode === 'default' && styles.modeDefault)}
       {...restProps}
     />
   );

@@ -10,8 +10,8 @@ import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/Visu
 import styles from './Switch.module.css';
 
 const sizeYClassNames = {
-  none: styles['Switch--sizeY-none'],
-  compact: styles['Switch--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface SwitchProps
@@ -80,10 +80,10 @@ export const Switch = ({
   return (
     <label
       className={classNames(
-        styles['Switch'],
+        styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        platform === 'ios' ? styles['Switch--ios'] : styles['Switch--default'],
-        disabled && styles['Switch--disabled'],
+        platform === 'ios' ? styles.ios : styles.default,
+        disabled && styles.disabled,
         focusVisibleClassNames,
         className,
       )}
@@ -92,17 +92,17 @@ export const Switch = ({
     >
       <VisuallyHidden
         {...inputProps}
-        className={styles['Switch__inputNative']}
+        className={styles.inputNative}
         onBlur={handleBlur}
         onFocus={handleFocus}
       />
-      <span aria-hidden className={styles['Switch__inputFake']}>
-        <span className={styles['Switch__track']} />
+      <span aria-hidden className={styles.inputFake}>
+        <span className={styles.track} />
         <span
           aria-hidden
           className={classNames(
-            styles['Switch__handle'],
-            platform !== 'ios' && !disabled && styles['Switch__handle--withRipple'],
+            styles.handle,
+            platform !== 'ios' && !disabled && styles.handleWithRipple,
           )}
         />
       </span>

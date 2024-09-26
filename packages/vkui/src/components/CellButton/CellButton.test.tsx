@@ -12,7 +12,7 @@ describe('CellButton', () => {
         Check
       </CellButton>,
     );
-    expect(screen.getByTestId('cell')).toHaveClass(styles['CellButton--mode-danger']);
+    expect(screen.getByTestId('cell')).toHaveClass(styles.modeDanger);
   });
   it('should have danger className with mode danger', () => {
     render(
@@ -20,6 +20,6 @@ describe('CellButton', () => {
         Check
       </CellButton>,
     );
-    expect(screen.getByTestId('cell')).toHaveClass(styles['CellButton--centered']);
+    expect(screen.getByTestId('cell')).toHaveClass(styles.centered);
   });
 });

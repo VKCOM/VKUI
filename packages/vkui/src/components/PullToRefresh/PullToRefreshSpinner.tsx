@@ -32,16 +32,13 @@ export const PullToRefreshSpinner = ({
 
   return (
     <RootComponent
-      baseClassName={classNames(
-        styles['PullToRefresh__spinner'],
-        on && styles['PullToRefresh__spinner--on'],
-      )}
+      baseClassName={classNames(styles.spinner, on && styles.spinnerOn)}
       {...restProps}
     >
       {on && <VisuallyHidden>{children}</VisuallyHidden>}
       <svg
         role="presentation"
-        className={styles['PullToRefresh__spinner-self']}
+        className={styles.spinnerSelf}
         style={{
           width: size,
           height: size,
@@ -57,7 +54,7 @@ export const PullToRefreshSpinner = ({
           }}
         >
           <circle
-            className={styles['PullToRefresh__spinner-path']}
+            className={styles.spinnerPath}
             fill="none"
             strokeDasharray={dasharray}
             strokeDashoffset={dashoffset}

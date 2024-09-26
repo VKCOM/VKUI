@@ -10,12 +10,12 @@ import styles from './Accordion.module.css';
 const CUSTOM_PROPERTY_ACCORDION_CONTENT_HEIGHT = '--vkui_internal--AccordionContent_height';
 
 const stateClassNames = {
-  enter: styles['AccordionContent__in--enter'],
-  entering: styles['AccordionContent__in--enter'],
-  entered: styles['AccordionContent__in--entered'],
-  exit: styles['AccordionContent__in--exit'],
-  exiting: styles['AccordionContent__in--exit'],
-  exited: styles['AccordionContent__in--exited'],
+  enter: styles.inEnter,
+  entering: styles.inEnter,
+  entered: styles.inEntered,
+  exit: styles.inExit,
+  exiting: styles.inExit,
+  exited: styles.inExited,
 };
 
 export interface AccordionContentProps
@@ -66,12 +66,12 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
       role="region"
       aria-labelledby={labelId}
       aria-hidden={!expanded}
-      className={classNames(styles['AccordionContent'], className)}
+      className={classNames(styles.host, className)}
       {...restProps}
     >
       <div
         ref={inRef}
-        className={classNames(styles['AccordionContent__in'], stateClassNames[animationState])}
+        className={classNames(styles.in, stateClassNames[animationState])}
         {...animationHandlers}
       >
         {children}

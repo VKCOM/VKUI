@@ -1,5 +1,5 @@
 /* Page styles */
-.PaginationPage {
+.host {
   box-sizing: border-box;
   padding-inline: 8px;
   inline-size: 100%;
@@ -14,33 +14,33 @@
   text-decoration: none;
 }
 
-.PaginationPage--state-hover {
+.stateHover {
   background-color: var(--vkui--color_transparent--hover);
 }
 
-.PaginationPage--state-active,
-.PaginationPage--current {
+.stateActive,
+.current {
   color: var(--vkui--color_text_primary);
   background-color: var(--vkui--color_transparent--active);
 }
 
-.PaginationPage--disabled {
+.disabled {
   opacity: var(--vkui--opacity_disable);
 }
 
-.PaginationPage--sizeY-compact {
+.sizeYCompact {
   line-height: var(--vkui--size_button_large_height--compact);
   block-size: var(--vkui--size_button_large_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .PaginationPage--sizeY-none {
+  .sizeYNone {
     line-height: var(--vkui--size_button_large_height--compact);
     block-size: var(--vkui--size_button_large_height--compact);
   }
 }
 
-.PaginationPage--type-ellipsis {
+.typeEllipsis {
   min-inline-size: 16px;
   padding-inline: 0;
 }

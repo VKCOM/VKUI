@@ -228,7 +228,7 @@ export const AppRoot = ({
   ) : (
     <div
       ref={appRootRef}
-      className={classNames(styles['AppRoot'], userSelectModeClassName, className)}
+      className={classNames(styles.host, userSelectModeClassName, className)}
       {...props}
     >
       {content}

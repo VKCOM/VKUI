@@ -1,8 +1,8 @@
-.Clickable__realClickable {
+.realClickable {
   cursor: pointer;
 }
 
-.Clickable__resetButtonStyle {
+.resetButtonStyle {
   appearance: none;
   user-select: none;
   -webkit-tap-highlight-color: none;
@@ -10,18 +10,18 @@
   -webkit-user-drag: none;
 }
 
-.Clickable__resetLinkStyle {
+.resetLinkStyle {
   appearance: none;
   -webkit-tap-highlight-color: none;
   text-decoration: none;
 }
 
-.Clickable__host:focus,
-.Clickable__host:focus-visible {
+.host:focus,
+.host:focus-visible {
   outline: none;
 }
 
-.Clickable__host[disabled],
-.Clickable__host[aria-disabled='true'] {
+.host[disabled],
+.host[aria-disabled='true'] {
   cursor: not-allowed;
 }

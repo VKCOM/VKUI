@@ -35,9 +35,9 @@ export const ModalPageHeader = ({
     <>
       <div
         className={classNames(
-          styles['ModalPageHeader'],
-          platform !== 'vkcom' && styles['ModalPageHeader--withGaps'],
-          isDesktop && styles['ModalPageHeader--desktop'],
+          styles.host,
+          platform !== 'vkcom' && styles.withGaps,
+          isDesktop && styles.desktop,
         )}
         ref={getRootRef}
       >

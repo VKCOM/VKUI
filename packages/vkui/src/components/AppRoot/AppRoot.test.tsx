@@ -24,13 +24,13 @@ describe('AppRoot', () => {
         </AdaptivityProvider>
       );
       const result = render(<Template />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-none']);
+      expect(result.getByTestId('app-root')).toHaveClass(styles.pointerNone);
       result.rerender(<Template hasPointer={false} />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+      expect(result.getByTestId('app-root')).toHaveClass(styles.userSelectNone);
       result.rerender(<Template hasPointer={true} />);
       expect(result.getByTestId('app-root')).not.toHaveClass(
-        styles['AppRoot--pointer-none'],
-        styles['AppRoot--user-select-none'],
+        styles.pointerNone,
+        styles.userSelectNone,
       );
     });
 
@@ -42,12 +42,12 @@ describe('AppRoot', () => {
       );
       // по умолчанию userSelectMode='disabled-in-webview'
       const result = render(<Template isWebView />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+      expect(result.getByTestId('app-root')).toHaveClass(styles.userSelectNone);
 
       result.rerender(<Template isWebView={false} />);
       expect(result.getByTestId('app-root')).not.toHaveClass(
-        styles['AppRoot--pointer-none'],
-        styles['AppRoot--user-select-none'],
+        styles.pointerNone,
+        styles.userSelectNone,
       );
     });
 
@@ -57,12 +57,12 @@ describe('AppRoot', () => {
       );
 
       expect(result.getByTestId('app-root')).not.toHaveClass(
-        styles['AppRoot--pointer-none'],
-        styles['AppRoot--user-select-none'],
+        styles.pointerNone,
+        styles.userSelectNone,
       );
 
       result.rerender(<AppRoot mode="full" data-testid="app-root" userSelectMode="disabled" />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+      expect(result.getByTestId('app-root')).toHaveClass(styles.userSelectNone);
     });
   });
 

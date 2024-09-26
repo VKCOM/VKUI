@@ -1,4 +1,4 @@
-.SimpleCell {
+.host {
   --vkui_internal--SimpleCell-before-inline-padding-end: var(--vkui--spacing_size_xl);
 
   display: flex;
@@ -10,19 +10,19 @@
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-.SimpleCell--mult {
+.mult {
   white-space: normal;
 }
 
-.SimpleCell--mult .SimpleCell__children {
+.mult .children {
   text-overflow: initial;
 }
 
-.SimpleCell--disabled {
+.disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.SimpleCell__before {
+.before {
   display: flex;
   align-items: center;
   padding-block: var(--vkui--spacing_size_s);
@@ -31,20 +31,20 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.SimpleCell__before > :global(.vkuiIcon) {
+.before > :global(.vkuiIcon) {
   padding-inline-end: var(--vkui--spacing_size_xs);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.SimpleCell__before--ios > :global(.vkuiIcon) {
+.beforeIos > :global(.vkuiIcon) {
   padding-inline-end: 0;
 }
 
-.SimpleCell__before:empty {
+.before:empty {
   display: none;
 }
 
-.SimpleCell__middle {
+.middle {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,25 +56,25 @@
 }
 
 /* stylelint-disable-next-line selector-max-universal -- gap: 2px */
-.SimpleCell__middle > *:not(:first-child) {
+.middle > *:not(:first-child) {
   margin-block-start: var(--vkui--spacing_size_2xs);
 }
 
-.SimpleCell__subhead {
+.subhead {
   color: var(--vkui--color_text_subhead);
 }
 
-.SimpleCell__text {
+.text {
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.SimpleCell__subtitle,
-.SimpleCell__extraSubtitle {
+.subtitle,
+.extraSubtitle {
   color: var(--vkui--color_text_secondary);
 }
 
-.SimpleCell .SimpleCell__content {
+.host .content {
   display: flex;
   align-content: flex-start;
   align-items: center;
@@ -82,23 +82,23 @@
   max-inline-size: 100%;
 }
 
-.SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
+.host:not(.mult) .content {
   justify-content: flex-start;
 }
 
-.SimpleCell__children {
+.children {
   color: inherit;
   text-overflow: ellipsis;
   overflow: hidden;
   display: block;
 }
 
-.SimpleCell--mult .SimpleCell__children,
-.SimpleCell--mult .SimpleCell__subtitle {
+.mult .children,
+.mult .subtitle {
   flex: 1 1 auto;
 }
 
-.SimpleCell__badge {
+.badge {
   display: inline-block;
   flex-grow: 0;
   flex-shrink: 0;
@@ -106,11 +106,11 @@
 }
 
 /* stylelint-disable-next-line selector-max-universal -- gap: 4px */
-.SimpleCell__content > *:not(:last-child) {
+.content > *:not(:last-child) {
   margin-inline-end: var(--vkui--spacing_size_xs);
 }
 
-.SimpleCell__indicator {
+.indicator {
   flex-shrink: 0;
   color: var(--vkui--color_text_secondary);
   min-inline-size: 0;
@@ -120,7 +120,7 @@
   padding-inline-start: var(--vkui--spacing_size_xl);
 }
 
-.SimpleCell__after {
+.after {
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -128,16 +128,16 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.SimpleCell__after > :global(.vkuiIcon) {
+.after > :global(.vkuiIcon) {
   padding-inline-start: var(--vkui--spacing_size_m);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.SimpleCell__after > :global(.vkuiIcon):last-child {
+.after > :global(.vkuiIcon):last-child {
   padding-inline-end: var(--vkui--spacing_size_2xs);
 }
 
-.SimpleCell__chevronIcon {
+.chevronIcon {
   color: var(--vkui--color_icon_tertiary);
   padding-inline-start: var(--vkui--spacing_size_xl);
 }
@@ -146,20 +146,20 @@
  * sizeY === 'compact'
  */
 
-.SimpleCell--sizeY-compact {
+.sizeYCompact {
   min-block-size: 44px;
 }
 
-.SimpleCell--sizeY-compact .SimpleCell__before {
+.sizeYCompact .before {
   padding-block: var(--vkui--spacing_size_xs);
 }
 
 @media (--sizeY-compact) {
-  .SimpleCell--sizeY-none {
+  .sizeYNone {
     min-block-size: 44px;
   }
 
-  .SimpleCell--sizeY-none .SimpleCell__before {
+  .sizeYNone .before {
     padding-block: var(--vkui--spacing_size_xs);
   }
 }
@@ -169,7 +169,7 @@
  * FormItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem) > .SimpleCell {
+:global(.vkuiInternalFormItem) > .host {
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }

@@ -15,9 +15,9 @@ import { ModalPageContext } from './ModalPageContext';
 import styles from './ModalPage.module.css';
 
 const sizeClassName = {
-  s: styles['ModalPage--size-s'],
-  m: styles['ModalPage--size-m'],
-  l: styles['ModalPage--size-l'],
+  s: styles.sizeS,
+  m: styles.sizeM,
+  l: styles.sizeL,
 };
 
 export interface ModalPageProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
@@ -138,35 +138,35 @@ export const ModalPage = ({
         aria-labelledby={contextValue.labelId}
         id={id}
         baseClassName={classNames(
-          styles['ModalPage'],
-          platform === 'ios' && styles['ModalPage--ios'],
-          isDesktop && styles['ModalPage--desktop'],
+          styles.host,
+          platform === 'ios' && styles.ios,
+          isDesktop && styles.desktop,
           sizeX === 'regular' && 'vkuiInternalModalPage--sizeX-regular',
           typeof size === 'string' && sizeClassName[size],
         )}
       >
         <div
-          className={styles['ModalPage__in-wrap']}
+          className={styles.inWrap}
           style={{
             maxWidth: typeof size === 'number' ? size : undefined,
             height,
           }}
           ref={refs.innerElement}
         >
-          <div className={styles['ModalPage__in']}>
-            <div className={styles['ModalPage__header']} ref={refs.headerElement}>
+          <div className={styles.in}>
+            <div className={styles.header} ref={refs.headerElement}>
               {header}
             </div>
 
-            <div className={styles['ModalPage__content-wrap']}>
+            <div className={styles.contentWrap}>
               <div
-                className={styles['ModalPage__content']}
+                className={styles.content}
                 ref={multiRef<HTMLDivElement>(refs.contentElement, getModalContentRef)}
                 {...(modalContentTestId && { 'data-testid': modalContentTestId })}
               >
-                <div className={styles['ModalPage__content-in']}>{children}</div>
+                <div className={styles.contentIn}>{children}</div>
               </div>
-              <div ref={refs.bottomInset} className={styles['ModalPage__bottom-inset']} />
+              <div ref={refs.bottomInset} className={styles.bottomInset} />
             </div>
             {isCloseButtonShown && (
               <ModalDismissButton

@@ -1,4 +1,4 @@
-.CalendarHeader {
+.host {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,17 +6,17 @@
   min-block-size: 36px;
 }
 
-.CalendarHeader__pickers {
+.pickers {
   display: flex;
   position: absolute;
   color: var(--vkui--color_text_primary);
 }
 
-.CalendarHeader__picker + .CalendarHeader__picker {
+.picker + .picker {
   margin-inline-start: 4px;
 }
 
-.CalendarHeader__nav-icon {
+.navIcon {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -24,18 +24,18 @@
   padding: 3px;
 }
 
-.CalendarHeader__nav-icon--accent {
+.navIconAccent {
   color: var(--vkui--color_icon_accent);
 }
 
-.CalendarHeader__nav-icon-next {
+.navIconNext {
   inset-inline-end: 0;
 }
 
-.CalendarHeader__nav-icon-prev {
+.navIconPrev {
   inset-inline-start: 0;
 }
 
-.CalendarHeader__month {
+.month {
   text-transform: capitalize;
 }

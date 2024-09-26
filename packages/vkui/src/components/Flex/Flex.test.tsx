@@ -34,25 +34,25 @@ describe(Flex, () => {
         props: {
           noWrap: false,
         },
-        className: styles['Flex--wrap'],
+        className: styles.wrap,
       },
       {
         props: {
           reverse: true,
         },
-        className: styles['Flex--reverse'],
+        className: styles.reverse,
       },
       {
         props: {
           direction: 'column',
         },
-        className: styles['Flex--direction-column'],
+        className: styles.directionColumn,
       },
       {
         props: {
           margin: 'auto',
         },
-        className: styles['Flex--margin-auto'],
+        className: styles.marginAuto,
       },
       {
         props: {
@@ -70,13 +70,13 @@ describe(Flex, () => {
         props: {
           align: 'center',
         },
-        className: styles['Flex--align-center'],
+        className: styles.alignCenter,
       },
       {
         props: {
           justify: 'center',
         },
-        className: styles['Flex--justify-center'],
+        className: styles.justifyCenter,
       },
     ])('should have className $className with props $props', ({ props, className }) => {
       render(

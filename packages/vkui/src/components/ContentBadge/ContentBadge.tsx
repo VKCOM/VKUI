@@ -11,36 +11,36 @@ import styles from './ContentBadge.module.css';
 
 const appearanceClassNames = {
   'accent': {
-    primary: styles['ContentBadge--primary-accent'],
-    secondary: styles['ContentBadge--secondary-accent'],
-    outline: styles['ContentBadge--outline-accent'],
+    primary: styles.primaryAccent,
+    secondary: styles.secondaryAccent,
+    outline: styles.outlineAccent,
   },
   'neutral': {
-    primary: styles['ContentBadge--primary-neutral'],
-    secondary: styles['ContentBadge--secondary-neutral'],
-    outline: styles['ContentBadge--outline-neutral'],
+    primary: styles.primaryNeutral,
+    secondary: styles.secondaryNeutral,
+    outline: styles.outlineNeutral,
   },
   'accent-green': {
-    primary: styles['ContentBadge--primary-accent-green'],
-    secondary: styles['ContentBadge--secondary-accent-green'],
-    outline: styles['ContentBadge--outline-accent-green'],
+    primary: styles.primaryAccentGreen,
+    secondary: styles.secondaryAccentGreen,
+    outline: styles.outlineAccentGreen,
   },
   'accent-red': {
-    primary: styles['ContentBadge--primary-accent-red'],
-    secondary: styles['ContentBadge--secondary-accent-red'],
-    outline: styles['ContentBadge--outline-accent-red'],
+    primary: styles.primaryAccentRed,
+    secondary: styles.secondaryAccentRed,
+    outline: styles.outlineAccentRed,
   },
   'overlay': {
-    primary: styles['ContentBadge--primary-overlay'],
-    secondary: styles['ContentBadge--secondary-overlay'],
-    outline: styles['ContentBadge--outline-overlay'],
+    primary: styles.primaryOverlay,
+    secondary: styles.secondaryOverlay,
+    outline: styles.outlineOverlay,
   },
 };
 
 const sizeClassNames = {
-  s: styles['ContentBadge--size-s'],
-  m: styles['ContentBadge--size-m'],
-  l: styles['ContentBadge--size-l'],
+  s: styles.sizeS,
+  m: styles.sizeM,
+  l: styles.sizeL,
 };
 
 export interface ContentBadgeProps
@@ -104,9 +104,9 @@ export const ContentBadge: React.FC<ContentBadgeProps> & {
       normalize
       className={classNames(
         className,
-        styles.ContentBadge,
-        size !== 's' && capsule && styles['ContentBadge--capsule'],
-        mode === 'outline' && styles['ContentBadge--mode-outline'],
+        styles.host,
+        size !== 's' && capsule && styles.capsule,
+        mode === 'outline' && styles.modeOutline,
         appearanceClassNames[appearance][mode],
         sizeClassNames[size],
       )}

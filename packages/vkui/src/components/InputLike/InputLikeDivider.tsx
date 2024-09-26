@@ -8,7 +8,7 @@ export const InputLikeDivider = ({
   ...props
 }: React.InputHTMLAttributes<HTMLSpanElement>): React.ReactNode => {
   return (
-    <span className={classNames(styles['InputLike__divider'], className)} {...props}>
+    <span className={classNames(styles.divider, className)} {...props}>
       {children}
     </span>
   );

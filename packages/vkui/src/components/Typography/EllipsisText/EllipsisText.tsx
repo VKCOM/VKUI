@@ -46,14 +46,11 @@ const EllipsisText = ({
   }, [contentRef, maxLines]);
 
   return (
-    <span ref={getRootRef} className={classNames(styles['EllipsisText'], className)} {...restProps}>
+    <span ref={getRootRef} className={classNames(styles.host, className)} {...restProps}>
       <span
         style={{ maxWidth }}
         ref={contentRef}
-        className={classNames(
-          styles['EllipsisText__content'],
-          maxLines > 1 && styles['EllipsisText__content--multiline'],
-        )}
+        className={classNames(styles.content, maxLines > 1 && styles.contentMultiline)}
       >
         {children}
       </span>

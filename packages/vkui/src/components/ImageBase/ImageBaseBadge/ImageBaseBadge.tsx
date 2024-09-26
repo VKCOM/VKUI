@@ -18,8 +18,8 @@ function DevelopmentCheck({ children }: Pick<ImageBaseBadgeProps, 'children'>) {
 }
 
 const backgroundStyles = {
-  stroke: styles['ImageBaseBadge--background-stroke'],
-  shadow: styles['ImageBaseBadge--background-shadow'],
+  stroke: styles.backgroundStroke,
+  shadow: styles.backgroundShadow,
 };
 
 export interface ImageBaseBadgeProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -57,7 +57,7 @@ export const ImageBaseBadge: React.FC<ImageBaseBadgeProps> = ({
     <>
       <RootComponent
         {...restProps}
-        baseClassName={classNames(styles['ImageBaseBadge'], backgroundStyles[background])}
+        baseClassName={classNames(styles.host, backgroundStyles[background])}
       />
       {process.env.NODE_ENV === 'development' && (
         <DevelopmentCheck>{restProps.children}</DevelopmentCheck>

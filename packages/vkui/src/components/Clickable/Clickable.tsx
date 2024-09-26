@@ -112,7 +112,7 @@ const RealClickable = <T,>({
     <RootComponent
       baseClassName={classNames(
         baseClassName,
-        styles['Clickable__realClickable'],
+        styles.realClickable,
         focusVisibleClassNames,
         stateClassName,
       )}
@@ -175,10 +175,10 @@ function component<T>({
 
 const getUserAgentResetClassName = (Component?: React.ElementType) => {
   if (Component === 'a') {
-    return styles.Clickable__resetLinkStyle;
+    return styles.resetLinkStyle;
   }
   if (Component === 'button') {
-    return styles.Clickable__resetButtonStyle;
+    return styles.resetButtonStyle;
   }
   return;
 };
@@ -205,7 +205,7 @@ export const Clickable = <T,>({
   const baseClassName = classNames(
     baseClassNameProp,
     getUserAgentResetClassName(commonProps.Component),
-    styles['Clickable__host'],
+    styles.host,
   );
 
   if (isClickable) {

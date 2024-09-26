@@ -1,12 +1,12 @@
-.AccordionSummary__icon {
+.icon {
   color: var(--vkui--color_icon_secondary);
 }
 
-.AccordionContent {
+.host {
   overflow: hidden;
 }
 
-.AccordionContent__in {
+.in {
   --vkui_internal--AccordionContent_height: initial;
 
   animation-duration: 100ms;
@@ -15,37 +15,37 @@
 }
 
 @media (--reduce-motion) {
-  .AccordionContent__in {
+  .in {
     animation-duration: 300ms;
     animation-timing-function: linear;
   }
 }
 
-.AccordionContent__in--enter {
+.inEnter {
   animation-name: animation-accordion-expand;
 }
 
 @media (--reduce-motion) {
-  .AccordionContent__in--enter {
+  .inEnter {
     animation-name: animation-accordion-fade-in;
   }
 }
 
-.AccordionContent__in--entered {
+.inEntered {
   block-size: var(--vkui_internal--AccordionContent_height);
 }
 
-.AccordionContent__in--exit {
+.inExit {
   animation-name: animation-accordion-collapse;
 }
 
 @media (--reduce-motion) {
-  .AccordionContent__in--exit {
+  .inExit {
     animation-name: animation-accordion-fade-out;
   }
 }
 
-.AccordionContent__in--exited {
+.inExited {
   block-size: 0;
 }
 

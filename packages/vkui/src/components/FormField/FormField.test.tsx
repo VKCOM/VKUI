@@ -38,11 +38,7 @@ describe('FormField', () => {
       </FormField>,
     );
 
-    expect(screen.getByTestId('before').parentElement).toHaveClass(
-      styles['FormField__icon--align-start'],
-    );
-    expect(screen.getByTestId('after').parentElement).toHaveClass(
-      styles['FormField__icon--align-end'],
-    );
+    expect(screen.getByTestId('before').parentElement).toHaveClass(styles.iconAlignStart);
+    expect(screen.getByTestId('after').parentElement).toHaveClass(styles.iconAlignEnd);
   });
 });

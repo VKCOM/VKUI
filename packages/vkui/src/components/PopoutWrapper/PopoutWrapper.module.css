@@ -1,4 +1,4 @@
-.PopoutWrapper {
+.host {
   inline-size: 100%;
   block-size: 100%;
   box-sizing: border-box;
@@ -7,19 +7,19 @@
   pointer-events: none;
 }
 
-.PopoutWrapper--opened {
+.opened {
   pointer-events: initial;
 }
 
-.PopoutWrapper--closing {
+.closing {
   pointer-events: none;
 }
 
-.PopoutWrapper--fixed {
+.fixed {
   position: fixed;
 }
 
-.PopoutWrapper__overlay {
+.overlay {
   position: fixed;
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -28,25 +28,25 @@
   opacity: 1;
 }
 
-.PopoutWrapper--opened .PopoutWrapper__overlay {
+.opened .overlay {
   animation: animation-full-fade-in var(--vkui--animation_duration_m) ease both;
 }
 
-.PopoutWrapper--closing .PopoutWrapper__overlay {
+.closing .overlay {
   opacity: 0;
   /* prettier-ignore */
   animation: animation-full-fade-out var(--vkui--animation_duration_m) var(--vkui--animation_easing_default) both;
 }
 
-.PopoutWrapper--masked .PopoutWrapper__overlay {
+.masked .overlay {
   background: var(--vkui--color_overlay_primary);
 }
 
-.PopoutWrapper--fixed .PopoutWrapper__overlay {
+.fixed .overlay {
   position: absolute;
 }
 
-.PopoutWrapper__container {
+.container {
   inline-size: 100%;
   block-size: 100%;
   position: relative;
@@ -54,7 +54,7 @@
   box-sizing: border-box;
 }
 
-.PopoutWrapper__content {
+.content {
   display: flex;
   justify-content: center;
   inline-size: 100%;
@@ -63,31 +63,31 @@
 }
 
 /* stylelint-disable-next-line selector-max-universal */
-.PopoutWrapper__content > * {
+.content > * {
   pointer-events: auto;
 }
 
-.PopoutWrapper--alignY-center .PopoutWrapper__container {
+.alignYCenter .container {
   align-items: center;
 }
 
-.PopoutWrapper--alignY-bottom .PopoutWrapper__container {
+.alignYBottom .container {
   align-items: flex-end;
 }
 
-.PopoutWrapper--alignY-top .PopoutWrapper__container {
+.alignYTop .container {
   align-items: flex-start;
 }
 
-.PopoutWrapper--alignX-center .PopoutWrapper__container {
+.alignXCenter .container {
   justify-content: center;
 }
 
-.PopoutWrapper--alignX-left .PopoutWrapper__container {
+.alignXLeft .container {
   justify-content: flex-start;
 }
 
-.PopoutWrapper--alignX-right .PopoutWrapper__container {
+.alignXRight .container {
   justify-content: flex-end;
 }
 

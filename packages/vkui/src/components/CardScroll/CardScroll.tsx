@@ -94,10 +94,10 @@ export const CardScroll = ({
       {...restProps}
       Component={Component}
       baseClassName={classNames(
-        styles['CardScroll'],
+        styles.host,
         'vkuiInternalCardScroll',
         size !== false && stylesSize[size],
-        !noSpaces && styles['CardScroll--withSpaces'],
+        !noSpaces && styles.withSpaces,
       )}
     >
       <HorizontalScroll
@@ -105,10 +105,10 @@ export const CardScroll = ({
         getScrollToRight={getScrollToRight}
         showArrows={showArrows}
       >
-        <div className={styles['CardScroll__in']} ref={refContainer}>
-          <span className={styles['CardScroll__gap']} ref={gapRef} />
+        <div className={styles.in} ref={refContainer}>
+          <span className={styles.gap} ref={gapRef} />
           {children}
-          <span className={styles['CardScroll__gap']} />
+          <span className={styles.gap} />
         </div>
       </HorizontalScroll>
     </RootComponent>

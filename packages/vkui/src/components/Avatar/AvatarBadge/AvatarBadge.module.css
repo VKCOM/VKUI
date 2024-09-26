@@ -1,15 +1,15 @@
-.AvatarBadge {
+.host {
   inset-inline-end: 0;
   inset-block-end: 0;
 }
 
-.AvatarBadge--shifted {
+.shifted {
   inset-inline-end: -2px;
   inset-block-end: -2px;
 }
 
-.AvatarBadge--preset-online,
-.AvatarBadge--preset-onlineMobile {
+.presetOnline,
+.presetOnlineMobile {
   inset-inline-end: 14%;
   inset-block-end: 14%;
   color: var(--vkui--color_accent_green);
@@ -19,10 +19,10 @@
 /**
  * Перебиваем свойства `ImageBaseBadge` для этих кейсов
  */
-.AvatarBadge--preset-online {
+.presetOnline {
   padding: 0;
 }
 
-.AvatarBadge--preset-onlineMobile {
+.presetOnlineMobile {
   border-radius: 3px;
 }

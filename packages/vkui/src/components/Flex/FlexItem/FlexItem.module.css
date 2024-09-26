@@ -1,43 +1,43 @@
-.FlexItem {
+.host {
   /* Пустой класс для CSS Modules (см. CONTRIBUTING.md)  */
 }
 
 /* flex */
 
-.FlexItem--flex-grow {
+.flexGrow {
   flex: 1 0 auto;
 }
 
-.FlexItem--flex-shrink {
+.flexShrink {
   flex: 0 1 auto;
 }
 
-.FlexItem--flex-content {
+.flexContent {
   flex: 1 1 auto;
 }
 
-.FlexItem--flex-fixed {
+.flexFixed {
   flex: 0 0 auto;
 }
 
 /* align-self */
 
-.FlexItem--align-self-start {
+.alignSelfStart {
   align-self: start;
 }
 
-.FlexItem--align-self-end {
+.alignSelfEnd {
   align-self: end;
 }
 
-.FlexItem--align-self-center {
+.alignSelfCenter {
   align-self: center;
 }
 
-.FlexItem--align-self-baseline {
+.alignSelfBaseline {
   align-self: baseline;
 }
 
-.FlexItem--align-self-stretch {
+.alignSelfStretch {
   align-self: stretch;
 }

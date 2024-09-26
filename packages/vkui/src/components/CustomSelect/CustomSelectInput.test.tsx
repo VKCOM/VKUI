@@ -13,35 +13,35 @@ describe(CustomSelectInput, () => {
       props: {
         align: 'right',
       },
-      className: styles['CustomSelectInput--align-right'],
+      className: styles.alignRight,
     },
     {
       props: {
         align: 'center',
       },
-      className: styles['CustomSelectInput--align-center'],
+      className: styles.alignCenter,
     },
     {
       props: {
         multiline: true,
       },
-      className: styles['CustomSelectInput--multiline'],
+      className: styles.multiline,
     },
     {
       props: {
         before: 'before',
       },
-      className: styles['CustomSelectInput--hasBefore'],
+      className: styles.hasBefore,
     },
     {
       props: {
         after: 'after',
       },
-      className: styles['CustomSelectInput--hasAfter'],
+      className: styles.hasAfter,
     },
     {
       props: {},
-      className: styles['CustomSelectInput--empty'],
+      className: styles.empty,
     },
   ])(`should have className $className when props $props`, ({ props, className }) => {
     const ref = {

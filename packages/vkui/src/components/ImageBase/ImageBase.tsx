@@ -92,13 +92,13 @@ export interface ImageBaseProps
 const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
   switch (objectFit) {
     case 'contain':
-      return styles['ImageBase__img--objectFit-contain'];
+      return styles.imgObjectFitContain;
     case 'cover':
-      return styles['ImageBase__img--objectFit-cover'];
+      return styles.imgObjectFitCover;
     case 'none':
-      return styles['ImageBase__img--objectFit-none'];
+      return styles.imgObjectFitNone;
     case 'scale-down':
-      return styles['ImageBase__img--objectFit-scaleDown'];
+      return styles.imgObjectFitScaleDown;
   }
   return undefined;
 };
@@ -209,9 +209,9 @@ export const ImageBase: React.FC<ImageBaseProps> & {
       <Clickable
         style={{ width, height, ...style }}
         baseClassName={classNames(
-          styles['ImageBase'],
-          loaded && styles['ImageBase--loaded'],
-          withTransparentBackground && styles['ImageBase--transparent-background'],
+          styles.host,
+          loaded && styles.loaded,
+          withTransparentBackground && styles.transparentBackground,
         )}
         {...restProps}
       >
@@ -220,9 +220,9 @@ export const ImageBase: React.FC<ImageBaseProps> & {
             ref={imgRef}
             alt={alt}
             className={classNames(
-              styles['ImageBase__img'],
+              styles.img,
               getObjectFitClassName(objectFit),
-              keepAspectRatio && styles['ImageBase__img--keepRatio'],
+              keepAspectRatio && styles.imgKeepRatio,
             )}
             crossOrigin={crossOrigin}
             decoding={decoding}
@@ -247,9 +247,9 @@ export const ImageBase: React.FC<ImageBaseProps> & {
             {...getFetchPriorityProp(fetchPriority)}
           />
         )}
-        {fallbackIcon && <div className={styles['ImageBase__fallback']}>{fallbackIcon}</div>}
-        {children && <div className={styles['ImageBase__children']}>{children}</div>}
-        {!noBorder && <div aria-hidden className={styles['ImageBase__border']} />}
+        {fallbackIcon && <div className={styles.fallback}>{fallbackIcon}</div>}
+        {children && <div className={styles.children}>{children}</div>}
+        {!noBorder && <div aria-hidden className={styles.border} />}
       </Clickable>
     </ImageBaseContext.Provider>
   );

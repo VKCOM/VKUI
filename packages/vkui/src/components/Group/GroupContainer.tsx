@@ -10,20 +10,20 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Group.module.css';
 
 const sizeXClassNames = {
-  none: classNames(styles['Group--sizeX-none'], 'vkuiInternalGroup--sizeX-none'),
-  regular: styles['Group--sizeX-regular'],
-  compact: styles['Group--sizeX-compact'],
+  none: classNames(styles.sizeXNone, 'vkuiInternalGroup--sizeX-none'),
+  regular: styles.sizeXRegular,
+  compact: styles.sizeXCompact,
 };
 
 const stylesMode = {
-  none: classNames(styles['Group--mode-none'], 'vkuiInternalGroup--mode-none'),
-  plain: classNames(styles['Group--mode-plain'], 'vkuiInternalGroup--mode-plain'),
-  card: classNames(styles['Group--mode-card'], 'vkuiInternalGroup--mode-card'),
+  none: classNames(styles.modeNone, 'vkuiInternalGroup--mode-none'),
+  plain: classNames(styles.modePlain, 'vkuiInternalGroup--mode-plain'),
+  card: classNames(styles.modeCard, 'vkuiInternalGroup--mode-card'),
 };
 
 const stylesPadding = {
-  s: styles['Group--padding-s'],
-  m: styles['Group--padding-m'],
+  s: styles.paddingS,
+  m: styles.paddingM,
 };
 
 type GroupMode = 'plain' | 'card' | 'none';
@@ -110,16 +110,14 @@ export const GroupContainer: React.FC<GroupContainerProps> = ({
   let siblingSeparatorElement: React.ReactNode = null;
   switch (separator) {
     case 'auto':
-      siblingSeparatorElement = <div className={styles['Group__separator-sibling']} />;
+      siblingSeparatorElement = <div className={styles.separatorSibling} />;
       break;
     case 'show':
       siblingSeparatorElement = (
         <div
           className={classNames(
-            styles['Group__separator-sibling'],
-            mode === 'plain' || mode === 'none'
-              ? styles['Group__separator-sibling--forced']
-              : undefined,
+            styles.separatorSibling,
+            mode === 'plain' || mode === 'none' ? styles.separatorSiblingForced : undefined,
           )}
         />
       );
@@ -135,9 +133,9 @@ export const GroupContainer: React.FC<GroupContainerProps> = ({
         tabIndex={tabIndex}
         baseClassName={classNames(
           'vkuiInternalGroup',
-          styles['Group'],
+          styles.host,
           sizeXClassNames[sizeX],
-          mode === 'plain' && isInsideModal && styles['Group--mode-plain-inside-modal'],
+          mode === 'plain' && isInsideModal && styles.modePlainInsideModal,
           stylesMode[mode],
           stylesPadding[padding],
         )}

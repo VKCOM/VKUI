@@ -77,7 +77,7 @@ export const Spinner: React.FC<SpinnerProps> = React.memo(
         Component="span"
         role="status"
         {...restProps}
-        baseClassName={classNames(styles['Spinner'], noColor && styles['Spinner--no-color'])}
+        baseClassName={classNames(styles.host, noColor && styles.noColor)}
       >
         <SpinnerIcon>{svgAnimateElement}</SpinnerIcon>
         {hasReactNode(children) && <VisuallyHidden>{children}</VisuallyHidden>}

@@ -503,14 +503,14 @@ describe('ChipsSelect', () => {
     await waitForFloatingPosition();
 
     // dropdown по умолчанию открыт вниз и класс для границ выставлен верно
-    expect(document.querySelector(`.${styles['ChipsSelect--pop-down']}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.popDown}`)).not.toBeNull();
 
     // меняем позиционирование дропдауна вверх
     placementStub = 'top';
     component.rerender(<ChipsSelect options={[FIRST_OPTION, SECOND_OPTION, THIRD_OPTION]} />);
 
     // dropdown открыт вверх и класс для границ выставлен верно
-    expect(document.querySelector(`.${styles['ChipsSelect--pop-up']}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.popUp}`)).not.toBeNull();
 
     // закрываем дропдаун и меняем позиционирование вниз
     await userEvent.click(document.body);
@@ -525,15 +525,14 @@ describe('ChipsSelect', () => {
     await waitForFloatingPosition();
 
     // дропдаун открыт вниз и класс для границ выставлен верно
-    expect(document.querySelector(`.${styles['ChipsSelect--pop-down']}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.popDown}`)).not.toBeNull();
   });
 
   it('check close dropdown when click to dropdown icon', async () => {
     const result = render(
       <ChipsSelect creatable="Добавить новую опцию" options={[]} dropdownTestId="dropdown" />,
     );
-    const getDropdownIcon = () =>
-      result.container.getElementsByClassName(styles['ChipsSelect__dropdown-icon'])[0];
+    const getDropdownIcon = () => result.container.getElementsByClassName(styles.dropdownIcon)[0];
     expect(screen.queryByTestId('dropdown')).toBeFalsy();
     fireEvent.click(getDropdownIcon());
     await waitForFloatingPosition();

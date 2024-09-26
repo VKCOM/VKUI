@@ -1,4 +1,4 @@
-.DateInput__input {
+.input {
   display: block;
   flex-grow: 1;
   align-self: center;
@@ -10,17 +10,17 @@
   font-variant-numeric: tabular-nums;
 }
 
-.DateInput__input--time-divider {
+.inputTimeDivider {
   /* stylelint-disable-next-line declaration-no-important */
   letter-spacing: 6px !important;
 }
 
-.DateInput--sizeY-compact .DateInput__input {
+.sizeYCompact .input {
   margin-inline-end: 22px;
 }
 
 @media (--sizeY-compact) {
-  .DateInput--sizeY-none .DateInput__input {
+  .sizeYNone .input {
     margin-inline-end: 22px;
   }
 }

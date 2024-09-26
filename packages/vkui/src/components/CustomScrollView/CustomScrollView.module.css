@@ -1,11 +1,11 @@
-.CustomScrollView {
+.host {
   inline-size: 100%;
   block-size: 100%;
   overflow: hidden;
   position: relative;
 }
 
-.CustomScrollView__box {
+.box {
   max-block-size: inherit;
   inline-size: 100%;
   block-size: 100%;
@@ -16,51 +16,51 @@
   outline: none;
 }
 
-.CustomScrollView__box--overscrollBehavior-contain {
+.boxOverscrollBehaviorContain {
   overscroll-behavior: contain;
 }
 
-.CustomScrollView__box--overscrollBehavior-none {
+.boxOverscrollBehaviorNone {
   overscroll-behavior: none;
 }
 
-.CustomScrollView__box--horizontalEnabled {
+.boxHorizontalEnabled {
   padding-inline-end: 0;
   overflow-x: scroll;
 }
 
-.CustomScrollView__box-content {
+.boxContent {
   position: relative;
   inline-size: 100%;
   block-size: 100%;
 }
 
-.CustomScrollView__barY:active + .CustomScrollView__box,
-.CustomScrollView__barX:active + .CustomScrollView__box {
+.barY:active + .box,
+.barX:active + .box {
   pointer-events: none;
 }
 
-.CustomScrollView__barY,
-.CustomScrollView__barX {
+.barY,
+.barX {
   position: absolute;
 }
 
-.CustomScrollView__barY {
+.barY {
   inset-block-start: 0;
   inset-inline-end: 0;
   block-size: 100%;
   inline-size: 10px;
 }
 
-.CustomScrollView__barX {
+.barX {
   inset-block-end: 0;
   inset-inline-start: 0;
   inline-size: 100%;
   block-size: 10px;
 }
 
-.CustomScrollView__trackerY,
-.CustomScrollView__trackerX {
+.trackerY,
+.trackerX {
   position: absolute;
   user-select: none;
   box-sizing: border-box;
@@ -68,26 +68,26 @@
   inset-inline-start: 0;
 }
 
-.CustomScrollView__trackerY {
+.trackerY {
   inline-size: 10px;
   padding-block: 4px;
   padding-inline: 0 4px;
 }
 
-.CustomScrollView__trackerX {
+.trackerX {
   block-size: 10px;
   padding-inline: 4px;
   padding-block: 0 4px;
 }
 
-.CustomScrollView__trackerY--hidden,
-.CustomScrollView__trackerX--hidden {
+.trackerYHidden,
+.trackerXHidden {
   opacity: 0;
   transition: opacity 200ms;
 }
 
-.CustomScrollView__trackerY::before,
-.CustomScrollView__trackerX::before {
+.trackerY::before,
+.trackerX::before {
   content: '';
   opacity: 0.48;
   display: block;
@@ -100,14 +100,14 @@
     opacity 200ms;
 }
 
-.CustomScrollView__trackerY:hover::before,
-.CustomScrollView__trackerY:active::before {
+.trackerY:hover::before,
+.trackerY:active::before {
   opacity: 0.8;
   transform: scaleX(1.3333);
 }
 
-.CustomScrollView__trackerX:hover::before,
-.CustomScrollView__trackerX:active::before {
+.trackerX:hover::before,
+.trackerX:active::before {
   opacity: 0.8;
   transform: scaleY(1.3333);
 }
@@ -117,16 +117,16 @@
  * CustomSelectDropdown
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCustomSelectDropdown) .CustomScrollView__box {
+:global(.vkuiInternalCustomSelectDropdown) .box {
   padding-inline-end: 8px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalCustomSelectDropdown--wide) .CustomScrollView__box {
+:global(.vkuiInternalCustomSelectDropdown--wide) .box {
   padding-inline-end: 0;
 }
 
-.CustomScrollView--hasPointer-true .CustomScrollView__box {
+.hasPointerTrue .box {
   /**
    * Для удаление скролла в Firefox.
    * В версии ниже 64 будет виден скролл, но это не ломает функциональность.
@@ -134,12 +134,12 @@
   scrollbar-width: none;
 }
 
-.CustomScrollView--hasPointer-true .CustomScrollView__box::-webkit-scrollbar {
+.hasPointerTrue .box::-webkit-scrollbar {
   display: none;
 }
 
 @media (--pointer-has) {
-  .CustomScrollView--hasPointer-none .CustomScrollView__box {
+  .hasPointerNone .box {
     /**
      * Для удаление скролла в Firefox.
      * В версии ниже 64 будет виден скролл, но это не ломает функциональность.
@@ -147,7 +147,7 @@
     scrollbar-width: none;
   }
 
-  .CustomScrollView--hasPointer-none .CustomScrollView__box::-webkit-scrollbar {
+  .hasPointerNone .box::-webkit-scrollbar {
     display: none;
   }
 }
@@ -155,14 +155,14 @@
 /**
  * Не отрисовываем полосу прокрутки, если у устройства отсутствует мышь
  */
-.CustomScrollView--hasPointer-false .CustomScrollView__barY,
-.CustomScrollView--hasPointer-false .CustomScrollView__barX {
+.hasPointerFalse .barY,
+.hasPointerFalse .barX {
   display: none;
 }
 
 @media (--pointer-has-not) {
-  .CustomScrollView--hasPointer-none .CustomScrollView__barY,
-  .CustomScrollView--hasPointer-none .CustomScrollView__barX {
+  .hasPointerNone .barY,
+  .hasPointerNone .barX {
     display: none;
   }
 }

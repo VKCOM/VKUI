@@ -11,9 +11,9 @@ export type Coords = {
 };
 
 const placementClassNames = {
-  right: styles['FloatingArrow--placement-right'],
-  bottom: styles['FloatingArrow--placement-bottom'],
-  left: styles['FloatingArrow--placement-left'],
+  right: styles.placementRight,
+  bottom: styles.placementBottom,
+  left: styles.placementLeft,
 };
 
 export interface FloatingArrowProps
@@ -59,13 +59,10 @@ export const FloatingArrow = ({
     <div
       ref={getRootRef}
       style={arrowStyles}
-      className={classNames(
-        styles['FloatingArrow'],
-        arrowPlacement && placementClassNames[arrowPlacement],
-      )}
+      className={classNames(styles.host, arrowPlacement && placementClassNames[arrowPlacement])}
       {...restProps}
     >
-      <Icon className={classNames(styles['FloatingArrow__in'], iconClassName)} style={iconStyle} />
+      <Icon className={classNames(styles.in, iconClassName)} style={iconStyle} />
     </div>
   );
 };

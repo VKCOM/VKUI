@@ -1456,7 +1456,7 @@ describe('CustomSelect', () => {
     await waitForFloatingPosition();
 
     // dropdown по умолчанию открыт вниз и класс для границ выставлен верно
-    expect(document.querySelector(`.${styles['CustomSelect--pop-down']}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.popDown}`)).not.toBeNull();
 
     // меняем позиционирование дропдауна вверх
     placementStub = 'top';
@@ -1473,7 +1473,7 @@ describe('CustomSelect', () => {
     );
 
     // dropdown открыт вверх и класс для границ выставлен верно
-    expect(document.querySelector(`.${styles['CustomSelect--pop-up']}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.popUp}`)).not.toBeNull();
 
     // закрываем дропдаун и меняем позиционирование вниз
     fireEvent.blur(screen.getByTestId('select'));
@@ -1498,6 +1498,6 @@ describe('CustomSelect', () => {
     await waitForFloatingPosition();
 
     // дропдаун открыт вниз и класс для границ выставлен верно
-    expect(document.querySelector(`.${styles['CustomSelect--pop-down']}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.popDown}`)).not.toBeNull();
   });
 });
