@@ -61,8 +61,10 @@ export interface SimpleCellOwnProps extends HasComponent {
    */
   disabled?: boolean;
   /**
-   * В режиме `auto` в iOS добавляет chevron справа.
-   * Передавать `always`, если предполагается переход при клике по ячейке.
+   * Управляет видимостью иконки шеврона `›`
+   *
+   * - `auto` - добавляет шеврон справа только для платформы `ios`;
+   * - `always` - всегда показывает шеврон.
    */
   expandable?: 'auto' | 'always';
   /**
