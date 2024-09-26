@@ -13,9 +13,9 @@ const stylesSize = {
 };
 
 const stylesDirection = {
-  'row': styles.directionRow,
-  'row-reverse': styles.directionRowReverse,
-  'column': styles.directionColumn,
+  start: styles.directionRow,
+  end: styles.directionRowReverse,
+  top: styles.directionColumn,
 };
 
 export type UsersStackRenderWrapperProps = {
@@ -49,11 +49,10 @@ export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElemen
    */
   count?: number;
   /**
-   * Определяет положение элементов
-   * Режим `column` рекомендуется использовать с размером `m`
-   * @since 5.3.0
+   * Определяет положение аватаров
+   * Режим `top` рекомендуется использовать с размером `m`
    */
-  direction?: 'row' | 'row-reverse' | 'column';
+  avatarsPosition?: 'start' | 'top' | 'end';
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
@@ -132,7 +131,7 @@ export const UsersStack = ({
   count = Math.max(0, photos.length - visibleCount),
   size = 'm',
   children,
-  direction = 'row',
+  avatarsPosition = 'start',
   ...restProps
 }: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();
@@ -193,7 +192,7 @@ export const UsersStack = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles.host, stylesSize[size], stylesDirection[direction])}
+      baseClassName={classNames(styles.host, stylesSize[size], stylesDirection[avatarsPosition])}
     >
       {(photosElements.length > 0 || othersElement) && (
         <div className={styles.photos} aria-hidden>

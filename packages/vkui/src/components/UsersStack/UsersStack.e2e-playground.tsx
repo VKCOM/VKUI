@@ -16,7 +16,7 @@ export const UsersStackPlayground = (props: ComponentPlaygroundProps) => {
         {
           children: ['Понравилось Анне и ещё XX людям'],
           size: ['s', 'm', 'l'],
-          direction: ['row', 'column', 'row-reverse'],
+          avatarsPosition: ['start', 'top', 'end'],
           photos: [
             [base64Image],
             [base64Image, base64Image],
@@ -27,7 +27,7 @@ export const UsersStackPlayground = (props: ComponentPlaygroundProps) => {
         // при пустом children отсутствуют отступы
         {
           children: [undefined],
-          direction: ['row', 'column', 'row-reverse'],
+          avatarsPosition: ['start', 'top', 'end'],
           photos: [[base64Image, base64Image, base64Image]],
         },
       ]}
