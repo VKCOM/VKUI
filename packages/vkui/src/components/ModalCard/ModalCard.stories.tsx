@@ -141,7 +141,7 @@ export const CardWithComplexContent: Story = {
           ]}
           size="l"
           visibleCount={3}
-          direction="column"
+          avatarsPosition="block-start"
         >
           Алексей, Илья, Михаил
           <br />и ещё 3 человека

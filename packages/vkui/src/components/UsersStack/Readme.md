@@ -33,7 +33,7 @@ const App = () => {
             </UsersStack>
           </Div>
           <Div>
-            <UsersStack direction="row-reverse" photos={[getAvatarUrl('user_lihachyov')]}>
+            <UsersStack avatarsPosition="inline-end" photos={[getAvatarUrl('user_lihachyov')]}>
               Понравилось Муртолу Левзачеву
             </UsersStack>
           </Div>
@@ -74,7 +74,7 @@ const App = () => {
                 getAvatarUrl('user_xyz'),
               ]}
               size="l"
-              direction="column"
+              avatarsPosition="block-start"
             >
               Алексей, Илья, Михаил
               <br />и ещё 3 человека
@@ -114,7 +114,7 @@ const App = () => {
                 { src: getAvatarUrl('user_xyz'), renderWrapper: AvatarWrapper },
               ]}
               size="l"
-              direction="column"
+              avatarsPosition="block-start"
             >
               Иван и ещё 2 ваших друга подписаны
             </UsersStack>

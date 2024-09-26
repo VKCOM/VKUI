@@ -63,7 +63,12 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
           children: [
             <React.Fragment key="userstack">
               <Spacing size={20} />
-              <UsersStack photos={['', '', '', '']} size="l" visibleCount={3} direction="column">
+              <UsersStack
+                photos={['', '', '', '']}
+                size="l"
+                visibleCount={3}
+                avatarsPosition="block-start"
+              >
                 Алексей, Илья, Михаил
                 <br />и ещё 3 человека
               </UsersStack>

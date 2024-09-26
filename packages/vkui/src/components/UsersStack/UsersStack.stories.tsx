@@ -25,7 +25,7 @@ export const Playground: Story = {
   args: {
     children: 'Алексей, Илья, Михаил и ещё 1 человек',
     photos: [getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()],
-    direction: 'row',
+    avatarsPosition: 'inline-start',
   },
 };
 
