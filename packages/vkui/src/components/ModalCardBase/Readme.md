@@ -66,7 +66,7 @@
       }
     >
       <Spacing size={20} />
-      <UsersStack photos={[getAvatarUrl('user_lihachyov')]} avatarsPosition="top">
+      <UsersStack photos={[getAvatarUrl('user_lihachyov')]} avatarsPosition="block-start">
         Понравилось Муртолу Левзачеву
       </UsersStack>
     </ModalCardBase>

@@ -13,9 +13,9 @@ const stylesSize = {
 };
 
 const avatarsPositionStyles = {
-  start: styles.avatarsPositionStart,
-  end: styles.avatarsPositionEnd,
-  top: styles.avatarsPositionTop,
+  'inline-start': styles.avatarsPositionInlineStart,
+  'inline-end': styles.avatarsPositionInlineEnd,
+  'block-start': styles.avatarsPositionBlockStart,
 };
 
 export type UsersStackRenderWrapperProps = {
@@ -50,9 +50,9 @@ export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElemen
   count?: number;
   /**
    * Определяет положение аватаров
-   * Режим `top` рекомендуется использовать с размером `m`
+   * Режим `block-start` рекомендуется использовать с размером `m`
    */
-  avatarsPosition?: 'start' | 'top' | 'end';
+  avatarsPosition?: 'inline-start' | 'block-start' | 'inline-end';
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
@@ -131,7 +131,7 @@ export const UsersStack = ({
   count = Math.max(0, photos.length - visibleCount),
   size = 'm',
   children,
-  avatarsPosition = 'start',
+  avatarsPosition = 'inline-start',
   ...restProps
 }: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();

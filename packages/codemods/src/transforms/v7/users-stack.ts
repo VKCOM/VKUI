@@ -18,9 +18,9 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const newAttributeName = 'avatarsPosition';
 
   const directionToAvatarsPosition: Record<string, string> = {
-    'row': 'start',
-    'row-reverse': 'end',
-    'column': 'top',
+    'row': 'inline-start',
+    'row-reverse': 'inline-end',
+    'column': 'block-start',
   };
 
   const getValueFromAttribute = (attribute: JSXAttribute): string | null => {
