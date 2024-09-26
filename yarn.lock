@@ -3783,7 +3783,7 @@ __metadata:
     autoprefixer: "npm:^10.4.20"
     concurrently: "npm:^9.0.1"
     cross-env: "npm:^7.0.3"
-    css-loader: "npm:^6.10.0"
+    css-loader: "npm:^7.1.2"
     css-minimizer-webpack-plugin: "npm:^7.0.0"
     cssnano: "npm:^7.0.6"
     dotenv: "npm:^16.4.5"
