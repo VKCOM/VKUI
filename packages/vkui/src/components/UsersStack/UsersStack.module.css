@@ -4,11 +4,11 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.directionRowReverse {
+.avatarsPositionEnd {
   flex-direction: row-reverse;
 }
 
-.directionColumn {
+.avatarsPositionTop {
   flex-direction: column;
   justify-content: center;
 }
@@ -58,15 +58,15 @@
   flex: 1;
 }
 
-.directionColumn .text {
+.avatarsPositionTop .text {
   text-align: center;
   margin-block-start: 8px;
 }
 
-.directionRow .text {
+.avatarsPositionStart .text {
   margin-inline-start: 8px;
 }
 
-.directionRowReverse .text {
+.avatarsPositionEnd .text {
   margin-inline-end: 8px;
 }

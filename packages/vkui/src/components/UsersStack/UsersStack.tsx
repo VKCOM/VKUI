@@ -12,10 +12,10 @@ const stylesSize = {
   l: styles.sizeL,
 };
 
-const stylesDirection = {
-  start: styles.directionRow,
-  end: styles.directionRowReverse,
-  top: styles.directionColumn,
+const avatarsPositionStyles = {
+  start: styles.avatarsPositionStart,
+  end: styles.avatarsPositionEnd,
+  top: styles.avatarsPositionTop,
 };
 
 export type UsersStackRenderWrapperProps = {
@@ -192,7 +192,11 @@ export const UsersStack = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles.host, stylesSize[size], stylesDirection[avatarsPosition])}
+      baseClassName={classNames(
+        styles.host,
+        stylesSize[size],
+        avatarsPositionStyles[avatarsPosition],
+      )}
     >
       {(photosElements.length > 0 || othersElement) && (
         <div className={styles.photos} aria-hidden>
