@@ -198,20 +198,23 @@ export const AppRoot = ({
     [scroll],
   );
 
+  const contextValue = React.useMemo(
+    () => ({
+      appRoot: appRootRef,
+      portalRoot: portalRootRef,
+      embedded: mode === 'embedded',
+      mode,
+      disablePortal,
+      layout,
+      get keyboardInput() {
+        return isKeyboardInputActiveRef.current;
+      },
+    }),
+    [disablePortal, isKeyboardInputActiveRef, layout, mode],
+  );
+
   const content = (
-    <AppRootContext.Provider
-      value={{
-        appRoot: appRootRef,
-        portalRoot: portalRootRef,
-        embedded: mode === 'embedded',
-        mode,
-        disablePortal,
-        layout,
-        get keyboardInput() {
-          return isKeyboardInputActiveRef.current;
-        },
-      }}
-    >
+    <AppRootContext.Provider value={contextValue}>
       <ScrollController elRef={appRootRef}>{children}</ScrollController>
     </AppRootContext.Provider>
   );
