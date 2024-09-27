@@ -398,16 +398,22 @@
 }
 
 .modeSecondary.appearanceOverlay {
-  background-color: var(--vkui--color_background_contrast_secondary_alpha);
+  background-color: var(--vkui--color_overlay_primary);
 }
 
-.modeSecondary.appearanceOverlay.hover,
+.modeSecondary.appearanceOverlay.hover {
+  background-color: var(--vkui--color_overlay_primary--hover);
+}
+
+.modeSecondary.appearanceOverlay.active {
+  background-color: var(--vkui--color_overlay_primary--active);
+}
+
 .modeTertiary.appearanceOverlay.hover,
 .modeOutline.appearanceOverlay.hover {
   background-color: var(--vkui--color_background_contrast_secondary_alpha--hover);
 }
 
-.modeSecondary.appearanceOverlay.active,
 .modeTertiary.appearanceOverlay.active,
 .modeOutline.appearanceOverlay.active {
   background-color: var(--vkui--color_background_contrast_secondary_alpha--active);
