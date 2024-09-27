@@ -15,9 +15,9 @@ export class BottomSheetController {
   private readonly scrollableChildrenObserver: UIScrollableChildrenObserver;
   private readonly lowerBound = 75;
 
+  private panState: 'idle' | 'start' | 'moving' = 'idle';
   private pannedEl: HTMLElement | null = null;
-  private isPanStarted = false;
-  private isMoving = false;
+  private rafId: number | null = null;
   // private expanded = false;
 
   private targetHeight = 0;
@@ -39,53 +39,63 @@ export class BottomSheetController {
   }
 
   panStart(event: TouchEvent, currentShiftY: number) {
+    if (this.panState !== 'idle') {
+      return;
+    }
+
     const target = event.target as HTMLElement;
 
     if (hasSelectionWithRangeType(target)) {
       return;
     }
 
-    this.panGestureRecognizer.setStartCoords(event);
-    this.currentShiftY = currentShiftY;
+    this.panState = 'start';
     this.pannedEl = target;
-    this.isPanStarted = true;
+    this.currentShiftY = currentShiftY;
+    this.panGestureRecognizer.setStartCoords(event);
   }
 
   panMove(event: TouchEvent) {
-    if (!this.isPanStarted || hasSelectionWithRangeType(event.target)) {
+    if (this.panState === 'idle') {
       return;
     }
 
     this.panGestureRecognizer.setInitialTimeOnce();
     this.panGestureRecognizer.setEndCoords(event);
 
-    const scheduleCallingShouldStartMovingFn = () => {
-      if (this.canStartMoving(this.getPanDirection())) {
+    if (this.panState === 'moving') {
+      if (event.cancelable) {
         event.preventDefault();
-
-        if (this.targetHeight === 0) {
-          this.targetHeight = this.targetEl.offsetHeight;
-        }
-
-        const { y1, y2 } = this.panGestureRecognizer;
-        const offsetPercent = y2 - y1 - MINIMUM_DISTANCE_FOR_MOVING_START;
-        this.nextShiftY = (offsetPercent / this.targetEl.offsetHeight) * 100;
-        this.nextShiftY += this.currentShiftY;
-        this.nextShiftY = rubberbandIfOutOfBounds(this.nextShiftY, 0, 100);
-
-        if (this.currentShiftY !== this.nextShiftY) {
-          this.isMoving = true;
-          this.animationBackdropController.setInlineStyles(this.nextShiftY);
-          this.animationTargetController.setInlineStyles(this.nextShiftY);
-        }
       }
-    };
 
-    requestAnimationFrame(scheduleCallingShouldStartMovingFn);
+      if (this.rafId === null) {
+        this.rafId = requestAnimationFrame(this.scheduleCallingShouldStartMovingFn);
+      }
+    } else {
+      if (
+        this.shouldBePreventedIfPanGestureDistanceIsNotAsExpected() ||
+        // Может быть `null` если нажали на Shadow DOM.
+        this.pannedEl === null ||
+        this.shouldBePreventedIfPannedElIsScrolling(this.pannedEl) ||
+        this.shouldBePreventedIfPannedElIsExternal(this.pannedEl) ||
+        this.shouldBePreventedByDataAttribute(this.pannedEl)
+      ) {
+        return;
+      }
+
+      this.panState = 'moving';
+      this.targetHeight = this.targetEl.offsetHeight;
+      this.panGestureRecognizer.setStartCoords(event);
+    }
   }
 
   panEnd() {
-    if (this.isMoving) {
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+
+    if (this.panState === 'moving') {
       if (this.nextShiftY > this.lowerBound || this.isPanGestureForClose()) {
         this.onClose();
       } else {
@@ -96,8 +106,7 @@ export class BottomSheetController {
       }
     }
 
-    this.isPanStarted = false;
-    this.isMoving = false;
+    this.panState = 'idle';
     this.targetHeight = 0;
     this.nextShiftY = 0;
     this.pannedEl = null;
@@ -112,77 +121,61 @@ export class BottomSheetController {
     this.scrollableChildrenObserver.unobserve();
   }
 
-  private canStartMoving(panDirection?: 'up' | 'down') {
-    const hasExpectedPanGestureDistance =
-      this.panGestureRecognizer.distance() > MINIMUM_DISTANCE_FOR_MOVING_START;
+  private readonly scheduleCallingShouldStartMovingFn = () => {
+    const { y1, y2 } = this.panGestureRecognizer;
+    const offsetPercent = y2 - y1;
 
-    if (!hasExpectedPanGestureDistance) {
-      return false;
+    this.nextShiftY = (offsetPercent / this.targetEl.offsetHeight) * 100;
+    this.nextShiftY += this.currentShiftY;
+    this.nextShiftY = rubberbandIfOutOfBounds(this.nextShiftY, 0, 100);
+
+    if (this.currentShiftY !== this.nextShiftY) {
+      this.animationBackdropController.setInlineStyles(this.nextShiftY);
+      this.animationTargetController.setInlineStyles(this.nextShiftY);
     }
 
-    if (this.checkScrollablePredicates()) {
-      return false;
-    }
-
-    switch (panDirection) {
-      case 'up':
-        if (this.scrollableChildrenObserver.hasYScroll) {
-          return this.currentShiftY !== 0;
-        }
-
-        return true;
-      case 'down':
-      default:
-        return true;
-    }
-  }
-
-  private checkScrollablePredicates() {
-    if (!this.pannedEl) {
-      return false;
-    }
-
-    this.scrollableChildrenObserver.observeOnce(this.targetEl, this.pannedEl);
-
-    if (!this.scrollableChildrenObserver.isScrollable) {
-      return false;
-    }
-
-    if (this.scrollableChildrenObserver.isScrolling) {
-      return true;
-    }
-
-    if (this.scrollableChildrenObserver.hasXScroll) {
-      const delta = this.panGestureRecognizer.delta();
-
-      if (Math.abs(delta.x) > Math.abs(delta.y)) {
-        return true;
-      }
-    }
-
-    if (this.scrollableChildrenObserver.hasYScroll) {
-      return this.scrollableChildrenObserver.isYScrolled;
-    }
-
-    return false;
-  }
-
-  private getPanDirection() {
-    const delta = this.panGestureRecognizer.delta();
-    if (delta.y > 0) {
-      return 'down';
-    } else if (delta.y < 0) {
-      return 'up';
-    }
-    return;
-  }
+    this.rafId = null;
+  };
 
   private isPanGestureForClose() {
-    if (this.getPanDirection() !== 'down') {
+    const panDirection = this.panGestureRecognizer.direction();
+    if (panDirection.axis !== 'y' || panDirection.direction !== 1) {
       return false;
     }
 
     const velocity = this.panGestureRecognizer.velocity();
     return velocity.y >= MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE;
+  }
+
+  private shouldBePreventedIfPanGestureDistanceIsNotAsExpected() {
+    return this.panGestureRecognizer.distance() < MINIMUM_DISTANCE_FOR_MOVING_START;
+  }
+
+  private shouldBePreventedIfPannedElIsExternal(pannedEl: HTMLElement) {
+    return !this.targetEl.contains(pannedEl);
+  }
+
+  private shouldBePreventedByDataAttribute(pannedEl: HTMLElement) {
+    // eslint-disable-next-line no-restricted-properties
+    return pannedEl.closest('[data-vkui-prevent-swipe=true]');
+  }
+
+  private shouldBePreventedIfPannedElIsScrolling(pannedEl: HTMLElement) {
+    this.scrollableChildrenObserver.observeOnce(this.targetEl, pannedEl);
+
+    if (this.scrollableChildrenObserver.isScrollable) {
+      if (this.scrollableChildrenObserver.isScrolling) {
+        return true;
+      }
+
+      const panDirection = this.panGestureRecognizer.direction();
+      return (
+        (this.scrollableChildrenObserver.hasXScroll && panDirection.axis === 'x') ||
+        (this.scrollableChildrenObserver.hasYScroll &&
+          (panDirection.direction === -1 || this.scrollableChildrenObserver.isYScrolled))
+      );
+    }
+
+    return false;
   }
 }

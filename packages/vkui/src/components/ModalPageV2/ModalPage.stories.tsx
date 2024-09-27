@@ -109,7 +109,20 @@ export const DynamicModalPage: Story = {
                   </div>
                 </HorizontalScroll>
               </Group>
-              <CustomSelect options={cities} forceDropdownPortal={false} />
+              <FormItem>
+                <CustomSelect
+                  options={cities}
+                  placeholder="forceDropdownPortal={false}"
+                  forceDropdownPortal={false}
+                />
+              </FormItem>
+              {/* <FormItem>
+                <CustomSelect
+                  options={cities}
+                  placeholder="forceDropdownPortal={true}"
+                  forceDropdownPortal={true}
+                />
+              </FormItem> */}
               <Div>
                 But I must explain to you how all this mistaken idea of denouncing pleasure and
                 praising pain was born and I will give you a complete account of the system, and
