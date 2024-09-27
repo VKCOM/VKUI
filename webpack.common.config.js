@@ -49,7 +49,7 @@ const rules = [
     exclude: sandbox ? new RegExp(`${sandbox}|\\.module\\.css$`) : /\.module\.css$/,
     use: [
       styleLoader,
-      'css-loader',
+      { loader: 'css-loader', options: { modules: false } },
       {
         loader: 'postcss-loader',
         options: {
@@ -69,6 +69,9 @@ const rules = [
         loader: 'css-loader',
         options: {
           modules: {
+            // см. https://github.com/webpack-contrib/css-loader/blob/v7.1.0/CHANGELOG.md
+            namedExport: false,
+            exportLocalsConvention: 'as-is',
             localIdentName: '[folder]__[local]--[hash:base64:5]',
           },
         },
@@ -94,6 +97,7 @@ if (sandbox) {
       {
         loader: 'css-loader',
         options: {
+          modules: false,
           importLoaders: 1,
         },
       },
