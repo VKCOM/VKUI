@@ -11,7 +11,7 @@ import {
   subMonths,
 } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
-import { isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
+import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { CalendarDays, type CalendarDaysProps } from '../CalendarDays/CalendarDays';
 import { CalendarHeader, type CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
@@ -113,17 +113,18 @@ export const CalendarRange = ({
   const getNewValue = React.useCallback(
     (date: Date): DateRangeType => {
       const isValueEmpty = !value || (value[0] === null && value[1] === null);
-      if (isValueEmpty) {
+      const isRangeSelected = value && !!value[0] && !!value[1];
+      if (isValueEmpty || isRangeSelected) {
         return [date, null];
       }
 
-      const [start, end] = value;
-      if ((start && isSameDay(date, start)) || (end && isSameDay(date, end))) {
-        return [setTimeEqual(date, start), setTimeEqual(date, end)];
+      const [start] = value;
+      if (start && isSameDay(date, start)) {
+        return [startOfDay(start), endOfDay(start)];
       } else if (start && isBefore(date, start)) {
-        return [setTimeEqual(date, start), end];
+        return [startOfDay(date), endOfDay(start)];
       } else if (start && isAfter(date, start)) {
-        return [start, setTimeEqual(date, end)];
+        return [start, endOfDay(date)];
       }
       return value;
     },
