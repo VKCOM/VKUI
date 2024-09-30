@@ -53,8 +53,6 @@ export interface HorizontalScrollProps
   scrollOnAnyWheel?: boolean;
   /**
    * Задает потомкам инлайновое положение (горизонально)
-   *
-   * TODO [>=7]: Сделать по умолчанию `true` (или удалить, применяя стили всегда)
    */
   inline?: boolean;
 }
