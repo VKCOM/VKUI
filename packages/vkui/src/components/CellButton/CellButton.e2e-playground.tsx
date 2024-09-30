@@ -21,6 +21,7 @@ export const CellButtonPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           before: [
+            undefined,
             <Avatar key={40} size={40}>
               <Icon24Add />
             </Avatar>,
