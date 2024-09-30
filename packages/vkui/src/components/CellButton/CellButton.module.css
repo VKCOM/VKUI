@@ -45,14 +45,26 @@
   padding-inline-end: var(--vkui--spacing_size_m);
 }
 
-.host {
+.appearanceNeutral {
+  --vkui_internal--icon_color: var(--vkui--color_icon_primary);
+
+  color: var(--vkui--color_text_primary);
+}
+
+.appearanceAccent {
   --vkui_internal--icon_color: var(--vkui--color_icon_accent_themed);
 
   color: var(--vkui--color_text_accent_themed);
 }
 
-.modeDanger {
+.appearanceNegative {
   --vkui_internal--icon_color: var(--vkui--color_text_negative);
 
   color: var(--vkui--color_text_negative);
+}
+
+.appearanceAccentInvariable {
+  --vkui_internal--icon_color: var(--vkui--color_icon_accent);
+
+  color: var(--vkui--color_text_accent);
 }
