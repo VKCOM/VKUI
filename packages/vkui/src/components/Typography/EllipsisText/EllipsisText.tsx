@@ -7,7 +7,7 @@ import type { RootComponentProps } from '../../RootComponent/RootComponent';
 import styles from './EllipsisText.module.css';
 
 export interface EllipsisTextProps
-  extends RootComponentProps<HTMLElement>,
+  extends Omit<RootComponentProps<HTMLElement>, 'title'>,
     HasRootRef<HTMLElement> {
   /**
    * Пользовательская маскимальная ширина.
