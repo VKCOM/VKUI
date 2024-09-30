@@ -3830,8 +3830,8 @@ __metadata:
     stylelint-use-logical: "npm:^2.1.2"
     stylelint-value-no-unknown-custom-properties: "npm:^6.0.1"
     swc-loader: "npm:^0.2.6"
-    swc-plugin-css-modules: "npm:0.1.18"
-    swc-plugin-transform-remove-imports: "npm:1.20.0"
+    swc-plugin-css-modules: "npm:0.1.19"
+    swc-plugin-transform-remove-imports: "npm:1.21.0"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.6.2"
     typescript-plugin-css-modules: "npm:^5.1.0"
@@ -15359,17 +15359,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-plugin-css-modules@npm:0.1.18":
-  version: 0.1.18
-  resolution: "swc-plugin-css-modules@npm:0.1.18"
-  checksum: 10/66f4ed1ae27b8e14a454d996e6d605a5cbefc97667810f3e1b3c4ec053ec78bb67f43423aab68e478809cea658b8659b034e6e132a3b51965b9d8900e3852908
+"swc-plugin-css-modules@npm:0.1.19":
+  version: 0.1.19
+  resolution: "swc-plugin-css-modules@npm:0.1.19"
+  checksum: 10/41e0b7660b9ac588ab2098475ec10bc70de0f58a1091a8d7df802cc61ebc92433ff96e66006967407426316460fabf7e3ce9b4f9e24ee4aee1a183968be2e419
   languageName: node
   linkType: hard
 
-"swc-plugin-transform-remove-imports@npm:1.20.0":
-  version: 1.20.0
-  resolution: "swc-plugin-transform-remove-imports@npm:1.20.0"
-  checksum: 10/f8ac80a983df0af7cf00f3075248a7ff4fc07e6fb92d70843dda0200672f23de01095f054f241912f110fd2bd3acba720275d63f7946da60fa23dbc611689dc8
+"swc-plugin-transform-remove-imports@npm:1.21.0":
+  version: 1.21.0
+  resolution: "swc-plugin-transform-remove-imports@npm:1.21.0"
+  checksum: 10/c586f45033ff119452ce704df520547832991326480e78dca8433ebc7beaad2126d7546179a55e7c41266b69f2f6194f8fe9a1298f7e729a68838251ce14a68e
   languageName: node
   linkType: hard
 
