@@ -1,12 +1,15 @@
 name: Setup
 description: It setting up the repository environment
 
+defaults:
+  run:
+    shell: bash
+
 runs:
   using: composite
   steps:
     - name: Enable Corepack
       run: corepack enable
-      shell: bash
 
     - name: Setup NodeJS
       uses: actions/setup-node@v4
@@ -18,4 +21,3 @@ runs:
 
     - name: Install dependencies
       run: YARN_ENABLE_SCRIPTS=false YARN_ENABLE_HARDENED_MODE=0 yarn install --immutable
-      shell: bash
