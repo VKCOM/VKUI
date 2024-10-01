@@ -5,7 +5,7 @@
   <Panel id="separator">
     <PanelHeader>Separator</PanelHeader>
 
-    <Group header={<Header mode="secondary">Сепаратор</Header>}>
+    <Group>
       <Cell before={<Icon28Notifications />}>Уведомления</Cell>
       <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
 

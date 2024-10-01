@@ -1,12 +1,12 @@
-.modePrimary {
+.appearancePrimary {
   color: var(--vkui--color_separator_primary);
 }
 
-.modeSecondary {
+.appearanceSecondary {
   color: var(--vkui--color_separator_secondary);
 }
 
-.modePrimaryAlpha {
+.appearancePrimaryAlpha {
   color: var(--vkui--color_separator_primary_alpha);
 }
 
