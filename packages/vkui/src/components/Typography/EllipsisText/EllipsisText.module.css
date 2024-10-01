@@ -4,6 +4,13 @@
   max-inline-size: 100%;
 }
 
+/* Хак для того, чтобы убрать системный тултип в Safari */
+.host.disableNativeTitle::after,
+.host.disableNativeTitle .content::after {
+  content: '';
+  display: block;
+}
+
 .content {
   min-inline-size: 1em;
   overflow: hidden;
