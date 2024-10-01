@@ -34,6 +34,10 @@ inputs:
     required: false
     default: false
 
+defaults:
+  run:
+    shell: bash
+
 runs:
   using: composite
   steps:
@@ -41,7 +45,6 @@ runs:
       run: |
         git add -A
         git commit -m 'bump(${{ inputs.package_name }}): from ${{ inputs.prev_version }} to ${{ inputs.next_version }}'
-      shell: bash
 
     - name: Create git tag
       id: git_release_tag
@@ -49,19 +52,16 @@ runs:
         GIT_TAG=${{ fromJSON(inputs.disable_git_tag_with_namespace) == true && format('v{0}', inputs.next_version) || format('{0}@{1}', inputs.package_name, inputs.next_version) }}
         git tag $GIT_TAG
         echo "value=$GIT_TAG" >> $GITHUB_OUTPUT
-      shell: bash
 
     - name: Generate archive
       # ../../ – это путь до корня из директории `packages/<name>`
       run: yarn workspace ${{ inputs.package_name }} pack --out ../../artifact.tgz
-      shell: bash
 
     - name: Publishing release
       run: |
         npm publish artifact.tgz --tag ${{ inputs.npm_tag }}
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
-      shell: bash
 
     - name: Pushing changes
       uses: ad-m/github-push-action@master
@@ -85,7 +85,6 @@ runs:
         echo ${{ inputs.npm_tag }} > publish_workflow_payload/npm_tag.txt
         echo ${{ steps.git_release_tag.outputs.value }} > publish_workflow_payload/git_release_tag.txt
         echo ${{ inputs.close_milestone }} > publish_workflow_payload/close_milestone.txt
-      shell: bash
 
     - name: Upload payload data to artifact for deploy workflow
       uses: actions/upload-artifact@v4
