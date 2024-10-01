@@ -43,7 +43,7 @@ export const Playground: Story = {
       />
     ),
     header: 'Баста в Ледовом',
-    subheader: 'Большой концерт',
+    subhead: 'Большой концерт',
     asideMode: 'dismiss',
     actions: 'ButtonPrimary',
   },
