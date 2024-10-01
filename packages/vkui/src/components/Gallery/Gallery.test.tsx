@@ -629,7 +629,7 @@ describe('Gallery', () => {
       });
 
       expect(warn).toHaveBeenCalledWith(
-        '%c[VKUI/Gallery] Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше."',
+        '%c[VKUI/Gallery] Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше.',
         undefined,
       );
       warn.mockRestore();
