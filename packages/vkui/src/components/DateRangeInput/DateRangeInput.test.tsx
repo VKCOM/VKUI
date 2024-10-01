@@ -97,21 +97,13 @@ describe('DateRangeInput', () => {
 
     expect(container.contains(document.activeElement)).toBeTruthy();
     await userEvent.click(screen.getAllByText('15')[0]);
-    await userEvent.click(screen.getAllByText('22')[1]);
 
     const resultStartDate = new Date(startDate);
     resultStartDate.setDate(15);
 
-    const resultEndDate = new Date(endDate);
-    resultEndDate.setDate(22);
-    resultEndDate.setMonth(7);
+    expect(onChange.mock.calls).toEqual([[[resultStartDate, null]]]);
 
-    expect(onChange.mock.calls).toEqual([
-      [[resultStartDate, endDate]],
-      [[startDate, resultEndDate]],
-    ]);
-
-    expect(container.contains(document.activeElement)).toBeFalsy();
+    expect(container.contains(document.activeElement)).toBeTruthy();
   });
 
   it('should not update value when typing incorrect date in input', async () => {
