@@ -86,7 +86,7 @@ export const Example: Story = {
               <CellButton
                 role="menuitem"
                 before={<Icon28DeleteOutline />}
-                mode="danger"
+                appearance="negative"
                 onClick={onClose}
               >
                 Удалить

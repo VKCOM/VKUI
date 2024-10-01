@@ -259,7 +259,7 @@ const App = () => {
                         <CellButton
                           role="menuitem"
                           before={<Icon28DeleteOutline />}
-                          mode="danger"
+                          appearance="negative"
                           onClick={onClose}
                         >
                           Добавить и очистить

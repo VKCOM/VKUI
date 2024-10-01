@@ -122,7 +122,7 @@ const SharedContent = () => {
           VK · Браузер Chrome для macOS
         </SimpleCell>
         <CellButton onClick={noop}>Показать историю активности</CellButton>
-        <CellButton onClick={noop} mode="danger">
+        <CellButton onClick={noop} appearance="negative">
           Завершить все остальные сеансы
         </CellButton>
       </Group>

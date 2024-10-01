@@ -4,7 +4,7 @@
     <PanelHeader>CellButton</PanelHeader>
     <Group header={<Header mode="secondary">Базовый пример</Header>}>
       <CellButton onClick={() => {}}>Добавить новую школу</CellButton>
-      <CellButton onClick={() => {}} mode="danger">
+      <CellButton onClick={() => {}} appearance="negative">
         Удалить беседу
       </CellButton>
     </Group>
@@ -12,7 +12,7 @@
       <CellButton onClick={() => {}} before={<Icon28AddOutline />}>
         Добавить родственника
       </CellButton>
-      <CellButton onClick={() => {}} before={<Icon28DeleteOutline />} mode="danger">
+      <CellButton onClick={() => {}} before={<Icon28DeleteOutline />} appearance="negative">
         Удалить беседу
       </CellButton>
     </Group>
