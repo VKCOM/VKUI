@@ -1,12 +1,16 @@
 name: Publish Workflow / Setup
 description: It setting up the repository environment for publish
 
+defaults:
+  run:
+    shell: bash
+
 runs:
   using: composite
   steps:
     - name: Enable Corepack
       run: corepack enable
-      shell: bash
+
     - name: Setup NodeJS
       uses: actions/setup-node@v4
       with:
@@ -17,10 +21,8 @@ runs:
 
     - name: Install dependencies
       run: YARN_ENABLE_SCRIPTS=false yarn install --immutable
-      shell: bash
 
     - name: Set Git credentials
       run: |
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Action"
-      shell: bash
