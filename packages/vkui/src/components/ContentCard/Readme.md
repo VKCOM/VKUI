@@ -21,7 +21,7 @@
   - `referrerPolicy`,
   - `sizes`,
   - `useMap`,
-- внутренний `Tappable` получает все остальные свойства (кроме `subtitle`, `header`, `text` и `caption`).
+- внутренний `Tappable` получает все остальные свойства (кроме `subhead`, `header`, `text` и `caption`).
 
 ## Цифровая доступность (a11y)
 
@@ -39,12 +39,12 @@ const Example = () => {
         <Group>
           <CardGrid size="l">
             <ContentCard
-              subtitle="VKUI"
+              subhead="VKUI"
               header="ContentCard example"
               caption="VKUI Styleguide > Blocks > ContentCard"
             />
             <ContentCard
-              subtitle="VKUI"
+              subhead="VKUI"
               header="ContentCard example"
               caption="VKUI Styleguide > Blocks > ContentCard"
               mode="tint"
@@ -53,7 +53,7 @@ const Example = () => {
               onClick={() => {}}
               src="https://images.unsplash.com/photo-1603988492906-4fb0fb251cf8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80"
               alt="Picture of brown and gray mountains under blue sky during daytime photo"
-              subtitle="unsplash"
+              subhead="unsplash"
               header="brown and gray mountains under blue sky during daytime photo"
               text="Mountain changji"
               caption="Photo by Siyuan on Unsplash"
@@ -62,7 +62,7 @@ const Example = () => {
             <ContentCard
               src="https://images.unsplash.com/photo-1603928726698-a015a1015d0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
               alt="Picture of person's left hand with pink paint"
-              subtitle="unsplash"
+              subhead="unsplash"
               header="Person's left hand with pink paint"
               text="Five hours of makeup and paint to achieve the human anatomy photoshoot. Thank you Steph and Shay. See more and official credit on @jawfox.photography."
               caption="Photo by Alexander Jawfox on Unsplash"
