@@ -8,16 +8,16 @@ describe('Separator', () => {
 
   it('should have separator mode className', () => {
     const getSeparator = () => screen.getByTestId('separator');
-    const { rerender } = render(<Separator mode="primary" data-testid="separator" />);
+    const { rerender } = render(<Separator appearance="primary" data-testid="separator" />);
 
-    expect(getSeparator()).toHaveClass(styles.modePrimary);
+    expect(getSeparator()).toHaveClass(styles.appearancePrimary);
 
-    rerender(<Separator mode="secondary" data-testid="separator" />);
+    rerender(<Separator appearance="secondary" data-testid="separator" />);
 
-    expect(getSeparator()).toHaveClass(styles.modeSecondary);
+    expect(getSeparator()).toHaveClass(styles.appearanceSecondary);
 
-    rerender(<Separator mode="primary-alpha" data-testid="separator" />);
+    rerender(<Separator appearance="primary-alpha" data-testid="separator" />);
 
-    expect(getSeparator()).toHaveClass(styles.modePrimaryAlpha);
+    expect(getSeparator()).toHaveClass(styles.appearancePrimaryAlpha);
   });
 });
