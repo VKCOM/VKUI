@@ -114,6 +114,11 @@ export const CarouselBase = ({
         return { coordX: elem.offsetLeft, width: elem.offsetWidth };
       }) || [];
 
+    if (localSlides.length === 0) {
+      initialized.current = false;
+      return;
+    }
+
     const containerWidth = rootRef.current.offsetWidth;
     const viewportOffsetWidth = viewportRef.current.offsetWidth;
     const layerWidth = localSlides.reduce((val, slide) => slide.width + val, 0);
@@ -128,7 +133,7 @@ export const CarouselBase = ({
       }
       if (remainingWidth <= 0 && slideIndex === localSlides.length) {
         warn(
-          'Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше."',
+          'Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше.',
         );
       }
     }
