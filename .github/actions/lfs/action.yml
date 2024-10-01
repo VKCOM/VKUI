@@ -1,17 +1,19 @@
 name: Workflow / Checkout LFS objects
 description: Get lfs from cache
 
+defaults:
+  run:
+    shell: bash
+
 runs:
   using: composite
   steps:
     # см. https://github.com/actions/checkout/issues/1169
     - name: Set safe directory
-      shell: bash
       run: git config --global --add safe.directory /__w/VKUI/VKUI
 
     # см. https://github.com/microsoft/playwright/issues/21920
     - name: Install git lfs
-      shell: bash
       run: |
         if git lfs > /dev/null ; then
             echo "git-lfs installed"
@@ -22,7 +24,6 @@ runs:
 
     # см. https://github.com/actions/cache/issues/1455
     - name: Install zstd
-      shell: bash
       run: |
         if zstd > /dev/null ; then
             echo "zstd installed"
@@ -31,7 +32,6 @@ runs:
         fi
 
     - name: Create LFS file list
-      shell: bash
       run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
     - name: Restore LFS cache
@@ -42,5 +42,4 @@ runs:
         enableCrossOsArchive: 'true'
 
     - name: Checkout LFS objects
-      shell: bash
       run: git lfs pull
