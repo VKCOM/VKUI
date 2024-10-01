@@ -44,7 +44,7 @@ export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Подзаголовок.
    */
-  subheader?: React.ReactNode;
+  subhead?: React.ReactNode;
   /**
    * Текст баннера.
    */
@@ -89,7 +89,7 @@ export const Banner = ({
   before,
   asideMode,
   header,
-  subheader,
+  subhead,
   text,
   children,
   background,
@@ -101,7 +101,7 @@ export const Banner = ({
   const platform = usePlatform();
 
   const HeaderTypography = size === 'm' ? Title : Headline;
-  const SubheaderTypography = size === 'm' ? Text : Subhead;
+  const SubheadTypography = size === 'm' ? Text : Subhead;
 
   const IconDismissIOS = mode === 'image' ? Icon24DismissDark : Icon24Dismiss;
 
@@ -121,10 +121,10 @@ export const Banner = ({
             {header}
           </HeaderTypography>
         )}
-        {hasReactNode(subheader) && (
-          <SubheaderTypography Component="div" className={styles.subheader}>
-            {subheader}
-          </SubheaderTypography>
+        {hasReactNode(subhead) && (
+          <SubheadTypography Component="div" className={styles.subhead}>
+            {subhead}
+          </SubheadTypography>
         )}
         {hasReactNode(text) && (
           <Text Component="div" className={styles.text}>

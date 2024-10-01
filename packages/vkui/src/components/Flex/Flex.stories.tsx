@@ -35,7 +35,7 @@ export const Playground: Story = {
               />
             }
             header="Для Вас"
-            subheader="Обновлено сегодня"
+            subhead="Обновлено сегодня"
             actions={
               <Button before={<Icon24Play />} onClick={noop}>
                 Слушать

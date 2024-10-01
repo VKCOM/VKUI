@@ -30,7 +30,7 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
           mode: ['image'],
           imageTheme: ['dark'],
           header: ['Мои достижения'],
-          subheader: ['Разблокировано 9 из 36'],
+          subhead: ['Разблокировано 9 из 36'],
           background: [<div key="img-bg" style={{ backgroundColor: '#222222' }} />],
           before: [undefined],
           asideMode: [undefined],
@@ -45,19 +45,19 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
           asideMode: ['dismiss', 'expand'],
           imageTheme: ['light'],
           header: ['Мои достижения'],
-          subheader: ['Разблокировано 9 из 36'],
+          subhead: ['Разблокировано 9 из 36'],
         },
         {
           mode: ['image'],
           asideMode: ['dismiss', 'expand'],
           imageTheme: ['dark'],
           header: ['Мои достижения'],
-          subheader: ['Разблокировано 9 из 36'],
+          subhead: ['Разблокировано 9 из 36'],
           background: [<div key="img-bg" style={{ backgroundColor: '#222222' }} />],
         },
         {
           header: ['Header'],
-          subheader: ['Subheader'],
+          subhead: ['Subheader'],
           text: ['Text'],
           actions: [<Button key="btn">Button</Button>],
         },
@@ -68,7 +68,7 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
           <Banner
             before={<Image size={96} src="" />}
             header="Баста в Ледовом"
-            subheader="Большой концерт"
+            subhead="Большой концерт"
             asideMode="dismiss"
             actions={<Button>Подробнее</Button>}
             {...props}

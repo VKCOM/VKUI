@@ -16,7 +16,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
             />
           }
           header="Баста в Ледовом"
-          subheader="Большой концерт"
+          subhead="Большой концерт"
           asideMode="dismiss"
           onDismiss={noop}
           actions={<Button>Подробнее</Button>}
@@ -32,7 +32,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
             />
           }
           header="Для Вас"
-          subheader="Обновлено сегодня"
+          subhead="Обновлено сегодня"
           actions={<Button before={<Icon24Play />}>Слушать</Button>}
         />
       </Div>
@@ -45,7 +45,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
             </Image>
           }
           header="Подписка за рубль!"
-          subheader="Предложение действует только до конца февраля"
+          subhead="Предложение действует только до конца февраля"
           asideMode="dismiss"
           onDismiss={noop}
           actions={
@@ -61,7 +61,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         <Banner
           before={<Avatar size={48} src={getAvatarUrl('user_lihachyov')} />}
           header="Сегодня день рождения Михаила Лихачёва"
-          subheader="Подарите подарок"
+          subhead="Подарите подарок"
           asideMode="dismiss"
           onDismiss={noop}
           actions={<Button mode="primary">Подарить</Button>}
@@ -76,7 +76,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
             </Avatar>
           }
           header="Телефон ожидает подтверждения"
-          subheader={
+          subhead={
             <React.Fragment>
               Новый номер +7 ••• ••• •• 96 будет сохранён через семь дней.
               <br />
@@ -107,7 +107,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
       <Div>
         <Banner
           header="Больше интересных подкастов в каталоге"
-          subheader="Найдите интересующие именно Вас подкасты!"
+          subhead="Найдите интересующие именно Вас подкасты!"
           asideMode="expand"
           onClick={() => console.log('[Podcast banner] onClick')}
         />
@@ -119,7 +119,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         <Banner
           mode="image"
           header="Мои достижения"
-          subheader="Разблокировано 9 из 36"
+          subhead="Разблокировано 9 из 36"
           background={
             <div
               style={{
@@ -141,7 +141,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         <Banner
           size="m"
           header="Реклама сообщества"
-          subheader={
+          subhead={
             <span>
               Привлекайте больше людей
               <br />в Ваше сообщество
@@ -164,7 +164,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
           mode="image"
           size="m"
           header="Реклама в сообществе"
-          subheader={
+          subhead={
             <span>
               Привлекайте больше людей
               <br />в Ваше сообщество
@@ -203,7 +203,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
               большой концерт
             </span>
           }
-          subheader="Москва · 12 декабря"
+          subhead="Москва · 12 декабря"
           background={
             <div
               style={{
