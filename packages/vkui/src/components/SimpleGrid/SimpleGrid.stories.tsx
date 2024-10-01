@@ -23,7 +23,7 @@ export const Playground: Story = {
         return (
           <ContentCard
             key={index}
-            subtitle="ALBUM"
+            subhead="ALBUM"
             header="Halsey – Badlands"
             caption="Blue Vinyl · EU · 2015"
             text="Badlands is the story about dreams and cruel reality..."

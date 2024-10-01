@@ -5,7 +5,7 @@ import { ContentCard, type ContentCardProps } from './ContentCard';
 
 const ContentCardTest = (props: ContentCardProps) => (
   <ContentCard
-    subtitle="VKUI"
+    subhead="VKUI"
     header="ContentCard example"
     caption="VKUI Styleguide > Blocks > ContentCard"
     {...props}

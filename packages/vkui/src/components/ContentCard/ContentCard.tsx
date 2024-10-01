@@ -19,7 +19,7 @@ export interface ContentCardProps
   /**
    Текст над заголовком
    */
-  subtitle?: React.ReactNode;
+  subhead?: React.ReactNode;
   /**
    Заголовок
    */
@@ -47,7 +47,7 @@ export interface ContentCardProps
  * @see https://vkcom.github.io/VKUI/#/ContentCard
  */
 export const ContentCard = ({
-  subtitle,
+  subhead,
   header,
   headerComponent = 'span',
   text,
@@ -111,9 +111,9 @@ export const ContentCard = ({
           />
         )}
         <div className={styles.body}>
-          {hasReactNode(subtitle) && (
-            <Caption className={classNames(styles.text, styles.subtitle)} weight="1" level="3" caps>
-              {subtitle}
+          {hasReactNode(subhead) && (
+            <Caption className={classNames(styles.text, styles.subhead)} weight="1" level="3" caps>
+              {subhead}
             </Caption>
           )}
           {hasReactNode(header) && (
