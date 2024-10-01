@@ -3,19 +3,16 @@ import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
 import styles from './CellButton.module.css';
 
 export const appearanceClassNames = {
-  'accent': styles.appearanceAccent,
-  'neutral': styles.appearanceNeutral,
-  'negative': styles.appearanceNegative,
-  'accent-invariable': styles.appearanceAccentInvariable,
+  accent: styles.appearanceAccent,
+  neutral: styles.appearanceNeutral,
+  negative: styles.appearanceNegative,
 };
 
 export interface CellButtonProps extends SimpleCellProps {
   /**
-   * > При использование `centered` значение по умолчанию будет `"accent"`.
-   *
-   * @default neutral
+   * > Режим `centered` переопределяет токен для темы `"accent"`.
    */
-  appearance?: 'neutral' | 'negative' | 'accent' | 'accent-invariable';
+  appearance?: 'accent' | 'neutral' | 'negative';
   centered?: boolean;
 }
 
@@ -24,12 +21,10 @@ export interface CellButtonProps extends SimpleCellProps {
  */
 export const CellButton = ({
   centered = false,
-  appearance: appearanceProp,
+  appearance = 'accent',
   className,
   ...restProps
 }: CellButtonProps): React.ReactNode => {
-  const isCenteredPreset = appearanceProp === undefined && centered;
-  const appearance = isCenteredPreset ? 'accent' : appearanceProp || 'neutral';
   return (
     <SimpleCell
       {...restProps}

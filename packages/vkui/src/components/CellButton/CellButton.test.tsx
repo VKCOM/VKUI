@@ -3,10 +3,10 @@ import { baselineComponent } from '../../testing/utils';
 import { appearanceClassNames, CellButton } from './CellButton';
 import styles from './CellButton.module.css';
 
-describe('CellButton', () => {
+describe(CellButton, () => {
   baselineComponent((props) => <CellButton {...props}>CellButton</CellButton>);
 
-  it.each(['neutral', 'negative', 'accent', 'accent-invariable', undefined] as const)(
+  it.each(['accent', 'neutral', 'negative', undefined] as const)(
     'should have expected className for appearance="%s"',
     (appearance) => {
       render(
@@ -15,7 +15,7 @@ describe('CellButton', () => {
         </CellButton>,
       );
       expect(screen.getByTestId('cell')).toHaveClass(
-        appearance ? appearanceClassNames[appearance] : appearanceClassNames.neutral,
+        appearance ? appearanceClassNames[appearance] : appearanceClassNames.accent,
       );
     },
   );

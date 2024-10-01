@@ -15,7 +15,7 @@ export const CellButtonPlayground = (props: ComponentPlaygroundProps) => {
           before: [<Icon24Add key="add" />],
         },
         {
-          appearance: ['negative', 'accent', 'accent-invariable'],
+          appearance: ['neutral', 'negative'],
           before: [<Icon28AddOutline key="icon" />],
           children: ['Создать что-нибудь'],
         },
