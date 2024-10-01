@@ -18,7 +18,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const newAttributeName = 'appearance';
 
   const modeToAppearance: Record<string, string> = {
-    primary: 'neutral',
+    primary: 'accent',
     danger: 'negative',
   };
 

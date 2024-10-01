@@ -4,12 +4,12 @@ import React from 'react';
 const App = () => {
   return (
     <React.Fragment>
-      {/* mode="primary" -> appearance="neutral" */}
+      {/* mode="primary" -> appearance="accent" */}
       <CellButton mode="primary">
         Создать что-нибудь
       </CellButton>
 
-      {/* mode="primary" -> appearance="neutral" */}
+      {/* mode="primary" -> appearance="accent" */}
       <CellButton mode={"primary"}>
         Создать что-нибудь
       </CellButton>

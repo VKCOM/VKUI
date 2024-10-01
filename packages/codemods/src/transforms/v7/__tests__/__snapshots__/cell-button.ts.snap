@@ -7,12 +7,12 @@ import React from 'react';
 const App = () => {
   return (
     (<React.Fragment>
-      {/* mode="primary" -> appearance="neutral" */}
-      <CellButton appearance="neutral">
+      {/* mode="primary" -> appearance="accent" */}
+      <CellButton appearance="accent">
         Создать что-нибудь
       </CellButton>
-      {/* mode="primary" -> appearance="neutral" */}
-      <CellButton appearance="neutral">
+      {/* mode="primary" -> appearance="accent" */}
+      <CellButton appearance="accent">
         Создать что-нибудь
       </CellButton>
       {/* mode="danger" -> appearance="negative" */}
