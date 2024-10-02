@@ -7,8 +7,9 @@ import {
   type GapsProp,
   rowGapClassNames,
 } from '../../lib/layouts';
-import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import type { RootComponentProps } from '../RootComponent/RootComponent';
 import { FlexItem, type FlexItemProps } from './FlexItem/FlexItem';
 import styles from './Flex.module.css';
 
@@ -39,7 +40,7 @@ type FlexContentProps =
   | 'space-between'
   | 'space-evenly';
 
-export interface FlexProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
   /**
    * Направление осей, эквивалентно `flex-direction`.
    */
