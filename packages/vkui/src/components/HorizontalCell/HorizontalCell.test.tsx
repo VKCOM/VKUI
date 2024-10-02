@@ -17,7 +17,7 @@ describe('HorizontalCell', () => {
     expect(document.querySelector(`.${styles.content}`)).toBeNull();
 
     rerender(
-      <HorizontalCell size="s" header="Author name">
+      <HorizontalCell size="s" title="Author name">
         <div>Children data</div>
       </HorizontalCell>,
     );
