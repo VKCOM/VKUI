@@ -7,7 +7,7 @@ describe(CustomScrollView, () => {
   baselineComponent(CustomScrollView);
 
   it('should have overscroll specific className', () => {
-    const getBoxElement = () => screen.getByTestId('scroll-view').firstElementChild as HTMLElement;
+    const getBoxElement = () => screen.getByTestId('scroll-view') as HTMLElement;
 
     const { rerender } = render(
       <CustomScrollView data-testid="scroll-view" enableHorizontalScroll>
