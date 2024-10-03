@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';

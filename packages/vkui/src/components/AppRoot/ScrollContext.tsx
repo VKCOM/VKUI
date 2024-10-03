@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';

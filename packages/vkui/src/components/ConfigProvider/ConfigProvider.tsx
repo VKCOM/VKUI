@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
 import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';

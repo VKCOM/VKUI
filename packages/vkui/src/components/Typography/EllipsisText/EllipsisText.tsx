@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getTextFromChildren } from '../../../lib/children';

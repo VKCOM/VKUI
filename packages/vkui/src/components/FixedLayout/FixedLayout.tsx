@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';

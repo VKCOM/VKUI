@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { useConfigProvider } from '../components/ConfigProvider/ConfigProviderContext';
 import type { HasPlatform } from '../types';

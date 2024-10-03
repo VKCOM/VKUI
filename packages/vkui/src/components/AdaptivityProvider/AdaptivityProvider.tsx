@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { getSizeX, isCompactByViewHeight, isCompactByViewWidth } from '../../lib/adaptivity';
 import type { HasChildren } from '../../types';

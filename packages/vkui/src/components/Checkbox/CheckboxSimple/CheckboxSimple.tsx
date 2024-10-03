@@ -1,3 +1,5 @@
+'use client';
+
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { Tappable } from '../../Tappable/Tappable';
