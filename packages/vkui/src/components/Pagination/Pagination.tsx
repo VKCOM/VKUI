@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 import { useAdaptivity } from '../../hooks/useAdaptivity';

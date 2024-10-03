@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasChildren } from '../../types';

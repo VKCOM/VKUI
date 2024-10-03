@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { canUseDOM } from '@vkontakte/vkjs';
 import { rectToClientRect } from '@vkontakte/vkui-floating-ui/core';

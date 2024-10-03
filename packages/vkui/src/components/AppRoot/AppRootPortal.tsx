@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { useAppearance } from '../../hooks/useAppearance';
 import { useIsClient } from '../../hooks/useIsClient';

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { getWindow, isHTMLElement } from '../../lib/dom';

@@ -1,3 +1,5 @@
+'use client';
+
 import { Icon24Reorder, Icon24ReorderIos } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import {
