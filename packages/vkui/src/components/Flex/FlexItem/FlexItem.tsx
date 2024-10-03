@@ -1,6 +1,7 @@
 import { classNames } from '@vkontakte/vkjs';
-import type { HasChildren, HTMLAttributesWithRootRef } from '../../../types';
+import type { HasChildren } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
+import type { RootComponentProps } from '../../RootComponent/RootComponent';
 import styles from './FlexItem.module.css';
 
 const flexClassNames = {
@@ -18,7 +19,9 @@ const alignSelfClassNames = {
   stretch: styles.alignSelfStretch,
 };
 
-export interface FlexItemProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasChildren {
+export interface FlexItemProps
+  extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'>,
+    HasChildren {
   /**
    * Для задания выравнивания, отлично от родительского, эквивалентно `align-self`
    */
