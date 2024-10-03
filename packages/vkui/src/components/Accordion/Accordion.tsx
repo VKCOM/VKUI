@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useObjectMemo } from '../../hooks/useObjectMemo';

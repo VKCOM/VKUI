@@ -1,3 +1,5 @@
+'use client';
+
 import { type AllHTMLAttributes, useCallback, useRef, useState } from 'react';
 import { arraysEquals } from '../../helpers/array';
 import { useExternRef } from '../../hooks/useExternRef';

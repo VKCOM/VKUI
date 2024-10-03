@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';

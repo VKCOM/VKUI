@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui-floating-ui",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "bugs": "https://github.com/VKCOM/VKUI",
   "repository": {
@@ -51,8 +51,8 @@
     },
     "./utils/dom": {
       "import": {
-        "types": "./utils/dom/floating-ui.utils.dom.d.ts",
-        "default": "./utils/dom/floating-ui.utils.dom.esm.js"
+        "types": "./utils/dist/floating-ui.utils.dom.d.mts",
+        "default": "./utils/dist/floating-ui.utils.dom.mjs"
       },
       "types": "./utils/dom/floating-ui.utils.dom.d.ts",
       "module": "./utils/dom/floating-ui.utils.dom.esm.js",

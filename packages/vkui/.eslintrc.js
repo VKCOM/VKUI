@@ -16,7 +16,7 @@ if (!E2E_TEST || !E2E_PLAYGROUND_HELPERS) {
 
 module.exports = {
   root: false,
-  extends: ['plugin:react-hooks/recommended'],
+  extends: ['plugin:react-hooks/recommended', 'plugin:react-server-components/recommended'],
   plugins: ['import', '@project-tools/vkui', 'unicorn'],
   parserOptions: {
     project: './tsconfig.eslint.json',
@@ -177,6 +177,7 @@ module.exports = {
             ],
           },
         ],
+        'react-server-components/use-client': 'off',
       },
     },
 
@@ -186,6 +187,7 @@ module.exports = {
         'no-restricted-properties': 'off',
         'no-restricted-globals': 'off',
         'react/display-name': 'off',
+        'react-server-components/use-client': 'off',
       },
     },
 
@@ -215,6 +217,7 @@ module.exports = {
             ],
           },
         ],
+        'react-server-components/use-client': 'off',
       },
     },
 
@@ -244,6 +247,7 @@ module.exports = {
             ],
           },
         ],
+        'react-server-components/use-client': 'off',
       },
     },
 
@@ -252,6 +256,7 @@ module.exports = {
       rules: {
         'import/no-default-export': 'off',
         '@typescript-eslint/consistent-type-assertions': 'off',
+        'react-server-components/use-client': 'off',
       },
     },
   ],

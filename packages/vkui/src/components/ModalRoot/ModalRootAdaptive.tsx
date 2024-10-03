@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useScrollLock } from '../AppRoot/ScrollContext';

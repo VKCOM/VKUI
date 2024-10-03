@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';

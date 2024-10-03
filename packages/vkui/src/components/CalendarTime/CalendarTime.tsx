@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { setHours, setMinutes } from 'date-fns';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';

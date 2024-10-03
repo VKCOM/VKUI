@@ -1,3 +1,5 @@
+'use client';
+
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import {

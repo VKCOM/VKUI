@@ -5,8 +5,9 @@ import {
   type GapsProp,
   rowGapClassNames,
 } from '../../lib/layouts';
-import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import type { RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './SimpleGrid.module.css';
 
 const marginClassNames = {
@@ -23,7 +24,7 @@ const alignClassNames = {
   baseline: styles.alignBaseline,
 };
 
-export interface SimpleGridProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
   /**
    * Количество колонок
    */

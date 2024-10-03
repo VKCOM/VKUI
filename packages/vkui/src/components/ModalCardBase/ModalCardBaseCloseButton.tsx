@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon20Cancel, Icon24Dismiss } from '@vkontakte/icons';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';

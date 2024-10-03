@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
