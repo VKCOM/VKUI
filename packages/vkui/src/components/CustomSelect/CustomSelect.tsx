@@ -8,7 +8,6 @@ import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import type { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import {
   CustomSelectDropdown,
   type CustomSelectDropdownProps,
@@ -129,11 +128,7 @@ export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
 > extends NativeSelectProps,
     Omit<FormFieldProps, 'maxHeight'>,
-    TrackerOptionsProps,
-    Pick<
-      CustomSelectDropdownProps,
-      'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
-    >,
+    Pick<CustomSelectDropdownProps, 'overscrollBehavior'>,
     Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'readOnly'> {
   /**
    * ref на внутрений компонент input
@@ -247,8 +242,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     fetching,
     forceDropdownPortal,
     selectType = 'default',
-    autoHideScrollbar,
-    autoHideScrollbarDelay,
     searchable = false,
     'renderOption': renderOptionProp = defaultRenderOptionFn,
     'options': optionsProp,
@@ -904,8 +897,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           offsetDistance={dropdownOffsetDistance}
           autoWidth={dropdownAutoWidth}
           forcePortal={forceDropdownPortal}
-          autoHideScrollbar={autoHideScrollbar}
-          autoHideScrollbarDelay={autoHideScrollbarDelay}
           noMaxHeight={noMaxHeight}
           role="listbox"
           id={popupAriaId}

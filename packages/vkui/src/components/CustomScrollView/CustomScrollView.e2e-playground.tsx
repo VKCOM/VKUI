@@ -7,14 +7,7 @@ import { CustomScrollView, type CustomScrollViewProps } from './CustomScrollView
 
 export const CustomScrollViewWithVerticalPlayground = (props: ComponentPlaygroundProps) => {
   return (
-    <ComponentPlayground
-      {...props}
-      propSets={[
-        {
-          autoHideScrollbar: [false, true],
-        },
-      ]}
-    >
+    <ComponentPlayground {...props} propSets={[]}>
       {(props: CustomScrollViewProps) => (
         <CustomScrollView {...props} style={{ height: 200 }}>
           <List>
@@ -32,14 +25,7 @@ export const CustomScrollViewWithVerticalPlayground = (props: ComponentPlaygroun
 
 export const CustomScrollViewWithBothScrollsPlayground = (props: ComponentPlaygroundProps) => {
   return (
-    <ComponentPlayground
-      {...props}
-      propSets={[
-        {
-          autoHideScrollbar: [false],
-        },
-      ]}
-    >
+    <ComponentPlayground {...props} propSets={[]}>
       {(props: CustomScrollViewProps) => (
         <div
           style={{
