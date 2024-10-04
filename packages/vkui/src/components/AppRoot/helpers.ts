@@ -1,49 +1,6 @@
-import type { SizeTypeValues } from '../../lib/adaptivity';
 import { isRefObject } from '../../lib/isRefObject';
-import type { AppRootLayout, AppRootMode, AppRootUserSelectMode, SafeAreaInsets } from './types';
+import type { AppRootUserSelectMode, SafeAreaInsets } from './types';
 import styles from './AppRoot.module.css';
-
-type ContainerClassNamesProps = {
-  mode: AppRootMode;
-  layout?: AppRootLayout;
-  tokensClassName: string;
-  sizeX: SizeTypeValues | 'none';
-  sizeY: SizeTypeValues | 'none';
-};
-
-export function getClassNamesByMode({
-  mode,
-  layout,
-  tokensClassName,
-  sizeX,
-  sizeY,
-}: ContainerClassNamesProps): [string[], string[]] {
-  const baseClassNames: string[] = ['vkui__root'];
-  const stylesClassNames: string[] = [tokensClassName];
-
-  if (mode === 'full' || mode === 'embedded') {
-    if (layout) {
-      const vkuiLayoutClassNames = { card: 'vkui--layout-card', plain: 'vkui--layout-plain' };
-      stylesClassNames.push(vkuiLayoutClassNames[layout]);
-    }
-
-    if (sizeX !== 'compact') {
-      const vkuiSizeXClassNames = { none: 'vkui--sizeX-none', regular: 'vkui--sizeX-regular' };
-      stylesClassNames.push(vkuiSizeXClassNames[sizeX]);
-    }
-
-    if (sizeY !== 'regular') {
-      const vkuiSizeYClassNames = { none: 'vkui--sizeY-none', compact: 'vkui--sizeY-compact' };
-      stylesClassNames.push(vkuiSizeYClassNames[sizeY]);
-    }
-
-    if (mode === 'embedded') {
-      baseClassNames.push('vkui__root--embedded');
-    }
-  }
-
-  return [baseClassNames, stylesClassNames];
-}
 
 export const getParentElement = (el: HTMLElement | null): HTMLElement | null =>
   el ? el.parentElement : null;

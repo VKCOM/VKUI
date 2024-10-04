@@ -13,7 +13,6 @@ import { AppRootContext } from './AppRootContext';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
 import {
   extractPortalRootByProp,
-  getClassNamesByMode,
   getParentElement,
   getUserSelectModeClassName,
   setSafeAreaInsets,
@@ -26,6 +25,21 @@ import type {
   SafeAreaInsets,
 } from './types';
 import styles from './AppRoot.module.css';
+
+const sizeXClassNames = {
+  none: styles.sizeXNone,
+  regular: styles.sizeXRegular,
+};
+
+const sizeYClassNames = {
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
+};
+
+const layoutClassNames = {
+  card: styles.layoutCard,
+  plain: styles.layoutPlain,
+};
 
 export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Режим встраивания */
@@ -132,45 +146,19 @@ export const AppRoot = ({
       const documentBody = getDocumentBody(appRootRef.current);
       const documentElement = documentBody.ownerDocument.documentElement;
 
-      const [baseClassNames, stylesClassNames] = getClassNamesByMode({
-        mode,
-        layout,
-        tokensClassName,
-        sizeX,
-        sizeY,
-      });
-
       /* eslint-disable no-restricted-properties */
       switch (mode) {
         case 'full': {
-          if (parentElement) {
-            parentElement.classList.add(...baseClassNames);
-          }
-
-          documentElement.classList.add(...stylesClassNames, 'vkui');
           const unsetSafeAreaInsets = setSafeAreaInsets(safeAreaInsets, documentElement);
 
           return function cleanup() {
-            if (parentElement) {
-              parentElement.classList.remove(...baseClassNames);
-            }
-
-            documentElement.classList.remove(...stylesClassNames, 'vkui');
             unsetSafeAreaInsets();
           };
         }
         case 'embedded': {
           if (parentElement) {
-            parentElement.classList.add(...baseClassNames, ...stylesClassNames);
-            if (!disableParentTransformForPositionFixedElements) {
-              parentElement.style.setProperty('transform', 'translate3d(0, 0, 0)');
-            }
             const unsetSafeAreaInsets = setSafeAreaInsets(safeAreaInsets, parentElement, portalRootRef.current); // prettier-ignore
             return function cleanup() {
-              parentElement.classList.remove(...baseClassNames, ...stylesClassNames);
-              if (!disableParentTransformForPositionFixedElements) {
-                parentElement.style.removeProperty('transform');
-              }
               unsetSafeAreaInsets();
             };
           }
@@ -184,15 +172,7 @@ export const AppRoot = ({
       }
       /* eslint-enable no-restricted-properties */
     },
-    [
-      mode,
-      layout,
-      disableParentTransformForPositionFixedElements,
-      tokensClassName,
-      sizeX,
-      sizeY,
-      safeAreaInsets,
-    ],
+    [mode, safeAreaInsets],
   );
 
   const ScrollController = React.useMemo(
@@ -233,7 +213,19 @@ export const AppRoot = ({
   ) : (
     <div
       ref={appRootRef}
-      className={classNames(styles.host, userSelectModeClassName, className)}
+      className={classNames(
+        styles.host,
+        mode === 'embedded' && styles.embedded,
+        sizeX !== 'compact' && sizeXClassNames[sizeX],
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        layout && layoutClassNames[layout],
+        mode === 'embedded' &&
+          !disableParentTransformForPositionFixedElements &&
+          styles.transformForPositionFixedElements,
+        userSelectModeClassName,
+        tokensClassName,
+        className,
+      )}
       {...props}
     >
       {content}
