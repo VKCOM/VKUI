@@ -20,7 +20,7 @@ const Example = () => {
         <PanelHeader fixed>Fixed layout</PanelHeader>
         <FixedLayout vertical="top" filled>
           <Search />
-          <Separator wide />
+          <Separator noPadding />
         </FixedLayout>
         <Group>
           <Div style={contentStyles}>
@@ -75,7 +75,7 @@ const Example = () => {
           </Div>
         </Group>
         <FixedLayout filled vertical="bottom">
-          <Separator wide />
+          <Separator noPadding />
           <Tabs>
             <TabsItem selected={activeTab === 'groups'} onClick={() => setActiveTab('groups')}>
               176 сообществ

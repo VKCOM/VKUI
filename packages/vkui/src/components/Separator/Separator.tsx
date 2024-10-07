@@ -11,7 +11,7 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
   /**
    * С этим свойством компонент не будет иметь отступы слева и справа
    */
-  wide?: boolean;
+  noPadding?: boolean;
 }
 
 const appearanceClassNames = {
@@ -24,13 +24,13 @@ const appearanceClassNames = {
  * @see https://vkcom.github.io/VKUI/#/Separator
  */
 export const Separator = ({
-  wide,
+  noPadding,
   appearance = 'primary',
   ...restProps
 }: SeparatorProps): React.ReactNode => (
   <RootComponent
     {...restProps}
-    baseClassName={classNames(!wide && styles.padded, appearanceClassNames[appearance])}
+    baseClassName={classNames(!noPadding && styles.padded, appearanceClassNames[appearance])}
   >
     <hr className={styles.in} />
   </RootComponent>
