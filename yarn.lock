@@ -3999,7 +3999,7 @@ __metadata:
     mini-css-extract-plugin: "npm:^2.9.1"
     postcss: "npm:^8.4.47"
     postcss-cli: "npm:^11.0.0"
-    postcss-custom-media: "npm:^11.0.1"
+    postcss-custom-media: "npm:^11.0.2"
     postcss-gap-properties: "npm:^6.0.0"
     postcss-import: "npm:^16.1.0"
     postcss-loader: "npm:^8.1.1"
@@ -12675,9 +12675,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-custom-media@npm:^11.0.1":
-  version: 11.0.1
-  resolution: "postcss-custom-media@npm:11.0.1"
+"postcss-custom-media@npm:^11.0.2":
+  version: 11.0.2
+  resolution: "postcss-custom-media@npm:11.0.2"
   dependencies:
     "@csstools/cascade-layer-name-parser": "npm:^2.0.1"
     "@csstools/css-parser-algorithms": "npm:^3.0.1"
@@ -12685,7 +12685,7 @@ __metadata:
     "@csstools/media-query-list-parser": "npm:^3.0.1"
   peerDependencies:
     postcss: ^8.4
-  checksum: 10/87c39bdd15f1a5fda6390b22109efde7c3e821d317c9463926f7bffaf9304bddc654a99996f0dc9cd74f3a3223b2fc2c75c0f1991809bcc624f11cb9f41fb6c9
+  checksum: 10/8f3fa74c6a38acc8d875881a3a220e41f189a6e6e947e5c970b05db6fcba7e4eb431f43261d924ee26ad09ea2a5ed7eda00792249c70a45536f03fabaabf99db
   languageName: node
   linkType: hard
 
