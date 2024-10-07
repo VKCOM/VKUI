@@ -1,5 +1,11 @@
-Используется для разделения какого-либо контента. Убрать стандартные отступы можно через свойство `noPadding`.
+Используется для разделения какого-либо контента.
+
+Убрать стандартные отступы можно через свойство `noPadding`.
 Изменить цветовое представление компонента можно при помощи свойства `appearance`.
+Свойство `size` позволяет задать размеры контейнера, внутри которого располагается `Separator`. Управлять выравниванием внутри контейнера можно через свойство `align`.
+
+> Обратите внимание, если вы используете компонент `Separator` с `direction="block"`,
+> то родительский элемент должен быть `flex`-контейнером.
 
 ```jsx
 <View activePanel="separator">
@@ -17,6 +23,13 @@
     </Group>
     <Group header={<Header mode="secondary">direction="block"</Header>}>
       <Div style={{ display: 'flex' }}>
+        <Link>Новости</Link>
+        <Separator direction="block" size="xl" noPadding />
+        <Link>Звонки</Link>
+        <Separator direction="block" size="xl" noPadding />
+        <Link>Друзья</Link>
+      </Div>
+      <Div>
         <Link>Новости</Link>
         <Separator direction="block" size="xl" noPadding />
         <Link>Звонки</Link>
