@@ -1,9 +1,10 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Div } from '../Div/Div';
 import { Separator } from '../Separator/Separator';
-import { sizesClassNames, Spacing, type SpacingProps, type SpacingSize } from './Spacing';
+import { Spacing, type SpacingProps } from './Spacing';
+import { spacingSizeClassNames, type SpacingSize } from '../../lib/spacings/sizes';
 
-const sizes = Object.keys(sizesClassNames) as SpacingSize[];
+const sizes = Object.keys(spacingSizeClassNames) as SpacingSize[];
 
 export const SpacingPlayground = (props: ComponentPlaygroundProps) => {
   return (

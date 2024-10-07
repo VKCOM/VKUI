@@ -1,26 +1,24 @@
-Компонент для разделения контента
-
-Для большинства случаев будет достаточно дефолтного поведения компонента
+Компонент для разделения контента.
 
 ```jsx static
-<Spacing /> // - пустой отступ высотой 8px
+<Spacing /> // отступ высотой 8px ("m")
 
-<Spacing size={16} />  // - пустой отступ высотой 16px
+<Spacing size="2xl" />  // отступ высотой 16px
 
-// - сепаратор с отступами 8px сверху и снизу
-<Spacing size={16} >
+// сепаратор с отступами 8px сверху и снизу
+<Spacing ize="2xl" >
   <Separator />
 </Spacing>
 ```
 
-Для более гибкой настройки положения линии и отступов, можно комбинировать два отступа вместе
+Для более гибкой настройки положения линии и отступов можно комбинировать два отступа вместе.
 
-Например - нужен сепаратор с отступом сверху 12px и снизу 20px:
+Например, нужен сепаратор с отступом сверху `12px` и снизу `20px`:
 
 ```jsx static
-<Spacing size={12} />
+<Spacing size="xl" />
 <Separator />
-<Spacing size={20} />
+<Spacing size="3xl" />
 ```
 
 ```jsx
@@ -42,7 +40,7 @@
       <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
       <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
 
-      <Spacing size={16} />
+      <Spacing size="2xl" />
 
       <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
       <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
@@ -52,7 +50,7 @@
       <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
       <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
 
-      <Spacing size={16}>
+      <Spacing size="2xl">
         <Separator />
       </Spacing>
 
@@ -80,9 +78,9 @@
       <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
       <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
 
-      <Spacing size={12} />
+      <Spacing size="xl" />
       <Separator />
-      <Spacing size={20} />
+      <Spacing size="3xl" />
 
       <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
       <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>

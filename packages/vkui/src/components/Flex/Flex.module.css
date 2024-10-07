@@ -92,7 +92,7 @@
 }
 
 /* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
-.withGaps > * {
+.withGaps.withGaps > * {
   margin-block-start: var(--vkui_internal--row_gap);
   margin-inline-start: var(--vkui_internal--column_gap);
 }
