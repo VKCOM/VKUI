@@ -13,6 +13,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
 
   if (localName) {
     renameProp(j, source, localName, { mode: 'appearance' });
+    renameProp(j, source, localName, { wide: 'noPadding' });
   }
 
   return source.toSource();

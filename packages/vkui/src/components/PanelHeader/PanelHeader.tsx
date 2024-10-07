@@ -190,7 +190,7 @@ export const PanelHeader = ({
           )}
         </>
       )}
-      {separatorVisible && isVKCOM && <Separator className={styles.separator} wide />}
+      {separatorVisible && isVKCOM && <Separator className={styles.separator} noPadding />}
     </RootComponent>
   );
 };
