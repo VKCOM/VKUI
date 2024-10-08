@@ -29,7 +29,7 @@ export interface RichCellProps extends TappableProps {
    */
   subtitle?: React.ReactNode;
   /**
-   * Контейнер для текста под `text`.
+   * Контейнер для текста под `subtitle`.
    */
   extraSubtitle?: React.ReactNode;
   /**
