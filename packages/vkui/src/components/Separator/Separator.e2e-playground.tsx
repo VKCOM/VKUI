@@ -25,6 +25,10 @@ export const SeparatorPlayground = (props: ComponentPlaygroundProps) => {
           size: ['xl'],
           noPadding: [true],
         },
+        {
+          align: ['start', 'center', 'end'],
+          size: ['3xl'],
+        },
       ]}
     >
       {(props: SeparatorProps) => (
