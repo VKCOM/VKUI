@@ -18,12 +18,12 @@ export const SpacingPlayground = (props: ComponentPlaygroundProps) => {
     >
       {({ size }: SpacingProps) => (
         <Div style={{ width: 100 }}>
-          <Separator />
+          <Separator padding />
           <Spacing size={size} />
-          <Separator />
+          <Separator padding />
           <Spacing size={size} />
           <Spacing size={size} style={{ background: '#b0bfb4' }}>
-            <Separator />
+            <Separator padding />
           </Spacing>
         </Div>
       )}
