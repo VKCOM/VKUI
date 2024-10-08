@@ -66,9 +66,9 @@ type Story = StoryObj<RichCellProps>;
 export const Playground: Story = {
   args: {
     before: 'Avatar72',
-    subhead: 'Subhead',
-    text: 'Text',
-    caption: 'Caption',
+    overTitle: 'Over Title',
+    subtitle: 'Subtitle',
+    extraSubtitle: 'Extra Subtitle',
     after: 'After',
     afterCaption: 'After Caption',
     children: 'Example',
