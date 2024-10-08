@@ -6,7 +6,7 @@ import type { ComponentPlaygroundProps } from './ComponentPlayground';
 
 export interface VKUITestOptions {
   platform: PlatformType;
-  appearance: ColorSchemeType;
+  colorSchemeType: ColorSchemeType;
   toMatchSnapshot?: {
     threshold?: number;
   };

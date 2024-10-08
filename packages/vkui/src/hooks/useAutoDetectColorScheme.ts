@@ -8,16 +8,16 @@ import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 /**
  * @private
  */
-export const useAutoDetectAppearance = (appearanceProp?: ColorSchemeType): ColorSchemeType => {
+export const useAutoDetectColorScheme = (colorSchemeProp?: ColorSchemeType): ColorSchemeType => {
   const { window } = useDOM();
 
-  const [appearance, setAppearance] = React.useState<ColorSchemeType>(
-    appearanceProp || ColorScheme.LIGHT,
+  const [colorScheme, setColorScheme] = React.useState<ColorSchemeType>(
+    colorSchemeProp || ColorScheme.LIGHT,
   );
 
   useIsomorphicLayoutEffect(() => {
-    if (appearanceProp) {
-      setAppearance(appearanceProp);
+    if (colorSchemeProp) {
+      setColorScheme(colorSchemeProp);
       return noop;
     }
 
@@ -29,12 +29,12 @@ export const useAutoDetectAppearance = (appearanceProp?: ColorSchemeType): Color
 
     const check = (event: MediaQueryList | MediaQueryListEvent) => {
       // eslint-disable-next-line no-restricted-properties
-      setAppearance(event.matches ? ColorScheme.DARK : ColorScheme.LIGHT);
+      setColorScheme(event.matches ? ColorScheme.DARK : ColorScheme.LIGHT);
     };
     check(mediaQuery);
     matchMediaListAddListener(mediaQuery, check);
     return () => matchMediaListRemoveListener(mediaQuery, check);
-  }, [window, appearanceProp]);
+  }, [window, colorSchemeProp]);
 
-  return appearance;
+  return colorScheme;
 };

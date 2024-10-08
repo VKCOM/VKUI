@@ -42,11 +42,11 @@ export const SliderPlayground = (props: ComponentPlaygroundProps) => {
 };
 
 export const SliderPlaygroundForKeyboardTest = ({
-  appearance,
+  colorScheme,
   ...restProps
 }: ComponentPlaygroundProps & (SliderProps | SliderMultipleProps)) => {
   return (
-    <ConfigProvider appearance={appearance}>
+    <ConfigProvider appearance={colorScheme}>
       <AdaptivityProvider hasPointer>
         <AppRoot>
           <Slider style={{ minWidth: '320px' }} {...restProps} />
@@ -57,11 +57,11 @@ export const SliderPlaygroundForKeyboardTest = ({
 };
 
 export const SliderPlaygroundForTooltipTest = ({
-  appearance,
+  colorScheme,
   ...restProps
 }: ComponentPlaygroundProps & (SliderProps | SliderMultipleProps)) => {
   return (
-    <ConfigProvider appearance={appearance}>
+    <ConfigProvider appearance={colorScheme}>
       <AdaptivityProvider hasPointer>
         <AppRoot
           style={{

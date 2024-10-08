@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useAppearance } from '../../hooks/useAppearance';
+import { useColorScheme } from '../../hooks/useColorScheme';
 import { useIsClient } from '../../hooks/useIsClient';
 import { createPortal } from '../../lib/createPortal';
 import { isRefObject } from '../../lib/isRefObject';
@@ -19,7 +19,7 @@ export interface AppRootPortalProps extends HasChildren {
 
 export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): React.ReactNode => {
   const { portalRoot, mode, disablePortal } = React.useContext(AppRootContext);
-  const appearance = useAppearance();
+  const colorScheme = useColorScheme();
 
   const isClient = useIsClient();
   if (!isClient) {
@@ -32,7 +32,7 @@ export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): Reac
   }
 
   return createPortal(
-    <AppearanceProvider value={appearance}>{children}</AppearanceProvider>,
+    <AppearanceProvider value={colorScheme}>{children}</AppearanceProvider>,
     portalContainer,
   );
 };

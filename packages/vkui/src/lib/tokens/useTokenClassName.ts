@@ -17,9 +17,9 @@ const isTokensClassNamesForPlatforms = (
   Platform.VKCOM in tokensClassNames;
 
 const getTokenClassNameByAppearance = (
-  appearance: ColorSchemeType,
+  colorScheme: ColorSchemeType,
   tokensClassNames?: TokensClassNamesByAppearances,
-) => (tokensClassNames ? tokensClassNames[appearance] : undefined);
+) => (tokensClassNames ? tokensClassNames[colorScheme] : undefined);
 
 const getAppearanceTokenClassNameByPlatform = (
   platform: PlatformType,
@@ -32,7 +32,7 @@ const getAppearanceTokenClassNameByPlatform = (
 export const useTokensClassName = (): string => {
   const {
     platform,
-    appearance = DEFAULT_COLOR_SCHEME,
+    appearance: colorScheme = DEFAULT_COLOR_SCHEME,
     tokensClassNames,
   } = React.useContext(ConfigProviderContext);
 
@@ -40,7 +40,7 @@ export const useTokensClassName = (): string => {
     ? getAppearanceTokenClassNameByPlatform(platform, tokensClassNames)
     : tokensClassNames;
 
-  const tokensClassName = getTokenClassNameByAppearance(appearance, appearanceSchemeClassName);
+  const tokensClassName = getTokenClassNameByAppearance(colorScheme, appearanceSchemeClassName);
 
-  return tokensClassName ? tokensClassName : DEFAULT_TOKENS_CLASS_NAMES[platform][appearance];
+  return tokensClassName ? tokensClassName : DEFAULT_TOKENS_CLASS_NAMES[platform][colorScheme];
 };

@@ -12,7 +12,7 @@ import { getAdaptivePxWidth, multiCartesian, prettyProps } from './utils';
 export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'div'>> {
   isFixedComponent?: boolean;
   platform: PlatformType;
-  appearance: ColorSchemeType;
+  colorScheme: ColorSchemeType;
   adaptivityProviderProps?: Partial<AdaptivityProps>;
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
   children: (props: Props) => React.ReactNode;
@@ -21,7 +21,7 @@ export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'
 
 export type ComponentPlaygroundProps = Pick<
   InternalComponentPlaygroundProps,
-  'platform' | 'appearance' | 'adaptivityProviderProps'
+  'platform' | 'colorScheme' | 'adaptivityProviderProps'
 >;
 
 /**
@@ -31,7 +31,7 @@ export const ComponentPlayground = <
   Props extends React.ComponentProps<any> = React.ComponentProps<'div'>,
 >({
   isFixedComponent = false,
-  appearance,
+  colorScheme,
   platform,
   adaptivityProviderProps: adaptivityProviderPropsProp,
   propSets = [],
@@ -52,7 +52,7 @@ export const ComponentPlayground = <
       : BREAKPOINTS.MOBILE;
 
   return (
-    <ConfigProvider appearance={appearance} platform={platform}>
+    <ConfigProvider appearance={colorScheme} platform={platform}>
       <AdaptivityProvider {...adaptivityProviderProps}>
         <AppWrapper
           mode={isFixedComponent ? 'full' : undefined}

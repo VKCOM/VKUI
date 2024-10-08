@@ -71,7 +71,7 @@
 ### Режимы
 
 Каждая тема обычно поддерживает как <i>светлый (англ. `light`)</i>, так и <i>тёмный (англ. `dark`)</i> режим.
-За его определение отвечает свойство `appearance`, и также как `platform`, по умолчанию, определяется
+За его определение отвечает свойство `colorScheme`, и также как `platform`, по умолчанию, определяется
 автоматически за счёт CSS медиа выражения [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
 
 Ручное определение будет выглядеть так:
@@ -105,8 +105,8 @@ ReactDOM.render(
 замены изображений на инвертированную версию в темных темах. Пример:
 
 ```jsx static
-const appearance = useAppearance();
-<Div>{appearance === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
+const colorScheme = useColorScheme();
+<Div>{colorScheme === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
 ```
 
 > Стоит иметь ввиду, что некоторые компоненты делегируют цвет фона родителю выше, например, это
@@ -143,7 +143,7 @@ const appearance = useAppearance();
 
 **VKUI** использует пакет `@vkontakte/vkui-tokens`, который предоставляет готовые наборы **дизайн-токенов**.
 
-Каждый набор объявлен в классе формата `vkui--<themeName>--<appearance>`. На примере светлой темы
+Каждый набор объявлен в классе формата `vkui--<themeName>--<colorScheme>`. На примере светлой темы
 с названием `vkBase` класс будет выглядеть так – `vkui--vkBase--light` ([ссылка на сам CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css)).
 Подобный класс выставляется на контейнер приложения.
 

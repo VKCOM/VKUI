@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
-import { useAppearance } from '../../../hooks/useAppearance';
+import { useColorScheme } from '../../../hooks/useColorScheme';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
@@ -94,9 +94,9 @@ export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
   visibility: visibilityProp,
   ...restProps
 }: ImageBaseOverlayProps) => {
-  const appearance = useAppearance();
+  const colorScheme = useColorScheme();
   const hasPointer = useAdaptivityHasPointer();
-  const theme = themeProp ?? appearance;
+  const theme = themeProp ?? colorScheme;
   const visibility = visibilityProp ?? (hasPointer ? 'on-hover' : 'always');
 
   const commonClassNames = classNames(

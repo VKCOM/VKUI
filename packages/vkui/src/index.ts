@@ -411,7 +411,7 @@ export {
   type UseAdaptivityWithJSMediaQueries,
   useAdaptivityWithJSMediaQueries,
 } from './hooks/useAdaptivityWithJSMediaQueries';
-export { useAppearance } from './hooks/useAppearance';
+export { useColorScheme } from './hooks/useColorScheme';
 export { usePagination } from './hooks/usePagination';
 export { useOrientationChange } from './hooks/useOrientationChange';
 export { useTodayDate } from './hooks/useTodayDate';

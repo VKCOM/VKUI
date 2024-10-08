@@ -69,7 +69,7 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
   );
 };
 
-export const TextareaStatePlayground = ({ appearance }: ComponentPlaygroundProps) => {
+export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProps) => {
   return (
     <AppRoot
       mode="embedded"
@@ -79,7 +79,7 @@ export const TextareaStatePlayground = ({ appearance }: ComponentPlaygroundProps
         width: BREAKPOINTS.MOBILE,
       }}
     >
-      <AppearanceProvider value={appearance}>
+      <AppearanceProvider value={colorScheme}>
         <AdaptivityProvider sizeY="regular">
           <Div style={{ padding: 10 }}>
             <Textarea id="textarea" />

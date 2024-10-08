@@ -28,7 +28,7 @@ export type { VKUITestOptions } from './types';
 
 export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & VKUITestHelpers>({
   platform: ['android', { option: true }],
-  appearance: ['light', { option: true }],
+  colorSchemeType: ['light', { option: true }],
 
   adaptivityProviderProps: [null, { option: true }],
   onlyForBrowsers: [null, { option: true }],
@@ -38,7 +38,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
   toMatchSnapshot: [{ threshold: 0.02 }, { option: true }],
 
   expectScreenshotClippedToContent: async (
-    { page, platform, browserName, appearance, toMatchSnapshot },
+    { page, platform, browserName, colorSchemeType, toMatchSnapshot },
     use,
     testInfo,
   ) => {
@@ -51,7 +51,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
         {
           platform,
           browserName,
-          appearance,
+          colorSchemeType,
         },
         expectCallCount,
       );
@@ -64,10 +64,10 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
     await use(result);
   },
 
-  componentPlaygroundProps: async ({ platform, appearance, adaptivityProviderProps }, use) => {
+  componentPlaygroundProps: async ({ platform, colorSchemeType, adaptivityProviderProps }, use) => {
     await use({
       platform,
-      appearance,
+      colorScheme: colorSchemeType,
       adaptivityProviderProps: adaptivityProviderProps ? adaptivityProviderProps : undefined,
     });
   },

@@ -7,7 +7,7 @@ import {
   PanelHeaderClose,
   SplitCol,
   SplitLayout,
-  useAppearance,
+  useColorScheme,
   View,
   VisuallyHidden,
 } from '@vkui';
@@ -16,14 +16,14 @@ import { StyleGuideModal } from './StyleGuideModal';
 import './StyleGuideMobile.css';
 
 const StyleGuideMobileHeader = ({ before, switchStyleGuideAppearance }) => {
-  const appearance = useAppearance();
+  const colorScheme = useColorScheme();
 
   return (
     <PanelHeader
       before={before}
       after={
         <PanelHeaderButton onClick={switchStyleGuideAppearance}>
-          {appearance === 'dark' ? (
+          {colorScheme === 'dark' ? (
             <>
               <VisuallyHidden>Переключить на светлую тему</VisuallyHidden>
               <Icon28SunOutline />
