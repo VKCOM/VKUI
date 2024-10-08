@@ -31,6 +31,27 @@ export function getImportInfo(
   return { localName: localImportName };
 }
 
+export function renameImportName(
+  j: JSCodeshift,
+  source: Collection,
+  componentName: string,
+  newName: string,
+  alias: string,
+  renameOnlyImportedName: boolean,
+) {
+  source
+    .find(j.ImportDeclaration, { source: { value: alias } })
+    .find(j.ImportSpecifier, { local: { name: componentName } })
+    .forEach((path) => {
+      const newSpecifier = j.importSpecifier(
+        j.identifier(newName),
+        renameOnlyImportedName ? j.identifier(componentName) : j.identifier(newName),
+      );
+      (newSpecifier as any).importKind = (path.value as any).importKind;
+      j(path).replaceWith(newSpecifier);
+    });
+}
+
 export function renameProp(
   j: JSCodeshift,
   source: Collection,
