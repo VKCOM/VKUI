@@ -1,6 +1,6 @@
 Используется для разделения какого-либо контента.
 
-Убрать стандартные отступы можно через свойство `noPadding`.
+Добавить стандартные отступы можно через свойство `padding`.
 Изменить цветовое представление компонента можно при помощи свойства `appearance`.
 Свойство `size` позволяет задать размеры контейнера, внутри которого располагается `Separator`. Управлять выравниванием внутри контейнера можно через свойство `align`.
 
@@ -24,9 +24,9 @@
     <Group header={<Header mode="secondary">direction="block"</Header>}>
       <Flex margin="auto">
         <Link>Новости</Link>
-        <Separator direction="block" size="xl" noPadding />
+        <Separator direction="block" size="xl" />
         <Link>Звонки</Link>
-        <Separator direction="block" size="xl" noPadding />
+        <Separator direction="block" size="xl" />
         <Link>Друзья</Link>
       </Flex>
     </Group>

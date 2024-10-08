@@ -56,7 +56,6 @@ export const BlockDirectionExample: Story = {
   args: {
     direction: 'block',
     size: '2xl',
-    noPadding: true,
   },
   decorators: [
     (Component, props) => (

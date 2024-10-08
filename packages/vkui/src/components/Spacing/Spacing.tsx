@@ -12,6 +12,12 @@ export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
    * Высота спэйсинга
    */
   size?: SpacingSizeProp;
+  /**
+   * @depracated 7.0.0
+   *
+   * Свойство устарело и будет удалено в v8.
+   */
+  children?: React.ReactNode;
 }
 /**
  * @see https://vkcom.github.io/VKUI/#/Spacing

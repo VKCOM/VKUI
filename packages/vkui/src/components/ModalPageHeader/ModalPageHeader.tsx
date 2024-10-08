@@ -58,7 +58,7 @@ export const ModalPageHeader = ({
           {children}
         </PanelHeader>
       </div>
-      {!noSeparator && <Separator noPadding={sizeX === 'regular'} />}
+      {!noSeparator && <Separator padding={sizeX !== 'regular'} />}
     </>
   );
 };

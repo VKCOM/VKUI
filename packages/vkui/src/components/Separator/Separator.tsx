@@ -12,9 +12,9 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
    */
   appearance?: 'primary' | 'secondary' | 'primary-alpha';
   /**
-   * Убирает стандартные отступы у разделителя
+   * Добавляет стандартные отступы у разделителя
    */
-  noPadding?: boolean;
+  padding?: boolean;
   /**
    * Направление отображения разделителя
    */
@@ -49,7 +49,7 @@ const alignClassNames = {
  * @see https://vkcom.github.io/VKUI/#/Separator
  */
 export const Separator = ({
-  noPadding,
+  padding = false,
   appearance = 'primary',
   direction = 'inline',
   align = 'center',
@@ -60,7 +60,7 @@ export const Separator = ({
   <RootComponent
     {...restProps}
     baseClassName={classNames(
-      !noPadding && styles.padded,
+      padding && styles.padded,
       appearanceClassNames[appearance],
       typeof size === 'string' && spacingSizeClassNames[size],
       directionClassNames[direction],

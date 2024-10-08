@@ -18,12 +18,11 @@ export const SeparatorPlayground = (props: ComponentPlaygroundProps) => {
         {
           direction: ['inline'],
           size: [undefined, 'xl'],
-          noPadding: [true, false],
+          padding: [true, false],
         },
         {
           direction: ['block'],
           size: ['xl'],
-          noPadding: [true],
         },
         {
           align: ['start', 'center', 'end'],
