@@ -29,13 +29,6 @@
         <Separator direction="block" size="xl" noPadding />
         <Link>Друзья</Link>
       </Div>
-      <Div>
-        <Link>Новости</Link>
-        <Separator direction="block" size="xl" noPadding />
-        <Link>Звонки</Link>
-        <Separator direction="block" size="xl" noPadding />
-        <Link>Друзья</Link>
-      </Div>
     </Group>
   </Panel>
 </View>
