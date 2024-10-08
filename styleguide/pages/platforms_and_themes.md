@@ -93,12 +93,12 @@ ReactDOM.render(
 ```
 
 Если вы хотите переопределить режим для отдельных компонентов приложения, воспользуйтесь
-`AppearanceProvider`.
+`ColorSchemeProvider`.
 
 ```jsx static
-<AppearanceProvider value="dark">
+<ColorSchemeProvider value="dark">
   <Snackbar action="Поделиться">Поделиться</Snackbar>
-</AppearanceProvider>
+</ColorSchemeProvider>
 ```
 
 Чтобы получить значение текущего режима, используйте хук `useAppearance`. Может пригодиться для
@@ -118,22 +118,22 @@ const colorScheme = useColorScheme();
 > ```jsx static
 > <Group header={<Header>Настройка тем</Header>}>
 >   <SimpleCell before={<Icon20PalleteOutline />}>Системная тема</SimpleCell>
->   <AppearanceProvider value="dark">
+>   <ColorSchemeProvider value="dark">
 >     <SimpleCell
 >       before={<Icon20MoonOutline />}
 >       style={{ backgroundColor: 'var(--vkui--color_background_content)' }}
 >     >
 >       Тёмная тема
 >     </SimpleCell>
->   </AppearanceProvider>
->   <AppearanceProvider value="light">
+>   </ColorSchemeProvider>
+>   <ColorSchemeProvider value="light">
 >     <SimpleCell
 >       before={<Icon20SunOutline />}
 >       style={{ backgroundColor: 'var(--vkui--color_background_content)' }}
 >     >
 >       Светлая тема
 >     </SimpleCell>
->   </AppearanceProvider>
+>   </ColorSchemeProvider>
 > </Group>
 > ```
 

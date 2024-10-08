@@ -377,8 +377,8 @@ export {
   useConfigProvider,
   ConfigProviderContext,
 } from './components/ConfigProvider/ConfigProviderContext';
-export { AppearanceProvider } from './components/AppearanceProvider/AppearanceProvider';
-export type { AppearanceProviderProps } from './components/AppearanceProvider/AppearanceProvider';
+export { ColorSchemeProvider } from './components/ColorSchemeProvider/ColorSchemeProvider';
+export type { ColorSchemeProviderProps } from './components/ColorSchemeProvider/ColorSchemeProvider';
 export { ColorScheme } from './lib/colorScheme';
 export type { ColorSchemeType } from './lib/colorScheme';
 export { LocaleProvider } from './components/LocaleProvider/LocaleProvider';

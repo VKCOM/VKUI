@@ -6,7 +6,7 @@ import { useIsClient } from '../../hooks/useIsClient';
 import { createPortal } from '../../lib/createPortal';
 import { isRefObject } from '../../lib/isRefObject';
 import type { HasChildren } from '../../types';
-import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
+import { ColorSchemeProvider } from '../ColorSchemeProvider/ColorSchemeProvider';
 import { AppRootContext, type AppRootContextInterface } from './AppRootContext';
 
 export interface AppRootPortalProps extends HasChildren {
@@ -32,7 +32,7 @@ export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): Reac
   }
 
   return createPortal(
-    <AppearanceProvider value={colorScheme}>{children}</AppearanceProvider>,
+    <ColorSchemeProvider value={colorScheme}>{children}</ColorSchemeProvider>,
     portalContainer,
   );
 };

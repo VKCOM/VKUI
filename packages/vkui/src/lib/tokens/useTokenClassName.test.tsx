@@ -10,7 +10,7 @@ const tests = Object.values(Platform)
   .flat();
 
 it.each(tests)(
-  'should return token class name for "$platform" platform with "$appearance" appearance',
+  'should return token class name for "$platform" platform with "$colorScheme" colorScheme',
   ({ colorScheme, platform }) => {
     const { result } = renderHook(() => useTokensClassName(), {
       wrapper({ children }) {
