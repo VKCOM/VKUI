@@ -58,14 +58,14 @@ export const useLoadThemeNames = () => {
 
       const key = themeName.replace('Dark', '');
       const values = data.get(key) || {
-        appearanceOptions: [
+        colorSchemeOptions: [
           { value: 'light', title: 'light', url: '', importRule: '', disabled: true },
           { value: 'dark', title: 'dark', url: '', importRule: '', disabled: true },
         ],
         baseForPlatform: null,
       };
 
-      values.appearanceOptions = values.appearanceOptions.map((appearanceData) => {
+      values.colorSchemeOptions = values.colorSchemeOptions.map((appearanceData) => {
         if (appearanceData.value === currentAppearance && appearanceData.disabled) {
           return {
             ...appearanceData,

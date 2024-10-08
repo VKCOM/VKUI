@@ -17,7 +17,7 @@ import './StyleGuideHeader.css';
 const prRegExp = /https:\/\/([\w]+)\.github.io\/([\w]+)\/pull\/([\d]+)/;
 const prData = prRegExp.exec(location.href);
 
-export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
+export const StyleGuideHeader = ({ switchStyleGuideColorScheme }) => {
   const { setActiveModal } = React.useContext(StyleGuideContext);
   const colorScheme = useColorScheme();
 
@@ -89,7 +89,7 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
               ))}
             </div>
             <div className="StyleGuideHeader__aside">
-              <IconButton onClick={switchStyleGuideAppearance}>
+              <IconButton onClick={switchStyleGuideColorScheme}>
                 <VisuallyHidden>Сменить тему</VisuallyHidden>
                 {colorScheme === 'dark' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
               </IconButton>

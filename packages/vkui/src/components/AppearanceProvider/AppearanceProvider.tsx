@@ -17,7 +17,7 @@ export const AppearanceProvider = ({
   children,
 }: AppearanceProviderProps): React.ReactNode => {
   return (
-    <ConfigProviderOverride appearance={value}>
+    <ConfigProviderOverride colorScheme={value}>
       <IconAppearanceProvider value={value}>
         <TokensClassProvider>{children}</TokensClassProvider>
       </IconAppearanceProvider>

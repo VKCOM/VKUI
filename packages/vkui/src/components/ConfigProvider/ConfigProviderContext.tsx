@@ -34,7 +34,7 @@ export interface ConfigProviderContextInterface {
   /**
    * Тип цветовой схемы – `light` или `dark`
    */
-  appearance: ColorSchemeType | undefined;
+  colorScheme: ColorSchemeType | undefined;
   /**
    * Включена ли анимация переходов между экранами в `Root` и `View`
    */
@@ -79,7 +79,7 @@ export const ConfigProviderContext: React.Context<ConfigProviderContextInterface
     isWebView: false,
     transitionMotionEnabled: true,
     platform: platform(),
-    appearance: undefined, // undefined обозначает что тема должна определиться автоматически
+    colorScheme: undefined, // undefined обозначает что тема должна определиться автоматически
     tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
     locale: 'ru',
   });

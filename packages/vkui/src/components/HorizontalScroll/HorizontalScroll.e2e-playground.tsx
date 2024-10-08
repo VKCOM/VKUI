@@ -56,7 +56,7 @@ export const HorizontalScrollWithHasMousePlayground = ({
   ...restProps
 }: ComponentPlaygroundProps) => {
   return (
-    <ConfigProvider appearance={colorScheme}>
+    <ConfigProvider colorScheme={colorScheme}>
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
         <AppRoot>
           <HorizontalScroll
@@ -81,7 +81,7 @@ export const HorizontalScrollWithoutHasMousePlayground = ({
   ...restProps
 }: ComponentPlaygroundProps) => {
   return (
-    <ConfigProvider appearance={colorScheme}>
+    <ConfigProvider colorScheme={colorScheme}>
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
         <AppRoot>
           <HorizontalScroll

@@ -15,14 +15,14 @@ import { Logo } from '../Logo/Logo';
 import { StyleGuideModal } from './StyleGuideModal';
 import './StyleGuideMobile.css';
 
-const StyleGuideMobileHeader = ({ before, switchStyleGuideAppearance }) => {
+const StyleGuideMobileHeader = ({ before, switchStyleGuideColorScheme }) => {
   const colorScheme = useColorScheme();
 
   return (
     <PanelHeader
       before={before}
       after={
-        <PanelHeaderButton onClick={switchStyleGuideAppearance}>
+        <PanelHeaderButton onClick={switchStyleGuideColorScheme}>
           {colorScheme === 'dark' ? (
             <>
               <VisuallyHidden>Переключить на светлую тему</VisuallyHidden>
@@ -69,7 +69,7 @@ export const StyleGuideMobile = (props) => {
           <View activePanel={activePanel}>
             <Panel id="content">
               <StyleGuideMobileHeader
-                switchStyleGuideAppearance={props.switchStyleGuideAppearance}
+                switchStyleGuideColorScheme={props.switchStyleGuideColorScheme}
                 before={
                   <PanelHeaderButton onClick={() => setActivePanel('menu')}>
                     <VisuallyHidden>Показать меню</VisuallyHidden>
@@ -81,7 +81,7 @@ export const StyleGuideMobile = (props) => {
             </Panel>
             <Panel id="menu">
               <StyleGuideMobileHeader
-                switchStyleGuideAppearance={props.switchStyleGuideAppearance}
+                switchStyleGuideColorScheme={props.switchStyleGuideColorScheme}
                 before={
                   <PanelHeaderClose onClick={() => setActivePanel('content')}>
                     Скрыть меню

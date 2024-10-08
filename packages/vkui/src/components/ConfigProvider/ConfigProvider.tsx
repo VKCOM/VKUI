@@ -31,14 +31,14 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode =
     transitionMotionEnabled,
     platform,
     locale,
-    appearance: appearanceProp,
+    colorScheme: colorSchemeProp,
     tokensClassNames,
   } = {
     ...parentConfig,
     ...props,
   };
 
-  const colorScheme = useAutoDetectColorScheme(appearanceProp);
+  const colorScheme = useAutoDetectColorScheme(colorSchemeProp);
 
   const configContext = useObjectMemo({
     hasCustomPanelHeaderAfter,
@@ -48,7 +48,7 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode =
     platform,
     locale,
     tokensClassNames,
-    appearance: colorScheme,
+    colorScheme,
   });
 
   return (

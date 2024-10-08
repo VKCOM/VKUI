@@ -345,7 +345,7 @@ describe('AppRoot', () => {
         const { unmount } = render(
           <ConfigProvider
             platform={platform}
-            appearance={colorScheme}
+            colorScheme={colorScheme}
             tokensClassNames={tokensClassNames}
           >
             <AppRoot />
@@ -363,13 +363,13 @@ describe('AppRoot', () => {
   });
 
   it('should add tokensClassName to embedded element of AppRoot inner full AppRoot and removes on unmount', async () => {
-    const configForFullMode = { appearance: ColorScheme.LIGHT, platform: Platform.VKCOM };
+    const configForFullMode = { colorScheme: ColorScheme.LIGHT, platform: Platform.VKCOM };
     const vkuiTokenModeClassNameForFullMode =
-      DEFAULT_TOKENS_CLASS_NAMES[configForFullMode.platform][configForFullMode.appearance];
+      DEFAULT_TOKENS_CLASS_NAMES[configForFullMode.platform][configForFullMode.colorScheme];
 
-    const configForEmbeddedMode = { appearance: ColorScheme.DARK, platform: Platform.VKCOM };
+    const configForEmbeddedMode = { colorScheme: ColorScheme.DARK, platform: Platform.VKCOM };
     const vkuiTokenModeClassNameForEmbeddedMode =
-      DEFAULT_TOKENS_CLASS_NAMES[configForEmbeddedMode.platform][configForEmbeddedMode.appearance];
+      DEFAULT_TOKENS_CLASS_NAMES[configForEmbeddedMode.platform][configForEmbeddedMode.colorScheme];
 
     const ConfigUserWithOwnProvider = () => {
       return (

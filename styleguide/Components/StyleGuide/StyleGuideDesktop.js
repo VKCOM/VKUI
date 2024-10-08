@@ -7,13 +7,13 @@ import './StyleGuideDesktop.css';
 export const StyleGuideDesktop = ({
   activeModal,
   popout,
-  switchStyleGuideAppearance,
+  switchStyleGuideColorScheme,
   toc,
   children,
 }) => {
   return (
     <div className="StyleGuideDesktop">
-      <StyleGuideHeader switchStyleGuideAppearance={switchStyleGuideAppearance} />
+      <StyleGuideHeader switchStyleGuideColorScheme={switchStyleGuideColorScheme} />
       <SplitLayout
         className="StyleGuide"
         popout={popout}

@@ -8,7 +8,7 @@ export const VKUI_TOKENS_THEMES_META_URL =
   'https://data.jsdelivr.com/v1/packages/npm/@vkontakte/vkui-tokens';
 
 /**
- * Эти темы поддерживают только appearance="dark", но при этом не имеют постфикса `Dark`.
+ * Эти темы поддерживают только colorScheme="dark", но при этом не имеют постфикса `Dark`.
  */
 export const INVERTED_THEME_NAME = new Map([
   ['calls', 'callsDark'],

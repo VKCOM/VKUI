@@ -2,7 +2,7 @@ import { useConfigProvider } from '../components/ConfigProvider/ConfigProviderCo
 import { type ColorSchemeType, DEFAULT_COLOR_SCHEME } from '../lib/colorScheme';
 
 export function useColorScheme(): ColorSchemeType {
-  const { appearance: colorScheme } = useConfigProvider();
+  const { colorScheme } = useConfigProvider();
 
   return colorScheme ?? DEFAULT_COLOR_SCHEME;
 }

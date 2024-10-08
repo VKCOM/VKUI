@@ -3,11 +3,11 @@ import * as React from 'react';
 /**
  * Загружает токены для конкретной темы.
  * @param {string} themeName
- * @param {object} appearanceOptions
+ * @param {object} colorSchemeOptions
  * @param {Document} doc
  * @return {boolean}
  */
-export function useLoadThemeTokens(themeName, appearanceOptions, doc = document) {
+export function useLoadThemeTokens(themeName, colorSchemeOptions, doc = document) {
   const [pending, setPending] = React.useState(false);
   const promiseRef = React.useRef(null);
 
@@ -18,7 +18,7 @@ export function useLoadThemeTokens(themeName, appearanceOptions, doc = document)
 
     setPending(true);
     promiseRef.current = Promise.allSettled(
-      appearanceOptions.map(({ url, disabled }) => {
+      colorSchemeOptions.map(({ url, disabled }) => {
         if (disabled || doc.querySelector(`link[href="${url}"]`)) {
           return Promise.resolve();
         }
@@ -43,7 +43,7 @@ export function useLoadThemeTokens(themeName, appearanceOptions, doc = document)
         promiseRef.current = null;
         setPending(false);
       });
-  }, [themeName, appearanceOptions]);
+  }, [themeName, colorSchemeOptions]);
 
   return !pending;
 }

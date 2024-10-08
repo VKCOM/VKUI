@@ -15,7 +15,7 @@ it.each(tests)(
     const { result } = renderHook(() => useTokensClassName(), {
       wrapper({ children }) {
         return (
-          <ConfigProvider platform={platform} appearance={colorScheme}>
+          <ConfigProvider platform={platform} colorScheme={colorScheme}>
             {children}
           </ConfigProvider>
         );

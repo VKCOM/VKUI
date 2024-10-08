@@ -32,7 +32,7 @@ const getAppearanceTokenClassNameByPlatform = (
 export const useTokensClassName = (): string => {
   const {
     platform,
-    appearance: colorScheme = DEFAULT_COLOR_SCHEME,
+    colorScheme = DEFAULT_COLOR_SCHEME,
     tokensClassNames,
   } = React.useContext(ConfigProviderContext);
 

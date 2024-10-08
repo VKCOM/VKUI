@@ -81,7 +81,7 @@ import { ConfigProvider, AdaptivityProvider, AppRoot, SimpleCell } from '@vkonta
 import '@vkontakte/vkui/dist/vkui.css';
 
 ReactDOM.render(
-  <ConfigProvider appearance="dark">
+  <ConfigProvider colorScheme="dark">
     <AdaptivityProvider>
       <AppRoot>
         <SimpleCell>Темным-темно</SimpleCell>

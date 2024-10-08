@@ -52,7 +52,7 @@ export const ComponentPlayground = <
       : BREAKPOINTS.MOBILE;
 
   return (
-    <ConfigProvider appearance={colorScheme} platform={platform}>
+    <ConfigProvider colorScheme={colorScheme} platform={platform}>
       <AdaptivityProvider {...adaptivityProviderProps}>
         <AppWrapper
           mode={isFixedComponent ? 'full' : undefined}
