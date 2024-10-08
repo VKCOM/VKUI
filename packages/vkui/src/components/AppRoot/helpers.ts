@@ -11,38 +11,26 @@ export const extractPortalRootByProp = (
 
 export const CUSTOM_PROPERTY_INSET_PREFIX = `--vkui_internal--safe_area_inset_`;
 
-export const setSafeAreaInsets = (
+export function getSafeAreaInsetsAsCssVariables(
   safeAreaInsets: SafeAreaInsets | undefined,
-  rootContainer: HTMLElement,
-  portalContainer?: HTMLElement,
-): (() => void) => {
+): Record<string, string> {
   if (!safeAreaInsets) {
-    return () => void 0;
+    return {};
   }
+
+  const cssVariables: Record<string, string> = {};
 
   for (const key in safeAreaInsets) {
     if (safeAreaInsets.hasOwnProperty(key) && typeof safeAreaInsets[key] === 'number') {
       const propertyKey = `${CUSTOM_PROPERTY_INSET_PREFIX}${key}`;
       const propertyValue = safeAreaInsets[key];
-      rootContainer.style.setProperty(propertyKey, `${propertyValue}px`);
-      if (portalContainer) {
-        portalContainer.style.setProperty(propertyKey, `${propertyValue}px`);
-      }
+
+      cssVariables[propertyKey] = `${propertyValue}px`;
     }
   }
 
-  return function unset() {
-    for (const key in safeAreaInsets) {
-      if (safeAreaInsets.hasOwnProperty(key)) {
-        const propertyKey = `${CUSTOM_PROPERTY_INSET_PREFIX}${key}`;
-        rootContainer.style.removeProperty(propertyKey);
-        if (portalContainer) {
-          portalContainer.style.removeProperty(propertyKey);
-        }
-      }
-    }
-  };
-};
+  return cssVariables;
+}
 
 export function getUserSelectModeClassName({
   userSelectMode,
