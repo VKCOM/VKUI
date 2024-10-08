@@ -15,6 +15,7 @@ export {
   getNodeScroll,
   isHTMLElement,
   isElement,
+  getParentNode,
 } from '@vkontakte/vkui-floating-ui/utils/dom';
 
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
@@ -260,3 +261,61 @@ export const initializeBrowserGesturePreventionEffect = (window: Window): VoidFu
     window.removeEventListener('touchmove', handleWindowTouchMove, options);
   };
 };
+
+export const hasSelectionWithRangeType = (node: unknown) => {
+  const selection = getWindow(node).getSelection();
+  return selection ? selection.type === 'Range' : false;
+};
+
+export const isHTMLContentEditableElement = (
+  el: Element | null,
+): el is HTMLInputElement | HTMLTextAreaElement | HTMLElement => {
+  if (el === null) {
+    return false;
+  }
+
+  if (el.tagName === 'INPUT') {
+    // @ts-expect-error: TS2339 за счёт `tagName` удовлетворяемся, что это `HTMLInputElement`
+    return el.type === 'text' || el.type === 'number' || el.type === 'search';
+  }
+
+  return (
+    el.tagName === 'TEXTAREA' ||
+    // eslint-disable-next-line no-restricted-properties
+    el.closest('[contenteditable=true]') !== null
+  );
+};
+
+export type VisualViewport = {
+  offsetTop: number;
+  offsetLeft: number;
+  width: number;
+  height: number;
+};
+
+/**
+ * Обход особенностей **Safari**:
+ *
+ * 1. `visualViewport` нет в **Safari 12**;
+ * 2. нужно всегда ориентироваться на `pageYOffset`, т.к., если поле ввода вверху области видимости,
+ *    `offsetTop` будет возвращать одинаковое значение даже после прокрутки.
+ */
+export function getVisualViewport(win: Window): VisualViewport {
+  const result: VisualViewport = { offsetTop: 0, offsetLeft: 0, width: 0, height: 0 };
+  if (win.visualViewport) {
+    const { offsetTop, offsetLeft, width, height } = win.visualViewport;
+    result.offsetTop = offsetTop || win.pageYOffset;
+    result.offsetLeft = offsetLeft;
+    result.width = width;
+    result.height = height;
+
+    return result;
+  }
+
+  // TODO[Safari@>=13] Удалить фоллбек
+  result.offsetTop = win.pageYOffset;
+  result.offsetLeft = win.pageXOffset;
+  result.width = win.innerWidth;
+  result.height = win.innerHeight;
+  return result;
+}

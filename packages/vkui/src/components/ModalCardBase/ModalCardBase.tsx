@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useKeyboard } from '../../hooks/useKeyboard';
+import { useVirtualKeyboardState } from '../../hooks/useKeyboard';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
@@ -105,7 +105,7 @@ export const ModalCardBase = ({
 }: ModalCardBaseProps): React.ReactNode => {
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
-  const isSoftwareKeyboardOpened = useKeyboard().isOpened;
+  const isSoftwareKeyboardOpened = useVirtualKeyboardState().opened;
 
   const size = isDesktop ? sizeProp : undefined;
   const withSafeZone =

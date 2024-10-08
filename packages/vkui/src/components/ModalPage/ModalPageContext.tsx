@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { createContext } from 'react';
 
 export interface ModalPageContextInterface {
   labelId?: string;
 }
 
 export const ModalPageContext: React.Context<ModalPageContextInterface> =
-  React.createContext<ModalPageContextInterface>({});
+  createContext<ModalPageContextInterface>({});
