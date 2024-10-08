@@ -9,8 +9,8 @@
   --vkui_internal--flex_original_margin_inline: var(--vkui--size_base_padding_horizontal--regular);
   --vkui_internal--flex_original_margin_block: var(--vkui--size_base_padding_vertical--regular);
 
-  margin-block: var(--vkui--size_base_padding_horizontal--regular);
-  margin-inline: var(--vkui--size_base_padding_vertical--regular);
+  margin-inline: var(--vkui--size_base_padding_horizontal--regular);
+  margin-block: var(--vkui--size_base_padding_vertical--regular);
 }
 
 .withGaps {
