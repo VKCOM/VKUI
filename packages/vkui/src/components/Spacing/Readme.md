@@ -6,7 +6,7 @@
 <Spacing size="2xl" />  // отступ высотой 16px
 
 // сепаратор с отступами 8px сверху и снизу
-<Spacing ize="2xl" >
+<Spacing size="2xl" >
   <Separator />
 </Spacing>
 ```

@@ -22,13 +22,13 @@
       <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
     </Group>
     <Group header={<Header mode="secondary">direction="block"</Header>}>
-      <Div style={{ display: 'flex' }}>
+      <Flex margin="auto">
         <Link>Новости</Link>
         <Separator direction="block" size="xl" noPadding />
         <Link>Звонки</Link>
         <Separator direction="block" size="xl" noPadding />
         <Link>Друзья</Link>
-      </Div>
+      </Flex>
     </Group>
   </Panel>
 </View>
