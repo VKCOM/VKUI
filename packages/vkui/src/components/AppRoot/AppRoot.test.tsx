@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { Appearance } from '../../lib/appearance';
+import { ColorScheme } from '../../lib/colorScheme';
 import { Platform } from '../../lib/platform';
 import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
 import { baselineComponent } from '../../testing/utils';
@@ -327,20 +327,25 @@ describe('AppRoot', () => {
     const CUSTOM_TOKEN_CLASS_NAME = 'myClassName';
 
     it.each([
-      ['default', Platform.IOS, Appearance.LIGHT, undefined],
-      ['default', Platform.IOS, Appearance.LIGHT, {}],
-      ['default', Platform.IOS, Appearance.DARK, DEFAULT_TOKENS_CLASS_NAMES],
-      ['default', Platform.IOS, Appearance.LIGHT, { dark: CUSTOM_TOKEN_CLASS_NAME }],
-      ['default', Platform.IOS, Appearance.LIGHT, { android: { dark: CUSTOM_TOKEN_CLASS_NAME } }],
-      ['custom', Platform.IOS, Appearance.DARK, { dark: CUSTOM_TOKEN_CLASS_NAME }],
-      ['custom', Platform.ANDROID, Appearance.DARK, { android: { dark: CUSTOM_TOKEN_CLASS_NAME } }],
+      ['default', Platform.IOS, ColorScheme.LIGHT, undefined],
+      ['default', Platform.IOS, ColorScheme.LIGHT, {}],
+      ['default', Platform.IOS, ColorScheme.DARK, DEFAULT_TOKENS_CLASS_NAMES],
+      ['default', Platform.IOS, ColorScheme.LIGHT, { dark: CUSTOM_TOKEN_CLASS_NAME }],
+      ['default', Platform.IOS, ColorScheme.LIGHT, { android: { dark: CUSTOM_TOKEN_CLASS_NAME } }],
+      ['custom', Platform.IOS, ColorScheme.DARK, { dark: CUSTOM_TOKEN_CLASS_NAME }],
+      [
+        'custom',
+        Platform.ANDROID,
+        ColorScheme.DARK,
+        { android: { dark: CUSTOM_TOKEN_CLASS_NAME } },
+      ],
     ])(
-      'should use %s tokensClassName if platform="%s" appearance="%s" tokensClassNames={%o}',
-      (type, platform, appearance, tokensClassNames) => {
+      'should use %s tokensClassName if platform="%s" colorScheme="%s" tokensClassNames={%o}',
+      (type, platform, colorScheme, tokensClassNames) => {
         const { unmount } = render(
           <ConfigProvider
             platform={platform}
-            appearance={appearance}
+            appearance={colorScheme}
             tokensClassNames={tokensClassNames}
           >
             <AppRoot />
@@ -348,7 +353,7 @@ describe('AppRoot', () => {
         );
         const tokensClassName =
           type === 'default'
-            ? DEFAULT_TOKENS_CLASS_NAMES[platform][appearance]
+            ? DEFAULT_TOKENS_CLASS_NAMES[platform][colorScheme]
             : CUSTOM_TOKEN_CLASS_NAME;
         expect(document.documentElement).toHaveClass(tokensClassName);
         unmount();
@@ -358,11 +363,11 @@ describe('AppRoot', () => {
   });
 
   it('should add tokensClassName to embedded element of AppRoot inner full AppRoot and removes on unmount', async () => {
-    const configForFullMode = { appearance: Appearance.LIGHT, platform: Platform.VKCOM };
+    const configForFullMode = { appearance: ColorScheme.LIGHT, platform: Platform.VKCOM };
     const vkuiTokenModeClassNameForFullMode =
       DEFAULT_TOKENS_CLASS_NAMES[configForFullMode.platform][configForFullMode.appearance];
 
-    const configForEmbeddedMode = { appearance: Appearance.DARK, platform: Platform.VKCOM };
+    const configForEmbeddedMode = { appearance: ColorScheme.DARK, platform: Platform.VKCOM };
     const vkuiTokenModeClassNameForEmbeddedMode =
       DEFAULT_TOKENS_CLASS_NAMES[configForEmbeddedMode.platform][configForEmbeddedMode.appearance];
 

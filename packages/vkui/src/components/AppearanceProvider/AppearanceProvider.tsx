@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
-import type { AppearanceType } from '../../lib/appearance';
+import type { ColorSchemeType } from '../../lib/colorScheme';
 import { TokensClassProvider } from '../../lib/tokens';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface AppearanceProviderProps {
-  value: AppearanceType;
+  value: ColorSchemeType;
   children: React.ReactNode;
 }
 

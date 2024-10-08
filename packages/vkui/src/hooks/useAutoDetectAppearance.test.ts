@@ -1,7 +1,7 @@
 import { act } from 'react';
 import { renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { Appearance } from '../lib/appearance';
+import { ColorScheme } from '../lib/colorScheme';
 import * as LibDOM from '../lib/dom';
 import { useAutoDetectAppearance } from './useAutoDetectAppearance';
 
@@ -14,7 +14,7 @@ jest.mock('../lib/dom', () => {
 
 describe(useAutoDetectAppearance, () => {
   describe('client', () => {
-    it.each([Appearance.LIGHT, Appearance.DARK])(
+    it.each([ColorScheme.LIGHT, ColorScheme.DARK])(
       'should return appearance by property (%s)',
       (appearanceProp) => {
         const { result } = renderHook(() => useAutoDetectAppearance(appearanceProp));
@@ -26,22 +26,22 @@ describe(useAutoDetectAppearance, () => {
       {
         initialMatches: false,
         listenerMatches: false,
-        appearance: { before: Appearance.LIGHT, after: Appearance.LIGHT },
+        appearance: { before: ColorScheme.LIGHT, after: ColorScheme.LIGHT },
       },
       {
         initialMatches: true,
         listenerMatches: true,
-        appearance: { before: Appearance.DARK, after: Appearance.DARK },
+        appearance: { before: ColorScheme.DARK, after: ColorScheme.DARK },
       },
       {
         initialMatches: false,
         listenerMatches: true,
-        appearance: { before: Appearance.LIGHT, after: Appearance.DARK },
+        appearance: { before: ColorScheme.LIGHT, after: ColorScheme.DARK },
       },
       {
         initialMatches: true,
         listenerMatches: false,
-        appearance: { before: Appearance.DARK, after: Appearance.LIGHT },
+        appearance: { before: ColorScheme.DARK, after: ColorScheme.LIGHT },
       },
     ])(
       'should auto detect appearance (initialMatches is $initialMatches, listenerMatches is $listenerMatches, appearance is $appearance)',
@@ -84,7 +84,7 @@ describe(useAutoDetectAppearance, () => {
         };
       });
       const { result } = renderHook(() => useAutoDetectAppearance());
-      expect(result.current).toBe(Appearance.LIGHT);
+      expect(result.current).toBe(ColorScheme.LIGHT);
     });
   });
 });

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { AppearanceType } from '../../lib/appearance';
+import type { ColorSchemeType } from '../../lib/colorScheme';
 import { platform, type PlatformType } from '../../lib/platform';
 import { DEFAULT_TOKENS_CLASS_NAMES, type TokensClassNames } from '../../lib/tokens';
 
@@ -34,7 +34,7 @@ export interface ConfigProviderContextInterface {
   /**
    * Тип цветовой схемы – `light` или `dark`
    */
-  appearance: AppearanceType | undefined;
+  appearance: ColorSchemeType | undefined;
   /**
    * Включена ли анимация переходов между экранами в `Root` и `View`
    */

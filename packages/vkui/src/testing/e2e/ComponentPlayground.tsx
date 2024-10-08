@@ -3,7 +3,7 @@ import type { AdaptivityProps } from '../../components/AdaptivityProvider/Adapti
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
 import { BREAKPOINTS } from '../../lib/adaptivity';
-import type { AppearanceType } from '../../lib/appearance';
+import type { ColorSchemeType } from '../../lib/colorScheme';
 import type { PlatformType } from '../../lib/platform';
 import { AppDefaultWrapper, type AppWrapperProps } from './AppDefaultWrapper';
 import { TEST_CLASS_NAMES } from './constants';
@@ -12,7 +12,7 @@ import { getAdaptivePxWidth, multiCartesian, prettyProps } from './utils';
 export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'div'>> {
   isFixedComponent?: boolean;
   platform: PlatformType;
-  appearance: AppearanceType;
+  appearance: ColorSchemeType;
   adaptivityProviderProps?: Partial<AdaptivityProps>;
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
   children: (props: Props) => React.ReactNode;

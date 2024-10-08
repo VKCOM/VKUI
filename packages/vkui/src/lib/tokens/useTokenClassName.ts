@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ConfigProviderContext } from '../../components/ConfigProvider/ConfigProviderContext';
-import { type AppearanceType, DEFAULT_APPEARANCE } from '../appearance';
+import { type ColorSchemeType, DEFAULT_COLOR_SCHEME } from '../colorScheme';
 import { Platform, type PlatformType } from '../platform';
 import { DEFAULT_TOKENS_CLASS_NAMES } from './constants';
 import type {
@@ -17,7 +17,7 @@ const isTokensClassNamesForPlatforms = (
   Platform.VKCOM in tokensClassNames;
 
 const getTokenClassNameByAppearance = (
-  appearance: AppearanceType,
+  appearance: ColorSchemeType,
   tokensClassNames?: TokensClassNamesByAppearances,
 ) => (tokensClassNames ? tokensClassNames[appearance] : undefined);
 
@@ -32,7 +32,7 @@ const getAppearanceTokenClassNameByPlatform = (
 export const useTokensClassName = (): string => {
   const {
     platform,
-    appearance = DEFAULT_APPEARANCE,
+    appearance = DEFAULT_COLOR_SCHEME,
     tokensClassNames,
   } = React.useContext(ConfigProviderContext);
 

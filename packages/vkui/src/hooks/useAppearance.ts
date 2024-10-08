@@ -1,8 +1,8 @@
 import { useConfigProvider } from '../components/ConfigProvider/ConfigProviderContext';
-import { type AppearanceType, DEFAULT_APPEARANCE } from '../lib/appearance';
+import { type ColorSchemeType, DEFAULT_COLOR_SCHEME } from '../lib/colorScheme';
 
-export function useAppearance(): AppearanceType {
+export function useAppearance(): ColorSchemeType {
   const { appearance } = useConfigProvider();
 
-  return appearance ?? DEFAULT_APPEARANCE;
+  return appearance ?? DEFAULT_COLOR_SCHEME;
 }

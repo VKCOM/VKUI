@@ -7,7 +7,7 @@ import {
 test.describe('PullToRefresh', () => {
   // we are interested in VKCOM only as we need to test here mostly
   // whether the spinner is positioned properly
-  test.use({ onlyForPlatforms: ['vkcom'], onlyForAppearances: ['light'] });
+  test.use({ onlyForPlatforms: ['vkcom'], onlyForColorSchemes: ['light'] });
 
   test('renders spinner properly in default environment', async ({
     page,
