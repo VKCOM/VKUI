@@ -1,7 +1,7 @@
 import { classNames } from '@vkontakte/vkjs';
+import { spacingSizeClassNames, type SpacingSizeProp } from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { spacingSizeClassNames, type SpacingSizeProp } from '../../lib/spacings/sizes';
 import styles from './Separator.module.css';
 
 export const CUSTOM_CSS_TOKEN_FOR_USER_SIZE = '--vkui_internal--spacing_size';

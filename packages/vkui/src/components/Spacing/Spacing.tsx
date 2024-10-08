@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { HTMLAttributesWithRootRef } from '../../types';
 import { spacingSizeClassNames, type SpacingSizeProp } from '../../lib/spacings/sizes';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Spacing.module.css';
 

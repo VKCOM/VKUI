@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
+import { type SpacingSize, spacingSizeClassNames } from '../../lib/spacings/sizes';
 import { baselineComponent } from '../../testing/utils';
-import { spacingSizeClassNames, type SpacingSize } from '../../lib/spacings/sizes';
 import { CUSTOM_CSS_TOKEN_FOR_USER_GAP, Spacing } from './Spacing';
 
 const sizes = Object.keys(spacingSizeClassNames) as SpacingSize[];
