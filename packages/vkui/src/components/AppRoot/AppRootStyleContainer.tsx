@@ -8,7 +8,7 @@ import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 import { AppRootContext } from './AppRootContext';
 import { getSafeAreaInsetsAsCssVariables, getUserSelectModeClassName } from './helpers';
-import styles from './AppRoot.module.css';
+import styles from './AppRootStyleContainer.module.css';
 
 const sizeXClassNames = {
   none: styles.sizeXNone,
@@ -26,14 +26,8 @@ const layoutClassNames = {
 };
 
 type AppRootStyleContainerProps = RootComponentProps<HTMLDivElement>;
-export function AppRootStyleContainer({ className, style, ...props }: AppRootStyleContainerProps) {
-  const {
-    layout,
-    safeAreaInsets,
-    mode,
-    userSelectMode,
-    disableParentTransformForPositionFixedElements,
-  } = React.useContext(AppRootContext);
+export function AppRootStyleContainer({ style, ...props }: AppRootStyleContainerProps) {
+  const { layout, safeAreaInsets, mode, userSelectMode } = React.useContext(AppRootContext);
   const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
   const { isWebView } = useConfigProvider();
   const userSelectModeClassName = getUserSelectModeClassName({
@@ -45,18 +39,14 @@ export function AppRootStyleContainer({ className, style, ...props }: AppRootSty
 
   return (
     <RootComponent
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         mode === 'embedded' && styles.embedded,
         sizeX !== 'compact' && sizeXClassNames[sizeX],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         layout && layoutClassNames[layout],
-        mode === 'embedded' &&
-          !disableParentTransformForPositionFixedElements &&
-          styles.transformForPositionFixedElements,
         userSelectModeClassName,
         tokensClassName,
-        className,
       )}
       style={{ ...getSafeAreaInsetsAsCssVariables(safeAreaInsets), ...style }}
       {...props}
