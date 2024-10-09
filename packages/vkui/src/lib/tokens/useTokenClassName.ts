@@ -36,11 +36,11 @@ export const useTokensClassName = (): string => {
     tokensClassNames,
   } = React.useContext(ConfigProviderContext);
 
-  const appearanceSchemeClassName = isTokensClassNamesForPlatforms(tokensClassNames)
+  const colorSchemeClassName = isTokensClassNamesForPlatforms(tokensClassNames)
     ? getAppearanceTokenClassNameByPlatform(platform, tokensClassNames)
     : tokensClassNames;
 
-  const tokensClassName = getTokenClassNameByAppearance(colorScheme, appearanceSchemeClassName);
+  const tokensClassName = getTokenClassNameByAppearance(colorScheme, colorSchemeClassName);
 
   return tokensClassName ? tokensClassName : DEFAULT_TOKENS_CLASS_NAMES[platform][colorScheme];
 };
