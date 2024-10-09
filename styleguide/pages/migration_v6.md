@@ -244,7 +244,7 @@ npx @vkontakte/vkui-codemods --help
 
 <br/>
 
-### [`AppearanceProvider`](#/AppearanceProvider)
+### [`AppearanceProvider`](#/ColorSchemeProvider)
 
 - По аналогии с остальными провайдерами свойство `appearance` заменено на `value`.
 

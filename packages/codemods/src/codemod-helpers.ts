@@ -52,6 +52,32 @@ export function renameImportName(
     });
 }
 
+export function renameIdentifier(
+  j: JSCodeshift,
+  source: Collection,
+  oldName: string,
+  newName: string,
+) {
+  source.find(j.Identifier, { name: oldName }).forEach((path) => {
+    j(path).replaceWith(j.identifier(newName));
+  });
+}
+
+export function renameTypeIdentifier(
+  j: JSCodeshift,
+  source: Collection,
+  oldName: string,
+  newName: string,
+) {
+  source
+    .find(j.TSTypeReference, { typeName: { type: 'Identifier', name: oldName } })
+    .forEach((path) => {
+      if (path.node.typeName.type === 'Identifier') {
+        path.node.typeName.name = newName;
+      }
+    });
+}
+
 export function renameProp(
   j: JSCodeshift,
   source: Collection,

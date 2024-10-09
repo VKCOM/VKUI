@@ -1,5 +1,11 @@
 import { API, FileInfo } from 'jscodeshift';
-import { getImportInfo, renameImportName, renameProp } from '../../codemod-helpers';
+import {
+  getImportInfo,
+  renameIdentifier,
+  renameImportName,
+  renameProp,
+  renameTypeIdentifier,
+} from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
@@ -29,9 +35,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     const isAliasUsed = appearanceLocalName !== OLD_APPEARANCE_NAME;
     renameImportName(j, source, appearanceLocalName, NEW_APPEARANCE_NAME, alias, isAliasUsed);
     if (!isAliasUsed) {
-      source.find(j.Identifier, { name: appearanceLocalName }).forEach((path) => {
-        j(path).replaceWith(j.identifier(NEW_APPEARANCE_NAME));
-      });
+      renameIdentifier(j, source, appearanceLocalName, NEW_APPEARANCE_NAME);
     }
   }
   if (appearanceTypeLocalName) {
@@ -45,18 +49,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       isAliasUsed,
     );
     if (!isAliasUsed) {
-      source
-        .find(j.TSTypeReference)
-        .filter(
-          (path) =>
-            path.node.typeName.type === 'Identifier' &&
-            path.node.typeName.name === appearanceTypeLocalName,
-        )
-        .forEach((path) => {
-          if (path.node.typeName.type === 'Identifier') {
-            path.node.typeName.name = NEW_APPEARANCE_TYPE_NAME;
-          }
-        });
+      renameTypeIdentifier(j, source, appearanceTypeLocalName, NEW_APPEARANCE_TYPE_NAME);
     }
   }
   return source.toSource();
