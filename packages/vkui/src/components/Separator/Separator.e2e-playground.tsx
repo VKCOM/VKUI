@@ -28,6 +28,11 @@ export const SeparatorPlayground = (props: ComponentPlaygroundProps) => {
           align: ['start', 'center', 'end'],
           size: ['3xl'],
         },
+        {
+          direction: ['block'],
+          align: ['start', 'center', 'end'],
+          size: ['3xl'],
+        },
       ]}
     >
       {(props: SeparatorProps) => (
