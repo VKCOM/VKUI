@@ -1,4 +1,4 @@
-import { Appearance, type AppearanceType } from '@vkontakte/vkui';
+import { Appearance, type AppearanceType, useAppearance } from '@vkontakte/vkui';
 import React from 'react';
 
 const Component: React.FC<{
@@ -13,6 +13,8 @@ const Component: React.FC<{
 
 const App = () => {
   const appearance: AppearanceType = Appearance.LIGHT;
+
+  const fromHookAppearance = useAppearance();
 
   return (
     <React.Fragment>
