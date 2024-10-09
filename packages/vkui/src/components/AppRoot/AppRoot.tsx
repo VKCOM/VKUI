@@ -16,6 +16,7 @@ import type {
   AppRootUserSelectMode,
   SafeAreaInsets,
 } from './types';
+import styles from './AppRoot.module.css';
 
 export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Режим встраивания */
@@ -122,17 +123,8 @@ export const AppRoot = ({
         return isKeyboardInputActiveRef.current;
       },
       userSelectMode,
-      disableParentTransformForPositionFixedElements,
     }),
-    [
-      disablePortal,
-      isKeyboardInputActiveRef,
-      layout,
-      mode,
-      safeAreaInsets,
-      userSelectMode,
-      disableParentTransformForPositionFixedElements,
-    ],
+    [disablePortal, isKeyboardInputActiveRef, layout, mode, safeAreaInsets, userSelectMode],
   );
 
   return mode === 'partial' ? (
@@ -141,7 +133,15 @@ export const AppRoot = ({
     </AppRootContext.Provider>
   ) : (
     <AppRootContext.Provider value={contextValue}>
-      <AppRootStyleContainer getRootRef={appRootRef} {...props}>
+      <AppRootStyleContainer
+        getRootRef={appRootRef}
+        className={
+          mode === 'embedded' && !disableParentTransformForPositionFixedElements
+            ? styles.transformForPositionFixedElements
+            : undefined
+        }
+        {...props}
+      >
         <ScrollController elRef={appRootRef}>{children}</ScrollController>
       </AppRootStyleContainer>
     </AppRootContext.Provider>

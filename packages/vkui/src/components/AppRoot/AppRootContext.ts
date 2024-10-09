@@ -13,7 +13,6 @@ export interface AppRootContextInterface {
   disablePortal: boolean;
   layout?: 'card' | 'plain';
   userSelectMode?: AppRootUserSelectMode;
-  disableParentTransformForPositionFixedElements?: boolean;
 }
 
 /**
