@@ -3,7 +3,6 @@ import {
   getImportInfo,
   renameIdentifier,
   renameImportName,
-  renameProp,
   renameTypeIdentifier,
 } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
