@@ -9,6 +9,10 @@ const Wrapper = (Story: PartialStoryFn<ReactRenderer>) => (
     style={{
       borderRadius: 10,
       border: '1px solid #000',
+      height: '100%',
+      width: '100%',
+      maxWidth: '600px',
+      maxHeight: '300px',
     }}
   >
     <Story />
@@ -27,7 +31,6 @@ type Story = StoryObj<CustomScrollViewProps>;
 
 export const Playground: Story = {
   args: {
-    style: { height: 300, width: 600 },
     enableHorizontalScroll: true,
     children: (
       <Div

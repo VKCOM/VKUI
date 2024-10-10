@@ -65,8 +65,7 @@ const triggerKeydownEvent = async (input: HTMLElement, key: string, code: string
 const mockPropertiesToScroll = (defaultScrollTop = 0) => {
   const setScrollTopStub = jest.fn();
 
-  const dropdownScroll = screen.getByRole('listbox').firstElementChild
-    ?.firstElementChild as HTMLElement;
+  const dropdownScroll = screen.getByRole('listbox').firstElementChild as HTMLElement;
   jest.spyOn(dropdownScroll, 'offsetHeight', 'get').mockImplementation(() => 200);
   jest.spyOn(dropdownScroll, 'scrollTop', 'get').mockImplementation(() => defaultScrollTop);
   jest.spyOn(dropdownScroll, 'scrollTop', 'set').mockImplementation(setScrollTopStub);
