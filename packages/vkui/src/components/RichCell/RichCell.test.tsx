@@ -8,8 +8,8 @@ describe('RichCell', () => {
 
   it.each<[Exclude<RichCellProps['afterAlign'], undefined>, string, string]>([
     ['start', styles.content, styles.contentAfterAlignStart],
-    ['center', styles.host, styles.contentAfterAlignCenter],
-    ['end', styles.host, styles.contentAfterAlignEnd],
+    ['center', styles.inWrapper, styles.contentAfterAlignCenter],
+    ['end', styles.inWrapper, styles.contentAfterAlignEnd],
   ])(
     'should have correct position of after element',
     (afterAlign, expectedContainerStyle, alignClassName) => {
