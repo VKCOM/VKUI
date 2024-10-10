@@ -9,7 +9,7 @@ import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
 import { HorizontalScroll, type HorizontalScrollProps } from './HorizontalScroll';
 
 const items = new Array(20).fill(0).map((_, i) => (
-  <HorizontalCell key={i} header={`item ${i}`} onClick={noop}>
+  <HorizontalCell key={i} title={`item ${i}`} onClick={noop}>
     <Avatar size={56} />
   </HorizontalCell>
 ));

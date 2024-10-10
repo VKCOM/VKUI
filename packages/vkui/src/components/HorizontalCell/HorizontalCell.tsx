@@ -27,14 +27,14 @@ const CellTypography = ({ size, children, ...restProps }: CellTypographyProps) =
 };
 
 export interface HorizontalCellProps
-  extends Omit<TappableProps, 'size' | 'getRootRef'>,
+  extends Omit<TappableProps, 'size' | 'getRootRef' | 'title'>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
   /**
    * Заголовок
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /**
    * Дополнительная строка текста под `children`.
    */
@@ -50,7 +50,7 @@ export interface HorizontalCellProps
  */
 export const HorizontalCell = ({
   className,
-  header,
+  title,
   style,
   subtitle,
   size = 's',
@@ -68,9 +68,9 @@ export const HorizontalCell = ({
     >
       <Tappable className={styles.body} getRootRef={getRef} {...restProps}>
         {hasReactNode(children) && <div className={styles.image}>{children}</div>}
-        {(header || subtitle || extraSubtitle) && (
+        {(title || subtitle || extraSubtitle) && (
           <div className={styles.content}>
-            {hasReactNode(header) && <CellTypography size={size}>{header}</CellTypography>}
+            {hasReactNode(title) && <CellTypography size={size}>{title}</CellTypography>}
             {hasReactNode(subtitle) && <Footnote className={styles.subtitle}>{subtitle}</Footnote>}
             {hasReactNode(extraSubtitle) && (
               <Footnote className={styles.subtitle}>{extraSubtitle}</Footnote>

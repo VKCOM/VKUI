@@ -36,7 +36,7 @@ export const Playground: Story = {
       <>
         {values.map((value) => {
           return (
-            <HorizontalCell key={value.id} header={value.title} {...args}>
+            <HorizontalCell key={value.id} title={value.title} {...args}>
               <Image size={platform === 'ios' ? 64 : 56} borderRadius="l" src={value.icon} />
             </HorizontalCell>
           );

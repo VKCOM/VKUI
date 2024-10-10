@@ -57,7 +57,7 @@ export const Playground: Story = {
           <React.Fragment>
             {commonFriends.map((item) => {
               return (
-                <HorizontalCell key={item.id} header={item.first_name}>
+                <HorizontalCell key={item.id} title={item.first_name}>
                   <Avatar size={56} src={item.photo_200} />
                 </HorizontalCell>
               );

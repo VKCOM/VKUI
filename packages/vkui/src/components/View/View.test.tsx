@@ -307,7 +307,7 @@ describe(View, () => {
               <HorizontalCell
                 key={user.id}
                 size="s"
-                header={user.first_name}
+                title={user.first_name}
                 data-testid={`horizontal-cell-${index}`}
               >
                 <Avatar size={56} src={user.photo_100} />

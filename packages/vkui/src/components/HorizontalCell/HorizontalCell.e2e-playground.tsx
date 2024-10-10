@@ -20,23 +20,23 @@ export const HorizontalCellPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          header: ['Header'],
+          title: ['Title'],
           subtitle: ['Just subtitle'],
           extraSubtitle: ['Some extra subtitle'],
         },
         {
-          header: ['Very long title example'],
+          title: ['Very long title example'],
         },
       ]}
     >
-      {({ header, subtitle, extraSubtitle, ...restProps }: HorizontalCellProps) => (
+      {({ title, subtitle, extraSubtitle, ...restProps }: HorizontalCellProps) => (
         <div style={containerStyle}>
-          <HorizontalCell {...restProps} header={header} size="s">
+          <HorizontalCell {...restProps} title={title} size="s">
             <Avatar size={56} />
           </HorizontalCell>
           <HorizontalCell
             {...restProps}
-            header={header}
+            title={title}
             subtitle={subtitle}
             extraSubtitle={extraSubtitle}
             size="m"
@@ -45,7 +45,7 @@ export const HorizontalCellPlayground = (props: ComponentPlaygroundProps) => {
           </HorizontalCell>
           <HorizontalCell
             {...restProps}
-            header={header}
+            title={title}
             subtitle={subtitle}
             extraSubtitle={extraSubtitle}
             size="l"
