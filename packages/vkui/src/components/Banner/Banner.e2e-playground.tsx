@@ -58,7 +58,7 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
         {
           header: ['Header'],
           subhead: ['Subheader'],
-          text: ['Text'],
+          extraSubhead: ['Extra Subhead'],
           actions: [<Button key="btn">Button</Button>],
         },
       ]}
