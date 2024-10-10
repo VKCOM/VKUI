@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28Notifications, Icon28SlidersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { Div } from '../Div/Div';
 import { Group } from '../Group/Group';
+import { Link } from '../Link/Link';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
-import { Spacing } from '../Spacing/Spacing';
 import { Separator, type SeparatorProps } from './Separator';
 
 const story: Meta<SeparatorProps> = {
@@ -17,28 +18,54 @@ export default story;
 type Story = StoryObj<SeparatorProps>;
 
 export const Playground: Story = {
+  args: {
+    size: 'xl',
+  },
   decorators: [
-    (Component) => (
-      <div>
+    (Component, props) => (
+      <div
+        style={
+          props.args.direction === 'block'
+            ? { display: 'flex', alignItems: 'center', height: 50 }
+            : undefined
+        }
+      >
         Before Separator
-        <Component />
+        <Component {...props} />
         After Separator
       </div>
     ),
   ],
 };
 
-export const Example: Story = {
+export const DefaultDirectionExample: Story = {
   ...Playground,
   decorators: [
     (Component) => (
       <Group>
         <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
-        <Spacing>
-          <Component />
-        </Spacing>
+        <Component />
         <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
       </Group>
+    ),
+  ],
+};
+
+export const BlockDirectionExample: Story = {
+  ...Playground,
+  args: {
+    direction: 'block',
+    size: '2xl',
+  },
+  decorators: [
+    (Component, props) => (
+      <Div style={{ display: 'flex' }}>
+        <Link>Новости</Link>
+        <Component {...props} />
+        <Link>Звонки</Link>
+        <Component {...props} />
+        <Link>Друзья</Link>
+      </Div>
     ),
   ],
 };

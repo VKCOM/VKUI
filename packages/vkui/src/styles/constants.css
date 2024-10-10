@@ -82,6 +82,9 @@
   /* Layout Gaps */
   --vkui_internal--row_gap: 0px;
   --vkui_internal--column_gap: 0px;
+
+  /* Spacing size */
+  --vkui_internal--spacing_size: 0px;
 }
 
 @supports (padding-top: constant(safe-area-inset-top)) {

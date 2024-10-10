@@ -8,6 +8,7 @@ const App = () => {
       <Separator mode="primary-alpha" wide />
       <Separator mode={"secondary"} />
       <Separator wide={false} />
+      <Separator wide={true} />
     </React.Fragment>
   );
 };

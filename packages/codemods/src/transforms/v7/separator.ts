@@ -1,5 +1,5 @@
 import { API, FileInfo } from 'jscodeshift';
-import { getImportInfo, renameProp } from '../../codemod-helpers';
+import { getImportInfo, renameProp, swapBooleanValue } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
@@ -13,7 +13,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
 
   if (localName) {
     renameProp(j, source, localName, { mode: 'appearance' });
-    renameProp(j, source, localName, { wide: 'noPadding' });
+    swapBooleanValue(api, source, localName, 'wide', 'padding');
   }
 
   return source.toSource();
