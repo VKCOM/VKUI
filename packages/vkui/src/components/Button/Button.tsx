@@ -5,6 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import type { HasAlign } from '../../types';
 import { Spinner } from '../Spinner/Spinner';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import '../Tappable/Tappable.module.css';
 import '../Spinner/Spinner.module.css';
 import styles from './Button.module.css';
 
