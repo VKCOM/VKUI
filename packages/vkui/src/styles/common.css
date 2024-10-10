@@ -10,6 +10,13 @@
   block-size: 100%;
 }
 
+.vkui__root {
+  /* чтобы можно было ограничить размеры приложения
+   * извне с помощью max-height, max-width */
+  max-inline-size: inherit;
+  max-block-size: inherit;
+}
+
 /* отключаем нативный pull-to-refresh при взаимодействии с компонентом
  * PullToRefresh или при открывании модалки */
 .vkui--disable-overscroll-behavior {

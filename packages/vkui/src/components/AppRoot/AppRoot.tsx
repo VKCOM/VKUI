@@ -81,14 +81,20 @@ export const AppRoot = ({
   userSelectMode,
   ...props
 }: AppRootProps): React.ReactNode => {
-  const safeAreaInsets = useObjectMemo(safeAreaInsetsProp);
-  const isKeyboardInputActiveRef = useKeyboardInputTracker();
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
   const portalRootRef = React.useRef<HTMLElement | null>(
     portalRootProp ? extractPortalRootByProp(portalRootProp) : null,
   );
 
   useIsomorphicLayoutEffect(function removePortalRootOnUnmount() {
+    // Контейнер PortalRoot создаётся при первом вызове модалки или
+    // поповера использующего AppRootPortal.
+    // Потом он переиспользуется и не удаляется пока
+    // приложение не размонтируется.
+    // И создаётся только если в приложение не был передан
+    // пользовательский контейнер контейнер через свойство portalRootProp
+    // Сделано для поддержки SSR, чтобы при старте приложения
+    // никаких новых нод в DOM не создавалось.
     const documentBody = getDocumentBody(appRootRef.current);
     return function cleanup() {
       if (portalRootRef.current) {
@@ -109,6 +115,8 @@ export const AppRoot = ({
     [scroll],
   );
 
+  const isKeyboardInputActiveRef = useKeyboardInputTracker();
+  const safeAreaInsets = useObjectMemo(safeAreaInsetsProp);
   const contextValue = React.useMemo(
     () => ({
       appRoot: appRootRef,
