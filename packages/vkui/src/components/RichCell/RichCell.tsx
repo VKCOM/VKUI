@@ -118,28 +118,30 @@ export const RichCell: React.FC<RichCellProps> & {
       )}
     >
       {before && <div className={styles.before}>{before}</div>}
-      <div className={styles.in}>
-        <div className={styles.content}>
-          <div className={styles.contentBefore}>
-            {subhead && (
-              <Subhead Component="div" className={styles.subhead}>
-                {subhead}
-              </Subhead>
-            )}
-            <div className={styles.children}>{children}</div>
-            {text && <div className={styles.text}>{text}</div>}
-            {caption && (
-              <Subhead Component="div" className={styles.caption}>
-                {caption}
-              </Subhead>
-            )}
+      <div className={styles.inWrapper}>
+        <div className={styles.in}>
+          <div className={styles.content}>
+            <div className={styles.contentBefore}>
+              {subhead && (
+                <Subhead Component="div" className={styles.subhead}>
+                  {subhead}
+                </Subhead>
+              )}
+              <div className={styles.children}>{children}</div>
+              {text && <div className={styles.text}>{text}</div>}
+              {caption && (
+                <Subhead Component="div" className={styles.caption}>
+                  {caption}
+                </Subhead>
+              )}
+            </div>
+            {afterAlign === 'start' && afterRender()}
           </div>
-          {afterAlign === 'start' && afterRender()}
+          {bottom && <div className={styles.bottom}>{bottom}</div>}
+          {actions && <div className={styles.actions}>{actions}</div>}
         </div>
-        {bottom && <div className={styles.bottom}>{bottom}</div>}
-        {actions && <div className={styles.actions}>{actions}</div>}
+        {afterAlign !== 'start' && afterRender()}
       </div>
-      {afterAlign !== 'start' && afterRender()}
     </Tappable>
   );
 };

@@ -23,6 +23,13 @@
   margin-inline-end: var(--vkui--spacing_size_xl);
 }
 
+.inWrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  min-inline-size: 0;
+}
+
 .in {
   display: flex;
   flex-direction: column;
@@ -35,10 +42,10 @@
 .content {
   display: flex;
   word-break: break-word;
+  justify-content: space-between;
 }
 
 .contentBefore {
-  flex-grow: 1;
   min-inline-size: 0;
 }
 
@@ -46,9 +53,12 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  flex-shrink: 0;
   padding-inline-start: var(--vkui--spacing_size_xl);
   box-sizing: border-box;
+  flex-shrink: 0;
+  min-inline-size: 0;
+  flex-grow: 1;
+  flex-basis: 100px;
 }
 
 .contentAfterAlignStart {
