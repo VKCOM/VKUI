@@ -26,10 +26,14 @@ export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): Reac
   const colorScheme = useColorScheme();
 
   const canUsePortal = shouldUsePortal(usePortal, mode, Boolean(disablePortal));
+  const portalContainer = resolvePortalContainer(usePortal, portalRoot.current);
 
   useIsomorphicLayoutEffect(
+    // Создаём контейнер для портала по запросу один раз
+    // и пока приложение не размонтируется.
+    // Удаление созданной ноды происходит в AppRoot
     function initializePortalRootIfNeeded() {
-      const shouldCreatePortalRoot = canUsePortal && portalRoot.current === null;
+      const shouldCreatePortalRoot = canUsePortal && portalContainer === null;
       if (shouldCreatePortalRoot) {
         const documentBody = getDocumentBody(appRoot.current);
         const portal = documentBody.ownerDocument.createElement('div');
@@ -41,7 +45,7 @@ export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): Reac
       // делать очистку и удалять portalRoot не нужно,
       // так как это произойдёт при размонтировании AppRoot
     },
-    [canUsePortal, appRoot, portalRoot, setPortalRoot],
+    [canUsePortal, appRoot, portalContainer, setPortalRoot],
   );
 
   const isClient = useIsClient();
@@ -49,7 +53,6 @@ export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): Reac
     return null;
   }
 
-  const portalContainer = resolvePortalContainer(usePortal, portalRoot.current);
   if (canUsePortal && portalContainer) {
     return createPortal(
       <ColorSchemeProvider value={colorScheme}>
@@ -59,7 +62,7 @@ export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): Reac
     );
   }
 
-  return <React.Fragment>{children}</React.Fragment>;
+  return children;
 };
 
 function shouldUsePortal(
@@ -67,22 +70,22 @@ function shouldUsePortal(
   mode: AppRootContextInterface['mode'],
   disablePortal: boolean,
 ) {
-  if (usePortal !== undefined) {
-    if (typeof usePortal !== 'boolean') {
-      return true;
-    }
-
-    return disablePortal === false && usePortal === true;
+  if (usePortal === undefined) {
+    return disablePortal === false && mode !== 'full';
   }
 
-  return disablePortal === false && mode !== 'full';
+  if (typeof usePortal !== 'boolean') {
+    return true;
+  }
+
+  return disablePortal === false && usePortal === true;
 }
 
 function resolvePortalContainer<PortalRootFromContext extends HTMLElement | null | undefined>(
   usePortal: AppRootPortalProps['usePortal'],
   portalRootFromContext: PortalRootFromContext,
-) {
-  if (usePortal === true || !usePortal) {
+): HTMLElement | null {
+  if (typeof usePortal === 'boolean' || usePortal === undefined) {
     return portalRootFromContext ? portalRootFromContext : null;
   }
 

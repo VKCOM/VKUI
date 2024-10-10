@@ -1,6 +1,10 @@
 .host {
-  block-size: 100%;
+  /* чтобы можно было ограничить размеры приложения
+   * извне с помощью max-height, max-width */
+  max-inline-size: inherit;
+  max-block-size: inherit;
   inline-size: 100%;
+  block-size: 100%;
   /* Это и так проставляется во всех режимах, кроме partial */
   color-scheme: var(--vkui--colors_scheme);
   -webkit-tap-highlight-color: transparent;
@@ -59,13 +63,16 @@
   }
 }
 
-/* Взаимно исключающие селекторы
- * Видимо один надо поднять выше или убрать совсем тот что с hidden */
 .embedded {
-  overflow-x: hidden;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkui__root--embedded) .host {
+  /* Раньше в этом режиме на родителе (app__root--embeded)
+   * лежал стиль overflow-x: hidden
+   * см: https://github.com/VKCOM/VKUI/commit/67366838397305b79d4c1de6e0b5ca03e7fd7450
+   * см: https://github.com/VKCOM/VKUI/pull/1248/files
+   * Но сейчас, так как главные стили, в том числе и
+   * transform: translate3d(0, 0, 0) лежат на AppRoot,
+   * то в этом смысла не видно.
+   * По крайней мере примеров,
+   * где бы overflow ломался в embedded режиме,
+   * пока не было найдено */
   overflow: auto;
 }

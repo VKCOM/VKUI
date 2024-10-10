@@ -26,6 +26,9 @@ const layoutClassNames = {
 };
 
 type AppRootStyleContainerProps = RootComponentProps<HTMLDivElement>;
+/* Специальный контейнер для переиспользования стилей, токенов и area-inset в AppRoot
+ * (точке монтирования приложения) и PortalRoot (точке монтирования порталов для модальных
+ * окон) */
 export function AppRootStyleContainer({ style, ...props }: AppRootStyleContainerProps) {
   const { layout, safeAreaInsets, mode, userSelectMode } = React.useContext(AppRootContext);
   const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
