@@ -2,7 +2,7 @@ import { test } from '@vkui-e2e/test';
 import { PanelHeaderPlayground } from './PanelHeader.e2e-playground';
 
 test.use({
-  onlyForAppearances: ['light'],
+  onlyForColorSchemes: ['light'],
 });
 
 test('PanelHeader', async ({

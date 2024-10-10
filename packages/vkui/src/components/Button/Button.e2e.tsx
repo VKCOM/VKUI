@@ -20,7 +20,7 @@ test.describe('Button', () => {
 });
 
 test.describe('Button', () => {
-  test.use({ onlyForAppearances: ['light'] });
+  test.use({ onlyForColorSchemes: ['light'] });
   test('paddings', async ({
     mount,
     expectScreenshotClippedToContent,

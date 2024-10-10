@@ -41,13 +41,13 @@ export function Themes({ id }) {
       </Div>
       {error && <Div>Произошла ошибка</Div>}
       {isLoading && <PanelSpinner />}
-      {themeNames.map(([themeName, { appearanceOptions, baseForPlatform }]) => (
+      {themeNames.map(([themeName, { colorSchemeOptions, baseForPlatform }]) => (
         <SimpleCell
           key={themeName}
           badgeAfterTitle={
             <span style={{ display: 'flex', gap: 4 }} role="list">
               <VisuallyHidden>Поддерживает темы</VisuallyHidden>
-              {appearanceOptions.map(({ value, url, disabled }) => {
+              {colorSchemeOptions.map(({ value, url, disabled }) => {
                 if (disabled) {
                   return null;
                 }
@@ -74,7 +74,7 @@ export function Themes({ id }) {
             ) : undefined
           }
           onClick={() => {
-            setContext({ themeName, appearanceOptions });
+            setContext({ themeName, colorSchemeOptions });
             setActiveModal(null);
           }}
         >

@@ -4,7 +4,7 @@ import { useGlobals } from '@storybook/manager-api';
 import { IconButton } from '@storybook/components';
 import { PARAM_KEY } from './constants';
 
-export const AppearanceSwitch = () => {
+export const ColorSchemeSwitch = () => {
   const [globals, updateGlobals] = useGlobals();
   const isDarkTheme = globals[PARAM_KEY] === 'dark';
 

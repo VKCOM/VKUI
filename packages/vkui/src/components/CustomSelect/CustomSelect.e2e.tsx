@@ -1,5 +1,5 @@
 import { test } from '@vkui-e2e/test';
-import { Appearance } from '../../lib/appearance';
+import { ColorScheme } from '../../lib/colorScheme';
 import {
   CustomSelectNoMaxHeightPlayground,
   CustomSelectOptionScrollPlayground,
@@ -17,7 +17,7 @@ test('CustomSelect', async ({
 
 test.describe('CustomSelect', () => {
   test.use({
-    onlyForAppearances: [Appearance.LIGHT],
+    onlyForColorSchemes: [ColorScheme.LIGHT],
   });
   test('no max height', async ({
     mount,
@@ -41,7 +41,7 @@ test.describe('CustomSelect', () => {
 
 test.describe('CustomSelect', () => {
   test.use({
-    onlyForAppearances: [Appearance.LIGHT],
+    onlyForColorSchemes: [ColorScheme.LIGHT],
     onlyForPlatforms: ['android'],
     onlyForBrowsers: ['chromium'],
   });

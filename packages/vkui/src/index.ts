@@ -377,10 +377,10 @@ export {
   useConfigProvider,
   ConfigProviderContext,
 } from './components/ConfigProvider/ConfigProviderContext';
-export { AppearanceProvider } from './components/AppearanceProvider/AppearanceProvider';
-export type { AppearanceProviderProps } from './components/AppearanceProvider/AppearanceProvider';
-export { Appearance } from './lib/appearance';
-export type { AppearanceType } from './lib/appearance';
+export { ColorSchemeProvider } from './components/ColorSchemeProvider/ColorSchemeProvider';
+export type { ColorSchemeProviderProps } from './components/ColorSchemeProvider/ColorSchemeProvider';
+export { ColorScheme } from './lib/colorScheme';
+export type { ColorSchemeType } from './lib/colorScheme';
 export { LocaleProvider } from './components/LocaleProvider/LocaleProvider';
 export type { LocaleProviderProps } from './components/LocaleProvider/LocaleProvider';
 export { PlatformProvider } from './components/PlatformProvider/PlatformProvider';
@@ -411,7 +411,7 @@ export {
   type UseAdaptivityWithJSMediaQueries,
   useAdaptivityWithJSMediaQueries,
 } from './hooks/useAdaptivityWithJSMediaQueries';
-export { useAppearance } from './hooks/useAppearance';
+export { useColorScheme } from './hooks/useColorScheme';
 export { usePagination } from './hooks/usePagination';
 export { useOrientationChange } from './hooks/useOrientationChange';
 export { useTodayDate } from './hooks/useTodayDate';

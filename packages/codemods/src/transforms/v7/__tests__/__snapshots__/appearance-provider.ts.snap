@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`appearance-provider transforms correctly 1`] = `
+"import { ColorSchemeProvider, type ColorSchemeProviderProps, Snackbar } from '@vkontakte/vkui';
+import React from 'react';
+
+type Props = ColorSchemeProviderProps & {
+  additionalProp: string,
+}
+
+const App = () => {
+  const props: ColorSchemeProviderProps = {
+    value: 'dark',
+    children: (<Snackbar action="Поделиться">Поделиться</Snackbar>)
+  };
+
+  const getAdditionalProvider = () => (
+    <ColorSchemeProvider value={"light"}>
+      <Snackbar action="Поделиться">Поделиться</Snackbar>
+    </ColorSchemeProvider>
+  )
+
+  return (
+    (<React.Fragment>
+      <ColorSchemeProvider {...props} />
+      {getAdditionalProvider()}
+    </React.Fragment>)
+  );
+};"
+`;
+
+exports[`appearance-provider transforms correctly 2`] = `
+"import { ColorSchemeProvider as AppearanceProviderAlias, type ColorSchemeProviderProps as AppearanceProviderPropsAlias, Snackbar } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const props: AppearanceProviderPropsAlias = {
+    value: 'dark',
+    children: (<Snackbar action="Поделиться">Поделиться</Snackbar>)
+  };
+
+  return (
+    <React.Fragment>
+      <AppearanceProviderAlias {...props} />
+    </React.Fragment>
+  );
+};"
+`;

@@ -35,8 +35,8 @@ const Layout = ({ children }) => {
 
 const Config = ({
   hasPointer,
-  appearance,
-  appearanceOptions,
+  colorScheme,
+  colorSchemeOptions,
   themeName,
   layout,
   children,
@@ -45,10 +45,10 @@ const Config = ({
   return (
     <ConfigProvider
       {...config}
-      appearance={appearance}
+      colorScheme={colorScheme}
       tokensClassNames={getVKUIConfigProviderTokensClassNamesWithGlobalAppearance(
         themeName,
-        appearanceOptions,
+        colorSchemeOptions,
       )}
     >
       <AdaptivityProvider hasPointer={hasPointer}>
@@ -58,8 +58,8 @@ const Config = ({
   );
 };
 
-const WithoutFrame = ({ themeName, appearanceOptions, children }) => {
-  const loaded = useLoadThemeTokens(themeName, appearanceOptions);
+const WithoutFrame = ({ themeName, colorSchemeOptions, children }) => {
+  const loaded = useLoadThemeTokens(themeName, colorSchemeOptions);
   return loaded ? children : <PanelSpinner />;
 };
 
@@ -123,10 +123,10 @@ class Preview extends PreviewParent {
           return (
             <ConfigProvider
               platform={styleGuideContext.platform}
-              appearance={styleGuideContext.appearance}
+              colorScheme={styleGuideContext.colorScheme}
               tokensClassNames={getVKUIConfigProviderTokensClassNamesWithGlobalAppearance(
                 styleGuideContext.themeName,
-                styleGuideContext.appearanceOptions,
+                styleGuideContext.colorSchemeOptions,
               )}
             >
               <div
@@ -157,7 +157,7 @@ class Preview extends PreviewParent {
                     <Frame
                       style={adaptivity ? { width, height: styleGuideContext.height } : undefined}
                       platform={styleGuideContext.platform}
-                      appearanceOptions={styleGuideContext.appearanceOptions}
+                      colorSchemeOptions={styleGuideContext.colorSchemeOptions}
                       themeName={styleGuideContext.themeName}
                     >
                       <Config
@@ -172,7 +172,7 @@ class Preview extends PreviewParent {
                   ) : (
                     <WithoutFrame
                       themeName={styleGuideContext.themeName}
-                      appearanceOptions={styleGuideContext.appearanceOptions}
+                      colorSchemeOptions={styleGuideContext.colorSchemeOptions}
                     >
                       {example}
                     </WithoutFrame>

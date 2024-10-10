@@ -20,7 +20,7 @@ describe(ConfigProvider, () => {
         platform: 'android',
         isWebView: false,
         locale: 'ru',
-        appearance: 'light',
+        colorScheme: 'light',
         hasCustomPanelHeaderAfter: false,
         customPanelHeaderAfterMinWidth: 90,
         tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
@@ -30,7 +30,7 @@ describe(ConfigProvider, () => {
     };
     render(
       <ConfigProvider
-        appearance="light"
+        colorScheme="light"
         hasCustomPanelHeaderAfter={false}
         transitionMotionEnabled={false}
       >
@@ -48,7 +48,7 @@ describe(ConfigProvider, () => {
 
     const defaultConfig: ConfigProviderContextInterface = {
       platform: 'vkcom',
-      appearance: 'dark',
+      colorScheme: 'dark',
       hasCustomPanelHeaderAfter: true,
       customPanelHeaderAfterMinWidth: 90,
       transitionMotionEnabled: false,
@@ -89,7 +89,7 @@ describe(ConfigProviderOverride, () => {
 
   const defaultConfig: ConfigProviderContextInterface = {
     platform: 'vkcom',
-    appearance: 'dark',
+    colorScheme: 'dark',
     hasCustomPanelHeaderAfter: true,
     customPanelHeaderAfterMinWidth: 90,
     transitionMotionEnabled: false,

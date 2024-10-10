@@ -5,7 +5,7 @@ import { LinkFocusVisiblePlayground } from './Link.e2e-playground';
 test.describe('Link', () => {
   test.use({
     onlyForPlatforms: [Platform.ANDROID],
-    onlyForAppearances: ['light'],
+    onlyForColorSchemes: ['light'],
   });
 
   test('State: Focus Visible', async ({

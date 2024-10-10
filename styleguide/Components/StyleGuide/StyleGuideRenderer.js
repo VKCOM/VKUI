@@ -12,7 +12,7 @@ import { StyleGuideDesktop } from './StyleGuideDesktop';
 import { StyleGuideMobile } from './StyleGuideMobile';
 import './StyleGuideRenderer.css';
 
-const { themeName, appearance, appearanceOptions } = getDefaultByThemesPresets();
+const { themeName, colorScheme, colorSchemeOptions } = getDefaultByThemesPresets();
 
 let initialState = {
   platform: 'android',
@@ -20,9 +20,9 @@ let initialState = {
   height: SMALL_HEIGHT,
   hasPointer: true,
   themeName,
-  appearance,
-  appearanceOptions,
-  styleguideAppearance: 'light',
+  colorScheme,
+  colorSchemeOptions,
+  styleguideColorScheme: 'light',
   hasCustomPanelHeaderAfter: true,
   transitionMotionEnabled: true,
   layout: undefined,
@@ -45,21 +45,21 @@ export const StyleGuideContext = React.createContext(initialState);
 const resolveThemeProps = (
   {
     themeName: prevThemeName,
-    appearance: prevAppearance,
-    appearanceOptions: prevAppearanceOptions,
+    colorScheme: prevColorScheme,
+    colorSchemeOptions: prevcolorSchemeOptions,
     platform: prevPlatform,
   },
   {
     themeName: nextThemeName,
-    appearance: nextAppearance,
-    appearanceOptions: nextAppearanceOptions,
+    colorScheme: nextColorScheme,
+    colorSchemeOptions: nextcolorSchemeOptions,
     platform: nextPlatform,
   },
 ) => {
   const props = {
     themeName: prevThemeName,
-    appearance: prevAppearance,
-    appearanceOptions: prevAppearanceOptions,
+    colorScheme: prevColorScheme,
+    colorSchemeOptions: prevcolorSchemeOptions,
     platform: prevPlatform,
   };
 
@@ -78,23 +78,23 @@ const resolveThemeProps = (
     props.themeName = nextThemeName;
   }
 
-  if (nextAppearance) {
-    props.appearance = nextAppearance;
+  if (nextColorScheme) {
+    props.colorScheme = nextColorScheme;
   }
 
-  if (nextAppearanceOptions) {
-    props.appearanceOptions = nextAppearanceOptions;
+  if (nextcolorSchemeOptions) {
+    props.colorSchemeOptions = nextcolorSchemeOptions;
   }
 
-  const currentAppearanceDisabled = props.appearanceOptions.find(
-    ({ value, disabled }) => value === prevAppearance && disabled,
+  const currentColorSchemeDisabled = props.colorSchemeOptions.find(
+    ({ value, disabled }) => value === prevColorScheme && disabled,
   );
 
-  if (currentAppearanceDisabled) {
-    const foundEnabledAppearance = props.appearanceOptions.find(({ disabled }) => !disabled);
+  if (currentColorSchemeDisabled) {
+    const foundEnabledAppearance = props.colorSchemeOptions.find(({ disabled }) => !disabled);
 
     if (foundEnabledAppearance) {
-      props.appearance = foundEnabledAppearance.value;
+      props.colorScheme = foundEnabledAppearance.value;
     }
   }
 
@@ -109,11 +109,11 @@ let StyleGuideRenderer = ({ children, toc }) => {
     width,
     height,
     platform,
-    appearance,
+    colorScheme,
     themeName,
     hasPointer,
-    appearanceOptions,
-    styleguideAppearance,
+    colorSchemeOptions,
+    styleguideColorScheme,
   } = state;
 
   const { viewWidth } = useViewPortSize();
@@ -137,14 +137,14 @@ let StyleGuideRenderer = ({ children, toc }) => {
     }
   }, [platform]);
 
-  const switchStyleGuideAppearance = useCallback(() => {
-    const value = styleguideAppearance === 'dark' ? 'light' : 'dark';
-    const foundAppearance = appearanceOptions.find((appearance) => appearance.value === value);
+  const switchStyleGuideColorScheme = useCallback(() => {
+    const value = styleguideColorScheme === 'dark' ? 'light' : 'dark';
+    const foundColorScheme = colorSchemeOptions.find((colorScheme) => colorScheme.value === value);
     setContext({
-      styleguideAppearance: value,
-      appearance: foundAppearance?.disabled ? appearance : value,
+      styleguideColorScheme: value,
+      colorScheme: foundColorScheme?.disabled ? colorScheme : value,
     });
-  }, [platform, appearance, appearanceOptions, styleguideAppearance, setContext]);
+  }, [platform, colorScheme, colorSchemeOptions, styleguideColorScheme, setContext]);
 
   const providerValue = useMemo(
     () => ({
@@ -153,7 +153,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
       setPopout,
       setActiveModal,
     }),
-    [width, height, platform, appearance, themeName, hasPointer, setContext],
+    [width, height, platform, colorScheme, themeName, hasPointer, setContext],
   );
 
   const Component = viewWidth >= BREAKPOINTS.SMALL_TABLET ? StyleGuideDesktop : StyleGuideMobile;
@@ -162,7 +162,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
     <StyleGuideContext.Provider value={providerValue}>
       <ConfigProvider
         platform="android"
-        appearance={styleguideAppearance}
+        colorScheme={styleguideColorScheme}
         transitionMotionEnabled={false}
         hasCustomPanelHeaderAfter={false}
       >
@@ -171,7 +171,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
             toc={toc}
             popout={popout}
             activeModal={activeModal}
-            switchStyleGuideAppearance={switchStyleGuideAppearance}
+            switchStyleGuideColorScheme={switchStyleGuideColorScheme}
           >
             {children}
           </Component>

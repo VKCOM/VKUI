@@ -22,7 +22,7 @@ const CenteredStyle: React.CSSProperties = {
 export const withVKUIWrapper: Decorator = (Component, context) => {
   const {
     platform,
-    appearance,
+    colorScheme,
     hasPointer = false,
     hasCustomPanelHeaderAfter,
     direction,
@@ -39,7 +39,7 @@ export const withVKUIWrapper: Decorator = (Component, context) => {
   return (
     <ConfigProvider
       platform={platform}
-      appearance={appearance}
+      colorScheme={colorScheme}
       hasCustomPanelHeaderAfter={hasCustomPanelHeaderAfter}
     >
       <AdaptivityProvider hasPointer={hasPointer}>

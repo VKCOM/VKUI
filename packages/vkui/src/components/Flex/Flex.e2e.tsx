@@ -3,7 +3,7 @@ import { FlexPlayground } from './Flex.e2e-playground';
 
 test.describe('Flex', () => {
   test.use({
-    onlyForAppearances: ['light'],
+    onlyForColorSchemes: ['light'],
   });
   test('Rendering', async ({
     mount,

@@ -102,7 +102,7 @@ export function prettyProps(props: any) {
 type GenerateCustomScreenshotNameOptions = {
   platform: string;
   browserName: string;
-  appearance: string;
+  colorSchemeType: string;
   adaptivityProviderProps?: Partial<AdaptivityProps>;
 };
 
@@ -111,7 +111,7 @@ export function generateCustomScreenshotName(
   options: GenerateCustomScreenshotNameOptions,
   expectCallCount: number,
 ) {
-  const { platform, browserName, appearance } = options;
+  const { platform, browserName, colorSchemeType } = options;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_excludeFilePath, mainTestTitle, ...restTestTitles] = testTitlePath;
 
@@ -124,7 +124,7 @@ export function generateCustomScreenshotName(
 
     browserName,
 
-    appearance,
+    colorSchemeType,
 
     expectCallCount,
 

@@ -65,7 +65,7 @@
 
 - platform: 'android'
 - browserName: 'chromium'
-- appearance: 'light'
+- colorScheme: 'light'
 
 ```tsx
 test('Example', async ({ expectScreenshotClippedToContent }) => {

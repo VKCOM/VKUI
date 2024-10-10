@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 import path from 'path';
 import {
-  Appearance,
+  ColorScheme,
   defineConfig,
   type DeviceKey,
   devices,
@@ -124,50 +124,50 @@ function generateProjects(): TestProject {
     return restProps;
   };
 
-  const appearances = [Appearance.LIGHT, Appearance.DARK];
-  const projects = appearances
-    .map((appearance) => [
+  const colorSchemes = [ColorScheme.LIGHT, ColorScheme.DARK];
+  const projects = colorSchemes
+    .map((colorScheme) => [
       {
-        name: `android (chromium) • ${appearance}`,
+        name: `android (chromium) • ${colorScheme}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Pixel 5'),
-          appearance,
+          colorScheme,
           platform: Platform.ANDROID,
         },
       },
 
       {
-        name: `ios (webkit) • ${appearance}`,
+        name: `ios (webkit) • ${colorScheme}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('iPhone XR'),
-          appearance,
+          colorScheme,
           platform: Platform.IOS,
         },
       },
 
       {
-        name: `vkcom (chromium) • ${appearance}`,
+        name: `vkcom (chromium) • ${colorScheme}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Chrome'),
-          appearance,
+          colorScheme,
           platform: Platform.VKCOM,
         },
       },
 
       {
-        name: `vkcom (firefox) • ${appearance}`,
+        name: `vkcom (firefox) • ${colorScheme}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Firefox'),
-          appearance,
+          colorScheme,
           platform: Platform.VKCOM,
         },
       },
 
       {
-        name: `vkcom (webkit) • ${appearance}`,
+        name: `vkcom (webkit) • ${colorScheme}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Safari'),
-          appearance,
+          colorScheme,
           platform: Platform.VKCOM,
         },
       },

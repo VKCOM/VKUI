@@ -28,7 +28,7 @@ const config: StorybookConfig = {
     getAbsolutePath('@storybook/addon-interactions'),
     getAbsolutePath('@storybook/addon-a11y'),
     getAbsolutePath('@project-tools/storybook-addon-cartesian'),
-    './addons/appearance',
+    './addons/colorScheme',
     './addons/pointer',
     './addons/customPanelHeaderAfter',
     './addons/storybook-theme',

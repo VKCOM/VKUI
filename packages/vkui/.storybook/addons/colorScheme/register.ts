@@ -1,12 +1,12 @@
 import { addons, types } from '@storybook/manager-api';
-import { AppearanceSwitch } from './AppearanceSwitch';
+import { ColorSchemeSwitch } from './ColorSchemeSwitch';
 import { ADDON_ID } from './constants';
 
 addons.register(ADDON_ID, () => {
   addons.add(ADDON_ID, {
-    title: 'Appearance',
+    title: 'ColorScheme',
     type: types.TOOL,
     match: ({ viewMode }) => !!(viewMode && viewMode.match(/^(story|docs)$/)),
-    render: AppearanceSwitch,
+    render: ColorSchemeSwitch,
   });
 });

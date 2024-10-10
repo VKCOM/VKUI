@@ -41,7 +41,7 @@ test.describe('Slider with Tooltip', () => {
  * см. https://github.com/testing-library/user-event/issues/871
  */
 test.describe('keyboard events', () => {
-  test.use({ onlyForPlatforms: ['android'], onlyForAppearances: ['light'] });
+  test.use({ onlyForPlatforms: ['android'], onlyForColorSchemes: ['light'] });
 
   test('should be focused with Tab button', async ({ page, mount, componentPlaygroundProps }) => {
     const result = await mount(

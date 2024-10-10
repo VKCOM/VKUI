@@ -14,7 +14,7 @@ test('Image', async ({ mount, expectScreenshotClippedToContent, componentPlaygro
 test.describe('Image', () => {
   test.use({
     onlyForPlatforms: [Platform.ANDROID],
-    onlyForAppearances: ['light'],
+    onlyForColorSchemes: ['light'],
   });
 
   test('State: Focus Visible', async ({

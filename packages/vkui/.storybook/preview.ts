@@ -53,7 +53,7 @@ const preview: Preview = {
     cartesian: { disabled: true },
   },
   globalTypes: {
-    appearance: {
+    colorScheme: {
       defaultValue: 'light',
     },
     hasPointer: {

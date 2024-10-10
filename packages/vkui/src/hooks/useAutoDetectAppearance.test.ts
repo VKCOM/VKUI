@@ -1,9 +1,9 @@
 import { act } from 'react';
 import { renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { Appearance } from '../lib/appearance';
+import { ColorScheme } from '../lib/colorScheme';
 import * as LibDOM from '../lib/dom';
-import { useAutoDetectAppearance } from './useAutoDetectAppearance';
+import { useAutoDetectColorScheme } from './useAutoDetectColorScheme';
 
 jest.mock('../lib/dom', () => {
   return {
@@ -12,13 +12,13 @@ jest.mock('../lib/dom', () => {
   };
 });
 
-describe(useAutoDetectAppearance, () => {
+describe(useAutoDetectColorScheme, () => {
   describe('client', () => {
-    it.each([Appearance.LIGHT, Appearance.DARK])(
-      'should return appearance by property (%s)',
-      (appearanceProp) => {
-        const { result } = renderHook(() => useAutoDetectAppearance(appearanceProp));
-        expect(result.current).toBe(appearanceProp);
+    it.each([ColorScheme.LIGHT, ColorScheme.DARK])(
+      'should return colorScheme by property (%s)',
+      (colorScheme) => {
+        const { result } = renderHook(() => useAutoDetectColorScheme(colorScheme));
+        expect(result.current).toBe(colorScheme);
       },
     );
 
@@ -26,26 +26,26 @@ describe(useAutoDetectAppearance, () => {
       {
         initialMatches: false,
         listenerMatches: false,
-        appearance: { before: Appearance.LIGHT, after: Appearance.LIGHT },
+        colorScheme: { before: ColorScheme.LIGHT, after: ColorScheme.LIGHT },
       },
       {
         initialMatches: true,
         listenerMatches: true,
-        appearance: { before: Appearance.DARK, after: Appearance.DARK },
+        colorScheme: { before: ColorScheme.DARK, after: ColorScheme.DARK },
       },
       {
         initialMatches: false,
         listenerMatches: true,
-        appearance: { before: Appearance.LIGHT, after: Appearance.DARK },
+        colorScheme: { before: ColorScheme.LIGHT, after: ColorScheme.DARK },
       },
       {
         initialMatches: true,
         listenerMatches: false,
-        appearance: { before: Appearance.DARK, after: Appearance.LIGHT },
+        colorScheme: { before: ColorScheme.DARK, after: ColorScheme.LIGHT },
       },
     ])(
-      'should auto detect appearance (initialMatches is $initialMatches, listenerMatches is $listenerMatches, appearance is $appearance)',
-      ({ initialMatches, listenerMatches, appearance }) => {
+      'should auto detect colorScheme (initialMatches is $initialMatches, listenerMatches is $listenerMatches, colorScheme is $colorScheme)',
+      ({ initialMatches, listenerMatches, colorScheme }) => {
         let addEventListenerHandler = noop;
         const addEventListener = jest.fn().mockImplementation((_, handlerByHook) => {
           addEventListenerHandler = () => {
@@ -67,24 +67,24 @@ describe(useAutoDetectAppearance, () => {
             dispatchEvent: jest.fn(),
           })),
         });
-        const { result } = renderHook(() => useAutoDetectAppearance());
-        expect(result.current).toBe(appearance.before);
+        const { result } = renderHook(() => useAutoDetectColorScheme());
+        expect(result.current).toBe(colorScheme.before);
         act(addEventListenerHandler);
-        expect(result.current).toBe(appearance.after);
+        expect(result.current).toBe(colorScheme.after);
       },
     );
   });
 
   describe('server', () => {
-    it('should auto detect appearance ($appearance)', () => {
+    it('should auto detect colorScheme ($colorScheme)', () => {
       jest.spyOn<any, any>(LibDOM, 'useDOM').mockReturnValue(() => {
         return {
           document: undefined,
           window: undefined,
         };
       });
-      const { result } = renderHook(() => useAutoDetectAppearance());
-      expect(result.current).toBe(Appearance.LIGHT);
+      const { result } = renderHook(() => useAutoDetectColorScheme());
+      expect(result.current).toBe(ColorScheme.LIGHT);
     });
   });
 });

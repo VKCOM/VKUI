@@ -28,7 +28,7 @@ test.describe('Alert', () => {
 
 test.describe('Alert', () => {
   test.use({
-    onlyForAppearances: ['light'],
+    onlyForColorSchemes: ['light'],
   });
   test('long word', async ({
     mount,

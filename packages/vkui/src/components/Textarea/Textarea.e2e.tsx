@@ -10,7 +10,7 @@ test('Textarea', async ({ mount, expectScreenshotClippedToContent, componentPlay
 test.describe('Textarea', () => {
   test.use({
     onlyForPlatforms: [Platform.ANDROID],
-    onlyForAppearances: ['light'],
+    onlyForColorSchemes: ['light'],
   });
 
   test('fits size to content', async ({
