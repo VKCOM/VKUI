@@ -15,6 +15,7 @@ export interface AppRootPortalProps extends HasChildren {
   /**
    * - При передаче `true` будет использовать `portalRoot` из контекста `AppRoot`.
    * - При передаче элемента будут игнорироваться `portalRoot` и `disablePortal` из контекста `AppRoot`.
+   * - При передаче `in-app-after-content` будет использоваться контейнер внутри `SplitLayout`, сразу после контента приложения.
    */
   usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null | 'in-app-after-content';
   className?: string;

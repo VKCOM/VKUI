@@ -9,7 +9,7 @@ import { type DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { rubber } from '../../lib/touch';
 import { warnOnce } from '../../lib/warnOnce';
-import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { ModalPopoutPortal } from '../AppRoot/ModalPopoutPortal';
 import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { type CustomTouchEvent, Touch } from '../Touch/Touch';
@@ -545,7 +545,7 @@ class ModalRootTouchComponent extends React.Component<
     }
 
     return (
-      <AppRootPortal className={styles.host} usePortal="in-app-after-content">
+      <ModalPopoutPortal className={styles.host}>
         <TouchRootContext.Provider value={true}>
           <ModalRootContext.Provider value={this.modalRootContext}>
             <Touch
@@ -605,7 +605,7 @@ class ModalRootTouchComponent extends React.Component<
             </Touch>
           </ModalRootContext.Provider>
         </TouchRootContext.Provider>
-      </AppRootPortal>
+      </ModalPopoutPortal>
     );
   }
 }
