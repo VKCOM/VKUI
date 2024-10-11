@@ -15,9 +15,9 @@ describe('RichCell', () => {
     (afterAlign, expectedContainerStyle, alignClassName) => {
       const { container } = render(
         <RichCell
-          subhead="Subhead"
-          text="Text"
-          caption="Caption"
+          overTitle="Subhead"
+          subtitle="Text"
+          extraSubtitle="Caption"
           afterAlign={afterAlign}
           after={<div data-testid="after" />}
           afterCaption="After Caption"
