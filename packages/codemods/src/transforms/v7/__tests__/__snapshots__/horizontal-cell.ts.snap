@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`horizontal-cell transforms correctly 1`] = `
+"import { HorizontalCell, Image } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <HorizontalCell
+        title="Title"
+        subtitle="Subtitle"
+        extraSubtitle="Extra Subtitle"
+        size="m"
+      >
+        <Image size={88} borderRadius="l" />
+      </HorizontalCell>
+      <HorizontalCell
+        title={'Title'}
+        subtitle="Subtitle"
+        extraSubtitle="Extra Subtitle"
+        size="m"
+      >
+        <Image size={88} borderRadius="l" />
+      </HorizontalCell>
+    </React.Fragment>)
+  );
+};"
+`;

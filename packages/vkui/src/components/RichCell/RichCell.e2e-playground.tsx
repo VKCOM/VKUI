@@ -13,10 +13,10 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           before: [<Avatar size={72} key="72" />],
-          subhead: ['Subhead subhead subhead subhead'],
+          overTitle: ['Subhead subhead subhead subhead'],
           children: ['Children children children children'],
-          text: ['Text text text text text text'],
-          caption: ['Caption caption caption caption'],
+          subtitle: ['Text text text text text text'],
+          extraSubtitle: ['Caption caption caption caption'],
           after: ['After'],
           afterAlign: ['start', 'center', 'end'],
           afterCaption: ['After Caption'],
@@ -35,10 +35,10 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           before: [<Avatar size={72} key="72" />],
-          subhead: ['Subhead subhead subhead subhead'],
+          overTitle: ['Subhead subhead subhead subhead'],
           children: ['Children children children children'],
-          text: ['Text text text text text text'],
-          caption: ['Caption caption caption caption'],
+          subtitle: ['Text text text text text text'],
+          extraSubtitle: ['Caption caption caption caption'],
           after: ['After'],
           afterCaption: ['After Caption'],
           bottom: [
@@ -57,7 +57,7 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
         {
           before: [<Avatar size={48} key="48" />],
           children: ['Михаил Лихачев'],
-          caption: ['Команда ВКонтакте, Санкт-Петербург'],
+          overTitle: ['Команда ВКонтакте, Санкт-Петербург'],
           after: [
             <RichCell.Icon key="icon">
               <Icon24UserAddOutline />

@@ -183,12 +183,12 @@ const WriteBarExample = (props) => {
 
         <FixedLayout vertical="bottom" filled>
           <div ref={fixedLayoutInnerElRef}>
-            <Separator noPadding />
+            <Separator />
 
             {isAttachmentsShown && (
               <div>
                 <Div>Интерфейс прикрепления</Div>
-                <Separator noPadding />
+                <Separator />
               </div>
             )}
 
