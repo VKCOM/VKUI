@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { ScreenSpinnerContainer } from './ScreenSpinnerContainer';
@@ -31,12 +32,14 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
   useScrollLock();
 
   return (
-    <PopoutWrapper className={className} style={style} noBackground>
-      <ScreenSpinnerContainer state={state} mode={mode} label={label} customIcon={customIcon}>
-        <ScreenSpinnerLoader {...restProps} />
-        <ScreenSpinnerSwapIcon onClick={onClick} cancelLabel={cancelLabel} />
-      </ScreenSpinnerContainer>
-    </PopoutWrapper>
+    <AppRootPortal>
+      <PopoutWrapper className={className} style={style} noBackground>
+        <ScreenSpinnerContainer state={state} mode={mode} label={label} customIcon={customIcon}>
+          <ScreenSpinnerLoader {...restProps} />
+          <ScreenSpinnerSwapIcon onClick={onClick} cancelLabel={cancelLabel} />
+        </ScreenSpinnerContainer>
+      </PopoutWrapper>
+    </AppRootPortal>
   );
 };
 

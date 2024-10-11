@@ -9,6 +9,7 @@ import { type DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { rubber } from '../../lib/touch';
 import { warnOnce } from '../../lib/warnOnce';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { type CustomTouchEvent, Touch } from '../Touch/Touch';
@@ -544,63 +545,67 @@ class ModalRootTouchComponent extends React.Component<
     }
 
     return (
-      <TouchRootContext.Provider value={true}>
-        <ModalRootContext.Provider value={this.modalRootContext}>
-          <Touch
-            className={classNames(
-              styles.host,
-              this.props.configProvider?.hasCustomPanelHeaderAfter &&
-                styles.hasCustomPanelHeaderAfterSlot,
-              touchDown && classNames(styles.touched, 'vkuiInternalModalRoot--touched'),
-              !!(enteringModal || exitingModal) &&
-                classNames(styles.switching, 'vkuiInternalModalRoot--switching'),
-            )}
-            onMove={this.onTouchMove}
-            onEnd={this.onTouchEnd}
-            onScroll={this.onScroll}
-          >
-            <div
-              data-testid={modalOverlayTestId}
-              className={styles.mask}
-              onClick={this.props.onExit}
-              ref={this.maskElementRef}
-            />
-            <div className={styles.viewport} ref={this.viewportRef}>
-              {this.getModals().map((Modal) => {
-                const modalId = getNavId(Modal.props, warn);
-                const _modalState = this.props.getModalState(modalId);
-                if ((modalId !== activeModal && modalId !== exitingModal) || !_modalState) {
-                  return null;
-                }
-                const modalState = { ..._modalState };
+      <AppRootPortal>
+        <TouchRootContext.Provider value={true}>
+          <ModalRootContext.Provider value={this.modalRootContext}>
+            <Touch
+              className={classNames(
+                styles.host,
+                this.props.configProvider?.hasCustomPanelHeaderAfter &&
+                  styles.hasCustomPanelHeaderAfterSlot,
+                touchDown && classNames(styles.touched, 'vkuiInternalModalRoot--touched'),
+                !!(enteringModal || exitingModal) &&
+                  classNames(styles.switching, 'vkuiInternalModalRoot--switching'),
+              )}
+              onMove={this.onTouchMove}
+              onEnd={this.onTouchEnd}
+              onScroll={this.onScroll}
+            >
+              <div
+                data-testid={modalOverlayTestId}
+                className={styles.mask}
+                onClick={this.props.onExit}
+                ref={this.maskElementRef}
+              />
+              <div className={styles.viewport} ref={this.viewportRef}>
+                {this.getModals().map((Modal) => {
+                  const modalId = getNavId(Modal.props, warn);
+                  const _modalState = this.props.getModalState(modalId);
+                  if ((modalId !== activeModal && modalId !== exitingModal) || !_modalState) {
+                    return null;
+                  }
+                  const modalState = { ..._modalState };
 
-                const isPage = modalState.type === 'page';
-                const key = `modal-${modalId}`;
+                  const isPage = modalState.type === 'page';
+                  const key = `modal-${modalId}`;
 
-                return (
-                  <FocusTrap
-                    key={key}
-                    onClose={this.props.onExit}
-                    timeout={this.timeout}
-                    className={classNames(
-                      styles.modal,
+                  return (
+                    <FocusTrap
+                      key={key}
+                      onClose={this.props.onExit}
+                      timeout={this.timeout}
+                      className={classNames(
+                        styles.modal,
 
-                      dragging && 'vkuiInternalModalRoot__modal--dragging',
+                        dragging && 'vkuiInternalModalRoot__modal--dragging',
 
-                      isPage && modalState.expandable && 'vkuiInternalModalRoot__modal--expandable',
-                      isPage && modalState.collapsed && 'vkuiInternalModalRoot__modal--collapsed',
-                    )}
-                    autoFocus={false}
-                    restoreFocus={false}
-                  >
-                    {Modal}
-                  </FocusTrap>
-                );
-              })}
-            </div>
-          </Touch>
-        </ModalRootContext.Provider>
-      </TouchRootContext.Provider>
+                        isPage &&
+                          modalState.expandable &&
+                          'vkuiInternalModalRoot__modal--expandable',
+                        isPage && modalState.collapsed && 'vkuiInternalModalRoot__modal--collapsed',
+                      )}
+                      autoFocus={false}
+                      restoreFocus={false}
+                    >
+                      {Modal}
+                    </FocusTrap>
+                  );
+                })}
+              </div>
+            </Touch>
+          </ModalRootContext.Provider>
+        </TouchRootContext.Provider>
+      </AppRootPortal>
     );
   }
 }
