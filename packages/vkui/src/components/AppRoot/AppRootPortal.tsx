@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { useColorScheme } from '../../hooks/useColorScheme';
-import { useIsClient } from '../../hooks/useIsClient';
 import { createPortal } from '../../lib/createPortal';
 import { getDocumentBody } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
@@ -47,11 +46,6 @@ export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): Reac
     },
     [canUsePortal, appRoot, portalContainer, setPortalRoot],
   );
-
-  const isClient = useIsClient();
-  if (!isClient) {
-    return null;
-  }
 
   if (canUsePortal && portalContainer) {
     return createPortal(
