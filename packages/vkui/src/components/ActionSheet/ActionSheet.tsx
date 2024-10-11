@@ -6,7 +6,7 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
-import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { ModalPopoutPortal } from '../AppRoot/ModalPopoutPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -141,7 +141,7 @@ export const ActionSheet = ({
   }
 
   return (
-    <AppRootPortal>
+    <ModalPopoutPortal>
       <PopoutWrapper
         closing={Boolean(closingBy)}
         alignY="bottom"
@@ -152,6 +152,6 @@ export const ActionSheet = ({
       >
         {actionSheet}
       </PopoutWrapper>
-    </AppRootPortal>
+    </ModalPopoutPortal>
   );
 };
