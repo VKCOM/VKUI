@@ -82,6 +82,7 @@ export const AppRoot = ({
   ...props
 }: AppRootProps): React.ReactNode => {
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
+  const popoutModalContainerRef = React.useRef<HTMLDivElement | null>(null);
   const portalRootRef = React.useRef<HTMLElement | null>(
     portalRootProp ? extractPortalRootByProp(portalRootProp) : null,
   );
@@ -121,6 +122,7 @@ export const AppRoot = ({
     () => ({
       appRoot: appRootRef,
       portalRoot: portalRootRef,
+      popoutModalRoot: popoutModalContainerRef,
       setPortalRoot: (element: HTMLElement) => (portalRootRef.current = element),
       safeAreaInsets,
       embedded: mode === 'embedded',

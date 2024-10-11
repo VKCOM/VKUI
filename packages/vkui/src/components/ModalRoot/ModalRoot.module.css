@@ -1,4 +1,13 @@
 .host {
+  position: fixed;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  z-index: var(--vkui--z_index_modal);
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.wrapper {
   inline-size: 100%;
   block-size: 100%;
 }

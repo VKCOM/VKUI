@@ -1,6 +1,9 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutRoot.module.css';
 
@@ -38,12 +41,14 @@ export const PopoutRoot = ({
   children,
   ...restProps
 }: PopoutRootProps): React.ReactNode => {
+  const { popoutModalRoot } = React.useContext(AppRootContext);
+
   return (
     <RootComponent {...restProps} baseClassName={styles.host}>
       {children}
-      <div>
+      <div ref={popoutModalRoot}>
         {!!popout && <PopoutRootPopout>{popout}</PopoutRootPopout>}
-        {!!modal && <PopoutRootModal>{modal}</PopoutRootModal>}
+        {modal}
       </div>
     </RootComponent>
   );

@@ -16,16 +16,20 @@ export interface AppRootPortalProps extends HasChildren {
    * - При передаче `true` будет использовать `portalRoot` из контекста `AppRoot`.
    * - При передаче элемента будут игнорироваться `portalRoot` и `disablePortal` из контекста `AppRoot`.
    */
-  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null;
+  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null | 'in-app-after-content';
+  className?: string;
 }
 
-export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): React.ReactNode => {
-  const { portalRoot, setPortalRoot, appRoot, mode, disablePortal } =
-    React.useContext(AppRootContext);
+export const AppRootPortal = ({
+  children,
+  usePortal,
+  className,
+}: AppRootPortalProps): React.ReactNode => {
+  const { setPortalRoot, appRoot, mode, disablePortal } = React.useContext(AppRootContext);
   const colorScheme = useColorScheme();
 
   const canUsePortal = shouldUsePortal(usePortal, mode, Boolean(disablePortal));
-  const portalContainer = resolvePortalContainer(usePortal, portalRoot.current);
+  const portalContainer = usePortalContainer(usePortal);
 
   useIsomorphicLayoutEffect(
     // Создаём контейнер для портала по запросу один раз
@@ -50,7 +54,7 @@ export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): Reac
   if (canUsePortal && portalContainer) {
     return createPortal(
       <ColorSchemeProvider value={colorScheme}>
-        <AppRootStyleContainer>{children}</AppRootStyleContainer>
+        <AppRootStyleContainer className={className}>{children}</AppRootStyleContainer>
       </ColorSchemeProvider>,
       portalContainer,
     );
@@ -75,12 +79,14 @@ function shouldUsePortal(
   return disablePortal === false && usePortal === true;
 }
 
-function resolvePortalContainer<PortalRootFromContext extends HTMLElement | null | undefined>(
-  usePortal: AppRootPortalProps['usePortal'],
-  portalRootFromContext: PortalRootFromContext,
-): HTMLElement | null {
+function usePortalContainer(usePortal: AppRootPortalProps['usePortal']): HTMLElement | null {
+  const { portalRoot, popoutModalRoot } = React.useContext(AppRootContext);
   if (typeof usePortal === 'boolean' || usePortal === undefined) {
-    return portalRootFromContext ? portalRootFromContext : null;
+    return portalRoot.current;
+  }
+
+  if (usePortal === 'in-app-after-content') {
+    return popoutModalRoot.current;
   }
 
   return isRefObject(usePortal) ? usePortal.current : usePortal;
