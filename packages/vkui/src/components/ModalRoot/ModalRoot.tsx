@@ -545,12 +545,12 @@ class ModalRootTouchComponent extends React.Component<
     }
 
     return (
-      <AppRootPortal>
+      <AppRootPortal className={styles.host} usePortal="in-app-after-content">
         <TouchRootContext.Provider value={true}>
           <ModalRootContext.Provider value={this.modalRootContext}>
             <Touch
               className={classNames(
-                styles.host,
+                styles.wrapper,
                 this.props.configProvider?.hasCustomPanelHeaderAfter &&
                   styles.hasCustomPanelHeaderAfterSlot,
                 touchDown && classNames(styles.touched, 'vkuiInternalModalRoot--touched'),
