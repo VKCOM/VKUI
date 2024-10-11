@@ -6,6 +6,7 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -140,15 +141,17 @@ export const ActionSheet = ({
   }
 
   return (
-    <PopoutWrapper
-      closing={Boolean(closingBy)}
-      alignY="bottom"
-      className={className}
-      style={style}
-      onClick={onCloseWithOther}
-      fixed
-    >
-      {actionSheet}
-    </PopoutWrapper>
+    <AppRootPortal>
+      <PopoutWrapper
+        closing={Boolean(closingBy)}
+        alignY="bottom"
+        className={className}
+        style={style}
+        onClick={onCloseWithOther}
+        fixed
+      >
+        {actionSheet}
+      </PopoutWrapper>
+    </AppRootPortal>
   );
 };
