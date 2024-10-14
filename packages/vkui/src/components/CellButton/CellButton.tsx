@@ -1,5 +1,6 @@
 import { classNames } from '@vkontakte/vkjs';
 import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
+import '../SimpleCell/SimpleCell.module.css';
 import styles from './CellButton.module.css';
 
 export const appearanceClassNames = {
