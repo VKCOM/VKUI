@@ -28,7 +28,7 @@
 }
 
 .selected {
-  background-color: var(--vkui--color_background_secondary);
+  background-color: var(--vkui--color_background_secondary_alpha);
 }
 
 .selectionStart.selected,
