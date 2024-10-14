@@ -6,7 +6,7 @@ import { DOMContext } from '@vkui/lib/dom';
 import { useLoadThemeTokens } from '../../lib/theme/useLoadThemeTokens';
 import './Frame.css';
 
-const FrameDomProvider = ({ platform, appearanceOptions, themeName, children }) => {
+const FrameDomProvider = ({ appearanceOptions, themeName, children }) => {
   const [ready, setReady] = React.useState(false);
   const frame = useFrame();
 
@@ -29,7 +29,9 @@ const FrameDomProvider = ({ platform, appearanceOptions, themeName, children }) 
     hotIconChange.observe(sprite, { characterData: true, childList: true });
     hotObservers.push(hotIconChange);
 
-    frame.document.querySelector('.frame-content').setAttribute('id', 'root');
+    const frameContent = frame.document.querySelector('.frame-content');
+    frameContent.setAttribute('id', 'root');
+    frameContent.classList.add('vkui__root');
 
     // Пихаем в iFrame vkui стили
     const frameAssets = document.createDocumentFragment();
@@ -62,7 +64,7 @@ const FrameDomProvider = ({ platform, appearanceOptions, themeName, children }) 
 
 const initialFrameContent = `
 <!DOCTYPE html>
-<html>
+<html class="vkui">
   <head>
     <style>
       #root {
@@ -75,7 +77,7 @@ const initialFrameContent = `
 </html>
 `;
 
-export const Frame = ({ children, style, appearanceOptions, platform, themeName }) => {
+export const Frame = ({ children, style, appearanceOptions, themeName }) => {
   return (
     <ReactFrame
       mountTarget="body"
@@ -83,11 +85,7 @@ export const Frame = ({ children, style, appearanceOptions, platform, themeName 
       style={style}
       initialContent={initialFrameContent}
     >
-      <FrameDomProvider
-        platform={platform}
-        appearanceOptions={appearanceOptions}
-        themeName={themeName}
-      >
+      <FrameDomProvider appearanceOptions={appearanceOptions} themeName={themeName}>
         {children}
       </FrameDomProvider>
     </ReactFrame>

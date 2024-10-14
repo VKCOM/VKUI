@@ -1,29 +1,10 @@
+'use client';
+
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutRoot.module.css';
-
-/**
- * @private
- */
-export const PopoutRootPopout = ({
-  className,
-  ...restProps
-}: React.HTMLAttributes<HTMLDivElement>): React.ReactNode => (
-  <div className={classNames(styles.popout, className)} {...restProps} />
-);
-
-/**
- * @private
- */
-export const PopoutRootModal = ({
-  className,
-  ...restProps
-}: React.HTMLAttributes<HTMLDivElement>): React.ReactNode => (
-  <div className={classNames(styles.modal, className)} {...restProps} />
-);
 
 export interface PopoutRootProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   popout?: React.ReactNode;
@@ -39,13 +20,15 @@ export const PopoutRoot = ({
   children,
   ...restProps
 }: PopoutRootProps): React.ReactNode => {
+  const { popoutModalRoot } = React.useContext(AppRootContext);
+
   return (
     <RootComponent {...restProps} baseClassName={styles.host}>
       {children}
-      <AppRootPortal>
-        {!!popout && <PopoutRootPopout>{popout}</PopoutRootPopout>}
-        {!!modal && <PopoutRootModal>{modal}</PopoutRootModal>}
-      </AppRootPortal>
+      <div ref={popoutModalRoot}>
+        {popout}
+        {modal}
+      </div>
     </RootComponent>
   );
 };

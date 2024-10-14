@@ -13,6 +13,7 @@ import type {
   HasDataAttribute,
   HasRootRef,
 } from '../../types';
+import { ModalPopoutPortal } from '../AppRoot/ModalPopoutPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import type { ButtonProps } from '../Button/Button';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
@@ -134,67 +135,69 @@ export const Alert = ({
   useScrollLock();
 
   return (
-    <PopoutWrapper
-      className={className}
-      closing={closing}
-      style={style}
-      onClick={close}
-      getRootRef={getRootRef}
-    >
-      <FocusTrap
-        {...restProps}
-        {...animationHandlers}
-        getRootRef={elementRef}
-        onClick={stopPropagation}
-        onClose={close}
-        autoFocus={animationState === 'entered'}
-        className={classNames(
-          styles.host,
-          platform === 'ios' && styles.ios,
-          platform === 'vkcom' && styles.vkcom,
-          closing ? styles.closing : styles.opening,
-          isDesktop && styles.desktop,
-        )}
-        role="alertdialog"
-        aria-modal
-        aria-labelledby={headerId}
-        aria-describedby={textId}
+    <ModalPopoutPortal>
+      <PopoutWrapper
+        className={className}
+        closing={closing}
+        style={style}
+        onClick={close}
+        getRootRef={getRootRef}
       >
-        <div
+        <FocusTrap
+          {...restProps}
+          {...animationHandlers}
+          getRootRef={elementRef}
+          onClick={stopPropagation}
+          onClose={close}
+          autoFocus={animationState === 'entered'}
           className={classNames(
-            styles.content,
-            dismissButtonMode === 'inside' && styles.contentWithButton,
+            styles.host,
+            platform === 'ios' && styles.ios,
+            platform === 'vkcom' && styles.vkcom,
+            closing ? styles.closing : styles.opening,
+            isDesktop && styles.desktop,
           )}
+          role="alertdialog"
+          aria-modal
+          aria-labelledby={headerId}
+          aria-describedby={textId}
         >
-          {hasReactNode(header) && <AlertHeader id={headerId}>{header}</AlertHeader>}
-          {hasReactNode(text) && <AlertText id={textId}>{text}</AlertText>}
-          {children}
-          {isDismissButtonVisible && dismissButtonMode === 'inside' && (
-            <IconButton
-              label={dismissLabel}
-              className={classNames(styles.dismiss, 'vkuiInternalAlert__dismiss')}
-              onClick={close}
-              hoverMode="opacity"
-              activeMode="opacity"
-              data-testid={dismissButtonTestId}
-            >
-              <Icon20Cancel />
-            </IconButton>
+          <div
+            className={classNames(
+              styles.content,
+              dismissButtonMode === 'inside' && styles.contentWithButton,
+            )}
+          >
+            {hasReactNode(header) && <AlertHeader id={headerId}>{header}</AlertHeader>}
+            {hasReactNode(text) && <AlertText id={textId}>{text}</AlertText>}
+            {children}
+            {isDismissButtonVisible && dismissButtonMode === 'inside' && (
+              <IconButton
+                label={dismissLabel}
+                className={classNames(styles.dismiss, 'vkuiInternalAlert__dismiss')}
+                onClick={close}
+                hoverMode="opacity"
+                activeMode="opacity"
+                data-testid={dismissButtonTestId}
+              >
+                <Icon20Cancel />
+              </IconButton>
+            )}
+          </div>
+          <AlertActions
+            actions={actions}
+            actionsAlign={actionsAlign}
+            actionsLayout={actionsLayout}
+            renderAction={renderAction}
+            onItemClick={onItemClick}
+          />
+          {isDismissButtonVisible && dismissButtonMode === 'outside' && (
+            <ModalDismissButton onClick={close} data-testid={dismissButtonTestId}>
+              {dismissLabel}
+            </ModalDismissButton>
           )}
-        </div>
-        <AlertActions
-          actions={actions}
-          actionsAlign={actionsAlign}
-          actionsLayout={actionsLayout}
-          renderAction={renderAction}
-          onItemClick={onItemClick}
-        />
-        {isDismissButtonVisible && dismissButtonMode === 'outside' && (
-          <ModalDismissButton onClick={close} data-testid={dismissButtonTestId}>
-            {dismissLabel}
-          </ModalDismissButton>
-        )}
-      </FocusTrap>
-    </PopoutWrapper>
+        </FocusTrap>
+      </PopoutWrapper>
+    </ModalPopoutPortal>
   );
 };
