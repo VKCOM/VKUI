@@ -3,7 +3,7 @@ import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/pl
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
-import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
+import { ColorSchemeProvider } from '../ColorSchemeProvider/ColorSchemeProvider';
 import { Div } from '../Div/Div';
 import { Flex } from '../Flex/Flex';
 import { IconButton } from '../IconButton/IconButton';
@@ -69,7 +69,7 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
   );
 };
 
-export const TextareaStatePlayground = ({ appearance }: ComponentPlaygroundProps) => {
+export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProps) => {
   return (
     <AppRoot
       mode="embedded"
@@ -79,13 +79,13 @@ export const TextareaStatePlayground = ({ appearance }: ComponentPlaygroundProps
         width: BREAKPOINTS.MOBILE,
       }}
     >
-      <AppearanceProvider value={appearance}>
+      <ColorSchemeProvider value={colorScheme}>
         <AdaptivityProvider sizeY="regular">
           <Div style={{ padding: 10 }}>
             <Textarea id="textarea" />
           </Div>
         </AdaptivityProvider>
-      </AppearanceProvider>
+      </ColorSchemeProvider>
     </AppRoot>
   );
 };

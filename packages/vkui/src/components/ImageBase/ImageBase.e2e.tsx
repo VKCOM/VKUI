@@ -5,7 +5,7 @@ import { ImageWithParentWithBorderRadius } from './ImageBase.e2e-playground';
 test.describe('ImageBase', () => {
   test.use({
     onlyForPlatforms: [Platform.ANDROID],
-    onlyForAppearances: ['light'],
+    onlyForColorSchemes: ['light'],
   });
 
   test('Parent with border-radius: Image does not have visible corners from Image background', async ({

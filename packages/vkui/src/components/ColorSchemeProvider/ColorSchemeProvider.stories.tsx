@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { AppearanceProvider, type AppearanceProviderProps } from './AppearanceProvider';
+import { ColorSchemeProvider, type ColorSchemeProviderProps } from './ColorSchemeProvider';
 
-const story: Meta<AppearanceProviderProps> = {
-  title: 'Service/AppearanceProvider',
-  component: AppearanceProvider,
+const story: Meta<ColorSchemeProviderProps> = {
+  title: 'Service/ColorSchemeProvider',
+  component: ColorSchemeProvider,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;
 
-export const Playground: StoryObj<AppearanceProviderProps> = {
+export const Playground: StoryObj<ColorSchemeProviderProps> = {
   render: (args) => (
-    <AppearanceProvider {...args}>
+    <ColorSchemeProvider {...args}>
       <div
         style={{
           padding: 5,
@@ -20,8 +20,8 @@ export const Playground: StoryObj<AppearanceProviderProps> = {
           color: 'var(--vkui--color_text_primary)',
         }}
       >
-        AppearanceProvider
+        ColorSchemeProvider
       </div>
-    </AppearanceProvider>
+    </ColorSchemeProvider>
   ),
 };
