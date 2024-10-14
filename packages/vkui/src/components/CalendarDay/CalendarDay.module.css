@@ -23,7 +23,7 @@
 }
 
 .selected {
-  background-color: var(--vkui--color_background_secondary);
+  background-color: var(--vkui--color_background_secondary_alpha);
 }
 
 .selectionStart.selected,
@@ -74,11 +74,23 @@
 }
 
 .hintedActive,
-.hover :not(.hintedActive) .inner {
+.hostHovered :not(.hintedActive) .inner {
   background-color: var(--vkui--color_background_secondary_alpha--hover);
+}
+
+.hostActivated :not(.hintedActive) .inner {
+  background-color: var(--vkui--color_background_secondary_alpha--active);
 }
 
 .innerActive {
   background-color: var(--vkui--color_background_accent);
   color: var(--vkui--color_text_contrast);
+}
+
+.hostHovered .inner.innerActive {
+  background-color: var(--vkui--color_background_accent--hover);
+}
+
+.hostActivated .inner.innerActive {
+  background-color: var(--vkui--color_background_accent--active);
 }

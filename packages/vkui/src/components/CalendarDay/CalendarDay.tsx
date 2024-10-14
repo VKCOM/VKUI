@@ -108,7 +108,8 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
           !sameMonth && styles.notSameMonth,
           className,
         )}
-        hoverMode={active ? '' : styles.hover}
+        hoverMode={styles.hostHovered}
+        activeMode={styles.hostActivated}
         hasActive={false}
         onClick={onClick}
         disabled={disabled}
