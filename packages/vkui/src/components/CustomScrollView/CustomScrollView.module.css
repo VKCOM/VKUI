@@ -10,8 +10,20 @@
     scrollbar-color: var(--vkui--color_icon_medium_alpha) transparent;
     scrollbar-width: thin;
   }
+
+  .scrollbarHidden {
+    /**
+     * Для удаление скролла в Firefox.
+     * В версии ниже 64 будет виден скролл, но это не ломает функциональность.
+     */
+    scrollbar-width: none;
+  }
 }
 @supports not (scrollbar-color: auto) {
+  .scrollbarHidden::-webkit-scrollbar {
+    display: none;
+  }
+
   .host::-webkit-scrollbar {
     inline-size: 12px;
     block-size: 12px;

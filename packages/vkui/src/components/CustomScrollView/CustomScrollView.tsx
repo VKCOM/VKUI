@@ -25,6 +25,12 @@ export interface CustomScrollViewProps
    * Включение отображения горизонтального скролла
    */
   enableHorizontalScroll?: boolean;
+  /**
+   * Скрытие скроллбара
+   *
+   * > В версии ниже Firefox 64 будет виден скролл
+   */
+  scrollbarHidden?: boolean;
 }
 
 /**
@@ -37,6 +43,7 @@ export const CustomScrollView = ({
   onScroll,
   getRootRef,
   overscrollBehavior = 'auto',
+  scrollbarHidden = false,
   ...restProps
 }: CustomScrollViewProps): React.ReactNode => {
   return (
@@ -46,6 +53,7 @@ export const CustomScrollView = ({
         styles.host,
         enableHorizontalScroll && styles.horizontalScrollEnabled,
         overscrollBehaviorClassNames[overscrollBehavior],
+        scrollbarHidden && styles.scrollbarHidden,
       )}
       ref={getRootRef}
       onScroll={onScroll}
