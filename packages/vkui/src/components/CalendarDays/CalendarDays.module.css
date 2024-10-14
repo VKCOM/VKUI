@@ -11,12 +11,16 @@
   flex-grow: 1;
 }
 
-.row:not(:last-child) {
+.row:first-child:not(.rowSizeS) {
   margin-block-end: 4px;
 }
 
-.rowSizeS:not(:last-child) {
-  margin-block-end: 0;
+.row:not(:last-child):not(.rowSizeS) .rowDay {
+  padding-block-end: 2px;
+}
+
+.row:not(:nth-child(2)):not(.rowSizeS) .rowDay {
+  padding-block-start: 2px;
 }
 
 .weekday {
