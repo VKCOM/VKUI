@@ -48,9 +48,9 @@ export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    */
   subhead?: React.ReactNode;
   /**
-   * Текст баннера.
+   * Дополнительный подзаголовок баннера.
    */
-  text?: React.ReactNode;
+  extraSubhead?: React.ReactNode;
   /**
    * При использовании `mode="image"`.
    *
@@ -92,7 +92,7 @@ export const Banner = ({
   asideMode,
   header,
   subhead,
-  text,
+  extraSubhead,
   children,
   background,
   actions,
@@ -128,9 +128,9 @@ export const Banner = ({
             {subhead}
           </SubheadTypography>
         )}
-        {hasReactNode(text) && (
-          <Text Component="div" className={styles.text}>
-            {text}
+        {hasReactNode(extraSubhead) && (
+          <Text Component="div" className={styles.extraSubhead}>
+            {extraSubhead}
           </Text>
         )}
         {hasReactNode(actions) && React.Children.count(actions) > 0 && (

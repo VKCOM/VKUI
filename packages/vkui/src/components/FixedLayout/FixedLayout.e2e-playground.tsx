@@ -81,7 +81,7 @@ export const FixedLayoutPlayground = (
           <Panel id="fixedLayout">
             <PanelHeader>Fixed layout</PanelHeader>
             <FixedLayout filled={filled} vertical={vertical}>
-              <Separator wide />
+              <Separator />
               <Tabs>
                 <TabsItem selected>176 сообществ</TabsItem>
                 <TabsItem>9 событий</TabsItem>

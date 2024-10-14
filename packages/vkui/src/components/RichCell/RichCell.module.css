@@ -86,11 +86,11 @@
   }
 }
 
-.subhead {
+.overTitle {
   color: var(--vkui--color_text_secondary);
 }
 
-.caption {
+.extraSubtitle {
   margin-block-start: 1px;
   color: var(--vkui--color_text_secondary);
 }
@@ -99,10 +99,10 @@
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-.textEllipsis .subhead,
+.textEllipsis .overTitle,
 .textEllipsis .children,
-.textEllipsis .text,
-.textEllipsis .caption {
+.textEllipsis .subtitle,
+.textEllipsis .extraSubtitle {
   white-space: nowrap;
   text-overflow: ellipsis;
   max-inline-size: 100%;
@@ -118,14 +118,14 @@
 }
 
 .children,
-.text,
+.subtitle,
 .afterChildren {
   font-size: var(--vkui--font_paragraph--font_size--regular);
   line-height: var(--vkui--font_paragraph--line_height--regular);
 }
 
 .sizeYCompact .children,
-.sizeYCompact .text,
+.sizeYCompact .subtitle,
 .sizeYCompact .afterChildren {
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
@@ -133,7 +133,7 @@
 
 @media (--sizeY-compact) {
   .sizeYNone .children,
-  .sizeYNone .text,
+  .sizeYNone .subtitle,
   .sizeYNone .afterChildren {
     font-size: var(--vkui--font_subhead--font_size--regular);
     line-height: var(--vkui--font_subhead--line_height--regular);

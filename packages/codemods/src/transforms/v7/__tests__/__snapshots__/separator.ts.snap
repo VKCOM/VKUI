@@ -8,8 +8,10 @@ const App = () => {
   return (
     (<React.Fragment>
       <Separator appearance="primary" />
-      <Separator appearance="primary-alpha" wide />
+      <Separator appearance="primary-alpha" />
       <Separator appearance={"secondary"} />
+      <Separator padding />
+      <Separator />
     </React.Fragment>)
   );
 };"

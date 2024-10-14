@@ -183,14 +183,14 @@ export const PanelHeader = ({
       {!isVKCOM && (
         <>
           {staticSeparatorVisible && adaptiveSizeX.compact && (
-            <Separator className={adaptiveSizeX.compact.className} />
+            <Separator className={adaptiveSizeX.compact.className} padding />
           )}
           {staticSpacingVisible && adaptiveSizeX.regular && (
             <Spacing className={adaptiveSizeX.regular.className} size={16} />
           )}
         </>
       )}
-      {separatorVisible && isVKCOM && <Separator className={styles.separator} wide />}
+      {separatorVisible && isVKCOM && <Separator className={styles.separator} />}
     </RootComponent>
   );
 };

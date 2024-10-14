@@ -46,7 +46,7 @@
 }
 
 .subhead,
-.text {
+.extraSubhead {
   color: var(--vkui--color_text_subhead);
 }
 
@@ -93,7 +93,7 @@
 }
 
 .subhead:not(:first-child),
-.text:not(:first-child) {
+.extraSubhead:not(:first-child) {
   margin-block-start: 2px;
 }
 
@@ -123,7 +123,7 @@
 }
 
 .sizeM .subhead:not(:first-child),
-.sizeM .text:not(:first-child) {
+.sizeM .extraSubhead:not(:first-child) {
   margin-block-start: 4px;
 }
 

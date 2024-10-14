@@ -1,23 +1,23 @@
 import * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
-import type { AppearanceType } from '../../lib/appearance';
+import type { ColorSchemeType } from '../../lib/colorScheme';
 import { TokensClassProvider } from '../../lib/tokens';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
-export interface AppearanceProviderProps {
-  value: AppearanceType;
+export interface ColorSchemeProviderProps {
+  value: ColorSchemeType;
   children: React.ReactNode;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/AppearanceProvider
+ * @see https://vkcom.github.io/VKUI/#/ColorSchemeProvider
  */
-export const AppearanceProvider = ({
+export const ColorSchemeProvider = ({
   value,
   children,
-}: AppearanceProviderProps): React.ReactNode => {
+}: ColorSchemeProviderProps): React.ReactNode => {
   return (
-    <ConfigProviderOverride appearance={value}>
+    <ConfigProviderOverride colorScheme={value}>
       <IconAppearanceProvider value={value}>
         <TokensClassProvider>{children}</TokensClassProvider>
       </IconAppearanceProvider>
