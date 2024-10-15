@@ -4,15 +4,26 @@ import chalk from 'chalk';
 import { sync as spawnSync } from 'cross-spawn';
 import prompts from 'prompts';
 import { CliOptions, runCli } from './cli.js';
-import getAvailableCodemods, { TRANSFORM_DIR } from './getAvailableCodemods.js';
+import { TRANSFORM_DIR } from './getAvailableCodemods.js';
 import logger from './helpers/logger.js';
 
-function runJSCodeShift(
-  codemodName: string,
-  transformsVersion: string,
-  workingDirectory: string,
-  flags: CliOptions,
-) {
+interface JSCodeShiftRunnerProps {
+  codemodName: string;
+  transformsVersion: string;
+  paths: string[];
+  flags: CliOptions;
+}
+
+interface VerifyConfigurationProps {
+  paths: string[];
+  inputFile?: string;
+  codemodNames?: string[];
+  transformsVersion: string;
+}
+
+const MAX_PRINTED_PATHS = 5;
+
+function runJSCodeShift({ codemodName, transformsVersion, paths, flags }: JSCodeShiftRunnerProps) {
   const args = ['--parser=tsx', '--extensions=tsx,ts', `--alias=${flags.alias}`];
   if (flags.dryRun) {
     args.push('--dry');
@@ -32,7 +43,8 @@ function runJSCodeShift(
       '-t',
       `${TRANSFORM_DIR}/v${transformsVersion}/${codemodName}.js`,
       ...args,
-      workingDirectory,
+      '--ignore-pattern node_modules',
+      ...(flags.inputFile ? [`--stdin < ${flags.inputFile}`] : paths),
     ],
     {
       stdio: 'inherit',
@@ -41,7 +53,7 @@ function runJSCodeShift(
   );
 
   if (result.status === 1) {
-    logger.error(`Codemod ${codemodName} failed to apply`);
+    logger.error(`Codemod ${codemodName} failed to apply.`);
     return;
   }
 }
@@ -66,19 +78,30 @@ async function promptConfirmation(): Promise<boolean> {
   return confirmation;
 }
 
+function getWorkingPathsInfo(paths: string[], inputFile?: string) {
+  if (inputFile) {
+    return `from ${inputFile}`;
+  }
+
+  if (paths.length > MAX_PRINTED_PATHS) {
+    return `${paths.slice(0, MAX_PRINTED_PATHS).join(', ')} and ${paths.length - MAX_PRINTED_PATHS} more`;
+  }
+
+  return paths.join(', ');
+}
+
 async function verifyConfiguration({
-  workingDirectory,
+  paths,
+  inputFile,
+  codemodNames,
   transformsVersion,
-  codemodName,
-}: {
-  workingDirectory: string;
-  codemodName?: string;
-  transformsVersion: string;
-}) {
+}: VerifyConfigurationProps) {
+  const formattedPaths = getWorkingPathsInfo(paths, inputFile);
+
   logger.info(`Please ${chalk.cyan('verify')} the following information:
-        working directory: ${workingDirectory}
-        target major vkui version: ${transformsVersion}
-        codemod to apply: ${codemodName ? codemodName : chalk.red('all')}
+        working files/directories: ${formattedPaths}
+        target vkui major version: ${transformsVersion}
+        codemods to apply: ${codemodNames ? codemodNames : chalk.red('all')}
       `);
   const confirmed = await promptConfirmation();
   if (!confirmed) {
@@ -88,35 +111,22 @@ async function verifyConfiguration({
 }
 
 const run = async () => {
-  const { flags, codemodName, transformsVersion } = await runCli();
+  const { flags, codemods, transformsVersion } = await runCli();
 
-  const workingDirectory = flags.path ? flags.path : process.cwd();
-  if (codemodName && workingDirectory) {
-    const codemodes = getAvailableCodemods(transformsVersion);
-    if (codemodes.includes(codemodName)) {
-      await verifyConfiguration({
-        workingDirectory,
-        transformsVersion,
-        codemodName,
-      });
-      logger.info("\n 🚀 Let's go!");
-      runJSCodeShift(codemodName, transformsVersion, workingDirectory, flags);
-    } else {
-      logger.error(
-        `Codemod ${codemodName} doesn't exist. Please check the available codemods by running with --list option`,
-      );
-      process.exit(0);
-    }
-  }
-  if (flags.all && workingDirectory) {
-    await verifyConfiguration({ workingDirectory, transformsVersion });
-    logger.info("\n 🚀 Let's go!");
-    const codemodes = getAvailableCodemods(transformsVersion);
-    codemodes.forEach((codemod) => {
-      logger.info(`Codemod ${codemod} in process...`);
-      runJSCodeShift(codemod, transformsVersion, workingDirectory, flags);
-    });
-  }
+  const paths = flags.path ? flags.path : [process.cwd()];
+
+  await verifyConfiguration({
+    paths,
+    inputFile: flags.inputFile,
+    transformsVersion,
+    codemodNames: flags.all ? undefined : codemods,
+  });
+
+  logger.info("\n 🚀 Let's go!");
+  codemods.forEach((codemodName) => {
+    logger.info(`Codemod ${codemodName} in process...`);
+    runJSCodeShift({ codemodName, transformsVersion, paths, flags });
+  });
 
   logger.info(
     `
