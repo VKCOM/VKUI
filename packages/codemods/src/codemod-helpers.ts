@@ -105,6 +105,23 @@ export function renameProp(
     });
 }
 
+export function renameSubComponent(
+  j: JSCodeshift,
+  source: Collection,
+  componentName: string,
+  prevSubcomponentName: string,
+  newSubcomponentName: string,
+) {
+  source
+    .find(j.MemberExpression, {
+      object: { name: componentName },
+      property: { name: prevSubcomponentName },
+    })
+    .replaceWith(
+      j.memberExpression(j.identifier(componentName), j.identifier(newSubcomponentName)),
+    );
+}
+
 export function swapBooleanValue(
   api: API,
   source: Collection,

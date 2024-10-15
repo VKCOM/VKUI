@@ -11,9 +11,9 @@ describe('Placeholder', () => {
     render(
       <Placeholder data-testid="container" stretched>
         <Placeholder.Icon data-testid="icon">Icon</Placeholder.Icon>
-        <Placeholder.Header data-testid="header">Header</Placeholder.Header>
+        <Placeholder.Title data-testid="header">Header</Placeholder.Title>
         <Placeholder.Actions data-testid="actions">Actions</Placeholder.Actions>
-        <Placeholder.Text data-testid="text">Text</Placeholder.Text>
+        <Placeholder.Description data-testid="text">Text</Placeholder.Description>
       </Placeholder>,
     );
     expect(screen.getByTestId('container')).toHaveClass(
