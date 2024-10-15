@@ -7,7 +7,7 @@
 
 @supports (scrollbar-color: auto) {
   .host {
-    scrollbar-color: var(--vkui--color_icon_medium_alpha) transparent;
+    scrollbar-color: var(--vkui--color_icon_tertiary_alpha) transparent;
     scrollbar-width: thin;
   }
 
@@ -37,7 +37,7 @@
 
   .host::-webkit-scrollbar-thumb,
   .host::-webkit-scrollbar-thumb {
-    background-color: var(--vkui--color_icon_medium_alpha);
+    background-color: var(--vkui--color_icon_tertiary_alpha);
     border: 3px solid transparent;
     border-radius: 6px;
     background-clip: padding-box, content-box;
@@ -45,7 +45,7 @@
 
   .host::-webkit-scrollbar-thumb:hover,
   .host::-webkit-scrollbar-thumb:active {
-    background-color: var(--vkui--color_icon_medium_alpha--hover);
+    background-color: var(--vkui--color_icon_tertiary_alpha--hover);
     border: 2px solid transparent;
   }
 }

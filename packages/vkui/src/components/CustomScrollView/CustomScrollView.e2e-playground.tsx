@@ -1,31 +1,17 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { Avatar } from '../Avatar/Avatar';
-import { Cell } from '../Cell/Cell';
 import { Div } from '../Div/Div';
-import { List } from '../List/List';
 import { CustomScrollView, type CustomScrollViewProps } from './CustomScrollView';
-
-export const CustomScrollViewWithVerticalPlayground = (props: ComponentPlaygroundProps) => {
-  return (
-    <ComponentPlayground {...props} propSets={[]}>
-      {(props: CustomScrollViewProps) => (
-        <CustomScrollView {...props} style={{ height: 200 }}>
-          <List>
-            {['Say', 'Hello', 'To', 'My', 'Little', 'Friend'].map((item) => (
-              <Cell key={item} before={<Avatar />}>
-                {item}
-              </Cell>
-            ))}
-          </List>
-        </CustomScrollView>
-      )}
-    </ComponentPlayground>
-  );
-};
 
 export const CustomScrollViewWithBothScrollsPlayground = (props: ComponentPlaygroundProps) => {
   return (
-    <ComponentPlayground {...props} propSets={[]}>
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          scrollbarHidden: [false, true],
+        },
+      ]}
+    >
       {(props: CustomScrollViewProps) => (
         <div
           style={{
