@@ -79,7 +79,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
     async (
       {
         platform,
-        colorScheme,
+        colorSchemeType,
         defaultBrowserType,
         onlyForBrowsers,
         onlyForPlatforms,
@@ -91,7 +91,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
       const skipReasons = [
         { type: 'browser', matchList: onlyForBrowsers || [], value: defaultBrowserType },
         { type: 'platform', matchList: onlyForPlatforms || [], value: platform },
-        { type: 'colorScheme', matchList: onlyForColorSchemes || [], value: colorScheme },
+        { type: 'colorScheme', matchList: onlyForColorSchemes || [], value: colorSchemeType },
       ]
         .filter(
           ({ matchList, value }) => matchList.length > 0 && matchList.every((i) => i !== value),
