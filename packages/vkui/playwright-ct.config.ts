@@ -126,48 +126,48 @@ function generateProjects(): TestProject {
 
   const colorSchemes = [ColorScheme.LIGHT, ColorScheme.DARK];
   const projects = colorSchemes
-    .map((colorScheme) => [
+    .map((colorSchemeType) => [
       {
-        name: `android (chromium) • ${colorScheme}`,
+        name: `android (chromium) • ${colorSchemeType}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Pixel 5'),
-          colorScheme,
+          colorSchemeType,
           platform: Platform.ANDROID,
         },
       },
 
       {
-        name: `ios (webkit) • ${colorScheme}`,
+        name: `ios (webkit) • ${colorSchemeType}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('iPhone XR'),
-          colorScheme,
+          colorSchemeType,
           platform: Platform.IOS,
         },
       },
 
       {
-        name: `vkcom (chromium) • ${colorScheme}`,
+        name: `vkcom (chromium) • ${colorSchemeType}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Chrome'),
-          colorScheme,
+          colorSchemeType,
           platform: Platform.VKCOM,
         },
       },
 
       {
-        name: `vkcom (firefox) • ${colorScheme}`,
+        name: `vkcom (firefox) • ${colorSchemeType}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Firefox'),
-          colorScheme,
+          colorSchemeType,
           platform: Platform.VKCOM,
         },
       },
 
       {
-        name: `vkcom (webkit) • ${colorScheme}`,
+        name: `vkcom (webkit) • ${colorSchemeType}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Safari'),
-          colorScheme,
+          colorSchemeType,
           platform: Platform.VKCOM,
         },
       },
