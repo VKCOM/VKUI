@@ -1,18 +1,29 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { format } from 'date-fns';
 import { baselineComponent, userEvent } from '../../testing/utils';
-import { DateInput } from './DateInput';
-import styles from './DateInput.module.css';
-import inputLikeStyles from '../InputLike/InputLike.module.css';
+import { DateInput, type DateInputPropsTestsProps } from './DateInput';
 
 const date = new Date(2024, 6, 31, 11, 20);
 
-const getInputsLike = (container: HTMLElement) => {
-  const dateInput = container.getElementsByClassName(styles.input)[0];
-  return Array.prototype.filter.call(
-    dateInput.children,
-    (child) => !child.classList.contains(inputLikeStyles.divider),
-  );
+const testIds: DateInputPropsTestsProps = {
+  dayFieldTestId: 'day-picker',
+  monthFieldTestId: 'month-picker',
+  yearFieldTestId: 'year-picker',
+  hourFieldTestId: 'hour-picker',
+  minuteFieldTestId: 'minute-picker',
 };
+
+const getInputsLike = () => {
+  return [
+    screen.queryByTestId('day-picker'),
+    screen.queryByTestId('month-picker'),
+    screen.queryByTestId('year-picker'),
+    screen.queryByTestId('hour-picker'),
+    screen.queryByTestId('minute-picker'),
+  ].filter(Boolean) as HTMLElement[];
+};
+
+const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
 
 const convertInputsToNumbers = (inputs: HTMLElement[]) => {
   return inputs.map((input) => Number(input.textContent));
@@ -26,7 +37,7 @@ describe('DateInput', () => {
   });
   it('should be correct input value', () => {
     const onChange = jest.fn();
-    const { container } = render(
+    render(
       <DateInput
         value={date}
         onChange={onChange}
@@ -35,16 +46,17 @@ describe('DateInput', () => {
         changeDayLabel=""
         changeHoursLabel=""
         changeMinutesLabel=""
+        {...testIds}
       />,
     );
-    const inputLikes = getInputsLike(container);
+    const inputLikes = getInputsLike();
     const normalizedDate = convertInputsToNumbers(inputLikes);
     expect(normalizedDate).toEqual([31, 7, 2024]);
   });
 
   it('should be correct input value with time', () => {
     const onChange = jest.fn();
-    const { container } = render(
+    render(
       <DateInput
         value={date}
         onChange={onChange}
@@ -54,9 +66,10 @@ describe('DateInput', () => {
         changeDayLabel=""
         changeHoursLabel=""
         changeMinutesLabel=""
+        {...testIds}
       />,
     );
-    const inputLikes = getInputsLike(container);
+    const inputLikes = getInputsLike();
     const normalizedDate = convertInputsToNumbers(inputLikes);
     expect(normalizedDate).toEqual([31, 7, 2024, 11, 20]);
   });
@@ -64,7 +77,7 @@ describe('DateInput', () => {
   it('should correct update value when typing text in input', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
-    const { container } = render(
+    render(
       <DateInput
         value={date}
         onChange={onChange}
@@ -75,9 +88,10 @@ describe('DateInput', () => {
         changeDayLabel=""
         changeHoursLabel=""
         changeMinutesLabel=""
+        {...testIds}
       />,
     );
-    const inputLikes = getInputsLike(container);
+    const inputLikes = getInputsLike();
 
     const [dates, months, years, hours, minutes] = inputLikes;
 
@@ -106,19 +120,24 @@ describe('DateInput', () => {
         changeDayLabel=""
         changeHoursLabel=""
         changeMinutesLabel=""
+        {...testIds}
+        calendarTestsProps={{
+          dayTestId,
+        }}
       />,
     );
-    const inputLikes = getInputsLike(container);
+    const inputLikes = getInputsLike();
 
     const [dates] = inputLikes;
 
     await userEvent.click(dates);
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
-    await userEvent.click(screen.getByText(`${date.getDate() - 1}`));
-
     const resultDate = new Date(date);
     resultDate.setDate(date.getDate() - 1);
+
+    expect(container.contains(document.activeElement)).toBeTruthy();
+    fireEvent.click(screen.getByTestId(dayTestId(resultDate)));
+
     expect(onChange).toHaveBeenCalledWith(resultDate);
 
     expect(container.contains(document.activeElement)).toBeFalsy();

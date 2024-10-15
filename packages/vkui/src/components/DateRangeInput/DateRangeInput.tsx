@@ -14,6 +14,7 @@ import type { HasRootRef } from '../../types';
 import {
   CalendarRange,
   type CalendarRangeProps,
+  type CalendarRangeTestsProps,
   type DateRangeType,
 } from '../CalendarRange/CalendarRange';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
@@ -29,6 +30,17 @@ import dateInputStyles from '../DateInput/DateInput.module.css';
 const sizeYClassNames = {
   none: styles.sizeYNone,
   compact: styles.sizeYCompact,
+};
+
+type DateTestsProps = {
+  day?: string;
+  month?: string;
+  year?: string;
+};
+
+export type DateRangeInputTestsProps = {
+  startDateTestsProps?: DateTestsProps;
+  endDateTestsProps?: DateTestsProps;
 };
 
 export interface DateRangeInputProps
@@ -52,7 +64,9 @@ export interface DateRangeInputProps
       | 'renderDayContent'
     >,
     HasRootRef<HTMLDivElement>,
-    Omit<FormFieldProps, 'maxHeight'> {
+    Omit<FormFieldProps, 'maxHeight'>,
+    DateRangeInputTestsProps {
+  calendarTestsProps?: CalendarRangeTestsProps;
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
   clearFieldLabel?: string;
@@ -143,6 +157,9 @@ export const DateRangeInput = ({
   nextMonthIcon,
   disableCalendar = false,
   renderDayContent,
+  calendarTestsProps,
+  startDateTestsProps,
+  endDateTestsProps,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -281,6 +298,7 @@ export const DateRangeInput = ({
           onElementSelect={setFocusedElement}
           value={internalValue[0]}
           label={changeStartDayLabel}
+          data-testid={startDateTestsProps?.day}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -290,6 +308,7 @@ export const DateRangeInput = ({
           onElementSelect={setFocusedElement}
           value={internalValue[1]}
           label={changeStartMonthLabel}
+          data-testid={startDateTestsProps?.month}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -299,6 +318,7 @@ export const DateRangeInput = ({
           onElementSelect={setFocusedElement}
           value={internalValue[2]}
           label={changeStartYearLabel}
+          data-testid={startDateTestsProps?.year}
         />
         <InputLikeDivider>{' — '}</InputLikeDivider>
         <InputLike
@@ -308,6 +328,7 @@ export const DateRangeInput = ({
           onElementSelect={setFocusedElement}
           value={internalValue[3]}
           label={changeEndDayLabel}
+          data-testid={endDateTestsProps?.day}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -317,6 +338,7 @@ export const DateRangeInput = ({
           onElementSelect={setFocusedElement}
           value={internalValue[4]}
           label={changeEndMonthLabel}
+          data-testid={endDateTestsProps?.month}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -326,6 +348,7 @@ export const DateRangeInput = ({
           onElementSelect={setFocusedElement}
           value={internalValue[5]}
           label={changeEndYearLabel}
+          data-testid={endDateTestsProps?.year}
         />
       </Text>
       {open && !disableCalendar && (
@@ -347,6 +370,7 @@ export const DateRangeInput = ({
             prevMonthIcon={prevMonthIcon}
             nextMonthIcon={nextMonthIcon}
             renderDayContent={renderDayContent}
+            {...calendarTestsProps}
           />
         </Popper>
       )}
