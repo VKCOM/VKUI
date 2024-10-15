@@ -19,7 +19,7 @@
   margin-block-start: 16px;
 }
 
-.withSpaces .gap {
+.withPaddings .gap {
   inline-size: var(--vkui--size_base_padding_horizontal--regular);
 }
 
@@ -29,7 +29,7 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
-  .withSpaces
+  .withPaddings
   .gap {
   inline-size: 16px;
 }
@@ -37,7 +37,7 @@
 @media (--viewWidth-smallTabletPlus) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
-    .withSpaces
+    .withPaddings
     .gap {
     inline-size: 16px;
   }
@@ -48,33 +48,33 @@
  * Group
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-card) .withSpaces {
+:global(.vkuiInternalGroup--mode-card) .withPaddings {
   margin-inline: -8px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-card) .withSpaces:first-child {
+:global(.vkuiInternalGroup--mode-card) .withPaddings:first-child {
   padding-block-start: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-card) .withSpaces:last-child {
+:global(.vkuiInternalGroup--mode-card) .withPaddings:last-child {
   padding-block-end: var(--vkui--size_cardgrid_padding_vertical--regular);
 }
 
 @media (--sizeX-regular) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalGroup--mode-none) .withSpaces {
+  :global(.vkuiInternalGroup--mode-none) .withPaddings {
     margin-inline: -8px;
   }
 
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalGroup--mode-none) .withSpaces:first-child {
+  :global(.vkuiInternalGroup--mode-none) .withPaddings:first-child {
     padding-block-start: var(--vkui--size_cardgrid_padding_vertical--regular);
   }
 
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalGroup--mode-none) .withSpaces:last-child {
+  :global(.vkuiInternalGroup--mode-none) .withPaddings:last-child {
     padding-block-end: var(--vkui--size_cardgrid_padding_vertical--regular);
   }
 }
