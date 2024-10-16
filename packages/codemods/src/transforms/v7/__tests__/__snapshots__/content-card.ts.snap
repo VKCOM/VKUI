@@ -12,12 +12,14 @@ const App = () => {
         title="ContentCard example"
         caption="VKUI Styleguide > Blocks > ContentCard"
         description="Badlands is the story about dreams and cruel reality..."
+        titleComponent="h4"
       />
       <ContentCard
         overTitle={"VKUI"}
         title={"ContentCard example"}
         caption={"VKUI Styleguide > Blocks > ContentCard"}
         description={"Badlands is the story about dreams and cruel reality..."}
+        titleComponent="h4"
       />
     </React.Fragment>)
   );

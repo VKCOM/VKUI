@@ -15,6 +15,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       subtitle: 'overTitle',
       header: 'title',
       text: 'description',
+      headerComponent: 'titleComponent',
     });
   }
 
