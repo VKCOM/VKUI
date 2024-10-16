@@ -86,7 +86,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         );
 
         // Кейс, когда disableInteractive не был задан, значит overlay interactive.
-        // Сейчас у него обязательно должен быть onClick, чтобы не ломать обратную совместимость
+        // Сейчас у него обязательно должен быть onClick, чтобы не лоймать обратную совместимость
 
         if (!disableInteractiveAttribute) {
           // Проверяем наличие onClick, и если его нет, то пользователь должен добавить onClick
@@ -101,8 +101,8 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         // Рассчитываем значение disableInteractive в boolean
         const disableInteractiveValue = calcDisableInteractiveValue(disableInteractiveAttribute);
         if (disableInteractiveValue === null) {
-          // Если у disableInteractive используется сложное выражение
-          // То пользователь сам должен удалить этот проп, как ему нужно
+          // Если у disableInteractive используется сложное выражение,
+          // то пользователь сам должен удалить этот проп, как ему нужно
           showDisableInteractivePropReport(localName);
         }
 
@@ -110,7 +110,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         removeAttribute(overlayItemAttributes, disableInteractiveAttribute);
 
         if (disableInteractiveValue) {
-          // Если disableInteractive = true, то все, что нам нужно это удалить атрибут onClick
+          // Если disableInteractive = true, то все, что нам нужно, это удалить атрибут onClick
           // Важно: мы можем его спокойно удалить, так как в этом кейсе он может быть только undefined
           if (onClickAttribute) {
             removeAttribute(overlayItemAttributes, onClickAttribute);
@@ -122,10 +122,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
           showDisableInteractivePropReport(localName);
           return;
         }
-        // Если disableInteractive = false и onClick не пустой надо обработать следующие кейс:
+        // Если disableInteractive = false и onClick не пустой, надо обработать следующие кейсы:
         // onClick=undefined: надо добавить колбэк
-        // onClick=identifier: все хорошо,оставляем как есть
-        // В остальных случаях, надо чтобы пользователь убедился, что onClick устанавливается корректно
+        // onClick=identifier: все хорошо, оставляем как есть
+        // В остальных случаях надо, чтобы пользователь убедился, что onClick устанавливается корректно
         if (onClickAttribute.value?.type === 'JSXExpressionContainer') {
           const expression = onClickAttribute.value.expression;
           if (expression.type === 'Identifier') {
