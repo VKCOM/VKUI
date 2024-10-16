@@ -11,7 +11,11 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { localName } = getImportInfo(j, file, 'ContentCard', alias);
 
   if (localName) {
-    renameProp(j, source, localName, { subtitle: 'subhead' });
+    renameProp(j, source, localName, {
+      subtitle: 'overTitle',
+      header: 'title',
+      text: 'description',
+    });
   }
 
   return source.toSource();

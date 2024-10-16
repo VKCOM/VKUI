@@ -8,14 +8,16 @@ const App = () => {
   return (
     (<React.Fragment>
       <ContentCard
-        subhead="VKUI"
-        header="ContentCard example"
+        overTitle="VKUI"
+        title="ContentCard example"
         caption="VKUI Styleguide > Blocks > ContentCard"
+        description="Badlands is the story about dreams and cruel reality..."
       />
       <ContentCard
-        subhead={"VKUI"}
-        header="ContentCard example"
-        caption="VKUI Styleguide > Blocks > ContentCard"
+        overTitle={"VKUI"}
+        title={"ContentCard example"}
+        caption={"VKUI Styleguide > Blocks > ContentCard"}
+        description={"Badlands is the story about dreams and cruel reality..."}
       />
     </React.Fragment>)
   );

@@ -8,11 +8,13 @@ const App = () => {
         subtitle="VKUI"
         header="ContentCard example"
         caption="VKUI Styleguide > Blocks > ContentCard"
+        text="Badlands is the story about dreams and cruel reality..."
       />
       <ContentCard
         subtitle={"VKUI"}
-        header="ContentCard example"
-        caption="VKUI Styleguide > Blocks > ContentCard"
+        header={"ContentCard example"}
+        caption={"VKUI Styleguide > Blocks > ContentCard"}
+        text={"Badlands is the story about dreams and cruel reality..."}
       />
     </React.Fragment>
   );
