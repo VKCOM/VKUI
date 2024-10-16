@@ -51,8 +51,8 @@ const Example = () => {
         ]}
         actionsLayout="vertical"
         onClose={closePopout}
-        header="Подтвердите действие"
-        text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+        title="Подтвердите действие"
+        description="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
       />,
     );
   };
@@ -74,8 +74,8 @@ const Example = () => {
         actionsLayout="horizontal"
         dismissButtonMode="inside"
         onClose={closePopout}
-        header="Удаление документа"
-        text="Вы уверены, что хотите удалить этот документ?"
+        title="Удаление документа"
+        description="Вы уверены, что хотите удалить этот документ?"
       />,
     );
   };
@@ -138,8 +138,8 @@ const Example = () => {
         actionsLayout="horizontal"
         renderAction={renderAction}
         onClose={closePopout}
-        header="Подтвердите действие"
-        text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+        title="Подтвердите действие"
+        description="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
       />,
     );
   };

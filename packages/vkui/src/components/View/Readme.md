@@ -116,8 +116,8 @@ const App = () => {
 
     setPopoutWithRestriction(
       <Alert
-        header="Поле Имя не заполнено"
-        text="Пожалуйста, заполните его."
+        title="Поле Имя не заполнено"
+        description="Пожалуйста, заполните его."
         onClose={() => setPopoutWithRestriction(null)}
       />,
     );
