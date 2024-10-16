@@ -23,7 +23,7 @@ export const FormStatus = ({
     <Banner
       {...restProps}
       role={role}
-      subhead={children}
+      subtitle={children}
       className={classNames(
         'vkuiInternalFormStatus',
         mode === 'error' && classNames(styles.modeError, 'vkuiInternalFormStatus--mode-error'),
