@@ -94,7 +94,9 @@ const onNavClick = (e) => {
     <Icon56UserAddOutline />
   </Placeholder.Icon>
   <Placeholder.Title>Find friends</Placeholder.Title>
-  <Placeholder.Description>The people you add as your friends will be displayed here</Placeholder.Description>
+  <Placeholder.Description>
+    The people you add as your friends will be displayed here
+  </Placeholder.Description>
   <Placeholder.Actions>
     <ButtonGroup mode="vertical" align="center">
       <Button size="m">Button</Button>

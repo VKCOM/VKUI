@@ -20,8 +20,8 @@ describe('Placeholder', () => {
       classNames(styles.host, styles.stretched, styles.withPadding),
     );
     expect(screen.getByTestId('icon')).toHaveClass(styles.icon);
-    expect(screen.getByTestId('header')).toHaveClass(styles.header);
-    expect(screen.getByTestId('text')).toHaveClass(styles.text);
+    expect(screen.getByTestId('header')).toHaveClass(styles.title);
+    expect(screen.getByTestId('text')).toHaveClass(styles.description);
     expect(screen.getByTestId('actions')).toHaveClass(styles.action);
 
     expect(screen.getByText('Icon')).toBeInTheDocument();
