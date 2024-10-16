@@ -8,6 +8,13 @@ import { getFetchPriorityProp } from '../../lib/utils';
 import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
+import {
+  type FloatElementIndentation,
+  type FloatElementPlacement,
+  type FloatElementPosition,
+  ImageBaseFloatElement,
+  type ImageBaseFloatElementProps,
+} from './ImageBaseFloatElement/ImageBaseFloatElement';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import { ImageBaseContext } from './context';
 import type { ImageBaseContextProps, ImageBaseExpectedIconProps, ImageBaseSize } from './types';
@@ -20,6 +27,10 @@ export type {
   ImageBaseBadgeProps,
   ImageBaseOverlayProps,
   ImageBaseContextProps,
+  ImageBaseFloatElementProps,
+  FloatElementPlacement,
+  FloatElementPosition,
+  FloatElementIndentation,
 };
 
 export {
@@ -125,6 +136,7 @@ const sizeToNumber = (size: number | string | undefined): number | undefined => 
 export const ImageBase: React.FC<ImageBaseProps> & {
   Badge: typeof ImageBaseBadge;
   Overlay: typeof ImageBaseOverlay;
+  FloatElement: typeof ImageBaseFloatElement;
 } = ({
   alt,
   crossOrigin,
@@ -151,9 +163,11 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   withTransparentBackground,
   objectFit = 'cover',
   keepAspectRatio = false,
+  getRootRef,
   ...restProps
 }: ImageBaseProps) => {
   const size = sizeProp ?? minOr([sizeToNumber(widthSize), sizeToNumber(heightSize)], defaultSize);
+  const wrapperRef = useExternRef(getRootRef);
 
   const width = widthSize ?? (keepAspectRatio ? undefined : size);
   const height = heightSize ?? (keepAspectRatio ? undefined : size);
@@ -207,7 +221,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   );
 
   return (
-    <ImageBaseContext.Provider value={{ size }}>
+    <ImageBaseContext.Provider value={{ size, ref: wrapperRef }}>
       <Clickable
         style={{ width, height, ...style }}
         baseClassName={classNames(
@@ -215,6 +229,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
           loaded && styles.loaded,
           withTransparentBackground && styles.transparentBackground,
         )}
+        getRootRef={wrapperRef}
         {...restProps}
       >
         {hasSrc && (
@@ -264,3 +279,6 @@ ImageBase.Badge.displayName = 'ImageBase.Badge';
 
 ImageBase.Overlay = ImageBaseOverlay;
 ImageBase.Overlay.displayName = 'ImageBase.Overlay';
+
+ImageBase.FloatElement = ImageBaseFloatElement;
+ImageBase.FloatElement.displayName = 'ImageBase.FloatElement';
