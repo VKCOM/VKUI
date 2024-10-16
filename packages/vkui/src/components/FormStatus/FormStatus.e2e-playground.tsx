@@ -12,7 +12,7 @@ export const FormStatusPlayground = (props: ComponentPlaygroundProps) => {
       ]}
     >
       {(props: FormStatusProps) => (
-        <FormStatus header="Некорректный мобильный номер" {...props}>
+        <FormStatus title="Некорректный мобильный номер" {...props}>
           Необходимо корректно ввести номер в международном формате
         </FormStatus>
       )}
