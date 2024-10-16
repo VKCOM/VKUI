@@ -1,18 +1,23 @@
-.host {
+.content {
   border-radius: 0;
   font-size: 14px;
   color: var(--vkui--color_text_primary);
   font-family: var(--vkui--font_family_base);
+  block-size: 100%;
 }
 
-.hidden,
-.host {
-  block-size: 36px;
+.host,
+.hidden {
+  border-radius: 0;
   flex-basis: calc(100% / 7);
   flex-grow: 0;
 }
 
-.hiddenSizeS,
+.hidden,
+.content {
+  block-size: 36px;
+}
+
 .sizeS {
   block-size: 34px;
 }

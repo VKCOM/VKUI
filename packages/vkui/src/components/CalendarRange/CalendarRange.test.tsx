@@ -21,7 +21,7 @@ describe('CalendarRange', () => {
   };
 
   const getCalendarDayBlock = (part: HTMLElement, date: string) => {
-    return getByText(part, date).closest(`.${dayStyles.host}`) as HTMLElement;
+    return getByText(part, date).closest(`.${dayStyles.content}`) as HTMLElement;
   };
 
   const getLeftPart = () => {

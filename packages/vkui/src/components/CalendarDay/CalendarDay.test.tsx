@@ -26,7 +26,7 @@ describe('CalendarDay', () => {
   });
   it('check hinted className', () => {
     render(<CalendarDayTest hinted data-testid="day" />);
-    const calendarDay = screen.getByTestId('day').firstElementChild!;
+    const calendarDay = screen.getByTestId('day').firstElementChild!.firstElementChild!;
     expect(calendarDay).toHaveClass(styles.hintedActive);
   });
 
