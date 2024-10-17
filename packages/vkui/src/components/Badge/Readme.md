@@ -53,11 +53,11 @@ const Example = () => {
                 12
               </Counter>
             }
-            text="Сообщения"
+            label="Сообщения"
           >
             <Icon28MessageOutline />
           </TabbarItem>
-          <TabbarItem indicator={<Badge mode="prominent">Новый раздел</Badge>} text="Клипы">
+          <TabbarItem indicator={<Badge mode="prominent">Новый раздел</Badge>} label="Клипы">
             <Icon28ClipOutline />
           </TabbarItem>
         </Tabbar>
