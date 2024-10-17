@@ -34,13 +34,13 @@ const [indicator, setIndicator] = useState('one');
     </Tabbar>
 
     <Tabbar style={{ position: 'static', margin: '10px 0' }}>
-      <TabbarItem selected={text === 'one'} onClick={() => setText('one')} text="Новости">
+      <TabbarItem selected={text === 'one'} onClick={() => setText('one')} label="Новости">
         <Icon28NewsfeedOutline />
       </TabbarItem>
-      <TabbarItem selected={text === 'two'} onClick={() => setText('two')} text="Профиль">
+      <TabbarItem selected={text === 'two'} onClick={() => setText('two')} label="Профиль">
         <Icon28UserCircleOutline />
       </TabbarItem>
-      <TabbarItem selected={text === 'three'} onClick={() => setText('three')} text="Мессенджер">
+      <TabbarItem selected={text === 'three'} onClick={() => setText('three')} label="Мессенджер">
         <Icon28MessageOutline />
       </TabbarItem>
     </Tabbar>
@@ -49,21 +49,21 @@ const [indicator, setIndicator] = useState('one');
       <TabbarItem
         selected={horizontalText === 'one'}
         onClick={() => setHorizontalText('one')}
-        text="Новости"
+        label="Новости"
       >
         <Icon28NewsfeedOutline />
       </TabbarItem>
       <TabbarItem
         selected={horizontalText === 'two'}
         onClick={() => setHorizontalText('two')}
-        text="Профиль"
+        label="Профиль"
       >
         <Icon28UserCircleOutline />
       </TabbarItem>
       <TabbarItem
         selected={horizontalText === 'three'}
         onClick={() => setHorizontalText('three')}
-        text="Мессенджер"
+        label="Мессенджер"
       >
         <Icon28MessageOutline />
       </TabbarItem>
@@ -74,17 +74,21 @@ const [indicator, setIndicator] = useState('one');
         selected={indicator === 'one'}
         onClick={() => setIndicator('one')}
         indicator={<Badge mode="prominent">Есть обновления</Badge>}
-        text="Новости"
+        label="Новости"
       >
         <Icon28NewsfeedOutline />
       </TabbarItem>
-      <TabbarItem selected={indicator === 'two'} onClick={() => setIndicator('two')} text="Профиль">
+      <TabbarItem
+        selected={indicator === 'two'}
+        onClick={() => setIndicator('two')}
+        label="Профиль"
+      >
         <Icon28UserCircleOutline />
       </TabbarItem>
       <TabbarItem
         selected={indicator === 'three'}
         onClick={() => setIndicator('three')}
-        text="Мессенджер"
+        label="Мессенджер"
         indicator={
           <Counter size="s" mode="prominent">
             3
