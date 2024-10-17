@@ -39,7 +39,7 @@ export const Playground: Story = {
               <Group>
                 <Placeholder
                   icon={<Icon56UsersOutline />}
-                  header="Уведомления от сообществ"
+                  title="Уведомления от сообществ"
                   action={
                     <Button size="m" onClick={() => setPanel(panels[1])}>
                       Подключить сообщества
@@ -59,7 +59,7 @@ export const Playground: Story = {
                 <Placeholder>Доступ запрещён</Placeholder>
                 <Separator />
                 <Placeholder
-                  header="Находите друзей"
+                  title="Находите друзей"
                   action={
                     <Button size="m" onClick={() => setPanel(panels[0])}>
                       Найти друзей

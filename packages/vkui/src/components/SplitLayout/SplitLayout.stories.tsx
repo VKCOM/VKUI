@@ -122,7 +122,7 @@ export const Example: Story = {
               <Group>
                 <Placeholder
                   icon={<Icon56UsersOutline />}
-                  header="Уведомления от сообществ"
+                  title="Уведомления от сообществ"
                   action={<Button size="m">Подключить сообщества</Button>}
                 >
                   Подключите сообщества, от которых Вы хотите получать уведомления
@@ -140,7 +140,7 @@ export const Example: Story = {
                 <Placeholder>Доступ запрещён</Placeholder>
                 <Separator />
                 <Placeholder
-                  header="Находите друзей"
+                  title="Находите друзей"
                   action={<Button size="m">Найти друзей</Button>}
                 >
                   Здесь будут отображаться люди, которых вы добавите в друзья

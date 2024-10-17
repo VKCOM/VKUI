@@ -15,7 +15,7 @@ const Example = () => {
           <Gradient mode="tint" to="top">
             <Placeholder
               icon={<Avatar size={96} />}
-              header="Алексей Мазелюк"
+              title="Алексей Мазелюк"
               action={
                 <Button size="m" mode="secondary">
                   Редактировать

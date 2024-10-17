@@ -30,13 +30,13 @@ export const PlaceholderPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         // All = On
         {
-          header: ['Find friends'],
+          title: ['Find friends'],
           children: ['The people you add as your friends will be displayed here'],
           ...propsPlaceholder,
         },
         // Subtitle = Off
         {
-          header: ['Find friends'],
+          title: ['Find friends'],
           ...propsPlaceholder,
         },
         // Title = Off
