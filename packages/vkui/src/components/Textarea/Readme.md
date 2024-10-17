@@ -26,7 +26,7 @@ const App = () => {
               defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget commodo lorem. Suspendisse convallis ligula vitae mi dictum ullamcorper. Fusce pulvinar quis sem vel tincidunt. Fusce lectus odio, dapibus at metus congue, mollis tempor lorem. Vivamus dictum iaculis turpis non tincidunt. Cras ornare venenatis mi, quis mollis mauris tempus at. Curabitur turpis metus, hendrerit a ligula quis, euismod fringilla neque. Cras pretium aliquet convallis. In et bibendum nulla. Maecenas iaculis commodo blandit. Phasellus semper nunc nec placerat dictum."
               getRef={textAreaRef}
               after={
-                <Tooltip text="Скопировать" placement="top" usePortal>
+                <Tooltip description="Скопировать" placement="top" usePortal>
                   <IconButton
                     label="Скопировать"
                     onClick={() => navigator.clipboard.writeText(textAreaRef.current.value)}
