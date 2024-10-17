@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mini-info-cell transforms correctly 1`] = `
+"import { Icon20WorkOutline, MiniInfoCell } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <MiniInfoCell
+        before={<Icon20WorkOutline />}
+        mode="add"
+        onClick={() => console.log('Указать место учёбы')}
+        textWrap="short"
+        chevron
+      >
+        Укажите место учёбы
+      </MiniInfoCell>
+      <MiniInfoCell
+        before={<Icon20WorkOutline />}
+        mode="add"
+        onClick={() => console.log('Указать место учёбы')}
+        textWrap="short"
+        chevron={false}
+      >
+        Укажите место учёбы
+      </MiniInfoCell>
+    </React.Fragment>)
+  );
+};"
+`;

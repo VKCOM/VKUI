@@ -22,7 +22,7 @@ export const MiniInfoCellPlayground = (props: ComponentPlaygroundProps) => {
               vk.com/team
             </Link>,
           ],
-          expandable: [true],
+          chevron: [true],
         },
         {
           before: [<Icon20ArticleOutline key="icon" />],
@@ -53,7 +53,7 @@ export const MiniInfoCellPlayground = (props: ComponentPlaygroundProps) => {
           mode: ['more'],
           textWrap: ['short'],
           children: ['Подробная информация'],
-          expandable: [true],
+          chevron: [true],
         },
         {
           children: ['Ячейка без иконки'],

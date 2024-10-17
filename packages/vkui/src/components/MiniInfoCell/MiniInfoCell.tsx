@@ -47,14 +47,14 @@ export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElem
    *
    * - `nowrap` – в одну строку, текст не переносится и обрезается.
    * - `short` – максимально отображается 3 строки, остальное обрезается.
-   * - `full` – текст отображается полностью.
+   * - `full` – текст отображается полностью. В дизайне это свойство `multiline`
    */
   textWrap?: 'nowrap' | 'short' | 'full';
 
   /**
    * Передавать `true`, если предполагается переход при клике по ячейке.
    */
-  expandable?: boolean;
+  chevron?: boolean;
 }
 
 /**
@@ -66,7 +66,7 @@ export const MiniInfoCell = ({
   children,
   mode = 'base',
   textWrap = 'nowrap',
-  expandable = false,
+  chevron = false,
   className,
   ...restProps
 }: MiniInfoCellProps): React.ReactNode => {
@@ -84,7 +84,7 @@ export const MiniInfoCell = ({
         <Paragraph className={styles.content} weight={mode === 'more' ? '2' : undefined}>
           {children}
         </Paragraph>
-        {expandable && <Icon16Chevron />}
+        {chevron && <Icon16Chevron />}
       </div>
       {hasReactNode(after) && <span className={styles.after}>{after}</span>}
     </React.Fragment>
