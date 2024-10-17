@@ -133,18 +133,20 @@ const run = async () => {
 
   logger.info("\n 🚀 Let's go!");
 
-  let logStream = undefined;
-  if (flags.logFile) {
-    logStream = fs.createWriteStream(flags.logFile, { flags: 'a' });
-    await once(logStream, 'open');
+  function applyCodemods(logStream?: WriteStream) {
+    codemods.forEach((codemodName) => {
+      logger.info(`Codemod ${codemodName} in process...`);
+      runJSCodeShift({ codemodName, transformsVersion, paths, flags, logStream });
+    });
   }
-  codemods.forEach((codemodName) => {
-    logger.info(`Codemod ${codemodName} in process...`);
-    runJSCodeShift({ codemodName, transformsVersion, paths, flags, logStream });
-  });
 
-  if (logStream) {
+  if (flags.logFile) {
+    const logStream = fs.createWriteStream(flags.logFile, { flags: 'a' });
+    await once(logStream, 'open');
+    applyCodemods(logStream);
     logStream.end();
+  } else {
+    applyCodemods();
   }
 
   logger.info(
