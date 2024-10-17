@@ -15,7 +15,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/cssm/index.js"
     },
-    "./dist/cssm/styles/themes.css": "./dist/cssm/styles/themes.css"
+    "./dist/cssm/styles/themes.css": "./dist/cssm/styles/themes.css",
+    "./package.json": "./package.json"
   },
   "files": [
     "./dist",

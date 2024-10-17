@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from '@vkui';
 import { Setting } from '../Setting/Setting';
 
-export const AppearanceSelect = ({ onChange, value, options, ...restProps }) => {
+export const ColorSchemeSelect = ({ onChange, value, options, ...restProps }) => {
   return (
     <Setting
       {...restProps}
@@ -11,7 +11,7 @@ export const AppearanceSelect = ({ onChange, value, options, ...restProps }) => 
           Свойство <Link href="#/ConfigProvider">ConfigProvider</Link>
         </React.Fragment>
       }
-      label="appearance"
+      label="color scheme"
       options={options}
       onChange={onChange}
       value={value}

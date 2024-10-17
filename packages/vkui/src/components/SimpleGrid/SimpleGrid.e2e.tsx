@@ -3,7 +3,7 @@ import { SimpleGridPlayground } from './SimpleGrid.e2e-playground';
 
 test.describe('SimpleGrid', () => {
   test.use({
-    onlyForAppearances: ['light'],
+    onlyForColorSchemes: ['light'],
   });
   test('Rendering', async ({
     mount,

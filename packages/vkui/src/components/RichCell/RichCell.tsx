@@ -23,15 +23,15 @@ export interface RichCellProps extends TappableProps {
   /**
    * Контейнер для текста над `children`.
    */
-  subhead?: React.ReactNode;
+  overTitle?: React.ReactNode;
   /**
    * Контейнер для текста под `children`.
    */
-  text?: React.ReactNode;
+  subtitle?: React.ReactNode;
   /**
-   * Контейнер для текста под `text`.
+   * Контейнер для текста под `subtitle`.
    */
-  caption?: React.ReactNode;
+  extraSubtitle?: React.ReactNode;
   /**
    * Контейнер для контента под `caption`. Например `<UsersStack size="m" />`.
    */
@@ -79,10 +79,10 @@ export interface RichCellProps extends TappableProps {
 export const RichCell: React.FC<RichCellProps> & {
   Icon: typeof RichCellIcon;
 } = ({
-  subhead,
+  overTitle,
   children,
-  text,
-  caption,
+  subtitle,
+  extraSubtitle,
   before,
   after,
   afterCaption,
@@ -121,16 +121,16 @@ export const RichCell: React.FC<RichCellProps> & {
       <div className={styles.in}>
         <div className={styles.content}>
           <div className={styles.contentBefore}>
-            {subhead && (
-              <Subhead Component="div" className={styles.subhead}>
-                {subhead}
+            {overTitle && (
+              <Subhead Component="div" className={styles.overTitle}>
+                {overTitle}
               </Subhead>
             )}
             <div className={styles.children}>{children}</div>
-            {text && <div className={styles.text}>{text}</div>}
-            {caption && (
-              <Subhead Component="div" className={styles.caption}>
-                {caption}
+            {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
+            {extraSubtitle && (
+              <Subhead Component="div" className={styles.extraSubtitle}>
+                {extraSubtitle}
               </Subhead>
             )}
           </div>

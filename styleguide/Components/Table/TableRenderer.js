@@ -1,7 +1,7 @@
 import React, { createContext, Fragment, useContext, useEffect, useRef, useState } from 'react';
 import { Icon20HideOutline, Icon20ViewOutline } from '@vkontakte/icons';
 import { noop, throttle } from '@vkontakte/vkjs';
-import { classNames, Text, useAppearance } from '@vkui';
+import { classNames, Text, useColorScheme } from '@vkui';
 import NameRenderer from '../Name/NameRenderer';
 import TogglePropsButton from '../TogglePropsButton';
 import './Table.css';
@@ -34,7 +34,7 @@ const TableRows = ({ rows }) => {
 export const TableRenderer = ({ columns, rows, getRowKey }) => {
   const [hasLeft, setHasLeft] = useState(false);
   const [hasRight, setHasRight] = useState(false);
-  const appearance = useAppearance();
+  const colorScheme = useColorScheme();
   const tableRef = useRef(null);
   const tableWidth = useRef(0);
   const tableInRef = useRef(null);
@@ -72,7 +72,7 @@ export const TableRenderer = ({ columns, rows, getRowKey }) => {
         'Table',
         hasLeft && 'Table--hasLeft',
         hasRight && 'Table--hasRight',
-        `Table--${appearance}`,
+        `Table--${colorScheme}`,
       )}
     >
       <div className="Table__in" onScroll={throttle(updateBorders, 50)} ref={tableInRef}>

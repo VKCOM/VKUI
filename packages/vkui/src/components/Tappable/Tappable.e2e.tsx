@@ -11,7 +11,7 @@ test.describe('Tappable', () => {
   test.describe('State: Focus Visible', () => {
     test.use({
       onlyForPlatforms: [Platform.ANDROID],
-      onlyForAppearances: ['light'],
+      onlyForColorSchemes: ['light'],
     });
 
     ['inside', 'outside'].forEach((mode) => {
