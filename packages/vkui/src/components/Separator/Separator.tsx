@@ -18,7 +18,7 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
   /**
    * Направление отображения разделителя
    */
-  direction?: 'inline' | 'block';
+  direction?: 'horizontal' | 'vertical';
   /**
    * Размер контейнера, в который вложен разделитель
    */
@@ -36,8 +36,8 @@ const appearanceClassNames = {
 };
 
 const directionClassNames = {
-  block: styles.directionBlock,
-  inline: styles.directionInline,
+  horizontal: styles.directionHorizontal,
+  vertical: styles.directionVertical,
 };
 
 const alignClassNames = {
@@ -51,7 +51,7 @@ const alignClassNames = {
 export const Separator = ({
   padding = false,
   appearance = 'primary',
-  direction = 'inline',
+  direction = 'horizontal',
   align = 'center',
   style,
   size,
