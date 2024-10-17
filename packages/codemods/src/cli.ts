@@ -1,3 +1,4 @@
+import fs from 'fs';
 import chalk from 'chalk';
 import { Command } from 'commander';
 import prompts from 'prompts';
@@ -8,7 +9,9 @@ import logger from './helpers/logger.js';
 
 export interface CliOptions {
   list: boolean;
-  path: string;
+  path: string[];
+  inputFile: string;
+  logFile: string;
   dryRun: boolean;
   ignoreConfig: string;
   debug: boolean;
@@ -19,20 +22,16 @@ export interface CliOptions {
 
 export interface Cli {
   flags: CliOptions;
-  codemodName: string;
+  codemods: string[];
   transformsVersion: string;
 }
 
-const trimStringValue = (value: string | undefined) =>
-  typeof value === 'string' ? value.trim() : value;
-
-const promptAvailableCodemods = async (codemods: string[]): Promise<string> => {
-  const { codemod } = await prompts(
+const promptAvailableCodemods = async (codemods: string[]): Promise<string[]> => {
+  const { value } = await prompts(
     {
-      type: 'select',
-      name: 'codemod',
-      message: 'Pick a codemod',
-      initial: 0,
+      type: 'multiselect',
+      name: 'value',
+      message: 'Pick codemods',
       choices: codemods.map((name) => ({ title: name, value: name })),
     },
     {
@@ -41,22 +40,55 @@ const promptAvailableCodemods = async (codemods: string[]): Promise<string> => {
       },
     },
   );
+  if (value.length === 0) {
+    logger.error('No codemods picked.');
+    process.exit(1);
+  }
 
-  return codemod;
+  return value;
+};
+
+const promptTransformVersions = async (): Promise<string> => {
+  const { value } = await prompts(
+    {
+      type: 'select',
+      name: 'value',
+      message: 'Pick version',
+      choices: [
+        { title: 'v6', value: '6' },
+        { title: 'v7', value: '7' },
+      ],
+    },
+    {
+      onCancel: () => {
+        process.exit(1);
+      },
+    },
+  );
+
+  return value;
 };
 
 export const runCli = async (): Promise<Cli> => {
   const program = new Command('@vkontakte/vkui-codemod')
     .version(pkg.version || 'unknown')
-    .argument('[codemod-name]', 'which codemod should be applied', trimStringValue)
-    .usage(`${chalk.green('[codemod-name]')}`)
+    .argument('[codemod-names...]', 'which codemods should be applied')
+    .usage(`${chalk.green('[codemod-names...]')}`)
     .option('-l --list', 'list available codemods')
     .option('--all', 'apply all available codemods')
     .option(
       '-tv --transforms-version <transformsVersion>',
       'vkui major version transforms (available versions: "6", "7")',
     )
-    .option('-p --path <paths>', 'path to files in which to apply the codemods')
+    .option(
+      '-p --path [paths...]',
+      'file paths where codemods need to apply (space separated list), default: current directory',
+    )
+    .option('--input-file <file>', 'apply codemods only to file/directory listed in the file')
+    .option(
+      '--log-file <file>',
+      'log migration instructions with required manual changes to the file instead of the console',
+    )
     .option('--dry-run', 'no changes are made to files')
     .option(
       '--ignore-config <config>',
@@ -70,31 +102,51 @@ export const runCli = async (): Promise<Cli> => {
     .parse(process.argv);
 
   const options = program.opts() as CliOptions;
-
-  let codemodName = program.args[0];
-  const transformsVersion = options.transformsVersion || autoDetectVKUIVersion();
+  let codemods = program.processedArgs[0] as string[];
+  let transformsVersion = options.transformsVersion || autoDetectVKUIVersion();
 
   if (!transformsVersion) {
-    logger.error(
-      'Problem determining the major version of vkui, try specifying it using the --transforms-version',
-    );
-    process.exit(1);
+    transformsVersion = await promptTransformVersions();
   }
 
+  const availableCodemods = getAvailableCodemods(transformsVersion);
+
   if (options.list) {
-    const codemods = getAvailableCodemods(transformsVersion);
-    logger.info(codemods);
+    logger.info(availableCodemods);
     process.exit(0);
   }
 
-  if (!codemodName && !options.all) {
-    const codemods = getAvailableCodemods(transformsVersion);
-    codemodName = await promptAvailableCodemods(codemods);
+  if (options.inputFile && !fs.existsSync(options.inputFile)) {
+    logger.error(`Input file ${options.inputFile} does not exist.`);
+    process.exit(1);
+  }
+
+  if (codemods.length > 0) {
+    const wrongCodemods = [];
+    for (let codemodName of codemods) {
+      if (!availableCodemods.includes(codemodName)) {
+        wrongCodemods.push(codemodName);
+      }
+    }
+    if (wrongCodemods.length > 0) {
+      logger.error(
+        `The following codemods doesn't exist: ${wrongCodemods}. Please check the available codemods by running with --list option`,
+      );
+      process.exit(1);
+    }
+  }
+
+  if (codemods.length === 0 && !options.all) {
+    codemods = await promptAvailableCodemods(availableCodemods);
+  }
+
+  if (options.all) {
+    codemods = availableCodemods;
   }
 
   return {
     flags: options,
-    codemodName,
+    codemods,
     transformsVersion,
   };
 };
