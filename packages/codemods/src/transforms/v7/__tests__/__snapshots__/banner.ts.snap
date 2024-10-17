@@ -9,16 +9,16 @@ const App = () => {
     (<React.Fragment>
       <Banner
         before={<Avatar size={48} src={'user_lihachyov'} />}
-        header="Сегодня день рождения Михаила Лихачёва"
-        subhead="Подарите подарок"
-        extraSubhead="Дополнительный текст"
+        title="Сегодня день рождения Михаила Лихачёва"
+        subtitle="Подарите подарок"
+        extraSubtitle="Дополнительный текст"
         asideMode="dismiss"
       />
       <Banner
         before={<Avatar size={48} src={'user_lihachyov'} />}
-        header="Сегодня день рождения Михаила Лихачёва"
-        subhead={"Подарите подарок"}
-        extraSubhead={"Дополнительный текст"}
+        title="Сегодня день рождения Михаила Лихачёва"
+        subtitle={"Подарите подарок"}
+        extraSubtitle={"Дополнительный текст"}
         asideMode="dismiss"
       />
     </React.Fragment>)

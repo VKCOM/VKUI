@@ -42,8 +42,8 @@ export const Playground: Story = {
         src="https://sun9-63.userapi.com/yOEQYPHrNHjZEoanbqPb65HPl5iojmiLgLzfGA/W3geVMMt8TI.jpg"
       />
     ),
-    header: 'Баста в Ледовом',
-    subhead: 'Большой концерт',
+    title: 'Баста в Ледовом',
+    subtitle: 'Большой концерт',
     asideMode: 'dismiss',
     actions: 'ButtonPrimary',
   },

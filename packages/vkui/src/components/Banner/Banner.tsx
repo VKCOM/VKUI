@@ -14,7 +14,7 @@ import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './Banner.module.css';
 
-export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface BannerProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
   /**
    * Тип баннера.
    */
@@ -42,15 +42,15 @@ export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Заголовок.
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /**
    * Подзаголовок.
    */
-  subhead?: React.ReactNode;
+  subtitle?: React.ReactNode;
   /**
    * Дополнительный подзаголовок баннера.
    */
-  extraSubhead?: React.ReactNode;
+  extraSubtitle?: React.ReactNode;
   /**
    * При использовании `mode="image"`.
    *
@@ -90,9 +90,9 @@ export const Banner = ({
   size = 's',
   before,
   asideMode,
-  header,
-  subhead,
-  extraSubhead,
+  title,
+  subtitle,
+  extraSubtitle,
   children,
   background,
   actions,
@@ -118,19 +118,19 @@ export const Banner = ({
       {before && <div className={styles.before}>{before}</div>}
 
       <div className={styles.content}>
-        {hasReactNode(header) && (
+        {hasReactNode(title) && (
           <HeaderTypography Component="div" weight="2" level={size === 'm' ? '2' : '1'}>
-            {header}
+            {title}
           </HeaderTypography>
         )}
-        {hasReactNode(subhead) && (
-          <SubheadTypography Component="div" className={styles.subhead}>
-            {subhead}
+        {hasReactNode(subtitle) && (
+          <SubheadTypography Component="div" className={styles.subtitle}>
+            {subtitle}
           </SubheadTypography>
         )}
-        {hasReactNode(extraSubhead) && (
-          <Text Component="div" className={styles.extraSubhead}>
-            {extraSubhead}
+        {hasReactNode(extraSubtitle) && (
+          <Text Component="div" className={styles.extraSubtitle}>
+            {extraSubtitle}
           </Text>
         )}
         {hasReactNode(actions) && React.Children.count(actions) > 0 && (

@@ -29,8 +29,8 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
         {
           mode: ['image'],
           imageTheme: ['dark'],
-          header: ['Мои достижения'],
-          subhead: ['Разблокировано 9 из 36'],
+          title: ['Мои достижения'],
+          subtitle: ['Разблокировано 9 из 36'],
           background: [<div key="img-bg" style={{ backgroundColor: '#222222' }} />],
           before: [undefined],
           asideMode: [undefined],
@@ -44,21 +44,21 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
           mode: ['image'],
           asideMode: ['dismiss', 'expand'],
           imageTheme: ['light'],
-          header: ['Мои достижения'],
-          subhead: ['Разблокировано 9 из 36'],
+          title: ['Мои достижения'],
+          subtitle: ['Разблокировано 9 из 36'],
         },
         {
           mode: ['image'],
           asideMode: ['dismiss', 'expand'],
           imageTheme: ['dark'],
-          header: ['Мои достижения'],
-          subhead: ['Разблокировано 9 из 36'],
+          title: ['Мои достижения'],
+          subtitle: ['Разблокировано 9 из 36'],
           background: [<div key="img-bg" style={{ backgroundColor: '#222222' }} />],
         },
         {
-          header: ['Header'],
-          subhead: ['Subheader'],
-          extraSubhead: ['Extra Subhead'],
+          title: ['Header'],
+          subtitle: ['Subheader'],
+          extraSubtitle: ['Extra Subhead'],
           actions: [<Button key="btn">Button</Button>],
         },
       ]}
@@ -67,8 +67,8 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
         <Div>
           <Banner
             before={<Image size={96} src="" />}
-            header="Баста в Ледовом"
-            subhead="Большой концерт"
+            title="Баста в Ледовом"
+            subtitle="Большой концерт"
             asideMode="dismiss"
             actions={<Button>Подробнее</Button>}
             {...props}

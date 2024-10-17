@@ -7,7 +7,7 @@
     <PanelHeader>Статус формы</PanelHeader>
     <Group>
       <Div>
-        <FormStatus header="Некорректный мобильный номер" mode="error">
+        <FormStatus title="Некорректный мобильный номер" mode="error">
           Необходимо корректно ввести номер в международном формате
         </FormStatus>
       </Div>

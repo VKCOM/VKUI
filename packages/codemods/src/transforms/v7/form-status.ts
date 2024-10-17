@@ -8,12 +8,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const { alias } = options;
   const j = api.jscodeshift;
   const source = j(file.source);
-  const { localName } = getImportInfo(j, file, 'Banner', alias);
+  const { localName } = getImportInfo(j, file, 'FormStatus', alias);
 
   if (localName) {
     renameProp(j, source, localName, {
-      subheader: 'subtitle',
-      text: 'extraSubtitle',
       header: 'title',
     });
   }
