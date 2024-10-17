@@ -43,7 +43,7 @@ export const WithIcon: Story = {
   args: {
     before: 'Icon24FavoriteOutline',
     children: 'Избранное',
-    expandable: true,
+    chevron: true,
   },
 };
 
