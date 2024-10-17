@@ -5,8 +5,8 @@ import { ContentCard, type ContentCardProps } from './ContentCard';
 
 const ContentCardTest = (props: ContentCardProps) => (
   <ContentCard
-    subhead="VKUI"
-    header="ContentCard example"
+    overTitle="VKUI"
+    title="ContentCard example"
     caption="VKUI Styleguide > Blocks > ContentCard"
     {...props}
     data-testid="card"
@@ -18,7 +18,7 @@ const img = () => card().querySelector('img');
 describe('ContentCard', () => {
   baselineComponent((props) => (
     <CardGrid>
-      <ContentCard src="/image.png" {...props} text="ContentCard" />
+      <ContentCard src="/image.png" {...props} description="ContentCard" />
     </CardGrid>
   ));
 
@@ -59,13 +59,13 @@ describe('ContentCard', () => {
     expect(el.getAttribute('aria-disabled')).toBeNull();
   });
 
-  it('changes header tag with headerComponent prop', () => {
+  it('changes title tag with titleComponent prop', () => {
     const { rerender } = render(<ContentCardTest />);
 
     // по умолчанию span
     expect(screen.getByText('ContentCard example').tagName.toLowerCase()).toMatch('span');
 
-    rerender(<ContentCardTest headerComponent="h4" />);
+    rerender(<ContentCardTest titleComponent="h4" />);
     expect(screen.getByText('ContentCard example').tagName.toLowerCase()).toMatch('h4');
   });
 });
