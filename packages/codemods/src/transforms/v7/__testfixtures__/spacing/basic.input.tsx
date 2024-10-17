@@ -11,6 +11,8 @@ const App = () => {
       <Spacing size="3xs" />
 
       <Spacing size={"3xs"} />
+
+      <Spacing size={8} />
     </React.Fragment>
   );
 };

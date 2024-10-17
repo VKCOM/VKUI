@@ -26,11 +26,19 @@ export const remapSizePropValue = ({
     })
     .forEach((attribute) => {
       let nodeToReplaceValue;
+      if (
+        attribute.node.value?.type !== 'JSXExpressionContainer' &&
+        attribute.node.value?.type !== 'StringLiteral'
+      ) {
+        return;
+      }
       if (attribute.node.value?.type === 'JSXExpressionContainer') {
         const expression = attribute.node.value.expression;
-        if (expression.type === 'StringLiteral') {
-          nodeToReplaceValue = expression;
+        if (expression.type !== 'StringLiteral') {
+          return;
         }
+
+        nodeToReplaceValue = expression;
       }
       if (attribute.node.value?.type === 'StringLiteral') {
         nodeToReplaceValue = attribute.node.value;
