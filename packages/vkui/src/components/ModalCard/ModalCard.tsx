@@ -27,10 +27,10 @@ const warn = warnOnce('ModalCard');
  */
 export const ModalCard = ({
   icon,
-  header,
-  headerComponent,
-  subheader,
-  subheaderComponent,
+  title,
+  titleComponent,
+  description,
+  descriptionComponent,
   children,
   actions,
   onClose,
@@ -73,10 +73,10 @@ export const ModalCard = ({
         className={styles.in}
         getRootRef={refs.innerElement}
         icon={icon}
-        header={header}
-        headerComponent={headerComponent}
-        subheader={subheader}
-        subheaderComponent={subheaderComponent}
+        title={title}
+        titleComponent={titleComponent}
+        description={description}
+        descriptionComponent={descriptionComponent}
         actions={actions}
         onClose={onClose || modalContext.onClose}
         size={size}

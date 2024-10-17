@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`modal-card transforms correctly 1`] = `
+"import { Button, ModalCard, ModalCardBase } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <ModalCardBase
+        dismissButtonMode="inside"
+        dismissLabel="Закрыть"
+        title="Десктопная и планшетная версии с крестиком внутри"
+        titleComponent="h1"
+        description="Сверху будет безопасный отступ до иконки"
+        descriptionComponent="span"
+        actions={
+          <React.Fragment>
+            <Button size="l" mode="primary" stretched>
+              Некая кнопка
+            </Button>
+          </React.Fragment>
+        }
+      />
+      <ModalCard
+        dismissButtonMode="inside"
+        dismissLabel="Закрыть"
+        title="Десктопная и планшетная версии с крестиком внутри"
+        titleComponent="h1"
+        description="Сверху будет безопасный отступ до иконки"
+        descriptionComponent="span"
+        actions={
+          <React.Fragment>
+            <Button size="l" mode="primary" stretched>
+              Некая кнопка
+            </Button>
+          </React.Fragment>
+        }
+      />
+    </React.Fragment>)
+  );
+};"
+`;
