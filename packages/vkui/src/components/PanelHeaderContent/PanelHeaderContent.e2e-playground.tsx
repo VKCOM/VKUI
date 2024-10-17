@@ -9,7 +9,7 @@ export const PanelHeaderContentPlayground = (props: ComponentPlaygroundProps) =>
       propSets={[
         {
           before: [<Avatar size={36} key="icon" />, undefined],
-          status: ['Был в сети вчера', undefined],
+          subtitle: ['Был в сети вчера', undefined],
           children: ['Влад Анесов'],
           aside: ['Подробнее', undefined],
         },
