@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom-scroll-view transforms correctly 1`] = `
+"import { CustomScrollView, Div, Flex } from '@vkontakte/vkui';
+import React, {useRef} from 'react';
+
+const App = () => {
+  const ref = useRef();
+  return (
+    (<React.Fragment>
+      {/* Проверяем удаление старый пропов */}
+      <CustomScrollView className={"className"} enableHorizontalScroll>
+        <Flex>
+          <Div/>
+        </Flex>
+      </CustomScrollView>
+      {/* Заменяем boxRef на getRootRef */}
+      <CustomScrollView
+        getRootRef={ref}
+      >
+        <Flex>
+          <Div/>
+        </Flex>
+      </CustomScrollView>
+    </React.Fragment>)
+  );
+};"
+`;

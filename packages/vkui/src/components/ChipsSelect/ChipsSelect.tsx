@@ -76,10 +76,7 @@ export interface ChipsSelectProps<O extends ChipOption>
   extends ChipsInputBaseProps<O>,
     UseChipsSelectProps<O>,
     Pick<FormFieldProps, 'status' | 'mode' | 'before'>,
-    Pick<
-      CustomSelectDropdownProps,
-      'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
-    > {
+    Pick<CustomSelectDropdownProps, 'overscrollBehavior'> {
   placement?: 'top' | 'bottom';
   /**
    * Отрисовка Spinner вместо списка опций в выпадающем списке

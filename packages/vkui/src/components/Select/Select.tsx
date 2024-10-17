@@ -40,8 +40,6 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     dropdownAutoWidth,
     forceDropdownPortal,
     noMaxHeight,
-    autoHideScrollbar,
-    autoHideScrollbarDelay,
     labelTextTestId,
     nativeSelectTestId,
     after,
