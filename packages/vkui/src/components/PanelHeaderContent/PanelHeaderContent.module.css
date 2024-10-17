@@ -24,7 +24,7 @@
   block-size: 100%;
 }
 
-.status,
+.subtitle,
 .childrenIn,
 .childrenText {
   overflow: hidden;
@@ -32,7 +32,7 @@
   text-overflow: ellipsis;
 }
 
-.status {
+.subtitle {
   order: 1;
   margin-block-start: 1px;
   max-inline-size: 100%;

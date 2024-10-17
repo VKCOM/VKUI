@@ -25,18 +25,18 @@ const sizeYClassNames = {
 export interface PanelHeaderContentProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   aside?: React.ReactNode;
   before?: React.ReactNode;
-  status?: React.ReactNode;
+  subtitle?: React.ReactNode;
 }
 
 interface PanelHeaderChildrenProps extends HasChildren {
-  hasStatus: boolean;
+  hasSubtitle: boolean;
   hasBefore: boolean;
 }
 
-const PanelHeaderChildren = ({ hasStatus, hasBefore, children }: PanelHeaderChildrenProps) => {
+const PanelHeaderChildren = ({ hasSubtitle, hasBefore, children }: PanelHeaderChildrenProps) => {
   const platform = usePlatform();
 
-  return hasStatus || hasBefore ? (
+  return hasSubtitle || hasBefore ? (
     <Text
       className={styles.childrenText}
       Component="div"
@@ -54,7 +54,7 @@ const PanelHeaderChildren = ({ hasStatus, hasBefore, children }: PanelHeaderChil
  */
 export const PanelHeaderContent = ({
   aside,
-  status,
+  subtitle,
   before,
   children,
   onClick,
@@ -90,9 +90,12 @@ export const PanelHeaderContent = ({
         {...inProps}
         className={classNames(styles.in, !before && platform !== 'android' && styles.inCentered)}
       >
-        {hasReactNode(status) && <Footnote className={styles.status}>{status}</Footnote>}
+        {hasReactNode(subtitle) && <Footnote className={styles.subtitle}>{subtitle}</Footnote>}
         <div className={styles.children}>
-          <PanelHeaderChildren hasStatus={hasReactNode(status)} hasBefore={hasReactNode(before)}>
+          <PanelHeaderChildren
+            hasSubtitle={hasReactNode(subtitle)}
+            hasBefore={hasReactNode(before)}
+          >
             {children}
           </PanelHeaderChildren>
           {hasReactNode(aside) && <div className={styles.aside}>{aside}</div>}
