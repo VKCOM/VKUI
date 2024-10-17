@@ -38,7 +38,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const showDisableInteractivePropReport = (localName: string) => {
     showReport(
       localName,
-      `"disableInteractive" has been removed, please use "onClick" if you want to make ${localName}.Overlay interactive`,
+      `"disableInteractive" has been removed, please use "onClick" if you want to make ${localName}.Overlay interactive.`,
     );
   };
 
@@ -93,7 +93,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
           if (!onClickAttribute) {
             showReport(
               localName,
-              `If you want to make ${localName}.Overlay interactive please add "onClick" prop`,
+              `If you want to make ${localName}.Overlay interactive, please add "onClick" prop.`,
             );
           }
           return;
@@ -140,7 +140,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         }
         showReport(
           localName,
-          `"disableInteractive" has been removed, please validate that "onClick" prop value not falsy`,
+          `"disableInteractive" has been removed, please validate that "onClick" prop value not falsy.`,
         );
       });
   };
