@@ -105,7 +105,7 @@ export const Example: Story = {
                 <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
                 <Cell
                   onClick={() =>
-                    setPopout(<Alert header="Alert!" onClose={() => setPopout(null)} />)
+                    setPopout(<Alert title="Alert!" onClose={() => setPopout(null)} />)
                   }
                 >
                   alert
