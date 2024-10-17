@@ -220,7 +220,7 @@ const App = () => {
             id="findModal"
             onClose={() => setActiveModal(null)}
             icon={<Icon56MoneyTransferOutline />}
-            header="Здесь ничего нет"
+            title="Здесь ничего нет"
             actions={
               <Button size="l" mode="primary" stretched onClick={() => setActiveModal(null)}>
                 Понятно
