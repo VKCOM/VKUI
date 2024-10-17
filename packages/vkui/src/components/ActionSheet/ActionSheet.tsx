@@ -26,9 +26,9 @@ export interface ActionSheetProps
       SharedDropdownProps,
       'toggleRef' | 'popupOffsetDistance' | 'placement' | 'autoFocus'
     >,
-    Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus'> {
-  header?: React.ReactNode;
-  text?: React.ReactNode;
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   /**
    * Закрыть попап по клику снаружи.
    */
@@ -46,8 +46,8 @@ export interface ActionSheetProps
 export const ActionSheet = ({
   children,
   className,
-  header,
-  text,
+  title,
+  description,
   style,
   iosCloseItem,
   popupOffsetDistance,
@@ -114,14 +114,14 @@ export const ActionSheet = ({
         style={mode === 'menu' ? style : undefined}
       >
         <div className={styles.contentWrapper}>
-          {(header || text) && (
+          {(title || description) && (
             <div className={styles.header}>
-              {header && (
+              {title && (
                 <Footnote weight="2" className={styles.title}>
-                  {header}
+                  {title}
                 </Footnote>
               )}
-              {text && <Footnote className={styles.text}>{text}</Footnote>}
+              {description && <Footnote className={styles.description}>{description}</Footnote>}
             </div>
           )}
           {children}

@@ -23,8 +23,8 @@ const story: Meta<ActionSheetProps> = {
   component: ActionSheet,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
-    header: StringArg,
-    text: StringArg,
+    title: StringArg,
+    description: StringArg,
   },
 };
 
@@ -109,7 +109,7 @@ export const WithSubtitle: Story = {
 export const WithTitle: Story = {
   ...Base,
   args: {
-    header: 'Вы действительно хотите удалить это видео из Ваших видео?',
+    title: 'Вы действительно хотите удалить это видео из Ваших видео?',
     items: [{ mode: 'destructive', children: 'Удалить видео' }],
   },
 };

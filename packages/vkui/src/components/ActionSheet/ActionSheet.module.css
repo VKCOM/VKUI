@@ -41,7 +41,7 @@
   animation: animation-actionsheet-slide-down var(--vkui--animation_duration_m) var(--vkui--animation_easing_platform);
 }
 
-.title + .text {
+.title + .description {
   margin-block-start: 8px;
 }
 
@@ -79,7 +79,7 @@
   position: relative;
 }
 
-.ios .text {
+.ios .description {
   position: relative;
 }
 
