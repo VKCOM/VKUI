@@ -11,6 +11,7 @@ export interface CliOptions {
   list: boolean;
   path: string[];
   inputFile: string;
+  logFile: string;
   dryRun: boolean;
   ignoreConfig: string;
   debug: boolean;
@@ -84,6 +85,10 @@ export const runCli = async (): Promise<Cli> => {
       'file paths where codemods need to apply (space separated list), default: current directory',
     )
     .option('--input-file <file>', 'apply codemods only to file/directory listed in the file')
+    .option(
+      '--log-file <file>',
+      'log migration instructions with required manual changes to the file instead of the console',
+    )
     .option('--dry-run', 'no changes are made to files')
     .option(
       '--ignore-config <config>',
@@ -133,6 +138,10 @@ export const runCli = async (): Promise<Cli> => {
 
   if (codemods.length === 0 && !options.all) {
     codemods = await promptAvailableCodemods(availableCodemods);
+  }
+
+  if (options.all) {
+    codemods = availableCodemods;
   }
 
   return {

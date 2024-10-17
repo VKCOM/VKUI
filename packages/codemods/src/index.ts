@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import fs, { WriteStream } from 'fs';
+import { once } from 'node:events';
 import chalk from 'chalk';
 import { sync as spawnSync } from 'cross-spawn';
 import prompts from 'prompts';
@@ -12,6 +14,7 @@ interface JSCodeShiftRunnerProps {
   transformsVersion: string;
   paths: string[];
   flags: CliOptions;
+  logStream?: WriteStream;
 }
 
 interface VerifyConfigurationProps {
@@ -23,7 +26,13 @@ interface VerifyConfigurationProps {
 
 const MAX_PRINTED_PATHS = 5;
 
-function runJSCodeShift({ codemodName, transformsVersion, paths, flags }: JSCodeShiftRunnerProps) {
+function runJSCodeShift({
+  codemodName,
+  transformsVersion,
+  paths,
+  flags,
+  logStream,
+}: JSCodeShiftRunnerProps) {
   const args = ['--parser=tsx', '--extensions=tsx,ts', `--alias=${flags.alias}`];
   if (flags.dryRun) {
     args.push('--dry');
@@ -47,7 +56,7 @@ function runJSCodeShift({ codemodName, transformsVersion, paths, flags }: JSCode
       ...(flags.inputFile ? [`--stdin < ${flags.inputFile}`] : paths),
     ],
     {
-      stdio: 'inherit',
+      stdio: ['inherit', logStream ?? 'inherit', 'inherit'],
       shell: true,
     },
   );
@@ -123,10 +132,20 @@ const run = async () => {
   });
 
   logger.info("\n 🚀 Let's go!");
+
+  let logStream = undefined;
+  if (flags.logFile) {
+    logStream = fs.createWriteStream(flags.logFile, { flags: 'a' });
+    await once(logStream, 'open');
+  }
   codemods.forEach((codemodName) => {
     logger.info(`Codemod ${codemodName} in process...`);
-    runJSCodeShift({ codemodName, transformsVersion, paths, flags });
+    runJSCodeShift({ codemodName, transformsVersion, paths, flags, logStream });
   });
+
+  if (logStream) {
+    logStream.end();
+  }
 
   logger.info(
     `

@@ -35,9 +35,11 @@ Options:
   -l --list                                     list available codemods
   --all                                         apply all available codemods
   -tv --transforms-version <transformsVersion>  vkui major version transforms (available versions: "6", "7")
-  -p --path [paths...]                          file paths where codemods need to apply (space separated list), default:
-                                                current directory
+  -p --path [paths...]                          file paths where codemods need to apply (space separated list), default: current
+                                                directory
   --input-file <file>                           apply codemods only to file/directory listed in the file
+  --log-file <file>                             log migration instructions with required manual changes to the file instead of
+                                                the console
   --dry-run                                     no changes are made to files
   --ignore-config <config>                      ignore files if they match patterns sourced from a configuration file (e.g. a
                                                 .gitignore)
@@ -46,13 +48,19 @@ Options:
   -h, --help                                    display help for command
 ```
 
+### `-tv (--transforms-version)`
+
 Если приложение запустить без опции `-tv (--transforms-version)`, скрипт попытается автоматически определить версию, на которую необходимо мигрировать. Если этого сделать не удалось - нужно будет выбрать версию из предложенного списка.
+
+### `--all`
 
 При запуске приложения без аргументов будет предложено выбрать одну или несколько имеющихся миграций (их название отражает название компонента, к которому будет применено изменение). Если вам необходимо применить все имеющиеся миграции, запустите команду с опцией `--all`:
 
 ```shell
 npx @vkontakte/vkui-codemods --all
 ```
+
+### `--ignore-config <file>`
 
 Если вы хотите исключить некоторые файлы или директории из обработки, то временно создайте файл (по примеру .gitignore) с перечисленными исключениями в папке:
 
@@ -68,6 +76,12 @@ directoryToIgnore/
 
 Приведенная выше команда применит все codemods в директории `src` (находится в корне текущей директории), игонорируя файл `MyBeautifulComponentToIgnore.tsx` и директорию `directoryToIgnore`, указанные в `.codemodignore` (находится в корне текущей директории).
 
+### `--log-file <file>`
+
+Есть вероятность, что применить автоматические миграции не представляется возможным. В таком случае приложение выведет в консоль подсказку, какие изменения необходимо внести вручную. Этих изменений может быть большое количество, для удобства можно воспользоваться опцией `--log-file <file>`, тогда все инструкции будут записаны в указанный файл (если его не существует, то он будет создан автоматически).
+
+### `--input-file <file>`
+
 Если вы хотите перечислить файлы и директории, которые нужно включить в обработку, в отдельном конфигурационном файле, это можно сделать, указав опцию `--input-file <file>`:
 
 ```
@@ -75,6 +89,8 @@ directoryToIgnore/
 MyBeautifulComponent.tsx
 src/components
 ```
+
+### `--alias`
 
 > Обратите внимание, если вы используете собственный адаптер над библиотекой `VKUI` и делаете ре-экспорт существующих компонентов, то можете воспользоваться опцией `--alias` для указания правильного пути.
 
