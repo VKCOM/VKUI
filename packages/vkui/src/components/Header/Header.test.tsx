@@ -114,13 +114,13 @@ describe('Header', () => {
     render(
       <Fragment>
         <ConfigProvider platform="android">
-          <Header aside="Русский" />
+          <Header after="Русский" />
         </ConfigProvider>
         <ConfigProvider platform="ios">
-          <Header aside="English" />
+          <Header after="English" />
         </ConfigProvider>
         <ConfigProvider platform="vkcom">
-          <Header aside="Espanõl" />
+          <Header after="Espanõl" />
         </ConfigProvider>
       </Fragment>,
     );

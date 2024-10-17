@@ -9,7 +9,7 @@ const Example = () => {
         <Group>
           <Header
             mode="primary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -20,7 +20,7 @@ const Example = () => {
           </Header>
           <Header
             mode="primary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -33,7 +33,7 @@ const Example = () => {
           </Header>
           <Header
             mode="primary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -45,7 +45,7 @@ const Example = () => {
           </Header>
           <Header
             mode="primary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -63,7 +63,7 @@ const Example = () => {
         <Group>
           <Header
             mode="secondary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -74,7 +74,7 @@ const Example = () => {
           </Header>
           <Header
             mode="secondary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -86,7 +86,7 @@ const Example = () => {
           </Header>
           <Header
             mode="secondary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -135,7 +135,7 @@ const Example = () => {
                 3
               </Counter>
             }
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -159,7 +159,7 @@ const Example = () => {
                 3
               </Counter>
             }
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
