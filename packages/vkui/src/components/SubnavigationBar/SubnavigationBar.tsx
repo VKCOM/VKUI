@@ -15,7 +15,7 @@ export interface SubnavigationBarProps
       HorizontalScrollProps,
       'showArrows' | 'getScrollToLeft' | 'getScrollToRight' | 'scrollAnimationDuration'
     > {
-  mode?: 'fixed' | 'overflow';
+  fixed?: boolean;
 }
 
 const defaultScrollToLeft: ScrollPositionHandler = (x) => x - 240;
@@ -26,7 +26,7 @@ const defaultScrollToRight: ScrollPositionHandler = (x) => x + 240;
  * @see https://vkcom.github.io/VKUI/#/SubnavigationBar
  */
 export const SubnavigationBar = ({
-  mode = 'overflow',
+  fixed = false,
   children,
   showArrows = true,
   getScrollToLeft = defaultScrollToLeft,
@@ -37,7 +37,7 @@ export const SubnavigationBar = ({
   let ScrollWrapper: React.ElementType;
   let scrollWrapperProps = {};
 
-  if (mode === 'fixed') {
+  if (fixed) {
     ScrollWrapper = 'div';
   } else {
     ScrollWrapper = HorizontalScroll;
@@ -50,7 +50,7 @@ export const SubnavigationBar = ({
   }
 
   return (
-    <RootComponent baseClassName={mode === 'fixed' && styles.modeFixed} {...restProps}>
+    <RootComponent baseClassName={fixed && styles.modeFixed} {...restProps}>
       <ScrollWrapper className={styles.in} {...scrollWrapperProps}>
         <ul className={styles.scrollIn}>
           {React.Children.map(children, (child, idx) =>

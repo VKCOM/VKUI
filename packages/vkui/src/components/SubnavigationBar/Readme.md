@@ -190,7 +190,7 @@ const SubnavigationBarExample = () => {
             </Group>
 
             <Group>
-              <SubnavigationBar mode="fixed">
+              <SubnavigationBar fixed>
                 <SubnavigationButton
                   before={<Icon24ScanViewfinderOutline />}
                   size="l"
