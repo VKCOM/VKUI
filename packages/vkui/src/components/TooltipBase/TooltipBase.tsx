@@ -22,7 +22,7 @@ const stylesAppearance = {
 };
 
 export interface TooltipBaseProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children' | 'title'> {
   /**
    * Стиль отображения подсказки
    */
@@ -30,11 +30,11 @@ export interface TooltipBaseProps
   /**
    * Текст тултипа.
    */
-  text?: React.ReactNode;
+  description?: React.ReactNode;
   /**
    * Заголовок тултипа.
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /**
    * Для показа указателя, требуется передать хотя бы `coords` и `placement`.
    */
@@ -83,8 +83,8 @@ export const TooltipBase = ({
   appearance = 'accent',
   arrowProps,
   ArrowIcon = DefaultIcon,
-  text,
-  header,
+  description,
+  title,
   maxWidth = TOOLTIP_MAX_WIDTH,
   closeIconLabel = 'Закрыть',
   onCloseIconClick,
@@ -110,8 +110,8 @@ export const TooltipBase = ({
       )}
       <div className={styles.content} style={maxWidth !== null ? { maxWidth } : undefined}>
         <div>
-          {hasReactNode(header) && <Subhead weight="2">{header}</Subhead>}
-          {hasReactNode(text) && <Subhead>{text}</Subhead>}
+          {hasReactNode(title) && <Subhead weight="2">{title}</Subhead>}
+          {hasReactNode(description) && <Subhead>{description}</Subhead>}
         </div>
         {typeof onCloseIconClick === 'function' && (
           <Tappable
