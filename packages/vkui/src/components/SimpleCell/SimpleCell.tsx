@@ -68,7 +68,7 @@ export interface SimpleCellOwnProps extends HasComponent {
    * - `auto` - добавляет шеврон справа только для платформы `ios`;
    * - `always` - всегда показывает шеврон.
    */
-  expandable?: 'auto' | 'always';
+  chevron?: 'auto' | 'always';
   /**
    * Размер chevron
    */
@@ -93,7 +93,7 @@ export const SimpleCell = ({
   indicator,
   children,
   after,
-  expandable,
+  chevron,
   multiline,
   subhead,
   subtitle,
@@ -104,7 +104,7 @@ export const SimpleCell = ({
 }: SimpleCellProps): React.ReactNode => {
   const platform = usePlatform();
 
-  const hasChevron = expandable === 'always' || (expandable === 'auto' && platform === 'ios');
+  const hasChevron = chevron === 'always' || (chevron === 'auto' && platform === 'ios');
 
   const hasAfter = hasReactNode(after) || hasChevron;
   const { sizeY = 'none' } = useAdaptivity();

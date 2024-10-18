@@ -112,7 +112,7 @@ function MiniInfoCellExample() {
                 mode="add"
                 onClick={() => console.log('Указать место учёбы')}
                 textWrap="short"
-                expandable
+                chevron
               >
                 Укажите место учёбы
               </MiniInfoCell>
@@ -121,7 +121,7 @@ function MiniInfoCellExample() {
                 before={<Icon20Info />}
                 mode="more"
                 onClick={handleExtendedInfoClick}
-                expandable
+                chevron
               >
                 Подробная информация
               </MiniInfoCell>

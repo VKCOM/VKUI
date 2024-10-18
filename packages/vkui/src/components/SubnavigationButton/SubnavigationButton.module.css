@@ -79,7 +79,7 @@
   margin-inline-start: 8px;
 }
 
-.expandableIcon {
+.chevronIcon {
   margin-inline-start: 8px;
   margin-block-start: 1px; /* Смещает иконку относительно текста */
   color: var(--vkui--color_icon_secondary);
@@ -92,7 +92,7 @@
 
 .after:last-child,
 .label:last-child,
-.expandableIcon {
+.chevronIcon {
   padding-inline-end: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
 }
 
@@ -113,7 +113,7 @@
  * appearance
  */
 
-.appearanceNeutral .expandableIcon,
+.appearanceNeutral .chevronIcon,
 .appearanceNeutral .before {
   color: var(--vkui--color_icon_primary);
 }
@@ -136,7 +136,7 @@
 }
 
 .selected.appearanceAccent:not(.modeTertiary) .before,
-.selected.appearanceAccent:not(.modeTertiary) .expandableIcon {
+.selected.appearanceAccent:not(.modeTertiary) .chevronIcon {
   color: var(--vkui--color_icon_contrast_themed);
 }
 

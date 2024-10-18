@@ -28,7 +28,7 @@ describe('SimpleCell', () => {
   it('check chevron showed', () => {
     const { container } = render(
       <ConfigProvider platform={Platform.IOS}>
-        <SimpleCell expandable="auto">Язык</SimpleCell>
+        <SimpleCell chevron="auto">Язык</SimpleCell>
       </ConfigProvider>,
     );
     expect(container.getElementsByClassName(styles.chevronIcon)[0]).toBeInTheDocument();
