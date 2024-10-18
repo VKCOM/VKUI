@@ -1,0 +1,140 @@
+.host {
+  --vkui_internal_ModalPage--animation-duration: 0.3s;
+  --vkui_internal_ModalPage--transform-default: none;
+
+  inline-size: 100%;
+  outline: none;
+
+  /* Для ограничения высоты `.container`. */
+  display: flex;
+}
+
+.container {
+  position: relative;
+  inline-size: 100%;
+
+  /* Для срабатывания `height: 100%` у `.children`. */
+  display: flex;
+  flex-direction: column;
+  transform: var(--vkui_internal_ModalPage--transform-default);
+}
+
+.children {
+  border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+  background-color: var(--vkui--color_background_modal);
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+
+  /*
+   * Удерживает высоту в пределах 100% родителя при переполнении контента.
+   *
+   * - см. `ModalPageHeader`
+   * - см. `ModalPageContent`
+   * - см. `ModalPageFooter`
+   */
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+}
+
+/* Mobile */
+@media (--viewWidth-smallTabletMinus) {
+  .host {
+    position: absolute;
+    inset-inline: 0;
+    inset-block: auto var(--vkui_internal--safe_area_inset_bottom);
+    margin-inline: auto;
+    margin-block-start: var(--vkui_internal--safe_area_inset_top);
+    block-size: auto;
+    max-inline-size: var(--vkui--size_popup_small--regular);
+    max-block-size: calc(100% - var(--vkui_internal--safe_area_inset_top));
+  }
+
+  .hostStateEnter {
+    animation: modal-page-animation-slide-up var(--vkui_internal_ModalPage--animation-duration)
+      var(--vkui--animation_easing_platform) 0.1s backwards;
+  }
+
+  .hostStateExit {
+    animation: modal-page-animation-slide-down var(--vkui_internal_ModalPage--animation-duration)
+      var(--vkui--animation_easing_platform) forwards;
+  }
+
+  .container::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset-block-start: 100%;
+    inset-inline-start: 0;
+    margin-block-start: -1px; /* убирает зазор под `.children`  */
+    inline-size: 100%;
+    block-size: 50%;
+    background-color: var(--vkui--color_background_modal);
+    pointer-events: none;
+    touch-action: none;
+  }
+
+  .Modal__CloseButton {
+    display: none;
+  }
+}
+
+/* Desktop */
+@media (--viewWidth-smallTabletPlus) {
+  .host {
+    position: relative;
+    max-block-size: calc(100% - 64px);
+  }
+
+  .hostStateEnter {
+    animation: modal-page-animation-fade-in 0.2s ease-in 0.1s backwards;
+  }
+
+  .hostStateExit {
+    animation: modal-page-animation-fade-out 0.1s ease-out forwards;
+  }
+
+  .container {
+    box-shadow: var(--vkui--elevation3);
+  }
+
+  .children {
+    border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
+    border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
+  }
+
+  .hostMaxWidthS {
+    max-inline-size: var(--vkui--size_popup_small--regular);
+  }
+
+  .hostMaxWidthM {
+    max-inline-size: var(--vkui--size_popup_medium--regular);
+  }
+
+  .hostMaxWidthL {
+    max-inline-size: var(--vkui--size_popup_large--regular);
+  }
+}
+
+@keyframes modal-page-animation-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes modal-page-animation-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes modal-page-animation-slide-up {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+@keyframes modal-page-animation-slide-down {
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+}
