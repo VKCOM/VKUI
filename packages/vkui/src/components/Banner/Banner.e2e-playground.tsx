@@ -11,7 +11,7 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          asideMode: [undefined, 'dismiss', 'expand'],
+          after: [undefined, 'dismiss', 'expand'],
           size: ['s', 'm'],
           actions: [undefined],
         },
@@ -33,7 +33,7 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
           subtitle: ['Разблокировано 9 из 36'],
           background: [<div key="img-bg" style={{ backgroundColor: '#222222' }} />],
           before: [undefined],
-          asideMode: [undefined],
+          after: [undefined],
           actions: [
             <Button key="btn" appearance="overlay">
               Подробнее
@@ -42,14 +42,14 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           mode: ['image'],
-          asideMode: ['dismiss', 'expand'],
+          after: ['dismiss', 'expand'],
           imageTheme: ['light'],
           title: ['Мои достижения'],
           subtitle: ['Разблокировано 9 из 36'],
         },
         {
           mode: ['image'],
-          asideMode: ['dismiss', 'expand'],
+          after: ['dismiss', 'expand'],
           imageTheme: ['dark'],
           title: ['Мои достижения'],
           subtitle: ['Разблокировано 9 из 36'],
@@ -69,7 +69,7 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
             before={<Image size={96} src="" />}
             title="Баста в Ледовом"
             subtitle="Большой концерт"
-            asideMode="dismiss"
+            after="dismiss"
             actions={<Button>Подробнее</Button>}
             {...props}
           />

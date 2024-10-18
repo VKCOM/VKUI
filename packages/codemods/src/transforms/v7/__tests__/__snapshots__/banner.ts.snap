@@ -12,14 +12,14 @@ const App = () => {
         title="Сегодня день рождения Михаила Лихачёва"
         subtitle="Подарите подарок"
         extraSubtitle="Дополнительный текст"
-        asideMode="dismiss"
+        after="dismiss"
       />
       <Banner
         before={<Avatar size={48} src={'user_lihachyov'} />}
         title="Сегодня день рождения Михаила Лихачёва"
         subtitle={"Подарите подарок"}
         extraSubtitle={"Дополнительный текст"}
-        asideMode="dismiss"
+        after="dismiss"
       />
     </React.Fragment>)
   );

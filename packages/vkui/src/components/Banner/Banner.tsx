@@ -26,9 +26,14 @@ export interface BannerProps extends Omit<HTMLAttributesWithRootRef<HTMLDivEleme
    * - `dismiss` – отображается иконка крестика, при клике на неё сработает свойство `onDismiss`.
    * - `expand` – отображается иконка шеврона, которая подразумевает, что при клике на баннер можно куда-то перейти.
    */
-  asideMode?: 'dismiss' | 'expand';
+  after?: 'dismiss' | 'expand' | React.ReactNode;
   /**
-   * Срабатывает при клике на иконку крестика при `asideMode="dismiss"`.
+   * Включает режим отображения кликабельного баннера.
+   * По умолчанию `true`, если в `after` передано значение `'expand'`
+   */
+  tappable?: boolean;
+  /**
+   * Срабатывает при клике на иконку крестика при `after="dismiss"`.
    */
   onDismiss?: React.MouseEventHandler<HTMLButtonElement>;
   /**
@@ -89,7 +94,8 @@ export const Banner = ({
   imageTheme = 'dark',
   size = 's',
   before,
-  asideMode,
+  after: afterProp,
+  tappable = afterProp === 'expand',
   title,
   subtitle,
   extraSubtitle,
@@ -140,6 +146,27 @@ export const Banner = ({
     </>
   );
 
+  const afterMap: Record<string, React.ReactNode> = {
+    expand: <Icon24Chevron className={styles.expand} />,
+    dismiss: (
+      <IconButton
+        label={dismissLabel}
+        className={styles.dismiss}
+        onClick={onDismiss}
+        hoverMode="opacity"
+        hasActive={false}
+      >
+        {platform === 'ios' ? <IconDismissIOS /> : <Icon24Cancel />}
+      </IconButton>
+    ),
+  };
+
+  const after = afterProp && (
+    <div className={styles.after}>
+      {typeof afterProp === 'string' ? afterMap[afterProp] : afterProp}
+    </div>
+  );
+
   return (
     <RootComponent
       Component="section"
@@ -152,35 +179,19 @@ export const Banner = ({
         mode === 'image' && imageTheme === 'dark' && styles.inverted,
       )}
     >
-      {asideMode === 'expand' ? (
+      {tappable ? (
         <Tappable
           className={styles.in}
           activeMode={platform === 'ios' ? 'opacity' : 'background'}
           onClick={noop}
         >
           {content}
-
-          <div className={styles.aside}>
-            <Icon24Chevron className={styles.expand} />
-          </div>
+          {after}
         </Tappable>
       ) : (
         <div className={styles.in}>
           {content}
-
-          {asideMode === 'dismiss' && (
-            <div className={styles.aside}>
-              <IconButton
-                label={dismissLabel}
-                className={styles.dismiss}
-                onClick={onDismiss}
-                hoverMode="opacity"
-                hasActive={false}
-              >
-                {platform === 'ios' ? <IconDismissIOS /> : <Icon24Cancel />}
-              </IconButton>
-            </div>
-          )}
+          {after}
         </div>
       )}
     </RootComponent>
