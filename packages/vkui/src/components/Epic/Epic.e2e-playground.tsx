@@ -24,10 +24,10 @@ import { Epic } from './Epic';
 const EpicTabbar = () => {
   return (
     <Tabbar style={{ position: 'relative' }}>
-      <TabbarItem onClick={noop} selected={true} data-story="feed" text="Новости">
+      <TabbarItem onClick={noop} selected={true} data-story="feed" label="Новости">
         <Icon28NewsfeedOutline />
       </TabbarItem>
-      <TabbarItem onClick={noop} selected={false} data-story="services" text="Сервисы">
+      <TabbarItem onClick={noop} selected={false} data-story="services" label="Сервисы">
         <Icon28ServicesOutline />
       </TabbarItem>
       <TabbarItem
@@ -39,11 +39,11 @@ const EpicTabbar = () => {
             12
           </Counter>
         }
-        text="Сообщения"
+        label="Сообщения"
       >
         <Icon28MessageOutline />
       </TabbarItem>
-      <TabbarItem onClick={noop} selected={false} data-story="clips" text="Клипы">
+      <TabbarItem onClick={noop} selected={false} data-story="clips" label="Клипы">
         <Icon28ClipOutline />
       </TabbarItem>
       <TabbarItem
@@ -51,7 +51,7 @@ const EpicTabbar = () => {
         selected={false}
         data-story="profile"
         indicator={<Badge mode="prominent">Есть обновления</Badge>}
-        text="Профиль"
+        label="Профиль"
       >
         <Icon28UserCircleOutline />
       </TabbarItem>
