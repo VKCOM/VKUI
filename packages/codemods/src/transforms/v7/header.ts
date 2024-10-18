@@ -1,6 +1,6 @@
 import { API, FileInfo } from 'jscodeshift';
 import { remapSizePropValue } from './common/remapSizePropValue';
-import { getImportInfo } from '../../codemod-helpers';
+import { getImportInfo, renameProp } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
@@ -24,6 +24,8 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       regular: 'm',
     },
   });
+
+  renameProp(j, source, localName, { aside: 'after' });
 
   return source.toSource();
 }
