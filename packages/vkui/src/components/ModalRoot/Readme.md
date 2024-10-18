@@ -141,7 +141,7 @@ const App = () => {
       <Gradient mode="tint">
         <Placeholder
           icon={<Avatar size={96} src={randomUser.photo_100} />}
-          header={randomUser.first_name + ' ' + randomUser.last_name}
+          title={randomUser.first_name + ' ' + randomUser.last_name}
         ></Placeholder>
       </Gradient>
       <Group

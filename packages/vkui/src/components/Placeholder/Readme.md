@@ -19,7 +19,7 @@ const onNavClick = (e) => {
     <Group>
       <Placeholder
         icon={<Icon56UsersOutline />}
-        header="Уведомления от сообществ"
+        title="Уведомления от сообществ"
         action={<Button size="m">Подключить сообщества</Button>}
       >
         Подключите сообщества, от которых Вы хотите получать уведомления
@@ -44,7 +44,7 @@ const onNavClick = (e) => {
       <Placeholder>Доступ запрещён</Placeholder>
       <Separator />
       <Placeholder
-        header="Находите друзей"
+        title="Находите друзей"
         action={
           <ButtonGroup mode="vertical" align="center">
             <Button size="m">Найти друзей</Button>
@@ -93,8 +93,10 @@ const onNavClick = (e) => {
   <Placeholder.Icon>
     <Icon56UserAddOutline />
   </Placeholder.Icon>
-  <Placeholder.Header>Find friends</Placeholder.Header>
-  <Placeholder.Text>The people you add as your friends will be displayed here</Placeholder.Text>
+  <Placeholder.Title>Find friends</Placeholder.Title>
+  <Placeholder.Description>
+    The people you add as your friends will be displayed here
+  </Placeholder.Description>
   <Placeholder.Actions>
     <ButtonGroup mode="vertical" align="center">
       <Button size="m">Button</Button>

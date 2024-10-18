@@ -24,15 +24,15 @@
   color: var(--vkui--color_icon_secondary);
 }
 
-.header {
+.title {
   color: var(--vkui--color_text_primary);
 }
 
-.text {
+.description {
   color: var(--vkui--color_text_secondary);
 }
 
-.header + .text {
+.title + .description {
   margin-block-start: 8px;
 }
 

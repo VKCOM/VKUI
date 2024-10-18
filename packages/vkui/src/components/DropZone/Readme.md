@@ -4,10 +4,10 @@ const Item = ({ active }) => (
     <Placeholder.Icon>
       <Icon56CameraOutline fill={active ? 'var(--vkui--color_icon_accent)' : undefined} />
     </Placeholder.Icon>
-    <Placeholder.Header>Быстрая отправка</Placeholder.Header>
-    <Placeholder.Text>
+    <Placeholder.Title>Быстрая отправка</Placeholder.Title>
+    <Placeholder.Description>
       Перенесите файл сюда для быстрой отправки. В таком случае изображения будут сжаты.
-    </Placeholder.Text>
+    </Placeholder.Description>
   </Placeholder.Container>
 );
 
@@ -40,10 +40,10 @@ const Item = ({ active }) => (
     <Placeholder.Icon>
       <Icon56CameraOutline fill={active ? 'var(--vkui--color_icon_accent)' : undefined} />
     </Placeholder.Icon>
-    <Placeholder.Header>Быстрая отправка</Placeholder.Header>
-    <Placeholder.Text>
+    <Placeholder.Title>Быстрая отправка</Placeholder.Title>
+    <Placeholder.Description>
       Перенесите файл сюда для быстрой отправки. В таком случае изображения будут сжаты.
-    </Placeholder.Text>
+    </Placeholder.Description>
   </Placeholder.Container>
 );
 

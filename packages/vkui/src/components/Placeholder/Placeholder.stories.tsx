@@ -16,7 +16,7 @@ type Story = StoryObj<PlaceholderProps>;
 export const Playground: Story = {
   args: {
     children: 'Подключите сообщества, от которых Вы хотите получать уведомления',
-    header: 'Уведомления от сообществ',
+    title: 'Уведомления от сообществ',
     icon: <Icon56UsersOutline />,
   },
 };
