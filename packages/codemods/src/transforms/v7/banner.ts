@@ -10,13 +10,16 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   const source = j(file.source);
   const { localName } = getImportInfo(j, file, 'Banner', alias);
 
-  if (localName) {
-    renameProp(j, source, localName, {
-      subheader: 'subtitle',
-      text: 'extraSubtitle',
-      header: 'title',
-    });
+  if (!localName) {
+    return source.toSource();
   }
+
+  renameProp(j, source, localName, {
+    subheader: 'subtitle',
+    text: 'extraSubtitle',
+    header: 'title',
+    asideMode: 'after',
+  });
 
   return source.toSource();
 }

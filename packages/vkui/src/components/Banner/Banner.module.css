@@ -1,6 +1,8 @@
 .host {
   isolation: isolate;
   color: var(--vkui--color_text_primary);
+
+  --vkui_internal--banner-padding: 12px;
 }
 
 .in {
@@ -8,7 +10,7 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
-  padding: 12px;
+  padding: var(--vkui_internal--banner-padding);
   background-color: var(--vkui--color_background_secondary);
   border-radius: var(--vkui--size_border_radius--regular);
   overflow: hidden;
@@ -65,7 +67,7 @@
 }
 /* stylelint-enable selector-max-universal */
 
-.aside {
+.after {
   display: flex;
   flex-flow: row nowrap;
   align-content: center;
@@ -76,9 +78,9 @@
 }
 
 .dismiss {
-  position: absolute;
-  inset-block-start: 2px;
-  inset-inline-end: 2px;
+  margin-block-start: calc(-1 * (var(--vkui_internal--banner-padding) - 2px));
+  margin-inline-end: calc(-1 * (var(--vkui_internal--banner-padding) - 2px));
+  align-self: flex-start;
   display: flex;
   flex-flow: row nowrap;
   align-content: center;
@@ -118,8 +120,8 @@
 /**
  * Size "m"
  */
-.sizeM .in {
-  padding: 16px;
+.sizeM {
+  --vkui_internal--banner-padding: 16px;
 }
 
 .sizeM .subtitle:not(:first-child),

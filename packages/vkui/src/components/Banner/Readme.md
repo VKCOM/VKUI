@@ -17,7 +17,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
           }
           title="Баста в Ледовом"
           subtitle="Большой концерт"
-          asideMode="dismiss"
+          after="dismiss"
           onDismiss={noop}
           actions={<Button>Подробнее</Button>}
         />
@@ -46,7 +46,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
           }
           title="Подписка за рубль!"
           subtitle="Предложение действует только до конца февраля"
-          asideMode="dismiss"
+          after="dismiss"
           onDismiss={noop}
           actions={
             <ButtonGroup mode="vertical" gap="m">
@@ -62,7 +62,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
           before={<Avatar size={48} src={getAvatarUrl('user_lihachyov')} />}
           title="Сегодня день рождения Михаила Лихачёва"
           subtitle="Подарите подарок"
-          asideMode="dismiss"
+          after="dismiss"
           onDismiss={noop}
           actions={<Button mode="primary">Подарить</Button>}
         />
@@ -108,7 +108,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         <Banner
           title="Больше интересных подкастов в каталоге"
           subtitle="Найдите интересующие именно Вас подкасты!"
-          asideMode="expand"
+          after="expand"
           onClick={() => console.log('[Podcast banner] onClick')}
         />
       </Div>
@@ -147,7 +147,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
               <br />в Ваше сообщество
             </span>
           }
-          asideMode="dismiss"
+          after="dismiss"
           onDismiss={noop}
           actions={
             <Button mode="primary" size="m">
@@ -182,7 +182,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
               }}
             />
           }
-          asideMode="dismiss"
+          after="dismiss"
           onDismiss={noop}
           actions={
             <Button appearance="overlay" size="m">
@@ -216,7 +216,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
               }}
             />
           }
-          asideMode="dismiss"
+          after="dismiss"
           onDismiss={noop}
           actions={
             <Button appearance="overlay" size="m">
