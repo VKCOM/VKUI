@@ -10,7 +10,7 @@ describe('SubnavigationBar', () => {
     const falseCondition = false;
     const trueCondition = true;
     render(
-      <SubnavigationBar mode="fixed">
+      <SubnavigationBar fixed>
         <SubnavigationButton>Сканировать</SubnavigationButton>
         {null}
         {trueCondition && <SubnavigationButton>Добавить</SubnavigationButton>}
