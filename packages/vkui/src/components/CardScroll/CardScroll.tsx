@@ -20,7 +20,10 @@ export interface CardScrollProps extends HTMLAttributesWithRootRef<HTMLDivElemen
    */
   size?: 's' | 'm' | 'l' | false;
   showArrows?: HorizontalScrollProps['showArrows'];
-  noSpaces?: boolean;
+  /**
+   * Добавляет отступы по краям слева и справа
+   */
+  padding?: boolean;
 }
 
 /**
@@ -30,7 +33,7 @@ export const CardScroll = ({
   children,
   size = 's',
   showArrows = true,
-  noSpaces = false,
+  padding = false,
   Component = 'ul',
   ...restProps
 }: CardScrollProps): React.ReactNode => {
@@ -99,7 +102,7 @@ export const CardScroll = ({
         styles.host,
         'vkuiInternalCardScroll',
         size !== false && stylesSize[size],
-        !noSpaces && styles.withSpaces,
+        padding && styles.withPaddings,
       )}
     >
       <HorizontalScroll
