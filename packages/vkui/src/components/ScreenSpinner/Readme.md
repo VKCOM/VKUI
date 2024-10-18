@@ -7,7 +7,7 @@
 
 Чтобы уведомить о выполнении асинхронного процесса пользователей скринридеров, проставьте на [`SplitLayout`](#/SplitLayout), в котором выполняется процесс, метки [`aria-busy`](https://doka.guide/a11y/aria-busy/) и [`aria-live`](https://doka.guide/a11y/aria-live/).
 
-Чтобы заменить текст, который прочитает скринридер, передайте его в `children`. Он будет скрыт визуально, но останется доступным для ассистивных технологий. Если вы используете свойство `caption`, то передавать `children` не нужно, будет зачитан текст, переданный в `caption`.
+Чтобы заменить текст, который прочитает скринридер, передайте его в `children`. Он будет скрыт визуально, но останется доступным для ассистивных технологий. Если вы используете свойство `label`, то передавать `children` не нужно, будет зачитан текст, переданный в `label`.
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const [popout, setPopout] = useState(null);
@@ -20,7 +20,7 @@ const setLoadingScreenSpinner = () => {
 };
 
 const setDoneScreenSpinner = () => {
-  setPopout(<ScreenSpinner state="done" caption="Вы подписались на сообщество" />);
+  setPopout(<ScreenSpinner state="done" label="Вы подписались на сообщество" />);
   setTimeout(clearPopout, 3000);
 };
 
@@ -29,7 +29,7 @@ const setErrorScreenSpinner = () => {
 
   setTimeout(() => {
     setPopout(
-      <ScreenSpinner state="error" caption="Очень большая ошибка">
+      <ScreenSpinner state="error" label="Очень большая ошибка">
         Произошла ошибка
       </ScreenSpinner>,
     );
@@ -45,7 +45,7 @@ const setCancelableScreenSpinner = () => {
 const setScreenSpinnerWithCustomIcon = () => {
   setPopout(<ScreenSpinner state="custom" customIcon={<Icon56KeyOutline />} />);
 
-  setTimeout(clearPopout, 20000);
+  setTimeout(clearPopout, 2000);
 };
 
 <SplitLayout popout={popout} aria-live="polite" aria-busy={!!popout}>
