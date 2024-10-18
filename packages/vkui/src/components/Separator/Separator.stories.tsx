@@ -25,7 +25,7 @@ export const Playground: Story = {
     (Component, props) => (
       <div
         style={
-          props.args.direction === 'block'
+          props.args.direction === 'vertical'
             ? { display: 'flex', alignItems: 'center', height: 50 }
             : undefined
         }
@@ -54,7 +54,7 @@ export const DefaultDirectionExample: Story = {
 export const BlockDirectionExample: Story = {
   ...Playground,
   args: {
-    direction: 'block',
+    direction: 'vertical',
     size: '2xl',
   },
   decorators: [
