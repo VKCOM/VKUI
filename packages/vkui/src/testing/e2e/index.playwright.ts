@@ -61,10 +61,12 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
       );
       expectCallCount += 1;
     };
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(result);
   },
 
   componentPlaygroundProps: async ({ platform, colorSchemeType, adaptivityProviderProps }, use) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use({
       platform,
       colorScheme: colorSchemeType,
