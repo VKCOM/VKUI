@@ -20,7 +20,7 @@ export const Playground: Story = {
     </Tooltip>
   ),
   args: {
-    text: 'Привет',
+    description: 'Привет',
   },
 };
 
@@ -31,7 +31,7 @@ export const InteractiveTooltipWithCloseAction: Story = {
     </Tooltip>
   ),
   args: {
-    text: 'Привет',
+    description: 'Привет',
     enableInteractive: true,
     closable: true,
   },

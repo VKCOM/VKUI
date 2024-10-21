@@ -7,7 +7,7 @@ const AvatarWrapper = (props) => {
   const user = getRandomUser();
 
   return (
-    <Tooltip text={`${user.first_name} ${user.last_name}`}>
+    <Tooltip description={`${user.first_name} ${user.last_name}`}>
       <div
         style={{
           cursor: 'pointer',
