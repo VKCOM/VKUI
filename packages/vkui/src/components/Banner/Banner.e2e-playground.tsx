@@ -11,7 +11,7 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          after: [undefined, 'dismiss', 'expand'],
+          after: [undefined, 'dismiss', 'chevron'],
           size: ['s', 'm'],
           actions: [undefined],
         },
@@ -42,14 +42,14 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           mode: ['image'],
-          after: ['dismiss', 'expand'],
+          after: ['dismiss', 'chevron'],
           imageTheme: ['light'],
           title: ['Мои достижения'],
           subtitle: ['Разблокировано 9 из 36'],
         },
         {
           mode: ['image'],
-          after: ['dismiss', 'expand'],
+          after: ['dismiss', 'chevron'],
           imageTheme: ['dark'],
           title: ['Мои достижения'],
           subtitle: ['Разблокировано 9 из 36'],

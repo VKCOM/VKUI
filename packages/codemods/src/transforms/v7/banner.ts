@@ -47,7 +47,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       }
       report(
         api,
-        `Manual changes required for ${localName}'s "asideMode" prop. Need to change "expand" value to "chevron"`,
+        `Manual changes required for ${localName}'s "after" (previously "asideMode") prop. Need to change "expand" value to "chevron"`,
       );
     });
 

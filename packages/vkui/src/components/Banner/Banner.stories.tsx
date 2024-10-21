@@ -36,7 +36,7 @@ const story: Meta<BannerProps> = {
       sizeIconsCount: 10,
       additionalPresets: {
         dismiss: 'dismiss',
-        expand: 'expand',
+        chevron: 'chevron',
       },
     }),
     actions: createFieldWithPresets({
