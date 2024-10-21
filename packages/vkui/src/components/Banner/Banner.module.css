@@ -107,7 +107,7 @@
 }
 
 .inverted .dismiss,
-.inverted .expand,
+.inverted .chevron,
 .inverted {
   color: var(--vkui--color_text_contrast);
 }

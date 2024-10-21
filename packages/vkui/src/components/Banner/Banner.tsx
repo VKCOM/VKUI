@@ -24,14 +24,14 @@ export interface BannerProps extends Omit<HTMLAttributesWithRootRef<HTMLDivEleme
    * Тип действия в правой части баннера.
    *
    * - `dismiss` – отображается иконка крестика, при клике на неё сработает свойство `onDismiss`.
-   * - `expand` – отображается иконка шеврона, которая подразумевает, что при клике на баннер можно куда-то перейти.
+   * - `chevron` – отображается иконка шеврона, которая подразумевает, что при клике на баннер можно куда-то перейти.
    */
-  after?: 'dismiss' | 'expand' | React.ReactNode;
+  after?: 'dismiss' | 'chevron' | React.ReactNode;
   /**
    * Включает режим отображения кликабельного баннера.
    * По умолчанию `true`, если в `after` передано значение `'expand'`
    */
-  tappable?: boolean;
+  clickable?: boolean;
   /**
    * Срабатывает при клике на иконку крестика при `after="dismiss"`.
    */
@@ -95,7 +95,7 @@ export const Banner = ({
   size = 's',
   before,
   after: afterProp,
-  tappable = afterProp === 'expand',
+  clickable = afterProp === 'chevron',
   title,
   subtitle,
   extraSubtitle,
@@ -147,7 +147,7 @@ export const Banner = ({
   );
 
   const afterMap: Record<string, React.ReactNode> = {
-    expand: <Icon24Chevron className={styles.expand} />,
+    chevron: <Icon24Chevron className={styles.chevron} />,
     dismiss: (
       <IconButton
         label={dismissLabel}
@@ -179,7 +179,7 @@ export const Banner = ({
         mode === 'image' && imageTheme === 'dark' && styles.inverted,
       )}
     >
-      {tappable ? (
+      {clickable ? (
         <Tappable
           className={styles.in}
           activeMode={platform === 'ios' ? 'opacity' : 'background'}
