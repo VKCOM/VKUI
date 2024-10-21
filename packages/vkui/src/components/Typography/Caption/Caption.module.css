@@ -1,15 +1,15 @@
-.Caption--caps {
+.caps {
   text-transform: uppercase;
 }
 
-.Caption--level-1 {
+.level1 {
   font-size: var(--vkui--font_caption1--font_size--regular);
   line-height: var(--vkui--font_caption1--line_height--regular);
   font-weight: var(--vkui--font_caption1--font_weight--regular);
   font-family: var(--vkui--font_caption1--font_family--regular);
 }
 
-.Caption--sizeY-compact.Caption--level-1 {
+.sizeYCompact.level1 {
   font-size: var(
     --vkui--font_caption1--font_size--compact,
     var(--vkui--font_caption1--font_size--regular)
@@ -29,7 +29,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Caption--sizeY-none.Caption--level-1 {
+  .sizeYNone.level1 {
     font-size: var(
       --vkui--font_caption1--font_size--compact,
       var(--vkui--font_caption1--font_size--regular)
@@ -49,14 +49,14 @@
   }
 }
 
-.Caption--level-1.Caption--caps {
+.level1.caps {
   font-size: var(--vkui--font_caption1_caps--font_size--regular);
   line-height: var(--vkui--font_caption1_caps--line_height--regular);
   font-weight: var(--vkui--font_caption1_caps--font_weight--regular);
   font-family: var(--vkui--font_caption1_caps--font_family--regular);
 }
 
-.Caption--sizeY-compact.Caption--level-1.Caption--caps {
+.sizeYCompact.level1.caps {
   font-size: var(
     --vkui--font_caption1_caps--font_size--compact,
     var(--vkui--font_caption1_caps--font_size--regular)
@@ -76,7 +76,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Caption--sizeY-none.Caption--level-1.Caption--caps {
+  .sizeYNone.level1.caps {
     font-size: var(
       --vkui--font_caption1_caps--font_size--compact,
       var(--vkui--font_caption1_caps--font_size--regular)
@@ -96,14 +96,14 @@
   }
 }
 
-.Caption--level-2 {
+.level2 {
   font-size: var(--vkui--font_caption2--font_size--regular);
   line-height: var(--vkui--font_caption2--line_height--regular);
   font-weight: var(--vkui--font_caption2--font_weight--regular);
   font-family: var(--vkui--font_caption2--font_family--regular);
 }
 
-.Caption--sizeY-compact.Caption--level-2 {
+.sizeYCompact.level2 {
   font-size: var(
     --vkui--font_caption2--font_size--compact,
     var(--vkui--font_caption2--font_size--regular)
@@ -123,7 +123,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Caption--sizeY-none.Caption--level-2 {
+  .sizeYNone.level2 {
     font-size: var(
       --vkui--font_caption2--font_size--compact,
       var(--vkui--font_caption2--font_size--regular)
@@ -143,14 +143,14 @@
   }
 }
 
-.Caption--level-2.Caption--caps {
+.level2.caps {
   font-size: var(--vkui--font_caption2_caps--font_size--regular);
   line-height: var(--vkui--font_caption2_caps--line_height--regular);
   font-weight: var(--vkui--font_caption2_caps--font_weight--regular);
   font-family: var(--vkui--font_caption2_caps--font_family--regular);
 }
 
-.Caption--sizeY-compact.Caption--level-2.Caption--caps {
+.sizeYCompact.level2.caps {
   font-size: var(
     --vkui--font_caption2_caps--font_size--compact,
     var(--vkui--font_caption2_caps--font_size--regular)
@@ -170,7 +170,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Caption--sizeY-none.Caption--level-2.Caption--caps {
+  .sizeYNone.level2.caps {
     font-size: var(
       --vkui--font_caption2_caps--font_size--compact,
       var(--vkui--font_caption2_caps--font_size--regular)
@@ -190,14 +190,14 @@
   }
 }
 
-.Caption--level-3 {
+.level3 {
   font-size: var(--vkui--font_caption3--font_size--regular);
   line-height: var(--vkui--font_caption3--line_height--regular);
   font-weight: var(--vkui--font_caption3--font_weight--regular);
   font-family: var(--vkui--font_caption3--font_family--regular);
 }
 
-.Caption--sizeY-compact.Caption--level-3 {
+.sizeYCompact.level3 {
   font-size: var(
     --vkui--font_caption3--font_size--compact,
     var(--vkui--font_caption3--font_size--regular)
@@ -217,7 +217,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Caption--sizeY-none.Caption--level-3 {
+  .sizeYNone.level3 {
     font-size: var(
       --vkui--font_caption3--font_size--compact,
       var(--vkui--font_caption3--font_size--regular)
@@ -237,14 +237,14 @@
   }
 }
 
-.Caption--level-3.Caption--caps {
+.level3.caps {
   font-size: var(--vkui--font_caption3_caps--font_size--regular);
   line-height: var(--vkui--font_caption3_caps--line_height--regular);
   font-weight: var(--vkui--font_caption3_caps--font_weight--regular);
   font-family: var(--vkui--font_caption3_caps--font_family--regular);
 }
 
-.Caption--sizeY-compact.Caption--level-3.Caption--caps {
+.sizeYCompact.level3.caps {
   font-size: var(
     --vkui--font_caption3_caps--font_size--compact,
     var(--vkui--font_caption3_caps--font_size--regular)
@@ -264,7 +264,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Caption--sizeY-none.Caption--level-3.Caption--caps {
+  .sizeYNone.level3.caps {
     font-size: var(
       --vkui--font_caption3_caps--font_size--compact,
       var(--vkui--font_caption3_caps--font_size--regular)

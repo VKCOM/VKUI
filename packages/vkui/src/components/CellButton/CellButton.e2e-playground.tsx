@@ -10,20 +10,18 @@ export const CellButtonPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          centered: [true],
+          centered: [undefined, true],
           children: ['Создать что-нибудь'],
+          before: [<Icon24Add key="add" />],
         },
         {
-          mode: [undefined, 'danger'],
-          children: ['Создать что-нибудь'],
-        },
-        {
-          mode: [undefined, 'danger'],
+          appearance: ['neutral', 'negative'],
           before: [<Icon28AddOutline key="icon" />],
           children: ['Создать что-нибудь'],
         },
         {
           before: [
+            undefined,
             <Avatar key={40} size={40}>
               <Icon24Add />
             </Avatar>,

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon16Clear, Icon16SearchOutline, Icon24Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
@@ -146,7 +148,7 @@ export const Search = ({
     <IconButton
       hoverMode="opacity"
       onPointerDown={onIconClickStart}
-      className={styles['Search__icon']}
+      className={styles.icon}
       onFocus={setFocusedTrue}
       onBlur={setFocusedFalse}
       onClick={noop}
@@ -161,25 +163,25 @@ export const Search = ({
     <div
       className={classNames(
         'vkuiInternalSearch',
-        styles['Search'],
-        sizeY === 'none' && styles['Search--sizeY-none'],
-        sizeY === 'compact' && styles['Search--sizeY-compact'],
-        isFocused && styles['Search--focused'],
-        hasValue && styles['Search--has-value'],
-        hasAfter && styles['Search--has-after'],
-        iconProp && styles['Search--has-icon'],
-        inputProps.disabled && styles['Search--disabled'],
-        !noPadding && styles['Search--withPadding'],
+        styles.host,
+        sizeY === 'none' && styles.sizeYNone,
+        sizeY === 'compact' && styles.sizeYCompact,
+        isFocused && styles.focused,
+        hasValue && styles.hasValue,
+        hasAfter && styles.hasAfter,
+        iconProp && styles.hasIcon,
+        inputProps.disabled && styles.disabled,
+        !noPadding && styles.withPadding,
         className,
       )}
       ref={getRootRef}
       style={style}
     >
-      <div className={styles['Search__field']}>
-        <label htmlFor={inputId} className={styles['Search__label']}>
+      <div className={styles.field}>
+        <label htmlFor={inputId} className={styles.label}>
           {placeholder}
         </label>
-        <div className={styles['Search__input']}>
+        <div className={styles.input}>
           {before}
           <Headline
             Component="input"
@@ -191,13 +193,13 @@ export const Search = ({
             placeholder={placeholder}
             autoComplete={autoComplete}
             getRootRef={inputRef}
-            className={styles['Search__nativeInput']}
+            className={styles.nativeInput}
             onFocus={onFocus}
             onBlur={onBlur}
             onChange={callMultiple(onChange, checkHasValue)}
           />
         </div>
-        <div className={styles['Search__controls']}>
+        <div className={styles.controls}>
           {iconProp &&
             (typeof iconProp === 'function'
               ? iconProp(renderIconButton)
@@ -206,7 +208,7 @@ export const Search = ({
             hoverMode="opacity"
             onPointerDown={onIconCancelClickStart}
             onClick={onCancel}
-            className={styles['Search__icon']}
+            className={styles.icon}
             tabIndex={hasValue ? undefined : -1}
             disabled={inputProps.disabled}
           >
@@ -217,7 +219,7 @@ export const Search = ({
             <Button
               mode="primary"
               size="m"
-              className={classNames(styles['Search__findButton'], adaptiveSizeY.compact.className)}
+              className={classNames(styles.findButton, adaptiveSizeY.compact.className)}
               focusVisibleMode="inside"
               onClick={onFindButtonClick}
               tabIndex={hasValue ? undefined : -1}
@@ -228,7 +230,7 @@ export const Search = ({
         </div>
       </div>
       {hasAfter && (
-        <div className={styles['Search__after']}>
+        <div className={styles.after}>
           <Button
             mode="tertiary"
             size="m"
@@ -239,7 +241,7 @@ export const Search = ({
             onFocus={setFocusedTrue}
             onBlur={setFocusedFalse}
           >
-            <span className={styles['Search__afterTextClip']}>{after}</span>
+            <span className={styles.afterTextClip}>{after}</span>
           </Button>
         </div>
       )}

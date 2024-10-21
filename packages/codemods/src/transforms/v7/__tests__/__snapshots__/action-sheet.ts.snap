@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`action-sheet transforms correctly 1`] = `
+"import { ActionSheet, ActionSheetItem } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <ActionSheet
+        onClose={() => {}}
+        title="Вы действительно хотите удалить это видео из Ваших видео?"
+        description="Данное действие реально удалит видео, подумайте!"
+      >
+        <ActionSheetItem mode="destructive">Удалить видео</ActionSheetItem>
+      </ActionSheet>
+    </React.Fragment>)
+  );
+};"
+`;

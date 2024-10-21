@@ -7,17 +7,17 @@ describe('RichCell', () => {
   baselineComponent((props) => <RichCell {...props}>RichCell</RichCell>);
 
   it.each<[Exclude<RichCellProps['afterAlign'], undefined>, string, string]>([
-    ['start', styles['RichCell__content'], styles['RichCell__content-after--align-start']],
-    ['center', styles['RichCell'], styles['RichCell__content-after--align-center']],
-    ['end', styles['RichCell'], styles['RichCell__content-after--align-end']],
+    ['start', styles.content, styles.contentAfterAlignStart],
+    ['center', styles.host, styles.contentAfterAlignCenter],
+    ['end', styles.host, styles.contentAfterAlignEnd],
   ])(
     'should have correct position of after element',
     (afterAlign, expectedContainerStyle, alignClassName) => {
       const { container } = render(
         <RichCell
-          subhead="Subhead"
-          text="Text"
-          caption="Caption"
+          overTitle="Subhead"
+          subtitle="Text"
+          extraSubtitle="Caption"
           afterAlign={afterAlign}
           after={<div data-testid="after" />}
           afterCaption="After Caption"

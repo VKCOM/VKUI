@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
@@ -89,30 +91,26 @@ const RemovableIos = ({
 
   return (
     <div
-      className={classNames(styles['Removable__content'], 'vkuiInternalRemovable__content')}
+      className={classNames(styles.content, 'vkuiInternalRemovable__content')}
       style={{ transform: `translateX(-${removeOffset ?? 0}px)` }}
       onTransitionEnd={onRemoveTransitionEnd}
     >
       <IconButton
         hasActive={false}
         hasHover={false}
-        className={classNames(
-          styles['Removable__action'],
-          styles['Removable__toggle'],
-          'vkuiInternalRemovable__action',
-        )}
+        className={classNames(styles.action, styles.toggle, 'vkuiInternalRemovable__action')}
         onClick={onRemoveActivateClick}
         disabled={removeOffset > 0 || disabled}
         data-testid={toggleButtonTestId}
       >
         <VisuallyHidden>{removePlaceholderString}</VisuallyHidden>
-        <i className={styles['Removable__toggle-in']} role="presentation" />
+        <i className={styles.toggleIn} role="presentation" />
       </IconButton>
       {typeof childrenProp === 'function'
         ? childrenProp({ isRemoving: removeOffset > 0 })
         : childrenProp}
 
-      <span className={styles['Removable__offset']} aria-hidden />
+      <span className={styles.offset} aria-hidden />
 
       <Tappable
         Component="button"
@@ -120,11 +118,11 @@ const RemovableIos = ({
         hasHover={false}
         disabled={disabledRef.current}
         getRootRef={removeButtonRef}
-        className={styles['Removable__remove']}
+        className={styles.remove}
         onClick={onRemove}
         data-testid={removeButtonTestId}
       >
-        <span className={styles['Removable__remove-in']}>{removePlaceholder}</span>
+        <span className={styles.removeIn}>{removePlaceholder}</span>
       </Tappable>
     </div>
   );
@@ -182,19 +180,19 @@ export const Removable = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        platform === 'ios' && styles['Removable--ios'],
-        align === 'start' && styles['Removable--align-start'],
-        indent && styles['Removable--indent'],
+        platform === 'ios' && styles.ios,
+        align === 'start' && styles.alignStart,
+        indent && styles.indent,
       )}
     >
       {platform !== 'ios' && (
-        <div className={classNames(styles['Removable__content'], 'vkuiInternalRemovable__content')}>
+        <div className={classNames(styles.content, 'vkuiInternalRemovable__content')}>
           {typeof children === 'function' ? children({ isRemoving: false }) : children}
 
           <IconButton
             activeMode="opacity"
             hoverMode="opacity"
-            className={classNames(styles['Removable__action'], 'vkuiInternalRemovable__action')}
+            className={classNames(styles.action, 'vkuiInternalRemovable__action')}
             onClick={onRemoveClick}
             label={removePlaceholderString}
             data-testid={removeButtonTestId}
@@ -203,7 +201,7 @@ export const Removable = ({
             <Icon24Cancel role="presentation" />
           </IconButton>
 
-          <span className={styles['Removable__offset']} aria-hidden />
+          <span className={styles.offset} aria-hidden />
         </div>
       )}
 

@@ -1,11 +1,13 @@
+'use client';
+
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { Typography, type TypographyProps } from '../Typography';
 import styles from './Subhead.module.css';
 
 const sizeYClassNames = {
-  none: styles['Subhead--sizeY-none'],
-  compact: styles['Subhead--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export type SubheadProps = TypographyProps;
@@ -29,11 +31,7 @@ export const Subhead = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      className={classNames(
-        className,
-        styles['Subhead'],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-      )}
+      className={classNames(className, styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
       {...restProps}
     />
   );

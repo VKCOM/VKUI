@@ -22,12 +22,12 @@ describe('CalendarDay', () => {
   it('renders hidden div', () => {
     render(<CalendarDayTest hidden />);
 
-    expect(document.querySelector('.vkuiCalendarDay__hidden')).toBeInTheDocument();
+    expect(document.querySelector(`.${styles.hidden}`)).toBeInTheDocument();
   });
   it('check hinted className', () => {
     render(<CalendarDayTest hinted data-testid="day" />);
-    const calendarDay = screen.getByTestId('day').firstElementChild!;
-    expect(calendarDay).toHaveClass(styles['CalendarDay__hinted--active']);
+    const calendarDay = screen.getByTestId('day').firstElementChild!.firstElementChild!;
+    expect(calendarDay).toHaveClass(styles.hintedActive);
   });
 
   it('check children render', () => {

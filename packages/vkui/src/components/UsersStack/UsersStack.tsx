@@ -7,15 +7,15 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './UsersStack.module.css';
 
 const stylesSize = {
-  s: styles['UsersStack--size-s'],
-  m: styles['UsersStack--size-m'],
-  l: styles['UsersStack--size-l'],
+  s: styles.sizeS,
+  m: styles.sizeM,
+  l: styles.sizeL,
 };
 
-const stylesDirection = {
-  'row': styles['UsersStack--direction-row'],
-  'row-reverse': styles['UsersStack--direction-row-reverse'],
-  'column': styles['UsersStack--direction-column'],
+const avatarsPositionStyles = {
+  'inline-start': styles.avatarsPositionInlineStart,
+  'inline-end': styles.avatarsPositionInlineEnd,
+  'block-start': styles.avatarsPositionBlockStart,
 };
 
 export type UsersStackRenderWrapperProps = {
@@ -49,11 +49,10 @@ export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElemen
    */
   count?: number;
   /**
-   * Определяет положение элементов
-   * Режим `column` рекомендуется использовать с размером `m`
-   * @since 5.3.0
+   * Определяет положение аватаров
+   * Режим `block-start` рекомендуется использовать с размером `m`
    */
-  direction?: 'row' | 'row-reverse' | 'column';
+  avatarsPosition?: 'inline-start' | 'block-start' | 'inline-end';
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
@@ -132,7 +131,7 @@ export const UsersStack = ({
   count = Math.max(0, photos.length - visibleCount),
   size = 'm',
   children,
-  direction = 'row',
+  avatarsPosition = 'inline-start',
   ...restProps
 }: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();
@@ -154,12 +153,7 @@ export const UsersStack = ({
     const photoSrc = isPhotoType ? photo.src : photo;
 
     let photoElement = (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className={styles['UsersStack__photo']}
-        aria-hidden
-        display="block"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" className={styles.photo} aria-hidden display="block">
         <defs>
           <PathElement id={id} direction={direction} photoSize={photoSize} />
         </defs>
@@ -167,7 +161,7 @@ export const UsersStack = ({
           <use href={hrefID} />
         </clipPath>
         <g clipPath={`url(#${maskID})`}>
-          <use href={hrefID} className={styles['UsersStack__fill']} />
+          <use href={hrefID} className={styles.fill} />
           <image href={photoSrc} width={photoSize} height={photoSize} />
           <use href={hrefID} fill="none" stroke="rgba(0, 0, 0, 0.08)" />
         </g>
@@ -181,19 +175,15 @@ export const UsersStack = ({
     }
 
     return (
-      <div className={styles['UsersStack__photoWrapper']} key={i}>
+      <div className={styles.photoWrapper} key={i}>
         {photoElement}
       </div>
     );
   });
 
   const othersElement = canShowOthers ? (
-    <div className={styles['UsersStack__photoWrapper']}>
-      <CounterTypography
-        caps
-        weight="1"
-        className={classNames(styles['UsersStack__photo'], styles['UsersStack__photo--others'])}
-      >
+    <div className={styles.photoWrapper}>
+      <CounterTypography caps weight="1" className={classNames(styles.photo, styles.photoOthers)}>
         +{count}
       </CounterTypography>
     </div>
@@ -202,17 +192,19 @@ export const UsersStack = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles['UsersStack'], stylesSize[size], stylesDirection[direction])}
+      baseClassName={classNames(
+        styles.host,
+        stylesSize[size],
+        avatarsPositionStyles[avatarsPosition],
+      )}
     >
       {(photosElements.length > 0 || othersElement) && (
-        <div className={styles['UsersStack__photos']} aria-hidden>
+        <div className={styles.photos} aria-hidden>
           {photosElements}
           {othersElement}
         </div>
       )}
-      {hasReactNode(children) && (
-        <Footnote className={styles['UsersStack__text']}>{children}</Footnote>
-      )}
+      {hasReactNode(children) && <Footnote className={styles.text}>{children}</Footnote>}
     </RootComponent>
   );
 };

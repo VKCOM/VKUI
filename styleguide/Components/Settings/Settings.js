@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useAdaptivityConditionalRender } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
-import { AppearanceSelect } from './AppearanceSelect';
+import { ColorSchemeSelect } from './ColorSchemeSelect';
 import { HasCustomPanelHeaderAfter } from './HasCustomPanelHeaderAfter';
 import { HasPointerCheckbox } from './HasPointerCheckbox';
 import { LayoutSelect } from './LayoutSelect';
@@ -23,11 +23,11 @@ export const Settings = ({ adaptivity, showCustomPanelHeaderAfterProps, showLayo
                 onChange={(platform) => context.setContext({ platform })}
                 value={context.platform}
               />
-              <AppearanceSelect
+              <ColorSchemeSelect
                 disabled={context.appearanceDisabled}
-                onChange={(appearance) => context.setContext({ appearance })}
-                value={context.appearance}
-                options={context.appearanceOptions}
+                onChange={(colorScheme) => context.setContext({ colorScheme })}
+                value={context.colorScheme}
+                options={context.colorSchemeOptions}
               />
               <ThemeName />
               {showCustomPanelHeaderAfterProps && (

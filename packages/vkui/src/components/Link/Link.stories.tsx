@@ -27,7 +27,8 @@ export const WithIcon: Story = {
     target: '_blank',
     children: (
       <>
-        https://google.com <Icon24ExternalLinkOutline width={16} height={16} />
+        https://google.com&nbsp;
+        <Icon24ExternalLinkOutline width={16} height={16} />
       </>
     ),
   },

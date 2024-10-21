@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
@@ -12,7 +14,7 @@ import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './Banner.module.css';
 
-export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface BannerProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
   /**
    * Тип баннера.
    */
@@ -40,15 +42,15 @@ export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Заголовок.
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /**
    * Подзаголовок.
    */
-  subheader?: React.ReactNode;
+  subtitle?: React.ReactNode;
   /**
-   * Текст баннера.
+   * Дополнительный подзаголовок баннера.
    */
-  text?: React.ReactNode;
+  extraSubtitle?: React.ReactNode;
   /**
    * При использовании `mode="image"`.
    *
@@ -88,9 +90,9 @@ export const Banner = ({
   size = 's',
   before,
   asideMode,
-  header,
-  subheader,
-  text,
+  title,
+  subtitle,
+  extraSubtitle,
   children,
   background,
   actions,
@@ -101,38 +103,38 @@ export const Banner = ({
   const platform = usePlatform();
 
   const HeaderTypography = size === 'm' ? Title : Headline;
-  const SubheaderTypography = size === 'm' ? Text : Subhead;
+  const SubheadTypography = size === 'm' ? Text : Subhead;
 
   const IconDismissIOS = mode === 'image' ? Icon24DismissDark : Icon24Dismiss;
 
   const content = (
     <>
       {mode === 'image' && background && (
-        <div aria-hidden className={styles['Banner__bg']}>
+        <div aria-hidden className={styles.bg}>
           {background}
         </div>
       )}
 
-      {before && <div className={styles['Banner__before']}>{before}</div>}
+      {before && <div className={styles.before}>{before}</div>}
 
-      <div className={styles['Banner__content']}>
-        {hasReactNode(header) && (
+      <div className={styles.content}>
+        {hasReactNode(title) && (
           <HeaderTypography Component="div" weight="2" level={size === 'm' ? '2' : '1'}>
-            {header}
+            {title}
           </HeaderTypography>
         )}
-        {hasReactNode(subheader) && (
-          <SubheaderTypography Component="div" className={styles['Banner__subheader']}>
-            {subheader}
-          </SubheaderTypography>
+        {hasReactNode(subtitle) && (
+          <SubheadTypography Component="div" className={styles.subtitle}>
+            {subtitle}
+          </SubheadTypography>
         )}
-        {hasReactNode(text) && (
-          <Text Component="div" className={styles['Banner__text']}>
-            {text}
+        {hasReactNode(extraSubtitle) && (
+          <Text Component="div" className={styles.extraSubtitle}>
+            {extraSubtitle}
           </Text>
         )}
         {hasReactNode(actions) && React.Children.count(actions) > 0 && (
-          <div className={styles['Banner__actions']}>{actions}</div>
+          <div className={styles.actions}>{actions}</div>
         )}
       </div>
     </>
@@ -143,34 +145,34 @@ export const Banner = ({
       Component="section"
       {...restProps}
       baseClassName={classNames(
-        styles['Banner'],
-        platform === 'ios' && styles['Banner--ios'],
-        mode === 'image' && styles['Banner--mode-image'],
-        size === 'm' && styles['Banner--size-m'],
-        mode === 'image' && imageTheme === 'dark' && styles['Banner--inverted'],
+        styles.host,
+        platform === 'ios' && styles.ios,
+        mode === 'image' && styles.modeImage,
+        size === 'm' && styles.sizeM,
+        mode === 'image' && imageTheme === 'dark' && styles.inverted,
       )}
     >
       {asideMode === 'expand' ? (
         <Tappable
-          className={styles['Banner__in']}
+          className={styles.in}
           activeMode={platform === 'ios' ? 'opacity' : 'background'}
           onClick={noop}
         >
           {content}
 
-          <div className={styles['Banner__aside']}>
-            <Icon24Chevron className={styles['Banner__expand']} />
+          <div className={styles.aside}>
+            <Icon24Chevron className={styles.expand} />
           </div>
         </Tappable>
       ) : (
-        <div className={styles['Banner__in']}>
+        <div className={styles.in}>
           {content}
 
           {asideMode === 'dismiss' && (
-            <div className={styles['Banner__aside']}>
+            <div className={styles.aside}>
               <IconButton
                 label={dismissLabel}
-                className={styles['Banner__dismiss']}
+                className={styles.dismiss}
                 onClick={onDismiss}
                 hoverMode="opacity"
                 hasActive={false}

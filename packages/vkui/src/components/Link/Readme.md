@@ -19,13 +19,14 @@
   <Spacing size={24} />
 
   <Link href="https://google.com" target="_blank">
-    https://google.com <Icon24ExternalLinkOutline width={16} height={16} />
+    https://google.com&nbsp;
+    <Icon24ExternalLinkOutline width={16} height={16} />
   </Link>
 
   <Spacing size={24} />
 
   <div style={{ width: 304 }}>
-    Нажимая «Продолжить», вы принимаете <Link href="#">пользовательское соглашение</Link> и{' '}
+    Нажимая «Продолжить», вы принимаете&nbsp;<Link href="#">пользовательское соглашение</Link> и{' '}
     <Link href="#">политику конфиденциальности</Link>.
   </div>
 

@@ -6,20 +6,20 @@ import {
   VKUI_TOKENS_THEMES_BASE_URL,
 } from './constants';
 
-export const makeTokenClassName = (themeName, appearance) => {
-  return `vkui--${themeName}--${appearance}`;
+export const makeTokenClassName = (themeName, colorScheme) => {
+  return `vkui--${themeName}--${colorScheme}`;
 };
 
 /**
  * @param {string} themeName
- * @param {object} appearanceOptions
+ * @param {object} colorSchemeOptions
  * @return {object}
  */
 export const getVKUIConfigProviderTokensClassNamesWithGlobalAppearance = (
   themeName,
-  appearanceOptions = [],
+  colorSchemeOptions = [],
 ) => {
-  return appearanceOptions.reduce((acc, { value, disabled }) => {
+  return colorSchemeOptions.reduce((acc, { value, disabled }) => {
     if (disabled) {
       return acc;
     }
@@ -28,8 +28,8 @@ export const getVKUIConfigProviderTokensClassNamesWithGlobalAppearance = (
   }, {});
 };
 
-const getVKUITokensImport = (themeName, appearanceOptions) => {
-  return appearanceOptions.reduce((acc, { importRule, disabled }) => {
+const getVKUITokensImport = (themeName, colorSchemeOptions) => {
+  return colorSchemeOptions.reduce((acc, { importRule, disabled }) => {
     if (disabled) {
       return acc;
     }
@@ -46,7 +46,7 @@ const CODE_EXAMPLE_TEMPLATE = `{{comment}}
 const Example = () => (
   <ConfigProvider
     platform="{{platform}}"
-    appearance="{{appearance}}"
+    colorScheme="{{colorScheme}}"
   {{tokensClassNames}}>
     {/* ... */}
   </ConfigProvider>
@@ -55,7 +55,7 @@ const Example = () => (
 const definitionsToString = ({
   comment,
   platform,
-  appearance,
+  colorScheme,
   imports,
   tokensClassNames,
   selected,
@@ -75,42 +75,42 @@ const definitionsToString = ({
     .replace('{{comment}}', comment)
     .replace('{{imports}}', imports.join('\n'))
     .replace('{{platform}}', platform)
-    .replace('{{appearance}}', appearance)
+    .replace('{{colorScheme}}', colorScheme)
     .replace('{{tokensClassNames}}', tokensClassNamesString === null ? '' : tokensClassNamesString);
 };
 
 /**
  * @param {string} platformProp
  * @param {string} themeName
- * @param {('light'|'dark')} appearance
- * @param {object} appearanceOptions
+ * @param {('light'|'dark')} colorScheme
+ * @param {object} colorSchemeOptions
  * @return {object}
  */
 export const generateVKUIConfigProviderTokensClassNamesCodeExamples = (
   platformProp,
   themeName,
-  appearance,
-  appearanceOptions = [],
+  colorScheme,
+  colorSchemeOptions = [],
 ) => {
   const isByDefaultThemesPresets = DEFAULT_THEME_NAMES.includes(themeName);
   const isDefaultPlatformThemeName = DEFAULT_THEME_FOR_PLATFORM.get(platformProp) === themeName;
 
-  const selectedTokenClassName = makeTokenClassName(themeName, appearance);
+  const selectedTokenClassName = makeTokenClassName(themeName, colorScheme);
   const tokenDefinitionsWithGlobalAppearance = {
     comment: '// Перебиваем тему глобально',
     platform: platformProp,
-    appearance,
-    imports: [VKUI_COMPONENTS_CSS_IMPORT, ...getVKUITokensImport(themeName, appearanceOptions)],
+    colorScheme,
+    imports: [VKUI_COMPONENTS_CSS_IMPORT, ...getVKUITokensImport(themeName, colorSchemeOptions)],
     tokensClassNames: getVKUIConfigProviderTokensClassNamesWithGlobalAppearance(
       themeName,
-      appearanceOptions,
+      colorSchemeOptions,
     ),
     selected: selectedTokenClassName,
   };
   const tokenDefinitionsByPlatform = {
     comment: '// Перебиваем тему конкретной платформы',
     platform: platformProp,
-    appearance,
+    colorScheme,
     imports: [],
     tokensClassNames: {},
     selected: selectedTokenClassName,
@@ -130,13 +130,15 @@ export const generateVKUIConfigProviderTokensClassNamesCodeExamples = (
     }
 
     if (platformProp === platform) {
-      tokenDefinitionsByPlatform.imports.push(...getVKUITokensImport(themeName, appearanceOptions));
-      tokenDefinitionsByPlatform.tokensClassNames[platform] =
-        getVKUIConfigProviderTokensClassNamesWithGlobalAppearance(themeName, appearanceOptions);
-    } else if (themeNameForPlatform !== themeName && platform !== LEGACY_PLATFORM) {
-      const { appearanceOptions } = getDefaultByThemesPresets(themeNameForPlatform);
       tokenDefinitionsByPlatform.imports.push(
-        ...getVKUITokensImport(themeNameForPlatform, appearanceOptions),
+        ...getVKUITokensImport(themeName, colorSchemeOptions),
+      );
+      tokenDefinitionsByPlatform.tokensClassNames[platform] =
+        getVKUIConfigProviderTokensClassNamesWithGlobalAppearance(themeName, colorSchemeOptions);
+    } else if (themeNameForPlatform !== themeName && platform !== LEGACY_PLATFORM) {
+      const { colorSchemeOptions } = getDefaultByThemesPresets(themeNameForPlatform);
+      tokenDefinitionsByPlatform.imports.push(
+        ...getVKUITokensImport(themeNameForPlatform, colorSchemeOptions),
       );
     }
   });
@@ -167,8 +169,8 @@ export const onlyVariablesLocalImportRule = (themeName) => {
 export const getDefaultByThemesPresets = (themeName = 'vkBase') => {
   return {
     themeName: themeName,
-    appearance: 'light',
-    appearanceOptions: [
+    colorScheme: 'light',
+    colorSchemeOptions: [
       {
         value: 'light',
         title: 'light',

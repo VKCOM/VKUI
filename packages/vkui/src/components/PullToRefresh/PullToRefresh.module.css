@@ -1,24 +1,24 @@
-.PullToRefresh {
+.host {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-.PullToRefresh--refreshing {
+.refreshing {
   touch-action: none;
   pointer-events: none;
 }
 
-.PullToRefresh__controls {
+.controls {
   inline-size: 100%;
   pointer-events: none;
 }
 
-.PullToRefresh:not(.PullToRefresh--ios) .PullToRefresh__controls {
+.host:not(.ios) .controls {
   z-index: var(--vkui_internal--z_index_pull_to_refresh);
 }
 
-.PullToRefresh__spinner {
+.spinner {
   display: flex;
   margin: auto;
   inline-size: 40px;
@@ -36,41 +36,41 @@
   color: var(--vkui--color_icon_accent);
 }
 
-.PullToRefresh--ios .PullToRefresh__spinner {
+.ios .spinner {
   border-radius: 0;
   box-shadow: none;
   background: none;
   color: var(--vkui--color_icon_medium);
 }
 
-.PullToRefresh--watching .PullToRefresh__spinner {
+.watching .spinner {
   transition: opacity 220ms ease-out;
 }
 
-.PullToRefresh__spinner-self {
+.spinnerSelf {
   stroke: currentColor;
 }
 
-.PullToRefresh--ios.PullToRefresh--refreshing .PullToRefresh__spinner-self {
+.ios.refreshing .spinnerSelf {
   animation: pull-to-refresh-to-refreshing 380ms ease-out;
 }
 
-.PullToRefresh__spinner-path {
+.spinnerPath {
   transform: rotate(-90deg);
   transform-origin: center center;
   transition: stroke-dashoffset 167ms ease-out;
 }
 
-.PullToRefresh--watching .PullToRefresh__spinner-path,
-.PullToRefresh--refreshing .PullToRefresh__spinner-path {
+.watching .spinnerPath,
+.refreshing .spinnerPath {
   transition: none;
 }
 
-.PullToRefresh__spinner--on .PullToRefresh__spinner-path {
+.spinnerOn .spinnerPath {
   animation: ptr-rotator var(--vkui_internal--duration) linear infinite;
 }
 
-.PullToRefresh__content {
+.content {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -78,7 +78,7 @@
   transition: transform 400ms var(--vkui--animation_easing_platform);
 }
 
-.PullToRefresh--watching .PullToRefresh__content {
+.watching .content {
   transition: none;
 }
 

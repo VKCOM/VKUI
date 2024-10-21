@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -10,40 +12,40 @@ import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeaderContent.module.css';
 
 const platformClassNames = {
-  ios: styles['PanelHeaderContent--ios'],
-  android: styles['PanelHeaderContent--android'],
-  vkcom: styles['PanelHeaderContent--vkcom'],
+  ios: styles.ios,
+  android: styles.android,
+  vkcom: styles.vkcom,
 };
 
 const sizeYClassNames = {
-  none: styles['PanelHeaderContent--sizeY-none'],
-  compact: styles['PanelHeaderContent--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface PanelHeaderContentProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   aside?: React.ReactNode;
   before?: React.ReactNode;
-  status?: React.ReactNode;
+  subtitle?: React.ReactNode;
 }
 
 interface PanelHeaderChildrenProps extends HasChildren {
-  hasStatus: boolean;
+  hasSubtitle: boolean;
   hasBefore: boolean;
 }
 
-const PanelHeaderChildren = ({ hasStatus, hasBefore, children }: PanelHeaderChildrenProps) => {
+const PanelHeaderChildren = ({ hasSubtitle, hasBefore, children }: PanelHeaderChildrenProps) => {
   const platform = usePlatform();
 
-  return hasStatus || hasBefore ? (
+  return hasSubtitle || hasBefore ? (
     <Text
-      className={styles['PanelHeaderContent__childrenText']}
+      className={styles.childrenText}
       Component="div"
       weight={platform === 'vkcom' ? '2' : undefined}
     >
       {children}
     </Text>
   ) : (
-    <div className={styles['PanelHeaderContent__children-in']}>{children}</div>
+    <div className={styles.childrenIn}>{children}</div>
   );
 };
 
@@ -52,7 +54,7 @@ const PanelHeaderChildren = ({ hasStatus, hasBefore, children }: PanelHeaderChil
  */
 export const PanelHeaderContent = ({
   aside,
-  status,
+  subtitle,
   before,
   children,
   onClick,
@@ -76,33 +78,29 @@ export const PanelHeaderContent = ({
     <RootComponent
       {...rootProps}
       baseClassName={classNames(
-        styles['PanelHeaderContent'],
+        styles.host,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
     >
-      {hasReactNode(before) && <div className={styles['PanelHeaderContent__before']}>{before}</div>}
+      {hasReactNode(before) && <div className={styles.before}>{before}</div>}
       <InComponent
         {...inProps}
-        className={classNames(
-          styles['PanelHeaderContent__in'],
-          !before && platform !== 'android' && styles['PanelHeaderContent__in--centered'],
-        )}
+        className={classNames(styles.in, !before && platform !== 'android' && styles.inCentered)}
       >
-        {hasReactNode(status) && (
-          <Footnote className={styles['PanelHeaderContent__status']}>{status}</Footnote>
-        )}
-        <div className={styles['PanelHeaderContent__children']}>
-          <PanelHeaderChildren hasStatus={hasReactNode(status)} hasBefore={hasReactNode(before)}>
+        {hasReactNode(subtitle) && <Footnote className={styles.subtitle}>{subtitle}</Footnote>}
+        <div className={styles.children}>
+          <PanelHeaderChildren
+            hasSubtitle={hasReactNode(subtitle)}
+            hasBefore={hasReactNode(before)}
+          >
             {children}
           </PanelHeaderChildren>
-          {hasReactNode(aside) && (
-            <div className={styles['PanelHeaderContent__aside']}>{aside}</div>
-          )}
+          {hasReactNode(aside) && <div className={styles.aside}>{aside}</div>}
         </div>
-        {hasReactNode(before) && <div className={styles['PanelHeaderContent__width']} />}
+        {hasReactNode(before) && <div className={styles.width} />}
       </InComponent>
     </RootComponent>
   );

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
@@ -155,11 +157,11 @@ export const Image: React.FC<ImageProps> & {
       style={{ ...borderStyles, ...style }}
       className={classNames(
         className,
-        styles['Image'],
-        borderStartStartRadius && styles['Image--borderStartStartRadius'],
-        borderStartEndRadius && styles['Image--borderStartEndRadius'],
-        borderEndStartRadius && styles['Image--borderEndStartRadius'],
-        borderEndEndRadius && styles['Image--borderEndEndRadius'],
+        styles.host,
+        borderStartStartRadius && styles.borderStartStartRadius,
+        borderStartEndRadius && styles.borderStartEndRadius,
+        borderEndStartRadius && styles.borderEndStartRadius,
+        borderEndEndRadius && styles.borderEndEndRadius,
       )}
     />
   );

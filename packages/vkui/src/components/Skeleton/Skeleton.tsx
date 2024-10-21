@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { millisecondsInSecond } from 'date-fns/constants';
@@ -180,10 +182,7 @@ export const Skeleton = ({
     <RootComponent
       getRootRef={rootRef}
       Component="span"
-      baseClassName={classNames(
-        styles['Skeleton'],
-        disableAnimation && styles['Skeleton--disableAnimation'],
-      )}
+      baseClassName={classNames(styles.host, disableAnimation && styles.disableAnimation)}
       style={{ ...skeletonStyle, ...style }}
       {...restProps}
     >

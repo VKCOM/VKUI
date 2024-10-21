@@ -1,31 +1,23 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { spacingSizeClassNames, type SpacingSizeProp } from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Spacing.module.css';
 
-export const CUSTOM_CSS_TOKEN_FOR_USER_GAP = '--vkui_internal--Spacing_gap';
-
-export const sizesClassNames: Record<SpacingSize, string> = {
-  '3xs': styles['Spacing--3xs'],
-  '2xs': styles['Spacing--2xs'],
-  'xs': styles['Spacing--xs'],
-  's': styles['Spacing--s'],
-  'm': styles['Spacing--m'],
-  'l': styles['Spacing--l'],
-  'xl': styles['Spacing--xl'],
-  '2xl': styles['Spacing--2xl'],
-  '3xl': styles['Spacing--3xl'],
-  '4xl': styles['Spacing--4xl'],
-};
-
-export type SpacingSize = 's' | 'm' | 'l' | '3xs' | '2xs' | 'xs' | 'xl' | '2xl' | '3xl' | '4xl';
+export const CUSTOM_CSS_TOKEN_FOR_USER_GAP = '--vkui_internal--spacing_size';
 
 export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Высота спэйсинга
    */
-  size?: number | SpacingSize;
+  size?: SpacingSizeProp;
+  /**
+   * @depracated 7.0.0
+   *
+   * Свойство устарело и будет удалено в v8.
+   */
+  children?: React.ReactNode;
 }
 /**
  * @see https://vkcom.github.io/VKUI/#/Spacing
@@ -35,12 +27,12 @@ export const Spacing = ({ size = 'm', style, ...restProps }: SpacingProps): Reac
     <RootComponent
       {...restProps}
       style={{
-        ...(typeof size === 'number' && { [CUSTOM_CSS_TOKEN_FOR_USER_GAP]: size }),
+        ...(typeof size === 'number' && { [CUSTOM_CSS_TOKEN_FOR_USER_GAP]: `${size}px` }),
         ...style,
       }}
       baseClassName={classNames(
-        styles['Spacing'],
-        typeof size === 'string' && sizesClassNames[size],
+        styles.host,
+        typeof size === 'string' && spacingSizeClassNames[size],
       )}
     />
   );

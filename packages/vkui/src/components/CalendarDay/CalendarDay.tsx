@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
@@ -82,7 +84,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
         return renderDayContent(day);
       }
       return (
-        <div className={styles['CalendarDay__day-number']}>
+        <div className={styles.dayNumber}>
           <VisuallyHidden>{children ?? label}</VisuallyHidden>
           <span aria-hidden>{day.getDate()}</span>
         </div>
@@ -90,23 +92,14 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     }, [renderDayContent, day, children, label]);
 
     if (hidden) {
-      return <div className={styles['CalendarDay__hidden']} />;
+      return <div className={classNames(styles.hidden, size === 's' && styles.sizeS)} />;
     }
 
     return (
       <Tappable
-        className={classNames(
-          styles['CalendarDay'],
-          size === 's' && styles['CalendarDay--size-s'],
-          today && styles['CalendarDay--today'],
-          selected && !disabled && styles['CalendarDay--selected'],
-          selectionStart && styles['CalendarDay--selection-start'],
-          selectionEnd && styles['CalendarDay--selection-end'],
-          disabled && styles['CalendarDay--disabled'],
-          !sameMonth && styles['CalendarDay--not-same-month'],
-          className,
-        )}
-        hoverMode={active ? '' : styles['CalendarDay--hover']}
+        className={classNames(styles.host, size === 's' && styles.sizeS, className)}
+        hoverMode={styles.hostHovered}
+        activeMode={styles.hostActivated}
         hasActive={false}
         onClick={onClick}
         disabled={disabled}
@@ -119,19 +112,27 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
       >
         <div
           className={classNames(
-            styles['CalendarDay__hinted'],
-            hinted && styles['CalendarDay__hinted--active'],
-            hintedSelectionStart && styles['CalendarDay__hinted--selection-start'],
-            hintedSelectionEnd && styles['CalendarDay__hinted--selection-end'],
+            styles.content,
+            size === 's' && styles.sizeS,
+            today && styles.today,
+            selected && !disabled && styles.selected,
+            selectionStart && styles.selectionStart,
+            selectionEnd && styles.selectionEnd,
+            disabled && styles.disabled,
+            !sameMonth && styles.notSameMonth,
           )}
         >
           <div
             className={classNames(
-              styles['CalendarDay__inner'],
-              active && !disabled && styles['CalendarDay__inner--active'],
+              styles.hinted,
+              hinted && styles.hintedActive,
+              hintedSelectionStart && styles.hintedSelectionStart,
+              hintedSelectionEnd && styles.hintedSelectionEnd,
             )}
           >
-            {content}
+            <div className={classNames(styles.inner, active && !disabled && styles.innerActive)}>
+              {content}
+            </div>
           </div>
         </div>
       </Tappable>

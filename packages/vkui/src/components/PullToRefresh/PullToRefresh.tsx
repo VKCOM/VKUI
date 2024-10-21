@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
@@ -231,14 +233,14 @@ export const PullToRefresh = ({
         onMove={onTouchMove}
         onEnd={onTouchEnd}
         className={classNames(
-          styles['PullToRefresh'],
-          platform === 'ios' && styles['PullToRefresh--ios'],
-          watching && styles['PullToRefresh--watching'],
-          refreshing && styles['PullToRefresh--refreshing'],
+          styles.host,
+          platform === 'ios' && styles.ios,
+          watching && styles.watching,
+          refreshing && styles.refreshing,
           className,
         )}
       >
-        <FixedLayout className={styles['PullToRefresh__controls']} useParentWidth>
+        <FixedLayout className={styles.controls} useParentWidth>
           <PullToRefreshSpinner
             style={{
               transform: spinnerTransform,
@@ -250,7 +252,7 @@ export const PullToRefresh = ({
         </FixedLayout>
 
         <div
-          className={styles['PullToRefresh__content']}
+          className={styles.content}
           style={{
             transform: contentTransform,
           }}

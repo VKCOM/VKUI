@@ -1,52 +1,57 @@
-.CalendarDay {
+.content {
   border-radius: 0;
   font-size: 14px;
   color: var(--vkui--color_text_primary);
   font-family: var(--vkui--font_family_base);
+  block-size: 100%;
 }
 
-.CalendarDay__hidden,
-.CalendarDay {
-  block-size: 36px;
+.host,
+.hidden {
+  border-radius: 0;
   flex-basis: calc(100% / 7);
   flex-grow: 0;
 }
 
-.CalendarDay__hidden--size-s,
-.CalendarDay--size-s {
+.hidden,
+.content {
+  block-size: 36px;
+}
+
+.sizeS {
   block-size: 34px;
 }
 
-.CalendarDay--disabled,
-.CalendarDay--not-same-month {
+.disabled,
+.notSameMonth {
   color: var(--vkui--color_text_tertiary);
 }
 
-.CalendarDay--selected {
-  background-color: var(--vkui--color_background_secondary);
+.selected {
+  background-color: var(--vkui--color_background_secondary_alpha);
 }
 
-.CalendarDay--selection-start.CalendarDay--selected,
-.CalendarDay__hinted--selection-start {
+.selectionStart.selected,
+.hintedSelectionStart {
   border-start-start-radius: 8px;
   border-end-start-radius: 8px;
 }
 
-.CalendarDay--selection-end.CalendarDay--selected,
-.CalendarDay__hinted--selection-end {
+.selectionEnd.selected,
+.hintedSelectionEnd {
   border-start-end-radius: 8px;
   border-end-end-radius: 8px;
 }
 
-.CalendarDay__day-number {
+.dayNumber {
   text-align: center;
 }
 
-.CalendarDay--today {
+.today {
   font-weight: 600;
 }
 
-.CalendarDay--today .CalendarDay__day-number::after {
+.today .dayNumber::after {
   content: '';
   border-block-end: 2px solid var(--vkui--color_stroke_accent);
   inline-size: 16px;
@@ -56,12 +61,12 @@
   transform: translateX(-50%);
 }
 
-.CalendarDay--today .CalendarDay__inner--active .CalendarDay__day-number::after {
+.today .innerActive .dayNumber::after {
   border-block-end-color: var(--vkui--color_stroke_contrast);
 }
 
-.CalendarDay__inner,
-.CalendarDay__hinted {
+.inner,
+.hinted {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,16 +74,28 @@
   inline-size: 100%;
 }
 
-.CalendarDay__inner {
+.inner {
   border-radius: 8px;
 }
 
-.CalendarDay__hinted--active,
-.CalendarDay--hover :not(.CalendarDay__hinted--active) .CalendarDay__inner {
+.hintedActive,
+.hostHovered :not(.hintedActive) .inner {
   background-color: var(--vkui--color_background_secondary_alpha--hover);
 }
 
-.CalendarDay__inner--active {
+.hostActivated :not(.hintedActive) .inner {
+  background-color: var(--vkui--color_background_secondary_alpha--active);
+}
+
+.innerActive {
   background-color: var(--vkui--color_background_accent);
   color: var(--vkui--color_text_contrast);
+}
+
+.hostHovered .inner.innerActive {
+  background-color: var(--vkui--color_background_accent--hover);
+}
+
+.hostActivated .inner.innerActive {
+  background-color: var(--vkui--color_background_accent--active);
 }

@@ -12,15 +12,15 @@ describe(PopoutWrapper, () => {
     it('should be opened by default', () => {
       const result = render(<PopoutWrapper data-testid="popout-wrapper" />);
       const locator = result.getByTestId('popout-wrapper');
-      expect(locator).not.toHaveClass(styles['PopoutWrapper--closing']);
-      expect(locator).toHaveClass(styles['PopoutWrapper--opened']);
+      expect(locator).not.toHaveClass(styles.closing);
+      expect(locator).toHaveClass(styles.opened);
     });
 
     it('should be closed if closing={true}', () => {
       const result = render(<PopoutWrapper closing={true} data-testid="popout-wrapper" />);
       const locator = result.getByTestId('popout-wrapper');
-      expect(locator).not.toHaveClass(styles['PopoutWrapper--opening']);
-      expect(locator).toHaveClass(styles['PopoutWrapper--closing']);
+      expect(locator).not.toHaveClass(styles.opening);
+      expect(locator).toHaveClass(styles.closing);
     });
   });
 });

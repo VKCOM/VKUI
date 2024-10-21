@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useBooleanState } from '../../../hooks/useBooleanState';
@@ -37,7 +39,7 @@ export const SliderThumb = ({
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({
     focusVisible,
-    mode: styles['SliderThumb--focus-visible'],
+    mode: styles.focusVisible,
   });
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
@@ -96,17 +98,17 @@ export const SliderThumb = ({
         onMouseEnter={setHoveredTrue}
         onMouseLeave={setHoveredFalse}
         className={classNames(
-          styles['SliderThumb'],
+          styles.host,
           focusVisibleClassNames,
-          isActive && styles['SliderThumb--active'],
-          isHovered && styles['SliderThumb--hover'],
+          isActive && styles.active,
+          isHovered && styles.hover,
           className,
         )}
       >
         <input
           {...inputProps}
           type="range"
-          className={styles['SliderThumb__nativeInput']}
+          className={styles.nativeInput}
           aria-orientation="horizontal"
           onBlur={onBlur}
           onFocus={onFocus}
@@ -126,7 +128,7 @@ export const SliderThumb = ({
             placement: resolvedPlacement,
             getRootRef: setArrowRef,
           }}
-          text={inputValue}
+          description={inputValue}
         />
       )}
     </React.Fragment>

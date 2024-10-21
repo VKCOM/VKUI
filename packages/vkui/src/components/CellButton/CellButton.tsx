@@ -1,9 +1,19 @@
 import { classNames } from '@vkontakte/vkjs';
 import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
+import '../SimpleCell/SimpleCell.module.css';
 import styles from './CellButton.module.css';
 
+export const appearanceClassNames = {
+  accent: styles.appearanceAccent,
+  neutral: styles.appearanceNeutral,
+  negative: styles.appearanceNegative,
+};
+
 export interface CellButtonProps extends SimpleCellProps {
-  mode?: 'primary' | 'danger';
+  /**
+   * > Режим `centered` переопределяет токен для темы `"accent"`.
+   */
+  appearance?: 'accent' | 'neutral' | 'negative';
   centered?: boolean;
 }
 
@@ -12,7 +22,7 @@ export interface CellButtonProps extends SimpleCellProps {
  */
 export const CellButton = ({
   centered = false,
-  mode = 'primary',
+  appearance = 'accent',
   className,
   ...restProps
 }: CellButtonProps): React.ReactNode => {
@@ -20,9 +30,9 @@ export const CellButton = ({
     <SimpleCell
       {...restProps}
       className={classNames(
-        styles['CellButton'],
-        mode === 'danger' && styles['CellButton--mode-danger'],
-        centered && styles['CellButton--centered'],
+        styles.host,
+        appearanceClassNames[appearance],
+        centered && styles.centered,
         className,
       )}
     />

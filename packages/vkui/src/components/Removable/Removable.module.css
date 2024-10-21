@@ -1,11 +1,11 @@
-.Removable__content {
+.content {
   position: relative;
   display: flex;
   align-items: center;
   padding-inline-start: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-.Removable__action {
+.action {
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
@@ -13,22 +13,22 @@
   color: var(--vkui--color_icon_secondary);
 }
 
-.Removable--align-start .Removable__action {
+.alignStart .action {
   align-self: flex-start;
 }
 
-.Removable--disabled {
+.disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
 /**
  * iOS
  */
-.Removable--ios {
+.ios {
   overflow: hidden;
 }
 
-.Removable__remove {
+.remove {
   position: absolute;
   inset-inline-start: 100%;
   inset-block-start: 0;
@@ -43,7 +43,7 @@
   border-radius: 0;
 }
 
-.Removable__remove-in {
+.removeIn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,7 +51,7 @@
   block-size: 100%;
 }
 
-.Removable__toggle {
+.toggle {
   display: block;
   inline-size: 44px;
   block-size: 44px;
@@ -60,7 +60,7 @@
   background: none;
 }
 
-.Removable__toggle-in {
+.toggleIn {
   position: relative;
   display: flex;
   align-items: center;
@@ -71,7 +71,7 @@
   border: 0;
 }
 
-.Removable__toggle-in::after {
+.toggleIn::after {
   content: '';
   inline-size: 22px;
   block-size: 22px;
@@ -79,7 +79,7 @@
   border-radius: 50%;
 }
 
-.Removable__toggle-in::before {
+.toggleIn::before {
   content: '';
   position: absolute;
   display: block;
@@ -88,12 +88,12 @@
   background-color: var(--vkui_internal--white);
 }
 
-.Removable--ios .Removable__content {
+.ios .content {
   padding-inline: 0 var(--vkui--size_base_padding_horizontal--regular);
   transition: transform 0.6s var(--vkui--animation_easing_platform);
 }
 
-.Removable--indent .Removable__action {
+.indent .action {
   visibility: hidden;
   pointer-events: none;
 }
@@ -104,23 +104,19 @@
  * FormItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--removable) .Removable__content,
-:global(.vkuiInternalFormLayoutGroup--removable) .Removable__content {
+:global(.vkuiInternalFormItem--removable) .content,
+:global(.vkuiInternalFormLayoutGroup--removable) .content {
   flex-wrap: wrap;
   align-items: flex-start;
 }
 
-.Removable__offset {
+.offset {
   display: none;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--withTop)
-  :global(.vkuiInternalFormItem__removable)
-  ~ .Removable__offset,
-:global(.vkuiInternalFormLayoutGroup--removable)
-  :global(.vkuiInternalFormItem--withTop)
-  ~ .Removable__offset {
+:global(.vkuiInternalFormItem--withTop) :global(.vkuiInternalFormItem__removable) ~ .offset,
+:global(.vkuiInternalFormLayoutGroup--removable) :global(.vkuiInternalFormItem--withTop) ~ .offset {
   order: -1;
   display: block;
   inline-size: 100%;
@@ -130,10 +126,10 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--sizeY-compact):global(.vkuiInternalFormItem--withTop)
   :global(.vkuiInternalFormItem__removable)
-  ~ .Removable__offset,
+  ~ .offset,
 :global(.vkuiInternalFormLayoutGroup--sizeY-compact):global(.vkuiInternalFormLayoutGroup--removable)
   :global(.vkuiInternalFormItem--withTop)
-  ~ .Removable__offset {
+  ~ .offset {
   block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
 }
 
@@ -141,10 +137,10 @@
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalFormItem--sizeY-none):global(.vkuiInternalFormItem--withTop)
     :global(.vkuiInternalFormItem__removable)
-    ~ .Removable__offset,
+    ~ .offset,
   :global(.vkuiInternalFormLayoutGroup--sizeY-none):global(.vkuiInternalFormLayoutGroup--removable)
     :global(.vkuiInternalFormItem--withTop)
-    ~ .Removable__offset {
+    ~ .offset {
     block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
   }
 }

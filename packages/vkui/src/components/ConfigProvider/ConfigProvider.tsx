@@ -1,6 +1,8 @@
+'use client';
+
 import * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
-import { useAutoDetectAppearance } from '../../hooks/useAutoDetectAppearance';
+import { useAutoDetectColorScheme } from '../../hooks/useAutoDetectColorScheme';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { TokensClassProvider } from '../../lib/tokens';
 import { excludeKeysWithUndefined } from '../../lib/utils';
@@ -29,14 +31,14 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode =
     transitionMotionEnabled,
     platform,
     locale,
-    appearance: appearanceProp,
+    colorScheme: colorSchemeProp,
     tokensClassNames,
   } = {
     ...parentConfig,
     ...props,
   };
 
-  const appearance = useAutoDetectAppearance(appearanceProp);
+  const colorScheme = useAutoDetectColorScheme(colorSchemeProp);
 
   const configContext = useObjectMemo({
     hasCustomPanelHeaderAfter,
@@ -46,12 +48,12 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode =
     platform,
     locale,
     tokensClassNames,
-    appearance,
+    colorScheme,
   });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      <IconAppearanceProvider value={appearance}>
+      <IconAppearanceProvider value={colorScheme}>
         <TokensClassProvider>{children}</TokensClassProvider>
       </IconAppearanceProvider>
     </ConfigProviderContext.Provider>

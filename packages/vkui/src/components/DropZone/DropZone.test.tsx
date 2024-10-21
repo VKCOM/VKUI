@@ -13,12 +13,12 @@ describe('DropZone', () => {
         <div data-testid="content"></div>
       </DropZone>,
     );
-    expect(screen.getByTestId('drop-zone')).not.toHaveClass(styles['DropZone--active']);
+    expect(screen.getByTestId('drop-zone')).not.toHaveClass(styles.active);
     fireEvent.dragOver(screen.getByTestId('content'));
-    expect(screen.getByTestId('drop-zone')).toHaveClass(styles['DropZone--active']);
+    expect(screen.getByTestId('drop-zone')).toHaveClass(styles.active);
 
     fireEvent.dragLeave(screen.getByTestId('content'));
-    expect(screen.getByTestId('drop-zone')).not.toHaveClass(styles['DropZone--active']);
+    expect(screen.getByTestId('drop-zone')).not.toHaveClass(styles.active);
   });
 
   it('no active state when content stopPropagation dragOver', async () => {
@@ -28,7 +28,7 @@ describe('DropZone', () => {
       </DropZone>,
     );
     fireEvent.dragOver(screen.getByTestId('content'));
-    expect(screen.getByTestId('drop-zone')).not.toHaveClass(styles['DropZone--active']);
+    expect(screen.getByTestId('drop-zone')).not.toHaveClass(styles.active);
   });
 
   it('no active state when content stopPropagation dragOver', async () => {

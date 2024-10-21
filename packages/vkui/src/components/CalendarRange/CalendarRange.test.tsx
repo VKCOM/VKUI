@@ -1,4 +1,5 @@
 import { fireEvent, getByText, render, screen } from '@testing-library/react';
+import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { getDocumentBody } from '../../lib/dom';
 import { baselineComponent } from '../../testing/utils';
 import { CalendarRange } from './CalendarRange';
@@ -12,9 +13,7 @@ describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
 
   const getParts = () => {
-    return getDocumentBody().getElementsByClassName(
-      styles['CalendarRange__inner'],
-    ) as HTMLCollectionOf<HTMLElement>;
+    return getDocumentBody().getElementsByClassName(styles.inner) as HTMLCollectionOf<HTMLElement>;
   };
 
   const clickDayInPart = (part: HTMLElement, date: string) => {
@@ -22,7 +21,7 @@ describe('CalendarRange', () => {
   };
 
   const getCalendarDayBlock = (part: HTMLElement, date: string) => {
-    return getByText(part, date).closest(`.${dayStyles['CalendarDay']}`) as HTMLElement;
+    return getByText(part, date).closest(`.${dayStyles.content}`) as HTMLElement;
   };
 
   const getLeftPart = () => {
@@ -30,17 +29,12 @@ describe('CalendarRange', () => {
     return leftPart;
   };
 
-  const getRightPart = () => {
-    const [, rightPart] = getParts();
-    return rightPart;
-  };
-
   const checkLeftPartMonth = (monthName: string) => {
     expect(getByText(getLeftPart(), monthName)).toBeTruthy();
   };
 
   const triggerKeyDownEvent = (key: string) => {
-    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles['CalendarDays'])[0], {
+    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[0], {
       key,
       code: key,
     });
@@ -68,7 +62,7 @@ describe('CalendarRange', () => {
     );
 
     const getSelect = (index: number) => {
-      const headers = result.container.getElementsByClassName(styles['CalendarRange__header']);
+      const headers = result.container.getElementsByClassName(styles.header);
       expect(headers.length).toBe(2);
       const header = headers[index];
       return header.querySelector('select');
@@ -127,12 +121,8 @@ describe('CalendarRange', () => {
     const [leftPart] = getParts();
     clickDayInPart(leftPart, '1');
 
-    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(
-      dayStyles['CalendarDay--selection-start'],
-    );
-    expect(getCalendarDayBlock(leftPart, '1')).not.toHaveClass(
-      dayStyles['CalendarDay--selection-end'],
-    );
+    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(dayStyles.selectionStart);
+    expect(getCalendarDayBlock(leftPart, '1')).not.toHaveClass(dayStyles.selectionEnd);
   });
 
   it('check range working', async () => {
@@ -143,38 +133,34 @@ describe('CalendarRange', () => {
     const [leftPart] = getParts();
     clickDayInPart(leftPart, '3');
 
-    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(
-      dayStyles['CalendarDay--selection-start'],
-    );
-    expect(getCalendarDayBlock(leftPart, '3')).toHaveClass(dayStyles['CalendarDay--selection-end']);
+    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(dayStyles.selectionStart);
+    expect(getCalendarDayBlock(leftPart, '3')).toHaveClass(dayStyles.selectionEnd);
   });
 
   it('check reverse range select working', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
-    const { rerender } = render(
-      <CalendarRange value={[firstDayDate, firstDayDate]} onChange={onChange} />,
-    );
-
-    triggerKeyDownEvent('ArrowLeft');
+    const end = addDays(firstDayDate, 10);
+    const start = firstDayDate;
+    render(<CalendarRange value={[end, null]} onChange={onChange} />);
 
     const [leftPart] = getParts();
-    clickDayInPart(leftPart, '30');
+    clickDayInPart(leftPart, start.getDate().toString());
 
-    expect(onChange.mock.calls).toEqual([[[new Date('2023-08-30T07:40:00.000Z'), firstDayDate]]]);
+    expect(onChange.mock.calls).toEqual([[[startOfDay(start), endOfDay(end)]]]);
+  });
 
-    rerender(
-      <CalendarRange
-        value={[new Date('2023-08-30T07:40:00.000Z'), firstDayDate]}
-        onChange={onChange}
-      />,
-    );
+  it('check reselect range after range selected', async () => {
+    jest.useFakeTimers();
+    const onChange = jest.fn();
+    const start = firstDayDate;
+    const end = addDays(firstDayDate, 10);
+    render(<CalendarRange value={[start, end]} onChange={onChange} />);
 
-    expect(getCalendarDayBlock(getLeftPart(), '30')).toHaveClass(
-      dayStyles['CalendarDay--selection-start'],
-    );
-    expect(getCalendarDayBlock(getRightPart(), '1')).toHaveClass(
-      dayStyles['CalendarDay--selection-end'],
-    );
+    const newStart = addDays(firstDayDate, 5);
+    const [leftPart] = getParts();
+    clickDayInPart(leftPart, newStart.getDate().toString());
+
+    expect(onChange.mock.calls).toEqual([[[startOfDay(newStart), null]]]);
   });
 });

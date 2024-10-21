@@ -5,25 +5,26 @@ import {
   type GapsProp,
   rowGapClassNames,
 } from '../../lib/layouts';
-import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import type { RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './SimpleGrid.module.css';
 
 const marginClassNames = {
-  'auto': styles['SimpleGrid--margin-auto'],
-  'auto-inline': styles['SimpleGrid--margin-auto-inline'],
-  'auto-block': styles['SimpleGrid--margin-auto-block'],
+  'auto': styles.marginAuto,
+  'auto-inline': styles.marginAutoInline,
+  'auto-block': styles.marginAutoBlock,
 };
 
 const alignClassNames = {
-  start: styles['SimpleGrid--align-start'],
-  end: styles['SimpleGrid--align-end'],
-  center: styles['SimpleGrid--align-center'],
-  stretch: styles['SimpleGrid--align-stretch'],
-  baseline: styles['SimpleGrid--align-baseline'],
+  start: styles.alignStart,
+  end: styles.alignEnd,
+  center: styles.alignCenter,
+  stretch: styles.alignStretch,
+  baseline: styles.alignBaseline,
 };
 
-export interface SimpleGridProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
   /**
    * Количество колонок
    */
@@ -31,9 +32,7 @@ export interface SimpleGridProps extends HTMLAttributesWithRootRef<HTMLDivElemen
   /**
    * Отступы между элементами.
    * Значение из списка предопределённых пресетов или число, которое будет приведено к пикселям.
-   * Через массив можно задать отступ между столбцами и строками [column, row], если они отличаются.
-   *
-   * TODO [>=7]: порядок следования будет [row, column]
+   * Через массив можно задать отступ между столбцами и строками [row, column], если они отличаются.
    */
   gap?: GapsProp;
   /**
@@ -64,7 +63,7 @@ export const SimpleGrid = ({
   ...props
 }: SimpleGridProps) => {
   const style: CSSCustomProperties = {};
-  const [columnGap, rowGap] = calculateGap(gap);
+  const [rowGap, columnGap] = calculateGap(gap);
   if (typeof rowGap === 'number') {
     style['--vkui_internal--row_gap'] = `${rowGap}px`;
   }
@@ -80,10 +79,10 @@ export const SimpleGrid = ({
     <RootComponent
       {...props}
       baseClassName={classNames(
-        styles.SimpleGrid,
+        styles.host,
         margin !== 'none' && marginClassNames[margin],
         alignClassNames[align],
-        minColWidth && styles['SimpleGrid--with-min-width'],
+        minColWidth && styles.withMinWidth,
         typeof columnGap === 'string' && columnGapClassNames[columnGap],
         typeof rowGap === 'string' && rowGapClassNames[rowGap],
       )}

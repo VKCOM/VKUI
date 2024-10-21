@@ -6,7 +6,7 @@
  * - sizeX="compact" (mobile)  -> mode="plain"
  * - sizeX="regular" (desktop) -> mode="card"
  */
-.Group {
+.host {
   --vkui_internal--Group_padding_inline: 0;
   --vkui_internal--Group_padding_block: var(--vkui--spacing_size_m);
   --vkui_internal--Group_card_mode_padding_size: 0;
@@ -16,17 +16,17 @@
   padding-inline: var(--vkui_internal--Group_padding_inline);
 }
 
-.Group--padding-s {
+.paddingS {
   --vkui_internal--Group_card_mode_padding_size: var(--vkui--spacing_size_xs);
 }
 
-.Group--padding-m {
+.paddingM {
   --vkui_internal--Group_card_mode_padding_size: var(--vkui--spacing_size_m);
 }
 
 /* разделитель при mode="card" */
-.Group--mode-card,
-.Group--sizeX-regular.Group--mode-none {
+.modeCard,
+.sizeXRegular.modeNone {
   --vkui_internal--Group_padding_inline: var(--vkui_internal--Group_card_mode_padding_size);
   --vkui_internal--Group_padding_block: var(--vkui_internal--Group_card_mode_padding_size);
 
@@ -36,7 +36,7 @@
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none {
+  .sizeXNone.modeNone {
     --vkui_internal--Group_padding_inline: var(--vkui_internal--Group_card_mode_padding_size);
     --vkui_internal--Group_padding_block: var(--vkui_internal--Group_card_mode_padding_size);
 
@@ -46,21 +46,21 @@
   }
 }
 
-.Group--sizeX-compact.Group--mode-card {
+.sizeXCompact.modeCard {
   --vkui_internal--Group_padding_inline: 0;
 
   border-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-card {
+  .sizeXNone.modeCard {
     --vkui_internal--Group_padding_inline: 0;
 
     border-radius: var(--vkui--size_border_radius_promo--regular);
   }
 }
 
-.Group--sizeX-compact.Group--mode-card:first-of-type {
+.sizeXCompact.modeCard:first-of-type {
   border-start-start-radius: 0;
   border-start-end-radius: 0;
   border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
@@ -68,7 +68,7 @@
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-card:first-of-type {
+  .sizeXNone.modeCard:first-of-type {
     border-start-start-radius: 0;
     border-start-end-radius: 0;
     border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
@@ -83,8 +83,8 @@
  * например поверх Tooltip
  * См. пример: Slider c пропом withTooltip
  */
-.Group--mode-card::before,
-.Group--sizeX-regular.Group--mode-none::before {
+.modeCard::before,
+.sizeXRegular.modeNone::before {
   content: '';
   inset-inline-start: 0;
   inset-block-start: 0;
@@ -97,7 +97,7 @@
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none::before {
+  .sizeXNone.modeNone::before {
     content: '';
     inset-inline-start: 0;
     inset-block-start: 0;
@@ -110,12 +110,12 @@
   }
 }
 
-.Group--sizeX-compact.Group--mode-card::before {
+.sizeXCompact.modeCard::before {
   box-shadow: none;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-card::before {
+  .sizeXNone.modeCard::before {
     box-shadow: none;
   }
 }
@@ -123,28 +123,28 @@
 /*
  * Header
  */
-.Group__header:empty {
+.header:empty {
   display: none;
 }
 
-.Group--mode-plain:not(:first-of-type) > .Group__header,
-.Group--sizeX-compact.Group--mode-none:not(:first-of-type) > .Group__header {
+.modePlain:not(:first-of-type) > .header,
+.sizeXCompact.modeNone:not(:first-of-type) > .header {
   margin-block-start: calc(-1 * var(--vkui--spacing_size_m));
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none:not(:first-of-type) > .Group__header {
+  .sizeXNone.modeNone:not(:first-of-type) > .header {
     margin-block-start: calc(-1 * var(--vkui--spacing_size_m));
   }
 }
 
-.Group--mode-card > .Group__header,
-.Group--sizeX-regular.Group--mode-none > .Group__header {
+.modeCard > .header,
+.sizeXRegular.modeNone > .header {
   margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none > .Group__header {
+  .sizeXNone.modeNone > .header {
     margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
   }
 }
@@ -152,7 +152,7 @@
 /*
  * Description
  */
-.Group__description {
+.description {
   display: block;
   padding-block: var(--vkui--spacing_size_xs) var(--vkui--spacing_size_2xl);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
@@ -164,14 +164,14 @@
  *
  * ⚠️ Находится за пределами Group
  */
-.Group__separator-sibling {
+.separatorSibling {
   --vkui_internal--Group__separator_hr: none;
 
   position: relative;
   box-sizing: border-box;
 }
 
-.Group__separator-sibling::before {
+.separatorSibling::before {
   display: var(--vkui_internal--Group__separator_hr);
   content: '';
   block-size: var(--vkui--size_border--regular);
@@ -179,8 +179,8 @@
 }
 
 /* разделитель при mode="plain" */
-.Group--mode-plain + .Group__separator-sibling,
-.Group--sizeX-compact.Group--mode-none + .Group__separator-sibling {
+.modePlain + .separatorSibling,
+.sizeXCompact.modeNone + .separatorSibling {
   --vkui_internal--Group__separator_hr: block;
 
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
@@ -188,7 +188,7 @@
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none + .Group__separator-sibling {
+  .sizeXNone.modeNone + .separatorSibling {
     --vkui_internal--Group__separator_hr: block;
 
     padding-inline: var(--vkui--size_base_padding_horizontal--regular);
@@ -196,38 +196,37 @@
   }
 }
 
-.Group--mode-plain:last-of-type + .Group__separator-sibling:not(.Group__separator-sibling--forced) {
+.modePlain:last-of-type + .separatorSibling:not(.separatorSiblingForced) {
   display: none;
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-none:last-of-type
-    + .Group__separator-sibling:not(.Group__separator-sibling--forced) {
+  .sizeXNone.modeNone:last-of-type + .separatorSibling:not(.separatorSiblingForced) {
     display: none;
   }
 }
 
 /* разделитель при mode="card" */
-.Group--mode-card + .Group__separator-sibling,
-.Group--sizeX-regular.Group--mode-none + .Group__separator-sibling {
+.modeCard + .separatorSibling,
+.sizeXRegular.modeNone + .separatorSibling {
   block-size: var(--vkui--spacing_size_2xl);
   padding-block: calc(var(--vkui--spacing_size_2xl) / 2);
 }
 
 @media (--sizeX-regular) {
-  .Group--sizeX-none.Group--mode-none + .Group__separator-sibling {
+  .sizeXNone.modeNone + .separatorSibling {
     block-size: var(--vkui--spacing_size_2xl);
     padding-block: calc(var(--vkui--spacing_size_2xl) / 2);
   }
 }
 
-.Group--sizeX-compact.Group--mode-card + .Group__separator-sibling {
+.sizeXCompact.modeCard + .separatorSibling {
   block-size: var(--vkui--spacing_size_m);
   padding-block: calc(var(--vkui--spacing_size_m) / 2);
 }
 
 @media (--sizeX-compact) {
-  .Group--sizeX-none.Group--mode-card + .Group__separator-sibling {
+  .sizeXNone.modeCard + .separatorSibling {
     block-size: var(--vkui--spacing_size_m);
     padding-block: calc(var(--vkui--spacing_size_m) / 2);
   }
@@ -239,12 +238,12 @@
  * note: ModalPage форсирует mode="plain" для Group
  */
 @media (--sizeX-regular) {
-  .Group--mode-plain-inside-modal {
+  .modePlainInsideModal {
     --vkui_internal--Group_padding_inline: var(--vkui--spacing_size_m);
     --vkui_internal--Group_padding_block: var(--vkui--spacing_size_m);
   }
 
-  .Group--mode-plain-inside-modal + .Group__separator-sibling {
+  .modePlainInsideModal + .separatorSibling {
     padding-inline: calc(
       var(--vkui--size_base_padding_horizontal--regular) + var(--vkui--spacing_size_m)
     );
@@ -254,41 +253,41 @@
 /*
  * Group вложенный в Group
  */
-.Group .Group {
+.host .host {
   --vkui_internal--Group_padding_inline: 0;
 }
 
-.Group .Group + .Group__separator-sibling {
+.host .host + .separatorSibling {
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-.Group .Group:first-of-type {
+.host .host:first-of-type {
   padding-block-start: 0;
 }
 
-.Group .Group:last-of-type {
+.host .host:last-of-type {
   padding-block-end: 0;
 }
 
 /*
- * Group.ExpandedContent
+ * Group.host
  * компенсирующий отступы Group в зависимости
  * от режима: inline / block
  */
 
-.Group__expanded-content--inline {
+.expandedContentInline {
   margin-inline: calc(-1 * var(--vkui_internal--Group_padding_inline));
 }
 
-.Group__expanded-content--block {
+.expandedContentBlock {
   margin-block: calc(-1 * var(--vkui_internal--Group_padding_block));
 }
 
-.Group .Group:first-of-type .Group__expanded-content--block {
+.host .host:first-of-type .expandedContentBlock {
   margin-inline-start: 0;
 }
 
-.Group .Group:last-of-type .Group__expanded-content--block {
+.host .host:last-of-type .expandedContentBlock {
   margin-inline-start: 0;
 }
 
@@ -297,8 +296,8 @@
  * PanelHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader--vkcom) ~ .Group:first-of-type,
-:global(.vkuiInternalPanelHeader--vkcom) + * .Group:first-of-type {
+:global(.vkuiInternalPanelHeader--vkcom) ~ .host:first-of-type,
+:global(.vkuiInternalPanelHeader--vkcom) + * .host:first-of-type {
   position: relative;
   inset-block-start: -1px;
   border-start-end-radius: 0;

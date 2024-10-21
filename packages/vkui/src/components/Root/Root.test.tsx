@@ -231,5 +231,5 @@ describe(Root, () => {
 });
 
 function getViewPanelById(panelTestId: string) {
-  return screen.getByTestId(panelTestId).closest<HTMLElement>(`.${styles['Root__view']}`)!;
+  return screen.getByTestId(panelTestId).closest<HTMLElement>(`.${styles.view}`)!;
 }

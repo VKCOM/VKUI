@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
@@ -11,15 +13,20 @@ import { RootComponent } from '../../RootComponent/RootComponent';
 import { ScrollArrow } from '../../ScrollArrow/ScrollArrow';
 import { type CustomTouchEvent, Touch } from '../../Touch/Touch';
 import { type BaseGalleryProps, type GallerySlidesState } from '../types';
-import { ANIMATION_DURATION, CONTROL_ELEMENTS_STATE, SLIDES_MANAGER_STATE } from './constants';
+import {
+  ANIMATION_DURATION,
+  CONTROL_ELEMENTS_STATE,
+  SLIDE_THRESHOLD,
+  SLIDES_MANAGER_STATE,
+} from './constants';
 import { calculateIndent, getLoopPoints, getTargetIndex } from './helpers';
 import { useSlideAnimation } from './hooks';
 import type { ControlElementsState, SlidesManagerState } from './types';
 import styles from '../BaseGallery.module.css';
 
 const stylesBullets = {
-  dark: styles['BaseGallery__bullets--dark'],
-  light: styles['BaseGallery__bullets--light'],
+  dark: styles.bulletsDark,
+  light: styles.bulletsLight,
 };
 
 const warn = warnOnce('Gallery');
@@ -109,6 +116,11 @@ export const CarouselBase = ({
         return { coordX: elem.offsetLeft, width: elem.offsetWidth };
       }) || [];
 
+    if (localSlides.length === 0) {
+      initialized.current = false;
+      return;
+    }
+
     const containerWidth = rootRef.current.offsetWidth;
     const viewportOffsetWidth = viewportRef.current.offsetWidth;
     const layerWidth = localSlides.reduce((val, slide) => slide.width + val, 0);
@@ -123,7 +135,7 @@ export const CarouselBase = ({
       }
       if (remainingWidth <= 0 && slideIndex === localSlides.length) {
         warn(
-          'Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше."',
+          'Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше.',
         );
       }
     }
@@ -253,7 +265,14 @@ export const CarouselBase = ({
 
   useIsomorphicLayoutEffect(initializeSlides, [align, slideWidth]);
 
+  const calculateMinDeltaXToSlide = () => {
+    return slidesManager.current.slides[slideIndex].width * SLIDE_THRESHOLD;
+  };
+
   const slideLeft = (event: React.MouseEvent) => {
+    if (slideIndex > 0) {
+      shiftXCurrentRef.current += calculateMinDeltaXToSlide();
+    }
     onChange?.(
       (slideIndex - 1 + slidesManager.current.slides.length) % slidesManager.current.slides.length,
     );
@@ -261,6 +280,9 @@ export const CarouselBase = ({
   };
 
   const slideRight = (event: React.MouseEvent) => {
+    if (slideIndex < slidesManager.current.slides.length - 1) {
+      shiftXCurrentRef.current -= calculateMinDeltaXToSlide();
+    }
     onChange?.((slideIndex + 1) % slidesManager.current.slides.length);
     onNextClick?.(event);
   };
@@ -320,14 +342,14 @@ export const CarouselBase = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['BaseGallery'],
-        slideWidth === 'custom' && styles['BaseGallery--custom-width'],
-        isDraggable && styles['BaseGallery--draggable'],
+        styles.host,
+        slideWidth === 'custom' && styles.customWidth,
+        isDraggable && styles.draggable,
       )}
       getRootRef={rootRef}
     >
       <Touch
-        className={styles['BaseGallery__viewport']}
+        className={styles.viewport}
         onStartX={onStart}
         onMoveX={onMoveX}
         onEnd={onEnd}
@@ -335,13 +357,9 @@ export const CarouselBase = ({
         getRootRef={viewportRef}
         noSlideClick
       >
-        <div className={styles['BaseGallery__layer']} ref={layerRef}>
+        <div className={styles.layer} ref={layerRef}>
           {React.Children.map(children, (item: React.ReactNode, i: number) => (
-            <div
-              className={styles['BaseGallery__slide']}
-              key={`slide-${i}`}
-              ref={(el) => setSlideRef(el, i)}
-            >
+            <div className={styles.slide} key={`slide-${i}`} ref={(el) => setSlideRef(el, i)}>
               {item}
             </div>
           ))}
@@ -349,16 +367,10 @@ export const CarouselBase = ({
       </Touch>
 
       {bullets && (
-        <div
-          aria-hidden
-          className={classNames(styles['BaseGallery__bullets'], stylesBullets[bullets])}
-        >
+        <div aria-hidden className={classNames(styles.bullets, stylesBullets[bullets])}>
           {React.Children.map(children, (_item: React.ReactNode, index: number) => (
             <div
-              className={classNames(
-                styles['BaseGallery__bullet'],
-                index === slideIndex && styles['BaseGallery__bullet--active'],
-              )}
+              className={classNames(styles.bullet, index === slideIndex && styles.bulletActive)}
               key={index}
             />
           ))}
@@ -367,7 +379,7 @@ export const CarouselBase = ({
 
       {showArrows && hasPointer && canSlideLeft && (
         <ScrollArrow
-          className={styles['BaseGallery__arrow']}
+          className={styles.arrow}
           direction="left"
           onClick={slideLeft}
           size={arrowSize}
@@ -375,7 +387,7 @@ export const CarouselBase = ({
       )}
       {showArrows && hasPointer && canSlideRight && (
         <ScrollArrow
-          className={styles['BaseGallery__arrow']}
+          className={styles.arrow}
           direction="right"
           onClick={slideRight}
           size={arrowSize}

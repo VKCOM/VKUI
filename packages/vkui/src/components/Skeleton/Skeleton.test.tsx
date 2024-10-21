@@ -37,7 +37,7 @@ describe('Skeleton', () => {
       props: {
         noAnimation: true,
       },
-      className: styles['Skeleton--disableAnimation'],
+      className: styles.disableAnimation,
     },
   ])(
     'should have $cssVariable = $expectedValue with props $props',

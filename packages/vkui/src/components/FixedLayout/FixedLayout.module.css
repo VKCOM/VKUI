@@ -1,4 +1,4 @@
-.FixedLayout {
+.host {
   position: fixed;
   box-sizing: border-box;
   /**
@@ -17,16 +17,16 @@
     var(--vkui_internal--safe_area_inset_right);
 }
 
-.FixedLayout--filled {
+.filled {
   background: var(--vkui--color_background_content);
 }
 
-.FixedLayout--vertical-top {
+.verticalTop {
   inline-size: 100%;
   inset-block-start: 0;
 }
 
-.FixedLayout--vertical-bottom {
+.verticalBottom {
   inline-size: 100%;
   inset-block-end: 0;
   padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
@@ -37,7 +37,7 @@
  * Epic
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalEpic--hasTabbar) .FixedLayout--vertical-bottom {
+:global(.vkuiInternalEpic--hasTabbar) .verticalBottom {
   padding-block-end: calc(
     var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
   );
@@ -48,10 +48,8 @@
  * PanelHeader
  */
 /* stylelint-disable selector-max-universal, selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader) ~ .FixedLayout--vertical-top,
-:global(.vkuiInternalPanelHeader)
-  ~ *
-  .FixedLayout--vertical-top:not(:global(.vkuiInternalPanelHeader__fixed)) {
+:global(.vkuiInternalPanelHeader) ~ .verticalTop,
+:global(.vkuiInternalPanelHeader) ~ * .verticalTop:not(:global(.vkuiInternalPanelHeader__fixed)) {
   inset-block-start: calc(
     var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top)
   );

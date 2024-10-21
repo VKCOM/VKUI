@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 import path from 'path';
 import {
-  Appearance,
+  ColorScheme,
   defineConfig,
   type DeviceKey,
   devices,
@@ -124,50 +124,50 @@ function generateProjects(): TestProject {
     return restProps;
   };
 
-  const appearances = [Appearance.LIGHT, Appearance.DARK];
-  const projects = appearances
-    .map((appearance) => [
+  const colorSchemes = [ColorScheme.LIGHT, ColorScheme.DARK];
+  const projects = colorSchemes
+    .map((colorSchemeType) => [
       {
-        name: `android (chromium) • ${appearance}`,
+        name: `android (chromium) • ${colorSchemeType}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Pixel 5'),
-          appearance,
+          colorSchemeType,
           platform: Platform.ANDROID,
         },
       },
 
       {
-        name: `ios (webkit) • ${appearance}`,
+        name: `ios (webkit) • ${colorSchemeType}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('iPhone XR'),
-          appearance,
+          colorSchemeType,
           platform: Platform.IOS,
         },
       },
 
       {
-        name: `vkcom (chromium) • ${appearance}`,
+        name: `vkcom (chromium) • ${colorSchemeType}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Chrome'),
-          appearance,
+          colorSchemeType,
           platform: Platform.VKCOM,
         },
       },
 
       {
-        name: `vkcom (firefox) • ${appearance}`,
+        name: `vkcom (firefox) • ${colorSchemeType}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Firefox'),
-          appearance,
+          colorSchemeType,
           platform: Platform.VKCOM,
         },
       },
 
       {
-        name: `vkcom (webkit) • ${appearance}`,
+        name: `vkcom (webkit) • ${colorSchemeType}`,
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Safari'),
-          appearance,
+          colorSchemeType,
           platform: Platform.VKCOM,
         },
       },

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -12,9 +14,9 @@ import { SplitColContext } from './SplitColContext';
 import styles from './SplitCol.module.css';
 
 const breakpointClassNames = {
-  none: classNames(styles['SplitCol--viewWidth-none'], 'vkuiInternalSplitCol--viewWidth-none'),
-  tabletMinus: styles['SplitCol--viewWidth-tabletMinus'],
-  smallTabletPlus: styles['SplitCol--viewWidth-smallTabletPlus'],
+  none: classNames(styles.viewWidthNone, 'vkuiInternalSplitCol--viewWidth-none'),
+  tabletMinus: styles.viewWidthTabletMinus,
+  smallTabletPlus: styles.viewWidthSmallTabletPlus,
   tabletPlus: 'vkuiInternalSplitCol--viewWidth-tabletPlus',
 };
 
@@ -103,16 +105,15 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
       }}
       getRootRef={baseRef}
       baseClassName={classNames(
-        styles['SplitCol'],
+        styles.host,
         viewWidthToClassName(breakpointClassNames, viewWidth),
-        autoSpaced &&
-          classNames(styles['SplitCol--spaced-auto'], 'vkuiInternalSplitCol--spaced-auto'),
-        fixed && styles['SplitCol--fixed'],
-        stretchedOnMobile && styles['SplitCol--stretched-on-mobile'],
+        autoSpaced && classNames(styles.spacedAuto, 'vkuiInternalSplitCol--spaced-auto'),
+        fixed && styles.fixed,
+        stretchedOnMobile && styles.stretchedOnMobile,
       )}
     >
       <SplitColContext.Provider value={contextValue}>
-        {fixed ? <div className={styles['SplitCol__fixedInner']}>{children}</div> : children}
+        {fixed ? <div className={styles.fixedInner}>{children}</div> : children}
       </SplitColContext.Provider>
     </RootComponent>
   );

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -109,9 +111,9 @@ export const Root = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['Root'],
-        platform === 'ios' && styles['Root--ios'],
-        transition && styles['Root--transition'],
+        styles.host,
+        platform === 'ios' && styles.ios,
+        transition && styles.transition,
       )}
     >
       {views.map((view) => {
@@ -128,17 +130,17 @@ export const Root = ({
             ref={(e) => viewId && (viewNodes[viewId] = e)}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
             className={classNames(
-              styles['Root__view'],
-              transition && viewId === prevView && isBack && styles['Root__view--hide-back'],
-              transition && viewId === prevView && !isBack && styles['Root__view--hide-forward'],
-              transition && viewId === activeView && isBack && styles['Root__view--show-back'],
-              transition && viewId === activeView && !isBack && styles['Root__view--show-forward'],
+              styles.view,
+              transition && viewId === prevView && isBack && styles.viewHideBack,
+              transition && viewId === prevView && !isBack && styles.viewHideForward,
+              transition && viewId === activeView && isBack && styles.viewShowBack,
+              transition && viewId === activeView && !isBack && styles.viewShowForward,
             )}
           >
             <NavTransitionDirectionProvider isBack={isBack}>
               <NavTransitionProvider entering={transition && viewId === activeView}>
                 <div
-                  className={styles['Root__scrollCompensation']}
+                  className={styles.scrollCompensation}
                   style={{
                     marginTop: compensateScroll ? viewId && -(scrolls[viewId] ?? 0) : undefined,
                   }}

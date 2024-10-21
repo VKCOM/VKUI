@@ -8,41 +8,43 @@ import { type ScreenSpinnerProps } from './types';
 import styles from './ScreenSpinner.module.css';
 
 const stateClassNames = {
-  cancelable: styles['ScreenSpinner--state-cancelable'],
-  done: styles['ScreenSpinner--state-done'],
-  error: styles['ScreenSpinner--state-error'],
+  cancelable: styles.stateCancelable,
+  done: styles.stateDone,
+  error: styles.stateError,
+  custom: styles.stateCustom,
 };
 
 const modeClassNames = {
-  shadow: styles['ScreenSpinner--mode-shadow'],
-  overlay: styles['ScreenSpinner--mode-overlay'],
+  shadow: styles.modeShadow,
+  overlay: styles.modeOverlay,
 };
 
 type ScreenSpinnerContainerProps = HTMLAttributesWithRootRef<HTMLSpanElement> &
-  Pick<ScreenSpinnerProps, 'state' | 'mode' | 'caption'>;
+  Pick<ScreenSpinnerProps, 'state' | 'mode' | 'label' | 'customIcon'>;
 
 export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
   state = 'loading',
   mode = 'shadow',
-  caption,
+  customIcon,
+  label,
   children,
   ...restProps
 }: ScreenSpinnerContainerProps) => {
   return (
-    <ScreenSpinnerContext.Provider value={{ state, caption }}>
+    <ScreenSpinnerContext.Provider value={{ state, label, customIcon }}>
       <RootComponent
         baseClassName={classNames(
-          styles['ScreenSpinner'],
+          styles.host,
           modeClassNames[mode],
           state !== 'loading' && stateClassNames[state],
-          hasReactNode(caption) && styles['ScreenSpinner--has-caption'],
+          hasReactNode(label) && styles.hasLabel,
         )}
         {...restProps}
       >
-        <div className={styles['ScreenSpinner__icon-slot']}>{children}</div>
-        {hasReactNode(caption) && (
-          <Footnote className={styles.ScreenSpinner__caption} aria-hidden>
-            {caption}
+        <div className={styles.iconSlot}>{children}</div>
+        {hasReactNode(label) && (
+          <Footnote className={styles.label} aria-hidden>
+            {label}
           </Footnote>
         )}
       </RootComponent>

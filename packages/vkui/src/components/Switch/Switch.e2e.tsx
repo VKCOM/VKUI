@@ -10,7 +10,7 @@ test('Switch', async ({ mount, expectScreenshotClippedToContent, componentPlaygr
 test.describe('Switch', () => {
   test.use({
     onlyForPlatforms: [Platform.ANDROID],
-    onlyForAppearances: ['light'],
+    onlyForColorSchemes: ['light'],
   });
 
   test('State: Focus Visible', async ({

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { stopPropagation } from '../../lib/utils';
@@ -41,12 +43,9 @@ export const ScrollY = ({
   );
 
   return (
-    <div className={styles['CustomScrollView__barY']} ref={barY} onClick={stopPropagation}>
+    <div className={styles.barY} ref={barY} onClick={stopPropagation}>
       <div
-        className={classNames(
-          styles['CustomScrollView__trackerY'],
-          !verticalTrackerVisible && styles['CustomScrollView__trackerY--hidden'],
-        )}
+        className={classNames(styles.trackerY, !verticalTrackerVisible && styles.trackerYHidden)}
         onMouseEnter={autoHideScrollbar ? onVerticalTrackerMouseEnter : undefined}
         onMouseLeave={autoHideScrollbar ? onVerticalTrackerMouseLeave : undefined}
         ref={trackerY}

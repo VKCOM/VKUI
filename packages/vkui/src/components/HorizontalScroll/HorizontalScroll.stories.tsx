@@ -51,13 +51,13 @@ export const Playground: Story = {
     }, []);
 
     return (
-      <HorizontalScroll {...args} inline>
-        {commonFriends.length === 0 && <Spinner size="regular" style={{ height: 88 }} />}
+      <HorizontalScroll {...args}>
+        {commonFriends.length === 0 && <Spinner size="m" style={{ height: 88 }} />}
         {commonFriends.length > 0 && (
           <React.Fragment>
             {commonFriends.map((item) => {
               return (
-                <HorizontalCell key={item.id} header={item.first_name}>
+                <HorizontalCell key={item.id} title={item.first_name}>
                   <Avatar size={56} src={item.photo_200} />
                 </HorizontalCell>
               );

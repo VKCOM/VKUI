@@ -34,8 +34,8 @@ export const Playground: Story = {
                 src="https://sun9-32.userapi.com/uFzLOK55iY7pC0DHjneEdP9G6gXcXi2Mxj9wVA/wnTmzh_blNM.jpg"
               />
             }
-            header="Для Вас"
-            subheader="Обновлено сегодня"
+            title="Для Вас"
+            subtitle="Обновлено сегодня"
             actions={
               <Button before={<Icon24Play />} onClick={noop}>
                 Слушать

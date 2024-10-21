@@ -42,8 +42,8 @@ const getTappablePropsFromPaginationPage = (
 
   return {
     'className': classNames(pageClassNames, className),
-    'activeMode': styles['PaginationPage--state-active'],
-    'hoverMode': styles['PaginationPage--state-hover'],
+    'activeMode': styles.stateActive,
+    'hoverMode': styles.stateHover,
     'focusVisibleMode': 'outside',
     'aria-current': isCurrent ? true : undefined,
     'disabled': disabled,

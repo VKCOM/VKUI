@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
@@ -13,14 +15,14 @@ import styles from './TooltipBase.module.css';
 export const TOOLTIP_MAX_WIDTH = 220;
 
 const stylesAppearance = {
-  accent: styles['TooltipBase--appearance-accent'],
-  white: styles['TooltipBase--appearance-white'],
-  black: styles['TooltipBase--appearance-black'],
-  inversion: styles['TooltipBase--appearance-inversion'],
+  accent: styles.appearanceAccent,
+  white: styles.appearanceWhite,
+  black: styles.appearanceBlack,
+  inversion: styles.appearanceInversion,
 };
 
 export interface TooltipBaseProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children' | 'title'> {
   /**
    * Стиль отображения подсказки
    */
@@ -28,11 +30,11 @@ export interface TooltipBaseProps
   /**
    * Текст тултипа.
    */
-  text?: React.ReactNode;
+  description?: React.ReactNode;
   /**
    * Заголовок тултипа.
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /**
    * Для показа указателя, требуется передать хотя бы `coords` и `placement`.
    */
@@ -81,8 +83,8 @@ export const TooltipBase = ({
   appearance = 'accent',
   arrowProps,
   ArrowIcon = DefaultIcon,
-  text,
-  header,
+  description,
+  title,
   maxWidth = TOOLTIP_MAX_WIDTH,
   closeIconLabel = 'Закрыть',
   onCloseIconClick,
@@ -93,7 +95,7 @@ export const TooltipBase = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['TooltipBase'],
+        styles.host,
         appearance !== 'neutral' && stylesAppearance[appearance],
         className,
       )}
@@ -102,22 +104,19 @@ export const TooltipBase = ({
       {arrowProps && (
         <FloatingArrow
           {...arrowProps}
-          iconClassName={classNames(styles['TooltipBase__arrow'], arrowProps.iconClassName)}
+          iconClassName={classNames(styles.arrow, arrowProps.iconClassName)}
           Icon={ArrowIcon}
         />
       )}
-      <div
-        className={styles['TooltipBase__content']}
-        style={maxWidth !== null ? { maxWidth } : undefined}
-      >
+      <div className={styles.content} style={maxWidth !== null ? { maxWidth } : undefined}>
         <div>
-          {hasReactNode(header) && <Subhead weight="2">{header}</Subhead>}
-          {hasReactNode(text) && <Subhead>{text}</Subhead>}
+          {hasReactNode(title) && <Subhead weight="2">{title}</Subhead>}
+          {hasReactNode(description) && <Subhead>{description}</Subhead>}
         </div>
         {typeof onCloseIconClick === 'function' && (
           <Tappable
             Component="button"
-            className={styles['TooltipBase__closeButton']}
+            className={styles.closeButton}
             hoverMode="opacity"
             activeMode="opacity"
             onClick={onCloseIconClick}

@@ -42,7 +42,7 @@ export const Playground: StoryObj<AlertProps> = {
       },
     ],
     actionsLayout: 'horizontal',
-    header: 'Удаление документа',
-    text: 'Вы уверены, что хотите удалить этот документ?',
+    title: 'Удаление документа',
+    description: 'Вы уверены, что хотите удалить этот документ?',
   },
 };

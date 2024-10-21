@@ -1,20 +1,20 @@
-.MiniInfoCell {
+.host {
   display: flex;
   padding-block: var(--vkui--spacing_size_s);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   color: var(--vkui--color_text_subhead);
 }
 
-.MiniInfoCell--mode-accent {
+.modeAccent {
   color: var(--vkui--color_text_primary);
 }
 
-.MiniInfoCell__before {
+.before {
   margin-inline-end: var(--vkui--spacing_size_xl);
   color: var(--vkui--color_icon_secondary);
 }
 
-.MiniInfoCell__middle {
+.middle {
   flex: 1;
   min-inline-size: 0;
   overflow: hidden;
@@ -22,7 +22,7 @@
   align-items: center;
 }
 
-.MiniInfoCell__content {
+.content {
   flex: 1;
   min-inline-size: 0;
   overflow: hidden;
@@ -31,7 +31,7 @@
   word-break: break-word;
 }
 
-.MiniInfoCell--textWrap-short .MiniInfoCell__content {
+.textWrapShort .content {
   white-space: initial;
   display: -webkit-box;
   max-block-size: 60px;
@@ -39,42 +39,42 @@
   -webkit-box-orient: vertical;
 }
 
-.MiniInfoCell--textWrap-full .MiniInfoCell__content {
+.textWrapFull .content {
   overflow: inherit;
   white-space: initial;
 }
 
-.MiniInfoCell--textWrap-nowrap .MiniInfoCell__content {
+.textWrapNowrap .content {
   flex: 0 1 auto;
 }
 
-.MiniInfoCell__after {
+.after {
   margin-inline-start: var(--vkui--spacing_size_xl);
   margin-block: calc(-1 * var(--vkui--spacing_size_2xs));
 }
 
-.MiniInfoCell--mode-add,
-.MiniInfoCell--mode-more {
+.modeAdd,
+.modeMore {
   color: var(--vkui--color_text_link_themed);
 }
 
-.MiniInfoCell--mode-add .MiniInfoCell__before,
-.MiniInfoCell--mode-more .MiniInfoCell__before {
+.modeAdd .before,
+.modeMore .before {
   color: var(--vkui--color_icon_accent_themed);
 }
 
-.MiniInfoCell--mode-more {
+.modeMore {
   padding-block: 10px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.MiniInfoCell__middle :global(.vkuiIcon) {
+.middle :global(.vkuiIcon) {
   margin-inline-start: var(--vkui--spacing_size_xs);
   color: var(--vkui--color_text_accent);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.MiniInfoCell--mode-add .MiniInfoCell__middle :global(.vkuiIcon),
-.MiniInfoCell--mode-more .MiniInfoCell__middle :global(.vkuiIcon) {
+.modeAdd .middle :global(.vkuiIcon),
+.modeMore .middle :global(.vkuiIcon) {
   color: var(--vkui--color_icon_accent_themed);
 }

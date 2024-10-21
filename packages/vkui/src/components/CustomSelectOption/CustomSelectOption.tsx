@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
@@ -9,8 +11,8 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CustomSelectOption.module.css';
 
 const sizeYClassNames = {
-  none: styles['CustomSelectOption--sizeY-none'],
-  regular: styles['CustomSelectOption--sizeY-regular'],
+  none: styles.sizeYNone,
+  regular: styles.sizeYRegular,
 };
 
 export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -94,28 +96,28 @@ export const CustomSelectOption = ({
       aria-selected={selected}
       data-hovered={hovered}
       className={classNames(
-        styles['CustomSelectOption'],
+        styles.host,
         sizeY !== 'compact' && sizeYClassNames[sizeY],
-        hovered && styles['CustomSelectOption--hover'],
-        disabled && styles['CustomSelectOption--disabled'],
-        hierarchy > 0 && styles['CustomSelectOption--hierarchy'],
+        hovered && styles.hover,
+        disabled && styles.disabled,
+        hierarchy > 0 && styles.hierarchy,
         className,
       )}
       style={style}
     >
-      {hasReactNode(before) && <div className={styles['CustomSelectOption__before']}>{before}</div>}
-      <div className={styles['CustomSelectOption__main']}>
-        <div className={styles['CustomSelectOption__children']}>{children}</div>
+      {hasReactNode(before) && <div className={styles.before}>{before}</div>}
+      <div className={styles.main}>
+        <div className={styles.children}>{children}</div>
         {hasReactNode(description) && (
-          <Footnote className={styles['CustomSelectOption__description']}>
+          <Footnote className={styles.description}>
             <VisuallyHidden>&nbsp;</VisuallyHidden>
             {description}
           </Footnote>
         )}
       </div>
-      <div className={styles['CustomSelectOption__after']}>
+      <div className={styles.after}>
         {hasReactNode(after) && <div>{after}</div>}
-        {selected && <Icon16Done className={styles['CustomSelectOption__selectedIcon']} />}
+        {selected && <Icon16Done className={styles.selectedIcon} />}
       </div>
     </Paragraph>
   );

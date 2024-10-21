@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -8,24 +10,24 @@ import type { HasComponent, HasRootRef } from '../../types';
 import styles from './FormField.module.css';
 
 const sizeYClassNames = {
-  none: styles['FormField--sizeY-none'],
-  compact: styles['FormField--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 const stylesStatus = {
-  error: styles['FormField--status-error'],
-  valid: styles['FormField--status-valid'],
+  error: styles.statusError,
+  valid: styles.statusValid,
 };
 
 const iconAlignClassNames = {
   center: undefined,
-  start: styles['FormField__icon--align-start'],
-  end: styles['FormField__icon--align-end'],
+  start: styles.iconAlignStart,
+  end: styles.iconAlignEnd,
 };
 
 const renderIcon = (icon: React.ReactNode, align: FieldIconsAlign, className: string) => {
   return (
-    <div className={styles['FormField__iconWrapper']}>
+    <div className={styles.iconWrapper}>
       <span className={classNames(iconAlignClassNames[align], className)}>{icon}</span>
     </div>
   );
@@ -108,7 +110,7 @@ export const FormField = ({
   const focusWithin = useFocusWithin(elRef);
   const focusVisibleClassNames = useFocusVisibleClassName({
     focusVisible: focusWithin,
-    mode: styles['FormField--focus-visible'],
+    mode: styles.focusVisible,
   });
 
   const handleMouseEnter = (e: MouseEvent) => {
@@ -136,27 +138,23 @@ export const FormField = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={classNames(
-        styles['FormField'],
-        mode === 'default' && styles['FormField--mode-default'],
+        styles.host,
+        mode === 'default' && styles.modeDefault,
         status !== 'default' && stylesStatus[status],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        disabled && styles['FormField--disabled'],
-        !disabled && hover && styles['FormField--hover'],
+        disabled && styles.disabled,
+        !disabled && hover && styles.hover,
         focusVisibleClassNames,
         className,
       )}
     >
-      <div className={styles['FormField_scrollContainer']}>
-        {before && renderIcon(before, beforeAlign, styles['FormField__before'])}
-        <div className={styles['FormField__content']}>{children}</div>
+      <div className={styles.scrollContainer}>
+        {before && renderIcon(before, beforeAlign, styles.before)}
+        <div className={styles.content}>{children}</div>
         {after &&
-          renderIcon(
-            after,
-            afterAlign,
-            classNames(styles['FormField__after'], 'vkuiInternalFormField__after'),
-          )}
+          renderIcon(after, afterAlign, classNames(styles.after, 'vkuiInternalFormField__after'))}
       </div>
-      <span aria-hidden className={styles['FormField__border']} />
+      <span aria-hidden className={styles.border} />
     </Component>
   );
 };

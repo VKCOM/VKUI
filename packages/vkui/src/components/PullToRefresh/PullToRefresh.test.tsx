@@ -6,8 +6,9 @@ import { Platform, type PlatformType } from '../../lib/platform';
 import { baselineComponent, fakeTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
+import pullToRefreshStyles from './PullToRefresh.module.css';
 
-const hasSpinner = () => !!document.querySelector('.vkuiPullToRefresh__spinner--on');
+const hasSpinner = () => !!document.querySelector(`.${pullToRefreshStyles.spinnerOn}`);
 
 function firePull(el: HTMLElement, { end = true } = {}) {
   fireEvent.mouseDown(el, { clientY: 0 });

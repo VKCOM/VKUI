@@ -1,7 +1,9 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
-import { useAppearance } from '../../../hooks/useAppearance';
+import { useColorScheme } from '../../../hooks/useColorScheme';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
@@ -35,7 +37,6 @@ const ImageBaseOverlayInteractive = ({
   children,
   className,
   getRootRef,
-  disableInteractive,
   overlayShown,
   ...restProps
 }: ImageBaseOverlayInteractiveProps & { overlayShown?: boolean }) => {
@@ -49,8 +50,8 @@ const ImageBaseOverlayInteractive = ({
         tabIndex={0}
         role="button"
         className={classNames(
-          styles['ImageBaseOverlay--clickable'],
-          (focusVisible || overlayShown) && styles['ImageBaseOverlay--visible'],
+          styles.clickable,
+          (focusVisible || overlayShown) && styles.visible,
           focusVisibleClassNames,
           className,
         )}
@@ -68,7 +69,6 @@ const ImageBaseOverlayInteractive = ({
 const ImageBaseOverlayNonInteractive = ({
   className,
   getRootRef,
-  disableInteractive,
   overlayShown: overlayShownProps,
   ...restProps
 }: ImageBaseOverlayNonInteractiveProps & { overlayShown?: boolean }) => {
@@ -79,10 +79,7 @@ const ImageBaseOverlayNonInteractive = ({
     <div
       {...restProps}
       ref={rootRef}
-      className={classNames(
-        (overlayShown || overlayShownProps) && styles['ImageBaseOverlay--visible'],
-        className,
-      )}
+      className={classNames((overlayShown || overlayShownProps) && styles.visible, className)}
       onClick={onOverlayClick}
     />
   );
@@ -97,15 +94,15 @@ export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
   visibility: visibilityProp,
   ...restProps
 }: ImageBaseOverlayProps) => {
-  const appearance = useAppearance();
+  const colorScheme = useColorScheme();
   const hasPointer = useAdaptivityHasPointer();
-  const theme = themeProp ?? appearance;
+  const theme = themeProp ?? colorScheme;
   const visibility = visibilityProp ?? (hasPointer ? 'on-hover' : 'always');
 
   const commonClassNames = classNames(
-    styles['ImageBaseOverlay'],
-    theme === 'light' && styles['ImageBaseOverlay--theme-light'],
-    theme === 'dark' && styles['ImageBaseOverlay--theme-dark'],
+    styles.host,
+    theme === 'light' && styles.themeLight,
+    theme === 'dark' && styles.themeDark,
     className,
   );
 
@@ -115,7 +112,7 @@ export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
   };
 
   // Не делаем деструктуризацию пропа, потому что Typescript не вывозит
-  if (restProps.disableInteractive) {
+  if (!restProps.onClick) {
     return <ImageBaseOverlayNonInteractive {...restProps} {...commonProps} />;
   }
 

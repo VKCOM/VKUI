@@ -56,10 +56,10 @@ const Slide = ({
 );
 
 const checkActiveSlide = (container: HTMLElement, slideIndex: number) => {
-  const bullets = Array.from(container.getElementsByClassName(styles['BaseGallery__bullet']));
-  expect(
-    bullets.indexOf(container.getElementsByClassName(styles['BaseGallery__bullet--active'])[0]),
-  ).toBe(slideIndex);
+  const bullets = Array.from(container.getElementsByClassName(styles.bullet));
+  expect(bullets.indexOf(container.getElementsByClassName(styles.bulletActive)[0])).toBe(
+    slideIndex,
+  );
 };
 
 const checkTransformX = (value: string, expectedX: number) => {
@@ -297,9 +297,7 @@ describe('Gallery', () => {
 
       checkActiveSlide(container, 1);
 
-      const [leftArrow, rightArrow] = Array.from(
-        container.getElementsByClassName(styles['BaseGallery__arrow']),
-      );
+      const [leftArrow, rightArrow] = Array.from(container.getElementsByClassName(styles.arrow));
       fireEvent.click(rightArrow);
 
       expect(onNext).toHaveBeenCalledTimes(1);
@@ -550,9 +548,7 @@ describe('Gallery', () => {
 
       checkActiveSlide(container, 0);
 
-      const [leftArrow, rightArrow] = Array.from(
-        container.getElementsByClassName(styles['BaseGallery__arrow']),
-      );
+      const [leftArrow, rightArrow] = Array.from(container.getElementsByClassName(styles.arrow));
       fireEvent.click(leftArrow);
 
       expect(onPrev).toHaveBeenCalledTimes(1);
@@ -633,7 +629,7 @@ describe('Gallery', () => {
       });
 
       expect(warn).toHaveBeenCalledWith(
-        '%c[VKUI/Gallery] Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше."',
+        '%c[VKUI/Gallery] Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше.',
         undefined,
       );
       warn.mockRestore();

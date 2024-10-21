@@ -32,7 +32,7 @@ export const Playground: Story = {
       <Panel id="fixedLayout">
         <PanelHeader>Fixed layout</PanelHeader>
         <FixedLayout {...args}>
-          <Separator wide />
+          <Separator />
           <Tabs>
             <TabsItem selected>176 сообществ</TabsItem>
             <TabsItem>9 событий</TabsItem>
@@ -55,7 +55,7 @@ export const WithSearchAndContent: Story = {
         <PanelHeader>Fixed layout</PanelHeader>
         <FixedLayout {...args}>
           <Search />
-          <Separator wide />
+          <Separator />
         </FixedLayout>
         <StubContent />
       </Panel>

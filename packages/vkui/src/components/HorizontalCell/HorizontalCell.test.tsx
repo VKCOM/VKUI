@@ -14,14 +14,14 @@ describe('HorizontalCell', () => {
     );
 
     expect(screen.queryByText('Children data')).toBeTruthy();
-    expect(document.querySelector(`.${styles.HorizontalCell__content}`)).toBeNull();
+    expect(document.querySelector(`.${styles.content}`)).toBeNull();
 
     rerender(
-      <HorizontalCell size="s" header="Author name">
+      <HorizontalCell size="s" title="Author name">
         <div>Children data</div>
       </HorizontalCell>,
     );
 
-    expect(document.querySelector(`.${styles.HorizontalCell__content}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.content}`)).not.toBeNull();
   });
 });

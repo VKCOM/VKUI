@@ -1,18 +1,18 @@
-.Input {
+.host {
   position: relative;
   line-height: 20px;
   font-size: 16px;
 }
 
-.Input--align-center .Input__el {
+.alignCenter .el {
   text-align: center;
 }
 
-.Input--align-right .Input__el {
+.alignRight .el {
   text-align: end;
 }
 
-.Input__el {
+.el {
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
   padding-block: 0;
@@ -24,34 +24,34 @@
   color: var(--vkui--color_text_primary);
 }
 
-.Input--sizeY-compact .Input__el {
+.sizeYCompact .el {
   block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .Input--sizeY-none .Input__el {
+  .sizeYNone .el {
     block-size: var(--vkui--size_field_height--compact);
   }
 }
 
-.Input--hasBefore .Input__el {
+.hasBefore .el {
   padding-inline-start: 0;
 }
 
-.Input--hasAfter .Input__el {
+.hasAfter .el {
   padding-inline-end: 0;
 }
 
-.Input__el:disabled {
+.el:disabled {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.Input__el::placeholder {
+.el::placeholder {
   color: var(--vkui--color_text_secondary);
   /* Для Firefox */
   opacity: 1;
 }
 
-.Input__el:disabled::placeholder {
+.el:disabled::placeholder {
   color: var(--vkui--color_text_secondary);
 }

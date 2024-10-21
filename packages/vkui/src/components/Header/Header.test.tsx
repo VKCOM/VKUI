@@ -15,13 +15,13 @@ describe('Header', () => {
         <Header mode="primary">Русский</Header>
         <Header mode="secondary">English</Header>
         <Header mode="tertiary">Espanõl</Header>
-        <Header mode="primary" size="large">
+        <Header mode="primary" size="l">
           Français
         </Header>
-        <Header mode="secondary" size="large">
+        <Header mode="secondary" size="l">
           Deutsch
         </Header>
-        <Header mode="tertiary" size="large">
+        <Header mode="tertiary" size="l">
           中國人
         </Header>
       </ConfigProvider>,
@@ -40,13 +40,13 @@ describe('Header', () => {
         <Header mode="primary">Русский</Header>
         <Header mode="secondary">English</Header>
         <Header mode="tertiary">Espanõl</Header>
-        <Header mode="primary" size="large">
+        <Header mode="primary" size="l">
           Français
         </Header>
-        <Header mode="secondary" size="large">
+        <Header mode="secondary" size="l">
           Deutsch
         </Header>
-        <Header mode="tertiary" size="large">
+        <Header mode="tertiary" size="l">
           中國人
         </Header>
       </ConfigProvider>,
@@ -65,13 +65,13 @@ describe('Header', () => {
         <Header mode="primary">Русский</Header>
         <Header mode="secondary">English</Header>
         <Header mode="tertiary">Espanõl</Header>
-        <Header mode="primary" size="large">
+        <Header mode="primary" size="l">
           Français
         </Header>
-        <Header mode="secondary" size="large">
+        <Header mode="secondary" size="l">
           Deutsch
         </Header>
-        <Header mode="tertiary" size="large">
+        <Header mode="tertiary" size="l">
           中國人
         </Header>
       </ConfigProvider>,

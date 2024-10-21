@@ -83,7 +83,14 @@ module.exports = {
       {
         test: /\.css$/,
         include: /node_modules\/@vkontakte\/vkui/,
-        use: ['css-loader'],
+        use: [{
+          loader: 'css-loader',
+          /* Используем следующие опции в случае использования `css-loader >= 7.0.0` (см. https://github.com/webpack-contrib/css-loader/blob/v7.1.0/CHANGELOG.md) */
+          // options: {
+          //   namedExport: false,
+          //   exportLocalsConvention: 'as-is',
+          // }
+        ],
       },
     ],
   },

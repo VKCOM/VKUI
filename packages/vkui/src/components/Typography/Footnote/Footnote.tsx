@@ -1,11 +1,13 @@
+'use client';
+
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { type HasCaps, Typography, type TypographyProps } from '../Typography';
 import styles from './Footnote.module.css';
 
 const sizeYClassNames = {
-  none: styles['Footnote--sizeY-none'],
-  compact: styles['Footnote--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface FootnoteProps extends TypographyProps, HasCaps {}
@@ -33,8 +35,8 @@ export const Footnote = ({
       className={classNames(
         className,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        styles['Footnote'],
-        caps && styles['Footnote--caps'],
+        styles.host,
+        caps && styles.caps,
       )}
       {...restProps}
     />

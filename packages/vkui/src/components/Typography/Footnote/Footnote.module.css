@@ -1,11 +1,11 @@
-.Footnote {
+.host {
   font-size: var(--vkui--font_footnote--font_size--regular);
   line-height: var(--vkui--font_footnote--line_height--regular);
   font-weight: var(--vkui--font_footnote--font_weight--regular);
   font-family: var(--vkui--font_footnote--font_family--regular);
 }
 
-.Footnote--sizeY-compact {
+.sizeYCompact {
   font-size: var(
     --vkui--font_footnote--font_size--compact,
     var(--vkui--font_footnote--font_size--regular)
@@ -25,7 +25,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Footnote--sizeY-none {
+  .sizeYNone {
     font-size: var(
       --vkui--font_footnote--font_size--compact,
       var(--vkui--font_footnote--font_size--regular)
@@ -45,7 +45,7 @@
   }
 }
 
-.Footnote--caps {
+.caps {
   font-size: var(--vkui--font_footnote_caps--font_size--regular);
   line-height: var(--vkui--font_footnote_caps--line_height--regular);
   font-weight: var(--vkui--font_footnote_caps--font_weight--regular);
@@ -53,7 +53,7 @@
   text-transform: uppercase;
 }
 
-.Footnote--sizeY-compact.Footnote--caps {
+.sizeYCompact.caps {
   font-size: var(
     --vkui--font_footnote_caps--font_size--compact,
     var(--vkui--font_footnote_caps--font_size--regular)
@@ -73,7 +73,7 @@
 }
 
 @media (--sizeY-compact) {
-  .Footnote--sizeY-none.Footnote--caps {
+  .sizeYNone.caps {
     font-size: var(
       --vkui--font_footnote_caps--font_size--compact,
       var(--vkui--font_footnote_caps--font_size--regular)

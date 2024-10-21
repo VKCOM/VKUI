@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`banner transforms correctly 1`] = `
+"import { Avatar, Banner } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <Banner
+        before={<Avatar size={48} src={'user_lihachyov'} />}
+        title="Сегодня день рождения Михаила Лихачёва"
+        subtitle="Подарите подарок"
+        extraSubtitle="Дополнительный текст"
+        asideMode="dismiss"
+      />
+      <Banner
+        before={<Avatar size={48} src={'user_lihachyov'} />}
+        title="Сегодня день рождения Михаила Лихачёва"
+        subtitle={"Подарите подарок"}
+        extraSubtitle={"Дополнительный текст"}
+        asideMode="dismiss"
+      />
+    </React.Fragment>)
+  );
+};"
+`;

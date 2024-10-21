@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -9,9 +11,9 @@ import { Title } from '../Typography/Title/Title';
 import styles from './PanelHeaderButton.module.css';
 
 const platformClassNames = {
-  ios: styles['PanelHeaderButton--ios'],
-  android: styles['PanelHeaderButton--android'],
-  vkcom: styles['PanelHeaderButton--vkcom'],
+  ios: styles.ios,
+  android: styles.android,
+  vkcom: styles.vkcom,
 };
 
 export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
@@ -63,8 +65,8 @@ export const PanelHeaderButton = ({
       activeMode = 'opacity';
       break;
     case 'vkcom':
-      hoverMode = styles['PanelHeaderButton--hover'];
-      activeMode = styles['PanelHeaderButton--active'];
+      hoverMode = styles.hover;
+      activeMode = styles.active;
       break;
     default:
       hoverMode = 'background';
@@ -91,18 +93,18 @@ export const PanelHeaderButton = ({
       activeEffectDelay={200}
       activeMode={activeMode}
       className={classNames(
-        styles['PanelHeaderButton'],
+        styles.host,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        isPrimitive && styles['PanelHeaderButton--primitive'],
-        !isPrimitive && !isPrimitiveLabel && styles['PanelHeaderButton--notPrimitive'],
+        isPrimitive && styles.primitive,
+        !isPrimitive && !isPrimitiveLabel && styles.notPrimitive,
         className,
       )}
     >
       {isPrimitive ? <ButtonTypography primary={primary}>{children}</ButtonTypography> : children}
       {isPrimitiveLabel ? (
-        <ButtonTypography primary={primary} className={styles['PanelHeaderButton__label']}>
+        <ButtonTypography primary={primary} className={styles.label}>
           {label}
         </ButtonTypography>
       ) : (

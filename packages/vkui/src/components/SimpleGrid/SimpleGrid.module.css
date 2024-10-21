@@ -1,4 +1,4 @@
-.SimpleGrid {
+.host {
   --vkui_internal--grid_columns: 1;
   --vkui_internal--min_col_width: 0;
 
@@ -7,39 +7,39 @@
   grid-template-columns: repeat(var(--vkui_internal--grid_columns), minmax(0, 1fr));
 }
 
-.SimpleGrid--margin-auto {
+.marginAuto {
   margin-inline: var(--vkui--size_base_padding_horizontal--regular);
   margin-block: var(--vkui--size_base_padding_vertical--regular);
 }
 
-.SimpleGrid--margin-auto-inline {
+.marginAutoInline {
   margin-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-.SimpleGrid--margin-auto-block {
+.marginAutoBlock {
   margin-block: var(--vkui--size_base_padding_vertical--regular);
 }
 
-.SimpleGrid--with-min-width {
+.withMinWidth {
   grid-template-columns: repeat(auto-fit, minmax(var(--vkui_internal--min_col_width), 1fr));
 }
 
-.SimpleGrid--align-start {
+.alignStart {
   align-items: flex-start;
 }
 
-.SimpleGrid--align-end {
+.alignEnd {
   align-items: flex-end;
 }
 
-.SimpleGrid--align-center {
+.alignCenter {
   align-items: center;
 }
 
-.SimpleGrid--align-stretch {
+.alignStretch {
   align-items: stretch;
 }
 
-.SimpleGrid--align-baseline {
+.alignBaseline {
   align-items: baseline;
 }

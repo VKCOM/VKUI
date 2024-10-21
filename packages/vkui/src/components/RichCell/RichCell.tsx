@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -7,29 +9,29 @@ import { RichCellIcon } from './RichCellIcon/RichCellIcon';
 import styles from './RichCell.module.css';
 
 const sizeYClassNames = {
-  none: styles['RichCell--sizeY-none'],
-  compact: styles['RichCell--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 const alignAfterClassNames = {
-  start: styles['RichCell__content-after--align-start'],
-  center: styles['RichCell__content-after--align-center'],
-  end: styles['RichCell__content-after--align-end'],
+  start: styles.contentAfterAlignStart,
+  center: styles.contentAfterAlignCenter,
+  end: styles.contentAfterAlignEnd,
 };
 
 export interface RichCellProps extends TappableProps {
   /**
    * Контейнер для текста над `children`.
    */
-  subhead?: React.ReactNode;
+  overTitle?: React.ReactNode;
   /**
    * Контейнер для текста под `children`.
    */
-  text?: React.ReactNode;
+  subtitle?: React.ReactNode;
   /**
-   * Контейнер для текста под `text`.
+   * Контейнер для текста под `subtitle`.
    */
-  caption?: React.ReactNode;
+  extraSubtitle?: React.ReactNode;
   /**
    * Контейнер для контента под `caption`. Например `<UsersStack size="m" />`.
    */
@@ -77,10 +79,10 @@ export interface RichCellProps extends TappableProps {
 export const RichCell: React.FC<RichCellProps> & {
   Icon: typeof RichCellIcon;
 } = ({
-  subhead,
+  overTitle,
   children,
-  text,
-  caption,
+  subtitle,
+  extraSubtitle,
   before,
   after,
   afterCaption,
@@ -98,11 +100,9 @@ export const RichCell: React.FC<RichCellProps> & {
       return;
     }
     return (
-      <div
-        className={classNames(styles['RichCell__content-after'], alignAfterClassNames[afterAlign])}
-      >
-        {after && <div className={styles['RichCell__after-children']}>{after}</div>}
-        {afterCaption && <div className={styles['RichCell__after-caption']}>{afterCaption}</div>}
+      <div className={classNames(styles.contentAfter, alignAfterClassNames[afterAlign])}>
+        {after && <div className={styles.afterChildren}>{after}</div>}
+        {afterCaption && <div className={styles.afterCaption}>{afterCaption}</div>}
       </div>
     );
   };
@@ -111,33 +111,33 @@ export const RichCell: React.FC<RichCellProps> & {
     <Tappable
       {...restProps}
       className={classNames(
-        styles['RichCell'],
-        !multiline && styles['RichCell--text-ellipsis'],
+        styles.host,
+        !multiline && styles.textEllipsis,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
     >
-      {before && <div className={styles['RichCell__before']}>{before}</div>}
-      <div className={styles['RichCell__in']}>
-        <div className={styles['RichCell__content']}>
-          <div className={styles['RichCell__content-before']}>
-            {subhead && (
-              <Subhead Component="div" className={styles['RichCell__subhead']}>
-                {subhead}
+      {before && <div className={styles.before}>{before}</div>}
+      <div className={styles.in}>
+        <div className={styles.content}>
+          <div className={styles.contentBefore}>
+            {overTitle && (
+              <Subhead Component="div" className={styles.overTitle}>
+                {overTitle}
               </Subhead>
             )}
-            <div className={styles['RichCell__children']}>{children}</div>
-            {text && <div className={styles['RichCell__text']}>{text}</div>}
-            {caption && (
-              <Subhead Component="div" className={styles['RichCell__caption']}>
-                {caption}
+            <div className={styles.children}>{children}</div>
+            {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
+            {extraSubtitle && (
+              <Subhead Component="div" className={styles.extraSubtitle}>
+                {extraSubtitle}
               </Subhead>
             )}
           </div>
           {afterAlign === 'start' && afterRender()}
         </div>
-        {bottom && <div className={styles['RichCell__bottom']}>{bottom}</div>}
-        {actions && <div className={styles['RichCell__actions']}>{actions}</div>}
+        {bottom && <div className={styles.bottom}>{bottom}</div>}
+        {actions && <div className={styles.actions}>{actions}</div>}
       </div>
       {afterAlign !== 'start' && afterRender()}
     </Tappable>

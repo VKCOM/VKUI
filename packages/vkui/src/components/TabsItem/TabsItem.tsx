@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -14,19 +16,19 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './TabsItem.module.css';
 
 const sizeYClassNames = {
-  none: styles['TabsItem--sizeY-none'],
-  compact: styles['TabsItem--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 const stylesMode = {
-  default: styles['TabsItem--mode-default'],
-  accent: styles['TabsItem--mode-accent'],
-  secondary: styles['TabsItem--mode-secondary'],
+  default: styles.modeDefault,
+  accent: styles.modeAccent,
+  secondary: styles.modeSecondary,
 };
 
 const fillModeClassNames = {
-  stretched: styles['TabsItem--stretched'],
-  shrinked: styles['TabsItem--shrinked'],
+  stretched: styles.stretched,
+  shrinked: styles.shrinked,
 };
 
 export interface TabsItemProps
@@ -82,7 +84,7 @@ export const TabsItem = ({
   role = 'tab',
   tabIndex: tabIndexProp,
   getRootRef,
-  hoverMode = styles['TabsItem--hover'],
+  hoverMode = styles.hover,
   activeMode = '',
   hovered,
   activated,
@@ -108,14 +110,14 @@ export const TabsItem = ({
       typeof status === 'number' ? (
         <Subhead
           Component="span"
-          className={classNames(styles['TabsItem__status'], styles['TabsItem__status--count'])}
+          className={classNames(styles.status, styles.statusCount)}
           weight="2"
         >
           <VisuallyHidden>&nbsp;</VisuallyHidden>
           {status}
         </Subhead>
       ) : (
-        <span className={styles['TabsItem__status']}>
+        <span className={styles.status}>
           <VisuallyHidden>&nbsp;</VisuallyHidden>
           {status}
         </span>
@@ -183,11 +185,11 @@ export const TabsItem = ({
       {...restProps}
       getRootRef={rootRef}
       className={classNames(
-        styles['TabsItem'],
+        styles.host,
         mode && stylesMode[mode],
-        selected && styles['TabsItem--selected'],
+        selected && styles.selected,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        withGaps && styles['TabsItem--withGaps'],
+        withGaps && styles.withGaps,
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
         className,
       )}
@@ -202,19 +204,19 @@ export const TabsItem = ({
       aria-selected={selected}
       tabIndex={tabIndex}
     >
-      {before && <div className={styles['TabsItem__before']}>{before}</div>}
+      {before && <div className={styles.before}>{before}</div>}
       <Headline
         Component="span"
-        className={styles['TabsItem__label']}
+        className={styles.label}
         level={mode === 'default' ? '1' : '2'}
         weight="2"
       >
         {children}
       </Headline>
       {statusComponent}
-      {after && <div className={styles['TabsItem__after']}>{after}</div>}
+      {after && <div className={styles.after}>{after}</div>}
       {mode === 'default' && (
-        <div className={styles['TabsItem__underline']} aria-hidden data-selected={selected} />
+        <div className={styles.underline} aria-hidden data-selected={selected} />
       )}
     </Tappable>
   );

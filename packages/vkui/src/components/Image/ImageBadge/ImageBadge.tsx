@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { ImageBase, type ImageBaseBadgeProps, ImageBaseContext } from '../../ImageBase/ImageBase';
@@ -13,11 +15,7 @@ export const ImageBadge: React.FC<ImageBadgeProps> = ({
   return (
     <ImageBase.Badge
       {...restProps}
-      className={classNames(
-        styles['ImageBadge'],
-        size < 96 && styles['ImageBadge--shifted'],
-        className,
-      )}
+      className={classNames(styles.host, size < 96 && styles.shifted, className)}
     />
   );
 };

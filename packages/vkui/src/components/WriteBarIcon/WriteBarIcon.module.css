@@ -1,4 +1,4 @@
-.WriteBarIcon {
+.host {
   background: none;
   border: 0;
   position: relative;
@@ -11,7 +11,7 @@
   padding: 0;
 }
 
-.WriteBarIcon__in {
+.in {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,53 +19,53 @@
   block-size: 100%;
 }
 
-.WriteBarIcon:disabled {
+.host:disabled {
   opacity: 0.4;
   pointer-events: none;
 }
 
-.WriteBarIcon__active {
+.active {
   opacity: 0.6;
 }
 
-.WriteBarIcon__counter {
+.counter {
   position: absolute;
   inset-block-start: 6px;
   inset-inline-end: 2px;
   box-shadow: 0 0 0 2px var(--vkui--color_background_modal);
 }
 
-.WriteBarIcon--ios .WriteBarIcon__counter {
+.ios .counter {
   box-shadow: 0 0 0 2px var(--vkui--color_background_content);
 }
 
-.WriteBarIcon.WriteBarIcon--mode-send,
-.WriteBarIcon.WriteBarIcon--mode-done {
+.host.modeSend,
+.host.modeDone {
   color: var(--vkui--color_icon_accent);
 }
 
 /**
  * iOS
  */
-.WriteBarIcon--ios {
+.ios {
   color: var(--vkui--color_icon_accent_themed);
 }
 
-.WriteBarIcon--ios.WriteBarIcon--mode-send,
-.WriteBarIcon--ios.WriteBarIcon--mode-done {
+.ios.modeSend,
+.ios.modeDone {
   color: var(--vkui--color_icon_accent_themed);
   inline-size: 48px;
   padding-inline: 0;
 }
 
-.WriteBarIcon--ios.WriteBarIcon--mode-send,
-.WriteBarIcon--ios.WriteBarIcon--mode-done {
+.ios.modeSend,
+.ios.modeDone {
   /* компенсируем отступ WriteBar__after справа */
   margin-inline-end: -4px;
 }
 
-.WriteBarIcon--ios.WriteBarIcon--mode-send:only-child,
-.WriteBarIcon--ios.WriteBarIcon--mode-done:only-child {
+.ios.modeSend:only-child,
+.ios.modeDone:only-child {
   /* для одной иконки нужно компенсировать отступ WriteBar__after слева */
   margin-inline-start: -4px;
 }
@@ -74,7 +74,7 @@
  * Impact:
  * Counter
  */
-.WriteBarIcon {
+.host {
   --vkui_internal--counter_inherit_color: var(--vkui--color_text_contrast_themed);
   --vkui_internal--counter_inherit_background: var(--vkui--color_background_positive);
 }

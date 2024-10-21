@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -12,7 +14,7 @@ import styles from './Header.module.css';
 
 export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, HasComponent {
   mode?: 'primary' | 'secondary' | 'tertiary';
-  size?: 'regular' | 'large';
+  size?: 'm' | 'l';
   subtitle?: React.ReactNode;
   /* Позволяет задать тип элемента в который будет обёрнут subtitle */
   subtitleComponent?: React.ElementType;
@@ -51,7 +53,7 @@ type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode' | 'size' | 'clas
   HasComponent;
 
 const HeaderContent = ({ mode, size, ...restProps }: HeaderContentProps) => {
-  const isLarge = size === 'large';
+  const isLarge = size === 'l';
 
   const platform = usePlatform();
   if (platform === 'ios') {
@@ -86,16 +88,16 @@ const HeaderContent = ({ mode, size, ...restProps }: HeaderContentProps) => {
 };
 
 const stylesMode = {
-  primary: styles['Header--mode-primary'],
-  secondary: styles['Header--mode-secondary'],
-  tertiary: styles['Header--mode-tertiary'],
+  primary: styles.modePrimary,
+  secondary: styles.modeSecondary,
+  tertiary: styles.modeTertiary,
 };
 /**
  * @see https://vkcom.github.io/VKUI/#/Header
  */
 export const Header = ({
   mode = 'primary',
-  size = 'regular',
+  size = 'm',
   Component = 'h2',
   children,
   subtitle,
@@ -114,69 +116,47 @@ export const Header = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['Header'],
+        styles.host,
         stylesMode[mode],
-        size === 'large' && styles['Header--large'],
-        isPrimitiveReactNode(indicator) && styles['Header--pi'],
-        hasReactNode(subtitle) && styles['Header--with-subtitle'],
+        size === 'l' && styles.large,
+        isPrimitiveReactNode(indicator) && styles.pi,
+        hasReactNode(subtitle) && styles.withSubtitle,
       )}
     >
       {before && (
-        <div
-          className={classNames(
-            styles['Header__before'],
-            subtitle && styles['Header__before--withSubtitle'],
-          )}
-        >
+        <div className={classNames(styles.before, subtitle && styles.beforeWithSubtitle)}>
           {before}
         </div>
       )}
-      <div className={styles['Header__main']}>
-        <HeaderContent
-          className={styles['Header__content']}
-          Component={Component}
-          mode={mode}
-          size={size}
-        >
-          {beforeTitle && <div className={styles['Header__content__before']}>{beforeTitle}</div>}
-          <span
-            className={classNames(
-              styles['Header__content-in'],
-              multiline && styles['Header__content--multiline'],
-            )}
-          >
+      <div className={styles.main}>
+        <HeaderContent className={styles.content} Component={Component} mode={mode} size={size}>
+          {beforeTitle && <div className={styles.contentBefore}>{beforeTitle}</div>}
+          <span className={classNames(styles.contentIn, multiline && styles.contentMultiline)}>
             {children}
           </span>
-          {afterTitle && <div className={styles['Header__content__after']}>{afterTitle}</div>}
+          {afterTitle && <div className={styles.contentAfter}>{afterTitle}</div>}
           {hasReactNode(indicator) && (
-            <Footnote className={styles['Header__indicator']} weight="2">
+            <Footnote className={styles.indicator} weight="2">
               {indicator}
             </Footnote>
           )}
         </HeaderContent>
         {hasReactNode(subtitle) && (
-          <div className={styles['Header__subtitleWrapper']}>
-            {beforeSubtitle && (
-              <div className={styles['Header__subtitleBefore']}>{beforeSubtitle}</div>
-            )}
+          <div className={styles.subtitleWrapper}>
+            {beforeSubtitle && <div className={styles.subtitleBefore}>{beforeSubtitle}</div>}
             <Subhead
-              className={classNames(
-                styles['Header__subtitle'],
-                multiline && styles['Header__content--multiline'],
-              )}
+              className={classNames(styles.subtitle, multiline && styles.contentMultiline)}
               Component={subtitleComponent}
             >
               {subtitle}
             </Subhead>
-            {afterSubtitle && (
-              <div className={styles['Header__subtitleAfter']}>{afterSubtitle}</div>
-            )}
+            {afterSubtitle && <div className={styles.subtitleAfter}>{afterSubtitle}</div>}
           </div>
         )}
       </div>
 
       {hasReactNode(aside) && (
-        <Paragraph className={styles['Header__aside']} Component="span">
+        <Paragraph className={styles.aside} Component="span">
           {aside}
         </Paragraph>
       )}

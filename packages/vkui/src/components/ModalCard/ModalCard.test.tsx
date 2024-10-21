@@ -38,7 +38,7 @@ describe('ModalCard', () => {
 
   test('can specify tags for header and subheader', () => {
     const { rerender } = render(
-      <ModalCard header="Баскетбол на выходных" subheader="Приглашение в беседу" />,
+      <ModalCard title="Баскетбол на выходных" description="Приглашение в беседу" />,
     );
 
     expect(screen.getByText('Баскетбол на выходных').tagName.toLowerCase()).toMatch('span');
@@ -46,10 +46,10 @@ describe('ModalCard', () => {
 
     rerender(
       <ModalCard
-        header="Баскетбол на выходных"
-        headerComponent="h2"
-        subheader="Приглашение в беседу"
-        subheaderComponent="h3"
+        title="Баскетбол на выходных"
+        titleComponent="h2"
+        description="Приглашение в беседу"
+        descriptionComponent="h3"
       />,
     );
 

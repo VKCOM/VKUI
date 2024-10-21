@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { callMultiple } from '../../lib/callMultiple';
@@ -40,7 +42,7 @@ export const DropZone: React.FC<DropZoneProps> & {
 
   return (
     <RootComponent
-      baseClassName={classNames(styles['DropZone'], active && styles['DropZone--active'])}
+      baseClassName={classNames(styles.host, active && styles.active)}
       onDragOver={callMultiple(onDragOver, onActive)}
       onDragLeave={callMultiple(onDragLeave, offActive)}
       onDrop={callMultiple(onDrop, offActive)}

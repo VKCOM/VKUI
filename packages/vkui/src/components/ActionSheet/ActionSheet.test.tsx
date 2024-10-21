@@ -197,9 +197,7 @@ describe(ActionSheet, () => {
       const result = render(<ActionSheetMobile onClose={onClose} />);
       await waitForFloatingPosition();
       await userEvent.click(
-        result.container.querySelector<HTMLElement>(
-          `.${popoutWrapperStyles['PopoutWrapper__overlay']}`,
-        )!,
+        result.container.querySelector<HTMLElement>(`.${popoutWrapperStyles.overlay}`)!,
       );
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
       expect(onClose).toHaveBeenCalledTimes(1);
@@ -208,7 +206,7 @@ describe(ActionSheet, () => {
   });
 
   it('renders header and text', () => {
-    render(<ActionSheetMobile header="The header title" text="Text footnote" />);
+    render(<ActionSheetMobile title="The header title" description="Text footnote" />);
     act(jest.runAllTimers);
     expect(screen.queryByText('The header title')).toBeTruthy();
     expect(screen.queryByText('Text footnote')).toBeTruthy();

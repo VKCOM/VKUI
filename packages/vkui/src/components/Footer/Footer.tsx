@@ -22,7 +22,7 @@ export const Footer = ({
       Component={Component}
       role={role}
       {...restProps}
-      className={classNames(styles['Footer'], className)}
+      className={classNames(styles.host, className)}
     >
       {children}
     </Footnote>

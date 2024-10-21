@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
@@ -69,8 +71,8 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
           className={classNames(className, deviceType.mobile.className)}
           {...nativeProps}
         >
-          {options.map(({ label, value }) => (
-            <option value={value} key={`${value}`}>
+          {options.map(({ label, value, disabled }) => (
+            <option value={value} key={`${value}`} disabled={disabled}>
               {label}
             </option>
           ))}

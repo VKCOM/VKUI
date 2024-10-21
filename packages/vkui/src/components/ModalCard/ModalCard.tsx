@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
@@ -11,9 +13,9 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './ModalCard.module.css';
 
 const platformClassNames = {
-  ios: styles['ModalCard--ios'],
-  android: styles['ModalCard--android'],
-  vkcom: styles['ModalCard--vkcom'],
+  ios: styles.ios,
+  android: styles.android,
+  vkcom: styles.vkcom,
 };
 
 export interface ModalCardProps extends NavIdProps, ModalCardBaseProps {}
@@ -25,10 +27,10 @@ const warn = warnOnce('ModalCard');
  */
 export const ModalCard = ({
   icon,
-  header,
-  headerComponent,
-  subheader,
-  subheaderComponent,
+  title,
+  titleComponent,
+  description,
+  descriptionComponent,
   children,
   actions,
   onClose,
@@ -60,21 +62,21 @@ export const ModalCard = ({
       aria-labelledby={contextValue.labelId}
       id={id}
       baseClassName={classNames(
-        styles['ModalCard'],
+        styles.host,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        isDesktop && styles['ModalCard--desktop'],
+        isDesktop && styles.desktop,
       )}
     >
       <ModalCardBase
-        className={styles['ModalCard__in']}
+        className={styles.in}
         getRootRef={refs.innerElement}
         icon={icon}
-        header={header}
-        headerComponent={headerComponent}
-        subheader={subheader}
-        subheaderComponent={subheaderComponent}
+        title={title}
+        titleComponent={titleComponent}
+        description={description}
+        descriptionComponent={descriptionComponent}
         actions={actions}
         onClose={onClose || modalContext.onClose}
         size={size}

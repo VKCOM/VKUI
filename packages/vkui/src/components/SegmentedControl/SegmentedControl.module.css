@@ -1,4 +1,4 @@
-.SegmentedControl {
+.host {
   block-size: 30px;
   padding: 2px;
   border-radius: var(--vkui--size_border_radius--regular);
@@ -7,11 +7,11 @@
   font-family: var(--vkui--font_family_base);
 }
 
-.SegmentedControl--size-l {
+.sizeL {
   block-size: 36px;
 }
 
-.SegmentedControl__in {
+.in {
   position: relative;
   display: flex;
   block-size: 100%;
@@ -20,7 +20,7 @@
   border-radius: inherit;
 }
 
-.SegmentedControl__slider {
+.slider {
   position: absolute;
   inset-block: 0;
   inset-inline-start: 0;
@@ -37,20 +37,20 @@
 /**
  * sizeY REGULAR
  */
-.SegmentedControl--sizeY-regular {
+.sizeYRegular {
   block-size: 36px;
 }
 
-.SegmentedControl--sizeY-regular.SegmentedControl--size-l {
+.sizeYRegular.sizeL {
   block-size: 44px;
 }
 
 @media (--sizeY-regular) {
-  .SegmentedControl--sizeY-none {
+  .sizeYNone {
     block-size: 36px;
   }
 
-  .SegmentedControl--sizeY-none.SegmentedControl--size-l {
+  .sizeYNone.sizeL {
     block-size: 44px;
   }
 }

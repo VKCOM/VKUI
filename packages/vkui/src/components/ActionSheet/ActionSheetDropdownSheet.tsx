@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
@@ -29,10 +31,10 @@ export const ActionSheetDropdownSheet = ({
       {...restProps}
       onClick={stopPropagation}
       className={classNames(
-        styles['ActionSheet'],
-        platform === 'ios' && styles['ActionSheet--ios'],
-        closing ? styles['ActionSheet--closing'] : styles['ActionSheet--opening'],
-        sizeY === 'compact' && styles['ActionSheet--sizeY-compact'],
+        styles.host,
+        platform === 'ios' && styles.ios,
+        closing ? styles.closing : styles.opening,
+        sizeY === 'compact' && styles.sizeYCompact,
         className,
       )}
     >

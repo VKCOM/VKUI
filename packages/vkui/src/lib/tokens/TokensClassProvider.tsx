@@ -15,11 +15,7 @@ const InjectTokenClassNameToChild = ({ children }: InjectTokenClassNameToChildPr
   const tokensClassName = useTokensClassName();
 
   return React.cloneElement(children, {
-    className: classNames(
-      tokensClassName,
-      styles['TokensClassProvider--default-color'],
-      children.props.className,
-    ),
+    className: classNames(tokensClassName, styles.defaultColor, children.props.className),
   });
 };
 

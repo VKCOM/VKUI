@@ -71,7 +71,7 @@
 ### Режимы
 
 Каждая тема обычно поддерживает как <i>светлый (англ. `light`)</i>, так и <i>тёмный (англ. `dark`)</i> режим.
-За его определение отвечает свойство `appearance`, и также как `platform`, по умолчанию, определяется
+За его определение отвечает свойство `colorScheme`, и также как `platform`, по умолчанию, определяется
 автоматически за счёт CSS медиа выражения [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
 
 Ручное определение будет выглядеть так:
@@ -81,7 +81,7 @@ import { ConfigProvider, AdaptivityProvider, AppRoot, SimpleCell } from '@vkonta
 import '@vkontakte/vkui/dist/vkui.css';
 
 ReactDOM.render(
-  <ConfigProvider appearance="dark">
+  <ConfigProvider colorScheme="dark">
     <AdaptivityProvider>
       <AppRoot>
         <SimpleCell>Темным-темно</SimpleCell>
@@ -93,21 +93,49 @@ ReactDOM.render(
 ```
 
 Если вы хотите переопределить режим для отдельных компонентов приложения, воспользуйтесь
-`AppearanceProvider`.
+`ColorSchemeProvider`.
 
 ```jsx static
-<AppearanceProvider value="dark">
+<ColorSchemeProvider value="dark">
   <Snackbar action="Поделиться">Поделиться</Snackbar>
-</AppearanceProvider>
+</ColorSchemeProvider>
 ```
 
-Чтобы получить значение текущего режима, используйте хук `useAppearance`. Может пригодиться для
+Чтобы получить значение текущего режима, используйте хук `useColorScheme`. Может пригодиться для
 замены изображений на инвертированную версию в темных темах. Пример:
 
 ```jsx static
-const appearance = useAppearance();
-<Div>{appearance === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
+const colorScheme = useColorScheme();
+<Div>{colorScheme === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
 ```
+
+> Стоит иметь ввиду, что некоторые компоненты делегируют цвет фона родителю выше, например, это
+> компонент [Cell](#/Cell) и его производные.
+>
+> На примере [SimpleCell](#/SimpleCell) рассмотрим решение проблемы через допустимое определение
+> фона посредством `className` или `style`:
+>
+> ```jsx static
+> <Group header={<Header>Настройка тем</Header>}>
+>   <SimpleCell before={<Icon20PalleteOutline />}>Системная тема</SimpleCell>
+>   <ColorSchemeProvider value="dark">
+>     <SimpleCell
+>       before={<Icon20MoonOutline />}
+>       style={{ backgroundColor: 'var(--vkui--color_background_content)' }}
+>     >
+>       Тёмная тема
+>     </SimpleCell>
+>   </ColorSchemeProvider>
+>   <ColorSchemeProvider value="light">
+>     <SimpleCell
+>       before={<Icon20SunOutline />}
+>       style={{ backgroundColor: 'var(--vkui--color_background_content)' }}
+>     >
+>       Светлая тема
+>     </SimpleCell>
+>   </ColorSchemeProvider>
+> </Group>
+> ```
 
 <br/>
 
@@ -115,7 +143,7 @@ const appearance = useAppearance();
 
 **VKUI** использует пакет `@vkontakte/vkui-tokens`, который предоставляет готовые наборы **дизайн-токенов**.
 
-Каждый набор объявлен в классе формата `vkui--<themeName>--<appearance>`. На примере светлой темы
+Каждый набор объявлен в классе формата `vkui--<themeName>--<colorScheme>`. На примере светлой темы
 с названием `vkBase` класс будет выглядеть так – `vkui--vkBase--light` ([ссылка на сам CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css)).
 Подобный класс выставляется на контейнер приложения.
 

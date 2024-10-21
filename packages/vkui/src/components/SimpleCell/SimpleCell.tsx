@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -11,8 +13,8 @@ import { Chevron } from './Chevron/Chevron';
 import styles from './SimpleCell.module.css';
 
 const sizeYClassNames = {
-  none: styles['SimpleCell--sizeY-none'],
-  compact: styles['SimpleCell--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface SimpleCellOwnProps extends HasComponent {
@@ -61,8 +63,10 @@ export interface SimpleCellOwnProps extends HasComponent {
    */
   disabled?: boolean;
   /**
-   * В режиме `auto` в iOS добавляет chevron справа.
-   * Передавать `always`, если предполагается переход при клике по ячейке.
+   * Управляет видимостью иконки шеврона `›`
+   *
+   * - `auto` - добавляет шеврон справа только для платформы `ios`;
+   * - `always` - всегда показывает шеврон.
    */
   expandable?: 'auto' | 'always';
   /**
@@ -109,76 +113,53 @@ export const SimpleCell = ({
     <Tappable
       {...restProps}
       className={classNames(
-        styles['SimpleCell'],
-        restProps.disabled && styles['SimpleCell--disabled'],
+        styles.host,
+        restProps.disabled && styles.disabled,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        multiline && styles['SimpleCell--mult'],
+        multiline && styles.mult,
         className,
       )}
     >
-      <div
-        className={classNames(
-          styles['SimpleCell__before'],
-          platform === 'ios' && styles['SimpleCell__before--ios'],
-        )}
-      >
+      <div className={classNames(styles.before, platform === 'ios' && styles.beforeIos)}>
         {before}
       </div>
-      <div className={styles['SimpleCell__middle']}>
+      <div className={styles.middle}>
         {subhead && (
-          <Subhead
-            Component="span"
-            className={classNames(styles['SimpleCell__text'], styles['SimpleCell__subhead'])}
-          >
+          <Subhead Component="span" className={classNames(styles.text, styles.subhead)}>
             {subhead}
           </Subhead>
         )}
-        <div className={styles['SimpleCell__content']}>
-          {badgeBeforeTitle && (
-            <span className={styles['SimpleCell__badge']}>{badgeBeforeTitle}</span>
-          )}
-          <Headline Component="span" className={styles['SimpleCell__children']} weight="3">
+        <div className={styles.content}>
+          {badgeBeforeTitle && <span className={styles.badge}>{badgeBeforeTitle}</span>}
+          <Headline Component="span" className={styles.children} weight="3">
             {children}
           </Headline>
-          {hasReactNode(badgeAfterTitle) && (
-            <span className={styles['SimpleCell__badge']}>{badgeAfterTitle}</span>
-          )}
+          {hasReactNode(badgeAfterTitle) && <span className={styles.badge}>{badgeAfterTitle}</span>}
         </div>
         {subtitle && (
-          <div className={styles['SimpleCell__content']}>
-            {badgeBeforeSubtitle && (
-              <span className={styles['SimpleCell__badge']}>{badgeBeforeSubtitle}</span>
-            )}
-            <Footnote
-              normalize={false}
-              className={classNames(styles['SimpleCell__text'], styles['SimpleCell__subtitle'])}
-            >
+          <div className={styles.content}>
+            {badgeBeforeSubtitle && <span className={styles.badge}>{badgeBeforeSubtitle}</span>}
+            <Footnote normalize={false} className={classNames(styles.text, styles.subtitle)}>
               {subtitle}
             </Footnote>
-            {badgeAfterSubtitle && (
-              <span className={styles['SimpleCell__badge']}>{badgeAfterSubtitle}</span>
-            )}
+            {badgeAfterSubtitle && <span className={styles.badge}>{badgeAfterSubtitle}</span>}
           </div>
         )}
         {extraSubtitle && (
-          <Footnote
-            className={classNames(styles['SimpleCell__text'], styles['SimpleCell__extraSubtitle'])}
-          >
+          <Footnote className={classNames(styles.text, styles.extraSubtitle)}>
             {extraSubtitle}
           </Footnote>
         )}
       </div>
       {hasReactNode(indicator) && (
-        <Headline Component="span" weight="3" className={styles['SimpleCell__indicator']}>
+        <Headline Component="span" weight="3" className={styles.indicator}>
           {indicator}
         </Headline>
       )}
       {hasAfter && (
-        <div className={classNames(styles['SimpleCell__after'], 'vkuiInternalSimpleCell__after')}>
+        <div className={classNames(styles.after, 'vkuiInternalSimpleCell__after')}>
           {after}
-          {hasChevron && (
-            <Chevron size={chevronSize} className={styles['SimpleCell__chevronIcon']} />
-          )}
+          {hasChevron && <Chevron size={chevronSize} className={styles.chevronIcon} />}
         </div>
       )}
     </Tappable>

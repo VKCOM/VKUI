@@ -19,7 +19,7 @@ export const FormItemTopAside: React.FC<FormItemTopAsideProps> = ({
   ...restProps
 }: FormItemTopAsideProps) => {
   return (
-    <Subhead className={styles['FormItemTop__aside']} {...restProps}>
+    <Subhead className={styles.aside} {...restProps}>
       {children}
     </Subhead>
   );

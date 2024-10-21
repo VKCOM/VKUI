@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { clamp } from '../../helpers/math';
 import { useIsClient } from '../../hooks/useIsClient';

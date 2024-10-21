@@ -19,8 +19,7 @@ const getGridAvatarRootEl = () => screen.getByTestId(TEST_LOCATORS.HOST);
 
 const getGridAvatarBadgeEl = () => screen.getByTestId(TEST_LOCATORS.BADGE);
 
-const getGridAvatarItemEls = () =>
-  getGridAvatarRootEl().querySelectorAll(`.${styles['GridAvatar__item']}`);
+const getGridAvatarItemEls = () => getGridAvatarRootEl().querySelectorAll(`.${styles.item}`);
 
 describe(GridAvatar, () => {
   baselineComponent(GridAvatar);
@@ -48,6 +47,6 @@ describe(GridAvatar.Badge, () => {
       </GridAvatarTest>,
     );
 
-    expect(getGridAvatarBadgeEl()).toHaveClass(gridAvatarBadgeStyles['GridAvatarBadge--shifted']);
+    expect(getGridAvatarBadgeEl()).toHaveClass(gridAvatarBadgeStyles.shifted);
   });
 });

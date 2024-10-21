@@ -22,8 +22,8 @@ export interface StateProps {
 export const DEFAULT_STATE_MODE: StateMode = 'background';
 
 const stylesHovered: Record<string, string> = {
-  background: styles['Tappable--hovered-background'],
-  opacity: styles['Tappable--hovered-opacity'],
+  background: styles.hoveredBackground,
+  opacity: styles.hoveredOpacity,
   none: '',
 };
 
@@ -37,8 +37,8 @@ export function hoverClass(hoverMode: StateModeLiteral = DEFAULT_STATE_MODE): st
 }
 
 const stylesActivated: Record<string, string> = {
-  background: styles['Tappable--activated-background'],
-  opacity: styles['Tappable--activated-opacity'],
+  background: styles.activatedBackground,
+  opacity: styles.activatedOpacity,
   none: '',
 };
 

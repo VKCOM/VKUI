@@ -36,7 +36,7 @@ export const Example: Story = {
               <PanelHeaderBack onClick={noop} label={platform === 'vkcom' ? 'Назад' : undefined} />
             }
           >
-            <PanelHeaderContent before={<Avatar size={36} />} status="Был в сети вчера">
+            <PanelHeaderContent before={<Avatar size={36} />} subtitle="Был в сети вчера">
               Влад Анесов
             </PanelHeaderContent>
           </PanelHeader>

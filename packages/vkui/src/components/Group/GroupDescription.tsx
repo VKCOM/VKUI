@@ -9,6 +9,6 @@ export const GroupDescription: React.FC<GroupDescriptionProps> = ({
   className,
   ...restProps
 }: GroupDescriptionProps): React.ReactNode => (
-  <Footnote className={classNames(className, styles['Group__description'])} {...restProps} />
+  <Footnote className={classNames(className, styles.description)} {...restProps} />
 );
 GroupDescription.displayName = 'GroupDescription';

@@ -31,9 +31,7 @@ describe('SimpleCell', () => {
         <SimpleCell expandable="auto">Язык</SimpleCell>
       </ConfigProvider>,
     );
-    expect(
-      container.getElementsByClassName(styles['SimpleCell__chevronIcon'])[0],
-    ).toBeInTheDocument();
+    expect(container.getElementsByClassName(styles.chevronIcon)[0]).toBeInTheDocument();
   });
 
   it('handles disabled', () => {
@@ -47,6 +45,6 @@ describe('SimpleCell', () => {
     fireEvent.click(screen.getByText('Язык'));
     expect(clickStub).not.toHaveBeenCalled();
 
-    expect(screen.getByTestId('test')).toHaveClass(styles['SimpleCell--disabled']);
+    expect(screen.getByTestId('test')).toHaveClass(styles.disabled);
   });
 });

@@ -1,3 +1,5 @@
+'use client';
+
 import { Icon24Reorder, Icon24ReorderIos } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import {
@@ -44,14 +46,14 @@ export const CellDragger = ({
 
   return (
     <Touch
-      className={classNames(styles['CellDragger'], className)}
+      className={classNames(styles.host, className)}
       onStart={disabled ? undefined : onDragStart}
       onMoveY={disabled ? undefined : onDragMove}
       onEnd={disabled ? undefined : onDragEnd}
       {...restProps}
     >
       {children && <VisuallyHidden>{children}</VisuallyHidden>}
-      <Icon className={styles['CellDragger__icon']} />
+      <Icon className={styles.icon} />
     </Touch>
   );
 };

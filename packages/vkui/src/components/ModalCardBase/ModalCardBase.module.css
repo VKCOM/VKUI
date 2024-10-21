@@ -1,4 +1,4 @@
-.ModalCardBase__container {
+.container {
   box-sizing: border-box;
   position: relative;
   background: var(--vkui--color_background_modal);
@@ -18,19 +18,19 @@
   --vkui_internal--dismiss_icon_desktop_offset: 4px;
 }
 
-.ModalCardBase--withSafeZone .ModalCardBase__container {
+.withSafeZone .container {
   padding-block-start: calc(
     var(--vkui_internal--dismiss_icon_height) + var(--vkui_internal--dismiss_icon_padding) +
       var(--vkui_internal--dismiss_icon_safe_offset)
   );
 }
 
-.ModalCardBase__container--softwareKeyboardOpened {
+.containerSoftwareKeyboardOpened {
   margin-block-end: 0;
 }
 
-.ModalCardBase__header,
-.ModalCardBase__subheader {
+.title,
+.description {
   text-align: center;
   margin: 0;
   padding-block: 0;
@@ -38,25 +38,25 @@
   word-break: break-word;
 }
 
-.ModalCardBase__header {
+.title {
   color: var(--vkui--color_text_primary);
 }
 
-.ModalCardBase__subheader {
+.description {
   color: var(--vkui--color_text_subhead);
 }
 
-.ModalCardBase__icon {
+.icon {
   margin-block: 8px 16px;
   margin-inline: auto;
   color: var(--vkui--color_icon_accent);
 }
 
-.ModalCardBase__actions {
+.actions {
   margin-block-start: 16px;
 }
 
-.ModalCardBase__dismiss {
+.dismiss {
   position: absolute;
   inset-block-start: 0;
   inset-inline-end: 0;
@@ -67,7 +67,7 @@
 /**
  * iOS
  */
-.ModalCardBase--ios .ModalCardBase__container {
+.ios .container {
   border-radius: 14px;
 
   --vkui_internal--dismiss_icon_height: 24px;
@@ -78,23 +78,23 @@
 /**
  * Desktop
  */
-.ModalCardBase--desktop .ModalCardBase__dismiss {
+.desktop .dismiss {
   inset-block-start: var(--vkui_internal--dismiss_icon_desktop_offset);
   inset-inline-end: var(--vkui_internal--dismiss_icon_desktop_offset);
 }
 
-.ModalCardBase--desktop .ModalCardBase__container {
+.desktop .container {
   padding: 24px;
 
   --vkui_internal--dismiss_icon_safe_offset: 0px;
 }
 
-.ModalCardBase--desktop.ModalCardBase--ios .ModalCardBase__container {
+.desktop.ios .container {
   --vkui_internal--dismiss_icon_padding: 10px;
   --vkui_internal--dismiss_icon_safe_offset: 6px;
 }
 
-.ModalCardBase--withSafeZone.ModalCardBase--desktop .ModalCardBase__container {
+.withSafeZone.desktop .container {
   padding-block-start: calc(
     var(--vkui_internal--dismiss_icon_height) + var(--vkui_internal--dismiss_icon_padding) +
       var(--vkui_internal--dismiss_icon_safe_offset) +

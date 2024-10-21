@@ -1,30 +1,30 @@
-.WriteBar {
+.host {
   background: var(--vkui--color_background_contrast_themed);
 }
 
-.WriteBar--shadow {
+.shadow {
   box-shadow: var(--vkui--elevation3);
 }
 
-.WriteBar__before,
-.WriteBar__form,
-.WriteBar__after {
+.before,
+.form,
+.after {
   display: flex;
   align-items: flex-end;
 }
 
-.WriteBar__form {
+.form {
   min-block-size: 52px;
 }
 
-.WriteBar__formIn {
+.formIn {
   flex: 1;
   min-inline-size: 0;
   display: flex;
   position: relative;
 }
 
-.WriteBar__textarea {
+.textarea {
   box-sizing: border-box;
   inline-size: 100%;
   flex: 1;
@@ -38,30 +38,30 @@
   max-block-size: 120px;
 }
 
-.WriteBar__textarea::placeholder {
+.textarea::placeholder {
   color: var(--vkui--color_text_subhead);
   /* Для Firefox */
   opacity: 1;
 }
 
-.WriteBar__textarea:focus {
+.textarea:focus {
   outline: var(--vkui_internal--outline-reset);
 }
 
-.WriteBar__inlineAfter {
+.inlineAfter {
   display: flex;
   align-items: flex-end;
 }
 
-.WriteBar__before {
+.before {
   padding-inline-start: 4px;
 }
 
-.WriteBar__after {
+.after {
   padding-inline-end: 4px;
 }
 
-.WriteBar__textarea {
+.textarea {
   block-size: 52px;
   padding-block: 16px;
   padding-inline: 12px;
@@ -70,17 +70,17 @@
 /**
  * iOS
  */
-.WriteBar--ios {
+.ios {
   background: var(--vkui--color_background_content);
 }
 
-.WriteBar--ios .WriteBar__before,
-.WriteBar--ios .WriteBar__after {
+.ios .before,
+.ios .after {
   padding-block: 0;
   padding-inline: 4px;
 }
 
-.WriteBar--ios .WriteBar__formIn {
+.ios .formIn {
   box-sizing: border-box;
   background-color: var(--vkui--color_write_bar_input_background);
   border: var(--vkui--size_border--regular) solid var(--vkui--color_write_bar_input_border);
@@ -89,11 +89,11 @@
   margin-inline: 0;
 }
 
-.WriteBar--ios .WriteBar__formIn:first-child {
+.ios .formIn:first-child {
   margin-inline-start: 12px;
 }
 
-.WriteBar--ios .WriteBar__inlineAfter {
+.ios .inlineAfter {
   /* чтобы правильно выровнять иконку, нужно учитывать border */
   --vkui_internal--writebar-right-gap: calc(-1 * var(--vkui--size_border--regular));
   --vkui_internal--writebar-vertical-gap: calc(var(--vkui_internal--writebar-right-gap) - 8px);
@@ -102,7 +102,7 @@
   margin-block: var(--vkui_internal--writebar-vertical-gap);
 }
 
-.WriteBar--ios .WriteBar__textarea {
+.ios .textarea {
   block-size: 36px;
   padding-block: 6px;
   padding-inline: 12px 0;

@@ -4,8 +4,8 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Gradient.module.css';
 
 const modeStyles = {
-  overlay: styles['Gradient--mode-overlay'],
-  tint: styles['Gradient--mode-tint'],
+  overlay: styles.modeOverlay,
+  tint: styles.modeTint,
 };
 
 export interface GradientProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -32,9 +32,9 @@ export const Gradient = ({
       role="presentation"
       {...restProps}
       baseClassName={classNames(
-        styles['Gradient'],
+        styles.host,
         mode !== 'default' && modeStyles[mode],
-        to === 'bottom' && styles['Gradient--to-bottom'],
+        to === 'bottom' && styles.toBottom,
       )}
     />
   );

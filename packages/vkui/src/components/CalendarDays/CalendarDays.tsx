@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
@@ -84,28 +86,17 @@ export const CalendarDays = ({
   );
 
   return (
-    <RootComponent {...props} baseClassName={styles['CalendarDays']} getRootRef={ref}>
-      <div
-        className={classNames(
-          styles['CalendarDays__row'],
-          size === 's' && styles['CalendarDays__row--size-s'],
-        )}
-      >
+    <RootComponent {...props} baseClassName={styles.host} getRootRef={ref}>
+      <div className={classNames(styles.row, size === 's' && styles.rowSizeS)}>
         {daysNames.map((dayName) => (
-          <Footnote key={dayName} className={styles['CalendarDays__weekday']}>
+          <Footnote key={dayName} className={styles.weekday}>
             {dayName}
           </Footnote>
         ))}
       </div>
 
       {weeks.map((week, i) => (
-        <div
-          className={classNames(
-            styles['CalendarDays__row'],
-            size === 's' && styles['CalendarDays__row--size-s'],
-          )}
-          key={i}
-        >
+        <div className={classNames(styles.row, size === 's' && styles.rowSizeS)} key={i}>
           {week.map((day, i) => {
             const sameMonth = isSameMonth(day, viewDate);
             return (
@@ -130,6 +121,7 @@ export const CalendarDays = ({
                 size={size}
                 renderDayContent={renderDayContent}
                 {...dayProps}
+                className={classNames(dayProps?.className, styles.rowDay)}
               />
             );
           })}

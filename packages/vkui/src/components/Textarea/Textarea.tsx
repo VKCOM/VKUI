@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -13,8 +15,8 @@ import { useResizeTextarea } from './useResizeTextarea';
 import styles from './Textarea.module.css';
 
 const sizeYClassNames = {
-  none: styles['Textarea--sizeY-none'],
-  compact: styles['Textarea--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface TextareaProps
@@ -64,10 +66,10 @@ export const Textarea = ({
   return (
     <FormField
       className={classNames(
-        styles['Textarea'],
+        styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        align === 'right' && styles['Textarea--align-right'],
-        align === 'center' && styles['Textarea--align-center'],
+        align === 'right' && styles.alignRight,
+        align === 'center' && styles.alignCenter,
         className,
       )}
       style={style}
@@ -86,7 +88,7 @@ export const Textarea = ({
         value={value}
         as="textarea"
         rows={rows}
-        className={styles['Textarea__el']}
+        className={styles.el}
         onChange={callMultiple(onChange, resize)}
         getRootRef={elementRef}
       />

@@ -5,9 +5,9 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Typography.module.css';
 
 const stylesWeight = {
-  '1': styles['Typography--weight-1'],
-  '2': styles['Typography--weight-2'],
-  '3': styles['Typography--weight-3'],
+  '1': styles.weight1,
+  '2': styles.weight2,
+  '3': styles.weight3,
 };
 
 export interface HasCaps {
@@ -40,9 +40,7 @@ export interface TypographyProps
 
 export const Typography = ({
   weight,
-
-  // TODO [>=7]: сделать по умолчанию false (нужен будет кодмод)
-  useAccentWeight = true,
+  useAccentWeight,
   Component = 'span',
   normalize,
   inline,
@@ -51,11 +49,11 @@ export const Typography = ({
   <RootComponent
     Component={Component}
     baseClassName={classNames(
-      styles['Typography'],
-      normalize && styles['Typography--normalize'],
-      inline && styles['Typography--inline'],
+      styles.host,
+      normalize && styles.normalize,
+      inline && styles.inline,
       weight && stylesWeight[weight],
-      weight && useAccentWeight && styles['Typography--accent'],
+      weight && useAccentWeight && styles.accent,
     )}
     {...restProps}
   />

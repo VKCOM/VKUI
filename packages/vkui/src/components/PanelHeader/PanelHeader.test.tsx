@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PanelHeader, type PanelHeaderProps } from './PanelHeader';
+import styles from './PanelHeader.module.css';
 
 const PanelHeaderTest = (props: PanelHeaderProps) => (
   <PanelHeader data-testid="header" {...props} />
@@ -13,14 +14,14 @@ describe('PanelHeader', () => {
 
   it('resolves isFixed if fixed prop if it is passed', () => {
     const { rerender } = render(<PanelHeaderTest fixed />);
-    expect(panelHeader()).toHaveClass('vkuiPanelHeader--fixed');
+    expect(panelHeader()).toHaveClass(styles.hasFixed);
     rerender(<PanelHeaderTest fixed={false} />);
-    expect(panelHeader()).not.toHaveClass('vkuiPanelHeader--fixed');
+    expect(panelHeader()).not.toHaveClass(styles.hasFixed);
   });
 
   it('resolves isFixed if fixed prop is undefined', () => {
     render(<PanelHeaderTest />);
-    expect(panelHeader()).toHaveClass('vkuiPanelHeader--fixed');
+    expect(panelHeader()).toHaveClass(styles.hasFixed);
   });
 
   it('resolves isFixed if platform is VKCOM', () => {
@@ -30,7 +31,7 @@ describe('PanelHeader', () => {
       </ConfigProvider>,
     );
 
-    expect(panelHeader()).not.toHaveClass('vkuiPanelHeader--fixed');
+    expect(panelHeader()).not.toHaveClass(styles.hasFixed);
 
     rerender(
       <ConfigProvider platform="vkcom">
@@ -38,6 +39,6 @@ describe('PanelHeader', () => {
       </ConfigProvider>,
     );
 
-    expect(panelHeader()).toHaveClass('vkuiPanelHeader--fixed');
+    expect(panelHeader()).toHaveClass(styles.hasFixed);
   });
 });

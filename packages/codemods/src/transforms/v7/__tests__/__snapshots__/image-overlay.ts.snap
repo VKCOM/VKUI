@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`image-overlay transforms correctly 1`] = `
+"import { Image } from '@vkontakte/vkui';
+import { Icon12Add } from '@vkontakte/vkui-icons';
+import React from 'react';
+
+const App = () => {
+  const callback = () => {};
+  return (
+    (<React.Fragment>
+      {/* test 1: disableInteractive={true} -> remove disableInteractive and onClick */}
+      <Image
+        src="avatar_url"
+        alt="Приложение шторм онлайн"
+      >
+        <Image.Overlay aria-label="Кнопка для изображения">
+          <Icon12Add />
+        </Image.Overlay>
+      </Image>
+      {/* test 2: disableInteractive -> remove disableInteractive and onClick */}
+      <Image
+        src="avatar_url"
+        alt="Приложение шторм онлайн"
+      >
+        <Image.Overlay aria-label="Кнопка для изображения">
+          <Icon12Add />
+        </Image.Overlay>
+      </Image>
+      {/* test 3: disableInteractive={false} and onClick with Identifier -> remove disableInteractive, don't remove onClick */}
+      <Image
+        src="avatar_url"
+        alt="Приложение шторм онлайн"
+      >
+        <Image.Overlay aria-label="Кнопка для изображения" onClick={callback}>
+          <Icon12Add />
+        </Image.Overlay>
+      </Image>
+      {/* test 4: disableInteractive={false} and onClick with ArrowFunction -> remove disableInteractive, don't remove onClick */}
+      <Image
+        src="avatar_url"
+        alt="Приложение шторм онлайн"
+      >
+        <Image.Overlay aria-label="Кнопка для изображения" onClick={() => callback()}>
+          <Icon12Add />
+        </Image.Overlay>
+      </Image>
+    </React.Fragment>)
+  );
+};"
+`;
+
+exports[`image-overlay transforms correctly 2`] = `
+"import { ImageBase } from '@vkontakte/vkui';
+import { Icon12Add } from '@vkontakte/vkui-icons';
+import React from 'react';
+
+const App = () => {
+  const callback = () => {};
+  return (
+    (<React.Fragment>
+      {/* test 1: disableInteractive={true} -> remove disableInteractive and onClick */}
+      <ImageBase
+        src="avatar_url"
+        alt="Приложение шторм онлайн"
+      >
+        <ImageBase.Overlay aria-label="Кнопка для изображения">
+          <Icon12Add />
+        </ImageBase.Overlay>
+      </ImageBase>
+      {/* test 2: disableInteractive -> remove disableInteractive and onClick */}
+      <ImageBase
+        src="avatar_url"
+        alt="Приложение шторм онлайн"
+      >
+        <ImageBase.Overlay aria-label="Кнопка для изображения">
+          <Icon12Add />
+        </ImageBase.Overlay>
+      </ImageBase>
+      {/* test 3: disableInteractive={false} and onClick with Identifier -> remove disableInteractive, don't remove onClick */}
+      <ImageBase
+        src="avatar_url"
+        alt="Приложение шторм онлайн"
+      >
+        <ImageBase.Overlay aria-label="Кнопка для изображения" onClick={callback}>
+          <Icon12Add />
+        </ImageBase.Overlay>
+      </ImageBase>
+      {/* test 4: disableInteractive={false} and onClick with ArrowFunction -> remove disableInteractive, don't remove onClick */}
+      <ImageBase
+        src="avatar_url"
+        alt="Приложение шторм онлайн"
+      >
+        <ImageBase.Overlay aria-label="Кнопка для изображения" onClick={() => callback()}>
+          <Icon12Add />
+        </ImageBase.Overlay>
+      </ImageBase>
+    </React.Fragment>)
+  );
+};"
+`;

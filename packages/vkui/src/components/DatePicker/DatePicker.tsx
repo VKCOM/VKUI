@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { leadingZero } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
@@ -134,9 +136,9 @@ const DatePickerCustom = ({
   });
 
   return (
-    <RootComponent baseClassName={styles['DatePicker']} {...restProps}>
-      <div className={styles['DatePicker__container']}>
-        <div className={styles['DatePicker__day']}>
+    <RootComponent baseClassName={styles.host} {...restProps}>
+      <div className={styles.container}>
+        <div className={styles.day}>
           <CustomSelect
             name="day"
             value={internalValue.day}
@@ -147,9 +149,9 @@ const DatePickerCustom = ({
             disabled={disabled}
           />
         </div>
-        <div className={styles['DatePicker__month']}>
+        <div className={styles.month}>
           <CustomSelect
-            className={styles['DatePicker__monthSelect']}
+            className={styles.monthSelect}
             name="month"
             value={internalValue.month}
             options={monthOptions}
@@ -159,7 +161,7 @@ const DatePickerCustom = ({
             disabled={disabled}
           />
         </div>
-        <div className={styles['DatePicker__year']}>
+        <div className={styles.year}>
           <CustomSelect
             name="year"
             value={internalValue.year}

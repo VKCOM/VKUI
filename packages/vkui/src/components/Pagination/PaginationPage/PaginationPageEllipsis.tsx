@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HasRootRef } from '../../../types';
@@ -20,11 +22,7 @@ export const PaginationPageEllipsis = ({
 
   return (
     <Text
-      className={classNames(
-        paginationClassNames,
-        styles['PaginationPage--type-ellipsis'],
-        className,
-      )}
+      className={classNames(paginationClassNames, styles.typeEllipsis, className)}
       {...restProps}
     >
       &#8230;

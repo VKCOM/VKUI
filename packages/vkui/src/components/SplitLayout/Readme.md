@@ -57,7 +57,7 @@ const Example = () => {
               <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
               <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
               <Cell
-                onClick={() => setPopout(<Alert header="Alert!" onClose={() => setPopout(null)} />)}
+                onClick={() => setPopout(<Alert title="Alert!" onClose={() => setPopout(null)} />)}
               >
                 alert
               </Cell>

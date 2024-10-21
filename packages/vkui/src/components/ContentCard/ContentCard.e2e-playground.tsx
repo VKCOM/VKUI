@@ -7,7 +7,7 @@ export const ContentCardPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          subtitle: ['Album'],
+          subhead: ['Album'],
           header: ['Halsey – Badlands'],
           text: [
             'Badlands is the story about dreams and cruel reality, about opportunities and insurmountable obstacles, about love and broken hearts.',

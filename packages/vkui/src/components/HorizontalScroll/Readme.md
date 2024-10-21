@@ -24,7 +24,6 @@ const HorizontalScrollExample = () => {
             showArrows
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
-            inline
           >
             {recentFriends.map((item) => {
               return (
@@ -42,9 +41,8 @@ const HorizontalScrollExample = () => {
             arrowSize="m"
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
-            inline
           >
-            {commonFriends.length === 0 && <Spinner size="regular" style={{ height: 88 }} />}
+            {commonFriends.length === 0 && <Spinner size="m" style={{ height: 88 }} />}
             {commonFriends.length > 0 && (
               <Fragment>
                 {commonFriends.map((item) => {
@@ -75,25 +73,19 @@ const HorizontalScrollExample = () => {
           HorizontalCellShowMore
         </PanelHeader>
         <Group header={<Header>Альбомы</Header>}>
-          <HorizontalScroll inline>
+          <HorizontalScroll>
             <AlbumItems />
             <HorizontalCellShowMore onClick={() => {}} size="l" height={124} />
           </HorizontalScroll>
         </Group>
         <Group header={<Header>Возможные друзья</Header>}>
-          <HorizontalScroll inline>
+          <HorizontalScroll>
             <RandomUsers />
-
-            <HorizontalCellShowMore
-              onClick={() => {}}
-              compensateLastCellIndent
-              size="s"
-              height={56}
-            />
+            <HorizontalCellShowMore onClick={() => {}} size="s" height={56} />
           </HorizontalScroll>
         </Group>
         <Group header={<Header>Игры</Header>}>
-          <HorizontalScroll inline>
+          <HorizontalScroll>
             <HorizontalCell onClick={() => {}} size="m" header="Warma-geddon">
               <Image
                 size={88}
@@ -108,13 +100,7 @@ const HorizontalScrollExample = () => {
                 src={'https://sun9-71.userapi.com/c849220/v849220453/147ade/0MtQXKEVsiQ.jpg'}
               />
             </HorizontalCell>
-
-            <HorizontalCellShowMore
-              onClick={() => {}}
-              compensateLastCellIndent
-              size="m"
-              height={88}
-            />
+            <HorizontalCellShowMore onClick={() => {}} size="m" height={88} />
           </HorizontalScroll>
         </Group>
       </Panel>
@@ -181,30 +167,13 @@ const RandomUsers = () => {
 
 Специально для этого под `HorizontalScroll` создан компонент [`HorizontalCellShowMore`](#/HorizontalCellShowMore) (создан на основе [`HorizontalCell`](#/HorizontalCell)).
 
-Его можно вкладывать напрямую в того же родителя в котором лежат остальные `HorizontalCell` внутри
-`HorizontalScroll`.
+Его можно вкладывать напрямую в того же родителя, в котором лежат остальные `HorizontalCell` внутри `HorizontalScroll`.
 
 ```tsx static
 <HorizontalScroll>
-  <ListWrapper>
-    <HorizontalCell>1</HorizontalCell>
-    <HorizontalCell>2</HorizontalCell>
-    <HorizontalCell>3</HorizontalCell>
-    <HorizontalCellShowMore />
-  </ListWrapper>
-</HorizontalScroll>
-```
-
-Или как последний элемент `HorizontalScroll`, но тогда надо компенсировать отступы высталяемые
-`HorizontalCell` с помощью свойства `compensateLastCellIndent`.
-
-```tsx static
-<HorizontalScroll>
-  <ListWrapper>
-    <HorizontalCell>1</HorizontalCell>
-    <HorizontalCell>2</HorizontalCell>
-    <HorizontalCell>3</HorizontalCell>
-  </ListWrapper>
-  <HorizontalCellShowMore compensateLastCellIndent />
+  <HorizontalCell>1</HorizontalCell>
+  <HorizontalCell>2</HorizontalCell>
+  <HorizontalCell>3</HorizontalCell>
+  <HorizontalCellShowMore />
 </HorizontalScroll>
 ```

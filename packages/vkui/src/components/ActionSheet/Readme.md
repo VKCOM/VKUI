@@ -147,7 +147,7 @@ const SelectableActionSheet = () => {
   const speeds = ['0.25x', '0.5x', '0.75x', 'Нормальная', '1.25x', '1.5x', '2x', '3x'];
 
   return (
-    <ActionSheet header="Изменить скорость видео" onClose={onClose} toggleRef={selectableTargetRef}>
+    <ActionSheet title="Изменить скорость видео" onClose={onClose} toggleRef={selectableTargetRef}>
       {speeds.map((speed) => (
         <ActionSheetItem
           onChange={onChange}
@@ -170,7 +170,7 @@ const openTitle = () =>
     'title',
     <ActionSheet
       onClose={onClose}
-      header="Вы действительно хотите удалить это видео из Ваших видео?"
+      title="Вы действительно хотите удалить это видео из Ваших видео?"
       toggleRef={titleTargetRef}
     >
       <ActionSheetItem mode="destructive">Удалить видео</ActionSheetItem>

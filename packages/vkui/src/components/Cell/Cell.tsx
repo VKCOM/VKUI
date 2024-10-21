@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
@@ -85,10 +87,7 @@ export const Cell: React.FC<CellProps> & {
   const dragger = draggable ? (
     <CellDragger
       elRef={rootElRef}
-      className={classNames(
-        styles['Cell__dragger'],
-        !before && !selectable && styles['Cell__control--noBefore'],
-      )}
+      className={classNames(styles.dragger, !before && !selectable && styles.controlNoBefore)}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
     >
@@ -108,10 +107,7 @@ export const Cell: React.FC<CellProps> & {
     };
     checkbox = (
       <CellCheckbox
-        className={classNames(
-          styles['Cell__checkbox'],
-          !before && styles['Cell__control--noBefore'],
-        )}
+        className={classNames(styles.checkbox, !before && styles.controlNoBefore)}
         {...checkboxProps}
       />
     );
@@ -120,11 +116,11 @@ export const Cell: React.FC<CellProps> & {
   const hasActive = !disabled && !dragging;
 
   const cellClasses = classNames(
-    styles['Cell'],
-    dragging && styles['Cell--dragging'],
-    platform === 'ios' && styles['Cell--ios'],
-    removable && styles['Cell--removable'],
-    Component === 'label' && styles['Cell--selectable'],
+    styles.host,
+    dragging && styles.dragging,
+    platform === 'ios' && styles.ios,
+    removable && styles.removable,
+    Component === 'label' && styles.selectable,
   );
 
   const simpleCellProps: SimpleCellProps = {
@@ -132,7 +128,7 @@ export const Cell: React.FC<CellProps> & {
     hasHover: hasActive && !removable,
     disabled,
     ...restProps,
-    className: styles['Cell__content'],
+    className: styles.content,
     // чтобы свойство, если не определено, не присутствовало в
     // restProps явно как {'Component': undefined} и ниже не переопределяло
     // возможное значение commonProps.Component = 'a' при слиянии двух объектов, как

@@ -26,9 +26,8 @@ export interface ImageBaseOverlayCommonProps
 export interface ImageBaseOverlayInteractiveProps extends ImageBaseOverlayCommonProps {
   /**
    * Обработчик взаимодействия с элементом.
-   * Свойство несовместимо с `nonInteractive={true}`.
    */
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  onClick: React.MouseEventHandler<HTMLElement>;
   /**
    * Принимает иконку.
    *
@@ -42,17 +41,13 @@ export interface ImageBaseOverlayInteractiveProps extends ImageBaseOverlayCommon
    * > использовали иконку.
    */
   children: React.ReactElement<ImageBaseExpectedIconProps>;
-  disableInteractive?: false;
 }
 
 export interface ImageBaseOverlayNonInteractiveProps extends ImageBaseOverlayCommonProps {
   /**
-   * По умолчанию сам компонент является интерактивным элементом. Передав значение `true`, можно отключить
+   * По умолчанию сам компонент является интерактивным элементом. Передав значение равное `'undefined'` или не передав этот параметр вовсе, можно отключить
    * такое поведение, что дает возможность передавать отдельные интерактивные элементы в `children`.
-   *
-   * TODO [>=7]: для определения интерактивности завязываться на св-во `onClick`
    */
-  disableInteractive: true;
   onClick?: undefined;
   children: React.ReactNode;
 }

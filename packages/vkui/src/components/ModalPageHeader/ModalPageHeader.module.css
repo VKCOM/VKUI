@@ -1,17 +1,17 @@
-.ModalPageHeader {
+.host {
   --vkui_internal--safe_area_inset_top: 0;
 }
 
-.ModalPageHeader--withGaps {
+.withGaps {
   padding-inline: 4px;
 }
 
-.ModalPageHeader--desktop.ModalPageHeader--withGaps {
+.desktop.withGaps {
   padding-inline: 8px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.ModalPageHeader :global(.vkuiIcon--dismiss_24), /* Note: <Icon24Dismiss /> по документации используется только для iOS  */
-.ModalPageHeader :global(.vkuiIcon--cancel_24) {
+.host :global(.vkuiIcon--dismiss_24), /* Note: <Icon24Dismiss /> по документации используется только для iOS  */
+.host :global(.vkuiIcon--cancel_24) {
   color: var(--vkui--color_icon_secondary);
 }

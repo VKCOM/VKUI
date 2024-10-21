@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -20,19 +22,19 @@ import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeader.module.css';
 
 const platformClassNames = {
-  ios: styles['PanelHeader--ios'],
-  android: styles['PanelHeader--android'],
-  vkcom: classNames(styles['PanelHeader--vkcom'], 'vkuiInternalPanelHeader--vkcom'),
+  ios: styles.ios,
+  android: styles.android,
+  vkcom: classNames(styles.vkcom, 'vkuiInternalPanelHeader--vkcom'),
 };
 
 const sizeXClassNames = {
-  none: styles['PanelHeader--sizeX-none'],
-  regular: styles['PanelHeader--sizeX-regular'],
+  none: styles.sizeXNone,
+  regular: styles.sizeXRegular,
 };
 
 const sizeYClassNames = {
-  none: styles['PanelHeader--sizeY-none'],
-  compact: styles['PanelHeader--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface PanelHeaderProps
@@ -99,19 +101,17 @@ const PanelHeaderIn = ({ before, after, children, typographyProps = {} }: PanelH
         {children}
       </Text>
     ) : (
-      <Component className={styles['PanelHeader__content-in']} {...restProps}>
+      <Component className={styles.contentIn} {...restProps}>
         {children}
       </Component>
     );
 
   return (
-    <OnboardingTooltipContainer fixed className={styles['PanelHeader__in']}>
-      <div className={classNames(styles['PanelHeader__before'], 'vkuiInternalPanelHeader__before')}>
-        {before}
-      </div>
-      <div className={styles['PanelHeader__content']}>{typographyNode}</div>
+    <OnboardingTooltipContainer fixed className={styles.in}>
+      <div className={classNames(styles.before, 'vkuiInternalPanelHeader__before')}>{before}</div>
+      <div className={styles.content}>{typographyNode}</div>
       <div
-        className={classNames(styles['PanelHeader__after'], 'vkuiInternalPanelHeader__after')}
+        className={classNames(styles.after, 'vkuiInternalPanelHeader__after')}
         {...afterSlotProps}
       />
     </OnboardingTooltipContainer>
@@ -148,20 +148,18 @@ export const PanelHeader = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['PanelHeader'],
+        styles.host,
         'vkuiInternalPanelHeader',
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        transparent && styles['PanelHeader--trnsp'],
-        shadow && styles['PanelHeader--shadow'],
-        !float && classNames(styles['PanelHeader--static'], 'vkuiInternalPanelHeader--static'),
-        staticSeparatorVisible &&
-          classNames(styles['PanelHeader--sep'], 'vkuiInternalPanelHeader--sep'),
-        !before &&
-          classNames(styles['PanelHeader--no-before'], 'vkuiInternalPanelHeader--no-before'),
-        !after && styles['PanelHeader--no-after'],
-        isFixed && styles['PanelHeader--fixed'],
+        transparent && styles.trnsp,
+        shadow && styles.shadow,
+        !float && classNames(styles.static, 'vkuiInternalPanelHeader--static'),
+        staticSeparatorVisible && classNames(styles.sep, 'vkuiInternalPanelHeader--sep'),
+        !before && classNames(styles.noBefore, 'vkuiInternalPanelHeader--no-before'),
+        !after && styles.noAfter,
+        isFixed && styles.hasFixed,
         sizeX !== 'compact' && sizeXClassNames[sizeX],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
@@ -169,7 +167,7 @@ export const PanelHeader = ({
     >
       {isFixed ? (
         <FixedLayout
-          className={classNames(styles['PanelHeader__fixed'], 'vkuiInternalPanelHeader__fixed')}
+          className={classNames(styles.fixed, 'vkuiInternalPanelHeader__fixed')}
           vertical="top"
           getRootRef={getRef}
         >
@@ -185,16 +183,14 @@ export const PanelHeader = ({
       {!isVKCOM && (
         <>
           {staticSeparatorVisible && adaptiveSizeX.compact && (
-            <Separator className={adaptiveSizeX.compact.className} />
+            <Separator className={adaptiveSizeX.compact.className} padding />
           )}
           {staticSpacingVisible && adaptiveSizeX.regular && (
             <Spacing className={adaptiveSizeX.regular.className} size={16} />
           )}
         </>
       )}
-      {separatorVisible && isVKCOM && (
-        <Separator className={styles['PanelHeader__separator']} wide />
-      )}
+      {separatorVisible && isVKCOM && <Separator className={styles.separator} />}
     </RootComponent>
   );
 };

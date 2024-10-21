@@ -91,7 +91,7 @@ const setupList = (element: HTMLDivElement) => {
 
 const getCellDraggerById = (testId: string) => {
   const cellToDrag = screen.getByTestId(testId);
-  return cellToDrag.querySelector<HTMLElement>(`.${draggerStyles['CellDragger']}`)!;
+  return cellToDrag.querySelector<HTMLElement>(`.${draggerStyles.host}`)!;
 };
 
 const setup = ({ cellsCount = 3 }: { cellsCount?: number }) => {

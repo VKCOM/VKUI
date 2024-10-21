@@ -13,7 +13,7 @@ describe('CalendarTime', () => {
     const { container } = render(<CalendarTime onChange={onChange} value={dayDate} />);
 
     const [hourSelect, minuteSelect] = Array.from(
-      container.getElementsByClassName(styles['CalendarTime__picker']),
+      container.getElementsByClassName(styles.picker),
     ).map((picker) => picker.firstElementChild as HTMLElement);
 
     await userEvent.click(hourSelect);
@@ -37,7 +37,7 @@ describe('CalendarTime', () => {
     );
 
     const [hourSelect, minuteSelect] = Array.from(
-      container.getElementsByClassName(styles['CalendarTime__picker']),
+      container.getElementsByClassName(styles.picker),
     ).map((picker) => picker.firstElementChild as HTMLElement);
 
     await userEvent.click(hourSelect);

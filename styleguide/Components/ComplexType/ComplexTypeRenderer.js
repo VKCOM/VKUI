@@ -14,7 +14,7 @@ export const ComplexTypeRenderer = ({ name, raw }) => {
         <Tooltip
           className={classNames('ComplexTypeDropdown', sizeX.regular.className)}
           placement="right"
-          text={raw}
+          description={raw}
         >
           <Text className="ComplexType">
             <span className="ComplexType__name">{name}</span>
