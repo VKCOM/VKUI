@@ -13,25 +13,25 @@ import styles from './ContentCard.module.css';
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
     HasComponent,
-    Omit<TappableProps, 'getRootRef' | 'crossOrigin'>,
+    Omit<TappableProps, 'getRootRef' | 'crossOrigin' | 'title'>,
     Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
     HasRef<HTMLImageElement> {
   /**
    Текст над заголовком
    */
-  subhead?: React.ReactNode;
+  overTitle?: React.ReactNode;
   /**
    Заголовок
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /**
    Позволяет поменять тег используемый для заголовка
    */
-  headerComponent?: React.ElementType;
+  titleComponent?: React.ElementType;
   /**
    Текст
    */
-  text?: React.ReactNode;
+  description?: React.ReactNode;
   /**
    Нижний текст
    */
@@ -47,10 +47,10 @@ export interface ContentCardProps
  * @see https://vkcom.github.io/VKUI/#/ContentCard
  */
 export const ContentCard = ({
-  subhead,
-  header,
-  headerComponent = 'span',
-  text,
+  overTitle,
+  title,
+  titleComponent = 'span',
+  description,
   caption,
   // card props
   className,
@@ -111,17 +111,22 @@ export const ContentCard = ({
           />
         )}
         <div className={styles.body}>
-          {hasReactNode(subhead) && (
-            <Caption className={classNames(styles.text, styles.subhead)} weight="1" level="3" caps>
-              {subhead}
+          {hasReactNode(overTitle) && (
+            <Caption
+              className={classNames(styles.text, styles.overTitle)}
+              weight="1"
+              level="3"
+              caps
+            >
+              {overTitle}
             </Caption>
           )}
-          {hasReactNode(header) && (
-            <Headline className={styles.text} weight="2" level="1" Component={headerComponent}>
-              {header}
+          {hasReactNode(title) && (
+            <Headline className={styles.text} weight="2" level="1" Component={titleComponent}>
+              {title}
             </Headline>
           )}
-          {hasReactNode(text) && <Text className={styles.text}>{text}</Text>}
+          {hasReactNode(description) && <Text className={styles.text}>{description}</Text>}
           {hasReactNode(caption) && (
             <Footnote className={classNames(styles.text, styles.caption)}>{caption}</Footnote>
           )}
