@@ -4,6 +4,7 @@ import type {
   UseFloatingWithInteractionsProps,
   UseFloatingWithInteractionsReturn,
 } from '../useFloatingWithInteractions';
+import { type RestoreFocusType } from '../useFloatingWithInteractions/types';
 import type { OnPlacementChange } from './common';
 
 /**
@@ -44,7 +45,7 @@ export interface FloatingComponentProps
   /**
    * Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент.
    */
-  restoreFocus?: boolean;
+  restoreFocus?: RestoreFocusType;
   /**
    * Перебивает zIndex заданный по умолчанию.
    */
