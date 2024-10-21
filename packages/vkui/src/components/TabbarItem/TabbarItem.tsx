@@ -11,14 +11,14 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './TabbarItem.module.css';
 
 export interface TabbarItemProps
-  extends React.AllHTMLAttributes<HTMLElement>,
+  extends Omit<React.AllHTMLAttributes<HTMLElement>, 'label'>,
     HasRootRef<HTMLElement>,
     HasComponent {
   selected?: boolean;
   /**
    * Текст рядом с иконкой
    */
-  text?: React.ReactNode;
+  label?: React.ReactNode;
   /**
    * Индикатор над иконкой. Принимает `<Badge mode="prominent" />` или `<Counter size="s" mode="prominent" />`
    */
@@ -34,7 +34,7 @@ export const TabbarItem = ({
   children,
   selected,
   indicator,
-  text,
+  label,
   href,
   Component = href ? 'a' : 'button',
   disabled,
@@ -43,7 +43,7 @@ export const TabbarItem = ({
   const platform = usePlatform();
 
   if (process.env.NODE_ENV === 'development') {
-    const hasAccessibleName = text || restProps['aria-label'] || restProps['aria-labelledby'];
+    const hasAccessibleName = label || restProps['aria-label'] || restProps['aria-labelledby'];
 
     if (!hasAccessibleName) {
       warn(COMMON_WARNINGS.a11y[Component === 'a' ? 'link-name' : 'button-name'], 'error');
@@ -79,9 +79,9 @@ export const TabbarItem = ({
             {hasReactNode(indicator) && indicator}
           </div>
         </div>
-        {text && (
-          <Footnote Component="div" className={styles.text} weight="2">
-            {text}
+        {label && (
+          <Footnote Component="div" className={styles.label} weight="2">
+            {label}
           </Footnote>
         )}
       </div>
