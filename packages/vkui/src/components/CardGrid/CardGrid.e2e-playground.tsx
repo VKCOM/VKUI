@@ -24,7 +24,7 @@ export const CardGridPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           size: ['s', 'm', 'l'],
-          spaced: [true, false],
+          padding: [true, false],
         },
       ]}
     >
