@@ -38,8 +38,8 @@ export const ModalPageHeader = ({
       <div
         className={classNames(
           styles.host,
-          platform !== 'vkcom' && styles.withGaps,
-          isDesktop && styles.desktop,
+          platform !== 'vkcom' && styles.hostWithGaps,
+          isDesktop && styles.hostDesktop,
         )}
         ref={getRootRef}
       >
