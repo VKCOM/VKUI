@@ -15,7 +15,7 @@ const Example = () => {
 
         <Group header={<Header mode="secondary">В пунктах меню</Header>}>
           <Cell
-            expandable
+            chevron
             before={<Icon28Notifications />}
             badgeAfterTitle={<Badge>Есть новые</Badge>}
             onClick={noop}

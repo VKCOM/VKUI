@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cell transforms correctly 1`] = `
+"import { Cell } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <Cell
+        onClick={() => {}}
+        chevron="auto"
+        indicator="При использовании"
+      >
+        Геолокация
+      </Cell>
+      <Cell
+        onClick={() => {}}
+        chevron="always"
+        indicator="При использовании"
+      >
+        Геолокация
+      </Cell>
+    </React.Fragment>)
+  );
+};"
+`;
