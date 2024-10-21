@@ -5,7 +5,7 @@ import { TabbarItem } from './TabbarItem';
 
 describe('TabbarItem', () => {
   baselineComponent((props) => (
-    <TabbarItem text="TabbarItem" {...props}>
+    <TabbarItem label="TabbarItem" {...props}>
       <Icon28NewsfeedOutline />
     </TabbarItem>
   ));

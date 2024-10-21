@@ -14,13 +14,15 @@ export const CardScrollPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
+          padding: [true],
           size: ['s', 'm', 'l', false],
         },
         {
+          padding: [true],
           showArrows: [true, false, 'always'],
         },
         {
-          noSpaces: [false, true],
+          padding: [false],
         },
       ]}
     >

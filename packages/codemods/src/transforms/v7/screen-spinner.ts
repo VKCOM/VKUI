@@ -15,7 +15,15 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   }
 
   function removeSizeProp(attribute: ASTPath<JSXAttribute>) {
-    attribute.node.name.name === 'size' && j(attribute).remove();
+    if (attribute.node.name.name === 'size') {
+      j(attribute).remove();
+    }
+  }
+
+  function renameLabelToCaption(attribute: ASTPath<JSXAttribute>) {
+    if (attribute.node.name.name === 'caption') {
+      j(attribute).replaceWith(j.jsxAttribute(j.jsxIdentifier('label'), attribute.node.value));
+    }
   }
 
   // Обработка ScreenSpinner
@@ -25,7 +33,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       (path) => path.value.name.type === 'JSXIdentifier' && path.value.name.name === localName,
     )
     .find(j.JSXAttribute)
-    .forEach(removeSizeProp);
+    .forEach((attr) => {
+      removeSizeProp(attr);
+      renameLabelToCaption(attr);
+    });
 
   // Обработка ScreenSpinner.Loader
   source
@@ -40,6 +51,20 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     })
     .find(j.JSXAttribute)
     .forEach(removeSizeProp);
+
+  // Обработка ScreenSpinner.Container
+  source
+    .find(j.JSXElement, {
+      openingElement: {
+        name: {
+          type: 'JSXMemberExpression',
+          object: { name: localName },
+          property: { name: 'Container' },
+        },
+      },
+    })
+    .find(j.JSXAttribute)
+    .forEach(renameLabelToCaption);
 
   return source.toSource();
 }

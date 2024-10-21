@@ -21,7 +21,7 @@ export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, Has
   /**
    * Допускаются иконки, текст, Link
    */
-  aside?: React.ReactNode;
+  after?: React.ReactNode;
   /**
    * Допускаются текст, Indicator
    */
@@ -103,7 +103,7 @@ export const Header = ({
   subtitle,
   subtitleComponent = 'span',
   indicator,
-  aside,
+  after,
   multiline,
   before,
   beforeTitle,
@@ -155,9 +155,9 @@ export const Header = ({
         )}
       </div>
 
-      {hasReactNode(aside) && (
-        <Paragraph className={styles.aside} Component="span">
-          {aside}
+      {hasReactNode(after) && (
+        <Paragraph className={styles.after} Component="span">
+          {after}
         </Paragraph>
       )}
     </RootComponent>

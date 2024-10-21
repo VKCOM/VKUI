@@ -4,27 +4,27 @@ import { TabbarItem } from '../TabbarItem/TabbarItem';
 import { Tabbar, type TabbarProps } from './Tabbar';
 
 const tabs2 = [
-  <TabbarItem key="0" text="Новости">
+  <TabbarItem key="0" label="Новости">
     <Icon28UserCircleOutline />
   </TabbarItem>,
-  <TabbarItem key="1" text="Сервисы">
+  <TabbarItem key="1" label="Сервисы">
     <Icon28UserCircleOutline />
   </TabbarItem>,
 ];
 const tabs3 = [
   ...tabs2,
-  <TabbarItem key="2" text="Профиль">
+  <TabbarItem key="2" label="Профиль">
     <Icon28UserCircleOutline />
   </TabbarItem>,
 ];
 const longTabs = [
-  <TabbarItem key="2" text="Деконструктивизм">
+  <TabbarItem key="2" label="Деконструктивизм">
     <Icon28UserCircleOutline />
   </TabbarItem>,
-  <TabbarItem key="2" text="Постдеконструктивизм">
+  <TabbarItem key="2" label="Постдеконструктивизм">
     <Icon28UserCircleOutline />
   </TabbarItem>,
-  <TabbarItem key="2" text="Пирожки и прочие сладости">
+  <TabbarItem key="2" label="Пирожки и прочие сладости">
     <Icon28UserCircleOutline />
   </TabbarItem>,
 ];

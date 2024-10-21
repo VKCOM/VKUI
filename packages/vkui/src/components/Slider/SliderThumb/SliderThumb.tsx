@@ -128,7 +128,7 @@ export const SliderThumb = ({
             placement: resolvedPlacement,
             getRootRef: setArrowRef,
           }}
-          text={inputValue}
+          description={inputValue}
         />
       )}
     </React.Fragment>

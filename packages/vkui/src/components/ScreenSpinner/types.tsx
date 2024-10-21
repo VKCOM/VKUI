@@ -11,6 +11,6 @@ export type ScreenSpinnerProps = Omit<SpinnerProps, 'size'> & {
   /**
    * Текст под иконкой
    */
-  caption?: React.ReactNode;
+  label?: React.ReactNode;
   cancelLabel?: string;
 };

@@ -10,21 +10,21 @@ const Example = () => {
         <PanelHeader>More</PanelHeader>
         <Group>
           <Cell
-            expandable="auto"
+            chevron="auto"
             before={<Icon28UserOutline />}
             onClick={() => setActivePanel('panel2')}
           >
             Friends
           </Cell>
           <Cell
-            expandable="auto"
+            chevron="auto"
             before={<Icon28UsersOutline />}
             onClick={() => setActivePanel('panel2')}
           >
             Communities
           </Cell>
           <Cell
-            expandable="auto"
+            chevron="auto"
             before={<Icon28MusicOutline />}
             onClick={() => setActivePanel('panel2')}
           >

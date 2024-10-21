@@ -10,7 +10,7 @@ export const SubnavigationButtonPlayground = (props: ComponentPlaygroundProps) =
       {...props}
       propSets={[
         {
-          expandable: [undefined, true],
+          chevron: [undefined, true],
           selected: [undefined, true],
           before: [undefined, <Icon24Filter key="icon" />],
           after: [
@@ -40,7 +40,7 @@ export const SubnavigationButtonPlayground = (props: ComponentPlaygroundProps) =
           $adaptivity: true,
         },
         {
-          expandable: [true],
+          chevron: [true],
           selected: [undefined, true],
           before: [<Icon24Filter key="icon" />],
           mode: ['primary', 'outline', 'tertiary'],

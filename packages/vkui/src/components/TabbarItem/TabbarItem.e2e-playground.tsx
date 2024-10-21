@@ -11,14 +11,14 @@ export const TabbarItemPlayground = (playgroundProps: ComponentPlaygroundProps) 
       propSets={[
         {
           mode: ['vertical', 'horizontal'],
-          text: ['Message'],
+          label: ['Message'],
           children: [<Icon28MessageOutline key="icon" />],
           indicator: [undefined, <Badge key="badge" />],
           disabled: [false, true],
         },
         {
           mode: ['horizontal'],
-          text: ['Message'],
+          label: ['Message'],
           children: [<Icon28MessageOutline key="icon" />],
           selected: [true, false],
         },

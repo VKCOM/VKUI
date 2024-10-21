@@ -4,7 +4,7 @@ import { Tooltip, type TooltipProps } from './Tooltip';
 
 describe(Tooltip, () => {
   baselineComponent((props) => (
-    <Tooltip shown text="test" {...props}>
+    <Tooltip shown description="test" {...props}>
       <div>Target</div>
     </Tooltip>
   ));

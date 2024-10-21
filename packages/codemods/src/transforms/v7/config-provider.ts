@@ -75,7 +75,7 @@ function handleConfigProviderProps(
   const showReport = () => {
     report(
       api,
-      `: "${localName}" has been changed. Manual changes required: need to rename "appearance" field to "colorScheme" in object if it need`,
+      `: "${localName}" has been changed. Manual changes required: perhaps need to rename "appearance" field to "colorScheme" in object.`,
     );
   };
   const types = source.find(j.TSTypeReference, {
@@ -90,7 +90,7 @@ function handleUseConfigProvider(j: JSCodeshift, api: API, source: Collection, l
   const showReport = () => {
     report(
       api,
-      `: "${localName}" has been changed. Manual changes required: need to rename "appearance" field to "colorScheme" in result of hook if it need`,
+      `: "${localName}" has been changed. Manual changes required: perhaps need to rename "appearance" field to "colorScheme" in result of hook.`,
     );
   };
   const identifiers = source.find(j.Identifier, {
@@ -105,7 +105,7 @@ function handleConfigProvider(j: JSCodeshift, api: API, source: Collection, loca
   const showReport = () => {
     report(
       api,
-      `: "${localName}" has been changed. Manual changes required: need to rename "appearance" field to "colorScheme" if it need`,
+      `: "${localName}" has been changed. Manual changes required: perhaps need to rename "appearance" field to "colorScheme".`,
     );
   };
   source
@@ -145,7 +145,7 @@ function handleConfigProviderContext(
   const showReport = () => {
     report(
       api,
-      `: "${localName}" has been changed. Manual changes required: need to rename "appearance" field to "colorScheme" if it need`,
+      `: "${localName}" has been changed. Manual changes required: perhaps need to rename "appearance" field to "colorScheme".`,
     );
   };
 

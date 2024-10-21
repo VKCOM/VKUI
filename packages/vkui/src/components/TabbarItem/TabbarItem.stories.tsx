@@ -45,7 +45,7 @@ export const InVerticalTabbar: Story = {
   ...Playground,
   args: {
     children: 'Icon28MessageOutline',
-    text: 'Messages',
+    label: 'Messages',
   },
   decorators: [
     (Component, context) => (
