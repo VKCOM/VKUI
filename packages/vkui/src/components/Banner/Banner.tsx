@@ -97,6 +97,7 @@ export const Banner = ({
   onDismiss,
   dismissLabel = 'Скрыть',
   className,
+  Component,
   ...restProps
 }: BannerProps): React.ReactNode => {
   const platform = usePlatform();
@@ -160,9 +161,11 @@ export const Banner = ({
     </div>
   );
 
+  const isClickable = restProps.onClick || restProps.onClickCapture || restProps.href;
+
   return (
     <Tappable
-      Component="section"
+      Component={Component || (!isClickable ? 'section' : undefined)}
       activeMode={platform === 'ios' ? 'opacity' : 'background'}
       baseClassName={classNames(
         styles.host,
