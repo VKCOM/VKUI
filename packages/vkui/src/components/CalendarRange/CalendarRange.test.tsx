@@ -123,8 +123,8 @@ describe('CalendarRange', () => {
 
     fireEvent.click(dayElement);
 
-    expect(dayElement).toHaveClass(dayStyles.selectionStart);
-    expect(dayElement).not.toHaveClass(dayStyles.selectionEnd);
+    expect(dayElement.firstElementChild!).toHaveClass(dayStyles.selectionStart);
+    expect(dayElement.firstElementChild!).not.toHaveClass(dayStyles.selectionEnd);
   });
 
   it('check range working', () => {
@@ -137,8 +137,10 @@ describe('CalendarRange', () => {
 
     fireEvent.click(dayElement);
 
-    expect(screen.getByTestId(dayTestId(firstDayDate))).toHaveClass(dayStyles.selectionStart);
-    expect(dayElement).toHaveClass(dayStyles.selectionEnd);
+    expect(screen.getByTestId(dayTestId(firstDayDate)).firstElementChild!).toHaveClass(
+      dayStyles.selectionStart,
+    );
+    expect(dayElement.firstElementChild!).toHaveClass(dayStyles.selectionEnd);
   });
 
   it('check reverse range select working', () => {
