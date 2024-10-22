@@ -49,6 +49,11 @@ export const ScrollContext: React.Context<ScrollContextInterface> =
     disableScrollLock: noop,
   });
 
+/**
+ * Хук предоставляет API для блокировки и разблокировки скролла основного элемента, который
+ * определяется параметром `scroll` в `AppRoot`. Используется при открытии модальных окон, чтобы
+ * исправить проблемы с двойным скроллом на мобильных устройствах.
+ */
 export const useScroll = (): ScrollContextInterface => React.useContext(ScrollContext);
 
 export interface ScrollControllerProps extends HasChildren {
