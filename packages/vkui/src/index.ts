@@ -439,7 +439,10 @@ export {
   getViewWidthByViewportWidth,
   getViewHeightByViewportHeight,
 } from './lib/adaptivity';
-export { type Placement as FloatingPlacement } from './lib/floating';
+export {
+  type Placement as FloatingPlacement,
+  type PlacementWithAuto as FloatingPlacementWithAuto,
+} from './lib/floating';
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';
 export { CustomScrollView } from './components/CustomScrollView/CustomScrollView';
