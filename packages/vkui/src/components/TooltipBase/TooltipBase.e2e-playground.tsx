@@ -12,13 +12,13 @@ export const TooltipBasePlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          header: [undefined, 'Some header'],
+          title: [undefined, 'Some header'],
           onCloseIconClick: [undefined, noop],
         },
       ]}
     >
       {(props: TooltipBaseProps) => (
-        <TooltipBase text="Some text" {...props} className={TEST_CLASS_NAMES.CONTENT} />
+        <TooltipBase description="Some text" {...props} className={TEST_CLASS_NAMES.CONTENT} />
       )}
     </ComponentPlayground>
   );

@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`card-scroll transforms correctly 1`] = `
+"import { Card, CardScroll } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      {/* noSpaces by default -> padding=true */}
+      <CardScroll size="s" padding>
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+      </CardScroll>
+      {/* noSpaces="false" -> padding="true" */}
+      <CardScroll
+        size="s"
+        padding
+      >
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+      </CardScroll>
+      {/* noSpaces="true" -> padding="false" */}
+      <CardScroll size="s">
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+      </CardScroll>
+      {/* noSpaces="true" -> padding="false" */}
+      <CardScroll size="s">
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+      </CardScroll>
+    </React.Fragment>)
+  );
+};"
+`;

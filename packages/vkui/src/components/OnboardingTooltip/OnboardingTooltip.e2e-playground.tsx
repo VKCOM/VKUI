@@ -12,7 +12,7 @@ export const OnboardingTooltipPlayground = (props: ComponentPlaygroundProps) => 
       {...props}
       propSets={[
         {
-          header: [undefined, 'header'],
+          title: [undefined, 'header'],
         },
         {
           placement: ['top-start', 'top-end', 'bottom-start', 'bottom-end'],
@@ -40,7 +40,7 @@ export const OnboardingTooltipPlayground = (props: ComponentPlaygroundProps) => 
             justifyContent: 'center',
           }}
         >
-          <OnboardingTooltip text="onboarding tooltip" {...props}>
+          <OnboardingTooltip description="onboarding tooltip" {...props}>
             <div className={TEST_CLASS_NAMES.CONTENT} style={{ display: 'flex' }}>
               Tooltip target
             </div>

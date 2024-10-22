@@ -12,7 +12,7 @@ export const ScreenSpinnerLoadingPlayground = (props: ComponentPlaygroundProps) 
         },
         {
           state: ['loading', 'cancelable', 'error'],
-          caption: ['Text for screenspinner to test layout'],
+          label: ['Text for screenspinner to test layout'],
         },
       ]}
     >

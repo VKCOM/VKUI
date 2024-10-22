@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tabbar-item transforms correctly 1`] = `
+"import { Icon28NewsfeedOutline, Tabbar, TabbarItem } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <Tabbar style={{ position: 'static', margin: '10px 0' }}>
+        <TabbarItem selected={true} onClick={() => {}} label="Новости">
+          <Icon28NewsfeedOutline />
+        </TabbarItem>
+        <TabbarItem selected={false} onClick={() => {}} label={"Новости"}>
+          <Icon28NewsfeedOutline />
+        </TabbarItem>
+      </Tabbar>
+    </React.Fragment>)
+  );
+};"
+`;

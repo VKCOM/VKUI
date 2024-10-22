@@ -46,7 +46,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       if (!value || !directionToAvatarsPosition[value]) {
         report(
           api,
-          `: ${localName} has been changed. Manual changes required: need to change direction prop to avatarsPosition`,
+          `: ${localName} has been changed. Manual changes required: need to change direction prop to avatarsPosition.`,
         );
         return;
       }

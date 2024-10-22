@@ -45,7 +45,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       if (!value || !modeToAppearance[value]) {
         report(
           api,
-          `: ${localName} has been changed. Manual changes required: need to change 'mode' prop to 'appearance'`,
+          `: ${localName} has been changed. Manual changes required: need to change 'mode' prop to 'appearance'.`,
         );
         return;
       }
