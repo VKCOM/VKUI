@@ -309,7 +309,7 @@
 }
 
 .host.modePrimary.appearanceNeutral {
-  color: var(--vkui--color_text_contrast_themed)
+  color: var(--vkui--color_text_contrast_themed);
 }
 
 .host.appearanceAccentInvariable {
