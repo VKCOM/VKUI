@@ -10,7 +10,7 @@ const App = () => {
     (<React.Fragment>
       <HorizontalCellShowMore size="l" height={88} />
       <HorizontalCellShowMore size="l" height={88} />
-      <HorizontalCellShowMore compensateLastCellIndent={false} size="s" height={88} />
+      <HorizontalCellShowMore size="s" height={88} />
     </React.Fragment>)
   );
 };"

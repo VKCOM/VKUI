@@ -16,14 +16,12 @@ function compensateLastCellIndentManipulator(api: API, attribute: ASTPath<JSXAtt
     node.value.type === 'JSXExpressionContainer' &&
     node.value.expression.type === 'BooleanLiteral'
   ) {
-    if (node.value.expression.value) {
-      api.jscodeshift(attribute).remove();
-    } else {
-      report(
-        api,
-        `Manual changes required for ${componentName}'s "compensateLastCellIndent" prop. You might not need it anymore.`,
-      );
-    }
+    api.jscodeshift(attribute).remove();
+  } else {
+    report(
+      api,
+      `Manual changes required for ${componentName}'s "compensateLastCellIndent" prop. You might not need it anymore.`,
+    );
   }
 }
 
