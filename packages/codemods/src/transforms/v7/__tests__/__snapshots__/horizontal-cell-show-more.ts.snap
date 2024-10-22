@@ -1,25 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`horizontal-cell-show-more transforms correctly 1`] = `
-"import { HorizontalCellShowMore, HorizontalScroll } from '@vkontakte/vkui';
+"import { HorizontalCellShowMore } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
 const App = () => {
   return (
     (<React.Fragment>
-      <HorizontalScroll>
-        <div />
-        <div />
-        <div />
-        <HorizontalCellShowMore onClick={() => {}} size="m" height={88} />
-      </HorizontalScroll>
-      <HorizontalScroll>
-        <div />
-        <div />
-        <div />
-        <HorizontalCellShowMore onClick={() => {}} size="m" height={88} />
-      </HorizontalScroll>
+      <HorizontalCellShowMore size="m" height={88} />
+      <HorizontalCellShowMore size="m" height={88} />
+      <HorizontalCellShowMore size="s" height={88} />
     </React.Fragment>)
   );
 };"
