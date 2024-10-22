@@ -156,6 +156,48 @@ export function swapBooleanValue(
     });
 }
 
+export const removeProps = (
+  j: JSCodeshift,
+  api: API,
+  source: Collection,
+  componentName: string,
+  propsNames: string[],
+  createReportMessage: () => string = () => '',
+) => {
+  let needToShowReport = false;
+  source
+    .find(j.JSXElement, {
+      openingElement: {
+        name: {
+          name: componentName,
+        },
+      },
+    })
+    .forEach((path) => {
+      const attributes = path.node.openingElement.attributes;
+      const newAttributes = attributes?.filter((attr) => {
+        if (attr.type === 'JSXAttribute') {
+          const attrName = attr.name ? attr.name.name : null;
+          if (typeof attrName === 'string') {
+            return !propsNames.includes(attrName);
+          }
+        }
+        if (attr.type === 'JSXSpreadAttribute') {
+          needToShowReport = true;
+        }
+        return false;
+      });
+      path.node.openingElement.attributes = newAttributes;
+    });
+
+  if (needToShowReport) {
+    report(
+      api,
+      `: ${componentName} has been changed. Manual changes required: ${createReportMessage()}`,
+    );
+  }
+};
+
 export const removeAttribute = (
   attributes: Array<JSXAttribute | JSXSpreadAttribute> | undefined,
   attribute: JSXAttribute,

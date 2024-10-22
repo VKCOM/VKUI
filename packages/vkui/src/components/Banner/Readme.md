@@ -94,7 +94,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
           before={
             <Avatar src="https://sun9-7.userapi.com/q9qBUh4kGND1pTUytY4LwljtRLWoCXaIzN7C2A/52lM85R5kus.jpg" />
           }
-          extraSubhead="Хотите, чтобы вам меньше мешали? Включите режим «невидимка»!"
+          extraSubtitle="Хотите, чтобы вам меньше мешали? Включите режим «невидимка»!"
           actions={
             <ButtonGroup mode="horizontal" gap="m">
               <Button>Включить</Button>
