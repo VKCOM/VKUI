@@ -96,6 +96,9 @@
     "webpack-merge": "^6.0.1",
     "yargs": "^17.7.2"
   },
+  "resolutions": {
+    "markdown-to-jsx@npm:^6.11.4": "^7.5.0"
+  },
   "scripts": {
     "docs:styleguide": "yarn workspace @project-docs/styleguide run start",
     "docs:styleguide:props": "yarn workspace @project-docs/styleguide run start:props",
