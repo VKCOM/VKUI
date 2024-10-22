@@ -13,6 +13,8 @@
     "@csstools/postcss-global-data": "3.0.0",
     "@playwright/experimental-ct-react": "1.48.1",
     "@playwright/test": "1.48.1",
+    "@rspack/cli": "^v1.0.11",
+    "@rspack/core": "^v1.0.11",
     "@size-limit/file": "^11.1.6",
     "@size-limit/webpack": "^11.1.6",
     "@size-limit/webpack-css": "^11.1.6",
@@ -34,8 +36,9 @@
     "@vkontakte/eslint-plugin": "^2.0.0",
     "@vkontakte/prettier-config": "^0.2.1",
     "@vkontakte/stylelint-config": "^4.1.0",
-    "@vkontakte/vkui-tokens": "4.54.0",
+    "@vkontakte/vkui-tokens": "4.55.0",
     "autoprefixer": "^10.4.20",
+    "clean-webpack-plugin": "^4.0.0",
     "concurrently": "^9.0.1",
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
@@ -95,6 +98,9 @@
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^6.0.1",
     "yargs": "^17.7.2"
+  },
+  "resolutions": {
+    "markdown-to-jsx@npm:^6.11.4": "^7.5.0"
   },
   "scripts": {
     "docs:styleguide": "yarn workspace @project-docs/styleguide run start",
