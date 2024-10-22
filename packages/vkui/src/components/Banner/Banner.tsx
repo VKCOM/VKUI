@@ -2,19 +2,17 @@
 
 import * as React from 'react';
 import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import type { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
-import { RootComponent } from '../RootComponent/RootComponent';
-import { Tappable } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './Banner.module.css';
 
-export interface BannerProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
+export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
   /**
    * Тип баннера.
    */
@@ -27,11 +25,6 @@ export interface BannerProps extends Omit<HTMLAttributesWithRootRef<HTMLDivEleme
    * - `chevron` – отображается иконка шеврона, которая подразумевает, что при клике на баннер можно куда-то перейти.
    */
   after?: 'dismiss' | 'chevron' | React.ReactNode;
-  /**
-   * Включает режим отображения кликабельного баннера.
-   * По умолчанию `true`, если в `after` передано значение `'expand'`
-   */
-  clickable?: boolean;
   /**
    * Срабатывает при клике на иконку крестика при `after="dismiss"`.
    */
@@ -95,7 +88,6 @@ export const Banner = ({
   size = 's',
   before,
   after: afterProp,
-  clickable = afterProp === 'chevron',
   title,
   subtitle,
   extraSubtitle,
@@ -104,6 +96,7 @@ export const Banner = ({
   actions,
   onDismiss,
   dismissLabel = 'Скрыть',
+  className,
   ...restProps
 }: BannerProps): React.ReactNode => {
   const platform = usePlatform();
@@ -168,32 +161,22 @@ export const Banner = ({
   );
 
   return (
-    <RootComponent
+    <Tappable
       Component="section"
-      {...restProps}
+      activeMode={platform === 'ios' ? 'opacity' : 'background'}
       baseClassName={classNames(
         styles.host,
+        styles.in,
         platform === 'ios' && styles.ios,
         mode === 'image' && styles.modeImage,
         size === 'm' && styles.sizeM,
         mode === 'image' && imageTheme === 'dark' && styles.inverted,
+        className,
       )}
+      {...restProps}
     >
-      {clickable ? (
-        <Tappable
-          className={styles.in}
-          activeMode={platform === 'ios' ? 'opacity' : 'background'}
-          onClick={noop}
-        >
-          {content}
-          {after}
-        </Tappable>
-      ) : (
-        <div className={styles.in}>
-          {content}
-          {after}
-        </div>
-      )}
-    </RootComponent>
+      {content}
+      {after}
+    </Tappable>
   );
 };

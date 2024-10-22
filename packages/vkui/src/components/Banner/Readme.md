@@ -108,7 +108,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         <Banner
           title="Больше интересных подкастов в каталоге"
           subtitle="Найдите интересующие именно Вас подкасты!"
-          after="expand"
+          after="chevron"
           onClick={() => console.log('[Podcast banner] onClick')}
         />
       </Div>
