@@ -8,7 +8,7 @@ import styles from './HorizontalCellShowMore.module.css';
 
 const sizeClassNames = {
   s: styles.sizeS,
-  l: styles.sizeL,
+  m: styles.sizeM,
 };
 
 export interface HorizontalCellShowMoreProps
@@ -29,12 +29,12 @@ export interface HorizontalCellShowMoreProps
   /**
    * Задаёт размер компонента.
    *
-   * Значение `s` применяется для `<HorizontalCell size="s"`, в остальных случаях рекомендуется `l`.
+   * Значение `s` применяется для `<HorizontalCell size="s"`, в остальных случаях рекомендуется `m`.
    */
-  size?: 's' | 'l';
+  size?: 's' | 'm';
   /**
    * Предназначен для отрисовки текста.
-   * По умолчанию для `size='s'` содержит текст `Все`, для `size='l'` - `Показать все`.
+   * По умолчанию для `size='s'` содержит текст `Все`, для `size='m'` - `Показать все`.
    * */
   children?: SubheadProps['children'];
   /**

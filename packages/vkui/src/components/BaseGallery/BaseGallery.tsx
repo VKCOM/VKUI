@@ -53,7 +53,7 @@ export const BaseGallery = ({
   align = 'left',
   showArrows,
   getRef,
-  arrowSize = 'l',
+  arrowSize = 'm',
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});

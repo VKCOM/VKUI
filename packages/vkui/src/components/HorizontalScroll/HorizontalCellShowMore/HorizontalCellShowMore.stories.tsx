@@ -52,7 +52,7 @@ function getNotTooBigHeightBySize({
     return 56;
   }
 
-  if (size === 'l' && height && height > 88) {
+  if (size === 'm' && height && height > 88) {
     return 88;
   }
 
@@ -70,7 +70,7 @@ export const Playground: Story = {
     );
   },
   args: {
-    size: 'l',
+    size: 'm',
     height: 96,
   },
   decorators: [
@@ -107,7 +107,7 @@ export const Middle: Story = {
   ...Playground,
   args: {
     ...Playground.args,
-    size: 'l',
+    size: 'm',
     height: 88,
   },
 };
@@ -118,7 +118,7 @@ export const WithCustomText: Story = {
   ...Playground,
   args: {
     ...Playground.args,
-    size: 'l',
+    size: 'm',
     height: 88,
     children: 'Show More',
   },

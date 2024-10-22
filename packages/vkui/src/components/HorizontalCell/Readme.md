@@ -152,12 +152,12 @@ const Example = () => {
       <Panel id="horizontalCell">
         <PanelHeader>HorizontalCell</PanelHeader>
         <Group header={<Header>Возможные друзья</Header>}>
-          <HorizontalScroll>
+          <HorizontalScroll arrowSize="s">
             <UserItems />
           </HorizontalScroll>
         </Group>
         <Group header={<Header after={<Link>Показать все</Link>}>Мини-приложения</Header>}>
-          <HorizontalScroll>
+          <HorizontalScroll arrowSize="s">
             <MiniAppItems />
           </HorizontalScroll>
         </Group>

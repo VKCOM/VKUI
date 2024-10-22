@@ -30,12 +30,12 @@ function sizeManipulator(api: API, attribute: ASTPath<JSXAttribute>) {
 
   if (node.value?.type === 'StringLiteral') {
     if (node.value.value !== 's') {
-      node.value = api.jscodeshift.stringLiteral('l');
+      node.value = api.jscodeshift.stringLiteral('m');
     }
   } else {
     report(
       api,
-      `Manual changes required for ${componentName}'s "size" prop. Use "s" or "l" value only.`,
+      `Manual changes required for ${componentName}'s "size" prop. Use "s" or "m" value only.`,
     );
   }
 }

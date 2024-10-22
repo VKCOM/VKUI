@@ -22,6 +22,7 @@ const HorizontalScrollExample = () => {
             showArrows
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
+            arrowSize="s"
           >
             {recentFriends.map((item) => {
               return (
@@ -39,6 +40,7 @@ const HorizontalScrollExample = () => {
             arrowSize="m"
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
+            arrowSize="s"
           >
             {commonFriends.length === 0 && <Spinner size="m" style={{ height: 88 }} />}
             {commonFriends.length > 0 && (
@@ -73,7 +75,7 @@ const HorizontalScrollExample = () => {
         <Group header={<Header>Альбомы</Header>}>
           <HorizontalScroll>
             <AlbumItems />
-            <HorizontalCellShowMore onClick={() => {}} size="l" height={124} />
+            <HorizontalCellShowMore onClick={() => {}} size="m" height={124} />
           </HorizontalScroll>
         </Group>
         <Group header={<Header>Возможные друзья</Header>}>
@@ -98,7 +100,7 @@ const HorizontalScrollExample = () => {
                 src={'https://sun9-71.userapi.com/c849220/v849220453/147ade/0MtQXKEVsiQ.jpg'}
               />
             </HorizontalCell>
-            <HorizontalCellShowMore onClick={() => {}} size="l" height={88} />
+            <HorizontalCellShowMore onClick={() => {}} size="m" height={88} />
           </HorizontalScroll>
         </Group>
       </Panel>

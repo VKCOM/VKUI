@@ -8,8 +8,8 @@ import '@vkontakte/vkui/dist/vkui.css';
 const App = () => {
   return (
     (<React.Fragment>
-      <HorizontalCellShowMore size="l" height={88} />
-      <HorizontalCellShowMore size="l" height={88} />
+      <HorizontalCellShowMore size="m" height={88} />
+      <HorizontalCellShowMore size="m" height={88} />
       <HorizontalCellShowMore size="s" height={88} />
     </React.Fragment>)
   );
