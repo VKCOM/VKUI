@@ -9,7 +9,14 @@ const App = () => {
         header="Сегодня день рождения Михаила Лихачёва"
         subheader="Подарите подарок"
         text="Дополнительный текст"
-        asideMode="dismiss"
+        asideMode="expand"
+      />
+      <Banner
+        before={<Avatar size={48} src={'user_lihachyov'} />}
+        header="Сегодня день рождения Михаила Лихачёва"
+        subheader="Подарите подарок"
+        text="Дополнительный текст"
+        asideMode={'expand'}
       />
       <Banner
         before={<Avatar size={48} src={'user_lihachyov'} />}
