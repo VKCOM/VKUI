@@ -413,7 +413,7 @@ export {
 } from './hooks/useAdaptivityWithJSMediaQueries';
 export { useColorScheme } from './hooks/useColorScheme';
 export { usePagination } from './hooks/usePagination';
-export { useOrientationChange } from './hooks/useOrientationChange';
+export { type Orientation, useOrientationChange } from './hooks/useOrientationChange';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
