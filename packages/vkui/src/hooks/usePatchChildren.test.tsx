@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { act } from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, renderHook } from '@testing-library/react';
 import { setRef } from '../lib/utils';
 import type { HasRootRef } from '../types';
 import { usePatchChildren } from './usePatchChildren';
+
+const ComponentWithoutRef = (props: React.DOMAttributes<HTMLDivElement>) => <div {...props}></div>;
 
 const ComponentWithGetRootRef = ({
   getRootRef,
@@ -40,6 +42,30 @@ const WrapperWithUsePatchChildrenRef = ({
 };
 
 describe(usePatchChildren, () => {
+  it('returns undefined when no props', () => {
+    const { result } = renderHook(() => usePatchChildren());
+    const [childRef, child] = result.current;
+    act(() => {
+      expect(childRef.current).toBeNull();
+      expect(child).toBeUndefined();
+    });
+  });
+
+  it('returns error if children is not expected', () => {
+    const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
+
+    render(
+      <WrapperWithUsePatchChildrenRef>
+        <ComponentWithoutRef />
+      </WrapperWithUsePatchChildrenRef>,
+    );
+
+    expect(consoleErrorMock).toHaveBeenCalledTimes(1);
+    expect(consoleErrorMock.mock.calls[0][0]).toBe(
+      'Warning: React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.%s',
+    );
+  });
+
   it.each([
     { type: 'element', refPropKey: 'childRef' },
     { type: 'element', refPropKey: 'refHook' },

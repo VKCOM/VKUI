@@ -5,12 +5,8 @@ import {
   isForwardRefElement,
   isValidNotReactFragmentElement,
 } from '../lib/utils';
-import { warnOnce } from '../lib/warnOnce';
 import type { HasRootRef } from '../types';
-import { useEffectDev } from './useEffectDev';
 import { useExternRef } from './useExternRef';
-
-const warn = warnOnce('usePatchChildrenRef');
 
 type InjectProps<T> = Omit<React.HTMLAttributes<T>, keyof React.DOMAttributes<T>> &
   React.Attributes & {
@@ -29,8 +25,8 @@ type ChildrenElement<T> =
   | undefined;
 
 /**
- * Функция пытается прокинуть в переданный React-элемент хук для получения его ссылки на DOM этого
- * элемента.
+ * Хук позволяет пропатчить переданный компонент так, чтобы можно было получить ссылку на его
+ * DOM-элемент. Также есть возможность прокинуть дополнительные параметры.
  *
  * @param children
  * @param injectProps
@@ -39,7 +35,7 @@ type ChildrenElement<T> =
  * 👎 Без параметра `externRef`
  * ```ts
  * const { ref } = useSomeHook();
- * const [childRef, child] = usePatchChildrenRef(children);
+ * const [childRef, child] = usePatchChildren(children);
  * React.useLayoutEffect(() => {
  *   ref.current = childRef.current; // или ref.current(childRef.current)
  * }, [childRef]);
@@ -48,10 +44,8 @@ type ChildrenElement<T> =
  * 👍 С параметром `externRef`
  * ```ts
  * const { ref } = useSomeHook();
- * const [childRef, child] = usePatchChildrenRef(children, undefined, ref);
+ * const [childRef, child] = usePatchChildren(children, undefined, ref);
  * ```
- *
- * @private
  */
 export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
   children?: ChildrenElement<ElementType>,
@@ -84,15 +78,6 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
     : isValidElementResult
       ? { getRootRef: childRef, ...injectProps, ...mergedEventsByInjectProps }
       : undefined;
-
-  useEffectDev(() => {
-    if (!childRef.current) {
-      warn(
-        'Кажется, в children передан компонент, который не поддерживает свойство getRootRef. Мы не можем получить ссылку на корневой dom-элемент этого компонента',
-        'error',
-      );
-    }
-  }, [isValidElementResult ? children.type : null, childRef]);
 
   return [childRef, isValidElementResult ? React.cloneElement(children, props) : children];
 };
