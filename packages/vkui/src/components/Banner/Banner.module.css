@@ -1,11 +1,6 @@
 .host {
   isolation: isolate;
   color: var(--vkui--color_text_primary);
-
-  --vkui_internal--banner-padding: 12px;
-}
-
-.in {
   position: relative;
   display: flex;
   flex-flow: row nowrap;
@@ -14,9 +9,11 @@
   background-color: var(--vkui--color_background_secondary);
   border-radius: var(--vkui--size_border_radius--regular);
   overflow: hidden;
+
+  --vkui_internal--banner-padding: 12px;
 }
 
-.in::before {
+.host::before {
   content: '';
   position: absolute;
   inset-inline-start: 0;
@@ -102,7 +99,7 @@
 /**
  * Mode "image"
  */
-.modeImage .in {
+.modeImage.host {
   background-color: var(--vkui--color_background_secondary);
 }
 
@@ -139,12 +136,12 @@
  * FormStatus
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormStatus) .in::before {
+:global(.vkuiInternalFormStatus).host::before {
   border: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormStatus--mode-error) .in {
+:global(.vkuiInternalFormStatus--mode-error).host {
   background-color: var(--vkui--color_background_negative_tint);
 }
 

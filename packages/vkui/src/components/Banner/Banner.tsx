@@ -166,7 +166,6 @@ export const Banner = ({
       activeMode={platform === 'ios' ? 'opacity' : 'background'}
       baseClassName={classNames(
         styles.host,
-        styles.in,
         platform === 'ios' && styles.ios,
         mode === 'image' && styles.modeImage,
         size === 'm' && styles.sizeM,
