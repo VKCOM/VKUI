@@ -97,23 +97,14 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     }, [renderDayContent, day, children, label]);
 
     if (hidden) {
-      return <div className={styles.hidden} />;
+      return <div className={classNames(styles.hidden, size === 's' && styles.sizeS)} />;
     }
 
     return (
       <Tappable
-        className={classNames(
-          styles.host,
-          size === 's' && styles.sizeS,
-          today && styles.today,
-          selected && !disabled && styles.selected,
-          selectionStart && styles.selectionStart,
-          selectionEnd && styles.selectionEnd,
-          disabled && styles.disabled,
-          !sameMonth && styles.notSameMonth,
-          className,
-        )}
-        hoverMode={active ? '' : styles.hover}
+        className={classNames(styles.host, size === 's' && styles.sizeS, className)}
+        hoverMode={styles.hostHovered}
+        activeMode={styles.hostActivated}
         hasActive={false}
         onClick={onClick}
         disabled={disabled}
@@ -127,14 +118,27 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
       >
         <div
           className={classNames(
-            styles.hinted,
-            hinted && styles.hintedActive,
-            hintedSelectionStart && styles.hintedSelectionStart,
-            hintedSelectionEnd && styles.hintedSelectionEnd,
+            styles.content,
+            size === 's' && styles.sizeS,
+            today && styles.today,
+            selected && !disabled && styles.selected,
+            selectionStart && styles.selectionStart,
+            selectionEnd && styles.selectionEnd,
+            disabled && styles.disabled,
+            !sameMonth && styles.notSameMonth,
           )}
         >
-          <div className={classNames(styles.inner, active && !disabled && styles.innerActive)}>
-            {content}
+          <div
+            className={classNames(
+              styles.hinted,
+              hinted && styles.hintedActive,
+              hintedSelectionStart && styles.hintedSelectionStart,
+              hintedSelectionEnd && styles.hintedSelectionEnd,
+            )}
+          >
+            <div className={classNames(styles.inner, active && !disabled && styles.innerActive)}>
+              {content}
+            </div>
           </div>
         </div>
       </Tappable>

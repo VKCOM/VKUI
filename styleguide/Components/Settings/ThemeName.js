@@ -7,14 +7,14 @@ import { Setting } from '../Setting/Setting';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 
 const Hint = () => {
-  const { platform, themeName, appearance, appearanceOptions } =
+  const { platform, themeName, colorScheme, colorSchemeOptions } =
     React.useContext(StyleGuideContext);
 
   const codeExamples = generateVKUIConfigProviderTokensClassNamesCodeExamples(
     platform,
     themeName,
-    appearance,
-    appearanceOptions,
+    colorScheme,
+    colorSchemeOptions,
   );
 
   return (

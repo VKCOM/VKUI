@@ -78,7 +78,7 @@ const ProfilePanelContent = ({
       >
         <HorizontalScroll>
           {getRandomUsers(15).map((user) => (
-            <HorizontalCell key={user.id} size="s" header={user.first_name}>
+            <HorizontalCell key={user.id} size="s" title={user.first_name}>
               <Avatar size={56} src={user.photo_100} />
             </HorizontalCell>
           ))}
@@ -143,8 +143,8 @@ export const SwipeBlockExample: Story = {
 
       setPopoutWithRestriction(
         <Alert
-          header="Поле Имя не заполнено"
-          text="Пожалуйста, заполните его."
+          title="Поле Имя не заполнено"
+          description="Пожалуйста, заполните его."
           onClose={() => setPopoutWithRestriction(null)}
         />,
       );

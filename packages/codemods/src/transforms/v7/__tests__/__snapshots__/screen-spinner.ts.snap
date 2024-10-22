@@ -7,8 +7,18 @@ import React from 'react';
 const App = () => {
   return (
     (<React.Fragment>
+      {/* Проверяем удаление size */}
       <ScreenSpinner state="loading" />
       <ScreenSpinner.Container>
+        <ScreenSpinner.Loader />
+        <ScreenSpinner.SwapIcon />
+      </ScreenSpinner.Container>
+      {/* Проверяем переименование caption на label */}
+      <ScreenSpinner
+        state="loading"
+        label="Caption"
+      />
+      <ScreenSpinner.Container label="Caption">
         <ScreenSpinner.Loader />
         <ScreenSpinner.SwapIcon />
       </ScreenSpinner.Container>

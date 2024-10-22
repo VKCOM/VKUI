@@ -29,8 +29,8 @@
   margin-block-end: 0;
 }
 
-.header,
-.subheader {
+.title,
+.description {
   text-align: center;
   margin: 0;
   padding-block: 0;
@@ -38,11 +38,11 @@
   word-break: break-word;
 }
 
-.header {
+.title {
   color: var(--vkui--color_text_primary);
 }
 
-.subheader {
+.description {
   color: var(--vkui--color_text_subhead);
 }
 

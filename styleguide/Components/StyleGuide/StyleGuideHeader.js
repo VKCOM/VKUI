@@ -6,7 +6,7 @@ import {
   SplitCol,
   SplitLayout,
   Tappable,
-  useAppearance,
+  useColorScheme,
   VisuallyHidden,
 } from '@vkui';
 import { VKUI_PACKAGE } from '../../../shared';
@@ -17,9 +17,9 @@ import './StyleGuideHeader.css';
 const prRegExp = /https:\/\/([\w]+)\.github.io\/([\w]+)\/pull\/([\d]+)/;
 const prData = prRegExp.exec(location.href);
 
-export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
+export const StyleGuideHeader = ({ switchStyleGuideColorScheme }) => {
   const { setActiveModal } = React.useContext(StyleGuideContext);
-  const appearance = useAppearance();
+  const colorScheme = useColorScheme();
 
   const links = [
     {
@@ -89,9 +89,9 @@ export const StyleGuideHeader = ({ switchStyleGuideAppearance }) => {
               ))}
             </div>
             <div className="StyleGuideHeader__aside">
-              <IconButton onClick={switchStyleGuideAppearance}>
+              <IconButton onClick={switchStyleGuideColorScheme}>
                 <VisuallyHidden>Сменить тему</VisuallyHidden>
-                {appearance === 'dark' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
+                {colorScheme === 'dark' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
               </IconButton>
             </div>
           </div>

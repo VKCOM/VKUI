@@ -40,9 +40,9 @@ export const SearchPlayground = (props: ComponentPlaygroundProps) => {
   );
 };
 
-export const SearchTestFocusOnIOSPlayground = ({ appearance }: ComponentPlaygroundProps) => {
+export const SearchTestFocusOnIOSPlayground = ({ colorScheme }: ComponentPlaygroundProps) => {
   return (
-    <ConfigProvider platform="ios" appearance={appearance}>
+    <ConfigProvider platform="ios" colorScheme={colorScheme}>
       <AdaptivityProvider sizeY="regular">
         <AppRoot
           mode="embedded"

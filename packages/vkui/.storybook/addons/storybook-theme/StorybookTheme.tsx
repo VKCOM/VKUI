@@ -36,7 +36,7 @@ export const StorybookTheme = () => {
 
   const updateTheme = (themeProp: 'light' | 'dark') => {
     channel.emit(SET_STORYBOOK_THEME, themeProp);
-    updateGlobals({ [PARAM_KEY]: themeProp, appearance: themeProp });
+    updateGlobals({ [PARAM_KEY]: themeProp, colorScheme: themeProp });
     updateLocalStorageValue(themeProp);
   };
 

@@ -129,6 +129,7 @@ export const CalendarDays = ({
                 renderDayContent={renderDayContent}
                 testId={dayTestId}
                 {...dayProps}
+                className={classNames(dayProps?.className, styles.rowDay)}
               />
             );
           })}

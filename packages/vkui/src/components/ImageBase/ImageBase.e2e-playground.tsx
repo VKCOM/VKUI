@@ -1,5 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { AppearanceProvider } from '../AppearanceProvider/AppearanceProvider';
+import { ColorSchemeProvider } from '../ColorSchemeProvider/ColorSchemeProvider';
 import { ImageBase, type ImageBaseProps } from './ImageBase';
 
 const base64Image =
@@ -33,12 +33,12 @@ export const ImageWithParentWithBorderRadius = (props: ComponentPlaygroundProps)
         {/* Специально оборачиваем в провайдер, чтобы фон ImageBase бы темныи и выглядывал
          /* из-за img если img не полностью перекрывает ImageBase
           */}
-        <AppearanceProvider value="dark">
+        <ColorSchemeProvider value="dark">
           <ImageBase
             {...props}
             style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
           />
-        </AppearanceProvider>
+        </ColorSchemeProvider>
       </div>
     )}
   </ComponentPlayground>

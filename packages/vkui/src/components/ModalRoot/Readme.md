@@ -141,7 +141,7 @@ const App = () => {
       <Gradient mode="tint">
         <Placeholder
           icon={<Avatar size={96} src={randomUser.photo_100} />}
-          header={randomUser.first_name + ' ' + randomUser.last_name}
+          title={randomUser.first_name + ' ' + randomUser.last_name}
         ></Placeholder>
       </Gradient>
       <Group
@@ -387,8 +387,8 @@ const App = () => {
         id={MODAL_CARD_MONEY_SEND}
         onClose={() => changeActiveModal(null)}
         icon={<Icon56MoneyTransferOutline />}
-        header="Отправляйте деньги друзьям, используя банковскую карту"
-        subheader="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
+        title="Отправляйте деньги друзьям, используя банковскую карту"
+        description="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
         actions={
           <React.Fragment>
             <Spacing size={16} />
@@ -408,8 +408,8 @@ const App = () => {
         id={MODAL_CARD_APP_TO_MENU}
         onClose={() => changeActiveModal(null)}
         icon={<Image borderRadius="l" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
-        header="Добавить игру «Загадки детства» в меню?"
-        subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
+        title="Добавить игру «Загадки детства» в меню?"
+        description="Игра появится под списком разделов на экране меню и будет всегда под рукой."
         actions={
           <React.Fragment>
             <Spacing size={16} />
@@ -428,7 +428,7 @@ const App = () => {
       <ModalCard
         id={MODAL_CARD_ABOUT}
         onClose={() => changeActiveModal(null)}
-        header="Расскажите о себе"
+        title="Расскажите о себе"
         actions={
           <Button
             size="l"
@@ -448,7 +448,7 @@ const App = () => {
         id={MODAL_CARD_NOTIFICATIONS}
         onClose={() => changeActiveModal(null)}
         icon={<Icon56NotificationOutline />}
-        header="Приложение запрашивает разрешение на отправку Вам уведомлений"
+        title="Приложение запрашивает разрешение на отправку Вам уведомлений"
         actions={
           <React.Fragment>
             <Spacing size={16} />
@@ -480,8 +480,8 @@ const App = () => {
         id={MODAL_CARD_CHAT_INVITE}
         onClose={() => changeActiveModal(null)}
         icon={<Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />}
-        header="Баскетбол на выходных"
-        subheader="Приглашение в беседу"
+        title="Баскетбол на выходных"
+        description="Приглашение в беседу"
         actions={
           <React.Fragment>
             <Spacing size={8} />

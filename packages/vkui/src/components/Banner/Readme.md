@@ -15,8 +15,8 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
               src="https://sun9-63.userapi.com/yOEQYPHrNHjZEoanbqPb65HPl5iojmiLgLzfGA/W3geVMMt8TI.jpg"
             />
           }
-          header="Баста в Ледовом"
-          subhead="Большой концерт"
+          title="Баста в Ледовом"
+          subtitle="Большой концерт"
           asideMode="dismiss"
           onDismiss={noop}
           actions={<Button>Подробнее</Button>}
@@ -31,8 +31,8 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
               src="https://sun9-32.userapi.com/uFzLOK55iY7pC0DHjneEdP9G6gXcXi2Mxj9wVA/wnTmzh_blNM.jpg"
             />
           }
-          header="Для Вас"
-          subhead="Обновлено сегодня"
+          title="Для Вас"
+          subtitle="Обновлено сегодня"
           actions={<Button before={<Icon24Play />}>Слушать</Button>}
         />
       </Div>
@@ -44,8 +44,8 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
               <Icon28MusicOutline fill="#fff" />
             </Image>
           }
-          header="Подписка за рубль!"
-          subhead="Предложение действует только до конца февраля"
+          title="Подписка за рубль!"
+          subtitle="Предложение действует только до конца февраля"
           asideMode="dismiss"
           onDismiss={noop}
           actions={
@@ -60,8 +60,8 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
       <Div>
         <Banner
           before={<Avatar size={48} src={getAvatarUrl('user_lihachyov')} />}
-          header="Сегодня день рождения Михаила Лихачёва"
-          subhead="Подарите подарок"
+          title="Сегодня день рождения Михаила Лихачёва"
+          subtitle="Подарите подарок"
           asideMode="dismiss"
           onDismiss={noop}
           actions={<Button mode="primary">Подарить</Button>}
@@ -75,8 +75,8 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
               <span style={{ color: '#fff' }}>!</span>
             </Avatar>
           }
-          header="Телефон ожидает подтверждения"
-          subhead={
+          title="Телефон ожидает подтверждения"
+          subtitle={
             <React.Fragment>
               Новый номер +7 ••• ••• •• 96 будет сохранён через семь дней.
               <br />
@@ -94,7 +94,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
           before={
             <Avatar src="https://sun9-7.userapi.com/q9qBUh4kGND1pTUytY4LwljtRLWoCXaIzN7C2A/52lM85R5kus.jpg" />
           }
-          text="Хотите, чтобы вам меньше мешали? Включите режим «невидимка»!"
+          extraSubhead="Хотите, чтобы вам меньше мешали? Включите режим «невидимка»!"
           actions={
             <ButtonGroup mode="horizontal" gap="m">
               <Button>Включить</Button>
@@ -106,20 +106,20 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
 
       <Div>
         <Banner
-          header="Больше интересных подкастов в каталоге"
-          subhead="Найдите интересующие именно Вас подкасты!"
+          title="Больше интересных подкастов в каталоге"
+          subtitle="Найдите интересующие именно Вас подкасты!"
           asideMode="expand"
           onClick={() => console.log('[Podcast banner] onClick')}
         />
       </Div>
     </Group>
 
-    <Group header={<Header>Mode: image, size: regular</Header>}>
+    <Group title={<Header>Mode: image, size: regular</Header>}>
       <Div>
         <Banner
           mode="image"
-          header="Мои достижения"
-          subhead="Разблокировано 9 из 36"
+          title="Мои достижения"
+          subtitle="Разблокировано 9 из 36"
           background={
             <div
               style={{
@@ -136,12 +136,12 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         />
       </Div>
     </Group>
-    <Group header={<Header>Content: tint, size: medium</Header>}>
+    <Group title={<Header>Content: tint, size: medium</Header>}>
       <Div>
         <Banner
           size="m"
-          header="Реклама сообщества"
-          subhead={
+          title="Реклама сообщества"
+          subtitle={
             <span>
               Привлекайте больше людей
               <br />в Ваше сообщество
@@ -163,8 +163,8 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         <Banner
           mode="image"
           size="m"
-          header="Реклама в сообществе"
-          subhead={
+          title="Реклама в сообществе"
+          subtitle={
             <span>
               Привлекайте больше людей
               <br />в Ваше сообщество
@@ -196,14 +196,14 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         <Banner
           mode="image"
           size="m"
-          header={
+          title={
             <span>
               Баста в Ледовом,
               <br />
               большой концерт
             </span>
           }
-          subhead="Москва · 12 декабря"
+          subtitle="Москва · 12 декабря"
           background={
             <div
               style={{

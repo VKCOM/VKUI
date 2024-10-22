@@ -61,16 +61,16 @@
   padding-inline: 12px;
 }
 
-.header {
+.title {
   margin-block-end: 8px;
 }
 
-.text {
+.description {
   color: var(--vkui--color_text_secondary);
 }
 
-.header,
-.text {
+.title,
+.description {
   word-break: break-word;
 }
 
@@ -125,11 +125,11 @@
   text-align: center;
 }
 
-.ios .header:not(:last-child) {
+.ios .title:not(:last-child) {
   margin-block-end: 7px;
 }
 
-.ios .text {
+.ios .description {
   color: inherit;
 }
 

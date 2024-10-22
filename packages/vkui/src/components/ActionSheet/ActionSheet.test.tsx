@@ -206,7 +206,7 @@ describe(ActionSheet, () => {
   });
 
   it('renders header and text', () => {
-    render(<ActionSheetMobile header="The header title" text="Text footnote" />);
+    render(<ActionSheetMobile title="The header title" description="Text footnote" />);
     act(jest.runAllTimers);
     expect(screen.queryByText('The header title')).toBeTruthy();
     expect(screen.queryByText('Text footnote')).toBeTruthy();

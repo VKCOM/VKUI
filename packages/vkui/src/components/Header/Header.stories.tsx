@@ -32,7 +32,7 @@ const story: Meta<HeaderProps> = {
       iconSizes: ['12'],
       requiredIcons: ['Icon12Fire'],
     }),
-    aside: createFieldWithPresets({
+    after: createFieldWithPresets({
       iconSizes: [],
       additionalPresets: {
         Link: <Link>Показать все</Link>,
@@ -75,7 +75,7 @@ export const WithAside: Story = {
   ...Playground,
   args: {
     ...Playground.args,
-    aside: 'Link',
+    after: 'Link',
   },
 };
 
@@ -114,6 +114,6 @@ export const WithAllFeatures: Story = {
     beforeSubtitle: 'Icon12Tag',
     afterSubtitle: 'Icon12Fire',
     subtitle: 'SOHN — Conrad',
-    aside: <Link>Показать все</Link>,
+    after: <Link>Показать все</Link>,
   },
 };

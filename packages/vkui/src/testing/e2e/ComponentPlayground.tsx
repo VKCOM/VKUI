@@ -3,7 +3,7 @@ import type { AdaptivityProps } from '../../components/AdaptivityProvider/Adapti
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
 import { BREAKPOINTS } from '../../lib/adaptivity';
-import type { AppearanceType } from '../../lib/appearance';
+import type { ColorSchemeType } from '../../lib/colorScheme';
 import type { PlatformType } from '../../lib/platform';
 import { AppDefaultWrapper, type AppWrapperProps } from './AppDefaultWrapper';
 import { TEST_CLASS_NAMES } from './constants';
@@ -12,7 +12,7 @@ import { getAdaptivePxWidth, multiCartesian, prettyProps } from './utils';
 export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'div'>> {
   isFixedComponent?: boolean;
   platform: PlatformType;
-  appearance: AppearanceType;
+  colorScheme: ColorSchemeType;
   adaptivityProviderProps?: Partial<AdaptivityProps>;
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
   children: (props: Props) => React.ReactNode;
@@ -21,7 +21,7 @@ export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'
 
 export type ComponentPlaygroundProps = Pick<
   InternalComponentPlaygroundProps,
-  'platform' | 'appearance' | 'adaptivityProviderProps'
+  'platform' | 'colorScheme' | 'adaptivityProviderProps'
 >;
 
 /**
@@ -31,7 +31,7 @@ export const ComponentPlayground = <
   Props extends React.ComponentProps<any> = React.ComponentProps<'div'>,
 >({
   isFixedComponent = false,
-  appearance,
+  colorScheme,
   platform,
   adaptivityProviderProps: adaptivityProviderPropsProp,
   propSets = [],
@@ -52,7 +52,7 @@ export const ComponentPlayground = <
       : BREAKPOINTS.MOBILE;
 
   return (
-    <ConfigProvider appearance={appearance} platform={platform}>
+    <ConfigProvider colorScheme={colorScheme} platform={platform}>
       <AdaptivityProvider {...adaptivityProviderProps}>
         <AppWrapper
           mode={isFixedComponent ? 'full' : undefined}

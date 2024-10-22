@@ -17,7 +17,7 @@ type Story = StoryObj<FormStatusProps>;
 export const Playground: Story = {
   args: {
     mode: 'error',
-    header: 'Некорректный мобильный номер',
+    title: 'Некорректный мобильный номер',
     children: 'Необходимо корректно ввести номер в международном формате',
   },
 };
