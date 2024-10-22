@@ -8,33 +8,33 @@ import styles from './HorizontalCellShowMore.module.css';
 
 const sizeClassNames = {
   s: styles.sizeS,
-  m: styles.sizeM,
   l: styles.sizeL,
 };
 
 export interface HorizontalCellShowMoreProps
-  extends Omit<TappableProps, 'getRootRef' | 'size'>,
+  extends Omit<TappableProps, 'getRootRef' | 'size' | 'borderRadiusMode'>,
     HasRef<HTMLElement>,
     HasRootRef<HTMLDivElement> {
   /**
    * Задаёт высоту компонента. Должeн соответствовать размеру картинок
    * внутри соседних `HorizontalCell` компонентов.
    *
-   * Используйте размеры заданные дизайн-системой (см. типы).
+   * Используйте размеры, заданные дизайн-системой (см. типы).
    *
    * > ⚠️ Использование кастомного размера – это пограничный кейс.
    *
-   * Игнорируется если `size='s'`.
+   * Игнорируется, если `size='s'`.
    */
   height?: LiteralUnion<ImageBaseSize, number>;
   /**
-   * Задаёт размер компонента. Аналогичен такому же пропу у [HorizontalCell](https://vkcom.github.io/VKUI/#/HorizontalCellShowMore?id=props).
-   * Должен соответствовать значению пропа `size` соседних `HorizontalCell`.
+   * Задаёт размер компонента.
+   *
+   * Значение `s` применяется для `<HorizontalCell size="s"`, в остальных случаях рекомендуется `l`.
    */
-  size?: 's' | 'm' | 'l';
+  size?: 's' | 'l';
   /**
    * Предназначен для отрисовки текста.
-   * По умолчанию для `size='s'` содержит текст `Все`, для других размеров `Показать все`.
+   * По умолчанию для `size='s'` содержит текст `Все`, для `size='l'` - `Показать все`.
    * */
   children?: SubheadProps['children'];
   /**

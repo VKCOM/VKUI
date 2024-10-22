@@ -13,11 +13,6 @@ describe('HorizontalCellShowMore', () => {
     await screen.findByText('Все');
     expect(screen.queryByText('Показать все')).toBeFalsy();
 
-    component.rerender(<HorizontalCellShowMore size="m" />);
-    // renders Показать все by default in size "m"
-    await screen.findByText('Показать все');
-    expect(screen.queryByText('Все')).toBeFalsy();
-
     component.rerender(<HorizontalCellShowMore size="l" />);
     // renders Показать все by default in size "l"
     await screen.findByText('Показать все');

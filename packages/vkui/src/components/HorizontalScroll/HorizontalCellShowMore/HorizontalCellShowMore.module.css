@@ -25,7 +25,6 @@
   padding: var(--vkui--spacing_size_xs);
 }
 
-.sizeM .body,
 .sizeL .body {
   inline-size: 128px;
   margin-block-end: auto;

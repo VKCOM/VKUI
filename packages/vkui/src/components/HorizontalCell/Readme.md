@@ -1,8 +1,11 @@
 HorizontalCell автоматически ставит отступы по бокам в зависимости от платформы, поэтому его лучше использовать в [HorizontalScroll](#!/HorizontalScroll).
 
-- При `size='s'` рекомендуется `<Avatar size={56}/>` или же любой компонент шириной до 56 пикс.
-- При `size='m'` рекомендуется `<Avatar size={88} mode='app'/>` или же любой компонент шириной до 96 пикс.
-- При `size='l'` рекомендуется `<Avatar size={128} mode='image'/>` или же любой компонент произвольной ширины.
+- При `size='s'` рекомендуется `<Avatar size={56}/>` или же любой компонент шириной до 56 пикселей.
+- При `size='m'` рекомендуется `<Avatar size={88} mode='app'/>` или же любой компонент шириной до 88 пикселей.
+- При `size='l'` рекомендуется `<Avatar size={128} mode='image'/>` или же любой компонент шириной до 128 пикселей.
+- При `size='xl'` рекомендуются изображения шириной до 220 пикселей.
+- При `size='auto'` разрешается использовать изображение произвольной ширины.
+- Также есть возможность использовать любое числовое значение в `size`.
 
 ```jsx
 const largeImageStyles = {
@@ -134,7 +137,7 @@ const AlbumItems = () => {
     <HorizontalCell
       onClick={() => {}}
       key={id}
-      size="l"
+      size="xl"
       title={title}
       subtitle={`${size} фотографии`}
     >
@@ -153,22 +156,22 @@ const Example = () => {
             <UserItems />
           </HorizontalScroll>
         </Group>
-        <Group header={<Header aside={<Link>Показать все</Link>}>Мини-приложения</Header>}>
+        <Group header={<Header after={<Link>Показать все</Link>}>Мини-приложения</Header>}>
           <HorizontalScroll>
             <MiniAppItems />
           </HorizontalScroll>
         </Group>
-        <Group header={<Header aside={<Link>Показать все</Link>}>Игры</Header>}>
+        <Group header={<Header after={<Link>Показать все</Link>}>Игры</Header>}>
           <HorizontalScroll>
             <GamesItems />
           </HorizontalScroll>
         </Group>
-        <Group header={<Header aside={<Link>Показать все</Link>}>Плейлисты</Header>}>
+        <Group header={<Header after={<Link>Показать все</Link>}>Плейлисты</Header>}>
           <HorizontalScroll>
             <PlaylistItems />
           </HorizontalScroll>
         </Group>
-        <Group header={<Header aside={<Link>Показать все</Link>}>Альбомы</Header>}>
+        <Group header={<Header after={<Link>Показать все</Link>}>Альбомы</Header>}>
           <HorizontalScroll>
             <AlbumItems />
           </HorizontalScroll>
