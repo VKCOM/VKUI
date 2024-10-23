@@ -582,7 +582,7 @@ describe('CustomSelect', () => {
     expect(onChange).toHaveBeenCalledTimes(0);
   });
 
-  it('clear value externally with empty string', () => {
+  it('clear value externally with empty value', () => {
     const onChange = jest.fn();
 
     const { rerender } = render(
@@ -607,7 +607,7 @@ describe('CustomSelect', () => {
           { value: 1, label: 'Josh' },
         ]}
         onChange={onChange}
-        value=""
+        value={null}
       />,
     );
 
@@ -679,7 +679,7 @@ describe('CustomSelect', () => {
         ]}
         allowClearButton
         onChange={onChange}
-        value=""
+        value={null}
       />,
     );
 
@@ -774,7 +774,7 @@ describe('CustomSelect', () => {
         ]}
         allowClearButton
         onChange={onChange}
-        value=""
+        value={null}
       />,
     );
 
@@ -943,7 +943,7 @@ describe('CustomSelect', () => {
         ]}
         allowClearButton
         onChange={onChange}
-        value=""
+        value={null}
       />,
     );
 
@@ -989,7 +989,7 @@ describe('CustomSelect', () => {
     expect(onChange).toHaveBeenCalledTimes(3);
     expect(onChange).toHaveReturnedWith('0');
   });
-
+  // TODO
   it('accepts options with extended option type and Typescript does not throw', () => {
     const { rerender } = render(
       <CustomSelect
@@ -1104,6 +1104,7 @@ describe('CustomSelect', () => {
         ]}
         placeholder="Не выбрано"
         allowClearButton
+        value={null}
       />,
     );
 

@@ -30,6 +30,8 @@ const getUsers = (usersArray) =>
     description: user.screen_name,
   }));
 
+const users = [...getUsers(getRandomUsers(10))];
+
 const Example = () => {
   const selectTypes = [
     {
@@ -46,9 +48,7 @@ const Example = () => {
     },
   ];
 
-  const [selectType, setSelectType] = React.useState(undefined);
-
-  const users = [...getUsers(getRandomUsers(10))];
+  const [selectType, setSelectType] = React.useState(null);
 
   return (
     <Div>
@@ -64,7 +64,7 @@ const Example = () => {
             id="administrator-select-id"
             placeholder="Не выбран"
             options={users}
-            selectType={selectType}
+            selectType={selectType || 'default'}
             allowClearButton
           />
         </FormItem>
@@ -79,7 +79,7 @@ const Example = () => {
             value={selectType}
             placeholder="Не задан"
             options={selectTypes}
-            onChange={(e) => setSelectType(e.target.value)}
+            onChange={(_, newType) => setSelectType(newType)}
             renderOption={({ option, ...restProps }) => (
               <CustomSelectOption {...restProps} description={`"${option.value}"`} />
             )}
@@ -115,7 +115,7 @@ const Example = () => {
           id="administrator-select-id-3"
           placeholder="Не выбран"
           options={users}
-          selectType={selectType}
+          selectType={selectType || 'default'}
           autoHideScrollbar
         />
       </FormItem>
@@ -177,12 +177,12 @@ const CustomSearchLogicSelect = ({ id }) => {
     return options;
   };
 
-  const onCustomSearchChange = (e) => {
-    if (e.target.value === '0') {
+  const onCustomSearchChange = (_, newValue) => {
+    if (newValue === '0') {
       setNewUsers([...newUsers, { label: query, value: query }]);
       setValue(query);
     } else {
-      setValue(e.target.value);
+      setValue(newValue);
     }
     setQuery('');
   };
