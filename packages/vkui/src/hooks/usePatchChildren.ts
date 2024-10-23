@@ -5,8 +5,12 @@ import {
   isForwardRefElement,
   isValidNotReactFragmentElement,
 } from '../lib/utils';
+import { warnOnce } from '../lib/warnOnce';
 import type { HasRootRef } from '../types';
+import { useEffectDev } from './useEffectDev';
 import { useExternRef } from './useExternRef';
+
+const warn = warnOnce('usePatchChildren');
 
 type InjectProps<T> = Omit<React.HTMLAttributes<T>, keyof React.DOMAttributes<T>> &
   React.Attributes & {
@@ -62,7 +66,6 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
     isForwardRefElement<React.HTMLAttributes<ElementType>, ElementType>(children);
 
   const shouldUseRef = isDOMTypeElementResult || isForwardedRefElementResult;
-
   const childRef = useExternRef<ElementType>(
     shouldUseRef ? children.ref : isValidElementResult ? children.props.getRootRef : undefined,
     externRef,
@@ -79,5 +82,16 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
       ? { getRootRef: childRef, ...injectProps, ...mergedEventsByInjectProps }
       : undefined;
 
-  return [childRef, isValidElementResult ? React.cloneElement(children, props) : children];
+  const patchedChildren = isValidElementResult ? React.cloneElement(children, props) : children;
+
+  useEffectDev(() => {
+    if (!childRef.current && !shouldUseRef) {
+      warn(
+        'Кажется, в children передан компонент, который не поддерживает свойство getRootRef. Мы не можем получить ссылку на корневой dom-элемент этого компонента',
+        'error',
+      );
+    }
+  }, [isValidElementResult ? children.type : null, shouldUseRef, childRef]);
+
+  return [childRef, patchedChildren];
 };
