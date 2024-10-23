@@ -118,17 +118,13 @@ describe('AppRoot', () => {
   });
 
   it('should not call enableScrollLock if scroll is already locked', () => {
-    let isScrollLockStub = false;
-    const enableScrollLockStub = jest.fn(() => (isScrollLockStub = true));
-    const disableScrollLockStub = jest.fn();
+    const incrementScrollLockCounterStub = jest.fn();
+    const decrementScrollLockCounterStub = jest.fn();
     const scrollContextStub: ScrollContextInterface = {
       getScroll: () => ({ x: 0, y: 0 }),
       scrollTo: noop,
-      get isScrollLock() {
-        return Boolean(isScrollLockStub);
-      },
-      enableScrollLock: enableScrollLockStub,
-      disableScrollLock: disableScrollLockStub,
+      incrementScrollLockCounter: incrementScrollLockCounterStub,
+      decrementScrollLockCounter: decrementScrollLockCounterStub,
     };
 
     const ScrollToggler = () => {
@@ -155,16 +151,17 @@ describe('AppRoot', () => {
 
     const { unmount } = render(<Template />);
     // первый компонент вызвал scrollLock
-    expect(enableScrollLockStub).toHaveBeenCalledTimes(1);
+    expect(incrementScrollLockCounterStub).toHaveBeenCalledTimes(1);
     // второй появившийся компонент вызвал scrollLock
     fireEvent.click(screen.getByText('Show another toggler'));
 
-    // enableScrollLock должен быть вызван лишь раз
-    expect(enableScrollLockStub).toHaveBeenCalledTimes(1);
+    // incrementScrollLockCounterStub должен быть вызван второй раз
+    expect(incrementScrollLockCounterStub).toHaveBeenCalledTimes(2);
+    expect(decrementScrollLockCounterStub).toHaveBeenCalledTimes(0);
 
     unmount();
-    // disableScrollLock должен быть вызван лишь раз
-    expect(disableScrollLockStub).toHaveBeenCalledTimes(1);
+    // decrementScrollLockCounterStub должен быть вызван два раза
+    expect(decrementScrollLockCounterStub).toHaveBeenCalledTimes(2);
   });
 
   describe('portalRoot in mode="embedded"', () => {
