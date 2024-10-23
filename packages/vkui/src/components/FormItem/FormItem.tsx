@@ -44,8 +44,6 @@ export interface FormItemProps
    * Позволяет полностью заменить шапку поля пользовательским компонентом.
    *
    * @since 6.1.0
-   *
-   * TODO [>=7]: удалить и использовать top - оно будет принимать либо строку, либо подкомпонент
    */
   topNode?: React.ReactNode;
   bottom?: React.ReactNode;
