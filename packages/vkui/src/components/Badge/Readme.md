@@ -44,7 +44,7 @@ const Example = () => {
         </Group>
 
         <Tabbar>
-          <TabbarItem text="Новости">
+          <TabbarItem label="Новости">
             <Icon28NewsfeedOutline />
           </TabbarItem>
           <TabbarItem
