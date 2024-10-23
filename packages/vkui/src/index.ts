@@ -414,6 +414,7 @@ export {
 export { useColorScheme } from './hooks/useColorScheme';
 export { usePagination } from './hooks/usePagination';
 export { type Orientation, useOrientationChange } from './hooks/useOrientationChange';
+export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
