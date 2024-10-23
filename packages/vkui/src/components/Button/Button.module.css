@@ -189,7 +189,6 @@
 }
 
 .spinner {
-  color: currentColor;
   position: absolute;
   inset: 0;
 }
