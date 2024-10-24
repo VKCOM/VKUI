@@ -9,7 +9,7 @@
   animation: screen-spinner-intro 0.3s ease;
 }
 
-.hasCaption {
+.hasLabel {
   inline-size: fit-content;
   block-size: fit-content;
   max-inline-size: 150px;
@@ -30,13 +30,13 @@
   color: var(--vkui--color_icon_contrast);
 }
 
-.caption {
+.label {
   color: var(--vkui--color_text_secondary);
   margin-block-start: var(--vkui--spacing_size_xs);
   text-align: center;
 }
 
-.modeOverlay .caption {
+.modeOverlay .label {
   color: var(--vkui--color_text_contrast);
 }
 

@@ -20,7 +20,7 @@ describe(OnboardingTooltip, () => {
   baselineComponent(
     (props) => (
       <OnboardingTooltipContainer>
-        <OnboardingTooltip shown text="text" {...props}>
+        <OnboardingTooltip shown description="text" {...props}>
           <div />
         </OnboardingTooltip>
       </OnboardingTooltipContainer>
@@ -30,7 +30,7 @@ describe(OnboardingTooltip, () => {
 
   it('renders tooltip when shown=true', async () => {
     await renderTooltip(
-      <OnboardingTooltip shown text="text">
+      <OnboardingTooltip shown description="text">
         <div />
       </OnboardingTooltip>,
     );
@@ -39,7 +39,7 @@ describe(OnboardingTooltip, () => {
 
   it('supports child with getRootRef', async () => {
     await renderTooltip(
-      <OnboardingTooltip shown text="text">
+      <OnboardingTooltip shown description="text">
         <RootRef />
       </OnboardingTooltip>,
     );
@@ -49,7 +49,7 @@ describe(OnboardingTooltip, () => {
   it('does not create extra markup when shown=false', () => {
     render(
       <OnboardingTooltipContainer data-testid="container">
-        <OnboardingTooltip shown={false} text="text">
+        <OnboardingTooltip shown={false} description="text">
           <div data-testid="xxx" />
         </OnboardingTooltip>
       </OnboardingTooltipContainer>,
@@ -108,7 +108,7 @@ describe(OnboardingTooltip, () => {
 
     const Fixture = (props: OnboardingTooltipProps) => (
       <OnboardingTooltipContainer data-testid="container">
-        <OnboardingTooltip shown text="text" {...props}>
+        <OnboardingTooltip shown description="text" {...props}>
           <div data-testid="xxx" />
         </OnboardingTooltip>
       </OnboardingTooltipContainer>

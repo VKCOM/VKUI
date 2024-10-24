@@ -295,42 +295,42 @@ describe('Alert', () => {
 
   it.each([
     {
-      header: 'Header',
-      headerClassNames: [titleStyles.level3, typographyStyles.weight1],
-      text: 'Text',
-      textClassNames: [captionStyles.level1],
+      title: 'Header',
+      titleClassNames: [titleStyles.level3, typographyStyles.weight1],
+      description: 'Text',
+      descriptionClassNames: [captionStyles.level1],
       platform: Platform.IOS,
     },
     {
-      header: 'Header',
-      headerClassNames: [titleStyles.level2, typographyStyles.weight2],
-      text: 'Text',
-      textClassNames: [footnoteStyles.host],
+      title: 'Header',
+      titleClassNames: [titleStyles.level2, typographyStyles.weight2],
+      description: 'Text',
+      descriptionClassNames: [footnoteStyles.host],
       platform: Platform.VKCOM,
     },
     {
-      header: 'Header',
-      headerClassNames: [titleStyles.level2, typographyStyles.weight2],
-      text: 'Text',
-      textClassNames: [typographyStyles.weight3],
+      title: 'Header',
+      titleClassNames: [titleStyles.level2, typographyStyles.weight2],
+      description: 'Text',
+      descriptionClassNames: [typographyStyles.weight3],
       platform: Platform.ANDROID,
     },
   ])(
     `should have header classNames "$headerClassNames" and text classNames "$textClassNames" when use platform "$platform"`,
-    async ({ header, text, headerClassNames, textClassNames, platform }) => {
+    async ({ title, description, titleClassNames, descriptionClassNames, platform }) => {
       const result = render(
         <ConfigProvider platform={platform}>
-          <Alert onClose={jest.fn()} header={header} text={text} />
+          <Alert onClose={jest.fn()} title={title} description={description} />
         </ConfigProvider>,
       );
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
-      const headerElement = result.container.getElementsByClassName(styles.header)[0];
-      const textElement = result.container.getElementsByClassName(styles.text)[0];
+      const headerElement = result.container.getElementsByClassName(styles.title)[0];
+      const textElement = result.container.getElementsByClassName(styles.description)[0];
 
-      headerClassNames.forEach((className) => expect(headerElement).toHaveClass(className));
-      textClassNames.forEach((className) => expect(textElement).toHaveClass(className));
+      titleClassNames.forEach((className) => expect(headerElement).toHaveClass(className));
+      descriptionClassNames.forEach((className) => expect(textElement).toHaveClass(className));
     },
   );
 });

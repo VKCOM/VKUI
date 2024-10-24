@@ -21,7 +21,7 @@ import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import type { AlertActionProps } from './AlertAction';
 import { AlertActions } from './AlertActions';
-import { AlertHeader, AlertText } from './AlertTypography';
+import { AlertDescription, AlertTitle } from './AlertTypography';
 import styles from './Alert.module.css';
 
 type AlertActionMode = 'cancel' | 'destructive' | 'default';
@@ -45,13 +45,15 @@ export interface AlertActionInterface
   mode: AlertActionMode;
 }
 
-export interface AlertProps extends React.HTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
+export interface AlertProps
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>,
+    HasRootRef<HTMLDivElement> {
   actionsLayout?: 'vertical' | 'horizontal';
   actionsAlign?: AlignType;
   actions?: AlertActionInterface[];
   renderAction?: (props: AlertActionProps) => React.ReactNode;
-  header?: React.ReactNode;
-  text?: React.ReactNode;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   onClose: VoidFunction;
   /**
    * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий
@@ -77,8 +79,8 @@ export const Alert = ({
   children,
   className,
   style,
-  text,
-  header,
+  title,
+  description,
   onClose,
   dismissLabel = 'Закрыть предупреждение',
   renderAction,
@@ -90,8 +92,8 @@ export const Alert = ({
 }: AlertProps): React.ReactNode => {
   const generatedId = React.useId();
 
-  const headerId = `vkui-alert-${generatedId}-header`;
-  const textId = `vkui-alert-${generatedId}-text`;
+  const titleId = `vkui-alert-${generatedId}-title`;
+  const descriptionId = `vkui-alert-${generatedId}-description`;
 
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
@@ -157,8 +159,8 @@ export const Alert = ({
         )}
         role="alertdialog"
         aria-modal
-        aria-labelledby={headerId}
-        aria-describedby={textId}
+        aria-labelledby={titleId}
+        aria-describedby={descriptionId}
       >
         <div
           className={classNames(
@@ -166,8 +168,10 @@ export const Alert = ({
             dismissButtonMode === 'inside' && styles.contentWithButton,
           )}
         >
-          {hasReactNode(header) && <AlertHeader id={headerId}>{header}</AlertHeader>}
-          {hasReactNode(text) && <AlertText id={textId}>{text}</AlertText>}
+          {hasReactNode(title) && <AlertTitle id={titleId}>{title}</AlertTitle>}
+          {hasReactNode(description) && (
+            <AlertDescription id={descriptionId}>{description}</AlertDescription>
+          )}
           {children}
           {isDismissButtonVisible && dismissButtonMode === 'inside' && (
             <IconButton

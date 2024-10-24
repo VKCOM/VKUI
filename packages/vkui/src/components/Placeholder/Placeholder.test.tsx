@@ -11,17 +11,17 @@ describe('Placeholder', () => {
     render(
       <Placeholder data-testid="container" stretched>
         <Placeholder.Icon data-testid="icon">Icon</Placeholder.Icon>
-        <Placeholder.Header data-testid="header">Header</Placeholder.Header>
+        <Placeholder.Title data-testid="header">Header</Placeholder.Title>
         <Placeholder.Actions data-testid="actions">Actions</Placeholder.Actions>
-        <Placeholder.Text data-testid="text">Text</Placeholder.Text>
+        <Placeholder.Description data-testid="text">Text</Placeholder.Description>
       </Placeholder>,
     );
     expect(screen.getByTestId('container')).toHaveClass(
       classNames(styles.host, styles.stretched, styles.withPadding),
     );
     expect(screen.getByTestId('icon')).toHaveClass(styles.icon);
-    expect(screen.getByTestId('header')).toHaveClass(styles.header);
-    expect(screen.getByTestId('text')).toHaveClass(styles.text);
+    expect(screen.getByTestId('header')).toHaveClass(styles.title);
+    expect(screen.getByTestId('text')).toHaveClass(styles.description);
     expect(screen.getByTestId('actions')).toHaveClass(styles.action);
 
     expect(screen.getByText('Icon')).toBeInTheDocument();

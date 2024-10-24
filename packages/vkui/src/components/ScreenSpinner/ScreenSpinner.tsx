@@ -24,7 +24,7 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
   onClick,
   cancelLabel,
   mode,
-  caption,
+  label,
   customIcon,
   ...restProps
 }: ScreenSpinnerProps): React.ReactNode => {
@@ -32,7 +32,7 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
 
   return (
     <PopoutWrapper className={className} style={style} noBackground>
-      <ScreenSpinnerContainer state={state} mode={mode} caption={caption} customIcon={customIcon}>
+      <ScreenSpinnerContainer state={state} mode={mode} label={label} customIcon={customIcon}>
         <ScreenSpinnerLoader {...restProps} />
         <ScreenSpinnerSwapIcon onClick={onClick} cancelLabel={cancelLabel} />
       </ScreenSpinnerContainer>

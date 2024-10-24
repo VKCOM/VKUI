@@ -27,6 +27,11 @@ import { generateCustomScreenshotName } from './utils';
 export type { VKUITestOptions } from './types';
 
 export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & VKUITestHelpers>({
+  page: async function initialMouseSetup({ page }, use) {
+    await page.mouse.move(0, 0);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    await use(page);
+  },
   platform: ['android', { option: true }],
   colorSchemeType: ['light', { option: true }],
 
@@ -61,10 +66,12 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
       );
       expectCallCount += 1;
     };
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(result);
   },
 
   componentPlaygroundProps: async ({ platform, colorSchemeType, adaptivityProviderProps }, use) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use({
       platform,
       colorScheme: colorSchemeType,

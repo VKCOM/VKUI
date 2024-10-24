@@ -38,7 +38,7 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   size?: 's' | 'm' | 'l';
   selected?: boolean;
   /**
-   * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar mode="fixed" />`
+   * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar fixed />`
    */
   textLevel?: '1' | '2' | '3';
   /**
@@ -49,7 +49,7 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
    * Рекомендуется использовать только `<Counter size="s" />` или `<Badge />`
    */
   after?: React.ReactNode;
-  expandable?: boolean;
+  chevron?: boolean;
 }
 
 type SubnavigationButtonTypographyProps = Pick<
@@ -81,7 +81,7 @@ export const SubnavigationButton = ({
   textLevel = '1',
   before,
   after,
-  expandable,
+  chevron,
   children,
   className,
   ...restProps
@@ -113,7 +113,7 @@ export const SubnavigationButton = ({
           {children}
         </SubnavigationButtonTypography>
         {after && <span className={styles.after}>{after}</span>}
-        {expandable && <Icon16Dropdown className={styles.expandableIcon} />}
+        {chevron && <Icon16Dropdown className={styles.chevronIcon} />}
       </span>
     </Tappable>
   );

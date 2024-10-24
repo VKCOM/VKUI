@@ -35,8 +35,8 @@ export const SimpleCard: Story = {
       <ModalCard
         id={MODAL_CARD_MONEY_SEND}
         icon={<Icon56MoneyTransferOutline />}
-        header="Отправляйте деньги друзьям, используя банковскую карту"
-        subheader="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
+        title="Отправляйте деньги друзьям, используя банковскую карту"
+        description="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
         actions={
           <Button size="l" mode="primary" stretched>
             Попробовать
@@ -53,8 +53,8 @@ export const CardWithAvatar: Story = {
       <ModalCard
         id={MODAL_CARD_APP_TO_MENU}
         icon={<Image borderRadius="l" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
-        header="Добавить игру «Загадки детства» в меню?"
-        subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
+        title="Добавить игру «Загадки детства» в меню?"
+        description="Игра появится под списком разделов на экране меню и будет всегда под рукой."
         actions={
           <Button size="l" mode="primary" stretched>
             Добавить в меню
@@ -70,7 +70,7 @@ export const CardWithTextArea: Story = {
     <ModalWrapper modalId={MODAL_CARD_ABOUT}>
       <ModalCard
         id={MODAL_CARD_ABOUT}
-        header="Расскажите о себе"
+        title="Расскажите о себе"
         actions={
           <Button size="l" mode="primary" stretched>
             Сохранить
@@ -89,7 +89,7 @@ export const CardWithMultipleButtons: Story = {
       <ModalCard
         id={MODAL_CARD_NOTIFICATIONS}
         icon={<Icon56NotificationOutline />}
-        header="Приложение запрашивает разрешение на отправку Вам уведомлений"
+        title="Приложение запрашивает разрешение на отправку Вам уведомлений"
         actions={
           <ButtonGroup stretched>
             <Button key="deny" size="l" mode="secondary" stretched>
@@ -111,10 +111,10 @@ export const CardWithComplexContent: Story = {
       <ModalCard
         id={MODAL_CARD_CHAT_INVITE}
         icon={<Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />}
-        header="Баскетбол на выходных"
-        headerComponent="h2"
-        subheader="Приглашение в беседу"
-        subheaderComponent="span"
+        title="Баскетбол на выходных"
+        titleComponent="h2"
+        description="Приглашение в беседу"
+        descriptionComponent="span"
         actions={
           <React.Fragment>
             <Spacing size={8} />

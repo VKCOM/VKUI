@@ -9,7 +9,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
+import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';
 
 interface ScrollContext {
@@ -41,7 +41,7 @@ export interface HorizontalScrollProps
    * Функция для расчета величины прокрутки при клике на правую стрелку.
    */
   getScrollToRight?: ScrollPositionHandler;
-  arrowSize?: 'm' | 'l';
+  arrowSize?: ScrollArrowProps['size'];
   /**
    * Смещает иконки кнопок навигации по вертикали.
    */
@@ -163,7 +163,7 @@ export const HorizontalScroll = ({
   getScrollToLeft,
   getScrollToRight,
   showArrows = true,
-  arrowSize = 'l',
+  arrowSize = 'm',
   arrowOffsetY,
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,

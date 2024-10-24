@@ -413,7 +413,8 @@ export {
 } from './hooks/useAdaptivityWithJSMediaQueries';
 export { useColorScheme } from './hooks/useColorScheme';
 export { usePagination } from './hooks/usePagination';
-export { useOrientationChange } from './hooks/useOrientationChange';
+export { type Orientation, useOrientationChange } from './hooks/useOrientationChange';
+export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
@@ -439,7 +440,10 @@ export {
   getViewWidthByViewportWidth,
   getViewHeightByViewportHeight,
 } from './lib/adaptivity';
-export { type Placement as FloatingPlacement } from './lib/floating';
+export {
+  type Placement as FloatingPlacement,
+  type PlacementWithAuto as FloatingPlacementWithAuto,
+} from './lib/floating';
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';
 export { CustomScrollView } from './components/CustomScrollView/CustomScrollView';

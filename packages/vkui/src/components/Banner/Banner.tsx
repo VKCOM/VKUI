@@ -2,19 +2,17 @@
 
 import * as React from 'react';
 import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import type { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
-import { RootComponent } from '../RootComponent/RootComponent';
-import { Tappable } from '../Tappable/Tappable';
+import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './Banner.module.css';
 
-export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
   /**
    * Тип баннера.
    */
@@ -24,11 +22,11 @@ export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    * Тип действия в правой части баннера.
    *
    * - `dismiss` – отображается иконка крестика, при клике на неё сработает свойство `onDismiss`.
-   * - `expand` – отображается иконка шеврона, которая подразумевает, что при клике на баннер можно куда-то перейти.
+   * - `chevron` – отображается иконка шеврона, которая подразумевает, что при клике на баннер можно куда-то перейти.
    */
-  asideMode?: 'dismiss' | 'expand';
+  after?: 'dismiss' | 'chevron' | React.ReactNode;
   /**
-   * Срабатывает при клике на иконку крестика при `asideMode="dismiss"`.
+   * Срабатывает при клике на иконку крестика при `after="dismiss"`.
    */
   onDismiss?: React.MouseEventHandler<HTMLButtonElement>;
   /**
@@ -42,15 +40,15 @@ export interface BannerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Заголовок.
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /**
    * Подзаголовок.
    */
-  subhead?: React.ReactNode;
+  subtitle?: React.ReactNode;
   /**
    * Дополнительный подзаголовок баннера.
    */
-  extraSubhead?: React.ReactNode;
+  extraSubtitle?: React.ReactNode;
   /**
    * При использовании `mode="image"`.
    *
@@ -89,15 +87,17 @@ export const Banner = ({
   imageTheme = 'dark',
   size = 's',
   before,
-  asideMode,
-  header,
-  subhead,
-  extraSubhead,
+  after: afterProp,
+  title,
+  subtitle,
+  extraSubtitle,
   children,
   background,
   actions,
   onDismiss,
   dismissLabel = 'Скрыть',
+  className,
+  Component,
   ...restProps
 }: BannerProps): React.ReactNode => {
   const platform = usePlatform();
@@ -118,19 +118,19 @@ export const Banner = ({
       {before && <div className={styles.before}>{before}</div>}
 
       <div className={styles.content}>
-        {hasReactNode(header) && (
+        {hasReactNode(title) && (
           <HeaderTypography Component="div" weight="2" level={size === 'm' ? '2' : '1'}>
-            {header}
+            {title}
           </HeaderTypography>
         )}
-        {hasReactNode(subhead) && (
-          <SubheadTypography Component="div" className={styles.subhead}>
-            {subhead}
+        {hasReactNode(subtitle) && (
+          <SubheadTypography Component="div" className={styles.subtitle}>
+            {subtitle}
           </SubheadTypography>
         )}
-        {hasReactNode(extraSubhead) && (
-          <Text Component="div" className={styles.extraSubhead}>
-            {extraSubhead}
+        {hasReactNode(extraSubtitle) && (
+          <Text Component="div" className={styles.extraSubtitle}>
+            {extraSubtitle}
           </Text>
         )}
         {hasReactNode(actions) && React.Children.count(actions) > 0 && (
@@ -140,49 +140,45 @@ export const Banner = ({
     </>
   );
 
+  const afterMap: Record<string, React.ReactNode> = {
+    chevron: <Icon24Chevron className={styles.chevron} />,
+    dismiss: (
+      <IconButton
+        label={dismissLabel}
+        className={styles.dismiss}
+        onClick={onDismiss}
+        hoverMode="opacity"
+        hasActive={false}
+      >
+        {platform === 'ios' ? <IconDismissIOS /> : <Icon24Cancel />}
+      </IconButton>
+    ),
+  };
+
+  const after = afterProp && (
+    <div className={styles.after}>
+      {typeof afterProp === 'string' ? afterMap[afterProp] : afterProp}
+    </div>
+  );
+
+  const isClickable = restProps.onClick || restProps.onClickCapture || restProps.href;
+
   return (
-    <RootComponent
-      Component="section"
-      {...restProps}
+    <Tappable
+      Component={Component || (!isClickable ? 'section' : undefined)}
+      activeMode={platform === 'ios' ? 'opacity' : 'background'}
       baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
         mode === 'image' && styles.modeImage,
         size === 'm' && styles.sizeM,
         mode === 'image' && imageTheme === 'dark' && styles.inverted,
+        className,
       )}
+      {...restProps}
     >
-      {asideMode === 'expand' ? (
-        <Tappable
-          className={styles.in}
-          activeMode={platform === 'ios' ? 'opacity' : 'background'}
-          onClick={noop}
-        >
-          {content}
-
-          <div className={styles.aside}>
-            <Icon24Chevron className={styles.expand} />
-          </div>
-        </Tappable>
-      ) : (
-        <div className={styles.in}>
-          {content}
-
-          {asideMode === 'dismiss' && (
-            <div className={styles.aside}>
-              <IconButton
-                label={dismissLabel}
-                className={styles.dismiss}
-                onClick={onDismiss}
-                hoverMode="opacity"
-                hasActive={false}
-              >
-                {platform === 'ios' ? <IconDismissIOS /> : <Icon24Cancel />}
-              </IconButton>
-            </div>
-          )}
-        </div>
-      )}
-    </RootComponent>
+      {content}
+      {after}
+    </Tappable>
   );
 };

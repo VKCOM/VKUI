@@ -9,17 +9,24 @@ const App = () => {
     (<React.Fragment>
       <Banner
         before={<Avatar size={48} src={'user_lihachyov'} />}
-        header="Сегодня день рождения Михаила Лихачёва"
-        subhead="Подарите подарок"
-        extraSubhead="Дополнительный текст"
-        asideMode="dismiss"
+        title="Сегодня день рождения Михаила Лихачёва"
+        subtitle="Подарите подарок"
+        extraSubtitle="Дополнительный текст"
+        after="chevron"
       />
       <Banner
         before={<Avatar size={48} src={'user_lihachyov'} />}
-        header="Сегодня день рождения Михаила Лихачёва"
-        subhead={"Подарите подарок"}
-        extraSubhead={"Дополнительный текст"}
-        asideMode="dismiss"
+        title="Сегодня день рождения Михаила Лихачёва"
+        subtitle="Подарите подарок"
+        extraSubtitle="Дополнительный текст"
+        after={"chevron"}
+      />
+      <Banner
+        before={<Avatar size={48} src={'user_lihachyov'} />}
+        title="Сегодня день рождения Михаила Лихачёва"
+        subtitle={"Подарите подарок"}
+        extraSubtitle={"Дополнительный текст"}
+        after="dismiss"
       />
     </React.Fragment>)
   );

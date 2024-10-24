@@ -84,7 +84,7 @@ const propSets = [
         </ActionSheetItem>,
       ],
     ],
-    header: ['Заголовок'],
+    title: ['Заголовок'],
   },
 ];
 

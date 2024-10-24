@@ -29,8 +29,8 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
         {
           nav: ['1'],
           icon: [<Icon56MoneyTransferOutline key="icon" />],
-          header: ['Отправляйте деньги друзьям, используя банковскую карту'],
-          subheader: ['Номер карты получателя не нужен — он сам решит, куда зачислить средства.'],
+          title: ['Отправляйте деньги друзьям, используя банковскую карту'],
+          description: ['Номер карты получателя не нужен — он сам решит, куда зачислить средства.'],
           actions: [
             <React.Fragment key="actions">
               <Spacing size={16} />
@@ -43,8 +43,8 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
         {
           nav: ['2'],
           icon: [<Image key="image" size={72} borderRadius="l" />],
-          header: ['Добавить игру «Загадки детства» в меню?'],
-          subheader: [
+          title: ['Добавить игру «Загадки детства» в меню?'],
+          description: [
             'Игра появится под списком разделов на экране меню и будет всегда под рукой.',
           ],
           actions: [
@@ -77,7 +77,7 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           nav: ['3'],
-          header: ['Расскажите о себе'],
+          title: ['Расскажите о себе'],
           actions: [
             <Button size="l" mode="primary" stretched key="button">
               Сохранить
@@ -92,8 +92,8 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           nav: ['4'],
-          header: ['Гиппопотомомонстросесквиппедалиофобия'],
-          subheader: [
+          title: ['Гиппопотомомонстросесквиппедалиофобия'],
+          description: [
             'Гиппопотомомонстросесквиппедалиофобия — боязнь длинных слов, таких как метоксихлордиэтиламинометилбутиламиноакридин',
           ],
           actions: [
@@ -112,7 +112,7 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           nav: ['4'],
-          header: ['Расскажите о себе'],
+          title: ['Расскажите о себе'],
           actions: [
             <React.Fragment key="actions">
               <Spacing size={16} />
