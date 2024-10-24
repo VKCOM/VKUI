@@ -714,19 +714,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   }, [emptyText, options, renderDropdown, renderOption]);
 
   const selectInputRef = useExternRef(getSelectInputRef);
-  const focusOnInputTimerRef = React.useRef<ReturnType<typeof setTimeout>>();
-  const focusOnInput = React.useCallback(() => {
-    clearTimeout(focusOnInputTimerRef.current);
-
-    focusOnInputTimerRef.current = setTimeout(() => {
-      selectInputRef.current && selectInputRef.current.focus();
-    }, 0);
-  }, [selectInputRef]);
-  useIsomorphicLayoutEffect(function clearFocusOnInputTimer() {
-    return () => {
-      clearTimeout(focusOnInputTimerRef.current);
-    };
-  }, []);
 
   const controlledValueSet = isControlledOutside && props.value !== '';
   const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== '';
@@ -744,7 +731,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onClick={function clearSelectState() {
           setNativeSelectValue('');
           setInputValue('');
-          focusOnInput();
+          selectInputRef.current && selectInputRef.current.focus();
         }}
         disabled={restProps.disabled}
         data-testid={clearButtonTestId}
@@ -756,7 +743,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     iconProp,
     restProps.disabled,
     clearButtonTestId,
-    focusOnInput,
+    selectInputRef,
   ]);
 
   const icon = React.useMemo(() => {
@@ -801,11 +788,11 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
         const inputIsNotFocused = document.activeElement !== selectInputRef.current;
         if (inputIsNotFocused) {
-          focusOnInput();
+          selectInputRef.current.focus();
         }
       }
     },
-    [document, focusOnInput, selectInputRef],
+    [document, selectInputRef],
   );
 
   const preventInputBlurWhenClickInsideFocusedSelectArea = (
