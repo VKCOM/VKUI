@@ -269,7 +269,7 @@ export const Popover = ({
             mount={!hidden}
             disabled={hidden}
             autoFocus={disableInteractive ? false : autoFocus}
-            restoreFocus={restoreFocus ? onRestoreFocus : false}
+            restoreFocus={restoreFocus ? () => onRestoreFocus(restoreFocus) : false}
             onClose={onEscapeKeyDown}
           >
             {arrow}

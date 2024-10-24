@@ -11,6 +11,8 @@ export type ManualTriggerType = 'manual';
 
 export type TriggerType = ManualTriggerType | InteractiveTriggerType | InteractiveTriggerType[];
 
+export type RestoreFocusType = boolean | 'latest-active' | 'anchor-element' | HTMLElement;
+
 export type ShownChangeReason =
   | 'click-outside'
   | 'escape-key'
@@ -110,5 +112,5 @@ export interface UseFloatingWithInteractionsReturn<T extends HTMLElement = HTMLE
   middlewareData: UseFloatingData['middlewareData'];
   onClose: (this: void) => void;
   onEscapeKeyDown?: (this: void) => void;
-  onRestoreFocus: (this: void) => boolean;
+  onRestoreFocus: (restoreFocus?: RestoreFocusType) => boolean | HTMLElement;
 }
