@@ -27,18 +27,23 @@ import { generateCustomScreenshotName } from './utils';
 export type { VKUITestOptions } from './types';
 
 export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & VKUITestHelpers>({
+  page: async function initialMouseSetup({ page }, use) {
+    await page.mouse.move(0, 0);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    await use(page);
+  },
   platform: ['android', { option: true }],
-  appearance: ['light', { option: true }],
+  colorSchemeType: ['light', { option: true }],
 
   adaptivityProviderProps: [null, { option: true }],
   onlyForBrowsers: [null, { option: true }],
   onlyForPlatforms: [null, { option: true }],
-  onlyForAppearances: [null, { option: true }],
+  onlyForColorSchemes: [null, { option: true }],
 
   toMatchSnapshot: [{ threshold: 0.02 }, { option: true }],
 
   expectScreenshotClippedToContent: async (
-    { page, platform, browserName, appearance, toMatchSnapshot },
+    { page, platform, browserName, colorSchemeType, toMatchSnapshot },
     use,
     testInfo,
   ) => {
@@ -51,7 +56,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
         {
           platform,
           browserName,
-          appearance,
+          colorSchemeType,
         },
         expectCallCount,
       );
@@ -61,13 +66,15 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
       );
       expectCallCount += 1;
     };
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use(result);
   },
 
-  componentPlaygroundProps: async ({ platform, appearance, adaptivityProviderProps }, use) => {
+  componentPlaygroundProps: async ({ platform, colorSchemeType, adaptivityProviderProps }, use) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     await use({
       platform,
-      appearance,
+      colorScheme: colorSchemeType,
       adaptivityProviderProps: adaptivityProviderProps ? adaptivityProviderProps : undefined,
     });
   },
@@ -79,11 +86,11 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
     async (
       {
         platform,
-        appearance,
+        colorSchemeType,
         defaultBrowserType,
         onlyForBrowsers,
         onlyForPlatforms,
-        onlyForAppearances,
+        onlyForColorSchemes,
       },
       use,
       testInfo,
@@ -91,7 +98,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
       const skipReasons = [
         { type: 'browser', matchList: onlyForBrowsers || [], value: defaultBrowserType },
         { type: 'platform', matchList: onlyForPlatforms || [], value: platform },
-        { type: 'appearance', matchList: onlyForAppearances || [], value: appearance },
+        { type: 'colorScheme', matchList: onlyForColorSchemes || [], value: colorSchemeType },
       ]
         .filter(
           ({ matchList, value }) => matchList.length > 0 && matchList.every((i) => i !== value),
@@ -108,7 +115,7 @@ export const test = testBase.extend<VKUITestOptions & InternalVKUITestOptions & 
 // 2. Ре-экспортируем нужные модули, типы и константы.
 export { expect, defineConfig, devices } from '@playwright/experimental-ct-react';
 export type { PlaywrightTestConfig, ReporterDescription } from '@playwright/test';
-export { Appearance } from '../../lib/appearance';
+export { ColorScheme } from '../../lib/colorScheme';
 export { Platform } from '../../lib/platform';
 
 // 3. Вычленяем типы, которые не экспортируются самим Playwright.

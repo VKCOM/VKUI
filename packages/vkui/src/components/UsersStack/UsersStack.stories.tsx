@@ -25,7 +25,7 @@ export const Playground: Story = {
   args: {
     children: 'Алексей, Илья, Михаил и ещё 1 человек',
     photos: [getAvatarUrl(), getAvatarUrl(), getAvatarUrl(), getAvatarUrl()],
-    direction: 'row',
+    avatarsPosition: 'inline-start',
   },
 };
 
@@ -33,7 +33,7 @@ const AvatarWrapper = (props: UsersStackRenderWrapperProps) => {
   const user = getRandomUser();
 
   return (
-    <Tooltip text={`${user.first_name} ${user.last_name}`}>
+    <Tooltip description={`${user.first_name} ${user.last_name}`}>
       <div
         style={{
           cursor: 'pointer',

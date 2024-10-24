@@ -1,150 +1,156 @@
-.ToolButton {
+.host {
   position: relative;
   display: flex;
   box-sizing: border-box;
   text-decoration: none;
   border: 0;
   margin: 0;
-  padding: 10px;
+  padding: var(--vkui--spacing_size_m);
   border-radius: var(--vkui--size_border_radius_paper--regular);
   inline-size: 100%;
   flex-grow: 1;
   flex-basis: 0;
   align-items: center;
-  justify-content: center;
   font-family: var(--vkui--font_caption1--font_family--regular);
   font-size: var(--vkui--font_caption1--font_size--regular);
   line-height: var(--vkui--font_caption1--line_height--regular);
 }
 
-.ToolButton--rounded {
+.withFakeEndIcon {
+  padding-inline-end: var(--vkui--spacing_size_xl);
+}
+
+.rounded {
   border-radius: var(--vkui--size_border_radius_rounded--regular);
 }
 
-.ToolButton--sizeY-regular {
+.sizeYRegular {
   font-family: var(--vkui--font_subhead--font_family--regular);
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
 }
 
 @media (--sizeY-regular) {
-  .ToolButton--sizeY-none {
+  .sizeYNone {
     font-family: var(--vkui--font_subhead--font_family--regular);
     font-size: var(--vkui--font_subhead--font_size--regular);
     line-height: var(--vkui--font_subhead--line_height--regular);
   }
 }
 
-.ToolButton[disabled] {
+.host[disabled] {
   opacity: var(--vkui--opacity_disable);
 }
 
 /* ToolButton's directions */
-.ToolButton--direction-row {
+.directionRow {
   flex-direction: row;
+  justify-content: flex-start;
 }
 
-.ToolButton--direction-column {
+.directionColumn {
   flex-direction: column;
+  justify-content: center;
 }
 
-.ToolButton--direction-row .ToolButton__text {
+.directionRow .text {
   margin-inline-start: 4px;
 }
 
-.ToolButton--direction-column .ToolButton__text {
+.directionColumn .text {
   margin-block-start: 4px;
 }
 
 /* ToolButton's backgrounds */
 /* Mode  = Primary */
-.ToolButton--mode-primary.ToolButton--appearance-accent {
+.modePrimary.appearanceAccent {
   background-color: var(--vkui--color_background_accent_themed);
 }
 
-.ToolButton--mode-primary.ToolButton--appearance-accent.ToolButton--hover {
+.modePrimary.appearanceAccent.hover {
   background-color: var(--vkui--color_background_accent_themed--hover);
 }
 
-.ToolButton--mode-primary.ToolButton--appearance-accent.ToolButton--active {
+.modePrimary.appearanceAccent.active {
   background-color: var(--vkui--color_background_accent_themed--active);
 }
 
-.ToolButton--mode-primary.ToolButton--appearance-neutral {
-  background-color: var(--vkui--color_background_secondary);
+.modePrimary.appearanceNeutral {
+  background-color: var(--vkui--color_background_modal_inverse);
 }
 
-.ToolButton--mode-primary.ToolButton--appearance-neutral.ToolButton--hover {
-  background-color: var(--vkui--color_background_secondary--hover);
+.modePrimary.appearanceNeutral.hover {
+  background-color: var(--vkui--color_background_modal_inverse--hover);
 }
 
-.ToolButton--mode-primary.ToolButton--appearance-neutral.ToolButton--active {
-  background-color: var(--vkui--color_background_secondary--active);
+.modePrimary.appearanceNeutral.active {
+  background-color: var(--vkui--color_background_modal_inverse--active);
 }
 
 /* Mode = Secondary */
-.ToolButton--mode-secondary {
+.modeSecondary {
   background-color: var(--vkui--color_background_secondary_alpha);
 }
 
-.ToolButton--mode-secondary.ToolButton--hover {
+.modeSecondary.hover {
   background-color: var(--vkui--color_background_secondary_alpha--hover);
 }
 
-.ToolButton--mode-secondary.ToolButton--active {
+.modeSecondary.active {
   background-color: var(--vkui--color_background_secondary_alpha--active);
 }
 
 /* Mode = Tertiary */
-.ToolButton--mode-tertiary,
-.ToolButton--mode-outline {
+.modeTertiary,
+.modeOutline {
   background-color: var(--vkui--color_transparent);
 }
 
-.ToolButton--mode-tertiary.ToolButton--hover,
-.ToolButton--mode-outline.ToolButton--hover {
+.modeTertiary.hover,
+.modeOutline.hover {
   background-color: var(--vkui--color_transparent--hover);
 }
 
-.ToolButton--mode-tertiary.ToolButton--active,
-.ToolButton--mode-outline.ToolButton--active {
+.modeTertiary.active,
+.modeOutline.active {
   background-color: var(--vkui--color_transparent--active);
 }
 
 /*
   ToolButtons text colors
 */
-.ToolButton.ToolButton--appearance-accent {
+.host.appearanceAccent {
   color: var(--vkui--color_text_accent_themed);
 }
 
-.ToolButton.ToolButton--appearance-neutral {
+.host.appearanceNeutral {
   color: var(--vkui--color_text_primary);
 }
 
-.ToolButton--mode-primary.ToolButton--appearance-accent {
+.modePrimary.appearanceAccent,
+.modePrimary.appearanceNeutral {
   color: var(--vkui--color_text_contrast_themed);
 }
 
 /*
   Outline buttons borders
 */
-.ToolButton--mode-outline.ToolButton--appearance-accent,
-.ToolButton--mode-outline.ToolButton--appearance-accent.ToolButton--hover,
-.ToolButton--mode-outline.ToolButton--appearance-accent.ToolButton--active {
+.modeOutline.appearanceAccent,
+.modeOutline.appearanceAccent.hover,
+.modeOutline.appearanceAccent.active {
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_accent_themed);
 }
 
-.ToolButton--mode-outline.ToolButton--appearance-neutral {
+.modeOutline.appearanceNeutral {
   box-shadow: inset 0 0 0 1px var(--vkui--color_field_border_alpha);
 }
 
-.ToolButton--mode-outline.ToolButton--appearance-neutral.ToolButton--hover {
+.modeOutline.appearanceNeutral.hover {
   background-color: var(--vkui--color_background_secondary--hover);
   box-shadow: unset;
 }
 
-.ToolButton--mode-outline.ToolButton--appearance-neutral.ToolButton--active {
+.modeOutline.appearanceNeutral.active {
   background-color: var(--vkui--color_background_secondary--active);
   box-shadow: unset;
 }

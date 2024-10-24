@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`header transforms correctly 1`] = `
+"import { Header, Icon12ChevronOutline, Link } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const aside = (
+    <Link>
+      Показать все
+      {<Icon12ChevronOutline />}
+    </Link>
+  )
+
+  return (
+    (<React.Fragment>
+      {/* Проверка изменения size */}
+      <Header mode="primary" multiline size="l">
+        Кто может писать мне личные сообщения
+      </Header>
+      <Header mode="secondary" multiline size="m">
+        Кто может писать мне личные сообщения
+      </Header>
+      {/* Проверка замены aside на after */}
+      <Header
+        mode="primary"
+        subtitle="SOHN — Conrad"
+        subtitleComponent="h3"
+        after={
+          <Link>
+            Показать все
+            {<Icon12ChevronOutline />}
+          </Link>
+        }
+      />
+      <Header
+        mode="primary"
+        subtitle="SOHN — Conrad"
+        subtitleComponent="h3"
+        after={aside}
+      />
+    </React.Fragment>)
+  );
+};"
+`;

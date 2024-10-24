@@ -10,7 +10,7 @@ describe(ScrollArrow, () => {
   it('should have HTML style attribute for offsetY prop', () => {
     const offsetY = 10;
     const { container } = render(<ScrollArrow direction="left" offsetY={offsetY} onClick={noop} />);
-    const elIcon = container.querySelector(`.${styles['ScrollArrow__icon']}`);
+    const elIcon = container.querySelector(`.${styles.icon}`);
     expect(elIcon).toHaveStyle({ top: `${offsetY}px` });
   });
 

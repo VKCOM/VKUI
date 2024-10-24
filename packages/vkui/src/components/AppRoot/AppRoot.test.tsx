@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { Appearance } from '../../lib/appearance';
+import { ColorScheme } from '../../lib/colorScheme';
 import { Platform } from '../../lib/platform';
 import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
 import { baselineComponent } from '../../testing/utils';
@@ -24,13 +24,13 @@ describe('AppRoot', () => {
         </AdaptivityProvider>
       );
       const result = render(<Template />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--pointer-none']);
+      expect(result.getByTestId('app-root')).toHaveClass(styles.pointerNone);
       result.rerender(<Template hasPointer={false} />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+      expect(result.getByTestId('app-root')).toHaveClass(styles.userSelectNone);
       result.rerender(<Template hasPointer={true} />);
       expect(result.getByTestId('app-root')).not.toHaveClass(
-        styles['AppRoot--pointer-none'],
-        styles['AppRoot--user-select-none'],
+        styles.pointerNone,
+        styles.userSelectNone,
       );
     });
 
@@ -42,12 +42,12 @@ describe('AppRoot', () => {
       );
       // по умолчанию userSelectMode='disabled-in-webview'
       const result = render(<Template isWebView />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+      expect(result.getByTestId('app-root')).toHaveClass(styles.userSelectNone);
 
       result.rerender(<Template isWebView={false} />);
       expect(result.getByTestId('app-root')).not.toHaveClass(
-        styles['AppRoot--pointer-none'],
-        styles['AppRoot--user-select-none'],
+        styles.pointerNone,
+        styles.userSelectNone,
       );
     });
 
@@ -57,12 +57,12 @@ describe('AppRoot', () => {
       );
 
       expect(result.getByTestId('app-root')).not.toHaveClass(
-        styles['AppRoot--pointer-none'],
-        styles['AppRoot--user-select-none'],
+        styles.pointerNone,
+        styles.userSelectNone,
       );
 
       result.rerender(<AppRoot mode="full" data-testid="app-root" userSelectMode="disabled" />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles['AppRoot--user-select-none']);
+      expect(result.getByTestId('app-root')).toHaveClass(styles.userSelectNone);
     });
   });
 
@@ -118,17 +118,13 @@ describe('AppRoot', () => {
   });
 
   it('should not call enableScrollLock if scroll is already locked', () => {
-    let isScrollLockStub = false;
-    const enableScrollLockStub = jest.fn(() => (isScrollLockStub = true));
-    const disableScrollLockStub = jest.fn();
+    const incrementScrollLockCounterStub = jest.fn();
+    const decrementScrollLockCounterStub = jest.fn();
     const scrollContextStub: ScrollContextInterface = {
       getScroll: () => ({ x: 0, y: 0 }),
       scrollTo: noop,
-      get isScrollLock() {
-        return Boolean(isScrollLockStub);
-      },
-      enableScrollLock: enableScrollLockStub,
-      disableScrollLock: disableScrollLockStub,
+      incrementScrollLockCounter: incrementScrollLockCounterStub,
+      decrementScrollLockCounter: decrementScrollLockCounterStub,
     };
 
     const ScrollToggler = () => {
@@ -155,16 +151,17 @@ describe('AppRoot', () => {
 
     const { unmount } = render(<Template />);
     // первый компонент вызвал scrollLock
-    expect(enableScrollLockStub).toHaveBeenCalledTimes(1);
+    expect(incrementScrollLockCounterStub).toHaveBeenCalledTimes(1);
     // второй появившийся компонент вызвал scrollLock
     fireEvent.click(screen.getByText('Show another toggler'));
 
-    // enableScrollLock должен быть вызван лишь раз
-    expect(enableScrollLockStub).toHaveBeenCalledTimes(1);
+    // incrementScrollLockCounterStub должен быть вызван второй раз
+    expect(incrementScrollLockCounterStub).toHaveBeenCalledTimes(2);
+    expect(decrementScrollLockCounterStub).toHaveBeenCalledTimes(0);
 
     unmount();
-    // disableScrollLock должен быть вызван лишь раз
-    expect(disableScrollLockStub).toHaveBeenCalledTimes(1);
+    // decrementScrollLockCounterStub должен быть вызван два раза
+    expect(decrementScrollLockCounterStub).toHaveBeenCalledTimes(2);
   });
 
   describe('portalRoot in mode="embedded"', () => {
@@ -327,20 +324,25 @@ describe('AppRoot', () => {
     const CUSTOM_TOKEN_CLASS_NAME = 'myClassName';
 
     it.each([
-      ['default', Platform.IOS, Appearance.LIGHT, undefined],
-      ['default', Platform.IOS, Appearance.LIGHT, {}],
-      ['default', Platform.IOS, Appearance.DARK, DEFAULT_TOKENS_CLASS_NAMES],
-      ['default', Platform.IOS, Appearance.LIGHT, { dark: CUSTOM_TOKEN_CLASS_NAME }],
-      ['default', Platform.IOS, Appearance.LIGHT, { android: { dark: CUSTOM_TOKEN_CLASS_NAME } }],
-      ['custom', Platform.IOS, Appearance.DARK, { dark: CUSTOM_TOKEN_CLASS_NAME }],
-      ['custom', Platform.ANDROID, Appearance.DARK, { android: { dark: CUSTOM_TOKEN_CLASS_NAME } }],
+      ['default', Platform.IOS, ColorScheme.LIGHT, undefined],
+      ['default', Platform.IOS, ColorScheme.LIGHT, {}],
+      ['default', Platform.IOS, ColorScheme.DARK, DEFAULT_TOKENS_CLASS_NAMES],
+      ['default', Platform.IOS, ColorScheme.LIGHT, { dark: CUSTOM_TOKEN_CLASS_NAME }],
+      ['default', Platform.IOS, ColorScheme.LIGHT, { android: { dark: CUSTOM_TOKEN_CLASS_NAME } }],
+      ['custom', Platform.IOS, ColorScheme.DARK, { dark: CUSTOM_TOKEN_CLASS_NAME }],
+      [
+        'custom',
+        Platform.ANDROID,
+        ColorScheme.DARK,
+        { android: { dark: CUSTOM_TOKEN_CLASS_NAME } },
+      ],
     ])(
-      'should use %s tokensClassName if platform="%s" appearance="%s" tokensClassNames={%o}',
-      (type, platform, appearance, tokensClassNames) => {
+      'should use %s tokensClassName if platform="%s" colorScheme="%s" tokensClassNames={%o}',
+      (type, platform, colorScheme, tokensClassNames) => {
         const { unmount } = render(
           <ConfigProvider
             platform={platform}
-            appearance={appearance}
+            colorScheme={colorScheme}
             tokensClassNames={tokensClassNames}
           >
             <AppRoot />
@@ -348,7 +350,7 @@ describe('AppRoot', () => {
         );
         const tokensClassName =
           type === 'default'
-            ? DEFAULT_TOKENS_CLASS_NAMES[platform][appearance]
+            ? DEFAULT_TOKENS_CLASS_NAMES[platform][colorScheme]
             : CUSTOM_TOKEN_CLASS_NAME;
         expect(document.documentElement).toHaveClass(tokensClassName);
         unmount();
@@ -358,13 +360,13 @@ describe('AppRoot', () => {
   });
 
   it('should add tokensClassName to embedded element of AppRoot inner full AppRoot and removes on unmount', async () => {
-    const configForFullMode = { appearance: Appearance.LIGHT, platform: Platform.VKCOM };
+    const configForFullMode = { colorScheme: ColorScheme.LIGHT, platform: Platform.VKCOM };
     const vkuiTokenModeClassNameForFullMode =
-      DEFAULT_TOKENS_CLASS_NAMES[configForFullMode.platform][configForFullMode.appearance];
+      DEFAULT_TOKENS_CLASS_NAMES[configForFullMode.platform][configForFullMode.colorScheme];
 
-    const configForEmbeddedMode = { appearance: Appearance.DARK, platform: Platform.VKCOM };
+    const configForEmbeddedMode = { colorScheme: ColorScheme.DARK, platform: Platform.VKCOM };
     const vkuiTokenModeClassNameForEmbeddedMode =
-      DEFAULT_TOKENS_CLASS_NAMES[configForEmbeddedMode.platform][configForEmbeddedMode.appearance];
+      DEFAULT_TOKENS_CLASS_NAMES[configForEmbeddedMode.platform][configForEmbeddedMode.colorScheme];
 
     const ConfigUserWithOwnProvider = () => {
       return (

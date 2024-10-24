@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -6,14 +8,14 @@ import { AlertAction } from './AlertAction';
 import styles from './Alert.module.css';
 
 const alignStyles = {
-  left: styles['Alert__actions--align-left'],
-  center: styles['Alert__actions--align-center'],
-  right: styles['Alert__actions--align-right'],
+  left: styles.actionsAlignLeft,
+  center: styles.actionsAlignCenter,
+  right: styles.actionsAlignRight,
 };
 
 const directionStyles = {
-  vertical: styles['Alert__actions--direction-vertical'],
-  horizontal: styles['Alert__actions--direction-horizontal'],
+  vertical: styles.actionsDirectionVertical,
+  horizontal: styles.actionsDirectionHorizontal,
 };
 
 type ItemClickHandler = (item: AlertActionInterface) => void;
@@ -36,7 +38,7 @@ export const AlertActions = ({
   return (
     <div
       className={classNames(
-        styles['Alert__actions'],
+        styles.actions,
         actionsAlign && alignStyles[actionsAlign],
         direction && directionStyles[direction],
       )}

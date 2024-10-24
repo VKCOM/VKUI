@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`scroll-arrow transforms correctly 1`] = `
+"import { Gallery, HorizontalScroll, ScrollArrow } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <ScrollArrow direction='down' size="s" />
+      <ScrollArrow direction='left' size="m" />
+      <HorizontalScroll arrowSize="s"  />
+      <HorizontalScroll arrowSize="m"  />
+      <Gallery arrowSize="s" />
+      <Gallery arrowSize="m" />
+    </React.Fragment>)
+  );
+};"
+`;

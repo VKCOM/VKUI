@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -5,15 +7,15 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutWrapper.module.css';
 
 const stylesAlignX = {
-  center: styles['PopoutWrapper--alignX-center'],
-  left: styles['PopoutWrapper--alignX-left'],
-  right: styles['PopoutWrapper--alignX-right'],
+  center: styles.alignXCenter,
+  left: styles.alignXLeft,
+  right: styles.alignXRight,
 };
 
 const stylesAlignY = {
-  center: styles['PopoutWrapper--alignY-center'],
-  top: styles['PopoutWrapper--alignY-top'],
-  bottom: styles['PopoutWrapper--alignY-bottom'],
+  center: styles.alignYCenter,
+  top: styles.alignYTop,
+  bottom: styles.alignYBottom,
 };
 
 export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -58,17 +60,17 @@ export const PopoutWrapper = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['PopoutWrapper'],
+        styles.host,
         stylesAlignY[alignY],
         stylesAlignX[alignX],
-        closing ? styles['PopoutWrapper--closing'] : styles['PopoutWrapper--opened'],
-        fixed && styles['PopoutWrapper--fixed'],
-        !noBackground && styles['PopoutWrapper--masked'],
+        closing ? styles.closing : styles.opened,
+        fixed && styles.fixed,
+        !noBackground && styles.masked,
       )}
     >
-      <div className={styles['PopoutWrapper__container']}>
-        <div className={styles['PopoutWrapper__overlay']} onClick={onClick} />
-        <div className={styles['PopoutWrapper__content']}>{children}</div>
+      <div className={styles.container}>
+        <div className={styles.overlay} onClick={onClick} />
+        <div className={styles.content}>{children}</div>
       </div>
     </RootComponent>
   );

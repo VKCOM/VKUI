@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
@@ -5,14 +7,19 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { CalendarDay, type CalendarDayElementProps } from '../CalendarDay/CalendarDay';
+import {
+  CalendarDay,
+  type CalendarDayElementProps,
+  type CalendarDayProps,
+} from '../CalendarDay/CalendarDay';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './CalendarDays.module.css';
 
 export interface CalendarDaysProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
+    Pick<CalendarDayProps, 'renderDayContent'> {
   value?: Date | Array<Date | null>;
   viewDate: Date;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -55,6 +62,7 @@ export const CalendarDays = ({
   dayProps,
   listenDayChangesForUpdate = false,
   getRootRef,
+  renderDayContent,
   ...props
 }: CalendarDaysProps): React.ReactNode => {
   const { locale } = useConfigProvider();
@@ -78,28 +86,17 @@ export const CalendarDays = ({
   );
 
   return (
-    <RootComponent {...props} baseClassName={styles['CalendarDays']} getRootRef={ref}>
-      <div
-        className={classNames(
-          styles['CalendarDays__row'],
-          size === 's' && styles['CalendarDays__row--size-s'],
-        )}
-      >
+    <RootComponent {...props} baseClassName={styles.host} getRootRef={ref}>
+      <div className={classNames(styles.row, size === 's' && styles.rowSizeS)}>
         {daysNames.map((dayName) => (
-          <Footnote key={dayName} className={styles['CalendarDays__weekday']}>
+          <Footnote key={dayName} className={styles.weekday}>
             {dayName}
           </Footnote>
         ))}
       </div>
 
       {weeks.map((week, i) => (
-        <div
-          className={classNames(
-            styles['CalendarDays__row'],
-            size === 's' && styles['CalendarDays__row--size-s'],
-          )}
-          key={i}
-        >
+        <div className={classNames(styles.row, size === 's' && styles.rowSizeS)} key={i}>
           {week.map((day, i) => {
             const sameMonth = isSameMonth(day, viewDate);
             return (
@@ -122,7 +119,9 @@ export const CalendarDays = ({
                 hinted={isDayHinted?.(day)}
                 sameMonth={sameMonth}
                 size={size}
+                renderDayContent={renderDayContent}
                 {...dayProps}
+                className={classNames(dayProps?.className, styles.rowDay)}
               />
             );
           })}

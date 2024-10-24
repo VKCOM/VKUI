@@ -9,7 +9,7 @@ import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
 import { HorizontalScroll, type HorizontalScrollProps } from './HorizontalScroll';
 
 const items = new Array(20).fill(0).map((_, i) => (
-  <HorizontalCell key={i} header={`item ${i}`} onClick={noop}>
+  <HorizontalCell key={i} title={`item ${i}`} onClick={noop}>
     <Avatar size={56} />
   </HorizontalCell>
 ));
@@ -23,9 +23,8 @@ export const HorizontalScrollMobilePlayground = (props: ComponentPlaygroundProps
       propSets={[
         {
           showArrows: ['always'],
-          arrowSize: ['m', 'l'],
+          arrowSize: ['s', 'm'],
           children: [items],
-          inline: [true],
         },
       ]}
     >
@@ -41,10 +40,9 @@ export const HorizontalScrollSmallTabletPlayground = (props: ComponentPlayground
       propSets={[
         {
           showArrows: [undefined, 'always'],
-          arrowSize: ['m', 'l'],
+          arrowSize: ['s', 'm'],
           arrowOffsetY: [-10],
           children: [items],
-          inline: [true],
         },
       ]}
     >
@@ -54,11 +52,11 @@ export const HorizontalScrollSmallTabletPlayground = (props: ComponentPlayground
 };
 
 export const HorizontalScrollWithHasMousePlayground = ({
-  appearance,
+  colorScheme,
   ...restProps
 }: ComponentPlaygroundProps) => {
   return (
-    <ConfigProvider appearance={appearance}>
+    <ConfigProvider colorScheme={colorScheme}>
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
         <AppRoot>
           <HorizontalScroll
@@ -69,7 +67,6 @@ export const HorizontalScrollWithHasMousePlayground = ({
               }
               element.scrollLeft = 32;
             }}
-            inline
           >
             {items}
           </HorizontalScroll>
@@ -80,11 +77,11 @@ export const HorizontalScrollWithHasMousePlayground = ({
 };
 
 export const HorizontalScrollWithoutHasMousePlayground = ({
-  appearance,
+  colorScheme,
   ...restProps
 }: ComponentPlaygroundProps) => {
   return (
-    <ConfigProvider appearance={appearance}>
+    <ConfigProvider colorScheme={colorScheme}>
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
         <AppRoot>
           <HorizontalScroll
@@ -95,7 +92,6 @@ export const HorizontalScrollWithoutHasMousePlayground = ({
               }
               element.scrollLeft = 32;
             }}
-            inline
           >
             {items}
           </HorizontalScroll>

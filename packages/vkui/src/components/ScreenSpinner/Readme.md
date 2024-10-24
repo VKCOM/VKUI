@@ -7,7 +7,7 @@
 
 Чтобы уведомить о выполнении асинхронного процесса пользователей скринридеров, проставьте на [`SplitLayout`](#/SplitLayout), в котором выполняется процесс, метки [`aria-busy`](https://doka.guide/a11y/aria-busy/) и [`aria-live`](https://doka.guide/a11y/aria-live/).
 
-Чтобы заменить текст, который прочитает скринридер, передайте его в `children`. Он будет скрыт визуально, но останется доступным для ассистивных технологий.
+Чтобы заменить текст, который прочитает скринридер, передайте его в `children`. Он будет скрыт визуально, но останется доступным для ассистивных технологий. Если вы используете свойство `label`, то передавать `children` не нужно, будет зачитан текст, переданный в `label`.
 
 ```jsx { "props": { "layout": false, "adaptivity": true } }
 const [popout, setPopout] = useState(null);
@@ -20,20 +20,19 @@ const setLoadingScreenSpinner = () => {
 };
 
 const setDoneScreenSpinner = () => {
-  setPopout(<ScreenSpinner state="loading" />);
-
-  setTimeout(() => {
-    setPopout(<ScreenSpinner state="done">Успешно</ScreenSpinner>);
-
-    setTimeout(clearPopout, 1000);
-  }, 2000);
+  setPopout(<ScreenSpinner state="done" label="Вы подписались на сообщество" />);
+  setTimeout(clearPopout, 3000);
 };
 
 const setErrorScreenSpinner = () => {
   setPopout(<ScreenSpinner state="loading" />);
 
   setTimeout(() => {
-    setPopout(<ScreenSpinner state="error">Произошла ошибка</ScreenSpinner>);
+    setPopout(
+      <ScreenSpinner state="error" label="Очень большая ошибка">
+        Произошла ошибка
+      </ScreenSpinner>,
+    );
 
     setTimeout(clearPopout, 1000);
   }, 2000);
@@ -41,6 +40,12 @@ const setErrorScreenSpinner = () => {
 
 const setCancelableScreenSpinner = () => {
   setPopout(<ScreenSpinner state="cancelable" mode="overlay" onClick={clearPopout} />);
+};
+
+const setScreenSpinnerWithCustomIcon = () => {
+  setPopout(<ScreenSpinner state="custom" customIcon={<Icon56KeyOutline />} />);
+
+  setTimeout(clearPopout, 2000);
 };
 
 <SplitLayout popout={popout} aria-live="polite" aria-busy={!!popout}>
@@ -53,6 +58,9 @@ const setCancelableScreenSpinner = () => {
           <CellButton onClick={setDoneScreenSpinner}>Запустить успешный процесс</CellButton>
           <CellButton onClick={setErrorScreenSpinner}>Запустить процесс с ошибкой</CellButton>
           <CellButton onClick={setCancelableScreenSpinner}>Запустить отменяемый процесс</CellButton>
+          <CellButton onClick={setScreenSpinnerWithCustomIcon}>
+            Запустить спинер с кастомной иконкой
+          </CellButton>
         </Group>
       </Panel>
     </View>
@@ -63,12 +71,16 @@ const setCancelableScreenSpinner = () => {
 ## Подкомпоненты
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-<Flex margin="auto" gap="m">
+<Flex margin="auto" gap="m" align="start">
   <ScreenSpinner.Container>
     <ScreenSpinner.Loader />
     <ScreenSpinner.SwapIcon />
   </ScreenSpinner.Container>
   <ScreenSpinner.Container state="cancelable">
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  <ScreenSpinner.Container state="custom" customIcon={<Icon56CheckCircleOutline />}>
     <ScreenSpinner.Loader />
     <ScreenSpinner.SwapIcon />
   </ScreenSpinner.Container>

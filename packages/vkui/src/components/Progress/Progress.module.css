@@ -1,23 +1,23 @@
-.Progress {
+.host {
   border-radius: 1px;
   background: var(--vkui--color_track_background);
   block-size: 2px;
 }
 
-.Progress__in {
+.in {
   block-size: 100%;
   border-radius: inherit;
   transition: width 0.2s ease;
 }
 
-.Progress--appearance-accent .Progress__in {
+.appearanceAccent .in {
   background: var(--vkui--color_stroke_accent);
 }
 
-.Progress--appearance-positive .Progress__in {
+.appearancePositive .in {
   background: var(--vkui--color_stroke_positive);
 }
 
-.Progress--appearance-negative .Progress__in {
+.appearanceNegative .in {
   background: var(--vkui--color_stroke_negative);
 }

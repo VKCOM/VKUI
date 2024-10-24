@@ -1,4 +1,4 @@
-.ContentBadge {
+.host {
   isolation: isolate;
   position: relative;
   display: inline-grid;
@@ -17,14 +17,14 @@
   min-inline-size: 0;
 }
 
-.ContentBadge--size-s {
+.sizeS {
   min-block-size: 16px;
   padding-block: 1px;
   padding-inline: 4px;
   border-radius: 4px;
 }
 
-.ContentBadge--size-m {
+.sizeM {
   column-gap: 4px;
   min-block-size: 20px;
   padding-block: 3px;
@@ -32,12 +32,12 @@
   border-radius: 6px;
 }
 
-.ContentBadge__singleIcon-slot--size-m {
+.singleIconSlotSizeM {
   padding-block: 1px;
   margin-inline: -2px;
 }
 
-.ContentBadge--size-l {
+.sizeL {
   column-gap: 6px;
   min-block-size: 28px;
   padding-block: 6px;
@@ -45,74 +45,74 @@
   border-radius: 8px;
 }
 
-.ContentBadge__icon-slot--size-l {
+.iconSlotSizeL {
   margin-inline-start: -2px;
   margin-inline-end: -2px;
 }
 
-.ContentBadge__singleIcon-slot--size-l {
+.singleIconSlotSizeL {
   margin-block: -2px;
   margin-inline: -4px;
 }
 
-.ContentBadge--capsule {
+.capsule {
   border-radius: 48px;
 }
 
 /* mode="primary" */
-.ContentBadge--primary-accent {
+.primaryAccent {
   color: var(--vkui--color_text_contrast);
   background-color: var(--vkui--color_background_accent);
 }
 
-.ContentBadge--primary-neutral {
+.primaryNeutral {
   color: var(--vkui--color_text_primary);
   background-color: var(--vkui--color_background_secondary);
 }
 
-.ContentBadge--primary-accent-green {
+.primaryAccentGreen {
   color: var(--vkui--color_text_contrast);
   background-color: var(--vkui--color_accent_green);
 }
 
-.ContentBadge--primary-accent-red {
+.primaryAccentRed {
   color: var(--vkui--color_text_contrast);
   background-color: var(--vkui--color_accent_red);
 }
 
-.ContentBadge--primary-overlay {
+.primaryOverlay {
   color: var(--vkui--color_text_contrast);
   background-color: var(--vkui--color_overlay_primary);
 }
 
 /* mode="secondary" */
-.ContentBadge--secondary-accent {
+.secondaryAccent {
   color: var(--vkui--color_text_accent);
   background-color: var(--vkui--color_background_secondary_alpha);
 }
 
-.ContentBadge--secondary-neutral {
+.secondaryNeutral {
   color: var(--vkui--color_text_subhead);
   background-color: var(--vkui--color_background_secondary);
 }
 
-.ContentBadge--secondary-accent-green {
+.secondaryAccentGreen {
   color: var(--vkui--color_accent_green);
   background-color: var(--vkui--color_background_positive_tint);
 }
 
-.ContentBadge--secondary-accent-red {
+.secondaryAccentRed {
   color: var(--vkui--color_accent_red);
   background-color: var(--vkui--color_background_negative_tint);
 }
 
-.ContentBadge--secondary-overlay {
+.secondaryOverlay {
   color: var(--vkui--color_text_contrast);
   background-color: var(--vkui--color_overlay_secondary);
 }
 
 /* mode="outline" */
-.ContentBadge--mode-outline::before {
+.modeOutline::before {
   content: '';
   position: absolute;
   z-index: -1;
@@ -122,43 +122,43 @@
   border-radius: inherit;
 }
 
-.ContentBadge--outline-accent {
+.outlineAccent {
   color: var(--vkui--color_text_accent);
 }
 
-.ContentBadge--outline-accent::before {
+.outlineAccent::before {
   border-color: var(--vkui--color_stroke_accent);
 }
 
-.ContentBadge--outline-neutral {
+.outlineNeutral {
   color: var(--vkui--color_text_secondary);
 }
 
-.ContentBadge--outline-neutral::before {
+.outlineNeutral::before {
   border-color: var(--vkui--color_icon_secondary);
 }
 
-.ContentBadge--outline-accent-green {
+.outlineAccentGreen {
   color: var(--vkui--color_accent_green);
 }
 
-.ContentBadge--outline-accent-green::before {
+.outlineAccentGreen::before {
   border-color: currentColor;
 }
 
-.ContentBadge--outline-accent-red {
+.outlineAccentRed {
   color: var(--vkui--color_accent_red);
 }
 
-.ContentBadge--outline-accent-red::before {
+.outlineAccentRed::before {
   border-color: currentColor;
 }
 
-.ContentBadge--outline-overlay {
+.outlineOverlay {
   color: var(--vkui--color_text_contrast);
 }
 
-.ContentBadge--outline-overlay::before {
+.outlineOverlay::before {
   border-width: 0;
   background-color: var(--vkui--color_overlay_primary);
 }

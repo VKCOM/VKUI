@@ -1,3 +1,5 @@
+'use client';
+
 import { useExternRef } from '../../hooks/useExternRef';
 import { ChipsInputBase } from '../ChipsInputBase/ChipsInputBase';
 import type { ChipOption, ChipsInputBaseProps } from '../ChipsInputBase/types';

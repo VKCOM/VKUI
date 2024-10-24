@@ -104,16 +104,16 @@ export function getUserSelectModeClassName({
 
       const enableByHasPointerMediaQuery = hasPointer === undefined;
       if (enableByHasPointerMediaQuery) {
-        return styles['AppRoot--pointer-none'];
+        return styles.pointerNone;
       }
 
-      return styles['AppRoot--user-select-none'];
+      return styles.userSelectNone;
     }
     case 'disabled':
-      return styles['AppRoot--user-select-none'];
+      return styles.userSelectNone;
     case 'enabled':
       return null;
     default:
-      return isWebView ? styles['AppRoot--user-select-none'] : null;
+      return isWebView ? styles.userSelectNone : null;
   }
 }

@@ -7,9 +7,9 @@
     <Group>
       <RichCell
         before={<Avatar size={72} src={getAvatarUrl('')} />}
-        subhead="Subhead"
-        text="Text"
-        caption="Caption"
+        overTitle="Over Title"
+        subtitle="Subtitle"
+        extraSubtitle="Extra Subtitle"
         after="After"
         afterCaption="After Caption"
         bottom={
@@ -34,7 +34,7 @@
     <Group header={<Header>Рекомендации друзей</Header>}>
       <RichCell
         before={<Avatar size={72} src={getAvatarUrl('user_ilyagrshn')} />}
-        caption="Команда ВКонтакте, Санкт-Петербург"
+        extraSubtitle="Команда ВКонтакте, Санкт-Петербург"
         bottom={
           <UsersStack
             photos={[
@@ -94,8 +94,8 @@
     <Group header={<Header>История переводов</Header>}>
       <RichCell
         before={<Avatar size={48} src={getAvatarUrl('user_ti')} />}
-        text="Держи за обед в EZO"
-        caption="сегодня в 18:00"
+        subtitle="Держи за обед в EZO"
+        extraSubtitle="сегодня в 18:00"
         after="+ 1 232 ₽"
         afterCaption="Комиссия 1%"
         actions={
@@ -121,7 +121,7 @@
       </RichCell>
       <RichCell
         before={<Avatar size={48} src={getAvatarUrl('user_lihachyov')} />}
-        caption="Вчера в 20:30"
+        extraSubtitle="Вчера в 20:30"
         after="- 1 800 ₽"
       >
         Михаил Лихачев

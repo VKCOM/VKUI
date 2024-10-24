@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -10,8 +12,8 @@ import { SegmentedControlOption } from './SegmentedControlOption/SegmentedContro
 import styles from './SegmentedControl.module.css';
 
 const sizeYClassNames = {
-  none: styles['SegmentedControl--sizeY-none'],
-  ['regular']: styles['SegmentedControl--sizeY-regular'],
+  none: styles.sizeYNone,
+  regular: styles.sizeYRegular,
 };
 
 export type SegmentedControlValue = string | number | undefined;
@@ -76,16 +78,16 @@ export const SegmentedControl = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['SegmentedControl'],
+        styles.host,
         sizeY !== 'compact' && sizeYClassNames[sizeY],
-        size === 'l' && styles['SegmentedControl--size-l'],
+        size === 'l' && styles.sizeL,
       )}
     >
-      <div role="radiogroup" className={styles['SegmentedControl__in']}>
+      <div role="radiogroup" className={styles.in}>
         {actualIndex > -1 && (
           <div
             aria-hidden
-            className={styles['SegmentedControl__slider']}
+            className={styles.slider}
             style={{
               width: `${100 / options.length}%`,
               transform: translateX,

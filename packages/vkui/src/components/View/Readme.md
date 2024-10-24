@@ -116,8 +116,8 @@ const App = () => {
 
     setPopoutWithRestriction(
       <Alert
-        header="Поле Имя не заполнено"
-        text="Пожалуйста, заполните его."
+        title="Поле Имя не заполнено"
+        description="Пожалуйста, заполните его."
         onClose={() => setPopoutWithRestriction(null)}
       />,
     );
@@ -210,9 +210,9 @@ const ProfilePanelContent = ({ onSettingsClick, onBack }) => {
         header={<Header>HorizontalScroll</Header>}
         description="Свайпбэк срабатывает либо если мы тянем за левый край экрана, либо если позиция горизонтального скролла равна нулю"
       >
-        <HorizontalScroll inline>
+        <HorizontalScroll>
           {getRandomUsers(15).map((user) => (
-            <HorizontalCell key={user.id} size="s" header={user.first_name}>
+            <HorizontalCell key={user.id} size="s" title={user.first_name}>
               <Avatar size={56} src={user.photo_100} />
             </HorizontalCell>
           ))}
@@ -287,7 +287,7 @@ const Content = () => {
     function simulateDataLoadingWhenMovingForwards() {
       let timerId = null;
       const loadData = () => {
-        setSpinner(<Spinner size="large" style={{ margin: '20px 0' }} />);
+        setSpinner(<Spinner size="xl" style={{ margin: '20px 0' }} />);
         timerId = setTimeout(() => setSpinner(null), 1000);
       };
 

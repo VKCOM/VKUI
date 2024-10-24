@@ -5,8 +5,8 @@ import { Search } from './Search';
 import styles from './Search.module.css';
 
 const getInput = () => screen.getByRole('searchbox');
-const getClearIcon = () => document.querySelector(`.${styles.Search__icon}`)!;
-const getFindButton = () => document.querySelector(`.${styles.Search__findButton}`)!;
+const getClearIcon = () => document.querySelector(`.${styles.icon}`)!;
+const getFindButton = () => document.querySelector(`.${styles.findButton}`)!;
 
 jest.mock('../../lib/touch', () => {
   const originalModule = jest.requireActual('../../lib/touch');
@@ -178,7 +178,7 @@ describe(Search, () => {
       const { container } = render(<Search onChange={(e) => (value = e.target.value)} />);
       await userEvent.type(getInput(), 'user');
       expect(value).toEqual('user');
-      const clearButton = container.getElementsByClassName(styles['Search__icon'])[0];
+      const clearButton = container.getElementsByClassName(styles.icon)[0];
       clickFn(clearButton);
       expect(value).toEqual('');
     },

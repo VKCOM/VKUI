@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -42,10 +44,10 @@ export const Tabbar = ({ plain = false, mode, ...restProps }: TabbarProps): Reac
     <RootComponent
       baseClassName={classNames(
         'vkuiInternalTabbar',
-        styles['Tabbar'],
-        platform === 'ios' && styles['Tabbar--ios'],
+        styles.host,
+        platform === 'ios' && styles.ios,
         getItemsLayoutClassName(mode, restProps.children),
-        !plain && styles['Tabbar--shadow'],
+        !plain && styles.shadow,
       )}
       {...restProps}
     />

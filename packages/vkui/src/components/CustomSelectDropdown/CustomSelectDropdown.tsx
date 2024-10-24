@@ -3,18 +3,13 @@ import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
 import type { HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
 import { CustomScrollView, type CustomScrollViewProps } from '../CustomScrollView/CustomScrollView';
-import type { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import { Popper } from '../Popper/Popper';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './CustomSelectDropdown.module.css';
 
 export interface CustomSelectDropdownProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
-    Pick<
-      CustomScrollViewProps,
-      'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
-    >,
-    TrackerOptionsProps,
+    Pick<CustomScrollViewProps, 'overscrollBehavior'>,
     HasDataAttribute {
   targetRef: React.RefObject<HTMLElement>;
   placement?: Placement;
@@ -42,8 +37,6 @@ export const CustomSelectDropdown = ({
   offsetDistance = 0,
   autoWidth = false,
   forcePortal = true,
-  autoHideScrollbar,
-  autoHideScrollbarDelay,
   className,
   noMaxHeight = false,
   // CustomScrollView
@@ -57,17 +50,10 @@ export const CustomSelectDropdown = ({
       sameWidth={!autoWidth}
       placement={placement}
       className={classNames(
-        styles['CustomSelectDropdown'],
+        styles.host,
         'vkuiInternalCustomSelectDropdown',
-        offsetDistance === 0 &&
-          (placement.includes('top')
-            ? styles['CustomSelectDropdown--top']
-            : styles['CustomSelectDropdown--bottom']),
-        autoWidth &&
-          classNames(
-            styles['CustomSelectDropdown--wide'],
-            'vkuiInternalCustomSelectDropdown--wide',
-          ),
+        offsetDistance === 0 && (placement.includes('top') ? styles.top : styles.bottom),
+        autoWidth && classNames(styles.wide, 'vkuiInternalCustomSelectDropdown--wide'),
         className,
       )}
       usePortal={forcePortal}
@@ -75,15 +61,13 @@ export const CustomSelectDropdown = ({
       {...restProps}
     >
       <CustomScrollView
-        boxRef={scrollBoxRef}
-        className={noMaxHeight ? undefined : styles['CustomSelectDropdown__in--withMaxHeight']}
-        autoHideScrollbar={autoHideScrollbar}
-        autoHideScrollbarDelay={autoHideScrollbarDelay}
+        getRootRef={scrollBoxRef}
+        className={noMaxHeight ? undefined : styles.inWithMaxHeight}
         overscrollBehavior={overscrollBehavior}
       >
         {fetching ? (
-          <div className={styles['CustomSelectDropdown__fetching']}>
-            <Spinner size="small" />
+          <div className={styles.fetching}>
+            <Spinner size="s" />
           </div>
         ) : (
           children

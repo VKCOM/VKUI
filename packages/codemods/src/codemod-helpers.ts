@@ -1,3 +1,4 @@
+import { JSXSpreadAttribute } from 'jscodeshift';
 import type {
   API,
   Collection,
@@ -30,6 +31,53 @@ export function getImportInfo(
   return { localName: localImportName };
 }
 
+export function renameImportName(
+  j: JSCodeshift,
+  source: Collection,
+  componentName: string,
+  newName: string,
+  alias: string,
+  renameOnlyImportedName: boolean,
+) {
+  source
+    .find(j.ImportDeclaration, { source: { value: alias } })
+    .find(j.ImportSpecifier, { local: { name: componentName } })
+    .forEach((path) => {
+      const newSpecifier = j.importSpecifier(
+        j.identifier(newName),
+        renameOnlyImportedName ? j.identifier(componentName) : j.identifier(newName),
+      );
+      (newSpecifier as any).importKind = (path.value as any).importKind;
+      j(path).replaceWith(newSpecifier);
+    });
+}
+
+export function renameIdentifier(
+  j: JSCodeshift,
+  source: Collection,
+  oldName: string,
+  newName: string,
+) {
+  source.find(j.Identifier, { name: oldName }).forEach((path) => {
+    j(path).replaceWith(j.identifier(newName));
+  });
+}
+
+export function renameTypeIdentifier(
+  j: JSCodeshift,
+  source: Collection,
+  oldName: string,
+  newName: string,
+) {
+  source
+    .find(j.TSTypeReference, { typeName: { type: 'Identifier', name: oldName } })
+    .forEach((path) => {
+      if (path.node.typeName.type === 'Identifier') {
+        path.node.typeName.name = newName;
+      }
+    });
+}
+
 export function renameProp(
   j: JSCodeshift,
   source: Collection,
@@ -55,6 +103,23 @@ export function renameProp(
         ),
       );
     });
+}
+
+export function renameSubComponent(
+  j: JSCodeshift,
+  source: Collection,
+  componentName: string,
+  prevSubcomponentName: string,
+  newSubcomponentName: string,
+) {
+  source
+    .find(j.MemberExpression, {
+      object: { name: componentName },
+      property: { name: prevSubcomponentName },
+    })
+    .replaceWith(
+      j.memberExpression(j.identifier(componentName), j.identifier(newSubcomponentName)),
+    );
 }
 
 export function swapBooleanValue(
@@ -90,6 +155,55 @@ export function swapBooleanValue(
       }
     });
 }
+
+export const removeProps = (
+  j: JSCodeshift,
+  api: API,
+  source: Collection,
+  componentName: string,
+  propsNames: string[],
+  createReportMessage: () => string = () => '',
+) => {
+  let needToShowReport = false;
+  source
+    .find(j.JSXElement, {
+      openingElement: {
+        name: {
+          name: componentName,
+        },
+      },
+    })
+    .forEach((path) => {
+      const attributes = path.node.openingElement.attributes;
+      const newAttributes = attributes?.filter((attr) => {
+        if (attr.type === 'JSXAttribute') {
+          const attrName = attr.name ? attr.name.name : null;
+          if (typeof attrName === 'string') {
+            return !propsNames.includes(attrName);
+          }
+        }
+        if (attr.type === 'JSXSpreadAttribute') {
+          needToShowReport = true;
+        }
+        return false;
+      });
+      path.node.openingElement.attributes = newAttributes;
+    });
+
+  if (needToShowReport) {
+    report(
+      api,
+      `: ${componentName} has been changed. Manual changes required: ${createReportMessage()}`,
+    );
+  }
+};
+
+export const removeAttribute = (
+  attributes: Array<JSXAttribute | JSXSpreadAttribute> | undefined,
+  attribute: JSXAttribute,
+) => {
+  attributes?.splice(attributes?.indexOf(attribute), 1);
+};
 
 interface AttributeManipulatorAPI {
   keyTo?: string | ((k?: string) => string);

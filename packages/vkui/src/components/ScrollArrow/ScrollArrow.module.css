@@ -1,4 +1,4 @@
-.ScrollArrow {
+.host {
   cursor: pointer;
   user-select: auto;
   padding: 0;
@@ -10,19 +10,19 @@
   justify-content: center;
 }
 
-.ScrollArrow--direction-left,
-.ScrollArrow--direction-right {
+.directionLeft,
+.directionRight {
   block-size: 100%;
   flex-direction: column;
 }
 
-.ScrollArrow--direction-up,
-.ScrollArrow--direction-down {
+.directionUp,
+.directionDown {
   inline-size: 100%;
   flex-direction: row;
 }
 
-.ScrollArrow__icon {
+.icon {
   position: relative;
   background-color: var(--vkui--color_background_contrast_themed);
   color: var(--vkui--color_icon_secondary);
@@ -32,46 +32,46 @@
   justify-content: center;
 }
 
-.ScrollArrow--size-m .ScrollArrow__icon {
+.sizeS .icon {
   inline-size: 28px;
   block-size: 28px;
   border-radius: 14px;
 }
 
-.ScrollArrow--size-l .ScrollArrow__icon {
+.sizeM .icon {
   inline-size: 40px;
   block-size: 40px;
   border-radius: 24px;
 }
 
-.ScrollArrow--direction-left {
+.directionLeft {
   padding-inline-start: var(--vkui--size_base_padding_horizontal--regular, 16px);
   inset-inline-start: 0;
 }
 
-.ScrollArrow--direction-right {
+.directionRight {
   padding-inline-end: var(--vkui--size_base_padding_horizontal--regular, 16px);
   inset-inline-end: 0;
 }
 
-.ScrollArrow--direction-up {
+.directionUp {
   padding-block-start: var(--vkui--size_base_padding_horizontal--regular, 16px);
   inset-block-start: 0;
 }
 
-.ScrollArrow--direction-down {
+.directionDown {
   padding-block-end: var(--vkui--size_base_padding_horizontal--regular, 16px);
   inset-block-end: 0;
 }
 
-.ScrollArrow--direction-left .ScrollArrow__defaultIcon {
+.directionLeft .defaultIcon {
   transform: rotate(180deg);
 }
 
-.ScrollArrow--direction-up .ScrollArrow__defaultIcon {
+.directionUp .defaultIcon {
   transform: rotate(-90deg);
 }
 
-.ScrollArrow--direction-down .ScrollArrow__defaultIcon {
+.directionDown .defaultIcon {
   transform: rotate(90deg);
 }

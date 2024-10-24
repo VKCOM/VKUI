@@ -10,6 +10,10 @@ export const ScreenSpinnerLoadingPlayground = (props: ComponentPlaygroundProps) 
           state: ['loading', 'cancelable', 'error'],
           mode: [undefined, 'overlay'],
         },
+        {
+          state: ['loading', 'cancelable', 'error'],
+          label: ['Text for screenspinner to test layout'],
+        },
       ]}
     >
       {(props: ScreenSpinnerProps) => (

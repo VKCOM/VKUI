@@ -23,10 +23,10 @@ export const Playground: Story = {
         return (
           <ContentCard
             key={index}
-            subtitle="ALBUM"
-            header="Halsey – Badlands"
+            overTitle="ALBUM"
+            title="Halsey – Badlands"
             caption="Blue Vinyl · EU · 2015"
-            text="Badlands is the story about dreams and cruel reality..."
+            description="Badlands is the story about dreams and cruel reality..."
           />
         );
       })}

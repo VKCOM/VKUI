@@ -29,22 +29,22 @@ describe(Image, () => {
     [
       'borderStartStartRadius',
       '--vkui_internal--Image_border_start_start_radius',
-      styles['Image--borderStartStartRadius'],
+      styles.borderStartStartRadius,
     ],
     [
       'borderStartEndRadius',
       '--vkui_internal--Image_border_start_end_radius',
-      styles['Image--borderStartEndRadius'],
+      styles.borderStartEndRadius,
     ],
     [
       'borderEndStartRadius',
       '--vkui_internal--Image_border_end_start_radius',
-      styles['Image--borderEndStartRadius'],
+      styles.borderEndStartRadius,
     ],
     [
       'borderEndEndRadius',
       '--vkui_internal--Image_border_end_end_radius',
-      styles['Image--borderEndEndRadius'],
+      styles.borderEndEndRadius,
     ],
   ])('check correct %s', (borderProp, cssVariable, className) => {
     it.each<[ImageProps['borderRadius'], number, number]>([
@@ -96,6 +96,6 @@ describe(Image.Badge, () => {
       </ImageTest>,
     );
 
-    expect(getImageBadgeEl()).toHaveClass(imageBadgeStyles['ImageBadge--shifted']);
+    expect(getImageBadgeEl()).toHaveClass(imageBadgeStyles.shifted);
   });
 });

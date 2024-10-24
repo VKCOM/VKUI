@@ -18,12 +18,7 @@ describe('HorizontalCellShowMore', () => {
     await screen.findByText('Показать все');
     expect(screen.queryByText('Все')).toBeFalsy();
 
-    component.rerender(<HorizontalCellShowMore size="l" />);
-    // renders Показать все by default in size "l"
-    await screen.findByText('Показать все');
-    expect(screen.queryByText('Все')).toBeFalsy();
-
-    component.rerender(<HorizontalCellShowMore size="l">Show more</HorizontalCellShowMore>);
+    component.rerender(<HorizontalCellShowMore size="m">Show more</HorizontalCellShowMore>);
     // renders custom text
     await screen.findByText('Show more');
     expect(screen.queryByText('Все')).toBeFalsy();
@@ -32,8 +27,6 @@ describe('HorizontalCellShowMore', () => {
 
   it('should have specific className when centered=true', () => {
     const component = render(<HorizontalCellShowMore data-testid="show-more" centered={true} />);
-    expect(component.getByTestId('show-more').parentElement).toHaveClass(
-      styles['HorizontalCellShowMore--centered'],
-    );
+    expect(component.getByTestId('show-more').parentElement).toHaveClass(styles.centered);
   });
 });

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useDOM } from '../../lib/dom';
@@ -18,7 +20,10 @@ export interface CardScrollProps extends HTMLAttributesWithRootRef<HTMLDivElemen
    */
   size?: 's' | 'm' | 'l' | false;
   showArrows?: HorizontalScrollProps['showArrows'];
-  noSpaces?: boolean;
+  /**
+   * Добавляет отступы по краям слева и справа
+   */
+  padding?: boolean;
 }
 
 /**
@@ -28,9 +33,8 @@ export const CardScroll = ({
   children,
   size = 's',
   showArrows = true,
-  noSpaces = false,
-  // TODO [>=7]: поменять тег на ul https://github.com/VKCOM/VKUI/issues/7336
-  Component = 'div',
+  padding = false,
+  Component = 'ul',
   ...restProps
 }: CardScrollProps): React.ReactNode => {
   const refContainer = React.useRef<HTMLDivElement>(null);
@@ -95,10 +99,10 @@ export const CardScroll = ({
       {...restProps}
       Component={Component}
       baseClassName={classNames(
-        styles['CardScroll'],
+        styles.host,
         'vkuiInternalCardScroll',
         size !== false && stylesSize[size],
-        !noSpaces && styles['CardScroll--withSpaces'],
+        padding && styles.withPaddings,
       )}
     >
       <HorizontalScroll
@@ -106,10 +110,10 @@ export const CardScroll = ({
         getScrollToRight={getScrollToRight}
         showArrows={showArrows}
       >
-        <div className={styles['CardScroll__in']} ref={refContainer}>
-          <span className={styles['CardScroll__gap']} ref={gapRef} />
+        <div className={styles.in} ref={refContainer}>
+          <span className={styles.gap} ref={gapRef} />
           {children}
-          <span className={styles['CardScroll__gap']} />
+          <span className={styles.gap} />
         </div>
       </HorizontalScroll>
     </RootComponent>

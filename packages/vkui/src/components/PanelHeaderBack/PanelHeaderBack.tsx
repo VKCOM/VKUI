@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import {
   Icon20ChevronLeftOutline,
@@ -17,6 +19,11 @@ import {
 } from '../PanelHeaderButton/PanelHeaderButton';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from '../PanelHeaderButton/PanelHeaderButton.module.css';
+
+const sizeXClassNames = {
+  none: styles.backSizeXNone,
+  compact: styles.backSizeXCompact,
+};
 
 export interface PanelHeaderBackProps extends Omit<PanelHeaderButtonProps, 'children'> {
   children?: string;
@@ -62,10 +69,10 @@ export const PanelHeaderBack = ({
     <PanelHeaderButton
       {...restProps}
       className={classNames(
-        sizeX === 'compact' && styles['PanelHeaderBack--sizeX-compact'],
-        platform === 'ios' && styles['PanelHeaderBack--ios'],
-        platform === 'vkcom' && styles['PanelHeaderBack--vkcom'],
-        showLabel && !!label && styles['PanelHeaderBack--has-label'],
+        sizeX !== 'regular' && sizeXClassNames[sizeX],
+        platform === 'ios' && styles['backIos'],
+        platform === 'vkcom' && styles['backVkcom'],
+        showLabel && !!label && styles['backHasLabel'],
         className,
       )}
       label={showLabel && label}

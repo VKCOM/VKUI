@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
@@ -28,7 +30,7 @@ export interface CalendarProps
       | 'prevMonthProps'
       | 'nextMonthProps'
     >,
-    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate'> {
+    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'> {
   value?: Date;
   /**
    * Запрещает выбор даты в прошлом.
@@ -109,6 +111,7 @@ export const Calendar = ({
   nextMonthProps,
   dayProps,
   listenDayChangesForUpdate,
+  renderDayContent,
   minDateTime,
   maxDateTime,
   ...props
@@ -184,17 +187,14 @@ export const Calendar = ({
   );
 
   return (
-    <RootComponent
-      {...props}
-      baseClassName={classNames(styles['Calendar'], size === 's' && styles['Calendar--size-s'])}
-    >
+    <RootComponent {...props} baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}>
       <CalendarHeader
         viewDate={externalViewDate || viewDate}
         onChange={setViewDate}
         onNextMonth={setNextMonth}
         onPrevMonth={setPrevMonth}
         disablePickers={disablePickers || size === 's'}
-        className={styles['Calendar__header']}
+        className={styles.header}
         prevMonthLabel={prevMonthLabel}
         nextMonthLabel={nextMonthLabel}
         changeMonthLabel={changeMonthLabel}
@@ -224,9 +224,10 @@ export const Calendar = ({
         size={size}
         dayProps={dayProps}
         listenDayChangesForUpdate={listenDayChangesForUpdate}
+        renderDayContent={renderDayContent}
       />
       {enableTime && value && size !== 's' && (
-        <div className={styles['Calendar__time']}>
+        <div className={styles.time}>
           <CalendarTime
             value={value}
             onChange={onChange}

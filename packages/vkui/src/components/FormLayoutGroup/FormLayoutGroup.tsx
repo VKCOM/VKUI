@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -8,14 +10,8 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './FormLayoutGroup.module.css';
 
 const sizeYClassNames = {
-  none: classNames(
-    styles['FormLayoutGroup--sizeY-none'],
-    'vkuiInternalFormLayoutGroup--sizeY-none',
-  ),
-  ['compact']: classNames(
-    styles['FormLayoutGroup--sizeY-compact'],
-    'vkuiInternalFormLayoutGroup--sizeY-compact',
-  ),
+  none: classNames(styles.sizeYNone, 'vkuiInternalFormLayoutGroup--sizeY-none'),
+  compact: classNames(styles.sizeYCompact, 'vkuiInternalFormLayoutGroup--sizeY-compact'),
 };
 
 export interface FormLayoutGroupProps
@@ -57,30 +53,19 @@ export const FormLayoutGroup = ({
       getRootRef={rootEl}
       Component="fieldset"
       baseClassName={classNames(
-        styles['FormLayoutGroup'],
+        styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         mode === 'horizontal' &&
-          classNames(
-            styles['FormLayoutGroup--mode-horizontal'],
-            'vkuiInternalFormLayoutGroup--mode-horizontal',
-          ),
+          classNames(styles.modeHorizontal, 'vkuiInternalFormLayoutGroup--mode-horizontal'),
         mode === 'vertical' && 'vkuiInternalFormLayoutGroup--mode-vertical',
-        isRemovable &&
-          classNames(
-            styles['FormLayoutGroup--removable'],
-            'vkuiInternalFormLayoutGroup--removable',
-          ),
-        segmented &&
-          classNames(
-            styles['FormLayoutGroup--segmented'],
-            'vkuiInternalFormLayoutGroup--segmented',
-          ),
+        isRemovable && classNames(styles.withRemovable, 'vkuiInternalFormLayoutGroup--removable'),
+        segmented && classNames(styles.segmented, 'vkuiInternalFormLayoutGroup--segmented'),
       )}
       {...restProps}
     >
       {isRemovable ? (
         <Removable
-          className={styles['FormLayoutGroup__removable']}
+          className={styles.removable}
           align="start"
           removePlaceholder={removePlaceholder}
           onRemove={(e) => {
@@ -95,7 +80,7 @@ export const FormLayoutGroup = ({
       ) : (
         <React.Fragment>
           {children}
-          <span className={styles['FormLayoutGroup__offset']} aria-hidden />
+          <span className={styles.offset} aria-hidden />
         </React.Fragment>
       )}
     </RootComponent>

@@ -45,16 +45,14 @@ const mockCardScrollData = (container: HTMLElement, cardsCount: number, defaultS
     return styles as CSSStyleDeclaration;
   });
 
-  const cardScrollContainer = container.getElementsByClassName(
-    styles['CardScroll__in'],
-  )[0] as HTMLDivElement;
+  const cardScrollContainer = container.getElementsByClassName(styles.in)[0] as HTMLDivElement;
   jest.spyOn(cardScrollContainer, 'offsetWidth', 'get').mockImplementation(() => 1009);
 
-  const gap = container.getElementsByClassName(styles['CardScroll__gap'])[0] as HTMLDivElement;
+  const gap = container.getElementsByClassName(styles.gap)[0] as HTMLDivElement;
   jest.spyOn(gap, 'offsetWidth', 'get').mockImplementation(() => 12);
 
   const horizontalScroll = container.getElementsByClassName(
-    horizontalScrollStyles['HorizontalScroll__in'],
+    horizontalScrollStyles.in,
   )[0] as HTMLDivElement;
   return {
     horizontalScrollData: setupHorizontalScrollData(horizontalScroll, defaultScrollLeft),

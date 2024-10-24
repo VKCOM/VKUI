@@ -1,17 +1,21 @@
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon12Add } from '@vkontakte/icons';
+import { noop } from '@vkontakte/vkjs';
 import { Button } from '../../../components/Button/Button';
 import { baselineComponent, userEvent } from '../../../testing/utils';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay';
 import styles from './ImageBaseOverlay.module.css';
 
-const ImageBaseOverlayClickableTest = (props: Omit<ImageBaseOverlayProps, 'children'>) => (
+const ImageBaseOverlayClickableTest = ({
+  onClick,
+  ...restProps
+}: Omit<ImageBaseOverlayProps, 'children'>) => (
   <ImageBaseOverlay
     data-testid="overlay"
     aria-label="Интерактивная Кнопка"
-    {...props}
-    disableInteractive={false}
+    onClick={onClick || noop}
+    {...restProps}
   >
     <Icon12Add />
   </ImageBaseOverlay>
@@ -20,7 +24,7 @@ const ImageBaseOverlayClickableTest = (props: Omit<ImageBaseOverlayProps, 'child
 const ImageBaseOverlayNonClickableTest = (
   props: Omit<ImageBaseOverlayProps, 'children' | 'onClick'>,
 ) => (
-  <ImageBaseOverlay data-testid="overlay" {...props} disableInteractive>
+  <ImageBaseOverlay data-testid="overlay" {...props}>
     <Button data-testid="button1">Button</Button>
     <Button data-testid="button2">Button</Button>
   </ImageBaseOverlay>
@@ -37,7 +41,7 @@ describe(ImageBaseOverlay, () => {
     expect(element).toHaveFocus();
     act(jest.runAllTimers);
     await userEvent.tab();
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).toBeNull();
+    expect(document.querySelector(`.${styles.visible}`)).toBeNull();
   });
 
   it('focus event works as expected with noInteractive', async () => {
@@ -48,33 +52,31 @@ describe(ImageBaseOverlay, () => {
     await userEvent.tab();
     expect(button1).toHaveFocus();
     act(jest.runAllTimers);
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.visible}`)).not.toBeNull();
     await userEvent.tab();
     expect(button2).toHaveFocus();
     act(jest.runAllTimers);
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).not.toBeNull();
+    expect(document.querySelector(`.${styles.visible}`)).not.toBeNull();
     await userEvent.tab();
     act(jest.runAllTimers);
-    expect(document.querySelector(`.${styles['ImageBaseOverlay--visible']}`)).toBeNull();
+    expect(document.querySelector(`.${styles.visible}`)).toBeNull();
   });
 
   describe('works as clickable element', () => {
     it('appears as clickable element', () => {
-      render(<ImageBaseOverlayClickableTest />);
+      render(<ImageBaseOverlayClickableTest onClick={noop} />);
 
       const element = screen.getByTestId('overlay');
 
       expect(element.tagName.toLowerCase()).toMatch('div');
       expect(element).toHaveAttribute('role', 'button');
       expect(element).toHaveAttribute('tabindex', '0');
-      expect(document.querySelector(`.${styles['ImageBaseOverlay--clickable']}`)).not.toBeNull();
+      expect(document.querySelector(`.${styles.clickable}`)).not.toBeNull();
     });
 
     it('handles onClick prop', () => {
       const handleClick = jest.fn();
-      render(
-        <ImageBaseOverlayClickableTest onClick={handleClick} disableInteractive={undefined} />,
-      );
+      render(<ImageBaseOverlayClickableTest onClick={handleClick} />);
 
       fireEvent.click(screen.getByTestId('overlay'));
       expect(handleClick).toHaveBeenCalledTimes(1);
@@ -105,7 +107,7 @@ describe(ImageBaseOverlay, () => {
       expect(element.tagName.toLowerCase()).toMatch('div');
       expect(element).not.toHaveAttribute('role', 'button');
       expect(element).not.toHaveAttribute('tabindex', '0');
-      expect(document.querySelector(`.${styles['ImageBaseOverlay--clickable']}`)).toBeNull();
+      expect(document.querySelector(`.${styles.clickable}`)).toBeNull();
     });
   });
 });

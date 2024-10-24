@@ -1,10 +1,10 @@
-.FormLayoutGroup {
+.host {
   border: 0;
   padding: 0;
   margin: 0;
 }
 
-.FormLayoutGroup--mode-horizontal {
+.modeHorizontal {
   display: flex;
   padding-block: var(--vkui--size_form_item_padding_vertical--regular);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
@@ -12,20 +12,18 @@
   align-items: flex-start;
 }
 
-.FormLayoutGroup__removable {
+.removable {
   flex-grow: 1;
   min-inline-size: 0;
   max-inline-size: 100%;
 }
 
-.FormLayoutGroup__offset {
+.offset {
   display: none;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.FormLayoutGroup--mode-horizontal
-  :global(.vkuiInternalFormItem--withTop)
-  ~ .FormLayoutGroup__offset {
+.modeHorizontal :global(.vkuiInternalFormItem--withTop) ~ .offset {
   order: -1;
   display: block;
   min-inline-size: 100%;
@@ -33,25 +31,21 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.FormLayoutGroup--sizeY-compact.FormLayoutGroup--mode-horizontal
-  :global(.vkuiInternalFormItem--withTop)
-  ~ .FormLayoutGroup__offset {
+.sizeYCompact.modeHorizontal :global(.vkuiInternalFormItem--withTop) ~ .offset {
   block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
 }
 
 @media (--sizeY-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .FormLayoutGroup--sizeY-none.FormLayoutGroup--mode-horizontal
-    :global(.vkuiInternalFormItem--withTop)
-    ~ .FormLayoutGroup__offset {
+  .sizeYNone.modeHorizontal :global(.vkuiInternalFormItem--withTop) ~ .offset {
     block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
   }
 }
 
-.FormLayoutGroup--removable {
+.withRemovable {
   padding-inline: 0;
 }
 
-.FormLayoutGroup--segmented {
+.segmented {
   position: relative;
 }

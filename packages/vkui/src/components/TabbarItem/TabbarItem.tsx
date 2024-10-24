@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -9,14 +11,14 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './TabbarItem.module.css';
 
 export interface TabbarItemProps
-  extends React.AllHTMLAttributes<HTMLElement>,
+  extends Omit<React.AllHTMLAttributes<HTMLElement>, 'label'>,
     HasRootRef<HTMLElement>,
     HasComponent {
   selected?: boolean;
   /**
    * Текст рядом с иконкой
    */
-  text?: React.ReactNode;
+  label?: React.ReactNode;
   /**
    * Индикатор над иконкой. Принимает `<Badge mode="prominent" />` или `<Counter size="s" mode="prominent" />`
    */
@@ -32,7 +34,7 @@ export const TabbarItem = ({
   children,
   selected,
   indicator,
-  text,
+  label,
   href,
   Component = href ? 'a' : 'button',
   disabled,
@@ -41,7 +43,7 @@ export const TabbarItem = ({
   const platform = usePlatform();
 
   if (process.env.NODE_ENV === 'development') {
-    const hasAccessibleName = text || restProps['aria-label'] || restProps['aria-labelledby'];
+    const hasAccessibleName = label || restProps['aria-label'] || restProps['aria-labelledby'];
 
     if (!hasAccessibleName) {
       warn(COMMON_WARNINGS.a11y[Component === 'a' ? 'link-name' : 'button-name'], 'error');
@@ -55,31 +57,31 @@ export const TabbarItem = ({
       disabled={disabled}
       href={href}
       baseClassName={classNames(
-        styles['TabbarItem'],
-        platform === 'ios' && styles['TabbarItem--ios'],
-        platform === 'android' && styles['TabbarItem--android'],
-        selected && styles['TabbarItem--selected'],
+        styles.host,
+        platform === 'ios' && styles.ios,
+        platform === 'android' && styles.android,
+        selected && styles.selected,
       )}
     >
       <Tappable
         role="presentation"
         disabled={disabled}
-        activeMode={platform === 'ios' ? styles['TabbarItem__tappable--active'] : 'background'}
+        activeMode={platform === 'ios' ? styles.tappableActive : 'background'}
         activeEffectDelay={platform === 'ios' ? 0 : 300}
         hasHover={false}
-        className={styles['TabbarItem__tappable']}
+        className={styles.tappable}
         onClick={noop}
       />
-      <div className={styles['TabbarItem__in']}>
-        <div className={styles['TabbarItem__icon']}>
+      <div className={styles.in}>
+        <div className={styles.icon}>
           {children}
           <div className="vkuiInternalTabbarItem__label">
             {hasReactNode(indicator) && indicator}
           </div>
         </div>
-        {text && (
-          <Footnote Component="div" className={styles['TabbarItem__text']} weight="2">
-            {text}
+        {label && (
+          <Footnote Component="div" className={styles.label} weight="2">
+            {label}
           </Footnote>
         )}
       </div>

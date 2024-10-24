@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import type { HasRef, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
+import type { HasRef, HasRootRef, HTMLAttributesWithRootRef, LiteralUnion } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
@@ -8,11 +8,17 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './HorizontalCell.module.css';
 
+export const CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH = '--vkui_internal--cell_width';
+
 const stylesSize = {
-  s: styles['HorizontalCell--size-s'],
-  m: styles['HorizontalCell--size-m'],
-  l: styles['HorizontalCell--size-l'],
+  s: styles.sizeS,
+  m: styles.sizeM,
+  l: styles.sizeL,
+  xl: styles.sizeXL,
+  auto: styles.sizeAuto,
 };
+
+type HorizontalCellSizes = 's' | 'm' | 'l' | 'xl' | 'auto';
 
 interface CellTypographyProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   size: HorizontalCellProps['size'];
@@ -27,14 +33,21 @@ const CellTypography = ({ size, children, ...restProps }: CellTypographyProps) =
 };
 
 export interface HorizontalCellProps
-  extends Omit<TappableProps, 'size' | 'getRootRef'>,
+  extends Omit<TappableProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
-  size?: 's' | 'm' | 'l';
+  /**
+   * Ширина компонента
+   *
+   * Значения `'s' | 'm' | 'l' | 'xl'` определяются дизайн-системой.
+   * Значение `auto` позволяет задать динамическую ширину, определяемую контентом.
+   * Пользовательскую ширину можно задать через числовое значение.
+   */
+  size?: LiteralUnion<HorizontalCellSizes, number>;
   /**
    * Заголовок
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /**
    * Дополнительная строка текста под `children`.
    */
@@ -50,7 +63,7 @@ export interface HorizontalCellProps
  */
 export const HorizontalCell = ({
   className,
-  header,
+  title,
   style,
   subtitle,
   size = 's',
@@ -60,24 +73,30 @@ export const HorizontalCell = ({
   extraSubtitle,
   ...restProps
 }: HorizontalCellProps): React.ReactNode => {
+  const hasTypography =
+    hasReactNode(title) || hasReactNode(subtitle) || hasReactNode(extraSubtitle);
   return (
     <div
       ref={getRootRef}
-      style={style}
-      className={classNames(styles['HorizontalCell'], stylesSize[size], className)}
+      style={{
+        ...(typeof size === 'number' && { [CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH]: `${size}px` }),
+        ...style,
+      }}
+      className={classNames(
+        styles.host,
+        typeof size === 'string' && stylesSize[size],
+        size !== 'auto' && styles.sized,
+        className,
+      )}
     >
-      <Tappable className={styles['HorizontalCell__body']} getRootRef={getRef} {...restProps}>
-        {hasReactNode(children) && (
-          <div className={styles['HorizontalCell__image']}>{children}</div>
-        )}
-        {(header || subtitle || extraSubtitle) && (
-          <div className={styles['HorizontalCell__content']}>
-            {hasReactNode(header) && <CellTypography size={size}>{header}</CellTypography>}
-            {hasReactNode(subtitle) && (
-              <Footnote className={styles['HorizontalCell__subtitle']}>{subtitle}</Footnote>
-            )}
+      <Tappable className={styles.body} getRootRef={getRef} {...restProps}>
+        {hasReactNode(children) && <div className={styles.image}>{children}</div>}
+        {hasTypography && (
+          <div className={styles.content}>
+            {hasReactNode(title) && <CellTypography size={size}>{title}</CellTypography>}
+            {hasReactNode(subtitle) && <Footnote className={styles.subtitle}>{subtitle}</Footnote>}
             {hasReactNode(extraSubtitle) && (
-              <Footnote className={styles['HorizontalCell__subtitle']}>{extraSubtitle}</Footnote>
+              <Footnote className={styles.subtitle}>{extraSubtitle}</Footnote>
             )}
           </div>
         )}

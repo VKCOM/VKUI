@@ -1,3 +1,5 @@
+'use client';
+
 import { type MouseEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
@@ -74,10 +76,7 @@ export interface ChipsSelectProps<O extends ChipOption>
   extends ChipsInputBaseProps<O>,
     UseChipsSelectProps<O>,
     Pick<FormFieldProps, 'status' | 'mode' | 'before'>,
-    Pick<
-      CustomSelectDropdownProps,
-      'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
-    > {
+    Pick<CustomSelectDropdownProps, 'overscrollBehavior'> {
   placement?: 'top' | 'bottom';
   /**
    * Отрисовка Spinner вместо списка опций в выпадающем списке
@@ -443,7 +442,7 @@ export const ChipsSelect = <Option extends ChipOption>({
 
       if (isEmptyOptionPreset(option)) {
         return (
-          <Footnote key="empty-text" className={styles['ChipsSelect__empty']}>
+          <Footnote key="empty-text" className={styles.empty}>
             {option.placeholder}
           </Footnote>
         );
@@ -534,9 +533,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     () =>
       (opened &&
         dropdownOffsetDistance === 0 &&
-        (dropdownVerticalPlacement.includes('top')
-          ? styles['ChipsSelect--pop-up']
-          : styles['ChipsSelect--pop-down'])) ||
+        (dropdownVerticalPlacement.includes('top') ? styles.popUp : styles.popDown)) ||
       undefined,
     [dropdownOffsetDistance, opened, dropdownVerticalPlacement],
   );
@@ -554,7 +551,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         // FormFieldProps
         id={labelledbyId}
         getRootRef={rootRef}
-        className={classNames(styles['ChipsSelect'], openedClassNames, className)}
+        className={classNames(styles.host, openedClassNames, className)}
         status={status}
         after={
           dropdownIconProp || (
@@ -562,8 +559,8 @@ export const ChipsSelect = <Option extends ChipOption>({
               opened={opened}
               onClick={onDropdownIconClick}
               className={classNames(
-                styles['ChipsSelect__dropdown-icon'],
-                clearButtonShown && styles['ChipsSelect__dropdown-icon--withOffset'],
+                styles.dropdownIcon,
+                clearButtonShown && styles.dropdownIconWithOffset,
               )}
             />
           )

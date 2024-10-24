@@ -1,12 +1,15 @@
+'use client';
+
 import { useRef } from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { getTextFromChildren } from '../../../lib/children';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../../types';
 import type { RootComponentProps } from '../../RootComponent/RootComponent';
 import styles from './EllipsisText.module.css';
 
 export interface EllipsisTextProps
-  extends RootComponentProps<HTMLElement>,
+  extends Omit<RootComponentProps<HTMLElement>, 'title'>,
     HasRootRef<HTMLElement> {
   /**
    * Пользовательская маскимальная ширина.
@@ -22,6 +25,10 @@ export interface EllipsisTextProps
    * > @see [line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
    */
   maxLines?: number;
+  /**
+   * Отключает отображение нативного тултипа с полным текстом
+   */
+  disableNativeTitle?: boolean;
 }
 
 /** Компонент ограничивает текстовый контент убирая его в многоточие.
@@ -35,6 +42,7 @@ const EllipsisText = ({
   children,
   maxWidth,
   maxLines = 1,
+  disableNativeTitle = false,
   ...restProps
 }: EllipsisTextProps): React.ReactNode => {
   const contentRef = useRef<HTMLSpanElement | null>(null);
@@ -46,14 +54,20 @@ const EllipsisText = ({
   }, [contentRef, maxLines]);
 
   return (
-    <span ref={getRootRef} className={classNames(styles['EllipsisText'], className)} {...restProps}>
+    <span
+      ref={getRootRef}
+      className={classNames(
+        styles.host,
+        disableNativeTitle && styles.disableNativeTitle,
+        className,
+      )}
+      title={disableNativeTitle ? undefined : getTextFromChildren(children)}
+      {...restProps}
+    >
       <span
         style={{ maxWidth }}
         ref={contentRef}
-        className={classNames(
-          styles['EllipsisText__content'],
-          maxLines > 1 && styles['EllipsisText__content--multiline'],
-        )}
+        className={classNames(styles.content, maxLines > 1 && styles.contentMultiline)}
       >
         {children}
       </span>

@@ -1,5 +1,7 @@
-import { Icon28AddOutline } from '@vkontakte/icons';
+import { Icon24AddOutline, Icon28AddOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { Badge } from '../Badge/Badge';
+import { Counter } from '../Counter/Counter';
 import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
 import { PanelHeaderEdit, type PanelHeaderEditProps } from '../PanelHeaderEdit/PanelHeaderEdit';
@@ -15,6 +17,15 @@ export const PanelHeaderButtonPlayground = (props: ComponentPlaygroundProps) => 
           children: [<Icon28AddOutline key="icon" />],
           primary: [true, false],
           label: [undefined, 'label', <span key="label">label</span>],
+        },
+        {
+          children: [<Icon28AddOutline key="icon-28" />, <Icon24AddOutline key="icon-24" />],
+          label: [
+            <Counter size="s" mode="prominent" key="counter">
+              33
+            </Counter>,
+            <Badge mode="prominent" key="badge" />,
+          ],
         },
       ]}
     >

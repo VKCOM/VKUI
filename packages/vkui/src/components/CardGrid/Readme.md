@@ -7,11 +7,8 @@
 
 ## Цифровая доступность (a11y)
 
-- Рекомендуется использовать тег `"ul"` для повышения доступности компонента. Вы можете прокинуть необходимый тег через prop `Component`.
+- По умолчанию используется тег `"ul"` для повышения доступности компонента. Вы можете прокинуть необходимый вам тег через prop `Component`.
   Ссылки на источники: [статья про доступность карточек](https://inclusive-components.design/cards/).
-  > **Важно**
-  >
-  > В v7 тег по умолчанию будет заменен на `"ul"`
 
 ```jsx
 <View activePanel="card">
@@ -43,7 +40,7 @@
         <div style={{ paddingBottom: '30%' }} />
       </Card>
     </CardGrid>
-    <CardGrid size="l" spaced>
+    <CardGrid size="l" padding>
       <Card>
         <div style={{ paddingBottom: '30%' }} />
       </Card>

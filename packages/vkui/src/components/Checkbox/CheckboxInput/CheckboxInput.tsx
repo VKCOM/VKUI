@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import {
   Icon20CheckBoxIndetermanate,
@@ -16,6 +18,12 @@ import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';
 
+type VendorIconType = typeof Icon20CheckBoxOn;
+
+export type CheckboxInputIconType =
+  | React.ComponentType<React.SVGProps<SVGSVGElement>>
+  | VendorIconType;
+
 function setIndeterminate(el: HTMLInputElement, indeterminate: boolean) {
   el.indeterminate = indeterminate;
 }
@@ -26,6 +34,11 @@ export interface CheckboxInputProps
     HasRef<HTMLInputElement> {
   indeterminate?: boolean;
   defaultIndeterminate?: boolean;
+  IconOnCompact?: CheckboxInputIconType;
+  IconOnRegular?: CheckboxInputIconType;
+  IconOffCompact?: CheckboxInputIconType;
+  IconOffRegular?: CheckboxInputIconType;
+  IconIndeterminate?: CheckboxInputIconType;
 }
 
 const warn = warnOnce('Checkbox');
@@ -38,6 +51,11 @@ export function CheckboxInput({
   indeterminate,
   defaultIndeterminate,
   onChange,
+  IconOnCompact = Icon20CheckBoxOn,
+  IconOnRegular = Icon24CheckBoxOn,
+  IconOffCompact = Icon20CheckBoxOff,
+  IconOffRegular = Icon24CheckBoxOff,
+  IconIndeterminate = Icon20CheckBoxIndetermanate,
   ...restProps
 }: CheckboxInputProps) {
   const inputRef = useExternRef(getRef);
@@ -86,7 +104,7 @@ export function CheckboxInput({
 
   return (
     <RootComponent
-      baseClassName={styles['CheckboxInput']}
+      baseClassName={styles.host}
       className={className}
       style={style}
       getRootRef={getRootRef}
@@ -96,77 +114,51 @@ export function CheckboxInput({
         Component="input"
         type="checkbox"
         onChange={handleChange}
-        className={styles['CheckboxInput__input']}
+        className={styles.input}
         getRootRef={inputRef}
       />
       {platform === 'vkcom' ? (
-        <Icon20CheckBoxOn className={styles['CheckboxInput__icon--on']} />
+        <IconOnCompact className={styles.iconOn} />
       ) : (
         <React.Fragment>
           {adaptiveSizeY.compact && (
-            <Icon20CheckBoxOn
-              className={classNames(
-                styles['CheckboxInput__icon--on'],
-                adaptiveSizeY.compact.className,
-              )}
+            <IconOnCompact className={classNames(styles.iconOn, adaptiveSizeY.compact.className)} />
+          )}
+          {adaptiveSizeY.regular && (
+            <IconOnRegular className={classNames(styles.iconOn, adaptiveSizeY.regular.className)} />
+          )}
+        </React.Fragment>
+      )}
+      {platform === 'vkcom' ? (
+        <IconOffCompact className={styles.iconOff} />
+      ) : (
+        <React.Fragment>
+          {adaptiveSizeY.compact && (
+            <IconOffCompact
+              className={classNames(styles.iconOff, adaptiveSizeY.compact.className)}
             />
           )}
           {adaptiveSizeY.regular && (
-            <Icon24CheckBoxOn
-              className={classNames(
-                styles['CheckboxInput__icon--on'],
-                adaptiveSizeY.regular.className,
-              )}
+            <IconOffRegular
+              className={classNames(styles.iconOff, adaptiveSizeY.regular.className)}
             />
           )}
         </React.Fragment>
       )}
       {platform === 'vkcom' ? (
-        <Icon20CheckBoxOff className={styles['CheckboxInput__icon--off']} />
+        <IconIndeterminate width={20} height={20} className={styles.iconIndeterminate} />
       ) : (
         <React.Fragment>
           {adaptiveSizeY.compact && (
-            <Icon20CheckBoxOff
-              className={classNames(
-                styles['CheckboxInput__icon--off'],
-                adaptiveSizeY.compact.className,
-              )}
-            />
-          )}
-          {adaptiveSizeY.regular && (
-            <Icon24CheckBoxOff
-              className={classNames(
-                styles['CheckboxInput__icon--off'],
-                adaptiveSizeY.regular.className,
-              )}
-            />
-          )}
-        </React.Fragment>
-      )}
-      {platform === 'vkcom' ? (
-        <Icon20CheckBoxIndetermanate
-          width={20}
-          height={20}
-          className={styles['CheckboxInput__icon--indeterminate']}
-        />
-      ) : (
-        <React.Fragment>
-          {adaptiveSizeY.compact && (
-            <Icon20CheckBoxIndetermanate
-              className={classNames(
-                styles['CheckboxInput__icon--indeterminate'],
-                adaptiveSizeY.compact.className,
-              )}
+            <IconIndeterminate
+              className={classNames(styles.iconIndeterminate, adaptiveSizeY.compact.className)}
               width={20}
               height={20}
             />
           )}
           {adaptiveSizeY.regular && (
-            <Icon20CheckBoxIndetermanate
-              className={classNames(
-                styles['CheckboxInput__icon--indeterminate'],
-                adaptiveSizeY.regular.className,
-              )}
+            <IconIndeterminate
+              className={classNames(styles.iconIndeterminate, adaptiveSizeY.regular.className)}
               width={24}
               height={24}
             />

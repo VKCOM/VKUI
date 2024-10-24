@@ -1,11 +1,11 @@
 /* stylelint-disable selector-max-universal */
-.CellDragger {
+.host {
   cursor: ns-resize;
   color: var(--vkui--color_icon_secondary);
   user-select: none;
   touch-action: manipulation;
 }
 
-.CellDragger__icon {
+.icon {
   pointer-events: none;
 }

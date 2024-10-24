@@ -1,5 +1,5 @@
 ---
-to: src/transforms/__testfixtures__/<%= name %>/basic.input.tsx
+to: src/transforms/v<%= version %>/__testfixtures__/<%= h.changeCase.paramCase(name) %>/basic.input.tsx
 ---
 import { } from '@vkontakte/vkui';
 import React from 'react';

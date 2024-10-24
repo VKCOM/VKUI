@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon20Cancel, Icon24Dismiss } from '@vkontakte/icons';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
@@ -33,7 +35,7 @@ export function ModalCardBaseCloseButton({
   if (mode === 'inside' || (platform === 'ios' && !isDesktop)) {
     return (
       <Tappable
-        className={styles['ModalCardBase__dismiss']}
+        className={styles.dismiss}
         onClick={onClose}
         hoverMode="opacity"
         activeMode="opacity"

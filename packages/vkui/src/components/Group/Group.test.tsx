@@ -27,42 +27,42 @@ describe('Group', () => {
       isInsideModal: true,
       sizeX: undefined,
       layout: undefined,
-      className: styles['Group--mode-plain'],
+      className: styles.modePlain,
     },
     {
       mode: undefined,
       isInsideModal: true,
       sizeX: undefined,
       layout: undefined,
-      className: classNames(styles['Group--mode-plain'], styles['Group--mode-plain-inside-modal']),
+      className: classNames(styles.modePlain, styles.modePlainInsideModal),
     },
     {
       mode: undefined,
       isInsideModal: false,
       sizeX: undefined,
       layout: 'card',
-      className: styles['Group--mode-card'],
+      className: styles.modeCard,
     },
     {
       mode: undefined,
       isInsideModal: false,
       layout: undefined,
       sizeX: 'compact',
-      className: styles['Group--mode-plain'],
+      className: styles.modePlain,
     },
     {
       mode: undefined,
       isInsideModal: false,
       layout: undefined,
       sizeX: 'regular',
-      className: styles['Group--mode-card'],
+      className: styles.modeCard,
     },
     {
       mode: undefined,
       isInsideModal: false,
       layout: undefined,
       sizeX: undefined,
-      className: styles['Group--mode-none'],
+      className: styles.modeNone,
     },
   ])(
     'should have className $className with mode $mode isInsideModal $isInsideModal sizeX $sizeX',
@@ -96,7 +96,7 @@ describe('Group', () => {
 
   it.each(['show', 'hide', 'auto'] as const)('should force show separator', (separator) => {
     const getSeparatorEl = (container: HTMLElement) =>
-      container.getElementsByClassName(styles['Group__separator-sibling'])[0] ?? null;
+      container.getElementsByClassName(styles.separatorSibling)[0] ?? null;
 
     const modeNoneResult = render(
       <Group separator={separator}>
@@ -119,14 +119,14 @@ describe('Group', () => {
 
     switch (separator) {
       case 'show':
-        expect(modeNoneSeparatorEl).toHaveClass(styles['Group__separator-sibling--forced']);
-        expect(modePlainSeparatorEl).toHaveClass(styles['Group__separator-sibling--forced']);
-        expect(modeCardSeparatorEl).not.toHaveClass(styles['Group__separator-sibling--forced']);
+        expect(modeNoneSeparatorEl).toHaveClass(styles.separatorSiblingForced);
+        expect(modePlainSeparatorEl).toHaveClass(styles.separatorSiblingForced);
+        expect(modeCardSeparatorEl).not.toHaveClass(styles.separatorSiblingForced);
         break;
       case 'auto':
-        expect(modeNoneSeparatorEl).not.toHaveClass(styles['Group__separator-sibling--forced']);
-        expect(modePlainSeparatorEl).not.toHaveClass(styles['Group__separator-sibling--forced']);
-        expect(modeCardSeparatorEl).not.toHaveClass(styles['Group__separator-sibling--forced']);
+        expect(modeNoneSeparatorEl).not.toHaveClass(styles.separatorSiblingForced);
+        expect(modePlainSeparatorEl).not.toHaveClass(styles.separatorSiblingForced);
+        expect(modeCardSeparatorEl).not.toHaveClass(styles.separatorSiblingForced);
         break;
       case 'hide':
         expect(modeNoneSeparatorEl).toBeNull();

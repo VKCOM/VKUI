@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
@@ -35,9 +37,9 @@ export const ModalPageHeader = ({
     <>
       <div
         className={classNames(
-          styles['ModalPageHeader'],
-          platform !== 'vkcom' && styles['ModalPageHeader--withGaps'],
-          isDesktop && styles['ModalPageHeader--desktop'],
+          styles.host,
+          platform !== 'vkcom' && styles.withGaps,
+          isDesktop && styles.desktop,
         )}
         ref={getRootRef}
       >
@@ -56,7 +58,7 @@ export const ModalPageHeader = ({
           {children}
         </PanelHeader>
       </div>
-      {!noSeparator && <Separator wide={sizeX === 'regular'} />}
+      {!noSeparator && <Separator padding={sizeX !== 'regular'} />}
     </>
   );
 };

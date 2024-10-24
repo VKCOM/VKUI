@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
@@ -19,8 +21,8 @@ import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 
 const sizeYClassNames = {
-  none: styles['DateInput--sizeY-none'],
-  ['compact']: styles['DateInput--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface DateInputProps
@@ -53,6 +55,7 @@ export interface DateInputProps
       | 'nextMonthIcon'
       | 'minDateTime'
       | 'maxDateTime'
+      | 'renderDayContent'
     >,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'> {
@@ -145,6 +148,7 @@ export const DateInput = ({
   prevMonthIcon,
   nextMonthIcon,
   disableCalendar = false,
+  renderDayContent,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -246,7 +250,7 @@ export const DateInput = ({
         value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
       />
       <Text
-        className={styles['DateInput__input']}
+        className={styles.input}
         onKeyDown={handleKeyDown}
         // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
         // из-за чего `.Typography--normalize` перебивает стили.
@@ -281,9 +285,7 @@ export const DateInput = ({
         />
         {enableTime && (
           <React.Fragment>
-            <InputLikeDivider className={styles['DateInput__input--time-divider']}>
-              {' '}
-            </InputLikeDivider>
+            <InputLikeDivider className={styles.inputTimeDivider}> </InputLikeDivider>
             <InputLike
               length={2}
               getRootRef={hoursRef}
@@ -330,6 +332,7 @@ export const DateInput = ({
             changeYearLabel={changeYearLabel}
             changeDayLabel={changeDayLabel}
             showNeighboringMonth={showNeighboringMonth}
+            renderDayContent={renderDayContent}
             size={size}
             viewDate={viewDate}
             onHeaderChange={onHeaderChange}

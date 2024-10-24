@@ -1,27 +1,44 @@
-.Typography--normalize {
+.normalize {
   display: block;
   margin: 0;
   padding: 0;
 }
 
-.Typography--inline {
+.inline {
   display: inline-block;
 }
 
 /* Мы утяжеляем селектор, чтобы перебить другие селекторы */
-.Typography--weight-1.Typography--weight-1.Typography--weight-1 {
+.weight1.weight1.weight1.weight1 {
+  font-weight: var(--vkui--font_weight_base1);
+}
+
+.accent.weight1.weight1.weight1 {
   font-weight: var(--vkui--font_weight_accent1);
 }
 
-.Typography--weight-2.Typography--weight-2.Typography--weight-2 {
+.weight2.weight2.weight2.weight2 {
+  font-weight: var(--vkui--font_weight_base2);
+}
+
+.accent.weight2.weight2.weight2 {
   font-weight: var(--vkui--font_weight_accent2);
 }
 
-.Typography--weight-3.Typography--weight-3.Typography--weight-3 {
+.weight3.weight3.weight3.weight3 {
+  font-weight: var(--vkui--font_weight_base3);
+}
+
+.accent.weight3.weight3.weight3 {
   font-weight: var(--vkui--font_weight_accent3);
 }
 
 /* stylelint-disable-next-line selector-max-type */
-.Typography b {
+.host b {
+  font-weight: var(--vkui--font_weight_base1);
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.accent.host b {
   font-weight: var(--vkui--font_weight_accent1);
 }

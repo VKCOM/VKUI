@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon16Dropdown } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
@@ -9,25 +11,25 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './SubnavigationButton.module.css';
 
 const appearanceStyles = {
-  accent: styles['SubnavigationButton--appearance-accent'],
-  neutral: styles['SubnavigationButton--appearance-neutral'],
+  accent: styles.appearanceAccent,
+  neutral: styles.appearanceNeutral,
 };
 
 const modeStyles = {
-  primary: styles['SubnavigationButton--mode-primary'],
-  outline: styles['SubnavigationButton--mode-outline'],
-  tertiary: styles['SubnavigationButton--mode-tertiary'],
+  primary: styles.modePrimary,
+  outline: styles.modeOutline,
+  tertiary: styles.modeTertiary,
 };
 
 const sizeStyles = {
-  s: styles['SubnavigationButton--size-s'],
-  m: styles['SubnavigationButton--size-m'],
-  l: styles['SubnavigationButton--size-l'],
+  s: styles.sizeS,
+  m: styles.sizeM,
+  l: styles.sizeL,
 };
 
 const sizeYClassNames = {
-  none: styles['SubnavigationButton--sizeY-none'],
-  ['compact']: styles['SubnavigationButton--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
@@ -36,7 +38,7 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   size?: 's' | 'm' | 'l';
   selected?: boolean;
   /**
-   * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar mode="fixed" />`
+   * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar fixed />`
    */
   textLevel?: '1' | '2' | '3';
   /**
@@ -47,7 +49,7 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
    * Рекомендуется использовать только `<Counter size="s" />` или `<Badge />`
    */
   after?: React.ReactNode;
-  expandable?: boolean;
+  chevron?: boolean;
 }
 
 type SubnavigationButtonTypographyProps = Pick<
@@ -79,7 +81,7 @@ export const SubnavigationButton = ({
   textLevel = '1',
   before,
   after,
-  expandable,
+  chevron,
   children,
   className,
   ...restProps
@@ -92,26 +94,26 @@ export const SubnavigationButton = ({
       hasActive={false}
       focusVisibleMode="outside"
       className={classNames(
-        styles['SubnavigationButton'],
+        styles.host,
         sizeStyles[size],
         modeStyles[mode],
         appearanceStyles[appearance],
-        selected && styles['SubnavigationButton--selected'],
+        selected && styles.selected,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
     >
-      <span className={styles['SubnavigationButton__in']}>
-        {before && <span className={styles['SubnavigationButton__before']}>{before}</span>}
+      <span className={styles.in}>
+        {before && <span className={styles.before}>{before}</span>}
         <SubnavigationButtonTypography
           textLevel={textLevel}
-          className={styles['SubnavigationButton__label']}
+          className={styles.label}
           Component="span"
         >
           {children}
         </SubnavigationButtonTypography>
-        {after && <span className={styles['SubnavigationButton__after']}>{after}</span>}
-        {expandable && <Icon16Dropdown className={styles['SubnavigationButton__expandableIcon']} />}
+        {after && <span className={styles.after}>{after}</span>}
+        {chevron && <Icon16Dropdown className={styles.chevronIcon} />}
       </span>
     </Tappable>
   );

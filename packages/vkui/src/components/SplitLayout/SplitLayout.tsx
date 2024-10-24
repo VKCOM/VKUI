@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -41,10 +43,7 @@ export const SplitLayout = ({
 
   return (
     <PopoutRoot
-      className={classNames(
-        styles['SplitLayout'],
-        platform === 'ios' && styles['SplitLayout--ios'],
-      )}
+      className={classNames(styles.host, platform === 'ios' && styles.ios)}
       popout={popout}
       modal={modal}
       getRootRef={getRootRef}
@@ -54,9 +53,9 @@ export const SplitLayout = ({
         {...restProps}
         ref={getRef}
         className={classNames(
-          styles['SplitLayout__inner'],
-          !!header && styles['SplitLayout__inner--header'],
-          center && styles['SplitLayout__inner--center'],
+          styles.inner,
+          !!header && styles.innerHeader,
+          center && styles.innerCenter,
           className,
         )}
       >

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import {
   Icon12Dropdown,
@@ -67,18 +69,10 @@ export const CalendarHeader = ({
   changeMonthLabel = 'Изменить месяц',
   changeYearLabel = 'Изменить год',
   prevMonthIcon = (
-    <Icon20ChevronLeftOutline
-      className={styles['CalendarHeader__nav-icon--accent']}
-      width={30}
-      height={30}
-    />
+    <Icon20ChevronLeftOutline className={styles.navIconAccent} width={30} height={30} />
   ),
   nextMonthIcon = (
-    <Icon20ChevronRightOutline
-      className={styles['CalendarHeader__nav-icon--accent']}
-      width={30}
-      height={30}
-    />
+    <Icon20ChevronRightOutline className={styles.navIconAccent} width={30} height={30} />
   ),
   isMonthDisabled,
   isYearDisabled,
@@ -103,7 +97,7 @@ export const CalendarHeader = ({
     () =>
       getMonths(locale).map(({ value, label }) => ({
         value,
-        label: <span className={styles['CalendarHeader__month']}>{label}</span>,
+        label: <span className={styles.month}>{label}</span>,
         disabled: isMonthDisabled && isMonthDisabled(value),
       })),
     [locale, isMonthDisabled],
@@ -145,15 +139,11 @@ export const CalendarHeader = ({
   }
 
   return (
-    <RootComponent baseClassName={styles['CalendarHeader']} {...restProps}>
+    <RootComponent baseClassName={styles.host} {...restProps}>
       {!prevMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
-            className={classNames(
-              styles['CalendarHeader__nav-icon'],
-              styles['CalendarHeader__nav-icon-prev'],
-              prevMonthClassName,
-            )}
+            className={classNames(styles.navIcon, styles.navIconPrev, prevMonthClassName)}
             onClick={onPrevMonth}
             {...restPrevMonthProps}
           >
@@ -166,13 +156,10 @@ export const CalendarHeader = ({
       )}
       {disablePickers ? (
         <Paragraph
-          className={classNames(
-            styles['CalendarHeader__pickers'],
-            'vkuiInternalCalendarHeader__pickers',
-          )}
+          className={classNames(styles.pickers, 'vkuiInternalCalendarHeader__pickers')}
           weight="2"
         >
-          <span className={styles['CalendarHeader__month']}>
+          <span className={styles.month}>
             {new Intl.DateTimeFormat(locale, {
               month: 'long',
             }).format(viewDate)}
@@ -184,17 +171,9 @@ export const CalendarHeader = ({
         </Paragraph>
       ) : (
         <AdaptivityProvider sizeY="compact">
-          <div
-            className={classNames(
-              styles['CalendarHeader__pickers'],
-              'vkuiInternalCalendarHeader__pickers',
-            )}
-          >
+          <div className={classNames(styles.pickers, 'vkuiInternalCalendarHeader__pickers')}>
             <CustomSelect
-              className={classNames(
-                styles['CalendarHeader__picker'],
-                'vkuiInternalCalendarHeader__picker',
-              )}
+              className={classNames(styles.picker, 'vkuiInternalCalendarHeader__picker')}
               value={currentMonth}
               options={months}
               dropdownOffsetDistance={4}
@@ -206,10 +185,7 @@ export const CalendarHeader = ({
               aria-label={changeMonthLabel}
             />
             <CustomSelect
-              className={classNames(
-                styles['CalendarHeader__picker'],
-                'vkuiInternalCalendarHeader__picker',
-              )}
+              className={classNames(styles.picker, 'vkuiInternalCalendarHeader__picker')}
               value={currentYear}
               options={years}
               dropdownOffsetDistance={4}
@@ -226,11 +202,7 @@ export const CalendarHeader = ({
       {!nextMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
-            className={classNames(
-              styles['CalendarHeader__nav-icon'],
-              styles['CalendarHeader__nav-icon-next'],
-              nextMonthClassName,
-            )}
+            className={classNames(styles.navIcon, styles.navIconNext, nextMonthClassName)}
             onClick={onNextMonth}
             {...restNextMonthProps}
           >

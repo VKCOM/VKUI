@@ -1,40 +1,65 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, debounce } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useDOM } from '../../lib/dom';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import type { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import {
   CustomSelectDropdown,
   type CustomSelectDropdownProps,
 } from '../CustomSelectDropdown/CustomSelectDropdown';
+import {
+  CustomSelectOption,
+  type CustomSelectOptionProps,
+} from '../CustomSelectOption/CustomSelectOption';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import type { FormFieldProps } from '../FormField/FormField';
 import type { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import {
   CustomSelectClearButton,
   type CustomSelectClearButtonProps,
 } from './CustomSelectClearButton';
-import { CustomSelectInput } from './CustomSelectInput';
-import {
-  calculateInputValueFromOptions,
-  defaultRenderOptionFn,
-  findIndexAfter,
-  findIndexBefore,
-  findSelectedIndex,
-} from './helpers';
-import type { CustomSelectOptionInterface, CustomSelectRenderOption } from './types';
+import { CustomSelectInput, type CustomSelectInputProps } from './CustomSelectInput';
 import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
-  none: styles['CustomSelect--sizeY-none'],
-  ['compact']: styles['CustomSelect--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
+};
+
+const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
+  if (startIndex >= options.length - 1) {
+    return -1;
+  }
+  return options.findIndex((option, i) => i > startIndex && !option.disabled);
+};
+
+const findIndexBefore = (
+  options: CustomSelectOptionInterface[] = [],
+  endIndex: number = options.length,
+) => {
+  let result = -1;
+  if (endIndex <= 0) {
+    return result;
+  }
+  for (let i = endIndex - 1; i >= 0; i--) {
+    let option = options[i];
+
+    if (!option.disabled) {
+      result = i;
+      break;
+    }
+  }
+  return result;
 };
 
 const warn = warnOnce('CustomSelect');
@@ -48,9 +73,32 @@ const checkOptionsValueType = <T extends CustomSelectOptionInterface>(options: T
   }
 };
 
+function defaultRenderOptionFn<T extends CustomSelectOptionInterface>({
+  option,
+  ...props
+}: CustomSelectRenderOption<T>): React.ReactNode {
+  return <CustomSelectOption {...props} />;
+}
+
 const handleOptionDown: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
   e.preventDefault();
 };
+
+function findSelectedIndex<T extends CustomSelectOptionInterface>(
+  options: T[] = [],
+  value: SelectValue,
+  withClear: boolean,
+) {
+  if (withClear && value === '') {
+    return -1;
+  }
+  return (
+    options.findIndex((item) => {
+      value = typeof item.value === 'number' ? Number(value) : value;
+      return item.value === value;
+    }) ?? -1
+  );
+}
 
 const filter = <T extends CustomSelectOptionInterface>(
   options: SelectProps<T>['options'],
@@ -62,17 +110,28 @@ const filter = <T extends CustomSelectOptionInterface>(
     : options;
 };
 
-export type { CustomSelectClearButtonProps, CustomSelectOptionInterface, CustomSelectRenderOption };
+type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
+
+export interface CustomSelectOptionInterface {
+  value: SelectValue;
+  label: React.ReactElement | string;
+  disabled?: boolean;
+  [index: string]: any;
+}
+
+export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
+  extends CustomSelectOptionProps {
+  option: T;
+}
+
+export type { CustomSelectClearButtonProps };
 
 export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
 > extends NativeSelectProps,
     Omit<FormFieldProps, 'maxHeight'>,
-    TrackerOptionsProps,
-    Pick<
-      CustomSelectDropdownProps,
-      'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
-    > {
+    Pick<CustomSelectDropdownProps, 'overscrollBehavior'>,
+    Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'readOnly'> {
   /**
    * ref на внутрений компонент input
    */
@@ -89,7 +148,7 @@ export interface SelectProps<
   /**
    * Событие изменения текстового поля
    */
-  onInputChange?: (e: React.ChangeEvent) => void;
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   options: OptionInterfaceT[];
   /**
    * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
@@ -178,27 +237,25 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     style,
     onChange,
     children,
-    onInputChange: onInputChangeProp,
+    'onInputChange': onInputChangeProp,
     renderDropdown,
     onOpen,
     onClose,
     fetching,
     forceDropdownPortal,
     selectType = 'default',
-    autoHideScrollbar,
-    autoHideScrollbarDelay,
     searchable = false,
-    renderOption: renderOptionProp = defaultRenderOptionFn,
-    options: optionsProp,
+    'renderOption': renderOptionProp = defaultRenderOptionFn,
+    'options': optionsProp,
     emptyText = 'Ничего не найдено',
     filterFn = defaultFilterFn,
-    icon: iconProp,
+    'icon': iconProp,
     ClearButton = CustomSelectClearButton,
     allowClearButton = false,
     dropdownOffsetDistance = 0,
     dropdownAutoWidth = false,
     noMaxHeight = false,
-    ['aria-labelledby']: ariaLabelledBy,
+    'aria-labelledby': ariaLabelledBy,
     clearButtonTestId,
     nativeSelectTestId,
     defaultValue,
@@ -219,16 +276,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
   const selectElRef = useExternRef(getRef);
   const optionsWrapperRef = React.useRef<HTMLDivElement>(null);
-  const selectInputRef = useExternRef(getSelectInputRef);
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
+  const [inputValue, setInputValue] = React.useState('');
   const [nativeSelectValue, setNativeSelectValue] = React.useState(
     () => props.value ?? defaultValue ?? (allowClearButton ? '' : undefined),
-  );
-
-  const [inputValue, setInputValue] = React.useState(() =>
-    calculateInputValueFromOptions(optionsProp, nativeSelectValue),
   );
 
   const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
@@ -265,9 +318,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     () =>
       (opened &&
         dropdownOffsetDistance === 0 &&
-        (popperPlacement.includes('top')
-          ? styles['CustomSelect--pop-up']
-          : styles['CustomSelect--pop-down'])) ||
+        (popperPlacement.includes('top') ? styles.popUp : styles.popDown)) ||
       undefined,
     [dropdownOffsetDistance, opened, popperPlacement],
   );
@@ -369,6 +420,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const close = React.useCallback(() => {
     resetKeyboardInput();
 
+    setInputValue('');
     setOpened(false);
     resetFocusedOption();
     onClose?.();
@@ -378,8 +430,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     (index: number) => {
       const item = options[index];
 
-      close();
       setNativeSelectValue(item?.value);
+      close();
 
       const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
         isControlledOutside &&
@@ -415,15 +467,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     close();
     const event = new Event('focusout', { bubbles: true });
     selectElRef.current?.dispatchEvent(event);
-
-    setInputValue(calculateInputValueFromOptions(optionsProp, nativeSelectValue));
-  }, [close, selectElRef, optionsProp, nativeSelectValue]);
+  }, [close, selectElRef]);
 
   const onFocus = React.useCallback(() => {
     const event = new Event('focusin', { bubbles: true });
     selectElRef.current?.dispatchEvent(event);
-    selectInputRef.current?.select();
-  }, [selectElRef, selectInputRef]);
+  }, [selectElRef]);
 
   const onClick = React.useCallback(() => {
     if (opened) {
@@ -453,40 +502,27 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   );
 
   React.useEffect(
-    function filterOptions() {
+    function updateOptionsAndSelectedOptionIndex() {
+      const value = props.value ?? nativeSelectValue ?? defaultValue;
+
       const options =
         searchable && inputValue !== undefined
           ? filter(optionsProp, inputValue, filterFn)
           : optionsProp;
 
       setOptions(options);
+      setSelectedOptionIndex(findSelectedIndex(options, value, allowClearButton));
     },
-    [filterFn, inputValue, optionsProp, searchable],
-  );
-
-  const selectValue = props.value ?? nativeSelectValue ?? defaultValue;
-  React.useEffect(
-    function updateSelectedOptionIndexOnValueChange() {
-      setSelectedOptionIndex(findSelectedIndex(options, selectValue, allowClearButton));
-    },
-    [selectValue, allowClearButton, options],
-  );
-
-  const prevSelectValueRef = React.useRef(selectValue);
-  React.useEffect(
-    function updateInputValueOnSelectValueChange() {
-      if (prevSelectValueRef.current === selectValue) {
-        return;
-      }
-      setInputValue(calculateInputValueFromOptions(optionsProp, selectValue));
-    },
-    [selectValue, optionsProp],
-  );
-  React.useEffect(
-    function updatePrevSelectValue() {
-      prevSelectValueRef.current = selectValue;
-    },
-    [selectValue],
+    [
+      filterFn,
+      inputValue,
+      nativeSelectValue,
+      optionsProp,
+      defaultValue,
+      props.value,
+      searchable,
+      allowClearButton,
+    ],
   );
 
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -660,7 +696,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       options.length > 0 ? (
         <div ref={optionsWrapperRef}>{options.map(renderOption)}</div>
       ) : (
-        <Footnote className={styles['CustomSelect__empty']}>{emptyText}</Footnote>
+        <Footnote className={styles.empty}>{emptyText}</Footnote>
       );
 
     if (typeof renderDropdown === 'function') {
@@ -670,6 +706,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [emptyText, options, renderDropdown, renderOption]);
 
+  const selectInputRef = useExternRef(getSelectInputRef);
   const focusOnInputTimerRef = React.useRef<ReturnType<typeof setTimeout>>();
   const focusOnInput = React.useCallback(() => {
     clearTimeout(focusOnInputTimerRef.current);
@@ -696,7 +733,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
     return (
       <ClearButton
-        className={iconProp === undefined ? styles['CustomSelect--clear-icon'] : undefined}
+        className={iconProp === undefined ? styles.clearIcon : undefined}
         onClick={function clearSelectState() {
           setNativeSelectValue('');
           setInputValue('');
@@ -722,7 +759,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
     return (
       <DropdownIcon
-        className={clearButtonShown ? styles['CustomSelect__dropdown-icon'] : undefined}
+        className={clearButtonShown ? styles.dropdownIcon : undefined}
         opened={opened}
       />
     );
@@ -771,9 +808,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     // но вне инпута (например по иконке дропдауна), будет убирать фокус с инпута.
     // Чтобы в такой ситуации отключить blur инпута мы превентим mousedown событие обёртки
     const isInputFocused = document && document.activeElement === selectInputRef.current;
-    const clickTarget = e.target as HTMLElement;
-    const inputClicked = selectInputRef.current?.contains(clickTarget);
-    if (isInputFocused && !inputClicked) {
+    if (isInputFocused) {
       e.preventDefault();
     }
   };
@@ -788,26 +823,28 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const selectInputAriaProps: React.HTMLAttributes<HTMLElement> = {
     'role': 'combobox',
     'aria-controls': popupAriaId,
+    'aria-owns': popupAriaId,
     'aria-expanded': opened,
-    ['aria-activedescendant']:
+    'aria-activedescendant':
       ariaActiveDescendantId && opened ? `${popupAriaId}-${ariaActiveDescendantId}` : undefined,
     'aria-labelledby': ariaLabelledBy,
     'aria-haspopup': 'listbox',
     'aria-autocomplete': 'none',
   };
 
+  const focusWithin = useFocusWithin(handleRootRef);
+
   return (
     <div
-      className={classNames(
-        styles['CustomSelect'],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-        className,
-      )}
+      className={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
       style={style}
       ref={handleRootRef}
       onClick={passClickAndFocusToInputOnClick}
       onMouseDown={preventInputBlurWhenClickInsideFocusedSelectArea}
     >
+      {focusWithin && selected && !opened && (
+        <VisuallyHidden aria-live="polite">{selected.label}</VisuallyHidden>
+      )}
       <CustomSelectInput
         autoComplete="off"
         autoCapitalize="none"
@@ -819,7 +856,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onFocus={onFocus}
         onBlur={onBlur}
         className={openedClassNames}
-        searchable={searchable}
+        readOnly={!searchable}
         fetching={fetching}
         value={inputValue}
         onKeyUp={handleKeyUp}
@@ -829,8 +866,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         before={before}
         after={afterIcons}
         selectType={selectType}
-        selectedOptionLabel={selected?.label}
-      />
+      >
+        {selected?.label}
+      </CustomSelectInput>
       <select
         ref={selectElRef}
         name={name}
@@ -840,7 +878,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onClick={props.onClick}
         value={nativeSelectValue}
         aria-hidden
-        className={styles['CustomSelect__control']}
+        className={styles.control}
         data-testid={nativeSelectTestId}
         required={required}
       >
@@ -861,8 +899,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           offsetDistance={dropdownOffsetDistance}
           autoWidth={dropdownAutoWidth}
           forcePortal={forceDropdownPortal}
-          autoHideScrollbar={autoHideScrollbar}
-          autoHideScrollbarDelay={autoHideScrollbarDelay}
           noMaxHeight={noMaxHeight}
           role="listbox"
           id={popupAriaId}

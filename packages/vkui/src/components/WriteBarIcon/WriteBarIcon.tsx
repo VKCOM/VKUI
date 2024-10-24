@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import {
   Icon24Attach,
@@ -109,21 +111,21 @@ export const WriteBarIcon = ({
       {...restProps}
       Component="button"
       hasHover={false}
-      activeMode={styles['WriteBarIcon__active']}
+      activeMode={styles.active}
       className={classNames(
-        styles['WriteBarIcon'],
-        platform === 'ios' && styles['WriteBarIcon--ios'],
-        mode === 'send' && styles['WriteBarIcon--mode-send'],
-        mode === 'done' && styles['WriteBarIcon--mode-done'],
+        styles.host,
+        platform === 'ios' && styles.ios,
+        mode === 'send' && styles.modeSend,
+        mode === 'done' && styles.modeDone,
         className,
       )}
     >
-      <span className={styles['WriteBarIcon__in']}>
+      <span className={styles.in}>
         {label && <VisuallyHidden>{label}</VisuallyHidden>}
         {predefinedIcons ? <AdaptiveIconRenderer {...predefinedIcons} /> : children}
       </span>
       {hasReactNode(count) && (
-        <Counter className={styles['WriteBarIcon__counter']} size="s">
+        <Counter className={styles.counter} size="s">
           {count}
         </Counter>
       )}

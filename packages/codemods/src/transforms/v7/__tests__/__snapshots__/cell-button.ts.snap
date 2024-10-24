@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cell-button transforms correctly 1`] = `
+"import { CellButton } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      {/* mode="primary" -> appearance="accent" */}
+      <CellButton appearance="accent">
+        Создать что-нибудь
+      </CellButton>
+      {/* mode="primary" -> appearance="accent" */}
+      <CellButton appearance="accent">
+        Создать что-нибудь
+      </CellButton>
+      {/* mode="danger" -> appearance="negative" */}
+      <CellButton appearance="negative">
+        Создать что-нибудь
+      </CellButton>
+      {/* mode="danger" -> appearance="negative" */}
+      <CellButton appearance="negative">
+        Создать что-нибудь
+      </CellButton>
+      {/* do nothing 1 */}
+      <CellButton>
+        Создать что-нибудь
+      </CellButton>
+      {/* do nothing 2 */}
+      <CellButton centered>
+        Создать что-нибудь
+      </CellButton>
+    </React.Fragment>)
+  );
+};"
+`;

@@ -1,12 +1,20 @@
+'use client';
+
 import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { Typography, type TypographyProps } from '../Typography';
 import styles from './DisplayTitle.module.css';
 
 const stylesLevel = {
-  '1': styles['DisplayTitle--level-1'],
-  '2': styles['DisplayTitle--level-2'],
-  '3': styles['DisplayTitle--level-3'],
-  '4': styles['DisplayTitle--level-4'],
+  '1': styles.level1,
+  '2': styles.level2,
+  '3': styles.level3,
+  '4': styles.level4,
+};
+
+const sizeYClassNames = {
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface DisplayTitleProps extends TypographyProps {
@@ -26,12 +34,18 @@ export const DisplayTitle = ({
   inline = false,
   ...restProps
 }: DisplayTitleProps): React.ReactNode => {
+  const { sizeY = 'none' } = useAdaptivity();
+
   return (
     <Typography
       Component={Component}
       normalize={normalize}
       inline={inline}
-      className={classNames(className, stylesLevel[level])}
+      className={classNames(
+        className,
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        stylesLevel[level],
+      )}
       {...restProps}
     />
   );

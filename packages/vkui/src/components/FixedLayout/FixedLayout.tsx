@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
@@ -12,11 +14,8 @@ import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './FixedLayout.module.css';
 
 const stylesVertical = {
-  top: styles['FixedLayout--vertical-top'],
-  bottom: classNames(
-    styles['FixedLayout--vertical-bottom'],
-    'vkuiInternalFixedLayout--vertical-bottom',
-  ),
+  top: styles.verticalTop,
+  bottom: classNames(styles.verticalBottom, 'vkuiInternalFixedLayout--vertical-bottom'),
 };
 
 export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
@@ -102,9 +101,9 @@ export const FixedLayout = ({
       fixed
       ref={handleRootRef}
       className={classNames(
-        styles['FixedLayout'],
+        styles.host,
         platform === 'ios' && 'vkuiInternalFixedLayout--ios',
-        filled && styles['FixedLayout--filled'],
+        filled && styles.filled,
         vertical && stylesVertical[vertical],
         className,
       )}

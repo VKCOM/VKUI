@@ -1,8 +1,11 @@
 HorizontalCell автоматически ставит отступы по бокам в зависимости от платформы, поэтому его лучше использовать в [HorizontalScroll](#!/HorizontalScroll).
 
-- При `size='s'` рекомендуется `<Avatar size={56}/>` или же любой компонент шириной до 56 пикс.
-- При `size='m'` рекомендуется `<Avatar size={88} mode='app'/>` или же любой компонент шириной до 96 пикс.
-- При `size='l'` рекомендуется `<Avatar size={128} mode='image'/>` или же любой компонент произвольной ширины.
+- При `size='s'` рекомендуется `<Avatar size={56}/>` или же любой компонент шириной до 56 пикселей.
+- При `size='m'` рекомендуется `<Avatar size={88} mode='app'/>` или же любой компонент шириной до 88 пикселей.
+- При `size='l'` рекомендуется `<Avatar size={128} mode='image'/>` или же любой компонент шириной до 128 пикселей.
+- При `size='xl'` рекомендуются изображения шириной до 220 пикселей.
+- При `size='auto'` разрешается использовать изображение произвольной ширины.
+- Также есть возможность использовать любое числовое значение в `size`.
 
 ```jsx
 const largeImageStyles = {
@@ -16,7 +19,7 @@ const largeImageStyles = {
 
 const UserItems = () => {
   return getRandomUsers(15).map((user) => (
-    <HorizontalCell onClick={() => {}} key={user.id} size="s" header={user.first_name}>
+    <HorizontalCell onClick={() => {}} key={user.id} size="s" title={user.first_name}>
       <Avatar size={56} src={user.photo_100} />
     </HorizontalCell>
   ));
@@ -47,7 +50,7 @@ const miniApps = [
 
 const MiniAppItems = () => {
   return miniApps.map(({ id, title, icon_139 }) => (
-    <HorizontalCell onClick={() => {}} key={id} size="s" header={title}>
+    <HorizontalCell onClick={() => {}} key={id} size="s" title={title}>
       <Image size={56} borderRadius="m" src={icon_139} />
     </HorizontalCell>
   ));
@@ -73,7 +76,7 @@ const gamesItems = [
 
 const GamesItems = () => {
   return gamesItems.map(({ id, title, icon_139 }) => (
-    <HorizontalCell onClick={() => {}} key={id} size="m" header={title}>
+    <HorizontalCell onClick={() => {}} key={id} size="m" title={title}>
       <Image size={88} borderRadius="l" src={icon_139} />
     </HorizontalCell>
   ));
@@ -102,7 +105,7 @@ const playlistItems = [
 
 const PlaylistItems = () => {
   return playlistItems.map(({ id, title, description, photo_300 }) => (
-    <HorizontalCell onClick={() => {}} key={id} size="l" header={title} subtitle={description}>
+    <HorizontalCell onClick={() => {}} key={id} size="l" title={title} subtitle={description}>
       <Image size={128} src={photo_300} />
     </HorizontalCell>
   ));
@@ -134,8 +137,8 @@ const AlbumItems = () => {
     <HorizontalCell
       onClick={() => {}}
       key={id}
-      size="l"
-      header={title}
+      size="xl"
+      title={title}
       subtitle={`${size} фотографии`}
     >
       <img style={largeImageStyles} src={thumb_src} />
@@ -149,38 +152,28 @@ const Example = () => {
       <Panel id="horizontalCell">
         <PanelHeader>HorizontalCell</PanelHeader>
         <Group header={<Header>Возможные друзья</Header>}>
-          <HorizontalScroll>
-            <Flex noWrap>
-              <UserItems />
-            </Flex>
+          <HorizontalScroll arrowSize="s">
+            <UserItems />
           </HorizontalScroll>
         </Group>
-        <Group header={<Header aside={<Link>Показать все</Link>}>Мини-приложения</Header>}>
-          <HorizontalScroll>
-            <Flex noWrap>
-              <MiniAppItems />
-            </Flex>
+        <Group header={<Header after={<Link>Показать все</Link>}>Мини-приложения</Header>}>
+          <HorizontalScroll arrowSize="s">
+            <MiniAppItems />
           </HorizontalScroll>
         </Group>
-        <Group header={<Header aside={<Link>Показать все</Link>}>Игры</Header>}>
+        <Group header={<Header after={<Link>Показать все</Link>}>Игры</Header>}>
           <HorizontalScroll>
-            <Flex noWrap>
-              <GamesItems />
-            </Flex>
+            <GamesItems />
           </HorizontalScroll>
         </Group>
-        <Group header={<Header aside={<Link>Показать все</Link>}>Плейлисты</Header>}>
+        <Group header={<Header after={<Link>Показать все</Link>}>Плейлисты</Header>}>
           <HorizontalScroll>
-            <Flex noWrap>
-              <PlaylistItems />
-            </Flex>
+            <PlaylistItems />
           </HorizontalScroll>
         </Group>
-        <Group header={<Header aside={<Link>Показать все</Link>}>Альбомы</Header>}>
+        <Group header={<Header after={<Link>Показать все</Link>}>Альбомы</Header>}>
           <HorizontalScroll>
-            <Flex noWrap>
-              <AlbumItems />
-            </Flex>
+            <AlbumItems />
           </HorizontalScroll>
         </Group>
       </Panel>

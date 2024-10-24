@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getNavId } from '../../lib/getNavId';
@@ -34,7 +36,7 @@ export const Epic = ({
   return (
     <RootComponent
       {...restProps}
-      baseClassName={classNames(styles['Epic'], tabbar && 'vkuiInternalEpic--hasTabbar')}
+      baseClassName={classNames(styles.host, tabbar && 'vkuiInternalEpic--hasTabbar')}
     >
       <ScrollSaver
         key={activeStory}

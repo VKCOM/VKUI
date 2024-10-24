@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
@@ -7,7 +9,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
+import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';
 
 interface ScrollContext {
@@ -39,7 +41,7 @@ export interface HorizontalScrollProps
    * Функция для расчета величины прокрутки при клике на правую стрелку.
    */
   getScrollToRight?: ScrollPositionHandler;
-  arrowSize?: 'm' | 'l';
+  arrowSize?: ScrollArrowProps['size'];
   /**
    * Смещает иконки кнопок навигации по вертикали.
    */
@@ -51,12 +53,6 @@ export interface HorizontalScrollProps
    * По умолчанию прокручивается как любой горизонтальный контент через shift.
    */
   scrollOnAnyWheel?: boolean;
-  /**
-   * Задает потомкам инлайновое положение (горизонально)
-   *
-   * TODO [>=7]: Сделать по умолчанию `true` (или удалить, применяя стили всегда)
-   */
-  inline?: boolean;
 }
 
 /**
@@ -167,12 +163,11 @@ export const HorizontalScroll = ({
   getScrollToLeft,
   getScrollToRight,
   showArrows = true,
-  arrowSize = 'l',
+  arrowSize = 'm',
   arrowOffsetY,
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
   scrollOnAnyWheel = false,
-  inline = false,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
@@ -282,10 +277,9 @@ export const HorizontalScroll = ({
     <RootComponent
       {...restProps}
       baseClassName={classNames(
-        styles['HorizontalScroll'],
+        styles.host,
         'vkuiInternalHorizontalScroll',
-        showArrows === 'always' && styles['HorizontalScroll--withConstArrows'],
-        inline && styles['HorizontalScroll--inline'],
+        showArrows === 'always' && styles.withConstArrows,
       )}
       onMouseEnter={calculateArrowsVisibility}
     >
@@ -297,10 +291,7 @@ export const HorizontalScroll = ({
           direction="left"
           aria-hidden
           tabIndex={-1}
-          className={classNames(
-            styles['HorizontalScroll__arrow'],
-            styles['HorizontalScroll__arrowLeft'],
-          )}
+          className={classNames(styles.arrow, styles.arrowLeft)}
           onClick={scrollToLeft}
         />
       )}
@@ -312,15 +303,12 @@ export const HorizontalScroll = ({
           direction="right"
           aria-hidden
           tabIndex={-1}
-          className={classNames(
-            styles['HorizontalScroll__arrow'],
-            styles['HorizontalScroll__arrowRight'],
-          )}
+          className={classNames(styles.arrow, styles.arrowRight)}
           onClick={scrollToRight}
         />
       )}
-      <div className={styles['HorizontalScroll__in']} ref={scrollerRef}>
-        <div className={styles['HorizontalScroll__in-wrapper']}>{children}</div>
+      <div className={styles.in} ref={scrollerRef}>
+        <div className={styles.inWrapper}>{children}</div>
       </div>
     </RootComponent>
   );

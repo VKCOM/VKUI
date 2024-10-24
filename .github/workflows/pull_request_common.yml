@@ -20,7 +20,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Patch
-        if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
+        # TODO [>=7]: заменить условие после релиза v7 на ${ { startsWith(github.event.pull_request.title, 'fix') }}
+        if: false
         uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
@@ -52,15 +53,26 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Find changes
+        uses: dorny/paths-filter@v3
+        id: file_changes
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filters: |
+            root_package:
+              - 'package.json'
+            vkui_package:
+              - 'packages/vkui/package.json'
+
       - name: Get @vkontakte/vkui dependencies
         id: dependencies
         run: |
-          if [[ ${{ steps.metadata.outputs.directory }} == "/" ]]; then
+          if [[ ${{ steps.file_changes.outputs.root_package }} == 'true' ]]; then
             echo "value=@vkontakte/vkui-tokens" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          if [[ ${{ steps.metadata.outputs.directory }} == "packages/vkui" ]]; then
+          if [[ ${{ steps.file_changes.outputs.vkui_package }} == 'true' ]]; then
             DEPENDENCIES_OBJECT=$(node -p "require('./packages/vkui/package.json').dependencies")
             DEPENDENCIES_ARRAY=$(node -p "Object.keys($DEPENDENCIES_OBJECT)")
             DEPENDENCIES_ARRAY_JSON=$(node -p "JSON.stringify($DEPENDENCIES_ARRAY)")

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
@@ -12,7 +14,8 @@ import { Title } from '../Typography/Title/Title';
 import { ModalCardBaseCloseButton } from './ModalCardBaseCloseButton';
 import styles from './ModalCardBase.module.css';
 
-export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface ModalCardBaseProps
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
   /**
    * Иконка.
    *
@@ -23,16 +26,16 @@ export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivEle
   /**
    * Заголовок карточки
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /* Позволяет поменять тег используемый для заголовка */
-  headerComponent?: React.ElementType;
+  titleComponent?: React.ElementType;
 
   /**
-   * Подзаголовок
+   * Описание
    */
-  subheader?: React.ReactNode;
-  /* Позволяет поменять тег используемый для подзаголовка */
-  subheaderComponent?: React.ElementType;
+  description?: React.ReactNode;
+  /* Позволяет поменять тег используемый для описания */
+  descriptionComponent?: React.ElementType;
 
   /**
    * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button) с параметрами:
@@ -86,10 +89,10 @@ export interface ModalCardBaseProps extends HTMLAttributesWithRootRef<HTMLDivEle
  */
 export const ModalCardBase = ({
   icon,
-  header,
-  headerComponent = 'span',
-  subheader,
-  subheaderComponent = 'span',
+  title,
+  titleComponent = 'span',
+  description,
+  descriptionComponent = 'span',
   children,
   actions,
   onClose,
@@ -111,16 +114,16 @@ export const ModalCardBase = ({
     (dismissButtonMode === 'inside' ||
       (platform === 'ios' && !isDesktop && dismissButtonMode !== 'none'));
 
-  const hasHeader = hasReactNode(header);
-  const hasSubheader = hasReactNode(subheader);
+  const hasTitle = hasReactNode(title);
+  const hasDescription = hasReactNode(description);
   return (
     <RootComponent
       {...restProps}
       baseClassName={classNames(
         'vkuiInternalModalCardBase',
-        platform === 'ios' && styles['ModalCardBase--ios'],
-        isDesktop && styles['ModalCardBase--desktop'],
-        withSafeZone && styles['ModalCardBase--withSafeZone'],
+        platform === 'ios' && styles.ios,
+        isDesktop && styles.desktop,
+        withSafeZone && styles.withSafeZone,
       )}
       style={{
         ...style,
@@ -129,33 +132,28 @@ export const ModalCardBase = ({
     >
       <div
         className={classNames(
-          styles['ModalCardBase__container'],
-          isSoftwareKeyboardOpened && styles['ModalCardBase__container--softwareKeyboardOpened'],
+          styles.container,
+          isSoftwareKeyboardOpened && styles.containerSoftwareKeyboardOpened,
         )}
       >
-        {hasReactNode(icon) && <div className={styles['ModalCardBase__icon']}>{icon}</div>}
-        {hasReactNode(header) && (
-          <Title
-            level="2"
-            weight="2"
-            className={styles['ModalCardBase__header']}
-            Component={headerComponent}
-          >
-            {header}
+        {hasReactNode(icon) && <div className={styles.icon}>{icon}</div>}
+        {hasReactNode(title) && (
+          <Title level="2" weight="2" className={styles.title} Component={titleComponent}>
+            {title}
           </Title>
         )}
-        {hasHeader && hasSubheader && <Spacing size={8} />}
-        {hasSubheader && (
+        {hasTitle && hasDescription && <Spacing size={8} />}
+        {hasDescription && (
           <AdaptivityContext.Provider value={{ sizeY: 'regular' }}>
-            <Subhead className={styles['ModalCardBase__subheader']} Component={subheaderComponent}>
-              {subheader}
+            <Subhead className={styles.description} Component={descriptionComponent}>
+              {description}
             </Subhead>
           </AdaptivityContext.Provider>
         )}
 
         {children}
 
-        {hasReactNode(actions) && <div className={styles['ModalCardBase__actions']}>{actions}</div>}
+        {hasReactNode(actions) && <div className={styles.actions}>{actions}</div>}
 
         {dismissButtonMode !== 'none' && (
           <ModalCardBaseCloseButton

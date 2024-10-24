@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -159,7 +161,7 @@ export const OnboardingTooltip = ({
                 }
           }
         />
-        <div className={styles['OnboardingTooltip__overlay']} onClickCapture={onClose} />
+        <div className={styles.overlay} onClickCapture={onClose} />
       </>,
       tooltipContainer,
     );

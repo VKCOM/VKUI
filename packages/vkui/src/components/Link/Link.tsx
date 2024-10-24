@@ -22,7 +22,7 @@ export const Link = ({
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
       {...restProps}
-      className={classNames(styles['Link'], hasVisited && styles['Link--has-visited'], className)}
+      className={classNames(styles.host, hasVisited && styles.hasVisited, className)}
       hasHover={false}
       activeMode="opacity"
       hoverMode="none"

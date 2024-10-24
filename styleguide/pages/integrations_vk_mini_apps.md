@@ -37,14 +37,14 @@ import { App } from './App';
 vkBridge.send('VKWebAppInit');
 
 const Root = () => {
-  const vkBridgeAppearance = useAppearance() || undefined; // Вместо undefined можно задать значение по умолчанию
+  const vkBridgeColorScheme = useAppearance() || undefined; // Вместо undefined можно задать значение по умолчанию
   const vkBridgeInsets = useInsets() || undefined; // Вместо undefined можно задать значение по умолчанию
   const vkBridgeAdaptivityProps = transformVKBridgeAdaptivity(useAdaptivity()); // Конвертируем значения из VK Bridge в параметры AdaptivityProvider
   const { vk_platform } = parseURLSearchParamsForGetLaunchParams(window.location.search); // [опционально] Платформа может передаваться через URL (см. https://dev.vk.com/mini-apps/development/launch-params#vk_platform)
 
   return (
     <ConfigProvider
-      appearance={vkBridgeAppearance}
+      colorScheme={vkBridgeColorScheme}
       platform={vk_platform === 'desktop_web' ? 'vkcom' : undefined}
       isWebView={vkBridge.isWebView()}
       hasCustomPanelHeaderAfter={true} // Резервируем правую часть PanelHeader под кнопки управления VK Mini Apps. Через параметр customPanelHeaderAfterMinWidth можно регулировать ширину этой области (по умолчанию, используется 90)

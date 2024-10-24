@@ -310,6 +310,7 @@ export { RadioGroup } from './components/RadioGroup/RadioGroup';
 export type { RadioGroupProps } from './components/RadioGroup/RadioGroup';
 export { Checkbox } from './components/Checkbox/Checkbox';
 export type { CheckboxProps } from './components/Checkbox/Checkbox';
+export type { CheckboxInputIconType } from './components/Checkbox/CheckboxInput/CheckboxInput';
 export { Select } from './components/Select/Select';
 export { SelectMimicry } from './components/SelectMimicry/SelectMimicry';
 export type { SelectMimicryProps } from './components/SelectMimicry/SelectMimicry';
@@ -376,10 +377,10 @@ export {
   useConfigProvider,
   ConfigProviderContext,
 } from './components/ConfigProvider/ConfigProviderContext';
-export { AppearanceProvider } from './components/AppearanceProvider/AppearanceProvider';
-export type { AppearanceProviderProps } from './components/AppearanceProvider/AppearanceProvider';
-export { Appearance } from './lib/appearance';
-export type { AppearanceType } from './lib/appearance';
+export { ColorSchemeProvider } from './components/ColorSchemeProvider/ColorSchemeProvider';
+export type { ColorSchemeProviderProps } from './components/ColorSchemeProvider/ColorSchemeProvider';
+export { ColorScheme } from './lib/colorScheme';
+export type { ColorSchemeType } from './lib/colorScheme';
 export { LocaleProvider } from './components/LocaleProvider/LocaleProvider';
 export type { LocaleProviderProps } from './components/LocaleProvider/LocaleProvider';
 export { PlatformProvider } from './components/PlatformProvider/PlatformProvider';
@@ -410,9 +411,10 @@ export {
   type UseAdaptivityWithJSMediaQueries,
   useAdaptivityWithJSMediaQueries,
 } from './hooks/useAdaptivityWithJSMediaQueries';
-export { useAppearance } from './hooks/useAppearance';
+export { useColorScheme } from './hooks/useColorScheme';
 export { usePagination } from './hooks/usePagination';
-export { useOrientationChange } from './hooks/useOrientationChange';
+export { type Orientation, useOrientationChange } from './hooks/useOrientationChange';
+export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
@@ -438,7 +440,10 @@ export {
   getViewWidthByViewportWidth,
   getViewHeightByViewportHeight,
 } from './lib/adaptivity';
-export { type Placement as FloatingPlacement } from './lib/floating';
+export {
+  type Placement as FloatingPlacement,
+  type PlacementWithAuto as FloatingPlacementWithAuto,
+} from './lib/floating';
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';
 export { CustomScrollView } from './components/CustomScrollView/CustomScrollView';

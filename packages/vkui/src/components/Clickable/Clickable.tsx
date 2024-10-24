@@ -1,4 +1,7 @@
-import { classNames } from '@vkontakte/vkjs';
+'use client';
+
+import * as React from 'react';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import {
   type FocusVisibleModeProps,
@@ -32,6 +35,7 @@ const NonClickable = <T,>({
   hasActive,
   hasHover,
   hovered,
+  unlockParentHover,
   activated,
   activeEffectDelay,
   ...restProps
@@ -51,6 +55,8 @@ const RealClickable = <T,>({
   hasActive = true,
   hovered,
   activated,
+  hasHoverWithChildren,
+  unlockParentHover,
   onPointerEnter,
   onPointerLeave,
   onPointerDown,
@@ -64,7 +70,12 @@ const RealClickable = <T,>({
   const { focusVisible, ...focusEvents } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: focusVisibleMode });
 
-  const { stateClassName, setLockBubblingImmediate, ...stateEvents } = useState({
+  const {
+    stateClassName,
+    setLockHoverBubblingImmediate,
+    setLockActiveBubblingImmediate,
+    ...stateEvents
+  } = useState({
     activeClassName,
     hoverClassName,
     activeEffectDelay,
@@ -72,6 +83,7 @@ const RealClickable = <T,>({
     hasActive,
     hovered,
     activated,
+    unlockParentHover,
   });
 
   const handlers = mergeCalls(
@@ -90,18 +102,26 @@ const RealClickable = <T,>({
     },
   );
 
+  const lockStateContextValue = React.useMemo(
+    () => ({
+      lockHoverStateBubbling: hasHoverWithChildren ? noop : setLockHoverBubblingImmediate,
+      lockActiveStateBubbling: setLockActiveBubblingImmediate,
+    }),
+    [setLockHoverBubblingImmediate, setLockActiveBubblingImmediate, hasHoverWithChildren],
+  );
+
   return (
     <RootComponent
       baseClassName={classNames(
         baseClassName,
-        styles['Clickable__realClickable'],
+        styles.realClickable,
         focusVisibleClassNames,
         stateClassName,
       )}
       {...handlers}
       {...restProps}
     >
-      <ClickableLockStateContext.Provider value={setLockBubblingImmediate}>
+      <ClickableLockStateContext.Provider value={lockStateContextValue}>
         {children}
       </ClickableLockStateContext.Provider>
     </RootComponent>
@@ -157,10 +177,10 @@ function component<T>({
 
 const getUserAgentResetClassName = (Component?: React.ElementType) => {
   if (Component === 'a') {
-    return styles.Clickable__resetLinkStyle;
+    return styles.resetLinkStyle;
   }
   if (Component === 'button') {
-    return styles.Clickable__resetButtonStyle;
+    return styles.resetButtonStyle;
   }
   return;
 };
@@ -187,7 +207,7 @@ export const Clickable = <T,>({
   const baseClassName = classNames(
     baseClassNameProp,
     getUserAgentResetClassName(commonProps.Component),
-    styles['Clickable__host'],
+    styles.host,
   );
 
   if (isClickable) {

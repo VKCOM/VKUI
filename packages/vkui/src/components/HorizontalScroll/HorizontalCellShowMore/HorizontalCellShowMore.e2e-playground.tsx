@@ -12,17 +12,12 @@ export const HorizontalCellShowMorePlayground = (props: ComponentPlaygroundProps
         {
           children: ['Показать все'],
           height: [124, 96],
-          size: ['l'],
-        },
-        {
-          children: ['Show more'],
-          height: [124, 96],
           size: ['m'],
         },
       ]}
     >
       {(props: HorizontalCellShowMoreProps) => (
-        <HorizontalScroll inline>
+        <HorizontalScroll>
           <AlbumItems height={props.height} />
           <HorizontalCellShowMore {...props} />
         </HorizontalScroll>
@@ -48,7 +43,7 @@ function AlbumItems({ height = 124 }: { height?: number }) {
   return (
     <>
       {albumItems.map(({ id, title, size }) => (
-        <HorizontalCell key={id} size="l" header={title} subtitle={`${size} фотографии`}>
+        <HorizontalCell key={id} size="l" title={title} subtitle={`${size} фотографии`}>
           <Avatar size={height} />
         </HorizontalCell>
       ))}
@@ -57,7 +52,7 @@ function AlbumItems({ height = 124 }: { height?: number }) {
 }
 
 const smallCells = new Array(3).fill(0).map((_, i) => (
-  <HorizontalCell key={i} header={`item ${i + 1}`}>
+  <HorizontalCell key={i} title={`item ${i + 1}`}>
     <Avatar size={56} />
   </HorizontalCell>
 ));
@@ -72,9 +67,9 @@ export const HorizontalCellShowMoreMobilePlayground = (props: ComponentPlaygroun
       ]}
     >
       {(props: HorizontalCellShowMoreProps) => (
-        <HorizontalScroll inline>
-          <div style={{ display: 'flex' }}>{smallCells}</div>
-          <HorizontalCellShowMore {...props} compensateLastCellIndent />
+        <HorizontalScroll>
+          {smallCells}
+          <HorizontalCellShowMore {...props} />
         </HorizontalScroll>
       )}
     </ComponentPlayground>

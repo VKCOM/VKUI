@@ -1,16 +1,18 @@
+'use client';
+
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { Typography, type TypographyProps } from '../Typography';
 import styles from './Headline.module.css';
 
 const stylesLevel = {
-  '1': styles['Headline--level-1'],
-  '2': styles['Headline--level-2'],
+  '1': styles.level1,
+  '2': styles.level2,
 };
 
 const sizeYClassNames = {
-  none: styles['Headline--sizeY-none'],
-  ['compact']: styles['Headline--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface HeadlineProps extends TypographyProps {
@@ -24,7 +26,6 @@ export interface HeadlineProps extends TypographyProps {
  */
 export const Headline = ({
   className,
-  weight = '3',
   level = '1',
   Component = 'span',
   normalize = true,
@@ -38,7 +39,6 @@ export const Headline = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      weight={weight}
       className={classNames(
         className,
         sizeY !== 'regular' && sizeYClassNames[sizeY],

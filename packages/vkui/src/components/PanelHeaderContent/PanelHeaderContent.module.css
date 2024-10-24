@@ -1,4 +1,4 @@
-.PanelHeaderContent {
+.host {
   line-height: initial;
   block-size: 100%;
   max-inline-size: 100%;
@@ -9,12 +9,12 @@
   font-family: var(--vkui--font_family_base);
 }
 
-.PanelHeaderContent__before {
+.before {
   flex-shrink: 0;
   margin-inline-end: 12px;
 }
 
-.PanelHeaderContent__in {
+.in {
   flex-grow: 1;
   min-inline-size: 0;
   display: flex;
@@ -24,33 +24,33 @@
   block-size: 100%;
 }
 
-.PanelHeaderContent__status,
-.PanelHeaderContent__children-in,
-.PanelHeaderContent__childrenText {
+.subtitle,
+.childrenIn,
+.childrenText {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.PanelHeaderContent__status {
+.subtitle {
   order: 1;
   margin-block-start: 1px;
   max-inline-size: 100%;
   color: var(--vkui--color_text_secondary);
 }
 
-.PanelHeaderContent__children {
+.children {
   max-inline-size: 100%;
   display: flex;
   align-items: center;
 }
 
-.PanelHeaderContent__children-in {
+.childrenIn {
   flex-grow: 0;
   min-inline-size: 0;
 }
 
-.PanelHeaderContent__aside {
+.aside {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -58,11 +58,11 @@
   color: var(--vkui--color_icon_accent);
 }
 
-.PanelHeaderContent__width {
+.width {
   inline-size: 1000px;
 }
 
-.PanelHeaderContent__in--centered {
+.inCentered {
   align-items: center;
 }
 
@@ -70,7 +70,7 @@
  * iOS
  */
 
-.PanelHeaderContent--ios .PanelHeaderContent__children-in {
+.ios .childrenIn {
   font-size: 21px;
   font-family: var(--vkui--font_family_accent);
   font-weight: 500;
@@ -81,7 +81,7 @@
  * Android
  */
 
-.PanelHeaderContent--android .PanelHeaderContent__children-in {
+.android .childrenIn {
   font-size: 23px;
   font-family: var(--vkui--font_family_accent);
   font-weight: 500;
@@ -92,20 +92,19 @@
  * VKCOM
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader--no-before) .PanelHeaderContent--vkcom {
+:global(.vkuiInternalPanelHeader--no-before) .vkcom {
   padding-inline-start: 16px;
 }
 
 /**
  * Common
  */
-.PanelHeaderContent--sizeY-compact:not(.PanelHeaderContent--vkcom)
-  .PanelHeaderContent__children-in {
+.sizeYCompact:not(.vkcom) .childrenIn {
   font-size: 20px;
 }
 
 @media (--sizeY-compact) {
-  .PanelHeaderContent--sizeY-none:not(.PanelHeaderContent--vkcom) .PanelHeaderContent__children-in {
+  .sizeYNone:not(.vkcom) .childrenIn {
     font-size: 20px;
   }
 }

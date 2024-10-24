@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasChildren } from '../../types';
@@ -10,25 +12,25 @@ import styles from './Alert.module.css';
 interface AlertTypography extends HasChildren {
   id: string;
 }
-export const AlertHeader = (props: AlertTypography): React.ReactNode => {
+export const AlertTitle = (props: AlertTypography): React.ReactNode => {
   const platform = usePlatform();
 
   switch (platform) {
     case 'ios':
-      return <Title className={styles['Alert__header']} weight="1" level="3" {...props} />;
+      return <Title className={styles.title} weight="1" level="3" {...props} />;
     default:
-      return <Title className={styles['Alert__header']} weight="2" level="2" {...props} />;
+      return <Title className={styles.title} weight="2" level="2" {...props} />;
   }
 };
-export const AlertText = (props: AlertTypography): React.ReactNode => {
+export const AlertDescription = (props: AlertTypography): React.ReactNode => {
   const platform = usePlatform();
 
   switch (platform) {
     case 'vkcom':
-      return <Footnote className={styles['Alert__text']} {...props} />;
+      return <Footnote className={styles.description} {...props} />;
     case 'ios':
-      return <Caption className={styles['Alert__text']} {...props} />;
+      return <Caption className={styles.description} {...props} />;
     default:
-      return <Text Component="span" className={styles['Alert__text']} weight="3" {...props} />;
+      return <Text Component="span" className={styles.description} weight="3" {...props} />;
   }
 };

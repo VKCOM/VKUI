@@ -1,4 +1,4 @@
-.Link {
+.host {
   color: var(--vkui_internal--link-color, var(--vkui--color_text_link));
   border: 0;
   background: none;
@@ -14,18 +14,17 @@
 }
 
 @media (--hover-has) {
-  .Link:hover {
+  .host:hover {
     text-decoration: underline;
   }
 }
 
-.Link--has-visited:visited {
+.hasVisited:visited {
   color: var(--vkui--color_text_link_visited);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Link :global(.vkuiIcon) {
-  margin-inline-start: 4px;
+.host :global(.vkuiIcon) {
   display: inline-block;
   vertical-align: middle;
 }

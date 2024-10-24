@@ -1,3 +1,5 @@
+'use client';
+
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
@@ -5,8 +7,8 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardGrid.module.css';
 
 const sizeXClassNames = {
-  none: styles['CardGrid--sizeX-none'],
-  ['compact']: styles['CardGrid--sizeX-compact'],
+  none: styles.sizeXNone,
+  compact: styles.sizeXCompact,
 };
 
 const stylesSize = {
@@ -20,7 +22,7 @@ export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   /**
    * Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа
    */
-  spaced?: boolean;
+  padding?: boolean;
 }
 
 /**
@@ -28,9 +30,8 @@ export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>
  */
 export const CardGrid = ({
   size = 's',
-  spaced = false,
-  // TODO [>=7]: поменять тег на ul https://github.com/VKCOM/VKUI/issues/7336
-  Component = 'div',
+  padding = false,
+  Component = 'ul',
   ...restProps
 }: CardGridProps): React.ReactNode => {
   const { sizeX = 'none' } = useAdaptivity();
@@ -40,9 +41,9 @@ export const CardGrid = ({
       {...restProps}
       Component={Component}
       baseClassName={classNames(
-        styles['CardGrid'],
+        styles.host,
         'vkuiInternalCardGrid',
-        spaced && styles['CardGrid--spaced'],
+        padding && styles.padding,
         stylesSize[size],
         sizeX !== 'regular' && sizeXClassNames[sizeX],
       )}

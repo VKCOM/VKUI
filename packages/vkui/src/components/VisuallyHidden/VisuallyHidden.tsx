@@ -21,8 +21,8 @@ export const VisuallyHidden = <T,>({
     {...restProps}
     baseClassName={classNames(
       baseClassName,
-      styles['VisuallyHidden'],
-      Component === 'input' && styles['VisuallyHidden--focusable-input'],
+      styles.host,
+      Component === 'input' && styles.focusableInput,
     )}
   />
 );

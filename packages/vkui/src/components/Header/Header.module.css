@@ -1,4 +1,4 @@
-.Header {
+.host {
   display: flex;
   align-items: flex-start;
   padding: 0;
@@ -6,155 +6,155 @@
   font-family: var(--vkui--font_family_base);
 }
 
-.Header__before,
-.Header__subtitleBefore,
-.Header__subtitleAfter,
-.Header__content__before,
-.Header__content__after {
+.before,
+.subtitleBefore,
+.subtitleAfter,
+.contentBefore,
+.contentAfter {
   display: flex;
   flex-shrink: 0;
 }
 
-.Header__before {
+.before {
   align-self: center;
   margin-inline-end: var(--vkui--spacing_size_m);
-  margin-block-start: var(--vkui--spacing_size_3xs);
+  margin-block-start: var(--vkui--spacing_size_2xs);
 }
 
-.Header__before--withSubtitle {
+.beforeWithSubtitle {
   margin-block-start: var(--vkui--spacing_size_s);
 }
 
-.Header__subtitleWrapper {
+.subtitleWrapper {
   display: flex;
   align-items: center;
 }
 
-.Header__subtitleBefore {
+.subtitleBefore {
   margin-inline-end: var(--vkui--spacing_size_xs);
 }
 
-.Header__subtitleAfter {
+.subtitleAfter {
   margin-inline-start: var(--vkui--spacing_size_xs);
 }
 
-.Header__content__before {
+.contentBefore {
   margin-inline-end: var(--vkui--spacing_size_xs);
 }
 
-.Header__content__after {
+.contentAfter {
   margin-inline-start: var(--vkui--spacing_size_xs);
 }
 
-.Header__main {
+.main {
   flex: 1 0 0;
   min-inline-size: 0;
   color: var(--vkui--color_text_primary);
 }
 
-.Header__content {
+.content {
   display: flex;
   align-items: center;
 }
 
-.Header__content-in,
-.Header__subtitle {
+.contentIn,
+.subtitle {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.Header__content--multiline {
+.contentMultiline {
   white-space: initial;
   word-break: break-word;
   flex-grow: 1;
 }
 
-.Header__subtitle {
+.subtitle {
   display: block;
   color: var(--vkui--color_text_secondary);
 }
 
-.Header--mode-secondary:not(.Header--pi):not(.Header--with-subtitle) .Header__main,
-.Header--mode-tertiary .Header__main {
+.modeSecondary:not(.pi):not(.withSubtitle) .main,
+.modeTertiary .main {
   color: var(--vkui--color_text_secondary);
 }
 
-.Header__indicator {
+.indicator {
   color: var(--vkui--color_text_secondary);
   margin-inline-start: var(--vkui--spacing_size_xs);
   flex-shrink: 0;
 }
 
-.Header--mode-primary .Header__indicator {
+.modePrimary .indicator {
   color: var(--vkui--color_text_subhead);
 }
 
-.Header:not(.Header--pi) .Header__indicator {
+.host:not(.pi) .indicator {
   align-self: center;
 }
 
-.Header--mode-secondary .Header__indicator {
+.modeSecondary .indicator {
   margin-inline-start: 8px;
 }
 
-.Header__aside {
+.after {
   display: flex;
   white-space: nowrap;
 }
 
 /* stylelint-disable selector-max-universal */
-.Header__aside.Header__aside > * {
+.after.after > * {
   margin-block: 13px 7px;
   margin-inline-start: 12px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Header__aside > :global(.vkuiIcon) {
+.after > :global(.vkuiIcon) {
   position: relative;
   color: var(--vkui--color_icon_secondary);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Header__aside > :global(.vkuiIcon--24) {
+.after > :global(.vkuiIcon--24) {
   margin-block: 11px 5px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Header__aside > :global(.vkuiIcon--16) {
+.after > :global(.vkuiIcon--16) {
   margin-block: 15px 9px;
 }
 
-.Header--mode-primary {
+.modePrimary {
   padding-block: 3px 1px;
 }
 
-.Header__content {
+.content {
   margin-block-start: 12px;
 }
 
-.Header__content:last-child {
+.content:last-child {
   margin-block-end: 8px;
 }
 
-.Header--mode-tertiary .Header__content {
+.modeTertiary .content {
   margin-block-start: 15px;
 }
 
-.Header--mode-tertiary .Header__content:last-child {
+.modeTertiary .content:last-child {
   margin-block-end: 9px;
 }
 
-.Header__subtitleWrapper {
+.subtitleWrapper {
   margin-block-end: 7px;
 }
 
-/* Компенсируем 1 пиксель из-за паддинга в .Header--mode-primary */
-.Header--mode-primary .Header__subtitleWrapper {
+/* Компенсируем 1 пиксель из-за паддинга в .modePrimary */
+.modePrimary .subtitleWrapper {
   margin-block-end: 6px;
 }
 
-.Header--large .Header__content {
+.large .content {
   margin-block: 10px 6px;
 }
 
@@ -165,39 +165,39 @@
  * TODO: Переделать отрицательные отступы https://github.com/VKCOM/VKUI/issues/3508
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-plain):not(:first-of-type) > .Header:first-child,
+:global(.vkuiInternalGroup--mode-plain):not(:first-of-type) > .host:first-child,
 :global(.vkuiInternalGroup--mode-plain):not(:first-of-type)
   > :global(.vkuiInternalTappable):first-child
-  > .Header {
+  > .host {
   margin-block-start: -16px;
 }
 
 @media (--sizeX-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
-    > .Header:first-child,
+    > .host:first-child,
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
     > :global(.vkuiInternalTappable):first-child
-    > .Header {
+    > .host {
     margin-block-start: -16px;
   }
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalGroup--mode-card) > .Header:not(.Header--mode-tertiary):first-child,
+:global(.vkuiInternalGroup--mode-card) > .host:not(.modeTertiary):first-child,
 :global(.vkuiInternalGroup--mode-card)
   > :global(.vkuiInternalTappable):first-child
-  > .Header:not(.Header--mode-tertiary) {
+  > .host:not(.modeTertiary) {
   margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
 }
 
 @media (--sizeX-regular) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
-    > .Header:not(.Header--mode-tertiary):first-child,
+    > .host:not(.modeTertiary):first-child,
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
     > :global(.vkuiInternalTappable):first-child
-    > .Header:not(.Header--mode-tertiary) {
+    > .host:not(.modeTertiary) {
     margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
   }
 }
@@ -206,6 +206,6 @@
  * Impact:
  * Link
  */
-.Header__aside {
+.after {
   --vkui_internal--link-color: var(--vkui--color_text_accent);
 }

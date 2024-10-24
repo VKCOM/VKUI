@@ -8,15 +8,15 @@ import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './MiniInfoCell.module.css';
 
 const stylesMode = {
-  add: styles['MiniInfoCell--mode-add'],
-  accent: styles['MiniInfoCell--mode-accent'],
-  more: styles['MiniInfoCell--mode-more'],
+  add: styles.modeAdd,
+  accent: styles.modeAccent,
+  more: styles.modeMore,
 };
 
 const stylesTextWrap = {
-  nowrap: styles['MiniInfoCell--textWrap-nowrap'],
-  full: styles['MiniInfoCell--textWrap-full'],
-  short: styles['MiniInfoCell--textWrap-short'],
+  nowrap: styles.textWrapNowrap,
+  full: styles.textWrapFull,
+  short: styles.textWrapShort,
 };
 
 export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -47,14 +47,14 @@ export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElem
    *
    * - `nowrap` – в одну строку, текст не переносится и обрезается.
    * - `short` – максимально отображается 3 строки, остальное обрезается.
-   * - `full` – текст отображается полностью.
+   * - `full` – текст отображается полностью. В дизайне это свойство `multiline`
    */
   textWrap?: 'nowrap' | 'short' | 'full';
 
   /**
    * Передавать `true`, если предполагается переход при клике по ячейке.
    */
-  expandable?: boolean;
+  chevron?: boolean;
 }
 
 /**
@@ -66,12 +66,12 @@ export const MiniInfoCell = ({
   children,
   mode = 'base',
   textWrap = 'nowrap',
-  expandable = false,
+  chevron = false,
   className,
   ...restProps
 }: MiniInfoCellProps): React.ReactNode => {
   const cellClasses = classNames(
-    styles['MiniInfoCell'],
+    styles.host,
     stylesTextWrap[textWrap],
     mode !== 'base' && stylesMode[mode],
     className,
@@ -79,17 +79,14 @@ export const MiniInfoCell = ({
 
   const cellContent = (
     <React.Fragment>
-      {hasReactNode(before) && <span className={styles['MiniInfoCell__before']}>{before}</span>}
-      <div className={styles['MiniInfoCell__middle']}>
-        <Paragraph
-          className={styles['MiniInfoCell__content']}
-          weight={mode === 'more' ? '2' : undefined}
-        >
+      {hasReactNode(before) && <span className={styles.before}>{before}</span>}
+      <div className={styles.middle}>
+        <Paragraph className={styles.content} weight={mode === 'more' ? '2' : undefined}>
           {children}
         </Paragraph>
-        {expandable && <Icon16Chevron />}
+        {chevron && <Icon16Chevron />}
       </div>
-      {hasReactNode(after) && <span className={styles['MiniInfoCell__after']}>{after}</span>}
+      {hasReactNode(after) && <span className={styles.after}>{after}</span>}
     </React.Fragment>
   );
 

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon24ChevronDown, Icon24ChevronUp } from '@vkontakte/icons';
 import { callMultiple } from '../../lib/callMultiple';
@@ -5,7 +7,7 @@ import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { AccordionContext } from './AccordionContext';
 import styles from './Accordion.module.css';
 
-export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'expandable'> {
+export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'chevron'> {
   /**
    * Иконка для раскрытия контента.
    */
@@ -37,7 +39,7 @@ export const AccordionSummary: React.FC<AccordionSummaryProps> = ({
   const icon = (
     // Обертка нужна для правильной работы с отступами в SimpleCell
     <span className="vkuiIcon">
-      <Icon className={styles['AccordionSummary__icon']} />
+      <Icon className={styles.icon} />
     </span>
   );
 

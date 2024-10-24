@@ -1,19 +1,19 @@
-.Flex {
+.host {
   --vkui_internal--flex_original_margin_inline: 0px;
   --vkui_internal--flex_original_margin_block: 0px;
 
   display: flex;
 }
 
-.Flex--margin-auto {
+.marginAuto {
   --vkui_internal--flex_original_margin_inline: var(--vkui--size_base_padding_horizontal--regular);
   --vkui_internal--flex_original_margin_block: var(--vkui--size_base_padding_vertical--regular);
 
-  margin-block: var(--vkui--size_base_padding_horizontal--regular);
-  margin-inline: var(--vkui--size_base_padding_vertical--regular);
+  margin-inline: var(--vkui--size_base_padding_horizontal--regular);
+  margin-block: var(--vkui--size_base_padding_vertical--regular);
 }
 
-.Flex--withGaps {
+.withGaps {
   margin-block-start: calc(
     -1 * var(--vkui_internal--row_gap) + var(--vkui_internal--flex_original_margin_block)
   );
@@ -22,77 +22,77 @@
   );
 }
 
-.Flex > .Flex--margin-auto {
+.host > .marginAuto {
   margin-block: 0;
   margin-inline: 0;
 }
 
-.Flex--direction-column {
+.directionColumn {
   flex-direction: column;
 }
 
-.Flex--reverse {
+.reverse {
   flex-direction: row-reverse;
 }
 
-.Flex--direction-column.Flex--reverse {
+.directionColumn.reverse {
   flex-direction: column-reverse;
 }
 
-.Flex--wrap {
+.wrap {
   flex-wrap: wrap;
 }
 
 /* justify-content */
 
-.Flex--justify-start {
+.justifyStart {
   justify-content: flex-start;
 }
 
-.Flex--justify-end {
+.justifyEnd {
   justify-content: flex-end;
 }
 
-.Flex--justify-center {
+.justifyCenter {
   justify-content: center;
 }
 
-.Flex--justify-space-around {
+.justifySpaceAround {
   justify-content: space-around;
 }
 
-.Flex--justify-space-between {
+.justifySpaceBetween {
   justify-content: space-between;
 }
 
-.Flex--justify-space-evenly {
+.justifySpaceEvenly {
   justify-content: space-evenly;
 }
 
 /* align-items */
 
-.Flex--align-start {
+.alignStart {
   align-items: flex-start;
 }
 
-.Flex--align-end {
+.alignEnd {
   align-items: flex-end;
 }
 
-.Flex--align-center {
+.alignCenter {
   align-items: center;
 }
 
-.Flex--align-stretch {
+.alignStretch {
   align-items: stretch;
 }
 
-.Flex--align-baseline {
+.alignBaseline {
   align-items: baseline;
 }
 
 /* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
-.Flex--withGaps > * {
+.withGaps.withGaps > * {
   margin-block-start: var(--vkui_internal--row_gap);
   margin-inline-start: var(--vkui_internal--column_gap);
 }

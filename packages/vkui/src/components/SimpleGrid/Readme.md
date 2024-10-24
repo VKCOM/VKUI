@@ -3,17 +3,18 @@
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const halsey = {
-  subtitle: 'ALBUM',
-  header: 'Halsey – Badlands⁣',
+  overTitle: 'ALBUM',
+  title: 'Halsey – Badlands⁣',
   caption: 'Blue Vinyl · EU · 2015⁣',
-  text: 'Badlands is the story about dreams and cruel reality...',
+  description: 'Badlands is the story about dreams and cruel reality...',
 };
 
 const lorde = {
-  subtitle: 'ALBUM',
-  header: 'Lorde – Melodrama',
+  overTitle: 'ALBUM',
+  title: 'Lorde – Melodrama',
   caption: 'Blue Vinyl · EU · 2018⁣',
-  text: 'Lorde captures emotions like none other. Her second album is a masterful study of being a young woman, a sleek and humid pop record full of grief and hedonism, crafted with the utmost care and wisdom.',
+  description:
+    'Lorde captures emotions like none other. Her second album is a masterful study of being a young woman, a sleek and humid pop record full of grief and hedonism, crafted with the utmost care and wisdom.',
 };
 
 const GapSelectValues = [
@@ -72,7 +73,7 @@ const Example = () => {
         <SimpleGrid
           align={align}
           columns={columns}
-          gap={complexGap ? [columnGap, rowGap] : gap}
+          gap={complexGap ? [rowGap, columnGap] : gap}
           margin={margin}
         >
           {Array.from({ length: itemsCount }, (item, index) => {

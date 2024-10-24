@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`card-grid transforms correctly 1`] = `
+"import { Card, CardGrid } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      {/* spaced=false -> padding=false */}
+      <CardGrid
+        size="s"
+        padding={false}
+      >
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+      </CardGrid>
+      {/* spaced=true -> padding=true */}
+      <CardGrid
+        size="s"
+        padding={true}
+      >
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+      </CardGrid>
+      {/* spaced -> padding */}
+      <CardGrid
+        size="s"
+        padding
+      >
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
+        </Card>
+      </CardGrid>
+    </React.Fragment>)
+  );
+};"
+`;

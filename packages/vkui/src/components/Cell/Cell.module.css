@@ -1,42 +1,42 @@
-.Cell {
+.host {
   position: relative;
 }
 
-.Cell--dragging {
+.dragging {
   background-color: var(--vkui--color_background_secondary);
   box-shadow: var(--vkui--elevation3);
 }
 
-.Cell__checkbox,
-.Cell__dragger {
+.checkbox,
+.dragger {
   position: relative;
   flex-shrink: 0;
   margin-inline-end: var(--vkui--spacing_size_2xl);
 }
 
-.Cell__control--noBefore {
+.controlNoBefore {
   /* Когда в before нет ничего, кроме dragger или checkbox, нужно добавлять компенсированный отступ */
   margin-inline-end: calc(var(--vkui--spacing_size_2xl) - var(--vkui--spacing_size_xl));
 }
 
-.Cell__content {
+.content {
   max-inline-size: 100%;
   min-inline-size: 0;
 }
 
-.Cell--removable .Cell__content {
+.removable .content {
   flex-grow: 1;
   /* размер removable icon */
   padding-inline-end: 44px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Cell--removable :global(.vkuiInternalRemovable__content) {
+.removable :global(.vkuiInternalRemovable__content) {
   padding-inline-start: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- для того чтобы активная область Cell распространялась и на область removable */
-.Cell--removable :global(.vkuiInternalRemovable__action) {
+.removable :global(.vkuiInternalRemovable__action) {
   position: absolute;
   inset-inline-end: 0;
   padding-inline-start: 0;
@@ -45,33 +45,33 @@
 /**
  * iOS
  */
-.Cell--ios .Cell__dragger {
+.ios .dragger {
   margin-inline: var(--vkui--spacing_size_xl) 0;
 }
 
-.Cell--ios .Cell__checkbox {
+.ios .checkbox {
   margin-inline-end: var(--vkui--spacing_size_xl);
 }
 
-.Cell--ios .Cell__control--noBefore {
+.ios .controlNoBefore {
   /* Когда в before нет ничего, кроме dragger или checkbox, оставляем только отступ у before в SimpleCell */
   margin-inline-end: 0;
 }
 
-.Cell--ios.Cell--removable .Cell__content {
+.ios.removable .content {
   /* размер removable icon + icon margins*/
   padding-inline: 48px var(--vkui--size_base_padding_horizontal--regular);
   /* правый паддинг от removable который мы обнулили ниже */
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Cell--ios.Cell--removable :global(.vkuiInternalRemovable__action) {
+.ios.removable :global(.vkuiInternalRemovable__action) {
   inset-inline: 0 auto;
   z-index: 1;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.Cell--ios.Cell--removable :global(.vkuiInternalRemovable__content) {
+.ios.removable :global(.vkuiInternalRemovable__content) {
   padding-inline-end: 0;
 }
 
@@ -80,7 +80,7 @@
  * FormItem
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem) > .Cell {
+:global(.vkuiInternalFormItem) > .host {
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }

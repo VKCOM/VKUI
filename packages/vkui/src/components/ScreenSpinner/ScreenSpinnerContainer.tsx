@@ -1,40 +1,53 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { Footnote } from '../Typography/Footnote/Footnote';
 import { ScreenSpinnerContext } from './context';
 import { type ScreenSpinnerProps } from './types';
 import styles from './ScreenSpinner.module.css';
 
 const stateClassNames = {
-  cancelable: styles['ScreenSpinner--state-cancelable'],
-  done: styles['ScreenSpinner--state-done'],
-  error: styles['ScreenSpinner--state-error'],
+  cancelable: styles.stateCancelable,
+  done: styles.stateDone,
+  error: styles.stateError,
+  custom: styles.stateCustom,
 };
 
 const modeClassNames = {
-  shadow: styles['ScreenSpinner--mode-shadow'],
-  overlay: styles['ScreenSpinner--mode-overlay'],
+  shadow: styles.modeShadow,
+  overlay: styles.modeOverlay,
 };
 
 type ScreenSpinnerContainerProps = HTMLAttributesWithRootRef<HTMLSpanElement> &
-  Pick<ScreenSpinnerProps, 'state' | 'mode'>;
+  Pick<ScreenSpinnerProps, 'state' | 'mode' | 'label' | 'customIcon'>;
 
 export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
   state = 'loading',
   mode = 'shadow',
+  customIcon,
+  label,
+  children,
   ...restProps
 }: ScreenSpinnerContainerProps) => {
   return (
-    <ScreenSpinnerContext.Provider value={{ state }}>
+    <ScreenSpinnerContext.Provider value={{ state, label, customIcon }}>
       <RootComponent
         baseClassName={classNames(
-          styles['ScreenSpinner'],
+          styles.host,
           modeClassNames[mode],
           state !== 'loading' && stateClassNames[state],
+          hasReactNode(label) && styles.hasLabel,
         )}
         {...restProps}
-      />
+      >
+        <div className={styles.iconSlot}>{children}</div>
+        {hasReactNode(label) && (
+          <Footnote className={styles.label} aria-hidden>
+            {label}
+          </Footnote>
+        )}
+      </RootComponent>
     </ScreenSpinnerContext.Provider>
   );
 };

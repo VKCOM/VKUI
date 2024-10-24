@@ -6,11 +6,11 @@ import { DOMContext } from '@vkui/lib/dom';
 import { useLoadThemeTokens } from '../../lib/theme/useLoadThemeTokens';
 import './Frame.css';
 
-const FrameDomProvider = ({ platform, appearanceOptions, themeName, children }) => {
+const FrameDomProvider = ({ platform, colorSchemeOptions, themeName, children }) => {
   const [ready, setReady] = React.useState(false);
   const frame = useFrame();
 
-  const loaded = useLoadThemeTokens(themeName, appearanceOptions, frame.document);
+  const loaded = useLoadThemeTokens(themeName, colorSchemeOptions, frame.document);
 
   React.useEffect(() => {
     const hotObservers = [];
@@ -75,7 +75,7 @@ const initialFrameContent = `
 </html>
 `;
 
-export const Frame = ({ children, style, appearanceOptions, platform, themeName }) => {
+export const Frame = ({ children, style, colorSchemeOptions, platform, themeName }) => {
   return (
     <ReactFrame
       mountTarget="body"
@@ -85,7 +85,7 @@ export const Frame = ({ children, style, appearanceOptions, platform, themeName 
     >
       <FrameDomProvider
         platform={platform}
-        appearanceOptions={appearanceOptions}
+        colorSchemeOptions={colorSchemeOptions}
         themeName={themeName}
       >
         {children}

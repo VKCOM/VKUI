@@ -1,33 +1,69 @@
-.ScreenSpinner {
+.host {
   position: relative;
+  box-sizing: border-box;
   inline-size: 88px;
   block-size: 88px;
+  padding-block: var(--vkui--spacing_size_2xl);
+  padding-inline: var(--vkui--spacing_size_2xl);
   border-radius: var(--vkui--size_border_radius--regular);
   animation: screen-spinner-intro 0.3s ease;
 }
 
-.ScreenSpinner--mode-shadow {
+.hasLabel {
+  inline-size: fit-content;
+  block-size: fit-content;
+  max-inline-size: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.modeShadow {
   background-color: var(--vkui--color_background_contrast_themed);
   box-shadow: var(--vkui--elevation3);
   color: var(--vkui--color_icon_medium);
 }
 
-.ScreenSpinner--mode-overlay {
+.modeOverlay {
   background-color: var(--vkui--color_avatar_overlay);
   color: var(--vkui--color_icon_contrast);
 }
 
-.ScreenSpinner__spinner {
+.label {
+  color: var(--vkui--color_text_secondary);
+  margin-block-start: var(--vkui--spacing_size_xs);
+  text-align: center;
+}
+
+.modeOverlay .label {
+  color: var(--vkui--color_text_contrast);
+}
+
+.spinner {
   opacity: 1;
+}
+
+.spinnerTransition {
   transition: opacity 0.1s ease;
 }
 
-.ScreenSpinner--state-done .ScreenSpinner__spinner,
-.ScreenSpinner--state-error .ScreenSpinner__spinner {
+.stateDone .spinner,
+.stateError .spinner,
+.stateCustom .spinner {
   opacity: 0;
 }
 
-.ScreenSpinner__icon {
+.iconSlot {
+  inline-size: 56px;
+  block-size: 56px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
   position: absolute;
   inset-block-start: 0;
   inline-size: 100%;
@@ -37,17 +73,17 @@
   justify-content: center;
 }
 
-.ScreenSpinner--state-cancelable .ScreenSpinner__icon {
+.stateCancelable .icon {
   cursor: pointer;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.ScreenSpinner__icon :global(.vkuiIcon) {
+.icon :global(.vkuiIcon) {
   animation: screen-spinner-intro 0.2s ease;
 }
 
 /* stylelint-disable-next-line selector-max-type, selector-pseudo-class-disallowed-list */
-.ScreenSpinner--state-done :global(.vkuiIcon) path {
+.stateDone :global(.vkuiIcon) path {
   stroke-dasharray: 50;
   stroke-dashoffset: 50;
   animation: screen-spinner-icon-done 0.6s 0.3s var(--vkui--animation_easing_platform) forwards;

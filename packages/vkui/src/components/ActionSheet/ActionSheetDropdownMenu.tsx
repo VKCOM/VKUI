@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
@@ -71,11 +73,11 @@ export const ActionSheetDropdownMenu = ({
       offsetByMainAxis={popupOffsetDistance}
       placement={placement}
       className={classNames(
-        styles['ActionSheet'],
-        platform === 'ios' && styles['ActionSheet--ios'],
-        styles['ActionSheet--menu'],
-        closing ? styles['ActionSheet--closing'] : styles['ActionSheet--opening'],
-        sizeY === 'compact' && styles['ActionSheet--sizeY-compact'],
+        styles.host,
+        platform === 'ios' && styles.ios,
+        styles.menu,
+        closing ? styles.closing : styles.opening,
+        sizeY === 'compact' && styles.sizeYCompact,
         className,
       )}
       style={style}

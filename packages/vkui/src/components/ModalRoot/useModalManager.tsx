@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { isFunction, noop } from '@vkontakte/vkjs';
 import { getNavId } from '../../lib/getNavId';

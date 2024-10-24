@@ -22,7 +22,7 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           mode: ['primary'],
-          aside: [<Link key="link">Показать все</Link>],
+          after: [<Link key="link">Показать все</Link>],
         },
         {
           mode: ['primary', 'secondary'],
@@ -40,7 +40,7 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
         {
           mode: ['primary'],
           subtitle: ['SOHN — Conrad'],
-          aside: [<Link key="link">Показать все</Link>],
+          after: [<Link key="link">Показать все</Link>],
           indicator: [12],
         },
         {
@@ -54,7 +54,7 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           mode: ['primary'],
-          size: ['regular', 'large'],
+          size: ['m', 'l'],
         },
         {
           mode: ['primary'],

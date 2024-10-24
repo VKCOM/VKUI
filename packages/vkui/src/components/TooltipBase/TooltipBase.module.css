@@ -1,8 +1,8 @@
-.TooltipBase {
+.host {
   white-space: normal;
 }
 
-.TooltipBase__content {
+.content {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,7 +14,7 @@
   color: var(--vkui--color_text_primary);
 }
 
-.TooltipBase__closeButton {
+.closeButton {
   flex-grow: 0;
   flex-shrink: 0;
   align-self: flex-start;
@@ -25,42 +25,42 @@
   background: none;
 }
 
-.TooltipBase__arrow {
+.arrow {
   color: var(--vkui--color_background_contrast_themed);
 }
 
-.TooltipBase--appearance-accent .TooltipBase__content {
+.appearanceAccent .content {
   background-color: var(--vkui--color_background_accent_tint);
   color: var(--vkui--color_text_contrast);
 }
 
-.TooltipBase--appearance-accent .TooltipBase__arrow {
+.appearanceAccent .arrow {
   color: var(--vkui--color_background_accent_tint);
 }
 
-.TooltipBase--appearance-white .TooltipBase__content {
+.appearanceWhite .content {
   background-color: var(--vkui--color_background_contrast);
   color: var(--vkui--color_text_primary_invariably);
 }
 
-.TooltipBase--appearance-white .TooltipBase__arrow {
+.appearanceWhite .arrow {
   color: var(--vkui--color_background_contrast);
 }
 
-.TooltipBase--appearance-black .TooltipBase__content {
+.appearanceBlack .content {
   background-color: var(--vkui--color_background_contrast_inverse);
   color: var(--vkui--color_text_contrast);
 }
 
-.TooltipBase--appearance-black .TooltipBase__arrow {
+.appearanceBlack .arrow {
   color: var(--vkui--color_background_contrast_inverse);
 }
 
-.TooltipBase--appearance-inversion .TooltipBase__content {
+.appearanceInversion .content {
   background-color: var(--vkui--color_background_modal_inverse);
   color: var(--vkui--color_text_contrast_themed);
 }
 
-.TooltipBase--appearance-inversion .TooltipBase__arrow {
+.appearanceInversion .arrow {
   color: var(--vkui--color_background_modal_inverse);
 }

@@ -30,15 +30,12 @@ export function AspectRatio({
   ...props
 }: AspectRatioProps): JSX.Element {
   const style: React.CSSProperties & CSSCustomProperties = {
-    ['--vkui_internal--aspect_ratio']: String(ratio),
+    '--vkui_internal--aspect_ratio': String(ratio),
   };
 
   return (
     <RootComponent
-      baseClassName={classNames(
-        styles.AspectRatio,
-        mode === 'stretch' && styles['AspectRatio--mode-stretch'],
-      )}
+      baseClassName={classNames(styles.host, mode === 'stretch' && styles.modeStretch)}
       style={{ ...styleProp, ...style }}
       {...props}
     />

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
 import {
@@ -161,7 +163,7 @@ export const Popper = ({
   const dropdown = (
     <RootComponent
       {...restProps}
-      baseClassName={styles['Popper']}
+      baseClassName={styles.host}
       getRootRef={handleRootRef}
       style={{
         ...styleProp,

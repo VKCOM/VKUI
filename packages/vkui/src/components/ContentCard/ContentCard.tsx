@@ -13,25 +13,25 @@ import styles from './ContentCard.module.css';
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
     HasComponent,
-    Omit<TappableProps, 'getRootRef' | 'crossOrigin'>,
+    Omit<TappableProps, 'getRootRef' | 'crossOrigin' | 'title'>,
     Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
     HasRef<HTMLImageElement> {
   /**
    Текст над заголовком
    */
-  subtitle?: React.ReactNode;
+  overTitle?: React.ReactNode;
   /**
    Заголовок
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /**
    Позволяет поменять тег используемый для заголовка
    */
-  headerComponent?: React.ElementType;
+  titleComponent?: React.ElementType;
   /**
    Текст
    */
-  text?: React.ReactNode;
+  description?: React.ReactNode;
   /**
    Нижний текст
    */
@@ -47,10 +47,10 @@ export interface ContentCardProps
  * @see https://vkcom.github.io/VKUI/#/ContentCard
  */
 export const ContentCard = ({
-  subtitle,
-  header,
-  headerComponent = 'span',
-  text,
+  overTitle,
+  title,
+  titleComponent = 'span',
+  description,
   caption,
   // card props
   className,
@@ -74,8 +74,7 @@ export const ContentCard = ({
   fetchPriority,
   hasHover = false,
   hasActive = false,
-  // TODO [>=7]: поменять тег на li https://github.com/VKCOM/VKUI/issues/7336
-  Component = 'div',
+  Component = 'li',
   ...restProps
 }: ContentCardProps): React.ReactNode => {
   return (
@@ -84,18 +83,18 @@ export const ContentCard = ({
       getRootRef={getRootRef}
       Component={Component}
       style={style}
-      className={classNames(restProps.disabled && styles['ContentCard--disabled'], className)}
+      className={classNames(restProps.disabled && styles.disabled, className)}
     >
       <Tappable
         {...restProps}
         hasHover={hasHover}
         hasActive={hasActive}
-        className={styles['ContentCard__tappable']}
+        className={styles.tappable}
       >
         {(src || srcSet) && (
           <img
             ref={getRef}
-            className={styles['ContentCard__img']}
+            className={styles.img}
             src={src}
             srcSet={srcSet}
             alt={alt}
@@ -111,34 +110,25 @@ export const ContentCard = ({
             width="100%"
           />
         )}
-        <div className={styles['ContentCard__body']}>
-          {hasReactNode(subtitle) && (
+        <div className={styles.body}>
+          {hasReactNode(overTitle) && (
             <Caption
-              className={classNames(styles['ContentCard__text'], styles['ContentCard__subtitle'])}
+              className={classNames(styles.text, styles.overTitle)}
               weight="1"
               level="3"
               caps
             >
-              {subtitle}
+              {overTitle}
             </Caption>
           )}
-          {hasReactNode(header) && (
-            <Headline
-              className={styles['ContentCard__text']}
-              weight="2"
-              level="1"
-              Component={headerComponent}
-            >
-              {header}
+          {hasReactNode(title) && (
+            <Headline className={styles.text} weight="2" level="1" Component={titleComponent}>
+              {title}
             </Headline>
           )}
-          {hasReactNode(text) && <Text className={styles['ContentCard__text']}>{text}</Text>}
+          {hasReactNode(description) && <Text className={styles.text}>{description}</Text>}
           {hasReactNode(caption) && (
-            <Footnote
-              className={classNames(styles['ContentCard__text'], styles['ContentCard__caption'])}
-            >
-              {caption}
-            </Footnote>
+            <Footnote className={classNames(styles.text, styles.caption)}>{caption}</Footnote>
           )}
         </div>
       </Tappable>

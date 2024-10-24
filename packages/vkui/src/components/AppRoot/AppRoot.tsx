@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -198,20 +200,23 @@ export const AppRoot = ({
     [scroll],
   );
 
+  const contextValue = React.useMemo(
+    () => ({
+      appRoot: appRootRef,
+      portalRoot: portalRootRef,
+      embedded: mode === 'embedded',
+      mode,
+      disablePortal,
+      layout,
+      get keyboardInput() {
+        return isKeyboardInputActiveRef.current;
+      },
+    }),
+    [disablePortal, isKeyboardInputActiveRef, layout, mode],
+  );
+
   const content = (
-    <AppRootContext.Provider
-      value={{
-        appRoot: appRootRef,
-        portalRoot: portalRootRef,
-        embedded: mode === 'embedded',
-        mode,
-        disablePortal,
-        layout,
-        get keyboardInput() {
-          return isKeyboardInputActiveRef.current;
-        },
-      }}
-    >
+    <AppRootContext.Provider value={contextValue}>
       <ScrollController elRef={appRootRef}>{children}</ScrollController>
     </AppRootContext.Provider>
   );
@@ -228,7 +233,7 @@ export const AppRoot = ({
   ) : (
     <div
       ref={appRootRef}
-      className={classNames(styles['AppRoot'], userSelectModeClassName, className)}
+      className={classNames(styles.host, userSelectModeClassName, className)}
       {...props}
     >
       {content}

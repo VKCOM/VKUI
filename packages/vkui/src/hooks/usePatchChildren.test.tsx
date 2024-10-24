@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import * as React from 'react';
 import { act } from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, renderHook } from '@testing-library/react';
 import { setRef } from '../lib/utils';
 import type { HasRootRef } from '../types';
 import { usePatchChildren } from './usePatchChildren';
@@ -39,7 +40,66 @@ const WrapperWithUsePatchChildrenRef = ({
   return <div data-testid="child">{child}</div>;
 };
 
+jest.mock('../lib/warnOnce', () => ({
+  warnOnce: () => () => console.error('custom-error'),
+}));
+
+jest.mock('./useEffectDev', () => ({
+  useEffectDev: React.useEffect,
+}));
+
 describe(usePatchChildren, () => {
+  let consoleErrorMock: jest.SpyInstance<any, string[]> = jest.fn();
+  beforeAll(() => {
+    consoleErrorMock.mockRestore();
+    consoleErrorMock = jest.spyOn(global.console, 'error').mockImplementation();
+  });
+  afterAll(() => {
+    consoleErrorMock.mockRestore();
+  });
+  afterEach(() => {
+    consoleErrorMock.mockClear();
+  });
+  const isReactErrorFound = () =>
+    consoleErrorMock.mock.calls.some((call) =>
+      call.some((arg) => arg.startsWith('Warning: React')),
+    );
+  const isCustomErrorFound = () =>
+    consoleErrorMock.mock.calls.some((call) => call.some((arg) => arg.startsWith('custom-error')));
+
+  it('returns React and custom errors if children is not expected', () => {
+    const Component = (props: React.DOMAttributes<HTMLDivElement>) => <div {...props} />;
+    render(
+      <WrapperWithUsePatchChildrenRef>
+        <Component />
+      </WrapperWithUsePatchChildrenRef>,
+    );
+    expect(consoleErrorMock).toHaveBeenCalledTimes(2);
+    expect(isReactErrorFound()).toBeTruthy();
+    expect(isCustomErrorFound()).toBeTruthy();
+  });
+
+  it('returns custom error if children is not expected', () => {
+    const Component = (props: React.ComponentPropsWithoutRef<'div'>) => <div>{props.children}</div>;
+    render(
+      <WrapperWithUsePatchChildrenRef>
+        <Component />
+      </WrapperWithUsePatchChildrenRef>,
+    );
+    act(() => {
+      expect(consoleErrorMock).toHaveBeenCalledTimes(1);
+      expect(isCustomErrorFound()).toBeTruthy();
+    });
+  });
+
+  it('returns undefined when no props', () => {
+    const { result } = renderHook(() => usePatchChildren());
+    const [childRef, patchedChildren] = result.current;
+    render(patchedChildren);
+    expect(childRef.current).toBeNull();
+    expect(patchedChildren).toBeUndefined();
+  });
+
   it.each([
     { type: 'element', refPropKey: 'childRef' },
     { type: 'element', refPropKey: 'refHook' },
@@ -85,12 +145,6 @@ describe(usePatchChildren, () => {
   ])(
     'should inject $event event to $type (hasOwnEvent: $hasOwnEvent)',
     ({ type, event, hasOwnEvent }) => {
-      jest.spyOn(global.console, 'error').mockImplementationOnce((message) => {
-        if (message.includes('React does not recognize the')) {
-          return;
-        }
-        global.console.error(message);
-      });
       const reactElementRef = React.createRef<HTMLDivElement>();
       const ownEvent = {
         someIntValue: 1,

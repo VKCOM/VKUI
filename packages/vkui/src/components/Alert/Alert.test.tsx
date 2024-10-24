@@ -15,6 +15,8 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Alert, type AlertProps } from './Alert';
 import styles from './Alert.module.css';
 import buttonStyles from '../Button/Button.module.css';
+import modalDismissButtonStyles from '../ModalDismissButton/ModalDismissButton.module.css';
+import popoutWrapperStyles from '../PopoutWrapper/PopoutWrapper.module.css';
 import captionStyles from '../Typography/Caption/Caption.module.css';
 import footnoteStyles from '../Typography/Footnote/Footnote.module.css';
 import titleStyles from '../Typography/Title/Title.module.css';
@@ -36,10 +38,10 @@ describe('Alert', () => {
           <Alert onClose={onClose} />
         </AdaptivityProvider>,
       );
-      const target =
-        trigger === 'overlay' ? '.vkuiPopoutWrapper__overlay' : '.vkuiModalDismissButton';
+      const className =
+        trigger === 'overlay' ? popoutWrapperStyles.overlay : modalDismissButtonStyles.host;
 
-      await userEvent.click(document.querySelector(target)!);
+      await userEvent.click(document.querySelector(`.${className}`)!);
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
@@ -89,6 +91,30 @@ describe('Alert', () => {
         runOnlyPendingTimers: true,
       });
       expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call onClose last', async () => {
+      const callOrder: Array<'action' | 'onClose'> = [];
+      const action = jest.fn().mockImplementation(() => callOrder.push('action'));
+      const onClose = jest.fn().mockImplementation(() => callOrder.push('onClose'));
+      const result = render(
+        <Alert
+          onClose={onClose}
+          actions={[
+            {
+              action,
+              'title': 'Item',
+              'data-testid': '__action__',
+              'mode': 'default',
+            },
+          ]}
+        />,
+      );
+      await userEvent.click(result.getByTestId('__action__'));
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(callOrder).toEqual(['action', 'onClose']);
     });
   });
 
@@ -168,11 +194,11 @@ describe('Alert', () => {
   it.each([
     {
       mode: 'destructive' as const,
-      className: styles['Alert__action--mode-destructive'],
+      className: styles.actionModeDestructive,
     },
     {
       mode: 'cancel' as const,
-      className: styles['Alert__action--mode-cancel'],
+      className: styles.actionModeCancel,
     },
   ])(
     'should have className "$className" with mode "$mode" in IOS platform',
@@ -195,13 +221,13 @@ describe('Alert', () => {
   it.each([
     {
       mode: 'cancel' as const,
-      className: styles['Alert__button--mode-cancel'],
-      buttonClassName: buttonStyles['Button--mode-secondary'],
+      className: styles.buttonModeCancel,
+      buttonClassName: buttonStyles.modeSecondary,
     },
     {
       mode: 'destructive' as const,
       className: undefined,
-      buttonClassName: buttonStyles['Button--mode-primary'],
+      buttonClassName: buttonStyles.modePrimary,
     },
   ])(
     'should have className "$className" ans "$buttonClassName" with mode "$mode" in VKCOM platform',
@@ -245,15 +271,15 @@ describe('Alert', () => {
   it.each([
     {
       align: 'left' as const,
-      className: styles['Alert__actions--align-left'],
+      className: styles.actionsAlignLeft,
     },
     {
       align: 'center' as const,
-      className: styles['Alert__actions--align-center'],
+      className: styles.actionsAlignCenter,
     },
     {
       align: 'right' as const,
-      className: styles['Alert__actions--align-right'],
+      className: styles.actionsAlignRight,
     },
   ])(
     'actions wrapper should have className "$className" when use align "$align"',
@@ -262,49 +288,49 @@ describe('Alert', () => {
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
-      const actionsWrapper = getDocumentBody().getElementsByClassName(styles['Alert__actions'])[0];
+      const actionsWrapper = getDocumentBody().getElementsByClassName(styles.actions)[0];
       expect(actionsWrapper).toHaveClass(className);
     },
   );
 
   it.each([
     {
-      header: 'Header',
-      headerClassNames: [titleStyles['Title--level-3'], typographyStyles['Typography--weight-1']],
-      text: 'Text',
-      textClassNames: [captionStyles['Caption--level-1']],
+      title: 'Header',
+      titleClassNames: [titleStyles.level3, typographyStyles.weight1],
+      description: 'Text',
+      descriptionClassNames: [captionStyles.level1],
       platform: Platform.IOS,
     },
     {
-      header: 'Header',
-      headerClassNames: [titleStyles['Title--level-2'], typographyStyles['Typography--weight-2']],
-      text: 'Text',
-      textClassNames: [footnoteStyles['Footnote']],
+      title: 'Header',
+      titleClassNames: [titleStyles.level2, typographyStyles.weight2],
+      description: 'Text',
+      descriptionClassNames: [footnoteStyles.host],
       platform: Platform.VKCOM,
     },
     {
-      header: 'Header',
-      headerClassNames: [titleStyles['Title--level-2'], typographyStyles['Typography--weight-2']],
-      text: 'Text',
-      textClassNames: [typographyStyles['Typography--weight-3']],
+      title: 'Header',
+      titleClassNames: [titleStyles.level2, typographyStyles.weight2],
+      description: 'Text',
+      descriptionClassNames: [typographyStyles.weight3],
       platform: Platform.ANDROID,
     },
   ])(
     `should have header classNames "$headerClassNames" and text classNames "$textClassNames" when use platform "$platform"`,
-    async ({ header, text, headerClassNames, textClassNames, platform }) => {
+    async ({ title, description, titleClassNames, descriptionClassNames, platform }) => {
       const result = render(
         <ConfigProvider platform={platform}>
-          <Alert onClose={jest.fn()} header={header} text={text} />
+          <Alert onClose={jest.fn()} title={title} description={description} />
         </ConfigProvider>,
       );
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
-      const headerElement = result.container.getElementsByClassName(styles['Alert__header'])[0];
-      const textElement = result.container.getElementsByClassName(styles['Alert__text'])[0];
+      const headerElement = result.container.getElementsByClassName(styles.title)[0];
+      const textElement = result.container.getElementsByClassName(styles.description)[0];
 
-      headerClassNames.forEach((className) => expect(headerElement).toHaveClass(className));
-      textClassNames.forEach((className) => expect(textElement).toHaveClass(className));
+      titleClassNames.forEach((className) => expect(headerElement).toHaveClass(className));
+      descriptionClassNames.forEach((className) => expect(textElement).toHaveClass(className));
     },
   );
 });

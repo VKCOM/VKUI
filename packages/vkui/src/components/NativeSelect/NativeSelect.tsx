@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -13,8 +15,8 @@ import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
 
 const sizeYClassNames = {
-  none: styles['Select--sizeY-none'],
-  ['compact']: styles['Select--sizeY-compact'],
+  none: styles.sizeYNone,
+  compact: styles.sizeYCompact,
 };
 
 export interface NativeSelectProps
@@ -76,13 +78,13 @@ const NativeSelect = ({
     <FormField
       Component="div"
       className={classNames(
-        styles['Select'],
+        styles.host,
         'vkuiInternalNativeSelect',
-        before && styles['Select--hasBefore'],
-        empty && styles['Select--empty'],
-        multiline && styles['Select--multiline'],
-        align === 'center' && styles['Select--align-center'],
-        align === 'right' && styles['Select--align-right'],
+        before && styles.hasBefore,
+        empty && styles.empty,
+        multiline && styles.multiline,
+        align === 'center' && styles.alignCenter,
+        align === 'right' && styles.alignRight,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         className,
       )}
@@ -97,15 +99,15 @@ const NativeSelect = ({
       <select
         {...restProps}
         disabled={disabled}
-        className={styles['Select__el']}
+        className={styles.el}
         onChange={callMultiple(onChange, checkSelectedOption)}
         ref={selectRef}
       >
         {placeholder && <option value="">{placeholder}</option>}
         {children}
       </select>
-      <div className={styles['Select__container']} aria-hidden>
-        <SelectTypography className={styles['Select__title']} selectType={selectType}>
+      <div className={styles.container} aria-hidden>
+        <SelectTypography className={styles.title} selectType={selectType}>
           {title}
         </SelectTypography>
       </div>

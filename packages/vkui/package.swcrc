@@ -3,7 +3,8 @@
   "exclude": ["\\.(test|spec|e2e|e2e-playground|stories)\\.[jt]sx?$", "testing/", "storybook/"],
 
   "module": {
-    "type": "es6"
+    "type": "es6",
+    "resolveFully": true
   },
 
   "jsc": {
@@ -17,14 +18,18 @@
         "runtime": "automatic"
       }
     },
-    "target": "es2015",
+    "target": "es2017",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules", "src/*"]
+    },
 
     "experimental": {
       "plugins": [
         [
           "swc-plugin-css-modules",
           {
-            "generate_scoped_name": "vkui[local]"
+            "generate_scoped_name": "vkui[folder]__[local]"
           }
         ],
         [

@@ -9,6 +9,7 @@ import {
 } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { PanelHeaderContext } from './PanelHeaderContext';
+import panelHeaderContextStyles from './PanelHeaderContext.module.css';
 
 describe('PanelHeaderContext', () => {
   baselineComponent((props) => <PanelHeaderContext opened onClose={noop} {...props} />);
@@ -38,7 +39,7 @@ describe('PanelHeaderContext', () => {
     it('on mobile fade click', async () => {
       const onClose = jest.fn();
       render(<PanelHeaderContext opened onClose={onClose} />);
-      await userEvent.click(document.querySelector('.vkuiPanelHeaderContext__fade') as Element);
+      await userEvent.click(document.querySelector(`.${panelHeaderContextStyles.fade}`) as Element);
       expect(onClose).toHaveBeenCalledTimes(1);
     });
 

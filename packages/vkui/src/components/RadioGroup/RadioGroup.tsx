@@ -17,9 +17,9 @@ export const RadioGroup = ({
 }: RadioGroupProps): React.ReactNode => (
   <RootComponent
     baseClassName={classNames(
-      styles['RadioGroup'],
+      styles.host,
       'vkuiInternalRadioGroup',
-      mode === 'horizontal' && styles['RadioGroup--mode-horizontal'],
+      mode === 'horizontal' && styles.modeHorizontal,
     )}
     role="radiogroup"
     {...restProps}

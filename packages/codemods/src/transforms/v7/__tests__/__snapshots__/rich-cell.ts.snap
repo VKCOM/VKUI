@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rich-cell transforms correctly 1`] = `
+"import { Avatar, RichCell } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const text = "Text"
+  return (
+    (<React.Fragment>
+      <RichCell
+        before={<Avatar size={72} src="" />}
+        overTitle="Subhead"
+        subtitle="Text"
+        extraSubtitle="Caption"
+        after="After"
+        afterCaption="After Caption"
+      >
+        Children
+      </RichCell>
+      <RichCell
+        before={<Avatar size={72} src="" />}
+        overTitle={"Subhead"}
+        subtitle={text}
+        extraSubtitle={"Caption"}
+        after="After"
+        afterCaption="After Caption"
+      >
+        Children
+      </RichCell>
+    </React.Fragment>)
+  );
+};"
+`;

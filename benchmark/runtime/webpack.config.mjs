@@ -77,7 +77,7 @@ const webpackConfig = {
       {
         test: /\.css$/i,
         exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, { loader: 'css-loader', options: { modules: false } }],
       },
       {
         test: /\.module.css$/,
@@ -86,7 +86,7 @@ const webpackConfig = {
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            options: { importLoaders: 1 },
+            options: { modules: false, importLoaders: 1 },
           },
           {
             loader: 'postcss-loader',

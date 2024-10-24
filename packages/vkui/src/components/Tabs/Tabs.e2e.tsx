@@ -1,5 +1,5 @@
 import { test } from '@vkui-e2e/test';
-import { Appearance } from '../../lib/appearance';
+import { ColorScheme } from '../../lib/colorScheme';
 import { TabsItemsFlexModePlayground, TabsPlayground } from './Tabs.e2e-playground';
 
 test('Tabs', async ({ mount, expectScreenshotClippedToContent, componentPlaygroundProps }) => {
@@ -9,7 +9,7 @@ test('Tabs', async ({ mount, expectScreenshotClippedToContent, componentPlaygrou
 
 test.describe('Tabs', () => {
   test.use({
-    onlyForAppearances: [Appearance.LIGHT],
+    onlyForColorSchemes: [ColorScheme.LIGHT],
   });
   test('layout fill mode', async ({
     mount,

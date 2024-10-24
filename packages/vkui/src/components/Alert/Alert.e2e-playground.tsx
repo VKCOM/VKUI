@@ -18,8 +18,8 @@ const destroy: AlertActionInterface = { mode: 'destructive', title: 'Destroy' };
 
 const baseRender = (props: AlertProps) => (
   <Alert
-    header="Подтвердите действие"
-    text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+    title="Подтвердите действие"
+    description="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
     style={{ position: 'relative' }}
     autoFocus={false}
     {...props}
@@ -80,10 +80,10 @@ export const AlertLongWordPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          header: [
+          title: [
             'Оченьоченьоченьдлинноенеразрывноеслововзаголовкекотороедолжнопереноситьсянановуюстрочкуиневыходитьзаграницы',
           ],
-          text: [
+          description: [
             'Оченьоченьоченьдлинноенеразрывноеслововописаниикотороедолжнопереноситьсянановуюстрочкуиневыходитьзаграницы',
           ],
         },

@@ -19,6 +19,6 @@ describe('EllipsisText', () => {
 
     const text = screen.getByTestId('text-wrapper').firstElementChild as HTMLElement;
     expect(text).not.toBeNull();
-    expect(text).toHaveClass(styles['EllipsisText__content--multiline']);
+    expect(text).toHaveClass(styles.contentMultiline);
   });
 });

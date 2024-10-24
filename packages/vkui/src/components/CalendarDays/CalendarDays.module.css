@@ -1,25 +1,29 @@
-.CalendarDays {
+.host {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   flex-grow: 1;
 }
 
-.CalendarDays__row {
+.row {
   display: flex;
   justify-content: center;
   flex-grow: 1;
 }
 
-.CalendarDays__row:not(:last-child) {
+.row:first-child:not(.rowSizeS) {
   margin-block-end: 4px;
 }
 
-.CalendarDays__row--size-s:not(:last-child) {
-  margin-block-end: 0;
+.row:not(:last-child):not(.rowSizeS) .rowDay {
+  padding-block-end: 2px;
 }
 
-.CalendarDays__weekday {
+.row:not(:nth-child(2)):not(.rowSizeS) .rowDay {
+  padding-block-start: 2px;
+}
+
+.weekday {
   text-transform: capitalize;
   color: var(--vkui--color_text_subhead);
   block-size: 32px;

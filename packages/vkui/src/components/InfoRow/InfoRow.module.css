@@ -1,10 +1,10 @@
-.InfoRow {
+.host {
   user-select: text;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.InfoRow__header {
+.header {
   display: block;
   margin-block-end: 2px;
   color: var(--vkui--color_text_subhead);
