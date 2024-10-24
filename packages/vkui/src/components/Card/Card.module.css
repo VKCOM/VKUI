@@ -12,9 +12,9 @@
     0 2px 24px 0 rgba(0, 0, 0, 0.08),
     0 0 2px 0 rgba(0, 0, 0, 0.08)
   );
-  background: var(--vkui--color_background_contrast_themed);
 }
 
+.modeShadow,
 .modeOutline,
 .modePlain {
   background: var(--vkui--color_background_contrast_themed);
