@@ -60,11 +60,8 @@ export const useScroll = (): ScrollContextInterface => React.useContext(ScrollCo
  * Если счетчик больше нуля, требуется заблокировать прокрутку
  */
 function useScrollLockController(enableScrollLock: () => void, disableScrollLock: () => void) {
-  const {
-    count,
-    increment: incrementScrollLockCounter,
-    decrement: decrementScrollLockCounter,
-  } = useCounter(0);
+  const [count, { increment: incrementScrollLockCounter, decrement: decrementScrollLockCounter }] =
+    useCounter(0);
 
   const needLockScroll = count > 0;
 
