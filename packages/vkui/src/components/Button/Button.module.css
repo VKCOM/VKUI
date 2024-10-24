@@ -237,15 +237,15 @@
 }
 
 .modePrimary.appearanceNeutral {
-  background-color: var(--vkui--color_background_secondary);
+  background-color: var(--vkui--color_background_content_inverse);
 }
 
 .modePrimary.appearanceNeutral.hover {
-  background-color: var(--vkui--color_background_secondary--hover);
+  background-color: var(--vkui--color_background_content_inverse--hover);
 }
 
 .modePrimary.appearanceNeutral.active {
-  background-color: var(--vkui--color_background_secondary--active);
+  background-color: var(--vkui--color_background_content_inverse--active);
 }
 
 .modePrimary.appearanceAccentInvariable {
@@ -306,6 +306,10 @@
 
 .host.appearanceNeutral {
   color: var(--vkui--color_text_primary);
+}
+
+.host.modePrimary.appearanceNeutral {
+  color: var(--vkui--color_text_contrast_themed);
 }
 
 .host.appearanceAccentInvariable {
@@ -651,8 +655,8 @@
 }
 
 .modePrimary.appearanceNeutral {
-  --vkui_internal--counter_inherit_background: var(--vkui--color_background_contrast);
-  --vkui_internal--counter_inherit_color: var(--vkui--color_text_primary_invariably);
+  --vkui_internal--counter_inherit_background: var(--vkui--color_text_contrast_themed);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_background_content_inverse);
 }
 
 .modeSecondary.appearanceNeutral,
