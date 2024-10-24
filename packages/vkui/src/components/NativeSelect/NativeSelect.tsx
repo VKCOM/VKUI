@@ -1,5 +1,6 @@
 'use client';
 
+import { type ChangeEvent, type ChangeEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -19,12 +20,41 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
+export type SelectValue = Exclude<
+  React.SelectHTMLAttributes<HTMLSelectElement>['value'],
+  undefined
+> | null;
+
+export type NativeSelectValue = Exclude<SelectValue, null>;
+
 export interface NativeSelectProps
-  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'multiple'>,
+  extends Omit<
+      React.SelectHTMLAttributes<HTMLSelectElement>,
+      'multiple' | 'value' | 'defaultValue' | 'onChange'
+    >,
     HasRef<HTMLSelectElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Pick<FormFieldProps, 'before' | 'status'> {
+  /**
+   * Выбранное значение.
+   *
+   * > ⚠️  Важно: При прокидывании `undefined` компонент будет считаться `Uncontrolled`.
+   * >
+   * > Не используйте `undefined`, чтобы показать невыбранное состояние. Вместо этого используйте `null`
+   */
+  value?: SelectValue;
+  /**
+   * см. `value`
+   */
+  defaultValue?: SelectValue;
+  /**
+   * Коллбэк срабатывающий при изменении выбранного значения.
+   * Вторым параметром прокидывается новое значение.
+   *
+   * > ⚠️  Важно: Лучше использовать второй параметр для получения нового значения
+   */
+  onChange?: (e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue) => void;
   placeholder?: string;
   multiline?: boolean;
   selectType?: SelectType;
@@ -58,6 +88,8 @@ const NativeSelect = ({
   icon = <DropdownIcon />,
   before,
   onChange,
+  value,
+  defaultValue,
   ...restProps
 }: NativeSelectProps): React.ReactNode => {
   const [title, setTitle] = React.useState('');
@@ -71,6 +103,11 @@ const NativeSelect = ({
       setTitle(selectedOption.text);
       setEmpty(selectedOption.value === '' && placeholder != null);
     }
+  };
+
+  const _onChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const newValue = e.target.value || null;
+    onChange?.(e, newValue);
   };
   useIsomorphicLayoutEffect(checkSelectedOption, [children]);
 
@@ -98,9 +135,11 @@ const NativeSelect = ({
     >
       <select
         {...restProps}
+        value={value === null ? '' : value}
+        defaultValue={defaultValue === null ? '' : defaultValue}
         disabled={disabled}
         className={styles.el}
-        onChange={callMultiple(onChange, checkSelectedOption)}
+        onChange={callMultiple(_onChange, checkSelectedOption)}
         ref={selectRef}
       >
         {placeholder && <option value="">{placeholder}</option>}
