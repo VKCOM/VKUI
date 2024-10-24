@@ -77,6 +77,7 @@ export const Button = ({
   className,
   disableSpinnerAnimation,
   rounded,
+  disabled,
   ...restProps
 }: ButtonProps): React.ReactNode => {
   const hasIcons = Boolean(before || after);
@@ -90,6 +91,7 @@ export const Button = ({
       activeMode={styles.active}
       Component={restProps.href ? 'a' : 'button'}
       focusVisibleMode="outside"
+      disabled={loading || disabled}
       {...restProps}
       onClick={loading ? undefined : onClick}
       className={classNames(
@@ -106,6 +108,7 @@ export const Button = ({
         hasIconOnly && !stretched && styles.singleIcon,
         loading && styles.loading,
         rounded && styles.rounded,
+        disabled && styles.disabled,
       )}
       getRootRef={getRootRef}
     >
