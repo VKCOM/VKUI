@@ -1,49 +1,30 @@
+import { type ElementProps } from './types';
 import styles from '../../styles/adaptivity.module.css';
 
-export const sizeXCompactClassNames: Record<'mq' | 'compact', { className: string }> = {
-  mq: { className: styles['-sizeX--compact-mq'] },
-  compact: { className: styles['-sizeX--compact-forced'] },
+export const forcedProps = { className: '' };
+
+export const sizeXCompactMediaQueryProps: ElementProps = {
+  className: styles['-sizeX--compact-mq'],
 };
 
-export const sizeXRegularClassNames: Record<'mq' | 'regular', { className: string }> = {
-  mq: { className: styles['-sizeX--regular-mq'] },
-  regular: { className: styles['-sizeX--regular-forced'] },
+export const sizeXRegularMediaQueryProps: ElementProps = {
+  className: styles['-sizeX--regular-mq'],
 };
 
-export const sizeYCompactClassNames: Record<'mq' | 'compact', { className: string }> = {
-  mq: { className: styles['-sizeY--compact-mq'] },
-  compact: { className: styles['-sizeY--compact-forced'] },
+export const sizeYCompactMediaQueryProps: ElementProps = {
+  className: styles['-sizeY--compact-mq'],
 };
 
-export const sizeYRegularClassNames: Record<'mq' | 'regular', { className: string }> = {
-  mq: { className: styles['-sizeY--regular-mq'] },
-  regular: { className: styles['-sizeY--regular-forced'] },
+export const sizeYRegularMediaQueryProps: ElementProps = {
+  className: styles['-sizeY--regular-mq'],
 };
 
-export const viewWidthClassNames: Record<
-  'tabletMinus' | 'tabletPlus',
-  Record<'mq' | 'forced', { className: string }>
-> = {
-  tabletMinus: {
-    mq: { className: styles['-viewWidth--tabletMinus-mq'] },
-    forced: { className: styles['-viewWidth--tabletMinus-forced'] },
-  },
-  tabletPlus: {
-    mq: { className: styles['-viewWidth--tabletPlus-mq'] },
-    forced: { className: styles['-viewWidth--tabletPlus-forced'] },
-  },
+export const viewWidthMediaQueryMapProps: Record<'tabletMinus' | 'tabletPlus', ElementProps> = {
+  tabletMinus: { className: styles['-viewWidth--tabletMinus-mq'] },
+  tabletPlus: { className: styles['-viewWidth--tabletPlus-mq'] },
 };
 
-export const deviceTypeClassNames: Record<
-  'mobile' | 'desktop',
-  Record<'mq' | 'forced', { className: string }>
-> = {
-  mobile: {
-    mq: { className: styles['-deviceType--mobile-mq'] },
-    forced: { className: styles['-deviceType--mobile-forced'] },
-  },
-  desktop: {
-    mq: { className: styles['-deviceType--desktop-mq'] },
-    forced: { className: styles['-deviceType--desktop-forced'] },
-  },
+export const deviceTypeMediaQueryMapProps: Record<'mobile' | 'desktop', ElementProps> = {
+  mobile: { className: styles['-deviceType--mobile-mq'] },
+  desktop: { className: styles['-deviceType--desktop-mq'] },
 };

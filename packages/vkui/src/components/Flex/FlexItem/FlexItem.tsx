@@ -54,7 +54,6 @@ export const FlexItem = ({
       {...rest}
       style={{ flexBasis, ...style }}
       baseClassName={classNames(
-        styles.host,
         alignSelf && alignSelfClassNames[alignSelf],
         flex && flexClassNames[flex],
       )}
