@@ -20,7 +20,12 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
-type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
+export type SelectValue = Exclude<
+  React.SelectHTMLAttributes<HTMLSelectElement>['value'],
+  undefined
+> | null;
+
+export type NativeSelectValue = Exclude<SelectValue, null>;
 
 export interface NativeSelectProps
   extends Omit<
@@ -38,18 +43,18 @@ export interface NativeSelectProps
    * >
    * > Не используйте `undefined`, чтобы показать невыбранное состояние. Вместо этого используйте `null`
    */
-  value?: SelectValue | null;
+  value?: SelectValue;
   /**
    * см. `value`
    */
-  defaultValue?: SelectValue | null;
+  defaultValue?: SelectValue;
   /**
    * Коллбэк срабатывающий при изменении выбранного значения.
    * Вторым параметром прокидывается новое значение.
    *
    * > ⚠️  Важно: Лучше использовать второй параметр для получения нового значения
    */
-  onChange?: (e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue | null) => void;
+  onChange?: (e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue) => void;
   placeholder?: string;
   multiline?: boolean;
   selectType?: SelectType;

@@ -20,7 +20,11 @@ import {
 } from '../CustomSelectOption/CustomSelectOption';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import type { FormFieldProps } from '../FormField/FormField';
-import type { NativeSelectProps } from '../NativeSelect/NativeSelect';
+import type {
+  NativeSelectProps,
+  NativeSelectValue,
+  SelectValue,
+} from '../NativeSelect/NativeSelect';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -38,12 +42,10 @@ const sizeYClassNames = {
 
 const NOT_SELECTED = '__vkui_internal_CustomSelect_not_selected__';
 
-type NativeValue = Exclude<SelectValue, undefined>;
-
-const remapFromSelectValueToNativeValue = (value: NativeValue | null): NativeValue =>
+const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSelectValue =>
   value === null ? NOT_SELECTED : value;
 
-const remapFromNativeValueToSelectValue = (value: NativeValue): SelectValue | null =>
+const remapFromNativeValueToSelectValue = (value: NativeSelectValue): SelectValue =>
   value === NOT_SELECTED ? null : value;
 
 const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
@@ -114,7 +116,7 @@ const handleOptionDown: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) =
 
 function findSelectedIndex<T extends CustomSelectOptionInterface>(
   options: T[] = [],
-  value: SelectValue | null,
+  value: SelectValue,
 ) {
   if (value === null) {
     return -1;
@@ -137,10 +139,8 @@ const filter = <T extends CustomSelectOptionInterface>(
     : options;
 };
 
-type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
-
 export interface CustomSelectOptionInterface {
-  value: SelectValue;
+  value: Exclude<SelectValue, null>;
   label: React.ReactElement | string;
   disabled?: boolean;
   [index: string]: any;
@@ -307,7 +307,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
   const [inputValue, setInputValue] = React.useState('');
-  const [nativeSelectValue, setNativeSelectValue] = React.useState<NativeValue>(() => {
+  const [nativeSelectValue, setNativeSelectValue] = React.useState<NativeSelectValue>(() => {
     if (props.value !== undefined) {
       return remapFromSelectValueToNativeValue(props.value);
     }
@@ -320,7 +320,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
   const [options, setOptions] = React.useState(optionsProp);
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
-    findSelectedIndex(optionsProp, props.value ?? defaultValue),
+    findSelectedIndex(optionsProp, props.value ?? defaultValue ?? null),
   );
 
   React.useEffect(() => {
@@ -561,16 +561,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   );
 
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const newSelectedOptionIndex = findSelectedIndex(
-      options,
-      remapFromNativeValueToSelectValue(e.currentTarget.value),
-    );
+    const remappedNativeValue = remapFromNativeValueToSelectValue(e.currentTarget.value);
+    const newSelectedOptionIndex = findSelectedIndex(options, remappedNativeValue);
 
     if (selectedOptionIndex !== newSelectedOptionIndex) {
       if (!isControlledOutside) {
         setSelectedOptionIndex(newSelectedOptionIndex);
       }
-      onChange?.(e, remapFromNativeValueToSelectValue(e.currentTarget.value));
+      onChange?.(e, remappedNativeValue);
     }
   };
 

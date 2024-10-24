@@ -989,7 +989,7 @@ describe('CustomSelect', () => {
     expect(onChange).toHaveBeenCalledTimes(3);
     expect(onChange).toHaveReturnedWith('0');
   });
-  // TODO
+
   it('accepts options with extended option type and Typescript does not throw', () => {
     const { rerender } = render(
       <CustomSelect
