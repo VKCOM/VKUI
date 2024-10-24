@@ -110,7 +110,12 @@ export const Button = ({
       getRootRef={getRootRef}
     >
       {loading && (
-        <Spinner size="s" className={styles.spinner} disableAnimation={disableSpinnerAnimation} />
+        <Spinner
+          size="s"
+          className={styles.spinner}
+          disableAnimation={disableSpinnerAnimation}
+          noColor
+        />
       )}
       <span className={styles.in}>
         {hasReactNode(before) && (

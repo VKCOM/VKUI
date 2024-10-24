@@ -10,13 +10,3 @@
 .noColor {
   color: currentColor;
 }
-
-/**
- * CMP:
- * PanelHeader
- * TODO [>=7]: удалить
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader) .host {
-  color: currentColor;
-}
