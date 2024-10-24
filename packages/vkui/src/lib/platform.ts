@@ -7,7 +7,7 @@ export const Platform = {
 } as const;
 
 /**
- * TODO [>=7]: Переименовать 'vkcom' в 'web' и заменить в DEFAULT_TOKENS_CLASS_NAMES тему по умолчанию
+ * TODO [>=8]: Переименовать 'vkcom' в 'web' и заменить в DEFAULT_TOKENS_CLASS_NAMES тему по умолчанию
  */
 export type PlatformType = 'android' | 'ios' | 'vkcom';
 
