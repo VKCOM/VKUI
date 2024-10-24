@@ -18,8 +18,9 @@
   border-radius: var(--vkui--size_border_radius_rounded--regular);
 }
 
-.loading {
-  cursor: progress;
+.loading:not(.disabled) {
+  /* stylelint-disable-next-line declaration-no-important -- перебиваем disabled из Clickable */
+  cursor: progress !important;
 }
 
 .singleIcon {
@@ -67,14 +68,14 @@
   text-align: end;
 }
 
-.host[disabled] {
+.disabled {
   opacity: var(--vkui--opacity_disable);
 }
 
-.modePrimary[disabled]:not(.appearanceOverlay):not(.appearanceNegative):not(.appearancePositive),
-.modeSecondary[disabled]:not(.appearanceOverlay),
-.modeTertiary[disabled]:not(.appearanceOverlay),
-.modeOutline[disabled]:not(.appearanceOverlay) {
+.modePrimary.disabled:not(.appearanceOverlay):not(.appearanceNegative):not(.appearancePositive),
+.modeSecondary.disabled:not(.appearanceOverlay),
+.modeTertiary.disabled:not(.appearanceOverlay),
+.modeOutline.disabled:not(.appearanceOverlay) {
   opacity: 0.64;
 }
 
