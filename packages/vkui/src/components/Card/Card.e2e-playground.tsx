@@ -12,7 +12,7 @@ export const CardPlayground = (props: ComponentPlaygroundProps): React.ReactNode
       {...props}
       propSets={[
         {
-          mode: ['tint', 'shadow', 'outline', 'outline-tint'],
+          mode: ['tint', 'shadow', 'outline', 'outline-tint', 'plain'],
         },
       ]}
     >

@@ -4,7 +4,7 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Card.module.css';
 
 export interface CardProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
-  mode?: 'tint' | 'shadow' | 'outline' | 'outline-tint';
+  mode?: 'tint' | 'shadow' | 'outline' | 'outline-tint' | 'plain';
 }
 
 /**
@@ -24,6 +24,7 @@ export const Card = ({
         styles.host,
         mode === 'outline' && styles.modeOutline,
         mode === 'shadow' && styles.modeShadow,
+        mode === 'plain' && styles.modePlain,
         withBorder && styles.withBorder,
       )}
     />
