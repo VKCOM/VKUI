@@ -116,7 +116,6 @@ const Example = () => {
           placeholder="Не выбран"
           options={users}
           selectType={selectType}
-          autoHideScrollbar
         />
       </FormItem>
 
