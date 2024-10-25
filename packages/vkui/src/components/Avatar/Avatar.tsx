@@ -87,6 +87,7 @@ export const Avatar: React.FC<AvatarProps> & {
   initials,
   fallbackIcon: fallbackIconProp,
   children,
+  keepAspectRatio = true,
   ...restProps
 }: AvatarProps) => {
   const gradientName =
@@ -109,6 +110,7 @@ export const Avatar: React.FC<AvatarProps> & {
   return (
     <ImageBase
       {...restProps}
+      keepAspectRatio={keepAspectRatio}
       size={size}
       fallbackIcon={fallbackIcon}
       className={classNames(
