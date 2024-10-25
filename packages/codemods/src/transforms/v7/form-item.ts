@@ -1,5 +1,5 @@
 import { API, FileInfo, JSXAttribute, JSXElement, JSXExpressionContainer } from 'jscodeshift';
-import { getImportInfo } from '../../codemod-helpers';
+import { getImportInfo, renameProp } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
@@ -58,6 +58,8 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     return undefined;
   }
 
+  renameProp(j, source, localName, { topNode: 'top' });
+
   source.find(j.JSXElement, { openingElement: { name: { name: localName } } }).forEach((path) => {
     const formItem = path.node;
     let topMultiline: JSXAttribute | undefined;
@@ -91,10 +93,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
 
     // Ищем FormItem.TopLabel в пропе top и topNode
     formItemAttributes?.forEach((attr) => {
-      if (
-        attr.type === 'JSXAttribute' &&
-        (attr.name.name === 'top' || attr.name.name === 'topNode')
-      ) {
+      if (attr.type === 'JSXAttribute' && attr.name.name === 'top') {
         if (attr.value?.type === 'JSXElement') {
           topLabelMultiline = findTopLabelRecursive(attr.value);
         } else if (
