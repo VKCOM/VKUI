@@ -1,5 +1,5 @@
 import { API, FileInfo } from 'jscodeshift';
-import { getImportInfo, renameProp } from '../../codemod-helpers';
+import { getImportInfo } from '../../codemod-helpers';
 import { report } from '../../report';
 import { JSCodeShiftOptions } from '../../types';
 
