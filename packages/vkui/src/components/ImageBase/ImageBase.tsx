@@ -86,7 +86,7 @@ export interface ImageBaseProps
   objectFit?: React.CSSProperties['objectFit'];
   /**
    * Флаг для сохранения пропорций картинки.
-   * Для корректной работы необходимо задать размеры хотя бы одной стороны картинки
+   * Для корректной работы необходимо задать размеры одной стороны картинки
    */
   keepAspectRatio?: boolean;
 }
@@ -153,10 +153,14 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   keepAspectRatio = false,
   ...restProps
 }: ImageBaseProps) => {
+  const oneOfTwoDimensionsDefined =
+    (widthSize !== undefined && heightSize === undefined) ||
+    (widthSize === undefined && heightSize !== undefined);
+  const needToKeepAspectRatio = keepAspectRatio && oneOfTwoDimensionsDefined;
   const size = sizeProp ?? minOr([sizeToNumber(widthSize), sizeToNumber(heightSize)], defaultSize);
 
-  const width = widthSize ?? (keepAspectRatio ? undefined : size);
-  const height = heightSize ?? (keepAspectRatio ? undefined : size);
+  const width = widthSize ?? (needToKeepAspectRatio ? undefined : size);
+  const height = heightSize ?? (needToKeepAspectRatio ? undefined : size);
 
   const [loaded, setLoaded] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
@@ -224,14 +228,14 @@ export const ImageBase: React.FC<ImageBaseProps> & {
             className={classNames(
               styles.img,
               getObjectFitClassName(objectFit),
-              keepAspectRatio && styles.imgKeepRatio,
+              needToKeepAspectRatio && styles.imgKeepRatio,
             )}
             crossOrigin={crossOrigin}
             decoding={decoding}
             loading={loading}
             referrerPolicy={referrerPolicy}
             style={
-              keepAspectRatio
+              needToKeepAspectRatio
                 ? {
                     width: widthImg || width,
                     height: heightImg || height,
