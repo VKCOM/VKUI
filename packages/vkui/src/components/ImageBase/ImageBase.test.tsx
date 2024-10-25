@@ -187,7 +187,7 @@ describe(ImageBase, () => {
   });
 
   it('should have className with keepRatio', () => {
-    render(<ImageBaseTest src="#" keepAspectRatio={true} />);
+    render(<ImageBaseTest src="#" keepAspectRatio={true} widthSize="100%" />);
 
     expect(getImageBaseImgEl()).toHaveClass(styles.imgKeepRatio);
   });
