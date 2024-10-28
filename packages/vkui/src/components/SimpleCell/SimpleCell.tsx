@@ -45,7 +45,7 @@ export interface SimpleCellOwnProps extends HasComponent {
   /**
    * Дополнительная строка текста над `children`.
    */
-  subhead?: React.ReactNode;
+  overTitle?: React.ReactNode;
   /**
    * Дополнительная строка текста под `children`.
    */
@@ -95,7 +95,7 @@ export const SimpleCell = ({
   after,
   chevron,
   multiline,
-  subhead,
+  overTitle,
   subtitle,
   extraSubtitle,
   className,
@@ -124,9 +124,9 @@ export const SimpleCell = ({
         {before}
       </div>
       <div className={styles.middle}>
-        {subhead && (
-          <Subhead Component="span" className={classNames(styles.text, styles.subhead)}>
-            {subhead}
+        {overTitle && (
+          <Subhead Component="span" className={classNames(styles.text, styles.overTitle)}>
+            {overTitle}
           </Subhead>
         )}
         <div className={styles.content}>

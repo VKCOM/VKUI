@@ -16,7 +16,7 @@ const story: Meta<SimpleCellProps> = {
   component: SimpleCell,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
-    subhead: StringArg,
+    overTitle: StringArg,
     extraSubtitle: StringArg,
     before: createFieldWithPresets({
       iconSizes: ['28'],
