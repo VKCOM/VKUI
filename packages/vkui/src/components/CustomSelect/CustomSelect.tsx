@@ -28,7 +28,10 @@ import {
   CustomSelectClearButton,
   type CustomSelectClearButtonProps,
 } from './CustomSelectClearButton';
-import { CustomSelectInput, type CustomSelectInputProps } from './CustomSelectInput';
+import {
+  CustomSelectInput,
+  type CustomSelectInputProps,
+} from './CustomSelectInput/CustomSelectInput';
 import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
