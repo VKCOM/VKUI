@@ -127,14 +127,10 @@ export const FormField = ({
     <Component
       {...restProps}
       ref={elRef}
-      style={
-        maxHeight !== undefined
-          ? {
-              ...style,
-              maxHeight,
-            }
-          : style
-      }
+      style={{
+        maxHeight,
+        ...style,
+      }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={classNames(
