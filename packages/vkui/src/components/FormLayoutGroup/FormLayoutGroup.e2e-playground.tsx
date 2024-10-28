@@ -4,7 +4,7 @@ import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ChipsInput } from '../ChipsInput/ChipsInput';
 import { ChipsSelect } from '../ChipsSelect/ChipsSelect';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
-import { DatePicker } from '../DatePicker/DatePicker';
+import { DateInput } from '../DateInput/DateInput';
 import { FormItem } from '../FormItem/FormItem';
 import { Input } from '../Input/Input';
 import { NativeSelect } from '../NativeSelect/NativeSelect';
@@ -196,7 +196,7 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
                 <Input id="text" defaultValue="Текст" />
               </FormItem>
               <FormItem>
-                <DatePicker />
+                <DateInput />
               </FormItem>
             </AdaptivityProvider>,
           ],
