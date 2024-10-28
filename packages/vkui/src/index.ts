@@ -325,8 +325,6 @@ export type {
 } from './components/CustomSelect/CustomSelect';
 export { CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
 export type { CustomSelectOptionProps } from './components/CustomSelectOption/CustomSelectOption';
-export { DatePicker } from './components/DatePicker/DatePicker';
-export type { DatePickerProps, DatePickerDateFormat } from './components/DatePicker/DatePicker';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
 export type {
   SegmentedControlProps,
