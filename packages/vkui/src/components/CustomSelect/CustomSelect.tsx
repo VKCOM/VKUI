@@ -32,7 +32,10 @@ import {
   CustomSelectClearButton,
   type CustomSelectClearButtonProps,
 } from './CustomSelectClearButton';
-import { CustomSelectInput, type CustomSelectInputProps } from './CustomSelectInput';
+import {
+  CustomSelectInput,
+  type CustomSelectInputProps,
+} from './CustomSelectInput/CustomSelectInput';
 import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
@@ -739,19 +742,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   }, [emptyText, options, renderDropdown, renderOption]);
 
   const selectInputRef = useExternRef(getSelectInputRef);
-  const focusOnInputTimerRef = React.useRef<ReturnType<typeof setTimeout>>();
-  const focusOnInput = React.useCallback(() => {
-    clearTimeout(focusOnInputTimerRef.current);
-
-    focusOnInputTimerRef.current = setTimeout(() => {
-      selectInputRef.current && selectInputRef.current.focus();
-    }, 0);
-  }, [selectInputRef]);
-  useIsomorphicLayoutEffect(function clearFocusOnInputTimer() {
-    return () => {
-      clearTimeout(focusOnInputTimerRef.current);
-    };
-  }, []);
 
   const controlledValueSet = isControlledOutside && props.value !== null;
   const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== NOT_SELECTED;
@@ -769,7 +759,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onClick={function clearSelectState() {
           setNativeSelectValue(NOT_SELECTED);
           setInputValue('');
-          focusOnInput();
+          selectInputRef.current && selectInputRef.current.focus();
         }}
         disabled={restProps.disabled}
         data-testid={clearButtonTestId}
@@ -781,7 +771,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     iconProp,
     restProps.disabled,
     clearButtonTestId,
-    focusOnInput,
+    selectInputRef,
   ]);
 
   const icon = React.useMemo(() => {
@@ -826,11 +816,11 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
         const inputIsNotFocused = document.activeElement !== selectInputRef.current;
         if (inputIsNotFocused) {
-          focusOnInput();
+          selectInputRef.current.focus();
         }
       }
     },
-    [document, focusOnInput, selectInputRef],
+    [document, selectInputRef],
   );
 
   const preventInputBlurWhenClickInsideFocusedSelectArea = (

@@ -350,7 +350,7 @@ export type { SkeletonProps } from './components/Skeleton/Skeleton';
 export { Div } from './components/Div/Div';
 export type { DivProps } from './components/Div/Div';
 export { Touch } from './components/Touch/Touch';
-export type { TouchProps } from './components/Touch/Touch';
+export type { TouchProps, CustomTouchEvent } from './components/Touch/Touch';
 export { PanelSpinner } from './components/PanelSpinner/PanelSpinner';
 export type { PanelSpinnerProps } from './components/PanelSpinner/PanelSpinner';
 export { PanelHeaderClose } from './components/PanelHeaderClose/PanelHeaderClose';
@@ -414,6 +414,7 @@ export {
 export { useColorScheme } from './hooks/useColorScheme';
 export { usePagination } from './hooks/usePagination';
 export { type Orientation, useOrientationChange } from './hooks/useOrientationChange';
+export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';

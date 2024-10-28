@@ -60,7 +60,7 @@ export const WithInputFieldWithError: Story = {
 export const WithTopAside: Story = {
   ...Playground,
   args: {
-    topNode: (
+    top: (
       <FormItem.Top>
         <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
         <FormItem.TopAside id="counter">0/100</FormItem.TopAside>

@@ -90,7 +90,7 @@ function makePostcssPlugins({
     );
   }
 
-  // TODO [>=7]: Проверить браузерную поддержку
+  // TODO [>=8]: Проверить браузерную поддержку
   //
   // https://caniuse.com/mdn-css_properties_gap_grid_context
   if (!isESNext) {

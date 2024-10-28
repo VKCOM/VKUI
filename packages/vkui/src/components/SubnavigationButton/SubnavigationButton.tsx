@@ -38,7 +38,7 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   size?: 's' | 'm' | 'l';
   selected?: boolean;
   /**
-   * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar mode="fixed" />`
+   * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar fixed />`
    */
   textLevel?: '1' | '2' | '3';
   /**
