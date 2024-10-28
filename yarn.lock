@@ -2261,9 +2261,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rspack/cli@npm:^v1.0.11":
-  version: 1.0.11
-  resolution: "@rspack/cli@npm:1.0.11"
+"@rspack/cli@npm:^v1.0.14":
+  version: 1.0.14
+  resolution: "@rspack/cli@npm:1.0.14"
   dependencies:
     "@discoveryjs/json-ext": "npm:^0.5.7"
     "@rspack/dev-server": "npm:1.0.5"
@@ -2278,7 +2278,7 @@ __metadata:
     "@rspack/core": ^1.0.0-alpha || ^1.x
   bin:
     rspack: bin/rspack
-  checksum: 10/81cf412e114d1f0bd57d7c2718733ba6c3fea8be45f30ceb189c541830a04a857d2f031d6155512bb88abf0e2ce04f08dbcf78c64b2372156169c24869528572
+  checksum: 10/83cb672e12c4985f60b10383f5355adfaff24dc217bb7153f49203e021d6a22a12ba0b16622291006989e7602f986f4ac174c2b112886db69234e9c63e980314
   languageName: node
   linkType: hard
 
@@ -4373,7 +4373,7 @@ __metadata:
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0"
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0"
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
-    "@rspack/cli": "npm:^v1.0.11"
+    "@rspack/cli": "npm:^v1.0.14"
     "@rspack/core": "npm:^v1.0.11"
     "@size-limit/file": "npm:^11.1.6"
     "@size-limit/webpack": "npm:^11.1.6"
