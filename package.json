@@ -28,7 +28,7 @@
     "@types/jest": "^29.5.14",
     "@types/jest-axe": "^3.5.9",
     "@types/node": "^22.8.1",
-    "@types/react": "^18.3.11",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/webpack": "^5.28.5",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
