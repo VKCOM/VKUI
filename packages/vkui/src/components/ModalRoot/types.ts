@@ -1,14 +1,20 @@
-import type { DOMContextInterface } from '../../lib/dom';
-import type { HasPlatform } from '../../types';
-import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
-import type { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
+/** TODO [>=8] Удалить deprecated типы */
 
+import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
+
+/**
+ * @deprecated будет удалён в **VKUI v8**
+ */
 export type ModalType = 'page' | 'card';
 
+/**
+ * @deprecated будет удалён в **VKUI v8**
+ */
 export type TranslateRange = [number, number];
 
-export type ModalsState = { [index: string]: ModalsStateEntry };
-
+/**
+ * @deprecated будет удалён в **VKUI v8**
+ */
 export interface ModalElements {
   modalElement?: HTMLElement | null;
   innerElement?: HTMLElement | null;
@@ -17,6 +23,9 @@ export interface ModalElements {
   bottomInset?: HTMLElement | null;
 }
 
+/**
+ * @deprecated будет удалён в **VKUI v8**
+ */
 export interface ModalsStateEntry extends ModalElements {
   id: string | null;
   /**
@@ -73,29 +82,12 @@ export interface ModalsStateEntry extends ModalElements {
   preventClose?: boolean;
 }
 
-export interface ModalRootProps {
-  activeModal?: string | null;
-  children: React.ReactElement | Iterable<React.ReactElement>;
+export type ModalRootActiveModal = string | null;
 
-  /**
-   * Будет вызвано при начале открытия активной модалки с её id
-   */
-  onOpen?: (modalId: string) => void;
+export type ModalRootCallbackFunction = (modalId: string) => void;
 
-  /**
-   * Будет вызвано при окончательном открытии активной модалки с её id
-   */
-  onOpened?: (modalId: string) => void;
-
-  /**
-   * Будет вызвано при начале закрытия активной модалки с её id
-   */
-  onClose?: (modalId: string) => void;
-
-  /**
-   * Будет вызвано при окончательном закрытии активной модалки с её id
-   */
-  onClosed?: (modalId: string) => void;
+type ModalRootBaseProps = {
+  activeModal?: ModalRootActiveModal;
 
   /**
    * `data-testid` для маски
@@ -108,11 +100,57 @@ export interface ModalRootProps {
   noFocusToDialog?: boolean;
 
   usePortal?: AppRootPortalProps['usePortal'];
+
+  /**
+   * Будет вызвано при начале открытия активной модалки с её id
+   */
+  onOpen?: ModalRootCallbackFunction;
+
+  /**
+   * Будет вызвано при окончательном открытии активной модалки с её id
+   */
+  onOpened?: ModalRootCallbackFunction;
+
+  /**
+   * Будет вызвано при начале закрытия активной модалки с её id
+   */
+  onClose?: ModalRootCallbackFunction;
+
+  /**
+   * Будет вызвано при окончательном закрытии активной модалки с её id
+   */
+  onClosed?: ModalRootCallbackFunction;
+};
+
+export interface ModalRootProps extends ModalRootBaseProps {
+  children: React.ReactElement | Iterable<React.ReactElement>;
 }
 
-export interface ModalRootWithDOMProps extends HasPlatform, ModalRootProps, DOMContextInterface {
+type ModalRootContextBaseInterface = {
   /**
-   * @ignore
+   * Обозначает, в контексте ли модального окна мы сейчас.
    */
-  configProvider?: ConfigProviderContextInterface;
+  isInsideModal: boolean;
+
+  /**
+   * С **VKUI v7** задача с обновлением высоты контента при `dynamicContentHeight` решается через CSS.
+   *
+   * @deprecated будет удалён в **VKUI v8**
+   */
+  updateModalHeight: VoidFunction;
+
+  /**
+   * С **VKUI v7** регистрация модальных окон больше не требуется.
+   *
+   * @deprecated будет удалён в **VKUI v8**
+   */
+  registerModal: (data: ModalElements & Required<Pick<ModalsStateEntry, 'type' | 'id'>>) => void;
+};
+
+export interface ModalRootContextInterface
+  extends ModalRootContextBaseInterface,
+    ModalRootBaseProps {}
+
+export interface UseModalRootContext extends ModalRootContextBaseInterface {
+  onClose?: VoidFunction;
 }
