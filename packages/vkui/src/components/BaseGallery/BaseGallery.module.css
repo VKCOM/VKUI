@@ -21,7 +21,7 @@
   block-size: 100%;
   min-block-size: 100px;
   align-items: stretch;
-  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .draggable .layer {
