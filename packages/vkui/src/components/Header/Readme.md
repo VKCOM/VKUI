@@ -101,20 +101,14 @@ const Example = () => {
           <Header>Важные</Header>
         </Group>
         <Group>
-          <Header multiline>
-            Кто может писать мне личные сообщения
-          </Header>
-          <Header multiline>
-            Кто может комментировать мои записи
-          </Header>
+          <Header multiline>Кто может писать мне личные сообщения</Header>
+          <Header multiline>Кто может комментировать мои записи</Header>
           <Header size="s" multiline>
             Кто может оставлять записи на моей странице
           </Header>
         </Group>
         <Group>
-          <Header size="xl">
-            Большой заголовок
-          </Header>
+          <Header size="xl">Большой заголовок</Header>
         </Group>
         <Group>
           <Header

@@ -103,12 +103,15 @@
 .sizeS .after.after > * {
   margin-block-start: 11px;
 }
+
 .sizeM .after.after > * {
   margin-block-start: 13px;
 }
+
 .sizeL .after.after > * {
   margin-block-start: 14px;
 }
+
 .sizeXl .after.after > * {
   margin-block-start: 16px;
 }
@@ -123,12 +126,15 @@
 .sizeS .after > :global(.vkuiIcon--24) {
   margin-block: 9px 5px;
 }
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .sizeM .after > :global(.vkuiIcon--24) {
   margin-block: 10px 5px;
 }
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .sizeL .after > :global(.vkuiIcon--24) {
   margin-block: 11px 5px;
 }
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .sizeXl .after > :global(.vkuiIcon--24) {
   margin-block: 12px 5px;
 }
@@ -137,12 +143,15 @@
 .sizeS .after > :global(.vkuiIcon--16) {
   margin-block: 13px 9px;
 }
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .sizeM .after > :global(.vkuiIcon--16) {
   margin-block: 14px 9px;
 }
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .sizeL .after > :global(.vkuiIcon--16) {
   margin-block: 15px 9px;
 }
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .sizeXl .after > :global(.vkuiIcon--16) {
   margin-block: 16px 9px;
 }

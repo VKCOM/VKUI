@@ -40,15 +40,15 @@ const App = () => {
       {/* Проверка удаления mode */}
       {/* замена Large Primary на xl */}
       <Header size="xl" subtitle="SOHN — Conrad" />
-      {/* замена Large tertiary на medium */}
+      {/* замена Large tertiary на m */}
       <Header size="m" subtitle="SOHN — Conrad" />
-      {/* замена Regular tertiary на medium */}
+      {/* замена Regular tertiary на m */}
       <Header size="m" subtitle="SOHN — Conrad" />
-      {/* замена Regular primary на medium */}
+      {/* замена Regular primary на m */}
       <Header size="m" subtitle="SOHN — Conrad" />
-      {/* замена Large secondary на medium */}
+      {/* замена Large secondary на m */}
       <Header size="s" subtitle="SOHN — Conrad" />
-      {/* замена Regular secondary на medium */}
+      {/* замена Regular secondary на s */}
       <Header size="s" subtitle="SOHN — Conrad" />
     </React.Fragment>)
   );
