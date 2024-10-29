@@ -8,7 +8,6 @@ const Example = () => {
         <PanelHeader>Header</PanelHeader>
         <Group>
           <Header
-            mode="primary"
             after={
               <Link>
                 Показать все
@@ -19,7 +18,6 @@ const Example = () => {
             Плейлисты
           </Header>
           <Header
-            mode="primary"
             after={
               <Link>
                 Показать все
@@ -32,7 +30,6 @@ const Example = () => {
             Плейлисты
           </Header>
           <Header
-            mode="primary"
             after={
               <Link>
                 Показать все
@@ -44,7 +41,6 @@ const Example = () => {
             Плейлисты
           </Header>
           <Header
-            mode="primary"
             after={
               <Link>
                 Показать все
@@ -62,7 +58,7 @@ const Example = () => {
         </Group>
         <Group>
           <Header
-            mode="secondary"
+            size="s"
             after={
               <Link>
                 Показать все
@@ -73,7 +69,7 @@ const Example = () => {
             Приглашения
           </Header>
           <Header
-            mode="secondary"
+            size="s"
             after={
               <Link>
                 Показать все
@@ -85,7 +81,7 @@ const Example = () => {
             Фотографии
           </Header>
           <Header
-            mode="secondary"
+            size="s"
             after={
               <Link>
                 Показать все
@@ -102,27 +98,26 @@ const Example = () => {
           </Header>
         </Group>
         <Group>
-          <Header mode="tertiary">Важные</Header>
+          <Header>Важные</Header>
         </Group>
         <Group>
-          <Header mode="primary" multiline>
+          <Header multiline>
             Кто может писать мне личные сообщения
           </Header>
-          <Header mode="tertiary" multiline>
+          <Header multiline>
             Кто может комментировать мои записи
           </Header>
-          <Header mode="secondary" multiline>
+          <Header size="s" multiline>
             Кто может оставлять записи на моей странице
           </Header>
         </Group>
         <Group>
-          <Header mode="primary" size="l">
+          <Header size="xl">
             Большой заголовок
           </Header>
         </Group>
         <Group>
           <Header
-            mode="primary"
             before={<Icon28UserCircleFillBlue />}
             beforeTitle={<Icon16LockOutline />}
             afterTitle={<Icon16UnlockOutline />}
@@ -145,7 +140,6 @@ const Example = () => {
             Плейлисты
           </Header>
           <Header
-            mode="primary"
             before={<Icon28UserCircleFillBlue />}
             beforeTitle={<Icon16LockOutline />}
             afterTitle={<Icon16UnlockOutline />}
