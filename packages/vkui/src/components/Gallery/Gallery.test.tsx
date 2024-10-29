@@ -73,13 +73,14 @@ const setup = ({
   looped,
   containerWidth: defaultContainerWidth,
   isCustomSlideWidth = false,
-  viewPortWidth,
+  viewPortWidth: defaultViewPortWidth,
   align,
   onChange,
   onNext,
   onPrev,
   onDragStart,
   onDragEnd,
+  numberOfSlides = 5,
 }: {
   defaultSlideIndex: number;
   looped: boolean;
@@ -87,6 +88,7 @@ const setup = ({
   isCustomSlideWidth?: boolean;
   containerWidth: number;
   viewPortWidth: number;
+  numberOfSlides?: number;
   align?: AlignType;
   onChange: VoidFunction;
   onNext?: VoidFunction;
@@ -99,6 +101,7 @@ const setup = ({
   let layerTransform = '';
   let viewPort: HTMLDivElement;
   let containerWidth = defaultContainerWidth;
+  let viewPortWidth = defaultViewPortWidth;
 
   const mockContainerData = (element: HTMLDivElement) => {
     if (!element) {
@@ -161,21 +164,15 @@ const setup = ({
       getRootRef={mockContainerData}
       getRef={mockViewportData}
     >
-      <Slide data-testid="slide-1" getRef={(e: HTMLDivElement) => mockSlideData(e, 0)}>
-        1
-      </Slide>
-      <Slide data-testid="slide-2" getRef={(e: HTMLDivElement) => mockSlideData(e, 1)}>
-        2
-      </Slide>
-      <Slide data-testid="slide-3" getRef={(e: HTMLDivElement) => mockSlideData(e, 2)}>
-        3
-      </Slide>
-      <Slide data-testid="slide-4" getRef={(e: HTMLDivElement) => mockSlideData(e, 3)}>
-        4
-      </Slide>
-      <Slide data-testid="slide-5" getRef={(e: HTMLDivElement) => mockSlideData(e, 4)}>
-        5
-      </Slide>
+      {Array.from({ length: numberOfSlides }).map((_v, index) => (
+        <Slide
+          key={index}
+          data-testid={`slide-${index + 1}`}
+          getRef={(e: HTMLDivElement) => mockSlideData(e, index)}
+        >
+          {index + 1}
+        </Slide>
+      ))}
     </Gallery>
   );
 
@@ -199,6 +196,9 @@ const setup = ({
     },
     set containerWidth(newWidth: number) {
       containerWidth = newWidth;
+    },
+    set viewPortWidth(newWidth: number) {
+      viewPortWidth = newWidth;
     },
   };
 };
@@ -639,5 +639,71 @@ describe('Gallery', () => {
       warn.mockRestore();
       process.env.NODE_ENV = 'test';
     });
+  });
+
+  it('checks gallery arrows and navigation in center alignment', () => {
+    const onChange = jest.fn();
+    const onDragStart = jest.fn();
+    const onDragEnd = jest.fn();
+
+    // в контейнере недостаточно места для
+    // двух слайдов с выравниванием по центру
+    // поэтому мы показываем кнопки и позволяем drag
+    const mockedData = setup({
+      numberOfSlides: 2,
+      defaultSlideIndex: 2,
+      slideWidth: 180,
+      containerWidth: 300,
+      viewPortWidth: 300,
+      align: 'center',
+      looped: false,
+      onDragStart,
+      onDragEnd,
+      onChange,
+    });
+    const {
+      component: { container },
+      rerender,
+    } = mockedData;
+
+    checkActiveSlide(container, 1);
+    expect(Array.from(container.getElementsByClassName(styles.arrow))).toHaveLength(1);
+
+    simulateDrag(mockedData.viewPort, [150, 0]);
+
+    expect(onDragStart).toHaveBeenCalledTimes(1);
+    expect(onDragEnd).toHaveBeenCalledTimes(1);
+
+    // это пограничное состояние при котором слайды ещё
+    // не помещаются в контейнер,
+    // при ширине контейнера 540 они уже будут влезать
+    mockedData.containerWidth = 539;
+    mockedData.viewPortWidth = 539;
+    onDragStart.mockClear();
+    onDragEnd.mockClear();
+
+    rerender({ slideIndex: 2 });
+
+    expect(Array.from(container.getElementsByClassName(styles.arrow))).toHaveLength(1);
+
+    simulateDrag(mockedData.viewPort, [150, 0]);
+
+    expect(onDragStart).toHaveBeenCalledTimes(1);
+    expect(onDragEnd).toHaveBeenCalledTimes(1);
+
+    // слайды полностью помещаются, поэтому мы отключаем drag и не показываем стрелочки
+    mockedData.containerWidth = 540;
+    mockedData.viewPortWidth = 540;
+    onDragStart.mockClear();
+    onDragEnd.mockClear();
+
+    rerender({ slideIndex: 2 });
+
+    expect(Array.from(container.getElementsByClassName(styles.arrow))).toHaveLength(0);
+
+    simulateDrag(mockedData.viewPort, [150, 0]);
+
+    expect(onDragStart).not.toHaveBeenCalled();
+    expect(onDragEnd).not.toHaveBeenCalled();
   });
 });
