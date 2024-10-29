@@ -60,9 +60,6 @@
   text-align: start;
 }
 
-.alignCenter {
-}
-
 .alignRight .in {
   justify-content: flex-end;
   text-align: end;
@@ -77,9 +74,6 @@
 .modeTertiary.disabled:not(.appearanceOverlay),
 .modeOutline.disabled:not(.appearanceOverlay) {
   opacity: 0.64;
-}
-
-.withIcon {
 }
 
 .content {
