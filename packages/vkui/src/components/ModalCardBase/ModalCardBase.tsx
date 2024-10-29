@@ -126,8 +126,8 @@ export const ModalCardBase = ({
         withSafeZone && styles.withSafeZone,
       )}
       style={{
-        ...style,
         maxWidth: size,
+        ...style,
       }}
     >
       <div

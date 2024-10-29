@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent } from '../../../testing/utils';
 import { CustomSelectInput, type CustomSelectInputProps } from './CustomSelectInput';
 import styles from './CustomSelectInput.module.css';
 

@@ -107,7 +107,7 @@ export const FixedLayout = ({
         vertical && stylesVertical[vertical],
         className,
       )}
-      style={{ ...style, width }}
+      style={{ width, ...style }}
     >
       {children}
     </OnboardingTooltipContainer>

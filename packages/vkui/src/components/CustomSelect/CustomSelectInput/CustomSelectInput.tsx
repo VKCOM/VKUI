@@ -2,17 +2,17 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useFocusWithin } from '../../hooks/useFocusWithin';
-import { usePlatform } from '../../hooks/usePlatform';
-import { getFormFieldModeFromSelectType } from '../../lib/select';
-import type { HasAlign, HasRef, HasRootRef } from '../../types';
-import { FormField, type FormFieldProps } from '../FormField/FormField';
-import type { SelectType } from '../Select/Select';
-import { SelectTypography } from '../SelectTypography/SelectTypography';
-import { Text } from '../Typography/Text/Text';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { useExternRef } from '../../../hooks/useExternRef';
+import { useFocusWithin } from '../../../hooks/useFocusWithin';
+import { usePlatform } from '../../../hooks/usePlatform';
+import { getFormFieldModeFromSelectType } from '../../../lib/select';
+import type { HasAlign, HasRef, HasRootRef } from '../../../types';
+import { FormField, type FormFieldProps } from '../../FormField/FormField';
+import type { SelectType } from '../../Select/Select';
+import { SelectTypography } from '../../SelectTypography/SelectTypography';
+import { Text } from '../../Typography/Text/Text';
+import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CustomSelectInput.module.css';
 
 const sizeYClassNames = {

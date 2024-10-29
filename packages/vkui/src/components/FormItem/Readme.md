@@ -43,13 +43,11 @@
 
 Компонент `<FormItem.TopAside>` отвечает за отрисовку дополнительного контента справа от заголовка поля.
 
-> Обратите внимание, что составной компонент необходимо прокидывать в свойство `topNode`, а не `top`
-
 Пример использования:
 
 ```jsx static
 <FormItem
-  topNode={
+  top={
     <FormItem.Top>
       <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
       <FormItem.TopAside>0/100</FormItem.TopAside>
@@ -246,7 +244,7 @@ const Example = () => {
               />
             </FormItem>
             <FormItem
-              topNode={
+              top={
                 <FormItem.Top>
                   <FormItem.TopLabel htmlFor="about">О себе</FormItem.TopLabel>
                   <FormItem.TopAside>{about.length}/100</FormItem.TopAside>
