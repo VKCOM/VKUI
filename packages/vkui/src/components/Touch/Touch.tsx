@@ -25,11 +25,11 @@ export interface TouchProps
   useCapture?: boolean;
   slideThreshold?: number;
   noSlideClick?: boolean;
-  onEnter?: HoverHandler; // TODO [>=7] Заменить типы события в VKUITouchEvent на события из React
+  onEnter?: HoverHandler;
   onLeave?: HoverHandler;
-  onStart?: CustomTouchEventHandler; // TODO [>=7] Заменить типы события в VKUITouchEvent на события из React
-  onStartX?: CustomTouchEventHandler; // TODO [>=7] Заменить типы события в VKUITouchEvent на события из React
-  onStartY?: CustomTouchEventHandler; // TODO [>=7] Заменить типы события в VKUITouchEvent на события из React
+  onStart?: CustomTouchEventHandler;
+  onStartX?: CustomTouchEventHandler;
+  onStartY?: CustomTouchEventHandler;
   onMove?: CustomTouchEventHandler;
   onMoveX?: CustomTouchEventHandler;
   onMoveY?: CustomTouchEventHandler;
