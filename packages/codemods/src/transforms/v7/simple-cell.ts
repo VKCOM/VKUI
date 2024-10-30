@@ -13,6 +13,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   if (localName) {
     renameProp(j, source, localName, {
       expandable: 'chevron',
+      subhead: 'overTitle',
     });
   }
 
