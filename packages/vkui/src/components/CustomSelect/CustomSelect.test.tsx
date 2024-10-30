@@ -7,7 +7,7 @@ import { baselineComponent, userEvent, waitForFloatingPosition } from '../../tes
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
-import styles from './CustomSelectDropdown.module.css';
+import styles from './CustomSelect.module.css';
 
 let placementStub: Placement | undefined = undefined;
 jest.mock('../../lib/floating', () => {
