@@ -6,6 +6,7 @@ import {
   type ViewWidthType,
 } from '../../lib/adaptivity';
 import type { PlatformType } from '../../lib/platform';
+import { forcedProps } from './constants';
 import type {
   AdaptiveDeviceType,
   AdaptiveSizeType,
@@ -17,41 +18,31 @@ import type {
 
 export const getAdaptiveSizeType = (
   type: undefined | SizeTypeValues,
-  compactClassNames: Record<'mq' | 'compact', ElementProps>,
-  regularClassNames: Record<'mq' | 'regular', ElementProps>,
+  compactMediaQueryProps: ElementProps,
+  regularMediaQueryProps: ElementProps,
 ): AdaptiveSizeType => {
   return {
-    compact:
-      type === undefined
-        ? compactClassNames.mq
-        : type === 'compact'
-          ? compactClassNames[type]
-          : false,
-    regular:
-      type === undefined
-        ? regularClassNames.mq
-        : type === 'regular'
-          ? regularClassNames[type]
-          : false,
+    compact: type === undefined ? compactMediaQueryProps : type === 'compact' ? forcedProps : false,
+    regular: type === undefined ? regularMediaQueryProps : type === 'regular' ? forcedProps : false,
   };
 };
 
 export const getAdaptiveViewWidth = (
   viewWidth: undefined | ViewWidthType,
-  viewWidthClassNames: Record<ViewWidthCSSBreakpoints, Record<'mq' | 'forced', ElementProps>>,
+  viewWidthMapProps: Record<ViewWidthCSSBreakpoints, ElementProps>,
 ): AdaptiveViewWidth => {
   return {
     tabletMinus:
       viewWidth === undefined
-        ? viewWidthClassNames.tabletMinus.mq
+        ? viewWidthMapProps.tabletMinus
         : viewWidth < ViewWidth.TABLET
-          ? viewWidthClassNames.tabletMinus.forced
+          ? forcedProps
           : false,
     tabletPlus:
       viewWidth === undefined
-        ? viewWidthClassNames.tabletPlus.mq
+        ? viewWidthMapProps.tabletPlus
         : viewWidth >= ViewWidth.TABLET
-          ? viewWidthClassNames.tabletPlus.forced
+          ? forcedProps
           : false,
   };
 };
@@ -61,26 +52,26 @@ export const getAdaptiveDeviceType = (
   viewHeight: undefined | ViewHeightType,
   hasPointer: undefined | boolean,
   platform: PlatformType,
-  deviceTypeClassNames: Record<DeviceTypeCSSBreakpoints, Record<'mq' | 'forced', ElementProps>>,
+  deviceTypeMapProps: Record<DeviceTypeCSSBreakpoints, ElementProps>,
 ): AdaptiveDeviceType => {
   const isDesktop = tryToCheckIsDesktop(viewWidth, viewHeight, hasPointer, platform);
 
   if (isDesktop === null) {
     return {
-      mobile: deviceTypeClassNames.mobile.mq,
-      desktop: deviceTypeClassNames.desktop.mq,
+      mobile: deviceTypeMapProps.mobile,
+      desktop: deviceTypeMapProps.desktop,
     };
   }
 
   if (isDesktop) {
     return {
       mobile: false,
-      desktop: deviceTypeClassNames.desktop.forced,
+      desktop: forcedProps,
     };
   }
 
   return {
-    mobile: deviceTypeClassNames.mobile.forced,
+    mobile: forcedProps,
     desktop: false,
   };
 };

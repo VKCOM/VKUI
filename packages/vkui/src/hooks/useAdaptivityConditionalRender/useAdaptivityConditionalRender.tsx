@@ -2,12 +2,12 @@ import * as React from 'react';
 import { AdaptivityContext } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { usePlatform } from '../usePlatform';
 import {
-  deviceTypeClassNames,
-  sizeXCompactClassNames,
-  sizeXRegularClassNames,
-  sizeYCompactClassNames,
-  sizeYRegularClassNames,
-  viewWidthClassNames,
+  deviceTypeMediaQueryMapProps,
+  sizeXCompactMediaQueryProps,
+  sizeXRegularMediaQueryProps,
+  sizeYCompactMediaQueryProps,
+  sizeYRegularMediaQueryProps,
+  viewWidthMediaQueryMapProps,
 } from './constants';
 import { getAdaptiveDeviceType, getAdaptiveSizeType, getAdaptiveViewWidth } from './helpers';
 import type { UseAdaptivityConditionalRender } from './types';
@@ -23,15 +23,23 @@ export const useAdaptivityConditionalRender = (): UseAdaptivityConditionalRender
   const platform = usePlatform();
 
   return React.useMemo(() => {
-    const sizeX = getAdaptiveSizeType(sizeXContext, sizeXCompactClassNames, sizeXRegularClassNames);
-    const sizeY = getAdaptiveSizeType(sizeYContext, sizeYCompactClassNames, sizeYRegularClassNames);
-    const viewWidth = getAdaptiveViewWidth(viewWidthContext, viewWidthClassNames);
+    const sizeX = getAdaptiveSizeType(
+      sizeXContext,
+      sizeXCompactMediaQueryProps,
+      sizeXRegularMediaQueryProps,
+    );
+    const sizeY = getAdaptiveSizeType(
+      sizeYContext,
+      sizeYCompactMediaQueryProps,
+      sizeYRegularMediaQueryProps,
+    );
+    const viewWidth = getAdaptiveViewWidth(viewWidthContext, viewWidthMediaQueryMapProps);
     const deviceType = getAdaptiveDeviceType(
       viewWidthContext,
       viewHeightContext,
       hasPointerContext,
       platform,
-      deviceTypeClassNames,
+      deviceTypeMediaQueryMapProps,
     );
     return {
       sizeX,

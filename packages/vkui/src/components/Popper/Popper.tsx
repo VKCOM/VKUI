@@ -166,7 +166,6 @@ export const Popper = ({
       baseClassName={styles.host}
       getRootRef={handleRootRef}
       style={{
-        ...styleProp,
         ...convertFloatingDataToReactCSSProperties(
           floatingPositionStrategy,
           floatingDataX,
@@ -174,6 +173,7 @@ export const Popper = ({
           sameWidth ? null : undefined,
           middlewareData,
         ),
+        ...styleProp,
       }}
     >
       {arrow && (
