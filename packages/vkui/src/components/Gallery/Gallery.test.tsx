@@ -667,7 +667,10 @@ describe('Gallery', () => {
     } = mockedData;
 
     checkActiveSlide(container, 1);
-    expect(Array.from(container.getElementsByClassName(styles.arrow))).toHaveLength(1);
+    mockedData.component.debug();
+    expect(Array.from(container.getElementsByClassName(styles['BaseGallery__arrow']))).toHaveLength(
+      1,
+    );
 
     simulateDrag(mockedData.viewPort, [150, 0]);
 
@@ -684,7 +687,9 @@ describe('Gallery', () => {
 
     rerender({ slideIndex: 2 });
 
-    expect(Array.from(container.getElementsByClassName(styles.arrow))).toHaveLength(1);
+    expect(Array.from(container.getElementsByClassName(styles['BaseGallery__arrow']))).toHaveLength(
+      1,
+    );
 
     simulateDrag(mockedData.viewPort, [150, 0]);
 
@@ -699,7 +704,9 @@ describe('Gallery', () => {
 
     rerender({ slideIndex: 2 });
 
-    expect(Array.from(container.getElementsByClassName(styles.arrow))).toHaveLength(0);
+    expect(Array.from(container.getElementsByClassName(styles['BaseGallery__arrow']))).toHaveLength(
+      0,
+    );
 
     simulateDrag(mockedData.viewPort, [150, 0]);
 
