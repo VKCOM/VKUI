@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
@@ -40,8 +41,10 @@ export const SplitLayout = ({
   const platform = usePlatform();
   const { popoutModalRoot } = React.useContext(AppRootContext);
 
+  const rootRef = useExternRef<HTMLDivElement>(popoutModalRoot, getRootRef);
+
   return (
-    <div className={classNames(styles.host, platform === 'ios' && styles.ios)} ref={getRootRef}>
+    <div className={classNames(styles.host, platform === 'ios' && styles.ios)} ref={rootRef}>
       {header}
       <div
         {...restProps}
@@ -55,7 +58,6 @@ export const SplitLayout = ({
       >
         {children}
       </div>
-      <div ref={popoutModalRoot} />
     </div>
   );
 };
