@@ -46,8 +46,8 @@ export const AppRootPortal = ({
         setPortalRoot(portal);
       }
 
-      // делать очистку и удалять portalRoot не нужно,
-      // так как это произойдёт при размонтировании AppRoot
+      // Note:
+      // Очистка и удаление `portalRoot` делегируется `AppRoot`, т.к. экземпляров `AppRootPortal` может быть несколько и размонтирования одного из них удалит `portalRoot`, что сломает работу других экземпляров.
     },
     [canUsePortal, appRoot, portalContainer, setPortalRoot],
   );
