@@ -1,5 +1,9 @@
 Кастомизируемое поле выбора значения из раскрывающегося списка. Используется внутри [Select](#!/Select).
 
+> Важно: для отображения невыбранного состояния нужно использовать `value=null` вместо `undefined`.
+>
+> `undefined` ипользуется только для неконтролируемого компонента.
+
 ## Цифровая доступность (a11y)
 
 Следуйте рекомендациям из раздела "Цифровая доступность" компонента [Select](#!/Select).
@@ -79,7 +83,7 @@ const Example = () => {
             value={selectType}
             placeholder="Не задан"
             options={selectTypes}
-            onChange={(_, newType) => setSelectType(newType)}
+            onChange={(newType) => setSelectType(newType)}
             renderOption={({ option, ...restProps }) => (
               <CustomSelectOption {...restProps} description={`"${option.value}"`} />
             )}
@@ -176,7 +180,7 @@ const CustomSearchLogicSelect = ({ id }) => {
     return options;
   };
 
-  const onCustomSearchChange = (_, newValue) => {
+  const onCustomSearchChange = (newValue) => {
     if (newValue === '0') {
       setNewUsers([...newUsers, { label: query, value: query }]);
       setValue(query);

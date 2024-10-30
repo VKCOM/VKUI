@@ -20,6 +20,11 @@ import {
 } from '../CustomSelectOption/CustomSelectOption';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import type { FormFieldProps } from '../FormField/FormField';
+import {
+  NOT_SELECTED,
+  remapFromNativeValueToSelectValue,
+  remapFromSelectValueToNativeValue,
+} from '../NativeSelect/NativeSelect';
 import type {
   NativeSelectProps,
   NativeSelectValue,
@@ -42,14 +47,6 @@ const sizeYClassNames = {
   none: styles.sizeYNone,
   compact: styles.sizeYCompact,
 };
-
-const NOT_SELECTED = '__vkui_internal_CustomSelect_not_selected__';
-
-const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSelectValue =>
-  value === null ? NOT_SELECTED : value;
-
-const remapFromNativeValueToSelectValue = (value: NativeSelectValue): SelectValue =>
-  value === NOT_SELECTED ? null : value;
 
 const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
   if (startIndex >= options.length - 1) {
@@ -121,7 +118,7 @@ function findSelectedIndex<T extends CustomSelectOptionInterface>(
   options: T[] = [],
   value: SelectValue,
 ) {
-  if (value === null) {
+  if (value === NOT_SELECTED.CUSTOM) {
     return -1;
   }
   return (
@@ -317,7 +314,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     if (defaultValue !== undefined) {
       return remapFromSelectValueToNativeValue(defaultValue);
     }
-    return NOT_SELECTED;
+    return NOT_SELECTED.NATIVE;
   });
 
   const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
@@ -343,7 +340,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   useIsomorphicLayoutEffect(() => {
     if (
       options.some(({ value }) => nativeSelectValue === value) ||
-      (allowClearButton && nativeSelectValue === NOT_SELECTED)
+      (allowClearButton && nativeSelectValue === NOT_SELECTED.NATIVE)
     ) {
       const event = new Event('change', { bubbles: true });
 
@@ -571,7 +568,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       if (!isControlledOutside) {
         setSelectedOptionIndex(newSelectedOptionIndex);
       }
-      onChange?.(e, remappedNativeValue);
+      onChange?.(remappedNativeValue);
     }
   };
 
@@ -743,8 +740,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const selectInputRef = useExternRef(getSelectInputRef);
 
-  const controlledValueSet = isControlledOutside && props.value !== null;
-  const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== NOT_SELECTED;
+  const controlledValueSet = isControlledOutside && props.value !== NOT_SELECTED.CUSTOM;
+  const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== NOT_SELECTED.NATIVE;
   const clearButtonShown =
     allowClearButton && !opened && (controlledValueSet || uncontrolledValueSet);
 
@@ -757,7 +754,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       <ClearButton
         className={iconProp === undefined ? styles.clearIcon : undefined}
         onClick={function clearSelectState() {
-          setNativeSelectValue(NOT_SELECTED);
+          setNativeSelectValue(NOT_SELECTED.NATIVE);
           setInputValue('');
           selectInputRef.current && selectInputRef.current.focus();
         }}
@@ -904,8 +901,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         data-testid={nativeSelectTestId}
         required={required}
       >
-        {(allowClearButton || nativeSelectValue === NOT_SELECTED) && (
-          <option key={NOT_SELECTED} value={NOT_SELECTED} />
+        {(allowClearButton || nativeSelectValue === NOT_SELECTED.NATIVE) && (
+          <option key={NOT_SELECTED.NATIVE} value={NOT_SELECTED.NATIVE} />
         )}
         {optionsProp.map((item) => (
           <option key={`${item.value}`} value={item.value} />

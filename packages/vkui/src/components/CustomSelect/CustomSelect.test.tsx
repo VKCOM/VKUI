@@ -31,16 +31,15 @@ const getCustomSelectValue = () => screen.getByTestId('labelTextTestId').textCon
 const CustomSelectControlled = ({
   options,
   initialValue,
-  onChangeStub,
+  onChange,
   ...restProps
-}: Omit<SelectProps, 'value' | 'onChange'> & {
+}: Omit<SelectProps, 'value'> & {
   initialValue?: string;
-  onChangeStub?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }) => {
-  const [value, setValue] = React.useState(initialValue);
-  const handleChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setValue(event.target.value);
-    onChangeStub?.(event);
+  const [value, setValue] = React.useState<SelectProps['value']>(initialValue);
+  const handleChange: SelectProps['onChange'] = (newValue) => {
+    setValue(newValue);
+    onChange?.(newValue);
   };
   return <CustomSelect {...restProps} options={options} value={value} onChange={handleChange} />;
 };
@@ -122,7 +121,7 @@ describe('CustomSelect', () => {
 
   it('works correctly as controlled component', () => {
     const SelectController = () => {
-      const [value, setValue] = useState(0);
+      const [value, setValue] = useState<SelectProps['value']>(0);
       const options = [
         { value: 0, label: 'Mike' },
         { value: 1, label: 'Josh' },
@@ -132,7 +131,7 @@ describe('CustomSelect', () => {
           labelTextTestId="labelTextTestId"
           options={options}
           value={value}
-          onChange={(e) => setValue(Number(e.target.value))}
+          onChange={setValue}
         />
       );
     };
@@ -691,7 +690,7 @@ describe('CustomSelect', () => {
   });
 
   it('(uncontrolled): calls onChange when click on unselected option and does not call when click on selected ', async () => {
-    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+    const onChange = jest.fn();
 
     render(
       <CustomSelect
@@ -716,7 +715,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOption);
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveReturnedWith('1');
+    expect(onChange).toHaveBeenCalledWith('1');
 
     fireEvent.click(screen.getByTestId('labelTextTestId'));
 
@@ -725,12 +724,12 @@ describe('CustomSelect', () => {
     fireEvent.click(selectedOption);
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveReturnedWith('1');
+    expect(onChange).toHaveBeenCalledWith('1');
   });
 
   it('(controlled): calls onChange expected amount of times after clearing component and clicking on option without updating controlled prop value', async () => {
     // мы намеренно проверяем кейсы где при нажатии на опцию или на кнопку очистки value проп не меняется
-    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+    const onChange = jest.fn();
 
     const { rerender } = render(
       <CustomSelect
@@ -762,7 +761,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionFirstClick);
 
     expect(onChange).toHaveBeenCalledTimes(2);
-    expect(onChange).toHaveReturnedWith('1');
+    expect(onChange).toHaveBeenCalledWith('1');
 
     // clear input through prop
     rerender(
@@ -800,7 +799,7 @@ describe('CustomSelect', () => {
   });
 
   it('(controlled): calls onChange when click on unselected option without value change', async () => {
-    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+    const onChange = jest.fn();
 
     render(
       <CustomSelect
@@ -829,7 +828,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionFirstClick);
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveReturnedWith('1');
+    expect(onChange).toHaveBeenCalledWith('1');
 
     // второй клик по не выбранной опции без изменения value
     // нужно проверить потому что при первом клике внутреннее value CustomSelect (nativeSelectValue) изменилось
@@ -845,7 +844,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionSecondClick);
 
     expect(onChange).toHaveBeenCalledTimes(2);
-    expect(onChange).toHaveReturnedWith('1');
+    expect(onChange).toHaveBeenCalledWith('1');
 
     // третий клик уже по выбранной опции (соответствующей value переданному в CustomSelect)
     // onChange не должен вызываться.
@@ -858,13 +857,11 @@ describe('CustomSelect', () => {
     fireEvent.click(selectedOptionThirdClick);
 
     expect(onChange).toHaveBeenCalledTimes(2);
-    expect(onChange).toHaveReturnedWith('1');
+    expect(onChange).toHaveBeenCalledWith('1');
   });
 
   it('(controlled): does not call onChange on already selected', async () => {
-    const onChangeStub = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => {
-      return event.target.value;
-    });
+    const onChangeStub = jest.fn();
 
     render(
       <CustomSelectControlled
@@ -874,7 +871,7 @@ describe('CustomSelect', () => {
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
-        onChangeStub={onChangeStub}
+        onChange={onChangeStub}
       />,
     );
 
@@ -893,7 +890,7 @@ describe('CustomSelect', () => {
 
     // onChange должен вызываться
     expect(onChangeStub).toHaveBeenCalledTimes(1);
-    expect(onChangeStub).toHaveReturnedWith('1');
+    expect(onChangeStub).toHaveBeenCalledWith('1');
 
     // второй клик по выбранной опции
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -903,7 +900,7 @@ describe('CustomSelect', () => {
 
     // onChange не должен вызываться
     expect(onChangeStub).toHaveBeenCalledTimes(1);
-    expect(onChangeStub).toHaveReturnedWith('1');
+    expect(onChangeStub).toHaveBeenCalledWith('1');
 
     // третий клик по не выбранной опции
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -917,7 +914,7 @@ describe('CustomSelect', () => {
 
     // onChange должен быть вызван
     expect(onChangeStub).toHaveBeenCalledTimes(2);
-    expect(onChangeStub).toHaveReturnedWith('0');
+    expect(onChangeStub).toHaveBeenCalledWith('0');
 
     // четвертый клик по выбранной опции
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -927,11 +924,11 @@ describe('CustomSelect', () => {
 
     // onChange не должен вызываться
     expect(onChangeStub).toHaveBeenCalledTimes(2);
-    expect(onChangeStub).toHaveReturnedWith('0');
+    expect(onChangeStub).toHaveBeenCalledWith('0');
   });
 
   it('(controlled): does call onChange on option click when prop value is empty and value is not changing', async () => {
-    const onChange = jest.fn((event: React.ChangeEvent<HTMLSelectElement>) => event.target.value);
+    const onChange = jest.fn();
 
     render(
       <CustomSelect
@@ -961,7 +958,7 @@ describe('CustomSelect', () => {
 
     // onChange должен быть вызван
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveReturnedWith('0');
+    expect(onChange).toHaveBeenCalledWith('0');
 
     // второй клик по другой опции без изменения value
     fireEvent.click(screen.getByTestId('inputTestId'));
@@ -974,7 +971,7 @@ describe('CustomSelect', () => {
 
     // onChange должен быть вызван
     expect(onChange).toHaveBeenCalledTimes(2);
-    expect(onChange).toHaveReturnedWith('1');
+    expect(onChange).toHaveBeenCalledWith('1');
 
     // третий клик по той же опции что и в предыдущий раз
     fireEvent.click(screen.getByTestId('inputTestId'));
@@ -987,7 +984,7 @@ describe('CustomSelect', () => {
 
     // onChange должен быть вызван
     expect(onChange).toHaveBeenCalledTimes(3);
-    expect(onChange).toHaveReturnedWith('0');
+    expect(onChange).toHaveBeenCalledWith('0');
   });
 
   it('accepts options with extended option type and Typescript does not throw', () => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { type ChangeEvent, type ChangeEventHandler } from 'react';
+import { type ChangeEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -27,6 +27,17 @@ export type SelectValue = Exclude<
 
 export type NativeSelectValue = Exclude<SelectValue, null>;
 
+export const NOT_SELECTED = {
+  NATIVE: '__vkui_internal_Select_not_selected__',
+  CUSTOM: null,
+};
+
+export const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSelectValue =>
+  value === NOT_SELECTED.CUSTOM ? NOT_SELECTED.NATIVE : value;
+
+export const remapFromNativeValueToSelectValue = (value: NativeSelectValue): SelectValue =>
+  value === NOT_SELECTED.NATIVE ? NOT_SELECTED.CUSTOM : value;
+
 export interface NativeSelectProps
   extends Omit<
       React.SelectHTMLAttributes<HTMLSelectElement>,
@@ -50,11 +61,8 @@ export interface NativeSelectProps
   defaultValue?: SelectValue;
   /**
    * Коллбэк срабатывающий при изменении выбранного значения.
-   * Вторым параметром прокидывается новое значение.
-   *
-   * > ⚠️  Важно: Лучше использовать второй параметр для получения нового значения
    */
-  onChange?: (e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue) => void;
+  onChange?: (newValue: SelectValue) => void;
   placeholder?: string;
   multiline?: boolean;
   selectType?: SelectType;
@@ -101,13 +109,13 @@ const NativeSelect = ({
     const selectedOption = selectRef.current?.options[selectRef.current.selectedIndex];
     if (selectedOption) {
       setTitle(selectedOption.text);
-      setEmpty(selectedOption.value === '' && placeholder != null);
+      setEmpty(selectedOption.value === NOT_SELECTED.NATIVE && placeholder != null);
     }
   };
 
   const _onChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const newValue = e.target.value || null;
-    onChange?.(e, newValue);
+    const newValue = remapFromNativeValueToSelectValue(e.target.value);
+    onChange?.(newValue);
   };
   useIsomorphicLayoutEffect(checkSelectedOption, [children]);
 
@@ -135,14 +143,18 @@ const NativeSelect = ({
     >
       <select
         {...restProps}
-        value={value === null ? '' : value}
-        defaultValue={defaultValue === null ? '' : defaultValue}
+        value={value !== undefined ? remapFromSelectValueToNativeValue(value) : value}
+        defaultValue={
+          defaultValue !== undefined
+            ? remapFromSelectValueToNativeValue(defaultValue)
+            : defaultValue
+        }
         disabled={disabled}
         className={styles.el}
         onChange={callMultiple(_onChange, checkSelectedOption)}
         ref={selectRef}
       >
-        {placeholder && <option value="">{placeholder}</option>}
+        {placeholder && <option value={NOT_SELECTED.NATIVE}>{placeholder}</option>}
         {children}
       </select>
       <div className={styles.container} aria-hidden>
