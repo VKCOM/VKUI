@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
-import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 import styles from './SplitLayout.module.css';
 
 export interface SplitLayoutProps
@@ -29,8 +29,6 @@ export interface SplitLayoutProps
  * @see https://vkcom.github.io/VKUI/#/SplitLayout
  */
 export const SplitLayout = ({
-  popout,
-  modal,
   header,
   children,
   getRootRef,
@@ -40,14 +38,10 @@ export const SplitLayout = ({
   ...restProps
 }: SplitLayoutProps): React.ReactNode => {
   const platform = usePlatform();
+  const { popoutModalRoot } = React.useContext(AppRootContext);
 
   return (
-    <PopoutRoot
-      className={classNames(styles.host, platform === 'ios' && styles.ios)}
-      popout={popout}
-      modal={modal}
-      getRootRef={getRootRef}
-    >
+    <div className={classNames(styles.host, platform === 'ios' && styles.ios)} ref={getRootRef}>
       {header}
       <div
         {...restProps}
@@ -61,6 +55,7 @@ export const SplitLayout = ({
       >
         {children}
       </div>
-    </PopoutRoot>
+      <div ref={popoutModalRoot} />
+    </div>
   );
 };
