@@ -25,16 +25,7 @@ const layoutClassNames = {
   plain: styles.layoutPlain,
 };
 
-type AppRootStyleContainerProps = RootComponentProps<HTMLDivElement>;
-
-/**
- * Специальный контейнер для переиспользования стилей, токенов и safe-area-inset в:
- * - точке монтирования приложения – `AppRoot`;
- * - точке монтирования порталов для модальных окон – `PortalRoot`.
- *
- * @private
- */
-export function AppRootStyleContainer({ style, ...props }: AppRootStyleContainerProps) {
+export function useAppRootStyles() {
   const { layout, safeAreaInsets, mode, userSelectMode } = React.useContext(AppRootContext);
   const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
   const { isWebView } = useConfigProvider();
@@ -45,20 +36,36 @@ export function AppRootStyleContainer({ style, ...props }: AppRootStyleContainer
   });
   const tokensClassName = useTokensClassName();
 
+  return {
+    style: safeAreaInsets ? getSafeAreaInsetsAsCssVariables(safeAreaInsets) : undefined,
+    className: classNames(
+      styles.host,
+      mode === 'embedded' && styles.embedded,
+      sizeX !== 'compact' && sizeXClassNames[sizeX],
+      sizeY !== 'regular' && sizeYClassNames[sizeY],
+      layout && layoutClassNames[layout],
+      userSelectModeClassName,
+      tokensClassName,
+    ),
+  };
+}
+
+type AppRootStyleContainerProps = RootComponentProps<HTMLDivElement>;
+
+/**
+ * Специальный контейнер для переиспользования стилей, токенов и safe-area-inset в:
+ * - точке монтирования приложения – `AppRoot`;
+ * - точке монтирования порталов для модальных окон – `PortalRoot`.
+ *
+ * @private
+ */
+export function AppRootStyleContainer({ style, ...props }: AppRootStyleContainerProps) {
+  const { style: appRootStyle, className: appRootClassName } = useAppRootStyles();
+
   return (
     <RootComponent
-      baseClassName={classNames(
-        styles.host,
-        mode === 'embedded' && styles.embedded,
-        sizeX !== 'compact' && sizeXClassNames[sizeX],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-        layout && layoutClassNames[layout],
-        userSelectModeClassName,
-        tokensClassName,
-      )}
-      style={
-        safeAreaInsets ? { ...getSafeAreaInsetsAsCssVariables(safeAreaInsets), ...style } : style
-      }
+      baseClassName={appRootClassName}
+      style={appRootStyle ? { ...appRootStyle, ...style } : style}
       {...props}
     />
   );

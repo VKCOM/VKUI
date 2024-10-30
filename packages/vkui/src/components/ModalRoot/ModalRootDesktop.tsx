@@ -203,46 +203,44 @@ export const ModalRootDesktop = ({
   }
 
   return (
-    <ModalPopoutPortal>
-      <ModalRootContext.Provider value={modalRootContext}>
+    <ModalRootContext.Provider value={modalRootContext}>
+      <ModalPopoutPortal
+        className={classNames(
+          styles.host,
+          hasCustomPanelHeaderAfter && styles.hasCustomPanelHeaderAfterSlot,
+          styles.desktop,
+        )}
+      >
         <div
-          className={classNames(
-            styles.host,
-            hasCustomPanelHeaderAfter && styles.hasCustomPanelHeaderAfterSlot,
-            styles.desktop,
-          )}
-        >
-          <div
-            data-testid={modalOverlayTestId}
-            className={styles.mask}
-            ref={maskElementRef}
-            onClick={onExit}
-          />
-          <div className={styles.viewport}>
-            {modals.map((Modal: React.ReactElement) => {
-              const modalId = getNavId(Modal.props, warn);
-              if (modalId !== activeModal && modalId !== exitingModal) {
-                return null;
-              }
+          data-testid={modalOverlayTestId}
+          className={styles.mask}
+          ref={maskElementRef}
+          onClick={onExit}
+        />
+        <div className={styles.viewport}>
+          {modals.map((Modal: React.ReactElement) => {
+            const modalId = getNavId(Modal.props, warn);
+            if (modalId !== activeModal && modalId !== exitingModal) {
+              return null;
+            }
 
-              const key = `modal-${modalId}`;
+            const key = `modal-${modalId}`;
 
-              return (
-                <FocusTrap
-                  autoFocus={false}
-                  restoreFocus={false}
-                  onClose={onExit}
-                  timeout={timeout}
-                  key={key}
-                  className={styles.modal}
-                >
-                  {Modal}
-                </FocusTrap>
-              );
-            })}
-          </div>
+            return (
+              <FocusTrap
+                autoFocus={false}
+                restoreFocus={false}
+                onClose={onExit}
+                timeout={timeout}
+                key={key}
+                className={styles.modal}
+              >
+                {Modal}
+              </FocusTrap>
+            );
+          })}
         </div>
-      </ModalRootContext.Provider>
-    </ModalPopoutPortal>
+      </ModalPopoutPortal>
+    </ModalRootContext.Provider>
   );
 };
