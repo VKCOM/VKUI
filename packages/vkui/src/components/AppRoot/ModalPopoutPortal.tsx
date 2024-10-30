@@ -20,7 +20,7 @@ export function ModalPopoutPortal(props: AppRootPortalProps) {
 
   const shouldRenderInAppAfterContent = usePortalProp === undefined && mode === 'full';
   if (shouldRenderInAppAfterContent) {
-    usePortal = 'in-app-after-content';
+    usePortal = 'SplitLayout';
   }
 
   return <AppRootPortal {...props} usePortal={usePortal} />;
