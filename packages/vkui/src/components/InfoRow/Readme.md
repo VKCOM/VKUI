@@ -10,7 +10,7 @@
         <InfoRow header="Общий бюджет">3000 р.</InfoRow>
       </SimpleCell>
     </Group>
-    <Group header={<Header mode="secondary">Информация о пользователе</Header>}>
+    <Group header={<Header size="s">Информация о пользователе</Header>}>
       <SimpleCell multiline>
         <InfoRow header="Дата рождения">30 января 1993</InfoRow>
       </SimpleCell>

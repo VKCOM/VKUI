@@ -17,7 +17,7 @@ const HorizontalScrollExample = () => {
     <View activePanel={activePanel}>
       <Panel id="basic-case">
         <PanelHeader>HorizontalScroll</PanelHeader>
-        <Group header={<Header mode="secondary">Недавние</Header>}>
+        <Group header={<Header size="s">Недавние</Header>}>
           <HorizontalScroll
             showArrows
             getScrollToLeft={(i) => i - 120}
@@ -34,7 +34,7 @@ const HorizontalScrollExample = () => {
           </HorizontalScroll>
         </Group>
 
-        <Group header={<Header mode="secondary">Общие друзья</Header>}>
+        <Group header={<Header size="s">Общие друзья</Header>}>
           <HorizontalScroll
             showArrows
             arrowSize="m"
@@ -57,7 +57,7 @@ const HorizontalScrollExample = () => {
           </HorizontalScroll>
         </Group>
 
-        <Group header={<Header mode="secondary">С кнопкой "Показать всё"</Header>}>
+        <Group header={<Header size="s">С кнопкой "Показать всё"</Header>}>
           <CellButton
             before={<Icon16MoreHorizontal aria-hidden />}
             onClick={() => setActivePanel('show-more-case')}

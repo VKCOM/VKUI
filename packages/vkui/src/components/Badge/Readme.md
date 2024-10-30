@@ -13,7 +13,7 @@ const Example = () => {
       <Panel id="badge">
         <PanelHeader>Бейдж</PanelHeader>
 
-        <Group header={<Header mode="secondary">В пунктах меню</Header>}>
+        <Group header={<Header size="s">В пунктах меню</Header>}>
           <Cell
             chevron
             before={<Icon28Notifications />}
@@ -24,7 +24,7 @@ const Example = () => {
           </Cell>
         </Group>
 
-        <Group header={<Header mode="secondary">В переключателях</Header>}>
+        <Group header={<Header size="s">В переключателях</Header>}>
           <Tabs>
             <TabsItem
               selected={tab === 'dialogs'}
