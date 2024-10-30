@@ -51,7 +51,9 @@ export function AppRootStyleContainer({ style, ...props }: AppRootStyleContainer
         userSelectModeClassName,
         tokensClassName,
       )}
-      style={{ ...getSafeAreaInsetsAsCssVariables(safeAreaInsets), ...style }}
+      style={
+        safeAreaInsets ? { ...getSafeAreaInsetsAsCssVariables(safeAreaInsets), ...style } : style
+      }
       {...props}
     />
   );
