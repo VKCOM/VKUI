@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`panel-header-close transforms correctly 1`] = `
+"import { noop, PanelHeaderClose } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <PanelHeaderClose onClick={noop} label={"Закрыть"}></PanelHeaderClose>
+      <PanelHeaderClose onClick={noop} label={<><span>Закрыть</span></>}></PanelHeaderClose>
+      <PanelHeaderClose onClick={noop} label={"Закрыть"}></PanelHeaderClose>
+      <PanelHeaderClose onClick={noop} label="Закрыть" />
+    </React.Fragment>)
+  );
+};"
+`;

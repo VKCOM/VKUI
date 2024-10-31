@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`panel-header-submit transforms correctly 1`] = `
+"import { noop, PanelHeaderSubmit } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    (<React.Fragment>
+      <PanelHeaderSubmit onClick={noop} label={"Закрыть"}></PanelHeaderSubmit>
+      <PanelHeaderSubmit onClick={noop} label={<><span>Закрыть</span></>}></PanelHeaderSubmit>
+      <PanelHeaderSubmit onClick={noop} label={"Закрыть"}></PanelHeaderSubmit>
+      <PanelHeaderSubmit onClick={noop} label="Закрыть" />
+    </React.Fragment>)
+  );
+};"
+`;

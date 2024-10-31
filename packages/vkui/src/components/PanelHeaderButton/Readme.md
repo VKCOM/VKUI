@@ -40,6 +40,7 @@
 ### PanelHeaderBack
 
 Этот компонент используется для показа кнопки назад в панелях в рамках одного `View`. Внутри инкапсулирована логика показа нужной иконки для платформы.
+Также можно передать свойство `label`, и тогда на IOS он будет отображен, а на других платформах будет скрыт, но виден для скринридеров.
 
 ```jsx static
 <PanelHeader before={<PanelHeaderBack onClick={this.props.onBackClick} />}>
@@ -49,7 +50,8 @@
 
 ### PanelHeaderClose
 
-Этот компонент используется для показа кнопки "Отмена" в модальных окнах для закрытия текущего `View` в рамках `Root`. На iOS будет показан текст, передаваемый как `children`, на Android - `<Icon28CancelOutline />` или `<Icon24CancelOutline />`:
+Этот компонент используется для показа кнопки "Отмена" в модальных окнах для закрытия текущего `View` в рамках `Root`. На iOS будет показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28CancelOutline />` или `<Icon24CancelOutline />`:
+Если передать свойство `label`, то на Android и Desktop он будет скрыт, но виден для скринридеров.
 
 ```jsx static
 <PanelHeader before={<PanelHeaderClose onClick={this.props.onCloseClick} />}>
@@ -60,6 +62,7 @@
 ### PanelHeaderEdit
 
 Компонент для отрисовки кнопки **Редактировать** в шапке. Принимает свойство `isActive`, которое определяет состояние кнопки (включен ли режим редактирования).
+Для указания кастомных текстов для состояний можно использовать соответствующие свойства `doneLabel` и `editLabel`. Данные тексты будут видны на IOS, а на Android и Desktop они будет скрыты, но видны для скринридеров.
 
 ```jsx static
 <PanelHeader after={<PanelHeaderEdit onClick={this.props.onEdit}>Готово</PanelHeaderSubmit>}>
@@ -69,7 +72,8 @@
 
 ### PanelHeaderSubmit
 
-Этот компонент используется для показа кнопки "Готово" в модальных окнах для закрытия текущего `View` в рамках `Root` и сохранения какого-либо результата. На iOS будет показан текст, передаваемый как `children`, на Android - `<Icon28DoneOutline />` или `<Icon24DoneOutline />`:
+Этот компонент используется для показа кнопки "Готово" в модальных окнах для закрытия текущего `View` в рамках `Root` и сохранения какого-либо результата. На iOS будет показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28DoneOutline />` или `<Icon24DoneOutline />`:
+Если передать свойство `label`, то на Android и Desktop он будет скрыт, но виден для скринридеров.
 
 ```jsx static
 <PanelHeader after={<PanelHeaderSubmit onClick={this.props.onSubmit}>Готово</PanelHeaderSubmit>}>

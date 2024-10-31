@@ -3,9 +3,12 @@ import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/pl
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
-import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
+import { PanelHeaderClose, type PanelHeaderCloseProps } from '../PanelHeaderClose/PanelHeaderClose';
 import { PanelHeaderEdit, type PanelHeaderEditProps } from '../PanelHeaderEdit/PanelHeaderEdit';
-import { PanelHeaderSubmit } from '../PanelHeaderSubmit/PanelHeaderSubmit';
+import {
+  PanelHeaderSubmit,
+  type PanelHeaderSubmitProps,
+} from '../PanelHeaderSubmit/PanelHeaderSubmit';
 import { PanelHeaderButton, type PanelHeaderButtonProps } from './PanelHeaderButton';
 
 export const PanelHeaderButtonPlayground = (props: ComponentPlaygroundProps) => {
@@ -44,7 +47,7 @@ export const PanelHeaderClosePlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: PanelHeaderButtonProps) => <PanelHeaderClose {...props} />}
+      {(props: PanelHeaderCloseProps) => <PanelHeaderClose {...props} />}
     </ComponentPlayground>
   );
 };
@@ -91,11 +94,11 @@ export const PanelHeaderSubmitPlayground = (props: ComponentPlaygroundProps) => 
       {...props}
       propSets={[
         {
-          children: [undefined, 'Children'],
+          label: [undefined, 'Label'],
         },
       ]}
     >
-      {(props: PanelHeaderButtonProps) => <PanelHeaderSubmit {...props} />}
+      {(props: PanelHeaderSubmitProps) => <PanelHeaderSubmit {...props} />}
     </ComponentPlayground>
   );
 };

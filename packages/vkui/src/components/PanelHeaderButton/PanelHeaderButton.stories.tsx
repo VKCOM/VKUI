@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28AddOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { PanelHeaderBack as PanelHeaderBackCmp } from '../PanelHeaderBack/PanelHeaderBack';
 import { PanelHeaderClose as PanelHeaderCloseCmp } from '../PanelHeaderClose/PanelHeaderClose';
 import {
@@ -49,6 +49,10 @@ export const PanelHeaderBack: Story = {
 export const PanelHeaderEdit: StoryObj<PanelHeaderEditProps> = {
   args: {
     isActive: true,
+  },
+  argTypes: {
+    doneLabel: StringArg,
+    editLabel: StringArg,
   },
   render: (args) => {
     return <PanelHeaderEditCmp {...args} />;
