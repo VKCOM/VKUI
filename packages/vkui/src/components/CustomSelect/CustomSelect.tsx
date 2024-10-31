@@ -471,7 +471,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const selectOption = React.useCallback(
     (index: number) => {
       const item = options[index];
-      setNativeSelectValue(item?.value ?? NOT_SELECTED);
+      setNativeSelectValue(item?.value ?? NOT_SELECTED.NATIVE);
       close();
 
       const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
