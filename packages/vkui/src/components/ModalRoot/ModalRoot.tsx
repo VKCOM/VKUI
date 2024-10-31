@@ -545,7 +545,7 @@ class ModalRootTouchComponent extends React.Component<
     }
 
     return (
-      <ModalPopoutPortal className={styles.host}>
+      <ModalPopoutPortal className={styles.host} usePortal={this.props.usePortal}>
         <TouchRootContext.Provider value={true}>
           <ModalRootContext.Provider value={this.modalRootContext}>
             <Touch

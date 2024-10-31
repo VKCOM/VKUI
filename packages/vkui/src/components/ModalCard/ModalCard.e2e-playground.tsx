@@ -130,6 +130,7 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
         <div style={{ height: 500, transform: 'translateZ(0)' }}>
           <ModalRoot
             activeModal={props.nav}
+            usePortal={false}
             // Note: с включенным фокусом ломаются скриншоты на движке Webkit из-за фокуса сразу
             // на несколько окон
             noFocusToDialog
