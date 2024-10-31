@@ -1,4 +1,4 @@
-import { API, ASTPath, Collection, JSXAttribute, JSXElement, JSXText } from 'jscodeshift';
+import { API, ASTPath, Collection, JSXAttribute, JSXElement } from 'jscodeshift';
 import { removeAttribute } from '../../../codemod-helpers';
 
 export const moveFromChildrenToLabel = (api: API, source: Collection, localName: string) => {

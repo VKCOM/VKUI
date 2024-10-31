@@ -1,5 +1,5 @@
 import { API, FileInfo } from 'jscodeshift';
-import { getImportInfo, removeAttribute, removeProps } from '../../codemod-helpers';
+import { getImportInfo, removeProps } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
 import { removeChildrenFromComponent } from './common/removeChildrenFromComponent';
 
