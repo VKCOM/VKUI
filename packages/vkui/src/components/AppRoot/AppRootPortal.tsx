@@ -26,10 +26,19 @@ export const AppRootPortal = ({
   usePortal,
   className,
 }: AppRootPortalProps): React.ReactNode => {
-  const { setPortalRoot, appRoot, mode, disablePortal } = React.useContext(AppRootContext);
+  const {
+    setPortalRoot,
+    appRoot,
+    mode,
+    disablePortal: disableCreatePortalInGlobalPortalRoot,
+  } = React.useContext(AppRootContext);
   const colorScheme = useColorScheme();
 
-  const canUsePortal = shouldUsePortal(usePortal, mode, Boolean(disablePortal));
+  const canUsePortal = shouldUsePortal(
+    usePortal,
+    mode,
+    Boolean(disableCreatePortalInGlobalPortalRoot),
+  );
   const portalContainer = usePortalContainer(usePortal);
 
   useIsomorphicLayoutEffect(
@@ -67,17 +76,17 @@ export const AppRootPortal = ({
 function shouldUsePortal(
   usePortal: AppRootPortalProps['usePortal'],
   mode: AppRootContextInterface['mode'],
-  disablePortal: boolean,
+  disableCreatePortalInGlobalPortalRoot: boolean,
 ) {
   if (usePortal === undefined) {
-    return disablePortal === false && mode !== 'full';
+    return disableCreatePortalInGlobalPortalRoot === false && mode !== 'full';
   }
 
   if (typeof usePortal !== 'boolean') {
     return true;
   }
 
-  return disablePortal === false && usePortal === true;
+  return disableCreatePortalInGlobalPortalRoot === false && usePortal === true;
 }
 
 function usePortalContainer(usePortal: AppRootPortalProps['usePortal']): HTMLElement | null {
