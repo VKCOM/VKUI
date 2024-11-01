@@ -1,11 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
 import * as React from 'react';
-import { noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { useIsClient } from '../../hooks/useIsClient';
-import { callMultiple } from '../../lib/callMultiple';
 import { BaseGallery } from '../BaseGallery/BaseGallery';
 import { CarouselBase } from '../BaseGallery/CarouselBase/CarouselBase';
 import type { BaseGalleryProps } from '../BaseGallery/types';
@@ -28,8 +25,6 @@ export const Gallery = ({
   onChange,
   bullets,
   looped,
-  onDragStart,
-  onDragEnd,
   ...props
 }: GalleryProps): React.ReactNode => {
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
@@ -41,10 +36,6 @@ export const Gallery = ({
   );
   const childCount = slides.length;
   const isClient = useIsClient();
-  const autoPlayControls = useRef<{ pause: VoidFunction; resume: VoidFunction }>({
-    pause: noop,
-    resume: noop,
-  });
 
   const handleChange: GalleryProps['onChange'] = React.useCallback(
     (current: number) => {
@@ -57,12 +48,7 @@ export const Gallery = ({
     [isControlled, onChange, slideIndex],
   );
 
-  useAutoPlay({
-    timeout,
-    slideIndex,
-    onNext: () => handleChange((slideIndex + 1) % childCount),
-    controls: autoPlayControls,
-  });
+  useAutoPlay(timeout, slideIndex, () => handleChange((slideIndex + 1) % childCount));
 
   // prevent invalid slideIndex
   // any slide index is invalid with no slides, just keep it as is
@@ -85,8 +71,6 @@ export const Gallery = ({
     <Component
       dragDisabled={isControlled && !onChange}
       {...props}
-      onDragStart={callMultiple(onDragStart, autoPlayControls.current.pause)}
-      onDragEnd={callMultiple(onDragEnd, autoPlayControls.current.resume)}
       bullets={childCount > 0 && bullets}
       slideIndex={safeSlideIndex}
       onChange={handleChange}

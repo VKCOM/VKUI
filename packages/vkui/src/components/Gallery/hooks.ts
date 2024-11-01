@@ -1,68 +1,51 @@
-import { type RefObject, useImperativeHandle } from 'react';
 import * as React from 'react';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useDOM } from '../../lib/dom';
 import type { TimeoutId } from '../../types';
 
-export interface AutoPlayConfig {
-  timeout: number;
-  slideIndex: number;
-  onNext: VoidFunction;
-  controls?: RefObject<{
-    pause: VoidFunction;
-    resume: VoidFunction;
-  }>;
-}
-
-export function useAutoPlay({ timeout, slideIndex, onNext, controls }: AutoPlayConfig): void {
+export function useAutoPlay(
+  timeout: number,
+  slideIndex: number,
+  callbackFnProp: VoidFunction,
+): void {
   const { document } = useDOM();
-  const [paused, setPaused] = React.useState(false);
-  const timeoutRef = React.useRef<TimeoutId>(null);
-  const callbackFn = useStableCallback(onNext);
+  const callbackFn = useStableCallback(callbackFnProp);
 
-  // Выносим функции очистки и старта таймера в отдельные функции
-  const clearAutoPlayTimeout = React.useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-  }, []);
+  React.useEffect(
+    function initializeAutoPlay() {
+      if (!document || !timeout) {
+        return;
+      }
 
-  const startAutoPlayTimeout = React.useCallback(() => {
-    if (!document || !timeout || paused) {
-      return;
-    }
+      let timeoutId: TimeoutId = null;
 
-    if (document.visibilityState === 'visible') {
-      clearAutoPlayTimeout();
-      timeoutRef.current = setTimeout(callbackFn, timeout);
-    } else {
-      clearAutoPlayTimeout();
-    }
-  }, [document, timeout, paused, clearAutoPlayTimeout, callbackFn]);
+      const stop = () => {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
+      };
 
-  useImperativeHandle(controls, () => ({
-    pause: () => setPaused(true),
-    resume: () => setPaused(false),
-  }));
+      const start = () => {
+        switch (document.visibilityState) {
+          case 'visible':
+            stop();
+            timeoutId = setTimeout(callbackFn, timeout);
+            break;
+          case 'hidden':
+            stop();
+        }
+      };
 
-  // Очистка таймера при размонтировании компонента
-  React.useEffect(() => {
-    return clearAutoPlayTimeout;
-  }, [clearAutoPlayTimeout]);
+      start();
 
-  // Основной эффект для управления автопроигрыванием
-  React.useEffect(() => {
-    if (!document || !timeout || paused) {
-      return;
-    }
+      document.addEventListener('visibilitychange', start);
 
-    startAutoPlayTimeout();
-    document.addEventListener('visibilitychange', startAutoPlayTimeout);
-
-    return () => {
-      clearAutoPlayTimeout();
-      document.removeEventListener('visibilitychange', startAutoPlayTimeout);
-    };
-  }, [document, timeout, slideIndex, startAutoPlayTimeout, clearAutoPlayTimeout, paused]);
+      return () => {
+        stop();
+        document.removeEventListener('visibilitychange', start);
+      };
+    },
+    [document, timeout, slideIndex, callbackFn],
+  );
 }
