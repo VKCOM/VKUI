@@ -118,7 +118,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     const overflowY = window!.innerWidth > document!.documentElement.clientWidth ? 'scroll' : '';
     const overflowX = window!.innerHeight > document!.documentElement.clientHeight ? 'scroll' : '';
 
-    document!.documentElement.style.setProperty('overscroll-behavior', 'none');
+    Object.assign(document!.documentElement.style, { overscrollBehavior: 'none' });
     Object.assign(document!.body.style, {
       position: 'fixed',
       top: `-${scrollY}px`,
@@ -134,7 +134,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     const scrollY = document!.body.style.top;
     const scrollX = document!.body.style.left;
 
-    document!.documentElement.style.removeProperty('overscroll-behavior');
+    Object.assign(document!.documentElement.style, { overscrollBehavior: '' });
     clearDisableScrollStyle(document!.body);
     window!.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
   }, [document, window]);
