@@ -13,10 +13,18 @@ export interface SplitLayoutProps
     HasRef<HTMLDivElement> {
   /**
    * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
+   *
+   * @deprecated будет удалёно в **VKUI v8**
+   * Начиная с **VKUI v7** компоненты можно располагать в любом
+   * месте приложения в пределах `AppRoot`
    */
   popout?: React.ReactNode;
   /**
    * Свойство для отрисовки `ModalRoot`.
+   *
+   * @deprecated будет удалёно в **VKUI v8**
+   * Начиная с **VKUI v7**  `ModalRoot` можно располагать в любом
+   * месте приложения в пределах `AppRoot`
    */
   modal?: React.ReactNode;
   header?: React.ReactNode;
@@ -39,6 +47,7 @@ export const SplitLayout = ({
   ...restProps
 }: SplitLayoutProps): React.ReactNode => {
   const platform = usePlatform();
+
   const { popoutModalRoot } = React.useContext(AppRootContext);
 
   const rootRef = useExternRef<HTMLDivElement>(popoutModalRoot, getRootRef);
