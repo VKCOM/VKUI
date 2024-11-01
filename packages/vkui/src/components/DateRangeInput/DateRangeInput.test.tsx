@@ -130,4 +130,24 @@ describe('DateRangeInput', () => {
 
     expect(onChange).toBeCalledTimes(0);
   });
+
+  it('should call onCalendarClose callback when calendar was closed', async () => {
+    jest.useFakeTimers();
+    const onCalendarClose = jest.fn();
+    const { container } = render(
+      <DateRangeInput value={[startDate, null]} onCalendarClose={onCalendarClose} />,
+    );
+    const inputLikes = getInputsLike(container);
+    const [dates] = inputLikes;
+
+    await userEvent.click(dates);
+    expect(onCalendarClose).toHaveBeenCalledTimes(0);
+
+    expect(container.contains(document.activeElement)).toBeTruthy();
+    await userEvent.click(screen.getAllByText('15')[0]);
+
+    expect(onCalendarClose).toHaveBeenCalledTimes(1);
+
+    expect(container.contains(document.activeElement)).toBeFalsy();
+  });
 });

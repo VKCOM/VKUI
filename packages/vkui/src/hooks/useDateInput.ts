@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import * as React from 'react';
 import { useDOM } from '../lib/dom';
 import { useBooleanState } from './useBooleanState';
@@ -17,6 +18,7 @@ export interface UseDateInputDependencies<T, D> {
   onInternalValueChange: (value: string[]) => void;
   getInternalValue: (value?: D | undefined) => string[];
   onChange?: (value?: D | undefined) => void;
+  onCalendarClose?: VoidFunction;
 }
 
 export function useDateInput<T extends HTMLElement, D>({
@@ -29,6 +31,7 @@ export function useDateInput<T extends HTMLElement, D>({
   onInternalValueChange,
   getInternalValue,
   value,
+  onCalendarClose,
 }: UseDateInputDependencies<T, D>): {
   rootRef: React.RefObject<HTMLDivElement>;
   calendarRef: React.RefObject<HTMLDivElement>;
@@ -51,14 +54,19 @@ export function useDateInput<T extends HTMLElement, D>({
   const [focusedElement, setFocusedElement] = React.useState<number | null>(null);
   const { window } = useDOM();
 
+  const _onCalendarClose = useCallback(() => {
+    closeCalendar();
+    onCalendarClose?.();
+  }, [closeCalendar, onCalendarClose]);
+
   const removeFocusFromField = React.useCallback(() => {
     if (focusedElement !== null) {
       setFocusedElement(null);
-      closeCalendar();
+      _onCalendarClose();
       window!.getSelection()?.removeAllRanges();
       setInternalValue(getInternalValue(value));
     }
-  }, [focusedElement, closeCalendar, getInternalValue, value, window]);
+  }, [focusedElement, _onCalendarClose, window, getInternalValue, value]);
 
   const handleClickOutside = React.useCallback(
     (e: MouseEvent) => {
@@ -191,7 +199,7 @@ export function useDateInput<T extends HTMLElement, D>({
     calendarRef,
     open,
     openCalendar,
-    closeCalendar,
+    closeCalendar: _onCalendarClose,
     internalValue,
     focusedElement,
     setFocusedElement,
