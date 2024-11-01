@@ -27,6 +27,7 @@ export const ModalRootDesktop = ({
   onClose,
   onClosed,
   modalOverlayTestId,
+  usePortal,
 }: ModalRootWithDOMProps): React.ReactNode => {
   const maskElementRef = React.useRef<HTMLDivElement>(null);
   const maskAnimationFrame = React.useRef<number | undefined>(undefined);
@@ -210,6 +211,7 @@ export const ModalRootDesktop = ({
           hasCustomPanelHeaderAfter && styles.hasCustomPanelHeaderAfterSlot,
           styles.desktop,
         )}
+        usePortal={usePortal}
       >
         <div
           data-testid={modalOverlayTestId}
