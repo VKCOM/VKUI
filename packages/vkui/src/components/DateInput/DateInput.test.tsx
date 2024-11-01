@@ -126,19 +126,23 @@ describe('DateInput', () => {
 
   it('should call onCloseCalendar calendar was closed', async () => {
     jest.useFakeTimers();
-    const onCalendarClose = jest.fn();
-    const { container } = render(<DateInput value={date} onCalendarClose={onCalendarClose} />);
+    const onCalendarOpenChanged = jest.fn();
+    const { container } = render(
+      <DateInput value={date} onCalendarOpenChanged={onCalendarOpenChanged} />,
+    );
     const inputLikes = getInputsLike(container);
 
     const [dates] = inputLikes;
 
     await userEvent.click(dates);
-    expect(onCalendarClose).toHaveBeenCalledTimes(0);
+    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
+    expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
 
     expect(container.contains(document.activeElement)).toBeTruthy();
     await userEvent.click(screen.getByText(`${date.getDate() - 1}`));
 
-    expect(onCalendarClose).toHaveBeenCalledTimes(1);
+    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
+    expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
 
     expect(container.contains(document.activeElement)).toBeFalsy();
   });

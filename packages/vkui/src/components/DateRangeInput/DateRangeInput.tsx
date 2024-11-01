@@ -55,7 +55,7 @@ export interface DateRangeInputProps
     Omit<FormFieldProps, 'maxHeight'> {
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
-  onCalendarClose?: VoidFunction;
+  onCalendarOpenChanged?: (opened: boolean) => void;
   clearFieldLabel?: string;
   showCalendarLabel?: string;
   changeStartDayLabel?: string;
@@ -143,7 +143,7 @@ export const DateRangeInput = ({
   prevMonthIcon,
   nextMonthIcon,
   disableCalendar = false,
-  onCalendarClose,
+  onCalendarOpenChanged,
   renderDayContent,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
@@ -225,7 +225,7 @@ export const DateRangeInput = ({
     onInternalValueChange,
     getInternalValue,
     value,
-    onCalendarClose,
+    onCalendarOpenChanged,
   });
 
   const { sizeY = 'none' } = useAdaptivity();

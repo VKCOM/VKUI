@@ -18,7 +18,7 @@ export interface UseDateInputDependencies<T, D> {
   onInternalValueChange: (value: string[]) => void;
   getInternalValue: (value?: D | undefined) => string[];
   onChange?: (value?: D | undefined) => void;
-  onCalendarClose?: VoidFunction;
+  onCalendarOpenChanged?: (opened: boolean) => void;
 }
 
 export function useDateInput<T extends HTMLElement, D>({
@@ -31,7 +31,7 @@ export function useDateInput<T extends HTMLElement, D>({
   onInternalValueChange,
   getInternalValue,
   value,
-  onCalendarClose,
+  onCalendarOpenChanged,
 }: UseDateInputDependencies<T, D>): {
   rootRef: React.RefObject<HTMLDivElement>;
   calendarRef: React.RefObject<HTMLDivElement>;
@@ -55,9 +55,18 @@ export function useDateInput<T extends HTMLElement, D>({
   const { window } = useDOM();
 
   const _onCalendarClose = useCallback(() => {
-    closeCalendar();
-    onCalendarClose?.();
-  }, [closeCalendar, onCalendarClose]);
+    if (open) {
+      closeCalendar();
+      onCalendarOpenChanged?.(false);
+    }
+  }, [closeCalendar, onCalendarOpenChanged, open]);
+
+  const _onCalendarOpen = useCallback(() => {
+    if (!open) {
+      openCalendar();
+      onCalendarOpenChanged?.(true);
+    }
+  }, [onCalendarOpenChanged, open, openCalendar]);
 
   const removeFocusFromField = React.useCallback(() => {
     if (focusedElement !== null) {
@@ -109,14 +118,14 @@ export function useDateInput<T extends HTMLElement, D>({
 
     if (element) {
       element.focus();
-      openCalendar();
+      _onCalendarOpen();
       range.selectNodeContents(element as Node);
 
       const selection = window!.getSelection();
       selection?.removeAllRanges();
       selection?.addRange(range);
     }
-  }, [disabled, focusedElement, openCalendar, refs, window]);
+  }, [disabled, focusedElement, _onCalendarOpen, refs, window]);
 
   const clear = React.useCallback(() => {
     onChange?.(undefined);
@@ -198,7 +207,7 @@ export function useDateInput<T extends HTMLElement, D>({
     rootRef,
     calendarRef,
     open,
-    openCalendar,
+    openCalendar: _onCalendarOpen,
     closeCalendar: _onCalendarClose,
     internalValue,
     focusedElement,
