@@ -44,6 +44,8 @@ export const SplitLayout = ({
   getRef,
   className,
   center,
+  modal,
+  popout,
   ...restProps
 }: SplitLayoutProps): React.ReactNode => {
   const platform = usePlatform();
@@ -66,6 +68,8 @@ export const SplitLayout = ({
         )}
       >
         {children}
+        {modal}
+        {popout}
       </div>
     </div>
   );
