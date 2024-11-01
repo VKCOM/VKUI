@@ -41,10 +41,7 @@
       </Group>
     </Group>
     <Group style={{ background: 'var(--vkui--color_background_trtiary)' }}>
-      <Group
-        mode="plain"
-        header={<Header mode="secondary">Без обводки и тени</Header>}
-      >
+      <Group mode="plain" header={<Header mode="secondary">Без обводки и тени</Header>}>
         <CardGrid size="l">
           <Card mode="plain">
             <div style={{ height: 96 }} />
