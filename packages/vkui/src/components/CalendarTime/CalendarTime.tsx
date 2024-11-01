@@ -13,7 +13,7 @@ export interface CalendarTimeProps {
   changeHoursLabel?: string;
   changeMinutesLabel?: string;
   onChange?: (value: Date) => void;
-  onClose?: () => void;
+  onDoneButtonClick?: () => void;
   isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
 }
 
@@ -37,7 +37,7 @@ export const CalendarTime = ({
   value,
   doneButtonText = 'Готово',
   onChange,
-  onClose,
+  onDoneButtonClick,
   changeHoursLabel,
   changeMinutesLabel,
   isDayDisabled,
@@ -90,7 +90,7 @@ export const CalendarTime = ({
       </div>
       <div className={styles.button}>
         <AdaptivityProvider sizeY="compact">
-          <Button mode="secondary" onClick={onClose} size="l">
+          <Button mode="secondary" onClick={onDoneButtonClick} size="l">
             {doneButtonText}
           </Button>
         </AdaptivityProvider>
