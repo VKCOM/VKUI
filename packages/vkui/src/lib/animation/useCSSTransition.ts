@@ -43,6 +43,13 @@ export type UseCSSTransition<Ref extends Element = Element> = [
   },
 ];
 
+/**
+ * Хук основан на компоненте `CSSTransition` из библиотеки `react-transition-group`.
+ *
+ * @link https://reactcommunity.org/react-transition-group/css-transition
+ *
+ * @private
+ */
 export const useCSSTransition = <Ref extends Element = Element>(
   inProp?: boolean,
   {

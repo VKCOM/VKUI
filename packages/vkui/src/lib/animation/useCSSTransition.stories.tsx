@@ -18,7 +18,8 @@ interface DemoProps extends UseCSSTransitionOptions {
 }
 
 const story: Meta<DemoProps> = {
-  title: 'Experimental/useCSSTransition',
+  title: 'DevTools/useCSSTransition',
+  tags: ['test'], // скрываем из публичной документации, т.к. хук внутренний
   component: () => <div />,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
