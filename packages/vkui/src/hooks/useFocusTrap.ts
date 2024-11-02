@@ -184,61 +184,64 @@ export const useFocusTrap = (
     [mount, restoreFocusImpl],
   );
 
-  useIsomorphicLayoutEffect(() => {
-    if (!ref.current) {
-      return;
-    }
-
-    const onDocumentKeydown = (event: KeyboardEvent) => {
-      if (disabled) {
+  useIsomorphicLayoutEffect(
+    function initializeFocusTrap() {
+      if (!ref.current) {
         return;
       }
 
-      const pressedKeyResult = pressedKey(event);
+      const onDocumentKeydown = (event: KeyboardEvent) => {
+        if (disabled) {
+          return;
+        }
 
-      switch (pressedKeyResult) {
-        case Keys.TAB: {
-          if (!focusableNodesRef.current.length) {
-            return false;
-          }
+        const pressedKeyResult = pressedKey(event);
 
-          const lastIdx = focusableNodesRef.current.length - 1;
-          const targetIdx = focusableNodesRef.current.findIndex((node) => node === event.target);
-
-          const shouldFocusFirstNode =
-            targetIdx === -1 || (targetIdx === lastIdx && !event.shiftKey);
-
-          if (shouldFocusFirstNode || (targetIdx === 0 && event.shiftKey)) {
-            event.preventDefault();
-
-            const node = focusableNodesRef.current[shouldFocusFirstNode ? 0 : lastIdx];
-
-            if (node !== getActiveElementByAnotherElement(node)) {
-              node.focus();
+        switch (pressedKeyResult) {
+          case Keys.TAB: {
+            if (!focusableNodesRef.current.length) {
+              return false;
             }
 
-            return false;
+            const lastIdx = focusableNodesRef.current.length - 1;
+            const targetIdx = focusableNodesRef.current.findIndex((node) => node === event.target);
+
+            const shouldFocusFirstNode =
+              targetIdx === -1 || (targetIdx === lastIdx && !event.shiftKey);
+
+            if (shouldFocusFirstNode || (targetIdx === 0 && event.shiftKey)) {
+              event.preventDefault();
+
+              const node = focusableNodesRef.current[shouldFocusFirstNode ? 0 : lastIdx];
+
+              if (node !== getActiveElementByAnotherElement(node)) {
+                node.focus();
+              }
+
+              return false;
+            }
+
+            break;
           }
-
-          break;
-        }
-        case Keys.ESCAPE: {
-          if (onClose) {
-            event.preventDefault();
-            onClose();
+          case Keys.ESCAPE: {
+            if (onClose) {
+              event.preventDefault();
+              onClose();
+            }
           }
         }
-      }
 
-      return true;
-    };
+        return true;
+      };
 
-    const doc = getWindow(ref.current).document;
-    doc.addEventListener('keydown', onDocumentKeydown, {
-      capture: true,
-    });
-    return () => {
-      doc.removeEventListener('keydown', onDocumentKeydown, true);
-    };
-  }, [onClose, ref, disabled]);
+      const doc = getWindow(ref.current).document;
+      doc.addEventListener('keydown', onDocumentKeydown, {
+        capture: true,
+      });
+      return () => {
+        doc.removeEventListener('keydown', onDocumentKeydown, true);
+      };
+    },
+    [onClose, ref, disabled],
+  );
 };
