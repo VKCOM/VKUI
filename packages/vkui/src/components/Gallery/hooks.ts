@@ -46,23 +46,21 @@ export function useAutoPlay({ timeout, slideIndex, onNext, controls }: AutoPlayC
     resume: () => setPaused(false),
   }));
 
-  // Очистка таймера при размонтировании компонента
-  React.useEffect(() => {
-    return clearAutoPlayTimeout;
-  }, [clearAutoPlayTimeout]);
-
   // Основной эффект для управления автопроигрыванием
-  React.useEffect(() => {
-    if (!document || !timeout || paused) {
-      return;
-    }
+  React.useEffect(
+    function initializeAutoPlay() {
+      if (!document || !timeout || paused) {
+        return;
+      }
 
-    startAutoPlayTimeout();
-    document.addEventListener('visibilitychange', startAutoPlayTimeout);
+      startAutoPlayTimeout();
+      document.addEventListener('visibilitychange', startAutoPlayTimeout);
 
-    return () => {
-      clearAutoPlayTimeout();
-      document.removeEventListener('visibilitychange', startAutoPlayTimeout);
-    };
-  }, [document, timeout, slideIndex, startAutoPlayTimeout, clearAutoPlayTimeout, paused]);
+      return () => {
+        clearAutoPlayTimeout();
+        document.removeEventListener('visibilitychange', startAutoPlayTimeout);
+      };
+    },
+    [document, timeout, slideIndex, startAutoPlayTimeout, clearAutoPlayTimeout, paused],
+  );
 }
