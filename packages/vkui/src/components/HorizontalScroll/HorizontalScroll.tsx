@@ -1,10 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useDirection } from '../../hooks/useDirection';
-import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
@@ -233,44 +232,33 @@ export const HorizontalScroll = ({
     }
   }, [showArrows, hasPointer, scrollerRef, setCanScrollStart, setCanScrollEnd]);
 
-  const scrollEvent = useEventListener('scroll', calculateArrowsVisibility);
-  React.useEffect(
-    function addScrollerRefToScrollEvent() {
-      if (!scrollerRef.current) {
-        return noop;
-      }
-
-      scrollEvent.add(scrollerRef.current);
-      return scrollEvent.remove;
-    },
-    [scrollEvent, scrollerRef],
-  );
-
   React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
 
-  /**
-   * Прокрутка с помощью любого колеса мыши
-   */
-  const onwheel = React.useCallback(
-    (e: WheelEvent) => {
+  const _onWheel = React.useCallback(
+    (e: React.WheelEvent) => {
       scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });
-      e.preventDefault();
     },
     [scrollerRef],
   );
 
-  const wheelEvent = useEventListener('wheel', onwheel);
-  React.useEffect(
-    function addScrollerRefToWheelEvent() {
-      if (!scrollerRef.current || !scrollOnAnyWheel) {
-        return noop;
-      }
-
-      wheelEvent.add(scrollerRef.current);
-
-      return wheelEvent.remove;
+  /**
+   * Прокрутка с помощью любого колеса мыши
+   */
+  const onScrollWheel = React.useCallback(
+    (e: React.WheelEvent) => {
+      _onWheel(e);
+      e.preventDefault();
     },
-    [wheelEvent, scrollerRef, scrollOnAnyWheel],
+    [_onWheel],
+  );
+
+  const onArrowWheel = React.useCallback(
+    (e: React.WheelEvent) => {
+      if (e.deltaX || (e.deltaY && scrollOnAnyWheel)) {
+        _onWheel(e);
+      }
+    },
+    [_onWheel, scrollOnAnyWheel],
   );
 
   return (
@@ -293,6 +281,7 @@ export const HorizontalScroll = ({
           tabIndex={-1}
           className={classNames(styles.arrow, styles.arrowLeft)}
           onClick={scrollToLeft}
+          onWheel={onArrowWheel}
         />
       )}
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
@@ -305,9 +294,15 @@ export const HorizontalScroll = ({
           tabIndex={-1}
           className={classNames(styles.arrow, styles.arrowRight)}
           onClick={scrollToRight}
+          onWheel={onArrowWheel}
         />
       )}
-      <div className={styles.in} ref={scrollerRef}>
+      <div
+        className={styles.in}
+        ref={scrollerRef}
+        onScroll={calculateArrowsVisibility}
+        onWheel={scrollOnAnyWheel ? onScrollWheel : undefined}
+      >
         <div className={styles.inWrapper}>{children}</div>
       </div>
     </RootComponent>
