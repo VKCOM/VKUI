@@ -4151,7 +4151,7 @@ __metadata:
     commander: "npm:^12.1.0"
     cross-spawn: "npm:^7.0.3"
     jest: "npm:^29.7.0"
-    jscodeshift: "npm:^17.0.0"
+    jscodeshift: "npm:^17.1.1"
     prompts: "npm:^2.4.2"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.6.3"
@@ -10928,9 +10928,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jscodeshift@npm:^17.0.0":
-  version: 17.0.0
-  resolution: "jscodeshift@npm:17.0.0"
+"jscodeshift@npm:^17.1.1":
+  version: 17.1.1
+  resolution: "jscodeshift@npm:17.1.1"
   dependencies:
     "@babel/core": "npm:^7.24.7"
     "@babel/parser": "npm:^7.24.7"
@@ -10948,7 +10948,7 @@ __metadata:
     neo-async: "npm:^2.5.0"
     picocolors: "npm:^1.0.1"
     recast: "npm:^0.23.9"
-    temp: "npm:^0.9.4"
+    tmp: "npm:^0.2.3"
     write-file-atomic: "npm:^5.0.1"
   peerDependencies:
     "@babel/preset-env": ^7.1.6
@@ -10957,7 +10957,7 @@ __metadata:
       optional: true
   bin:
     jscodeshift: bin/jscodeshift.js
-  checksum: 10/d47000c33775336332e1ee431354881ce25a42354a82c712e109f598eac90be747d412c85428e1fa0302136823e44e4f42487746d62752120cd6879665bcef0a
+  checksum: 10/89a92203e2653c68ae2f12332332ca014aeec8c6cd5ab6947ba53334abd97005b94c0c670c47f2878880d01b89775490ca8efe58494d71137c1f6abae630a53d
   languageName: node
   linkType: hard
 
@@ -11998,17 +11998,6 @@ __metadata:
     minipass: "npm:^3.0.0"
     yallist: "npm:^4.0.0"
   checksum: 10/ae0f45436fb51344dcb87938446a32fbebb540d0e191d63b35e1c773d47512e17307bf54aa88326cc6d176594d00e4423563a091f7266c2f9a6872cdc1e234d1
-  languageName: node
-  linkType: hard
-
-"mkdirp@npm:^0.5.1":
-  version: 0.5.6
-  resolution: "mkdirp@npm:0.5.6"
-  dependencies:
-    minimist: "npm:^1.2.6"
-  bin:
-    mkdirp: bin/cmd.js
-  checksum: 10/0c91b721bb12c3f9af4b77ebf73604baf350e64d80df91754dc509491ae93bf238581e59c7188360cec7cb62fc4100959245a42cfe01834efedc5e9d068376c2
   languageName: node
   linkType: hard
 
@@ -14708,17 +14697,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:~2.6.2":
-  version: 2.6.3
-  resolution: "rimraf@npm:2.6.3"
-  dependencies:
-    glob: "npm:^7.1.3"
-  bin:
-    rimraf: ./bin.js
-  checksum: 10/756419f2fa99aa119c46a9fc03e09d84ecf5421a80a72d1944c5088c9e4671e77128527a900a313ed9d3fdbdd37e2ae05486cd7e9116d5812d8c31f2399d7c86
-  languageName: node
-  linkType: hard
-
 "rollup@npm:^4.20.0":
   version: 4.22.4
   resolution: "rollup@npm:4.22.4"
@@ -16087,16 +16065,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"temp@npm:^0.9.4":
-  version: 0.9.4
-  resolution: "temp@npm:0.9.4"
-  dependencies:
-    mkdirp: "npm:^0.5.1"
-    rimraf: "npm:~2.6.2"
-  checksum: 10/38d40564656c6e8e3caee41c592b3cc076d257ab4746ae4a6a179c44eb4a6d3e8a19a08c7716c8e88756bb898d6e56dd0a9e0408249bbcb3c990a178c34d0571
-  languageName: node
-  linkType: hard
-
 "terser-webpack-plugin@npm:^5.3.1, terser-webpack-plugin@npm:^5.3.10, terser-webpack-plugin@npm:^5.3.3":
   version: 5.3.10
   resolution: "terser-webpack-plugin@npm:5.3.10"
@@ -16218,6 +16186,13 @@ __metadata:
   dependencies:
     "@popperjs/core": "npm:^2.9.0"
   checksum: 10/9bd1c6ab68704dd10b8896fd66e28f3b4b4017a32b8802a9d57a565dee1704df45c249d8363bcaca235dbc0d9a7a90d6f1326f1e6b999f7809b36599a3f92eb3
+  languageName: node
+  linkType: hard
+
+"tmp@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "tmp@npm:0.2.3"
+  checksum: 10/7b13696787f159c9754793a83aa79a24f1522d47b87462ddb57c18ee93ff26c74cbb2b8d9138f571d2e0e765c728fb2739863a672b280528512c6d83d511c6fa
   languageName: node
   linkType: hard
 
