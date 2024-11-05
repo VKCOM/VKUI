@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import * as React from 'react';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useDOM } from '../../lib/dom';
@@ -18,8 +19,8 @@ export function useAutoPlay({ timeout, slideIndex, onNext }: AutoPlayConfig): {
   const timeoutRef = React.useRef<TimeoutId>(null);
   const callbackFn = useStableCallback(onNext);
 
-  const pause = useStableCallback(() => setPaused(true));
-  const resume = useStableCallback(() => setPaused(false));
+  const pause = useCallback(() => setPaused(true), []);
+  const resume = useCallback(() => setPaused(false), []);
 
   // Выносим функции очистки и старта таймера в отдельные функции
   const clearAutoPlayTimeout = React.useCallback(() => {
