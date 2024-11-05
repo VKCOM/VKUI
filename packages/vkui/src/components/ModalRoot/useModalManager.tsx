@@ -96,6 +96,7 @@ export function useModalManager(
   initModal: (state: ModalsStateEntry) => void = noop,
 ): ModalTransitionProps {
   const modalsState = React.useRef<ModalsState>({}).current;
+  // eslint-disable-next-line react-compiler/react-compiler
   getModals(children).forEach((Modal) => {
     const modalProps = Modal.props;
     const id = getNavId(modalProps, warn);

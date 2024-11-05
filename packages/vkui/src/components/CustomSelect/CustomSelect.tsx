@@ -726,6 +726,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const resolvedContent = React.useMemo(() => {
     const defaultDropdownContent =
       options.length > 0 ? (
+        // eslint-disable-next-line react-compiler/react-compiler
         <div ref={optionsWrapperRef}>{options.map(renderOption)}</div>
       ) : (
         <Footnote className={styles.empty}>{emptyText}</Footnote>

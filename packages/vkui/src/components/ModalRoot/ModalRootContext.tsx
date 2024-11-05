@@ -43,6 +43,7 @@ export function useModalRegistry(
     return undefined;
   }, []);
 
+  // eslint-disable-next-line react-compiler/react-compiler
   const refs = React.useRef<Required<ModalRefs>>({
     modalElement: (e) => (elements.modalElement = e),
     innerElement: (e) => (elements.innerElement = e),
