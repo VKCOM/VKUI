@@ -3,12 +3,13 @@ import type { AdaptivityProps } from '../../components/AdaptivityProvider/Adapti
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ViewHeight, ViewWidth } from '../../lib/adaptivity';
 import {
-  deviceTypeClassNames,
-  sizeXCompactClassNames,
-  sizeXRegularClassNames,
-  sizeYCompactClassNames,
-  sizeYRegularClassNames,
-  viewWidthClassNames,
+  deviceTypeMediaQueryMapProps,
+  forcedProps,
+  sizeXCompactMediaQueryProps,
+  sizeXRegularMediaQueryProps,
+  sizeYCompactMediaQueryProps,
+  sizeYRegularMediaQueryProps,
+  viewWidthMediaQueryMapProps,
 } from './constants';
 import { useAdaptivityConditionalRender } from './useAdaptivityConditionalRender';
 
@@ -17,32 +18,32 @@ describe(useAdaptivityConditionalRender, () => {
     it('sizeX', () => {
       const { result } = renderHook(useAdaptivityConditionalRender);
       expect(result.current.sizeX).toMatchObject({
-        compact: sizeXCompactClassNames.mq,
-        regular: sizeXRegularClassNames.mq,
+        compact: sizeXCompactMediaQueryProps,
+        regular: sizeXRegularMediaQueryProps,
       });
     });
 
     it('sizeY', () => {
       const { result } = renderHook(useAdaptivityConditionalRender);
       expect(result.current.sizeY).toMatchObject({
-        compact: sizeYCompactClassNames.mq,
-        regular: sizeYRegularClassNames.mq,
+        compact: sizeYCompactMediaQueryProps,
+        regular: sizeYRegularMediaQueryProps,
       });
     });
 
     it('viewWidth', () => {
       const { result } = renderHook(useAdaptivityConditionalRender);
       expect(result.current.viewWidth).toMatchObject({
-        tabletPlus: viewWidthClassNames.tabletPlus.mq,
-        tabletMinus: viewWidthClassNames.tabletMinus.mq,
+        tabletPlus: viewWidthMediaQueryMapProps.tabletPlus,
+        tabletMinus: viewWidthMediaQueryMapProps.tabletMinus,
       });
     });
 
     it('deviceType', () => {
       const { result } = renderHook(useAdaptivityConditionalRender);
       expect(result.current.deviceType).toMatchObject({
-        mobile: deviceTypeClassNames.mobile.mq,
-        desktop: deviceTypeClassNames.desktop.mq,
+        mobile: deviceTypeMediaQueryMapProps.mobile,
+        desktop: deviceTypeMediaQueryMapProps.desktop,
       });
     });
   });
@@ -59,7 +60,7 @@ describe(useAdaptivityConditionalRender, () => {
           sizeX: 'compact',
         });
         expect(result.current.sizeX).toMatchObject({
-          compact: sizeXCompactClassNames['compact'],
+          compact: forcedProps,
           regular: false,
         });
       });
@@ -70,7 +71,7 @@ describe(useAdaptivityConditionalRender, () => {
         });
         expect(result.current.sizeX).toMatchObject({
           compact: false,
-          regular: sizeXRegularClassNames['regular'],
+          regular: forcedProps,
         });
       });
     });
@@ -81,7 +82,7 @@ describe(useAdaptivityConditionalRender, () => {
           sizeY: 'compact',
         });
         expect(result.current.sizeY).toMatchObject({
-          compact: sizeYCompactClassNames['compact'],
+          compact: forcedProps,
           regular: false,
         });
       });
@@ -92,7 +93,7 @@ describe(useAdaptivityConditionalRender, () => {
         });
         expect(result.current.sizeY).toMatchObject({
           compact: false,
-          regular: sizeYRegularClassNames['regular'],
+          regular: forcedProps,
         });
       });
     });
@@ -103,7 +104,7 @@ describe(useAdaptivityConditionalRender, () => {
           viewWidth: ViewWidth.TABLET,
         });
         expect(result.current.viewWidth).toMatchObject({
-          tabletPlus: viewWidthClassNames.tabletPlus.forced,
+          tabletPlus: forcedProps,
           tabletMinus: false,
         });
       });
@@ -114,7 +115,7 @@ describe(useAdaptivityConditionalRender, () => {
         });
         expect(result.current.viewWidth).toMatchObject({
           tabletPlus: false,
-          tabletMinus: viewWidthClassNames.tabletMinus.forced,
+          tabletMinus: forcedProps,
         });
       });
     });
@@ -125,8 +126,8 @@ describe(useAdaptivityConditionalRender, () => {
           viewWidth: ViewWidth.SMALL_MOBILE,
         });
         expect(result.current.deviceType).toMatchObject({
-          mobile: deviceTypeClassNames.mobile.mq,
-          desktop: deviceTypeClassNames.desktop.mq,
+          mobile: deviceTypeMediaQueryMapProps.mobile,
+          desktop: deviceTypeMediaQueryMapProps.desktop,
         });
       });
 
@@ -135,8 +136,8 @@ describe(useAdaptivityConditionalRender, () => {
           viewHeight: ViewHeight.MEDIUM,
         });
         expect(result.current.deviceType).toMatchObject({
-          mobile: deviceTypeClassNames.mobile.mq,
-          desktop: deviceTypeClassNames.desktop.mq,
+          mobile: deviceTypeMediaQueryMapProps.mobile,
+          desktop: deviceTypeMediaQueryMapProps.desktop,
         });
       });
 
@@ -146,7 +147,7 @@ describe(useAdaptivityConditionalRender, () => {
           viewHeight: ViewHeight.MEDIUM,
         });
         expect(result.current.deviceType).toMatchObject({
-          mobile: deviceTypeClassNames.mobile.forced,
+          mobile: forcedProps,
           desktop: false,
         });
       });
@@ -158,7 +159,7 @@ describe(useAdaptivityConditionalRender, () => {
         });
         expect(result.current.deviceType).toMatchObject({
           mobile: false,
-          desktop: deviceTypeClassNames.desktop.forced,
+          desktop: forcedProps,
         });
       });
     });

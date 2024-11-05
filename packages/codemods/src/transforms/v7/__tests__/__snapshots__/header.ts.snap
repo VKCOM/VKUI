@@ -1,18 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`header transforms correctly 1`] = `
-"import { Header } from '@vkontakte/vkui';
+"import { Header, Icon12ChevronOutline, Link } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
+  const aside = (
+    <Link>
+      Показать все
+      {<Icon12ChevronOutline />}
+    </Link>
+  )
+
   return (
     (<React.Fragment>
-      <Header mode="primary" multiline size="l">
+      {/* Проверка изменения size */}
+      <Header multiline size="l">
         Кто может писать мне личные сообщения
       </Header>
-      <Header mode="secondary" multiline size="m">
+      <Header multiline size="m">
         Кто может писать мне личные сообщения
       </Header>
+      {/* Проверка замены aside на after */}
+      <Header
+        subtitle="SOHN — Conrad"
+        subtitleComponent="h3"
+        after={
+          <Link>
+            Показать все
+            {<Icon12ChevronOutline />}
+          </Link>
+        }
+      />
+      <Header
+        subtitle="SOHN — Conrad"
+        subtitleComponent="h3"
+        after={aside}
+      />
+      {/* Проверка удаления mode */}
+      {/* замена Large Primary на xl */}
+      <Header size="xl" subtitle="SOHN — Conrad" />
+      {/* замена Large tertiary на m */}
+      <Header size="m" subtitle="SOHN — Conrad" />
+      {/* замена Regular tertiary на m */}
+      <Header size="m" subtitle="SOHN — Conrad" />
+      {/* замена Regular primary на m */}
+      <Header size="m" subtitle="SOHN — Conrad" />
+      {/* замена Large secondary на m */}
+      <Header size="s" subtitle="SOHN — Conrad" />
+      {/* замена Regular secondary на s */}
+      <Header size="s" subtitle="SOHN — Conrad" />
     </React.Fragment>)
   );
 };"

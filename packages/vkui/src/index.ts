@@ -325,8 +325,6 @@ export type {
 } from './components/CustomSelect/CustomSelect';
 export { CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
 export type { CustomSelectOptionProps } from './components/CustomSelectOption/CustomSelectOption';
-export { DatePicker } from './components/DatePicker/DatePicker';
-export type { DatePickerProps, DatePickerDateFormat } from './components/DatePicker/DatePicker';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
 export type {
   SegmentedControlProps,
@@ -350,7 +348,7 @@ export type { SkeletonProps } from './components/Skeleton/Skeleton';
 export { Div } from './components/Div/Div';
 export type { DivProps } from './components/Div/Div';
 export { Touch } from './components/Touch/Touch';
-export type { TouchProps } from './components/Touch/Touch';
+export type { TouchProps, CustomTouchEvent } from './components/Touch/Touch';
 export { PanelSpinner } from './components/PanelSpinner/PanelSpinner';
 export type { PanelSpinnerProps } from './components/PanelSpinner/PanelSpinner';
 export { PanelHeaderClose } from './components/PanelHeaderClose/PanelHeaderClose';
@@ -413,7 +411,8 @@ export {
 } from './hooks/useAdaptivityWithJSMediaQueries';
 export { useColorScheme } from './hooks/useColorScheme';
 export { usePagination } from './hooks/usePagination';
-export { useOrientationChange } from './hooks/useOrientationChange';
+export { type Orientation, useOrientationChange } from './hooks/useOrientationChange';
+export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
@@ -439,7 +438,10 @@ export {
   getViewWidthByViewportWidth,
   getViewHeightByViewportHeight,
 } from './lib/adaptivity';
-export { type Placement as FloatingPlacement } from './lib/floating';
+export {
+  type Placement as FloatingPlacement,
+  type PlacementWithAuto as FloatingPlacementWithAuto,
+} from './lib/floating';
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';
 export { CustomScrollView } from './components/CustomScrollView/CustomScrollView';

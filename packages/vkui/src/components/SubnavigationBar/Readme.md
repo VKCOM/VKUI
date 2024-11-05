@@ -144,7 +144,7 @@ const SubnavigationBarExample = () => {
                 <SubnavigationButton
                   before={<Icon24Filter />}
                   selected={filtersCount > 0}
-                  expandable
+                  chevron
                   after={
                     filtersCount > 0 && (
                       <Counter size="s">
@@ -190,7 +190,7 @@ const SubnavigationBarExample = () => {
             </Group>
 
             <Group>
-              <SubnavigationBar mode="fixed">
+              <SubnavigationBar fixed>
                 <SubnavigationButton
                   before={<Icon24ScanViewfinderOutline />}
                   size="l"

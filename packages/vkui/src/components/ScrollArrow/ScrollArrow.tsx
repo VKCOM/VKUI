@@ -7,8 +7,8 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './ScrollArrow.module.css';
 
 const stylesSize = {
+  s: styles.sizeS,
   m: styles.sizeM,
-  l: styles.sizeL,
 };
 
 const stylesDirection = {
@@ -27,7 +27,7 @@ const labelDirection = {
 
 const ArrowIcon = ({ size }: Pick<ScrollArrowProps, 'size'>) => {
   let Icon = Icon24Chevron;
-  if (size === 'm') {
+  if (size === 's') {
     Icon = Icon16Chevron;
   }
 
@@ -44,7 +44,7 @@ export interface ScrollArrowProps
   /**
    * Размер стрелки
    */
-  size?: 'm' | 'l';
+  size?: 's' | 'm';
   /**
    * Смещает иконку кнопки навигации по вертикали.
    */
@@ -59,7 +59,7 @@ export interface ScrollArrowProps
  * @see https://vkcom.github.io/VKUI/#/ScrollArrow
  */
 export const ScrollArrow = ({
-  size = 'l',
+  size = 'm',
   offsetY,
   direction,
   label: labelProp,

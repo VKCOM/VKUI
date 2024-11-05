@@ -6,30 +6,30 @@ const Example = () => {
     <View activePanel={activePanel}>
       <Panel id="list">
         <PanelHeader>SimpleCell</PanelHeader>
-        <Group header={<Header mode="secondary">Меню</Header>}>
+        <Group header={<Header size="s">Меню</Header>}>
           <SimpleCell
             onClick={() => setActivePanel('nothing')}
-            expandable="auto"
+            chevron="auto"
             before={<Icon28UserOutline />}
           >
             Аккаунт
           </SimpleCell>
           <SimpleCell
             onClick={() => setActivePanel('nothing')}
-            expandable="auto"
+            chevron="auto"
             before={<Icon28PaletteOutline />}
           >
             Внешний вид
           </SimpleCell>
           <SimpleCell
             onClick={() => setActivePanel('nothing')}
-            expandable="auto"
+            chevron="auto"
             before={<Icon28SettingsOutline />}
           >
             Основные
           </SimpleCell>
         </Group>
-        <Group header={<Header mode="secondary">Настройки</Header>}>
+        <Group header={<Header size="s">Настройки</Header>}>
           <SimpleCell Component="label" after={<Switch defaultChecked />}>
             Сжимать фотографии
           </SimpleCell>
@@ -37,23 +37,19 @@ const Example = () => {
             Сжимать видео
           </SimpleCell>
         </Group>
-        <Group header={<Header mode="secondary">Настройки системы</Header>}>
-          <SimpleCell
-            onClick={() => setActivePanel('nothing')}
-            expandable="auto"
-            indicator="Русский"
-          >
+        <Group header={<Header size="s">Настройки системы</Header>}>
+          <SimpleCell onClick={() => setActivePanel('nothing')} chevron="auto" indicator="Русский">
             Язык
           </SimpleCell>
           <SimpleCell
             onClick={() => setActivePanel('nothing')}
-            expandable="auto"
+            chevron="auto"
             indicator="При использовании"
           >
             Геолокация
           </SimpleCell>
         </Group>
-        <Group header={<Header mode="secondary">Список диалогов</Header>}>
+        <Group header={<Header size="s">Список диалогов</Header>}>
           <SimpleCell
             before={<Avatar size={40} src={getAvatarUrl('user_xyz')} />}
             after={
@@ -77,7 +73,7 @@ const Example = () => {
             Artur Stambultsian
           </SimpleCell>
         </Group>
-        <Group header={<Header mode="secondary">Список друзей</Header>}>
+        <Group header={<Header size="s">Список друзей</Header>}>
           <SimpleCell
             before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />}
             badgeAfterTitle={<Icon12Verified />}

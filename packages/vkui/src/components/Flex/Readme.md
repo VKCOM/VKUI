@@ -14,8 +14,8 @@ const FlexContainer = ({ itemsCount, ...props }) => {
                 src="https://sun9-32.userapi.com/uFzLOK55iY7pC0DHjneEdP9G6gXcXi2Mxj9wVA/wnTmzh_blNM.jpg"
               />
             }
-            header="Для Вас"
-            subheader="Обновлено сегодня"
+            title="Для Вас"
+            subtitle="Обновлено сегодня"
             actions={
               <Button before={<Icon24Play />} onClick={() => {}}>
                 Слушать
@@ -142,35 +142,23 @@ const Example = () => {
         </Checkbox>
         {!complexGap && (
           <FormItem top="gap">
-            <Select
-              value={gap}
-              onChange={(e) => setGap(e.target.value)}
-              options={GapSelectValues}
-            />
+            <Select value={gap} onChange={setGap} options={GapSelectValues} />
           </FormItem>
         )}
         {complexGap && (
           <FormItem top="row gap">
-            <Select
-              value={rowGap}
-              onChange={(e) => setRowGap(e.target.value)}
-              options={GapSelectValues}
-            />
+            <Select value={rowGap} onChange={setRowGap} options={GapSelectValues} />
           </FormItem>
         )}
         {complexGap && (
           <FormItem top="column gap">
-            <Select
-              value={columnGap}
-              onChange={(e) => setColumnGap(e.target.value)}
-              options={GapSelectValues}
-            />
+            <Select value={columnGap} onChange={setColumnGap} options={GapSelectValues} />
           </FormItem>
         )}
         <FormItem top="align">
           <Select
             value={align}
-            onChange={(e) => setAlign(e.target.value)}
+            onChange={setAlign}
             placeholder="Не выбрано"
             options={[
               { label: 'start', value: 'start' },
@@ -185,7 +173,7 @@ const Example = () => {
         <FormItem top="justify">
           <Select
             value={justify}
-            onChange={(e) => setJustify(e.target.value)}
+            onChange={setJustify}
             placeholder="Не выбрано"
             options={[
               { label: 'start', value: 'start' },

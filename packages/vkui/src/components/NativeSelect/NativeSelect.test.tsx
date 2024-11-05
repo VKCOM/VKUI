@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { baselineComponent, userEvent } from '../../testing/utils';
-import { NativeSelect } from './NativeSelect';
+import { NativeSelect, type NativeSelectProps } from './NativeSelect';
 
 const getTarget = () => screen.getByTestId<HTMLSelectElement>('target');
 
@@ -18,9 +18,9 @@ describe('NativeSelect', () => {
 
   it('works correctly with value and onChange', async () => {
     const SelectController = () => {
-      const [value, setValue] = React.useState('0');
+      const [value, setValue] = React.useState<NativeSelectProps['value']>('0');
       return (
-        <NativeSelect data-testid="target" value={value} onChange={(e) => setValue(e.target.value)}>
+        <NativeSelect data-testid="target" value={value} onChange={setValue}>
           <option value="0">Mike</option>
           <option value="1">Josh</option>
         </NativeSelect>

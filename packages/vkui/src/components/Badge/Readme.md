@@ -13,9 +13,9 @@ const Example = () => {
       <Panel id="badge">
         <PanelHeader>Бейдж</PanelHeader>
 
-        <Group header={<Header mode="secondary">В пунктах меню</Header>}>
+        <Group header={<Header size="s">В пунктах меню</Header>}>
           <Cell
-            expandable
+            chevron
             before={<Icon28Notifications />}
             badgeAfterTitle={<Badge>Есть новые</Badge>}
             onClick={noop}
@@ -24,7 +24,7 @@ const Example = () => {
           </Cell>
         </Group>
 
-        <Group header={<Header mode="secondary">В переключателях</Header>}>
+        <Group header={<Header size="s">В переключателях</Header>}>
           <Tabs>
             <TabsItem
               selected={tab === 'dialogs'}
@@ -44,7 +44,7 @@ const Example = () => {
         </Group>
 
         <Tabbar>
-          <TabbarItem text="Новости">
+          <TabbarItem label="Новости">
             <Icon28NewsfeedOutline />
           </TabbarItem>
           <TabbarItem
@@ -53,11 +53,11 @@ const Example = () => {
                 12
               </Counter>
             }
-            text="Сообщения"
+            label="Сообщения"
           >
             <Icon28MessageOutline />
           </TabbarItem>
-          <TabbarItem indicator={<Badge mode="prominent">Новый раздел</Badge>} text="Клипы">
+          <TabbarItem indicator={<Badge mode="prominent">Новый раздел</Badge>} label="Клипы">
             <Icon28ClipOutline />
           </TabbarItem>
         </Tabbar>

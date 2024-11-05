@@ -22,4 +22,18 @@ describe('FormItem', () => {
     // c htmlFor и без topComponent используется "label"
     expect(screen.getByText('Имя').tagName.toLowerCase()).toMatch('label');
   });
+
+  it('check render top node', () => {
+    render(
+      <FormItem
+        top={
+          <FormItem.Top data-testid="top">
+            <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
+            <FormItem.TopAside>0/100</FormItem.TopAside>
+          </FormItem.Top>
+        }
+      />,
+    );
+    expect(screen.queryByTestId('top')).toBeTruthy();
+  });
 });

@@ -16,20 +16,20 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          mode: ['primary', 'secondary', 'tertiary'],
+          size: ['s', 'm', 'l', 'xl'],
           children: ['Кто может оставлять записи на моей странице'],
           multiline: [undefined, true],
         },
         {
-          mode: ['primary'],
-          aside: [<Link key="link">Показать все</Link>],
+          size: ['m'],
+          after: [<Link key="link">Показать все</Link>],
         },
         {
-          mode: ['primary', 'secondary'],
+          size: ['s', 'm', 'l', 'xl'],
           subtitle: ['SOHN — Conrad'],
         },
         {
-          mode: ['primary'],
+          size: ['m'],
           indicator: [
             12,
             <Counter key="counter" size="s" mode="prominent">
@@ -38,13 +38,13 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           ],
         },
         {
-          mode: ['primary'],
+          size: ['m'],
           subtitle: ['SOHN — Conrad'],
-          aside: [<Link key="link">Показать все</Link>],
+          after: [<Link key="link">Показать все</Link>],
           indicator: [12],
         },
         {
-          mode: ['secondary', 'tertiary'],
+          size: ['m'],
           indicator: [
             12,
             <Counter key="counter" size="s" mode="prominent">
@@ -53,40 +53,36 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           ],
         },
         {
-          mode: ['primary'],
-          size: ['m', 'l'],
-        },
-        {
-          mode: ['primary'],
+          size: ['m'],
           children: ['Кто может оставлять записи на моей странице'],
           before: [<Icon28UserCircleFillBlue key="user" />],
         },
         {
-          mode: ['primary'],
+          size: ['m'],
           children: ['Кто может оставлять записи на моей странице'],
           beforeTitle: [<Icon16LockOutline key="beforeTitle" />],
         },
         {
-          mode: ['primary'],
+          size: ['m'],
           children: ['Кто может оставлять записи на моей странице'],
           afterTitle: [<Icon16UnlockOutline key="afterTitle" />],
           multiline: [undefined, true],
         },
         {
-          mode: ['primary'],
+          size: ['m'],
           children: ['Кто может оставлять записи на моей странице'],
           subtitle: ['SOHN — Conrad'],
           beforeSubtitle: [<Icon12Tag key="beforeSubtitle" />],
         },
         {
-          mode: ['primary'],
+          size: ['m'],
           children: ['Кто может оставлять записи на моей странице'],
           subtitle: ['SOHN — Conrad'],
           afterSubtitle: [<Icon12Fire key="afterSubtitle" />],
           multiline: [undefined, true],
         },
         {
-          mode: ['primary', 'secondary', 'tertiary'],
+          size: ['s', 'm', 'l', 'xl'],
           children: ['Кто может оставлять записи на моей странице'],
           before: [<Icon28UserCircleFillBlue key="user" />],
           beforeTitle: [<Icon16LockOutline key="beforeTitle" />],

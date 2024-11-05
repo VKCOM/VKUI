@@ -213,7 +213,7 @@ const Scrollable = () => {
               value: 'secondary',
             },
           ]}
-          onChange={(event) => setMode(event.target.value)}
+          onChange={setMode}
         />
       </FormItem>
       <FormItem top="layoutFillMode">
@@ -233,7 +233,7 @@ const Scrollable = () => {
               value: 'shrinked',
             },
           ]}
-          onChange={(event) => setLayoutFillMode(event.target.value)}
+          onChange={setLayoutFillMode}
         />
       </FormItem>
       <Checkbox onChange={() => setDisabled((prev) => !prev)}>disabled</Checkbox>

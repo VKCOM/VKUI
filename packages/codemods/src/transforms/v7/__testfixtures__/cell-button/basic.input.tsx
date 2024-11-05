@@ -33,6 +33,11 @@ const App = () => {
       <CellButton centered>
         Создать что-нибудь
       </CellButton>
+
+      {/* rename subhead -> overtitle */}
+      <CellButton centered subhead={"Subhead"}>
+        Создать что-нибудь
+      </CellButton>
     </React.Fragment>
   );
 };

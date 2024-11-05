@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
@@ -9,7 +10,7 @@ import { getRandomUser, getRandomUsers } from '../../testing/mock';
 import { Avatar } from '../Avatar/Avatar';
 import { CellButton } from '../CellButton/CellButton';
 import { Checkbox } from '../Checkbox/Checkbox';
-import { DatePicker } from '../DatePicker/DatePicker';
+import { DateInput } from '../DateInput/DateInput';
 import { FormItem } from '../FormItem/FormItem';
 import { Gradient } from '../Gradient/Gradient';
 import { Group } from '../Group/Group';
@@ -127,12 +128,12 @@ export const FullscreenModalPage: Story = {
           <Gradient mode="tint">
             <Placeholder
               icon={<Avatar size={96} src={randomUser.photo_100} />}
-              header={randomUser.first_name + ' ' + randomUser.last_name}
+              title={randomUser.first_name + ' ' + randomUser.last_name}
             ></Placeholder>
           </Gradient>
           <Group
             header={
-              <Header mode="secondary" indicator="25">
+              <Header size="s" indicator="25">
                 Друзья
               </Header>
             }
@@ -153,6 +154,7 @@ export const FullscreenModalPage: Story = {
 
 export const ModalPageWithFilters: Story = {
   render: function Render() {
+    const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>(new Date(1901, 0, 1));
     const { sizeX } = useAdaptivityConditionalRender();
 
     return (
@@ -212,12 +214,11 @@ export const ModalPageWithFilters: Story = {
             </FormItem>
 
             <FormItem top="Дата рождения">
-              <DatePicker
-                min={{ day: 1, month: 1, year: 1901 }}
-                max={{ day: 1, month: 1, year: 2006 }}
-                dayPlaceholder="Д"
-                monthPlaceholder="ММ"
-                yearPlaceholder="ГГ"
+              <DateInput
+                value={dateOfBirth}
+                onChange={setDateOfBirth}
+                minDateTime={new Date(1901, 0, 1)}
+                maxDateTime={new Date(2006, 0, 1)}
               />
             </FormItem>
           </Group>

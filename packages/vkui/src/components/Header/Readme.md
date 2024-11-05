@@ -8,8 +8,7 @@ const Example = () => {
         <PanelHeader>Header</PanelHeader>
         <Group>
           <Header
-            mode="primary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -19,8 +18,7 @@ const Example = () => {
             Плейлисты
           </Header>
           <Header
-            mode="primary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -32,8 +30,7 @@ const Example = () => {
             Плейлисты
           </Header>
           <Header
-            mode="primary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -44,8 +41,7 @@ const Example = () => {
             Плейлисты
           </Header>
           <Header
-            mode="primary"
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -62,8 +58,8 @@ const Example = () => {
         </Group>
         <Group>
           <Header
-            mode="secondary"
-            aside={
+            size="s"
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -73,8 +69,8 @@ const Example = () => {
             Приглашения
           </Header>
           <Header
-            mode="secondary"
-            aside={
+            size="s"
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -85,8 +81,8 @@ const Example = () => {
             Фотографии
           </Header>
           <Header
-            mode="secondary"
-            aside={
+            size="s"
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -102,27 +98,20 @@ const Example = () => {
           </Header>
         </Group>
         <Group>
-          <Header mode="tertiary">Важные</Header>
+          <Header>Важные</Header>
         </Group>
         <Group>
-          <Header mode="primary" multiline>
-            Кто может писать мне личные сообщения
-          </Header>
-          <Header mode="tertiary" multiline>
-            Кто может комментировать мои записи
-          </Header>
-          <Header mode="secondary" multiline>
+          <Header multiline>Кто может писать мне личные сообщения</Header>
+          <Header multiline>Кто может комментировать мои записи</Header>
+          <Header size="s" multiline>
             Кто может оставлять записи на моей странице
           </Header>
         </Group>
         <Group>
-          <Header mode="primary" size="l">
-            Большой заголовок
-          </Header>
+          <Header size="xl">Большой заголовок</Header>
         </Group>
         <Group>
           <Header
-            mode="primary"
             before={<Icon28UserCircleFillBlue />}
             beforeTitle={<Icon16LockOutline />}
             afterTitle={<Icon16UnlockOutline />}
@@ -135,7 +124,7 @@ const Example = () => {
                 3
               </Counter>
             }
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}
@@ -145,7 +134,6 @@ const Example = () => {
             Плейлисты
           </Header>
           <Header
-            mode="primary"
             before={<Icon28UserCircleFillBlue />}
             beforeTitle={<Icon16LockOutline />}
             afterTitle={<Icon16UnlockOutline />}
@@ -159,7 +147,7 @@ const Example = () => {
                 3
               </Counter>
             }
-            aside={
+            after={
               <Link>
                 Показать все
                 {platform === 'vkcom' && <Icon12ChevronOutline />}

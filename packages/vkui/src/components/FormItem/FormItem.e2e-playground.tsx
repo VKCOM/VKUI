@@ -113,7 +113,7 @@ export const FormItemTopAsidePlayground = (props: ComponentPlaygroundProps) => {
       {({ topLabel, topAside, ...props }: FormItemTopAsideProps) => (
         <FormItem
           {...props}
-          topNode={
+          top={
             <FormItem.Top>
               {topLabel}
               {topAside}

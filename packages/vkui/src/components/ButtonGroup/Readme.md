@@ -32,7 +32,7 @@ const ButtonGroupPropsForm = ({
         <FormItem top="mode">
           <Select
             value={mode}
-            onChange={(e) => handleChange('mode', e.target.value)}
+            onChange={(newValue) => handleChange('mode', newValue)}
             options={[
               { label: 'vertical', value: 'vertical' },
               { label: 'horizontal', value: 'horizontal' },
@@ -43,7 +43,7 @@ const ButtonGroupPropsForm = ({
       <FormItem top="gap">
         <Select
           value={gap}
-          onChange={(e) => handleChange('gap', e.target.value)}
+          onChange={(newValue) => handleChange('gap', newValue)}
           options={[
             { label: 'none', value: 'none' },
             { label: 'space', value: 'space' },
@@ -55,7 +55,7 @@ const ButtonGroupPropsForm = ({
       <FormItem top="align">
         <Select
           value={align}
-          onChange={(e) => handleChange('align', e.target.value)}
+          onChange={(newValue) => handleChange('align', newValue)}
           options={[
             { label: 'left', value: 'left' },
             { label: 'center', value: 'center' },
@@ -402,7 +402,7 @@ const Example = () => {
         <FormItem top="sizeY">
           <Select
             value={sizeY}
-            onChange={(e) => setSizeY(e.target.value)}
+            onChange={setSizeY}
             options={[
               { label: 'compact', value: 'compact' },
               { label: 'regular', value: 'regular' },

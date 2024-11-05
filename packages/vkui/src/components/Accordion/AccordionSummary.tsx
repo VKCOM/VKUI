@@ -7,7 +7,7 @@ import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { AccordionContext } from './AccordionContext';
 import styles from './Accordion.module.css';
 
-export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'expandable'> {
+export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'chevron'> {
   /**
    * Иконка для раскрытия контента.
    */

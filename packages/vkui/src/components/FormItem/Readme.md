@@ -43,13 +43,11 @@
 
 Компонент `<FormItem.TopAside>` отвечает за отрисовку дополнительного контента справа от заголовка поля.
 
-> Обратите внимание, что составной компонент необходимо прокидывать в свойство `topNode`, а не `top`
-
 Пример использования:
 
 ```jsx static
 <FormItem
-  topNode={
+  top={
     <FormItem.Top>
       <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
       <FormItem.TopAside>0/100</FormItem.TopAside>
@@ -96,16 +94,21 @@ const Example = () => {
     }
   };
 
+  const setStateActionsMap = {
+    email: updateEmail,
+    purpose: setPurpose,
+    about: setAbout,
+  };
+
   const onChange = (e) => {
     const { name, value } = e.currentTarget;
-
-    const setStateAction = {
-      email: updateEmail,
-      purpose: setPurpose,
-      about: setAbout,
-    }[name];
-
+    const setStateAction = setStateActionsMap[name];
     setStateAction && setStateAction(value);
+  };
+
+  const onSelectChange = (name, newValue) => {
+    const setStateAction = setStateActionsMap[name];
+    setStateAction && setStateAction(newValue);
   };
 
   const onShowPatronymic = () => setShowPatronymic(true);
@@ -225,7 +228,7 @@ const Example = () => {
               <Select
                 id="purpose-of-the-trip-select-id"
                 placeholder="Выберите цель поездки"
-                onChange={onChange}
+                onChange={(newValue) => onSelectChange('purpose', newValue)}
                 value={purpose}
                 name="purpose"
                 required
@@ -246,7 +249,7 @@ const Example = () => {
               />
             </FormItem>
             <FormItem
-              topNode={
+              top={
                 <FormItem.Top>
                   <FormItem.TopLabel htmlFor="about">О себе</FormItem.TopLabel>
                   <FormItem.TopAside>{about.length}/100</FormItem.TopAside>

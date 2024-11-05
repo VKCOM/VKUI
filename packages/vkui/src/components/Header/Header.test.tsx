@@ -9,100 +9,72 @@ const getTypographyTagNameByText = (text: string) => screen.getByText(text).tagN
 describe('Header', () => {
   baselineComponent((props) => <Header {...props}>Title</Header>);
 
-  it('[typography] HeaderContent is h2 on ANDROID regardless of mode and size', () => {
+  it('[typography] HeaderContent is h2 on ANDROID regardless size', () => {
     render(
       <ConfigProvider platform="android">
-        <Header mode="primary">Русский</Header>
-        <Header mode="secondary">English</Header>
-        <Header mode="tertiary">Espanõl</Header>
-        <Header mode="primary" size="l">
-          Français
-        </Header>
-        <Header mode="secondary" size="l">
-          Deutsch
-        </Header>
-        <Header mode="tertiary" size="l">
-          中國人
-        </Header>
+        <Header size="s">Русский</Header>
+        <Header size="m">English</Header>
+        <Header size="l">Espanõl</Header>
+        <Header size="xl">Français</Header>
       </ConfigProvider>,
     );
     expect(screen.getByText('Русский').parentElement?.tagName.toLowerCase()).toMatch('h2');
     expect(screen.getByText('English').parentElement?.tagName.toLowerCase()).toMatch('h2');
     expect(screen.getByText('Espanõl').parentElement?.tagName.toLowerCase()).toMatch('h2');
     expect(screen.getByText('Français').parentElement?.tagName.toLowerCase()).toMatch('h2');
-    expect(screen.getByText('Deutsch').parentElement?.tagName.toLowerCase()).toMatch('h2');
-    expect(screen.getByText('中國人').parentElement?.tagName.toLowerCase()).toMatch('h2');
   });
 
-  it('[typography] HeaderContent is h2 on IOS regardless of mode and size', () => {
+  it('[typography] HeaderContent is h2 on IOS regardless of size', () => {
     render(
       <ConfigProvider platform="ios">
-        <Header mode="primary">Русский</Header>
-        <Header mode="secondary">English</Header>
-        <Header mode="tertiary">Espanõl</Header>
-        <Header mode="primary" size="l">
-          Français
-        </Header>
-        <Header mode="secondary" size="l">
-          Deutsch
-        </Header>
-        <Header mode="tertiary" size="l">
-          中國人
-        </Header>
+        <Header size="s">Русский</Header>
+        <Header size="m">English</Header>
+        <Header size="l">Espanõl</Header>
+        <Header size="xl">Français</Header>
       </ConfigProvider>,
     );
     expect(screen.getByText('Русский').parentElement?.tagName.toLowerCase()).toMatch('h2');
     expect(screen.getByText('English').parentElement?.tagName.toLowerCase()).toMatch('h2');
     expect(screen.getByText('Espanõl').parentElement?.tagName.toLowerCase()).toMatch('h2');
     expect(screen.getByText('Français').parentElement?.tagName.toLowerCase()).toMatch('h2');
-    expect(screen.getByText('Deutsch').parentElement?.tagName.toLowerCase()).toMatch('h2');
-    expect(screen.getByText('中國人').parentElement?.tagName.toLowerCase()).toMatch('h2');
   });
 
-  it('[typography] HeaderContent is h2 on VKCOM regardless of mode and size', () => {
+  it('[typography] HeaderContent is h2 on VKCOM regardless of size', () => {
     render(
       <ConfigProvider platform="vkcom">
-        <Header mode="primary">Русский</Header>
-        <Header mode="secondary">English</Header>
-        <Header mode="tertiary">Espanõl</Header>
-        <Header mode="primary" size="l">
-          Français
-        </Header>
-        <Header mode="secondary" size="l">
-          Deutsch
-        </Header>
-        <Header mode="tertiary" size="l">
-          中國人
-        </Header>
+        <Header size="s">Русский</Header>
+        <Header size="m">English</Header>
+        <Header size="l">Espanõl</Header>
+        <Header size="xl">Français</Header>
       </ConfigProvider>,
     );
     expect(screen.getByText('Русский').parentElement?.tagName.toLowerCase()).toMatch('h2');
     expect(screen.getByText('English').parentElement?.tagName.toLowerCase()).toMatch('h2');
     expect(screen.getByText('Espanõl').parentElement?.tagName.toLowerCase()).toMatch('h2');
     expect(screen.getByText('Français').parentElement?.tagName.toLowerCase()).toMatch('h2');
-    expect(screen.getByText('Deutsch').parentElement?.tagName.toLowerCase()).toMatch('h2');
-    expect(screen.getByText('中國人').parentElement?.tagName.toLowerCase()).toMatch('h2');
   });
 
-  it('[typography] HeaderSubtitle is span by default regardless of mode', () => {
+  it('[typography] HeaderSubtitle is span by default regardless of size', () => {
     render(
       <Fragment>
-        <Header mode="primary" subtitle="Русский" />
-        <Header mode="secondary" subtitle="English" />
-        <Header mode="tertiary" subtitle="Espanõl" />
+        <Header size="s" subtitle="Русский" />
+        <Header size="m" subtitle="English" />
+        <Header size="l" subtitle="Espanõl" />
+        <Header size="xl" subtitle="Français" />
       </Fragment>,
     );
     expect(getTypographyTagNameByText('Русский')).toMatch('span');
     expect(getTypographyTagNameByText('English')).toMatch('span');
     expect(getTypographyTagNameByText('Espanõl')).toMatch('span');
+    expect(getTypographyTagNameByText('Français')).toMatch('span');
   });
 
-  it('[typography] HeaderSubtitle is h3 with subtitleComponent prop regardless of mode', () => {
+  it('[typography] HeaderSubtitle is h3 with subtitleComponent prop regardless of size', () => {
     render(
       <Fragment>
-        <Header mode="primary" subtitle="Русский" subtitleComponent="h3" />
-        <Header mode="secondary" subtitle="English" subtitleComponent="h3" />
-        <Header mode="tertiary" subtitle="Espanõl" subtitleComponent="h3" />
+        <Header size="s" subtitle="Русский" subtitleComponent="h3" />
+        <Header size="s" subtitle="English" subtitleComponent="h3" />
+        <Header size="s" subtitle="Espanõl" subtitleComponent="h3" />
       </Fragment>,
     );
     expect(getTypographyTagNameByText('Русский')).toMatch('h3');
@@ -114,13 +86,13 @@ describe('Header', () => {
     render(
       <Fragment>
         <ConfigProvider platform="android">
-          <Header aside="Русский" />
+          <Header after="Русский" />
         </ConfigProvider>
         <ConfigProvider platform="ios">
-          <Header aside="English" />
+          <Header after="English" />
         </ConfigProvider>
         <ConfigProvider platform="vkcom">
-          <Header aside="Espanõl" />
+          <Header after="Espanõl" />
         </ConfigProvider>
       </Fragment>,
     );

@@ -212,7 +212,7 @@ const ProfilePanelContent = ({ onSettingsClick, onBack }) => {
       >
         <HorizontalScroll>
           {getRandomUsers(15).map((user) => (
-            <HorizontalCell key={user.id} size="s" header={user.first_name}>
+            <HorizontalCell key={user.id} size="s" title={user.first_name}>
               <Avatar size={56} src={user.photo_100} />
             </HorizontalCell>
           ))}

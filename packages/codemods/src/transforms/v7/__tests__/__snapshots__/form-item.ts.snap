@@ -23,7 +23,7 @@ const App = () => {
       </FormItem>
       {/* test 2: should find TopLabel inside topNode prop */}
       <FormItem
-        topNode={
+        top={
           <FormItem.Top>
             <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
             <FormItem.TopAside>0/100</FormItem.TopAside>
