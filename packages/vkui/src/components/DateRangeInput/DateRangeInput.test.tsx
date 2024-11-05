@@ -143,7 +143,7 @@ describe('DateRangeInput', () => {
     jest.useFakeTimers();
     const onCalendarOpenChanged = jest.fn();
     const { container } = render(
-      <DateRangeInput value={[startDate, null]} onCalendarOpenChanged={onCalendarOpenChanged} />,
+      <DateRangeInput value={[startDate, endDate]} onCalendarOpenChanged={onCalendarOpenChanged} />,
     );
     const inputLikes = getInputsLike(container);
     const [dates] = inputLikes;
@@ -154,7 +154,7 @@ describe('DateRangeInput', () => {
     expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
 
     expect(container.contains(document.activeElement)).toBeTruthy();
-    await userEvent.click(screen.getAllByText('15')[0]);
+    await userEvent.click(screen.getAllByText('15')[1]);
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
     expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
