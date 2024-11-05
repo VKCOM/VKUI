@@ -96,7 +96,12 @@ export const CalendarTime = ({
       {doneButtonShow && (
         <div className={styles.button}>
           <AdaptivityProvider sizeY="compact">
-            <Button mode="secondary" onClick={onDoneButtonClick} size="l" disabled={doneButtonDisabled}>
+            <Button
+              mode="secondary"
+              onClick={onDoneButtonClick}
+              size="l"
+              disabled={doneButtonDisabled}
+            >
               {doneButtonText}
             </Button>
           </AdaptivityProvider>
