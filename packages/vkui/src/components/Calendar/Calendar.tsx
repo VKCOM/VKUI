@@ -54,7 +54,7 @@ export interface CalendarProps
    * Позволяет запретить выбор даты.
    */
   shouldDisableDate?: (value: Date) => boolean;
-  onClose?: () => void;
+  onDoneButtonClick?: () => void;
   /**
    * Дата отображаемого месяца.
    * При использовании обновление даты должно происходить вне компонента.
@@ -87,7 +87,7 @@ export const Calendar = ({
   disablePast,
   disableFuture,
   shouldDisableDate,
-  onClose,
+  onDoneButtonClick,
   enableTime = false,
   doneButtonText,
   weekStartsOn = 1,
@@ -231,7 +231,7 @@ export const Calendar = ({
           <CalendarTime
             value={value}
             onChange={onChange}
-            onClose={onClose}
+            onDoneButtonClick={onDoneButtonClick}
             doneButtonText={doneButtonText}
             changeHoursLabel={changeHoursLabel}
             changeMinutesLabel={changeMinutesLabel}
