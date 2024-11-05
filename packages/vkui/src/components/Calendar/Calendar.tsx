@@ -14,7 +14,14 @@ import styles from './Calendar.module.css';
 
 export interface CalendarProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
-    Pick<CalendarTimeProps, 'changeHoursLabel' | 'changeMinutesLabel'>,
+    Pick<
+      CalendarTimeProps,
+      | 'changeHoursLabel'
+      | 'changeMinutesLabel'
+      | 'doneButtonText'
+      | 'doneButtonDisabled'
+      | 'doneButtonShow'
+    >,
     Pick<
       CalendarHeaderProps,
       | 'prevMonthLabel'
@@ -42,7 +49,6 @@ export interface CalendarProps
   disableFuture?: boolean;
   enableTime?: boolean;
   disablePickers?: boolean;
-  doneButtonText?: string;
   changeDayLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   showNeighboringMonth?: boolean;
@@ -88,6 +94,8 @@ export const Calendar = ({
   onClose,
   enableTime = false,
   doneButtonText,
+  doneButtonDisabled,
+  doneButtonShow,
   weekStartsOn = 1,
   disablePickers,
   changeHoursLabel = 'Изменить час',
@@ -234,6 +242,8 @@ export const Calendar = ({
             onChange={onChange}
             onClose={onClose}
             doneButtonText={doneButtonText}
+            doneButtonDisabled={doneButtonDisabled}
+            doneButtonShow={doneButtonShow}
             changeHoursLabel={changeHoursLabel}
             changeMinutesLabel={changeMinutesLabel}
             isDayDisabled={minDateTime || maxDateTime ? isDayDisabled : undefined}
