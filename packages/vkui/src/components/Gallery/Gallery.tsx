@@ -1,8 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
 import * as React from 'react';
-import { noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { useIsClient } from '../../hooks/useIsClient';
 import { callMultiple } from '../../lib/callMultiple';
@@ -41,10 +39,6 @@ export const Gallery = ({
   );
   const childCount = slides.length;
   const isClient = useIsClient();
-  const autoPlayControls = useRef<{ pause: VoidFunction; resume: VoidFunction }>({
-    pause: noop,
-    resume: noop,
-  });
 
   const handleChange: GalleryProps['onChange'] = React.useCallback(
     (current: number) => {
@@ -57,11 +51,10 @@ export const Gallery = ({
     [isControlled, onChange, slideIndex],
   );
 
-  useAutoPlay({
+  const autoPlayControls = useAutoPlay({
     timeout,
     slideIndex,
     onNext: () => handleChange((slideIndex + 1) % childCount),
-    controls: autoPlayControls,
   });
 
   // prevent invalid slideIndex
@@ -85,8 +78,8 @@ export const Gallery = ({
     <Component
       dragDisabled={isControlled && !onChange}
       {...props}
-      onDragStart={callMultiple(onDragStart, autoPlayControls.current.pause)}
-      onDragEnd={callMultiple(onDragEnd, autoPlayControls.current.resume)}
+      onDragStart={callMultiple(onDragStart, autoPlayControls.pause)}
+      onDragEnd={callMultiple(onDragEnd, autoPlayControls.resume)}
       bullets={childCount > 0 && bullets}
       slideIndex={safeSlideIndex}
       onChange={handleChange}

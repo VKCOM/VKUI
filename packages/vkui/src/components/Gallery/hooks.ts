@@ -1,4 +1,3 @@
-import { type RefObject, useImperativeHandle } from 'react';
 import * as React from 'react';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useDOM } from '../../lib/dom';
@@ -8,17 +7,19 @@ export interface AutoPlayConfig {
   timeout: number;
   slideIndex: number;
   onNext: VoidFunction;
-  controls?: RefObject<{
-    pause: VoidFunction;
-    resume: VoidFunction;
-  }>;
 }
 
-export function useAutoPlay({ timeout, slideIndex, onNext, controls }: AutoPlayConfig): void {
+export function useAutoPlay({ timeout, slideIndex, onNext }: AutoPlayConfig): {
+  pause: VoidFunction;
+  resume: VoidFunction;
+} {
   const { document } = useDOM();
   const [paused, setPaused] = React.useState(false);
   const timeoutRef = React.useRef<TimeoutId>(null);
   const callbackFn = useStableCallback(onNext);
+
+  const pause = useStableCallback(() => setPaused(true));
+  const resume = useStableCallback(() => setPaused(false));
 
   // Выносим функции очистки и старта таймера в отдельные функции
   const clearAutoPlayTimeout = React.useCallback(() => {
@@ -41,11 +42,6 @@ export function useAutoPlay({ timeout, slideIndex, onNext, controls }: AutoPlayC
     }
   }, [document, timeout, paused, clearAutoPlayTimeout, callbackFn]);
 
-  useImperativeHandle(controls, () => ({
-    pause: () => setPaused(true),
-    resume: () => setPaused(false),
-  }));
-
   // Основной эффект для управления автопроигрыванием
   React.useEffect(
     function initializeAutoPlay() {
@@ -63,4 +59,9 @@ export function useAutoPlay({ timeout, slideIndex, onNext, controls }: AutoPlayC
     },
     [document, timeout, slideIndex, startAutoPlayTimeout, clearAutoPlayTimeout, paused],
   );
+
+  return {
+    resume,
+    pause,
+  };
 }

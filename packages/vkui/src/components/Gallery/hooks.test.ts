@@ -38,25 +38,17 @@ describe(useAutoPlay, () => {
   it('check controls working', () => {
     jest.useFakeTimers();
     const callback = jest.fn();
-    const controls = {
-      current: {
-        pause: noop,
-        resume: noop,
-      },
-    };
 
     let visibilityState: Document['visibilityState'] = 'visible';
 
     jest.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
 
-    const res = renderHook(() =>
-      useAutoPlay({ timeout: 100, slideIndex: 0, onNext: callback, controls }),
-    );
+    const res = renderHook(() => useAutoPlay({ timeout: 100, slideIndex: 0, onNext: callback }));
     jest.runAllTimers();
     expect(callback).toHaveBeenCalledTimes(1);
 
     // Останавливаем работу хука
-    controls.current.pause();
+    res.result.current.pause();
     res.rerender();
     // Срабатывает события visibilityChange
     fireEvent(document, new Event('visibilitychange'));
@@ -65,7 +57,7 @@ describe(useAutoPlay, () => {
     expect(callback).toHaveBeenCalledTimes(1);
 
     // Восстанавливаем работу хука
-    controls.current.resume();
+    res.result.current.resume();
     res.rerender();
     // Срабатывает события visibilityChange
     fireEvent(document, new Event('visibilitychange'));
