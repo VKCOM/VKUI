@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
@@ -10,6 +11,8 @@ import styles from './CalendarTime.module.css';
 export interface CalendarTimeProps {
   value: Date;
   doneButtonText?: string;
+  doneButtonShow?: boolean;
+  doneButtonDisabled?: boolean;
   changeHoursLabel?: string;
   changeMinutesLabel?: string;
   onChange?: (value: Date) => void;
@@ -35,12 +38,14 @@ for (let i = 0; i < 60; i += 1) {
 
 export const CalendarTime = ({
   value,
-  doneButtonText = 'Готово',
   onChange,
   onDoneButtonClick,
   changeHoursLabel,
   changeMinutesLabel,
   isDayDisabled,
+  doneButtonText = 'Готово',
+  doneButtonDisabled = false,
+  doneButtonShow = true,
 }: CalendarTimeProps): React.ReactNode => {
   const localHours = isDayDisabled
     ? hours.map((hour) => {
@@ -64,7 +69,7 @@ export const CalendarTime = ({
   );
 
   return (
-    <div className={styles.host}>
+    <div className={classNames(styles.host, !doneButtonShow && styles.host__withoutDone)}>
       <div className={styles.picker}>
         <AdaptivityProvider sizeY="compact">
           <CustomSelect
@@ -88,13 +93,20 @@ export const CalendarTime = ({
           />
         </AdaptivityProvider>
       </div>
-      <div className={styles.button}>
-        <AdaptivityProvider sizeY="compact">
-          <Button mode="secondary" onClick={onDoneButtonClick} size="l">
-            {doneButtonText}
-          </Button>
-        </AdaptivityProvider>
-      </div>
+      {doneButtonShow && (
+        <div className={styles.button}>
+          <AdaptivityProvider sizeY="compact">
+            <Button
+              mode="secondary"
+              onClick={onDoneButtonClick}
+              size="l"
+              disabled={doneButtonDisabled}
+            >
+              {doneButtonText}
+            </Button>
+          </AdaptivityProvider>
+        </div>
+      )}
     </div>
   );
 };
