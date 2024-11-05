@@ -33,6 +33,18 @@ export const CalendarPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           value: [new Date('1970-05-05')],
+          enableTime: [true],
+          doneButtonText: ['Done'],
+          doneButtonShow: [true, false],
+        },
+        {
+          value: [new Date('1970-05-05')],
+          enableTime: [true],
+          doneButtonShow: [true],
+          doneButtonDisabled: [true],
+        },
+        {
+          value: [new Date('1970-05-05')],
           nextMonthIcon: [
             undefined,
             <span key="next" className={TEST_CLASS_NAMES.CONTENT}>
