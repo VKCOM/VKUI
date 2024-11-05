@@ -142,17 +142,35 @@ const Example = () => {
         </Checkbox>
         {!complexGap && (
           <FormItem top="gap">
-            <Select value={gap} onChange={setGap} options={GapSelectValues} />
+            <Select
+              value={gap}
+              placeholder="Не выбрано"
+              onChange={setGap}
+              options={GapSelectValues}
+              allowClearButton
+            />
           </FormItem>
         )}
         {complexGap && (
           <FormItem top="row gap">
-            <Select value={rowGap} onChange={setRowGap} options={GapSelectValues} />
+            <Select
+              value={rowGap}
+              placeholder="Не выбрано"
+              onChange={setRowGap}
+              options={GapSelectValues}
+              allowClearButton
+            />
           </FormItem>
         )}
         {complexGap && (
           <FormItem top="column gap">
-            <Select value={columnGap} onChange={setColumnGap} options={GapSelectValues} />
+            <Select
+              value={columnGap}
+              placeholder="Не выбрано"
+              onChange={setColumnGap}
+              options={GapSelectValues}
+              allowClearButton
+            />
           </FormItem>
         )}
         <FormItem top="align">
