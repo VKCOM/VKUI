@@ -199,6 +199,7 @@ export type { InfoRowProps } from './components/InfoRow/InfoRow';
 export { Gallery } from './components/Gallery/Gallery';
 export type { GalleryProps } from './components/Gallery/Gallery';
 export { Avatar } from './components/Avatar/Avatar';
+export type { GetInitialsFontSizeType } from './components/Avatar/helpers';
 export type {
   AvatarProps,
   AvatarBadgeProps,
