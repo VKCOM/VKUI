@@ -1,5 +1,4 @@
 import { fireEvent, renderHook } from '@testing-library/react';
-import { noop } from '@vkontakte/vkjs';
 import { useAutoPlay } from './hooks';
 
 describe(useAutoPlay, () => {
