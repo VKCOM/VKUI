@@ -293,7 +293,13 @@ export type { DropZoneProps } from './components/DropZone/DropZone';
 export { Input } from './components/Input/Input';
 export type { InputProps } from './components/Input/Input';
 export { Chip } from './components/ChipsInputBase/Chip/Chip';
-export type { ChipProps, ChipOption, RenderChipProps } from './components/ChipsInputBase/types';
+export type {
+  ChipProps,
+  ChipOption,
+  RenderChipProps,
+  ChipOptionValue,
+  ChipOptionLabel,
+} from './components/ChipsInputBase/types';
 export { ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
 export { ChipsSelect } from './components/ChipsSelect/ChipsSelect';
@@ -446,6 +452,7 @@ export {
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';
 export { CustomScrollView } from './components/CustomScrollView/CustomScrollView';
+export type { CustomScrollViewProps } from './components/CustomScrollView/CustomScrollView';
 export { Popper } from './components/Popper/Popper';
 export type { PopperProps } from './components/Popper/Popper';
 
