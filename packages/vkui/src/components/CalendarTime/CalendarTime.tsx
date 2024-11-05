@@ -69,7 +69,12 @@ export const CalendarTime = ({
   );
 
   return (
-    <div className={classNames(styles['CalendarTime'], !doneButtonShow && styles['CalendarTime__withoutDone'])}>
+    <div
+      className={classNames(
+        styles['CalendarTime'],
+        !doneButtonShow && styles['CalendarTime__withoutDone'],
+      )}
+    >
       <div className={styles['CalendarTime__picker']}>
         <AdaptivityProvider sizeY="compact">
           <CustomSelect
@@ -96,12 +101,7 @@ export const CalendarTime = ({
       {doneButtonShow && (
         <div className={styles['CalendarTime__button']}>
           <AdaptivityProvider sizeY="compact">
-            <Button
-              mode="secondary"
-              onClick={onClose}
-              size="l"
-              disabled={doneButtonDisabled}
-            >
+            <Button mode="secondary" onClick={onClose} size="l" disabled={doneButtonDisabled}>
               {doneButtonText}
             </Button>
           </AdaptivityProvider>
