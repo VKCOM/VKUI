@@ -14,14 +14,14 @@ const Example = () => {
     <View activePanel="gallery">
       <Panel nav="gallery">
         <PanelHeader>Gallery</PanelHeader>
-        <Group header={<Header mode="secondary">Sticks right</Header>}>
+        <Group header={<Header size="s">Sticks right</Header>}>
           <Gallery slideWidth="90%" bullets="dark">
             <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
             <img src="https://placebear.com/1024/640" style={{ display: 'block' }} />
             <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
           </Gallery>
         </Group>
-        <Group header={<Header mode="secondary">Sticks left</Header>}>
+        <Group header={<Header size="s">Sticks left</Header>}>
           <Gallery slideWidth="90%" align="right">
             <div
               style={{
@@ -33,14 +33,14 @@ const Example = () => {
             <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
           </Gallery>
         </Group>
-        <Group header={<Header mode="secondary">Centered</Header>}>
+        <Group header={<Header size="s">Centered</Header>}>
           <Gallery slideWidth="90%" align="center">
             <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
             <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
             <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
           </Gallery>
         </Group>
-        <Group header={<Header mode="secondary">Custom width</Header>}>
+        <Group header={<Header size="s">Custom width</Header>}>
           <Gallery slideWidth="custom" style={{ height: 150 }}>
             <div
               style={{
@@ -68,14 +68,14 @@ const Example = () => {
             />
           </Gallery>
         </Group>
-        <Group header={<Header mode="secondary">Arrows</Header>}>
+        <Group header={<Header size="s">Arrows</Header>}>
           <Gallery slideWidth="90%" style={{ height: 150 }} bullets="dark" showArrows>
             <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
             <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
             <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
           </Gallery>
         </Group>
-        <Group header={<Header mode="secondary">Controlled</Header>}>
+        <Group header={<Header size="s">Controlled</Header>}>
           <Gallery
             slideWidth="90%"
             align="center"
@@ -104,7 +104,7 @@ const Example = () => {
             </Button>
           </FormItem>
         </Group>
-        <Group header={<Header mode="secondary">With looped prop</Header>}>
+        <Group header={<Header size="s">With looped prop</Header>}>
           <Gallery slideWidth="90%" style={{ height: 150 }} bullets="dark" showArrows looped>
             <Slide backgroundColor="var(--vkui--color_background_negative)">1</Slide>
             <Slide backgroundColor="var(--vkui--color_background_positive)">2</Slide>

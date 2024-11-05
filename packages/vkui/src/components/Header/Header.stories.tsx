@@ -33,7 +33,7 @@ const story: Meta<HeaderProps> = {
       requiredIcons: ['Icon12Fire'],
     }),
     after: createFieldWithPresets({
-      iconSizes: [],
+      iconSizes: ['16', '24'],
       additionalPresets: {
         Link: <Link>Показать все</Link>,
       },
@@ -114,6 +114,6 @@ export const WithAllFeatures: Story = {
     beforeSubtitle: 'Icon12Tag',
     afterSubtitle: 'Icon12Fire',
     subtitle: 'SOHN — Conrad',
-    after: <Link>Показать все</Link>,
+    after: 'Link',
   },
 };

@@ -14,7 +14,7 @@ const Example = () => {
     <View activePanel="counter-demo">
       <Panel id="counter-demo">
         <PanelHeader>Counter</PanelHeader>
-        <Group header={<Header mode="secondary">Счётчики в ячейках</Header>}>
+        <Group header={<Header size="s">Счётчики в ячейках</Header>}>
           <List>
             <Cell before={<Icon28UserOutline />} indicator={<Counter>4</Counter>}>
               Друзья
@@ -40,7 +40,7 @@ const Example = () => {
             </Cell>
           </List>
         </Group>
-        <Group header={<Header mode="secondary">Счётчики в кнопках</Header>}>
+        <Group header={<Header size="s">Счётчики в кнопках</Header>}>
           <FormItem>
             <Button mode="secondary" size="m" after={<Counter>16</Counter>}>
               Secondary medium
@@ -85,7 +85,7 @@ const Example = () => {
           <Cell before={<Avatar />}>Виктор Пелевин</Cell>
           <Cell before={<Avatar />}>Михаил Зыгарь</Cell>
         </Group>
-        <Group header={<Header mode="secondary">В переключателях</Header>}>
+        <Group header={<Header size="s">В переключателях</Header>}>
           <Tabs mode="buttons">
             <HorizontalScroll>
               <TabsItem

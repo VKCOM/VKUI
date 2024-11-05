@@ -5,7 +5,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
-import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
 import styles from './CalendarTime.module.css';
 
 export interface CalendarTimeProps {
@@ -16,7 +16,7 @@ export interface CalendarTimeProps {
   changeHoursLabel?: string;
   changeMinutesLabel?: string;
   onChange?: (value: Date) => void;
-  onClose?: () => void;
+  onDoneButtonClick?: () => void;
   isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
 }
 
@@ -39,7 +39,7 @@ for (let i = 0; i < 60; i += 1) {
 export const CalendarTime = ({
   value,
   onChange,
-  onClose,
+  onDoneButtonClick,
   changeHoursLabel,
   changeMinutesLabel,
   isDayDisabled,
@@ -60,13 +60,11 @@ export const CalendarTime = ({
     : minutes;
 
   const onHoursChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) =>
-      onChange?.(setHours(value, Number(event.target.value))),
+    (newValue: SelectProps['value']) => onChange?.(setHours(value, Number(newValue))),
     [onChange, value],
   );
   const onMinutesChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) =>
-      onChange?.(setMinutes(value, Number(event.target.value))),
+    (newValue: SelectProps['value']) => onChange?.(setMinutes(value, Number(newValue))),
     [onChange, value],
   );
 
@@ -98,7 +96,7 @@ export const CalendarTime = ({
       {doneButtonShow && (
         <div className={styles.button}>
           <AdaptivityProvider sizeY="compact">
-            <Button mode="secondary" onClick={onClose} size="l" disabled={doneButtonDisabled}>
+            <Button mode="secondary" onClick={onDoneButtonClick} size="l" disabled={doneButtonDisabled}>
               {doneButtonText}
             </Button>
           </AdaptivityProvider>

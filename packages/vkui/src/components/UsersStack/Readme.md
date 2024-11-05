@@ -62,7 +62,7 @@ const App = () => {
           </Div>
         </Group>
 
-        <Group header={<Header mode="secondary">Вертикальный режим</Header>}>
+        <Group header={<Header size="s">Вертикальный режим</Header>}>
           <Div>
             <UsersStack
               photos={[
@@ -102,7 +102,7 @@ const App = () => {
           </Flex>
         </Group>
 
-        <Group header={<Header mode="secondary">Кликабельные с тултипом</Header>}>
+        <Group header={<Header size="s">Кликабельные с тултипом</Header>}>
           <Div>
             <UsersStack
               photos={[

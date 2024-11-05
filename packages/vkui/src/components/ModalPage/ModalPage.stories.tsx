@@ -133,7 +133,7 @@ export const FullscreenModalPage: Story = {
           </Gradient>
           <Group
             header={
-              <Header mode="secondary" indicator="25">
+              <Header size="s" indicator="25">
                 Друзья
               </Header>
             }

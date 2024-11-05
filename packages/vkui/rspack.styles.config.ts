@@ -55,7 +55,7 @@ const config: Configuration = {
                 [
                   'swc-plugin-css-modules',
                   {
-                    generate_scoped_name: 'vkui[folder]_[local]',
+                    generate_scoped_name: '[folder]__[local]--[hash:base64:5]',
                   },
                 ],
               ],
