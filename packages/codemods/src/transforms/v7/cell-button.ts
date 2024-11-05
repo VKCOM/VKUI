@@ -14,7 +14,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     return source.toSource();
   }
 
-  renameProp(j, source, localName, { subhead: 'overTitle' });
+  renameProp(j, source, localName, { subhead: 'overTitle', expandable: 'chevron' });
 
   const attributeToReplace = 'mode';
   const newAttributeName = 'appearance';
