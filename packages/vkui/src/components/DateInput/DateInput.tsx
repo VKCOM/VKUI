@@ -62,6 +62,7 @@ export interface DateInputProps
   clearFieldLabel?: string;
   showCalendarLabel?: string;
   disableCalendar?: boolean;
+  onCalendarOpenChanged?: (opened: boolean) => void;
 }
 
 const elementsConfig = (index: number) => {
@@ -147,6 +148,7 @@ export const DateInput = ({
   nextMonthIcon,
   disableCalendar = false,
   renderDayContent,
+  onCalendarOpenChanged,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -205,6 +207,7 @@ export const DateInput = ({
     onInternalValueChange,
     getInternalValue,
     value,
+    onCalendarOpenChanged,
   });
 
   const { sizeY = 'none' } = useAdaptivity();
