@@ -22,10 +22,9 @@
           </Card>
         </CardGrid>
       </Group>
-
     </Group>
     <Group style={{ background: 'var(--vkui--color_background_secondary)' }}>
-      <Group mode="plain" header={<Header  size="s">Светлый фон без обводки и тени</Header>}>
+      <Group mode="plain" header={<Header size="s">Светлый фон без обводки и тени</Header>}>
         <CardGrid size="l">
           <Card mode="plain">
             <div style={{ height: 96 }} />
