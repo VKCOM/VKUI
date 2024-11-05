@@ -1,5 +1,5 @@
 {
-  "version": "7.0.0-dev-d4929f.1",
+  "version": "7.0.0-beta.1",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "module": "./dist/index.js",
