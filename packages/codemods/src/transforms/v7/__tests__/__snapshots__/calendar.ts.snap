@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`calendar transforms correctly 1`] = `
+"import { Calendar } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const callback = () => {}
+  return (
+    (<React.Fragment>
+      <Calendar
+        onChange={() => {}}
+        enableTime={true}
+        disablePast={true}
+        disableFuture={true}
+        onDoneButtonClick={() => {}}
+      />
+      <Calendar
+        onChange={() => {}}
+        enableTime={true}
+        disablePast={true}
+        disableFuture={true}
+        onDoneButtonClick={callback}
+      />
+    </React.Fragment>)
+  );
+};"
+`;
