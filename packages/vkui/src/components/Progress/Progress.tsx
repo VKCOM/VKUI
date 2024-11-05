@@ -20,13 +20,6 @@ function progressCustomHeightStyle(height: number | undefined): React.CSSPropert
     : undefined;
 }
 
-function progressStyle(height: number | undefined, styleProps: React.CSSProperties | undefined) {
-  const styleHeight = progressCustomHeightStyle(height);
-  const style = styleHeight ? { ...styleProps, ...styleHeight } : styleProps;
-
-  return style;
-}
-
 export interface ProgressProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Стиль отображения прогрессбара
@@ -49,19 +42,18 @@ export const Progress = ({
   value = 0,
   appearance = 'accent',
   height,
-  style: styleProps,
+  style,
   ...restProps
 }: ProgressProps): React.ReactNode => {
   const progress = clamp(value, PROGRESS_MIN_VALUE, PROGRESS_MAX_VALUE);
   const title = `${progress} / ${PROGRESS_MAX_VALUE}`;
-
-  const style = progressStyle(height, styleProps);
+  const styleHeight = progressCustomHeightStyle(height);
 
   return (
     <RootComponent
       aria-valuenow={value}
       title={title}
-      style={style}
+      style={{ ...styleHeight, ...style }}
       {...restProps}
       role="progressbar"
       aria-valuemin={PROGRESS_MIN_VALUE}

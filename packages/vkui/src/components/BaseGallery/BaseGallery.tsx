@@ -143,6 +143,13 @@ export const BaseGallery = ({
       localSlides.length <= layoutState.current.slides.length ||
       layoutState.current.slides[slideIndex]?.coordX !== localSlides[slideIndex]?.coordX;
 
+    const currentSlideOffsetOnCenterAlignment =
+      (localContainerWidth - (localSlides[slideIndex]?.width ?? 0)) / 2;
+    const isFullyVisible =
+      align === 'center'
+        ? localLayerWidth + currentSlideOffsetOnCenterAlignment <= localContainerWidth
+        : localLayerWidth <= localContainerWidth;
+
     layoutState.current = {
       containerWidth: localContainerWidth,
       viewportOffsetWidth: localViewportOffsetWidth,
@@ -161,7 +168,7 @@ export const BaseGallery = ({
         align,
       }),
       slides: localSlides,
-      isFullyVisible: localLayerWidth <= localContainerWidth,
+      isFullyVisible,
     };
 
     setShiftState((prevState) => ({

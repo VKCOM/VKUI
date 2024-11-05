@@ -36,7 +36,6 @@ const stylesAppearance = {
 
 const stylesAlign = {
   left: styles.alignLeft,
-  center: styles.alignCenter,
   right: styles.alignRight,
 };
 
@@ -77,9 +76,9 @@ export const Button = ({
   className,
   disableSpinnerAnimation,
   rounded,
+  disabled,
   ...restProps
 }: ButtonProps): React.ReactNode => {
-  const hasIcons = Boolean(before || after);
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
@@ -90,6 +89,7 @@ export const Button = ({
       activeMode={styles.active}
       Component={restProps.href ? 'a' : 'button'}
       focusVisibleMode="outside"
+      disabled={loading || disabled}
       {...restProps}
       onClick={loading ? undefined : onClick}
       className={classNames(
@@ -98,19 +98,24 @@ export const Button = ({
         stylesSize[size],
         stylesMode[mode],
         stylesAppearance[appearance],
-        stylesAlign[align],
+        align !== 'center' && stylesAlign[align],
         sizeY !== 'compact' && sizeYClassNames[sizeY],
         platform === 'ios' && styles.ios,
         stretched && styles.stretched,
-        hasIcons && styles.withIcon,
         hasIconOnly && !stretched && styles.singleIcon,
         loading && styles.loading,
         rounded && styles.rounded,
+        disabled && styles.disabled,
       )}
       getRootRef={getRootRef}
     >
       {loading && (
-        <Spinner size="s" className={styles.spinner} disableAnimation={disableSpinnerAnimation} />
+        <Spinner
+          size="s"
+          className={styles.spinner}
+          disableAnimation={disableSpinnerAnimation}
+          noColor
+        />
       )}
       <span className={styles.in}>
         {hasReactNode(before) && (

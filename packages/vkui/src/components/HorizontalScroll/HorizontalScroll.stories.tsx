@@ -69,7 +69,7 @@ export const Playground: Story = {
   },
   decorators: [
     (Component, context) => (
-      <Group header={<Header mode="secondary">Недавние</Header>}>
+      <Group header={<Header size="s">Недавние</Header>}>
         <Component args={context.args} />
       </Group>
     ),

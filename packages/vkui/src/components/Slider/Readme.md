@@ -63,11 +63,7 @@ const Example = () => {
             />
           </FormItem>
           <FormItem>
-            <Select
-              value={String(valueStep)}
-              options={options()}
-              onChange={(e) => setValueStep(e.target.value)}
-            />
+            <Select value={String(valueStep)} options={options()} onChange={setValueStep} />
           </FormItem>
           <FormItem top={<span id="uncontrolled">Uncontrolled</span>}>
             <Slider defaultValue={20} aria-labelledby="uncontrolled" />

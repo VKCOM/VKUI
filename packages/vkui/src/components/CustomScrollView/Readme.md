@@ -50,10 +50,10 @@ const Example = () => {
     <View activePanel="customScrollView">
       <Panel id="customScrollView">
         <PanelHeader>CustomScrollView</PanelHeader>
-        <Group header={<Header mode="secondary">Вертикальный скролл</Header>}>
+        <Group header={<Header size="s">Вертикальный скролл</Header>}>
           <WithVerticalScroll />
         </Group>
-        <Group header={<Header mode="secondary">Горизонтальный скролл</Header>}>
+        <Group header={<Header size="s">Горизонтальный скролл</Header>}>
           <WithHorizontalScroll />
         </Group>
       </Panel>

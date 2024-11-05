@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH, HorizontalCell } from './HorizontalCell';
-import styles from './HorizontaCell.module.css';
+import styles from './HorizontalCell.module.css';
 
 describe('HorizontalCell', () => {
   baselineComponent((props) => <HorizontalCell {...props}>HorizontalCell</HorizontalCell>);

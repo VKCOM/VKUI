@@ -12,7 +12,7 @@ import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../l
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
@@ -80,13 +80,11 @@ export const CalendarHeader = ({
 }: CalendarHeaderProps): React.ReactNode => {
   const { locale } = useConfigProvider();
   const onMonthsChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) =>
-      onChange(setMonth(viewDate, Number(event.target.value))),
+    (newValue: SelectProps['value']) => onChange(setMonth(viewDate, Number(newValue))),
     [onChange, viewDate],
   );
   const onYearChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) =>
-      onChange(setYear(viewDate, Number(event.target.value))),
+    (newValue: SelectProps['value']) => onChange(setYear(viewDate, Number(newValue))),
     [onChange, viewDate],
   );
 

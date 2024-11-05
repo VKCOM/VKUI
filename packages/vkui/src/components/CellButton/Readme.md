@@ -2,13 +2,13 @@
 <View activePanel="button">
   <Panel id="button">
     <PanelHeader>CellButton</PanelHeader>
-    <Group header={<Header mode="secondary">Базовый пример</Header>}>
+    <Group header={<Header size="s">Базовый пример</Header>}>
       <CellButton onClick={() => {}}>Добавить новую школу</CellButton>
       <CellButton onClick={() => {}} appearance="negative">
         Удалить беседу
       </CellButton>
     </Group>
-    <Group header={<Header mode="secondary">Иконки</Header>}>
+    <Group header={<Header size="s">Иконки</Header>}>
       <CellButton onClick={() => {}} before={<Icon28AddOutline />}>
         Добавить родственника
       </CellButton>
@@ -16,7 +16,7 @@
         Удалить беседу
       </CellButton>
     </Group>
-    <Group header={<Header mode="secondary">Аватарки</Header>}>
+    <Group header={<Header size="s">Аватарки</Header>}>
       <CellButton
         onClick={() => {}}
         before={
@@ -48,7 +48,7 @@
         Создать плейлист
       </CellButton>
     </Group>
-    <Group header={<Header mode="secondary">Центрирование</Header>}>
+    <Group header={<Header size="s">Центрирование</Header>}>
       <CellButton onClick={() => {}} centered before={<Icon24Add />}>
         Создать беседу
       </CellButton>

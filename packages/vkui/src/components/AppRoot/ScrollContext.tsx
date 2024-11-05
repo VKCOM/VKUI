@@ -13,6 +13,7 @@ const clearDisableScrollStyle = (node: HTMLElement) => {
     top: '',
     left: '',
     right: '',
+    overscrollBehavior: '',
     overflowY: '',
     overflowX: '',
   });
@@ -60,11 +61,8 @@ export const useScroll = (): ScrollContextInterface => React.useContext(ScrollCo
  * Если счетчик больше нуля, требуется заблокировать прокрутку
  */
 function useScrollLockController(enableScrollLock: () => void, disableScrollLock: () => void) {
-  const {
-    count,
-    increment: incrementScrollLockCounter,
-    decrement: decrementScrollLockCounter,
-  } = useCounter(0);
+  const [count, { increment: incrementScrollLockCounter, decrement: decrementScrollLockCounter }] =
+    useCounter(0);
 
   const needLockScroll = count > 0;
 
@@ -120,11 +118,13 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     const overflowY = window!.innerWidth > document!.documentElement.clientWidth ? 'scroll' : '';
     const overflowX = window!.innerHeight > document!.documentElement.clientHeight ? 'scroll' : '';
 
+    Object.assign(document!.documentElement.style, { overscrollBehavior: 'none' });
     Object.assign(document!.body.style, {
       position: 'fixed',
       top: `-${scrollY}px`,
       left: `-${scrollX}px`,
       right: '0',
+      overscrollBehavior: 'none',
       overflowY,
       overflowX,
     });
@@ -134,6 +134,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     const scrollY = document!.body.style.top;
     const scrollX = document!.body.style.left;
 
+    Object.assign(document!.documentElement.style, { overscrollBehavior: '' });
     clearDisableScrollStyle(document!.body);
     window!.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
   }, [document, window]);
