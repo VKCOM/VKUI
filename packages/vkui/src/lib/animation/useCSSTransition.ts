@@ -73,15 +73,16 @@ export const useCSSTransition = <Ref extends Element = Element>(
 
   const ref = useRef<Ref | null>(null);
   const [state, setState] = useState<UseCSSTransitionState>(() => {
-    if (inProp) {
-      if (enableAppear) {
-        onEnter(true);
-        return 'appear';
-      }
-      return 'entered';
+    if (!inProp) {
+      return 'exited';
     }
 
-    return 'exited';
+    if (enableAppear) {
+      onEnter(true);
+      return 'appear';
+    }
+
+    return 'entered';
   });
   const prevState = usePrevious(state);
 
