@@ -3,6 +3,10 @@
   align-items: center;
 }
 
+.CalendarTime__withoutDone {
+  justify-content: center;
+}
+
 .CalendarTime__picker {
   inline-size: 77px;
 }
