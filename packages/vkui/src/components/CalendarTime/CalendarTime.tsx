@@ -11,7 +11,7 @@ import styles from './CalendarTime.module.css';
 export type CalendarTimeTestsProps = {
   hoursTestId?: string;
   minutesTestId?: string;
-  timeDoneTestId?: string;
+  doneButtonTestId?: string;
 };
 
 export interface CalendarTimeProps extends CalendarTimeTestsProps {
@@ -54,7 +54,7 @@ export const CalendarTime = ({
   doneButtonShow = true,
   minutesTestId,
   hoursTestId,
-  timeDoneTestId,
+  doneButtonTestId,
 }: CalendarTimeProps): React.ReactNode => {
   const localHours = isDayDisabled
     ? hours.map((hour) => {
@@ -112,7 +112,7 @@ export const CalendarTime = ({
               onClick={onDoneButtonClick}
               size="l"
               disabled={doneButtonDisabled}
-              data-testid={timeDoneTestId}
+              data-testid={doneButtonTestId}
             >
               {doneButtonText}
             </Button>

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { format } from 'date-fns';
+import { addDays, format } from 'date-fns';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { DateRangeInput, type DateRangeInputTestsProps } from './DateRangeInput';
 
@@ -160,9 +160,16 @@ describe('DateRangeInput', () => {
     jest.useFakeTimers();
     const onCalendarOpenChanged = jest.fn();
     const { container } = render(
-      <DateRangeInput value={[startDate, null]} onCalendarOpenChanged={onCalendarOpenChanged} />,
+      <DateRangeInput
+        value={[startDate, null]}
+        onCalendarOpenChanged={onCalendarOpenChanged}
+        {...testsProps}
+        calendarTestsProps={{
+          dayTestId,
+        }}
+      />,
     );
-    const inputLikes = getInputsLike(container);
+    const inputLikes = getInputsLike();
     const [dates] = inputLikes;
 
     await userEvent.click(dates);
@@ -171,7 +178,7 @@ describe('DateRangeInput', () => {
     expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
 
     expect(container.contains(document.activeElement)).toBeTruthy();
-    await userEvent.click(screen.getAllByText('15')[0]);
+    await userEvent.click(screen.getByTestId(dayTestId(addDays(startDate, 10))));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
     expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
