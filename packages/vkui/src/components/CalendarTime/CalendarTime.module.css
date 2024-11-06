@@ -7,6 +7,10 @@
   inline-size: 77px;
 }
 
+.CalendarTime__withoutDone {
+  justify-content: center;
+}
+
 .CalendarTime__divider {
   margin-inline: 6px;
   color: var(--vkui--color_text_primary);
