@@ -2,7 +2,7 @@
   display: flex;
   padding-block: var(--vkui--spacing_size_m);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
-  min-block-size: 64px;
+  min-block-size: 48px;
   box-sizing: border-box;
   color: var(--vkui--color_text_primary);
   text-decoration: none; /* в случае если Component="a" */
@@ -10,12 +10,12 @@
 }
 
 .sizeYCompact {
-  min-block-size: 60px;
+  min-block-size: 44px;
 }
 
 @media (--sizeY-compact) {
   .sizeYNone {
-    min-block-size: 60px;
+    min-block-size: 44px;
   }
 }
 
@@ -161,6 +161,6 @@
 
 @media (--sizeY-compact) {
   .sizeYNone {
-    min-block-size: 60px;
+    min-block-size: 44px;
   }
 }
