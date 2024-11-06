@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { clamp } from '../../helpers/math';
 import { useIsClient } from '../../hooks/useIsClient';
+import { callMultiple } from '../../lib/callMultiple';
 import { BaseGallery } from '../BaseGallery/BaseGallery';
 import { CarouselBase } from '../BaseGallery/CarouselBase/CarouselBase';
 import type { BaseGalleryProps } from '../BaseGallery/types';
@@ -23,6 +24,8 @@ export const Gallery = ({
   onChange,
   bullets,
   looped,
+  onDragStart,
+  onDragEnd,
   ...props
 }: GalleryProps): React.ReactNode => {
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
@@ -46,7 +49,11 @@ export const Gallery = ({
     [isControlled, onChange, slideIndex],
   );
 
-  useAutoPlay(timeout, slideIndex, () => handleChange((slideIndex + 1) % childCount));
+  const autoPlayControls = useAutoPlay({
+    timeout,
+    slideIndex,
+    onNext: () => handleChange((slideIndex + 1) % childCount),
+  });
 
   // prevent invalid slideIndex
   // any slide index is invalid with no slides, just keep it as is
@@ -69,6 +76,8 @@ export const Gallery = ({
     <Component
       dragDisabled={isControlled && !onChange}
       {...props}
+      onDragStart={callMultiple(onDragStart, autoPlayControls.pause)}
+      onDragEnd={callMultiple(onDragEnd, autoPlayControls.resume)}
       bullets={childCount > 0 && bullets}
       slideIndex={safeSlideIndex}
       onChange={handleChange}
