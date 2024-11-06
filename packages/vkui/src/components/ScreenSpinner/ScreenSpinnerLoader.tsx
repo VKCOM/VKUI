@@ -12,8 +12,7 @@ export const ScreenSpinnerLoader: React.FC<Omit<SpinnerProps, 'size'>> = ({
   ...restProps
 }) => {
   const { label } = React.useContext(ScreenSpinnerContext);
-  // TODO [>=7]: см. https://github.com/VKCOM/VKUI/pull/7505#discussion_r1754153438
-  const a11yText = children ? children : label ?? 'Пожалуйста, подождите...';
+  const a11yText = children ?? label;
   return (
     <Spinner
       className={classNames(styles.spinner, !label && styles.spinnerTransition)}

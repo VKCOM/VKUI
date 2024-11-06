@@ -40,7 +40,7 @@
         <div style={{ paddingBottom: '30%' }} />
       </Card>
     </CardGrid>
-    <CardGrid size="l" spaced>
+    <CardGrid size="l" padding>
       <Card>
         <div style={{ paddingBottom: '30%' }} />
       </Card>

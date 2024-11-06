@@ -12,16 +12,15 @@ const App = () => {
   return (
     <React.Fragment>
       {/* Проверка изменения size */}
-      <Header mode="primary" multiline size="large">
+      <Header multiline size="large">
         Кто может писать мне личные сообщения
       </Header>
-      <Header mode="secondary" multiline size="regular">
+      <Header multiline size="regular">
         Кто может писать мне личные сообщения
       </Header>
 
       {/* Проверка замены aside на after */}
       <Header
-        mode="primary"
         subtitle="SOHN — Conrad"
         subtitleComponent="h3"
         aside={
@@ -32,10 +31,48 @@ const App = () => {
         }
       />
       <Header
-        mode="primary"
         subtitle="SOHN — Conrad"
         subtitleComponent="h3"
         aside={aside}
+      />
+
+      {/* Проверка удаления mode */}
+      {/* замена Large Primary на xl */}
+      <Header
+        mode="primary"
+        size="large"
+        subtitle="SOHN — Conrad"
+      />
+
+      {/* замена Large tertiary на m */}
+      <Header
+        mode="tertiary"
+        size="large"
+        subtitle="SOHN — Conrad"
+      />
+      {/* замена Regular tertiary на m */}
+      <Header
+        mode="tertiary"
+        size="regular"
+        subtitle="SOHN — Conrad"
+      />
+      {/* замена Regular primary на m */}
+      <Header
+        mode="primary"
+        size="regular"
+        subtitle="SOHN — Conrad"
+      />
+      {/* замена Large secondary на m */}
+      <Header
+        mode="secondary"
+        size="large"
+        subtitle="SOHN — Conrad"
+      />
+      {/* замена Regular secondary на s */}
+      <Header
+        mode="secondary"
+        size="regular"
+        subtitle="SOHN — Conrad"
       />
     </React.Fragment>
   );

@@ -46,7 +46,7 @@ const SubnavigationButtonExample = () => {
         <FormItem top="appearance">
           <Select
             value={appearance}
-            onChange={(e) => setAppearance(e.target.value)}
+            onChange={setAppearance}
             options={[
               { label: 'accent', value: 'accent' },
               { label: 'neutral', value: 'neutral' },
@@ -56,7 +56,7 @@ const SubnavigationButtonExample = () => {
         <FormItem top="text level">
           <Select
             value={textLevel}
-            onChange={(e) => setTextLevel(e.target.value)}
+            onChange={setTextLevel}
             options={[
               { label: '1', value: '1' },
               { label: '2', value: '2' },
@@ -67,7 +67,7 @@ const SubnavigationButtonExample = () => {
         <FormItem top="size">
           <Select
             value={size}
-            onChange={(e) => setSize(e.target.value)}
+            onChange={setSize}
             options={[
               { label: 's', value: 's' },
               { label: 'm', value: 'm' },
@@ -78,7 +78,7 @@ const SubnavigationButtonExample = () => {
         <FormItem top="sizeY">
           <Select
             value={sizeY}
-            onChange={(e) => setSizeY(e.target.value)}
+            onChange={setSizeY}
             options={[
               { label: 'compact', value: 'compact' },
               {

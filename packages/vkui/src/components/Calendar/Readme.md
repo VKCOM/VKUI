@@ -9,6 +9,7 @@ import { lightFormat } from 'date-fns';
 const Example = () => {
   const [value, setValue] = useState(() => new Date());
   const [enableTime, setEnableTime] = useState(false);
+  const [doneButtonShow, setDoneButtonShow] = useState(true);
   const [disablePast, setDisablePast] = useState(false);
   const [disableFuture, setDisableFuture] = useState(false);
   const [disablePickers, setDisablePickers] = useState(false);
@@ -25,6 +26,13 @@ const Example = () => {
           Включено
         </Checkbox>
       </FormItem>
+      {enableTime && (
+        <FormItem top="Показывать кнопку 'Готово'">
+          <Checkbox checked={doneButtonShow} onChange={(e) => setDoneButtonShow(e.target.checked)}>
+            Включено
+          </Checkbox>
+        </FormItem>
+      )}
       <FormItem top="Запрет выбора прошлых дат">
         <Checkbox checked={disablePast} onChange={(e) => setDisablePast(e.target.checked)}>
           Включено
@@ -60,7 +68,7 @@ const Example = () => {
         <Select
           style={{ width: 100 }}
           value={locale}
-          onChange={(e) => setLocale(e.target.value)}
+          onChange={setLocale}
           options={[
             {
               label: 'ru',
@@ -85,7 +93,7 @@ const Example = () => {
         <Select
           style={{ width: 100 }}
           value={size}
-          onChange={(e) => setSize(e.target.value)}
+          onChange={setSize}
           options={[
             {
               label: 's',
@@ -107,6 +115,7 @@ const Example = () => {
             disablePast={disablePast}
             disableFuture={disableFuture}
             disablePickers={disablePickers}
+            doneButtonShow={doneButtonShow}
             showNeighboringMonth={showNeighboringMonth}
             size={size}
             listenDayChangesForUpdate={listenDayChangesForUpdate}

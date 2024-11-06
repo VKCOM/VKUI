@@ -12,7 +12,7 @@ const ExampleBase = ({ formItemStatus }) => {
       <FormItem top="align">
         <Select
           value={align}
-          onChange={(e) => setAlign(e.target.value)}
+          onChange={setAlign}
           options={[
             { label: 'left', value: 'left' },
             { label: 'center', value: 'center' },
@@ -106,7 +106,7 @@ const Example = () => {
           <FormItem top="AdaptivityProvider[sizeY]">
             <Select
               value={sizeY}
-              onChange={(e) => setSizeY(e.target.value)}
+              onChange={setSizeY}
               options={[
                 { label: 'compact', value: 'compact' },
                 { label: 'regular', value: 'regular' },
@@ -116,7 +116,7 @@ const Example = () => {
           <FormItem top="FormItem[status]">
             <Select
               value={formItemStatus}
-              onChange={(e) => setFormItemStatus(e.target.value)}
+              onChange={setFormItemStatus}
               options={[
                 { label: 'default', value: 'default' },
                 { label: 'error', value: 'error' },

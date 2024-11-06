@@ -59,7 +59,7 @@ export const GalleryWithArrowsPlayground = (props: ComponentPlaygroundProps) => 
   return (
     <ComponentPlayground {...props}>
       {(props: GalleryProps) => (
-        <Gallery initialSlideIndex={1} data-testid="gallery" arrowSize="m" showArrows {...props}>
+        <Gallery initialSlideIndex={1} data-testid="gallery" arrowSize="s" showArrows {...props}>
           {getItems()}
         </Gallery>
       )}

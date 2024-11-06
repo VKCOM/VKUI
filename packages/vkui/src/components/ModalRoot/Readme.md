@@ -105,6 +105,7 @@ const App = () => {
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const [activeModal, setActiveModal] = useState(null);
   const [modalHistory, setModalHistory] = useState([]);
+  const [dateOfBirth, setDateOfBirth] = useState(new Date(1901, 0, 1));
   const [randomUser] = useState(() => getRandomUser());
   const [users] = useState(() =>
     'k'
@@ -146,7 +147,7 @@ const App = () => {
       </Gradient>
       <Group
         header={
-          <Header mode="secondary" indicator="25">
+          <Header size="s" indicator="25">
             Друзья
           </Header>
         }
@@ -302,12 +303,11 @@ const App = () => {
           </FormItem>
 
           <FormItem top="Дата рождения">
-            <DatePicker
-              min={{ day: 1, month: 1, year: 1901 }}
-              max={{ day: 1, month: 1, year: 2006 }}
-              dayPlaceholder="Д"
-              monthPlaceholder="ММ"
-              yearPlaceholder="ГГ"
+            <DateInput
+              value={dateOfBirth}
+              onChange={setDateOfBirth}
+              minDateTime={new Date(1901, 0, 1)}
+              maxDateTime={new Date(2006, 0, 1)}
             />
           </FormItem>
         </Group>

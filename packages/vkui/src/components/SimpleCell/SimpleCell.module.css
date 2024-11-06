@@ -60,7 +60,7 @@
   margin-block-start: var(--vkui--spacing_size_2xs);
 }
 
-.subhead {
+.overTitle {
   color: var(--vkui--color_text_subhead);
 }
 

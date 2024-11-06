@@ -66,4 +66,35 @@ describe('CalendarTime', () => {
 
     expect(onChange).toHaveBeenCalledTimes(0);
   });
+
+  it('should hide done button with doneButtonShow=false', () => {
+    const onChange = jest.fn();
+    const buttonText = 'Текст';
+    render(
+      <CalendarTime
+        onChange={onChange}
+        value={dayDate}
+        doneButtonShow={false}
+        doneButtonText={buttonText}
+      />,
+    );
+    expect(screen.queryByText(buttonText)).toBeFalsy();
+  });
+
+  it('should disable done button with doneButtonDisabled=false', () => {
+    const onChange = jest.fn();
+    const buttonText = 'Текст';
+    render(
+      <CalendarTime
+        onChange={onChange}
+        value={dayDate}
+        doneButtonText={buttonText}
+        doneButtonDisabled={true}
+      />,
+    );
+    const text = screen.queryByText(buttonText);
+    expect(text).toBeTruthy();
+    const button = text!.closest('button');
+    expect(button!.disabled).toBeTruthy();
+  });
 });

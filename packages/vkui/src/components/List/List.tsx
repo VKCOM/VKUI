@@ -27,8 +27,8 @@ export const List = ({
       role="list"
       className={classNames(styles.host, className)}
       style={{
-        ...style,
         gridGap: gap,
+        ...style,
       }}
       {...restProps}
     >

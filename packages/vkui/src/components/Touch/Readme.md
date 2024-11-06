@@ -65,7 +65,7 @@ const Example = () => {
     <View activePanel="gallery">
       <Panel id="gallery">
         <PanelHeader>Touch</PanelHeader>
-        <Group header={<Header mode="secondary">Перетащите кружок</Header>}>
+        <Group header={<Header size="s">Перетащите кружок</Header>}>
           <div
             style={{
               ...containerStyle,

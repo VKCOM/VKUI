@@ -21,6 +21,14 @@ const App = () => {
       >
         Геолокация
       </SimpleCell>
+      {/* rename subhead -> overtitle */}
+      <SimpleCell
+        onClick={() => {}}
+        overTitle={"Subhead"}
+        indicator="При использовании"
+      >
+        Геолокация
+      </SimpleCell>
     </React.Fragment>)
   );
 };"

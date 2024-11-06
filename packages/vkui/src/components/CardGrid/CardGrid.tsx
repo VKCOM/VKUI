@@ -22,7 +22,7 @@ export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   /**
    * Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа
    */
-  spaced?: boolean;
+  padding?: boolean;
 }
 
 /**
@@ -30,7 +30,7 @@ export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>
  */
 export const CardGrid = ({
   size = 's',
-  spaced = false,
+  padding = false,
   Component = 'ul',
   ...restProps
 }: CardGridProps): React.ReactNode => {
@@ -43,7 +43,7 @@ export const CardGrid = ({
       baseClassName={classNames(
         styles.host,
         'vkuiInternalCardGrid',
-        spaced && styles.spaced,
+        padding && styles.padding,
         stylesSize[size],
         sizeX !== 'regular' && sizeXClassNames[sizeX],
       )}

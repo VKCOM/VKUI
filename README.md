@@ -69,7 +69,7 @@ const Example = () => {
           <View activePanel="main">
             <Panel id="main">
               <PanelHeader>VKUI</PanelHeader>
-              <Group header={<Header mode="secondary">Items</Header>}>
+              <Group header={<Header size="s">Items</Header>}>
                 <SimpleCell>Hello</SimpleCell>
                 <SimpleCell>World</SimpleCell>
               </Group>

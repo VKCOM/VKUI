@@ -69,6 +69,7 @@ export interface DateRangeInputProps
   calendarTestsProps?: CalendarRangeTestsProps;
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
+  onCalendarOpenChanged?: (opened: boolean) => void;
   clearFieldLabel?: string;
   showCalendarLabel?: string;
   changeStartDayLabel?: string;
@@ -156,6 +157,7 @@ export const DateRangeInput = ({
   prevMonthIcon,
   nextMonthIcon,
   disableCalendar = false,
+  onCalendarOpenChanged,
   renderDayContent,
   calendarTestsProps,
   startDateTestsProps,
@@ -240,6 +242,7 @@ export const DateRangeInput = ({
     onInternalValueChange,
     getInternalValue,
     value,
+    onCalendarOpenChanged,
   });
 
   const { sizeY = 'none' } = useAdaptivity();

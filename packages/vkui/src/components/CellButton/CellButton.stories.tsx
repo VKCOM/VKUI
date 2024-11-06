@@ -45,7 +45,7 @@ const story: Meta<CellButtonProps> = {
     }),
     subtitle: StringArg,
     extraSubtitle: StringArg,
-    subhead: StringArg,
+    overTitle: StringArg,
   },
 };
 

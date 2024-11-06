@@ -8,33 +8,39 @@
   <Panel id="card">
     <PanelHeader>Card</PanelHeader>
     <Group>
-      <Group mode="plain" header={<Header mode="secondary">Дефолтный стиль</Header>}>
+      <Group mode="plain" header={<Header size="s">Стандартный стиль</Header>}>
         <CardGrid size="l">
           <Card>
             <div style={{ height: 96 }} />
           </Card>
         </CardGrid>
       </Group>
-      <Group mode="plain" header={<Header mode="secondary">С внутренней обводкой</Header>}>
+      <Group mode="plain" header={<Header size="s">Стандартный фон с обводкой</Header>}>
+        <CardGrid size="l">
+          <Card mode="outline-tint">
+            <div style={{ height: 96 }} />
+          </Card>
+        </CardGrid>
+      </Group>
+    </Group>
+    <Group style={{ background: 'var(--vkui--color_background_secondary)' }}>
+      <Group mode="plain" header={<Header size="s">Светлый фон без обводки и тени</Header>}>
+        <CardGrid size="l">
+          <Card mode="plain">
+            <div style={{ height: 96 }} />
+          </Card>
+        </CardGrid>
+      </Group>
+      <Group mode="plain" header={<Header size="s">Светлый фон с обводкой</Header>}>
         <CardGrid size="l">
           <Card mode="outline">
             <div style={{ height: 96 }} />
           </Card>
         </CardGrid>
       </Group>
-      <Group mode="plain" header={<Header mode="secondary">С внешней тенью</Header>}>
+      <Group mode="plain" header={<Header size="s">Светлый фон с тенью</Header>}>
         <CardGrid size="l">
           <Card mode="shadow">
-            <div style={{ height: 96 }} />
-          </Card>
-        </CardGrid>
-      </Group>
-      <Group
-        mode="plain"
-        header={<Header mode="secondary">С внутренней обводкой и дефолтным фоном</Header>}
-      >
-        <CardGrid size="l">
-          <Card mode="outline-tint">
             <div style={{ height: 96 }} />
           </Card>
         </CardGrid>

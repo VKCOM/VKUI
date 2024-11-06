@@ -98,10 +98,10 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
     <RootComponent
       {...restProps}
       style={{
+        width,
+        maxWidth,
+        minWidth,
         ...style,
-        width: width,
-        maxWidth: maxWidth,
-        minWidth: minWidth,
       }}
       getRootRef={baseRef}
       baseClassName={classNames(

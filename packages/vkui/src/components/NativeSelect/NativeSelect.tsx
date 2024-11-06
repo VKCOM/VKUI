@@ -1,5 +1,6 @@
 'use client';
 
+import { type ChangeEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -19,12 +20,49 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
+export type SelectValue = Exclude<
+  React.SelectHTMLAttributes<HTMLSelectElement>['value'],
+  undefined
+> | null;
+
+export type NativeSelectValue = Exclude<SelectValue, null>;
+
+export const NOT_SELECTED = {
+  NATIVE: '__vkui_internal_Select_not_selected__',
+  CUSTOM: null,
+};
+
+export const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSelectValue =>
+  value === NOT_SELECTED.CUSTOM ? NOT_SELECTED.NATIVE : value;
+
+export const remapFromNativeValueToSelectValue = (value: NativeSelectValue): SelectValue =>
+  value === NOT_SELECTED.NATIVE ? NOT_SELECTED.CUSTOM : value;
+
 export interface NativeSelectProps
-  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'multiple'>,
+  extends Omit<
+      React.SelectHTMLAttributes<HTMLSelectElement>,
+      'multiple' | 'value' | 'defaultValue' | 'onChange'
+    >,
     HasRef<HTMLSelectElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Pick<FormFieldProps, 'before' | 'status'> {
+  /**
+   * Выбранное значение.
+   *
+   * > ⚠️  Важно: При прокидывании `undefined` компонент будет считаться `Uncontrolled`.
+   * >
+   * > Не используйте `undefined`, чтобы показать невыбранное состояние. Вместо этого используйте `null`
+   */
+  value?: SelectValue;
+  /**
+   * см. `value`
+   */
+  defaultValue?: SelectValue;
+  /**
+   * Коллбэк срабатывающий при изменении выбранного значения.
+   */
+  onChange?: (newValue: SelectValue) => void;
   placeholder?: string;
   multiline?: boolean;
   selectType?: SelectType;
@@ -58,6 +96,8 @@ const NativeSelect = ({
   icon = <DropdownIcon />,
   before,
   onChange,
+  value,
+  defaultValue,
   ...restProps
 }: NativeSelectProps): React.ReactNode => {
   const [title, setTitle] = React.useState('');
@@ -69,8 +109,13 @@ const NativeSelect = ({
     const selectedOption = selectRef.current?.options[selectRef.current.selectedIndex];
     if (selectedOption) {
       setTitle(selectedOption.text);
-      setEmpty(selectedOption.value === '' && placeholder != null);
+      setEmpty(selectedOption.value === NOT_SELECTED.NATIVE && placeholder != null);
     }
+  };
+
+  const _onChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const newValue = remapFromNativeValueToSelectValue(e.target.value);
+    onChange?.(newValue);
   };
   useIsomorphicLayoutEffect(checkSelectedOption, [children]);
 
@@ -98,12 +143,18 @@ const NativeSelect = ({
     >
       <select
         {...restProps}
+        value={value !== undefined ? remapFromSelectValueToNativeValue(value) : value}
+        defaultValue={
+          defaultValue !== undefined
+            ? remapFromSelectValueToNativeValue(defaultValue)
+            : defaultValue
+        }
         disabled={disabled}
         className={styles.el}
-        onChange={callMultiple(onChange, checkSelectedOption)}
+        onChange={callMultiple(_onChange, checkSelectedOption)}
         ref={selectRef}
       >
-        {placeholder && <option value="">{placeholder}</option>}
+        {placeholder && <option value={NOT_SELECTED.NATIVE}>{placeholder}</option>}
         {children}
       </select>
       <div className={styles.container} aria-hidden>

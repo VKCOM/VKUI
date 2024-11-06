@@ -30,7 +30,12 @@ const App = () => {
       </CellButton>
 
       {/* do nothing 2 */}
-      <CellButton centered>
+      <CellButton centered expandable="auto">
+        Создать что-нибудь
+      </CellButton>
+
+      {/* rename subhead -> overtitle */}
+      <CellButton centered subhead={"Subhead"}>
         Создать что-нибудь
       </CellButton>
     </React.Fragment>

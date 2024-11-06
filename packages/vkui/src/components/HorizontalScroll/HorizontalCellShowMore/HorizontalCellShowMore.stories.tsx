@@ -70,7 +70,7 @@ export const Playground: Story = {
     );
   },
   args: {
-    size: 'l',
+    size: 'm',
     height: 96,
   },
   decorators: [

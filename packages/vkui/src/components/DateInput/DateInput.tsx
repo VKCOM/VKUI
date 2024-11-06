@@ -74,6 +74,7 @@ export interface DateInputProps
   clearFieldLabel?: string;
   showCalendarLabel?: string;
   disableCalendar?: boolean;
+  onCalendarOpenChanged?: (opened: boolean) => void;
 }
 
 const elementsConfig = (index: number) => {
@@ -159,6 +160,7 @@ export const DateInput = ({
   nextMonthIcon,
   disableCalendar = false,
   renderDayContent,
+  onCalendarOpenChanged,
   calendarTestsProps,
   dayFieldTestId,
   monthFieldTestId,
@@ -223,6 +225,7 @@ export const DateInput = ({
     onInternalValueChange,
     getInternalValue,
     value,
+    onCalendarOpenChanged,
   });
 
   const { sizeY = 'none' } = useAdaptivity();
@@ -341,7 +344,7 @@ export const DateInput = ({
             disablePast={disablePast}
             disableFuture={disableFuture}
             shouldDisableDate={shouldDisableDate}
-            onClose={removeFocusFromField}
+            onDoneButtonClick={removeFocusFromField}
             getRootRef={calendarRef}
             doneButtonText={doneButtonText}
             disablePickers={disablePickers}

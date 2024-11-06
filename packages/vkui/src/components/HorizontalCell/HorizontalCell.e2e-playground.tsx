@@ -52,6 +52,15 @@ export const HorizontalCellPlayground = (props: ComponentPlaygroundProps) => {
           >
             <Image size={128} borderRadius="l" />
           </HorizontalCell>
+          <HorizontalCell
+            {...restProps}
+            title={title}
+            subtitle={subtitle}
+            extraSubtitle={extraSubtitle}
+            size="xl"
+          >
+            <Image size={220} borderRadius="l" />
+          </HorizontalCell>
         </div>
       )}
     </ComponentPlayground>

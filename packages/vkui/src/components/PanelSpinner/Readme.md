@@ -15,7 +15,7 @@ import { PanelSpinner } from '@vkontakte/vkui';
   {loading ? (
     <PanelSpinner>Панель загружается, пожалуйста, подождите...</PanelSpinner>
   ) : (
-    <Group header={<Header mode="secondary">Информация</Header>}>...</Group>
+    <Group header={<Header size="s">Информация</Header>}>...</Group>
   )}
 </Panel>;
 ```

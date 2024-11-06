@@ -44,7 +44,7 @@ const Example = () => {
         <FormItem top="direction">
           <Select
             value={direction}
-            onChange={(e) => setDirection(e.target.value)}
+            onChange={setDirection}
             options={[
               { label: 'row', value: 'row' },
               { label: 'column', value: 'column' },
@@ -54,7 +54,7 @@ const Example = () => {
         <FormItem top="mode">
           <Select
             value={mode}
-            onChange={(e) => setMode(e.target.value)}
+            onChange={setMode}
             options={[
               { label: 'primary', value: 'primary' },
               { label: 'secondary', value: 'secondary' },
@@ -66,7 +66,7 @@ const Example = () => {
         <FormItem top="appearance">
           <Select
             value={appearance}
-            onChange={(e) => setAppearance(e.target.value)}
+            onChange={setAppearance}
             options={[
               { label: 'accent', value: 'accent' },
               { label: 'neutral', value: 'neutral' },
@@ -76,7 +76,7 @@ const Example = () => {
         <FormItem top="sizeY">
           <Select
             value={sizeY}
-            onChange={(e) => setSizeY(e.target.value)}
+            onChange={setSizeY}
             options={[
               { label: 'compact', value: 'compact' },
               {

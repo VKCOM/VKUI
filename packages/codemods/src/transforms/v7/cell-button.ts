@@ -1,5 +1,5 @@
 import { API, FileInfo, JSXAttribute } from 'jscodeshift';
-import { getImportInfo } from '../../codemod-helpers';
+import { getImportInfo, renameProp } from '../../codemod-helpers';
 import { report } from '../../report';
 import { JSCodeShiftOptions } from '../../types';
 
@@ -13,6 +13,8 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   if (!localName) {
     return source.toSource();
   }
+
+  renameProp(j, source, localName, { subhead: 'overTitle', expandable: 'chevron' });
 
   const attributeToReplace = 'mode';
   const newAttributeName = 'appearance';

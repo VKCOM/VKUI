@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
+import { useCounter } from '../../hooks/useCounter';
 import { useDOM } from '../../lib/dom';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasChildren } from '../../types';
 
 const clearDisableScrollStyle = (node: HTMLElement) => {
@@ -13,6 +13,7 @@ const clearDisableScrollStyle = (node: HTMLElement) => {
     top: '',
     left: '',
     right: '',
+    overscrollBehavior: '',
     overflowY: '',
     overflowX: '',
   });
@@ -34,9 +35,14 @@ export type GetScrollOptions = {
 export interface ScrollContextInterface {
   getScroll: (this: void, options?: GetScrollOptions) => { x: number; y: number };
   scrollTo: (this: void, x?: number, y?: number) => void;
-  isScrollLock: boolean;
-  enableScrollLock: (this: void) => void;
-  disableScrollLock: (this: void) => void;
+  /**
+   * Увеличивает счетчик блокировки прокрутки
+   */
+  incrementScrollLockCounter: (this: void) => void;
+  /**
+   * Уменьшает счетчик блокировки прокрутки
+   */
+  decrementScrollLockCounter: (this: void) => void;
   beforeScrollLockFnSetRef?: React.RefObject<Set<() => void>>;
 }
 
@@ -44,12 +50,35 @@ export const ScrollContext: React.Context<ScrollContextInterface> =
   React.createContext<ScrollContextInterface>({
     getScroll: () => ({ x: 0, y: 0 }),
     scrollTo: noop,
-    isScrollLock: false,
-    enableScrollLock: noop,
-    disableScrollLock: noop,
+    incrementScrollLockCounter: noop,
+    decrementScrollLockCounter: noop,
   });
 
 export const useScroll = (): ScrollContextInterface => React.useContext(ScrollContext);
+
+/**
+ * Управляет блокировкой окна в зависимости от внутреннего счетчика.
+ * Если счетчик больше нуля, требуется заблокировать прокрутку
+ */
+function useScrollLockController(enableScrollLock: () => void, disableScrollLock: () => void) {
+  const [count, { increment: incrementScrollLockCounter, decrement: decrementScrollLockCounter }] =
+    useCounter(0);
+
+  const needLockScroll = count > 0;
+
+  React.useEffect(() => {
+    if (needLockScroll) {
+      enableScrollLock();
+    } else {
+      disableScrollLock();
+    }
+  }, [needLockScroll, enableScrollLock, disableScrollLock]);
+
+  return {
+    incrementScrollLockCounter,
+    decrementScrollLockCounter,
+  };
+}
 
 export interface ScrollControllerProps extends HasChildren {
   elRef: React.RefObject<HTMLElement>;
@@ -57,7 +86,6 @@ export interface ScrollControllerProps extends HasChildren {
 
 export const GlobalScrollController = ({ children }: ScrollControllerProps): React.ReactNode => {
   const { window, document } = useDOM();
-  const [isScrollLock, setScrollLock] = React.useState(false);
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
 
   const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
@@ -80,7 +108,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     [document, window],
   );
 
-  const enableScrollLock = React.useCallback<ScrollContextInterface['enableScrollLock']>(() => {
+  const enableScrollLock = React.useCallback(() => {
     beforeScrollLockFnSetRef.current.forEach((fn) => {
       fn();
     });
@@ -90,37 +118,41 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     const overflowY = window!.innerWidth > document!.documentElement.clientWidth ? 'scroll' : '';
     const overflowX = window!.innerHeight > document!.documentElement.clientHeight ? 'scroll' : '';
 
+    Object.assign(document!.documentElement.style, { overscrollBehavior: 'none' });
     Object.assign(document!.body.style, {
       position: 'fixed',
       top: `-${scrollY}px`,
       left: `-${scrollX}px`,
       right: '0',
+      overscrollBehavior: 'none',
       overflowY,
       overflowX,
     });
-    setScrollLock(true);
   }, [document, window]);
 
-  const disableScrollLock = React.useCallback<ScrollContextInterface['disableScrollLock']>(() => {
+  const disableScrollLock = React.useCallback(() => {
     const scrollY = document!.body.style.top;
     const scrollX = document!.body.style.left;
 
+    Object.assign(document!.documentElement.style, { overscrollBehavior: '' });
     clearDisableScrollStyle(document!.body);
     window!.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
-    setScrollLock(false);
   }, [document, window]);
+
+  const { incrementScrollLockCounter, decrementScrollLockCounter } = useScrollLockController(
+    enableScrollLock,
+    disableScrollLock,
+  );
 
   const scrollController = React.useMemo<ScrollContextInterface>(
     () => ({
       getScroll,
       scrollTo,
-      isScrollLock,
-      disableScrollLock,
-      enableScrollLock,
-
+      incrementScrollLockCounter,
+      decrementScrollLockCounter,
       beforeScrollLockFnSetRef: beforeScrollLockFnSetRef,
     }),
-    [getScroll, scrollTo, isScrollLock, disableScrollLock, enableScrollLock],
+    [getScroll, scrollTo, incrementScrollLockCounter, decrementScrollLockCounter],
   );
 
   return <ScrollContext.Provider value={scrollController}>{children}</ScrollContext.Provider>;
@@ -130,7 +162,6 @@ export const ElementScrollController = ({
   elRef,
   children,
 }: ScrollControllerProps): React.ReactNode => {
-  const [isScrollLock, setScrollLock] = React.useState(false);
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
 
   const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
@@ -152,7 +183,7 @@ export const ElementScrollController = ({
     [elRef],
   );
 
-  const enableScrollLock = React.useCallback<ScrollContextInterface['enableScrollLock']>(() => {
+  const enableScrollLock = React.useCallback(() => {
     const el = elRef.current;
     if (!el) {
       return;
@@ -174,10 +205,9 @@ export const ElementScrollController = ({
       overflowY,
       overflowX,
     });
-    setScrollLock(true);
   }, [elRef]);
 
-  const disableScrollLock = React.useCallback<ScrollContextInterface['disableScrollLock']>(() => {
+  const disableScrollLock = React.useCallback(() => {
     const el = elRef.current;
     if (!el) {
       return;
@@ -188,31 +218,41 @@ export const ElementScrollController = ({
 
     clearDisableScrollStyle(el);
     el.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
-    setScrollLock(false);
   }, [elRef]);
+
+  const { incrementScrollLockCounter, decrementScrollLockCounter } = useScrollLockController(
+    enableScrollLock,
+    disableScrollLock,
+  );
 
   const scrollController = React.useMemo<ScrollContextInterface>(
     () => ({
       getScroll,
       scrollTo,
-      isScrollLock,
-      disableScrollLock,
-      enableScrollLock,
+      incrementScrollLockCounter,
+      decrementScrollLockCounter,
       beforeScrollLockFnSetRef,
     }),
-    [getScroll, scrollTo, isScrollLock, disableScrollLock, enableScrollLock],
+    [getScroll, scrollTo, incrementScrollLockCounter, decrementScrollLockCounter],
   );
 
   return <ScrollContext.Provider value={scrollController}>{children}</ScrollContext.Provider>;
 };
 
+/**
+ * Блокирует прокрутку окна
+ *
+ * @param enabled - если false то не будет блокировать
+ */
 export const useScrollLock = (enabled = true): void => {
-  const { enableScrollLock, disableScrollLock, isScrollLock } = useScroll();
-  useIsomorphicLayoutEffect(() => {
-    if (enabled && !isScrollLock) {
-      enableScrollLock();
-      return disableScrollLock;
+  const { incrementScrollLockCounter, decrementScrollLockCounter } = useScroll();
+
+  React.useEffect(() => {
+    if (enabled) {
+      incrementScrollLockCounter();
+      return decrementScrollLockCounter;
     }
+
     return noop;
-  }, [enableScrollLock, disableScrollLock, enabled]);
+  }, [enabled, incrementScrollLockCounter, decrementScrollLockCounter]);
 };

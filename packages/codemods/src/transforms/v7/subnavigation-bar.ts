@@ -35,7 +35,7 @@ function replaceModeToFixed(j: JSCodeshift, source: Collection, api: API, localN
       if (value === null) {
         report(
           api,
-          `: ${localName} has been changed. Manual changes required: change prop mode to flag fixed`,
+          `: ${localName} has been changed. Manual changes required: change prop mode to flag fixed.`,
         );
         return;
       }
