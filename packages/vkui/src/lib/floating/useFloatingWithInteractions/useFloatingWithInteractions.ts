@@ -229,9 +229,21 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     commitShownLocalState(false, 'callback');
   }, [commitShownLocalState]);
 
-  const handleRestoreFocus = React.useCallback(
-    () => (triggerOnFocus ? blockFocusRef.current : true),
-    [triggerOnFocus],
+  const handleRestoreFocus: UseFloatingWithInteractionsReturn['onRestoreFocus'] = React.useCallback(
+    (restoreFocus = true) => {
+      if (!restoreFocus) {
+        return false;
+      }
+      if (restoreFocus === true) {
+        return triggerOnFocus ? blockFocusRef.current : true;
+      } else if (restoreFocus === 'anchor-element') {
+        return refs.reference.current as HTMLElement;
+      } else if (restoreFocus instanceof HTMLElement) {
+        return restoreFocus;
+      }
+      return false;
+    },
+    [refs.reference, triggerOnFocus],
   );
 
   const handleEscapeKeyDown = React.useCallback(() => {

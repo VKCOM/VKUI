@@ -1,4 +1,4 @@
-import { type RefObject, useCallback, useRef, useState } from 'react';
+import { type RefObject, useRef, useState } from 'react';
 import { arraysEquals } from '../helpers/array';
 import { FOCUSABLE_ELEMENTS_LIST, Keys, pressedKey } from '../lib/accessibility';
 import {
@@ -10,6 +10,72 @@ import {
 } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { useMutationObserver } from './useMutationObserver';
+import { useStableCallback } from './useStableCallback';
+
+const useRestoreFocus = ({
+  restoreFocus,
+  timeout,
+  mount,
+  ref,
+}: Pick<UseFocusTrapProps, 'restoreFocus' | 'timeout' | 'mount'> & {
+  ref: RefObject<HTMLElement | null>;
+}) => {
+  const restoreFocusRef = useRef(restoreFocus);
+  restoreFocusRef.current = restoreFocus;
+  const [restoreFocusTo, setRestoreFocusTo] = useState<Element | null>(null);
+
+  const restoreFocusImpl = useStableCallback(() => {
+    const shouldRestoreFocus =
+      typeof restoreFocusRef.current === 'function'
+        ? restoreFocusRef.current()
+        : restoreFocusRef.current;
+
+    if (!shouldRestoreFocus) {
+      return;
+    }
+
+    setTimeout(() => {
+      const restoreFocusElement =
+        (isHTMLElement(shouldRestoreFocus) && shouldRestoreFocus) ||
+        (isHTMLElement(restoreFocusTo) && restoreFocusTo) ||
+        null;
+
+      if (restoreFocusElement) {
+        restoreFocusElement.focus();
+        setRestoreFocusTo(null);
+      }
+    }, timeout);
+  });
+
+  useIsomorphicLayoutEffect(
+    function calculateRestoreFocusTo() {
+      if (!ref.current || !restoreFocusRef.current || !mount) {
+        setRestoreFocusTo(null);
+        return;
+      }
+      setRestoreFocusTo(getActiveElementByAnotherElement(ref.current));
+    },
+    [ref, mount],
+  );
+
+  useIsomorphicLayoutEffect(
+    function tryToRestoreFocusOnUnmount() {
+      return () => {
+        restoreFocusImpl();
+      };
+    },
+    [restoreFocusImpl],
+  );
+
+  useIsomorphicLayoutEffect(
+    function tryToRestoreFocusWhenFakeUnmount() {
+      if (!mount) {
+        restoreFocusImpl();
+      }
+    },
+    [mount, restoreFocusImpl],
+  );
+};
 
 const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
 
@@ -31,7 +97,7 @@ export type UseFocusTrapProps = {
   /**
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean);
+  restoreFocus?: boolean | (() => boolean | HTMLElement);
   /**
    * @default 0
    */
@@ -60,8 +126,6 @@ export const useFocusTrap = (
 
   const focusableNodesRef = useRef<HTMLElement[]>([]);
 
-  const [restoreFocusTo, setRestoreFocusTo] = useState<Element | null>(null);
-
   const focusNodeByIndex = (nodeIndex: number) => {
     const element = focusableNodesRef.current[nodeIndex];
 
@@ -71,6 +135,13 @@ export const useFocusTrap = (
       });
     }
   };
+
+  useRestoreFocus({
+    restoreFocus,
+    mount,
+    timeout,
+    ref,
+  });
 
   const recalculateFocusableNodesRef = (parentNode: HTMLElement) => {
     // eslint-disable-next-line no-restricted-properties
@@ -140,48 +211,6 @@ export const useFocusTrap = (
       };
     },
     [autoFocus, timeout, disabled],
-  );
-
-  const restoreFocusImpl = useCallback(() => {
-    const shouldRestoreFocus = typeof restoreFocus === 'function' ? restoreFocus() : restoreFocus;
-
-    if (!restoreFocusTo || !isHTMLElement(restoreFocusTo) || !shouldRestoreFocus) {
-      return;
-    }
-
-    setTimeout(() => {
-      if (restoreFocusTo) {
-        restoreFocusTo.focus();
-        setRestoreFocusTo(null);
-      }
-    }, timeout);
-  }, [restoreFocus, restoreFocusTo, timeout]);
-
-  useIsomorphicLayoutEffect(
-    function calculateRestoreFocusTo() {
-      if (!ref.current || !restoreFocus || !mount) {
-        setRestoreFocusTo(null);
-        return;
-      }
-      setRestoreFocusTo(getActiveElementByAnotherElement(ref.current));
-    },
-    [ref, mount, restoreFocus],
-  );
-
-  useIsomorphicLayoutEffect(
-    function tryToRestoreFocusOnUnmount() {
-      return () => restoreFocusImpl();
-    },
-    [restoreFocusImpl],
-  );
-
-  useIsomorphicLayoutEffect(
-    function tryToRestoreFocusWhenFakeUnmount() {
-      if (!mount) {
-        restoreFocusImpl();
-      }
-    },
-    [mount, restoreFocusImpl],
   );
 
   useIsomorphicLayoutEffect(
