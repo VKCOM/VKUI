@@ -234,7 +234,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       if (!restoreFocus) {
         return false;
       }
-      if (restoreFocus === true || restoreFocus === 'latest-active') {
+      if (restoreFocus === true) {
         return triggerOnFocus ? blockFocusRef.current : true;
       } else if (restoreFocus === 'anchor-element') {
         return refs.reference.current as HTMLElement;

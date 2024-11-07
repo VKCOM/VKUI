@@ -1,10 +1,10 @@
 import type * as React from 'react';
 import type { UseFloatingMiddlewaresBootstrapOptions } from '../useFloatingMiddlewaresBootstrap';
 import type {
+  RestoreFocusType,
   UseFloatingWithInteractionsProps,
   UseFloatingWithInteractionsReturn,
 } from '../useFloatingWithInteractions';
-import { type RestoreFocusType } from '../useFloatingWithInteractions/types';
 import type { OnPlacementChange } from './common';
 
 /**

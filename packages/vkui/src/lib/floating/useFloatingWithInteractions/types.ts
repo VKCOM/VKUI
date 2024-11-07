@@ -11,7 +11,7 @@ export type ManualTriggerType = 'manual';
 
 export type TriggerType = ManualTriggerType | InteractiveTriggerType | InteractiveTriggerType[];
 
-export type RestoreFocusType = boolean | 'latest-active' | 'anchor-element' | HTMLElement;
+export type RestoreFocusType = boolean | 'anchor-element' | HTMLElement;
 
 export type ShownChangeReason =
   | 'click-outside'
