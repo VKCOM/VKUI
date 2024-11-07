@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { fakeTimers, userEvent } from '../../testing/utils';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { fakeTimers } from '../../testing/utils';
 import { CalendarDay, type CalendarDayProps } from './CalendarDay';
 import styles from './CalendarDay.module.css';
 
@@ -13,9 +13,9 @@ const CalendarDayTest = (testProps: Omit<CalendarDayProps, 'day' | 'onChange'>) 
 describe('CalendarDay', () => {
   fakeTimers();
 
-  it('calls callback with day on click', async () => {
+  it('calls callback with day on click', () => {
     render(<CalendarDayTest />);
-    await userEvent.click(screen.getByText('1'));
+    fireEvent.click(screen.getByText('1'));
 
     expect(onChange).toHaveBeenCalledWith(day);
   });
@@ -25,7 +25,7 @@ describe('CalendarDay', () => {
     expect(document.querySelector('.vkuiCalendarDay__hidden')).toBeInTheDocument();
   });
   it('check hinted className', () => {
-    render(<CalendarDayTest hinted data-testid="day" />);
+    render(<CalendarDayTest hinted testId="day" />);
     const calendarDay = screen.getByTestId('day').firstElementChild!;
     expect(calendarDay).toHaveClass(styles['CalendarDay__hinted--active']);
   });
