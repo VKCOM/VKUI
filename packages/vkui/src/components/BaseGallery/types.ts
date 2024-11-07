@@ -48,6 +48,7 @@ export interface BaseGalleryProps
    */
   dragDisabled?: boolean;
   showArrows?: boolean;
+  arrowClickableArea?: 'fill' | 'fit';
   hasPointer?: boolean;
   arrowSize?: ScrollArrowProps['size'];
   /**

@@ -83,8 +83,26 @@
 
 .arrow {
   position: absolute;
-  inset-block-start: 0;
   opacity: 0;
+}
+
+.arrowAreaFill {
+  inset-block-start: 0;
+}
+
+.arrowAreaFit {
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  block-size: auto;
+  padding-block: calc(var(--vkui--size_base_padding_vertical--regular) * 2);
+}
+
+.arrowStart {
+  padding-inline-end: var(--vkui--size_base_padding_horizontal--regular);
+}
+
+.arrowEnd {
+  padding-inline-start: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .host:hover .arrow {
