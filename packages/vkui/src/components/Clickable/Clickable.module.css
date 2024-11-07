@@ -1,20 +1,22 @@
 .realClickable {
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.resetButtonStyle {
+/* stylelint-disable selector-max-type */
+button.realClickable {
   appearance: none;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-drag: none;
 }
 
-.resetLinkStyle {
+a.realClickable {
   appearance: none;
   -webkit-tap-highlight-color: transparent;
   text-decoration: none;
 }
+/* stylelint-enable selector-max-type */
 
 .host:focus,
 .host:focus-visible {
