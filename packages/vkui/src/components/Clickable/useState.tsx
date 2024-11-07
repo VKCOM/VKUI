@@ -93,12 +93,13 @@ function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: U
     (isHover: boolean) => {
       setHoveredStateLocal(isHover);
 
-      const isHovered = calculateStateValue({
-        hasState: hasHover,
-        isLocked: lockState,
-        stateValueControlled: Boolean(hovered),
-        stateValueLocal: isHover,
-      });
+      const isHovered =
+        hovered ??
+        calculateStateValue({
+          hasState: hasHover,
+          isLocked: lockState,
+          stateValueLocal: isHover,
+        });
 
       // проверка сделана чтобы реже вызывать обновление состояния
       // контекста родителя
@@ -122,12 +123,13 @@ function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: U
     handleHover(false);
   };
 
-  const isHovered = calculateStateValue({
-    hasState: hasHover,
-    isLocked: lockState,
-    stateValueControlled: Boolean(hovered),
-    stateValueLocal: hoveredStateLocal,
-  });
+  const isHovered =
+    hovered ??
+    calculateStateValue({
+      hasState: hasHover,
+      isLocked: lockState,
+      stateValueLocal: hoveredStateLocal,
+    });
 
   return {
     isHovered,
@@ -194,12 +196,13 @@ function useActive({
     setActivated(false, activeEffectDelay);
   };
 
-  const isActivated = calculateStateValue({
-    hasState: hasActive,
-    isLocked: lockStateRef.current,
-    stateValueControlled: Boolean(activated),
-    stateValueLocal: activatedState,
-  });
+  const isActivated =
+    activated ??
+    calculateStateValue({
+      hasState: hasActive,
+      isLocked: lockStateRef.current,
+      stateValueLocal: activatedState,
+    });
 
   return {
     isActivated,
@@ -287,6 +290,7 @@ export function useState({
 
   const { isActivated, ...activeEvent } = useActive({
     ...restProps,
+    hasActive,
     lockStateRef: lockActiveStateRef,
     setParentStateLock: setParentStateLockActiveBubbling,
   });
@@ -309,13 +313,11 @@ export function useState({
 function calculateStateValue({
   hasState,
   isLocked,
-  stateValueControlled,
   stateValueLocal,
 }: {
   hasState: boolean;
   isLocked: boolean;
-  stateValueControlled: boolean;
   stateValueLocal: boolean;
 }): boolean {
-  return hasState && !isLocked && (stateValueControlled || stateValueLocal);
+  return hasState && !isLocked && stateValueLocal;
 }
