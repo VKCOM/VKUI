@@ -3,6 +3,10 @@
   align-items: center;
 }
 
+.host__withoutDone {
+  justify-content: center;
+}
+
 .picker {
   inline-size: 79px;
 }

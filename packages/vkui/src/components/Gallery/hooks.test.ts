@@ -10,7 +10,7 @@ describe(useAutoPlay, () => {
 
     jest.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
 
-    renderHook(() => useAutoPlay(100, 0, callback));
+    renderHook(() => useAutoPlay({ timeout: 100, slideIndex: 0, onNext: callback }));
     jest.runAllTimers();
     expect(callback).toHaveBeenCalledTimes(1);
 
@@ -29,8 +29,39 @@ describe(useAutoPlay, () => {
     jest.useFakeTimers();
     const callback = jest.fn();
 
-    renderHook(() => useAutoPlay(0, 0, callback));
+    renderHook(() => useAutoPlay({ timeout: 0, slideIndex: 0, onNext: callback }));
     jest.runAllTimers();
     expect(callback).toHaveBeenCalledTimes(0);
+  });
+
+  it('check controls working', () => {
+    jest.useFakeTimers();
+    const callback = jest.fn();
+
+    let visibilityState: Document['visibilityState'] = 'visible';
+
+    jest.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
+
+    const res = renderHook(() => useAutoPlay({ timeout: 100, slideIndex: 0, onNext: callback }));
+    jest.runAllTimers();
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    // Останавливаем работу хука
+    res.result.current.pause();
+    res.rerender();
+    // Срабатывает события visibilityChange
+    fireEvent(document, new Event('visibilitychange'));
+    jest.runAllTimers();
+    // Но callback не срабатыват по истечению таймеров
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    // Восстанавливаем работу хука
+    res.result.current.resume();
+    res.rerender();
+    // Срабатывает события visibilityChange
+    fireEvent(document, new Event('visibilitychange'));
+    jest.runAllTimers();
+    // callback срабатыват по истечению таймеров
+    expect(callback).toHaveBeenCalledTimes(2);
   });
 });

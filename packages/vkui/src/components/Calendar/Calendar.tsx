@@ -8,15 +8,38 @@ import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { CalendarDays, type CalendarDaysProps } from '../CalendarDays/CalendarDays';
-import { CalendarHeader, type CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
-import { CalendarTime, type CalendarTimeProps } from '../CalendarTime/CalendarTime';
+import {
+  CalendarDays,
+  type CalendarDaysProps,
+  type CalendarDaysTestsProps,
+} from '../CalendarDays/CalendarDays';
+import {
+  CalendarHeader,
+  type CalendarHeaderProps,
+  type CalendarHeaderTestsProps,
+} from '../CalendarHeader/CalendarHeader';
+import {
+  CalendarTime,
+  type CalendarTimeProps,
+  type CalendarTimeTestsProps,
+} from '../CalendarTime/CalendarTime';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Calendar.module.css';
 
+export type CalendarTestsProps = CalendarDaysTestsProps &
+  CalendarHeaderTestsProps &
+  CalendarTimeTestsProps;
+
 export interface CalendarProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
-    Pick<CalendarTimeProps, 'changeHoursLabel' | 'changeMinutesLabel'>,
+    Pick<
+      CalendarTimeProps,
+      | 'changeHoursLabel'
+      | 'changeMinutesLabel'
+      | 'doneButtonText'
+      | 'doneButtonDisabled'
+      | 'doneButtonShow'
+    >,
     Pick<
       CalendarHeaderProps,
       | 'prevMonthLabel'
@@ -30,7 +53,8 @@ export interface CalendarProps
       | 'prevMonthProps'
       | 'nextMonthProps'
     >,
-    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'> {
+    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'>,
+    CalendarTestsProps {
   value?: Date;
   /**
    * Запрещает выбор даты в прошлом.
@@ -44,7 +68,6 @@ export interface CalendarProps
   disableFuture?: boolean;
   enableTime?: boolean;
   disablePickers?: boolean;
-  doneButtonText?: string;
   changeDayLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   showNeighboringMonth?: boolean;
@@ -90,6 +113,8 @@ export const Calendar = ({
   onDoneButtonClick,
   enableTime = false,
   doneButtonText,
+  doneButtonDisabled,
+  doneButtonShow,
   weekStartsOn = 1,
   disablePickers,
   changeHoursLabel = 'Изменить час',
@@ -114,6 +139,11 @@ export const Calendar = ({
   renderDayContent,
   minDateTime,
   maxDateTime,
+  prevMonthButtonTestId,
+  nextMonthButtonTestId,
+  monthDropdownTestId,
+  yearDropdownTestId,
+  dayTestId,
   ...props
 }: CalendarProps): React.ReactNode => {
   const {
@@ -205,6 +235,10 @@ export const Calendar = ({
         nextMonthProps={nextMonthProps}
         isMonthDisabled={isMonthDisabled}
         isYearDisabled={isYearDisabled}
+        nextMonthButtonTestId={nextMonthButtonTestId}
+        prevMonthButtonTestId={prevMonthButtonTestId}
+        monthDropdownTestId={monthDropdownTestId}
+        yearDropdownTestId={yearDropdownTestId}
       />
       <CalendarDays
         viewDate={externalViewDate || viewDate}
@@ -225,6 +259,7 @@ export const Calendar = ({
         dayProps={dayProps}
         listenDayChangesForUpdate={listenDayChangesForUpdate}
         renderDayContent={renderDayContent}
+        dayTestId={dayTestId}
       />
       {enableTime && value && size !== 's' && (
         <div className={styles.time}>
@@ -233,6 +268,8 @@ export const Calendar = ({
             onChange={onChange}
             onDoneButtonClick={onDoneButtonClick}
             doneButtonText={doneButtonText}
+            doneButtonDisabled={doneButtonDisabled}
+            doneButtonShow={doneButtonShow}
             changeHoursLabel={changeHoursLabel}
             changeMinutesLabel={changeMinutesLabel}
             isDayDisabled={minDateTime || maxDateTime ? isDayDisabled : undefined}
