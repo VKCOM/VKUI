@@ -1,16 +1,25 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import { type HTMLAttributesWithRootRef } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
 import { Headline } from '../Typography/Headline/Headline';
 import styles from './Counter.module.css';
 
 const modeClassNames = {
-  secondary: styles.modeSecondary,
   primary: styles.modePrimary,
-  prominent: styles.modeProminent,
   contrast: styles.modeContrast,
+  tertiary: styles.modeTertiary,
   inherit: styles.modeInherit,
+};
+
+const appearanceClassNames: Record<string, string> = {
+  'custom': styles.appearanceCustom,
+  'accent': styles.appearanceAccent,
+  'neutral': styles.appearanceNeutral,
+  'accent-green': styles.appearanceAccentGreen,
+  'accent-red': styles.appearanceAccentRed,
 };
 
 const sizeClassNames = {
@@ -20,11 +29,20 @@ const sizeClassNames = {
 
 export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
   /**
-   * Тип счетчика.  В режиме `inherit` если компонент находится в кнопке, то
-   * цвета зависят от кнопки. Если компонент находится вне кнопки, применяется
-   * режим `secondary`
+   * Режим отображения счетчика
    */
-  mode?: 'secondary' | 'primary' | 'prominent' | 'contrast' | 'inherit';
+  mode?: 'primary' | 'contrast' | 'tertiary' | 'inherit';
+
+  /**
+   * Внешний вид счетчика
+   */
+  appearance?: 'accent' | 'neutral' | 'accent-green' | 'accent-red' | 'custom';
+
+  /**
+   * Пользовательский цвет (работает только при appearance="custom")
+   */
+  color?: string;
+
   size?: 's' | 'm';
 }
 
@@ -33,11 +51,48 @@ export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
  */
 export const Counter = ({
   mode = 'inherit',
+  appearance: appearanceProp,
+  color,
   size = 'm',
   children,
   className,
+  style: styleProp,
   ...restProps
 }: CounterProps): React.ReactNode => {
+  const appearance = React.useMemo<CounterProps['appearance']>(() => {
+    if (mode === 'inherit') {
+      return undefined;
+    }
+    if (appearanceProp) {
+      return appearanceProp;
+    }
+    return 'accent';
+  }, [appearanceProp, mode]);
+
+  const style = React.useMemo(() => {
+    if (mode === 'inherit' || appearance !== 'custom' || !color) {
+      return styleProp;
+    }
+    switch (mode) {
+      case 'primary':
+        return {
+          ...styleProp,
+          '--vkui_internal--counter_background': color,
+        };
+      case 'contrast':
+        return {
+          ...styleProp,
+          '--vkui_internal--counter_foreground': color,
+        };
+      case 'tertiary':
+        return {
+          ...styleProp,
+          '--vkui_internal--counter_foreground': color,
+        };
+    }
+    return styleProp;
+  }, [appearance, color, mode, styleProp]);
+
   if (React.Children.count(children) === 0) {
     return null;
   }
@@ -48,11 +103,13 @@ export const Counter = ({
   return (
     <CounterTypography
       {...restProps}
+      style={style}
       Component="span"
       className={classNames(
         'vkuiInternalCounter',
         styles.host,
         modeClassNames[mode],
+        !!appearance && appearanceClassNames[appearance],
         sizeClassNames[size],
         className,
       )}

@@ -49,7 +49,7 @@ const Example = () => {
             after={
               <PanelHeaderButton
                 label={
-                  <Counter size="s" mode="prominent">
+                  <Counter size="s" mode="primary" appearance="accent-red">
                     <VisuallyHidden>Обновлений: </VisuallyHidden>
                     21
                   </Counter>
@@ -77,7 +77,7 @@ const Example = () => {
               <React.Fragment>
                 <PanelHeaderButton
                   label={
-                    <Counter size="s" mode="prominent">
+                    <Counter size="s" mode="primary" appearance="accent-red">
                       <VisuallyHidden>Новых: </VisuallyHidden>3
                     </Counter>
                   }
@@ -91,7 +91,7 @@ const Example = () => {
                 </PanelHeaderButton>
                 <PanelHeaderButton
                   label={
-                    <Counter size="s" mode="prominent">
+                    <Counter size="s" mode="primary" appearance="accent-red">
                       2
                     </Counter>
                   }

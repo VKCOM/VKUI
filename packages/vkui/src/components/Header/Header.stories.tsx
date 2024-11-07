@@ -43,7 +43,7 @@ const story: Meta<HeaderProps> = {
       additionalPresets: {
         Text: '12',
         Counter: (
-          <Counter size="s" mode="prominent">
+          <Counter size="s" mode="primary" appearance="accent-red">
             3
           </Counter>
         ),

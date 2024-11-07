@@ -5,27 +5,92 @@
   padding-inline: 5px;
   text-align: center;
   box-sizing: border-box;
+  background: var(--vkui_internal--counter_background);
+  color: var(--vkui_internal--counter_foreground);
+
+  --vkui_internal--counter_background: transparent;
+  --vkui_internal--counter_foreground: var(--vkui--color_text_contrast);
 }
 
-.modePrimary {
-  background: var(--vkui--color_background_accent);
-  color: var(--vkui--color_text_contrast);
+/* -------- Mode Primary --------- */
+.modePrimary.appearanceAccent {
+  --vkui_internal--counter_background: var(--vkui--color_background_accent_themed);
+  --vkui_internal--counter_foreground: var(--vkui--color_text_contrast_themed);
 }
 
-.modeSecondary {
-  background: var(--vkui--color_icon_secondary);
-  color: var(--vkui--color_text_contrast_themed);
+.modePrimary.appearanceNeutral {
+  --vkui_internal--counter_background: var(--vkui--color_icon_secondary);
+  --vkui_internal--counter_foreground: var(--vkui--color_text_contrast);
 }
 
-.modeProminent {
-  background: var(--vkui--color_accent_red);
-  color: var(--vkui--color_text_contrast);
+.modePrimary.appearanceAccentGreen {
+  --vkui_internal--counter_background: var(--vkui--color_accent_green);
+  --vkui_internal--counter_foreground: var(--vkui--color_text_contrast);
 }
+
+.modePrimary.appearanceAccentRed {
+  --vkui_internal--counter_background: var(--vkui--color_accent_red);
+  --vkui_internal--counter_foreground: var(--vkui--color_text_contrast);
+}
+
+.modePrimary.appearanceCustom {
+  --vkui_internal--counter_background: transparent;
+  --vkui_internal--counter_foreground: var(--vkui--color_text_contrast);
+}
+
+/* -------- Mode Contrast --------- */
 
 .modeContrast {
-  background: var(--vkui--color_background_content);
-  color: var(--vkui--color_text_accent_themed);
+  --vkui_internal--counter_background: var(--vkui--color_background_contrast);
 }
+
+.modeContrast.appearanceAccent {
+  --vkui_internal--counter_foreground: var(--vkui--color_text_accent);
+}
+
+.modeContrast.appearanceNeutral {
+  --vkui_internal--counter_foreground: var(--vkui--color_text_tertiary);
+}
+
+.modeContrast.appearanceAccentGreen {
+  --vkui_internal--counter_foreground: var(--vkui--color_accent_green);
+}
+
+.modeContrast.appearanceAccentRed {
+  --vkui_internal--counter_foreground: var(--vkui--color_accent_red);
+}
+
+.modeContrast.appearanceCustom {
+  --vkui_internal--counter_foreground: var(--vkui--color_text_primary_invariably);
+}
+
+/* -------- Mode Tertiary --------- */
+
+.modeTertiary {
+  --vkui_internal--counter_background: transparent;
+}
+
+.modeTertiary.appearanceAccent {
+  --vkui_internal--counter_foreground: var(--vkui--color_text_accent);
+}
+
+.modeTertiary.appearanceNeutral {
+  --vkui_internal--counter_foreground: var(--vkui--color_text_subhead);
+}
+
+.modeTertiary.appearanceAccentGreen {
+  --vkui_internal--counter_foreground: var(--vkui--color_accent_green);
+}
+
+.modeTertiary.appearanceAccentRed {
+  --vkui_internal--counter_foreground: var(--vkui--color_accent_red);
+}
+
+.modeTertiary.appearanceCustom {
+  --vkui_internal--counter_foreground: var(--vkui--color_text_contrast);
+}
+
+/*----------------------------------*/
 
 .sizeM {
   block-size: 24px;
@@ -40,11 +105,14 @@
 }
 
 .modeInherit {
-  background-color: var(
+  --vkui_internal--counter_background: var(
     --vkui_internal--counter_inherit_background,
     var(--vkui--color_icon_secondary)
   );
-  color: var(--vkui_internal--counter_inherit_color, var(--vkui--color_text_contrast_themed));
+  --vkui_internal--counter_foreground: var(
+    --vkui_internal--counter_inherit_color,
+    var(--vkui--color_text_contrast_themed)
+  );
 }
 
 /**

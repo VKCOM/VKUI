@@ -35,7 +35,7 @@ const EpicTabbar = () => {
         selected={false}
         data-story="messages"
         indicator={
-          <Counter size="s" mode="prominent">
+          <Counter size="s" mode="primary" appearance="accent-red">
             12
           </Counter>
         }

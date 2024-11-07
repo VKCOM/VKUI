@@ -90,7 +90,7 @@ const [indicator, setIndicator] = useState('one');
         onClick={() => setIndicator('three')}
         label="Мессенджер"
         indicator={
-          <Counter size="s" mode="prominent">
+          <Counter size="s" mode="primary" appearance="accent-red">
             3
           </Counter>
         }
