@@ -39,18 +39,18 @@ const PlaceholderIcon = (props: PlaceholderIconProps): React.ReactNode => (
   <RootComponent baseClassName={styles.icon} {...props} />
 );
 
-export type PlaceholderHeaderProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
+export type PlaceholderTitleProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
 
-const PlaceholderTitle = ({ className, ...restProps }: PlaceholderHeaderProps): React.ReactNode => (
+const PlaceholderTitle = ({ className, ...restProps }: PlaceholderTitleProps): React.ReactNode => (
   <Title level="2" weight="2" className={classNames(className, styles.title)} {...restProps} />
 );
 
-export type PlaceholderTextProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
+export type PlaceholderDescriptionProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
 
 const PlaceholderDescription = ({
   className,
   ...restProps
-}: PlaceholderTextProps): React.ReactNode => (
+}: PlaceholderDescriptionProps): React.ReactNode => (
   <Headline weight="3" className={classNames(className, styles.description)} {...restProps} />
 );
 
