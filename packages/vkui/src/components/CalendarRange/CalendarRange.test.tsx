@@ -1,43 +1,15 @@
-import { fireEvent, getByText, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { format } from 'date-fns';
 import { getDocumentBody } from '../../lib/dom';
 import { baselineComponent } from '../../testing/utils';
 import { CalendarRange } from './CalendarRange';
-import styles from './CalendarRange.module.css';
 import dayStyles from '../CalendarDay/CalendarDay.module.css';
 import daysStyles from '../CalendarDays/CalendarDays.module.css';
 
-const firstDayDate = new Date('2023-09-01T07:40:00.000Z');
+const firstDayDate = new Date(2023, 8, 1);
 
 describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
-
-  const getParts = () => {
-    return getDocumentBody().getElementsByClassName(
-      styles['CalendarRange__inner'],
-    ) as HTMLCollectionOf<HTMLElement>;
-  };
-
-  const clickDayInPart = (part: HTMLElement, date: string) => {
-    fireEvent.click(getByText(part, date));
-  };
-
-  const getCalendarDayBlock = (part: HTMLElement, date: string) => {
-    return getByText(part, date).closest(`.${dayStyles['CalendarDay']}`) as HTMLElement;
-  };
-
-  const getLeftPart = () => {
-    const [leftPart] = getParts();
-    return leftPart;
-  };
-
-  const getRightPart = () => {
-    const [, rightPart] = getParts();
-    return rightPart;
-  };
-
-  const checkLeftPartMonth = (monthName: string) => {
-    expect(getByText(getLeftPart(), monthName)).toBeTruthy();
-  };
 
   const triggerKeyDownEvent = (key: string) => {
     fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles['CalendarDays'])[0], {
@@ -46,16 +18,22 @@ describe('CalendarRange', () => {
     });
   };
 
+  const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+
   it('calls onChange when initial value is [null, null]', () => {
     const onChangeStub = jest.fn();
     render(
-      <CalendarRange data-testid="calendar-range" onChange={onChangeStub} value={[null, null]} />,
+      <CalendarRange
+        data-testid="calendar-range"
+        onChange={onChangeStub}
+        value={[null, null]}
+        dayTestId={(day) => `${day.getDate()}`}
+      />,
     );
-
-    fireEvent.click(screen.getAllByText('6')[0]);
+    fireEvent.click(screen.getAllByTestId('6')[0]);
     expect(onChangeStub).not.toHaveBeenLastCalledWith([null, null]);
 
-    fireEvent.click(screen.getAllByText('6')[1]);
+    fireEvent.click(screen.getAllByTestId('6')[1]);
     expect(onChangeStub).not.toHaveBeenLastCalledWith([null, null]);
   });
 
@@ -63,21 +41,23 @@ describe('CalendarRange', () => {
     const startDate = new Date(2024, 2, 1);
     const endDate = new Date(2024, 2, 10);
 
-    const result = render(
-      <CalendarRange data-testid="calendar-range" value={[startDate, endDate]} />,
+    render(
+      <CalendarRange
+        data-testid="calendar-range"
+        value={[startDate, endDate]}
+        leftPartHeaderTestsData={{
+          monthDropdownTestId: 'left-month-dropdown',
+        }}
+        rightPartHeaderTestsData={{
+          monthDropdownTestId: 'right-month-dropdown',
+        }}
+      />,
     );
 
-    const getSelect = (index: number) => {
-      const headers = result.container.getElementsByClassName(styles['CalendarRange__header']);
-      expect(headers.length).toBe(2);
-      const header = headers[index];
-      return header.querySelector('select');
-    };
-
     // Кликаем по дропдауну месяца в правой части, чтобы открылся дропдаун
-    const rightPartSelect = getSelect(1);
+    const rightPartSelect = screen.getByTestId('right-month-dropdown');
     expect(rightPartSelect).not.toBeNull();
-    fireEvent.click(rightPartSelect!);
+    fireEvent.click(rightPartSelect);
 
     // Кликаем по месяцу Июнь в селекте
     const unselectedOption = screen.getByRole('option', { selected: false, name: 'июнь' });
@@ -85,95 +65,114 @@ describe('CalendarRange', () => {
     fireEvent.click(unselectedOption);
 
     // Кликаем по дропдауну месяца в левой части, чтобы открылся дропдаун
-    const leftPartSelect = getSelect(0);
+    const leftPartSelect = screen.getByTestId('left-month-dropdown');
     expect(leftPartSelect).not.toBeNull();
-    fireEvent.click(leftPartSelect!);
+    fireEvent.click(leftPartSelect);
 
     expect(screen.getByRole('option', { selected: true, name: 'май' }));
   });
 
   it('check navigation by keyboard between two months', async () => {
     jest.useFakeTimers();
-    render(<CalendarRange value={[firstDayDate, firstDayDate]} />);
+    render(
+      <CalendarRange
+        value={[firstDayDate, firstDayDate]}
+        leftPartHeaderTestsData={{
+          monthDropdownTestId: (index) => `left-month-picker-${index}`,
+        }}
+        rightPartHeaderTestsData={{
+          monthDropdownTestId: (index) => `right-month-picker-${index}`,
+        }}
+        dayTestId={dayTestId}
+      />,
+    );
+    const checkActiveDay = (date: Date) => {
+      expect(document.activeElement as HTMLElement).toBe(screen.getByTestId(dayTestId(date)));
+    };
 
-    checkLeftPartMonth('сентябрь');
+    expect(screen.getByTestId(`left-month-picker-8`));
 
     triggerKeyDownEvent('ArrowLeft');
 
-    checkLeftPartMonth('август');
-    expect(getByText(document.activeElement as HTMLElement, '31')).toBeInTheDocument();
+    expect(screen.getByTestId(`left-month-picker-7`));
+    checkActiveDay(new Date(2023, 7, 31));
 
     triggerKeyDownEvent('ArrowRight');
 
-    checkLeftPartMonth('август');
-    expect(getByText(document.activeElement as HTMLElement, '1')).toBeInTheDocument();
+    expect(screen.getByTestId(`left-month-picker-7`));
+    checkActiveDay(new Date(2023, 8, 1));
 
     triggerKeyDownEvent('ArrowUp');
 
-    checkLeftPartMonth('август');
-    expect(getByText(document.activeElement as HTMLElement, '25')).toBeInTheDocument();
+    expect(screen.getByTestId(`left-month-picker-7`));
+    checkActiveDay(new Date(2023, 7, 25));
 
     triggerKeyDownEvent('ArrowDown');
 
-    checkLeftPartMonth('август');
-    expect(getByText(document.activeElement as HTMLElement, '1')).toBeInTheDocument();
+    expect(screen.getByTestId(`left-month-picker-7`));
+    checkActiveDay(new Date(2023, 8, 1));
   });
 
-  it('check click on same day', async () => {
-    jest.useFakeTimers();
+  it('check click on same day', () => {
     const onChange = jest.fn();
-    render(<CalendarRange value={[firstDayDate, null]} onChange={onChange} />);
+    render(
+      <CalendarRange value={[firstDayDate, null]} onChange={onChange} dayTestId={dayTestId} />,
+    );
 
-    const [leftPart] = getParts();
-    clickDayInPart(leftPart, '1');
+    const dayElement = screen.getByTestId(dayTestId(new Date(2023, 8, 1)));
 
-    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(
+    fireEvent.click(dayElement);
+
+    expect(dayElement).toHaveClass(dayStyles['CalendarDay--selection-start']);
+    expect(dayElement).not.toHaveClass(dayStyles['CalendarDay--selection-end']);
+  });
+
+  it('check range working', () => {
+    const onChange = jest.fn();
+    render(
+      <CalendarRange value={[firstDayDate, null]} onChange={onChange} dayTestId={dayTestId} />,
+    );
+
+    const dayElement = screen.getByTestId(dayTestId(new Date(2023, 8, 3)));
+
+    fireEvent.click(dayElement);
+
+    expect(screen.getByTestId(dayTestId(firstDayDate))).toHaveClass(
       dayStyles['CalendarDay--selection-start'],
     );
-    expect(getCalendarDayBlock(leftPart, '1')).not.toHaveClass(
-      dayStyles['CalendarDay--selection-end'],
-    );
+    expect(dayElement).toHaveClass(dayStyles['CalendarDay--selection-end']);
   });
 
-  it('check range working', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
-    render(<CalendarRange value={[firstDayDate, null]} onChange={onChange} />);
-
-    const [leftPart] = getParts();
-    clickDayInPart(leftPart, '3');
-
-    expect(getCalendarDayBlock(leftPart, '1')).toHaveClass(
-      dayStyles['CalendarDay--selection-start'],
-    );
-    expect(getCalendarDayBlock(leftPart, '3')).toHaveClass(dayStyles['CalendarDay--selection-end']);
-  });
-
-  it('check reverse range select working', async () => {
-    jest.useFakeTimers();
+  it('check reverse range select working', () => {
     const onChange = jest.fn();
     const { rerender } = render(
-      <CalendarRange value={[firstDayDate, firstDayDate]} onChange={onChange} />,
+      <CalendarRange
+        value={[firstDayDate, firstDayDate]}
+        onChange={onChange}
+        dayTestId={dayTestId}
+      />,
     );
 
     triggerKeyDownEvent('ArrowLeft');
 
-    const [leftPart] = getParts();
-    clickDayInPart(leftPart, '30');
+    const clickedDate = new Date(2023, 7, 30);
 
-    expect(onChange.mock.calls).toEqual([[[new Date('2023-08-30T07:40:00.000Z'), firstDayDate]]]);
+    fireEvent.click(screen.getByTestId(dayTestId(clickedDate)));
+
+    expect(onChange.mock.calls).toEqual([[[clickedDate, firstDayDate]]]);
 
     rerender(
       <CalendarRange
-        value={[new Date('2023-08-30T07:40:00.000Z'), firstDayDate]}
+        value={[clickedDate, firstDayDate]}
         onChange={onChange}
+        dayTestId={dayTestId}
       />,
     );
 
-    expect(getCalendarDayBlock(getLeftPart(), '30')).toHaveClass(
+    expect(screen.getByTestId(dayTestId(clickedDate))).toHaveClass(
       dayStyles['CalendarDay--selection-start'],
     );
-    expect(getCalendarDayBlock(getRightPart(), '1')).toHaveClass(
+    expect(screen.getByTestId(dayTestId(firstDayDate))).toHaveClass(
       dayStyles['CalendarDay--selection-end'],
     );
   });

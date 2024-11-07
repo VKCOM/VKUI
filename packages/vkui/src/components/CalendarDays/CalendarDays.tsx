@@ -9,15 +9,21 @@ import {
   CalendarDay,
   type CalendarDayElementProps,
   type CalendarDayProps,
+  type CalendarDayTestsProps,
 } from '../CalendarDay/CalendarDay';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './CalendarDays.module.css';
 
+export type CalendarDaysTestsProps = {
+  dayTestId?: CalendarDayTestsProps['testId'];
+};
+
 export interface CalendarDaysProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
-    Pick<CalendarDayProps, 'renderDayContent'> {
+    Pick<CalendarDayProps, 'renderDayContent'>,
+    CalendarDaysTestsProps {
   value?: Date | Array<Date | null>;
   viewDate: Date;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -61,6 +67,7 @@ export const CalendarDays = ({
   listenDayChangesForUpdate = false,
   getRootRef,
   renderDayContent,
+  dayTestId,
   ...props
 }: CalendarDaysProps): React.ReactNode => {
   const { locale } = useConfigProvider();
@@ -129,6 +136,7 @@ export const CalendarDays = ({
                 sameMonth={sameMonth}
                 size={size}
                 renderDayContent={renderDayContent}
+                testId={dayTestId}
                 {...dayProps}
               />
             );

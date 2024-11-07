@@ -11,7 +11,11 @@ export type CalendarDayElementProps = Omit<
   'onChange' | 'size' | 'disabled' | 'selected'
 >;
 
-export interface CalendarDayProps extends CalendarDayElementProps {
+export type CalendarDayTestsProps = {
+  testId?: string | ((day: Date) => string);
+};
+
+export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTestsProps {
   day: Date;
   today?: boolean;
   selected?: boolean;
@@ -55,6 +59,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     className,
     children,
     renderDayContent,
+    testId,
     ...restProps
   }: CalendarDayProps) => {
     const { locale } = useConfigProvider();
@@ -115,6 +120,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
         focusVisibleMode={active ? 'outside' : 'inside'}
         onPointerEnter={handleEnter}
         onPointerLeave={handleLeave}
+        data-testid={typeof testId === 'string' ? testId : testId?.(day)}
         {...restProps}
       >
         <div
