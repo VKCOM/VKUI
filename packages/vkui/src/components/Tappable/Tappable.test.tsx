@@ -210,11 +210,12 @@ describe(Tappable, () => {
     it('activates during longtap', async () => {
       render(<TappableTest onClick={noop} />);
       fireEvent.pointerDown(tappable());
-      expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
-      await waitFor(() => expect(tappable()).toHaveClass(styles['Tappable--activated-background']));
+      act(jest.runOnlyPendingTimers);
+      expect(tappable()).toHaveClass(styles['Tappable--activated-background']);
 
       fireEvent.pointerUp(tappable());
-      expect(tappable()).toHaveClass(styles['Tappable--activated-background']);
+      act(jest.runOnlyPendingTimers);
+      expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
     });
 
     it('does not activate on child Tappable click', async () => {
@@ -264,12 +265,16 @@ describe(Tappable, () => {
         expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
       });
 
-      it('on hasActive=false', () => {
-        const h = render(<TappableTest />);
-        fireEvent.mouseDown(tappable());
-        act(jest.runAllTimers);
-        h.rerender(<TappableTest hasActive={false} />);
-        expect(tappable()).not.toHaveClass(styles['Tappable--activated-background']);
+      it('on hasActive=false', async () => {
+        render(<TappableTest hasActive={false} onClick={noop} />);
+        await userEvent.click(tappable());
+        let errored = false;
+        await waitFor(() =>
+          expect(tappable()).toHaveClass(styles['Tappable--activated-background']),
+        ).catch(() => {
+          errored = true;
+        });
+        expect(errored).toBeTruthy();
       });
 
       it('on child hover', async () => {
