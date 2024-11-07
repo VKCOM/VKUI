@@ -265,9 +265,12 @@ function useLockRef(
 export function useState({
   hovered,
   hasHover,
+  activated,
   hasActive,
+  activeEffectDelay,
   unlockParentHover,
-  ...restProps
+  hoverClassName,
+  activeClassName,
 }: StateProps): {
   stateClassName: string;
   setLockHoverBubblingImmediate: (...args: any[]) => void;
@@ -289,16 +292,14 @@ export function useState({
   });
 
   const { isActivated, ...activeEvent } = useActive({
-    ...restProps,
+    activated,
     hasActive,
+    activeEffectDelay,
     lockStateRef: lockActiveStateRef,
     setParentStateLock: setParentStateLockActiveBubbling,
   });
 
-  const stateClassName = classNames(
-    isHovered && restProps.hoverClassName,
-    isActivated && restProps.activeClassName,
-  );
+  const stateClassName = classNames(isHovered && hoverClassName, isActivated && activeClassName);
   const handlers = mergeCalls(hoverEvent, activeEvent);
 
   return {
