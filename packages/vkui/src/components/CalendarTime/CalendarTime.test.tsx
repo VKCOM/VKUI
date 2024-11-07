@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import { setHours, setMinutes } from 'date-fns';
 import { userEvent } from '../../testing/utils';
 import { CalendarTime } from './CalendarTime';
-import styles from './CalendarTime.module.css';
 
 const dayDate = new Date('2023-09-01T07:40:00.000Z');
 
@@ -10,11 +9,19 @@ describe('CalendarTime', () => {
   it('check onChange should called when select hours and minutes', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
-    const { container } = render(<CalendarTime onChange={onChange} value={dayDate} />);
+    render(
+      <CalendarTime
+        onChange={onChange}
+        value={dayDate}
+        hoursTestId="hours-picker"
+        minutesTestId="minutes-picker"
+      />,
+    );
 
-    const [hourSelect, minuteSelect] = Array.from(
-      container.getElementsByClassName(styles['CalendarTime__picker']),
-    ).map((picker) => picker.firstElementChild as HTMLElement);
+    const [hourSelect, minuteSelect] = [
+      screen.getByTestId('hours-picker'),
+      screen.getByTestId('minutes-picker'),
+    ];
 
     await userEvent.click(hourSelect);
 
@@ -32,13 +39,20 @@ describe('CalendarTime', () => {
   it('check onChange should not called when isDisabled true', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
-    const { container } = render(
-      <CalendarTime onChange={onChange} value={dayDate} isDayDisabled={() => true} />,
+    render(
+      <CalendarTime
+        onChange={onChange}
+        value={dayDate}
+        isDayDisabled={() => true}
+        hoursTestId="hours-picker"
+        minutesTestId="minutes-picker"
+      />,
     );
 
-    const [hourSelect, minuteSelect] = Array.from(
-      container.getElementsByClassName(styles['CalendarTime__picker']),
-    ).map((picker) => picker.firstElementChild as HTMLElement);
+    const [hourSelect, minuteSelect] = [
+      screen.getByTestId('hours-picker'),
+      screen.getByTestId('minutes-picker'),
+    ];
 
     await userEvent.click(hourSelect);
 
@@ -55,32 +69,28 @@ describe('CalendarTime', () => {
 
   it('should hide done button with doneButtonShow=false', () => {
     const onChange = jest.fn();
-    const buttonText = 'Текст';
     render(
       <CalendarTime
         onChange={onChange}
         value={dayDate}
+        doneButtonTestId="done-button"
         doneButtonShow={false}
-        doneButtonText={buttonText}
       />,
     );
-    expect(screen.queryByText(buttonText)).toBeFalsy();
+    expect(screen.queryByTestId('done-button')).toBeFalsy();
   });
 
   it('should disable done button with doneButtonDisabled=false', () => {
     const onChange = jest.fn();
-    const buttonText = 'Текст';
     render(
       <CalendarTime
         onChange={onChange}
         value={dayDate}
-        doneButtonText={buttonText}
+        doneButtonTestId="done-button"
         doneButtonDisabled={true}
       />,
     );
-    const text = screen.queryByText(buttonText);
-    expect(text).toBeTruthy();
-    const button = text!.closest('button');
+    const button = screen.queryByTestId<HTMLButtonElement>('done-button');
     expect(button!.disabled).toBeTruthy();
   });
 });
