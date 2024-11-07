@@ -5,14 +5,14 @@
 .resetButtonStyle {
   appearance: none;
   user-select: none;
-  -webkit-tap-highlight-color: none;
+  -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-drag: none;
 }
 
 .resetLinkStyle {
   appearance: none;
-  -webkit-tap-highlight-color: none;
+  -webkit-tap-highlight-color: transparent;
   text-decoration: none;
 }
 
