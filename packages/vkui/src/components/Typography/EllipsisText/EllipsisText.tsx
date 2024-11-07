@@ -5,7 +5,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { getTextFromChildren } from '../../../lib/children';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../../types';
-import type { RootComponentProps } from '../../RootComponent/RootComponent';
+import { RootComponent, type RootComponentProps } from '../../RootComponent/RootComponent';
 import styles from './EllipsisText.module.css';
 
 export interface EllipsisTextProps
@@ -37,8 +37,8 @@ export interface EllipsisTextProps
  * @see https://vkcom.github.io/VKUI/#/EllipsisText
  */
 const EllipsisText = ({
+  Component = 'span',
   className,
-  getRootRef,
   children,
   maxWidth,
   maxLines = 1,
@@ -54,8 +54,8 @@ const EllipsisText = ({
   }, [contentRef, maxLines]);
 
   return (
-    <span
-      ref={getRootRef}
+    <RootComponent
+      Component={Component}
       className={classNames(
         styles.host,
         disableNativeTitle && styles.disableNativeTitle,
@@ -71,7 +71,7 @@ const EllipsisText = ({
       >
         {children}
       </span>
-    </span>
+    </RootComponent>
   );
 };
 
