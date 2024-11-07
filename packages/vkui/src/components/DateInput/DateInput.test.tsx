@@ -4,7 +4,7 @@ import { DateInput } from './DateInput';
 import styles from './DateInput.module.css';
 import inputLikeStyles from '../InputLike/InputLike.module.css';
 
-const date = new Date(2024, 6, 31, 11, 20);
+const date = new Date(2024, 6, 31, 11, 20, 0, 0);
 
 const getInputsLike = (container: HTMLElement) => {
   const dateInput = container.getElementsByClassName(styles['DateInput__input'])[0];
@@ -90,7 +90,24 @@ describe('DateInput', () => {
     const normalizedDate = convertInputsToNumbers(inputLikes);
     expect(normalizedDate).toEqual([30, 6, 2023, 15, 40]);
 
-    expect(onChange).toBeCalledTimes(5);
+    expect(onChange).toHaveBeenCalledTimes(5);
+    expect(onChange).toHaveBeenCalledWith(new Date(2023, 5, 30, 15, 40, 0, 0));
+  });
+
+  it('should call onChange with zero sec/ms', async () => {
+    jest.useFakeTimers();
+    const onChange = jest.fn();
+    const { container } = render(<DateInput value={undefined} onChange={onChange} />);
+    const inputLikes = getInputsLike(container);
+
+    const [dates, months, years] = inputLikes;
+
+    await userEvent.type(dates, '30');
+    await userEvent.type(months, '06');
+    await userEvent.type(years, '2023');
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith(new Date(2023, 5, 30, 0, 0, 0, 0));
   });
 
   it('should call onChange callback when change data by calendar', async () => {
