@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { startOfDay, startOfMinute } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -191,7 +192,10 @@ export const DateInput = ({
       }
 
       if (isMatch(formattedValue, mask)) {
-        onChange?.(parse(formattedValue, mask, value ?? new Date()));
+        const now = new Date();
+        onChange?.(
+          parse(formattedValue, mask, value ?? (enableTime ? startOfMinute(now) : startOfDay(now))),
+        );
       }
     },
     [enableTime, maxElement, onChange, value],
