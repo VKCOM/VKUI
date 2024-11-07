@@ -55,6 +55,7 @@ export const ComponentPlayground = <
     <ConfigProvider colorScheme={colorScheme} platform={platform}>
       <AdaptivityProvider {...adaptivityProviderProps}>
         <AppWrapper
+          className={TEST_CLASS_NAMES.APP_ROOT}
           mode={isFixedComponent ? 'full' : undefined}
           style={
             isFixedComponent
