@@ -1,4 +1,5 @@
-import { AppRoot, type AppRootProps } from '../../components/AppRoot/AppRoot';
+import { type AppRootProps } from '../../components/AppRoot/AppRoot';
+import { AppRootDefault } from './AppRootDefault';
 
 export type AppWrapperProps = AppRootProps;
 
@@ -7,7 +8,7 @@ export const AppDefaultWrapper = ({
   children,
   ...restProps
 }: AppWrapperProps) => (
-  <AppRoot mode={mode} {...restProps}>
+  <AppRootDefault mode={mode} {...restProps}>
     <div
       style={{
         border: '8px solid var(--playwright-border)',
@@ -16,5 +17,5 @@ export const AppDefaultWrapper = ({
     >
       {children}
     </div>
-  </AppRoot>
+  </AppRootDefault>
 );

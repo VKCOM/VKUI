@@ -11,3 +11,4 @@ export { getAdaptivePxWidth } from './utils';
 
 export { ComponentPlayground, type ComponentPlaygroundProps } from './ComponentPlayground';
 export { AppDefaultWrapper, type AppWrapperProps } from './AppDefaultWrapper';
+export { AppRootDefault, type AppRootDefaultProps } from './AppRootDefault';
