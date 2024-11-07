@@ -6,7 +6,13 @@ import { Button } from '../Button/Button';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
 import styles from './CalendarTime.module.css';
 
-export interface CalendarTimeProps {
+export type CalendarTimeTestsProps = {
+  hoursTestId?: string;
+  minutesTestId?: string;
+  doneButtonTestId?: string;
+};
+
+export interface CalendarTimeProps extends CalendarTimeTestsProps {
   value: Date;
   doneButtonText?: string;
   doneButtonShow?: boolean;
@@ -44,6 +50,9 @@ export const CalendarTime = ({
   doneButtonText = 'Готово',
   doneButtonDisabled = false,
   doneButtonShow = true,
+  minutesTestId,
+  hoursTestId,
+  doneButtonTestId,
 }: CalendarTimeProps): React.ReactNode => {
   const localHours = isDayDisabled
     ? hours.map((hour) => {
@@ -83,6 +92,7 @@ export const CalendarTime = ({
             onChange={onHoursChange}
             forceDropdownPortal={false}
             aria-label={changeHoursLabel}
+            data-testid={hoursTestId}
           />
         </AdaptivityProvider>
       </div>
@@ -95,13 +105,20 @@ export const CalendarTime = ({
             onChange={onMinutesChange}
             forceDropdownPortal={false}
             aria-label={changeMinutesLabel}
+            data-testid={minutesTestId}
           />
         </AdaptivityProvider>
       </div>
       {doneButtonShow && (
         <div className={styles['CalendarTime__button']}>
           <AdaptivityProvider sizeY="compact">
-            <Button mode="secondary" onClick={onClose} size="l" disabled={doneButtonDisabled}>
+            <Button
+              mode="secondary"
+              onClick={onClose}
+              size="l"
+              disabled={doneButtonDisabled}
+              data-testid={doneButtonTestId}
+            >
               {doneButtonText}
             </Button>
           </AdaptivityProvider>

@@ -1,18 +1,35 @@
 import { render, screen } from '@testing-library/react';
+import { addDays, format } from 'date-fns';
 import { baselineComponent, userEvent } from '../../testing/utils';
-import { DateRangeInput } from './DateRangeInput';
-import styles from '../DateInput/DateInput.module.css';
-import inputLikeStyles from '../InputLike/InputLike.module.css';
+import { DateRangeInput, type DateRangeInputTestsProps } from './DateRangeInput';
 
 const startDate = new Date(2024, 6, 20);
 const endDate = new Date(2024, 6, 31);
 
-const getInputsLike = (container: HTMLElement) => {
-  const dateInput = container.getElementsByClassName(styles['DateInput__input'])[0];
-  return Array.prototype.filter.call(
-    dateInput.children,
-    (child) => !child.classList.contains(inputLikeStyles['InputLike__divider']),
-  );
+const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+
+const testsProps: DateRangeInputTestsProps = {
+  startDateTestsProps: {
+    day: 'start-day',
+    month: 'start-month',
+    year: 'start-year',
+  },
+  endDateTestsProps: {
+    day: 'end-day',
+    month: 'end-month',
+    year: 'end-year',
+  },
+};
+
+const getInputsLike = () => {
+  return [
+    screen.getByTestId('start-day'),
+    screen.getByTestId('start-month'),
+    screen.getByTestId('start-year'),
+    screen.getByTestId('end-day'),
+    screen.getByTestId('end-month'),
+    screen.getByTestId('end-year'),
+  ];
 };
 
 const convertInputsToNumbers = (inputs: HTMLElement[]) => {
@@ -27,7 +44,7 @@ describe('DateRangeInput', () => {
   });
 
   it('should be correct input value', () => {
-    const { container } = render(
+    render(
       <DateRangeInput
         value={[startDate, endDate]}
         changeStartDayLabel=""
@@ -36,9 +53,10 @@ describe('DateRangeInput', () => {
         changeEndDayLabel=""
         changeEndMonthLabel=""
         changeEndYearLabel=""
+        {...testsProps}
       />,
     );
-    const inputLikes = getInputsLike(container);
+    const inputLikes = getInputsLike();
     const normalizedDate = convertInputsToNumbers(inputLikes);
     expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
   });
@@ -46,7 +64,7 @@ describe('DateRangeInput', () => {
   it('should correct update value when typing text in input', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
-    const { container } = render(
+    render(
       <DateRangeInput
         value={[startDate, endDate]}
         onChange={onChange}
@@ -56,9 +74,10 @@ describe('DateRangeInput', () => {
         changeEndDayLabel=""
         changeEndMonthLabel=""
         changeEndYearLabel=""
+        {...testsProps}
       />,
     );
-    const inputLikes = getInputsLike(container);
+    const inputLikes = getInputsLike();
     const [startDates, startMonths, startYears, endDates, endMonths, endYears] = inputLikes;
 
     await userEvent.type(startDates, '10');
@@ -88,9 +107,13 @@ describe('DateRangeInput', () => {
         changeEndDayLabel=""
         changeEndMonthLabel=""
         changeEndYearLabel=""
+        {...testsProps}
+        calendarTestsProps={{
+          dayTestId,
+        }}
       />,
     );
-    const inputLikes = getInputsLike(container);
+    const inputLikes = getInputsLike();
     const [dates] = inputLikes;
 
     await userEvent.click(dates);
@@ -117,7 +140,7 @@ describe('DateRangeInput', () => {
   it('should not update value when typing incorrect date in input', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
-    const { container } = render(
+    render(
       <DateRangeInput
         value={[startDate, endDate]}
         onChange={onChange}
@@ -127,9 +150,10 @@ describe('DateRangeInput', () => {
         changeEndDayLabel=""
         changeEndMonthLabel=""
         changeEndYearLabel=""
+        {...testsProps}
       />,
     );
-    const inputLikes = getInputsLike(container);
+    const inputLikes = getInputsLike();
     const startDates = inputLikes[0];
     const endDates = inputLikes[3];
 
@@ -143,9 +167,16 @@ describe('DateRangeInput', () => {
     jest.useFakeTimers();
     const onCalendarOpenChanged = jest.fn();
     const { container } = render(
-      <DateRangeInput value={[startDate, endDate]} onCalendarOpenChanged={onCalendarOpenChanged} />,
+      <DateRangeInput
+        value={[startDate, endDate]}
+        onCalendarOpenChanged={onCalendarOpenChanged}
+        {...testsProps}
+        calendarTestsProps={{
+          dayTestId,
+        }}
+      />,
     );
-    const inputLikes = getInputsLike(container);
+    const inputLikes = getInputsLike();
     const [dates] = inputLikes;
 
     await userEvent.click(dates);
@@ -154,7 +185,7 @@ describe('DateRangeInput', () => {
     expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
 
     expect(container.contains(document.activeElement)).toBeTruthy();
-    await userEvent.click(screen.getAllByText('15')[1]);
+    await userEvent.click(screen.getByTestId(dayTestId(addDays(startDate, 10))));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
     expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
