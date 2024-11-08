@@ -31,7 +31,7 @@ export interface EllipsisTextProps
   disableNativeTitle?: boolean;
 }
 
-/** Компонент ограничивает текстовый контент убирая его в многоточие.
+/** Компонент ограничивает текстовый контент, убирая его в многоточие.
  *
  * @since 6.1.0
  * @see https://vkcom.github.io/VKUI/#/EllipsisText
