@@ -1,6 +1,7 @@
 import type * as React from 'react';
 import type { UseFloatingMiddlewaresBootstrapOptions } from '../useFloatingMiddlewaresBootstrap';
 import type {
+  RestoreFocusType,
   UseFloatingWithInteractionsProps,
   UseFloatingWithInteractionsReturn,
 } from '../useFloatingWithInteractions';
@@ -44,7 +45,7 @@ export interface FloatingComponentProps
   /**
    * Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент.
    */
-  restoreFocus?: boolean;
+  restoreFocus?: RestoreFocusType;
   /**
    * Перебивает zIndex заданный по умолчанию.
    */
