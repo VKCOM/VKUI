@@ -54,7 +54,7 @@ export const BaseGallery = ({
   showArrows,
   getRef,
   arrowSize,
-  arrowClickableArea,
+  arrowAreaHeight,
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -367,7 +367,7 @@ export const BaseGallery = ({
         onSlideLeft={slideLeft}
         showArrows={showArrows}
         arrowSize={arrowSize}
-        arrowClickableArea={arrowClickableArea}
+        arrowAreaHeight={arrowAreaHeight}
       />
     </RootComponent>
   );

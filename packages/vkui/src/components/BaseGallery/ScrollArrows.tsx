@@ -6,24 +6,24 @@ import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import { type BaseGalleryProps } from './types';
 import styles from './BaseGallery.module.css';
 
-const stylesArrowClickableArea = {
+const stylesArrowAreaHeight = {
   fill: styles.arrowAreaFill,
   fit: styles.arrowAreaFit,
 };
 
 export const getArrowClassName = (
   side: 'start' | 'end',
-  arrowClickableArea: Exclude<BaseGalleryProps['arrowClickableArea'], undefined>,
+  arrowAreaHeight: Exclude<BaseGalleryProps['arrowAreaHeight'], undefined>,
 ) => {
   return classNames(
     styles.arrow,
     side === 'start' ? styles.arrowStart : styles.arrowEnd,
-    stylesArrowClickableArea[arrowClickableArea],
+    stylesArrowAreaHeight[arrowAreaHeight],
   );
 };
 
 interface ScrollArrowsProps
-  extends Pick<BaseGalleryProps, 'showArrows' | 'arrowSize' | 'arrowClickableArea'> {
+  extends Pick<BaseGalleryProps, 'showArrows' | 'arrowSize' | 'arrowAreaHeight'> {
   hasPointer?: boolean;
   canSlideLeft: boolean;
   canSlideRight: boolean;
@@ -39,13 +39,13 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
   onSlideLeft,
   showArrows = false,
   arrowSize = 'm',
-  arrowClickableArea = 'fill',
+  arrowAreaHeight = 'fill',
 }) => {
   return (
     <>
       {showArrows && hasPointer && canSlideLeft && (
         <ScrollArrow
-          className={getArrowClassName('start', arrowClickableArea)}
+          className={getArrowClassName('start', arrowAreaHeight)}
           direction="left"
           onClick={onSlideLeft}
           size={arrowSize}
@@ -53,7 +53,7 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
       )}
       {showArrows && hasPointer && canSlideRight && (
         <ScrollArrow
-          className={getArrowClassName('end', arrowClickableArea)}
+          className={getArrowClassName('end', arrowAreaHeight)}
           direction="right"
           onClick={onSlideRight}
           size={arrowSize}

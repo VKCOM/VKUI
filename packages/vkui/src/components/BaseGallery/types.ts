@@ -51,7 +51,7 @@ export interface BaseGalleryProps
   /**
    * Управление размером кликабельной зоны стрелок
    */
-  arrowClickableArea?: 'fill' | 'fit';
+  arrowAreaHeight?: 'fill' | 'fit';
   hasPointer?: boolean;
   arrowSize?: ScrollArrowProps['size'];
   /**
