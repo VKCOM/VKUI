@@ -96,3 +96,8 @@
 .sized:last-child {
   max-inline-size: var(--vkui_internal--side_cell_width);
 }
+
+.sized:first-child .body,
+.sized:last-child .body {
+  max-inline-size: var(--vkui_internal--cell_width);
+}
