@@ -15,12 +15,25 @@ import {
 import { useCalendar } from '../../hooks/useCalendar';
 import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { CalendarDays, type CalendarDaysProps } from '../CalendarDays/CalendarDays';
-import { CalendarHeader, type CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
+import {
+  CalendarDays,
+  type CalendarDaysProps,
+  type CalendarDaysTestsProps,
+} from '../CalendarDays/CalendarDays';
+import {
+  CalendarHeader,
+  type CalendarHeaderProps,
+  type CalendarHeaderTestsProps,
+} from '../CalendarHeader/CalendarHeader';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CalendarRange.module.css';
 
 export type DateRangeType = [Date | null, Date | null];
+
+export type CalendarRangeTestsProps = CalendarDaysTestsProps & {
+  leftPartHeaderTestsData?: CalendarHeaderTestsProps;
+  rightPartHeaderTestsData?: CalendarHeaderTestsProps;
+};
 
 export interface CalendarRangeProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
@@ -33,7 +46,8 @@ export interface CalendarRangeProps
       | 'prevMonthIcon'
       | 'nextMonthIcon'
     >,
-    Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'> {
+    Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'>,
+    CalendarRangeTestsProps {
   value?: DateRangeType;
   disablePast?: boolean;
   disableFuture?: boolean;
@@ -74,6 +88,9 @@ export const CalendarRange = ({
   nextMonthIcon,
   listenDayChangesForUpdate,
   renderDayContent,
+  dayTestId,
+  leftPartHeaderTestsData,
+  rightPartHeaderTestsData,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
   const {
@@ -207,6 +224,7 @@ export const CalendarRange = ({
           prevMonthIcon={prevMonthIcon}
           isMonthDisabled={isMonthDisabled}
           isYearDisabled={isYearDisabled}
+          {...leftPartHeaderTestsData}
         />
         <CalendarDays
           viewDate={viewDate}
@@ -228,6 +246,7 @@ export const CalendarRange = ({
           listenDayChangesForUpdate={listenDayChangesForUpdate}
           renderDayContent={renderDayContent}
           aria-label={changeDayLabel}
+          dayTestId={dayTestId}
         />
       </div>
       <div className={styles.inner}>
@@ -245,6 +264,7 @@ export const CalendarRange = ({
           nextMonthIcon={nextMonthIcon}
           isMonthDisabled={isMonthDisabled}
           isYearDisabled={isYearDisabled}
+          {...rightPartHeaderTestsData}
         />
         <CalendarDays
           viewDate={secondViewDate}
@@ -268,6 +288,7 @@ export const CalendarRange = ({
           renderDayContent={renderDayContent}
           tabIndex={0}
           onBlur={resetSelectedDay}
+          dayTestId={dayTestId}
         />
       </div>
     </RootComponent>

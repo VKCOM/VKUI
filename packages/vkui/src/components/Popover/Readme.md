@@ -39,6 +39,7 @@ const PopoverWithTriggerHover = () => {
           <Text>Привет</Text>
         </Div>
       }
+      restoreFocus="anchor-element"
     >
       <Button id="tooltip-1" mode="outline">
         Наведи на меня
