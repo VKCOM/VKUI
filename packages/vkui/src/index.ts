@@ -106,6 +106,7 @@ export { AspectRatio } from './components/AspectRatio/AspectRatio';
 export type { AspectRatioProps } from './components/AspectRatio/AspectRatio';
 export { Flex } from './components/Flex/Flex';
 export type { FlexProps } from './components/Flex/Flex';
+export type { FlexItemProps } from './components/Flex/FlexItem/FlexItem';
 export { SimpleGrid } from './components/SimpleGrid/SimpleGrid';
 export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
 
@@ -198,6 +199,7 @@ export type { InfoRowProps } from './components/InfoRow/InfoRow';
 export { Gallery } from './components/Gallery/Gallery';
 export type { GalleryProps } from './components/Gallery/Gallery';
 export { Avatar } from './components/Avatar/Avatar';
+export type { GetInitialsFontSizeType } from './components/Avatar/helpers';
 export type {
   AvatarProps,
   AvatarBadgeProps,
@@ -244,8 +246,8 @@ export type {
   PlaceholderProps,
   PlaceholderContainerProps,
   PlaceholderIconProps,
-  PlaceholderHeaderProps,
-  PlaceholderTextProps,
+  PlaceholderTitleProps,
+  PlaceholderDescriptionProps,
   PlaceholderActionsProps,
 } from './components/Placeholder/Placeholder';
 export { Banner } from './components/Banner/Banner';
@@ -292,7 +294,13 @@ export type { DropZoneProps } from './components/DropZone/DropZone';
 export { Input } from './components/Input/Input';
 export type { InputProps } from './components/Input/Input';
 export { Chip } from './components/ChipsInputBase/Chip/Chip';
-export type { ChipProps, ChipOption, RenderChipProps } from './components/ChipsInputBase/types';
+export type {
+  ChipProps,
+  ChipOption,
+  RenderChipProps,
+  ChipOptionValue,
+  ChipOptionLabel,
+} from './components/ChipsInputBase/types';
 export { ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
 export { ChipsSelect } from './components/ChipsSelect/ChipsSelect';
@@ -445,6 +453,7 @@ export {
 export type { AdaptivityProps } from './components/AdaptivityProvider/AdaptivityContext';
 export { calcInitialsAvatarColor } from './helpers/avatar';
 export { CustomScrollView } from './components/CustomScrollView/CustomScrollView';
+export type { CustomScrollViewProps } from './components/CustomScrollView/CustomScrollView';
 export { Popper } from './components/Popper/Popper';
 export type { PopperProps } from './components/Popper/Popper';
 

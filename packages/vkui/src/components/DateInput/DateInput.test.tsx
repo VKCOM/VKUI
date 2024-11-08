@@ -3,7 +3,7 @@ import { format, subDays } from 'date-fns';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { DateInput, type DateInputPropsTestsProps } from './DateInput';
 
-const date = new Date(2024, 6, 31, 11, 20);
+const date = new Date(2024, 6, 31, 11, 20, 0, 0);
 
 const testIds: DateInputPropsTestsProps = {
   dayFieldTestId: 'day-picker',
@@ -104,7 +104,24 @@ describe('DateInput', () => {
     const normalizedDate = convertInputsToNumbers(inputLikes);
     expect(normalizedDate).toEqual([30, 6, 2023, 15, 40]);
 
-    expect(onChange).toBeCalledTimes(5);
+    expect(onChange).toHaveBeenCalledTimes(5);
+    expect(onChange).toHaveBeenCalledWith(new Date(2023, 5, 30, 15, 40, 0, 0));
+  });
+
+  it('should call onChange with zero sec/ms', async () => {
+    jest.useFakeTimers();
+    const onChange = jest.fn();
+    render(<DateInput value={undefined} onChange={onChange} {...testIds} />);
+    const inputLikes = getInputsLike();
+
+    const [dates, months, years] = inputLikes;
+
+    await userEvent.type(dates, '30');
+    await userEvent.type(months, '06');
+    await userEvent.type(years, '2023');
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith(new Date(2023, 5, 30, 0, 0, 0, 0));
   });
 
   it('should call onChange callback when change data by calendar', async () => {

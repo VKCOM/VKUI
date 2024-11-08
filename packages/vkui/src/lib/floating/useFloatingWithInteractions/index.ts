@@ -6,4 +6,6 @@ export type {
   UseFloatingWithInteractionsReturn,
 } from './types';
 
+export { type RestoreFocusType } from './types';
+
 export { DEFAULT_TRIGGER } from './constants';

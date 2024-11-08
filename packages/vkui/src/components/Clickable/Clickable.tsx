@@ -175,16 +175,6 @@ function component<T>({
   return {};
 }
 
-const getUserAgentResetClassName = (Component?: React.ElementType) => {
-  if (Component === 'a') {
-    return styles.resetLinkStyle;
-  }
-  if (Component === 'button') {
-    return styles.resetButtonStyle;
-  }
-  return;
-};
-
 /**
  * Базовый кликабельный корневой компонент.
  *
@@ -204,11 +194,7 @@ export const Clickable = <T,>({
 }: ClickableProps<T>): React.ReactNode => {
   const commonProps = component(restProps);
   const isClickable = checkClickable(restProps);
-  const baseClassName = classNames(
-    baseClassNameProp,
-    getUserAgentResetClassName(commonProps.Component),
-    styles.host,
-  );
+  const baseClassName = classNames(baseClassNameProp, styles.host);
 
   if (isClickable) {
     return (
