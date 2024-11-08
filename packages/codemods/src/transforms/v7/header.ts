@@ -8,25 +8,17 @@ import {
 } from 'jscodeshift';
 import { report } from '../../report';
 import { remapSizePropValue } from './common/remapSizePropValue';
-import { getImportInfo, removeAttribute, renameProp } from '../../codemod-helpers';
+import {
+  getImportInfo,
+  getStringValueFromAttribute,
+  removeAttribute,
+  renameProp,
+} from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
 
 function removePropMode(j: JSCodeshift, api: API, source: Collection, localName: string) {
-  const getValueFromAttribute = (attr: JSXAttribute): string | null => {
-    if (attr.value?.type === 'StringLiteral') {
-      return attr.value.value;
-    }
-    if (attr.value?.type === 'JSXExpressionContainer') {
-      const expression = attr.value.expression;
-      if (expression.type === 'StringLiteral') {
-        return expression.value;
-      }
-    }
-    return null;
-  };
-
   const changeAttributeValue = (
     attributes: Array<JSXAttribute | JSXSpreadAttribute> | undefined,
     attribute: JSXAttribute | undefined,
@@ -67,7 +59,7 @@ function removePropMode(j: JSCodeshift, api: API, source: Collection, localName:
         return;
       }
       removeAttribute(attributes, modeAttr);
-      const modeValue = getValueFromAttribute(modeAttr);
+      const modeValue = getStringValueFromAttribute(modeAttr);
       if (!modeValue) {
         report(
           api,
@@ -75,7 +67,7 @@ function removePropMode(j: JSCodeshift, api: API, source: Collection, localName:
         );
         return;
       }
-      const sizeValue = getValueFromAttribute(sizeAttr);
+      const sizeValue = getStringValueFromAttribute(sizeAttr);
 
       if (modeValue === 'primary' && sizeValue === 'l') {
         changeAttributeValue(attributes, sizeAttr, 'size', 'xl');

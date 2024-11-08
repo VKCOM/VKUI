@@ -8,10 +8,15 @@ export const CounterPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           children: ['3'],
-          mode: ['primary', 'contrast', 'tertiary'],
-          appearance: ['accent', 'neutral', 'accent-green', 'accent-red'],
+          mode: ['primary'],
+          appearance: ['accent'],
           size: ['m', 's'],
           $adaptivity: 'y',
+        },
+        {
+          children: ['3'],
+          mode: ['primary', 'contrast', 'tertiary'],
+          appearance: ['accent', 'neutral', 'accent-green', 'accent-red'],
         },
       ]}
     >

@@ -40,6 +40,10 @@ export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
 
   /**
    * Пользовательский цвет (работает только при appearance="custom")
+   * - При mode="primary" - изменяет фон
+   * - При mode="contrast" - изменяет цвет текста
+   * - При mode="tertiary" - изменяет цвет текста
+   * - При mode="inherit" - не работает
    */
   color?: string;
 
@@ -80,10 +84,6 @@ export const Counter = ({
           '--vkui_internal--counter_background': color,
         };
       case 'contrast':
-        return {
-          ...styleProp,
-          '--vkui_internal--counter_foreground': color,
-        };
       case 'tertiary':
         return {
           ...styleProp,
