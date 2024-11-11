@@ -49,7 +49,7 @@ export interface BaseGalleryProps
   dragDisabled?: boolean;
   showArrows?: boolean;
   /**
-   * Управление размером кликабельной зоны стрелок
+   * Управление размером кликабельной зоны стрелок. В дизайне свойство называется `arrowArea`
    */
   arrowAreaHeight?: 'fill' | 'fit';
   hasPointer?: boolean;
