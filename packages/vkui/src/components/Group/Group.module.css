@@ -176,6 +176,7 @@
   content: '';
   block-size: var(--vkui--size_border--regular);
   background: var(--vkui--color_separator_primary);
+  margin-block-end: calc(-1 * var(--vkui--size_border--regular));
 }
 
 /* разделитель при mode="plain" */
