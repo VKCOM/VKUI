@@ -256,7 +256,7 @@ export const DateInput = ({
         setValue(valueProp);
       }
     },
-    [open, valueProp]
+    [open, valueProp],
   );
 
   const onCalendarChange = React.useCallback(
