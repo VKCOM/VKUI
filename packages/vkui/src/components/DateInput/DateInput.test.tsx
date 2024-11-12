@@ -111,8 +111,8 @@ describe('DateInput', () => {
   it('should call onChange with zero sec/ms', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
-    const { container } = render(<DateInput value={undefined} onChange={onChange} />);
-    const inputLikes = getInputsLike(container);
+    render(<DateInput value={undefined} onChange={onChange} {...testIds} />);
+    const inputLikes = getInputsLike();
 
     const [dates, months, years] = inputLikes;
 
