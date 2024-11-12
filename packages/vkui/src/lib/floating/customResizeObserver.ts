@@ -68,7 +68,6 @@ export class CustomResizeObserver {
 
   observeUsingIframe(element: HTMLElement): void {
     const iframe = element.ownerDocument.createElement('iframe');
-    iframe.src = 'javascript:void(0)';
     iframe.ariaHidden = 'true';
     iframe.tabIndex = -1;
     Object.assign(iframe.style, defaultIframeStyles);
