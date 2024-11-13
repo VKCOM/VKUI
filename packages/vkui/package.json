@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "version": "7.0.0-beta.1",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
@@ -54,7 +55,7 @@
     "clear": "yarn run -T shx rm -rf dist/* || yarn run -T shx true",
     "docker:clear-playwright-cache": "../../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker rm -f && docker volume rm vkui_package_vkui_playwright_cache",
     "postcss": "yarn run -T cross-env NODE_ENV=production concurrently 'yarn:postcss:*'",
-    "postcss:bundle": "yarn run -T rspack --config rspack.styles.config.ts",
+    "postcss:bundle": "yarn run -T rspack --config rspack.styles.config.mjs",
     "postcss:modules": "yarn run -T postcss './src/**/*.css' --base ./src --dir ./dist/cssm --config ./cssm",
     "swc-base": "yarn run -T cross-env NODE_ENV=production swc src/ --config-file package.swcrc --extensions .tsx,.jsx,.ts,.js --strip-leading-paths",
     "swc:es6": "yarn swc-base -d dist -s",

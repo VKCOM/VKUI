@@ -2,16 +2,15 @@
 import fs from 'node:fs';
 import path from 'path';
 import ts from 'typescript';
-import { PATHS } from '../shared.config.js';
 
 const inputSourceFilePath = path.resolve(
   import.meta.dirname,
-  PATHS.JS_BREAKPOINTS.replace(PATHS.ROOT_DIR, '../'),
+  '../src/lib/adaptivity/breakpoints.ts',
 );
 
 const outputSourceFilePath = path.resolve(
   import.meta.dirname,
-  PATHS.CSS_CUSTOM_MEDIAS.replace(PATHS.ROOT_DIR, '../'),
+  '../src/styles/customMedias.generated.css',
 );
 
 /**
