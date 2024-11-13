@@ -1,7 +1,13 @@
 import { API, ASTPath, Collection, JSXAttribute, JSXElement } from 'jscodeshift';
 import { removeAttribute } from '../../../codemod-helpers';
+import { report } from '../../../report';
 
-export const moveFromChildrenToLabel = (api: API, source: Collection, localName: string) => {
+export const moveFromChildrenToLabel = (
+  api: API,
+  source: Collection,
+  localName: string,
+  needToAddHideLabelProps = false,
+) => {
   const j = api.jscodeshift;
 
   // Находим все JSX элементы с указанным именем
@@ -14,6 +20,10 @@ export const moveFromChildrenToLabel = (api: API, source: Collection, localName:
     .forEach((path: ASTPath<JSXElement>) => {
       const element = path.node;
       const openingElement = element.openingElement;
+
+      const existingLabelProp = openingElement.attributes?.find(
+        (attr) => attr.type === 'JSXAttribute' && attr.name.name === 'label',
+      ) as JSXAttribute;
 
       // Получаем содержимое из props children
       const childrenProp = openingElement.attributes?.find(
@@ -53,18 +63,23 @@ export const moveFromChildrenToLabel = (api: API, source: Collection, localName:
       }
 
       if (labelValue) {
+        if (existingLabelProp) {
+          report(
+            api,
+            `Manual changes required for ${localName}'s "label" prop. Need to remove "children" prop. You can mode "children" value to "label" prop`,
+          );
+          return;
+        }
+
         // Очищаем существующие children
         element.children = [];
-
-        // Обновляем или добавляем проп label
-        const existingLabelProp = openingElement.attributes?.find(
-          (attr) => attr.type === 'JSXAttribute' && attr.name.name === 'label',
-        ) as JSXAttribute;
-
-        if (existingLabelProp) {
-          existingLabelProp.value = labelValue;
-        } else {
-          openingElement.attributes?.push(j.jsxAttribute(j.jsxIdentifier('label'), labelValue));
+        // Добавляем проп label
+        openingElement.attributes?.push(j.jsxAttribute(j.jsxIdentifier('label'), labelValue));
+        if (needToAddHideLabelProps) {
+          // Добавляем проп hideLabelOnVKCom и hideLabelOnIOS, так как раньше children был скрыт визуально
+          // и после того как мы перенесли children в label, визуально ничего не должно измениться
+          openingElement.attributes?.push(j.jsxAttribute(j.jsxIdentifier('hideLabelOnVKCom')));
+          openingElement.attributes?.push(j.jsxAttribute(j.jsxIdentifier('hideLabelOnIOS')));
         }
       }
     });

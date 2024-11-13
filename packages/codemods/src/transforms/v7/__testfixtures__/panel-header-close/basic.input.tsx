@@ -12,10 +12,6 @@ const App = () => {
         <span>Закрыть</span>
       </PanelHeaderClose>
 
-      <PanelHeaderClose onClick={noop} label="Другой label">
-        Закрыть
-      </PanelHeaderClose>
-
       <PanelHeaderClose onClick={noop} children="Закрыть" />
     </React.Fragment>
   );

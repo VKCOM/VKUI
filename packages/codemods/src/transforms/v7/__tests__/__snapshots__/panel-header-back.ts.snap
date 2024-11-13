@@ -7,10 +7,13 @@ import React from 'react';
 const App = () => {
   return (
     (<React.Fragment>
-      <PanelHeaderBack onClick={noop} label={"Закрыть"}></PanelHeaderBack>
-      <PanelHeaderBack onClick={noop} label={<><span>Закрыть</span></>}></PanelHeaderBack>
-      <PanelHeaderBack onClick={noop} label={"Закрыть"}></PanelHeaderBack>
-      <PanelHeaderBack onClick={noop} label="Закрыть" />
+      <PanelHeaderBack onClick={noop} label={"Закрыть"} hideLabelOnVKCom hideLabelOnIOS></PanelHeaderBack>
+      <PanelHeaderBack
+        onClick={noop}
+        label={<><span>Закрыть</span></>}
+        hideLabelOnVKCom
+        hideLabelOnIOS></PanelHeaderBack>
+      <PanelHeaderBack onClick={noop} label="Закрыть" hideLabelOnVKCom hideLabelOnIOS />
     </React.Fragment>)
   );
 };"

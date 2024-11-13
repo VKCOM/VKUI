@@ -15,7 +15,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     return source.toSource();
   }
 
-  moveFromChildrenToLabel(api, source, localName);
+  moveFromChildrenToLabel(api, source, localName, false);
 
   return source.toSource();
 }
