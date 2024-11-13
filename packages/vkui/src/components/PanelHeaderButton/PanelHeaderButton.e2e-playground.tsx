@@ -2,7 +2,7 @@ import { Icon24AddOutline, Icon28AddOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
-import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
+import { PanelHeaderBack, type PanelHeaderBackProps } from '../PanelHeaderBack/PanelHeaderBack';
 import { PanelHeaderClose, type PanelHeaderCloseProps } from '../PanelHeaderClose/PanelHeaderClose';
 import { PanelHeaderEdit, type PanelHeaderEditProps } from '../PanelHeaderEdit/PanelHeaderEdit';
 import {
@@ -61,9 +61,14 @@ export const PanelHeaderBackPlayground = (props: ComponentPlaygroundProps) => {
           primary: [true, false],
           label: [undefined, 'label'],
         },
+        {
+          hideLabelOnIOS: [true, false],
+          hideLabelOnVKCom: [true, false],
+          label: ['label'],
+        },
       ]}
     >
-      {(props: PanelHeaderButtonProps) => <PanelHeaderBack {...props} />}
+      {(props: PanelHeaderBackProps) => <PanelHeaderBack {...props} />}
     </ComponentPlayground>
   );
 };

@@ -5,6 +5,7 @@ import {
   Icon20ChevronLeftOutline,
   Icon24ArrowLeftOutline,
   Icon28ArrowLeftOutline,
+  Icon28ChevronBack,
   Icon28ChevronLeftOutline,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
@@ -24,12 +25,15 @@ const sizeXClassNames = {
   compact: styles.backSizeXCompact,
 };
 
-export type PanelHeaderBackProps = Omit<PanelHeaderButtonProps, 'children'>;
+export type PanelHeaderBackProps = Omit<PanelHeaderButtonProps, 'children'> & {
+  hideLabelOnVKCom?: boolean;
+  hideLabelOnIOS?: boolean;
+};
 
 const getBackIcon = (platform: PlatformType) => {
   switch (platform) {
     case 'ios':
-      return null;
+      return <Icon28ChevronBack />;
     case 'vkcom':
       return (
         <AdaptiveIconRenderer
@@ -53,13 +57,16 @@ const getBackIcon = (platform: PlatformType) => {
 export const PanelHeaderBack = ({
   label = 'Назад',
   className,
+  hideLabelOnVKCom = false,
+  hideLabelOnIOS = false,
   ...restProps
 }: PanelHeaderBackProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeX = 'none' } = useAdaptivity();
   // также label нужно скрывать при platform === 'ios' && sizeX === regular
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
-  const showLabel = platform === 'ios';
+  const showLabel =
+    (platform === 'vkcom' && !hideLabelOnVKCom) || (platform === 'ios' && !hideLabelOnIOS);
 
   return (
     <PanelHeaderButton
