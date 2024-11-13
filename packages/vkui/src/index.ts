@@ -7,6 +7,7 @@ import './styles/transformOriginByPlacement.module.css';
 import './styles/gaps.module.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
+export { AppRootPortal } from './components/AppRoot/AppRootPortal';
 export type { AppRootProps } from './components/AppRoot/AppRoot';
 export type { SafeAreaInsets } from './components/AppRoot/types';
 
