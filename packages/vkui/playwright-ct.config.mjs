@@ -14,7 +14,7 @@ import postcssLogical from 'postcss-logical';
 import cssModules from 'postcss-modules';
 // import * as tsconfig from './tsconfig.json' with { type: 'json' };
 
-const rootDirectory = path.join(import.meta.dirname, '../../..');
+const rootDirectory = path.join(import.meta.dirname, '../..');
 
 // см. `.env`
 dotenv.config();
