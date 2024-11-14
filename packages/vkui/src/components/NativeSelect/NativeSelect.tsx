@@ -115,6 +115,9 @@ const NativeSelect = ({
     if (e.target.value === NOT_SELECTED.NATIVE) {
       e.target.value = '';
     }
+    if (e.currentTarget.value === NOT_SELECTED.NATIVE) {
+      e.currentTarget.value = '';
+    }
     onChange?.(e, newValue);
   };
   useIsomorphicLayoutEffect(checkSelectedOption, [children]);
