@@ -65,7 +65,7 @@
     "test:ci": "yarn test --ci --silent --outputFile ../../test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_output'",
     "test:e2e": "../../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update": "../../scripts/generate_env_docker.sh -u && docker compose --env-file=./.env.docker up --abort-on-container-exit",
-    "test:e2e:ci": "yarn run -T playwright test --config playwright-ct.config.ts",
+    "test:e2e:ci": "yarn run -T cross-env NODE_OPTIONS='--no-warnings' playwright test --config playwright-ct.config.mjs",
     "test:e2e-update:ci": "yarn run test:e2e:ci --update-snapshots",
     "lint:generated-files": "yarn run -T tsc scripts/generateCSSCustomMedias.mjs --checkJs --module ESNext --moduleResolution node --resolveJsonModule --allowSyntheticDefaultImports --noEmit && yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
     "storybook": "bash -c 'source .env && yarn run -T cross-env SANDBOX=\\.storybook storybook dev -p ${STORYBOOK_DEV_PORT:=6006}'",
@@ -79,7 +79,7 @@
   "dependencies": {
     "@swc/helpers": "^0.5.15",
     "@vkontakte/icons": "^2.115.0",
-    "@vkontakte/vkjs": "^1.3.0",
+    "@vkontakte/vkjs": "^2.0.0",
     "@vkontakte/vkui-floating-ui": "^0.2.3",
     "date-fns": "^4.1.0"
   },
