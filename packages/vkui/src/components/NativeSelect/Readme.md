@@ -21,7 +21,7 @@ const ControlledSelect = () => {
           id="gender-select-id"
           placeholder="Не выбрано"
           value={selectedOption}
-          onChange={setSelectedOption}
+          onChange={(_, newValue) => setSelectedOption(newValue)}
         >
           <option value="m">Мужской</option>
           <option value="f">Женский</option>
@@ -38,7 +38,7 @@ const UncontrolledSelect = () => {
   };
   const cities = ['Moscow', 'Saint-Petersburg'];
 
-  const onChange = (newValue) =>
+  const onChange = (_, newValue) =>
     newValue
       ? console.log('Выбран город', cityValueToName[newValue])
       : console.log('Выбор сброшен');

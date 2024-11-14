@@ -1,6 +1,6 @@
 'use client';
 
-import { type ChangeEventHandler } from 'react';
+import { type ChangeEvent, type ChangeEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -61,8 +61,11 @@ export interface NativeSelectProps
   defaultValue?: SelectValue;
   /**
    * Коллбэк срабатывающий при изменении выбранного значения.
+   * Вторым параметром прокидывается новое значение
+   *
+   * > ⚠️ Лучше использовать второй параметр при работе с компонентом
    */
-  onChange?: (newValue: SelectValue) => void;
+  onChange?: (e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue) => void;
   placeholder?: string;
   multiline?: boolean;
   selectType?: SelectType;
@@ -70,12 +73,6 @@ export interface NativeSelectProps
    * Иконка раскрывающегося списка
    */
   icon?: React.ReactNode;
-}
-
-export interface SelectState {
-  value?: React.SelectHTMLAttributes<HTMLSelectElement>['value'];
-  title?: string;
-  notSelected?: boolean;
 }
 
 /**
@@ -115,7 +112,10 @@ const NativeSelect = ({
 
   const _onChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const newValue = remapFromNativeValueToSelectValue(e.target.value);
-    onChange?.(newValue);
+    if (e.target.value === NOT_SELECTED.NATIVE) {
+      e.target.value = '';
+    }
+    onChange?.(e, newValue);
   };
   useIsomorphicLayoutEffect(checkSelectedOption, [children]);
 
