@@ -1,7 +1,6 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo, removeProps } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
-import { warnSelectOnChange } from './common/warnSelectOnChange';
 
 export const parser = 'tsx';
 
@@ -20,7 +19,6 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
   removeProps(j, api, source, localName, PROPS_TO_REMOVE, () => {
     return `need to remove props ${PROPS_TO_REMOVE.join(', ')}`;
   });
-  warnSelectOnChange(api, source, localName);
 
   return source.toSource();
 }

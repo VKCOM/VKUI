@@ -173,7 +173,7 @@ const AvatarPropsForm = ({
             { label: 'blue', value: 'blue' },
           ]}
           value={gradientColor}
-          onChange={setGradientColor}
+          onChange={(_, newValue) => setGradientColor(newValue)}
         />
       </FormItem>
 
@@ -196,7 +196,7 @@ const AvatarPropsForm = ({
               { label: 'preset="online-mobile"', value: 'online-mobile' },
             ]}
             value={badge}
-            onChange={setBadge}
+            onChange={(_, newValue) => setBadge(newValue)}
           />
         </FormItem>
         <FormItem top="Avatar.Badge[background]">
@@ -208,7 +208,7 @@ const AvatarPropsForm = ({
             ]}
             value={badgeBackground}
             disabled={badge !== 'children'}
-            onChange={setBadgeBackground}
+            onChange={(_, newValue) => setBadgeBackground(newValue)}
           />
         </FormItem>
       </FormLayoutGroup>
@@ -231,7 +231,7 @@ const AvatarPropsForm = ({
             ]}
             value={overlayTheme}
             disabled={!overlay}
-            onChange={setOverlayTheme}
+            onChange={(_, newValue) => setOverlayTheme(newValue)}
           />
         </FormItem>
         <FormItem top="Avatar.Overlay[visibility]">
@@ -243,7 +243,7 @@ const AvatarPropsForm = ({
             ]}
             value={overlayVisibility}
             disabled={!overlay}
-            onChange={setOverlayVisibility}
+            onChange={(_, newValue) => setOverlayVisibility(newValue)}
           />
         </FormItem>
       </FormLayoutGroup>

@@ -145,7 +145,7 @@ const Example = () => {
             <Select
               value={gap}
               placeholder="Не выбрано"
-              onChange={setGap}
+              onChange={(_, newValue) => setGap(newValue)}
               options={GapSelectValues}
               allowClearButton
             />
@@ -156,7 +156,7 @@ const Example = () => {
             <Select
               value={rowGap}
               placeholder="Не выбрано"
-              onChange={setRowGap}
+              onChange={(_, newValue) => setRowGap(newValue)}
               options={GapSelectValues}
               allowClearButton
             />
@@ -167,7 +167,7 @@ const Example = () => {
             <Select
               value={columnGap}
               placeholder="Не выбрано"
-              onChange={setColumnGap}
+              onChange={(_, newValue) => setColumnGap(newValue)}
               options={GapSelectValues}
               allowClearButton
             />
@@ -176,7 +176,7 @@ const Example = () => {
         <FormItem top="align">
           <Select
             value={align}
-            onChange={setAlign}
+            onChange={(_, newValue) => setAlign(newValue)}
             placeholder="Не выбрано"
             options={[
               { label: 'start', value: 'start' },
@@ -191,7 +191,7 @@ const Example = () => {
         <FormItem top="justify">
           <Select
             value={justify}
-            onChange={setJustify}
+            onChange={(_, newValue) => setJustify(newValue)}
             placeholder="Не выбрано"
             options={[
               { label: 'start', value: 'start' },

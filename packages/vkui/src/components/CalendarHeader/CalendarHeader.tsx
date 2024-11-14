@@ -1,5 +1,6 @@
 'use client';
 
+import { type ChangeEvent } from 'react';
 import * as React from 'react';
 import {
   Icon12Dropdown,
@@ -92,11 +93,13 @@ export const CalendarHeader = ({
 }: CalendarHeaderProps): React.ReactNode => {
   const { locale } = useConfigProvider();
   const onMonthsChange = React.useCallback(
-    (newValue: SelectProps['value']) => onChange(setMonth(viewDate, Number(newValue))),
+    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
+      onChange(setMonth(viewDate, Number(newValue))),
     [onChange, viewDate],
   );
   const onYearChange = React.useCallback(
-    (newValue: SelectProps['value']) => onChange(setYear(viewDate, Number(newValue))),
+    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
+      onChange(setYear(viewDate, Number(newValue))),
     [onChange, viewDate],
   );
 

@@ -228,7 +228,7 @@ const Example = () => {
               <Select
                 id="purpose-of-the-trip-select-id"
                 placeholder="Выберите цель поездки"
-                onChange={(newValue) => onSelectChange('purpose', newValue)}
+                onChange={(_, newValue) => onSelectChange('purpose', newValue)}
                 value={purpose}
                 name="purpose"
                 required

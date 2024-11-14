@@ -37,9 +37,9 @@ const CustomSelectControlled = ({
   initialValue?: string;
 }) => {
   const [value, setValue] = React.useState<SelectProps['value']>(initialValue);
-  const handleChange: SelectProps['onChange'] = (newValue) => {
+  const handleChange: SelectProps['onChange'] = (e, newValue) => {
     setValue(newValue);
-    onChange?.(newValue);
+    onChange?.(e, newValue);
   };
   return <CustomSelect {...restProps} options={options} value={value} onChange={handleChange} />;
 };
@@ -131,7 +131,7 @@ describe('CustomSelect', () => {
           labelTextTestId="labelTextTestId"
           options={options}
           value={value}
-          onChange={setValue}
+          onChange={(_, newValue) => setValue(newValue)}
         />
       );
     };
@@ -715,7 +715,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOption);
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith('1');
+    expect(onChange.mock.calls[0][1]).toBe('1');
 
     fireEvent.click(screen.getByTestId('labelTextTestId'));
 
@@ -724,7 +724,7 @@ describe('CustomSelect', () => {
     fireEvent.click(selectedOption);
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith('1');
+    expect(onChange.mock.calls[0][1]).toBe('1');
   });
 
   it('(controlled): calls onChange expected amount of times after clearing component and clicking on option without updating controlled prop value', async () => {
@@ -761,7 +761,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionFirstClick);
 
     expect(onChange).toHaveBeenCalledTimes(2);
-    expect(onChange).toHaveBeenCalledWith('1');
+    expect(onChange.mock.calls[1][1]).toBe('1');
 
     // clear input through prop
     rerender(
@@ -828,7 +828,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionFirstClick);
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith('1');
+    expect(onChange.mock.calls[0][1]).toBe('1');
 
     // второй клик по не выбранной опции без изменения value
     // нужно проверить потому что при первом клике внутреннее value CustomSelect (nativeSelectValue) изменилось
@@ -844,7 +844,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOptionSecondClick);
 
     expect(onChange).toHaveBeenCalledTimes(2);
-    expect(onChange).toHaveBeenCalledWith('1');
+    expect(onChange.mock.calls[1][1]).toBe('1');
 
     // третий клик уже по выбранной опции (соответствующей value переданному в CustomSelect)
     // onChange не должен вызываться.
@@ -857,7 +857,7 @@ describe('CustomSelect', () => {
     fireEvent.click(selectedOptionThirdClick);
 
     expect(onChange).toHaveBeenCalledTimes(2);
-    expect(onChange).toHaveBeenCalledWith('1');
+    expect(onChange.mock.calls[1][1]).toBe('1');
   });
 
   it('(controlled): does not call onChange on already selected', async () => {
@@ -890,7 +890,7 @@ describe('CustomSelect', () => {
 
     // onChange должен вызываться
     expect(onChangeStub).toHaveBeenCalledTimes(1);
-    expect(onChangeStub).toHaveBeenCalledWith('1');
+    expect(onChangeStub.mock.calls[0][1]).toBe('1');
 
     // второй клик по выбранной опции
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -900,7 +900,7 @@ describe('CustomSelect', () => {
 
     // onChange не должен вызываться
     expect(onChangeStub).toHaveBeenCalledTimes(1);
-    expect(onChangeStub).toHaveBeenCalledWith('1');
+    expect(onChangeStub.mock.calls[0][1]).toBe('1');
 
     // третий клик по не выбранной опции
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -914,7 +914,7 @@ describe('CustomSelect', () => {
 
     // onChange должен быть вызван
     expect(onChangeStub).toHaveBeenCalledTimes(2);
-    expect(onChangeStub).toHaveBeenCalledWith('0');
+    expect(onChangeStub.mock.calls[1][1]).toBe('0');
 
     // четвертый клик по выбранной опции
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -924,7 +924,7 @@ describe('CustomSelect', () => {
 
     // onChange не должен вызываться
     expect(onChangeStub).toHaveBeenCalledTimes(2);
-    expect(onChangeStub).toHaveBeenCalledWith('0');
+    expect(onChangeStub.mock.calls[1][1]).toBe('0');
   });
 
   it('(controlled): does call onChange on option click when prop value is empty and value is not changing', async () => {
@@ -958,7 +958,7 @@ describe('CustomSelect', () => {
 
     // onChange должен быть вызван
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith('0');
+    expect(onChange.mock.calls[0][1]).toBe('0');
 
     // второй клик по другой опции без изменения value
     fireEvent.click(screen.getByTestId('inputTestId'));
@@ -971,7 +971,7 @@ describe('CustomSelect', () => {
 
     // onChange должен быть вызван
     expect(onChange).toHaveBeenCalledTimes(2);
-    expect(onChange).toHaveBeenCalledWith('1');
+    expect(onChange.mock.calls[1][1]).toBe('1');
 
     // третий клик по той же опции что и в предыдущий раз
     fireEvent.click(screen.getByTestId('inputTestId'));
@@ -984,7 +984,7 @@ describe('CustomSelect', () => {
 
     // onChange должен быть вызван
     expect(onChange).toHaveBeenCalledTimes(3);
-    expect(onChange).toHaveBeenCalledWith('0');
+    expect(onChange.mock.calls[2][1]).toBe('1');
   });
 
   it('accepts options with extended option type and Typescript does not throw', () => {
