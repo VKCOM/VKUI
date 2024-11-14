@@ -11,7 +11,6 @@ import postcssCustomMedia from 'postcss-custom-media';
 import postcssGapProperties from 'postcss-gap-properties';
 import cssImport from 'postcss-import';
 import postcssLogical from 'postcss-logical';
-import cssModules from 'postcss-modules';
 // import * as tsconfig from './tsconfig.json' with { type: 'json' };
 
 const rootDirectory = path.join(import.meta.dirname, '../..');
@@ -137,12 +136,6 @@ export default defineConfig({
             //
             // https://caniuse.com/css-logical-props
             postcssLogical(),
-
-            // Обработка css modules. Добавляет префикс vkui
-            cssModules({
-              generateScopedName: 'vkui[folder]__[local]',
-              getJSON: () => void 0,
-            }),
 
             // TODO [>=8]: Проверить браузерную поддержку
             //
