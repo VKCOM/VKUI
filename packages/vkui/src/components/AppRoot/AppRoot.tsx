@@ -3,6 +3,8 @@
 import * as React from 'react';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseVKUIClasses';
+import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
 import { getDocumentBody } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AppRootContext } from './AppRootContext';
@@ -64,6 +66,16 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * @since 6.2.0
    */
   userSelectMode?: AppRootUserSelectMode;
+  /*
+   * По умолчанию в режиме `mode="full"` VKUI в рантайме выставляет:
+   * - класс .vkui на html элемент
+   * - класс .vkui__root на элемент-контейнер, в который монтируется VKUI
+   * С помощью этой опции такое поведение можно отключить.
+   *
+   * Для корректной работы SSR рекоммендуется выставлять эти классы самостоятельно
+   * и отключить это поводение.
+   */
+  disableSettingVKUIClassesInRuntime?: boolean;
 }
 
 /**
@@ -79,6 +91,7 @@ export const AppRoot = ({
   safeAreaInsets: safeAreaInsetsProp,
   layout,
   userSelectMode,
+  disableSettingVKUIClassesInRuntime,
   ...props
 }: AppRootProps): React.ReactNode => {
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
@@ -136,6 +149,24 @@ export const AppRoot = ({
     }),
     [disablePortal, isKeyboardInputActiveRef, layout, mode, safeAreaInsets, userSelectMode],
   );
+
+  /*
+   * Вешаем класс токенов на html в режиме full.
+   * Это необходимо, чтобы цвета html элемента и скроллбара соответствовали текущей цветовой схеме:
+   * - фон html элемента виден, если пользователь оверскролит. Тогда возникает анимация bounce-эффекта и виден фон html элемента. Без токенов в черной теме будет выглядывать белый фон.
+   * - цвет системного сколлбара зависит от color-sheme свойства, значение которого задётся токенами и должно быть выставлено именно на html элементе.
+   * В режме SSR пользователи сами могу задать этот класс на html-элементе. главное, чтобы он соответствовал переданным platform и appearence свойствам.
+   */
+  useSyncHTMLWithTokens({ appRootRef, enable: mode === 'full' });
+  /*
+   * По умолчанию VKUI будет выставлять .vkui на html и .vkui__root на контейнере в режиме full.
+   * В режиме embedded будет выставлять только .vkui__root на контейнере.
+   */
+  useSyncHTMLWithBaseVKUIClasses({
+    appRootRef,
+    mode,
+    enable: mode !== 'partial' && !disableSettingVKUIClassesInRuntime,
+  });
 
   return mode === 'partial' ? (
     <AppRootContext.Provider value={contextValue}>

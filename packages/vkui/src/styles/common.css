@@ -8,6 +8,8 @@
   margin: 0;
   padding: 0;
   block-size: 100%;
+  color-scheme: var(--vkui--colors_scheme);
+  background: var(--vkui--color_background);
 }
 
 .vkui__root {
