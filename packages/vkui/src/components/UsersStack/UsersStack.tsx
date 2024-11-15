@@ -1,5 +1,8 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useLayoutDirection } from '../../hooks/useLayoutDirection';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
@@ -71,6 +74,13 @@ function PathElement({ photoSize, direction, ...props }: PathElementProps) {
 
     case 'right':
       switch (photoSize) {
+        case 16:
+          return (
+            <path
+              d="M14,13.285A8 8 0 0 1 8 16A8 8 0 0 1 8 0A8 8 0 0 1 14 2.715A8 8 0 0 0 14,13.285"
+              {...props}
+            />
+          );
         case 24:
           return (
             <path
@@ -135,12 +145,14 @@ export const UsersStack = ({
   ...restProps
 }: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();
+  const dir = useLayoutDirection();
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';
   const CounterTypography = size === 'l' ? Footnote : Caption;
 
   const photoSize = photoSizes[size];
-  const directionClip = canShowOthers ? 'right' : 'left';
+  const directionClip =
+    dir === 'ltr' ? (canShowOthers ? 'right' : 'left') : canShowOthers ? 'left' : 'right';
 
   const photosElements = photos.slice(0, visibleCount).map((photo, i) => {
     const direction = i === 0 && !canShowOthers ? 'circle' : directionClip;
