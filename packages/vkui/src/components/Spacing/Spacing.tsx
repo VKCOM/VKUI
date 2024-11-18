@@ -13,7 +13,7 @@ export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
    */
   size?: SpacingSizeProp;
   /**
-   * @depracated 7.0.0
+   * @deprecated 7.0.0
    *
    * Свойство устарело и будет удалено в v8.
    */
