@@ -141,7 +141,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
             { label: 'l', value: 'l' },
           ]}
           value={borderRadius}
-          onChange={setBorderRadius}
+          onChange={(_, newValue) => setBorderRadius(newValue)}
         />
       </FormItem>
 
@@ -160,7 +160,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
             ]}
             value={badgeBackground}
             disabled={!badge}
-            onChange={setBadgeBackground}
+            onChange={(_, newValue) => setBadgeBackground(newValue)}
           />
         </FormItem>
       </FormLayoutGroup>
@@ -183,7 +183,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
             ]}
             value={overlayTheme}
             disabled={!overlay}
-            onChange={setOverlayTheme}
+            onChange={(_, newValue) => setOverlayTheme(newValue)}
           />
         </FormItem>
         <FormItem top="Image.Overlay[visibility]">
@@ -195,7 +195,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
             ]}
             value={overlayVisibility}
             disabled={!overlay}
-            onChange={setOverlayVisibility}
+            onChange={(_, newValue) => setOverlayVisibility(newValue)}
           />
         </FormItem>
       </FormLayoutGroup>

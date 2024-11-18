@@ -68,7 +68,7 @@ const Example = () => {
         <Select
           style={{ width: 100 }}
           value={locale}
-          onChange={setLocale}
+          onChange={(e, newValue) => setLocale(newValue)}
           options={[
             {
               label: 'ru',
@@ -93,7 +93,7 @@ const Example = () => {
         <Select
           style={{ width: 100 }}
           value={size}
-          onChange={setSize}
+          onChange={(_, newValue) => setSize(newValue)}
           options={[
             {
               label: 's',
