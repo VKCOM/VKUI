@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { useLayoutDirection } from '../../hooks/useLayoutDirection';
+import { useDirection } from '../../hooks/useDirection';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
@@ -145,7 +145,7 @@ export const UsersStack = ({
   ...restProps
 }: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();
-  const dir = useLayoutDirection();
+  const [, dir = 'ltr'] = useDirection();
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';
   const CounterTypography = size === 'l' ? Footnote : Caption;
