@@ -18,11 +18,15 @@ PLAYWRIGHT_VERSION=$(echo $YARN_INFO_OUTPUT | cut -f 2 -d :);
 # см. https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.noble
 echo "IMAGE=mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION}-noble" >> .env.docker;
 
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-      -u)
+
+while getopts "u:i:r:" option; do
+   case "$option" in
+       u)
         echo "UPDATE_SNAPSHOTS_FLAG=-u" >> .env.docker
         ;;
-  esac
-  shift
+       r)
+        # позволяет переопределить аргумент для команды yarn run
+        echo "RUN_SCRIPT_COMMAND=${OPTARG}" >> .env.docker
+        ;;
+   esac
 done
