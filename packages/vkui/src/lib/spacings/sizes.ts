@@ -15,4 +15,12 @@ export const spacingSizeClassNames: Record<SpacingSize, string> = {
   '4xl': styles['-spacing--4xl'],
 };
 
-export type SpacingSizeProp = LiteralUnion<SpacingSize, number>;
+export type SpacingSizeProp = LiteralUnion<SpacingSize | `--${string}`, number>;
+
+export function isSpacingSizeMap(size?: SpacingSizeProp): size is SpacingSize {
+  return typeof size === 'string' && !size.startsWith('--');
+}
+
+export function isSpacingSizeCustom(size?: SpacingSizeProp): size is number | `--${string}` {
+  return typeof size === 'number' || (typeof size === 'string' && size.startsWith('--'));
+}

@@ -1,5 +1,10 @@
 import { classNames } from '@vkontakte/vkjs';
-import { spacingSizeClassNames, type SpacingSizeProp } from '../../lib/spacings/sizes';
+import {
+  isSpacingSizeCustom,
+  isSpacingSizeMap,
+  spacingSizeClassNames,
+  type SpacingSizeProp,
+} from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Separator.module.css';
@@ -21,6 +26,8 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
   direction?: 'horizontal' | 'vertical';
   /**
    * Размер контейнера, в который вложен разделитель
+   *
+   * Принимает значения дизайн-системы, числовые значения и css-переменные
    */
   size?: SpacingSizeProp;
   /**
@@ -62,13 +69,15 @@ export const Separator = ({
     baseClassName={classNames(
       padding && styles.padded,
       appearanceClassNames[appearance],
-      typeof size === 'string' && spacingSizeClassNames[size],
+      isSpacingSizeMap(size) && spacingSizeClassNames[size],
       directionClassNames[direction],
       size !== undefined && styles.sized,
       align !== 'center' && alignClassNames[align],
     )}
     style={{
-      ...(typeof size === 'number' && { [CUSTOM_CSS_TOKEN_FOR_USER_SIZE]: `${size}px` }),
+      ...(isSpacingSizeCustom(size) && {
+        [CUSTOM_CSS_TOKEN_FOR_USER_SIZE]: typeof size === 'number' ? `${size}px` : `var(${size})`,
+      }),
       ...style,
     }}
   >
