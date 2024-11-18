@@ -78,7 +78,7 @@
   "dependencies": {
     "@swc/helpers": "^0.5.15",
     "@vkontakte/icons": "^2.115.0",
-    "@vkontakte/vkjs": "^1.3.0",
+    "@vkontakte/vkjs": "^2.0.1",
     "@vkontakte/vkui-floating-ui": "^0.2.3",
     "date-fns": "^4.1.0"
   },
