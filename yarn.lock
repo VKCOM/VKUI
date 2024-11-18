@@ -4065,14 +4065,14 @@ __metadata:
     jest-preset-stylelint: "npm:^7.1.0"
     lint-staged: "npm:^15.2.10"
     mini-css-extract-plugin: "npm:^2.9.2"
-    postcss: "npm:^8.4.48"
+    postcss: "npm:^8.4.49"
     postcss-cli: "npm:^11.0.0"
     postcss-custom-media: "npm:^11.0.5"
     postcss-gap-properties: "npm:^6.0.0"
     postcss-import: "npm:^16.1.0"
     postcss-loader: "npm:^8.1.1"
     postcss-logical: "npm:^8.0.0"
-    postcss-modules: "npm:^6.0.0"
+    postcss-modules: "npm:^6.0.1"
     postcss-value-parser: "npm:^4.2.0"
     prettier: "npm:^3.3.2"
     process: "npm:^0.11.10"
@@ -4111,7 +4111,7 @@ __metadata:
     "@types/node": "npm:^22.9.0"
     "@types/postcss-less": "npm:^4.0.6"
     jest: "npm:^29.7.0"
-    postcss: "npm:^8.4.48"
+    postcss: "npm:^8.4.49"
     postcss-less: "npm:^6.0.0"
     postcss-scss: "npm:^4.0.9"
     postcss-value-parser: "npm:^4.2.0"
@@ -5028,8 +5028,8 @@ __metadata:
     html-webpack-plugin: "npm:^5.6.3"
     mini-css-extract-plugin: "npm:^2.9.2"
     playwright: "npm:1.48.2"
-    postcss: "npm:^8.4.48"
-    postcss-modules: "npm:^6.0.0"
+    postcss: "npm:^8.4.49"
+    postcss-modules: "npm:^6.0.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     serve-static: "npm:1.16.2"
@@ -13005,7 +13005,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-local-by-default@npm:^4.0.0, postcss-modules-local-by-default@npm:^4.0.4, postcss-modules-local-by-default@npm:^4.0.5":
+"postcss-modules-local-by-default@npm:^4.0.4, postcss-modules-local-by-default@npm:^4.0.5":
   version: 4.0.5
   resolution: "postcss-modules-local-by-default@npm:4.0.5"
   dependencies:
@@ -13018,7 +13018,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-scope@npm:^3.0.0, postcss-modules-scope@npm:^3.1.1, postcss-modules-scope@npm:^3.2.0":
+"postcss-modules-scope@npm:^3.1.1, postcss-modules-scope@npm:^3.2.0":
   version: 3.2.0
   resolution: "postcss-modules-scope@npm:3.2.0"
   dependencies:
@@ -13040,21 +13040,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "postcss-modules@npm:6.0.0"
+"postcss-modules@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "postcss-modules@npm:6.0.1"
   dependencies:
     generic-names: "npm:^4.0.0"
     icss-utils: "npm:^5.1.0"
     lodash.camelcase: "npm:^4.3.0"
-    postcss-modules-extract-imports: "npm:^3.0.0"
-    postcss-modules-local-by-default: "npm:^4.0.0"
-    postcss-modules-scope: "npm:^3.0.0"
+    postcss-modules-extract-imports: "npm:^3.1.0"
+    postcss-modules-local-by-default: "npm:^4.0.5"
+    postcss-modules-scope: "npm:^3.2.0"
     postcss-modules-values: "npm:^4.0.0"
-    string-hash: "npm:^1.1.1"
+    string-hash: "npm:^1.1.3"
   peerDependencies:
     postcss: ^8.0.0
-  checksum: 10/1992d19894a29867363b07b4cc9b0b4b50f6ba4d83a042c435ff4a89d4b3826ee4b809f208c71dc323f38437833a029714f626f5f065e8bb68279763f1ec2a9e
+  checksum: 10/d53bfc67bd8351ebca81505f53ea917bdb46bbb962b9a7c10ba0dfb123a61af88b9bee16ed7085a660de9557a379a3d9a0e72184148d14523c8602d23618e796
   languageName: node
   linkType: hard
 
@@ -13268,7 +13268,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.0, postcss@npm:^8.1.2, postcss@npm:^8.4.33, postcss@npm:^8.4.35, postcss@npm:^8.4.38, postcss@npm:^8.4.43, postcss@npm:^8.4.47, postcss@npm:^8.4.48":
+"postcss@npm:^8.0.0, postcss@npm:^8.1.2, postcss@npm:^8.4.33, postcss@npm:^8.4.35, postcss@npm:^8.4.38, postcss@npm:^8.4.43, postcss@npm:^8.4.47":
   version: 8.4.48
   resolution: "postcss@npm:8.4.48"
   dependencies:
@@ -13276,6 +13276,17 @@ __metadata:
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
   checksum: 10/94d7b2255752607d120fb7de7b2a7f895ba1594a0e1b566cb01972ca4a7b04a65ed2a1783109f86bb28cfb421c5a58c54b9330942bedaa2fd35c5c605fa6beb8
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.4.49":
+  version: 8.4.49
+  resolution: "postcss@npm:8.4.49"
+  dependencies:
+    nanoid: "npm:^3.3.7"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 10/28fe1005b1339870e0a5006375ba5ac1213fd69800f79e7db09c398e074421ba6e162898e94f64942fed554037fd292db3811d87835d25ab5ef7f3c9daacb6ca
   languageName: node
   linkType: hard
 
@@ -15170,7 +15181,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string-hash@npm:^1.1.1":
+"string-hash@npm:^1.1.3":
   version: 1.1.3
   resolution: "string-hash@npm:1.1.3"
   checksum: 10/104b8667a5e0dc71bfcd29fee09cb88c6102e27bfb07c55f95535d90587d016731d52299380052e514266f4028a7a5172e0d9ac58e2f8f5001be61dc77c0754d
