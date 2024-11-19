@@ -139,9 +139,9 @@ export const Calendar = ({
   renderDayContent,
   minDateTime,
   maxDateTime,
-  doneButtonTestId,
   minutesTestId,
   hoursTestId,
+  doneButtonTestId,
   prevMonthButtonTestId,
   nextMonthButtonTestId,
   monthDropdownTestId,
@@ -276,9 +276,9 @@ export const Calendar = ({
             changeHoursLabel={changeHoursLabel}
             changeMinutesLabel={changeMinutesLabel}
             isDayDisabled={minDateTime || maxDateTime ? isDayDisabled : undefined}
-            doneButtonTestId={doneButtonTestId}
             minutesTestId={minutesTestId}
             hoursTestId={hoursTestId}
+            doneButtonTestId={doneButtonTestId}
           />
         </div>
       )}

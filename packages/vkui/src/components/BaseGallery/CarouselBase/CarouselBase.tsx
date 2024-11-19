@@ -70,6 +70,7 @@ export const CarouselBase = ({
   const isCenterWithCustomWidth = slideWidth === 'custom' && align === 'center';
 
   const transformCssStyles = (shiftX: number, animation = false) => {
+    shiftX = Math.round(shiftX);
     slidesManager.current.loopPoints.forEach((loopPoint) => {
       const { target, index } = loopPoint;
       const slide = slidesStore.current[index];

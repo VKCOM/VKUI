@@ -1,37 +1,42 @@
-/* eslint no-console: 0 */
-import path from 'path';
-import {
-  ColorScheme,
-  defineConfig,
-  type DeviceKey,
-  devices,
-  Platform,
-  type ReporterDescription,
-  type TestProject,
-  type VKUITestOptions,
-} from '@vkui-e2e/test';
+// @ts-check
+/* eslint-disable no-console, import/no-default-export */
+
+import path from 'node:path';
+import postcssGlobalData from '@csstools/postcss-global-data';
+import { defineConfig, devices } from '@playwright/experimental-ct-react';
+import restructureVariable from '@project-tools/postcss-restructure-variable';
+import autoprefixer from 'autoprefixer';
 import dotenv from 'dotenv';
-import { makePostcssPlugins } from './scripts/postcss';
-import * as tsconfig from './tsconfig.json';
+import postcssCustomMedia from 'postcss-custom-media';
+import postcssGapProperties from 'postcss-gap-properties';
+import cssImport from 'postcss-import';
+import postcssLogical from 'postcss-logical';
+// import * as tsconfig from './tsconfig.json' with { type: 'json' };
+
+const rootDirectory = path.join(import.meta.dirname, '../..');
 
 // см. `.env`
 dotenv.config();
 
-const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).reduce<
-  Record<string, string>
->((aliases, [name, paths]) => {
-  aliases[name] = path.join(__dirname, paths[0]);
-  return aliases;
-}, {});
+// TODO [@playwright/experimental-ct-react>=1.49] использовать TS_CONFIG_ALIASES в resolve.alias
+//  https://github.com/microsoft/playwright/issues/33557
+//
+// const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).reduce(
+//   (aliases, [name, paths]) => {
+//     aliases[name] = path.join(__dirname, paths[0]);
+//     return aliases;
+//   },
+//   {},
+// );
 
-const DEFAULT_REPORTERS: ReporterDescription[] = [['json', { outputFile: 'e2e-results.json' }]];
+/** @type {import('@playwright/test').ReporterDescription}  */
+const DEFAULT_REPORTER = ['json', { outputFile: 'e2e-results.json' }];
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-// eslint-disable-next-line import/no-default-export
-export default defineConfig<VKUITestOptions>({
-  testDir: path.join(__dirname, './src'),
+export default defineConfig({
+  testDir: path.join(import.meta.dirname, './src'),
   testMatch: generateTestMatch(),
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
@@ -65,8 +70,8 @@ export default defineConfig<VKUITestOptions>({
       : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI
-    ? [['github'], ['dot'], ['blob'], ...DEFAULT_REPORTERS]
-    : [['list'], ['html', { open: 'never' }], ...DEFAULT_REPORTERS],
+    ? [['github'], ['dot'], ['blob'], [...DEFAULT_REPORTER]]
+    : [['list'], ['html', { open: 'never' }], [...DEFAULT_REPORTER]],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -79,16 +84,65 @@ export default defineConfig<VKUITestOptions>({
     deviceScaleFactor: 1,
 
     ctViteConfig: {
-      build: { commonjsOptions: { include: [/node_modules/, /\.js/] } },
+      build: { commonjsOptions: { include: [/node_modules/, /\.js/] }, sourcemap: false },
 
-      css: {
-        postcss: {
-          plugins: makePostcssPlugins(),
+      resolve: {
+        // alias: TS_CONFIG_ALIASES,
+        alias: {
+          '@vkui-e2e/test': path.join(import.meta.dirname, 'src/testing/e2e/index.playwright'),
+          '@vkui-e2e/playground-helpers': path.join(
+            import.meta.dirname,
+            'src/testing/e2e/index.playground',
+          ),
+          '@vkui-e2e/utils': path.join(import.meta.dirname, 'src/testing/e2e/utils'),
         },
       },
 
-      resolve: {
-        alias: TS_CONFIG_ALIASES,
+      css: {
+        postcss: {
+          plugins: [
+            // Обработка css импортов
+            cssImport(),
+
+            restructureVariable(
+              [
+                './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
+              ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
+            ),
+
+            // Сбор данных для работы некоторых postcss плагинов
+            postcssGlobalData({
+              files: [
+                './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
+                'packages/vkui/src/styles/dynamicTokens.css',
+                'packages/vkui/src/styles/constants.css',
+                'packages/vkui/src/styles/customMedias.generated.css',
+              ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
+            }),
+
+            // Автопрефиксер
+            autoprefixer(),
+
+            // Обработка CustomMedia
+            postcssCustomMedia(),
+
+            // Обработка CSS Logical
+            //
+            // https://caniuse.com/css-logical-props
+            postcssLogical(),
+
+            // TODO [>=8]: Проверить браузерную поддержку
+            //
+            // https://caniuse.com/mdn-css_properties_gap_grid_context
+            postcssGapProperties(),
+          ],
+        },
       },
     },
   },
@@ -114,17 +168,17 @@ function generateTestMatch() {
   return ['**/*.e2e.{ts,tsx}'];
 }
 
-function generateProjects(): TestProject {
+function generateProjects() {
   /**
    * Иначе перебивает `deviceScaleFactor` из общего конфига.
    * Можно решить через `page.screenshot({ scale: 'css' })`, но через функцию ниже получается прозрачнее.
    */
-  const getDeviceDescriptorWithoutScaleFactor = <T extends DeviceKey>(deviceName: T) => {
+  const getDeviceDescriptorWithoutScaleFactor = (deviceName) => {
     const { deviceScaleFactor, ...restProps } = devices[deviceName];
     return restProps;
   };
 
-  const colorSchemes = [ColorScheme.LIGHT, ColorScheme.DARK];
+  const colorSchemes = ['light', 'dark'];
   const projects = colorSchemes
     .map((colorSchemeType) => [
       {
@@ -132,7 +186,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Pixel 5'),
           colorSchemeType,
-          platform: Platform.ANDROID,
+          platform: 'android',
         },
       },
 
@@ -141,7 +195,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('iPhone XR'),
           colorSchemeType,
-          platform: Platform.IOS,
+          platform: 'ios',
         },
       },
 
@@ -150,7 +204,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Chrome'),
           colorSchemeType,
-          platform: Platform.VKCOM,
+          platform: 'vkcom',
         },
       },
 
@@ -159,7 +213,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Firefox'),
           colorSchemeType,
-          platform: Platform.VKCOM,
+          platform: 'vkcom',
         },
       },
 
@@ -168,7 +222,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Safari'),
           colorSchemeType,
-          platform: Platform.VKCOM,
+          platform: 'vkcom',
         },
       },
     ])
