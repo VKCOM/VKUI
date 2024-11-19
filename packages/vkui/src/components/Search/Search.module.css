@@ -201,6 +201,7 @@
   inline-size: initial;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup--mode-plain) .host {
   padding-block-start: 4px;
 }
