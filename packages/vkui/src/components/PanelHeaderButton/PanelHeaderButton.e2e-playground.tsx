@@ -21,7 +21,7 @@ export const PanelHeaderButtonPlayground = (props: ComponentPlaygroundProps) => 
         {
           children: [<Icon28AddOutline key="icon-28" />, <Icon24AddOutline key="icon-24" />],
           label: [
-            <Counter size="s" mode="prominent" key="counter">
+            <Counter size="s" mode="primary" appearance="accent-red" key="counter">
               33
             </Counter>,
             <Badge mode="prominent" key="badge" />,

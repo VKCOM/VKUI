@@ -48,7 +48,7 @@ const Example = () => {
               </Link>
             }
             indicator={
-              <Counter size="s" mode="prominent">
+              <Counter size="s" mode="primary" appearance="accent-red">
                 3
               </Counter>
             }
@@ -89,7 +89,7 @@ const Example = () => {
               </Link>
             }
             indicator={
-              <Counter size="s" mode="prominent">
+              <Counter size="s" mode="primary" appearance="accent-red">
                 3
               </Counter>
             }
@@ -120,7 +120,7 @@ const Example = () => {
             subtitle="SOHN — Conrad"
             subtitleComponent="h3"
             indicator={
-              <Counter size="s" mode="prominent">
+              <Counter size="s" mode="primary" appearance="accent-red">
                 3
               </Counter>
             }
@@ -143,7 +143,7 @@ const Example = () => {
             subtitleComponent="h3"
             multiline
             indicator={
-              <Counter size="s" mode="prominent">
+              <Counter size="s" mode="primary" appearance="accent-red">
                 3
               </Counter>
             }

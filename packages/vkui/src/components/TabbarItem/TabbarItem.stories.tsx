@@ -21,7 +21,7 @@ const story: Meta<TabbarItemProps> = {
       additionalPresets: {
         Badge: <Badge mode="prominent">Есть обновления</Badge>,
         Counter: (
-          <Counter size="s" mode="prominent">
+          <Counter size="s" mode="primary" appearance="accent-red">
             3
           </Counter>
         ),

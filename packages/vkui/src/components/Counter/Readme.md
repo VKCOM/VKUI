@@ -19,7 +19,14 @@ const Example = () => {
             <Cell before={<Icon28UserOutline />} indicator={<Counter>4</Counter>}>
               Друзья
             </Cell>
-            <Cell before={<Icon28UsersOutline />} indicator={<Counter mode="primary">2</Counter>}>
+            <Cell
+              before={<Icon28UsersOutline />}
+              indicator={
+                <Counter mode="primary" appearance="accent">
+                  2
+                </Counter>
+              }
+            >
               Группы
             </Cell>
             <Cell
@@ -34,7 +41,11 @@ const Example = () => {
             </Cell>
             <Cell
               before={<Icon28FavoriteOutline />}
-              indicator={<Counter mode="primary">1</Counter>}
+              indicator={
+                <Counter mode="primary" appearance="accent">
+                  1
+                </Counter>
+              }
             >
               Закладки
             </Cell>
@@ -71,7 +82,7 @@ const Example = () => {
           header={
             <Header
               indicator={
-                <Counter size="s" mode="prominent">
+                <Counter size="s" mode="primary" appearance="accent-red">
                   5 <VisuallyHidden>новых</VisuallyHidden>
                 </Counter>
               }
@@ -104,7 +115,7 @@ const Example = () => {
               </TabsItem>
               <TabsItem
                 after={
-                  <Counter size="s" mode="primary">
+                  <Counter size="s" mode="primary" appearance="accent">
                     2
                   </Counter>
                 }
@@ -123,7 +134,7 @@ const Example = () => {
               selected={simpleTab === 'dialogs'}
               onClick={() => setSimpleTab('dialogs')}
               after={
-                <Counter size="s" mode="prominent">
+                <Counter size="s" mode="primary" appearance="accent-red">
                   6
                 </Counter>
               }
