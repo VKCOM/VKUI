@@ -19,7 +19,7 @@ PLAYWRIGHT_VERSION=$(echo $YARN_INFO_OUTPUT | cut -f 2 -d :);
 echo "IMAGE=mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION}-noble" >> .env.docker;
 
 
-while getopts "u:i:r:" option; do
+while getopts "ur:" option; do
    case "$option" in
        u)
         echo "UPDATE_SNAPSHOTS_FLAG=-u" >> .env.docker
