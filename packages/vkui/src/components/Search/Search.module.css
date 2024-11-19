@@ -201,7 +201,6 @@
   inline-size: initial;
 }
 
-/* FIXME поменять на `:global(.vkuiInternalGroup--mode-plain)` */
-.modePlain .host {
+:global(.vkuiInternalGroup--mode-plain) .host {
   padding-block-start: 4px;
 }
