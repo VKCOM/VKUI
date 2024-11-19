@@ -145,14 +145,14 @@ export const UsersStack = ({
   ...restProps
 }: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();
-  const [, dir = 'ltr'] = useDirection();
+  const [directionRef, textDirection = 'ltr'] = useDirection();
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';
   const CounterTypography = size === 'l' ? Footnote : Caption;
 
   const photoSize = photoSizes[size];
   const directionClip =
-    dir === 'ltr' ? (canShowOthers ? 'right' : 'left') : canShowOthers ? 'left' : 'right';
+    textDirection === 'ltr' ? (canShowOthers ? 'right' : 'left') : canShowOthers ? 'left' : 'right';
 
   const photosElements = photos.slice(0, visibleCount).map((photo, i) => {
     const direction = i === 0 && !canShowOthers ? 'circle' : directionClip;
@@ -204,6 +204,7 @@ export const UsersStack = ({
   return (
     <RootComponent
       {...restProps}
+      getRootRef={directionRef}
       baseClassName={classNames(
         styles.host,
         stylesSize[size],
