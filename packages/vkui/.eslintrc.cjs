@@ -218,6 +218,7 @@ module.exports = {
           },
         ],
         'react-server-components/use-client': 'off',
+        '@typescript-eslint/unbound-method': 'off',
       },
     },
 
