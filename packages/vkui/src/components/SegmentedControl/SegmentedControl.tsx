@@ -92,7 +92,7 @@ export const SegmentedControl = ({
         size === 'l' && styles.sizeL,
       )}
     >
-      <div role={role} ref={tabsRef} className={styles.in}>
+      <div role={role === 'tablist' ? 'tablist' : 'radiogroup'} ref={tabsRef} className={styles.in}>
         {actualIndex > -1 && (
           <div
             aria-hidden
