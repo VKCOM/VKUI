@@ -4,11 +4,16 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { SegmentedControlOption } from './SegmentedControlOption/SegmentedControlOption';
+import {
+  SegmentedControlOption,
+  type SegmentedControlRadioProps,
+  type SegmentedControlTabProps,
+} from './SegmentedControlOption/SegmentedControlOption';
 import styles from './SegmentedControl.module.css';
 
 const sizeYClassNames = {
@@ -30,13 +35,14 @@ export interface SegmentedControlOptionInterface
 }
 
 export interface SegmentedControlProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'role'> {
   options: SegmentedControlOptionInterface[];
   size?: 'm' | 'l';
   name?: string;
   onChange?: (value: SegmentedControlValue) => void;
   value?: SegmentedControlValue;
   defaultValue?: SegmentedControlValue;
+  role?: 'tablist' | 'radiogroup';
 }
 
 const warn = warnOnce('SegmentedControl');
@@ -52,6 +58,7 @@ export const SegmentedControl = ({
   children,
   onChange: onChangeProp,
   value: valueProp,
+  role = 'radiogroup',
   ...restProps
 }: SegmentedControlProps): React.ReactNode => {
   const id = React.useId();
@@ -63,6 +70,8 @@ export const SegmentedControl = ({
   });
 
   const { sizeY = 'none' } = useAdaptivity();
+
+  const { tabsRef } = useTabsNavigation(role === 'tablist');
 
   const actualIndex = options.findIndex((option) => option.value === value);
 
@@ -83,7 +92,7 @@ export const SegmentedControl = ({
         size === 'l' && styles.sizeL,
       )}
     >
-      <div role="radiogroup" className={styles.in}>
+      <div role={role} ref={tabsRef} className={styles.in}>
         {actualIndex > -1 && (
           <div
             aria-hidden
@@ -94,17 +103,33 @@ export const SegmentedControl = ({
             }}
           />
         )}
-        {options.map(({ label, ...optionProps }) => (
-          <SegmentedControlOption
-            key={`${optionProps.value}`}
-            {...optionProps}
-            name={name ?? id}
-            checked={value === optionProps.value}
-            onChange={() => onChange(optionProps.value)}
-          >
-            {label}
-          </SegmentedControlOption>
-        ))}
+        {options.map(({ label, ...optionProps }) => {
+          const selected = value === optionProps.value;
+          const onSelect = () => onChange(optionProps.value);
+          const roleOptionProps: SegmentedControlTabProps | SegmentedControlRadioProps =
+            role === 'tablist'
+              ? {
+                  'role': 'tab',
+                  'aria-selected': selected,
+                  'onClick': onSelect,
+                }
+              : {
+                  role: 'radio',
+                  checked: selected,
+                  onChange: onSelect,
+                  name: name ?? id,
+                };
+
+          return (
+            <SegmentedControlOption
+              key={`${optionProps.value}`}
+              {...optionProps}
+              {...roleOptionProps}
+            >
+              {label}
+            </SegmentedControlOption>
+          );
+        })}
       </div>
     </RootComponent>
   );
