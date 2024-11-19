@@ -1,6 +1,9 @@
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import {
+  AppDefaultWrapper,
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+} from '@vkui-e2e/playground-helpers';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { AppRoot } from '../AppRoot/AppRoot';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Slider, type SliderMultipleProps, type SliderProps } from './Slider';
 
@@ -48,9 +51,9 @@ export const SliderPlaygroundForKeyboardTest = ({
   return (
     <ConfigProvider colorScheme={colorScheme}>
       <AdaptivityProvider hasPointer>
-        <AppRoot>
+        <AppDefaultWrapper disableDecorations>
           <Slider style={{ minWidth: '320px' }} {...restProps} />
-        </AppRoot>
+        </AppDefaultWrapper>
       </AdaptivityProvider>
     </ConfigProvider>
   );
@@ -63,7 +66,8 @@ export const SliderPlaygroundForTooltipTest = ({
   return (
     <ConfigProvider colorScheme={colorScheme}>
       <AdaptivityProvider hasPointer>
-        <AppRoot
+        <AppDefaultWrapper
+          disableDecorations
           style={{
             padding: '80px 30px 30px',
             width: '320px',
@@ -71,7 +75,7 @@ export const SliderPlaygroundForTooltipTest = ({
           }}
         >
           <Slider withTooltip {...restProps} />
-        </AppRoot>
+        </AppDefaultWrapper>
       </AdaptivityProvider>
     </ConfigProvider>
   );
