@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useDirection } from '../../hooks/useDirection';
+import { useExternRef } from '../../hooks/useExternRef';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
@@ -142,10 +143,12 @@ export const UsersStack = ({
   size = 'm',
   children,
   avatarsPosition = 'inline-start',
+  getRootRef,
   ...restProps
 }: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();
   const [directionRef, textDirection = 'ltr'] = useDirection();
+  const rootRef = useExternRef(getRootRef, directionRef);
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';
   const CounterTypography = size === 'l' ? Footnote : Caption;
@@ -204,7 +207,7 @@ export const UsersStack = ({
   return (
     <RootComponent
       {...restProps}
-      getRootRef={directionRef}
+      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         stylesSize[size],
