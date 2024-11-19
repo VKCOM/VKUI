@@ -9,6 +9,12 @@
   padding: 0;
   block-size: 100%;
   color-scheme: var(--vkui--colors_scheme);
+  /*
+   * TODO [>=8]: Убрать background с html элемента, но для этого надо
+   * чтобы height у всех родителей Panel впроть до html имели
+   * min-height: 100% вместо height: 100% иначе фон html выглядывает в
+   * многоколоночном режиме если чуть ниже проскролить контент.
+   */
   background: var(--vkui--color_background);
 }
 
