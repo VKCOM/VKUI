@@ -323,6 +323,10 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const referencePropsRef = React.useRef<ReferenceProps>({});
   const floatingPropsRef = React.useRef<FloatingProps>({ style: {} });
 
+  useIsomorphicLayoutEffect(() => {
+    referencePropsRef.current = {};
+  }, [triggerOnHover, triggerOnFocus, triggerOnClick]);
+
   if (shownFinalState) {
     floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties(
       strategy,
