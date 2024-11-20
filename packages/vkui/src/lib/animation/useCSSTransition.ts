@@ -1,13 +1,7 @@
-import {
-  type TransitionEvent,
-  type TransitionEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { type TransitionEvent, type TransitionEventHandler, useEffect, useRef } from 'react';
 import { noop } from '@vkontakte/vkjs';
-import { usePrevious } from '../../hooks/usePrevious';
 import { useStableCallback } from '../../hooks/useStableCallback';
+import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 
 /* istanbul ignore next: особенность рендера в браузере когда меняется className, в Jest не воспроизвести */
 const forceReflowForFixNewMountedElement = (node: Element | null) => void node?.scrollTop;
@@ -72,7 +66,7 @@ export const useCSSTransition = <Ref extends Element = Element>(
   const onExited = useStableCallback(onExitedProp || noop);
 
   const ref = useRef<Ref | null>(null);
-  const [state, setState] = useState<UseCSSTransitionState>(() => {
+  const [[state, prevState], setState] = useStateWithPrev<UseCSSTransitionState>(() => {
     if (!inProp) {
       return 'exited';
     }
@@ -84,7 +78,6 @@ export const useCSSTransition = <Ref extends Element = Element>(
 
     return 'entered';
   });
-  const prevState = usePrevious(state);
 
   useEffect(
     function updateState() {
@@ -158,6 +151,7 @@ export const useCSSTransition = <Ref extends Element = Element>(
 
       state,
       prevState,
+      setState,
 
       enableAppear,
       enableEnter,
