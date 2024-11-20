@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import type { HasChildren } from '../../types';
 import { AccordionContent } from './AccordionContent';
 import { AccordionContext } from './AccordionContext';
@@ -53,12 +52,15 @@ export const Accordion: React.FC<AccordionProps> & {
     disabled: restProps.disabled,
   });
 
-  const context = useObjectMemo({
-    labelId,
-    contentId,
-    expanded: expanded || false,
-    onChange,
-  });
+  const context = React.useMemo(
+    () => ({
+      labelId,
+      contentId,
+      expanded: expanded || false,
+      onChange,
+    }),
+    [contentId, expanded, labelId, onChange],
+  );
 
   return <AccordionContext.Provider value={context}>{children}</AccordionContext.Provider>;
 };

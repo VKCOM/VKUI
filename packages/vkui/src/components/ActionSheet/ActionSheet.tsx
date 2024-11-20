@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { useScrollLock } from '../AppRoot/ScrollContext';
@@ -58,7 +57,7 @@ export const ActionSheet = ({
 }: ActionSheetProps): React.ReactNode => {
   const platform = usePlatform();
   const [closingBy, setClosingBy] = React.useState<undefined | CloseInitiators>(undefined);
-  const onCloseWithOther = () => setClosingBy('other');
+  const onCloseWithOther = React.useCallback(() => setClosingBy('other'), []);
   const actionCallbackRef = React.useRef(noop);
 
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
@@ -93,7 +92,10 @@ export const ActionSheet = ({
       },
     [],
   );
-  const contextValue = useObjectMemo({ onItemClick, mode, onClose: onCloseWithOther });
+  const contextValue = React.useMemo(
+    () => ({ onItemClick, mode, onClose: onCloseWithOther }),
+    [mode, onCloseWithOther, onItemClick],
+  );
 
   const DropdownComponent = mode === 'menu' ? ActionSheetDropdownMenu : ActionSheetDropdownSheet;
 
