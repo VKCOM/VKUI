@@ -17,11 +17,11 @@ export function useSyncHTMLWithTokens({
 
     const htmlElement = appRootRef.current?.ownerDocument.documentElement;
     /* eslint-disable-next-line no-restricted-properties */
-    htmlElement?.classList.add(tokenClassName, 'vkui');
+    htmlElement?.classList.add(tokenClassName);
 
     return () => {
       /* eslint-disable-next-line no-restricted-properties */
-      htmlElement?.classList.remove(tokenClassName, 'vkui');
+      htmlElement?.classList.remove(tokenClassName);
     };
   }, [tokenClassName]);
 }
