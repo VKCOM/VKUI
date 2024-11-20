@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePrevious } from '../../hooks/usePrevious';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { useDOM } from '../../lib/dom';
@@ -53,12 +52,15 @@ export const ModalRootDesktop = ({
     enteringModal,
     activeModal,
   });
-  const modalRootContext: ModalRootContextInterface = useObjectMemo({
-    updateModalHeight: () => undefined,
-    registerModal: ({ id, ...data }) => Object.assign(getModalState(id) ?? {}, data),
-    onClose: onExit,
-    isInsideModal: true,
-  });
+  const modalRootContext: ModalRootContextInterface = React.useMemo(
+    () => ({
+      updateModalHeight: () => undefined,
+      registerModal: ({ id, ...data }) => Object.assign(getModalState(id) ?? {}, data),
+      onClose: onExit,
+      isInsideModal: true,
+    }),
+    [getModalState, onExit],
+  );
 
   const timeout = platform === 'ios' ? 400 : 320;
   const modals = React.Children.toArray(children) as React.ReactElement[];
