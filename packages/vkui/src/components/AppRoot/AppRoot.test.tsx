@@ -25,7 +25,6 @@ describe('AppRoot', () => {
         </AdaptivityProvider>
       );
       const result = render(<Template />);
-      result.debug();
       expect(result.getByTestId('app-root')).toHaveClass(styles.pointerNone);
       result.rerender(<Template hasPointer={false} />);
       expect(result.getByTestId('app-root')).toHaveClass(styles.userSelectNone);
@@ -173,9 +172,9 @@ describe('AppRoot', () => {
   describe('portalRoot prop', () => {
     it('should accept custom portal root', () => {
       const customPortalRoot = document.createElement('div');
-      let portalRoot: React.RefObject<HTMLElement | null> = React.createRef();
+      let portalRoot: React.MutableRefObject<HTMLElement | null> = React.createRef();
       const contextCallback = jest.fn().mockImplementation((ctx) => {
-        portalRoot = ctx.portalRoot ?? null;
+        portalRoot.current = ctx.portalRoot ?? null;
         return null;
       });
       render(
