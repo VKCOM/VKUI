@@ -4,7 +4,7 @@ import { type AppRootUserSelectMode, type SafeAreaInsets } from './types';
 
 export interface AppRootContextInterface {
   appRoot: React.RefObject<HTMLElement>;
-  portalRoot: React.MutableRefObject<HTMLElement | null>;
+  portalRoot: HTMLElement | null;
   popoutModalRoot: React.MutableRefObject<HTMLDivElement | null>;
   setPortalRoot: (element: HTMLElement) => void;
   safeAreaInsets?: SafeAreaInsets;
@@ -24,7 +24,7 @@ export interface AppRootContextInterface {
 export const DEFAULT_APP_ROOT_CONTEXT_VALUE: AppRootContextInterface = {
   appRoot: React.createRef(),
   mode: 'full',
-  portalRoot: React.createRef(),
+  portalRoot: null,
   popoutModalRoot: React.createRef(),
   setPortalRoot: noop,
   safeAreaInsets: undefined,

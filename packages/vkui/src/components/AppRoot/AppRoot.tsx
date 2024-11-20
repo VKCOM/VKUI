@@ -85,7 +85,7 @@ export const AppRoot = ({
   children,
   mode = 'full',
   scroll = 'global',
-  portalRoot: portalRootProp = null,
+  portalRoot: portalRootProp,
   disablePortal = false,
   disableParentTransformForPositionFixedElements,
   safeAreaInsets: safeAreaInsetsProp,
@@ -96,33 +96,45 @@ export const AppRoot = ({
 }: AppRootProps): React.ReactNode => {
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
   const popoutModalContainerRef = React.useRef<HTMLDivElement | null>(null);
-  const portalRootRef = React.useRef<HTMLElement | null>(
+  const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(
     portalRootProp ? extractPortalRootByProp(portalRootProp) : null,
   );
 
-  useIsomorphicLayoutEffect(function removePortalRootOnUnmount() {
-    // Контейнер PortalRoot создаётся при первом вызове модалки или
-    // поповера использующего AppRootPortal.
-    // Потом он переиспользуется и не удаляется пока
-    // приложение не размонтируется.
-    // И создаётся только если в приложение не был передан
-    // пользовательский контейнер через свойство portalRootProp
-    // Сделано для поддержки SSR, чтобы при старте приложения
-    // никаких новых нод в DOM не создавалось.
-    const documentBody = getDocumentBody(appRootRef.current);
-    return function cleanup() {
-      if (portalRootRef.current) {
-        const isPortalRootPassedByProps = Boolean(portalRootProp);
-        if (!isPortalRootPassedByProps) {
-          // удаляем portalRoot из дома только если он
-          // был создан в AppRootPortal.
-          // Если он был передан через пропы - удалять нельзя
-          documentBody.removeChild(portalRootRef.current);
-        }
-        portalRootRef.current = null;
+  useIsomorphicLayoutEffect(
+    function syncPortalRootWithPortalRootProp() {
+      const portalByProp = portalRootProp ? extractPortalRootByProp(portalRootProp) : null;
+      if (portalRootProp !== undefined) {
+        setPortalRoot(portalByProp);
       }
-    };
-  }, []);
+    },
+    [portalRootProp],
+  );
+
+  useIsomorphicLayoutEffect(
+    function removePortalRootOnUnmount() {
+      // Контейнер PortalRoot создаётся при первом вызове модалки или
+      // поповера использующего AppRootPortal.
+      // Потом он переиспользуется и не удаляется пока
+      // приложение не размонтируется.
+      // И создаётся только если в приложение не был передан
+      // пользовательский контейнер через свойство portalRootProp
+      // Сделано для поддержки SSR, чтобы при старте приложения
+      // никаких новых нод в DOM не создавалось.
+      const documentBody = getDocumentBody(appRootRef.current);
+      return function cleanup() {
+        if (portalRoot) {
+          const isPortalRootPassedByProps = Boolean(portalRootProp);
+          if (!isPortalRootPassedByProps) {
+            // удаляем portalRoot из дома только если он
+            // был создан в AppRootPortal.
+            // Если он был передан через пропы - удалять нельзя
+            documentBody.removeChild(portalRoot);
+          }
+        }
+      };
+    },
+    [portalRootProp],
+  );
 
   const ScrollController = React.useMemo(
     () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
@@ -134,9 +146,9 @@ export const AppRoot = ({
   const contextValue = React.useMemo(
     () => ({
       appRoot: appRootRef,
-      portalRoot: portalRootRef,
+      portalRoot,
       popoutModalRoot: popoutModalContainerRef,
-      setPortalRoot: (element: HTMLElement) => (portalRootRef.current = element),
+      setPortalRoot,
       safeAreaInsets,
       embedded: mode === 'embedded',
       mode,
@@ -147,7 +159,15 @@ export const AppRoot = ({
       },
       userSelectMode,
     }),
-    [disablePortal, isKeyboardInputActiveRef, layout, mode, safeAreaInsets, userSelectMode],
+    [
+      portalRoot,
+      disablePortal,
+      isKeyboardInputActiveRef,
+      layout,
+      mode,
+      safeAreaInsets,
+      userSelectMode,
+    ],
   );
 
   /*

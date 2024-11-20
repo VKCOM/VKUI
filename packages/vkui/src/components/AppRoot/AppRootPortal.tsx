@@ -92,11 +92,11 @@ function shouldUsePortal(
 function usePortalContainer(usePortal: AppRootPortalProps['usePortal']): HTMLElement | null {
   const { portalRoot, popoutModalRoot } = React.useContext(AppRootContext);
   if (typeof usePortal === 'boolean' || usePortal === undefined) {
-    return portalRoot.current;
+    return portalRoot;
   }
 
   if (usePortal === 'SplitLayout') {
-    return popoutModalRoot.current;
+    return popoutModalRoot.current || portalRoot;
   }
 
   return isRefObject(usePortal) ? usePortal.current : usePortal;
