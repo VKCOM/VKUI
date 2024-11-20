@@ -9,11 +9,11 @@ export type TranslateRange = [number, number];
 export type ModalsState = { [index: string]: ModalsStateEntry };
 
 export interface ModalElements {
-  modalElement?: HTMLElement | null;
-  innerElement?: HTMLElement | null;
-  headerElement?: HTMLElement | null;
-  contentElement?: HTMLElement | null;
-  bottomInset?: HTMLElement | null;
+  modalElement?: HTMLDivElement | null;
+  innerElement?: HTMLDivElement | null;
+  headerElement?: HTMLDivElement | null;
+  contentElement?: HTMLDivElement | null;
+  bottomInset?: HTMLDivElement | null;
 }
 
 export interface ModalsStateEntry extends ModalElements {
