@@ -3,77 +3,35 @@ const { argv } = require('yargs');
 const { VKUI_PACKAGE } = require('../shared');
 const { reactDocgenTypescript } = require('./propsParser.config');
 
-// функции взяты из
-// https://github.com/vxna/mini-html-webpack-template/blob/a388df47a72d2a0d5d7c66a55e5af8e2c0480783/src/index.js#L9
-function mapAttrs(tag) {
-  return Object.keys(tag)
-    .map((attr) => `${attr}="${tag[attr]}"`)
-    .join(' ');
-}
-
-function generateTags(tags = [], type) {
-  const closing = type === ('script' || 'style') ? `></${type}>` : '>';
-  return tags.map((tag) => `<${type} ${mapAttrs(tag)}${closing}`);
-}
-
-function webpackArtifacts(files = [], publicPath = '', type) {
-  const tag = (file) =>
-    type === 'script' ? { src: publicPath + file } : { rel: 'stylesheet', href: publicPath + file };
-
-  return files.map((file) => generateTags([tag(file)], type)).join('\n');
-}
-
 /**
  * @type {import('react-styleguidist').StyleguidistConfig}
  */
 const baseConfig = {
   title: 'VKUI styleguide',
   styleguideDir: path.join(__dirname, argv.dist || 'dist'),
-  // Кастомная функция реализована на основе плагина
-  // https://github.com/vxna/mini-html-webpack-template/blob/a388df47a72d2a0d5d7c66a55e5af8e2c0480783/src/index.js#L9
-  // который используется при передаче в template объекта.
-  // Нам же надо задать класс vkui для html и vkui__root для контейнера
-  template: (templateArgs) => {
-    const headLinks = [
-      {
-        rel: 'preconnect',
-        href: 'https://fonts.googleapis.com',
-      },
-      {
-        rel: 'preconnect',
-        href: 'https://fonts.gstatic.com',
-        crossorigin: 'anonymous',
-      },
-      {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap',
-      },
-      {
-        rel: 'shortcut icon',
-        href: 'https://vk.com/images/icons/favicons/fav_logo_2x.ico?6',
-      },
-    ];
-
-    const { css, js, publicPath, title, container, favicon } = templateArgs;
-    const htmlToReturn = `
-      <!DOCTYPE html>
-        <html lang="ru" class="vkui">
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover" />
-          <meta http-equiv="X-UA-Compatible" content="ie=edge">
-          <title>${title}</title>
-          ${favicon ? `<link rel="icon" type="image/x-icon" href="${favicon}">` : ''}
-          ${generateTags(headLinks, 'link').join('\n')}
-          ${webpackArtifacts(css, publicPath, 'link')}
-        </head>
-        <body>
-          ${container ? `<div id="${container}" class="vkui__root"></div>` : ''}
-          ${webpackArtifacts(js, publicPath, 'script')}
-        </body>
-      </html>`;
-
-    return htmlToReturn;
+  template: {
+    lang: 'ru',
+    head: {
+      links: [
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.googleapis.com',
+        },
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.gstatic.com',
+          crossorigin: 'anonymous',
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap',
+        },
+        {
+          rel: 'shortcut icon',
+          href: 'https://vk.com/images/icons/favicons/fav_logo_2x.ico?6',
+        },
+      ],
+    },
   },
   styleguideComponents: {
     'PlaygroundRenderer': path.join(__dirname, './Components/Playground/PlaygroundRenderer'),
