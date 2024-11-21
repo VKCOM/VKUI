@@ -13,6 +13,7 @@ import type {
   HasDataAttribute,
   HasRootRef,
 } from '../../types';
+import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
 import { ModalPopoutPortal } from '../AppRoot/ModalPopoutPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import type { ButtonProps } from '../Button/Button';
@@ -69,6 +70,7 @@ export interface AlertProps
    * `data-testid` для кнопки закрытия
    */
   dismissButtonTestId?: string;
+  usePortal?: AppRootPortalProps['usePortal'];
 }
 
 /**
@@ -89,6 +91,7 @@ export const Alert = ({
   dismissButtonMode = 'outside',
   dismissButtonTestId,
   getRootRef,
+  usePortal,
   ...restProps
 }: AlertProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -137,7 +140,7 @@ export const Alert = ({
   useScrollLock();
 
   return (
-    <ModalPopoutPortal>
+    <ModalPopoutPortal usePortal={usePortal}>
       <PopoutWrapper
         className={className}
         closing={closing}
