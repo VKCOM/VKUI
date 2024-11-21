@@ -10,6 +10,7 @@ const Example = () => {
   const [value, setValue] = useState(() => new Date());
   const [enableTime, setEnableTime] = useState(false);
   const [doneButtonShow, setDoneButtonShow] = useState(true);
+  const [doneButtonMode, setDoneButtonMode] = useState('secondary');
   const [disablePast, setDisablePast] = useState(false);
   const [disableFuture, setDisableFuture] = useState(false);
   const [disablePickers, setDisablePickers] = useState(false);
@@ -31,6 +32,37 @@ const Example = () => {
           <Checkbox checked={doneButtonShow} onChange={(e) => setDoneButtonShow(e.target.checked)}>
             Включено
           </Checkbox>
+        </FormItem>
+      )}
+      {enableTime && (
+        <FormItem top="Вид кнопки 'Готово'">
+          <Select
+            style={{ width: 150 }}
+            value={doneButtonMode}
+            onChange={(_, newValue) => setDoneButtonMode(newValue)}
+            options={[
+              {
+                label: 'primary',
+                value: 'primary',
+              },
+              {
+                label: 'secondary',
+                value: 'secondary',
+              },
+              {
+                label: 'tertiary',
+                value: 'tertiary',
+              },
+              {
+                label: 'outline',
+                value: 'outline',
+              },
+              {
+                label: 'link',
+                value: 'link',
+              },
+            ]}
+          />
         </FormItem>
       )}
       <FormItem top="Запрет выбора прошлых дат">
@@ -119,6 +151,9 @@ const Example = () => {
             showNeighboringMonth={showNeighboringMonth}
             size={size}
             listenDayChangesForUpdate={listenDayChangesForUpdate}
+            DoneButton={({ ...doneButtonProps }) => (
+              <Button {...doneButtonProps} mode={doneButtonMode} />
+            )}
           />
         </LocaleProvider>
       </FormItem>
