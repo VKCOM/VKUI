@@ -151,9 +151,7 @@ const Example = () => {
             showNeighboringMonth={showNeighboringMonth}
             size={size}
             listenDayChangesForUpdate={listenDayChangesForUpdate}
-            DoneButton={(doneButtonProps) => (
-              <Button {...doneButtonProps} mode={doneButtonMode} />
-            )}
+            DoneButton={(doneButtonProps) => <Button {...doneButtonProps} mode={doneButtonMode} />}
           />
         </LocaleProvider>
       </FormItem>
