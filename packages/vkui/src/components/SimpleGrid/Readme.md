@@ -139,7 +139,7 @@ const Example = () => {
         <FormItem top="align">
           <Select
             value={align}
-            onChange={(newValue) => setAlign(newValue || 'stretch')}
+            onChange={(_, newValue) => setAlign(newValue || 'stretch')}
             placeholder="Не выбрано"
             options={[
               { label: 'start', value: 'start' },
@@ -156,17 +156,29 @@ const Example = () => {
         </Checkbox>
         {!complexGap && (
           <FormItem top="gap">
-            <Select value={gap} onChange={setGap} options={GapSelectValues} />
+            <Select
+              value={gap}
+              onChange={(_, newValue) => setGap(newValue)}
+              options={GapSelectValues}
+            />
           </FormItem>
         )}
         {complexGap && (
           <FormItem top="row gap">
-            <Select value={rowGap} onChange={setRowGap} options={GapSelectValues} />
+            <Select
+              value={rowGap}
+              onChange={(_, newValue) => setRowGap(newValue)}
+              options={GapSelectValues}
+            />
           </FormItem>
         )}
         {complexGap && (
           <FormItem top="column gap">
-            <Select value={columnGap} onChange={setColumnGap} options={GapSelectValues} />
+            <Select
+              value={columnGap}
+              onChange={(_, newValue) => setColumnGap(newValue)}
+              options={GapSelectValues}
+            />
           </FormItem>
         )}
       </div>

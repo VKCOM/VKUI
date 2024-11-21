@@ -260,3 +260,54 @@ export const initializeBrowserGesturePreventionEffect = (window: Window): VoidFu
     window.removeEventListener('touchmove', handleWindowTouchMove, options);
   };
 };
+
+const nonTextInputTypes = { button: true, submit: true, reset: true, color: true, file: true, image: true, checkbox: true, radio: true }; // prettier-ignore
+
+export const isHTMLContentEditableElement = (
+  el: Element | null,
+): el is HTMLInputElement | HTMLTextAreaElement | HTMLElement => {
+  if (el === null) {
+    return false;
+  }
+
+  if (el.tagName === 'INPUT') {
+    // @ts-expect-error: TS2339 за счёт `tagName` удовлетворяемся, что это `HTMLInputElement`
+    return !nonTextInputTypes[el.type]; // prettier-ignore
+  }
+
+  return (
+    el.tagName === 'TEXTAREA' ||
+    // eslint-disable-next-line no-restricted-properties
+    el.closest('[contenteditable=true]') !== null
+  );
+};
+
+export type VisualViewport = {
+  offsetTop: number;
+  offsetLeft: number;
+  width: number;
+  height: number;
+};
+
+/**
+ * Фоллбек `visualViewport` для **Safari 12**.
+ */
+export function getVisualViewport(win: Window): VisualViewport {
+  const result: VisualViewport = { offsetTop: 0, offsetLeft: 0, width: 0, height: 0 };
+  if (win.visualViewport) {
+    const { offsetTop, offsetLeft, width, height } = win.visualViewport;
+    result.offsetTop = Math.round(offsetTop);
+    result.offsetLeft = offsetLeft;
+    result.width = width;
+    result.height = Math.round(height);
+
+    return result;
+  }
+
+  // TODO[Safari@>=13] Удалить фоллбек
+  result.offsetTop = win.pageYOffset;
+  result.offsetLeft = win.pageXOffset;
+  result.width = win.innerWidth; // note: вызывает reflow в отличии от visualViewport
+  result.height = win.innerHeight; // note: вызывает reflow в отличии от visualViewport
+  return result;
+}

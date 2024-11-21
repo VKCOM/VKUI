@@ -20,7 +20,11 @@ describe('NativeSelect', () => {
     const SelectController = () => {
       const [value, setValue] = React.useState<NativeSelectProps['value']>('0');
       return (
-        <NativeSelect data-testid="target" value={value} onChange={setValue}>
+        <NativeSelect
+          data-testid="target"
+          value={value}
+          onChange={(_, newValue) => setValue(newValue)}
+        >
           <option value="0">Mike</option>
           <option value="1">Josh</option>
         </NativeSelect>

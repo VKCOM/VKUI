@@ -1,4 +1,4 @@
-import { usePrevious } from '../../hooks/usePrevious';
+import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
 import type { OnPlacementChange, Placement, PlacementWithAuto } from './types/common';
 
@@ -7,12 +7,18 @@ export function usePlacementChangeCallback(
   resolvedPlacement: Placement,
   onPlacementChange: OnPlacementChange | undefined,
 ): void {
-  const prevPlacement = usePrevious(resolvedPlacement);
+  const prevPlacementRef = React.useRef<Placement | undefined>(undefined);
+  React.useEffect(() => {
+    prevPlacementRef.current = resolvedPlacement;
+  });
 
   useIsomorphicLayoutEffect(() => {
     if (!onPlacementChange) {
       return;
     }
+
+    const prevPlacement = prevPlacementRef.current;
+
     const isInitialPlacementChanged =
       prevPlacement === undefined && initialPlacement !== resolvedPlacement;
     const isResolvedPlacementChanged =
@@ -20,5 +26,5 @@ export function usePlacementChangeCallback(
     if (isInitialPlacementChanged || isResolvedPlacementChanged) {
       onPlacementChange(resolvedPlacement);
     }
-  }, [prevPlacement, initialPlacement, resolvedPlacement, onPlacementChange]);
+  }, [initialPlacement, resolvedPlacement, onPlacementChange]);
 }

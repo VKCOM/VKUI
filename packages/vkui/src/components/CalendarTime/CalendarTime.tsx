@@ -1,5 +1,6 @@
 'use client';
 
+import { type ChangeEvent } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
@@ -69,11 +70,13 @@ export const CalendarTime = ({
     : minutes;
 
   const onHoursChange = React.useCallback(
-    (newValue: SelectProps['value']) => onChange?.(setHours(value, Number(newValue))),
+    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
+      onChange?.(setHours(value, Number(newValue))),
     [onChange, value],
   );
   const onMinutesChange = React.useCallback(
-    (newValue: SelectProps['value']) => onChange?.(setMinutes(value, Number(newValue))),
+    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
+      onChange?.(setMinutes(value, Number(newValue))),
     [onChange, value],
   );
 

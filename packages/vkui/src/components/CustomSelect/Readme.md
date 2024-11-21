@@ -83,7 +83,8 @@ const Example = () => {
             value={selectType}
             placeholder="Не задан"
             options={selectTypes}
-            onChange={(newType) => setSelectType(newType)}
+            allowClearButton
+            onChange={(_, newType) => setSelectType(newType)}
             renderOption={({ option, ...restProps }) => (
               <CustomSelectOption {...restProps} description={`"${option.value}"`} />
             )}
@@ -180,7 +181,7 @@ const CustomSearchLogicSelect = ({ id }) => {
     return options;
   };
 
-  const onCustomSearchChange = (newValue) => {
+  const onCustomSearchChange = (_, newValue) => {
     if (newValue === '0') {
       setNewUsers([...newUsers, { label: query, value: query }]);
       setValue(query);
