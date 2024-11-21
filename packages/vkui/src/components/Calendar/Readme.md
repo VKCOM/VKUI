@@ -151,7 +151,7 @@ const Example = () => {
             showNeighboringMonth={showNeighboringMonth}
             size={size}
             listenDayChangesForUpdate={listenDayChangesForUpdate}
-            DoneButton={({ ...doneButtonProps }) => (
+            DoneButton={(doneButtonProps) => (
               <Button {...doneButtonProps} mode={doneButtonMode} />
             )}
           />
