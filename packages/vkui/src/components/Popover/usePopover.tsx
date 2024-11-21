@@ -20,7 +20,9 @@ import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { type PopoverProps } from './Popover';
 import styles from './Popover.module.css';
 
-export type UsePopoverProps = Omit<PopoverProps, 'children'>;
+export type UsePopoverProps = Omit<PopoverProps, 'children'> & {
+  [key: `data-${string}`]: string | number | boolean;
+};
 
 export type UsePopoverResult<ElementType extends HTMLElement = HTMLElement> = {
   anchorRef: Ref<ElementType>;
