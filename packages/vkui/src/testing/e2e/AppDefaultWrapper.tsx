@@ -1,5 +1,6 @@
-import { type AppRootProps } from '../../components/AppRoot/AppRoot';
-import { AppRootDefault } from './AppRootDefault';
+import { classNames } from '@vkontakte/vkjs';
+import { AppRoot, type AppRootProps } from '../../components/AppRoot/AppRoot';
+import { TEST_CLASS_NAMES } from './constants';
 
 export type AppWrapperProps = AppRootProps & {
   /* Убираем декоративные элементы вокруг children: border, background */
@@ -8,11 +9,12 @@ export type AppWrapperProps = AppRootProps & {
 
 export const AppDefaultWrapper = ({
   mode = 'embedded',
+  className,
   children,
   disableDecorations,
   ...restProps
 }: AppWrapperProps) => (
-  <AppRootDefault mode={mode} {...restProps}>
+  <AppRoot mode={mode} className={classNames(TEST_CLASS_NAMES.APP_ROOT, className)} {...restProps}>
     <div
       style={
         disableDecorations
@@ -25,5 +27,5 @@ export const AppDefaultWrapper = ({
     >
       {children}
     </div>
-  </AppRootDefault>
+  </AppRoot>
 );

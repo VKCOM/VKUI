@@ -1,6 +1,6 @@
 import { Icon20CopyOutline, Icon20TrashSimpleOutline } from '@vkontakte/icons';
 import {
-  AppRootDefault,
+  AppDefaultWrapper,
   ComponentPlayground,
   type ComponentPlaygroundProps,
 } from '@vkui-e2e/playground-helpers';
@@ -74,7 +74,8 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
 
 export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProps) => {
   return (
-    <AppRootDefault
+    <AppDefaultWrapper
+      disableDecorations
       mode="embedded"
       style={{
         height: 'auto',
@@ -89,6 +90,6 @@ export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProp
           </Div>
         </AdaptivityProvider>
       </ColorSchemeProvider>
-    </AppRootDefault>
+    </AppDefaultWrapper>
   );
 };
