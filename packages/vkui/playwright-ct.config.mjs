@@ -10,7 +10,6 @@ import dotenv from 'dotenv';
 import postcssCustomMedia from 'postcss-custom-media';
 import postcssGapProperties from 'postcss-gap-properties';
 import cssImport from 'postcss-import';
-import postcssLogical from 'postcss-logical';
 // import * as tsconfig from './tsconfig.json' with { type: 'json' };
 
 const rootDirectory = path.join(import.meta.dirname, '../..');
@@ -131,11 +130,6 @@ export default defineConfig({
 
             // Обработка CustomMedia
             postcssCustomMedia(),
-
-            // Обработка CSS Logical
-            //
-            // https://caniuse.com/css-logical-props
-            postcssLogical(),
 
             // TODO [>=8]: Проверить браузерную поддержку
             //
