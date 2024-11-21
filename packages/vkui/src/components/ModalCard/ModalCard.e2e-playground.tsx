@@ -16,7 +16,7 @@ import { UsersStack } from '../UsersStack/UsersStack';
 import { ModalCard, type ModalCardProps } from './ModalCard';
 
 const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
-  <AppDefaultWrapper scroll="contain" {...restProps}>
+  <AppDefaultWrapper scroll="contain" disablePortal {...restProps}>
     {children}
   </AppDefaultWrapper>
 );

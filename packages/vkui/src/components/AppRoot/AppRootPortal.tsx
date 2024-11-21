@@ -2,62 +2,103 @@
 
 import * as React from 'react';
 import { useColorScheme } from '../../hooks/useColorScheme';
-import { useIsClient } from '../../hooks/useIsClient';
 import { createPortal } from '../../lib/createPortal';
+import { getDocumentBody } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasChildren } from '../../types';
 import { ColorSchemeProvider } from '../ColorSchemeProvider/ColorSchemeProvider';
 import { AppRootContext, type AppRootContextInterface } from './AppRootContext';
+import { AppRootStyleContainer } from './AppRootStyleContainer';
 
 export interface AppRootPortalProps extends HasChildren {
   /**
    * - При передаче `true` будет использовать `portalRoot` из контекста `AppRoot`.
    * - При передаче элемента будут игнорироваться `portalRoot` и `disablePortal` из контекста `AppRoot`.
+   * - При передаче `SplitLayout` будет использоваться контейнер внутри `SplitLayout`, сразу после контента приложения.
+   *   Если контейнера `SplitLayout` в приложении нет, то будет использован глобальный `portalRoot`, чаще всего
+   *   это последний дочерний элемент `body`.
    */
-  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null;
+  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null | 'SplitLayout';
+  className?: string;
 }
 
-export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): React.ReactNode => {
-  const { portalRoot, mode, disablePortal } = React.useContext(AppRootContext);
+export const AppRootPortal = ({
+  children,
+  usePortal,
+  className,
+}: AppRootPortalProps): React.ReactNode => {
+  const {
+    setPortalRoot,
+    appRoot,
+    mode,
+    disablePortal: disableCreatePortalInGlobalPortalRoot,
+  } = React.useContext(AppRootContext);
   const colorScheme = useColorScheme();
 
-  const isClient = useIsClient();
-  if (!isClient) {
-    return null;
-  }
-
-  const portalContainer = resolvePortalContainer(usePortal, portalRoot.current);
-  if (!portalContainer || shouldDisablePortal(usePortal, mode, Boolean(disablePortal))) {
-    return <React.Fragment>{children}</React.Fragment>;
-  }
-
-  return createPortal(
-    <ColorSchemeProvider value={colorScheme}>{children}</ColorSchemeProvider>,
-    portalContainer,
+  const canUsePortal = shouldUsePortal(
+    usePortal,
+    mode,
+    Boolean(disableCreatePortalInGlobalPortalRoot),
   );
+  const portalContainer = usePortalContainer(usePortal);
+
+  useIsomorphicLayoutEffect(
+    // Создаём контейнер для портала по запросу один раз
+    // и пока приложение не размонтируется.
+    // Удаление созданной ноды происходит в AppRoot
+    function initializePortalRootIfNeeded() {
+      const shouldCreatePortalRoot = canUsePortal && portalContainer === null;
+      if (shouldCreatePortalRoot) {
+        const documentBody = getDocumentBody(appRoot.current);
+        const portal = documentBody.ownerDocument.createElement('div');
+        documentBody.appendChild(portal);
+
+        setPortalRoot(portal);
+      }
+
+      // Note:
+      // Очистка и удаление `portalRoot` делегируется `AppRoot`, т.к. экземпляров `AppRootPortal` может быть несколько и размонтирование одного из них удалит `portalRoot`, что сломает работу других экземпляров.
+    },
+    [canUsePortal, appRoot, portalContainer, setPortalRoot],
+  );
+
+  if (canUsePortal && portalContainer) {
+    return createPortal(
+      <ColorSchemeProvider value={colorScheme}>
+        <AppRootStyleContainer className={className}>{children}</AppRootStyleContainer>
+      </ColorSchemeProvider>,
+      portalContainer,
+    );
+  }
+
+  return children;
 };
 
-function shouldDisablePortal(
+function shouldUsePortal(
   usePortal: AppRootPortalProps['usePortal'],
   mode: AppRootContextInterface['mode'],
-  disablePortal: boolean,
+  disableCreatePortalInGlobalPortalRoot: boolean,
 ) {
-  if (usePortal !== undefined) {
-    if (typeof usePortal !== 'boolean') {
-      return false;
-    }
-    return disablePortal || usePortal !== true;
+  if (usePortal === undefined) {
+    return disableCreatePortalInGlobalPortalRoot === false && mode !== 'full';
   }
-  // fallback
-  return disablePortal || mode === 'full';
+
+  if (typeof usePortal !== 'boolean') {
+    return true;
+  }
+
+  return disableCreatePortalInGlobalPortalRoot === false && usePortal === true;
 }
 
-function resolvePortalContainer<PortalRootFromContext extends HTMLElement | null | undefined>(
-  usePortal: AppRootPortalProps['usePortal'],
-  portalRootFromContext: PortalRootFromContext,
-) {
-  if (usePortal === true || !usePortal) {
-    return portalRootFromContext ? portalRootFromContext : null;
+function usePortalContainer(usePortal: AppRootPortalProps['usePortal']): HTMLElement | null {
+  const { portalRoot, popoutModalRoot } = React.useContext(AppRootContext);
+  if (typeof usePortal === 'boolean' || usePortal === undefined) {
+    return portalRoot;
+  }
+
+  if (usePortal === 'SplitLayout') {
+    return popoutModalRoot.current || portalRoot;
   }
 
   return isRefObject(usePortal) ? usePortal.current : usePortal;

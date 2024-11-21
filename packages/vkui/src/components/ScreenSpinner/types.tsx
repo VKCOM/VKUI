@@ -1,4 +1,5 @@
 import type * as React from 'react';
+import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
 import type { SpinnerProps } from '../Spinner/Spinner';
 
 export type ScreenSpinnerProps = Omit<SpinnerProps, 'size'> & {
@@ -13,4 +14,5 @@ export type ScreenSpinnerProps = Omit<SpinnerProps, 'size'> & {
    */
   label?: React.ReactNode;
   cancelLabel?: string;
+  usePortal?: AppRootPortalProps['usePortal'];
 };

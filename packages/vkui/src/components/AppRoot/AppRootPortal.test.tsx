@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
+import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { AppRoot, type AppRootProps } from './AppRoot';
 import { AppRootPortal, type AppRootPortalProps } from './AppRootPortal';
 
@@ -23,6 +24,10 @@ function TestComponent({
 }
 
 describe('AppRootPortal', () => {
+  afterEach(function cleanupBodyFromAppendedDivsByPortal() {
+    document.body.innerHTML = '';
+  });
+
   it('does not use portal by default in full mode', () => {
     render(<TestComponent appRootProps={{ mode: 'full' }} />);
 
@@ -57,6 +62,37 @@ describe('AppRootPortal', () => {
     render(<TestComponent appRootProps={{ mode: 'full' }} usePortal />);
 
     expect(screen.getByTestId('portal-root').childElementCount).toBe(1);
+  });
+
+  it('renders portal in SplitLayout if usePortal="SplitLayout"', () => {
+    render(
+      <AppRoot>
+        <SplitLayout data-testid="split-layout-id">Split layout content</SplitLayout>
+        <div data-testid="portal-root" />
+        <AppRootPortal usePortal="SplitLayout">
+          <div>Portal content</div>
+        </AppRootPortal>
+      </AppRoot>,
+    );
+
+    expect(screen.getByTestId('portal-root').childElementCount).toBe(0);
+    // портал отрендерился внутри host элемента, после контента SplitLayout
+    expect(screen.getByTestId('split-layout-id').parentElement?.childElementCount).toBe(2);
+  });
+
+  it('renders portal as last child of body if usePortal="SplitLayout" and there is no SplitLayout component', () => {
+    render(
+      <AppRoot>
+        <AppRootPortal usePortal="SplitLayout">
+          <div>Portal content</div>
+        </AppRootPortal>
+        <div data-testid="portal-root" />
+      </AppRoot>,
+    );
+
+    expect(screen.getByTestId('portal-root').childElementCount).toBe(0);
+    // портал отрендерился как последний элемент body
+    expect(document.body.lastChild!.textContent).toBe('Portal content');
   });
 
   it('uses portal passed via usePortal prop', () => {

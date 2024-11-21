@@ -6,7 +6,7 @@ import { DOMContext } from '@vkui/lib/dom';
 import { useLoadThemeTokens } from '../../lib/theme/useLoadThemeTokens';
 import './Frame.css';
 
-const FrameDomProvider = ({ platform, colorSchemeOptions, themeName, children }) => {
+const FrameDomProvider = ({ colorSchemeOptions, themeName, children }) => {
   const [ready, setReady] = React.useState(false);
   const frame = useFrame();
 
@@ -29,7 +29,9 @@ const FrameDomProvider = ({ platform, colorSchemeOptions, themeName, children })
     hotIconChange.observe(sprite, { characterData: true, childList: true });
     hotObservers.push(hotIconChange);
 
-    frame.document.querySelector('.frame-content').setAttribute('id', 'root');
+    const frameContent = frame.document.querySelector('.frame-content');
+    frameContent.setAttribute('id', 'root');
+    frameContent.classList.add('vkui__root');
 
     // Пихаем в iFrame vkui стили
     const frameAssets = document.createDocumentFragment();
@@ -62,7 +64,7 @@ const FrameDomProvider = ({ platform, colorSchemeOptions, themeName, children })
 
 const initialFrameContent = `
 <!DOCTYPE html>
-<html>
+<html class="vkui">
   <head>
     <style>
       #root {

@@ -1,13 +1,19 @@
 import * as React from 'react';
+import { noop } from '@vkontakte/vkjs';
+import { type AppRootUserSelectMode, type SafeAreaInsets } from './types';
 
 export interface AppRootContextInterface {
   appRoot: React.RefObject<HTMLElement>;
-  portalRoot: React.RefObject<HTMLElement>;
+  portalRoot: HTMLElement | null;
+  popoutModalRoot: React.MutableRefObject<HTMLDivElement | null>;
+  setPortalRoot: (element: HTMLElement) => void;
+  safeAreaInsets?: SafeAreaInsets;
   embedded: boolean;
   mode: 'partial' | 'embedded' | 'full';
   keyboardInput: boolean;
   disablePortal: boolean;
   layout?: 'card' | 'plain';
+  userSelectMode?: AppRootUserSelectMode;
 }
 
 /**
@@ -18,7 +24,10 @@ export interface AppRootContextInterface {
 export const DEFAULT_APP_ROOT_CONTEXT_VALUE: AppRootContextInterface = {
   appRoot: React.createRef(),
   mode: 'full',
-  portalRoot: React.createRef(),
+  portalRoot: null,
+  popoutModalRoot: React.createRef(),
+  setPortalRoot: noop,
+  safeAreaInsets: undefined,
   embedded: false,
   keyboardInput: false,
   disablePortal: false,

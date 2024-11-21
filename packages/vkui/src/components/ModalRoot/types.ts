@@ -1,5 +1,6 @@
 import type { DOMContextInterface } from '../../lib/dom';
 import type { HasPlatform } from '../../types';
+import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
 import type { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 
 export type ModalType = 'page' | 'card';
@@ -105,6 +106,8 @@ export interface ModalRootProps {
    * Отключает фокус на контейнер диалогового окна при открытии.
    */
   noFocusToDialog?: boolean;
+
+  usePortal?: AppRootPortalProps['usePortal'];
 }
 
 export interface ModalRootWithDOMProps extends HasPlatform, ModalRootProps, DOMContextInterface {
