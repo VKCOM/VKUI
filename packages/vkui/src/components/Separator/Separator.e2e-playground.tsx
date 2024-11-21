@@ -1,8 +1,12 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { type SpacingSize, spacingSizeClassNames } from '../../lib/spacings/sizes';
+import { type CSSCustomProperties } from '../../types';
 import { Separator, type SeparatorProps } from './Separator';
 
 const sizes = Object.keys(spacingSizeClassNames) as SpacingSize[];
+const divStyle: CSSCustomProperties = {
+  '--my-custom-var': '20px',
+};
 
 export const SeparatorPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -33,10 +37,14 @@ export const SeparatorPlayground = (props: ComponentPlaygroundProps) => {
           align: ['start', 'center', 'end'],
           size: ['3xl'],
         },
+        {
+          direction: ['horizontal', 'vertical'],
+          size: ['--my-custom-var'],
+        },
       ]}
     >
       {(props: SeparatorProps) => (
-        <div style={props.direction === 'vertical' ? { display: 'flex' } : undefined}>
+        <div style={props.direction === 'vertical' ? { display: 'flex', ...divStyle } : divStyle}>
           First Item
           <Separator {...props} />
           Second Item
