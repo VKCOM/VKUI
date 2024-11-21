@@ -16,6 +16,8 @@ export interface AppRootPortalProps extends HasChildren {
    * - При передаче `true` будет использовать `portalRoot` из контекста `AppRoot`.
    * - При передаче элемента будут игнорироваться `portalRoot` и `disablePortal` из контекста `AppRoot`.
    * - При передаче `SplitLayout` будет использоваться контейнер внутри `SplitLayout`, сразу после контента приложения.
+   *   Если контейнера `SplitLayout` в приложении нет, то будет использован глобальный `portalRoot`, чаще всего
+   *   это последний дочерний элемент `body`.
    */
   usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null | 'SplitLayout';
   className?: string;
@@ -56,7 +58,7 @@ export const AppRootPortal = ({
       }
 
       // Note:
-      // Очистка и удаление `portalRoot` делегируется `AppRoot`, т.к. экземпляров `AppRootPortal` может быть несколько и размонтирования одного из них удалит `portalRoot`, что сломает работу других экземпляров.
+      // Очистка и удаление `portalRoot` делегируется `AppRoot`, т.к. экземпляров `AppRootPortal` может быть несколько и размонтирование одного из них удалит `portalRoot`, что сломает работу других экземпляров.
     },
     [canUsePortal, appRoot, portalContainer, setPortalRoot],
   );
