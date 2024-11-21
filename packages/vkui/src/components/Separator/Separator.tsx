@@ -1,10 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import {
-  isSpacingSizeCustom,
-  isSpacingSizeMap,
-  spacingSizeClassNames,
-  type SpacingSizeProp,
-} from '../../lib/spacings/sizes';
+import { resolveSpacingSize, type SpacingSizeProp } from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Separator.module.css';
@@ -63,24 +58,28 @@ export const Separator = ({
   style,
   size,
   ...restProps
-}: SeparatorProps): React.ReactNode => (
-  <RootComponent
-    {...restProps}
-    baseClassName={classNames(
-      padding && styles.padded,
-      appearanceClassNames[appearance],
-      isSpacingSizeMap(size) && spacingSizeClassNames[size],
-      directionClassNames[direction],
-      size !== undefined && styles.sized,
-      align !== 'center' && alignClassNames[align],
-    )}
-    style={{
-      ...(isSpacingSizeCustom(size) && {
-        [CUSTOM_CSS_TOKEN_FOR_USER_SIZE]: typeof size === 'number' ? `${size}px` : `var(${size})`,
-      }),
-      ...style,
-    }}
-  >
-    <hr className={styles.in} />
-  </RootComponent>
-);
+}: SeparatorProps): React.ReactNode => {
+  const [spacingSizeClassName, spacingSizeStyle] = resolveSpacingSize(
+    CUSTOM_CSS_TOKEN_FOR_USER_SIZE,
+    size,
+  );
+  return (
+    <RootComponent
+      {...restProps}
+      baseClassName={classNames(
+        padding && styles.padded,
+        appearanceClassNames[appearance],
+        directionClassNames[direction],
+        size !== undefined && styles.sized,
+        align !== 'center' && alignClassNames[align],
+        spacingSizeClassName,
+      )}
+      style={{
+        ...spacingSizeStyle,
+        ...style,
+      }}
+    >
+      <hr className={styles.in} />
+    </RootComponent>
+  );
+};

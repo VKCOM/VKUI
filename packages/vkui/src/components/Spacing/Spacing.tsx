@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import {
-  isSpacingSizeCustom,
-  isSpacingSizeMap,
-  spacingSizeClassNames,
-  type SpacingSizeProp,
-} from '../../lib/spacings/sizes';
+import { resolveSpacingSize, type SpacingSizeProp } from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Spacing.module.css';
@@ -30,16 +25,18 @@ export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
  * @see https://vkcom.github.io/VKUI/#/Spacing
  */
 export const Spacing = ({ size = 'm', style, ...restProps }: SpacingProps): React.ReactNode => {
+  const [spacingSizeClassName, spacingSizeStyle] = resolveSpacingSize(
+    CUSTOM_CSS_TOKEN_FOR_USER_GAP,
+    size,
+  );
   return (
     <RootComponent
       {...restProps}
       style={{
-        ...(isSpacingSizeCustom(size) && {
-          [CUSTOM_CSS_TOKEN_FOR_USER_GAP]: typeof size === 'number' ? `${size}px` : `var(${size})`,
-        }),
+        ...spacingSizeStyle,
         ...style,
       }}
-      baseClassName={classNames(styles.host, isSpacingSizeMap(size) && spacingSizeClassNames[size])}
+      baseClassName={classNames(styles.host, spacingSizeClassName)}
     />
   );
 };

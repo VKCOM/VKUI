@@ -1,4 +1,4 @@
-import type { LiteralUnion } from '../../types';
+import type { CSSCustomProperties, LiteralUnion } from '../../types';
 import styles from '../../styles/spacings.module.css';
 
 export type SpacingSize = '2xs' | 'xs' | 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
@@ -17,10 +17,17 @@ export const spacingSizeClassNames: Record<SpacingSize, string> = {
 
 export type SpacingSizeProp = LiteralUnion<SpacingSize | `--${string}`, number>;
 
-export function isSpacingSizeMap(size?: SpacingSizeProp): size is SpacingSize {
-  return typeof size === 'string' && !size.startsWith('--');
-}
+export function resolveSpacingSize(
+  cssVariable: string,
+  size?: SpacingSizeProp,
+): [string | undefined, CSSCustomProperties | undefined] {
+  if (typeof size === 'string') {
+    if (size.startsWith('--')) {
+      return [undefined, { [cssVariable]: `var(${size})` }];
+    } else {
+      return [spacingSizeClassNames[size as SpacingSize], undefined];
+    }
+  }
 
-export function isSpacingSizeCustom(size?: SpacingSizeProp): size is number | `--${string}` {
-  return typeof size === 'number' || (typeof size === 'string' && size.startsWith('--'));
+  return [undefined, typeof size === 'number' ? { [cssVariable]: `${size}px` } : undefined];
 }
