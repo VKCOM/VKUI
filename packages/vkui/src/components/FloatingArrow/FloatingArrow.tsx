@@ -10,7 +10,7 @@ export type Coords = {
   y?: number;
 };
 
-const placementClassNames = {
+export const placementClassNames = {
   right: styles.placementRight,
   bottom: styles.placementBottom,
   left: styles.placementLeft,
@@ -35,7 +35,9 @@ export interface FloatingArrowProps
 }
 
 /**
- * @private
+ * Иконка-стрелка для всплывающих окон.
+ *
+ * @since 7.0.0
  */
 export const FloatingArrow = ({
   offset,
@@ -44,6 +46,8 @@ export const FloatingArrow = ({
   iconStyle,
   iconClassName,
   placement = 'bottom',
+  className,
+  style,
   getRootRef,
   Icon = DefaultIcon,
   ...restProps
@@ -58,8 +62,12 @@ export const FloatingArrow = ({
   return (
     <div
       ref={getRootRef}
-      style={arrowStyles}
-      className={classNames(styles.host, arrowPlacement && placementClassNames[arrowPlacement])}
+      style={style ? { ...arrowStyles, ...style } : arrowStyles}
+      className={classNames(
+        className,
+        styles.host,
+        arrowPlacement && placementClassNames[arrowPlacement],
+      )}
       {...restProps}
     >
       <Icon className={classNames(styles.in, iconClassName)} style={iconStyle} />
