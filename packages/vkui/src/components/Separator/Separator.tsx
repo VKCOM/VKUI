@@ -74,10 +74,14 @@ export const Separator = ({
         align !== 'center' && alignClassNames[align],
         spacingSizeClassName,
       )}
-      style={{
-        ...spacingSizeStyle,
-        ...style,
-      }}
+      style={
+        spacingSizeStyle
+          ? {
+              ...spacingSizeStyle,
+              ...style,
+            }
+          : style
+      }
     >
       <hr className={styles.in} />
     </RootComponent>

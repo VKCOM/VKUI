@@ -32,10 +32,14 @@ export const Spacing = ({ size = 'm', style, ...restProps }: SpacingProps): Reac
   return (
     <RootComponent
       {...restProps}
-      style={{
-        ...spacingSizeStyle,
-        ...style,
-      }}
+      style={
+        spacingSizeStyle
+          ? {
+              ...spacingSizeStyle,
+              ...style,
+            }
+          : style
+      }
       baseClassName={classNames(styles.host, spacingSizeClassName)}
     />
   );
