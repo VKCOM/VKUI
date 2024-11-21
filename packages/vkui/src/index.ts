@@ -356,6 +356,14 @@ export type { SkeletonProps } from './components/Skeleton/Skeleton';
  */
 export { Div } from './components/Div/Div';
 export type { DivProps } from './components/Div/Div';
+export {
+  DEFAULT_ARROW_HEIGHT,
+  DEFAULT_ARROW_WIDTH,
+  DEFAULT_ARROW_PADDING,
+  DefaultIcon,
+} from './components/FloatingArrow/DefaultIcon';
+export { FloatingArrow } from './components/FloatingArrow/FloatingArrow';
+export type { FloatingArrowProps } from './components/FloatingArrow/FloatingArrow';
 export { Touch } from './components/Touch/Touch';
 export type { TouchProps, CustomTouchEvent } from './components/Touch/Touch';
 export { PanelSpinner } from './components/PanelSpinner/PanelSpinner';
