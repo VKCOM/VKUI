@@ -68,7 +68,11 @@ export const EpicPlayground = (props: ComponentPlaygroundProps) => (
       >
         <View id="feed" activePanel="feed">
           <Panel id="feed">
-            <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Новости</PanelHeader>
+            <PanelHeader
+              before={<PanelHeaderBack onClick={noop} hideLabelOnIOS hideLabelOnVKCom />}
+            >
+              Новости
+            </PanelHeader>
             <Group>
               <Placeholder icon={<Icon56NewsfeedOutline width={56} height={56} />} />
             </Group>

@@ -84,6 +84,9 @@ export const PanelHeaderButton = ({
       warn(COMMON_WARNINGS.a11y[restProps.href ? 'link-name' : 'button-name'], 'error');
     }
   }
+  const elements = [label, children].filter((item) => !!item);
+
+  const onlyPrimitive = elements.length === 1 && isPrimitiveReactNode(elements[0]);
 
   return (
     <Tappable
@@ -97,7 +100,7 @@ export const PanelHeaderButton = ({
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        isPrimitive && styles.primitive,
+        onlyPrimitive && styles.primitive,
         !isPrimitive && !isPrimitiveLabel && styles.notPrimitive,
         className,
       )}

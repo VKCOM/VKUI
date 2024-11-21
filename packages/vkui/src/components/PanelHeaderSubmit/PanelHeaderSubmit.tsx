@@ -9,24 +9,25 @@ import {
 } from '../PanelHeaderButton/PanelHeaderButton';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 
+export type PanelHeaderSubmitProps = Omit<PanelHeaderButtonProps, 'children'>;
+
 /**
  * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
  */
 export const PanelHeaderSubmit = ({
-  children = 'Готово',
+  label = 'Готово',
   ...restProps
-}: PanelHeaderButtonProps): React.ReactNode => {
+}: PanelHeaderSubmitProps): React.ReactNode => {
   const platform = usePlatform();
 
   return (
-    <PanelHeaderButton primary {...restProps}>
-      {platform === 'ios' ? (
-        children
-      ) : (
-        <>
-          <VisuallyHidden>{children}</VisuallyHidden>
-          <AdaptiveIconRenderer IconCompact={Icon24DoneOutline} IconRegular={Icon28DoneOutline} />
-        </>
+    <PanelHeaderButton
+      primary
+      label={platform === 'ios' ? label : label && <VisuallyHidden>{label}</VisuallyHidden>}
+      {...restProps}
+    >
+      {platform !== 'ios' && (
+        <AdaptiveIconRenderer IconCompact={Icon24DoneOutline} IconRegular={Icon28DoneOutline} />
       )}
     </PanelHeaderButton>
   );
