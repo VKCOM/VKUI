@@ -1,5 +1,4 @@
 import type * as React from 'react';
-import { getParentElement } from '../components/AppRoot/helpers';
 import { type AppRootMode } from '../components/AppRoot/types';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
@@ -18,7 +17,7 @@ export function useSyncHTMLWithBaseVKUIClasses({
     }
 
     const htmlElement = appRootRef.current?.ownerDocument.documentElement;
-    const parentElement = getParentElement(appRootRef.current);
+    const parentElement = appRootRef.current?.parentElement ?? null;
 
     if (mode === 'full') {
       /* eslint-disable-next-line no-restricted-properties */

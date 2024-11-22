@@ -3,9 +3,8 @@
 import * as React from 'react';
 import { useColorScheme } from '../../hooks/useColorScheme';
 import { createPortal } from '../../lib/createPortal';
-import { getDocumentBody } from '../../lib/dom';
+import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasChildren } from '../../types';
 import { ColorSchemeProvider } from '../ColorSchemeProvider/ColorSchemeProvider';
 import { AppRootContext, type AppRootContextInterface } from './AppRootContext';
@@ -28,12 +27,8 @@ export const AppRootPortal = ({
   usePortal,
   className,
 }: AppRootPortalProps): React.ReactNode => {
-  const {
-    setPortalRoot,
-    appRoot,
-    mode,
-    disablePortal: disableCreatePortalInGlobalPortalRoot,
-  } = React.useContext(AppRootContext);
+  const { mode, disablePortal: disableCreatePortalInGlobalPortalRoot } =
+    React.useContext(AppRootContext);
   const colorScheme = useColorScheme();
 
   const canUsePortal = shouldUsePortal(
@@ -41,27 +36,8 @@ export const AppRootPortal = ({
     mode,
     Boolean(disableCreatePortalInGlobalPortalRoot),
   );
+
   const portalContainer = usePortalContainer(usePortal);
-
-  useIsomorphicLayoutEffect(
-    // Создаём контейнер для портала по запросу один раз
-    // и пока приложение не размонтируется.
-    // Удаление созданной ноды происходит в AppRoot
-    function initializePortalRootIfNeeded() {
-      const shouldCreatePortalRoot = canUsePortal && portalContainer === null;
-      if (shouldCreatePortalRoot) {
-        const documentBody = getDocumentBody(appRoot.current);
-        const portal = documentBody.ownerDocument.createElement('div');
-        documentBody.appendChild(portal);
-
-        setPortalRoot(portal);
-      }
-
-      // Note:
-      // Очистка и удаление `portalRoot` делегируется `AppRoot`, т.к. экземпляров `AppRootPortal` может быть несколько и размонтирование одного из них удалит `portalRoot`, что сломает работу других экземпляров.
-    },
-    [canUsePortal, appRoot, portalContainer, setPortalRoot],
-  );
 
   if (canUsePortal && portalContainer) {
     return createPortal(
@@ -92,7 +68,15 @@ function shouldUsePortal(
 }
 
 function usePortalContainer(usePortal: AppRootPortalProps['usePortal']): HTMLElement | null {
-  const { portalRoot, popoutModalRoot } = React.useContext(AppRootContext);
+  const { portalRoot: portalRootFromContext, popoutModalRoot } = React.useContext(AppRootContext);
+
+  const { document } = useDOM();
+
+  // если portalRoot не передали, то мы используем body
+  // мы можем использовать body как портал,
+  // так как все стили передаются вместе с AppRootStyleContainer
+  const portalRoot = portalRootFromContext || document?.body || null;
+
   if (typeof usePortal === 'boolean' || usePortal === undefined) {
     return portalRoot;
   }

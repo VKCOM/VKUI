@@ -2,9 +2,6 @@ import { isRefObject } from '../../lib/isRefObject';
 import type { AppRootUserSelectMode, SafeAreaInsets } from './types';
 import styles from './AppRoot.module.css';
 
-export const getParentElement = (el: HTMLElement | null): HTMLElement | null =>
-  el ? el.parentElement : null;
-
 export const extractPortalRootByProp = (
   portalRootProp: HTMLElement | React.RefObject<HTMLElement>,
 ): HTMLElement | null => (isRefObject(portalRootProp) ? portalRootProp.current : portalRootProp);

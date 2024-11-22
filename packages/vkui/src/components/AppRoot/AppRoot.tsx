@@ -103,11 +103,11 @@ export const AppRoot = ({
   useIsomorphicLayoutEffect(
     function syncPortalRootWithPortalRootProp() {
       const portalByProp = portalRootProp ? extractPortalRootByProp(portalRootProp) : null;
-      if (portalRootProp !== undefined) {
+      if (portalRootProp !== undefined && portalRoot !== portalByProp) {
         setPortalRoot(portalByProp);
       }
     },
-    [portalRootProp],
+    [portalRoot, portalRootProp],
   );
 
   useIsomorphicLayoutEffect(
@@ -148,7 +148,6 @@ export const AppRoot = ({
       appRoot: appRootRef,
       portalRoot,
       popoutModalRoot: popoutModalContainerRef,
-      setPortalRoot,
       safeAreaInsets,
       embedded: mode === 'embedded',
       mode,
