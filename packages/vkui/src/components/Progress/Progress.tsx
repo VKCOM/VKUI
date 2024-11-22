@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Progress.module.css';
@@ -53,7 +54,7 @@ export const Progress = ({
     <RootComponent
       aria-valuenow={value}
       title={title}
-      style={{ ...styleHeight, ...style }}
+      style={mergeStyle(styleHeight, style)}
       {...restProps}
       role="progressbar"
       aria-valuemin={PROGRESS_MIN_VALUE}
