@@ -26,7 +26,6 @@ const stylesSize = {
 };
 
 const textAlignClassNames = {
-  start: styles.textAlignStart,
   center: styles.textAlignCenter,
   end: styles.textAlignEnd,
 };
@@ -121,7 +120,12 @@ export const HorizontalCell = ({
       <Tappable className={styles.body} getRootRef={getRef} {...restProps}>
         {hasReactNode(children) && <div className={styles.image}>{children}</div>}
         {hasTypography && (
-          <div className={classNames(styles.content, textAlignClassNames[textAlign])}>
+          <div
+            className={classNames(
+              styles.content,
+              textAlign !== 'start' && textAlignClassNames[textAlign],
+            )}
+          >
             {hasReactNode(title) && <CellTypography size={size}>{title}</CellTypography>}
             {hasReactNode(subtitle) && <Footnote className={styles.subtitle}>{subtitle}</Footnote>}
             {hasReactNode(extraSubtitle) && (
