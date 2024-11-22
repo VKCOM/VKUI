@@ -1,6 +1,13 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import type { HasRef, HasRootRef, HTMLAttributesWithRootRef, LiteralUnion } from '../../types';
+import { mergeStyle } from '../../helpers/mergeStyle';
+import type {
+  CSSCustomProperties,
+  HasRef,
+  HasRootRef,
+  HTMLAttributesWithRootRef,
+  LiteralUnion,
+} from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
@@ -75,13 +82,14 @@ export const HorizontalCell = ({
 }: HorizontalCellProps): React.ReactNode => {
   const hasTypography =
     hasReactNode(title) || hasReactNode(subtitle) || hasReactNode(extraSubtitle);
+
+  const customProperties: CSSCustomProperties | undefined =
+    typeof size === 'number' ? { [CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH]: `${size}px` } : undefined;
+
   return (
     <div
       ref={getRootRef}
-      style={{
-        ...(typeof size === 'number' && { [CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH]: `${size}px` }),
-        ...style,
-      }}
+      style={mergeStyle(customProperties, style)}
       className={classNames(
         styles.host,
         typeof size === 'string' && stylesSize[size],

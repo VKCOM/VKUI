@@ -1,5 +1,6 @@
 import { Children } from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import {
   calculateGap,
   columnGapClassNames,
@@ -104,7 +105,7 @@ export const Flex: React.FC<FlexProps> & {
         withGaps && styles.withGaps,
         withGaps && getGapsPresets(rowGap, columnGap),
       )}
-      style={withGaps ? { ...getGapsByUser(rowGap, columnGap), ...styleProp } : styleProp}
+      style={mergeStyle(getGapsByUser(rowGap, columnGap), styleProp)}
     >
       {children}
     </RootComponent>

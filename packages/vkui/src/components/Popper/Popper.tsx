@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
 import {
   autoUpdateFloatingElement,
@@ -165,16 +166,16 @@ export const Popper = ({
       {...restProps}
       baseClassName={styles.host}
       getRootRef={handleRootRef}
-      style={{
-        ...convertFloatingDataToReactCSSProperties(
+      style={mergeStyle(
+        convertFloatingDataToReactCSSProperties(
           floatingPositionStrategy,
           floatingDataX,
           floatingDataY,
           sameWidth ? null : undefined,
           middlewareData,
         ),
-        ...styleProp,
-      }}
+        styleProp,
+      )}
     >
       {arrow && (
         <FloatingArrow
