@@ -3,7 +3,7 @@ import * as fsPromises from 'node:fs/promises';
 import * as path from 'node:path';
 import * as url from 'node:url';
 import swc from '@swc/core';
-import pkg from './package.json' assert { type: 'json' };
+import pkg from './package.json' with { type: 'json' };
 
 function removePathFromStart(subPackagePath) {
   return subPackagePath.replace(/^\.\//, '');
