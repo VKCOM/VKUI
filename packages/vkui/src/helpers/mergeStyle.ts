@@ -12,6 +12,10 @@ export const mergeStyle: (
 ) => React.CSSProperties | undefined = mergeObject;
 
 function mergeObject<T extends object>(...objects: Array<T | undefined>): T | undefined {
+  if (objects.length <= 1) {
+    return objects[0];
+  }
+
   let counter = 0;
 
   return objects.reduce<T | undefined>((result, object) => {
