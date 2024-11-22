@@ -34,11 +34,11 @@
 }
 
 .sized {
-  --vkui_internal--side_cell_width: calc(
-    var(--vkui_internal--cell_width) + var(--vkui_internal--side_cell_gap)
-  );
-
   max-inline-size: var(--vkui_internal--cell_width);
+}
+
+.customSize .body {
+  inline-size: var(--vkui_internal--cell_width);
 }
 
 .sizeS {
@@ -46,6 +46,10 @@
     var(--vkui--size_base_padding_horizontal--regular) - var(--vkui--spacing_size_m)
   );
   --vkui_internal--cell_width: 72px;
+}
+
+.noPadding {
+  --vkui_internal--side_cell_gap: 0px;
 }
 
 .image {
@@ -56,7 +60,18 @@
 .content {
   padding-block: 2px 8px;
   padding-inline: 6px;
+}
+
+.textAlignStart {
   text-align: start;
+}
+
+.textAlignCenter {
+  text-align: center;
+}
+
+.textAlignEnd {
+  text-align: end;
 }
 
 .sizeS .image {
@@ -67,7 +82,6 @@
 .sizeS .content {
   padding-block: 2px 8px;
   padding-inline: 4px;
-  text-align: center;
 }
 
 .sizeM {
@@ -94,7 +108,13 @@
 
 .sized:first-child,
 .sized:last-child {
-  max-inline-size: var(--vkui_internal--side_cell_width);
+  max-inline-size: calc(var(--vkui_internal--cell_width) + var(--vkui_internal--side_cell_gap));
+}
+
+.sized:first-child:last-child {
+  max-inline-size: calc(
+    var(--vkui_internal--cell_width) + (2 * (var(--vkui_internal--side_cell_gap)))
+  );
 }
 
 .sized:first-child .body,
