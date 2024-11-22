@@ -110,32 +110,6 @@ export const AppRoot = ({
     [portalRoot, portalRootProp],
   );
 
-  useIsomorphicLayoutEffect(
-    function removePortalRootOnUnmount() {
-      // Контейнер PortalRoot создаётся при первом вызове модалки или
-      // поповера использующего AppRootPortal.
-      // Потом он переиспользуется и не удаляется пока
-      // приложение не размонтируется.
-      // И создаётся только если в приложение не был передан
-      // пользовательский контейнер через свойство portalRootProp
-      // Сделано для поддержки SSR, чтобы при старте приложения
-      // никаких новых нод в DOM не создавалось.
-      const documentBody = getDocumentBody(appRootRef.current);
-      return function cleanup() {
-        if (portalRoot) {
-          const isPortalRootPassedByProps = Boolean(portalRootProp);
-          if (!isPortalRootPassedByProps) {
-            // удаляем portalRoot из дома только если он
-            // был создан в AppRootPortal.
-            // Если он был передан через пропы - удалять нельзя
-            documentBody.removeChild(portalRoot);
-          }
-        }
-      };
-    },
-    [portalRootProp],
-  );
-
   const ScrollController = React.useMemo(
     () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
     [scroll],
