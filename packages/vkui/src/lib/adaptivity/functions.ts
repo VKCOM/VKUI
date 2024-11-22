@@ -1,6 +1,7 @@
 import type { Exact } from '../../types';
+import { getWindow } from '../dom';
 import { type PlatformType } from '../platform';
-import { BREAKPOINTS } from './breakpoints';
+import { BREAKPOINTS, MEDIA_QUERIES } from './breakpoints';
 import {
   type SizeTypeValues,
   VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP,
@@ -136,6 +137,12 @@ export function tryToCheckIsDesktop(
     hasPointer || (viewHeight !== undefined ? viewHeight >= ViewHeight.MEDIUM : false);
 
   return (widthIsLikeDesktop && otherParametersIsLikeDesktop) || IS_VKCOM_CRUTCH;
+}
+
+export function isSmallTablePlus(el: HTMLElement) {
+  const win = getWindow(el);
+  // eslint-disable-next-line no-restricted-properties
+  return win ? win.matchMedia(MEDIA_QUERIES.SMALL_TABLET_PLUS).matches : false;
 }
 
 /**

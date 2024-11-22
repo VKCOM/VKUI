@@ -239,3 +239,8 @@ export const cities = [
     value: '4',
   },
 ];
+
+export const multiplyText = (text: string, count = 1) => {
+  const rest = new Array(count).fill(text.toLocaleLowerCase());
+  return `${text} ${rest.join(' ')}`;
+};

@@ -1,20 +1,13 @@
 import { Icon24Cancel, Icon24Dismiss, Icon24Done } from '@vkontakte/icons';
-import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { ModalContext } from '../../context/ModalContext';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { ModalPageHeader, type ModalPageHeaderProps } from './ModalPageHeader';
 
 const renderModalPageHeaderWithModalRoot = (props: ModalPageHeaderProps) => (
-  <ModalRootContext.Provider
-    value={{
-      isInsideModal: true,
-      updateModalHeight: noop,
-      registerModal: noop,
-    }}
-  >
+  <ModalContext.Provider value="test">
     <ModalPageHeader {...props} />
-  </ModalRootContext.Provider>
+  </ModalContext.Provider>
 );
 
 const children = ['Заголовок', 'Невероятно длинный заголовок выезжает за шапку даже на десктопе'];

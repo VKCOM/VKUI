@@ -9,11 +9,11 @@ import {
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Image } from '../Image/Image';
-import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
 import { Spacing } from '../Spacing/Spacing';
 import { Textarea } from '../Textarea/Textarea';
 import { UsersStack } from '../UsersStack/UsersStack';
-import { ModalCard, type ModalCardProps } from './ModalCard';
+import { ModalCard } from './ModalCard';
+import type { ModalCardProps } from './types';
 
 const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
   <AppDefaultWrapper scroll="contain" disablePortal {...restProps}>
@@ -127,15 +127,14 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
       AppWrapper={AppWrapper}
     >
       {(props: ModalCardProps) => (
-        <div style={{ height: 500, transform: 'translateZ(0)' }}>
-          <ModalRoot
-            activeModal={props.nav}
+        <div style={{ height: 500, overflow: 'hidden', transform: 'translateZ(0)' }}>
+          <ModalCard
+            open
             // Note: с включенным фокусом ломаются скриншоты на движке Webkit из-за фокуса сразу
             // на несколько окон
             noFocusToDialog
-          >
-            <ModalCard {...props} />
-          </ModalRoot>
+            {...props}
+          />
         </div>
       )}
     </ComponentPlayground>

@@ -4,7 +4,6 @@
   background: var(--vkui--color_background_modal);
   border-radius: 12px;
   padding: 16px;
-  margin-block-end: var(--vkui_internal--safe_area_inset_bottom);
   display: flex;
   flex-direction: column;
   justify-content: center;
