@@ -3,52 +3,43 @@ import { mergeStyle } from './mergeStyle';
 describe(mergeStyle, () => {
   it.each([
     {
-      input: [],
+      a: undefined,
+      b: undefined,
       output: undefined,
     },
     {
-      input: [undefined],
-      output: undefined,
-    },
-    {
-      input: [{ color: 'red' }, { background: 'blue' }],
+      a: { color: 'red' },
+      b: { background: 'blue' },
       output: { color: 'red', background: 'blue' },
     },
     {
-      input: [{ color: 'red' }, { background: 'blue' }, { border: 'green' }],
-      output: { color: 'red', background: 'blue', border: 'green' },
-    },
-    {
-      input: [undefined, { color: 'red' }, undefined],
+      a: undefined,
+      b: { color: 'red' },
       output: { color: 'red' },
     },
     {
-      input: [{ color: 'red' }],
+      a: { color: 'red' },
+      b: undefined,
       output: { color: 'red' },
     },
     {
-      input: [{ color: 'red' }, { color: 'blue' }],
+      a: { color: 'red' },
+      b: { color: 'blue' },
       output: { color: 'blue' },
     },
-    {
-      input: [{ color: 'red' }, { color: 'blue' }, { color: 'green' }],
-      output: { color: 'green' },
-    },
-  ])('mergeStyle($input) is $output', ({ input, output }) =>
-    expect(mergeStyle(...input)).toStrictEqual(output),
+  ] as const)('mergeStyle($a, $b) is $output', ({ a, b, output }) =>
+    expect(mergeStyle(a, b)).toStrictEqual(output),
   );
 
   const testStyles = { display: 'flex' };
   const copyTestStyles = { ...testStyles };
 
-  it.each([
-    [[testStyles]],
-    [[undefined, testStyles]],
-    [[testStyles, undefined]],
-    [[undefined, testStyles, undefined]],
-  ])('mergeStyle(%p) is not copy', (input) => {
-    const result = mergeStyle(...input);
-    expect(result).toBe(testStyles);
-    expect(result).not.toBe(copyTestStyles);
-  });
+  it.each([[[undefined, testStyles]], [[testStyles, undefined]]] as const)(
+    'mergeStyle(%p) is not copy',
+    ([a, b]) => {
+      const result = mergeStyle(a, b);
+      expect(result).toBe(testStyles);
+      expect(result).not.toBe(copyTestStyles);
+    },
+  );
 });
