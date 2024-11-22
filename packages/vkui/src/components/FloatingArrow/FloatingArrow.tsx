@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
 import type { HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { DefaultIcon } from './DefaultIcon';
 import styles from './FloatingArrow.module.css';
 
@@ -46,9 +47,7 @@ export const FloatingArrow = ({
   iconStyle,
   iconClassName,
   placement = 'bottom',
-  className,
   style,
-  getRootRef,
   Icon = DefaultIcon,
   ...restProps
 }: FloatingArrowProps): React.ReactNode => {
@@ -60,18 +59,13 @@ export const FloatingArrow = ({
   );
 
   return (
-    <div
-      ref={getRootRef}
+    <RootComponent
       style={style ? { ...arrowStyles, ...style } : arrowStyles}
-      className={classNames(
-        className,
-        styles.host,
-        arrowPlacement && placementClassNames[arrowPlacement],
-      )}
+      baseClassName={classNames(styles.host, arrowPlacement && placementClassNames[arrowPlacement])}
       {...restProps}
     >
       <Icon className={classNames(styles.in, iconClassName)} style={iconStyle} />
-    </div>
+    </RootComponent>
   );
 };
 
