@@ -58,7 +58,6 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     hintedSelectionEnd,
     sameMonth,
     size,
-    className,
     children,
     renderDayContent,
     testId,
@@ -102,7 +101,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
 
     return (
       <Tappable
-        className={classNames(styles.host, size === 's' && styles.sizeS, className)}
+        baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}
         hoverMode={styles.hostHovered}
         activeMode={styles.hostActivated}
         hasActive={false}

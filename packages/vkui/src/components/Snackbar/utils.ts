@@ -5,21 +5,20 @@ import type { ShiftData, SnackbarPlacement } from './types';
 
 export function resolveOffsetYCssStyle(
   placement: SnackbarPlacement,
-  style?: React.CSSProperties,
   offsetY?: React.CSSProperties['inset'],
 ): React.CSSProperties | undefined {
   if (offsetY === undefined) {
-    return style;
+    return undefined;
   }
   switch (placement) {
     case 'top-start':
     case 'top':
     case 'top-end':
-      return { ...style, top: offsetY };
+      return { top: offsetY };
     case 'bottom-start':
     case 'bottom':
     case 'bottom-end':
-      return { ...style, bottom: offsetY };
+      return { bottom: offsetY };
   }
 }
 

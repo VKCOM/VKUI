@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { millisecondsInSecond } from 'date-fns/constants';
-import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
@@ -140,7 +139,6 @@ export const Skeleton = ({
   maxWidth,
   maxInlineSize,
   borderRadius,
-  style,
   children,
   colorFrom,
   colorTo,
@@ -184,7 +182,7 @@ export const Skeleton = ({
       getRootRef={rootRef}
       Component="span"
       baseClassName={classNames(styles.host, disableAnimation && styles.disableAnimation)}
-      style={mergeStyle(skeletonStyle, style)}
+      baseStyle={skeletonStyle}
       {...restProps}
     >
       {children || <>&zwnj;</>}

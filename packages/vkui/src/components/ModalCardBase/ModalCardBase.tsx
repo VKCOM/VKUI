@@ -97,7 +97,6 @@ export const ModalCardBase = ({
   actions,
   onClose,
   dismissLabel = 'Скрыть',
-  style,
   size: sizeProp,
   modalDismissButtonTestId,
   dismissButtonMode = 'outside',
@@ -125,9 +124,8 @@ export const ModalCardBase = ({
         isDesktop && styles.desktop,
         withSafeZone && styles.withSafeZone,
       )}
-      style={{
+      baseStyle={{
         maxWidth: size,
-        ...style,
       }}
     >
       <div

@@ -1,5 +1,4 @@
 import { classNames } from '@vkontakte/vkjs';
-import { mergeStyle } from '../../helpers/mergeStyle';
 import {
   calculateGap,
   columnGapClassNames,
@@ -57,7 +56,6 @@ export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, '
 export const SimpleGrid = ({
   columns = 1,
   gap,
-  style: styleProp,
   margin = 'none',
   minColWidth,
   align = 'stretch',
@@ -87,7 +85,7 @@ export const SimpleGrid = ({
         typeof columnGap === 'string' && columnGapClassNames[columnGap],
         typeof rowGap === 'string' && rowGapClassNames[rowGap],
       )}
-      style={mergeStyle(style, styleProp)}
+      baseStyle={style}
     />
   );
 };

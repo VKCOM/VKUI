@@ -156,7 +156,7 @@ export const CalendarHeader = ({
       {!prevMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
-            className={classNames(styles.navIcon, styles.navIconPrev, prevMonthClassName)}
+            baseClassName={classNames(styles.navIcon, styles.navIconPrev, prevMonthClassName)}
             onClick={onPrevMonth}
             data-testid={prevMonthButtonTestId}
             {...restPrevMonthProps}
@@ -222,7 +222,7 @@ export const CalendarHeader = ({
       {!nextMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
-            className={classNames(styles.navIcon, styles.navIconNext, nextMonthClassName)}
+            baseClassName={classNames(styles.navIcon, styles.navIconNext, nextMonthClassName)}
             onClick={onNextMonth}
             data-testid={nextMonthButtonTestId}
             {...restNextMonthProps}
