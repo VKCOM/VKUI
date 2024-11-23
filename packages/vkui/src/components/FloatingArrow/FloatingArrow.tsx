@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import type { Placement } from '../../lib/floating';
 import type { HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -60,7 +61,7 @@ export const FloatingArrow = ({
 
   return (
     <RootComponent
-      style={style ? { ...arrowStyles, ...style } : arrowStyles}
+      style={mergeStyle(arrowStyles, style)}
       baseClassName={classNames(styles.host, arrowPlacement && placementClassNames[arrowPlacement])}
       {...restProps}
     >
