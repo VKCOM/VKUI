@@ -12,13 +12,13 @@ import { AppRootStyleContainer } from './AppRootStyleContainer';
 
 export interface AppRootPortalProps extends HasChildren {
   /**
-   * - При передаче `true` будет использовать `portalRoot` из контекста `AppRoot`.
+   * - При передаче `true` в качестве портала будет использован `portalRoot`
+   * из контекста `AppRoot` если он передан в `AppRoot`, иначе `document.body`.
    * - При передаче элемента будут игнорироваться `portalRoot` и `disablePortal` из контекста `AppRoot`.
-   * - При передаче `SplitLayout` будет использоваться контейнер внутри `SplitLayout`, сразу после контента приложения.
-   *   Если контейнера `SplitLayout` в приложении нет, то будет использован глобальный `portalRoot`, чаще всего
-   *   это последний дочерний элемент `body`.
+   *
+   * По умолчанию в качестве портала будет использован `document.body`
    */
-  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null | 'SplitLayout';
+  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null;
   className?: string;
 }
 
@@ -68,22 +68,20 @@ function shouldUsePortal(
 }
 
 function usePortalContainer(usePortal: AppRootPortalProps['usePortal']): HTMLElement | null {
-  const { portalRoot: portalRootFromContext, popoutModalRoot } = React.useContext(AppRootContext);
+  const { portalRoot: portalRootFromContext } = React.useContext(AppRootContext);
 
   const { document } = useDOM();
 
-  // если portalRoot не передали, то мы используем body
+  if (usePortal && typeof usePortal !== 'boolean') {
+    return isRefObject(usePortal) ? usePortal.current : usePortal;
+  }
+
+  const resolvedPortalFromContext = isRefObject(portalRootFromContext)
+    ? portalRootFromContext.current
+    : portalRootFromContext;
+  // если portalRoot не передали через AppRoot, то мы используем body
   // мы можем использовать body как портал,
   // так как все стили передаются вместе с AppRootStyleContainer
-  const portalRoot = portalRootFromContext || document?.body || null;
-
-  if (typeof usePortal === 'boolean' || usePortal === undefined) {
-    return portalRoot;
-  }
-
-  if (usePortal === 'SplitLayout') {
-    return popoutModalRoot.current || portalRoot;
-  }
-
-  return isRefObject(usePortal) ? usePortal.current : usePortal;
+  const portalRoot = resolvedPortalFromContext || document?.body || null;
+  return portalRoot;
 }

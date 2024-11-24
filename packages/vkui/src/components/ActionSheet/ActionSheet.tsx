@@ -5,7 +5,7 @@ import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
-import { ModalPopoutPortal } from '../AppRoot/ModalPopoutPortal';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -143,7 +143,7 @@ export const ActionSheet = ({
   }
 
   return (
-    <ModalPopoutPortal>
+    <AppRootPortal>
       <PopoutWrapper
         closing={Boolean(closingBy)}
         alignY="bottom"
@@ -154,6 +154,6 @@ export const ActionSheet = ({
       >
         {actionSheet}
       </PopoutWrapper>
-    </ModalPopoutPortal>
+    </AppRootPortal>
   );
 };

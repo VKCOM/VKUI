@@ -14,7 +14,7 @@ import type {
   HasRootRef,
 } from '../../types';
 import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
-import { ModalPopoutPortal } from '../AppRoot/ModalPopoutPortal';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import type { ButtonProps } from '../Button/Button';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
@@ -140,7 +140,7 @@ export const Alert = ({
   useScrollLock();
 
   return (
-    <ModalPopoutPortal usePortal={usePortal}>
+    <AppRootPortal usePortal={usePortal}>
       <PopoutWrapper
         className={className}
         closing={closing}
@@ -205,6 +205,6 @@ export const Alert = ({
           )}
         </FocusTrap>
       </PopoutWrapper>
-    </ModalPopoutPortal>
+    </AppRootPortal>
   );
 };

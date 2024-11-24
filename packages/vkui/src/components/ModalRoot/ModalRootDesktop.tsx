@@ -8,7 +8,7 @@ import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { useDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
-import { ModalPopoutPortal } from '../AppRoot/ModalPopoutPortal';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalRootContext, type ModalRootContextInterface } from './ModalRootContext';
@@ -204,7 +204,7 @@ export const ModalRootDesktop = ({
   }
 
   return (
-    <ModalPopoutPortal usePortal={usePortal}>
+    <AppRootPortal usePortal={usePortal}>
       <ModalRootContext.Provider value={modalRootContext}>
         <div
           className={classNames(
@@ -244,6 +244,6 @@ export const ModalRootDesktop = ({
           </div>
         </div>
       </ModalRootContext.Provider>
-    </ModalPopoutPortal>
+    </AppRootPortal>
   );
 };

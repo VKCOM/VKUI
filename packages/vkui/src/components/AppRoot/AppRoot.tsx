@@ -5,12 +5,9 @@ import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseVKUIClasses';
 import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
-import { getDocumentBody } from '../../lib/dom';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AppRootContext } from './AppRootContext';
 import { AppRootStyleContainer } from './AppRootStyleContainer';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
-import { extractPortalRootByProp } from './helpers';
 import type {
   AppRootLayout,
   AppRootMode,
@@ -85,7 +82,7 @@ export const AppRoot = ({
   children,
   mode = 'full',
   scroll = 'global',
-  portalRoot: portalRootProp,
+  portalRoot,
   disablePortal = false,
   disableParentTransformForPositionFixedElements,
   safeAreaInsets: safeAreaInsetsProp,
@@ -95,20 +92,6 @@ export const AppRoot = ({
   ...props
 }: AppRootProps): React.ReactNode => {
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
-  const popoutModalContainerRef = React.useRef<HTMLDivElement | null>(null);
-  const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(
-    portalRootProp ? extractPortalRootByProp(portalRootProp) : null,
-  );
-
-  useIsomorphicLayoutEffect(
-    function syncPortalRootWithPortalRootProp() {
-      const portalByProp = portalRootProp ? extractPortalRootByProp(portalRootProp) : null;
-      if (portalRootProp !== undefined && portalRoot !== portalByProp) {
-        setPortalRoot(portalByProp);
-      }
-    },
-    [portalRoot, portalRootProp],
-  );
 
   const ScrollController = React.useMemo(
     () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
@@ -121,7 +104,6 @@ export const AppRoot = ({
     () => ({
       appRoot: appRootRef,
       portalRoot,
-      popoutModalRoot: popoutModalContainerRef,
       safeAreaInsets,
       embedded: mode === 'embedded',
       mode,
