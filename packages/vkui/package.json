@@ -8,13 +8,15 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./dist/vkui.css": "./dist/vkui.css",
     "./dist/components.css": "./dist/components.css",
     "./dist/cssm": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/cssm/index.js"
+      "import": "./dist/cssm/index.js",
+      "default": "./dist/cssm/index.js"
     },
     "./dist/cssm/styles/themes.css": "./dist/cssm/styles/themes.css",
     "./package.json": "./package.json"
