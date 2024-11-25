@@ -25,6 +25,11 @@ const stylesSize = {
   auto: styles.sizeAuto,
 };
 
+const textAlignClassNames = {
+  center: styles.textAlignCenter,
+  end: styles.textAlignEnd,
+};
+
 type HorizontalCellSizes = 's' | 'm' | 'l' | 'xl' | 'auto';
 
 interface CellTypographyProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -63,6 +68,16 @@ export interface HorizontalCellProps
    * Дополнительная строка текста под `children` и `subtitle`.
    */
   extraSubtitle?: React.ReactNode;
+  /**
+   * Задает выравнивание типографики. По умолчанию `center` для `size=s`, иначе `start`
+   */
+  textAlign?: 'start' | 'center' | 'end';
+  /**
+   * Отключает формирование отступов у крайних элементов
+   *
+   * Актуально для использования в многострочных списках
+   */
+  noPadding?: boolean;
 }
 
 /**
@@ -78,6 +93,8 @@ export const HorizontalCell = ({
   getRootRef,
   getRef,
   extraSubtitle,
+  textAlign = size === 's' ? 'center' : 'start',
+  noPadding = false,
   ...restProps
 }: HorizontalCellProps): React.ReactNode => {
   const hasTypography =
@@ -94,13 +111,20 @@ export const HorizontalCell = ({
         styles.host,
         typeof size === 'string' && stylesSize[size],
         size !== 'auto' && styles.sized,
+        typeof size === 'number' && styles.customSize,
+        noPadding && styles.noPadding,
         className,
       )}
     >
       <Tappable className={styles.body} getRootRef={getRef} {...restProps}>
         {hasReactNode(children) && <div className={styles.image}>{children}</div>}
         {hasTypography && (
-          <div className={styles.content}>
+          <div
+            className={classNames(
+              styles.content,
+              textAlign !== 'start' && textAlignClassNames[textAlign],
+            )}
+          >
             {hasReactNode(title) && <CellTypography size={size}>{title}</CellTypography>}
             {hasReactNode(subtitle) && <Footnote className={styles.subtitle}>{subtitle}</Footnote>}
             {hasReactNode(extraSubtitle) && (
