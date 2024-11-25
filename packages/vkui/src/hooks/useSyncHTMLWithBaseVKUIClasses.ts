@@ -19,12 +19,18 @@ export function useSyncHTMLWithBaseVKUIClasses({
     const htmlElement = appRootRef.current?.ownerDocument.documentElement;
     const parentElement = appRootRef.current?.parentElement ?? null;
 
+    const parentElementClasses = ['vkui__root'];
+
+    if (mode === 'embedded') {
+      parentElementClasses.push('vkui__root--embedded');
+    }
+
     if (mode === 'full') {
       /* eslint-disable-next-line no-restricted-properties */
       htmlElement?.classList.add('vkui');
     }
     /* eslint-disable-next-line no-restricted-properties */
-    parentElement?.classList.add('vkui__root');
+    parentElement?.classList.add(...parentElementClasses);
 
     return () => {
       if (mode === 'full') {
@@ -32,7 +38,7 @@ export function useSyncHTMLWithBaseVKUIClasses({
         htmlElement?.classList.remove('vkui');
       }
       /* eslint-disable-next-line no-restricted-properties */
-      parentElement?.classList.remove('vkui__root');
+      parentElement?.classList.remove(...parentElementClasses);
     };
-  }, []);
+  }, [mode, enable]);
 }

@@ -26,6 +26,9 @@
   padding: 0;
   block-size: 100%;
   color-scheme: var(--vkui--colors_scheme);
+}
+
+.vkui {
   /*
    * TODO [>=8]: Убрать background с html элемента, но для этого надо
    * чтобы height у всех родителей Panel вплоть до html имели
@@ -40,6 +43,10 @@
    * извне с помощью max-height, max-width */
   max-inline-size: inherit;
   max-block-size: inherit;
+}
+
+.vkui__root--embedded {
+  background: var(--vkui--color_background);
 }
 
 /* отключаем нативный pull-to-refresh при взаимодействии с компонентом
