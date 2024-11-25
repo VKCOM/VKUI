@@ -86,8 +86,8 @@
     "date-fns": "^4.1.0"
   },
   "devDependencies": {
-    "@storybook/react": "8.4.2",
-    "@storybook/react-webpack5": "8.4.2",
+    "@storybook/react": "8.4.5",
+    "@storybook/react-webpack5": "8.4.5",
     "@types/node": "*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
