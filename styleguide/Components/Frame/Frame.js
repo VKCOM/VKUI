@@ -83,10 +83,7 @@ export const Frame = ({ children, style, colorSchemeOptions, themeName }) => {
       style={style}
       initialContent={initialFrameContent}
     >
-      <FrameDomProvider
-        colorSchemeOptions={colorSchemeOptions}
-        themeName={themeName}
-      >
+      <FrameDomProvider colorSchemeOptions={colorSchemeOptions} themeName={themeName}>
         {children}
       </FrameDomProvider>
     </ReactFrame>
