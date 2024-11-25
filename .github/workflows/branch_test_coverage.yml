@@ -43,6 +43,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     name: Deploy test coverage
+    permissions:
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -55,7 +57,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true
           flags: unittests
           files: .nyc_output/coverage-final.json
           fail_ci_if_error: true
