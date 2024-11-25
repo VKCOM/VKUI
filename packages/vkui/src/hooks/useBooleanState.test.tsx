@@ -36,4 +36,22 @@ describe('useBooleanState', () => {
     });
     expect(result.current.value).toEqual(true);
   });
+
+  it('functions remain unchanged', () => {
+    const { result } = renderHook(useBooleanState, {
+      initialProps: false,
+    });
+
+    const firstRender = { ...result.current };
+
+    act(() => {
+      result.current.setTrue();
+      result.current.setFalse();
+      result.current.toggle();
+    });
+
+    expect(result.current.setFalse).toBe(firstRender.setFalse);
+    expect(result.current.setTrue).toBe(firstRender.setTrue);
+    expect(result.current.toggle).toBe(firstRender.toggle);
+  });
 });
