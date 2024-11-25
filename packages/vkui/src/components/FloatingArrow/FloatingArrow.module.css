@@ -6,7 +6,7 @@
   content: '';
   display: block;
 
-  /* см. Примечание 1 в FloatingArrow.tsx. */
+  /* см. "Примечание" в DefaultIcon.tsx. */
   transform: translateY(1px);
 }
 
