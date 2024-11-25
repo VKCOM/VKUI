@@ -93,13 +93,12 @@ export const HorizontalCell = ({
   getRootRef,
   getRef,
   extraSubtitle,
-  textAlign: textAlignProp,
+  textAlign = size === 's' ? 'center' : 'start',
   noPadding = false,
   ...restProps
 }: HorizontalCellProps): React.ReactNode => {
   const hasTypography =
     hasReactNode(title) || hasReactNode(subtitle) || hasReactNode(extraSubtitle);
-  const textAlign = textAlignProp ?? (size === 's' ? 'center' : 'start');
 
   const customProperties: CSSCustomProperties | undefined =
     typeof size === 'number' ? { [CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH]: `${size}px` } : undefined;
