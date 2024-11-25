@@ -37,7 +37,7 @@ describe('useBooleanState', () => {
     expect(result.current.value).toEqual(true);
   });
 
-  it('функции управления состоянием не меняются', () => {
+  it('functions remain unchanged', () => {
     const { result } = renderHook(useBooleanState, {
       initialProps: false,
     });
