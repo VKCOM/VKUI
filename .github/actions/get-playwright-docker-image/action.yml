@@ -1,5 +1,5 @@
 name: Get Playwright Docker Image
-description: See https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.focal
+description: See https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.noble
 
 outputs:
   value:
@@ -23,5 +23,5 @@ runs:
       # {"value":"@playwright/test@npm:1.42.1","children":{"Version":"1.42.1","Exported Binaries":["playwright"],"Dependencies":[{"descriptor":"playwright@npm:1.42.1","locator":"playwright@npm:1.42.1"}]}}
       run: |
         PLAYWRIGHT_VERSION=$(yarn info @playwright/test --all --json | jq -r '.children' | jq -r '.Version');
-        echo "value=mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION}-focal" >> $GITHUB_OUTPUT
+        echo "value=mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION}-noble" >> $GITHUB_OUTPUT
       shell: bash
