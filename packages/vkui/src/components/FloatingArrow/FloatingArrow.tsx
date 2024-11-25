@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { mergeStyle } from '../../helpers/mergeStyle';
 import type { Placement } from '../../lib/floating';
 import type { HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -48,7 +47,6 @@ export const FloatingArrow = ({
   iconStyle,
   iconClassName,
   placement = 'bottom',
-  style,
   Icon = DefaultIcon,
   ...restProps
 }: FloatingArrowProps): React.ReactNode => {
@@ -61,7 +59,7 @@ export const FloatingArrow = ({
 
   return (
     <RootComponent
-      style={mergeStyle(arrowStyles, style)}
+      baseStyle={arrowStyles}
       baseClassName={classNames(styles.host, arrowPlacement && placementClassNames[arrowPlacement])}
       {...restProps}
     >
