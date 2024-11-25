@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import { mergeStyle } from '../../helpers/mergeStyle';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Progress.module.css';
@@ -43,7 +42,6 @@ export const Progress = ({
   value = 0,
   appearance = 'accent',
   height,
-  style,
   ...restProps
 }: ProgressProps): React.ReactNode => {
   const progress = clamp(value, PROGRESS_MIN_VALUE, PROGRESS_MAX_VALUE);
@@ -54,12 +52,12 @@ export const Progress = ({
     <RootComponent
       aria-valuenow={value}
       title={title}
-      style={mergeStyle(styleHeight, style)}
       {...restProps}
       role="progressbar"
       aria-valuemin={PROGRESS_MIN_VALUE}
       aria-valuemax={PROGRESS_MAX_VALUE}
       baseClassName={classNames(styles.host, stylesAppearance[appearance])}
+      baseStyle={styleHeight}
     >
       <div className={styles.in} style={{ width: `${progress}%` }} />
     </RootComponent>

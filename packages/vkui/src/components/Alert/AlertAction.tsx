@@ -20,7 +20,7 @@ const AlertActionIos = ({ mode, ...restProps }: AlertActionProps) => {
   return (
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
-      className={classNames(
+      baseClassName={classNames(
         styles.action,
         mode === 'destructive' && styles.actionModeDestructive,
         mode === 'cancel' && styles.actionModeCancel,

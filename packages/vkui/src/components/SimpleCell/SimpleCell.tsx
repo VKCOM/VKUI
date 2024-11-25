@@ -98,7 +98,6 @@ export const SimpleCell = ({
   overTitle,
   subtitle,
   extraSubtitle,
-  className,
   chevronSize = 'm',
   ...restProps
 }: SimpleCellProps): React.ReactNode => {
@@ -112,12 +111,11 @@ export const SimpleCell = ({
   return (
     <Tappable
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         restProps.disabled && styles.disabled,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         multiline && styles.mult,
-        className,
       )}
     >
       <div className={classNames(styles.before, platform === 'ios' && styles.beforeIos)}>

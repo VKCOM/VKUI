@@ -1,5 +1,4 @@
 import { classNames } from '@vkontakte/vkjs';
-import { mergeStyle } from '../../helpers/mergeStyle';
 import { resolveSpacingSize, type SpacingSizeProp } from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -56,7 +55,6 @@ export const Separator = ({
   appearance = 'primary',
   direction = 'horizontal',
   align = 'center',
-  style,
   size,
   ...restProps
 }: SeparatorProps): React.ReactNode => {
@@ -75,7 +73,7 @@ export const Separator = ({
         align !== 'center' && alignClassNames[align],
         spacingSizeClassName,
       )}
-      style={mergeStyle(spacingSizeStyle, style)}
+      baseStyle={spacingSizeStyle}
     >
       <hr className={styles.in} />
     </RootComponent>

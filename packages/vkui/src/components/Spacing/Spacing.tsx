@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { mergeStyle } from '../../helpers/mergeStyle';
 import { resolveSpacingSize, type SpacingSizeProp } from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -25,7 +24,7 @@ export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
 /**
  * @see https://vkcom.github.io/VKUI/#/Spacing
  */
-export const Spacing = ({ size = 'm', style, ...restProps }: SpacingProps): React.ReactNode => {
+export const Spacing = ({ size = 'm', ...restProps }: SpacingProps): React.ReactNode => {
   const [spacingSizeClassName, spacingSizeStyle] = resolveSpacingSize(
     CUSTOM_CSS_TOKEN_FOR_USER_GAP,
     size,
@@ -33,7 +32,7 @@ export const Spacing = ({ size = 'm', style, ...restProps }: SpacingProps): Reac
   return (
     <RootComponent
       {...restProps}
-      style={mergeStyle(spacingSizeStyle, style)}
+      baseStyle={spacingSizeStyle}
       baseClassName={classNames(styles.host, spacingSizeClassName)}
     />
   );

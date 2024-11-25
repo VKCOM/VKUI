@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { type HTMLAttributesWithRootRef } from '../../types';
+import { mergeStyle } from '../../helpers/mergeStyle';
+import { type CSSCustomProperties, type HTMLAttributesWithRootRef } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
 import { Headline } from '../Typography/Headline/Headline';
 import styles from './Counter.module.css';
@@ -73,25 +74,23 @@ export const Counter = ({
     return 'accent';
   }, [appearanceProp, mode]);
 
-  const style = React.useMemo(() => {
-    if (mode === 'inherit' || appearance !== 'custom' || !color) {
-      return styleProp;
-    }
-    switch (mode) {
-      case 'primary':
-        return {
-          ...styleProp,
-          '--vkui_internal--counter_background': color,
-        };
-      case 'contrast':
-      case 'tertiary':
-        return {
-          ...styleProp,
-          '--vkui_internal--counter_foreground': color,
-        };
-    }
-    return styleProp;
-  }, [appearance, color, mode, styleProp]);
+  const style: (React.CSSProperties & CSSCustomProperties<string | undefined>) | undefined =
+    React.useMemo(() => {
+      if (mode === 'inherit' || appearance !== 'custom' || !color) {
+        return undefined;
+      }
+      switch (mode) {
+        case 'primary':
+          return {
+            '--vkui_internal--counter_background': color,
+          };
+        case 'contrast':
+        case 'tertiary':
+          return {
+            '--vkui_internal--counter_foreground': color,
+          };
+      }
+    }, [appearance, color, mode]);
 
   if (React.Children.count(children) === 0) {
     return null;
@@ -103,7 +102,7 @@ export const Counter = ({
   return (
     <CounterTypography
       {...restProps}
-      style={style}
+      style={mergeStyle(style, styleProp)}
       Component="span"
       className={classNames(
         'vkuiInternalCounter',

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import type { HasComponent, HasRootRef } from '../../types';
 import styles from './RootComponent.module.css';
 
@@ -8,6 +9,7 @@ export interface RootComponentProps<T>
     HasRootRef<T>,
     HasComponent {
   baseClassName?: string | false;
+  baseStyle?: React.CSSProperties;
 }
 
 /**
@@ -17,6 +19,8 @@ export const RootComponent = <T,>({
   Component = 'div',
   baseClassName,
   className,
+  baseStyle,
+  style,
   getRootRef,
   ...restProps
 }: RootComponentProps<T>): React.ReactNode => (
@@ -28,6 +32,7 @@ export const RootComponent = <T,>({
       styles.host,
       restProps.hidden === true && styles.hidden,
     )}
+    style={mergeStyle(baseStyle, style)}
     {...restProps}
   />
 );
