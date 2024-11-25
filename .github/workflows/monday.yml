@@ -1,0 +1,22 @@
+name: 'Cron / Monday'
+on:
+  schedule:
+    - cron: '0 5 * * 1' # Runs at 05:00, only on Monday
+
+jobs:
+  corepack-up:
+    name: Corepack up
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - uses: VKCOM/gh-actions/shared/node/corepack-up-pr@main
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
