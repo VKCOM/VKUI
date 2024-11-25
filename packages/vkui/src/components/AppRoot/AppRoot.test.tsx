@@ -79,9 +79,7 @@ describe('AppRoot', () => {
       </AppRoot>,
     );
     expect(contextCallback).toHaveBeenCalledWith({
-      popoutModalRoot: { current: null },
       safeAreaInsets: undefined,
-      setPortalRoot: expect.any(Function),
       userSelectMode: undefined,
       appRoot: { current: result.getByTestId('app-root') },
       portalRoot: portalRoot,

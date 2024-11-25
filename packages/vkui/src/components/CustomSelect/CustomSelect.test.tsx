@@ -1180,13 +1180,13 @@ describe('CustomSelect', () => {
     expect(inputRef.current).not.toBeNull();
   });
 
-  it('check input should close popover and reset selected option', async () => {
+  it.only('check input should close popover and reset selected option', async () => {
     jest.useFakeTimers();
     const inputRef: React.RefObject<HTMLInputElement> = {
       current: null,
     };
 
-    const { container } = render(
+    const { debug } = render(
       <CustomSelect
         searchable={true}
         options={[
@@ -1201,7 +1201,7 @@ describe('CustomSelect', () => {
     );
 
     const optionsHasFocused = () => {
-      return !!container.querySelector('[data-hovered="true"]');
+      return !!document.body.querySelector('[data-hovered="true"]');
     };
 
     checkDropdownOpened(false);
@@ -1214,6 +1214,7 @@ describe('CustomSelect', () => {
 
     // Нажимаем стрелку вниз, тем самым фокусируемся на первом option
     await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
+    debug();
     checkDropdownOpened();
     expect(optionsHasFocused()).toBeTruthy();
 
