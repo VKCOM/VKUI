@@ -78,7 +78,6 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
     minWidth,
     animate: animateProp,
     fixed,
-    style,
     autoSpaced,
     stretchedOnMobile,
     getRootRef,
@@ -99,11 +98,10 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
   return (
     <RootComponent
       {...restProps}
-      style={{
+      baseStyle={{
         width,
         maxWidth,
         minWidth,
-        ...style,
       }}
       getRootRef={baseRef}
       baseClassName={classNames(

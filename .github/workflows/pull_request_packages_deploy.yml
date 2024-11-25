@@ -26,6 +26,8 @@ jobs:
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
     runs-on: ubuntu-latest
     name: Deploy test coverage
+    permissions:
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,7 +46,7 @@ jobs:
         if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
         uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true
           flags: unittests
           files: .nyc_output/coverage-final.json
           override_branch: ${{ env.PR_HEAD_BRANCH }}

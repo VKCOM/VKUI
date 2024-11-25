@@ -31,7 +31,6 @@ export const Link = ({
   noUnderline,
   hasVisited,
   children,
-  className,
   ...restProps
 }: LinkProps): React.ReactNode => {
   const before = beforeProp ? <span className={styles.before}>{beforeProp}</span> : null;
@@ -41,11 +40,10 @@ export const Link = ({
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         hasVisited && styles.hasVisited,
         noUnderline ? undefined : styles.withUnderline,
-        className,
       )}
       hasHover={false}
       activeMode="opacity"

@@ -73,7 +73,6 @@ export const Button = ({
   getRootRef,
   loading,
   onClick,
-  className,
   disableSpinnerAnimation,
   rounded,
   disabled,
@@ -92,8 +91,7 @@ export const Button = ({
       disabled={loading || disabled}
       {...restProps}
       onClick={loading ? undefined : onClick}
-      className={classNames(
-        className,
+      baseClassName={classNames(
         styles.host,
         stylesSize[size],
         stylesMode[mode],

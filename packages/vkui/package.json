@@ -8,13 +8,15 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./dist/vkui.css": "./dist/vkui.css",
     "./dist/components.css": "./dist/components.css",
     "./dist/cssm": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/cssm/index.js"
+      "import": "./dist/cssm/index.js",
+      "default": "./dist/cssm/index.js"
     },
     "./dist/cssm/styles/themes.css": "./dist/cssm/styles/themes.css",
     "./package.json": "./package.json"
@@ -84,12 +86,12 @@
     "date-fns": "^4.1.0"
   },
   "devDependencies": {
-    "@storybook/react": "8.4.2",
-    "@storybook/react-webpack5": "8.4.2",
+    "@storybook/react": "8.4.5",
+    "@storybook/react-webpack5": "8.4.5",
     "@types/node": "*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "storybook": "8.4.4",
+    "storybook": "8.4.5",
     "ts-node": "*"
   },
   "size-limit": [

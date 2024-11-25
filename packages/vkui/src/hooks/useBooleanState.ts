@@ -19,8 +19,8 @@ export const useBooleanState = (
   }, []);
 
   const toggle = React.useCallback(() => {
-    setValue(!value);
-  }, [value]);
+    setValue((value) => !value);
+  }, []);
 
   return { value, setTrue, setFalse, toggle };
 };

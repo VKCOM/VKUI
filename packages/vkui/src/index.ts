@@ -7,6 +7,7 @@ import './styles/transformOriginByPlacement.module.css';
 import './styles/gaps.module.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
+export { AppRootPortal } from './components/AppRoot/AppRootPortal';
 export type { AppRootProps } from './components/AppRoot/AppRoot';
 export type { SafeAreaInsets } from './components/AppRoot/types';
 
@@ -360,9 +361,11 @@ export type { TouchProps, CustomTouchEvent } from './components/Touch/Touch';
 export { PanelSpinner } from './components/PanelSpinner/PanelSpinner';
 export type { PanelSpinnerProps } from './components/PanelSpinner/PanelSpinner';
 export { PanelHeaderClose } from './components/PanelHeaderClose/PanelHeaderClose';
+export type { PanelHeaderCloseProps } from './components/PanelHeaderClose/PanelHeaderClose';
 export { PanelHeaderBack } from './components/PanelHeaderBack/PanelHeaderBack';
 export type { PanelHeaderBackProps } from './components/PanelHeaderBack/PanelHeaderBack';
 export { PanelHeaderSubmit } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
+export type { PanelHeaderSubmitProps } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
 export { PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHeaderEdit';
 export type { PanelHeaderEditProps } from './components/PanelHeaderEdit/PanelHeaderEdit';
 export { ModalCardBase } from './components/ModalCardBase/ModalCardBase';

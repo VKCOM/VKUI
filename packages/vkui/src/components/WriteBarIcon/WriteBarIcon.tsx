@@ -58,7 +58,6 @@ export const WriteBarIcon = ({
   mode,
   children,
   count,
-  className,
   label: labelProp,
   ...restProps
 }: WriteBarIconProps): React.ReactNode => {
@@ -112,12 +111,11 @@ export const WriteBarIcon = ({
       Component="button"
       hasHover={false}
       activeMode={styles.active}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
         mode === 'send' && styles.modeSend,
         mode === 'done' && styles.modeDone,
-        className,
       )}
     >
       <span className={styles.in}>

@@ -67,14 +67,12 @@ export const MiniInfoCell = ({
   mode = 'base',
   textWrap = 'nowrap',
   chevron = false,
-  className,
   ...restProps
 }: MiniInfoCellProps): React.ReactNode => {
   const cellClasses = classNames(
     styles.host,
     stylesTextWrap[textWrap],
     mode !== 'base' && stylesMode[mode],
-    className,
   );
 
   const cellContent = (
@@ -91,7 +89,7 @@ export const MiniInfoCell = ({
   );
 
   return restProps.onClick ? (
-    <Tappable Component="div" role="button" {...restProps} className={cellClasses}>
+    <Tappable Component="div" role="button" {...restProps} baseClassName={cellClasses}>
       {cellContent}
     </Tappable>
   ) : (
