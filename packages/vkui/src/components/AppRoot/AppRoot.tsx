@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseVKUIClasses';
 import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
 import { AppRootContext } from './AppRootContext';
@@ -99,7 +98,7 @@ export const AppRoot = ({
   );
 
   const isKeyboardInputActiveRef = useKeyboardInputTracker();
-  const safeAreaInsets = useObjectMemo(safeAreaInsetsProp);
+  const safeAreaInsets = React.useMemo(() => safeAreaInsetsProp, [safeAreaInsetsProp]);
   const contextValue = React.useMemo(
     () => ({
       appRoot: appRootRef,
@@ -136,6 +135,7 @@ export const AppRoot = ({
   /*
    * По умолчанию VKUI будет выставлять .vkui на html и .vkui__root на контейнере в режиме full.
    * В режиме embedded будет выставлять только .vkui__root на контейнере.
+   * В режиме partial мы классы не выставляем.
    */
   useSyncHTMLWithBaseVKUIClasses({
     appRootRef,
