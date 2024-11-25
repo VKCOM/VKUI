@@ -134,7 +134,7 @@ export const AppRoot = ({
   useSyncHTMLWithTokens({ appRootRef, enable: mode === 'full' });
   /*
    * По умолчанию VKUI будет выставлять .vkui на html и .vkui__root на контейнере в режиме full.
-   * В режиме embedded будет выставлять только .vkui__root на контейнере.
+   * В режиме embedded будет выставлять только .vkui__root и .vkui__root--embedded на контейнере.
    * В режиме partial мы классы не выставляем.
    */
   useSyncHTMLWithBaseVKUIClasses({
