@@ -4445,7 +4445,7 @@ __metadata:
     "@vkontakte/eslint-plugin": "npm:^2.0.0"
     "@vkontakte/prettier-config": "npm:^0.2.1"
     "@vkontakte/stylelint-config": "npm:^4.1.0"
-    "@vkontakte/vkui-tokens": "npm:4.55.0"
+    "@vkontakte/vkui-tokens": "npm:4.56.0"
     autoprefixer: "npm:^10.4.20"
     clean-webpack-plugin: "npm:^4.0.0"
     concurrently: "npm:^9.1.0"
@@ -4531,12 +4531,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/vkui-tokens@npm:4.55.0":
-  version: 4.55.0
-  resolution: "@vkontakte/vkui-tokens@npm:4.55.0"
+"@vkontakte/vkui-tokens@npm:4.56.0":
+  version: 4.56.0
+  resolution: "@vkontakte/vkui-tokens@npm:4.56.0"
   dependencies:
     csstype: "npm:^3.1.1"
-  checksum: 10/85109017d6571f2f525b637a4f9924e228f360fd1f37c7c48b63ad37a709ebf7171c294da43be04893499d17a7593e44d8e5852e70b92d2009981f4c1d66ff9a
+  checksum: 10/1980e92b811c01382c64406c6af27b93b537afd76b7529517d3f728846c92baf31afd005db41916a2f8b11a037ee93a77e03ab106ecf8c8df61ff9e18656d6f3
   languageName: node
   linkType: hard
 
