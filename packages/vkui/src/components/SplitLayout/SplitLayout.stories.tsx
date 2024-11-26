@@ -16,7 +16,7 @@ import { CellButton } from '../CellButton/CellButton';
 import { Group } from '../Group/Group';
 import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
-import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
+import { ModalRoot } from '../ModalRoot/ModalRoot';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { Placeholder } from '../Placeholder/Placeholder';

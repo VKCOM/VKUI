@@ -26,8 +26,7 @@ const MODAL_ID = 'MODAL_ID';
 
 const HeaderButton = ({ children }: { children: React.ReactNode }) => {
   const { onClose } = React.useContext(ModalRootContext);
-
-  return <PanelHeaderButton onClick={onClose}>{children}</PanelHeaderButton>;
+  return <PanelHeaderButton onClick={() => onClose?.(MODAL_ID)}>{children}</PanelHeaderButton>;
 };
 
 export const Example: Story = {

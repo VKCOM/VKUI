@@ -1,159 +1,159 @@
 .host {
-  inline-size: 100%;
-  block-size: 100%;
-  overflow: hidden;
-  position: absolute;
-  box-sizing: border-box;
-  pointer-events: none;
-}
+  --vkui_internal_ModalPage--userHeight: 100%;
+  --vkui_internal_ModalPage--desktopMaxWidth: 100%;
 
-.host:focus {
-  outline: none;
-}
-
-.desktop {
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.inWrap {
   inline-size: 100%;
-  block-size: 100%;
-  position: absolute;
-  inset-inline: 0;
-  inset-block-end: 0;
+  block-size: var(--vkui_internal_ModalPage--userHeight);
   margin-inline: auto;
-  display: flex;
-  align-items: flex-end;
-  pointer-events: initial;
-  transform: translateY(100%);
-  transition: transform 320ms var(--vkui--animation_easing_platform);
+  outline: none;
+  box-sizing: border-box;
 }
 
-.ios .inWrap {
-  transition: transform 400ms var(--vkui--animation_easing_platform);
-}
+/* Mobile */
+@media (--viewWidth-smallTabletMinus) {
+  .host {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    max-inline-size: var(--vkui--size_popup_small--regular);
+    pointer-events: none;
+  }
 
-.desktop .inWrap {
-  position: relative;
-  align-items: initial;
-  margin-block: 32px;
-  margin-inline: 56px;
-  block-size: auto;
-  max-block-size: 640px;
-  opacity: 0;
-  transform: none;
-  transition: opacity 340ms var(--vkui--animation_easing_platform);
-}
+  .hostSafeAreaInsetTop {
+    max-block-size: calc(100% - var(--vkui_internal--safe_area_inset_top));
+  }
 
-@media (max-height: 672px) {
-  .desktop .inWrap {
-    max-block-size: calc(100% - 32px * 2);
+  .hostSafeAreaInsetTopWithCustomOffset {
+    max-block-size: calc(
+      100% - (var(--vkui_internal--safe_area_inset_top) + var(--vkui_internal--panel_header_height))
+    );
+  }
+}
+/* Desktop */
+@media (--viewWidth-smallTabletPlus) {
+  .host {
+    position: relative;
+    margin-block: auto;
+    max-inline-size: var(--vkui_internal_ModalPage--desktopMaxWidth);
+    max-block-size: calc(100% - 64px); /* FIXME 64px??? */
+    block-size: auto;
+  }
+
+  .hostMaxWidthS {
+    --vkui_internal_ModalPage--desktopMaxWidth: var(--vkui--size_popup_small--regular);
+  }
+
+  .hostMaxWidthM {
+    --vkui_internal_ModalPage--desktopMaxWidth: var(--vkui--size_popup_medium--regular);
+  }
+
+  .hostMaxWidthL {
+    --vkui_internal_ModalPage--desktopMaxWidth: var(--vkui--size_popup_large--regular);
   }
 }
 
-.sizeS .inWrap {
-  max-inline-size: var(--vkui--size_popup_small--regular);
-}
-
-.sizeM .inWrap {
-  max-inline-size: var(--vkui--size_popup_medium--regular);
-}
-
-.sizeL .inWrap {
-  max-inline-size: var(--vkui--size_popup_large--regular);
-}
-
-.in {
-  background-color: var(--vkui--color_background_modal);
-  overflow: visible;
-  position: relative;
+.document {
+  inline-size: 100%;
   box-sizing: border-box;
+
+  /*
+   * Удерживает высоту в пределах 100% родителя при переполнении контента.
+   */
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+}
+
+/* Mobile */
+@media (--viewWidth-smallTabletMinus) {
+  .document {
+    --vkui_internal_ModalPageDocument--snapPoint: auto;
+    --vkui_internal_ModalPageDocument--safeAreaInsetBottom: var(
+      --vkui_internal--safe_area_inset_bottom
+    );
+
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-end: 0;
+    block-size: var(--vkui_internal_ModalPageDocument--snapPoint);
+    max-block-size: 100%;
+    padding-block-end: var(--vkui_internal_ModalPageDocument--safeAreaInsetBottom);
+    pointer-events: auto;
+    touch-action: pan-y;
+    transform: translate3d(0, 0, 0);
+    transition: block-size 0.4s var(--vkui_internal--spring-easing);
+  }
+
+  .documentStateEnter {
+    transform: translate3d(0, 100%, 0);
+  }
+
+  .documentStateEntering {
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.5s var(--vkui_internal--slide-easing) 0.1s;
+  }
+
+  .documentStateExiting {
+    transform: translate3d(0, 100%, 0);
+    transition: transform 0.2s ease;
+  }
+
+  .documentStateExited {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+/* Desktop */
+@media (--viewWidth-smallTabletPlus) {
+  .document {
+    position: relative;
+    block-size: auto;
+  }
+
+  .documentStateEnter {
+    opacity: 0;
+  }
+
+  .documentStateEntering {
+    opacity: 1;
+    transition: opacity 0.2s ease-in 0.1s;
+  }
+
+  .documentStateExiting {
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+  }
+
+  .documentStateExited {
+    opacity: 0;
+  }
+}
+
+.children {
   inline-size: 100%;
   block-size: 100%;
-  display: flex;
-  flex-direction: column;
-  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
   border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+  background-color: var(--vkui--color_background_modal);
+  overflow: hidden;
 
-  --vkui_internal--background: var(--vkui--color_background_modal);
-}
-
-.desktop .in {
-  block-size: auto;
-  box-shadow: var(--vkui--elevation3);
-  border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
-  border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
-}
-
-.header {
-  inline-size: 100%;
-}
-
-.contentWrap {
-  position: relative;
+  /*
+   * Удерживает высоту в пределах 100% родителя при переполнении контента.
+   *
+   * - см. `ModalPageHeader`
+   * - см. `ModalPageContent`
+   * - см. `ModalPageFooter`
+   */
   display: flex;
-  block-size: 100%;
+  flex-shrink: 1;
   flex-direction: column;
-  overflow: hidden;
-  border-end-start-radius: inherit;
-  border-end-end-radius: inherit;
 }
 
-.header:empty + .contentWrap {
-  border-radius: inherit;
-}
-
-.content {
-  block-size: 100%;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  box-sizing: border-box;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot__modal--expandable) .content,
-.desktop .content {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot__modal--expandable) .contentIn,
-.desktop .contentIn {
-  block-size: 100%;
-}
-
-/* существует для того, чтобы использовать в расчёте translateY
- * чтобы поднять ModalPage не только на высоту контента, но и на высоту bottom-inset
- * особенно важно для ModalPage c динамической высотой
- */
-.bottomInset {
-  block-size: var(--vkui_internal--safe_area_inset_bottom);
-  flex-shrink: 0;
-}
-
-/**
- * CMP:
- * ModalRoot
- *
- * [дополнительно] также ищи в файле `ModalRoot__modal--expandable`
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot--touched) .inWrap {
-  transition: none;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot--switching) .inWrap {
-  pointer-events: none;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot__modal--collapsed) .content,
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot__modal--dragging) .content {
-  overflow: hidden;
-  touch-action: pan-y;
+/* Desktop */
+@media (--viewWidth-smallTabletPlus) {
+  .children {
+    border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
+    border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
+    box-shadow: var(--vkui--elevation3);
+  }
 }
