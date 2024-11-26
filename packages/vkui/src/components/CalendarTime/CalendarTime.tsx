@@ -1,6 +1,6 @@
 'use client';
 
-import { type ChangeEvent } from 'react';
+import { type ChangeEvent, useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
@@ -43,6 +43,26 @@ for (let i = 0; i < 60; i += 1) {
   minutes.push({ value: i, label: String(i).padStart(2, '0') });
 }
 
+const validateHours = (
+  value: string,
+  localHours: Array<{
+    value: number;
+    label: string;
+  }>,
+): boolean => {
+  return localHours.some((h) => h.label === value);
+};
+
+const validateMinutes = (
+  value: string,
+  localMinutes: Array<{
+    value: number;
+    label: string;
+  }>,
+): boolean => {
+  return localMinutes.some((m) => m.label === value);
+};
+
 export const CalendarTime = ({
   value,
   onChange,
@@ -57,6 +77,10 @@ export const CalendarTime = ({
   hoursTestId,
   doneButtonTestId,
 }: CalendarTimeProps): React.ReactNode => {
+  const hoursInputRef = useRef<HTMLInputElement | null>(null);
+  const minutesInputRef = useRef<HTMLInputElement | null>(null);
+  const doneButtonRef = useRef<HTMLButtonElement | null>(null);
+
   const localHours = isDayDisabled
     ? hours.map((hour) => {
         return { ...hour, disabled: isDayDisabled(setHours(value, hour.value), true) };
@@ -69,6 +93,26 @@ export const CalendarTime = ({
       })
     : minutes;
 
+  const onPickerValueChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    validate: (numericValue: string) => boolean,
+    setter: (value: Date, numericValue: number) => Date,
+  ) => {
+    const numericValue = e.target.value.replace(/\D/g, '');
+    e.target.value = numericValue;
+    if (validate(numericValue)) {
+      onChange?.(setter(value, Number(numericValue)));
+    }
+  };
+
+  const onHoursInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onPickerValueChange(e, (numValue) => validateHours(numValue, localHours), setHours);
+  };
+
+  const onMinutesInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onPickerValueChange(e, (numValue) => validateMinutes(numValue, localMinutes), setMinutes);
+  };
+
   const onHoursChange = React.useCallback(
     (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
       onChange?.(setHours(value, Number(newValue))),
@@ -80,6 +124,21 @@ export const CalendarTime = ({
     [onChange, value],
   );
 
+  const onPickerKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === 'Tab') {
+      const steps = [hoursInputRef, minutesInputRef, doneButtonRef];
+      const currentStepIndex = steps.findIndex((step) => step.current === e.target);
+      const diff = e.shiftKey ? -1 : 1;
+      const nextStepIndex = currentStepIndex + diff;
+      if (nextStepIndex < 0 || nextStepIndex >= steps.length) {
+        return;
+      }
+      e.preventDefault();
+      const nextStep = steps[nextStepIndex];
+      nextStep.current?.focus();
+    }
+  };
+
   return (
     <div className={classNames(styles.host, !doneButtonShow && styles.host__withoutDone)}>
       <div className={styles.picker}>
@@ -89,6 +148,11 @@ export const CalendarTime = ({
             options={localHours}
             onChange={onHoursChange}
             forceDropdownPortal={false}
+            searchable
+            filterFn={() => true}
+            onInputChange={onHoursInputChange}
+            onInputKeyDown={onPickerKeyDown}
+            getSelectInputRef={hoursInputRef}
             aria-label={changeHoursLabel}
             data-testid={hoursTestId}
           />
@@ -102,6 +166,11 @@ export const CalendarTime = ({
             options={localMinutes}
             onChange={onMinutesChange}
             forceDropdownPortal={false}
+            searchable
+            filterFn={() => true}
+            onInputChange={onMinutesInputChange}
+            getSelectInputRef={minutesInputRef}
+            onInputKeyDown={onPickerKeyDown}
             aria-label={changeMinutesLabel}
             data-testid={minutesTestId}
           />
@@ -115,6 +184,8 @@ export const CalendarTime = ({
               onClick={onDoneButtonClick}
               size="l"
               disabled={doneButtonDisabled}
+              getRootRef={doneButtonRef}
+              onKeyDown={onPickerKeyDown}
               data-testid={doneButtonTestId}
             >
               {doneButtonText}
