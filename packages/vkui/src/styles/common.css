@@ -49,6 +49,14 @@
   background: var(--vkui--color_background);
 }
 
+.vkui--layout-card {
+  background: var(--vkui--color_background);
+}
+
+.vkui--layout-plain {
+  background: var(--vkui--color_background_content);
+}
+
 /* отключаем нативный pull-to-refresh при взаимодействии с компонентом
  * PullToRefresh или при открывании модалки */
 .vkui--disable-overscroll-behavior {

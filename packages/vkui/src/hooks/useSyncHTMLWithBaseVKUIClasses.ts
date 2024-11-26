@@ -1,14 +1,18 @@
 import type * as React from 'react';
-import { type AppRootMode } from '../components/AppRoot/types';
+import type { AppRootLayout, AppRootMode } from '../components/AppRoot/types';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
+
+const layoutClassNames = { card: 'vkui--layout-card', plain: 'vkui--layout-plain' };
 
 export function useSyncHTMLWithBaseVKUIClasses({
   appRootRef,
   mode,
   enable,
+  layout,
 }: {
   appRootRef: React.RefObject<HTMLElement>;
   mode: AppRootMode;
+  layout?: AppRootLayout;
   enable: boolean;
 }) {
   useIsomorphicLayoutEffect(() => {
@@ -19,6 +23,7 @@ export function useSyncHTMLWithBaseVKUIClasses({
     const htmlElement = appRootRef.current?.ownerDocument.documentElement;
     const parentElement = appRootRef.current?.parentElement ?? null;
 
+    const htmlElementClasses = ['vkui'];
     const parentElementClasses = ['vkui__root'];
 
     if (mode === 'embedded') {
@@ -26,16 +31,20 @@ export function useSyncHTMLWithBaseVKUIClasses({
     }
 
     if (mode === 'full') {
+      if (layout) {
+        htmlElementClasses.push(layoutClassNames[layout]);
+      }
       /* eslint-disable-next-line no-restricted-properties */
-      htmlElement?.classList.add('vkui');
+      htmlElement?.classList.add(...htmlElementClasses);
     }
+
     /* eslint-disable-next-line no-restricted-properties */
     parentElement?.classList.add(...parentElementClasses);
 
     return () => {
       if (mode === 'full') {
         /* eslint-disable-next-line no-restricted-properties */
-        htmlElement?.classList.remove('vkui');
+        htmlElement?.classList.remove(...htmlElementClasses);
       }
       /* eslint-disable-next-line no-restricted-properties */
       parentElement?.classList.remove(...parentElementClasses);
