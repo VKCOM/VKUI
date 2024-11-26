@@ -168,6 +168,7 @@ export const AppRoot = ({
         getRootRef={appRootRef}
         className={classNames(
           className,
+          styles.host,
           sizeX !== 'compact' && sizeXClassNames[sizeX],
           layout && layoutClassNames[layout],
           mode === 'embedded' && !disableParentTransformForPositionFixedElements
