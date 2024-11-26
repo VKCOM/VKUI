@@ -138,13 +138,10 @@ export const ActionSheet = ({
     </ActionSheetContext.Provider>
   );
 
-  if (mode === 'menu') {
-    return actionSheet;
-  }
-
   return (
     <AppRootPortal>
       <PopoutWrapper
+        noBackground={mode === 'menu'}
         closing={Boolean(closingBy)}
         alignY="bottom"
         className={className}
