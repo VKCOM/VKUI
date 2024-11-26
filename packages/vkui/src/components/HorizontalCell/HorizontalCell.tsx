@@ -1,13 +1,7 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
-import type {
-  CSSCustomProperties,
-  HasRef,
-  HasRootRef,
-  HTMLAttributesWithRootRef,
-  LiteralUnion,
-} from '../../types';
+import type { CSSCustomProperties, HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
@@ -31,18 +25,6 @@ const textAlignClassNames = {
 };
 
 type HorizontalCellSizes = 's' | 'm' | 'l' | 'xl' | 'auto';
-
-interface CellTypographyProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
-  size: HorizontalCellProps['size'];
-}
-
-const CellTypography = ({ size, children, ...restProps }: CellTypographyProps) => {
-  return size === 's' ? (
-    <Caption {...restProps}>{children}</Caption>
-  ) : (
-    <Subhead {...restProps}>{children}</Subhead>
-  );
-};
 
 export interface HorizontalCellProps
   extends Omit<TappableProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'>,
@@ -78,6 +60,8 @@ export interface HorizontalCellProps
    * Актуально для использования в многострочных списках
    */
   noPadding?: boolean;
+  /* Позволяет поменять тег, используемый для `title` */
+  TitleComponent?: React.ElementType;
 }
 
 /**
@@ -95,6 +79,7 @@ export const HorizontalCell = ({
   extraSubtitle,
   textAlign = size === 's' ? 'center' : 'start',
   noPadding = false,
+  TitleComponent = size === 's' ? Caption : Subhead,
   ...restProps
 }: HorizontalCellProps): React.ReactNode => {
   const hasTypography =
@@ -125,7 +110,7 @@ export const HorizontalCell = ({
               textAlign !== 'start' && textAlignClassNames[textAlign],
             )}
           >
-            {hasReactNode(title) && <CellTypography size={size}>{title}</CellTypography>}
+            {hasReactNode(title) && <TitleComponent>{title}</TitleComponent>}
             {hasReactNode(subtitle) && <Footnote className={styles.subtitle}>{subtitle}</Footnote>}
             {hasReactNode(extraSubtitle) && (
               <Footnote className={styles.subtitle}>{extraSubtitle}</Footnote>
