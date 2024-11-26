@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import type { ColorSchemeType } from '../../lib/colorScheme';
 import { platform, type PlatformType } from '../../lib/platform';

@@ -1,5 +1,9 @@
 import { classNames } from '@vkontakte/vkjs';
-import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
+import { ImageBase, type ImageBaseProps } from '../ImageBase/ImageBase';
+import {
+  ImageBaseOverlay,
+  type ImageBaseOverlayProps,
+} from '../ImageBase/ImageBaseOverlay/ImageBaseOverlay';
 import { AvatarBadge, type AvatarBadgeProps } from './AvatarBadge/AvatarBadge';
 import {
   AvatarBadgeWithPreset,
@@ -131,7 +135,7 @@ Avatar.Badge.displayName = 'Avatar.Badge';
 Avatar.BadgeWithPreset = AvatarBadgeWithPreset;
 Avatar.BadgeWithPreset.displayName = 'Avatar.BadgeWithPreset';
 
-Avatar.Overlay = ImageBase.Overlay;
+Avatar.Overlay = ImageBaseOverlay;
 Avatar.Overlay.displayName = 'Avatar.Overlay';
 
 Avatar.getInitialsFontSize = getInitialsFontSize;
