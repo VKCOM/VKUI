@@ -8,6 +8,7 @@ import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { useDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalRootContext, type ModalRootContextInterface } from './ModalRootContext';
@@ -26,6 +27,7 @@ export const ModalRootDesktop = ({
   onClose,
   onClosed,
   modalOverlayTestId,
+  usePortal,
 }: ModalRootWithDOMProps): React.ReactNode => {
   const maskElementRef = React.useRef<HTMLDivElement>(null);
   const maskAnimationFrame = React.useRef<number | undefined>(undefined);
@@ -202,44 +204,46 @@ export const ModalRootDesktop = ({
   }
 
   return (
-    <ModalRootContext.Provider value={modalRootContext}>
-      <div
-        className={classNames(
-          styles.host,
-          hasCustomPanelHeaderAfter && styles.hasCustomPanelHeaderAfterSlot,
-          styles.desktop,
-        )}
-      >
+    <AppRootPortal usePortal={usePortal}>
+      <ModalRootContext.Provider value={modalRootContext}>
         <div
-          data-testid={modalOverlayTestId}
-          className={styles.mask}
-          ref={maskElementRef}
-          onClick={onExit}
-        />
-        <div className={styles.viewport}>
-          {modals.map((Modal: React.ReactElement) => {
-            const modalId = getNavId(Modal.props, warn);
-            if (modalId !== activeModal && modalId !== exitingModal) {
-              return null;
-            }
+          className={classNames(
+            styles.host,
+            hasCustomPanelHeaderAfter && styles.hasCustomPanelHeaderAfterSlot,
+            styles.desktop,
+          )}
+        >
+          <div
+            data-testid={modalOverlayTestId}
+            className={styles.mask}
+            ref={maskElementRef}
+            onClick={onExit}
+          />
+          <div className={styles.viewport}>
+            {modals.map((Modal: React.ReactElement) => {
+              const modalId = getNavId(Modal.props, warn);
+              if (modalId !== activeModal && modalId !== exitingModal) {
+                return null;
+              }
 
-            const key = `modal-${modalId}`;
+              const key = `modal-${modalId}`;
 
-            return (
-              <FocusTrap
-                autoFocus={false}
-                restoreFocus={false}
-                onClose={onExit}
-                timeout={timeout}
-                key={key}
-                className={styles.modal}
-              >
-                {Modal}
-              </FocusTrap>
-            );
-          })}
+              return (
+                <FocusTrap
+                  autoFocus={false}
+                  restoreFocus={false}
+                  onClose={onExit}
+                  timeout={timeout}
+                  key={key}
+                  className={styles.modal}
+                >
+                  {Modal}
+                </FocusTrap>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </ModalRootContext.Provider>
+      </ModalRootContext.Provider>
+    </AppRootPortal>
   );
 };

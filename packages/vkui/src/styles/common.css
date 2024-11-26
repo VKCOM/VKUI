@@ -1,3 +1,23 @@
+/*
+ * .vkui класс в режиме full необходим на элементе html
+ * чтобы правильно устанавливалось значение color-scheme
+ * окрашивающее фон html и скроллбар в цвета текущей цветовой
+ * схемы.
+ * Так как color-scheme зависит от vkui токена, то в
+ * full режиме класс токенов vkui также должен
+ * быть установлен на html.
+ *
+ * В SSR есть проблема - чтобы на сервере правильно установить
+ * нужный класс для токенов надо знать предпочитаемую цветовую
+ * схему пользователя и передать её через свойство appearance.
+ * Если ошибиться со схемой на сервере, то пользователь
+ * может получить не ту схему, либо может увидеть как интерфейс моргает
+ * из-за переключения со светлой темы на тёмную.
+ * Чтобы окончательно избавиться от этой проблемы нужно
+ * в vkui-tokens создавать темы в которые старазу же зашиты обе цветовые схемы.
+ * А переключение между темами задавалось бы через медиа выражения
+ * с помощью prefers-color-scheme.
+ * */
 /* stylelint-disable-next-line selector-max-type */
 .vkui > body,
 .vkui,
@@ -5,53 +25,30 @@
   margin: 0;
   padding: 0;
   block-size: 100%;
-}
-
-.vkui__root--embedded {
-  overflow-x: hidden;
-}
-
-.vkui,
-.vkui__root--embedded {
   color-scheme: var(--vkui--colors_scheme);
 }
 
-/* stylelint-disable-next-line selector-max-type */
-.vkui > body,
+.vkui {
+  /*
+   * TODO [>=8]: Убрать background с html элемента, но для этого надо
+   * чтобы height у всех родителей Panel вплоть до html имели
+   * min-height: 100% вместо height: 100% иначе фон html выглядывает в
+   * многоколоночном режиме если чуть ниже проскролить контент.
+   */
+  background: var(--vkui--color_background);
+}
+
+.vkui__root {
+  /* чтобы можно было ограничить размеры приложения
+   * извне с помощью max-height, max-width */
+  max-inline-size: inherit;
+  max-block-size: inherit;
+}
+
 .vkui__root--embedded {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-text-size-adjust: 100%;
-  font-family: var(--vkui--font_family_base);
-  color: var(--vkui--color_text_primary);
-}
-
-.vkui--sizeX-regular {
   background: var(--vkui--color_background);
 }
 
-@media (--sizeX-regular) {
-  .vkui--sizeX-none {
-    background: var(--vkui--color_background);
-  }
-}
-
-.vkui--layout-card {
-  background: var(--vkui--color_background);
-}
-
-.vkui--layout-plain {
-  background: var(--vkui--color_background_content);
-}
-
-.vkui--sizeY-compact {
-  --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--compact);
-}
-
-@media (--sizeY-compact) {
-  .vkui--sizeY-none {
-    --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--compact);
-  }
-}
 /* отключаем нативный pull-to-refresh при взаимодействии с компонентом
  * PullToRefresh или при открывании модалки */
 .vkui--disable-overscroll-behavior {

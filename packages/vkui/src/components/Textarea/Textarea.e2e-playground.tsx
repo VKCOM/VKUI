@@ -1,8 +1,11 @@
 import { Icon20CopyOutline, Icon20TrashSimpleOutline } from '@vkontakte/icons';
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import {
+  AppDefaultWrapper,
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+} from '@vkui-e2e/playground-helpers';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { AppRoot } from '../AppRoot/AppRoot';
 import { ColorSchemeProvider } from '../ColorSchemeProvider/ColorSchemeProvider';
 import { Div } from '../Div/Div';
 import { Flex } from '../Flex/Flex';
@@ -71,7 +74,8 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
 
 export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProps) => {
   return (
-    <AppRoot
+    <AppDefaultWrapper
+      disableDecorations
       mode="embedded"
       style={{
         height: 'auto',
@@ -86,6 +90,6 @@ export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProp
           </Div>
         </AdaptivityProvider>
       </ColorSchemeProvider>
-    </AppRoot>
+    </AppDefaultWrapper>
   );
 };

@@ -7,7 +7,7 @@ import {
 import { Alert, type AlertActionInterface, type AlertProps } from './Alert';
 
 const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
-  <AppDefaultWrapper scroll="contain" {...restProps}>
+  <AppDefaultWrapper scroll="contain" disablePortal {...restProps}>
     {children}
   </AppDefaultWrapper>
 );

@@ -1,23 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { getDocumentBody } from '../../lib/dom';
-import { useTokensClassName } from '../../lib/tokens';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseVKUIClasses';
+import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
 import { AppRootContext } from './AppRootContext';
+import { AppRootStyleContainer } from './AppRootStyleContainer';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
-import {
-  extractPortalRootByProp,
-  getClassNamesByMode,
-  getParentElement,
-  getUserSelectModeClassName,
-  setSafeAreaInsets,
-} from './helpers';
 import type {
   AppRootLayout,
   AppRootMode,
@@ -73,6 +62,16 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * @since 6.2.0
    */
   userSelectMode?: AppRootUserSelectMode;
+  /*
+   * По умолчанию в режиме `mode="full"` VKUI в рантайме выставляет:
+   * - класс .vkui на html элемент
+   * - класс .vkui__root на элемент-контейнер, в который монтируется VKUI
+   * С помощью этой опции такое поведение можно отключить.
+   *
+   * Для корректной работы SSR рекоммендуется выставлять эти классы самостоятельно
+   * и отключить это поводение.
+   */
+  disableSettingVKUIClassesInRuntime?: boolean;
 }
 
 /**
@@ -82,128 +81,29 @@ export const AppRoot = ({
   children,
   mode = 'full',
   scroll = 'global',
-  portalRoot: portalRootProp = null,
+  portalRoot,
   disablePortal = false,
   disableParentTransformForPositionFixedElements,
-  className,
   safeAreaInsets: safeAreaInsetsProp,
   layout,
   userSelectMode,
+  disableSettingVKUIClassesInRuntime,
   ...props
 }: AppRootProps): React.ReactNode => {
-  const { hasPointer, sizeX = 'none', sizeY = 'none' } = useAdaptivity();
-  const tokensClassName = useTokensClassName();
-
-  const safeAreaInsets = useObjectMemo(safeAreaInsetsProp);
-  const isKeyboardInputActiveRef = useKeyboardInputTracker();
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
-  const portalRootRef = React.useRef<HTMLElement | null>(null);
-
-  useIsomorphicLayoutEffect(
-    function setupPortalRoot() {
-      const portalByProp = portalRootProp ? extractPortalRootByProp(portalRootProp) : null;
-
-      if (portalByProp) {
-        portalRootRef.current = portalByProp;
-        return function cleanup() {
-          portalRootRef.current = null;
-        };
-      }
-
-      const documentBody = getDocumentBody(appRootRef.current);
-      const portal = documentBody.ownerDocument.createElement('div');
-      documentBody.appendChild(portal);
-      portalRootRef.current = portal;
-      return function cleanup() {
-        documentBody.removeChild(portal);
-        portalRootRef.current = null;
-      };
-    },
-    [portalRootProp],
-  );
-
-  useIsomorphicLayoutEffect(
-    function setupContainers() {
-      if (!appRootRef.current || !portalRootRef.current) {
-        return;
-      }
-
-      const parentElement = getParentElement(appRootRef.current);
-      const documentBody = getDocumentBody(appRootRef.current);
-      const documentElement = documentBody.ownerDocument.documentElement;
-
-      const [baseClassNames, stylesClassNames] = getClassNamesByMode({
-        mode,
-        layout,
-        tokensClassName,
-        sizeX,
-        sizeY,
-      });
-
-      /* eslint-disable no-restricted-properties */
-      switch (mode) {
-        case 'full': {
-          if (parentElement) {
-            parentElement.classList.add(...baseClassNames);
-          }
-
-          documentElement.classList.add(...stylesClassNames, 'vkui');
-          const unsetSafeAreaInsets = setSafeAreaInsets(safeAreaInsets, documentElement);
-
-          return function cleanup() {
-            if (parentElement) {
-              parentElement.classList.remove(...baseClassNames);
-            }
-
-            documentElement.classList.remove(...stylesClassNames, 'vkui');
-            unsetSafeAreaInsets();
-          };
-        }
-        case 'embedded': {
-          if (parentElement) {
-            parentElement.classList.add(...baseClassNames, ...stylesClassNames);
-            if (!disableParentTransformForPositionFixedElements) {
-              parentElement.style.setProperty('transform', 'translate3d(0, 0, 0)');
-            }
-            const unsetSafeAreaInsets = setSafeAreaInsets(safeAreaInsets, parentElement, portalRootRef.current); // prettier-ignore
-            return function cleanup() {
-              parentElement.classList.remove(...baseClassNames, ...stylesClassNames);
-              if (!disableParentTransformForPositionFixedElements) {
-                parentElement.style.removeProperty('transform');
-              }
-              unsetSafeAreaInsets();
-            };
-          }
-          /* istanbul ignore next: node.parentElement может быть null, но такой кейс в теории невозможен */
-          return;
-        }
-        /* istanbul ignore next: не покрывается за счёт теста на <AppRoot mode="partial" /> */
-        case 'partial': {
-          return;
-        }
-      }
-      /* eslint-enable no-restricted-properties */
-    },
-    [
-      mode,
-      layout,
-      disableParentTransformForPositionFixedElements,
-      tokensClassName,
-      sizeX,
-      sizeY,
-      safeAreaInsets,
-    ],
-  );
 
   const ScrollController = React.useMemo(
     () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
     [scroll],
   );
 
+  const isKeyboardInputActiveRef = useKeyboardInputTracker();
+  const safeAreaInsets = React.useMemo(() => safeAreaInsetsProp, [safeAreaInsetsProp]);
   const contextValue = React.useMemo(
     () => ({
       appRoot: appRootRef,
-      portalRoot: portalRootRef,
+      portalRoot,
+      safeAreaInsets,
       embedded: mode === 'embedded',
       mode,
       disablePortal,
@@ -211,32 +111,55 @@ export const AppRoot = ({
       get keyboardInput() {
         return isKeyboardInputActiveRef.current;
       },
+      userSelectMode,
     }),
-    [disablePortal, isKeyboardInputActiveRef, layout, mode],
+    [
+      portalRoot,
+      disablePortal,
+      isKeyboardInputActiveRef,
+      layout,
+      mode,
+      safeAreaInsets,
+      userSelectMode,
+    ],
   );
 
-  const content = (
-    <AppRootContext.Provider value={contextValue}>
-      <ScrollController elRef={appRootRef}>{children}</ScrollController>
-    </AppRootContext.Provider>
-  );
-
-  const { isWebView } = useConfigProvider();
-  const userSelectModeClassName = getUserSelectModeClassName({
-    userSelectMode,
-    isWebView,
-    hasPointer,
+  /*
+   * Вешаем класс токенов на html в режиме full.
+   * Это необходимо, чтобы цвета html элемента и скроллбара соответствовали текущей цветовой схеме:
+   * - фон html элемента виден, если пользователь оверскролит. Тогда возникает анимация bounce-эффекта и виден фон html элемента. Без токенов в черной теме будет выглядывать белый фон.
+   * - цвет системного сколлбара зависит от color-sheme свойства, значение которого задётся токенами и должно быть выставлено именно на html элементе.
+   * В режме SSR пользователи сами могу задать этот класс на html-элементе. главное, чтобы он соответствовал переданным platform и appearence свойствам.
+   */
+  useSyncHTMLWithTokens({ appRootRef, enable: mode === 'full' });
+  /*
+   * По умолчанию VKUI будет выставлять .vkui на html и .vkui__root на контейнере в режиме full.
+   * В режиме embedded будет выставлять только .vkui__root и .vkui__root--embedded на контейнере.
+   * В режиме partial мы классы не выставляем.
+   */
+  useSyncHTMLWithBaseVKUIClasses({
+    appRootRef,
+    mode,
+    enable: mode !== 'partial' && !disableSettingVKUIClassesInRuntime,
   });
 
   return mode === 'partial' ? (
-    content
+    <AppRootContext.Provider value={contextValue}>
+      <ScrollController elRef={appRootRef}>{children}</ScrollController>
+    </AppRootContext.Provider>
   ) : (
-    <div
-      ref={appRootRef}
-      className={classNames(styles.host, userSelectModeClassName, className)}
-      {...props}
-    >
-      {content}
-    </div>
+    <AppRootContext.Provider value={contextValue}>
+      <AppRootStyleContainer
+        getRootRef={appRootRef}
+        className={
+          mode === 'embedded' && !disableParentTransformForPositionFixedElements
+            ? styles.transformForPositionFixedElements
+            : undefined
+        }
+        {...props}
+      >
+        <ScrollController elRef={appRootRef}>{children}</ScrollController>
+      </AppRootStyleContainer>
+    </AppRootContext.Provider>
   );
 };

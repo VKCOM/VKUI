@@ -1,31 +1,3 @@
-.host {
-  block-size: 100%;
-  inline-size: 100%;
-}
-
-.userSelectNone {
-  user-select: none;
-}
-
-/**
- * Хак для webkit-based браузеров, потому что на версиях iOS <= 14.* исчезает возможность
- * редактировать contenteditable элементы, если выше по дереву задан user-select: none;
- */
-.userSelectNone [contenteditable] {
-  user-select: text;
-}
-
-@media (--pointer-has-not) {
-  .pointerNone {
-    user-select: none;
-  }
-
-  .pointerNone [contenteditable] {
-    user-select: text;
-  }
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkui__root--embedded) .host {
-  overflow: auto;
+.transformForPositionFixedElements {
+  transform: translate3d(0, 0, 0);
 }

@@ -13,7 +13,7 @@ import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
 const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
-  <AppDefaultWrapper scroll="contain" {...restProps}>
+  <AppDefaultWrapper disablePortal scroll="contain" {...restProps}>
     {children}
   </AppDefaultWrapper>
 );

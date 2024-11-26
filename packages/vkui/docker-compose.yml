@@ -2,12 +2,14 @@ services:
   package_vkui:
     image: ${IMAGE}
     ipc: host
+    extra_hosts:
+      - host.docker.internal:host-gateway # allows network calls between docker container and the host. See https://forums.docker.com/t/how-to-reach-localhost-on-host-from-docker-container/113321
     user: root
     working_dir: /repo/packages/vkui
     command: sh -c "
       corepack enable &&
       YARN_ENABLE_SCRIPTS=false yarn install --immutable &&
-      yarn run test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG:-}
+      yarn run ${RUN_SCRIPT_COMMAND:-test:e2e:ci} ${UPDATE_SNAPSHOTS_FLAG:-}
       "
     volumes:
       - ../../:/repo
@@ -25,6 +27,8 @@ services:
       - /repo/.cache
       - /repo/.swc
       - /repo/packages/vkui/.swc
+    ports:
+      - 4300:4300
 
 volumes:
   yarn_cache:
