@@ -28,7 +28,7 @@ services:
       - /repo/.swc
       - /repo/packages/vkui/.swc
     ports:
-      - 4300:4300
+      - 127.0.0.1:4300:4300
 
 volumes:
   yarn_cache:
