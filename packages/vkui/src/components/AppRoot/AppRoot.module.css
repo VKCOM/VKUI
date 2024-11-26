@@ -7,16 +7,6 @@
   block-size: 100%;
 }
 
-.sizeXRegular {
-  background: var(--vkui--color_background);
-}
-
-@media (--sizeX-regular) {
-  .sizeXNone {
-    background: var(--vkui--color_background);
-  }
-}
-
 .layoutCard {
   background: var(--vkui--color_background);
 }

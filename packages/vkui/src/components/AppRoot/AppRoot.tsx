@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseVKUIClasses';
 import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
@@ -17,11 +16,6 @@ import type {
   SafeAreaInsets,
 } from './types';
 import styles from './AppRoot.module.css';
-
-const sizeXClassNames = {
-  none: styles.sizeXNone,
-  regular: styles.sizeXRegular,
-};
 
 const layoutClassNames = {
   card: styles.layoutCard,
@@ -151,8 +145,6 @@ export const AppRoot = ({
     enable: mode !== 'partial' && !disableSettingVKUIClassesInRuntime,
   });
 
-  const { sizeX = 'none' } = useAdaptivity();
-
   const ScrollController = React.useMemo(
     () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
     [scroll],
@@ -169,7 +161,6 @@ export const AppRoot = ({
         className={classNames(
           className,
           styles.host,
-          sizeX !== 'compact' && sizeXClassNames[sizeX],
           layout && layoutClassNames[layout],
           mode === 'embedded' && !disableParentTransformForPositionFixedElements
             ? styles.transformForPositionFixedElements
