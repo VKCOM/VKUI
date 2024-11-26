@@ -47,14 +47,8 @@ type AppRootStyleContainerProps = RootComponentProps<HTMLDivElement>;
  *
  * @private
  */
-export function AppRootStyleContainer({ style, ...props }: AppRootStyleContainerProps) {
+export function AppRootStyleContainer(props: AppRootStyleContainerProps) {
   const { style: appRootStyle, className: appRootClassName } = useAppRootStyles();
 
-  return (
-    <RootComponent
-      baseClassName={appRootClassName}
-      style={appRootStyle ? { ...appRootStyle, ...style } : style}
-      {...props}
-    />
-  );
+  return <RootComponent baseClassName={appRootClassName} baseStyle={appRootStyle} {...props} />;
 }

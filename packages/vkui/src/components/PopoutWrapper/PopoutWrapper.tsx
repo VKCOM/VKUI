@@ -72,10 +72,7 @@ export const PopoutWrapper = ({
         fixed && styles.fixed,
         !noBackground && styles.masked,
       )}
-      style={{
-        zIndex,
-        ...restProps.style,
-      }}
+      baseStyle={{ zIndex }}
     >
       <div className={styles.container}>
         <div className={styles.overlay} onClick={onClick} />
