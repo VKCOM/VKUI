@@ -43,24 +43,15 @@ for (let i = 0; i < 60; i += 1) {
   minutes.push({ value: i, label: String(i).padStart(2, '0') });
 }
 
-const validateHours = (
+const validateValue = (
   value: string,
-  localHours: Array<{
+  validValues: Array<{
     value: number;
     label: string;
   }>,
 ): boolean => {
-  return localHours.some((h) => h.label === value);
-};
-
-const validateMinutes = (
-  value: string,
-  localMinutes: Array<{
-    value: number;
-    label: string;
-  }>,
-): boolean => {
-  return localMinutes.some((m) => m.label === value);
+  const numValue = Number(value);
+  return !isNaN(numValue) && validValues.some((v) => v.value === numValue);
 };
 
 export const CalendarTime = ({
@@ -106,11 +97,11 @@ export const CalendarTime = ({
   };
 
   const onHoursInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onPickerValueChange(e, (numValue) => validateHours(numValue, localHours), setHours);
+    onPickerValueChange(e, (numValue) => validateValue(numValue, localHours), setHours);
   };
 
   const onMinutesInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onPickerValueChange(e, (numValue) => validateMinutes(numValue, localMinutes), setMinutes);
+    onPickerValueChange(e, (numValue) => validateValue(numValue, localMinutes), setMinutes);
   };
 
   const onHoursChange = React.useCallback(
