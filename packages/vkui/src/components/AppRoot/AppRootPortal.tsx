@@ -8,7 +8,7 @@ import { isRefObject } from '../../lib/isRefObject';
 import type { HasChildren } from '../../types';
 import { ColorSchemeProvider } from '../ColorSchemeProvider/ColorSchemeProvider';
 import { AppRootContext, type AppRootContextInterface } from './AppRootContext';
-import { AppRootStyleContainer } from './AppRootStyleContainer';
+import { AppRootStyleContainer } from './AppRootStyleContainer/AppRootStyleContainer';
 
 export interface AppRootPortalProps extends HasChildren {
   /**

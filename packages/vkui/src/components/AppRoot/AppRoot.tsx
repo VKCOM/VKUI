@@ -1,11 +1,13 @@
 'use client';
 
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseVKUIClasses';
 import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
 import { AppRootContext } from './AppRootContext';
-import { AppRootStyleContainer } from './AppRootStyleContainer';
+import { AppRootStyleContainer } from './AppRootStyleContainer/AppRootStyleContainer';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
 import type {
   AppRootLayout,
@@ -15,6 +17,16 @@ import type {
   SafeAreaInsets,
 } from './types';
 import styles from './AppRoot.module.css';
+
+const sizeXClassNames = {
+  none: styles.sizeXNone,
+  regular: styles.sizeXRegular,
+};
+
+const layoutClassNames = {
+  card: styles.layoutCard,
+  plain: styles.layoutPlain,
+};
 
 export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Режим встраивания */
@@ -88,14 +100,10 @@ export const AppRoot = ({
   layout,
   userSelectMode,
   disableSettingVKUIClassesInRuntime,
+  className,
   ...props
 }: AppRootProps): React.ReactNode => {
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
-
-  const ScrollController = React.useMemo(
-    () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
-    [scroll],
-  );
 
   const isKeyboardInputActiveRef = useKeyboardInputTracker();
   const safeAreaInsets = React.useMemo(() => safeAreaInsetsProp, [safeAreaInsetsProp]);
@@ -143,6 +151,13 @@ export const AppRoot = ({
     enable: mode !== 'partial' && !disableSettingVKUIClassesInRuntime,
   });
 
+  const { sizeX = 'none' } = useAdaptivity();
+
+  const ScrollController = React.useMemo(
+    () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
+    [scroll],
+  );
+
   return mode === 'partial' ? (
     <AppRootContext.Provider value={contextValue}>
       <ScrollController elRef={appRootRef}>{children}</ScrollController>
@@ -151,11 +166,14 @@ export const AppRoot = ({
     <AppRootContext.Provider value={contextValue}>
       <AppRootStyleContainer
         getRootRef={appRootRef}
-        className={
+        className={classNames(
+          className,
+          sizeX !== 'compact' && sizeXClassNames[sizeX],
+          layout && layoutClassNames[layout],
           mode === 'embedded' && !disableParentTransformForPositionFixedElements
             ? styles.transformForPositionFixedElements
-            : undefined
-        }
+            : undefined,
+        )}
         {...props}
       >
         <ScrollController elRef={appRootRef}>{children}</ScrollController>

@@ -11,8 +11,8 @@ import { AppRoot, type AppRootProps } from './AppRoot';
 import { AppRootContext } from './AppRootContext';
 import { ScrollContext, type ScrollContextInterface, useScrollLock } from './ScrollContext';
 import { CUSTOM_PROPERTY_INSET_PREFIX } from './helpers';
-import appRootStyles from './AppRoot.module.css';
-import styles from './AppRootStyleContainer.module.css';
+import styles from './AppRoot.module.css';
+import appRootStyleContainerStyle from './AppRootStyleContainer/AppRootStyleContainer.module.css';
 
 describe('AppRoot', () => {
   baselineComponent(AppRoot, { getRootRef: false });
@@ -25,13 +25,13 @@ describe('AppRoot', () => {
         </AdaptivityProvider>
       );
       const result = render(<Template />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles.pointerNone);
+      expect(result.getByTestId('app-root')).toHaveClass(appRootStyleContainerStyle.pointerNone);
       result.rerender(<Template hasPointer={false} />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles.userSelectNone);
+      expect(result.getByTestId('app-root')).toHaveClass(appRootStyleContainerStyle.userSelectNone);
       result.rerender(<Template hasPointer={true} />);
       expect(result.getByTestId('app-root')).not.toHaveClass(
-        styles.pointerNone,
-        styles.userSelectNone,
+        appRootStyleContainerStyle.pointerNone,
+        appRootStyleContainerStyle.userSelectNone,
       );
     });
 
@@ -43,12 +43,12 @@ describe('AppRoot', () => {
       );
       // по умолчанию userSelectMode='disabled-in-webview'
       const result = render(<Template isWebView />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles.userSelectNone);
+      expect(result.getByTestId('app-root')).toHaveClass(appRootStyleContainerStyle.userSelectNone);
 
       result.rerender(<Template isWebView={false} />);
       expect(result.getByTestId('app-root')).not.toHaveClass(
-        styles.pointerNone,
-        styles.userSelectNone,
+        appRootStyleContainerStyle.pointerNone,
+        appRootStyleContainerStyle.userSelectNone,
       );
     });
 
@@ -58,12 +58,12 @@ describe('AppRoot', () => {
       );
 
       expect(result.getByTestId('app-root')).not.toHaveClass(
-        styles.pointerNone,
-        styles.userSelectNone,
+        appRootStyleContainerStyle.pointerNone,
+        appRootStyleContainerStyle.userSelectNone,
       );
 
       result.rerender(<AppRoot mode="full" data-testid="app-root" userSelectMode="disabled" />);
-      expect(result.getByTestId('app-root')).toHaveClass(styles.userSelectNone);
+      expect(result.getByTestId('app-root')).toHaveClass(appRootStyleContainerStyle.userSelectNone);
     });
   });
 
@@ -362,9 +362,7 @@ describe('AppRoot', () => {
   describe('Workarounds', () => {
     it('should disable CSS transform on parent for mode="embedded"', () => {
       const component = render(<AppRoot data-testid="app-root" mode="embedded" />);
-      expect(screen.getByTestId('app-root')).toHaveClass(
-        appRootStyles.transformForPositionFixedElements,
-      );
+      expect(screen.getByTestId('app-root')).toHaveClass(styles.transformForPositionFixedElements);
 
       component.rerender(
         <AppRoot
@@ -375,7 +373,7 @@ describe('AppRoot', () => {
       );
 
       expect(screen.getByTestId('app-root')).not.toHaveClass(
-        appRootStyles.transformForPositionFixedElements,
+        styles.transformForPositionFixedElements,
       );
     });
   });
