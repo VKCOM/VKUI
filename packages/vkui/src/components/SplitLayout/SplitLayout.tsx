@@ -12,7 +12,7 @@ export interface SplitLayoutProps
   /**
    * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
    *
-   * @deprecated будет удалёно в **VKUI v8**
+   * @deprecated будет удалeно в **VKUI v8**
    * Начиная с **VKUI v7** компоненты можно располагать в любом
    * месте приложения в пределах `AppRoot`
    */
@@ -20,7 +20,7 @@ export interface SplitLayoutProps
   /**
    * Свойство для отрисовки `ModalRoot`.
    *
-   * @deprecated будет удалёно в **VKUI v8**
+   * @deprecated будет удалeно в **VKUI v8**
    * Начиная с **VKUI v7**  `ModalRoot` можно располагать в любом
    * месте приложения в пределах `AppRoot`
    */
