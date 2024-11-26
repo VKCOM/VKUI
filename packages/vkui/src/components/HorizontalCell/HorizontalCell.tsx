@@ -61,8 +61,8 @@ export interface HorizontalCellProps
    */
   noPadding?: boolean;
   /**
-   * Позволяет поменять тег, используемый для `title`.
-   * По умолчанию Caption для `size=s`, иначе Subhead.
+   * Позволяет передать типографический компонент, используемый для `title`.
+   * По умолчанию `Caption` для `size=s`, иначе `Subhead`.
    */
   TitleComponent?: React.ElementType;
 }
