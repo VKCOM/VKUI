@@ -75,7 +75,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * С помощью этой опции такое поведение можно отключить.
    *
    * Для корректной работы SSR рекоммендуется выставлять эти классы самостоятельно
-   * и отключить это поводение.
+   * и отключить это поведение.
    */
   disableSettingVKUIClassesInRuntime?: boolean;
 }
