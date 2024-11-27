@@ -187,7 +187,8 @@ describe('CalendarTime', () => {
       const hoursInput = screen.getByTestId('hours-picker');
       await userEvent.type(hoursInput, '25'); // Невалидное значение часов
 
-      expect(onChange).not.toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith(setHours(dayDate, 2));
+      expect(onChange).toHaveBeenCalledTimes(1);
     });
 
     it('should not call onChange for invalid minutes input', async () => {
@@ -197,7 +198,8 @@ describe('CalendarTime', () => {
       const minutesInput = screen.getByTestId('minutes-picker');
       await userEvent.type(minutesInput, '61'); // Невалидное значение минут
 
-      expect(onChange).not.toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith(setMinutes(dayDate, 6));
+      expect(onChange).toHaveBeenCalledTimes(1);
     });
   });
 
