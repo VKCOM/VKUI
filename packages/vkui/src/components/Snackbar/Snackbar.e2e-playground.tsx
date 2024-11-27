@@ -1,6 +1,10 @@
 import { noop } from '@vkontakte/vkjs';
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { AppRoot } from '../AppRoot/AppRoot';
+import {
+  AppDefaultWrapper,
+  type AppWrapperProps,
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+} from '@vkui-e2e/playground-helpers';
 import { Snackbar, type SnackbarProps } from './Snackbar';
 
 const BASE_OFFSET_Y = 64;
@@ -14,13 +18,19 @@ const offsetYByPlacement = {
   'bottom-end': 0,
 };
 
+const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
+  <AppDefaultWrapper disableDecorations {...restProps}>
+    {children}
+  </AppDefaultWrapper>
+);
+
 export const SnackbarPlayground = ({ platform, ...restProps }: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...restProps}
       platform={platform}
       isFixedComponent
-      AppWrapper={AppRoot}
+      AppWrapper={AppWrapper}
       propSets={[
         {
           placement: ['top-start', 'top', 'top-end', 'bottom-start', 'bottom', 'bottom-end'],
@@ -45,7 +55,7 @@ export const SnackbarModePlayground = (props: ComponentPlaygroundProps) => {
     <ComponentPlayground
       {...props}
       isFixedComponent
-      AppWrapper={AppRoot}
+      AppWrapper={AppWrapper}
       propSets={[
         {
           mode: [undefined, 'dark'],
