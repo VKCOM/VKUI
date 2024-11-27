@@ -1,5 +1,5 @@
 {
-  "node": "18",
+  "node": "20",
   "buildCommand": "build:vkui",
   "packages": ["packages/vkui"],
   "sandboxes": ["vkui-typescript-uwozmt"]

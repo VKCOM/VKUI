@@ -96,7 +96,6 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   mode = 'default',
   subtitle,
   offsetY,
-  style,
   getRootRef,
   ...restProps
 }: SnackbarProps) => {
@@ -259,7 +258,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
         placementClassNames[placement],
         animationStateClassNames[animationState],
       )}
-      style={resolveOffsetYCssStyle(placement, style, offsetY)}
+      baseStyle={resolveOffsetYCssStyle(placement, offsetY)}
       getRootRef={rootRef}
     >
       <div

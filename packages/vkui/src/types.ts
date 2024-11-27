@@ -65,7 +65,10 @@ export type Exact<A, B> = A extends B ? B : never;
 /**
  * Для возможности указывать css custom properties
  */
-export type CSSCustomProperties<T extends string | undefined = string> = Record<`--${string}`, T>;
+export type CSSCustomProperties<T extends string | number | undefined = string> = Record<
+  `--${string}`,
+  T
+>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Nothing {}

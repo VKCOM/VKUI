@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import type { HasComponent, HasRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -119,7 +118,7 @@ export const FormItem: React.FC<FormItemProps> & {
     </React.Fragment>
   );
 
-  const context = useObjectMemo({ required, topMultiline });
+  const context = React.useMemo(() => ({ required, topMultiline }), [required, topMultiline]);
 
   return (
     <RootComponent

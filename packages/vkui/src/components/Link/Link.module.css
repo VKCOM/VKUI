@@ -14,7 +14,7 @@
 }
 
 @media (--hover-has) {
-  .host:hover {
+  .withUnderline:hover {
     text-decoration: underline;
   }
 }
@@ -23,8 +23,16 @@
   color: var(--vkui--color_text_link_visited);
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.host :global(.vkuiIcon) {
+.before,
+.after {
   display: inline-block;
   vertical-align: middle;
+}
+
+.before {
+  margin-inline-end: var(--vkui--spacing_size_xs);
+}
+
+.after {
+  margin-inline-start: var(--vkui--spacing_size_xs);
 }

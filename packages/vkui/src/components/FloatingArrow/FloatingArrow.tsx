@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
 import type { HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { DefaultIcon } from './DefaultIcon';
 import styles from './FloatingArrow.module.css';
 
@@ -10,7 +11,7 @@ export type Coords = {
   y?: number;
 };
 
-const placementClassNames = {
+export const placementClassNames = {
   right: styles.placementRight,
   bottom: styles.placementBottom,
   left: styles.placementLeft,
@@ -35,7 +36,9 @@ export interface FloatingArrowProps
 }
 
 /**
- * @private
+ * Иконка-стрелка для всплывающих окон.
+ *
+ * @since 7.0.0
  */
 export const FloatingArrow = ({
   offset,
@@ -44,7 +47,6 @@ export const FloatingArrow = ({
   iconStyle,
   iconClassName,
   placement = 'bottom',
-  getRootRef,
   Icon = DefaultIcon,
   ...restProps
 }: FloatingArrowProps): React.ReactNode => {
@@ -56,14 +58,13 @@ export const FloatingArrow = ({
   );
 
   return (
-    <div
-      ref={getRootRef}
-      style={arrowStyles}
-      className={classNames(styles.host, arrowPlacement && placementClassNames[arrowPlacement])}
+    <RootComponent
+      baseStyle={arrowStyles}
+      baseClassName={classNames(styles.host, arrowPlacement && placementClassNames[arrowPlacement])}
       {...restProps}
     >
       <Icon className={classNames(styles.in, iconClassName)} style={iconStyle} />
-    </div>
+    </RootComponent>
   );
 };
 

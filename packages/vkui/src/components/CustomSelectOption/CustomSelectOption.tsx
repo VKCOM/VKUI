@@ -3,8 +3,9 @@
 import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -74,15 +75,14 @@ export const CustomSelectOption = ({
   ...restProps
 }: CustomSelectOptionProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
-  const style = React.useMemo(
+  const style: (React.CSSProperties & CSSCustomProperties<number>) | undefined = React.useMemo(
     () =>
       hierarchy > 0
         ? {
             '--vkui_internal--custom_select_option_hierarchy_level': hierarchy,
-            ...styleProp,
           }
-        : styleProp,
-    [hierarchy, styleProp],
+        : undefined,
+    [hierarchy],
   );
   const hovered = hoveredProp && !disabled ? true : false;
 
@@ -103,7 +103,7 @@ export const CustomSelectOption = ({
         hierarchy > 0 && styles.hierarchy,
         className,
       )}
-      style={style}
+      style={mergeStyle(style, styleProp)}
     >
       {hasReactNode(before) && <div className={styles.before}>{before}</div>}
       <div className={styles.main}>

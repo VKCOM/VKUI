@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 
 export const NavViewIdContext: React.Context<string | undefined> = React.createContext<

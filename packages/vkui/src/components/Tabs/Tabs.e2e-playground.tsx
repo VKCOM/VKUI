@@ -72,7 +72,7 @@ const Scrollable = ({ disabled }: { disabled?: boolean }) => {
           onClick={noop}
           before={beforeIconByMode}
           status={
-            <Counter mode="prominent" size="s">
+            <Counter mode="primary" appearance="accent-red" size="s">
               3
             </Counter>
           }
@@ -114,7 +114,7 @@ export const TabsPlayground = (props: ComponentPlaygroundProps) => {
             <Unscrollable
               key="tabs"
               status={
-                <Counter mode="prominent" size="s">
+                <Counter mode="primary" appearance="accent-red" size="s">
                   3
                 </Counter>
               }
@@ -122,7 +122,7 @@ export const TabsPlayground = (props: ComponentPlaygroundProps) => {
             <Unscrollable
               key="tabs"
               status={
-                <Counter mode="prominent" size="s">
+                <Counter mode="primary" appearance="accent-red" size="s">
                   3
                 </Counter>
               }

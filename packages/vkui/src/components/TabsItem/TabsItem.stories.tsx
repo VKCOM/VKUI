@@ -31,7 +31,7 @@ const story: Meta<TabsItemProps> = {
       additionalPresets: {
         Badge: <Badge mode="prominent">Есть обновления</Badge>,
         Counter: (
-          <Counter mode="prominent" size="s">
+          <Counter mode="primary" appearance="accent-red" size="s">
             3
           </Counter>
         ),
@@ -84,7 +84,7 @@ export const WithCounter: Story = {
     before: 'Icon20UsersOutline',
     after: 'Icon16Dropdown',
     status: (
-      <Counter mode="prominent" size="s">
+      <Counter mode="primary" appearance="accent-red" size="s">
         3
       </Counter>
     ),

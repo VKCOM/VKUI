@@ -8,7 +8,6 @@ const postcssGapProperties = require('postcss-gap-properties');
 const cssImport = require('postcss-import');
 const postcssLogical = require('postcss-logical');
 const cssModules = require('postcss-modules');
-const { VKUI_PACKAGE, VKUI_TOKENS_CSS, generateScopedName } = require('../../../shared');
 
 const rootDirectory = path.join(__dirname, '../../..');
 
@@ -33,11 +32,12 @@ function getMinimizerOptions(isVKUIPackageBuild = false) {
 /**
  * Конфигурация postcss плагинов
  * @param {Object} config - Конфигурация.
- * @param {boolean | undefined} config.isVKUIPackageBuild - Сборка пакета.
- * @param {boolean | undefined} config.isProduction - Продакшн сборка.
- * @param {boolean | undefined} config.isCssModulesFile - Сборка module.css файлов.
- * @param {boolean | undefined} config.isESNext - Отдельная сборка cssm.
- * @param {boolean | undefined} config.disableMinimizer - Отключает cssnano.
+ * @param {boolean} [config.isVKUIPackageBuild=false] Сборка пакета.
+ * @param {boolean} [config.isProduction=process.env.NODE_ENV === 'production'] Продакшн сборка.
+ * @param {boolean} [config.isCssModulesFile=false] Сборка module.css файлов.
+ * @param {boolean} [config.isESNext=false] Отдельная сборка cssm.
+ * @param {boolean} [config.isStorybook=process.env.SANDBOX === '.storybook'] Отдельная сборка cssm.
+ * @param {boolean} [config.disableMinimizer=false] Отключает cssnano.
  * @returns {import('postcss').Plugin[]}
  */
 function makePostcssPlugins({
@@ -53,16 +53,24 @@ function makePostcssPlugins({
     cssImport(),
 
     restructureVariable(
-      VKUI_TOKENS_CSS.map((pathSegment) => path.join(rootDirectory, pathSegment)),
+      [
+        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css',
+        './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
+      ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
     ),
 
     // Сбор данных для работы некоторых postcss плагинов
     postcssGlobalData({
       files: [
         './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
-        VKUI_PACKAGE.PATHS.CSS_DYNAMIC_TOKENS,
-        VKUI_PACKAGE.PATHS.CSS_CONSTANTS,
-        VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS,
+        'packages/vkui/src/styles/dynamicTokens.css',
+        'packages/vkui/src/styles/constants.css',
+        'packages/vkui/src/styles/customMedias.generated.css',
       ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
     }),
 
@@ -84,7 +92,7 @@ function makePostcssPlugins({
   if (isVKUIPackageBuild && isCssModulesFile && !isESNext) {
     plugins.push(
       cssModules({
-        generateScopedName,
+        generateScopedName: 'vkui[folder]__[local]',
         getJSON: () => void 0,
       }),
     );

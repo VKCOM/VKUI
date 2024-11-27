@@ -15,7 +15,7 @@ import {
 } from '../PanelHeaderButton/PanelHeaderButton';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 
-export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
+export interface PanelHeaderEditProps extends Omit<PanelHeaderButtonProps, 'label' | 'children'> {
   /**
    * Включен ли режим редактирования
    */
@@ -43,17 +43,15 @@ export const PanelHeaderEdit = ({
   const label = isActive ? doneLabel : editLabel;
 
   return (
-    <PanelHeaderButton {...restProps}>
-      {platform === 'ios' ? (
-        label
-      ) : (
-        <>
-          <VisuallyHidden>{label}</VisuallyHidden>
-          <AdaptiveIconRenderer
-            IconCompact={isActive ? Icon24DoneOutline : Icon24PenOutline}
-            IconRegular={isActive ? Icon28DoneOutline : Icon28EditOutline}
-          />
-        </>
+    <PanelHeaderButton
+      {...restProps}
+      label={platform === 'ios' ? label : label && <VisuallyHidden>{label}</VisuallyHidden>}
+    >
+      {platform !== 'ios' && (
+        <AdaptiveIconRenderer
+          IconCompact={isActive ? Icon24DoneOutline : Icon24PenOutline}
+          IconRegular={isActive ? Icon28DoneOutline : Icon28EditOutline}
+        />
       )}
     </PanelHeaderButton>
   );

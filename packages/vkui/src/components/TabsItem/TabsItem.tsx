@@ -80,7 +80,6 @@ export const TabsItem = ({
   status,
   after,
   selected = false,
-  className,
   role = 'tab',
   tabIndex: tabIndexProp,
   getRootRef,
@@ -184,14 +183,13 @@ export const TabsItem = ({
     <Tappable
       {...restProps}
       getRootRef={rootRef}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         mode && stylesMode[mode],
         selected && styles.selected,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         withGaps && styles.withGaps,
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
-        className,
       )}
       hoverMode={hoverMode}
       activeMode={activeMode}

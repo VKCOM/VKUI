@@ -1,23 +1,20 @@
+// @ts-check
+
 import path from 'node:path';
-import rspack, { type Configuration, type RspackPluginInstance } from '@rspack/core';
+import rspack from '@rspack/core';
 import browserslist from 'browserslist';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import { makePostcssPlugins } from './scripts/postcss';
+import { makePostcssPlugins } from './scripts/postcss.cjs';
 
-const rootDirectory = path.join(__dirname, '../../');
+const rootDirectory = path.join(import.meta.dirname, '../../');
 const browser = browserslist.readConfig(path.join(rootDirectory, '.browserslistrc'));
-
-interface MakeCssRuleUseOptions {
-  /**
-   * Флаг для определения сборки css модулей
-   */
-  isCssModulesFile?: boolean;
-}
-
 /**
  * Конфигурация для css
+ *
+ * @param {Object} [options={}]
+ * @param {boolean} [options.isCssModulesFile=false] Флаг для определения сборки css модулей
  */
-function makeCssRuleUse({ isCssModulesFile = false }: MakeCssRuleUseOptions = {}) {
+function makeCssRuleUse({ isCssModulesFile = false } = {}) {
   return [
     {
       loader: 'postcss-loader',
@@ -30,14 +27,15 @@ function makeCssRuleUse({ isCssModulesFile = false }: MakeCssRuleUseOptions = {}
   ];
 }
 
-const config: Configuration = {
+/** @type {import('@rspack/cli').Configuration} */
+const config = {
   mode: 'production',
   entry: {
     vkui: ['./src/styles/themes.css', './src/index.ts'],
     components: './src/index.ts',
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(import.meta.dirname, 'dist'),
     filename: '[name].js.tmp',
     cssFilename: '[name].css',
   },
@@ -55,7 +53,7 @@ const config: Configuration = {
                 [
                   'swc-plugin-css-modules',
                   {
-                    generate_scoped_name: '[folder]__[local]--[hash:base64:5]',
+                    generate_scoped_name: 'vkui[folder]__[local]',
                   },
                 ],
               ],
@@ -96,7 +94,7 @@ const config: Configuration = {
       protectWebpackAssets: false,
       cleanOnceBeforeBuildPatterns: [],
       cleanAfterEveryBuildPatterns: ['*.tmp', '*.tmp.*'],
-    }) as unknown as RspackPluginInstance,
+    }),
   ],
   stats: {
     all: false,
@@ -106,6 +104,7 @@ const config: Configuration = {
   },
   experiments: {
     css: true,
+    outputModule: true,
   },
 };
 

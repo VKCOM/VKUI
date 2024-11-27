@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useKeyboard } from '../../hooks/useKeyboard';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -97,7 +97,6 @@ export const ModalCardBase = ({
   actions,
   onClose,
   dismissLabel = 'Скрыть',
-  style,
   size: sizeProp,
   modalDismissButtonTestId,
   dismissButtonMode = 'outside',
@@ -106,7 +105,7 @@ export const ModalCardBase = ({
 }: ModalCardBaseProps): React.ReactNode => {
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
-  const isSoftwareKeyboardOpened = useKeyboard().isOpened;
+  const { opened: isSoftwareKeyboardOpened } = useVirtualKeyboardState();
 
   const size = isDesktop ? sizeProp : undefined;
   const withSafeZone =
@@ -125,9 +124,8 @@ export const ModalCardBase = ({
         isDesktop && styles.desktop,
         withSafeZone && styles.withSafeZone,
       )}
-      style={{
+      baseStyle={{
         maxWidth: size,
-        ...style,
       }}
     >
       <div

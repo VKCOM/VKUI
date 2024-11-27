@@ -1,7 +1,4 @@
 import path from 'node:path';
-import shared from './shared.js';
-
-const { VKUI_PACKAGE } = shared;
 
 const config = {
   extends: ['stylelint-config-standard', '@vkontakte/stylelint-config'],
@@ -57,9 +54,9 @@ const config = {
       true,
       {
         importFrom: [
-          path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_CONSTANTS),
-          path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_DYNAMIC_TOKENS),
-          path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_MISSED_THEME_TOKENS),
+          path.join(import.meta.dirname, 'packages/vkui/src/styles/constants.css'),
+          path.join(import.meta.dirname, 'packages/vkui/src/styles/dynamicTokens.css'),
+          path.join(import.meta.dirname, 'packages/vkui/src/styles/missedThemeTokens.css'),
           path.join(
             import.meta.dirname,
             'node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css',
@@ -70,7 +67,10 @@ const config = {
     'csstools/media-use-custom-media': [
       'known',
       {
-        importFrom: path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS),
+        importFrom: path.join(
+          import.meta.dirname,
+          'packages/vkui/src/styles/customMedias.generated.css',
+        ),
       },
     ],
     'selector-pseudo-class-disallowed-list': ['global'],
