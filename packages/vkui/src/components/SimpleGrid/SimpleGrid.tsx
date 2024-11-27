@@ -56,7 +56,6 @@ export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, '
 export const SimpleGrid = ({
   columns = 1,
   gap,
-  style: styleProp,
   margin = 'none',
   minColWidth,
   align = 'stretch',
@@ -86,7 +85,7 @@ export const SimpleGrid = ({
         typeof columnGap === 'string' && columnGapClassNames[columnGap],
         typeof rowGap === 'string' && rowGapClassNames[rowGap],
       )}
-      style={{ ...style, ...styleProp }}
+      baseStyle={style}
     />
   );
 };

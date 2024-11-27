@@ -5,7 +5,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { ViewWidth, viewWidthToClassName } from '../../lib/adaptivity';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -79,7 +78,6 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
     minWidth,
     animate: animateProp,
     fixed,
-    style,
     autoSpaced,
     stretchedOnMobile,
     getRootRef,
@@ -89,19 +87,21 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
   const { viewWidth } = useAdaptivity();
   const animate = useTransitionAnimate(animateProp);
 
-  const contextValue = useObjectMemo({
-    colRef: baseRef,
-    animate,
-  });
+  const contextValue = React.useMemo(
+    () => ({
+      colRef: baseRef,
+      animate,
+    }),
+    [animate, baseRef],
+  );
 
   return (
     <RootComponent
       {...restProps}
-      style={{
+      baseStyle={{
         width,
         maxWidth,
         minWidth,
-        ...style,
       }}
       getRootRef={baseRef}
       baseClassName={classNames(

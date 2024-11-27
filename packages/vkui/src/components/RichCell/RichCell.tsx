@@ -89,7 +89,6 @@ export const RichCell: React.FC<RichCellProps> & {
   bottom,
   actions,
   multiline,
-  className,
   afterAlign = 'start',
   ...restProps
 }: RichCellProps) => {
@@ -110,11 +109,10 @@ export const RichCell: React.FC<RichCellProps> & {
   return (
     <Tappable
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         !multiline && styles.textEllipsis,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        className,
       )}
     >
       {before && <div className={styles.before}>{before}</div>}

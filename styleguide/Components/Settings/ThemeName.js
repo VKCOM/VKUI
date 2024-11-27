@@ -42,8 +42,8 @@ export const ThemeName = () => {
   };
   return (
     <Setting hintMaxWidth="max-content" hint={<Hint />} label="themeName">
-      <Link role="button" onClick={onChangeValue}>
-        {themeName} <Icon20RectangleInfoOutline />
+      <Link role="button" onClick={onChangeValue} after={<Icon20RectangleInfoOutline />}>
+        {themeName}
       </Link>
     </Setting>
   );

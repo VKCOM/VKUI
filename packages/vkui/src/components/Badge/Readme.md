@@ -49,7 +49,7 @@ const Example = () => {
           </TabbarItem>
           <TabbarItem
             indicator={
-              <Counter size="s" mode="prominent">
+              <Counter size="s" mode="primary" appearance="accent-red">
                 12
               </Counter>
             }

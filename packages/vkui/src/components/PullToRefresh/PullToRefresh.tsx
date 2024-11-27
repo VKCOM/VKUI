@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { usePlatform } from '../../hooks/usePlatform';
-import { usePrevious } from '../../hooks/usePrevious';
+import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { type DOMProps, initializeBrowserGesturePreventionEffect, useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { AnyFunction, HasChildren } from '../../types';
@@ -57,7 +57,11 @@ export const PullToRefresh = ({
   const platform = usePlatform();
   const scroll = useScroll();
   const { window } = useDOM();
-  const prevIsFetching = usePrevious(isFetching);
+
+  const prevIsFetchingRef = React.useRef<boolean | undefined>(undefined);
+  React.useEffect(() => {
+    prevIsFetchingRef.current = isFetching;
+  });
 
   const initParams = React.useMemo(
     () => ({
@@ -74,8 +78,7 @@ export const PullToRefresh = ({
   const [watching, setWatching] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [canRefresh, setCanRefresh] = React.useState(false);
-  const [touchDown, setTouchDown] = React.useState(false);
-  const prevTouchDown = usePrevious(touchDown);
+  const [[touchDown, prevTouchDown], setTouchDown] = useStateWithPrev(false);
 
   const touchY = React.useRef(0);
   const [contentShift, setContentShift] = React.useState(0);
@@ -99,16 +102,18 @@ export const PullToRefresh = ({
   const waitFetchingTimeoutId = React.useRef<NodeJS.Timeout>();
 
   useIsomorphicLayoutEffect(() => {
+    const prevIsFetching = prevIsFetchingRef.current;
     if (prevIsFetching !== undefined && prevIsFetching && !isFetching) {
       onRefreshingFinish();
     }
-  }, [prevIsFetching, isFetching, onRefreshingFinish]);
+  }, [isFetching, onRefreshingFinish]);
 
   useIsomorphicLayoutEffect(() => {
+    const prevIsFetching = prevIsFetchingRef.current;
     if (prevIsFetching !== undefined && !prevIsFetching && isFetching) {
       clearTimeout(waitFetchingTimeoutId.current);
     }
-  }, [isFetching, prevIsFetching]);
+  }, [isFetching]);
 
   const runRefreshing = React.useCallback(() => {
     if (!refreshing && onRefresh) {
@@ -141,7 +146,6 @@ export const PullToRefresh = ({
     }
   }, [
     initParams,
-    prevIsFetching,
     isFetching,
     onRefreshingFinish,
     prevTouchDown,

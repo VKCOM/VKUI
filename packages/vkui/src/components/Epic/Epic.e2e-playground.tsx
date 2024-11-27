@@ -35,7 +35,7 @@ const EpicTabbar = () => {
         selected={false}
         data-story="messages"
         indicator={
-          <Counter size="s" mode="prominent">
+          <Counter size="s" mode="primary" appearance="accent-red">
             12
           </Counter>
         }
@@ -68,7 +68,11 @@ export const EpicPlayground = (props: ComponentPlaygroundProps) => (
       >
         <View id="feed" activePanel="feed">
           <Panel id="feed">
-            <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Новости</PanelHeader>
+            <PanelHeader
+              before={<PanelHeaderBack onClick={noop} hideLabelOnIOS hideLabelOnVKCom />}
+            >
+              Новости
+            </PanelHeader>
             <Group>
               <Placeholder icon={<Icon56NewsfeedOutline width={56} height={56} />} />
             </Group>

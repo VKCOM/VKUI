@@ -82,7 +82,6 @@ export const Flex: React.FC<FlexProps> & {
   margin = 'none',
   noWrap = false,
   direction = 'row',
-  style: styleProp,
   reverse = false,
   children,
   ...props
@@ -104,7 +103,7 @@ export const Flex: React.FC<FlexProps> & {
         withGaps && styles.withGaps,
         withGaps && getGapsPresets(rowGap, columnGap),
       )}
-      style={withGaps ? { ...getGapsByUser(rowGap, columnGap), ...styleProp } : styleProp}
+      baseStyle={getGapsByUser(rowGap, columnGap)}
     >
       {children}
     </RootComponent>

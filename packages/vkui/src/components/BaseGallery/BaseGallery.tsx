@@ -272,7 +272,7 @@ export const BaseGallery = ({
 
   const onEnd = (e: CustomTouchEvent) => {
     if (isDraggable) {
-      const targetIndex = e.isSlide ? getTarget(e) : slideIndex ?? 0;
+      const targetIndex = e.isSlide ? getTarget(e) : (slideIndex ?? 0);
       onDragEnd?.(e, targetIndex);
 
       const nextShiftState: Partial<ShiftingState> = {

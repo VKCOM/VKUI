@@ -96,7 +96,6 @@ export const Banner = ({
   actions,
   onDismiss,
   dismissLabel = 'Скрыть',
-  className,
   Component,
   ...restProps
 }: BannerProps): React.ReactNode => {
@@ -173,7 +172,6 @@ export const Banner = ({
         mode === 'image' && styles.modeImage,
         size === 'm' && styles.sizeM,
         mode === 'image' && imageTheme === 'dark' && styles.inverted,
-        className,
       )}
       {...restProps}
     >
