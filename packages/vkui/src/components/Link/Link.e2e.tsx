@@ -1,6 +1,6 @@
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
-import { LinkFocusVisiblePlayground } from './Link.e2e-playground';
+import { LinkFocusVisiblePlayground, LinkWithIcons } from './Link.e2e-playground';
 
 test.describe('Link', () => {
   test.use({
@@ -17,6 +17,15 @@ test.describe('Link', () => {
     await mount(<LinkFocusVisiblePlayground {...componentPlaygroundProps} />);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.keyboard.press('Tab');
+    await expectScreenshotClippedToContent();
+  });
+
+  test('icon gaps', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<LinkWithIcons {...componentPlaygroundProps} />);
     await expectScreenshotClippedToContent();
   });
 });

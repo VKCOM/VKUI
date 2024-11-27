@@ -205,6 +205,22 @@ export const removeAttribute = (
   attributes?.splice(attributes?.indexOf(attribute), 1);
 };
 
+/**
+ * @description Функция достает из атрибута строковое значение. Если вернулся null, значит значение не строковое
+ */
+export const getStringValueFromAttribute = (attribute: JSXAttribute): string | null => {
+  if (attribute.value?.type === 'StringLiteral') {
+    return attribute.value.value;
+  }
+  if (attribute.value?.type === 'JSXExpressionContainer') {
+    const expression = attribute.value.expression;
+    if (expression.type === 'StringLiteral') {
+      return expression.value;
+    }
+  }
+  return null;
+};
+
 interface AttributeManipulatorAPI {
   keyTo?: string | ((k?: string) => string);
   reportText?: string | (() => string);

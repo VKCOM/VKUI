@@ -32,7 +32,7 @@ export const Gallery = ({
 }: GalleryProps): React.ReactNode => {
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
   const isControlled = typeof props.slideIndex === 'number';
-  const slideIndex = isControlled ? props.slideIndex ?? 0 : localSlideIndex;
+  const slideIndex = isControlled ? (props.slideIndex ?? 0) : localSlideIndex;
   const slides = React.useMemo(
     () => React.Children.toArray(children).filter((item) => Boolean(item)),
     [children],

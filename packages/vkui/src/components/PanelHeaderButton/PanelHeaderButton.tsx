@@ -49,7 +49,6 @@ export const PanelHeaderButton = ({
   children,
   primary = false,
   label,
-  className,
   ...restProps
 }: PanelHeaderButtonProps): React.ReactNode => {
   const isPrimitive = isPrimitiveReactNode(children);
@@ -84,6 +83,9 @@ export const PanelHeaderButton = ({
       warn(COMMON_WARNINGS.a11y[restProps.href ? 'link-name' : 'button-name'], 'error');
     }
   }
+  const elements = [label, children].filter((item) => !!item);
+
+  const onlyPrimitive = elements.length === 1 && isPrimitiveReactNode(elements[0]);
 
   return (
     <Tappable
@@ -92,14 +94,13 @@ export const PanelHeaderButton = ({
       hoverMode={hoverMode}
       activeEffectDelay={200}
       activeMode={activeMode}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        isPrimitive && styles.primitive,
+        onlyPrimitive && styles.primitive,
         !isPrimitive && !isPrimitiveLabel && styles.notPrimitive,
-        className,
       )}
     >
       {isPrimitive ? <ButtonTypography primary={primary}>{children}</ButtonTypography> : children}

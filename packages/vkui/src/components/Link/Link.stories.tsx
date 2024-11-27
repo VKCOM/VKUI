@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Icon24ExternalLinkOutline } from '@vkontakte/icons';
+import { Icon16ChainOutline, Icon24ExternalLinkOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { Link, type LinkProps } from './Link';
 
@@ -21,15 +21,30 @@ export const Playground: Story = {
 };
 
 export const WithIcon: Story = {
-  ...Playground,
-  args: {
-    href: 'https://google.com',
-    target: '_blank',
-    children: (
+  render: function Render() {
+    return (
       <>
-        https://google.com&nbsp;
-        <Icon24ExternalLinkOutline width={16} height={16} />
+        <Link
+          href="https://google.com"
+          target="_blank"
+          after={<Icon24ExternalLinkOutline width={16} height={16} />}
+        >
+          https://google.com
+        </Link>
+        <br />
+        <Link href="/" before={<Icon16ChainOutline />}>
+          Главная
+        </Link>
+        <br />
+        <Link
+          href="https://vk.com/video807566_169118280"
+          target="_blank"
+          before={<Icon16ChainOutline />}
+          after={<Icon24ExternalLinkOutline width={16} height={16} />}
+        >
+          Главная в новом окне
+        </Link>
       </>
-    ),
+    );
   },
 };

@@ -5,7 +5,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { millisecondsInSecond } from 'date-fns/constants';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { usePrevious } from '../../hooks/usePrevious';
+import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { useDOM } from '../../lib/dom';
 import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -64,8 +64,8 @@ function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
  */
 function useSkeletonPosition(rootRef: React.MutableRefObject<HTMLElement | null>) {
   const { document, window } = useDOM();
-  const [skeletonGradientLeft, setSkeletonGradientLeft] = React.useState('0');
-  const prevSkeletonGradientLeft = usePrevious(skeletonGradientLeft);
+  const [[skeletonGradientLeft, prevSkeletonGradientLeft], setSkeletonGradientLeft] =
+    useStateWithPrev('0');
 
   const updatePosition = React.useCallback(() => {
     const el = rootRef.current;
@@ -78,7 +78,7 @@ function useSkeletonPosition(rootRef: React.MutableRefObject<HTMLElement | null>
     if (prevSkeletonGradientLeft !== gradientValue) {
       setSkeletonGradientLeft(gradientValue);
     }
-  }, [document, prevSkeletonGradientLeft, rootRef]);
+  }, [document, prevSkeletonGradientLeft, rootRef, setSkeletonGradientLeft]);
 
   React.useEffect(updatePosition, [updatePosition]);
   useGlobalEventListener(window, 'resize', updatePosition);
@@ -139,7 +139,6 @@ export const Skeleton = ({
   maxWidth,
   maxInlineSize,
   borderRadius,
-  style,
   children,
   colorFrom,
   colorTo,
@@ -183,7 +182,7 @@ export const Skeleton = ({
       getRootRef={rootRef}
       Component="span"
       baseClassName={classNames(styles.host, disableAnimation && styles.disableAnimation)}
-      style={{ ...skeletonStyle, ...style }}
+      baseStyle={skeletonStyle}
       {...restProps}
     >
       {children || <>&zwnj;</>}
