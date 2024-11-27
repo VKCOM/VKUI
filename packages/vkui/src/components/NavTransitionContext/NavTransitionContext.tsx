@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 
 export interface TransitionContextProps {
   entering: boolean;
@@ -16,8 +15,12 @@ export const NavTransitionProvider = ({
   entering,
 }: React.PropsWithChildren<TransitionContextProps>): React.ReactNode => {
   const parentContext = useNavTransition();
-  const contextValue = useObjectMemo({
-    entering: parentContext.entering || entering,
-  });
+  const contextValue = React.useMemo(
+    () => ({
+      entering: parentContext.entering || entering,
+    }),
+    [entering, parentContext.entering],
+  );
+
   return <TransitionContext.Provider value={contextValue}>{children}</TransitionContext.Provider>;
 };

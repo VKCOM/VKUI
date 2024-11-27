@@ -173,7 +173,7 @@ const Scrollable = () => {
           <TabsItem
             before={mode === 'default' ? <Icon24UsersOutline /> : <Icon20UsersOutline />}
             status={
-              <Counter mode="prominent" size="s">
+              <Counter mode="primary" appearance="accent-red" size="s">
                 3
               </Counter>
             }

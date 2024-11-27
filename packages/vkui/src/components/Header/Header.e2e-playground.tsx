@@ -32,7 +32,7 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           size: ['m'],
           indicator: [
             12,
-            <Counter key="counter" size="s" mode="prominent">
+            <Counter key="counter" size="s" mode="primary" appearance="accent-red">
               3
             </Counter>,
           ],
@@ -47,7 +47,7 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           size: ['m'],
           indicator: [
             12,
-            <Counter key="counter" size="s" mode="prominent">
+            <Counter key="counter" size="s" mode="primary" appearance="accent-red">
               3
             </Counter>,
           ],

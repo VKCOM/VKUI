@@ -60,6 +60,7 @@ export const Tappable = ({
   return (
     <Clickable
       baseClassName={classNames(
+        'vkuiInternalTappable',
         baseClassName,
         styles.host,
         sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],

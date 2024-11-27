@@ -83,7 +83,6 @@ export const SubnavigationButton = ({
   after,
   chevron,
   children,
-  className,
   ...restProps
 }: SubnavigationButtonProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -93,14 +92,13 @@ export const SubnavigationButton = ({
       {...restProps}
       hasActive={false}
       focusVisibleMode="outside"
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         sizeStyles[size],
         modeStyles[mode],
         appearanceStyles[appearance],
         selected && styles.selected,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        className,
       )}
     >
       <span className={styles.in}>
