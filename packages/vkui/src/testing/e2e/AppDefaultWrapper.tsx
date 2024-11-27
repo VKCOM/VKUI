@@ -3,7 +3,7 @@ import { AppRoot, type AppRootProps } from '../../components/AppRoot/AppRoot';
 import { TEST_CLASS_NAMES } from './constants';
 
 export type AppWrapperProps = AppRootProps & {
-  /* Убираем декоративные элементы вокруг children: border, background */
+  /* Убираем декоративные элементы вокруг children: border */
   disableDecorations?: boolean;
 };
 
@@ -16,14 +16,15 @@ export const AppDefaultWrapper = ({
 }: AppWrapperProps) => (
   <AppRoot mode={mode} className={classNames(TEST_CLASS_NAMES.APP_ROOT, className)} {...restProps}>
     <div
-      style={
-        disableDecorations
+      style={{
+        ...(disableDecorations
           ? undefined
           : {
               border: '8px solid var(--playwright-border)',
-              background: 'var(--playwright-background)',
-            }
-      }
+            }),
+
+        background: 'var(--playwright-background)',
+      }}
     >
       {children}
     </div>

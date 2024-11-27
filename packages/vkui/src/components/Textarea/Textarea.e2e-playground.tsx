@@ -76,10 +76,8 @@ export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProp
   return (
     <AppDefaultWrapper
       disableDecorations
-      mode="embedded"
       style={{
         height: 'auto',
-        position: 'absolute',
         width: BREAKPOINTS.MOBILE,
       }}
     >

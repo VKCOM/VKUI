@@ -48,13 +48,10 @@ export const SearchTestFocusOnIOSPlayground = ({ colorScheme }: ComponentPlaygro
     <ConfigProvider platform="ios" colorScheme={colorScheme}>
       <AdaptivityProvider sizeY="regular">
         <AppDefaultWrapper
-          mode="embedded"
           disableDecorations
           style={{
             height: 'auto',
-            position: 'absolute',
             width: BREAKPOINTS.MOBILE,
-            background: 'var(--vkui--color_background_content)',
           }}
         >
           <Search after="after" />
