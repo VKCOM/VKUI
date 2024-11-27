@@ -101,6 +101,7 @@ export const AppRoot = ({
 
   const isKeyboardInputActiveRef = useKeyboardInputTracker();
   const safeAreaInsets = React.useMemo(() => safeAreaInsetsProp, [safeAreaInsetsProp]);
+
   const contextValue = React.useMemo(
     () => ({
       appRoot: appRootRef,
