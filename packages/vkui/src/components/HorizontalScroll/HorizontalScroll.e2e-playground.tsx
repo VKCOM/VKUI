@@ -1,11 +1,8 @@
 import { noop } from '@vkontakte/vkjs';
-import {
-  AppDefaultWrapper,
-  ComponentPlayground,
-  type ComponentPlaygroundProps,
-} from '@vkui-e2e/playground-helpers';
+import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { ViewWidth } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { AppRoot } from '../AppRoot/AppRoot';
 import { Avatar } from '../Avatar/Avatar';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
@@ -61,7 +58,7 @@ export const HorizontalScrollWithHasMousePlayground = ({
   return (
     <ConfigProvider colorScheme={colorScheme}>
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
-        <AppDefaultWrapper disableDecorations>
+        <AppRoot>
           <HorizontalScroll
             {...restProps}
             getRef={(element) => {
@@ -73,7 +70,7 @@ export const HorizontalScrollWithHasMousePlayground = ({
           >
             {items}
           </HorizontalScroll>
-        </AppDefaultWrapper>
+        </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
   );
@@ -86,7 +83,7 @@ export const HorizontalScrollWithoutHasMousePlayground = ({
   return (
     <ConfigProvider colorScheme={colorScheme}>
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
-        <AppDefaultWrapper disableDecorations>
+        <AppRoot>
           <HorizontalScroll
             {...restProps}
             getRef={(element) => {
@@ -98,7 +95,7 @@ export const HorizontalScrollWithoutHasMousePlayground = ({
           >
             {items}
           </HorizontalScroll>
-        </AppDefaultWrapper>
+        </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
   );

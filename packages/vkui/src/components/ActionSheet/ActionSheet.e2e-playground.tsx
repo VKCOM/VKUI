@@ -29,10 +29,15 @@ const ActionSheetWrapper = (props: ActionSheetProps) => {
       </button>
       <ActionSheet
         {...props}
-        style={{
-          // Перебиваем "absolute", чтобы не задавать фиксированную высоту для тестов под iOS и Android
-          position: 'relative',
-        }}
+        style={
+          platform === 'vkcom'
+            ? undefined
+            : {
+                // Перебиваем "absolute", чтобы не задавать фиксированную
+                // высоту для тестов под iOS и Android
+                position: 'relative',
+              }
+        }
         toggleRef={toggleRef}
         onClose={noop}
       />
