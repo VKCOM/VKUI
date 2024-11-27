@@ -7,11 +7,6 @@
   block-size: 100%;
 }
 
-.wrapper {
-  inline-size: 100%;
-  block-size: 100%;
-}
-
 .mask {
   opacity: 1;
   inline-size: 100%;
