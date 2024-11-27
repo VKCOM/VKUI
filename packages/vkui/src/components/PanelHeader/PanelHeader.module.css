@@ -244,7 +244,7 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.vkcom.sizeXRegular:not(:global(.vkuiInternalModalPageHeader__in)):not(.sep) .in::after {
+.vkcom.sizeXRegular:not(:global(.vkuiInternalModalPageHeader__in)):not(.sep):not(.trnsp) .in::after {
   position: absolute;
   inset-inline: var(--vkui--size_border--regular);
   inset-block-end: 0;
@@ -255,7 +255,7 @@
 
 @media (--sizeX-regular) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .vkcom.sizeXNone:not(:global(.vkuiInternalModalPageHeader__in)):not(.sep) .in::after {
+  .vkcom.sizeXNone:not(:global(.vkuiInternalModalPageHeader__in)):not(.sep):not(.trnsp) .in::after {
     position: absolute;
     inset-inline: var(--vkui--size_border--regular);
     inset-block-end: 0;
@@ -266,7 +266,7 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.vkcom.sizeXRegular:not(:global(.vkuiInternalModalPageHeader__in)) .in {
+.vkcom.sizeXRegular:not(:global(.vkuiInternalModalPageHeader__in)):not(.trnsp) .in {
   border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
   border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
   box-shadow: 0 0 0 var(--vkui--size_border--regular) var(--vkui--color_field_border_alpha) inset;
@@ -275,7 +275,7 @@
 
 @media (--sizeX-regular) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  .vkcom.sizeXNone:not(:global(.vkuiInternalModalPageHeader__in)) .in {
+  .vkcom.sizeXNone:not(:global(.vkuiInternalModalPageHeader__in)):not(.trnsp) .in {
     border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
     border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
     box-shadow: 0 0 0 var(--vkui--size_border--regular) var(--vkui--color_field_border_alpha) inset;
