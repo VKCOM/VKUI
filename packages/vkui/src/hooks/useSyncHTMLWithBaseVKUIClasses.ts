@@ -49,5 +49,5 @@ export function useSyncHTMLWithBaseVKUIClasses({
       /* eslint-disable-next-line no-restricted-properties */
       parentElement?.classList.remove(...parentElementClasses);
     };
-  }, [mode, enable]);
+  }, [mode, enable, layout]);
 }

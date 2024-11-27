@@ -210,7 +210,7 @@ describe('AppRoot', () => {
 
   describe('Setup containers', () => {
     it('adds class="vkui" to html element and vkui__root to AppRoot parent in full mode', () => {
-      const component = render(<AppRoot />);
+      const component = render(<AppRoot mode="full" />);
 
       expect(document.documentElement).toHaveClass('vkui');
       expect(component.container).toHaveClass('vkui__root');
@@ -220,6 +220,43 @@ describe('AppRoot', () => {
       expect(document.documentElement).not.toHaveClass('vkui');
       expect(component.container).not.toHaveClass('vkui__root');
     });
+
+    it('adds layout classes to html element in full mode', () => {
+      const component = render(<AppRoot mode="full" />);
+
+      expect(document.documentElement).not.toHaveClass('vkui--layout-card');
+      expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
+
+      component.rerender(<AppRoot mode="full" layout="card" />);
+
+      expect(document.documentElement).toHaveClass('vkui--layout-card');
+      expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
+
+      component.rerender(<AppRoot mode="full" layout="plain" />);
+
+      expect(document.documentElement).not.toHaveClass('vkui--layout-card');
+      expect(document.documentElement).toHaveClass('vkui--layout-plain');
+    });
+
+    it.each(['embedded', 'partial'] as const)(
+      'does not add layout classes to html element in %s mode',
+      (mode) => {
+        const component = render(<AppRoot mode={mode} />);
+
+        expect(document.documentElement).not.toHaveClass('vkui--layout-card');
+        expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
+
+        component.rerender(<AppRoot mode={mode} layout="card" />);
+
+        expect(document.documentElement).not.toHaveClass('vkui--layout-card');
+        expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
+
+        component.rerender(<AppRoot mode={mode} layout="plain" />);
+
+        expect(document.documentElement).not.toHaveClass('vkui--layout-card');
+        expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
+      },
+    );
 
     it('does not add class="vkui" to html element but adds vkui__root to AppRoot parent in embedded mode', () => {
       const component = render(<AppRoot mode="embedded" />);

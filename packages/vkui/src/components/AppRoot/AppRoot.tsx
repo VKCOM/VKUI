@@ -143,6 +143,7 @@ export const AppRoot = ({
   useSyncHTMLWithBaseVKUIClasses({
     appRootRef,
     mode,
+    layout,
     enable: mode !== 'partial' && !disableSettingVKUIClassesInRuntime,
   });
 
