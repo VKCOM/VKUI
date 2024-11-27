@@ -119,7 +119,7 @@ export const CalendarTime = ({
     if (e.key === 'Enter' || e.key === 'Tab') {
       const steps = [hoursInputRef, minutesInputRef, doneButtonRef];
       const currentStepIndex = steps.findIndex((step) => step.current === e.target);
-      const diff = e.shiftKey ? -1 : 1;
+      const diff = e.key === 'Tab' && e.shiftKey ? -1 : 1;
       const nextStepIndex = currentStepIndex + diff;
       if (nextStepIndex < 0 || nextStepIndex >= steps.length) {
         return;
