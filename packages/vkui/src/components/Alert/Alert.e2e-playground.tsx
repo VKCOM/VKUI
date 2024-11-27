@@ -1,12 +1,12 @@
 import {
   AppDefaultWrapper,
-  type AppWrapperProps,
+  type AppDefaultWrapperProps,
   ComponentPlayground,
   type ComponentPlaygroundProps,
 } from '@vkui-e2e/playground-helpers';
 import { Alert, type AlertActionInterface, type AlertProps } from './Alert';
 
-const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
+const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
   <AppDefaultWrapper scroll="contain" disablePortal {...restProps}>
     {children}
   </AppDefaultWrapper>

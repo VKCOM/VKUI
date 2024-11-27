@@ -9,7 +9,7 @@ import {
 import { noop } from '@vkontakte/vkjs';
 import {
   AppDefaultWrapper,
-  type AppWrapperProps,
+  type AppDefaultWrapperProps,
   ComponentPlayground,
   type ComponentPlaygroundProps,
 } from '@vkui-e2e/playground-helpers';
@@ -64,7 +64,7 @@ const EpicTabbar = () => {
   );
 };
 
-const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
+const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
   <AppDefaultWrapper disableDecorations {...restProps}>
     {children}
   </AppDefaultWrapper>

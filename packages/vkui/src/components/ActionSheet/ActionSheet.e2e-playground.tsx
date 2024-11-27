@@ -3,7 +3,7 @@ import { Icon28SettingsOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import {
   AppDefaultWrapper,
-  type AppWrapperProps,
+  type AppDefaultWrapperProps,
   ComponentPlayground,
   type ComponentPlaygroundProps,
   TEST_CLASS_NAMES,
@@ -12,7 +12,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
-const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
+const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
   <AppDefaultWrapper disablePortal scroll="contain" {...restProps}>
     {children}
   </AppDefaultWrapper>

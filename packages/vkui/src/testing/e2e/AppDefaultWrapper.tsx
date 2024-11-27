@@ -2,7 +2,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { AppRoot, type AppRootProps } from '../../components/AppRoot/AppRoot';
 import { TEST_CLASS_NAMES } from './constants';
 
-export type AppWrapperProps = AppRootProps & {
+export type AppDefaultWrapperProps = AppRootProps & {
   /* Убираем декоративные элементы вокруг children: border */
   disableDecorations?: boolean;
 };
@@ -13,7 +13,7 @@ export const AppDefaultWrapper = ({
   children,
   disableDecorations,
   ...restProps
-}: AppWrapperProps) => (
+}: AppDefaultWrapperProps) => (
   <AppRoot mode={mode} className={classNames(TEST_CLASS_NAMES.APP_ROOT, className)} {...restProps}>
     <div
       style={{
