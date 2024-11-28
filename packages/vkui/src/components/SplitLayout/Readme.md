@@ -37,12 +37,7 @@ const Example = () => {
   const isVKCOM = platform === 'vkcom';
 
   return (
-    <SplitLayout
-      center
-      header={!isVKCOM && <PanelHeader delimiter="none" />}
-      popout={popout}
-      modal={modalRoot}
-    >
+    <SplitLayout center header={!isVKCOM && <PanelHeader delimiter="none" />}>
       {viewWidth.tabletPlus && (
         <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
           <Panel>
@@ -115,6 +110,8 @@ const Example = () => {
           </Panel>
         </View>
       </SplitCol>
+      {popout}
+      {modalRoot}
     </SplitLayout>
   );
 };
