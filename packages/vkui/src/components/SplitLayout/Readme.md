@@ -1,5 +1,10 @@
 Компонент-контейнер для реализации интерфейса с [многоколоночной структурой](#!/Adaptivity). Тесно связан со [SplitCol](#!/SplitCol).
 
+> Начиная с VKUI v7 свойства `popout` и `modal` помечены как `deprecated`.
+> Вы всё ещё можете использовать иx для передачи всплывающих и модальных окон.
+>
+> Тем не менее теперь вы можете объявлять такие компоненты как [ModalRoot](#/ModalRoot), [Alert](#/Alert), [ActionSheet](#/ActionSheet) и [ScreenSpinner](#/ScreenSpinner) в любом месте в пределах [AppRoot](#/AppRoot).
+
 ```jsx { "props": { "layout": false, "showCustomPanelHeaderAfterProps": true, "showLayoutSelect": true, "adaptivity": true } }
 const panels = ['panel 1', 'panel 2', 'panel 3'];
 const modals = ['modal 1', 'modal 2'];
