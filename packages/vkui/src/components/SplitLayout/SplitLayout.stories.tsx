@@ -46,128 +46,123 @@ export const Example: Story = {
     const [modal, setModal] = React.useState<string | null>(null);
     const [popout, setPopout] = React.useState<React.ReactNode | null>(null);
 
-    const modalRoot = (
-      <ModalRoot activeModal={modal}>
-        <ModalPage
-          id={modals[0]}
-          onClose={() => setModal(null)}
-          header={<ModalPageHeader>Modal 1</ModalPageHeader>}
-        >
-          <Group>
-            <CellButton onClick={() => setModal(modals[1])}>Modal 2</CellButton>
-          </Group>
-        </ModalPage>
-        <ModalPage
-          id={modals[1]}
-          onClose={() => setModal(null)}
-          header={<ModalPageHeader>Modal 2</ModalPageHeader>}
-        >
-          <Group>
-            <CellButton onClick={() => setModal(modals[0])}>Modal 1</CellButton>
-          </Group>
-        </ModalPage>
-      </ModalRoot>
-    );
-
     const isVKCOM = platform === 'vkcom';
 
     return (
-      <SplitLayout
-        center
-        header={!isVKCOM && <PanelHeader delimiter="none" />}
-        popout={popout}
-        modal={modalRoot}
-      >
-        {viewWidth.tabletPlus && (
-          <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
-            <Panel>
-              {!isVKCOM && <PanelHeader />}
-              <Group>
-                {panels.map((i) => (
+      <React.Fragment>
+        <SplitLayout center header={!isVKCOM && <PanelHeader delimiter="none" />}>
+          {viewWidth.tabletPlus && (
+            <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
+              <Panel>
+                {!isVKCOM && <PanelHeader />}
+                <Group>
+                  {panels.map((i) => (
+                    <Cell
+                      key={i}
+                      disabled={i === panel}
+                      style={
+                        i === panel
+                          ? {
+                              backgroundColor: 'var(--vkui--color_background_secondary)',
+                              borderRadius: 8,
+                            }
+                          : {}
+                      }
+                      onClick={() => setPanel(i)}
+                    >
+                      {i}
+                    </Cell>
+                  ))}
+                  <Separator />
+                  <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
+                  <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
                   <Cell
-                    key={i}
-                    disabled={i === panel}
-                    style={
-                      i === panel
-                        ? {
-                            backgroundColor: 'var(--vkui--color_background_secondary)',
-                            borderRadius: 8,
-                          }
-                        : {}
+                    onClick={() =>
+                      setPopout(<Alert title="Alert!" onClose={() => setPopout(null)} />)
                     }
-                    onClick={() => setPanel(i)}
                   >
-                    {i}
+                    alert
                   </Cell>
-                ))}
-                <Separator />
-                <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
-                <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
-                <Cell
-                  onClick={() =>
-                    setPopout(<Alert title="Alert!" onClose={() => setPopout(null)} />)
-                  }
-                >
-                  alert
-                </Cell>
-              </Group>
-            </Panel>
+                </Group>
+              </Panel>
+            </SplitCol>
+          )}
+
+          <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
+            <View activePanel={panel}>
+              <Panel id={panels[0]}>
+                <PanelHeader after={<Avatar size={36} />}>Panel 1</PanelHeader>
+                <Group>
+                  <Placeholder
+                    icon={<Icon56UsersOutline />}
+                    title="Уведомления от сообществ"
+                    action={<Button size="m">Подключить сообщества</Button>}
+                  >
+                    Подключите сообщества, от которых Вы хотите получать уведомления
+                  </Placeholder>
+                  <Separator />
+                  <Placeholder icon={<Icon56MentionOutline />}>
+                    Введите адрес страницы в поле поиска
+                  </Placeholder>
+                </Group>
+              </Panel>
+
+              <Panel id={panels[1]}>
+                <PanelHeader after={<Avatar size={36} />}>Panel 2</PanelHeader>
+                <Group>
+                  <Placeholder>Доступ запрещён</Placeholder>
+                  <Separator />
+                  <Placeholder
+                    title="Находите друзей"
+                    action={<Button size="m">Найти друзей</Button>}
+                  >
+                    Здесь будут отображаться люди, которых вы добавите в друзья
+                  </Placeholder>
+                </Group>
+              </Panel>
+
+              <Panel id={panels[2]}>
+                <PanelHeader after={<Avatar size={36} />}>Panel 3</PanelHeader>
+                <Group>
+                  <Placeholder
+                    icon={<Icon56MessageReadOutline />}
+                    action={
+                      <Button size="m" mode="tertiary">
+                        Показать все сообщения
+                      </Button>
+                    }
+                  >
+                    Нет непрочитанных
+                    <br />
+                    сообщений
+                  </Placeholder>
+                </Group>
+              </Panel>
+            </View>
           </SplitCol>
-        )}
-
-        <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
-          <View activePanel={panel}>
-            <Panel id={panels[0]}>
-              <PanelHeader after={<Avatar size={36} />}>Panel 1</PanelHeader>
-              <Group>
-                <Placeholder
-                  icon={<Icon56UsersOutline />}
-                  title="Уведомления от сообществ"
-                  action={<Button size="m">Подключить сообщества</Button>}
-                >
-                  Подключите сообщества, от которых Вы хотите получать уведомления
-                </Placeholder>
-                <Separator />
-                <Placeholder icon={<Icon56MentionOutline />}>
-                  Введите адрес страницы в поле поиска
-                </Placeholder>
-              </Group>
-            </Panel>
-
-            <Panel id={panels[1]}>
-              <PanelHeader after={<Avatar size={36} />}>Panel 2</PanelHeader>
-              <Group>
-                <Placeholder>Доступ запрещён</Placeholder>
-                <Separator />
-                <Placeholder
-                  title="Находите друзей"
-                  action={<Button size="m">Найти друзей</Button>}
-                >
-                  Здесь будут отображаться люди, которых вы добавите в друзья
-                </Placeholder>
-              </Group>
-            </Panel>
-
-            <Panel id={panels[2]}>
-              <PanelHeader after={<Avatar size={36} />}>Panel 3</PanelHeader>
-              <Group>
-                <Placeholder
-                  icon={<Icon56MessageReadOutline />}
-                  action={
-                    <Button size="m" mode="tertiary">
-                      Показать все сообщения
-                    </Button>
-                  }
-                >
-                  Нет непрочитанных
-                  <br />
-                  сообщений
-                </Placeholder>
-              </Group>
-            </Panel>
-          </View>
-        </SplitCol>
-      </SplitLayout>
+        </SplitLayout>
+        {popout}
+        <ModalRoot activeModal={modal}>
+          <ModalPage
+            id={modals[0]}
+            onClose={() => setModal(null)}
+            header={<ModalPageHeader>Modal 1</ModalPageHeader>}
+          >
+            <Group>
+              <CellButton onClick={() => setModal(modals[1])}>Modal 2</CellButton>
+            </Group>
+          </ModalPage>
+          <ModalPage
+            id={modals[1]}
+            onClose={() => setModal(null)}
+            header={<ModalPageHeader>Modal 2</ModalPageHeader>}
+          >
+            <Group>
+              <CellButton onClick={() => setModal(modals[0])}>Modal 1</CellButton>
+            </Group>
+          </ModalPage>
+        </ModalRoot>
+      </React.Fragment>
     );
   },
 };
