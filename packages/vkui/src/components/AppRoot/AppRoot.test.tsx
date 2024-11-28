@@ -79,7 +79,7 @@ describe('AppRoot', () => {
       </AppRoot>,
     );
     expect(contextCallback).toHaveBeenCalledWith({
-      safeAreaInsets: undefined,
+      safeAreaInsets: {},
       userSelectMode: undefined,
       appRoot: { current: result.getByTestId('app-root') },
       portalRoot: portalRoot,
