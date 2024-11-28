@@ -1186,7 +1186,7 @@ describe('CustomSelect', () => {
       current: null,
     };
 
-    const { container } = render(
+    render(
       <CustomSelect
         searchable={true}
         options={[
@@ -1201,7 +1201,7 @@ describe('CustomSelect', () => {
     );
 
     const optionsHasFocused = () => {
-      return !!container.querySelector('[data-hovered="true"]');
+      return !!document.body.querySelector('[data-hovered="true"]');
     };
 
     checkDropdownOpened(false);

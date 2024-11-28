@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import {
   AppDefaultWrapper,
-  type AppWrapperProps,
+  type AppDefaultWrapperProps,
   ComponentPlayground,
   type ComponentPlaygroundProps,
 } from '@vkui-e2e/playground-helpers';
@@ -15,8 +15,8 @@ import { Textarea } from '../Textarea/Textarea';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { ModalCard, type ModalCardProps } from './ModalCard';
 
-const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
-  <AppDefaultWrapper scroll="contain" {...restProps}>
+const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
+  <AppDefaultWrapper scroll="contain" disablePortal {...restProps}>
     {children}
   </AppDefaultWrapper>
 );

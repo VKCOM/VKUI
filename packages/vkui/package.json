@@ -68,6 +68,8 @@
     "test:e2e": "../../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update": "../../scripts/generate_env_docker.sh -u && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e:ci": "yarn run -T cross-env NODE_OPTIONS='--no-warnings' playwright test --config playwright-ct.config.mjs",
+    "test:e2e:ci:ui": "yarn run -T cross-env NODE_OPTIONS='--no-warnings' playwright test --ui --ui-port=4300 --ui-host=0.0.0.0 --config playwright-ct.config.mjs",
+    "test:e2e:ui": "../../scripts/generate_env_docker.sh -r test:e2e:ci:ui && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update:ci": "yarn run test:e2e:ci --update-snapshots",
     "lint:generated-files": "yarn run -T tsc scripts/generateCSSCustomMedias.mjs --checkJs --module ESNext --moduleResolution node --resolveJsonModule --allowSyntheticDefaultImports --jsx react-jsx --noEmit && yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
     "storybook": "bash -c 'source .env && yarn run -T cross-env SANDBOX=\\.storybook storybook dev -p ${STORYBOOK_DEV_PORT:=6006}'",

@@ -2,6 +2,7 @@ import { expect, test } from '@vkui-e2e/test';
 import {
   SliderPlayground,
   SliderPlaygroundForKeyboardTest,
+  SliderPlaygroundForKeyboardTestWithTabButton,
   SliderPlaygroundForTooltipTest,
 } from './Slider.e2e-playground';
 
@@ -18,14 +19,7 @@ test.describe('Slider with Tooltip', () => {
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    const result = await mount(
-      <SliderPlaygroundForTooltipTest
-        {...componentPlaygroundProps}
-        defaultValue={24.4234234234234}
-        min={24.4234}
-        max={30}
-      />,
-    );
+    const result = await mount(<SliderPlaygroundForTooltipTest {...componentPlaygroundProps} />);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await result.waitFor();
 
@@ -45,11 +39,7 @@ test.describe('keyboard events', () => {
 
   test('should be focused with Tab button', async ({ page, mount, componentPlaygroundProps }) => {
     const result = await mount(
-      <SliderPlaygroundForKeyboardTest
-        multiple
-        defaultValue={[20, 80]}
-        {...componentPlaygroundProps}
-      />,
+      <SliderPlaygroundForKeyboardTestWithTabButton {...componentPlaygroundProps} />,
     );
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await result.waitFor();
