@@ -8,6 +8,7 @@ import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
 import { AppRootContext } from './AppRootContext';
 import { AppRootStyleContainer } from './AppRootStyleContainer/AppRootStyleContainer';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
+import { useSafeAreaInsetsMemo } from './helpers';
 import type {
   AppRootLayout,
   AppRootMode,
@@ -100,7 +101,7 @@ export const AppRoot = ({
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
 
   const isKeyboardInputActiveRef = useKeyboardInputTracker();
-  const safeAreaInsets = React.useMemo(() => safeAreaInsetsProp, [safeAreaInsetsProp]);
+  const safeAreaInsets = useSafeAreaInsetsMemo(safeAreaInsetsProp);
 
   const contextValue = React.useMemo(
     () => ({
