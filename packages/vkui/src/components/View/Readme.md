@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 Базовый компонент для создания панелей.
 
 - В качестве `children` принимает коллекцию [Panel](#/Panel). У каждой [Panel](#/Panel) должен быть
@@ -269,6 +272,269 @@ Xук возвращает правильное значение даже есл
 <br />
 
 Хук также работает в режиме <a href="{{anchor}}">iOS Swipe Back</a>. Тип перехода известен как только пользователь начал движение.
+
+<br />
+
+В примере ниже c помощью спиннера имитируется загрузка данных если панель отрисована с анимацией перехода вперед.
+Используется два `View` и по три `Panel` компонента в каждом, чтобы показать, что тип перехода известен как при переходе между `View`, так и при переходе между `Panel`.
+
+На третьем `View` пример со свайпом в iOS от левого края назад, где видно, что панель на которую идёт переход определяет его тип в самом начале свайпа.
+
+=======
+## <a id="usenavdirection_example" style="position: relative; top: -100px;"></a>[useNavDirection(): определение типа перехода (вперёд/назад), с которым была отрисована панель.](#/View?id=usenavdirection_example)
+=======
+В примере ниже на View1 и View2 сохраняются позиции скролла HorizontalScroll используя ScrollSaver, useScrollSaver и ScrollSaverWithoutChildren.
+Позиция сохраняется как при переходе между View так и при переходе между Panel
+При возврате на View1 c других View мы сбрасываем весь кэш ScrollSaver.
+
+ScrollSaverWtihoutChildren - это версия useScrollSaver обёрнутая в компонент для динамического рендеринга, но она требудет преедачи пропа elementRef.
+>>>>>>> cffef2295 (Update Readme to show only ScrollSaver Example)
+=======
+Базовый компонент для создания панелей. В качестве `children` принимает коллекцию `Panel`.
+У каждой `Panel` должен быть уникальный `id`. Свойство `activePanel` определяет какая `Panel` активна.
+
+При смене значения свойства `activePanel` происходит плавный переход от одной панели к другой.
+Как только он заканчивается, вызывается свойство-функция `onTransition`.
+
+Чтобы понять был это переход вперёд или назад можно воспользоваться хуком [`useNavDirection()`](#/View?id=usenavdirection_example). Этот хук работает даже если анимации выключены (`<ConfigProvider transitionMotionEnabled={false}>`).
+>>>>>>> af7abaa36 (Add ScrollSaver doc)
+
+>>>>>>> ffd276e66 (Update View Readme to use ScrollSaver with HorizontalScroll)
+```jsx
+const [activePanel, setActivePanel] = useState('panel1');
+
+<View activePanel={activePanel}>
+  <Panel id="panel1">
+    <PanelHeader>Panel 1</PanelHeader>
+    <Group>
+      <div style={{ height: 200 }} />
+      <CellButton onClick={() => setActivePanel('panel2')}>Go to panel 2</CellButton>
+      <div style={{ height: 600 }} />
+    </Group>
+  </Panel>
+  <Panel id="panel2">
+    <PanelHeader>Panel 2</PanelHeader>
+    <Group>
+      <div style={{ height: 200 }} />
+      <CellButton onClick={() => setActivePanel('panel3')}>Go to panel 3</CellButton>
+      <div style={{ height: 600 }} />
+    </Group>
+  </Panel>
+  <Panel id="panel3">
+    <PanelHeader>Panel 3</PanelHeader>
+    <Group>
+      <div style={{ height: 200 }} />
+      <CellButton onClick={() => setActivePanel('panel1')}>Back to panel 1</CellButton>
+      <div style={{ height: 600 }} />
+    </Group>
+  </Panel>
+</View>;
+```
+
+<br />
+
+## <a id="/View?id=iosswipeback" style="position: relative; top: -100px;"></a>[iOS Swipe Back](https://vkcom.github.io/VKUI/#/View?id=iosswipeback)
+
+В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы
+повторить такое поведение в VKUI, нужно:
+
+- Передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите `history`.
+- Передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`.
+- Обернуть ваше приложение в `ConfigProvider` — он определит, открыто приложение в webview клиента VK или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение webview: `<ConfigProvider isWebView>`.
+
+**Блокировка свайпа (вариант #1)**
+
+Компоненты, которые сами обрабатывают жесты (например, карта или кастомный компонент по типу карусели), могут конфликтовать со свайпбеком. Вот как можно это решить:
+
+- либо повесьте на них свойство `data-vkui-swipe-back={false}`;
+- либо вызывайте `event.stopPropagation()` на событие `onStartX` компонента [Touch](#/Touch).
+
+<br />
+
+**Блокировка свайпа (вариант #2)**
+
+Для блокирования свайпа по вашему условию есть коллбек `onSwipeBackStart()` (см. **Свойства и методы**)
+
+```tsx static
+import * as React from 'react';
+import { type ViewProps, View } from '@vkontakte/vkui';
+
+type ViewOnSwipeBackStartProp = Required<ViewProps>['onSwipeBackStart'];
+
+const App = () => {
+  const handleSwipeBackStart = React.useCallback<ViewOnSwipeBackStartProp>((activePanel) => {}, []);
+  return <View onSwipeBackStart={handleSwipeBackStart} />;
+};
+```
+
+```jsx
+import vkBridge from '@vkontakte/vk-bridge';
+
+const App = () => {
+  const [history, setHistory] = useState(['main']);
+  const activePanel = history[history.length - 1];
+
+  const go = React.useCallback((panel) => {
+    setHistory((prevHistory) => [...prevHistory, panel]);
+  }, []);
+  const goBack = React.useCallback(() => {
+    setHistory((prevHistory) => prevHistory.slice(0, -1));
+  }, []);
+
+  const handleProfileClick = React.useCallback(() => go('profile'), [go]);
+  const handleSettingsClick = React.useCallback(() => go('settings'), [go]);
+
+  const [userName, setUserName] = React.useState('');
+  const [popoutWithRestriction, setPopoutWithRestriction] = React.useState(null);
+
+  const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
+    (activePanel) => {
+      if (activePanel === 'settings') {
+        if (userName !== '') {
+          return;
+        }
+
+        setPopoutWithRestriction(
+          <Alert
+            header="Поле Имя не заполнено"
+            text="Пожалуйста, заполните его."
+            onClose={() => setPopoutWithRestriction(null)}
+          />,
+        );
+
+        return 'prevent';
+      }
+    },
+    [userName],
+  );
+
+  return (
+    <SplitLayout popout={popoutWithRestriction}>
+      <SplitCol>
+        <View
+          history={history}
+          activePanel={activePanel}
+          onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
+          onSwipeBack={goBack}
+        >
+          <Panel id="main">
+            <MainPanelContent onProfileClick={handleProfileClick} />
+          </Panel>
+          <Panel id="profile">
+            <ProfilePanelContent onSettingsClick={handleSettingsClick} />
+          </Panel>
+          <Panel id="settings">
+            <SettingsPanelContent name={userName} onChangeName={setUserName} />
+          </Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  );
+};
+
+const MainPanelContent = ({ onProfileClick }) => {
+  return (
+    <React.Fragment>
+      <PanelHeader>Main</PanelHeader>
+      <Group>
+        <div style={{ height: 200 }} />
+        <CellButton stopPropagation={false} onClick={onProfileClick}>
+          Профиль
+        </CellButton>
+        <div style={{ height: 600 }} />
+      </Group>
+    </React.Fragment>
+  );
+};
+
+const ProfilePanelContent = ({ onSettingsClick }) => {
+  return (
+    <React.Fragment>
+      <PanelHeader>Профиль</PanelHeader>
+      <Group>
+        <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
+        <Div style={{ height: 50, background: '#eee' }} data-vkui-swipe-back={false}>
+          Здесь свайпбек отключен
+        </Div>
+      </Group>
+      <Group>
+        <CellButton stopPropagation={false} onClick={onSettingsClick}>
+          Настройки
+        </CellButton>
+      </Group>
+      <Group
+        header={<Header>Gallery</Header>}
+        description="Полностью блокирует свайпбэк (за счёт event.stopPropagation() на onStartX компонента Touch)"
+      >
+        <Gallery slideWidth="90%" bullets="dark">
+          <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+          <img src="https://placebear.com/1024/640" style={{ display: 'block' }} />
+          <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+        </Gallery>
+      </Group>
+      <Group
+        header={<Header>HorizontalScroll</Header>}
+        description="Свайпбэк срабатывает либо если мы тянем за левый край экрана, либо если позиция горизонтального скролла равна нулю"
+      >
+        <HorizontalScroll>
+          <div style={{ display: 'flex' }}>
+            {getRandomUsers(15).map((user) => (
+              <HorizontalCell key={user.id} size="s" header={user.first_name}>
+                <Avatar size={56} src={user.photo_100} />
+              </HorizontalCell>
+            ))}
+          </div>
+        </HorizontalScroll>
+      </Group>
+    </React.Fragment>
+  );
+};
+
+const SettingsPanelContent = ({ name, onChangeName }) => {
+  const handleNameChange = React.useCallback(
+    (event) => {
+      onChangeName(event.target.value.trim());
+    },
+    [onChangeName],
+  );
+
+  return (
+    <React.Fragment>
+      <PanelHeader>Настройки</PanelHeader>
+      <Group>
+        <Placeholder>Пример с блокированием свайпбека пока не будет выполнено условие</Placeholder>
+        <FormItem htmlFor="name" top="Имя">
+          <Input id="name" value={name} onChange={handleNameChange} />
+        </FormItem>
+      </Group>
+    </React.Fragment>
+  );
+};
+
+<ConfigProvider platform={Platform.IOS} isWebView>
+  <App />
+</ConfigProvider>;
+```
+
+<br />
+
+## <a id="usenavdirection_example" style="position: relative; top: -100px;"></a>[useNavDirection(): определение типа перехода (вперёд/назад), с которым была отрисована панель.](#/View?id=usenavdirection_example)
+
+Хук `useNavDirection()` возвращает одно из трёх значений:
+
+- `undefined` означает, что компонент был смонтирован без перехода (тип перехода может быть не определён при самом первом монтировании приложения, когда ещё не было переходов между [View](#/View) и [Panel](#/Panel));
+- `"forwards"` переход вперёд;
+- `"backwards"` переход назад.
+
+Xук возвращает правильное значение даже если анимация **выключена** через [ConfigProvider](#/ConfigProvider) (`<ConfigProvider transitionMotionEnabled={false}>`).
+
+Значение известно ещё до завершения анимации и определяется один раз, при первом монтировании панели.
+
+Этот хук можно использовать для определения типа анимации перехода не только между `Panel` внутри одного `View`, но и между `View` внутри `Root`.
+
+<br />
+
+Хук также работает в режиме [iOS Swipe Back](#/View?id=iosswipeback). Тип перехода известен как только пользователь начал движение.
 
 <br />
 

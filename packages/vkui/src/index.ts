@@ -409,6 +409,19 @@ export type {
   PopoverArrowProps,
   PopoverContentRenderProp,
 } from './components/Popover/Popover';
+export { ScrollSaver, type ScrollSaverProps } from './components/ScrollSaver/ScrollSaver';
+export {
+  ScrollSaverWithCustomRef,
+  type ScrollSaverWithCustomRefProps,
+} from './components/ScrollSaver/ScrollSaverWithCustomRef';
+export { useScrollSaver } from './components/ScrollSaver/useScrollSaver';
+export { type ScrollSaveModeType } from './components/ScrollSaver/types';
+export {
+  ScrollSaverContextProvider,
+  useScrollSaverCache,
+  useClearScrollSaverCache,
+  type ScrollSaverCache,
+} from './components/ScrollSaver/ScrollSaverContext';
 
 /**
  * HOCs
