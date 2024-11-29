@@ -12,13 +12,13 @@ import {
 import { noop } from '@vkontakte/vkjs';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
-import { BottomSheetController, type InitialSnapPoint } from './controllers/BottomSheetController';
+import { BottomSheetController, type SnapPoint } from './controllers/BottomSheetController';
 import { CSSTransitionController } from './controllers/CSSTransitionController';
 
 export type UseBottomSheetOptions = {
   sheetCSSProperty: string;
   backdropCSSProperty: string;
-  initialSnapPoint?: InitialSnapPoint;
+  snapPoint: SnapPoint;
   blocked?: boolean;
   onDismiss?: VoidFunction;
 };
@@ -49,7 +49,7 @@ export type UseBottomSheetResult = [
  *
  * ## Возможности
  *
- * - [x] есть возможность открывать до определенного размера (см. `initialSnapPoint`)
+ * - [x] есть возможность открывать до определенного размера (см. `snapPoint`)
  * - [x] есть возможность закрыть при сильном смахивании вниз
  * - [x] есть возможность отключить взаимодействие на определённых элементах используя data-атрибут
  * - [x] есть возможность отключить взаимодействие на определённых элементах используя stopPropagation()
@@ -57,7 +57,7 @@ export type UseBottomSheetResult = [
  * ## Анимации
  *
  * - [x] оверлей становится светлее в зависимости от процента сворачивания
- *    - [x] при `initialSnapPoint !== 'auto'` процент высчитывается относительно переданного `initialSnapPoint`
+ *    - [x] при `snapPoint !== 'auto'` процент высчитывается относительно переданного `snapPoint.initial`
  * - [x] при перетаскивании за пределы есть анимация натяжения
  *   > note: в `ModalPage` этого эффекта нет при высоте 100% из-за `max-block-size: 100%`
  *
@@ -74,7 +74,7 @@ export const useBottomSheet = (
   enabled: boolean,
   {
     blocked,
-    initialSnapPoint,
+    snapPoint,
     sheetCSSProperty,
     backdropCSSProperty,
     onDismiss: onDismissProp,
@@ -84,16 +84,11 @@ export const useBottomSheet = (
   const [sheetEl, setSheetEl] = useState<HTMLElement | null>(null);
   const [backdropEl, setBackdropEl] = useState<HTMLElement | null>(null);
 
-  const initialStyle = useMemo<CSSProperties | undefined>(() => {
-    if (!enabled) {
-      return;
-    }
-
-    const { unit, currentSnapPoint } =
-      BottomSheetController.parseInitialSnapPoint(initialSnapPoint);
-
-    return unit === '%' ? { [sheetCSSProperty]: `${currentSnapPoint}${unit}` } : undefined;
-  }, [enabled, initialSnapPoint, sheetCSSProperty]);
+  const initialStyle = useMemo<CSSProperties | undefined>(
+    () =>
+      enabled && snapPoint !== 'auto' ? { [sheetCSSProperty]: `${snapPoint.initial}%` } : undefined,
+    [enabled, snapPoint, sheetCSSProperty],
+  );
 
   const onDismiss = useStableCallback(onDismissProp || noop);
   const bsController = useMemo<BottomSheetController | null>(() => {
@@ -136,10 +131,10 @@ export const useBottomSheet = (
   useIsomorphicLayoutEffect(
     function init() {
       if (bsController) {
-        bsController.init(initialSnapPoint);
+        bsController.init(snapPoint);
       }
     },
-    [initialSnapPoint, bsController],
+    [snapPoint, bsController],
   );
 
   useIsomorphicLayoutEffect(

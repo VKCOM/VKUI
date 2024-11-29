@@ -1,6 +1,5 @@
 import { noop } from '@vkontakte/vkjs';
 import { clamp } from '../../../helpers/math';
-import { inRange } from '../../../helpers/range';
 import { rubberbandIfOutOfBounds } from '../../animation';
 import { getNearestOverflowAncestor, hasSelectionWithRangeType } from '../../dom';
 import { UIPanGestureRecognizer } from '../../touch/UIPanGestureRecognizer';
@@ -9,19 +8,12 @@ import {
   DRAG_THRESHOLDS,
   DYNAMIC_SNAP_POINT_DATA,
   SNAP_POINT_DETENTS,
-  SNAP_POINT_SAFE_RANGE,
 } from '../constants';
 import type { CSSTransitionController } from './CSSTransitionController';
 
-export type InitialSnapPoint = 'auto' | number;
-
 export type SnapPointDetents = [number, number] | [number, number, number];
 
-export type BottomSheetControllerSnapPointData = {
-  unit: '%' | 'px';
-  currentSnapPoint: number;
-  snapPointDetents: SnapPointDetents;
-};
+export type SnapPoint = 'auto' | { initial: number; detents: SnapPointDetents };
 
 export type BottomSheetControllerOptions = {
   sheetScrollEl: HTMLElement | null;
@@ -31,35 +23,6 @@ export type BottomSheetControllerOptions = {
 };
 
 export class BottomSheetController {
-  static parseInitialSnapPoint(
-    initialSnapPoint: InitialSnapPoint = SNAP_POINT_DETENTS.MEDIUM,
-  ): BottomSheetControllerSnapPointData {
-    if (initialSnapPoint === 'auto') {
-      return {
-        unit: 'px',
-        currentSnapPoint: DYNAMIC_SNAP_POINT_DATA.IDLE_POINT_VALUE,
-        snapPointDetents: [SNAP_POINT_DETENTS.MIN, DYNAMIC_SNAP_POINT_DATA.IDLE_POINT_VALUE],
-      };
-    }
-
-    const currentSnapPoint = Math.min(
-      Math.max(initialSnapPoint, SNAP_POINT_SAFE_RANGE.LOWER),
-      SNAP_POINT_DETENTS.LARGE,
-    );
-
-    return {
-      unit: '%',
-      currentSnapPoint,
-      snapPointDetents: inRange(
-        currentSnapPoint,
-        SNAP_POINT_SAFE_RANGE.LOWER,
-        SNAP_POINT_SAFE_RANGE.HIGHEST,
-      )
-        ? [SNAP_POINT_DETENTS.MIN, currentSnapPoint, SNAP_POINT_DETENTS.LARGE]
-        : [SNAP_POINT_DETENTS.MIN, currentSnapPoint],
-    };
-  }
-
   constructor(
     private readonly sheetEl: HTMLElement,
     {
@@ -76,15 +39,18 @@ export class BottomSheetController {
     this.backdropTransitionController = backdropTransitionController;
   }
 
-  init(initialSnapPoint?: InitialSnapPoint) {
+  init(snapPoint: SnapPoint) {
     this.isInitialized = true;
 
-    const { unit, currentSnapPoint, snapPointDetents } =
-      BottomSheetController.parseInitialSnapPoint(initialSnapPoint);
-
-    this.unit = unit;
-    this.currentSnapPoint = currentSnapPoint;
-    this.snapPointDetents = snapPointDetents;
+    if (snapPoint === 'auto') {
+      this.unit = 'px';
+      this.currentSnapPoint = DYNAMIC_SNAP_POINT_DATA.IDLE_POINT_VALUE;
+      this.snapPointDetents = [SNAP_POINT_DETENTS.MIN, DYNAMIC_SNAP_POINT_DATA.IDLE_POINT_VALUE];
+    } else {
+      this.unit = '%';
+      this.currentSnapPoint = snapPoint.initial;
+      this.snapPointDetents = snapPoint.detents;
+    }
   }
 
   destroy() {

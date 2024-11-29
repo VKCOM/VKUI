@@ -97,7 +97,7 @@ export const ModalCardInternal = ({
     bottomSheetEnabled,
     {
       blocked: keyboardOpened,
-      initialSnapPoint: 'auto',
+      snapPoint: 'auto',
       sheetCSSProperty: '--vkui_internal_ModalCard--translateY',
       backdropCSSProperty: '--vkui_internal--modal-overlay--opacity',
       onDismiss() {

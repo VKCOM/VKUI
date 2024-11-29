@@ -7,7 +7,11 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animation';
-import { BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE, useBottomSheet } from '../../lib/sheet';
+import {
+  BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE,
+  type SnapPoint,
+  useBottomSheet,
+} from '../../lib/sheet';
 import type { CSSCustomProperties } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
@@ -33,7 +37,9 @@ const transitionStateClassNames: Partial<Record<UseCSSTransitionState, string>> 
   exited: styles['documentStateExited'],
 };
 
-export interface ModalPageInternalProps extends Omit<ModalPageProps, 'nav' | 'keepMounted'> {
+export interface ModalPageInternalProps
+  extends Omit<ModalPageProps, 'nav' | 'keepMounted' | 'settlingHeight' | 'dynamicContentHeight'> {
+  snapPoint: SnapPoint;
   ModalOverlay?: ComponentType<ModalOverlayProps>;
 }
 
@@ -51,8 +57,7 @@ export const ModalPageInternal = ({
   children,
   className,
   style,
-  dynamicContentHeight,
-  settlingHeight,
+  snapPoint,
   getModalContentRef,
   ModalOverlay = ModalOverlayDefault,
   modalOverlayTestId,
@@ -92,7 +97,7 @@ export const ModalPageInternal = ({
   const [{ initialStyle, setSheetEl, setSheetScrollEl, setBackdropEl }, bottomSheetEventHandlers] =
     useBottomSheet(bottomSheetEnabled, {
       blocked: keyboardOpened,
-      initialSnapPoint: dynamicContentHeight ? 'auto' : settlingHeight,
+      snapPoint,
       sheetCSSProperty: '--vkui_internal_ModalPageDocument--snapPoint',
       backdropCSSProperty: '--vkui_internal--modal-overlay--opacity',
       onDismiss() {

@@ -1,8 +1,10 @@
 'use client';
 
-import { useId } from 'react';
+import { useId, useMemo } from 'react';
 import { ModalContext } from '../../context/ModalContext';
+import { inRange } from '../../helpers/range';
 import { getNavId } from '../../lib/getNavId';
+import { SNAP_POINT_DETENTS, SNAP_POINT_SAFE_RANGE, type SnapPoint } from '../../lib/sheet';
 import { warnOnce } from '../../lib/warnOnce';
 import { useModalManager } from '../ModalRoot/useModalManager';
 import { ModalPageInternal } from './ModalPageInternal';
@@ -25,11 +27,30 @@ export const ModalPage = ({
   onClosed,
   size = 's',
   settlingHeight = 50,
+  dynamicContentHeight,
   keepMounted = false,
   ...restProps
 }: ModalPageProps) => {
   const generatingId = useId();
   const id = getNavId({ nav, id: idProp }, warn) || generatingId;
+
+  const snapPoint = useMemo((): SnapPoint => {
+    if (dynamicContentHeight) {
+      return 'auto';
+    }
+
+    const currentSnapPoint = Math.min(
+      Math.max(settlingHeight, SNAP_POINT_SAFE_RANGE.LOWER),
+      SNAP_POINT_DETENTS.LARGE,
+    );
+
+    return {
+      initial: currentSnapPoint,
+      detents: inRange(currentSnapPoint, SNAP_POINT_SAFE_RANGE.LOWER, SNAP_POINT_SAFE_RANGE.HIGHEST)
+        ? [SNAP_POINT_DETENTS.MIN, currentSnapPoint, SNAP_POINT_DETENTS.LARGE]
+        : [SNAP_POINT_DETENTS.MIN, currentSnapPoint],
+    };
+  }, [settlingHeight, dynamicContentHeight]);
 
   const { mounted, ...resolvedProps } = useModalManager({
     id,
@@ -53,7 +74,7 @@ export const ModalPage = ({
         id={id}
         size={size}
         aria-labelledby={`${id}-label`}
-        settlingHeight={settlingHeight}
+        snapPoint={snapPoint}
         {...resolvedProps}
         {...restProps}
       />
