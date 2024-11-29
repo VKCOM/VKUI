@@ -12,6 +12,8 @@ import type { ModalPageProps } from './types';
 
 const warn = warnOnce('ModalPage');
 
+const snapPointCache = new Map<string, Exclude<SnapPoint, 'auto'>>();
+
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalPage
  */
@@ -34,25 +36,7 @@ export const ModalPage = ({
   const generatingId = useId();
   const id = getNavId({ nav, id: idProp }, warn) || generatingId;
 
-  const snapPoint = useMemo((): SnapPoint => {
-    if (dynamicContentHeight) {
-      return 'auto';
-    }
-
-    const currentSnapPoint = Math.min(
-      Math.max(settlingHeight, SNAP_POINT_SAFE_RANGE.LOWER),
-      SNAP_POINT_DETENTS.LARGE,
-    );
-
-    return {
-      initial: currentSnapPoint,
-      detents: inRange(currentSnapPoint, SNAP_POINT_SAFE_RANGE.LOWER, SNAP_POINT_SAFE_RANGE.HIGHEST)
-        ? [SNAP_POINT_DETENTS.MIN, currentSnapPoint, SNAP_POINT_DETENTS.LARGE]
-        : [SNAP_POINT_DETENTS.MIN, currentSnapPoint],
-    };
-  }, [settlingHeight, dynamicContentHeight]);
-
-  const { mounted, ...resolvedProps } = useModalManager({
+  const { mounted, shouldPreserveSnapPoint, ...resolvedProps } = useModalManager({
     id,
     open,
     keepMounted,
@@ -63,6 +47,29 @@ export const ModalPage = ({
     onClose,
     onClosed,
   });
+
+  const snapPoint = useMemo((): SnapPoint => {
+    if (dynamicContentHeight) {
+      return 'auto';
+    }
+
+    if (shouldPreserveSnapPoint) {
+      const snapPointCached = snapPointCache.get(id);
+
+      if (snapPointCached) {
+        return snapPointCached;
+      }
+
+      const nextSnapPoint = transformSettlingHeightToSnapPoint(settlingHeight);
+      snapPointCache.set(id, nextSnapPoint);
+
+      return nextSnapPoint;
+    } else {
+      snapPointCache.delete(id);
+    }
+
+    return transformSettlingHeightToSnapPoint(settlingHeight);
+  }, [id, shouldPreserveSnapPoint, dynamicContentHeight, settlingHeight]);
 
   if (!mounted) {
     return null;
@@ -75,9 +82,35 @@ export const ModalPage = ({
         size={size}
         aria-labelledby={`${id}-label`}
         snapPoint={snapPoint}
+        onSnapPointChange={
+          snapPoint !== 'auto' && shouldPreserveSnapPoint
+            ? (snapPoint) => {
+                const snapPointCached = snapPointCache.get(id);
+
+                if (snapPointCached) {
+                  snapPointCached.initial = snapPoint;
+                  snapPointCache.set(id, snapPointCached);
+                }
+              }
+            : undefined
+        }
         {...resolvedProps}
         {...restProps}
       />
     </ModalContext.Provider>
   );
 };
+
+function transformSettlingHeightToSnapPoint(settlingHeight: number): Exclude<SnapPoint, 'auto'> {
+  const currentSnapPoint = Math.min(
+    Math.max(settlingHeight, SNAP_POINT_SAFE_RANGE.LOWER),
+    SNAP_POINT_DETENTS.LARGE,
+  );
+
+  return {
+    initial: currentSnapPoint,
+    detents: inRange(currentSnapPoint, SNAP_POINT_SAFE_RANGE.LOWER, SNAP_POINT_SAFE_RANGE.HIGHEST)
+      ? [SNAP_POINT_DETENTS.MIN, currentSnapPoint, SNAP_POINT_DETENTS.LARGE]
+      : [SNAP_POINT_DETENTS.MIN, currentSnapPoint],
+  };
+}

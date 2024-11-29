@@ -15,10 +15,13 @@ export type SnapPointDetents = [number, number] | [number, number, number];
 
 export type SnapPoint = 'auto' | { initial: number; detents: SnapPointDetents };
 
+export type SnapPointChange = (snapPoint: number) => void;
+
 export type BottomSheetControllerOptions = {
   sheetScrollEl: HTMLElement | null;
   sheetTransitionController: CSSTransitionController<string>;
   backdropTransitionController: CSSTransitionController | null;
+  onSnapPointChange: SnapPointChange;
   onDismiss: VoidFunction;
 };
 
@@ -29,9 +32,11 @@ export class BottomSheetController {
       sheetScrollEl,
       sheetTransitionController,
       backdropTransitionController,
+      onSnapPointChange,
       onDismiss,
     }: BottomSheetControllerOptions,
   ) {
+    this.onSnapPointChange = onSnapPointChange;
     this.onDismiss = onDismiss;
     this.panGestureRecognizer = new UIPanGestureRecognizer();
     this.sheetScrollEl = sheetScrollEl;
@@ -136,7 +141,16 @@ export class BottomSheetController {
   panEnd() {
     switch (this.panState) {
       case 'moving':
+        const prevCurrentSnapPoint = this.currentSnapPoint;
         this.currentSnapPoint = this.getSnapPointTo(this.nextSnapPoint);
+
+        if (
+          prevCurrentSnapPoint !== this.currentSnapPoint &&
+          this.currentSnapPoint > SNAP_POINT_DETENTS.MIN
+        ) {
+          this.onSnapPointChange(this.currentSnapPoint);
+        }
+
         this.calculateSnapPoint(this.currentSnapPoint);
         break;
     }
@@ -165,6 +179,7 @@ export class BottomSheetController {
   private readonly sheetTransitionController: CSSTransitionController<string>;
   private readonly backdropTransitionController: CSSTransitionController | null;
   private readonly panGestureRecognizer: UIPanGestureRecognizer;
+  private readonly onSnapPointChange: SnapPointChange;
   private readonly onDismiss: VoidFunction;
 
   private calculateSnapPoint(nextSnapPoint: number, immediately = false) {

@@ -30,8 +30,8 @@ export interface UseModalManagerResolvedProps {
 }
 
 export type UseModalManagerResult =
-  | { mounted: false }
-  | ({ mounted: true } & UseModalManagerResolvedProps);
+  | { mounted: false; shouldPreserveSnapPoint: boolean }
+  | ({ mounted: true; shouldPreserveSnapPoint: boolean } & UseModalManagerResolvedProps);
 
 export const useModalManager = ({
   id,
@@ -46,6 +46,7 @@ export const useModalManager = ({
 }: UseModalManager): UseModalManagerResult => {
   const context = useContext(ModalRootContext);
   const opened = context.isInsideModal ? context.activeModal === id : open;
+  const shouldPreserveSnapPoint = context.isInsideModal ? context.activeModal !== null : false;
 
   const [unmounted, setUnmounted] = useState(keepMounted ? false : !opened);
 
@@ -59,12 +60,13 @@ export const useModalManager = ({
   );
 
   if (unmounted) {
-    return { mounted: false };
+    return { mounted: false, shouldPreserveSnapPoint };
   }
 
   return {
     mounted: true,
     open: opened,
+    shouldPreserveSnapPoint,
     noFocusToDialog: noFocusToDialog || context.noFocusToDialog,
     modalOverlayTestId: modalOverlayTestId || context.modalOverlayTestId,
     ModalOverlay: context.isInsideModal ? VisuallyHiddenModalOverlay : ModalOverlay,

@@ -10,4 +10,4 @@ export {
   type UseBottomSheetResult,
   useBottomSheet,
 } from './useBottomSheet';
-export type { SnapPoint } from './controllers/BottomSheetController';
+export type { SnapPoint, SnapPointChange } from './controllers/BottomSheetController';

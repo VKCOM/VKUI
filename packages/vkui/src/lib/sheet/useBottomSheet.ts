@@ -12,7 +12,11 @@ import {
 import { noop } from '@vkontakte/vkjs';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
-import { BottomSheetController, type SnapPoint } from './controllers/BottomSheetController';
+import {
+  BottomSheetController,
+  type SnapPoint,
+  type SnapPointChange,
+} from './controllers/BottomSheetController';
 import { CSSTransitionController } from './controllers/CSSTransitionController';
 
 export type UseBottomSheetOptions = {
@@ -20,6 +24,7 @@ export type UseBottomSheetOptions = {
   backdropCSSProperty: string;
   snapPoint: SnapPoint;
   blocked?: boolean;
+  onSnapPointChange?: SnapPointChange;
   onDismiss?: VoidFunction;
 };
 
@@ -77,6 +82,7 @@ export const useBottomSheet = (
     snapPoint,
     sheetCSSProperty,
     backdropCSSProperty,
+    onSnapPointChange: onSnapPointChangeProp,
     onDismiss: onDismissProp,
   }: UseBottomSheetOptions,
 ): UseBottomSheetResult => {
@@ -90,6 +96,7 @@ export const useBottomSheet = (
     [enabled, snapPoint, sheetCSSProperty],
   );
 
+  const onSnapPointChange = useStableCallback(onSnapPointChangeProp || noop);
   const onDismiss = useStableCallback(onDismissProp || noop);
   const bsController = useMemo<BottomSheetController | null>(() => {
     if (!enabled || sheetEl === null) {
@@ -102,6 +109,7 @@ export const useBottomSheet = (
       backdropTransitionController: backdropEl
         ? new CSSTransitionController(backdropEl, backdropCSSProperty)
         : null,
+      onSnapPointChange,
       onDismiss,
     });
   }, [
@@ -111,6 +119,7 @@ export const useBottomSheet = (
     sheetScrollEl,
     backdropEl,
     backdropCSSProperty,
+    onSnapPointChange,
     onDismiss,
   ]);
 

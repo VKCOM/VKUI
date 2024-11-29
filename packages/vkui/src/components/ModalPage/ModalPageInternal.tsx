@@ -10,6 +10,7 @@ import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animatio
 import {
   BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE,
   type SnapPoint,
+  type SnapPointChange,
   useBottomSheet,
 } from '../../lib/sheet';
 import type { CSSCustomProperties } from '../../types';
@@ -41,6 +42,7 @@ export interface ModalPageInternalProps
   extends Omit<ModalPageProps, 'nav' | 'keepMounted' | 'settlingHeight' | 'dynamicContentHeight'> {
   snapPoint: SnapPoint;
   ModalOverlay?: ComponentType<ModalOverlayProps>;
+  onSnapPointChange?: SnapPointChange;
 }
 
 /**
@@ -58,6 +60,7 @@ export const ModalPageInternal = ({
   className,
   style,
   snapPoint,
+  onSnapPointChange,
   getModalContentRef,
   ModalOverlay = ModalOverlayDefault,
   modalOverlayTestId,
@@ -100,6 +103,7 @@ export const ModalPageInternal = ({
       snapPoint,
       sheetCSSProperty: '--vkui_internal_ModalPageDocument--snapPoint',
       backdropCSSProperty: '--vkui_internal--modal-overlay--opacity',
+      onSnapPointChange,
       onDismiss() {
         onClose('swipe-down');
       },
