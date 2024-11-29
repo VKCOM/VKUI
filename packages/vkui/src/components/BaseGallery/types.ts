@@ -2,6 +2,7 @@ import type * as React from 'react';
 import type { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
 import type { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import type { CustomTouchEvent, CustomTouchEventHandler } from '../Touch/Touch';
+import { type BulletsTestIds } from './Bullets';
 
 export interface GallerySlidesState {
   coordX: number;
@@ -28,7 +29,8 @@ export interface LayoutState {
 export interface BaseGalleryProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
     HasAlign,
-    HasRef<HTMLElement> {
+    HasRef<HTMLElement>,
+    BulletsTestIds {
   slideWidth?: string | number;
   slideIndex?: number;
   onDragStart?: CustomTouchEventHandler;
@@ -58,4 +60,16 @@ export interface BaseGalleryProps
    * Текст для кнопки-стрелки вправо (вперед). Делает ее доступной для ассистивных технологий
    */
   arrowNextLabel?: string;
+  /**
+   * e2e test-id для слайда
+   */
+  slideTestId?: (index: number) => string;
+  /**
+   * e2e test-id для кнопки перехода к следующему слайду
+   */
+  nextArrowTestId?: string;
+  /**
+   e2e test-id для кнопки перехода к предыдущему слайду
+   */
+  prevArrowTestId?: string;
 }
