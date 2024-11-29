@@ -34,6 +34,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'usePortal'
   | 'onPlacementChange'
   | 'disableFlipMiddleware'
+  | 'strategy'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps' | 'onCloseIconClick'>;
@@ -98,6 +99,7 @@ export const Tooltip = ({
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
   disableTriggerOnFocus = false,
+  strategy,
 
   // useFloatingWithInteractions
   defaultShown,
@@ -165,6 +167,7 @@ export const Tooltip = ({
     closeAfterClick: !disableCloseAfterClick,
     disableInteractive: !enableInteractive,
     middlewares,
+    strategy,
   });
   const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
 

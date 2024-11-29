@@ -79,6 +79,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'zIndex'
   | 'disableFlipMiddleware'
   | 'customMiddlewares'
+  | 'strategy'
 >;
 
 /**
@@ -136,6 +137,7 @@ export const Popover = ({
   arrowHeight = DEFAULT_ARROW_HEIGHT,
   arrowPadding = DEFAULT_ARROW_PADDING,
   placement: expectedPlacement = 'bottom-start',
+  strategy,
   onPlacementChange,
   disableFlipMiddleware = false,
   trigger = 'click',
@@ -216,6 +218,7 @@ export const Popover = ({
     shown: shownProp,
     onShownChange,
     onShownChanged,
+    strategy,
   });
 
   usePlacementChangeCallback(expectedPlacement, resolvedPlacement, onPlacementChange);

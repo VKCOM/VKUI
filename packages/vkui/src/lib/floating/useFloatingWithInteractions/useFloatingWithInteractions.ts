@@ -33,6 +33,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   // UseFloating
   placement: placementProp = 'bottom',
+  strategy: strategyProp = 'fixed',
   middlewares,
   hoverDelay = 0,
   closeAfterClick = false,
@@ -84,7 +85,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   // Библиотека `floating-ui`
   const { placement, x, y, strategy, refs, middlewareData } = useFloating<T>({
-    strategy: 'fixed',
+    strategy: strategyProp,
     placement: placementProp,
     middleware: middlewares,
     whileElementsMounted,
