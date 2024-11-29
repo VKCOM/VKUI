@@ -42,6 +42,17 @@ const story: Meta<ModalPageProps> = {
   title: 'Modals/ModalPage',
   component: ModalPage,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  decorators: function UIController(Component) {
+    const [, updateArg] = useArgs();
+    return (
+      <>
+        <Button appearance="overlay" onClick={() => updateArg({ open: true })}>
+          Открыть
+        </Button>
+        <Component />
+      </>
+    );
+  },
 };
 
 export default story;
@@ -257,127 +268,124 @@ export const Sandbox: Story = {
     };
 
     return (
-      <>
-        <Button onClick={() => updateArgs({ open: false })}>Открыть</Button>
-        <ModalPage
-          id="test"
-          {...props}
-          header={
-            <ModalPageHeader
-              before={
-                sizeX.compact &&
-                platform === 'android' && (
-                  <AndroidCloseButton
-                    className={sizeX.compact.className}
-                    onClick={() => handleModalClose('close-custom')}
-                  />
-                )
-              }
-              after={
-                sizeX.compact &&
-                platform === 'ios' && (
-                  <IosCloseButton
-                    className={sizeX.compact.className}
-                    onClick={() => handleModalClose('close-custom')}
-                  />
-                )
-              }
-            >
-              Sandbox
-            </ModalPageHeader>
-          }
-          footer={
-            <ModalPageFooter>
-              <Input name="footer" type="text" placeholder="Lorem ipsum..." />
-            </ModalPageFooter>
-          }
-          {...props}
-          onClose={handleModalClose}
-        >
-          <FormItem label="top" top="Вертикальный скролл не должен блокироваться">
-            <Textarea
-              name="top"
-              placeholder="Lorem ipsum..."
-              defaultValue={multiplyText('Lorem ipsum', 100)}
-              maxHeight={110}
-            />
-          </FormItem>
-          <Div>
-            <Div
-              style={{ paddingBlock: 24, borderRadius: 12, border: '1px dashed tomato' }}
-              onTouchStart={stopPropagation}
-              onMouseDown={stopPropagation}
-            >
-              <code>event.stopPropagation()</code> на <code>onTouchStart</code>/
-              <code>onMouseDown</code> должен блокировать жесты вызывающие
-              сворачивание/разворачивание панели
-            </Div>
+      <ModalPage
+        id="test"
+        {...props}
+        header={
+          <ModalPageHeader
+            before={
+              sizeX.compact &&
+              platform === 'android' && (
+                <AndroidCloseButton
+                  className={sizeX.compact.className}
+                  onClick={() => handleModalClose('close-custom')}
+                />
+              )
+            }
+            after={
+              sizeX.compact &&
+              platform === 'ios' && (
+                <IosCloseButton
+                  className={sizeX.compact.className}
+                  onClick={() => handleModalClose('close-custom')}
+                />
+              )
+            }
+          >
+            Sandbox
+          </ModalPageHeader>
+        }
+        footer={
+          <ModalPageFooter>
+            <Input name="footer" type="text" placeholder="Lorem ipsum..." />
+          </ModalPageFooter>
+        }
+        {...props}
+        onClose={handleModalClose}
+      >
+        <FormItem label="top" top="Вертикальный скролл не должен блокироваться">
+          <Textarea
+            name="top"
+            placeholder="Lorem ipsum..."
+            defaultValue={multiplyText('Lorem ipsum', 100)}
+            maxHeight={110}
+          />
+        </FormItem>
+        <Div>
+          <Div
+            style={{ paddingBlock: 24, borderRadius: 12, border: '1px dashed tomato' }}
+            onTouchStart={stopPropagation}
+            onMouseDown={stopPropagation}
+          >
+            <code>event.stopPropagation()</code> на <code>onTouchStart</code>/
+            <code>onMouseDown</code> должен блокировать жесты вызывающие сворачивание/разворачивание
+            панели
           </Div>
-          <Group
-            header={
-              <Header size="m" multiline>
-                Горизонтальный скролл не должен блокироваться
-              </Header>
-            }
-          >
-            <HorizontalScroll>
-              <div style={{ display: 'flex' }}>
-                {mockData.map((item) => {
-                  return (
-                    <HorizontalCell key={item.id} title={item.first_name}>
-                      <Avatar size={56} src={item.photo_200} />
-                    </HorizontalCell>
-                  );
-                })}
-              </div>
-            </HorizontalScroll>
-            <Spacing size="m" />
-            <CardScroll padding>
-              {mockData.map((_, index) => (
-                <Card key={index}>
-                  <div style={{ height: 96 }} />
-                </Card>
-              ))}
-            </CardScroll>
-          </Group>
-          <FormItem
-            top="Плавающий элемент в пределах панели"
-            bottom={
-              <>
-                Если <code>scrollTop</code> в плавающем элементе и в <code>ModalPageContent</code>{' '}
-                будет равен <b>0</b>, то панель будет считать, что её можно тянуть вниз для
-                сворачивания
-              </>
-            }
-          >
-            <CustomSelect
-              options={cities}
-              placeholder="forceDropdownPortal={false}"
-              forceDropdownPortal={false}
-            />
-          </FormItem>
-          <FormItem
-            top="Плавающий элемент за пределами панели"
-            bottom="Панель не отвечает за закрытие плавающего окна, если та вышла за пределы во время скролла или сворачивания/разворачивания"
-          >
-            <CustomSelect
-              options={cities}
-              placeholder="forceDropdownPortal={true}"
-              forceDropdownPortal={true}
-            />
-          </FormItem>
-          <FormItem
-            top={
-              <>
-                Текстовое поле в конце <code>ModaPageContent</code>
-              </>
-            }
-            label="bottom"
-          >
-            <Input name="bottom" placeholder="Lorem ipsum..." />
-          </FormItem>
-        </ModalPage>
-      </>
+        </Div>
+        <Group
+          header={
+            <Header size="m" multiline>
+              Горизонтальный скролл не должен блокироваться
+            </Header>
+          }
+        >
+          <HorizontalScroll>
+            <div style={{ display: 'flex' }}>
+              {mockData.map((item) => {
+                return (
+                  <HorizontalCell key={item.id} title={item.first_name}>
+                    <Avatar size={56} src={item.photo_200} />
+                  </HorizontalCell>
+                );
+              })}
+            </div>
+          </HorizontalScroll>
+          <Spacing size="m" />
+          <CardScroll padding>
+            {mockData.map((_, index) => (
+              <Card key={index}>
+                <div style={{ height: 96 }} />
+              </Card>
+            ))}
+          </CardScroll>
+        </Group>
+        <FormItem
+          top="Плавающий элемент в пределах панели"
+          bottom={
+            <>
+              Если <code>scrollTop</code> в плавающем элементе и в <code>ModalPageContent</code>{' '}
+              будет равен <b>0</b>, то панель будет считать, что её можно тянуть вниз для
+              сворачивания
+            </>
+          }
+        >
+          <CustomSelect
+            options={cities}
+            placeholder="forceDropdownPortal={false}"
+            forceDropdownPortal={false}
+          />
+        </FormItem>
+        <FormItem
+          top="Плавающий элемент за пределами панели"
+          bottom="Панель не отвечает за закрытие плавающего окна, если та вышла за пределы во время скролла или сворачивания/разворачивания"
+        >
+          <CustomSelect
+            options={cities}
+            placeholder="forceDropdownPortal={true}"
+            forceDropdownPortal={true}
+          />
+        </FormItem>
+        <FormItem
+          top={
+            <>
+              Текстовое поле в конце <code>ModaPageContent</code>
+            </>
+          }
+          label="bottom"
+        >
+          <Input name="bottom" placeholder="Lorem ipsum..." />
+        </FormItem>
+      </ModalPage>
     );
   },
 };
