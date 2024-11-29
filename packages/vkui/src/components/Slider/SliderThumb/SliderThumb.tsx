@@ -45,12 +45,12 @@ export const SliderThumb = ({
   return (
     <div {...restProps} className={classNames(styles.container, className)}>
       <Tooltip
-        placement="top-start"
+        placement="top"
         appearance="neutral"
         shown={shouldShowTooltip}
         description={inputValue}
+        disableFlipMiddleware
         offsetByMainAxis={7}
-        offsetByCrossAxis={0}
         usePortal={false}
         strategy="absolute"
       >
