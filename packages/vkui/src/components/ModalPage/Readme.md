@@ -47,7 +47,7 @@ const Example = () => {
 
 **Обязательные компоненты, задающиеся библиотекой**:
 
-- `ModalOutlet` – портал, куда рендерится `ModalPage`;
+- `ModalOutlet` – обёртка с фиксированной позицией для перекрытия других элементов в **DOM**;
 - `ModalOverlay` – интерактивный задний фон;
 - `ModalPageInternal` – инкапсулирует в себе всю логику поведения;
 - `ModalPageContent` – оборачивает переданный `children` в [CustomScrollView](#/CustomScrollView).
