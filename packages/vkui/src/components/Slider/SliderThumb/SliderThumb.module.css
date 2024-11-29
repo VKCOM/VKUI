@@ -1,7 +1,12 @@
-.host {
+.container {
   position: absolute;
   z-index: 1;
   box-sizing: border-box;
+}
+
+.host {
+  box-sizing: border-box;
+  display: block;
   inline-size: var(--vkui_internal--slider_thumb_size);
   block-size: var(--vkui_internal--slider_thumb_size);
   border-radius: 50%;
