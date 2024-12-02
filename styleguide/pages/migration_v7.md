@@ -678,7 +678,7 @@
 
 <hr/>
 
-### [Flex](https://vkcom.github.io/VKUI/7.0.0-beta.0/#/Flex)
+### [Flex](https://vkcom.github.io/VKUI/7.0.0/#/Flex)
 
 Изменена последовательность отступов в свойстве `gap` на `[row, column]`.
 
@@ -909,7 +909,7 @@
 
 <hr/>
 
-### [Image](https://vkcom.github.io/VKUI/7.0.0-beta.0/#/Image)
+### [Image](https://vkcom.github.io/VKUI/7.0.0/#/Image)
 
 У под-компонента `Image.Overlay` свойство `disableInteractive` было удалено, вместо него теперь можно просто не прокидывать
 свойство `onClick`.
@@ -1371,7 +1371,7 @@ const SomeWrapper = ({ id }) => (
 
 <hr/>
 
-### [SimpleGrid](https://vkcom.github.io/VKUI/7.0.0-beta.0/#/SimpleGrid)
+### [SimpleGrid](https://vkcom.github.io/VKUI/7.0.0/#/SimpleGrid)
 
 Изменена последовательность отступов в свойстве `gap` на `[row, column]`.
 
