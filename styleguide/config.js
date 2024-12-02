@@ -115,11 +115,13 @@ const baseConfig = {
         'display': 'list-item',
         'counterIncrement': 'list-item 0',
         'listStyle': 'inside disclosure-closed',
+        'color': 'var(--vkui--color_text_primary)',
 
         'details[open] > &': {
           display: 'list-item',
           counterIncrement: 'list-item 0',
           listStyle: 'inside disclosure-open',
+          color: 'var(--vkui--color_text_primary)',
           marginBottom: 0,
         },
       },
