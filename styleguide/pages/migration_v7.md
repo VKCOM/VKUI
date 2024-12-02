@@ -228,8 +228,8 @@
   ```diff
   <ConfigProviderContext.Provider value={{
     ...configContext,
-    - appearance: 'light',
-    + colorScheme: 'light'
+  - appearance: 'light',
+  + colorScheme: 'light'
   }}>
     {children}
   </ConfigProviderContext.Provider>
@@ -742,6 +742,8 @@
   </FormItem>
   ```
 
+  </details>
+
 <hr/>
 
 ### [FormStatus](https://vkcom.github.io/VKUI/7.0.0/#/FormStatus)
@@ -1135,6 +1137,8 @@ const SomeWrapper = ({ id }) => (
 - <PanelSpinner size="small" />
 + <PanelSpinner size="s" />
 ```
+
+</details>
 
 <hr/>
 
