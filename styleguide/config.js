@@ -202,7 +202,7 @@ const baseConfig = {
         {
           name: 'Modals',
           components: () => [
-            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalRoot/ModalRootAdaptive.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalRoot/ModalRoot.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalPage/ModalPage.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalPageHeader/ModalPageHeader.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalCard/ModalCard.tsx`,
