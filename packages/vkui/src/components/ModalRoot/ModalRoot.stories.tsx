@@ -14,8 +14,6 @@ import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Spinner } from '../Spinner/Spinner';
-import { SplitCol } from '../SplitCol/SplitCol';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { ModalRoot } from './ModalRoot';
 import type { ModalRootProps } from './types';
 
@@ -185,13 +183,10 @@ export const ModalRootAutoFocus: Story = {
     );
 
     return (
-      <SplitLayout modal={modal}>
-        <SplitCol>
-          <Placeholder stretched>
-            <Button onClick={() => setActiveModal(MODAL_ROOT_WITH_AUTO_FOCUS)}>Открыть</Button>
-          </Placeholder>
-        </SplitCol>
-      </SplitLayout>
+      <Placeholder stretched>
+        <Button onClick={() => setActiveModal(MODAL_ROOT_WITH_AUTO_FOCUS)}>Открыть</Button>
+        {modal}
+      </Placeholder>
     );
   },
 };
