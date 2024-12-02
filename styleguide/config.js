@@ -102,6 +102,43 @@ const baseConfig = {
         },
       },
     },
+    Details: {
+      details: {
+        'li > &': {
+          marginLeft: 26,
+          marginBottom: 0,
+        },
+      },
+    },
+    DetailsSummary: {
+      summary: {
+        'display': 'list-item',
+        'counterIncrement': 'list-item 0',
+        'listStyle': 'inside disclosure-closed',
+        'color': 'var(--vkui--color_text_primary)',
+
+        'details[open] > &': {
+          display: 'list-item',
+          counterIncrement: 'list-item 0',
+          listStyle: 'inside disclosure-open',
+          color: 'var(--vkui--color_text_primary)',
+          marginBottom: 0,
+        },
+      },
+    },
+    Table: {
+      table: {
+        marginLeft: 22,
+      },
+    },
+    TableCell: {
+      th: {
+        color: 'var(--vkui--color_text_primary)',
+      },
+      td: {
+        color: 'var(--vkui--color_text_primary)',
+      },
+    },
   },
   exampleMode: 'expand',
   sections: [
@@ -352,9 +389,9 @@ const baseConfig = {
           content: './pages/css_modules.md',
         },
         {
-          title: 'Миграция с v5 на v6',
+          title: 'Миграция с v6 на v7',
           name: 'Migrations',
-          content: './pages/migration_v6.md',
+          content: './pages/migration_v7.md',
         },
         {
           name: 'Unstable',
