@@ -508,32 +508,31 @@ const App = () => {
   );
 
   return (
-    <SplitLayout modal={modal}>
-      <SplitCol>
-        <View activePanel="modals">
-          <Panel id="modals">
-            <PanelHeader>Модальные окна</PanelHeader>
-            <Group>
-              <CellButton onClick={() => changeActiveModal(MODAL_PAGE_FILTERS)}>
-                Открыть модальную страницу
-              </CellButton>
-              <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_FULLSCREEN)}>
-                Открыть полноэкранную модальную страницу
-              </CellButton>
-              <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_WITH_FIXED_HEIGHT)}>
-                Открыть модальную страницу c фиксированной высотой
-              </CellButton>
-              <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_DYNAMIC)}>
-                Открыть модальную страницу с динамической высотой
-              </CellButton>
-              <CellButton onClick={() => changeActiveModal(MODAL_CARD_MONEY_SEND)}>
-                Открыть модальные карточки
-              </CellButton>
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+    <React.Fragment>
+      {modal}
+      <View activePanel="modals">
+        <Panel id="modals">
+          <PanelHeader>Модальные окна</PanelHeader>
+          <Group>
+            <CellButton onClick={() => changeActiveModal(MODAL_PAGE_FILTERS)}>
+              Открыть модальную страницу
+            </CellButton>
+            <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_FULLSCREEN)}>
+              Открыть полноэкранную модальную страницу
+            </CellButton>
+            <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_WITH_FIXED_HEIGHT)}>
+              Открыть модальную страницу c фиксированной высотой
+            </CellButton>
+            <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_DYNAMIC)}>
+              Открыть модальную страницу с динамической высотой
+            </CellButton>
+            <CellButton onClick={() => changeActiveModal(MODAL_CARD_MONEY_SEND)}>
+              Открыть модальные карточки
+            </CellButton>
+          </Group>
+        </Panel>
+      </View>
+    </React.Fragment>
   );
 };
 
