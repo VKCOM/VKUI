@@ -499,7 +499,7 @@
   (a.k.a `mode="primary"`) возвращён токен `--vkui--color_text_accent`, а вот при комбинации с `centered` применяется
   `--vkui--color_text_accent_themed`.
   <details>
-  <summary>Пример миграции</summary>
+  <summary>Миграция</summary>
 
   ```diff
   <CellButton
@@ -683,7 +683,7 @@
 Изменена последовательность отступов в свойстве `gap` на `[row, column]`.
 
 <details>
-<summary>Пример миграции</summary>
+<summary>Миграция</summary>
 
 ```diff
 <Flex
@@ -1208,7 +1208,7 @@ const SomeWrapper = ({ id }) => (
 - Удалён `a11y`-текст по умолчанию, передавайте нужный текст в `children` или `label` свойства.
 - Удалено свойство `size`.
   <details>
-  <summary>Пример миграции</summary>
+  <summary>Миграция</summary>
 
   ```diff
   <ScreenSpinner
@@ -1376,7 +1376,7 @@ const SomeWrapper = ({ id }) => (
 Изменена последовательность отступов в свойстве `gap` на `[row, column]`.
 
 <details>
-<summary>Пример миграции</summary>
+<summary>Миграция</summary>
 
 ```diff
 <SimpleGrid
