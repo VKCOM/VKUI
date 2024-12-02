@@ -124,7 +124,7 @@ export const ModalPage = ({
   const size = isDesktop ? sizeProp : 's';
 
   const modalContext = React.useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId({ nav, id }, warn), 'page');
+  const refs = useModalRegistry(getNavId({ nav, id }, warn), 'page');
   const rootRef = useExternRef(getRootRef, refs.modalElement);
 
   const contextValue = React.useMemo(() => ({ labelId: `${id}-label` }), [id]);

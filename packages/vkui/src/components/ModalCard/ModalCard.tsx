@@ -47,7 +47,7 @@ export const ModalCard = ({
   const platform = usePlatform();
 
   const modalContext = React.useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId({ nav, id }, warn), 'card');
+  const refs = useModalRegistry(getNavId({ nav, id }, warn), 'card');
   const rootRef = useExternRef(getRootRef, refs.modalElement);
 
   const contextValue = React.useMemo(() => ({ labelId: `${id}-label` }), [id]);
