@@ -927,6 +927,26 @@ CSS свойства, которые через каскад задавалис�
 
 <hr/>
 
+### [PanelSpinner](https://vkcom.github.io/VKUI/7.0.0/#/PanelSpinner)
+
+Изменен формат `size` с `'small' | 'regular' | 'medium' | 'large'` на `'s' | 'm' | 'l' | 'xl'`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+- <PanelSpinner size="large" />
++ <PanelSpinner size="xl" />
+- <PanelSpinner size="medium" />
++ <PanelSpinner size="l" />
+- <PanelSpinner size="regular" />
++ <PanelSpinner size="m" />
+- <PanelSpinner size="small" />
++ <PanelSpinner size="s" />
+```
+
+<hr/>
+
 ### [RichCell](https://vkcom.github.io/VKUI/7.0.0/#/RichCell)
 
 - Свойство `text` переименовано в `subtitle`.
