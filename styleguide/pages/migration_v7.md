@@ -23,6 +23,7 @@
 - <a href="{{anchor}}">⚙️ Сборка</a>
 - <a href="{{anchor}}">🌗 `Appearance` → `ColorScheme`</a>
 - <a href="{{anchor}}">🧩 Компоненты</a>
+  - <a href="{{anchor}}">Типографика</a>
   - <a href="{{anchor}}">ActionSheet</a>
   - <a href="{{anchor}}">Alert</a>
   - <a href="{{anchor}}">Banner</a>
@@ -36,6 +37,7 @@
   - <a href="{{anchor}}">Counter</a>
   - <a href="{{anchor}}">CustomScrollView</a>
   - <a href="{{anchor}}">🗑️ DatePicker</a>
+  - <a href="{{anchor}}">Flex</a>
   - <a href="{{anchor}}">FormItem</a>
   - <a href="{{anchor}}">FormStatus</a>
   - <a href="{{anchor}}">Gallery</a>
@@ -43,6 +45,7 @@
   - <a href="{{anchor}}">HorizontalCell</a>
   - <a href="{{anchor}}">HorizontalCellShowMore</a>
   - <a href="{{anchor}}">HorizontalScroll</a>
+  - <a href="{{anchor}}">Image</a>
   - <a href="{{anchor}}">Link</a>
   - <a href="{{anchor}}">MiniInfoCell</a>
   - <a href="{{anchor}}">ModalCard, ModalCardBase</a>
@@ -59,6 +62,8 @@
   - <a href="{{anchor}}">Select</a>
   - <a href="{{anchor}}">Separator</a>
   - <a href="{{anchor}}">SimpleCell</a>
+  - <a href="{{anchor}}">SimpleGrid</a>
+  - <a href="{{anchor}}">Spacing</a>
   - <a href="{{anchor}}">Spinner</a>
   - <a href="{{anchor}}">SplitLayout</a>
   - <a href="{{anchor}}">SubnavigationBar</a>
@@ -246,6 +251,12 @@
 
 <br/>
 
+### Типографика
+
+Теперь используется `useAccentWeight = false` по умолчанию. Когда дополнительно требуется переопределить тип начертания текста
+с помощью свойства `weight` - `VKUI` использует токены `fontWeightBase*`. Чтобы включить `fontWeightAccent*` токены, нужно
+использовать свойство `useAccentWeight`.
+
 ### [ActionSheet](https://vkcom.github.io/VKUI/7.0.0/#/ActionSheet)
 
 - Свойство `header` переименовано в `title`.
@@ -272,7 +283,7 @@
 
 ### [Alert](https://vkcom.github.io/VKUI/7.0.0/#/Alert)
 
-- Свойство `header` переименовано в`title`.
+- Свойство `header` переименовано в `title`.
 - Свойство `text` переименовано в `description`.
 
 <details>
@@ -323,21 +334,26 @@
 
 ### [Button](https://vkcom.github.io/VKUI/7.0.0/#/Button)
 
-Изменен цвет компонента в состоянии `mode="primary"`
+- Изменен цвет компонента при `appearance="overlay"` и `mode="secondary"`.
 
-и `appearance="neutral"`, при миграции рекомендуется выставлять `mode="secondary"` при `appearance="neutral"`.
+  <img width="480" src="https://github.com/user-attachments/assets/8af4ce92-98e2-4492-8b29-c5a828b52089" style="display: block; margin-left: 20px" />
 
-<details>
-<summary>Миграция</summary>
+- Изменен цвет компонента в состоянии `mode="primary"` и `appearance="neutral"`, при миграции рекомендуется выставлять
+  `mode="secondary"` при `appearance="neutral"`.
 
-```diff
-<Button
-  appearance="neutral"
-+ mode="secondary"
-/>
-```
+  <img width="480" src="https://github.com/user-attachments/assets/9bb3cfb5-7f5a-40bc-9e2b-f6b736861da7" style="display: block; margin-left: 20px" />
 
-</details>
+  <details>
+  <summary>Миграция</summary>
+
+  ```diff
+  <Button
+    appearance="neutral"
+  + mode="secondary"
+  />
+  ```
+
+  </details>
 
 <hr/>
 
@@ -414,8 +430,8 @@
   ```diff
   <Cell
     onClick={() => {}}
-  - subhead={"Subhead"}
-  + overTitle={"Subhead"}
+  - subhead="Subhead"
+  + overTitle="Subhead"
     indicator="При использовании"
   >
     Геолокация
@@ -452,8 +468,8 @@
   ```diff
   <CellButton
     onClick={() => {}}
-  - subhead={"Subhead"}
-  + overTitle={"Subhead"}
+  - subhead="Subhead"
+  + overTitle="Subhead"
     indicator="При использовании"
   >
     Геолокация
@@ -474,6 +490,30 @@
     indicator="При использовании"
   >
     Геолокация
+  </CellButton>
+  ```
+
+  </details>
+
+- Свойство `mode` заменено на `appearance` со значениями `'accent' | 'neutral' | 'negative'`, также для `appearance="accent"`
+  (a.k.a `mode="primary"`) возвращён токен `--vkui--color_text_accent`, а вот при комбинации с `centered` применяется
+  `--vkui--color_text_accent_themed`.
+  <details>
+  <summary>Пример миграции</summary>
+
+  ```diff
+  <CellButton
+  - mode="danger"
+  + appearance="negative"
+  >
+    Создать что-нибудь
+  </CellButton>
+
+  <CellButton
+  - mode="primary"
+  + appearance="accent"
+  >
+    Создать что-нибудь
   </CellButton>
   ```
 
@@ -543,7 +583,7 @@
 
   ```diff
   <CustomScrollView
-    className={"className"}
+    className="className"
   - boxRef={ref}
   + getRootRef={ref}
     enableHorizontalScroll
@@ -562,7 +602,7 @@
 
   ```diff
   <CustomScrollView
-    className={"className"}
+    className="className"
   - windowResize
   - autoHideScrollbar
   - autoHideScrollbarDelay={1000}
@@ -638,28 +678,69 @@
 
 <hr/>
 
-### [FormItem](https://vkcom.github.io/VKUI/7.0.0/#/FormItem)
+### [Flex](https://vkcom.github.io/VKUI/7.0.0-beta.0/#/Flex)
 
-Удалено свойство `topNode`, вместо него можно использовать свойство `top`.
+Изменена последовательность отступов в свойстве `gap` на `[row, column]`.
 
 <details>
-<summary>Миграция</summary>
+<summary>Пример миграции</summary>
 
 ```diff
-<FormItem
-- topNode={
-+ top={
-  <FormItem.Top>
-    <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
-    <FormItem.TopAside>0/100</FormItem.TopAside>
-  </FormItem.Top>
-}
+<Flex
+  direction="column"
+- gap={[20, 10]}
++ gap={[10, 20]}
+  align="center"
 >
-<Textarea id="about" name="about" />
-</FormItem>
+  <div/>
+  <div/>
+</Flex>
 ```
 
 </details>
+
+<hr/>
+
+### [FormItem](https://vkcom.github.io/VKUI/7.0.0/#/FormItem)
+
+- Удалено свойство `topNode`, вместо него можно использовать свойство `top`.
+  <details>
+  <summary>Миграция</summary>
+
+  ```diff
+  <FormItem
+  - topNode={
+  + top={
+      <FormItem.Top>
+        <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
+        <FormItem.TopAside>0/100</FormItem.TopAside>
+      </FormItem.Top>
+    }
+  >
+  <Textarea id="about" name="about" />
+  </FormItem>
+  ```
+
+  </details>
+
+- У под-компонента `FormItem.TopLabel` свойство `multiline` было удалено, теперь свойство `topMultiline` устанавливается у компонент `FormItem`.
+  <details>
+  <summary>Миграция</summary>
+
+  ```diff
+  <FormItem
+  + topMultiline
+    top={
+      <FormItem.Top>
+  -     <FormItem.TopLabel htmlFor="about" multiline>Дополнительная информация</FormItem.TopLabel>
+  +     <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
+        <FormItem.TopAside>0/100</FormItem.TopAside>
+      </FormItem.Top>
+    }
+  >
+    <div/>
+  </FormItem>
+  ```
 
 <hr/>
 
@@ -702,7 +783,7 @@
 
 <hr/>
 
-### [Header](https://vkcom.github.io/VKUI/7.0.0/#/Header):
+### [Header](https://vkcom.github.io/VKUI/7.0.0/#/Header)
 
 - Изменен формат `size` с `'regular' | 'large'` на `'m' | 'l'`.
   <details>
@@ -759,12 +840,7 @@
     subtitle="SOHN — Conrad"
     subtitleComponent="h3"
   - aside={
-  + after={
-      <Link>
-        Показать все
-        {<Icon12ChevronOutline />}
-      </Link>
-    }
+  + after={<Link>Показать все</Link>}
   />
   ```
 
@@ -793,36 +869,50 @@
 
 ### [HorizontalCellShowMore](https://vkcom.github.io/VKUI/7.0.0/#/HorizontalCellShowMore)
 
-Значение `size="l"` удалено, используйте `size="m"`.
+- Значение `size="l"` удалено, используйте `size="m"`.
 
-<details>
-<summary>Миграция</summary>
+  <details>
+  <summary>Миграция</summary>
 
-```diff
-- <HorizontalCellShowMore size="l">
-+ <HorizontalCellShowMore size="m">
-```
+  ```diff
+  - <HorizontalCellShowMore size="l">
+  + <HorizontalCellShowMore size="m">
+  ```
 
-</details>
+  </details>
+
+- Свойство `compensateLastCellIndent` удалено. Если вы использовали дополнительные обертки внутри `HorizontalScroll`, чтобы
+  выравнивать ячейки внутри компонента, просьба пересмотреть их использование и размещать `HorizontalCellShowMore` на том же уровне
+  вложенности, что и остальные ячейки в `HorizontalScroll`.
 
 <hr/>
 
 ### [HorizontalScroll](https://vkcom.github.io/VKUI/7.0.0/#/HorizontalScroll)
 
-Значение `arrowSize="l"` удалено, используйте `arrowSize="m"`, а вместо `arrowSize="m"` используйте `arrowSize="s"`.
+- Значение `arrowSize="l"` удалено, используйте `arrowSize="m"`, а вместо `arrowSize="m"` используйте `arrowSize="s"`.
 
-<details>
-<summary>Миграция</summary>
+  <details>
+  <summary>Миграция</summary>
 
-```diff
-- <HorizontalScroll arrowSize="m">
-+ <HorizontalScroll arrowSize="s">
+  ```diff
+  - <HorizontalScroll arrowSize="m">
+  + <HorizontalScroll arrowSize="s">
 
-- <HorizontalScroll arrowSize="l">
-+ <HorizontalScroll arrowSize="m">
-```
+  - <HorizontalScroll arrowSize="l">
+  + <HorizontalScroll arrowSize="m">
+  ```
 
-</details>
+  </details>
+
+- Свойство `inline` удалено и теперь применяется по умолчанию. Если вы использовали дополнительные обертки, чтобы выравнивать ячейки
+  внутри компонента, просьба пересмотреть их использование.
+
+<hr/>
+
+### [Image](https://vkcom.github.io/VKUI/7.0.0-beta.0/#/Image)
+
+У под-компонента `Image.Overlay` свойство `disableInteractive` было удалено, вместо него теперь можно просто не прокидывать
+свойство `onClick`.
 
 <hr/>
 
@@ -989,7 +1079,7 @@ const SomeWrapper = ({ id }) => (
 
 <hr/>
 
-### [PanelHeaderButton](https://vkcom.github.io/VKUI/7.0.0/#/PanelHeaderButton):
+### [PanelHeaderButton](https://vkcom.github.io/VKUI/7.0.0/#/PanelHeaderButton)
 
 - У пресета `PanelHeaderClose` удалено свойство `children`. Теперь для прокидывания текста для `a11y` нужно прокидывать его
   в свойство`label`.
@@ -1092,49 +1182,48 @@ const SomeWrapper = ({ id }) => (
 ### [RichCell](https://vkcom.github.io/VKUI/7.0.0/#/RichCell)
 
 - Свойство `text` переименовано в `subtitle`.
-  <details>
-  <summary>Миграция</summary>
-
-  ```diff
-  <RichCell
-  - text="Санкт-Петербург"
-  + subtitle="Санкт-Петербург"
-  />
-  ```
-
-  </details>
-
 - Свойство `caption` переименовано в `extraSubtitle`.
-  <details>
-  <summary>Миграция</summary>
-
-  ```diff
-  <RichCell
-  - caption="сегодня в 18:00"
-  + extraSubtitle="сегодня в 18:00"
-  />
-  ```
-
-  </details>
-
 - Свойство `subhead` переименовано в `overTitle`.
-  <details>
-  <summary>Миграция</summary>
 
-  ```diff
-  <RichCell
-  - subhead="онлайн"
-  + overTitle="онлайн"
-  />
-  ```
+<details>
+<summary>Миграция</summary>
 
-  </details>
+```diff
+<RichCell
+- subhead="онлайн"
++ overTitle="онлайн"
+- text="Санкт-Петербург"
++ subtitle="Санкт-Петербург"
+- caption="сегодня в 18:00"
++ extraSubtitle="сегодня в 18:00"
+/>
+```
+
+</details>
 
 <hr/>
 
 ### [ScreenSpinner](https://vkcom.github.io/VKUI/7.0.0/#/ScreenSpinner)
 
 - Удалён `a11y`-текст по умолчанию, передавайте нужный текст в `children` или `label` свойства.
+- Удалено свойство `size`.
+  <details>
+  <summary>Пример миграции</summary>
+
+  ```diff
+  <ScreenSpinner
+    state="loading"
+  - size="regular"
+  />
+  <ScreenSpinner.Container>
+  - <ScreenSpinner.Loader size="small" />
+  + <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  ```
+
+  </details>
+
 - Свойство `caption` переименовано в `label`.
   <details>
   <summary>Миграция</summary>
@@ -1178,9 +1267,9 @@ const SomeWrapper = ({ id }) => (
 
 <hr/>
 
-### [Select](https://vkcom.github.io/VKUI/7.0.0/#/Select):
+### [Select](https://vkcom.github.io/VKUI/7.0.0/#/Select)
 
-- В колбэк `onChange` помимо ChangeEvent теперь прокидывается новое
+- В колбэк `onChange` помимо `ChangeEvent` теперь прокидывается новое
   значение вторым аргументом. Рекомендуется использовать именно второй аргумент. То же самое относится
   и к [CustomSelect](https://vkcom.github.io/VKUI/7.0.0/#/CustomSelect)
   и [NativeSelect](https://vkcom.github.io/VKUI/#/7.0.0/NativeSelect).
@@ -1230,9 +1319,11 @@ const SomeWrapper = ({ id }) => (
   -  wide={false}
   +  padding
   />
+
   <Separator
   -  wide
   />
+
   <Separator
   -  wide={true}
   />
@@ -1251,8 +1342,8 @@ const SomeWrapper = ({ id }) => (
   ```diff
   <SimpleCell
     onClick={() => {}}
-  - subhead={"Subhead"}
-  + overTitle={"Subhead"}
+  - subhead="Subhead"
+  + overTitle="Subhead"
     indicator="При использовании"
   >
     Геолокация
@@ -1277,6 +1368,46 @@ const SomeWrapper = ({ id }) => (
   ```
 
   </details>
+
+<hr/>
+
+### [SimpleGrid](https://vkcom.github.io/VKUI/7.0.0-beta.0/#/SimpleGrid)
+
+Изменена последовательность отступов в свойстве `gap` на `[row, column]`.
+
+<details>
+<summary>Пример миграции</summary>
+
+```diff
+<SimpleGrid
+  columns={2}
+- gap={[20, 10]}
++ gap={[10, 20]}
+  align="center"
+>
+  <div/>
+  <div/>
+</SimpleGrid>
+```
+
+</details>
+
+<hr/>
+
+### [Spacing](https://vkcom.github.io/VKUI/7.0.0/#/Spacing)
+
+Удален вариант значения пропа size `3xs`, вместо него можно использовать `2xs`, совпадающий по значению.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+- <Spacing size="3xs" />
+
++ <Spacing size="2xs" />
+```
+
+</details>
 
 <hr/>
 
@@ -1338,12 +1469,12 @@ const SomeWrapper = ({ id }) => (
 
 ```diff
 <SubnavigationBar
-- mode={"fixed"}
+- mode="fixed"
 + fixed
 />
 
 <SubnavigationBar
-- mode={"overflow"}
+- mode="overflow"
 />
 ```
 
