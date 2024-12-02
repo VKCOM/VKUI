@@ -35,6 +35,8 @@ type AllowedFloatingComponentProps = Pick<
   | 'onPlacementChange'
   | 'disableFlipMiddleware'
   | 'strategy'
+  | 'overflowPadding'
+  | 'flipOptions'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps' | 'onCloseIconClick'>;
@@ -99,13 +101,15 @@ export const Tooltip = ({
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
   disableTriggerOnFocus = false,
-  strategy,
+  overflowPadding,
+  flipOptions,
 
   // useFloatingWithInteractions
   defaultShown,
   shown: shownProp,
   onShownChange,
   hoverDelay = 150,
+  strategy,
 
   // инверсированные св-ва для useFloatingWithInteractions
   enableInteractive = false,
@@ -146,6 +150,8 @@ export const Tooltip = ({
     arrowPadding,
     arrowHeight,
     disableFlipMiddleware,
+    overflowPadding,
+    flipOptions,
   });
   const {
     shown,

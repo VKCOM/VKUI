@@ -9,11 +9,13 @@ import {
   sizeMiddleware,
 } from '../adapters';
 import { checkIsNotAutoPlacement, getAutoPlacementAlign } from '../functions';
-import type {
-  ArrowOptions,
-  Placement,
-  PlacementWithAuto,
-  UseFloatingMiddleware,
+import {
+  type ArrowOptions,
+  type FlipOptions,
+  type FloatingPadding,
+  type Placement,
+  type PlacementWithAuto,
+  type UseFloatingMiddleware,
 } from '../types/common';
 
 export interface UseFloatingMiddlewaresBootstrapOptions {
@@ -59,6 +61,15 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    * Принудительно скрывает компонент если целевой элемент вышел за область видимости.
    */
   hideWhenReferenceHidden?: boolean;
+  /**
+   * Настройки изменения размещение плавающего элемента, чтобы держать его в поле зрения.
+   * Более подробно можно почитать в документации @see https://floating-ui.com/docs/flip
+   */
+  flipOptions?: FlipOptions;
+  /**
+   * Безопасная зона вокруг плавающего элемента, чтобы тот не выходил за края контента.
+   */
+  overflowPadding?: number | FloatingPadding;
 }
 
 export const useFloatingMiddlewaresBootstrap = ({
@@ -73,6 +84,10 @@ export const useFloatingMiddlewaresBootstrap = ({
   customMiddlewares,
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
+  overflowPadding = 0,
+  flipOptions = {
+    fallbackAxisSideDirection: 'start',
+  },
 }: UseFloatingMiddlewaresBootstrapOptions): {
   middlewares: UseFloatingMiddleware[];
   strictPlacement: Placement | undefined;
@@ -90,14 +105,14 @@ export const useFloatingMiddlewaresBootstrap = ({
     if (isAutoPlacement) {
       middlewares.push(autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }));
     } else if (!disableFlipMiddleware) {
-      middlewares.push(
-        flipMiddleware({
-          fallbackAxisSideDirection: 'start',
-        }),
-      );
+      middlewares.push(flipMiddleware(flipOptions));
     }
 
-    middlewares.push(shiftMiddleware());
+    middlewares.push(
+      shiftMiddleware({
+        padding: overflowPadding,
+      }),
+    );
 
     if (sameWidth) {
       middlewares.push(
@@ -131,16 +146,18 @@ export const useFloatingMiddlewaresBootstrap = ({
 
     return { middlewares, strictPlacement: isAutoPlacement ? undefined : placement };
   }, [
+    placement,
     offsetByCrossAxis,
-    arrowRef,
     arrow,
     arrowHeight,
-    arrowPadding,
     offsetByMainAxis,
+    disableFlipMiddleware,
+    overflowPadding,
     sameWidth,
     customMiddlewares,
-    placement,
     hideWhenReferenceHidden,
-    disableFlipMiddleware,
+    flipOptions,
+    arrowRef,
+    arrowPadding,
   ]);
 };

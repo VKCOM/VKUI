@@ -49,10 +49,13 @@ export const SliderThumb = ({
         appearance="neutral"
         shown={shouldShowTooltip}
         description={inputValue}
-        disableFlipMiddleware
         offsetByMainAxis={7}
         usePortal={false}
         strategy="absolute"
+        overflowPadding={8}
+        flipOptions={{
+          fallbackAxisSideDirection: 'none',
+        }}
       >
         <span
           onMouseEnter={setHoveredTrue}

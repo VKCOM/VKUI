@@ -80,6 +80,8 @@ type AllowedFloatingComponentProps = Pick<
   | 'disableFlipMiddleware'
   | 'customMiddlewares'
   | 'strategy'
+  | 'overflowPadding'
+  | 'flipOptions'
 >;
 
 /**
@@ -138,6 +140,8 @@ export const Popover = ({
   arrowPadding = DEFAULT_ARROW_PADDING,
   placement: expectedPlacement = 'bottom-start',
   strategy,
+  overflowPadding,
+  flipOptions,
   onPlacementChange,
   disableFlipMiddleware = false,
   trigger = 'click',
@@ -192,6 +196,8 @@ export const Popover = ({
     hideWhenReferenceHidden,
     disableFlipMiddleware,
     customMiddlewares,
+    overflowPadding,
+    flipOptions,
   });
   const {
     placement: resolvedPlacement,
