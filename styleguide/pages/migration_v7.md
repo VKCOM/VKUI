@@ -38,16 +38,21 @@
   - <a href="{{anchor}}">🗑️ DatePicker</a>
   - <a href="{{anchor}}">FormItem</a>
   - <a href="{{anchor}}">FormStatus</a>
+  - <a href="{{anchor}}">Gallery</a>
   - <a href="{{anchor}}">Header</a>
   - <a href="{{anchor}}">HorizontalCell</a>
   - <a href="{{anchor}}">HorizontalCellShowMore</a>
+  - <a href="{{anchor}}">HorizontalScroll</a>
   - <a href="{{anchor}}">Link</a>
   - <a href="{{anchor}}">MiniInfoCell</a>
-  - <a href="{{anchor}}">ModalCard</a>
+  - <a href="{{anchor}}">ModalCard, ModalCardBase</a>
+  - <a href="{{anchor}}">ModalRoot</a>
   - <a href="{{anchor}}">OnboardingTooltip</a>
   - <a href="{{anchor}}">PanelHeader</a>
   - <a href="{{anchor}}">PanelHeaderButton</a>
   - <a href="{{anchor}}">PanelHeaderContent</a>
+  - <a href="{{anchor}}">PanelSpinner</a>
+  - <a href="{{anchor}}">Placeholder</a>
   - <a href="{{anchor}}">RichCell</a>
   - <a href="{{anchor}}">ScreenSpinner</a>
   - <a href="{{anchor}}">ScrollArrow</a>
@@ -245,22 +250,23 @@
 
 - Свойство `header` переименовано в `title`.
 - Свойство `text` переименовано в `description`.
-  <details>
-  <summary>Миграция</summary>
 
-  ```diff
-  <ActionSheet
-    onClose={() => {}}
-  - header="Вы действительно хотите удалить это видео из Ваших видео?"
-  + title="Вы действительно хотите удалить это видео из Ваших видео?"
-  - text="Данное действие реально удалит видео, подумайте!"
-  + description="Данное действие реально удалит видео, подумайте!"
-  >
-    <ActionSheetItem mode="destructive">Удалить видео</ActionSheetItem>
-  </ActionSheet>
-  ```
+<details>
+<summary>Миграция</summary>
 
-  </details>
+```diff
+<ActionSheet
+  onClose={() => {}}
+- header="Вы действительно хотите удалить это видео из Ваших видео?"
++ title="Вы действительно хотите удалить это видео из Ваших видео?"
+- text="Данное действие реально удалит видео, подумайте!"
++ description="Данное действие реально удалит видео, подумайте!"
+>
+  <ActionSheetItem mode="destructive">Удалить видео</ActionSheetItem>
+</ActionSheet>
+```
+
+</details>
 
 <hr/>
 
@@ -268,21 +274,22 @@
 
 - Свойство `header` переименовано в`title`.
 - Свойство `text` переименовано в `description`.
-  <details>
-  <summary>Миграция</summary>
 
-  ```diff
-  <Alert
-  - header="Подтвердите действие"
-  + title="Подтвердите действие"
-  - text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
-  + description="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
-    actionsAlign="left"
-    actionsLayout="horizontal"
-  />
-  ```
+<details>
+<summary>Миграция</summary>
 
-  </details>
+```diff
+<Alert
+- header="Подтвердите действие"
++ title="Подтвердите действие"
+- text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
++ description="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+  actionsAlign="left"
+  actionsLayout="horizontal"
+/>
+```
+
+</details>
 
 <hr/>
 
@@ -291,40 +298,26 @@
 - Свойство `subheader` переименовано в `subtitle`.
 - Свойство `text` переименовано в `extraSubtitle`.
 - Свойство `header` переименовано в `title`.
-  <details>
-  <summary>Миграция</summary>
-
-  ```diff
-  <Banner
-    before={<Avatar size={48} src={'user_lihachyov'} />}
-  - header="Сегодня день рождения Михаила Лихачёва"
-  + title="Сегодня день рождения Михаила Лихачёва"
-  - subheader="Подарите подарок"
-  + subtitle="Подарите подарок"
-  - text="Дополнительный текст"
-  + extraSubtitle="Дополнительный текст"
-    asideMode="dismiss"
-  />
-  ```
-
-  </details>
-
 - Свойство `asideMode` переименовано в `after`.
-  <details>
-  <summary>Миграция </summary>
 
-  ```diff
-  <Banner
-    before={<Avatar size={48} src={'user_lihachyov'} />}
-    title="Сегодня день рождения Михаила Лихачёва"
-    subtitle={"Подарите подарок"}
-    extraSubtitle={"Дополнительный текст"}
-  - asideMode="dismiss"
-  + after="dismiss"
-  />
-  ```
+<details>
+<summary>Миграция</summary>
 
-  </details>
+```diff
+<Banner
+  before={<Avatar size={48} src={'user_lihachyov'} />}
+- header="Сегодня день рождения Михаила Лихачёва"
++ title="Сегодня день рождения Михаила Лихачёва"
+- subheader="Подарите подарок"
++ subtitle="Подарите подарок"
+- text="Дополнительный текст"
++ extraSubtitle="Дополнительный текст"
+- asideMode="dismiss"
++ after="dismiss"
+/>
+```
+
+</details>
 
 <hr/>
 
@@ -452,23 +445,39 @@
 
 ### [CellButton](https://vkcom.github.io/VKUI/7.0.0/#/CellButton)
 
-Свойство `subhead` переименовано в `overTitle`.
+- Свойство `subhead` переименовано в `overTitle`.
+  <details>
+  <summary>Миграция</summary>
 
-<details>
-<summary>Миграция</summary>
+  ```diff
+  <CellButton
+    onClick={() => {}}
+  - subhead={"Subhead"}
+  + overTitle={"Subhead"}
+    indicator="При использовании"
+  >
+    Геолокация
+  </CellButton>
+  ```
 
-```diff
-<CellButton
-  onClick={() => {}}
-- subhead={"Subhead"}
-+ overTitle={"Subhead"}
-  indicator="При использовании"
->
-  Геолокация
-</CellButton>
-```
+  </details>
 
-</details>
+- Свойство `expandable` переименовано в `chevron`.
+  <details>
+  <summary>Миграция</summary>
+
+  ```diff
+  <CellButton
+    onClick={() => {}}
+  - expandable="auto"
+  + chevron="auto"
+    indicator="При использовании"
+  >
+    Геолокация
+  </CellButton>
+  ```
+
+  </details>
 
 <hr/>
 
@@ -478,24 +487,25 @@
 - Свойство `subtitle` переименовано в `overTitle`.
 - Свойство `text` переименовано в `description`.
 - Свойство `headerComponent` переименовано в `titleComponent`.
-  <details>
-  <summary>Миграция</summary>
 
-  ```diff
-  <ContentCard
-  - subtitle="VKUI"
-  + overTitle="VKUI"
-  - header="ContentCard example"
-  + title="ContentCard example"
-  - headerComponent="h4"
-  + titleComponent="h4"
-    caption="VKUI Styleguide > Blocks > ContentCard"
-  - text="Badlands is the story about dreams and cruel reality..."
-  + description="Badlands is the story about dreams and cruel reality..."
-  />
-  ```
+<details>
+<summary>Миграция</summary>
 
-  </details>
+```diff
+<ContentCard
+- subtitle="VKUI"
++ overTitle="VKUI"
+- header="ContentCard example"
++ title="ContentCard example"
+- headerComponent="h4"
++ titleComponent="h4"
+  caption="VKUI Styleguide > Blocks > ContentCard"
+- text="Badlands is the story about dreams and cruel reality..."
++ description="Badlands is the story about dreams and cruel reality..."
+/>
+```
+
+</details>
 
 <hr/>
 
@@ -674,6 +684,24 @@
 
 <hr/>
 
+### [Gallery](https://vkcom.github.io/VKUI/7.0.0/#/Gallery)
+
+Значение `arrowSize="l"` удалено, используйте `arrowSize="m"`, а вместо `arrowSize="m"` используйте `arrowSize="s"`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+- <Gallery arrowSize="m">
++ <Gallery arrowSize="s">
+- <Gallery arrowSize="l">
++ <Gallery arrowSize="m">
+```
+
+</details>
+
+<hr/>
+
 ### [Header](https://vkcom.github.io/VKUI/7.0.0/#/Header):
 
 - Изменен формат `size` с `'regular' | 'large'` на `'m' | 'l'`.
@@ -779,6 +807,25 @@
 
 <hr/>
 
+### [HorizontalScroll](https://vkcom.github.io/VKUI/7.0.0/#/HorizontalScroll)
+
+Значение `arrowSize="l"` удалено, используйте `arrowSize="m"`, а вместо `arrowSize="m"` используйте `arrowSize="s"`.
+
+<details>
+<summary>Миграция</summary>
+
+```diff
+- <HorizontalScroll arrowSize="m">
++ <HorizontalScroll arrowSize="s">
+
+- <HorizontalScroll arrowSize="l">
++ <HorizontalScroll arrowSize="m">
+```
+
+</details>
+
+<hr/>
+
 ### [Link](https://vkcom.github.io/VKUI/7.0.0/#/Link)
 
 Теперь для передачи иконок следует использовать параметры `before` и `after`,
@@ -826,38 +873,89 @@ CSS свойства, которые через каскад задавалис�
 
 <hr/>
 
-### [ModalCard](https://vkcom.github.io/VKUI/7.0.0/#/ModalCard)
+### [ModalCard](https://vkcom.github.io/VKUI/7.0.0/#/ModalCard), [ModalCardBase](https://vkcom.github.io/VKUI/7.0.0/#/ModalCardBase)
 
 - Свойство `header` переименовано в `title`.
 - Свойство `subheader` переименовано в `description`.
 - Свойство `headerComponent` переименовано в `titleComponent`.
 - Свойство `subheaderComponent` переименовано в `descriptionComponent`.
-  <details>
-  <summary>Миграция</summary>
 
-  ```diff
-  <ModalCard
-    dismissButtonMode="inside"
-    dismissLabel="Закрыть"
-  - header="Десктопная и планшетная версии с крестиком внутри"
-  + title="Десктопная и планшетная версии с крестиком внутри"
-  - headerComponent="h1"
-  + titleComponent="h1"
-  - subheader="Сверху будет безопасный отступ до иконки"
-  + description="Сверху будет безопасный отступ до иконки"
-  - subheaderComponent="span"
-  + descriptionComponent="span"
-    actions={
-      <React.Fragment>
-        <Button size="l" mode="primary" stretched>
-          Некая кнопка
-        </Button>
-      </React.Fragment>
-    }
+<details>
+<summary>Миграция на примере `ModalCard`</summary>
+
+```diff
+<ModalCard
+  dismissButtonMode="inside"
+  dismissLabel="Закрыть"
+- header="Десктопная и планшетная версии с крестиком внутри"
++ title="Десктопная и планшетная версии с крестиком внутри"
+- headerComponent="h1"
++ titleComponent="h1"
+- subheader="Сверху будет безопасный отступ до иконки"
++ description="Сверху будет безопасный отступ до иконки"
+- subheaderComponent="span"
++ descriptionComponent="span"
+  actions={
+    <React.Fragment>
+      <Button size="l" mode="primary" stretched>
+        Некая кнопка
+      </Button>
+    </React.Fragment>
+  }
+/>
+```
+
+</details>
+
+<hr/>
+
+### [ModalRoot](https://vkcom.github.io/VKUI/7.0.0/#/ModalRoot)
+
+Удалена реализация контекста через `React.cloneElement`, которая требовала передавать `settlingHeight` и `dynamicContentHeight` в
+обёртки над `ModalPage` / `ModalCard`.
+
+<details>
+<summary>Миграция (перенос `settlingHeight` / `dynamicContentHeight`)</summary>
+
+```diff
+const SomeWrapper = ({ id }) => (
+  <ModalPage
+    id={id}
++   settlingHeight={100} // или dynamicContentHeight
   />
-  ```
+);
 
-  </details>
+<ModalRoot activeModal="m">
+  <SomeWrapper
+    id="m"
+-   settlingHeight={100} // или dynamicContentHeight
+  />
+</ModalRoot>
+```
+
+</details>
+
+<details>
+<summary>Миграция (пробрасывание `settlingHeight` / `dynamicContentHeight`)</summary>
+
+```diff
+- const SomeWrapper = ({ id }) => (
++ const SomeWrapper = (props) => (
+  <ModalPage
+-   id={id}
++   {...props}
+  />
+);
+
+<ModalRoot activeModal="m">
+  <SomeWrapper
+    id="m"
+    settlingHeight={100} // или dynamicContentHeight
+  />
+</ModalRoot>
+```
+
+</details>
 
 <hr/>
 
@@ -937,13 +1035,57 @@ CSS свойства, которые через каскад задавалис�
 ```diff
 - <PanelSpinner size="large" />
 + <PanelSpinner size="xl" />
+
 - <PanelSpinner size="medium" />
 + <PanelSpinner size="l" />
+
 - <PanelSpinner size="regular" />
 + <PanelSpinner size="m" />
+
 - <PanelSpinner size="small" />
 + <PanelSpinner size="s" />
 ```
+
+<hr/>
+
+### [Placeholder](https://vkcom.github.io/VKUI/7.0.0/#/Placeholder)
+
+- свойство `header` переименовано на `title`
+  <details>
+  <summary>Миграция</summary>
+
+  ```diff
+  <Placeholder
+    icon={<Icon56UsersOutline />}
+  - header={<Button size="m">Подключить сообщества</Button>}
+  + title={<Button size="m">Подключить сообщества</Button>}
+  >
+    Подключите сообщества, от которых Вы хотите получать уведомления
+  </Placeholder>
+  ```
+
+  </details>
+
+- подкомпонент `Header` переименован на `Title`, `Text` переименован на `Description`
+  <details>
+  <summary>Миграция</summary>
+
+  ```diff
+  <Placeholder.Container>
+  - <Placeholder.Header>
+  + <Placeholder.Title>
+      Find friends
+  -  </Placeholder.Header>
+  +  </Placeholder.Title>
+  -  <Placeholder.Text>
+  +  <Placeholder.Description>
+      The people you add as your friends will be displayed here
+  -  </Placeholder.Text>
+  +  </Placeholder.Description>
+  </Placeholder.Container>
+  ```
+
+  </details>
 
 <hr/>
 
@@ -1027,6 +1169,7 @@ CSS свойства, которые через каскад задавалис�
 ```diff
 - <ScrollArrow size="m">
 + <ScrollArrow size="s">
+
 - <ScrollArrow size="l">
 + <ScrollArrow size="m">
 ```
@@ -1147,10 +1290,13 @@ CSS свойства, которые через каскад задавалис�
 ```diff
 - <Spinner size="large" />
 + <Spinner size="xl" />
+
 - <Spinner size="medium" />
 + <Spinner size="l" />
+
 - <Spinner size="regular" />
 + <Spinner size="m" />
+
 - <Spinner size="small" />
 + <Spinner size="s" />
 ```
@@ -1281,14 +1427,14 @@ CSS свойства, которые через каскад задавалис�
 <summary>Миграция</summary>
 
 ```diff
-<UsersStack
-  photos={['photo1', 'photo2', 'photo3']}
-- direction="row-reverse"
-+ avatarsPosition="inline-end"
-  size="s"
->
-  Иван и ещё 2 ваших друга подписаны
-</UsersStack>
+- <UsersStack direction="row" />
++ <UsersStack avatarsPosition="inline-start" />
+
+- <UsersStack direction="row-reverse" />
++ <UsersStack avatarsPosition="block-start" />
+
+- <UsersStack direction="column" />
++ <UsersStack avatarsPosition="inline-end" />
 ```
 
 </details>
