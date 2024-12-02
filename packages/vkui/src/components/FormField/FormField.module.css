@@ -135,6 +135,7 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-error) .modeDefault .border,
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-error) .focusVisible .border,
 .statusError.modeDefault .border,
 .statusError.focusVisible .border {
@@ -151,6 +152,7 @@
 /* increase specificity to cover --mode-default case */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-valid) .modeDefault .border,
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-valid) .focusVisible .border,
 .statusValid.modeDefault .border,
 .statusValid.focusVisible .border {

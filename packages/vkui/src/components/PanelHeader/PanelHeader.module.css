@@ -182,20 +182,22 @@
  * CMP:
  * SplitCol
  */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
   .android.noBefore:not(:global(.vkuiInternalModalPageHeader__in))
   .content {
   padding-inline-start: 0;
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 @media (--viewWidth-smallTabletPlus) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
     .android.noBefore:not(:global(.vkuiInternalModalPageHeader__in))
     .content {
     padding-inline-start: 0;
   }
+  /* stylelint-enable selector-pseudo-class-disallowed-list */
 }
 
 /* stylelint-disable selector-max-universal */
@@ -213,20 +215,22 @@
   padding-inline-start: 16px;
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
   .android.noAfter:not(:global(.vkuiInternalModalPageHeader__in))
   .content {
   padding-inline-end: 0;
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 @media (--viewWidth-smallTabletPlus) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
     .android.noAfter:not(:global(.vkuiInternalModalPageHeader__in))
     .content {
     padding-inline-end: 0;
   }
+  /* stylelint-enable selector-pseudo-class-disallowed-list */
 }
 
 .android .after:not(:empty),

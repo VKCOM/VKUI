@@ -113,15 +113,15 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.desktop .content,
-:global(.vkuiInternalModalRoot__modal--expandable) .content {
+:global(.vkuiInternalModalRoot__modal--expandable) .content,
+.desktop .content {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.desktop .contentIn,
-:global(.vkuiInternalModalRoot__modal--expandable) .contentIn {
+:global(.vkuiInternalModalRoot__modal--expandable) .contentIn,
+.desktop .contentIn {
   block-size: 100%;
 }
 
@@ -152,6 +152,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalModalRoot__modal--collapsed) .content,
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalModalRoot__modal--dragging) .content {
   overflow: hidden;
   touch-action: pan-y;
