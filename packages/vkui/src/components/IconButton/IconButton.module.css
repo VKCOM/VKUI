@@ -43,6 +43,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .sizeYCompact :global(.vkuiIcon--16),
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .sizeYCompact :global(.vkuiIcon--16.vkuiIcon--w-8) {
   padding: 14px;
 }
@@ -74,6 +75,7 @@
 
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .sizeYNone :global(.vkuiIcon--16),
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .sizeYNone :global(.vkuiIcon--16.vkuiIcon--w-8) {
     padding: 14px;
   }
@@ -97,7 +99,9 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable) :global(.vkuiInternalRemovable__content) > .host,
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--removable) :global(.vkuiInternalRemovable__content) > .host,
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormField__after) .host {
   display: flex;
   align-items: center;
@@ -108,12 +112,13 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormField__after)
   .host
   :global(.vkuiIcon):global(.vkuiIcon):global(.vkuiIcon) {
   padding: 0;
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormField__after) .sizeYCompact {
@@ -121,13 +126,14 @@
   block-size: var(--vkui--size_field_height--compact);
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable) :global(.vkuiInternalRemovable__content) > .sizeYCompact,
 :global(.vkuiInternalFormLayoutGroup--removable)
   :global(.vkuiInternalRemovable__content)
   > .sizeYCompact {
   block-size: var(--vkui--size_field_height--compact);
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 @media (--sizeY-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
@@ -136,13 +142,14 @@
     block-size: var(--vkui--size_field_height--compact);
   }
 
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalFormItem--removable) :global(.vkuiInternalRemovable__content) > .sizeYNone,
   :global(.vkuiInternalFormLayoutGroup--removable)
     :global(.vkuiInternalRemovable__content)
     > .sizeYNone {
     block-size: var(--vkui--size_field_height--compact);
   }
+  /* stylelint-enable selector-pseudo-class-disallowed-list */
 }
 
 /**

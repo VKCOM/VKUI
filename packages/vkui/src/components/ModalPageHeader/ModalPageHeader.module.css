@@ -12,6 +12,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .host :global(.vkuiIcon--dismiss_24), /* Note: <Icon24Dismiss /> по документации используется только для iOS  */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .host :global(.vkuiIcon--cancel_24) {
   color: var(--vkui--color_icon_secondary);
 }

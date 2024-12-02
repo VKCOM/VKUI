@@ -167,9 +167,9 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.ios.noMotion .panel :global(.vkuiInternalPanel__in),
 .noMotion .panel,
-.ios.noMotion .panel,
-.ios.noMotion .panel :global(.vkuiInternalPanel__in) {
+.ios.noMotion .panel {
   animation: none;
 }
 
