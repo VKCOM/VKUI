@@ -832,22 +832,6 @@
 
   </details>
 
-- Свойство `aside` переименовано в `after`.
-  <details>
-  <summary>Миграция</summary>
-
-  ```diff
-  <Header
-    mode="primary"
-    subtitle="SOHN — Conrad"
-    subtitleComponent="h3"
-  - aside={
-  + after={<Link>Показать все</Link>}
-  />
-  ```
-
-  </details>
-
 <hr/>
 
 ### [HorizontalCell](https://vkcom.github.io/VKUI/7.0.0/#/HorizontalCell)
