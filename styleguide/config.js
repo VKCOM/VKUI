@@ -131,6 +131,14 @@ const baseConfig = {
         marginLeft: 22,
       },
     },
+    TableCell: {
+      th: {
+        color: 'var(--vkui--color_text_primary)',
+      },
+      td: {
+        color: 'var(--vkui--color_text_primary)',
+      },
+    },
   },
   exampleMode: 'expand',
   sections: [
