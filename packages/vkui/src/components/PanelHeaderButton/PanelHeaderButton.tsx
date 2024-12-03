@@ -18,7 +18,7 @@ const platformClassNames = {
 
 export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
   primary?: boolean;
-  // TODO [>=7]: добавить св-во `indicator`, чтобы разграничить кейсы
+  // TODO [>=8]: добавить св-во `indicator`, чтобы разграничить кейсы
   label?: React.ReactNode;
 }
 

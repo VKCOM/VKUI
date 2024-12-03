@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -105,7 +104,6 @@ export const ModalCardBase = ({
 }: ModalCardBaseProps): React.ReactNode => {
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
-  const { opened: isSoftwareKeyboardOpened } = useVirtualKeyboardState();
 
   const size = isDesktop ? sizeProp : undefined;
   const withSafeZone =
@@ -128,12 +126,7 @@ export const ModalCardBase = ({
         maxWidth: size,
       }}
     >
-      <div
-        className={classNames(
-          styles.container,
-          isSoftwareKeyboardOpened && styles.containerSoftwareKeyboardOpened,
-        )}
-      >
+      <div className={styles.container}>
         {hasReactNode(icon) && <div className={styles.icon}>{icon}</div>}
         {hasReactNode(title) && (
           <Title level="2" weight="2" className={styles.title} Component={titleComponent}>

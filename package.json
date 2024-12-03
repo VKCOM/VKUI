@@ -13,8 +13,8 @@
     "@csstools/postcss-global-data": "3.0.0",
     "@playwright/experimental-ct-react": "1.49.0",
     "@playwright/test": "1.49.0",
-    "@rspack/cli": "^v1.1.3",
-    "@rspack/core": "^v1.1.3",
+    "@rspack/cli": "^v1.1.4",
+    "@rspack/core": "^v1.1.4",
     "@size-limit/file": "^11.1.6",
     "@size-limit/webpack": "^11.1.6",
     "@size-limit/webpack-css": "^11.1.6",
@@ -27,7 +27,7 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.14",
     "@types/jest-axe": "^3.5.9",
-    "@types/node": "^22.9.3",
+    "@types/node": "^22.10.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/webpack": "^5.28.5",
@@ -36,7 +36,7 @@
     "@vkontakte/eslint-plugin": "^2.0.0",
     "@vkontakte/prettier-config": "^0.2.1",
     "@vkontakte/stylelint-config": "^4.1.0",
-    "@vkontakte/vkui-tokens": "4.56.0",
+    "@vkontakte/vkui-tokens": "4.56.1",
     "autoprefixer": "^10.4.20",
     "clean-webpack-plugin": "^4.0.0",
     "concurrently": "^9.1.0",
@@ -82,7 +82,7 @@
     "shx": "^0.3.4",
     "size-limit": "^11.1.6",
     "style-loader": "^4.0.0",
-    "stylelint": "^16.10.0",
+    "stylelint": "^16.11.0",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-media-use-custom-media": "^4.0.0",
     "stylelint-prettier": "^5.0.2",
@@ -143,7 +143,7 @@
       "prettier --check"
     ]
   },
-  "packageManager": "yarn@4.5.2",
+  "packageManager": "yarn@4.5.3+sha512.3003a14012e2987072d244c720506549c1aab73ee728208f1b2580a9fd67b92d61ba6b08fe93f6dce68fd771e3af1e59a0afa28dd242dd0940d73b95fedd4e90",
   "workspaces": {
     "packages": [
       "benchmark",
