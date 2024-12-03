@@ -67,7 +67,7 @@ type PrepareDataParams = {
 
 const setup = ({ defaultScrollLeft = 50, cardsCount = 6 }: PrepareDataParams) => {
   const { container } = render(
-    <CardScroll size="s">
+    <CardScroll size="s" startArrowTestId="ScrollArrowLeft" endArrowTestId="ScrollArrowRight">
       {new Array(cardsCount).fill(0).map((_, index) => (
         <div key={index} data-testid={`card-${index}`}></div>
       ))}
