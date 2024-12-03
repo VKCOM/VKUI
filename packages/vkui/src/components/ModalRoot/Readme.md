@@ -175,7 +175,7 @@ const App = () => {
         id={MODAL_PAGE_WITH_FIXED_HEIGHT}
         onClose={modalBack}
         settlingHeight={100}
-        height={isDesktop ? 250 : '70%'}
+        height={isDesktop ? '250px' : '70%'}
         hideCloseButton={platform === 'ios'}
         header={
           <ModalPageHeader
