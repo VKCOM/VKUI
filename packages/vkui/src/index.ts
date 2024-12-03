@@ -415,6 +415,7 @@ export type {
   PopoverArrowProps,
   PopoverContentRenderProp,
 } from './components/Popover/Popover';
+export { usePopover } from './components/Popover/usePopover';
 
 /**
  * HOCs
