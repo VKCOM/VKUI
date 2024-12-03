@@ -9,20 +9,14 @@ const Example = () => {
         <Group>
           <Header
             after={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
           >
             Плейлисты
           </Header>
           <Header
             after={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
             subtitle="SOHN — Conrad"
             subtitleComponent="h3"
@@ -31,10 +25,7 @@ const Example = () => {
           </Header>
           <Header
             after={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
             indicator="12"
           >
@@ -42,10 +33,7 @@ const Example = () => {
           </Header>
           <Header
             after={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
             indicator={
               <Counter size="s" mode="primary" appearance="accent-red">
@@ -60,10 +48,7 @@ const Example = () => {
           <Header
             size="s"
             after={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
           >
             Приглашения
@@ -71,10 +56,7 @@ const Example = () => {
           <Header
             size="s"
             after={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
             indicator="667"
           >
@@ -83,10 +65,7 @@ const Example = () => {
           <Header
             size="s"
             after={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
             indicator={
               <Counter size="s" mode="primary" appearance="accent-red">
@@ -125,10 +104,7 @@ const Example = () => {
               </Counter>
             }
             after={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
           >
             Плейлисты
@@ -148,10 +124,7 @@ const Example = () => {
               </Counter>
             }
             after={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
           >
             Плейлисты
