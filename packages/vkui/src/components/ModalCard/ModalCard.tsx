@@ -29,7 +29,11 @@ export const ModalCard = ({
   const generatingId = useId();
   const id = getNavId({ nav, id: idProp }, warn) || generatingId;
 
-  const { mounted, ...resolvedProps } = useModalManager({
+  const {
+    mounted,
+    shouldPreserveSnapPoint: excludedProp,
+    ...resolvedProps
+  } = useModalManager({
     id,
     open,
     keepMounted,
