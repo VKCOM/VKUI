@@ -23,11 +23,8 @@ export const StyleGuideHeader = ({ switchStyleGuideColorScheme }) => {
 
   const links = [
     {
-      title: (
-        <>
-          {'v' + VKUI_PACKAGE.VERSION} <Icon16Dropdown />
-        </>
-      ),
+      after: <Icon16Dropdown />,
+      title: `v${VKUI_PACKAGE.VERSION}`,
       onClick: () => setActiveModal('versions'),
     },
     {
@@ -84,7 +81,7 @@ export const StyleGuideHeader = ({ switchStyleGuideColorScheme }) => {
             <div className="StyleGuideHeader__links">
               {links.map(({ title, ...props }, i) => (
                 <Link key={i} target="_blank" {...props}>
-                  <Text>{title}</Text>
+                  <Text inline>{title}</Text>
                 </Link>
               ))}
             </div>

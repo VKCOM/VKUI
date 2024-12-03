@@ -26,12 +26,7 @@ const warn = warnOnce('IconButton');
 /**
  * @see https://vkcom.github.io/VKUI/#/IconButton
  */
-export const IconButton = ({
-  label,
-  children,
-  className,
-  ...restProps
-}: IconButtonProps): React.ReactNode => {
+export const IconButton = ({ label, children, ...restProps }: IconButtonProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
 
@@ -53,11 +48,10 @@ export const IconButton = ({
       activeMode="background"
       Component={restProps.href ? 'a' : 'button'}
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         platform === 'ios' && styles.ios,
-        className,
       )}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}

@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
 import { useAutoDetectColorScheme } from '../../hooks/useAutoDetectColorScheme';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { TokensClassProvider } from '../../lib/tokens';
 import { excludeKeysWithUndefined } from '../../lib/utils';
 import {
@@ -40,16 +39,28 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode =
 
   const colorScheme = useAutoDetectColorScheme(colorSchemeProp);
 
-  const configContext = useObjectMemo({
-    hasCustomPanelHeaderAfter,
-    customPanelHeaderAfterMinWidth,
-    isWebView,
-    transitionMotionEnabled,
-    platform,
-    locale,
-    tokensClassNames,
-    colorScheme,
-  });
+  const configContext = React.useMemo(
+    () => ({
+      hasCustomPanelHeaderAfter,
+      customPanelHeaderAfterMinWidth,
+      isWebView,
+      transitionMotionEnabled,
+      platform,
+      locale,
+      tokensClassNames,
+      colorScheme,
+    }),
+    [
+      colorScheme,
+      customPanelHeaderAfterMinWidth,
+      hasCustomPanelHeaderAfter,
+      isWebView,
+      locale,
+      platform,
+      tokensClassNames,
+      transitionMotionEnabled,
+    ],
+  );
 
   return (
     <ConfigProviderContext.Provider value={configContext}>

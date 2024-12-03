@@ -23,12 +23,7 @@ export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 
  * @since 5.5.0
  * @see https://vkcom.github.io/VKUI/#/AspectRatio
  */
-export function AspectRatio({
-  ratio,
-  mode = 'stretch',
-  style: styleProp,
-  ...props
-}: AspectRatioProps): JSX.Element {
+export function AspectRatio({ ratio, mode = 'stretch', ...props }: AspectRatioProps): JSX.Element {
   const style: React.CSSProperties & CSSCustomProperties = {
     '--vkui_internal--aspect_ratio': String(ratio),
   };
@@ -36,7 +31,7 @@ export function AspectRatio({
   return (
     <RootComponent
       baseClassName={classNames(styles.host, mode === 'stretch' && styles.modeStretch)}
-      style={{ ...styleProp, ...style }}
+      baseStyle={style}
       {...props}
     />
   );

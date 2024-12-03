@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import type { SizeTypeValues, ViewHeightType, ViewWidthType } from '../../lib/adaptivity';
 

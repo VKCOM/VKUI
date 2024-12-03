@@ -139,7 +139,6 @@ export const Skeleton = ({
   maxWidth,
   maxInlineSize,
   borderRadius,
-  style,
   children,
   colorFrom,
   colorTo,
@@ -183,7 +182,7 @@ export const Skeleton = ({
       getRootRef={rootRef}
       Component="span"
       baseClassName={classNames(styles.host, disableAnimation && styles.disableAnimation)}
-      style={{ ...skeletonStyle, ...style }}
+      baseStyle={skeletonStyle}
       {...restProps}
     >
       {children || <>&zwnj;</>}

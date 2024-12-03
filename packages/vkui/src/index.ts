@@ -7,6 +7,7 @@ import './styles/transformOriginByPlacement.module.css';
 import './styles/gaps.module.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
+export { AppRootPortal } from './components/AppRoot/AppRootPortal';
 export type { AppRootProps } from './components/AppRoot/AppRoot';
 export type { SafeAreaInsets } from './components/AppRoot/types';
 
@@ -141,16 +142,22 @@ export type {
 /**
  * Modals
  */
-export { ModalRoot } from './components/ModalRoot/ModalRootAdaptive';
-export type { ModalRootProps } from './components/ModalRoot/types';
+export { ModalRoot } from './components/ModalRoot/ModalRoot';
+export type {
+  ModalRootProps,
+  ModalRootContextInterface,
+  UseModalRootContext,
+} from './components/ModalRoot/types';
 export { withModalRootContext } from './components/ModalRoot/withModalRootContext';
 export { ModalRootContext } from './components/ModalRoot/ModalRootContext';
+export { useModalRootContext } from './components/ModalRoot/useModalRootContext';
+export { ModalPageContent } from './components/ModalPageContent/ModalPageContent';
 export { ModalPage } from './components/ModalPage/ModalPage';
-export type { ModalPageProps } from './components/ModalPage/ModalPage';
+export type { ModalPageProps, ModalPageCloseReason } from './components/ModalPage/types';
 export { ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
 export type { ModalPageHeaderProps } from './components/ModalPageHeader/ModalPageHeader';
 export { ModalCard } from './components/ModalCard/ModalCard';
-export type { ModalCardProps } from './components/ModalCard/ModalCard';
+export type { ModalCardProps, ModalCardCloseReason } from './components/ModalCard/types';
 export { ModalDismissButton } from './components/ModalDismissButton/ModalDismissButton';
 export type { ModalDismissButtonProps } from './components/ModalDismissButton/ModalDismissButton';
 
@@ -355,14 +362,24 @@ export type { SkeletonProps } from './components/Skeleton/Skeleton';
  */
 export { Div } from './components/Div/Div';
 export type { DivProps } from './components/Div/Div';
+export {
+  DEFAULT_ARROW_HEIGHT as DEFAULT_ICON_ARROW_HEIGHT,
+  DEFAULT_ARROW_WIDTH as DEFAULT_ICON_ARROW_WIDTH,
+  DEFAULT_ARROW_PADDING as DEFAULT_ICON_ARROW_PADDING,
+  DefaultIcon,
+} from './components/FloatingArrow/DefaultIcon';
+export { FloatingArrow } from './components/FloatingArrow/FloatingArrow';
+export type { FloatingArrowProps } from './components/FloatingArrow/FloatingArrow';
 export { Touch } from './components/Touch/Touch';
 export type { TouchProps, CustomTouchEvent } from './components/Touch/Touch';
 export { PanelSpinner } from './components/PanelSpinner/PanelSpinner';
 export type { PanelSpinnerProps } from './components/PanelSpinner/PanelSpinner';
 export { PanelHeaderClose } from './components/PanelHeaderClose/PanelHeaderClose';
+export type { PanelHeaderCloseProps } from './components/PanelHeaderClose/PanelHeaderClose';
 export { PanelHeaderBack } from './components/PanelHeaderBack/PanelHeaderBack';
 export type { PanelHeaderBackProps } from './components/PanelHeaderBack/PanelHeaderBack';
 export { PanelHeaderSubmit } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
+export type { PanelHeaderSubmitProps } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
 export { PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHeaderEdit';
 export type { PanelHeaderEditProps } from './components/PanelHeaderEdit/PanelHeaderEdit';
 export { ModalCardBase } from './components/ModalCardBase/ModalCardBase';
@@ -428,7 +445,6 @@ export { useNavTransition } from './components/NavTransitionContext/NavTransitio
 export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useNavId } from './components/NavIdContext/useNavId';
 export type { TransitionDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
-export { useModalRootContext } from './components/ModalRoot/useModalRootContext';
 
 /**
  * Utils
@@ -471,5 +487,7 @@ export type { TransitionContextProps } from './components/NavTransitionContext/N
  */
 export { ViewInfinite as unstable_ViewInfinite } from './components/View/ViewInfinite';
 export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from './components/View/ViewInfinite';
+export { ModalPageFooter as unstable_ModalPageFooter } from './components/ModalPageFooter/ModalPageFooter';
+export type { ModalPageFooterProps as unstable_ModalPageFooterProps } from './components/ModalPageFooter/ModalPageFooter';
 
 import './styles/common.css';

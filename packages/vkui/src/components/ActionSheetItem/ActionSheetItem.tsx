@@ -73,7 +73,6 @@ export const ActionSheetItem = ({
   onImmediateClick,
   multiline = false,
   iconChecked,
-  className,
   isCancelItem,
   ...restProps
 }: ActionSheetItemProps): React.ReactNode => {
@@ -130,7 +129,7 @@ export const ActionSheetItem = ({
       {...restProps}
       onClick={onItemClickImpl}
       activeMode={platform === 'ios' ? styles.active : undefined}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
         mode === 'cancel' && styles.modeCancel,
@@ -138,7 +137,6 @@ export const ActionSheetItem = ({
         sizeY === 'compact' && styles.sizeYCompact,
         isRich && styles.rich,
         actionSheetMode === 'menu' && styles.menu,
-        className,
       )}
       onKeyDown={onKeyDown}
     >

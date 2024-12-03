@@ -201,7 +201,7 @@
   inline-size: initial;
 }
 
-/* FIXME поменять на `:global(.vkuiInternalGroup--mode-plain)` */
-.modePlain .host {
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalGroup--mode-plain) .host {
   padding-block-start: 4px;
 }

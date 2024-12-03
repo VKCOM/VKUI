@@ -286,27 +286,27 @@
 /*
   Buttons text colors
 */
-.host.appearanceAccent {
+.appearanceAccent {
   color: var(--vkui--color_text_accent_themed);
 }
 
-.host.appearancePositive {
+.appearancePositive {
   color: var(--vkui--color_text_positive);
 }
 
-.host.appearanceNegative {
+.appearanceNegative {
   color: var(--vkui--color_text_negative);
 }
 
-.host.appearanceNeutral {
+.appearanceNeutral {
   color: var(--vkui--color_text_primary);
 }
 
-.host.modePrimary.appearanceNeutral {
+.modePrimary.appearanceNeutral {
   color: var(--vkui--color_text_contrast_themed);
 }
 
-.host.appearanceAccentInvariable {
+.appearanceAccentInvariable {
   color: var(--vkui--color_text_accent);
 }
 

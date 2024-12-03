@@ -1,6 +1,15 @@
 import * as React from 'react';
 
+export const DEFAULT_ARROW_WIDTH = 20;
+export const DEFAULT_ARROW_HEIGHT = 8;
+export const DEFAULT_ARROW_PADDING = 10;
+
+const PLATFORM_HEIGHT = 1;
+const ARROW_HEIGHT_WITH_WHITE_SPACE = DEFAULT_ARROW_HEIGHT + PLATFORM_HEIGHT;
+
 /**
+ * Стрелка для всплывающих окон.
+ *
  * Примечание 1.
  *
  * В компоненте, SVG элемент `<path />` представляет собой стрелку с платформой в виде прямоугольника в 1px. Платформа
@@ -12,15 +21,9 @@ import * as React from 'react';
  * 2. Сместить положение SVG контейнера на высоту платформы – сделано в CSS через `translateY(1px)`.
  *
  * https://github.com/VKCOM/VKUI/issues/2123
+ *
+ * @since 7.0.0
  */
-
-export const DEFAULT_ARROW_WIDTH = 20;
-export const DEFAULT_ARROW_HEIGHT = 8;
-export const DEFAULT_ARROW_PADDING = 10;
-
-const PLATFORM_HEIGHT = 1;
-const ARROW_HEIGHT_WITH_WHITE_SPACE = DEFAULT_ARROW_HEIGHT + PLATFORM_HEIGHT;
-
 export const DefaultIcon = (props: React.SVGAttributes<SVGSVGElement>): React.ReactNode => {
   return (
     <svg
