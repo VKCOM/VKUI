@@ -7,7 +7,7 @@ import { type BaseGalleryProps } from './types';
 import styles from './BaseGallery.module.css';
 
 const stylesArrowAreaHeight = {
-  fill: styles.arrowAreaFill,
+  stretched: styles.arrowAreaStretched,
   fit: styles.arrowAreaFit,
 };
 
@@ -39,7 +39,7 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
   onSlideLeft,
   showArrows = false,
   arrowSize = 'm',
-  arrowAreaHeight = 'fill',
+  arrowAreaHeight = 'stretched',
 }) => {
   return showArrows && hasPointer ? (
     <>
