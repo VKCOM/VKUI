@@ -1,7 +1,7 @@
-import { type Ref } from 'react';
+import { type Ref, useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { type FloatingComponentProps, useFloatingElement } from '../../hooks/useFloatingElement';
+import { useFloatingElement, type UseFloatingElementProps } from '../../hooks/useFloatingElement';
 import { injectAriaExpandedPropByRole } from '../../lib/accessibility';
 import { animationFadeClassNames, transformOriginClassNames } from '../../lib/animation';
 import { type ReferenceProps } from '../../lib/floating/useFloatingWithInteractions/types';
@@ -72,94 +72,96 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
   role = 'dialog',
   ...restPopoverProps
 }: UsePopoverProps): UsePopoverResult<ElementType> => {
-  const renderFloatingComponent = React.useCallback(
-    ({
-      shown,
-      middlewareData,
-      placement: resolvedPlacement,
-      setArrowRef,
-      floatingRef,
-      floatingProps,
-      willBeHide,
-      onRestoreFocus,
-      onEscapeKeyDown,
-      onClose,
-    }: FloatingComponentProps<HTMLDivElement>) => {
-      if (!shown && !keepMounted) {
-        return null;
-      }
-      const hidden = keepMounted && !shown;
+  const renderFloatingComponent: UseFloatingElementProps<HTMLDivElement>['renderFloatingComponent'] =
+    React.useCallback(
+      ({
+        shown,
+        middlewareData,
+        placement: resolvedPlacement,
+        setArrowRef,
+        floatingRef,
+        floatingProps,
+        willBeHide,
+        onRestoreFocus,
+        onClose,
+      }) => {
+        if (!shown && !keepMounted) {
+          return null;
+        }
+        const hidden = keepMounted && !shown;
 
-      let arrow: React.ReactElement | null = null;
-      if (withArrow) {
-        const { arrow: arrowCoords } = middlewareData;
-        arrow = (
-          <FloatingArrow
-            iconClassName={noStyling ? undefined : styles.arrow}
-            {...arrowProps}
-            coords={arrowCoords}
-            placement={resolvedPlacement}
-            getRootRef={setArrowRef}
-            Icon={ArrowIcon}
-          />
-        );
-      }
-      return (
-        <AppRootPortal usePortal={usePortal}>
-          <div
-            ref={floatingRef}
-            className={classNames(styles.host, hidden && styles.hidden)}
-            {...floatingProps}
-            style={{
-              zIndex: !hidden ? zIndex : undefined,
-              ...floatingProps.style,
-            }}
-          >
-            <FocusTrap
-              {...restPopoverProps}
-              role={role}
-              className={classNames(
-                styles.in,
-                noStyling ? undefined : styles.inWithStyling,
-                willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
-                transformOriginClassNames[resolvedPlacement],
-                className,
-              )}
-              mount={!hidden}
-              disabled={hidden}
-              autoFocus={disableInteractive ? false : autoFocus}
-              restoreFocus={restoreFocus ? () => onRestoreFocus(restoreFocus) : false}
-              onClose={onEscapeKeyDown}
+        let arrow: React.ReactElement | null = null;
+        if (withArrow) {
+          const { arrow: arrowCoords } = middlewareData;
+          arrow = (
+            <FloatingArrow
+              iconClassName={noStyling ? undefined : styles.arrow}
+              {...arrowProps}
+              coords={arrowCoords}
+              placement={resolvedPlacement}
+              getRootRef={setArrowRef}
+              Icon={ArrowIcon}
+            />
+          );
+        }
+        return (
+          <AppRootPortal usePortal={usePortal}>
+            <div
+              ref={floatingRef}
+              className={classNames(styles.host, hidden && styles.hidden)}
+              {...floatingProps}
+              style={{
+                zIndex: !hidden ? zIndex : undefined,
+                ...floatingProps.style,
+              }}
             >
-              {arrow}
-              {typeof content === 'function' ? content({ onClose }) : content}
-            </FocusTrap>
-          </div>
-        </AppRootPortal>
-      );
-    },
-    [
-      ArrowIcon,
-      arrowProps,
-      autoFocus,
-      className,
-      content,
-      disableInteractive,
-      keepMounted,
-      noStyling,
-      restPopoverProps,
-      restoreFocus,
-      role,
-      usePortal,
-      withArrow,
-      zIndex,
-    ],
-  );
+              <FocusTrap
+                {...restPopoverProps}
+                role={role}
+                className={classNames(
+                  styles.in,
+                  noStyling ? undefined : styles.inWithStyling,
+                  willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
+                  transformOriginClassNames[resolvedPlacement],
+                  className,
+                )}
+                mount={!hidden}
+                disabled={hidden}
+                autoFocus={disableInteractive ? false : autoFocus}
+                restoreFocus={restoreFocus ? () => onRestoreFocus(restoreFocus) : false}
+              >
+                {arrow}
+                {typeof content === 'function' ? content({ onClose }) : content}
+              </FocusTrap>
+            </div>
+          </AppRootPortal>
+        );
+      },
+      [
+        ArrowIcon,
+        arrowProps,
+        autoFocus,
+        className,
+        content,
+        disableInteractive,
+        keepMounted,
+        noStyling,
+        restPopoverProps,
+        restoreFocus,
+        role,
+        usePortal,
+        withArrow,
+        zIndex,
+      ],
+    );
 
-  const { anchorRef, anchorProps, component, componentShow } = useFloatingElement<
-    ElementType,
-    HTMLDivElement
-  >({
+  const remapAnchorProps: Exclude<UseFloatingElementProps['remapAnchorProps'], undefined> =
+    useCallback(
+      ({ shown, ...referenceProps }) => injectAriaExpandedPropByRole(referenceProps, shown, role),
+      [role],
+    );
+
+  const { anchorRef, anchorProps, component } = useFloatingElement<ElementType, HTMLDivElement>({
     arrow: withArrow,
     arrowHeight,
     arrowPadding,
@@ -185,11 +187,12 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
 
     onPlacementChange,
     renderFloatingComponent,
+    remapAnchorProps,
   });
 
   return {
     anchorRef,
-    anchorProps: injectAriaExpandedPropByRole(anchorProps, componentShow, role),
+    anchorProps,
     popover: component,
   };
 };

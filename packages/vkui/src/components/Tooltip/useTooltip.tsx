@@ -3,8 +3,11 @@
 import * as React from 'react';
 import { type Ref, useCallback } from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { type FloatingComponentProps, useFloatingElement } from '../../hooks/useFloatingElement';
-import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
+import {
+  type FloatingComponentProps,
+  useFloatingElement,
+  type UseFloatingElementProps,
+} from '../../hooks/useFloatingElement';
 import { animationFadeClassNames } from '../../lib/animation';
 import { getArrowCoordsByMiddlewareData } from '../../lib/floating';
 import { type ReferenceProps } from '../../lib/floating/useFloatingWithInteractions/types';
@@ -119,7 +122,16 @@ export const useTooltip = ({
     ],
   );
 
-  const { componentShow, component, anchorRef, anchorProps, onEscapeKeyDown } = useFloatingElement({
+  const remapAnchorProps: Exclude<UseFloatingElementProps['remapAnchorProps'], undefined> =
+    useCallback(
+      ({ shown, ...referenceProps }) => ({
+        ...referenceProps,
+        ...(shown && { 'aria-describedby': tooltipId }),
+      }),
+      [tooltipId],
+    );
+
+  const { component, anchorRef, anchorProps } = useFloatingElement({
     placement: placementProp,
     arrow: !disableArrow,
     arrowHeight,
@@ -141,16 +153,12 @@ export const useTooltip = ({
 
     renderFloatingComponent,
     externalFloatingElementRef: getRootRef,
+    remapAnchorProps,
   });
-
-  useGlobalEscKeyDown(componentShow, onEscapeKeyDown);
 
   return {
     anchorRef,
-    anchorProps: {
-      ...anchorProps,
-      ...(componentShow && { 'aria-describedby': tooltipId }),
-    },
+    anchorProps,
     tooltip: component,
   };
 };
