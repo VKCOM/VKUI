@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { usePatchChildren } from '../../hooks/usePatchChildren';
+import { useAnchorElement } from '../../hooks/useAnchorElement';
 import { type FloatingComponentProps, type OnShownChange } from '../../lib/floating';
 import { type FloatingArrowProps as FloatingArrowPropsPrivate } from '../FloatingArrow/FloatingArrow';
 import { type TooltipBaseProps } from '../TooltipBase/TooltipBase';
@@ -80,11 +80,11 @@ export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTool
 export const Tooltip = ({ children, ...restProps }: TooltipProps): React.ReactNode => {
   const { anchorRef, anchorProps, tooltip } = useTooltip(restProps);
 
-  const [, child] = usePatchChildren(children, anchorProps, anchorRef);
+  const anchor = useAnchorElement(children, anchorProps, anchorRef);
 
   return (
     <React.Fragment>
-      {child}
+      {anchor}
       {tooltip}
     </React.Fragment>
   );
