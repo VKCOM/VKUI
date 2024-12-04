@@ -53,7 +53,7 @@ export const BaseGallery = ({
   align = 'left',
   showArrows,
   getRef,
-  arrowSize = 'l',
+  arrowSize = 'm',
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -143,6 +143,13 @@ export const BaseGallery = ({
       localSlides.length <= layoutState.current.slides.length ||
       layoutState.current.slides[slideIndex]?.coordX !== localSlides[slideIndex]?.coordX;
 
+    const currentSlideOffsetOnCenterAlignment =
+      (localContainerWidth - (localSlides[slideIndex]?.width ?? 0)) / 2;
+    const isFullyVisible =
+      align === 'center'
+        ? localLayerWidth + currentSlideOffsetOnCenterAlignment <= localContainerWidth
+        : localLayerWidth <= localContainerWidth;
+
     layoutState.current = {
       containerWidth: localContainerWidth,
       viewportOffsetWidth: localViewportOffsetWidth,
@@ -161,7 +168,7 @@ export const BaseGallery = ({
         align,
       }),
       slides: localSlides,
-      isFullyVisible: localLayerWidth <= localContainerWidth,
+      isFullyVisible,
     };
 
     setShiftState((prevState) => ({
@@ -265,7 +272,7 @@ export const BaseGallery = ({
 
   const onEnd = (e: CustomTouchEvent) => {
     if (isDraggable) {
-      const targetIndex = e.isSlide ? getTarget(e) : slideIndex ?? 0;
+      const targetIndex = e.isSlide ? getTarget(e) : (slideIndex ?? 0);
       onDragEnd?.(e, targetIndex);
 
       const nextShiftState: Partial<ShiftingState> = {

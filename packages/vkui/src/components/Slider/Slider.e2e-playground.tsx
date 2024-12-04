@@ -1,7 +1,4 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { AppRoot } from '../AppRoot/AppRoot';
-import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Slider, type SliderMultipleProps, type SliderProps } from './Slider';
 
 export const SliderPlayground = (props: ComponentPlaygroundProps) => {
@@ -42,37 +39,80 @@ export const SliderPlayground = (props: ComponentPlaygroundProps) => {
 };
 
 export const SliderPlaygroundForKeyboardTest = ({
-  colorScheme,
-  ...restProps
+  ...props
 }: ComponentPlaygroundProps & (SliderProps | SliderMultipleProps)) => {
   return (
-    <ConfigProvider colorScheme={colorScheme}>
-      <AdaptivityProvider hasPointer>
-        <AppRoot>
-          <Slider style={{ minWidth: '320px' }} {...restProps} />
-        </AppRoot>
-      </AdaptivityProvider>
-    </ConfigProvider>
-  );
-};
-
-export const SliderPlaygroundForTooltipTest = ({
-  colorScheme,
-  ...restProps
-}: ComponentPlaygroundProps & (SliderProps | SliderMultipleProps)) => {
-  return (
-    <ConfigProvider colorScheme={colorScheme}>
-      <AdaptivityProvider hasPointer>
-        <AppRoot
+    <ComponentPlayground {...props}>
+      {(sliderProps: SliderProps | SliderMultipleProps) => (
+        <div
           style={{
             padding: '80px 30px 30px',
             width: '320px',
             height: 'auto',
           }}
         >
-          <Slider withTooltip {...restProps} />
-        </AppRoot>
-      </AdaptivityProvider>
-    </ConfigProvider>
+          <Slider withTooltip {...sliderProps} />
+        </div>
+      )}
+    </ComponentPlayground>
+  );
+};
+
+export const SliderPlaygroundForKeyboardTestWithTabButton = ({
+  ...props
+}: ComponentPlaygroundProps & (SliderProps | SliderMultipleProps)) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          defaultValue: [[20, 80]],
+          multiple: [true],
+          withTooltip: [true],
+        },
+      ]}
+    >
+      {(sliderProps: SliderProps | SliderMultipleProps) => (
+        <div
+          style={{
+            padding: '80px 30px 30px',
+            width: '320px',
+            height: 'auto',
+          }}
+        >
+          <Slider {...sliderProps} />
+        </div>
+      )}
+    </ComponentPlayground>
+  );
+};
+
+export const SliderPlaygroundForTooltipTest = (
+  props: ComponentPlaygroundProps & (SliderProps | SliderMultipleProps),
+) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          defaultValue: [24.4234234234234],
+          min: [24.4234],
+          max: [30],
+          withTooltip: [true],
+        },
+      ]}
+    >
+      {(sliderProps: SliderProps | SliderMultipleProps) => (
+        <div
+          style={{
+            padding: '80px 30px 30px',
+            width: '320px',
+            height: 'auto',
+          }}
+        >
+          <Slider {...sliderProps} />
+        </div>
+      )}
+    </ComponentPlayground>
   );
 };

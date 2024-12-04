@@ -105,6 +105,23 @@ export function renameProp(
     });
 }
 
+export function renameSubComponent(
+  j: JSCodeshift,
+  source: Collection,
+  componentName: string,
+  prevSubcomponentName: string,
+  newSubcomponentName: string,
+) {
+  source
+    .find(j.MemberExpression, {
+      object: { name: componentName },
+      property: { name: prevSubcomponentName },
+    })
+    .replaceWith(
+      j.memberExpression(j.identifier(componentName), j.identifier(newSubcomponentName)),
+    );
+}
+
 export function swapBooleanValue(
   api: API,
   source: Collection,
@@ -139,11 +156,69 @@ export function swapBooleanValue(
     });
 }
 
+export const removeProps = (
+  j: JSCodeshift,
+  api: API,
+  source: Collection,
+  componentName: string,
+  propsNames: string[],
+  createReportMessage: () => string = () => '',
+) => {
+  let needToShowReport = false;
+  source
+    .find(j.JSXElement, {
+      openingElement: {
+        name: {
+          name: componentName,
+        },
+      },
+    })
+    .forEach((path) => {
+      const attributes = path.node.openingElement.attributes;
+      const newAttributes = attributes?.filter((attr) => {
+        if (attr.type === 'JSXAttribute') {
+          const attrName = attr.name ? attr.name.name : null;
+          if (typeof attrName === 'string') {
+            return !propsNames.includes(attrName);
+          }
+        }
+        if (attr.type === 'JSXSpreadAttribute') {
+          needToShowReport = true;
+        }
+        return false;
+      });
+      path.node.openingElement.attributes = newAttributes;
+    });
+
+  if (needToShowReport) {
+    report(
+      api,
+      `: ${componentName} has been changed. Manual changes required: ${createReportMessage()}`,
+    );
+  }
+};
+
 export const removeAttribute = (
   attributes: Array<JSXAttribute | JSXSpreadAttribute> | undefined,
   attribute: JSXAttribute,
 ) => {
   attributes?.splice(attributes?.indexOf(attribute), 1);
+};
+
+/**
+ * @description Функция достает из атрибута строковое значение. Если вернулся null, значит значение не строковое
+ */
+export const getStringValueFromAttribute = (attribute: JSXAttribute): string | null => {
+  if (attribute.value?.type === 'StringLiteral') {
+    return attribute.value.value;
+  }
+  if (attribute.value?.type === 'JSXExpressionContainer') {
+    const expression = attribute.value.expression;
+    if (expression.type === 'StringLiteral') {
+      return expression.value;
+    }
+  }
+  return null;
 };
 
 interface AttributeManipulatorAPI {

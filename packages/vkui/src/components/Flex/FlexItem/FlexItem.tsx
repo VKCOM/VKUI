@@ -46,15 +46,13 @@ export const FlexItem = ({
   alignSelf,
   flex,
   flexBasis,
-  style,
   ...rest
 }: FlexItemProps): React.ReactNode => {
   return (
     <RootComponent
       {...rest}
-      style={{ flexBasis, ...style }}
+      baseStyle={{ flexBasis }}
       baseClassName={classNames(
-        styles.host,
         alignSelf && alignSelfClassNames[alignSelf],
         flex && flexClassNames[flex],
       )}

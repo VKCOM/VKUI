@@ -37,23 +37,20 @@ const Example = () => {
   );
 
   return (
-    <SplitLayout modal={modal}>
-      <SplitCol>
-        <View activePanel="group">
-          <Panel id="group">
-            <PanelHeader>Group</PanelHeader>
+    <View activePanel="group">
+      <Panel id="group">
+        <PanelHeader>Group</PanelHeader>
 
-            <SharedContent />
+        <SharedContent />
 
-            <Group header={<Header mode="secondary">Модальное окно с Group</Header>}>
-              <SimpleCell onClick={() => setModalOpened(true)}>
-                Открыть Group в модальном окне
-              </SimpleCell>
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+        <Group header={<Header size="s">Модальное окно с Group</Header>}>
+          <SimpleCell onClick={() => setModalOpened(true)}>
+            Открыть Group в модальном окне
+          </SimpleCell>
+          {modal}
+        </Group>
+      </Panel>
+    </View>
   );
 };
 
@@ -180,8 +177,8 @@ const SharedContent = () => {
 ```jsx
 const recentFriends = getRandomUsers(20);
 
-<Group header={<Header mode="secondary">Недавние</Header>}>
-  <Header mode="primary">HorizontalScroll не учитывает отступы Group по горизонтали</Header>
+<Group header={<Header size="s">Недавние</Header>}>
+  <Header>HorizontalScroll не учитывает отступы Group по горизонтали</Header>
 
   <Group.ExpandedContent direction="inline">
     <HorizontalScroll showArrows>
@@ -195,7 +192,7 @@ const recentFriends = getRandomUsers(20);
     </HorizontalScroll>
   </Group.ExpandedContent>
 
-  <Header mode="primary">Здесь контент учитывает отступы Group по горизонтали</Header>
+  <Header>Здесь контент учитывает отступы Group по горизонтали</Header>
   <HorizontalScroll showArrows>
     {recentFriends.map((item) => {
       return (

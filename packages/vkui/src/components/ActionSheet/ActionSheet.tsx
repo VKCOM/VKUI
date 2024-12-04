@@ -3,9 +3,9 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -58,7 +58,7 @@ export const ActionSheet = ({
 }: ActionSheetProps): React.ReactNode => {
   const platform = usePlatform();
   const [closingBy, setClosingBy] = React.useState<undefined | CloseInitiators>(undefined);
-  const onCloseWithOther = () => setClosingBy('other');
+  const onCloseWithOther = React.useCallback(() => setClosingBy('other'), []);
   const actionCallbackRef = React.useRef(noop);
 
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
@@ -93,7 +93,10 @@ export const ActionSheet = ({
       },
     [],
   );
-  const contextValue = useObjectMemo({ onItemClick, mode, onClose: onCloseWithOther });
+  const contextValue = React.useMemo(
+    () => ({ onItemClick, mode, onClose: onCloseWithOther }),
+    [mode, onCloseWithOther, onItemClick],
+  );
 
   const DropdownComponent = mode === 'menu' ? ActionSheetDropdownMenu : ActionSheetDropdownSheet;
 
@@ -135,20 +138,19 @@ export const ActionSheet = ({
     </ActionSheetContext.Provider>
   );
 
-  if (mode === 'menu') {
-    return actionSheet;
-  }
-
   return (
-    <PopoutWrapper
-      closing={Boolean(closingBy)}
-      alignY="bottom"
-      className={className}
-      style={style}
-      onClick={onCloseWithOther}
-      fixed
-    >
-      {actionSheet}
-    </PopoutWrapper>
+    <AppRootPortal>
+      <PopoutWrapper
+        noBackground={mode === 'menu'}
+        closing={Boolean(closingBy)}
+        alignY="bottom"
+        className={className}
+        style={style}
+        onClick={onCloseWithOther}
+        fixed
+      >
+        {actionSheet}
+      </PopoutWrapper>
+    </AppRootPortal>
   );
 };

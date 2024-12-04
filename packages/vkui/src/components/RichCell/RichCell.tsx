@@ -89,7 +89,6 @@ export const RichCell: React.FC<RichCellProps> & {
   bottom,
   actions,
   multiline,
-  className,
   afterAlign = 'start',
   ...restProps
 }: RichCellProps) => {
@@ -110,36 +109,37 @@ export const RichCell: React.FC<RichCellProps> & {
   return (
     <Tappable
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         !multiline && styles.textEllipsis,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        className,
       )}
     >
       {before && <div className={styles.before}>{before}</div>}
-      <div className={styles.in}>
-        <div className={styles.content}>
-          <div className={styles.contentBefore}>
-            {overTitle && (
-              <Subhead Component="div" className={styles.overTitle}>
-                {overTitle}
-              </Subhead>
-            )}
-            <div className={styles.children}>{children}</div>
-            {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
-            {extraSubtitle && (
-              <Subhead Component="div" className={styles.extraSubtitle}>
-                {extraSubtitle}
-              </Subhead>
-            )}
+      <div className={styles.inWrapper}>
+        <div className={styles.in}>
+          <div className={styles.content}>
+            <div className={styles.contentBefore}>
+              {overTitle && (
+                <Subhead Component="div" className={styles.overTitle}>
+                  {overTitle}
+                </Subhead>
+              )}
+              <div className={styles.children}>{children}</div>
+              {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
+              {extraSubtitle && (
+                <Subhead Component="div" className={styles.extraSubtitle}>
+                  {extraSubtitle}
+                </Subhead>
+              )}
+            </div>
+            {afterAlign === 'start' && afterRender()}
           </div>
-          {afterAlign === 'start' && afterRender()}
+          {bottom && <div className={styles.bottom}>{bottom}</div>}
+          {actions && <div className={styles.actions}>{actions}</div>}
         </div>
-        {bottom && <div className={styles.bottom}>{bottom}</div>}
-        {actions && <div className={styles.actions}>{actions}</div>}
+        {afterAlign !== 'start' && afterRender()}
       </div>
-      {afterAlign !== 'start' && afterRender()}
     </Tappable>
   );
 };

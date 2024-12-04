@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
-import { HorizontalCell } from './HorizontalCell';
-import styles from './HorizontaCell.module.css';
+import { CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH, HorizontalCell } from './HorizontalCell';
+import styles from './HorizontalCell.module.css';
 
 describe('HorizontalCell', () => {
   baselineComponent((props) => <HorizontalCell {...props}>HorizontalCell</HorizontalCell>);
@@ -23,5 +23,17 @@ describe('HorizontalCell', () => {
     );
 
     expect(document.querySelector(`.${styles.content}`)).not.toBeNull();
+  });
+
+  it('should use custom size', () => {
+    const h = render(<HorizontalCell size={100} title="Image" />);
+    expect(h.container.firstElementChild).toHaveStyle(`${CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH}: 100px`);
+  });
+
+  it('should preserve user style', () => {
+    const h = render(<HorizontalCell size={100} style={{ background: 'red' }} />);
+    expect(h.container.firstElementChild).toHaveStyle(
+      `background: red; ${CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH}: 100px`,
+    );
   });
 });

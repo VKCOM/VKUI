@@ -1,5 +1,6 @@
 'use client';
 
+import { type ChangeEvent } from 'react';
 import * as React from 'react';
 import {
   Icon12Dropdown,
@@ -12,7 +13,7 @@ import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../l
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
@@ -21,8 +22,16 @@ import styles from './CalendarHeader.module.css';
 
 type ArrowMonthProps = Omit<React.AllHTMLAttributes<HTMLElement>, 'onClick' | 'aria-label'>;
 
+export type CalendarHeaderTestsProps = {
+  monthDropdownTestId?: string | ((monthIndex: number) => string);
+  yearDropdownTestId?: string | ((year: number) => string);
+  nextMonthButtonTestId?: string;
+  prevMonthButtonTestId?: string;
+};
+
 export interface CalendarHeaderProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
+    CalendarHeaderTestsProps {
   viewDate: Date;
   /**
    * Скрывает иконку для переключения на предыдущий месяц
@@ -76,17 +85,21 @@ export const CalendarHeader = ({
   ),
   isMonthDisabled,
   isYearDisabled,
+  monthDropdownTestId,
+  yearDropdownTestId,
+  prevMonthButtonTestId,
+  nextMonthButtonTestId,
   ...restProps
 }: CalendarHeaderProps): React.ReactNode => {
   const { locale } = useConfigProvider();
   const onMonthsChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) =>
-      onChange(setMonth(viewDate, Number(event.target.value))),
+    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
+      onChange(setMonth(viewDate, Number(newValue))),
     [onChange, viewDate],
   );
   const onYearChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) =>
-      onChange(setYear(viewDate, Number(event.target.value))),
+    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
+      onChange(setYear(viewDate, Number(newValue))),
     [onChange, viewDate],
   );
 
@@ -143,8 +156,9 @@ export const CalendarHeader = ({
       {!prevMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
-            className={classNames(styles.navIcon, styles.navIconPrev, prevMonthClassName)}
+            baseClassName={classNames(styles.navIcon, styles.navIconPrev, prevMonthClassName)}
             onClick={onPrevMonth}
+            data-testid={prevMonthButtonTestId}
             {...restPrevMonthProps}
           >
             <VisuallyHidden>
@@ -183,6 +197,11 @@ export const CalendarHeader = ({
               forceDropdownPortal={false}
               selectType="accent"
               aria-label={changeMonthLabel}
+              data-testid={
+                typeof monthDropdownTestId === 'string'
+                  ? monthDropdownTestId
+                  : monthDropdownTestId?.(currentMonth)
+              }
             />
             <CustomSelect
               className={classNames(styles.picker, 'vkuiInternalCalendarHeader__picker')}
@@ -195,6 +214,7 @@ export const CalendarHeader = ({
               forceDropdownPortal={false}
               selectType="accent"
               aria-label={changeYearLabel}
+              data-testid={yearDropdownTestId}
             />
           </div>
         </AdaptivityProvider>
@@ -202,8 +222,9 @@ export const CalendarHeader = ({
       {!nextMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
-            className={classNames(styles.navIcon, styles.navIconNext, nextMonthClassName)}
+            baseClassName={classNames(styles.navIcon, styles.navIconNext, nextMonthClassName)}
             onClick={onNextMonth}
+            data-testid={nextMonthButtonTestId}
             {...restNextMonthProps}
           >
             <VisuallyHidden>

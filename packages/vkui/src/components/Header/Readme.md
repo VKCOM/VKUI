@@ -8,23 +8,15 @@ const Example = () => {
         <PanelHeader>Header</PanelHeader>
         <Group>
           <Header
-            mode="primary"
-            aside={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+            after={
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
           >
             Плейлисты
           </Header>
           <Header
-            mode="primary"
-            aside={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+            after={
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
             subtitle="SOHN — Conrad"
             subtitleComponent="h3"
@@ -32,27 +24,19 @@ const Example = () => {
             Плейлисты
           </Header>
           <Header
-            mode="primary"
-            aside={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+            after={
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
             indicator="12"
           >
             Плейлисты
           </Header>
           <Header
-            mode="primary"
-            aside={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+            after={
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
             indicator={
-              <Counter size="s" mode="prominent">
+              <Counter size="s" mode="primary" appearance="accent-red">
                 3
               </Counter>
             }
@@ -62,38 +46,29 @@ const Example = () => {
         </Group>
         <Group>
           <Header
-            mode="secondary"
-            aside={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+            size="s"
+            after={
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
           >
             Приглашения
           </Header>
           <Header
-            mode="secondary"
-            aside={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+            size="s"
+            after={
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
             indicator="667"
           >
             Фотографии
           </Header>
           <Header
-            mode="secondary"
-            aside={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+            size="s"
+            after={
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
             indicator={
-              <Counter size="s" mode="prominent">
+              <Counter size="s" mode="primary" appearance="accent-red">
                 3
               </Counter>
             }
@@ -102,27 +77,20 @@ const Example = () => {
           </Header>
         </Group>
         <Group>
-          <Header mode="tertiary">Важные</Header>
+          <Header>Важные</Header>
         </Group>
         <Group>
-          <Header mode="primary" multiline>
-            Кто может писать мне личные сообщения
-          </Header>
-          <Header mode="tertiary" multiline>
-            Кто может комментировать мои записи
-          </Header>
-          <Header mode="secondary" multiline>
+          <Header multiline>Кто может писать мне личные сообщения</Header>
+          <Header multiline>Кто может комментировать мои записи</Header>
+          <Header size="s" multiline>
             Кто может оставлять записи на моей странице
           </Header>
         </Group>
         <Group>
-          <Header mode="primary" size="l">
-            Большой заголовок
-          </Header>
+          <Header size="xl">Большой заголовок</Header>
         </Group>
         <Group>
           <Header
-            mode="primary"
             before={<Icon28UserCircleFillBlue />}
             beforeTitle={<Icon16LockOutline />}
             afterTitle={<Icon16UnlockOutline />}
@@ -131,21 +99,17 @@ const Example = () => {
             subtitle="SOHN — Conrad"
             subtitleComponent="h3"
             indicator={
-              <Counter size="s" mode="prominent">
+              <Counter size="s" mode="primary" appearance="accent-red">
                 3
               </Counter>
             }
-            aside={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+            after={
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
           >
             Плейлисты
           </Header>
           <Header
-            mode="primary"
             before={<Icon28UserCircleFillBlue />}
             beforeTitle={<Icon16LockOutline />}
             afterTitle={<Icon16UnlockOutline />}
@@ -155,15 +119,12 @@ const Example = () => {
             subtitleComponent="h3"
             multiline
             indicator={
-              <Counter size="s" mode="prominent">
+              <Counter size="s" mode="primary" appearance="accent-red">
                 3
               </Counter>
             }
-            aside={
-              <Link>
-                Показать все
-                {platform === 'vkcom' && <Icon12ChevronOutline />}
-              </Link>
+            after={
+              <Link after={platform === 'vkcom' && <Icon12ChevronOutline />}>Показать все</Link>
             }
           >
             Плейлисты

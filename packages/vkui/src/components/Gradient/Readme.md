@@ -15,7 +15,7 @@ const Example = () => {
           <Gradient mode="tint" to="top">
             <Placeholder
               icon={<Avatar size={96} />}
-              header="Алексей Мазелюк"
+              title="Алексей Мазелюк"
               action={
                 <Button size="m" mode="secondary">
                   Редактировать
@@ -34,7 +34,7 @@ const Example = () => {
             </CellButton>
           </Group>
         </Group>
-        <Group mode="plain" header={<Header mode="secondary">Направление to="bottom"</Header>}>
+        <Group mode="plain" header={<Header size="s">Направление to="bottom"</Header>}>
           <Gradient mode="tint" to="bottom">
             <Div>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a

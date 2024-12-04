@@ -1,21 +1,9 @@
-'use client';
-
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
-import { useFocusVisible } from '../../hooks/useFocusVisible';
-import {
-  type FocusVisibleModeProps,
-  useFocusVisibleClassName,
-} from '../../hooks/useFocusVisibleClassName';
-import { mergeCalls } from '../../lib/mergeCalls';
-import { clickByKeyboardHandler } from '../../lib/utils';
+import { classNames } from '@vkontakte/vkjs';
+import { type FocusVisibleModeProps } from '../../hooks/useFocusVisibleClassName';
 import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
-import {
-  ClickableLockStateContext,
-  DEFAULT_ACTIVE_EFFECT_DELAY,
-  type StateProps,
-  useState,
-} from './useState';
+import { RealClickable } from './RealClickable';
+import { type StateProps } from './useState';
 import styles from './Clickable.module.css';
 
 export interface ClickableProps<T = HTMLElement>
@@ -40,93 +28,6 @@ const NonClickable = <T,>({
   activeEffectDelay,
   ...restProps
 }: ClickableProps<T>) => <RootComponent {...restProps} />;
-
-/**
- * Кликабельный компонент. Добавляем кучу обвесов
- */
-const RealClickable = <T,>({
-  baseClassName,
-  children,
-  focusVisibleMode = 'inside',
-  activeClassName,
-  hoverClassName,
-  activeEffectDelay = DEFAULT_ACTIVE_EFFECT_DELAY,
-  hasHover = true,
-  hasActive = true,
-  hovered,
-  activated,
-  hasHoverWithChildren,
-  unlockParentHover,
-  onPointerEnter,
-  onPointerLeave,
-  onPointerDown,
-  onPointerCancel,
-  onPointerUp,
-  onBlur,
-  onFocus,
-  onKeyDown,
-  ...restProps
-}: ClickableProps<T>) => {
-  const { focusVisible, ...focusEvents } = useFocusVisible();
-  const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: focusVisibleMode });
-
-  const {
-    stateClassName,
-    setLockHoverBubblingImmediate,
-    setLockActiveBubblingImmediate,
-    ...stateEvents
-  } = useState({
-    activeClassName,
-    hoverClassName,
-    activeEffectDelay,
-    hasHover,
-    hasActive,
-    hovered,
-    activated,
-    unlockParentHover,
-  });
-
-  const handlers = mergeCalls(
-    focusEvents,
-    stateEvents,
-    { onKeyDown: clickByKeyboardHandler },
-    {
-      onPointerEnter,
-      onPointerLeave,
-      onPointerDown,
-      onPointerCancel,
-      onPointerUp,
-      onBlur,
-      onFocus,
-      onKeyDown,
-    },
-  );
-
-  const lockStateContextValue = React.useMemo(
-    () => ({
-      lockHoverStateBubbling: hasHoverWithChildren ? noop : setLockHoverBubblingImmediate,
-      lockActiveStateBubbling: setLockActiveBubblingImmediate,
-    }),
-    [setLockHoverBubblingImmediate, setLockActiveBubblingImmediate, hasHoverWithChildren],
-  );
-
-  return (
-    <RootComponent
-      baseClassName={classNames(
-        baseClassName,
-        styles.realClickable,
-        focusVisibleClassNames,
-        stateClassName,
-      )}
-      {...handlers}
-      {...restProps}
-    >
-      <ClickableLockStateContext.Provider value={lockStateContextValue}>
-        {children}
-      </ClickableLockStateContext.Provider>
-    </RootComponent>
-  );
-};
 
 /**
  * Проверяем, является ли компонент кликабельным
@@ -175,16 +76,6 @@ function component<T>({
   return {};
 }
 
-const getUserAgentResetClassName = (Component?: React.ElementType) => {
-  if (Component === 'a') {
-    return styles.resetLinkStyle;
-  }
-  if (Component === 'button') {
-    return styles.resetButtonStyle;
-  }
-  return;
-};
-
 /**
  * Базовый кликабельный корневой компонент.
  *
@@ -204,11 +95,7 @@ export const Clickable = <T,>({
 }: ClickableProps<T>): React.ReactNode => {
   const commonProps = component(restProps);
   const isClickable = checkClickable(restProps);
-  const baseClassName = classNames(
-    baseClassNameProp,
-    getUserAgentResetClassName(commonProps.Component),
-    styles.host,
-  );
+  const baseClassName = classNames(baseClassNameProp, styles.host);
 
   if (isClickable) {
     return (

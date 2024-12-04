@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useModalContext } from '../../context/ModalContext';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -13,7 +14,6 @@ import type {
 } from '../../types';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
@@ -84,7 +84,7 @@ interface PanelHeaderInProps {
 const PanelHeaderIn = ({ before, after, children, typographyProps = {} }: PanelHeaderInProps) => {
   const { Component = 'span', ...restProps } = typographyProps;
   const { hasCustomPanelHeaderAfter, customPanelHeaderAfterMinWidth } = useConfigProvider();
-  const { isInsideModal } = React.useContext(ModalRootContext);
+  const isInsideModal = useModalContext().id !== null;
   const platform = usePlatform();
 
   const afterSlotProps =

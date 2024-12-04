@@ -14,7 +14,7 @@
   <Panel id="separator">
     <PanelHeader>Spacing</PanelHeader>
 
-    <Group header={<Header mode="secondary">Default Spacing (empty, 8px)</Header>}>
+    <Group header={<Header size="s">Default Spacing (empty, 8px)</Header>}>
       <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
       <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
 
@@ -24,7 +24,7 @@
       <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
     </Group>
 
-    <Group header={<Header mode="secondary">Spacing 16px</Header>}>
+    <Group header={<Header size="s">Spacing 16px</Header>}>
       <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
       <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
 

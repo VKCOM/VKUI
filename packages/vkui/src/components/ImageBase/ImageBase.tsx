@@ -154,7 +154,6 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   height: heightImg,
   widthSize,
   heightSize,
-  style,
   noBorder = false,
   fallbackIcon: fallbackIconProp,
   children,
@@ -223,7 +222,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   return (
     <ImageBaseContext.Provider value={{ size, ref: wrapperRef }}>
       <Clickable
-        style={{ width, height, ...style }}
+        baseStyle={{ width, height }}
         baseClassName={classNames(
           styles.host,
           loaded && styles.loaded,

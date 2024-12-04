@@ -10,7 +10,6 @@ import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import type { TrackerOptionsProps } from '../CustomScrollView/useTrackerVisibility';
 import {
   CustomSelectDropdown,
   type CustomSelectDropdownProps,
@@ -21,7 +20,16 @@ import {
 } from '../CustomSelectOption/CustomSelectOption';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import type { FormFieldProps } from '../FormField/FormField';
-import type { NativeSelectProps } from '../NativeSelect/NativeSelect';
+import {
+  NOT_SELECTED,
+  remapFromNativeValueToSelectValue,
+  remapFromSelectValueToNativeValue,
+} from '../NativeSelect/NativeSelect';
+import type {
+  NativeSelectProps,
+  NativeSelectValue,
+  SelectValue,
+} from '../NativeSelect/NativeSelect';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -29,7 +37,10 @@ import {
   CustomSelectClearButton,
   type CustomSelectClearButtonProps,
 } from './CustomSelectClearButton';
-import { CustomSelectInput, type CustomSelectInputProps } from './CustomSelectInput';
+import {
+  CustomSelectInput,
+  type CustomSelectInputProps,
+} from './CustomSelectInput/CustomSelectInput';
 import styles from './CustomSelect.module.css';
 
 const sizeYClassNames = {
@@ -74,6 +85,24 @@ const checkOptionsValueType = <T extends CustomSelectOptionInterface>(options: T
   }
 };
 
+const checkMixControlledAndUncontrolledState = (
+  oldIsControlled: boolean,
+  newIsControlled: boolean,
+) => {
+  if (!oldIsControlled && newIsControlled) {
+    warn(
+      `Похоже, что компонент был переведен из состояния Uncontrolled в Controlled. Пожалуйста, не делайте так. Если вам нужно отобразить невыбранное состояние компонента, используйте value=null вместо undefined`,
+      'error',
+    );
+  }
+  if (oldIsControlled && !newIsControlled) {
+    warn(
+      `Похоже, что компонент был переведен из состояния Controlled в Uncontrolled. Пожалуйста, не делайте так. Если вам нужно отобразить невыбранное состояние компонента, используйте value=null вместо undefined`,
+      'error',
+    );
+  }
+};
+
 function defaultRenderOptionFn<T extends CustomSelectOptionInterface>({
   option,
   ...props
@@ -88,9 +117,8 @@ const handleOptionDown: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) =
 function findSelectedIndex<T extends CustomSelectOptionInterface>(
   options: T[] = [],
   value: SelectValue,
-  withClear: boolean,
 ) {
-  if (withClear && value === '') {
+  if (value === NOT_SELECTED.CUSTOM) {
     return -1;
   }
   return (
@@ -111,10 +139,8 @@ const filter = <T extends CustomSelectOptionInterface>(
     : options;
 };
 
-type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
-
 export interface CustomSelectOptionInterface {
-  value: SelectValue;
+  value: Exclude<SelectValue, null>;
   label: React.ReactElement | string;
   disabled?: boolean;
   [index: string]: any;
@@ -131,11 +157,7 @@ export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
 > extends NativeSelectProps,
     Omit<FormFieldProps, 'maxHeight'>,
-    TrackerOptionsProps,
-    Pick<
-      CustomSelectDropdownProps,
-      'overscrollBehavior' | 'autoHideScrollbar' | 'autoHideScrollbarDelay'
-    >,
+    Pick<CustomSelectDropdownProps, 'overscrollBehavior'>,
     Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'readOnly'> {
   /**
    * ref на внутрений компонент input
@@ -249,8 +271,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     fetching,
     forceDropdownPortal,
     selectType = 'default',
-    autoHideScrollbar,
-    autoHideScrollbarDelay,
     searchable = false,
     'renderOption': renderOptionProp = defaultRenderOptionFn,
     'options': optionsProp,
@@ -287,25 +307,40 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
   const [inputValue, setInputValue] = React.useState('');
-  const [nativeSelectValue, setNativeSelectValue] = React.useState(
-    () => props.value ?? defaultValue ?? (allowClearButton ? '' : undefined),
-  );
+  const [nativeSelectValue, setNativeSelectValue] = React.useState<NativeSelectValue>(() => {
+    if (props.value !== undefined) {
+      return remapFromSelectValueToNativeValue(props.value);
+    }
+    if (defaultValue !== undefined) {
+      return remapFromSelectValueToNativeValue(defaultValue);
+    }
+    return NOT_SELECTED.NATIVE;
+  });
 
   const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
   const [options, setOptions] = React.useState(optionsProp);
   const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
-    findSelectedIndex(optionsProp, props.value ?? defaultValue, allowClearButton),
+    findSelectedIndex(optionsProp, props.value ?? defaultValue ?? null),
   );
 
   React.useEffect(() => {
-    setIsControlledOutside(props.value !== undefined);
-    setNativeSelectValue((nativeSelectValue) => props.value ?? nativeSelectValue);
+    setIsControlledOutside((oldIsControlled) => {
+      const newIsControlled = props.value !== undefined;
+      checkMixControlledAndUncontrolledState(oldIsControlled, newIsControlled);
+      return newIsControlled;
+    });
+    setNativeSelectValue((nativeSelectValue) => {
+      if (props.value !== undefined) {
+        return remapFromSelectValueToNativeValue(props.value);
+      }
+      return nativeSelectValue;
+    });
   }, [props.value]);
 
   useIsomorphicLayoutEffect(() => {
     if (
       options.some(({ value }) => nativeSelectValue === value) ||
-      (allowClearButton && nativeSelectValue === '')
+      (allowClearButton && nativeSelectValue === NOT_SELECTED.NATIVE)
     ) {
       const event = new Event('change', { bubbles: true });
 
@@ -436,8 +471,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const selectOption = React.useCallback(
     (index: number) => {
       const item = options[index];
-
-      setNativeSelectValue(item?.value);
+      setNativeSelectValue(item?.value ?? NOT_SELECTED.NATIVE);
       close();
 
       const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
@@ -510,7 +544,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   React.useEffect(
     function updateOptionsAndSelectedOptionIndex() {
-      const value = props.value ?? nativeSelectValue ?? defaultValue;
+      const value =
+        props.value !== undefined
+          ? props.value
+          : remapFromNativeValueToSelectValue(nativeSelectValue);
 
       const options =
         searchable && inputValue !== undefined
@@ -518,32 +555,26 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           : optionsProp;
 
       setOptions(options);
-      setSelectedOptionIndex(findSelectedIndex(options, value, allowClearButton));
+      setSelectedOptionIndex(findSelectedIndex(options, value));
     },
-    [
-      filterFn,
-      inputValue,
-      nativeSelectValue,
-      optionsProp,
-      defaultValue,
-      props.value,
-      searchable,
-      allowClearButton,
-    ],
+    [filterFn, inputValue, nativeSelectValue, optionsProp, defaultValue, props.value, searchable],
   );
 
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const newSelectedOptionIndex = findSelectedIndex(
-      options,
-      e.currentTarget.value,
-      allowClearButton,
-    );
+    const remappedNativeValue = remapFromNativeValueToSelectValue(e.currentTarget.value);
+    const newSelectedOptionIndex = findSelectedIndex(options, remappedNativeValue);
 
     if (selectedOptionIndex !== newSelectedOptionIndex) {
       if (!isControlledOutside) {
         setSelectedOptionIndex(newSelectedOptionIndex);
       }
-      onChange?.(e);
+      if (e.target.value === NOT_SELECTED.NATIVE) {
+        e.target.value = '';
+      }
+      if (e.currentTarget.value === NOT_SELECTED.NATIVE) {
+        e.currentTarget.value = '';
+      }
+      onChange?.(e, remappedNativeValue);
     }
   };
 
@@ -553,11 +584,11 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
       const options = filter(optionsProp, e.target.value, filterFn);
       setOptions(options);
-      setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue, allowClearButton));
+      setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue));
 
       setInputValue(e.target.value);
     },
-    [filterFn, nativeSelectValue, onInputChangeProp, optionsProp, allowClearButton],
+    [filterFn, nativeSelectValue, onInputChangeProp, optionsProp],
   );
 
   const areOptionsShown = React.useCallback(() => {
@@ -714,22 +745,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   }, [emptyText, options, renderDropdown, renderOption]);
 
   const selectInputRef = useExternRef(getSelectInputRef);
-  const focusOnInputTimerRef = React.useRef<ReturnType<typeof setTimeout>>();
-  const focusOnInput = React.useCallback(() => {
-    clearTimeout(focusOnInputTimerRef.current);
 
-    focusOnInputTimerRef.current = setTimeout(() => {
-      selectInputRef.current && selectInputRef.current.focus();
-    }, 0);
-  }, [selectInputRef]);
-  useIsomorphicLayoutEffect(function clearFocusOnInputTimer() {
-    return () => {
-      clearTimeout(focusOnInputTimerRef.current);
-    };
-  }, []);
-
-  const controlledValueSet = isControlledOutside && props.value !== '';
-  const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== '';
+  const controlledValueSet = isControlledOutside && props.value !== NOT_SELECTED.CUSTOM;
+  const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== NOT_SELECTED.NATIVE;
   const clearButtonShown =
     allowClearButton && !opened && (controlledValueSet || uncontrolledValueSet);
 
@@ -742,9 +760,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       <ClearButton
         className={iconProp === undefined ? styles.clearIcon : undefined}
         onClick={function clearSelectState() {
-          setNativeSelectValue('');
+          setNativeSelectValue(NOT_SELECTED.NATIVE);
           setInputValue('');
-          focusOnInput();
+          selectInputRef.current && selectInputRef.current.focus();
         }}
         disabled={restProps.disabled}
         data-testid={clearButtonTestId}
@@ -756,7 +774,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     iconProp,
     restProps.disabled,
     clearButtonTestId,
-    focusOnInput,
+    selectInputRef,
   ]);
 
   const icon = React.useMemo(() => {
@@ -801,11 +819,11 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
         const inputIsNotFocused = document.activeElement !== selectInputRef.current;
         if (inputIsNotFocused) {
-          focusOnInput();
+          selectInputRef.current.focus();
         }
       }
     },
-    [document, focusOnInput, selectInputRef],
+    [document, selectInputRef],
   );
 
   const preventInputBlurWhenClickInsideFocusedSelectArea = (
@@ -889,7 +907,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         data-testid={nativeSelectTestId}
         required={required}
       >
-        {allowClearButton && <option key="" value="" />}
+        {(allowClearButton || nativeSelectValue === NOT_SELECTED.NATIVE) && (
+          <option key={NOT_SELECTED.NATIVE} value={NOT_SELECTED.NATIVE} />
+        )}
         {optionsProp.map((item) => (
           <option key={`${item.value}`} value={item.value} />
         ))}
@@ -906,8 +926,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           offsetDistance={dropdownOffsetDistance}
           autoWidth={dropdownAutoWidth}
           forcePortal={forceDropdownPortal}
-          autoHideScrollbar={autoHideScrollbar}
-          autoHideScrollbarDelay={autoHideScrollbarDelay}
           noMaxHeight={noMaxHeight}
           role="listbox"
           id={popupAriaId}

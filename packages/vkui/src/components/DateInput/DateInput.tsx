@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { startOfDay, startOfMinute } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -10,7 +11,7 @@ import { callMultiple } from '../../lib/callMultiple';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import type { HasRootRef } from '../../types';
-import { Calendar, type CalendarProps } from '../Calendar/Calendar';
+import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
@@ -25,6 +26,14 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
+export type DateInputPropsTestsProps = {
+  dayFieldTestId?: string;
+  monthFieldTestId?: string;
+  yearFieldTestId?: string;
+  hourFieldTestId?: string;
+  minuteFieldTestId?: string;
+};
+
 export interface DateInputProps
   extends Omit<React.InputHTMLAttributes<HTMLDivElement>, 'value' | 'onChange' | 'size'>,
     Pick<
@@ -36,6 +45,7 @@ export interface DateInputProps
       | 'onChange'
       | 'value'
       | 'doneButtonText'
+      | 'DoneButton'
       | 'weekStartsOn'
       | 'disablePickers'
       | 'changeHoursLabel'
@@ -58,12 +68,15 @@ export interface DateInputProps
       | 'renderDayContent'
     >,
     HasRootRef<HTMLDivElement>,
-    Omit<FormFieldProps, 'maxHeight'> {
+    Omit<FormFieldProps, 'maxHeight'>,
+    DateInputPropsTestsProps {
+  calendarTestsProps?: CalendarTestsProps;
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
   clearFieldLabel?: string;
   showCalendarLabel?: string;
   disableCalendar?: boolean;
+  onCalendarOpenChanged?: (opened: boolean) => void;
 }
 
 const elementsConfig = (index: number) => {
@@ -122,6 +135,7 @@ export const DateInput = ({
   style,
   className,
   doneButtonText,
+  DoneButton,
   closeOnChange = true,
   disablePickers,
   getRootRef,
@@ -149,6 +163,13 @@ export const DateInput = ({
   nextMonthIcon,
   disableCalendar = false,
   renderDayContent,
+  onCalendarOpenChanged,
+  calendarTestsProps,
+  dayFieldTestId,
+  monthFieldTestId,
+  yearFieldTestId,
+  hourFieldTestId,
+  minuteFieldTestId,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -175,7 +196,10 @@ export const DateInput = ({
       }
 
       if (isMatch(formattedValue, mask)) {
-        onChange?.(parse(formattedValue, mask, value ?? new Date()));
+        const now = new Date();
+        onChange?.(
+          parse(formattedValue, mask, value ?? (enableTime ? startOfMinute(now) : startOfDay(now))),
+        );
       }
     },
     [enableTime, maxElement, onChange, value],
@@ -207,6 +231,7 @@ export const DateInput = ({
     onInternalValueChange,
     getInternalValue,
     value,
+    onCalendarOpenChanged,
   });
 
   const { sizeY = 'none' } = useAdaptivity();
@@ -264,6 +289,7 @@ export const DateInput = ({
           onElementSelect={setFocusedElement}
           value={internalValue[0]}
           label={changeDayLabel}
+          data-testid={dayFieldTestId}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -273,6 +299,7 @@ export const DateInput = ({
           onElementSelect={setFocusedElement}
           value={internalValue[1]}
           label={changeMonthLabel}
+          data-testid={monthFieldTestId}
         />
         <InputLikeDivider>.</InputLikeDivider>
         <InputLike
@@ -282,6 +309,7 @@ export const DateInput = ({
           onElementSelect={setFocusedElement}
           value={internalValue[2]}
           label={changeYearLabel}
+          data-testid={yearFieldTestId}
         />
         {enableTime && (
           <React.Fragment>
@@ -293,6 +321,7 @@ export const DateInput = ({
               onElementSelect={setFocusedElement}
               value={internalValue[3]}
               label={changeHoursLabel}
+              data-testid={hourFieldTestId}
             />
             <InputLikeDivider>:</InputLikeDivider>
             <InputLike
@@ -302,6 +331,7 @@ export const DateInput = ({
               onElementSelect={setFocusedElement}
               value={internalValue[4]}
               label={changeMinutesLabel}
+              data-testid={minuteFieldTestId}
             />
           </React.Fragment>
         )}
@@ -320,9 +350,10 @@ export const DateInput = ({
             disablePast={disablePast}
             disableFuture={disableFuture}
             shouldDisableDate={shouldDisableDate}
-            onClose={removeFocusFromField}
+            onDoneButtonClick={removeFocusFromField}
             getRootRef={calendarRef}
             doneButtonText={doneButtonText}
+            DoneButton={DoneButton}
             disablePickers={disablePickers}
             changeHoursLabel={changeHoursLabel}
             changeMinutesLabel={changeMinutesLabel}
@@ -342,6 +373,7 @@ export const DateInput = ({
             nextMonthIcon={nextMonthIcon}
             minDateTime={minDateTime}
             maxDateTime={maxDateTime}
+            {...calendarTestsProps}
           />
         </Popper>
       )}

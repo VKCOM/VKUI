@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
+import { type CSSCustomProperties } from '../../types';
 import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
 import { ImageBadge, type ImageBadgeProps } from './ImageBadge/ImageBadge';
 import styles from './Image.module.css';
@@ -119,7 +121,7 @@ export const Image: React.FC<ImageProps> & {
   objectFit = 'cover',
   ...restProps
 }: ImageProps) => {
-  const borderStyles = React.useMemo(
+  const borderStyles: CSSCustomProperties<string | undefined> = React.useMemo(
     () => ({
       '--vkui_internal--Image_border_radius': getBorderRadiusBySizeInPx(size, borderRadius),
       '--vkui_internal--Image_border_start_start_radius': getBorderRadiusBySizeInPx(
@@ -154,7 +156,7 @@ export const Image: React.FC<ImageProps> & {
       {...restProps}
       objectFit={objectFit}
       size={size}
-      style={{ ...borderStyles, ...style }}
+      style={mergeStyle(borderStyles, style)}
       className={classNames(
         className,
         styles.host,

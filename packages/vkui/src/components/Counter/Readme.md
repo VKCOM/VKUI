@@ -14,12 +14,19 @@ const Example = () => {
     <View activePanel="counter-demo">
       <Panel id="counter-demo">
         <PanelHeader>Counter</PanelHeader>
-        <Group header={<Header mode="secondary">Счётчики в ячейках</Header>}>
+        <Group header={<Header size="s">Счётчики в ячейках</Header>}>
           <List>
             <Cell before={<Icon28UserOutline />} indicator={<Counter>4</Counter>}>
               Друзья
             </Cell>
-            <Cell before={<Icon28UsersOutline />} indicator={<Counter mode="primary">2</Counter>}>
+            <Cell
+              before={<Icon28UsersOutline />}
+              indicator={
+                <Counter mode="primary" appearance="accent">
+                  2
+                </Counter>
+              }
+            >
               Группы
             </Cell>
             <Cell
@@ -34,13 +41,17 @@ const Example = () => {
             </Cell>
             <Cell
               before={<Icon28FavoriteOutline />}
-              indicator={<Counter mode="primary">1</Counter>}
+              indicator={
+                <Counter mode="primary" appearance="accent">
+                  1
+                </Counter>
+              }
             >
               Закладки
             </Cell>
           </List>
         </Group>
-        <Group header={<Header mode="secondary">Счётчики в кнопках</Header>}>
+        <Group header={<Header size="s">Счётчики в кнопках</Header>}>
           <FormItem>
             <Button mode="secondary" size="m" after={<Counter>16</Counter>}>
               Secondary medium
@@ -71,7 +82,7 @@ const Example = () => {
           header={
             <Header
               indicator={
-                <Counter size="s" mode="prominent">
+                <Counter size="s" mode="primary" appearance="accent-red">
                   5 <VisuallyHidden>новых</VisuallyHidden>
                 </Counter>
               }
@@ -85,7 +96,7 @@ const Example = () => {
           <Cell before={<Avatar />}>Виктор Пелевин</Cell>
           <Cell before={<Avatar />}>Михаил Зыгарь</Cell>
         </Group>
-        <Group header={<Header mode="secondary">В переключателях</Header>}>
+        <Group header={<Header size="s">В переключателях</Header>}>
           <Tabs mode="buttons">
             <HorizontalScroll>
               <TabsItem
@@ -104,7 +115,7 @@ const Example = () => {
               </TabsItem>
               <TabsItem
                 after={
-                  <Counter size="s" mode="primary">
+                  <Counter size="s" mode="primary" appearance="accent">
                     2
                   </Counter>
                 }
@@ -123,7 +134,7 @@ const Example = () => {
               selected={simpleTab === 'dialogs'}
               onClick={() => setSimpleTab('dialogs')}
               after={
-                <Counter size="s" mode="prominent">
+                <Counter size="s" mode="primary" appearance="accent-red">
                   6
                 </Counter>
               }

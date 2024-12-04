@@ -67,7 +67,7 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           before: [<Avatar key="avatar" size={40} />],
-          subhead: ['Subhead'],
+          overTitle: ['Subhead'],
           children: ['Title'],
           subtitle: ['Subtitle'],
           extraSubtitle: ['Extra Subtitle'],
@@ -83,11 +83,11 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           children: ['Title'],
-          expandable: ['auto', 'always'],
+          chevron: ['auto', 'always'],
         },
         {
           children: ['Title'],
-          expandable: ['always'],
+          chevron: ['always'],
           chevronSize: ['m', 's'],
         },
 

@@ -77,9 +77,9 @@ export const Setting = ({
               </ActionSheet>,
             );
           }}
+          after={<Icon16Dropdown />}
         >
           {title}
-          <Icon16Dropdown />
         </Link>
       )}
       {children}

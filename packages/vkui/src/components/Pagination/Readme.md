@@ -89,7 +89,7 @@ const Example = () => {
         <FormItem top="sizeY">
           <Select
             value={sizeY}
-            onChange={(e) => setSizeY(e.target.value)}
+            onChange={(_, newValue) => setSizeY(newValue)}
             options={[
               { label: 'compact', value: 'compact' },
               { label: 'regular', value: 'regular' },
@@ -99,7 +99,7 @@ const Example = () => {
         <FormItem top="prop[navigationButtonsStyle]">
           <Select
             value={navigationButtonsStyle}
-            onChange={(e) => setNavigationButtonsStyle(e.target.value)}
+            onChange={(_, newValue) => setNavigationButtonsStyle(newValue)}
             options={[
               { label: 'icon', value: 'icon' },
               { label: 'caption', value: 'caption' },

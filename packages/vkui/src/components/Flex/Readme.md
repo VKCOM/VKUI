@@ -14,8 +14,8 @@ const FlexContainer = ({ itemsCount, ...props }) => {
                 src="https://sun9-32.userapi.com/uFzLOK55iY7pC0DHjneEdP9G6gXcXi2Mxj9wVA/wnTmzh_blNM.jpg"
               />
             }
-            header="Для Вас"
-            subheader="Обновлено сегодня"
+            title="Для Вас"
+            subtitle="Обновлено сегодня"
             actions={
               <Button before={<Icon24Play />} onClick={() => {}}>
                 Слушать
@@ -144,8 +144,10 @@ const Example = () => {
           <FormItem top="gap">
             <Select
               value={gap}
-              onChange={(e) => setGap(e.target.value)}
+              placeholder="Не выбрано"
+              onChange={(_, newValue) => setGap(newValue)}
               options={GapSelectValues}
+              allowClearButton
             />
           </FormItem>
         )}
@@ -153,8 +155,10 @@ const Example = () => {
           <FormItem top="row gap">
             <Select
               value={rowGap}
-              onChange={(e) => setRowGap(e.target.value)}
+              placeholder="Не выбрано"
+              onChange={(_, newValue) => setRowGap(newValue)}
               options={GapSelectValues}
+              allowClearButton
             />
           </FormItem>
         )}
@@ -162,15 +166,17 @@ const Example = () => {
           <FormItem top="column gap">
             <Select
               value={columnGap}
-              onChange={(e) => setColumnGap(e.target.value)}
+              placeholder="Не выбрано"
+              onChange={(_, newValue) => setColumnGap(newValue)}
               options={GapSelectValues}
+              allowClearButton
             />
           </FormItem>
         )}
         <FormItem top="align">
           <Select
             value={align}
-            onChange={(e) => setAlign(e.target.value)}
+            onChange={(_, newValue) => setAlign(newValue)}
             placeholder="Не выбрано"
             options={[
               { label: 'start', value: 'start' },
@@ -185,7 +191,7 @@ const Example = () => {
         <FormItem top="justify">
           <Select
             value={justify}
-            onChange={(e) => setJustify(e.target.value)}
+            onChange={(_, newValue) => setJustify(newValue)}
             placeholder="Не выбрано"
             options={[
               { label: 'start', value: 'start' },

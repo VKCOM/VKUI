@@ -1,14 +1,12 @@
 Компонент для отрисовки "длинного" содержимого, которое можно скроллить по горизонтали.
 
 ```jsx
-import { useEffect, useState, Fragment } from 'react';
-
 const HorizontalScrollExample = () => {
-  const [recentFriends] = useState(getRandomUsers(20));
-  const [commonFriends, setCommonFriends] = useState([]);
-  const [activePanel, setActivePanel] = useState('basic-case');
+  const [recentFriends] = React.useState(getRandomUsers(20));
+  const [commonFriends, setCommonFriends] = React.useState([]);
+  const [activePanel, setActivePanel] = React.useState('basic-case');
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Эмуляция загрузки
     setTimeout(() => {
       setCommonFriends(getRandomUsers(20));
@@ -19,15 +17,16 @@ const HorizontalScrollExample = () => {
     <View activePanel={activePanel}>
       <Panel id="basic-case">
         <PanelHeader>HorizontalScroll</PanelHeader>
-        <Group header={<Header mode="secondary">Недавние</Header>}>
+        <Group header={<Header size="s">Недавние</Header>}>
           <HorizontalScroll
             showArrows
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
+            arrowSize="s"
           >
             {recentFriends.map((item) => {
               return (
-                <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
+                <HorizontalCell onClick={() => {}} key={item.id} title={item.first_name}>
                   <Avatar size={56} src={item.photo_200} />
                 </HorizontalCell>
               );
@@ -35,29 +34,30 @@ const HorizontalScrollExample = () => {
           </HorizontalScroll>
         </Group>
 
-        <Group header={<Header mode="secondary">Общие друзья</Header>}>
+        <Group header={<Header size="s">Общие друзья</Header>}>
           <HorizontalScroll
             showArrows
             arrowSize="m"
             getScrollToLeft={(i) => i - 120}
             getScrollToRight={(i) => i + 120}
+            arrowSize="s"
           >
             {commonFriends.length === 0 && <Spinner size="m" style={{ height: 88 }} />}
             {commonFriends.length > 0 && (
-              <Fragment>
+              <React.Fragment>
                 {commonFriends.map((item) => {
                   return (
-                    <HorizontalCell onClick={() => {}} key={item.id} header={item.first_name}>
+                    <HorizontalCell onClick={() => {}} key={item.id} title={item.first_name}>
                       <Avatar size={56} src={item.photo_200} />
                     </HorizontalCell>
                   );
                 })}
-              </Fragment>
+              </React.Fragment>
             )}
           </HorizontalScroll>
         </Group>
 
-        <Group header={<Header mode="secondary">С кнопкой "Показать всё"</Header>}>
+        <Group header={<Header size="s">С кнопкой "Показать всё"</Header>}>
           <CellButton
             before={<Icon16MoreHorizontal aria-hidden />}
             onClick={() => setActivePanel('show-more-case')}
@@ -75,7 +75,7 @@ const HorizontalScrollExample = () => {
         <Group header={<Header>Альбомы</Header>}>
           <HorizontalScroll>
             <AlbumItems />
-            <HorizontalCellShowMore onClick={() => {}} size="l" height={124} />
+            <HorizontalCellShowMore onClick={() => {}} size="m" height={124} />
           </HorizontalScroll>
         </Group>
         <Group header={<Header>Возможные друзья</Header>}>
@@ -86,14 +86,14 @@ const HorizontalScrollExample = () => {
         </Group>
         <Group header={<Header>Игры</Header>}>
           <HorizontalScroll>
-            <HorizontalCell onClick={() => {}} size="m" header="Warma-geddon">
+            <HorizontalCell onClick={() => {}} size="m" title="Warma-geddon">
               <Image
                 size={88}
                 borderRadius="l"
                 src={'https://sun9-45.userapi.com/c846418/v846418215/5cf20/Gd9mQ6dVXTw.jpg'}
               />
             </HorizontalCell>
-            <HorizontalCell onClick={() => {}} size="m" header="Golden Valley">
+            <HorizontalCell onClick={() => {}} size="m" title="Golden Valley">
               <Image
                 size={88}
                 borderRadius="l"
@@ -141,8 +141,8 @@ const AlbumItems = () => {
     <HorizontalCell
       onClick={() => {}}
       key={id}
-      size="l"
-      header={title}
+      size="xl"
+      title={title}
       subtitle={`${size} фотографии`}
     >
       <img style={largeImageStyles} src={thumb_src} />
@@ -154,7 +154,7 @@ const usersList = getRandomUsers(3);
 
 const RandomUsers = () => {
   return usersList.map((user) => (
-    <HorizontalCell onClick={() => {}} key={user.id} size="s" header={user.first_name}>
+    <HorizontalCell onClick={() => {}} key={user.id} size="s" title={user.first_name}>
       <Avatar size={56} src={user.photo_100} />
     </HorizontalCell>
   ));
@@ -165,7 +165,7 @@ const RandomUsers = () => {
 
 # Кнопка "Показать всё"
 
-Специально для этого под `HorizontalScroll` создан компонент [`HorizontalCellShowMore`](#/HorizontalCellShowMore) (создан на основе [`HorizontalCell`](#/HorizontalCell)).
+Специально для этого под `HorizontalScroll` создан компонент [`HorizontalCellShowMore`](#/HorizontalCellShowMore).
 
 Его можно вкладывать напрямую в того же родителя, в котором лежат остальные `HorizontalCell` внутри `HorizontalScroll`.
 

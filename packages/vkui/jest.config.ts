@@ -10,6 +10,7 @@ const config: Config = {
   transform: {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { ...swcConfig }],
   },
+  transformIgnorePatterns: ['/node_modules/(?!@vkontakte/vkjs/)'],
   displayName: 'unit',
   roots: [path.join(__dirname, 'src')],
   setupFilesAfterEnv: [path.join(__dirname, 'jest.setup.ts')],

@@ -1,10 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import type { HasComponent, HasRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -42,14 +41,6 @@ export interface FormItemProps
    * Если оставить пустым и использовать htmlFor, то тег top будет label.
    */
   topComponent?: React.ElementType;
-  /**
-   * Позволяет полностью заменить шапку поля пользовательским компонентом.
-   *
-   * @since 6.1.0
-   *
-   * TODO [>=7]: удалить и использовать top - оно будет принимать либо строку, либо подкомпонент
-   */
-  topNode?: React.ReactNode;
   bottom?: React.ReactNode;
   /**
    * Передаётся при использовании `bottom`.
@@ -97,7 +88,6 @@ export const FormItem: React.FC<FormItemProps> & {
   htmlFor,
   bottomId,
   noPadding,
-  topNode,
   required = false,
   ...restProps
 }: FormItemProps) => {
@@ -106,14 +96,14 @@ export const FormItem: React.FC<FormItemProps> & {
 
   const wrappedChildren = (
     <React.Fragment>
-      {hasReactNode(topNode) ? (
-        topNode
-      ) : hasReactNode(top) ? (
+      {isPrimitiveReactNode(top) ? (
         <FormItemTop>
           <FormItemTopLabel htmlFor={htmlFor} Component={topComponentProp} id={topId}>
             {top}
           </FormItemTopLabel>
         </FormItemTop>
+      ) : hasReactNode(top) ? (
+        top
       ) : null}
       {children}
       {hasReactNode(bottom) && (
@@ -128,7 +118,7 @@ export const FormItem: React.FC<FormItemProps> & {
     </React.Fragment>
   );
 
-  const context = useObjectMemo({ required, topMultiline });
+  const context = React.useMemo(() => ({ required, topMultiline }), [required, topMultiline]);
 
   return (
     <RootComponent

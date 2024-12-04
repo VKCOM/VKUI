@@ -3,7 +3,7 @@
 ```jsx
 const Default = () => {
   return (
-    <Group header={<Header mode="secondary">По умолчанию</Header>}>
+    <Group header={<Header size="s">По умолчанию</Header>}>
       <SimpleCell
         before={<Image src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн" />}
         description="Ролевая"
@@ -19,9 +19,7 @@ const Responsive = () => {
   return (
     <Group
       header={
-        <Header mode="secondary">
-          Изображения без фиксированных размеров с сохранением пропорций
-        </Header>
+        <Header size="s">Изображения без фиксированных размеров с сохранением пропорций</Header>
       }
     >
       <Flex margin="auto" direction="column" gap="m">
@@ -47,7 +45,7 @@ const OthersFeatures = () => {
   const [overlay, setOverlay] = React.useState();
 
   return (
-    <Group header={<Header mode="secondary">Другие возможности</Header>}>
+    <Group header={<Header size="s">Другие возможности</Header>}>
       <ImagePropsForm
         onBorderRadiusChange={setBorderRadius}
         onBadgeChange={setBadge}
@@ -191,7 +189,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
             { label: 'l', value: 'l' },
           ]}
           value={borderRadius}
-          onChange={(e) => setBorderRadius(e.target.value)}
+          onChange={(_, newValue) => setBorderRadius(newValue)}
         />
       </FormItem>
 
@@ -210,7 +208,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
             ]}
             value={badgeBackground}
             disabled={!badge}
-            onChange={(e) => setBadgeBackground(e.target.value)}
+            onChange={(_, newValue) => setBadgeBackground(newValue)}
           />
         </FormItem>
       </FormLayoutGroup>
@@ -233,7 +231,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
             ]}
             value={overlayTheme}
             disabled={!overlay}
-            onChange={(e) => setOverlayTheme(e.target.value)}
+            onChange={(_, newValue) => setOverlayTheme(newValue)}
           />
         </FormItem>
         <FormItem top="Image.Overlay[visibility]">
@@ -245,7 +243,7 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
             ]}
             value={overlayVisibility}
             disabled={!overlay}
-            onChange={(e) => setOverlayVisibility(e.target.value)}
+            onChange={(_, newValue) => setOverlayVisibility(newValue)}
           />
         </FormItem>
       </FormLayoutGroup>

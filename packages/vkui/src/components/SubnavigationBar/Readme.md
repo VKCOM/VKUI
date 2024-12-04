@@ -134,114 +134,113 @@ const SubnavigationBarExample = () => {
   );
 
   return (
-    <SplitLayout modal={modal}>
-      <SplitCol>
-        <View activePanel={activePanel}>
-          <Panel id="example">
-            <PanelHeader>SubnavigationBar</PanelHeader>
-            <Group>
-              <SubnavigationBar>
-                <SubnavigationButton
-                  before={<Icon24Filter />}
-                  selected={filtersCount > 0}
-                  expandable
-                  after={
-                    filtersCount > 0 && (
-                      <Counter size="s">
-                        <VisuallyHidden>Применено: </VisuallyHidden>
-                        {filtersCount}
-                      </Counter>
-                    )
-                  }
-                  onClick={openModal}
-                >
-                  Фильтры
-                </SubnavigationButton>
+    <React.Fragment>
+      <View activePanel={activePanel}>
+        <Panel id="example">
+          <PanelHeader>SubnavigationBar</PanelHeader>
+          <Group>
+            <SubnavigationBar>
+              <SubnavigationButton
+                before={<Icon24Filter />}
+                selected={filtersCount > 0}
+                chevron
+                after={
+                  filtersCount > 0 && (
+                    <Counter size="s">
+                      <VisuallyHidden>Применено: </VisuallyHidden>
+                      {filtersCount}
+                    </Counter>
+                  )
+                }
+                onClick={openModal}
+              >
+                Фильтры
+              </SubnavigationButton>
 
-                <SubnavigationButton
-                  selected={sizeSelected}
-                  onClick={() => setSizeSelected(!sizeSelected)}
-                >
-                  Мой размер
-                </SubnavigationButton>
+              <SubnavigationButton
+                selected={sizeSelected}
+                onClick={() => setSizeSelected(!sizeSelected)}
+              >
+                Мой размер
+              </SubnavigationButton>
 
-                <SubnavigationButton
-                  selected={inStockSelected}
-                  onClick={() => setInStockSelected(!inStockSelected)}
-                >
-                  В наличии
-                </SubnavigationButton>
+              <SubnavigationButton
+                selected={inStockSelected}
+                onClick={() => setInStockSelected(!inStockSelected)}
+              >
+                В наличии
+              </SubnavigationButton>
 
-                <SubnavigationButton
-                  selected={highRatingSelected}
-                  onClick={() => setHighRatingSelected(!highRatingSelected)}
-                >
-                  Высокий рейтинг
-                </SubnavigationButton>
+              <SubnavigationButton
+                selected={highRatingSelected}
+                onClick={() => setHighRatingSelected(!highRatingSelected)}
+              >
+                Высокий рейтинг
+              </SubnavigationButton>
 
-                <SubnavigationButton
-                  before={<Icon24FavoriteOutline />}
-                  selected={faveSelected}
-                  onClick={() => setFaveSelected(!faveSelected)}
-                >
-                  Избранное
-                </SubnavigationButton>
-              </SubnavigationBar>
-            </Group>
+              <SubnavigationButton
+                before={<Icon24FavoriteOutline />}
+                selected={faveSelected}
+                onClick={() => setFaveSelected(!faveSelected)}
+              >
+                Избранное
+              </SubnavigationButton>
+            </SubnavigationBar>
+          </Group>
 
-            <Group>
-              <SubnavigationBar mode="fixed">
-                <SubnavigationButton
-                  before={<Icon24ScanViewfinderOutline />}
-                  size="l"
-                  textLevel={isVKCOM ? '1' : '3'}
-                  onClick={() => setActivePanel('add_friend')}
-                >
-                  Сканировать QR
-                </SubnavigationButton>
+          <Group>
+            <SubnavigationBar fixed>
+              <SubnavigationButton
+                before={<Icon24ScanViewfinderOutline />}
+                size="l"
+                textLevel={isVKCOM ? '1' : '3'}
+                onClick={() => setActivePanel('add_friend')}
+              >
+                Сканировать QR
+              </SubnavigationButton>
 
-                <SubnavigationButton
-                  before={<Icon24UserAddOutline />}
-                  size="l"
-                  textLevel={isVKCOM ? '1' : '3'}
-                  onClick={() => setActivePanel('add_friend')}
-                >
-                  Добавить друга
-                </SubnavigationButton>
-              </SubnavigationBar>
+              <SubnavigationButton
+                before={<Icon24UserAddOutline />}
+                size="l"
+                textLevel={isVKCOM ? '1' : '3'}
+                onClick={() => setActivePanel('add_friend')}
+              >
+                Добавить друга
+              </SubnavigationButton>
+            </SubnavigationBar>
 
-              <Header>Важные</Header>
-              <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>
-                Иван Барышев
-              </SimpleCell>
-              <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>
-                Михаил Лихачёв
-              </SimpleCell>
-              <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>
-                Artur Stambultsian
-              </SimpleCell>
-            </Group>
-          </Panel>
-          <Panel id="add_friend">
-            <PanelHeader before={<PanelHeaderBack onClick={() => setActivePanel('example')} />}>
-              Добавить друга
-            </PanelHeader>
+            <Header>Важные</Header>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>
+              Иван Барышев
+            </SimpleCell>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>
+              Михаил Лихачёв
+            </SimpleCell>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>
+              Artur Stambultsian
+            </SimpleCell>
+          </Group>
+        </Panel>
+        <Panel id="add_friend">
+          <PanelHeader before={<PanelHeaderBack onClick={() => setActivePanel('example')} />}>
+            Добавить друга
+          </PanelHeader>
 
-            <Group>
-              <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>
-                Иван Барышев
-              </SimpleCell>
-              <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>
-                Михаил Лихачёв
-              </SimpleCell>
-              <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>
-                Artur Stambultsian
-              </SimpleCell>
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+          <Group>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>
+              Иван Барышев
+            </SimpleCell>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>
+              Михаил Лихачёв
+            </SimpleCell>
+            <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>
+              Artur Stambultsian
+            </SimpleCell>
+          </Group>
+        </Panel>
+      </View>
+      {modal}
+    </React.Fragment>
   );
 };
 

@@ -143,30 +143,29 @@ const App = () => {
   }, [validateUserName, goBack]);
 
   return (
-    <SplitLayout popout={popoutWithRestriction}>
-      <SplitCol>
-        <View
-          history={history}
-          activePanel={activePanel}
-          onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
-          onSwipeBack={goBack}
-        >
-          <Panel id="main">
-            <MainPanelContent onProfileClick={handleProfileClick} />
-          </Panel>
-          <Panel id="profile">
-            <ProfilePanelContent onSettingsClick={handleSettingsClick} onBack={goBack} />
-          </Panel>
-          <Panel id="settings">
-            <SettingsPanelContent
-              name={userName}
-              onChangeName={setUserName}
-              onBack={handleBackForPreventIfNeeded}
-            />
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+    <React.Fragment>
+      <View
+        history={history}
+        activePanel={activePanel}
+        onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
+        onSwipeBack={goBack}
+      >
+        <Panel id="main">
+          <MainPanelContent onProfileClick={handleProfileClick} />
+        </Panel>
+        <Panel id="profile">
+          <ProfilePanelContent onSettingsClick={handleSettingsClick} onBack={goBack} />
+        </Panel>
+        <Panel id="settings">
+          <SettingsPanelContent
+            name={userName}
+            onChangeName={setUserName}
+            onBack={handleBackForPreventIfNeeded}
+          />
+        </Panel>
+      </View>
+      {popoutWithRestriction}
+    </React.Fragment>
   );
 };
 
@@ -212,7 +211,7 @@ const ProfilePanelContent = ({ onSettingsClick, onBack }) => {
       >
         <HorizontalScroll>
           {getRandomUsers(15).map((user) => (
-            <HorizontalCell key={user.id} size="s" header={user.first_name}>
+            <HorizontalCell key={user.id} size="s" title={user.first_name}>
               <Avatar size={56} src={user.photo_100} />
             </HorizontalCell>
           ))}

@@ -45,7 +45,7 @@ export interface SimpleCellOwnProps extends HasComponent {
   /**
    * Дополнительная строка текста над `children`.
    */
-  subhead?: React.ReactNode;
+  overTitle?: React.ReactNode;
   /**
    * Дополнительная строка текста под `children`.
    */
@@ -68,7 +68,7 @@ export interface SimpleCellOwnProps extends HasComponent {
    * - `auto` - добавляет шеврон справа только для платформы `ios`;
    * - `always` - всегда показывает шеврон.
    */
-  expandable?: 'auto' | 'always';
+  chevron?: 'auto' | 'always';
   /**
    * Размер chevron
    */
@@ -93,18 +93,17 @@ export const SimpleCell = ({
   indicator,
   children,
   after,
-  expandable,
+  chevron,
   multiline,
-  subhead,
+  overTitle,
   subtitle,
   extraSubtitle,
-  className,
   chevronSize = 'm',
   ...restProps
 }: SimpleCellProps): React.ReactNode => {
   const platform = usePlatform();
 
-  const hasChevron = expandable === 'always' || (expandable === 'auto' && platform === 'ios');
+  const hasChevron = chevron === 'always' || (chevron === 'auto' && platform === 'ios');
 
   const hasAfter = hasReactNode(after) || hasChevron;
   const { sizeY = 'none' } = useAdaptivity();
@@ -112,21 +111,20 @@ export const SimpleCell = ({
   return (
     <Tappable
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         restProps.disabled && styles.disabled,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         multiline && styles.mult,
-        className,
       )}
     >
       <div className={classNames(styles.before, platform === 'ios' && styles.beforeIos)}>
         {before}
       </div>
       <div className={styles.middle}>
-        {subhead && (
-          <Subhead Component="span" className={classNames(styles.text, styles.subhead)}>
-            {subhead}
+        {overTitle && (
+          <Subhead Component="span" className={classNames(styles.text, styles.overTitle)}>
+            {overTitle}
           </Subhead>
         )}
         <div className={styles.content}>

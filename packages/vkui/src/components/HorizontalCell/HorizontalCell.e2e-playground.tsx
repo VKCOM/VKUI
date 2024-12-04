@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import {} from '../../testing/mock';
-import { Avatar } from '../Avatar/Avatar';
 import { Image } from '../Image/Image';
 import { HorizontalCell, type HorizontalCellProps } from './HorizontalCell';
 
@@ -14,43 +12,45 @@ const containerStyle: React.CSSProperties = {
   padding: 8,
 };
 
+const mapSizes = {
+  s: 56,
+  m: 88,
+  l: 128,
+  xl: 220,
+  auto: 250,
+};
+
 export const HorizontalCellPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
       propSets={[
         {
+          size: ['s', 'm', 'l', 'xl', 'auto'],
           title: ['Title'],
           subtitle: ['Just subtitle'],
           extraSubtitle: ['Some extra subtitle'],
         },
         {
+          size: ['s', 'm'],
           title: ['Very long title example'],
+        },
+        {
+          size: [80],
+          textAlign: ['start', 'center', 'end'],
+          title: ['Title'],
+          subtitle: ['Just subtitle'],
+        },
+        {
+          size: ['s'],
+          noPadding: [true],
         },
       ]}
     >
-      {({ title, subtitle, extraSubtitle, ...restProps }: HorizontalCellProps) => (
+      {({ size, ...restProps }: HorizontalCellProps) => (
         <div style={containerStyle}>
-          <HorizontalCell {...restProps} title={title} size="s">
-            <Avatar size={56} />
-          </HorizontalCell>
-          <HorizontalCell
-            {...restProps}
-            title={title}
-            subtitle={subtitle}
-            extraSubtitle={extraSubtitle}
-            size="m"
-          >
-            <Image size={88} borderRadius="l" />
-          </HorizontalCell>
-          <HorizontalCell
-            {...restProps}
-            title={title}
-            subtitle={subtitle}
-            extraSubtitle={extraSubtitle}
-            size="l"
-          >
-            <Image size={128} borderRadius="l" />
+          <HorizontalCell size={size} {...restProps}>
+            <Image size={typeof size === 'string' ? mapSizes[size] : 56} borderRadius="l" />
           </HorizontalCell>
         </div>
       )}

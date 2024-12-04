@@ -3,13 +3,13 @@
 import * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
 import { useAutoDetectColorScheme } from '../../hooks/useAutoDetectColorScheme';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { TokensClassProvider } from '../../lib/tokens';
 import { excludeKeysWithUndefined } from '../../lib/utils';
 import {
   ConfigProviderContext,
   type ConfigProviderContextInterface,
   useConfigProvider,
+  useConfigProviderContextMemo,
 } from './ConfigProviderContext';
 
 export interface ConfigProviderProps extends Partial<ConfigProviderContextInterface> {
@@ -23,38 +23,22 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode =
   const props = excludeKeysWithUndefined(propsRaw);
   const parentConfig = useConfigProvider();
 
-  const {
-    children,
-    hasCustomPanelHeaderAfter,
-    customPanelHeaderAfterMinWidth,
-    isWebView,
-    transitionMotionEnabled,
-    platform,
-    locale,
-    colorScheme: colorSchemeProp,
-    tokensClassNames,
-  } = {
+  const mergeProps = {
     ...parentConfig,
     ...props,
   };
 
-  const colorScheme = useAutoDetectColorScheme(colorSchemeProp);
+  const colorScheme = useAutoDetectColorScheme(mergeProps.colorScheme);
 
-  const configContext = useObjectMemo({
-    hasCustomPanelHeaderAfter,
-    customPanelHeaderAfterMinWidth,
-    isWebView,
-    transitionMotionEnabled,
-    platform,
-    locale,
-    tokensClassNames,
+  const configContext = useConfigProviderContextMemo({
+    ...mergeProps,
     colorScheme,
   });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
       <IconAppearanceProvider value={colorScheme}>
-        <TokensClassProvider>{children}</TokensClassProvider>
+        <TokensClassProvider>{mergeProps.children}</TokensClassProvider>
       </IconAppearanceProvider>
     </ConfigProviderContext.Provider>
   );

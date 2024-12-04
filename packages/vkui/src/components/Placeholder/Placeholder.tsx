@@ -6,7 +6,8 @@ import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
 import styles from './Placeholder.module.css';
 
-export interface PlaceholderContainerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface PlaceholderContainerProps
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
   /**
    * Растягивает плейсхолдер на весь экран, но в таком случае на экране должен быть только плейсхолдер
    */
@@ -38,19 +39,19 @@ const PlaceholderIcon = (props: PlaceholderIconProps): React.ReactNode => (
   <RootComponent baseClassName={styles.icon} {...props} />
 );
 
-export type PlaceholderHeaderProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
+export type PlaceholderTitleProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
 
-const PlaceholderHeader = ({
-  className,
-  ...restProps
-}: PlaceholderHeaderProps): React.ReactNode => (
-  <Title level="2" weight="2" className={classNames(className, styles.header)} {...restProps} />
+const PlaceholderTitle = ({ className, ...restProps }: PlaceholderTitleProps): React.ReactNode => (
+  <Title level="2" weight="2" className={classNames(className, styles.title)} {...restProps} />
 );
 
-export type PlaceholderTextProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
+export type PlaceholderDescriptionProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
 
-const PlaceholderText = ({ className, ...restProps }: PlaceholderTextProps): React.ReactNode => (
-  <Headline weight="3" className={classNames(className, styles.text)} {...restProps} />
+const PlaceholderDescription = ({
+  className,
+  ...restProps
+}: PlaceholderDescriptionProps): React.ReactNode => (
+  <Headline weight="3" className={classNames(className, styles.description)} {...restProps} />
 );
 
 export type PlaceholderActionsProps = HTMLAttributesWithRootRef<HTMLDivElement>;
@@ -67,7 +68,7 @@ export interface PlaceholderProps extends PlaceholderContainerProps {
   /**
    * Заголовок плейсхолдера
    */
-  header?: React.ReactNode;
+  title?: React.ReactNode;
   /**
    * Кнопка действия
    */
@@ -80,20 +81,20 @@ export interface PlaceholderProps extends PlaceholderContainerProps {
 export const Placeholder: React.FC<PlaceholderProps> & {
   Container: typeof PlaceholderContainer;
   Icon: typeof PlaceholderIcon;
-  Header: typeof PlaceholderHeader;
-  Text: typeof PlaceholderText;
+  Title: typeof PlaceholderTitle;
+  Description: typeof PlaceholderDescription;
   Actions: typeof PlaceholderActions;
-} = ({ icon, header, children, action, noPadding = false, ...restProps }: PlaceholderProps) => (
+} = ({ icon, title, children, action, noPadding = false, ...restProps }: PlaceholderProps) => (
   <PlaceholderContainer noPadding={noPadding} {...restProps}>
     {hasReactNode(icon) && <PlaceholderIcon>{icon}</PlaceholderIcon>}
-    {hasReactNode(header) && <PlaceholderHeader>{header}</PlaceholderHeader>}
-    {hasReactNode(children) && <PlaceholderText>{children}</PlaceholderText>}
+    {hasReactNode(title) && <PlaceholderTitle>{title}</PlaceholderTitle>}
+    {hasReactNode(children) && <PlaceholderDescription>{children}</PlaceholderDescription>}
     {hasReactNode(action) && <PlaceholderActions>{action}</PlaceholderActions>}
   </PlaceholderContainer>
 );
 
 Placeholder.Container = PlaceholderContainer;
 Placeholder.Icon = PlaceholderIcon;
-Placeholder.Header = PlaceholderHeader;
-Placeholder.Text = PlaceholderText;
+Placeholder.Title = PlaceholderTitle;
+Placeholder.Description = PlaceholderDescription;
 Placeholder.Actions = PlaceholderActions;

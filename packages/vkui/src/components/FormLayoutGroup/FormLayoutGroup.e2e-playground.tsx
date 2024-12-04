@@ -4,7 +4,7 @@ import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ChipsInput } from '../ChipsInput/ChipsInput';
 import { ChipsSelect } from '../ChipsSelect/ChipsSelect';
 import { CustomSelect } from '../CustomSelect/CustomSelect';
-import { DatePicker } from '../DatePicker/DatePicker';
+import { DateInput } from '../DateInput/DateInput';
 import { FormItem } from '../FormItem/FormItem';
 import { Input } from '../Input/Input';
 import { NativeSelect } from '../NativeSelect/NativeSelect';
@@ -75,7 +75,10 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
               </FormItem>
             </React.Fragment>,
             <React.Fragment key="">
-              <FormItem htmlFor="tooLongTop" top="Сверху очень длинная надпись аж распирает">
+              <FormItem
+                htmlFor="tooLongTop"
+                top="Сверху очень длинная надпись аж распирает. Такая длинная, что не должна поместиться, но и не должна вытеснить следующий FormItem из группы"
+              >
                 <Input id="tooLongTop" />
               </FormItem>
               <FormItem htmlFor="theSameLongTop" top="И у меня тоже не короче твоей">
@@ -193,7 +196,7 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
                 <Input id="text" defaultValue="Текст" />
               </FormItem>
               <FormItem>
-                <DatePicker />
+                <DateInput />
               </FormItem>
             </AdaptivityProvider>,
           ],

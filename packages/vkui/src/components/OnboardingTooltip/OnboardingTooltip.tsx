@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { createPortal } from '../../lib/createPortal';
@@ -137,17 +138,13 @@ export const OnboardingTooltip = ({
       floatingDataY,
     );
 
-    if (styleProp) {
-      Object.assign(floatingStyle, styleProp);
-    }
-
     tooltip = createPortal(
       <>
         <TooltipBase
           {...restProps}
           id={tooltipId}
           getRootRef={tooltipRef}
-          style={floatingStyle}
+          style={mergeStyle(floatingStyle, styleProp)}
           maxWidth={maxWidth}
           arrowProps={
             disableArrow

@@ -105,6 +105,7 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable) .content,
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--removable) .content {
   flex-wrap: wrap;
   align-items: flex-start;
@@ -116,6 +117,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--withTop) :global(.vkuiInternalFormItem__removable) ~ .offset,
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--removable) :global(.vkuiInternalFormItem--withTop) ~ .offset {
   order: -1;
   display: block;
@@ -123,7 +125,7 @@
   block-size: calc(2px + var(--vkui--font_subhead--line_height--regular) + 8px);
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--sizeY-compact):global(.vkuiInternalFormItem--withTop)
   :global(.vkuiInternalFormItem__removable)
   ~ .offset,
@@ -132,9 +134,10 @@
   ~ .offset {
   block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 @media (--sizeY-compact) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalFormItem--sizeY-none):global(.vkuiInternalFormItem--withTop)
     :global(.vkuiInternalFormItem__removable)
     ~ .offset,
@@ -143,4 +146,5 @@
     ~ .offset {
     block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
   }
+  /* stylelint-enable selector-pseudo-class-disallowed-list */
 }

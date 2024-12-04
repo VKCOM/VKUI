@@ -13,7 +13,11 @@ export type CalendarDayElementProps = Omit<
   'onChange' | 'size' | 'disabled' | 'selected'
 >;
 
-export interface CalendarDayProps extends CalendarDayElementProps {
+export type CalendarDayTestsProps = {
+  testId?: string | ((day: Date) => string);
+};
+
+export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTestsProps {
   day: Date;
   today?: boolean;
   selected?: boolean;
@@ -54,9 +58,9 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     hintedSelectionEnd,
     sameMonth,
     size,
-    className,
     children,
     renderDayContent,
+    testId,
     ...restProps
   }: CalendarDayProps) => {
     const { locale } = useConfigProvider();
@@ -97,7 +101,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
 
     return (
       <Tappable
-        className={classNames(styles.host, size === 's' && styles.sizeS, className)}
+        baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}
         hoverMode={styles.hostHovered}
         activeMode={styles.hostActivated}
         hasActive={false}
@@ -108,6 +112,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
         focusVisibleMode={active ? 'outside' : 'inside'}
         onPointerEnter={handleEnter}
         onPointerLeave={handleLeave}
+        data-testid={typeof testId === 'string' ? testId : testId?.(day)}
         {...restProps}
       >
         <div

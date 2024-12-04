@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import type { ColorSchemeType } from '../../lib/colorScheme';
 import { platform, type PlatformType } from '../../lib/platform';
@@ -86,3 +88,39 @@ export const ConfigProviderContext: React.Context<ConfigProviderContextInterface
 
 export const useConfigProvider = (): ConfigProviderContextInterface =>
   React.useContext(ConfigProviderContext);
+
+export function useConfigProviderContextMemo(config: ConfigProviderContextInterface) {
+  const {
+    isWebView,
+    hasCustomPanelHeaderAfter,
+    customPanelHeaderAfterMinWidth,
+    colorScheme,
+    transitionMotionEnabled,
+    platform,
+    tokensClassNames,
+    locale,
+  } = config;
+
+  return React.useMemo<ConfigProviderContextInterface>(
+    () => ({
+      isWebView,
+      hasCustomPanelHeaderAfter,
+      customPanelHeaderAfterMinWidth,
+      colorScheme,
+      transitionMotionEnabled,
+      platform,
+      tokensClassNames,
+      locale,
+    }),
+    [
+      isWebView,
+      hasCustomPanelHeaderAfter,
+      customPanelHeaderAfterMinWidth,
+      colorScheme,
+      transitionMotionEnabled,
+      platform,
+      tokensClassNames,
+      locale,
+    ],
+  );
+}

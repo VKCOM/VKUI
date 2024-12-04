@@ -112,7 +112,6 @@ export const Popper = ({
   getRootRef,
   children,
   usePortal = true,
-  style: styleProp,
   onPlacementChange,
   ...restProps
 }: PopperProps): React.ReactNode => {
@@ -165,16 +164,13 @@ export const Popper = ({
       {...restProps}
       baseClassName={styles.host}
       getRootRef={handleRootRef}
-      style={{
-        ...styleProp,
-        ...convertFloatingDataToReactCSSProperties(
-          floatingPositionStrategy,
-          floatingDataX,
-          floatingDataY,
-          sameWidth ? null : undefined,
-          middlewareData,
-        ),
-      }}
+      baseStyle={convertFloatingDataToReactCSSProperties(
+        floatingPositionStrategy,
+        floatingDataX,
+        floatingDataY,
+        sameWidth ? null : undefined,
+        middlewareData,
+      )}
     >
       {arrow && (
         <FloatingArrow

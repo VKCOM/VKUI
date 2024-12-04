@@ -71,7 +71,7 @@ const Example = () => {
         <FormItem top="appearance">
           <Select
             value={appearance}
-            onChange={(e) => setAppearance(e.target.value)}
+            onChange={(_, newValue) => setAppearance(newValue)}
             options={[
               { label: 'accent', value: 'accent' },
               { label: 'positive', value: 'positive' },
@@ -85,7 +85,7 @@ const Example = () => {
         <FormItem top="size">
           <Select
             value={size}
-            onChange={(e) => setSize(e.target.value)}
+            onChange={(_, newValue) => setSize(newValue)}
             options={[
               { label: 's', value: 's' },
               { label: 'm', value: 'm' },
@@ -96,7 +96,7 @@ const Example = () => {
         <FormItem top="align">
           <Select
             value={align}
-            onChange={(e) => setAlign(e.target.value)}
+            onChange={(_, newValue) => setAlign(newValue)}
             options={[
               { label: 'left', value: 'left' },
               { label: 'center', value: 'center' },
@@ -107,7 +107,7 @@ const Example = () => {
         <FormItem top="sizeY">
           <Select
             value={sizeY}
-            onChange={(e) => setSizeY(e.target.value)}
+            onChange={(_, newValue) => setSizeY(newValue)}
             options={[
               { label: 'compact', value: 'compact' },
               {

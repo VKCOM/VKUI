@@ -66,7 +66,7 @@ const Example = () => {
             <Select
               value={String(valueStep)}
               options={options()}
-              onChange={(e) => setValueStep(e.target.value)}
+              onChange={(_, newValue) => setValueStep(newValue)}
             />
           </FormItem>
           <FormItem top={<span id="uncontrolled">Uncontrolled</span>}>

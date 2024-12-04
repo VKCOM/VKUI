@@ -2,10 +2,13 @@ import { Icon24AddOutline, Icon28AddOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
-import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
-import { PanelHeaderClose } from '../PanelHeaderClose/PanelHeaderClose';
+import { PanelHeaderBack, type PanelHeaderBackProps } from '../PanelHeaderBack/PanelHeaderBack';
+import { PanelHeaderClose, type PanelHeaderCloseProps } from '../PanelHeaderClose/PanelHeaderClose';
 import { PanelHeaderEdit, type PanelHeaderEditProps } from '../PanelHeaderEdit/PanelHeaderEdit';
-import { PanelHeaderSubmit } from '../PanelHeaderSubmit/PanelHeaderSubmit';
+import {
+  PanelHeaderSubmit,
+  type PanelHeaderSubmitProps,
+} from '../PanelHeaderSubmit/PanelHeaderSubmit';
 import { PanelHeaderButton, type PanelHeaderButtonProps } from './PanelHeaderButton';
 
 export const PanelHeaderButtonPlayground = (props: ComponentPlaygroundProps) => {
@@ -21,7 +24,7 @@ export const PanelHeaderButtonPlayground = (props: ComponentPlaygroundProps) => 
         {
           children: [<Icon28AddOutline key="icon-28" />, <Icon24AddOutline key="icon-24" />],
           label: [
-            <Counter size="s" mode="prominent" key="counter">
+            <Counter size="s" mode="primary" appearance="accent-red" key="counter">
               33
             </Counter>,
             <Badge mode="prominent" key="badge" />,
@@ -44,7 +47,7 @@ export const PanelHeaderClosePlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: PanelHeaderButtonProps) => <PanelHeaderClose {...props} />}
+      {(props: PanelHeaderCloseProps) => <PanelHeaderClose {...props} />}
     </ComponentPlayground>
   );
 };
@@ -58,9 +61,14 @@ export const PanelHeaderBackPlayground = (props: ComponentPlaygroundProps) => {
           primary: [true, false],
           label: [undefined, 'label'],
         },
+        {
+          hideLabelOnIOS: [true, false],
+          hideLabelOnVKCom: [true, false],
+          label: ['label'],
+        },
       ]}
     >
-      {(props: PanelHeaderButtonProps) => <PanelHeaderBack {...props} />}
+      {(props: PanelHeaderBackProps) => <PanelHeaderBack {...props} />}
     </ComponentPlayground>
   );
 };
@@ -91,11 +99,11 @@ export const PanelHeaderSubmitPlayground = (props: ComponentPlaygroundProps) => 
       {...props}
       propSets={[
         {
-          children: [undefined, 'Children'],
+          label: [undefined, 'Label'],
         },
       ]}
     >
-      {(props: PanelHeaderButtonProps) => <PanelHeaderSubmit {...props} />}
+      {(props: PanelHeaderSubmitProps) => <PanelHeaderSubmit {...props} />}
     </ComponentPlayground>
   );
 };

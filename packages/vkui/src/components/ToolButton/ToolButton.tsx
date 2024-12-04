@@ -54,7 +54,6 @@ export const ToolButton = ({
   mode = 'primary',
   appearance = 'accent',
   direction = 'row',
-  className,
   children,
   IconCompact,
   IconRegular,
@@ -70,8 +69,7 @@ export const ToolButton = ({
       activeMode={styles.active}
       Component={restProps.href ? 'a' : 'button'}
       focusVisibleMode="outside"
-      className={classNames(
-        className,
+      baseClassName={classNames(
         styles.host,
         rounded && getRoundedClassName(direction, hasChildren),
         hasChildren && direction === 'row' && styles.withFakeEndIcon,

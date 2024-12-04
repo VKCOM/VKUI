@@ -46,7 +46,7 @@ export const CarouselBase = ({
   align = 'left',
   showArrows,
   getRef,
-  arrowSize = 'l',
+  arrowSize = 'm',
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -70,6 +70,7 @@ export const CarouselBase = ({
   const isCenterWithCustomWidth = slideWidth === 'custom' && align === 'center';
 
   const transformCssStyles = (shiftX: number, animation = false) => {
+    shiftX = Math.round(shiftX);
     slidesManager.current.loopPoints.forEach((loopPoint) => {
       const { target, index } = loopPoint;
       const slide = slidesStore.current[index];

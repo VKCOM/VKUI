@@ -1,19 +1,36 @@
 'use client';
 
+import { type ChangeEvent } from 'react';
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { Button } from '../Button/Button';
-import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { Button, type ButtonProps } from '../Button/Button';
+import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
 import styles from './CalendarTime.module.css';
 
-export interface CalendarTimeProps {
-  value: Date;
+export type CalendarTimeTestsProps = {
+  hoursTestId?: string;
+  minutesTestId?: string;
+  doneButtonTestId?: string;
+};
+
+export type CalendarDoneButtonProps = {
+  /**
+   * Кастомное отображение кнопки Done.
+   */
+  DoneButton?: React.ComponentType<ButtonProps>;
   doneButtonText?: string;
+  doneButtonShow?: boolean;
+  doneButtonDisabled?: boolean;
+  onDoneButtonClick?: () => void;
+};
+
+export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneButtonProps {
+  value: Date;
   changeHoursLabel?: string;
   changeMinutesLabel?: string;
   onChange?: (value: Date) => void;
-  onClose?: () => void;
   isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
 }
 
@@ -35,12 +52,18 @@ for (let i = 0; i < 60; i += 1) {
 
 export const CalendarTime = ({
   value,
-  doneButtonText = 'Готово',
   onChange,
-  onClose,
+  onDoneButtonClick,
   changeHoursLabel,
   changeMinutesLabel,
   isDayDisabled,
+  doneButtonText = 'Готово',
+  doneButtonDisabled = false,
+  doneButtonShow = true,
+  minutesTestId,
+  hoursTestId,
+  doneButtonTestId,
+  DoneButton,
 }: CalendarTimeProps): React.ReactNode => {
   const localHours = isDayDisabled
     ? hours.map((hour) => {
@@ -55,18 +78,33 @@ export const CalendarTime = ({
     : minutes;
 
   const onHoursChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) =>
-      onChange?.(setHours(value, Number(event.target.value))),
+    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
+      onChange?.(setHours(value, Number(newValue))),
     [onChange, value],
   );
   const onMinutesChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) =>
-      onChange?.(setMinutes(value, Number(event.target.value))),
+    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
+      onChange?.(setMinutes(value, Number(newValue))),
     [onChange, value],
   );
 
+  const renderDoneButton = () => {
+    const ButtonComponent = DoneButton ?? Button;
+    return (
+      <ButtonComponent
+        mode="secondary"
+        onClick={onDoneButtonClick}
+        size="l"
+        disabled={doneButtonDisabled}
+        data-testid={doneButtonTestId}
+      >
+        {doneButtonText}
+      </ButtonComponent>
+    );
+  };
+
   return (
-    <div className={styles.host}>
+    <div className={classNames(styles.host, !doneButtonShow && styles.host__withoutDone)}>
       <div className={styles.picker}>
         <AdaptivityProvider sizeY="compact">
           <CustomSelect
@@ -75,6 +113,7 @@ export const CalendarTime = ({
             onChange={onHoursChange}
             forceDropdownPortal={false}
             aria-label={changeHoursLabel}
+            data-testid={hoursTestId}
           />
         </AdaptivityProvider>
       </div>
@@ -87,16 +126,15 @@ export const CalendarTime = ({
             onChange={onMinutesChange}
             forceDropdownPortal={false}
             aria-label={changeMinutesLabel}
+            data-testid={minutesTestId}
           />
         </AdaptivityProvider>
       </div>
-      <div className={styles.button}>
-        <AdaptivityProvider sizeY="compact">
-          <Button mode="secondary" onClick={onClose} size="l">
-            {doneButtonText}
-          </Button>
-        </AdaptivityProvider>
-      </div>
+      {doneButtonShow && (
+        <div className={styles.button}>
+          <AdaptivityProvider sizeY="compact">{renderDoneButton()}</AdaptivityProvider>
+        </div>
+      )}
     </div>
   );
 };

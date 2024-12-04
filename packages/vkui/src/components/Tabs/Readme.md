@@ -173,7 +173,7 @@ const Scrollable = () => {
           <TabsItem
             before={mode === 'default' ? <Icon24UsersOutline /> : <Icon20UsersOutline />}
             status={
-              <Counter mode="prominent" size="s">
+              <Counter mode="primary" appearance="accent-red" size="s">
                 3
               </Counter>
             }
@@ -213,7 +213,7 @@ const Scrollable = () => {
               value: 'secondary',
             },
           ]}
-          onChange={(event) => setMode(event.target.value)}
+          onChange={(_, newValue) => setMode(newValue)}
         />
       </FormItem>
       <FormItem top="layoutFillMode">
@@ -233,7 +233,7 @@ const Scrollable = () => {
               value: 'shrinked',
             },
           ]}
-          onChange={(event) => setLayoutFillMode(event.target.value)}
+          onChange={(_, newValue) => setLayoutFillMode(newValue)}
         />
       </FormItem>
       <Checkbox onChange={() => setDisabled((prev) => !prev)}>disabled</Checkbox>

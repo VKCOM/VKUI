@@ -18,8 +18,9 @@
   border-radius: var(--vkui--size_border_radius_rounded--regular);
 }
 
-.loading {
-  cursor: progress;
+.loading:not(.disabled) {
+  /* stylelint-disable-next-line declaration-no-important -- перебиваем disabled из Clickable */
+  cursor: progress !important;
 }
 
 .singleIcon {
@@ -59,26 +60,20 @@
   text-align: start;
 }
 
-.alignCenter {
-}
-
 .alignRight .in {
   justify-content: flex-end;
   text-align: end;
 }
 
-.host[disabled] {
+.disabled {
   opacity: var(--vkui--opacity_disable);
 }
 
-.modePrimary[disabled]:not(.appearanceOverlay):not(.appearanceNegative):not(.appearancePositive),
-.modeSecondary[disabled]:not(.appearanceOverlay),
-.modeTertiary[disabled]:not(.appearanceOverlay),
-.modeOutline[disabled]:not(.appearanceOverlay) {
+.modePrimary.disabled:not(.appearanceOverlay):not(.appearanceNegative):not(.appearancePositive),
+.modeSecondary.disabled:not(.appearanceOverlay),
+.modeTertiary.disabled:not(.appearanceOverlay),
+.modeOutline.disabled:not(.appearanceOverlay) {
   opacity: 0.64;
-}
-
-.withIcon {
 }
 
 .content {
@@ -189,7 +184,6 @@
 }
 
 .spinner {
-  color: currentColor;
   position: absolute;
   inset: 0;
 }
@@ -237,15 +231,15 @@
 }
 
 .modePrimary.appearanceNeutral {
-  background-color: var(--vkui--color_background_secondary);
+  background-color: var(--vkui--color_background_content_inverse);
 }
 
 .modePrimary.appearanceNeutral.hover {
-  background-color: var(--vkui--color_background_secondary--hover);
+  background-color: var(--vkui--color_background_content_inverse--hover);
 }
 
 .modePrimary.appearanceNeutral.active {
-  background-color: var(--vkui--color_background_secondary--active);
+  background-color: var(--vkui--color_background_content_inverse--active);
 }
 
 .modePrimary.appearanceAccentInvariable {
@@ -292,23 +286,27 @@
 /*
   Buttons text colors
 */
-.host.appearanceAccent {
+.appearanceAccent {
   color: var(--vkui--color_text_accent_themed);
 }
 
-.host.appearancePositive {
+.appearancePositive {
   color: var(--vkui--color_text_positive);
 }
 
-.host.appearanceNegative {
+.appearanceNegative {
   color: var(--vkui--color_text_negative);
 }
 
-.host.appearanceNeutral {
+.appearanceNeutral {
   color: var(--vkui--color_text_primary);
 }
 
-.host.appearanceAccentInvariable {
+.modePrimary.appearanceNeutral {
+  color: var(--vkui--color_text_contrast_themed);
+}
+
+.appearanceAccentInvariable {
   color: var(--vkui--color_text_accent);
 }
 
@@ -651,8 +649,8 @@
 }
 
 .modePrimary.appearanceNeutral {
-  --vkui_internal--counter_inherit_background: var(--vkui--color_background_contrast);
-  --vkui_internal--counter_inherit_color: var(--vkui--color_text_primary_invariably);
+  --vkui_internal--counter_inherit_background: var(--vkui--color_text_contrast_themed);
+  --vkui_internal--counter_inherit_color: var(--vkui--color_background_content_inverse);
 }
 
 .modeSecondary.appearanceNeutral,

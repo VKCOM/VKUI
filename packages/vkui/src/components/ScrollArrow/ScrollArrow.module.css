@@ -32,13 +32,13 @@
   justify-content: center;
 }
 
-.sizeM .icon {
+.sizeS .icon {
   inline-size: 28px;
   block-size: 28px;
   border-radius: 14px;
 }
 
-.sizeL .icon {
+.sizeM .icon {
   inline-size: 40px;
   block-size: 40px;
   border-radius: 24px;

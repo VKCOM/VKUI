@@ -12,7 +12,7 @@
   <Panel id="separator">
     <PanelHeader>Separator</PanelHeader>
 
-    <Group header={<Header mode="secondary">direction="inline"</Header>}>
+    <Group header={<Header size="s">direction="horizontal"</Header>}>
       <Cell before={<Icon28Notifications />}>Уведомления</Cell>
       <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
 
@@ -21,12 +21,12 @@
       <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
       <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
     </Group>
-    <Group header={<Header mode="secondary">direction="block"</Header>}>
+    <Group header={<Header size="s">direction="vertical"</Header>}>
       <Flex margin="auto">
         <Link>Новости</Link>
-        <Separator direction="block" size="xl" />
+        <Separator direction="vertical" size="xl" />
         <Link>Звонки</Link>
-        <Separator direction="block" size="xl" />
+        <Separator direction="vertical" size="xl" />
         <Link>Друзья</Link>
       </Flex>
     </Group>

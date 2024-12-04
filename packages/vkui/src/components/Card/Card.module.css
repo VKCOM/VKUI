@@ -12,10 +12,11 @@
     0 2px 24px 0 rgba(0, 0, 0, 0.08),
     0 0 2px 0 rgba(0, 0, 0, 0.08)
   );
-  background: var(--vkui--color_background_contrast_themed);
 }
 
-.modeOutline {
+.modeShadow,
+.modeOutline,
+.modePlain {
   background: var(--vkui--color_background_contrast_themed);
 }
 
@@ -69,7 +70,7 @@
  * Group
  * SplitCol
  */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .host,
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
   :global(.vkuiInternalCardScroll--size-l)
@@ -77,27 +78,30 @@
   inline-size: calc(100% - 32px);
   margin-inline-end: 16px;
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 @media (--viewWidth-smallTabletPlus) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
     :global(.vkuiInternalCardScroll--size-l)
     .host {
     inline-size: calc(100% - 32px);
     margin-inline-end: 16px;
   }
+  /* stylelint-enable selector-pseudo-class-disallowed-list */
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup--mode-card) :global(.vkuiInternalCardScroll--size-l) .host:last-of-type,
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
   :global(.vkuiInternalCardScroll--size-l)
   .host:last-of-type {
   margin-inline-end: 0;
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 @media (--viewWidth-smallTabletPlus) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
     :global(.vkuiInternalCardScroll--size-l)
     .host:last-of-type {
@@ -105,19 +109,18 @@
   }
 }
 @media (--sizeX-regular) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--mode-none)
     :global(.vkuiInternalCardScroll--size-l)
     .host:last-of-type {
     margin-inline-end: 0;
   }
 
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--mode-none) :global(.vkuiInternalCardScroll--size-l) .host {
     inline-size: calc(100% - 32px);
     margin-inline-end: 16px;
   }
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 /**
  * CMP:

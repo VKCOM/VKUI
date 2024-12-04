@@ -19,19 +19,6 @@
       }
     ]
   },
-  "include": [
-    "src/**/*.ts*",
-    "src/**/*.js",
-    ".storybook/**/*.ts*",
-    "**/*.config.js",
-    "*.config.*.js",
-    "*.setup.js",
-    ".eslintrc.js",
-    "playwright-ct.config.ts",
-    "playwright/index.tsx",
-    "scripts/*.js",
-    "scripts/*.mjs",
-    "./jest.*.ts"
-  ],
+  "include": ["*.ts*", "**/*.ts*", "*.js", "**/*.js", "*.mjs", "**/*.mjs", "*.cjs", "**/*.cjs"],
   "files": ["./global.d.ts", "types/env.d.ts"]
 }

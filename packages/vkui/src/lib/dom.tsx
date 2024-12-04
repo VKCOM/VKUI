@@ -4,10 +4,12 @@ import * as React from 'react';
 import { canUseDOM } from '@vkontakte/vkjs';
 import { rectToClientRect } from '@vkontakte/vkui-floating-ui/core';
 import {
-  getNearestOverflowAncestor as getNearestOverflowAncestorLib,
+  getParentNode,
   getWindow,
   isElement,
   isHTMLElement,
+  isLastTraversableNode,
+  isOverflowElement,
 } from '@vkontakte/vkui-floating-ui/utils/dom';
 
 export {
@@ -15,6 +17,7 @@ export {
   getNodeScroll,
   isHTMLElement,
   isElement,
+  getParentNode,
 } from '@vkontakte/vkui-floating-ui/utils/dom';
 
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
@@ -32,7 +35,7 @@ export interface DOMContextInterface {
 export type DOMProps = DOMContextInterface;
 
 /* eslint-disable no-restricted-globals */
-export const getDOM = (): DOMContextInterface => ({
+const getDOM = (): DOMContextInterface => ({
   window: canUseDOM ? window : undefined,
   document: canUseDOM ? document : undefined,
 });
@@ -147,19 +150,32 @@ export const getRelativeBoundingClientRect = (parent: Element, child: Element) =
 };
 
 /**
- * Адаптер над getNearestOverflowAncestor из @floating-ui/utils/dom.
+ * Переписанный `getNearestOverflowAncestor` из @floating-ui/utils/dom.
  *
- * document.body подменяем на window, т.к. на document.body нельзя применить скролл.
+ * [1] добавляем ноду, на которой нужно остановить рекурсию
+ * [2] document.body подменяем на window, т.к. на document.body нельзя применить скролл.
+ *
+ * @link https://github.com/floating-ui/floating-ui/blob/%40floating-ui/dom%401.6.3/packages/utils/src/dom.ts#L143
  */
-export const getNearestOverflowAncestor = (childEl: Node): HTMLElement | Window | null => {
-  const foundAncestor = getNearestOverflowAncestorLib(childEl);
+export function getNearestOverflowAncestor(node: Node): HTMLElement | Window | null;
+export function getNearestOverflowAncestor(node: Node, terminalNode: Node): HTMLElement | null;
+export function getNearestOverflowAncestor(node: Node, terminalNode?: any): any {
+  const parentNode = getParentNode(node);
 
-  return isBody(foundAncestor)
-    ? getWindow(foundAncestor)
-    : isHTMLElement(childEl)
-      ? foundAncestor
-      : null;
-};
+  if (terminalNode === parentNode) {
+    return null; /* [1] */
+  }
+
+  if (isLastTraversableNode(parentNode)) {
+    return getWindow(parentNode); /* [2] */
+  }
+
+  if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
+    return parentNode;
+  }
+
+  return getNearestOverflowAncestor(parentNode, terminalNode);
+}
 
 export const getScrollHeight = (node: Element | Window): number => {
   return isWindow(node) ? node.document.documentElement.scrollHeight : node.scrollHeight;
@@ -259,4 +275,60 @@ export const initializeBrowserGesturePreventionEffect = (window: Window): VoidFu
     window.document.documentElement.classList.remove('vkui--disable-overscroll-behavior'); // eslint-disable-line no-restricted-properties
     window.removeEventListener('touchmove', handleWindowTouchMove, options);
   };
+};
+
+const nonTextInputTypes = { button: true, submit: true, reset: true, color: true, file: true, image: true, checkbox: true, radio: true }; // prettier-ignore
+
+export const isHTMLContentEditableElement = (
+  el: Element | null,
+): el is HTMLInputElement | HTMLTextAreaElement | HTMLElement => {
+  if (el === null) {
+    return false;
+  }
+
+  if (el.tagName === 'INPUT') {
+    // @ts-expect-error: TS2339 за счёт `tagName` удовлетворяемся, что это `HTMLInputElement`
+    return !nonTextInputTypes[el.type]; // prettier-ignore
+  }
+
+  return (
+    el.tagName === 'TEXTAREA' ||
+    // eslint-disable-next-line no-restricted-properties
+    el.closest('[contenteditable=true]') !== null
+  );
+};
+
+export type VisualViewport = {
+  offsetTop: number;
+  offsetLeft: number;
+  width: number;
+  height: number;
+};
+
+/**
+ * Фоллбек `visualViewport` для **Safari 12**.
+ */
+export function getVisualViewport(win: Window): VisualViewport {
+  const result: VisualViewport = { offsetTop: 0, offsetLeft: 0, width: 0, height: 0 };
+  if (win.visualViewport) {
+    const { offsetTop, offsetLeft, width, height } = win.visualViewport;
+    result.offsetTop = Math.round(offsetTop);
+    result.offsetLeft = offsetLeft;
+    result.width = width;
+    result.height = Math.round(height);
+
+    return result;
+  }
+
+  // TODO[Safari@>=13] Удалить фоллбек
+  result.offsetTop = win.pageYOffset;
+  result.offsetLeft = win.pageXOffset;
+  result.width = win.innerWidth; // note: вызывает reflow в отличии от visualViewport
+  result.height = win.innerHeight; // note: вызывает reflow в отличии от visualViewport
+  return result;
+}
+
+export const hasSelectionWithRangeType = (node: unknown) => {
+  const selection = getWindow(node).getSelection();
+  return selection ? selection.type === 'Range' : false;
 };

@@ -37,7 +37,7 @@ export const Playground: Story = {
           onClick={onStoryChange}
           selected={activeStory === 'feed'}
           data-story="feed"
-          text="Новости"
+          label="Новости"
         >
           <Icon28NewsfeedOutline />
         </TabbarItem>
@@ -45,7 +45,7 @@ export const Playground: Story = {
           onClick={onStoryChange}
           selected={activeStory === 'services'}
           data-story="services"
-          text="Сервисы"
+          label="Сервисы"
         >
           <Icon28ServicesOutline />
         </TabbarItem>
@@ -54,11 +54,11 @@ export const Playground: Story = {
           selected={activeStory === 'messages'}
           data-story="messages"
           indicator={
-            <Counter size="s" mode="prominent">
+            <Counter size="s" mode="primary" appearance="accent-red">
               12
             </Counter>
           }
-          text="Сообщения"
+          label="Сообщения"
         >
           <Icon28MessageOutline />
         </TabbarItem>
@@ -66,7 +66,7 @@ export const Playground: Story = {
           onClick={onStoryChange}
           selected={activeStory === 'clips'}
           data-story="clips"
-          text="Клипы"
+          label="Клипы"
         >
           <Icon28ClipOutline />
         </TabbarItem>
@@ -75,7 +75,7 @@ export const Playground: Story = {
           selected={activeStory === 'profile'}
           data-story="profile"
           indicator={<Badge mode="prominent">Есть обновления</Badge>}
-          text="Профиль"
+          label="Профиль"
         >
           <Icon28UserCircleOutline />
         </TabbarItem>

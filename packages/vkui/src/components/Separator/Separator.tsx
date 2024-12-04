@@ -1,5 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
-import { spacingSizeClassNames, type SpacingSizeProp } from '../../lib/spacings/sizes';
+import { resolveSpacingSize, type SpacingSizeProp } from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Separator.module.css';
@@ -18,9 +18,11 @@ export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement
   /**
    * Направление отображения разделителя
    */
-  direction?: 'inline' | 'block';
+  direction?: 'horizontal' | 'vertical';
   /**
    * Размер контейнера, в который вложен разделитель
+   *
+   * Принимает значения дизайн-системы, числовые значения и css-переменные
    */
   size?: SpacingSizeProp;
   /**
@@ -36,8 +38,8 @@ const appearanceClassNames = {
 };
 
 const directionClassNames = {
-  block: styles.directionBlock,
-  inline: styles.directionInline,
+  horizontal: styles.directionHorizontal,
+  vertical: styles.directionVertical,
 };
 
 const alignClassNames = {
@@ -51,27 +53,29 @@ const alignClassNames = {
 export const Separator = ({
   padding = false,
   appearance = 'primary',
-  direction = 'inline',
+  direction = 'horizontal',
   align = 'center',
-  style,
   size,
   ...restProps
-}: SeparatorProps): React.ReactNode => (
-  <RootComponent
-    {...restProps}
-    baseClassName={classNames(
-      padding && styles.padded,
-      appearanceClassNames[appearance],
-      typeof size === 'string' && spacingSizeClassNames[size],
-      directionClassNames[direction],
-      size !== undefined && styles.sized,
-      align !== 'center' && alignClassNames[align],
-    )}
-    style={{
-      ...(typeof size === 'number' && { [CUSTOM_CSS_TOKEN_FOR_USER_SIZE]: `${size}px` }),
-      ...style,
-    }}
-  >
-    <hr className={styles.in} />
-  </RootComponent>
-);
+}: SeparatorProps): React.ReactNode => {
+  const [spacingSizeClassName, spacingSizeStyle] = resolveSpacingSize(
+    CUSTOM_CSS_TOKEN_FOR_USER_SIZE,
+    size,
+  );
+  return (
+    <RootComponent
+      {...restProps}
+      baseClassName={classNames(
+        padding && styles.padded,
+        appearanceClassNames[appearance],
+        directionClassNames[direction],
+        size !== undefined && styles.sized,
+        align !== 'center' && alignClassNames[align],
+        spacingSizeClassName,
+      )}
+      baseStyle={spacingSizeStyle}
+    >
+      <hr className={styles.in} />
+    </RootComponent>
+  );
+};

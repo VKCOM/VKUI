@@ -32,8 +32,8 @@ const story: Meta<HeaderProps> = {
       iconSizes: ['12'],
       requiredIcons: ['Icon12Fire'],
     }),
-    aside: createFieldWithPresets({
-      iconSizes: [],
+    after: createFieldWithPresets({
+      iconSizes: ['16', '24'],
       additionalPresets: {
         Link: <Link>Показать все</Link>,
       },
@@ -43,7 +43,7 @@ const story: Meta<HeaderProps> = {
       additionalPresets: {
         Text: '12',
         Counter: (
-          <Counter size="s" mode="prominent">
+          <Counter size="s" mode="primary" appearance="accent-red">
             3
           </Counter>
         ),
@@ -75,7 +75,7 @@ export const WithAside: Story = {
   ...Playground,
   args: {
     ...Playground.args,
-    aside: 'Link',
+    after: 'Link',
   },
 };
 
@@ -114,6 +114,6 @@ export const WithAllFeatures: Story = {
     beforeSubtitle: 'Icon12Tag',
     afterSubtitle: 'Icon12Fire',
     subtitle: 'SOHN — Conrad',
-    aside: <Link>Показать все</Link>,
+    after: 'Link',
   },
 };

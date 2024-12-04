@@ -7,7 +7,12 @@ import {
   Icon56NewsfeedOutline,
 } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import {
+  AppDefaultWrapper,
+  type AppDefaultWrapperProps,
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+} from '@vkui-e2e/playground-helpers';
 import { Platform } from '../../lib/platform';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
@@ -24,10 +29,10 @@ import { Epic } from './Epic';
 const EpicTabbar = () => {
   return (
     <Tabbar style={{ position: 'relative' }}>
-      <TabbarItem onClick={noop} selected={true} data-story="feed" text="Новости">
+      <TabbarItem onClick={noop} selected={true} data-story="feed" label="Новости">
         <Icon28NewsfeedOutline />
       </TabbarItem>
-      <TabbarItem onClick={noop} selected={false} data-story="services" text="Сервисы">
+      <TabbarItem onClick={noop} selected={false} data-story="services" label="Сервисы">
         <Icon28ServicesOutline />
       </TabbarItem>
       <TabbarItem
@@ -35,15 +40,15 @@ const EpicTabbar = () => {
         selected={false}
         data-story="messages"
         indicator={
-          <Counter size="s" mode="prominent">
+          <Counter size="s" mode="primary" appearance="accent-red">
             12
           </Counter>
         }
-        text="Сообщения"
+        label="Сообщения"
       >
         <Icon28MessageOutline />
       </TabbarItem>
-      <TabbarItem onClick={noop} selected={false} data-story="clips" text="Клипы">
+      <TabbarItem onClick={noop} selected={false} data-story="clips" label="Клипы">
         <Icon28ClipOutline />
       </TabbarItem>
       <TabbarItem
@@ -51,7 +56,7 @@ const EpicTabbar = () => {
         selected={false}
         data-story="profile"
         indicator={<Badge mode="prominent">Есть обновления</Badge>}
-        text="Профиль"
+        label="Профиль"
       >
         <Icon28UserCircleOutline />
       </TabbarItem>
@@ -59,8 +64,14 @@ const EpicTabbar = () => {
   );
 };
 
+const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
+  <AppDefaultWrapper disableDecorations {...restProps}>
+    {children}
+  </AppDefaultWrapper>
+);
+
 export const EpicPlayground = (props: ComponentPlaygroundProps) => (
-  <ComponentPlayground {...props}>
+  <ComponentPlayground AppWrapper={AppWrapper} {...props}>
     {() => (
       <Epic
         activeStory="feed"
@@ -68,7 +79,11 @@ export const EpicPlayground = (props: ComponentPlaygroundProps) => (
       >
         <View id="feed" activePanel="feed">
           <Panel id="feed">
-            <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Новости</PanelHeader>
+            <PanelHeader
+              before={<PanelHeaderBack onClick={noop} hideLabelOnIOS hideLabelOnVKCom />}
+            >
+              Новости
+            </PanelHeader>
             <Group>
               <Placeholder icon={<Icon56NewsfeedOutline width={56} height={56} />} />
             </Group>

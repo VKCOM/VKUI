@@ -246,18 +246,16 @@ export const mockScrollContext = (
 ): [React.ComponentType<HasChildren>, jest.Mock] => {
   const getScroll = () => ({ x: 0, y: getY() });
   const scrollTo = jest.fn();
-  const isScrollLock = false;
-  const enableScrollLock = jest.fn();
-  const disableScrollLock = jest.fn();
+  const incrementScrollLockCounter = jest.fn();
+  const decrementScrollLockCounter = jest.fn();
   return [
     (props) => (
       <ScrollContext.Provider
         value={{
           getScroll,
           scrollTo,
-          isScrollLock,
-          enableScrollLock,
-          disableScrollLock,
+          incrementScrollLockCounter,
+          decrementScrollLockCounter,
         }}
       >
         {props.children}
@@ -314,6 +312,9 @@ export const waitRAF = async () => await new Promise((resolve) => requestAnimati
 
 // Решение отсюда https://stackoverflow.com/a/62282721/2903061
 export const requestAnimationFrameMock = {
+  _originRequestAnimationFrame: window.requestAnimationFrame,
+  _originCancelAnimationFrame: window.cancelAnimationFrame,
+
   handleCounter: 0,
   queue: new Map(),
   requestAnimationFrame(callback: FrameRequestCallback) {
@@ -345,6 +346,12 @@ export const requestAnimationFrameMock = {
     this.handleCounter = 0;
     window.requestAnimationFrame = this.requestAnimationFrame.bind(this);
     window.cancelAnimationFrame = this.cancelAnimationFrame.bind(this);
+  },
+  destroy() {
+    this.queue.clear();
+    this.handleCounter = 0;
+    window.requestAnimationFrame = this._originRequestAnimationFrame;
+    window.cancelAnimationFrame = this._originCancelAnimationFrame;
   },
 };
 
