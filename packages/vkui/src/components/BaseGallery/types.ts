@@ -51,7 +51,7 @@ export interface BaseGalleryProps
   /**
    * Управление размером кликабельной зоны стрелок. В дизайне свойство называется `arrowArea`
    */
-  arrowAreaHeight?: 'stretched' | 'fit';
+  arrowAreaHeight?: 'stretch' | 'fit';
   hasPointer?: boolean;
   arrowSize?: ScrollArrowProps['size'];
   /**
