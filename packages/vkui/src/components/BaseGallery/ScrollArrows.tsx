@@ -41,9 +41,9 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
   arrowSize = 'm',
   arrowAreaHeight = 'fill',
 }) => {
-  return (
+  return showArrows && hasPointer ? (
     <>
-      {showArrows && hasPointer && canSlideLeft && (
+      {canSlideLeft && (
         <ScrollArrow
           className={getArrowClassName('start', arrowAreaHeight)}
           direction="left"
@@ -51,7 +51,7 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
           size={arrowSize}
         />
       )}
-      {showArrows && hasPointer && canSlideRight && (
+      {canSlideRight && (
         <ScrollArrow
           className={getArrowClassName('end', arrowAreaHeight)}
           direction="right"
@@ -60,5 +60,5 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
         />
       )}
     </>
-  );
+  ) : null;
 };
