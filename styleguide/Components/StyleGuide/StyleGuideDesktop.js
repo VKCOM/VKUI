@@ -14,11 +14,7 @@ export const StyleGuideDesktop = ({
   return (
     <div className="StyleGuideDesktop">
       <StyleGuideHeader switchStyleGuideColorScheme={switchStyleGuideColorScheme} />
-      <SplitLayout
-        className="StyleGuide"
-        popout={popout}
-        modal={<StyleGuideModal activeModal={activeModal} />}
-      >
+      <SplitLayout className="StyleGuide">
         <SplitCol minWidth={340} width="20%" maxWidth={480} fixed>
           <div className="StyleGuide__sidebar">
             <div className="StyleGuide__sidebarIn">{toc}</div>
@@ -36,6 +32,8 @@ export const StyleGuideDesktop = ({
           </div>
         </SplitCol>
       </SplitLayout>
+      {popout}
+      <StyleGuideModal activeModal={activeModal} />
     </div>
   );
 };

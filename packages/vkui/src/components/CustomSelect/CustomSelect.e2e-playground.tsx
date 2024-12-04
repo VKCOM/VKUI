@@ -78,7 +78,7 @@ export const CustomSelectNoMaxHeightPlayground = (props: ComponentPlaygroundProp
 
 export const CustomSelectOptionScrollPlayground = (props: ComponentPlaygroundProps) => {
   return (
-    <ComponentPlayground {...props} propSets={[{ value: [7] }]}>
+    <ComponentPlayground {...props} propSets={[{ value: [7], forceDropdownPortal: [false] }]}>
       {(props: SelectProps) => (
         <div style={{ height: 200 }}>
           <CustomSelect

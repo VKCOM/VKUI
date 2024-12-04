@@ -1,56 +1,19 @@
 'use client';
 
-import * as React from 'react';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { ModalElements, ModalsStateEntry, ModalType } from './types';
-
-export type ModalRegistryEntry = ModalElements & Required<Pick<ModalsStateEntry, 'type' | 'id'>>;
-type ModalRefs = { [k in keyof ModalElements]: (e: ModalElements[k]) => void };
-
-export interface ModalRootContextInterface {
-  updateModalHeight: VoidFunction;
-  registerModal: (data: ModalRegistryEntry) => void;
-  onClose?: VoidFunction;
-  isInsideModal: boolean;
-}
-
-export const ModalRootContext: React.Context<ModalRootContextInterface> =
-  React.createContext<ModalRootContextInterface>({
-    updateModalHeight: () => undefined,
-    registerModal: () => undefined,
-    isInsideModal: false,
-  });
+import { createContext, type RefObject } from 'react';
+import { noop } from '@vkontakte/vkjs';
+import type { ModalRootContextInterface } from './types';
 
 /**
- * All referenced elements must be static
+ * Сохраняем `ref` компонента `ModalOverlay` из `ModalRoot` в контекст, чтобы можно было пробросить
+ * его до `ModalPage` и `ModalCard`.
+ *
+ * @private
  */
-export function useModalRegistry(
-  id: string | undefined,
-  type: ModalType,
-): {
-  refs: Required<ModalRefs>;
-} {
-  const modalContext = React.useContext(ModalRootContext);
-  const elements = React.useRef<ModalElements>({}).current;
-  useIsomorphicLayoutEffect(() => {
-    if (id !== undefined) {
-      modalContext.registerModal({ ...elements, type, id });
-      // unset refs on  unmount to prevent leak
-      const reset = Object.keys(elements).reduce<ModalRegistryEntry>(
-        (acc, k) => ({ ...acc, [k]: null }),
-        { type, id },
-      );
-      return () => modalContext.registerModal(reset);
-    }
-    return undefined;
-  }, []);
+export const ModalRootOverlayContext = createContext<RefObject<HTMLDivElement>>({ current: null });
 
-  const refs = React.useRef<Required<ModalRefs>>({
-    modalElement: (e) => (elements.modalElement = e),
-    innerElement: (e) => (elements.innerElement = e),
-    headerElement: (e) => (elements.headerElement = e),
-    contentElement: (e) => (elements.contentElement = e),
-    bottomInset: (e) => (elements.bottomInset = e),
-  }).current;
-  return { refs };
-}
+export const ModalRootContext = createContext<ModalRootContextInterface>({
+  updateModalHeight: noop,
+  registerModal: noop,
+  isInsideModal: false,
+});

@@ -5,6 +5,7 @@ import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -137,20 +138,19 @@ export const ActionSheet = ({
     </ActionSheetContext.Provider>
   );
 
-  if (mode === 'menu') {
-    return actionSheet;
-  }
-
   return (
-    <PopoutWrapper
-      closing={Boolean(closingBy)}
-      alignY="bottom"
-      className={className}
-      style={style}
-      onClick={onCloseWithOther}
-      fixed
-    >
-      {actionSheet}
-    </PopoutWrapper>
+    <AppRootPortal>
+      <PopoutWrapper
+        noBackground={mode === 'menu'}
+        closing={Boolean(closingBy)}
+        alignY="bottom"
+        className={className}
+        style={style}
+        onClick={onCloseWithOther}
+        fixed
+      >
+        {actionSheet}
+      </PopoutWrapper>
+    </AppRootPortal>
   );
 };
