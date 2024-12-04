@@ -8,7 +8,6 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import { type CustomTouchEvent } from '../Touch/Touch';
 import { Bullets } from './Bullets';
 import { GalleryViewPort } from './GalleryViewPort';
@@ -51,7 +50,8 @@ export const BaseGallery = ({
   align = 'left',
   showArrows,
   getRef,
-  arrowSize = 'm',
+  arrowSize,
+  arrowAreaHeight,
   slideTestId,
   bulletTestId,
   nextArrowTestId,
@@ -353,25 +353,16 @@ export const BaseGallery = ({
           bulletTestId={bulletTestId}
         />
       )}
-
-      {showArrows && hasPointer && canSlideLeft && (
-        <ScrollArrow
-          className={styles.arrow}
-          direction="left"
-          onClick={slideLeft}
-          size={arrowSize}
-          data-testid={prevArrowTestId}
-        />
-      )}
-      {showArrows && hasPointer && canSlideRight && (
-        <ScrollArrow
-          className={styles.arrow}
-          direction="right"
-          onClick={slideRight}
-          size={arrowSize}
-          data-testid={nextArrowTestId}
-        />
-      )}
+      <ScrollArrows
+        hasPointer={hasPointer}
+        canSlideLeft={canSlideLeft}
+        canSlideRight={canSlideRight}
+        onSlideRight={slideRight}
+        onSlideLeft={slideLeft}
+        showArrows={showArrows}
+        arrowSize={arrowSize}
+        arrowAreaHeight={arrowAreaHeight}
+      />
     </RootComponent>
   );
 };

@@ -50,6 +50,10 @@ export interface BaseGalleryProps
    */
   dragDisabled?: boolean;
   showArrows?: boolean;
+  /**
+   * Управление размером кликабельной зоны стрелок. В дизайне свойство называется `arrowArea`
+   */
+  arrowAreaHeight?: 'stretch' | 'fit';
   hasPointer?: boolean;
   arrowSize?: ScrollArrowProps['size'];
   /**

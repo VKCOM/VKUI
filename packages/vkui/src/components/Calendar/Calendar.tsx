@@ -19,6 +19,7 @@ import {
   type CalendarHeaderTestsProps,
 } from '../CalendarHeader/CalendarHeader';
 import {
+  type CalendarDoneButtonProps,
   CalendarTime,
   type CalendarTimeProps,
   type CalendarTimeTestsProps,
@@ -32,14 +33,7 @@ export type CalendarTestsProps = CalendarDaysTestsProps &
 
 export interface CalendarProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
-    Pick<
-      CalendarTimeProps,
-      | 'changeHoursLabel'
-      | 'changeMinutesLabel'
-      | 'doneButtonText'
-      | 'doneButtonDisabled'
-      | 'doneButtonShow'
-    >,
+    Pick<CalendarTimeProps, 'changeHoursLabel' | 'changeMinutesLabel'>,
     Pick<
       CalendarHeaderProps,
       | 'prevMonthLabel'
@@ -54,6 +48,7 @@ export interface CalendarProps
       | 'nextMonthProps'
     >,
     Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'>,
+    CalendarDoneButtonProps,
     CalendarTestsProps {
   value?: Date;
   /**
@@ -77,7 +72,6 @@ export interface CalendarProps
    * Позволяет запретить выбор даты.
    */
   shouldDisableDate?: (value: Date) => boolean;
-  onDoneButtonClick?: () => void;
   /**
    * Дата отображаемого месяца.
    * При использовании обновление даты должно происходить вне компонента.
@@ -115,6 +109,7 @@ export const Calendar = ({
   doneButtonText,
   doneButtonDisabled,
   doneButtonShow,
+  DoneButton,
   weekStartsOn = 1,
   disablePickers,
   changeHoursLabel = 'Изменить час',
@@ -273,6 +268,7 @@ export const Calendar = ({
             doneButtonText={doneButtonText}
             doneButtonDisabled={doneButtonDisabled}
             doneButtonShow={doneButtonShow}
+            DoneButton={DoneButton}
             changeHoursLabel={changeHoursLabel}
             changeMinutesLabel={changeMinutesLabel}
             isDayDisabled={minDateTime || maxDateTime ? isDayDisabled : undefined}

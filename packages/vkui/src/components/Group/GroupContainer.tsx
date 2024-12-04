@@ -2,12 +2,12 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useModalContext } from '../../context/ModalContext';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import type { SizeTypeValues } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Group.module.css';
 
@@ -90,7 +90,7 @@ export const GroupContainer: React.FC<GroupContainerProps> = ({
   tabIndex: tabIndexProp,
   ...restProps
 }: GroupContainerProps) => {
-  const { isInsideModal } = React.useContext(ModalRootContext);
+  const isInsideModal = useModalContext().id !== null;
   const { sizeX = 'none' } = useAdaptivity();
 
   const mode = useGroupMode(modeProps, sizeX, isInsideModal);

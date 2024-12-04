@@ -9,11 +9,11 @@ import {
   sizeMiddleware,
 } from '../adapters';
 import { checkIsNotAutoPlacement, getAutoPlacementAlign } from '../functions';
-import type {
-  ArrowOptions,
-  Placement,
-  PlacementWithAuto,
-  UseFloatingMiddleware,
+import {
+  type ArrowOptions,
+  type Placement,
+  type PlacementWithAuto,
+  type UseFloatingMiddleware,
 } from '../types/common';
 
 export interface UseFloatingMiddlewaresBootstrapOptions {
@@ -131,16 +131,16 @@ export const useFloatingMiddlewaresBootstrap = ({
 
     return { middlewares, strictPlacement: isAutoPlacement ? undefined : placement };
   }, [
+    placement,
     offsetByCrossAxis,
-    arrowRef,
     arrow,
     arrowHeight,
-    arrowPadding,
     offsetByMainAxis,
+    disableFlipMiddleware,
     sameWidth,
     customMiddlewares,
-    placement,
     hideWhenReferenceHidden,
-    disableFlipMiddleware,
+    arrowRef,
+    arrowPadding,
   ]);
 };

@@ -10,10 +10,9 @@ import { useDOM } from '../../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../../lib/warnOnce';
 import { RootComponent } from '../../RootComponent/RootComponent';
-import { ScrollArrow } from '../../ScrollArrow/ScrollArrow';
-import { type CustomTouchEvent } from '../../Touch/Touch';
 import { Bullets } from '../Bullets';
 import { GalleryViewPort } from '../GalleryViewPort';
+import { ScrollArrows } from '../ScrollArrows';
 import { type BaseGalleryProps, type GallerySlidesState } from '../types';
 import {
   ANIMATION_DURATION,
@@ -43,7 +42,8 @@ export const CarouselBase = ({
   align = 'left',
   showArrows,
   getRef,
-  arrowSize = 'm',
+  arrowSize,
+  arrowAreaHeight,
   slideTestId,
   bulletTestId,
   nextArrowTestId,
@@ -371,25 +371,16 @@ export const CarouselBase = ({
           bulletTestId={bulletTestId}
         />
       )}
-
-      {showArrows && hasPointer && canSlideLeft && (
-        <ScrollArrow
-          className={styles.arrow}
-          direction="left"
-          onClick={slideLeft}
-          size={arrowSize}
-          data-testid={prevArrowTestId}
-        />
-      )}
-      {showArrows && hasPointer && canSlideRight && (
-        <ScrollArrow
-          className={styles.arrow}
-          direction="right"
-          onClick={slideRight}
-          size={arrowSize}
-          data-testid={nextArrowTestId}
-        />
-      )}
+      <ScrollArrows
+        hasPointer={hasPointer}
+        canSlideLeft={canSlideLeft}
+        canSlideRight={canSlideRight}
+        onSlideRight={slideRight}
+        onSlideLeft={slideLeft}
+        showArrows={showArrows}
+        arrowSize={arrowSize}
+        arrowAreaHeight={arrowAreaHeight}
+      />
     </RootComponent>
   );
 };

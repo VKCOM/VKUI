@@ -125,74 +125,72 @@ const SearchExample = () => {
   const isVKCOM = platform === 'vkcom';
 
   return (
-    <SplitLayout
-      header={!isVKCOM && <PanelHeader delimiter="none" />}
-      modal={
-        <ModalRoot activeModal={activeModal}>
-          <ModalPage
-            id="filters"
-            onClose={hideModal}
-            header={
-              <ModalPageHeader
-                before={
-                  platform === 'android' && (
-                    <PanelHeaderButton onClick={hideModal}>
-                      <VisuallyHidden>Отмена</VisuallyHidden>
-                      <Icon24Cancel />
-                    </PanelHeaderButton>
-                  )
-                }
-                after={
+    <React.Fragment>
+      <SplitLayout header={!isVKCOM && <PanelHeader delimiter="none" />}>
+        <SplitCol autoSpaced={!isVKCOM}>
+          <View activePanel={activePanel}>
+            <Panel id="search">
+              <SimpleSearch goHeaderSearch={goHeaderSearch} />
+            </Panel>
+            <Panel id="header-search">
+              <HeaderSearch onFiltersClick={openFilters} goSearch={goSearch} />
+            </Panel>
+          </View>
+        </SplitCol>
+      </SplitLayout>
+      <ModalRoot activeModal={activeModal}>
+        <ModalPage
+          id="filters"
+          onClose={hideModal}
+          header={
+            <ModalPageHeader
+              before={
+                platform === 'android' && (
                   <PanelHeaderButton onClick={hideModal}>
-                    {platform === 'ios' ? (
-                      'Готово'
-                    ) : (
-                      <>
-                        <VisuallyHidden>Готово</VisuallyHidden>
-                        <Icon24Done />
-                      </>
-                    )}
+                    <VisuallyHidden>Отмена</VisuallyHidden>
+                    <Icon24Cancel />
                   </PanelHeaderButton>
-                }
-              >
-                Фильтры
-              </ModalPageHeader>
-            }
-          >
-            <Group>
-              <FormItem top="Страна">
-                <SelectMimicry placeholder="Не выбрана" />
-              </FormItem>
-              <FormItem top="Город">
-                <SelectMimicry placeholder="Не выбран" />
-              </FormItem>
-              <FormItem top="Пол">
-                <Radio name="sex" value="male" defaultChecked>
-                  Любой
-                </Radio>
-                <Radio name="sex" value="male">
-                  Мужской
-                </Radio>
-                <Radio name="sex" value="female">
-                  Женский
-                </Radio>
-              </FormItem>
-            </Group>
-          </ModalPage>
-        </ModalRoot>
-      }
-    >
-      <SplitCol autoSpaced={!isVKCOM}>
-        <View activePanel={activePanel}>
-          <Panel id="search">
-            <SimpleSearch goHeaderSearch={goHeaderSearch} />
-          </Panel>
-          <Panel id="header-search">
-            <HeaderSearch onFiltersClick={openFilters} goSearch={goSearch} />
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+                )
+              }
+              after={
+                <PanelHeaderButton onClick={hideModal}>
+                  {platform === 'ios' ? (
+                    'Готово'
+                  ) : (
+                    <>
+                      <VisuallyHidden>Готово</VisuallyHidden>
+                      <Icon24Done />
+                    </>
+                  )}
+                </PanelHeaderButton>
+              }
+            >
+              Фильтры
+            </ModalPageHeader>
+          }
+        >
+          <Group>
+            <FormItem top="Страна">
+              <SelectMimicry placeholder="Не выбрана" />
+            </FormItem>
+            <FormItem top="Город">
+              <SelectMimicry placeholder="Не выбран" />
+            </FormItem>
+            <FormItem top="Пол">
+              <Radio name="sex" value="male" defaultChecked>
+                Любой
+              </Radio>
+              <Radio name="sex" value="male">
+                Мужской
+              </Radio>
+              <Radio name="sex" value="female">
+                Женский
+              </Radio>
+            </FormItem>
+          </Group>
+        </ModalPage>
+      </ModalRoot>
+    </React.Fragment>
   );
 };
 
@@ -213,71 +211,73 @@ const App = () => {
     setActiveModal('findModal');
   };
   return (
-    <SplitLayout
-      modal={
-        <ModalRoot activeModal={activeModal}>
-          <ModalCard
-            id="findModal"
-            onClose={() => setActiveModal(null)}
-            icon={<Icon56MoneyTransferOutline />}
-            title="Здесь ничего нет"
-            actions={
-              <Button size="l" mode="primary" stretched onClick={() => setActiveModal(null)}>
-                Понятно
-              </Button>
-            }
-          ></ModalCard>
-        </ModalRoot>
-      }
-      header={!isVKCOM && <PanelHeader delimiter="none" />}
-    >
-      <SplitCol>
-        <View activePanel="find">
-          <Panel id="find">
-            <PanelHeader>Только для Compact-версии</PanelHeader>
-            <Group>
-              <Search
-                defaultValue="value"
-                icon={(renderButton) => (
-                  <Popover
-                    noStyling
-                    trigger="click"
-                    id="menupopup"
-                    role="dialog"
-                    aria-labelledby="menubutton"
-                    content={({ onClose }) => (
-                      <div
-                        style={{
-                          backgroundColor: 'var(--vkui--color_background_modal_inverse)',
-                          borderRadius: 8,
-                          boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
-                        }}
-                      >
-                        <CellButton role="menuitem" before={<Icon28AddOutline />} onClick={onClose}>
-                          Добавить
-                        </CellButton>
-                        <CellButton
-                          role="menuitem"
-                          before={<Icon28DeleteOutline />}
-                          appearance="negative"
-                          onClick={onClose}
+    <React.Fragment>
+      <SplitLayout header={!isVKCOM && <PanelHeader delimiter="none" />}>
+        <SplitCol>
+          <View activePanel="find">
+            <Panel id="find">
+              <PanelHeader>Только для Compact-версии</PanelHeader>
+              <Group>
+                <Search
+                  defaultValue="value"
+                  icon={(renderButton) => (
+                    <Popover
+                      noStyling
+                      trigger="click"
+                      id="menupopup"
+                      role="dialog"
+                      aria-labelledby="menubutton"
+                      content={({ onClose }) => (
+                        <div
+                          style={{
+                            backgroundColor: 'var(--vkui--color_background_modal_inverse)',
+                            borderRadius: 8,
+                            boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+                          }}
                         >
-                          Добавить и очистить
-                        </CellButton>
-                      </div>
-                    )}
-                  >
-                    {renderButton(<Icon24Done />)}
-                  </Popover>
-                )}
-                after={<Icon24User />}
-                onFindButtonClick={onFindButtonClick}
-              />
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+                          <CellButton
+                            role="menuitem"
+                            before={<Icon28AddOutline />}
+                            onClick={onClose}
+                          >
+                            Добавить
+                          </CellButton>
+                          <CellButton
+                            role="menuitem"
+                            before={<Icon28DeleteOutline />}
+                            appearance="negative"
+                            onClick={onClose}
+                          >
+                            Добавить и очистить
+                          </CellButton>
+                        </div>
+                      )}
+                    >
+                      {renderButton(<Icon24Done />)}
+                    </Popover>
+                  )}
+                  after={<Icon24User />}
+                  onFindButtonClick={onFindButtonClick}
+                />
+              </Group>
+            </Panel>
+          </View>
+        </SplitCol>
+      </SplitLayout>
+      <ModalRoot activeModal={activeModal}>
+        <ModalCard
+          id="findModal"
+          onClose={() => setActiveModal(null)}
+          icon={<Icon56MoneyTransferOutline />}
+          title="Здесь ничего нет"
+          actions={
+            <Button size="l" mode="primary" stretched onClick={() => setActiveModal(null)}>
+              Понятно
+            </Button>
+          }
+        ></ModalCard>
+      </ModalRoot>
+    </React.Fragment>
   );
 };
 
