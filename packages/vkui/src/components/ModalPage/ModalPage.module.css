@@ -1,7 +1,4 @@
 .host {
-  --vkui_internal_ModalPage--userHeight: 100%;
-  --vkui_internal_ModalPage--desktopMaxWidth: 100%;
-
   display: flex;
   inline-size: 100%;
   block-size: var(--vkui_internal_ModalPage--userHeight);
@@ -13,6 +10,8 @@
 /* Mobile */
 @media (--viewWidth-smallTabletMinus) {
   .host {
+    --vkui_internal_ModalPage--userHeight: 100%;
+
     position: absolute;
     inset-inline: 0;
     inset-block-end: 0;
@@ -33,11 +32,13 @@
 /* Desktop */
 @media (--viewWidth-smallTabletPlus) {
   .host {
+    --vkui_internal_ModalPage--desktopMaxWidth: 100%;
+    --vkui_internal_ModalPage--userHeight: auto;
+
     position: relative;
     margin-block: auto;
     max-inline-size: var(--vkui_internal_ModalPage--desktopMaxWidth);
     max-block-size: calc(100% - 64px); /* FIXME 64px??? */
-    block-size: auto;
   }
 
   .hostMaxWidthS {
