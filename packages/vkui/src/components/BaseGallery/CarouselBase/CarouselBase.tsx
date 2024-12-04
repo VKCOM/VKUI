@@ -10,6 +10,7 @@ import { useDOM } from '../../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../../lib/warnOnce';
 import { RootComponent } from '../../RootComponent/RootComponent';
+import { type CustomTouchEvent } from '../../Touch/Touch';
 import { Bullets } from '../Bullets';
 import { GalleryViewPort } from '../GalleryViewPort';
 import { ScrollArrows } from '../ScrollArrows';
@@ -380,6 +381,8 @@ export const CarouselBase = ({
         showArrows={showArrows}
         arrowSize={arrowSize}
         arrowAreaHeight={arrowAreaHeight}
+        prevArrowTestId={prevArrowTestId}
+        nextArrowTestId={nextArrowTestId}
       />
     </RootComponent>
   );

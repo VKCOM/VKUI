@@ -11,6 +11,7 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { type CustomTouchEvent } from '../Touch/Touch';
 import { Bullets } from './Bullets';
 import { GalleryViewPort } from './GalleryViewPort';
+import { ScrollArrows } from './ScrollArrows';
 import { calcMax, calcMin } from './helpers';
 import type { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
 import styles from './BaseGallery.module.css';
@@ -362,6 +363,8 @@ export const BaseGallery = ({
         showArrows={showArrows}
         arrowSize={arrowSize}
         arrowAreaHeight={arrowAreaHeight}
+        nextArrowTestId={nextArrowTestId}
+        prevArrowTestId={prevArrowTestId}
       />
     </RootComponent>
   );

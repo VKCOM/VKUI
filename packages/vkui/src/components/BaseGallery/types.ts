@@ -3,6 +3,7 @@ import type { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
 import type { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import type { CustomTouchEvent, CustomTouchEventHandler } from '../Touch/Touch';
 import { type BulletsTestIds } from './Bullets';
+import { type ScrollArrowsTestIds } from './ScrollArrows';
 
 export interface GallerySlidesState {
   coordX: number;
@@ -30,7 +31,8 @@ export interface BaseGalleryProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
     HasAlign,
     HasRef<HTMLElement>,
-    BulletsTestIds {
+    BulletsTestIds,
+    ScrollArrowsTestIds {
   slideWidth?: string | number;
   slideIndex?: number;
   onDragStart?: CustomTouchEventHandler;
@@ -68,12 +70,4 @@ export interface BaseGalleryProps
    * e2e test-id для слайда
    */
   slideTestId?: (index: number) => string;
-  /**
-   * e2e test-id для кнопки перехода к следующему слайду
-   */
-  nextArrowTestId?: string;
-  /**
-   e2e test-id для кнопки перехода к предыдущему слайду
-   */
-  prevArrowTestId?: string;
 }

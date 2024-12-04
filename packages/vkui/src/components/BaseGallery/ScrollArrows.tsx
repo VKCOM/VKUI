@@ -22,8 +22,20 @@ export const getArrowClassName = (
   );
 };
 
+export interface ScrollArrowsTestIds {
+  /**
+   * e2e test-id для кнопки перехода к следующему слайду
+   */
+  nextArrowTestId?: string;
+  /**
+   e2e test-id для кнопки перехода к предыдущему слайду
+   */
+  prevArrowTestId?: string;
+}
+
 interface ScrollArrowsProps
-  extends Pick<BaseGalleryProps, 'showArrows' | 'arrowSize' | 'arrowAreaHeight'> {
+  extends Pick<BaseGalleryProps, 'showArrows' | 'arrowSize' | 'arrowAreaHeight'>,
+    ScrollArrowsTestIds {
   hasPointer?: boolean;
   canSlideLeft: boolean;
   canSlideRight: boolean;
@@ -40,6 +52,8 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
   showArrows = false,
   arrowSize = 'm',
   arrowAreaHeight = 'stretch',
+  nextArrowTestId,
+  prevArrowTestId,
 }) => {
   return showArrows && hasPointer ? (
     <>
@@ -49,6 +63,7 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
           direction="left"
           onClick={onSlideLeft}
           size={arrowSize}
+          data-testid={prevArrowTestId}
         />
       )}
       {canSlideRight && (
@@ -57,6 +72,7 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
           direction="right"
           onClick={onSlideRight}
           size={arrowSize}
+          data-testid={nextArrowTestId}
         />
       )}
     </>
