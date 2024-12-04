@@ -57,6 +57,8 @@ export interface SliderBaseProps
    * Размер ползунка.
    */
   size?: 's' | 'm' | 'l';
+  startThumbTestId?: string;
+  endThumbTestId?: string;
 }
 
 export interface SliderProps extends SliderBaseProps {
@@ -88,6 +90,8 @@ export const Slider = ({
   getRootRef,
   getAriaLabel,
   getAriaValueText,
+  startThumbTestId,
+  endThumbTestId,
   onChange,
   withTooltip,
   size = 'l',
@@ -257,6 +261,7 @@ export const Slider = ({
           withTooltip={withTooltip}
           inputProps={{
             'data-type': 'start',
+            'data-testid': startThumbTestId,
             'ref': thumbStartInputRef,
             'step': step,
             'min': min,
@@ -278,6 +283,7 @@ export const Slider = ({
             withTooltip={withTooltip}
             inputProps={{
               'data-type': 'end',
+              'data-testid': endThumbTestId,
               'ref': thumbEndInputRef,
               'step': step,
               'min': startValue,
