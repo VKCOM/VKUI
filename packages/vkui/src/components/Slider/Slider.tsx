@@ -62,7 +62,7 @@ export interface SliderBaseProps
    */
   startThumbTestId?: string;
   /**
-   * e2e test-id для второго ползунка
+   * e2e test-id для второго ползунка когда `multiple=true`
    */
   endThumbTestId?: string;
 }
