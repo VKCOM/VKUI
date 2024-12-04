@@ -5,7 +5,7 @@ import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import type { ColorSchemeType } from '../../lib/colorScheme';
 import type { PlatformType } from '../../lib/platform';
-import { AppDefaultWrapper, type AppWrapperProps } from './AppDefaultWrapper';
+import { AppDefaultWrapper, type AppDefaultWrapperProps } from './AppDefaultWrapper';
 import { TEST_CLASS_NAMES } from './constants';
 import { getAdaptivePxWidth, multiCartesian, prettyProps } from './utils';
 
@@ -16,7 +16,7 @@ export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'
   adaptivityProviderProps?: Partial<AdaptivityProps>;
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
   children: (props: Props) => React.ReactNode;
-  AppWrapper?: React.ComponentType<AppWrapperProps>;
+  AppWrapper?: React.ComponentType<AppDefaultWrapperProps>;
 }
 
 export type ComponentPlaygroundProps = Pick<
@@ -55,6 +55,7 @@ export const ComponentPlayground = <
     <ConfigProvider colorScheme={colorScheme} platform={platform}>
       <AdaptivityProvider {...adaptivityProviderProps}>
         <AppWrapper
+          className={TEST_CLASS_NAMES.APP_ROOT}
           mode={isFixedComponent ? 'full' : undefined}
           style={
             isFixedComponent

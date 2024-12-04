@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { classNames, noop } from '@vkontakte/vkjs';
+import { ModalContext } from '../../context/ModalContext';
 import type { SizeTypeValues } from '../../lib/adaptivity';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
@@ -8,7 +9,6 @@ import {
   type AppRootContextInterface,
   DEFAULT_APP_ROOT_CONTEXT_VALUE,
 } from '../AppRoot/AppRootContext';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { Group, type GroupProps } from './Group';
 import styles from './Group.module.css';
 
@@ -75,17 +75,11 @@ describe('Group', () => {
           }}
         >
           <AdaptivityContext.Provider value={{ sizeX }}>
-            <ModalRootContext.Provider
-              value={{
-                isInsideModal,
-                updateModalHeight: noop,
-                registerModal: noop,
-              }}
-            >
+            <ModalContext.Provider value={isInsideModal ? 'test' : null}>
               <Group mode={mode} data-testid="group">
                 <div />
               </Group>
-            </ModalRootContext.Provider>
+            </ModalContext.Provider>
           </AdaptivityContext.Provider>
         </AppRootContext.Provider>,
       );

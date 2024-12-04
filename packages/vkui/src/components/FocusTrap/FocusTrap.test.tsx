@@ -15,8 +15,6 @@ import { AppRoot } from '../AppRoot/AppRoot';
 import { Button } from '../Button/Button';
 import { CellButton } from '../CellButton/CellButton';
 import { Panel } from '../Panel/Panel';
-import { SplitCol } from '../SplitCol/SplitCol';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { View } from '../View/View';
 import { FocusTrap, type FocusTrapProps } from './FocusTrap';
 
@@ -32,44 +30,34 @@ const ActionSheetTest = ({
   ...props
 }: Partial<ActionSheetProps> & Partial<FocusTrapProps>) => {
   const toggleRef = useRef(null);
-  const [actionSheet, toggleActionSheet] = useState<any>(null);
+  const [visible, setVisible] = useState(false);
 
   const handleClose = () => {
     if (onCloseProp) {
       onCloseProp();
     }
-    toggleActionSheet(null);
+    setVisible(false);
   };
 
   return (
     <AppRoot>
       <AdaptivityProvider hasPointer viewWidth={ViewWidth.MOBILE}>
-        <SplitLayout popout={actionSheet}>
-          <SplitCol>
-            <View activePanel="panel">
-              <Panel id="panel">
-                <CellButton
-                  data-testid="toggle"
-                  getRootRef={toggleRef}
-                  onClick={() =>
-                    toggleActionSheet(
-                      <ActionSheet
-                        data-testid="sheet"
-                        toggleRef={toggleRef}
-                        onClose={handleClose}
-                        {...props}
-                      >
-                        {children}
-                      </ActionSheet>,
-                    )
-                  }
-                >
-                  Toggle ActionSheet
-                </CellButton>
-              </Panel>
-            </View>
-          </SplitCol>
-        </SplitLayout>
+        <View activePanel="panel">
+          <Panel id="panel">
+            <CellButton
+              data-testid="toggle"
+              getRootRef={toggleRef}
+              onClick={() => setVisible(true)}
+            >
+              Toggle ActionSheet
+            </CellButton>
+          </Panel>
+        </View>
+        {visible ? (
+          <ActionSheet data-testid="sheet" toggleRef={toggleRef} onClose={handleClose} {...props}>
+            {children}
+          </ActionSheet>
+        ) : null}
       </AdaptivityProvider>
     </AppRoot>
   );

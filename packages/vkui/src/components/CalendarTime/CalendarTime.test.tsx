@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { setHours, setMinutes } from 'date-fns';
 import { userEvent } from '../../testing/utils';
+import { Button } from '../Button/Button';
 import { CalendarTime } from './CalendarTime';
 
 const dayDate = new Date('2023-09-01T07:40:00.000Z');
@@ -92,6 +93,22 @@ describe('CalendarTime', () => {
     );
     const button = screen.queryByTestId<HTMLButtonElement>('done-button');
     expect(button!.disabled).toBeTruthy();
+  });
+
+  it('should render custom done button', () => {
+    const onChange = jest.fn();
+    render(
+      <CalendarTime
+        onChange={onChange}
+        value={dayDate}
+        doneButtonTestId="done-button"
+        DoneButton={(doneButtonProps) => (
+          <Button {...doneButtonProps} data-testid="custom-done-button" />
+        )}
+      />,
+    );
+    expect(screen.queryByTestId('done-button')).toBeFalsy();
+    expect(screen.queryByTestId('custom-done-button')).toBeTruthy();
   });
 
   describe('Keyboard Navigation', () => {

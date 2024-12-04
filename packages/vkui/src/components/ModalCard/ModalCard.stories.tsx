@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Icon56MoneyTransferOutline, Icon56NotificationOutline } from '@vkontakte/icons';
-import { ModalWrapper } from '../../storybook/ModalWrapper';
+import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
+import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
@@ -11,124 +12,141 @@ import { Image } from '../Image/Image';
 import { Spacing } from '../Spacing/Spacing';
 import { Textarea } from '../Textarea/Textarea';
 import { UsersStack } from '../UsersStack/UsersStack';
-import { ModalCard, type ModalCardProps } from './ModalCard';
+import { ModalCard } from './ModalCard';
+import type { ModalCardProps } from './types';
 
 const story: Meta<ModalCardProps> = {
   title: 'Modals/ModalCard',
   component: ModalCard,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: {
+    ...CanvasFullLayout,
+    ...DisableCartesianParam,
+    background: 'linear-gradient(blue, pink)',
+  },
+  argTypes: {
+    icon: createFieldWithPresets({
+      iconSizes: ['56'],
+      additionalPresets: {
+        Image: <Image borderRadius="l" src={getAvatarUrl('app_zagadki', 200)} size={72} />,
+        Avatar: <Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />,
+      },
+      requiredIcons: ['Icon56MoneyTransferOutline', 'Icon56NotificationOutline'],
+    }),
+  },
+  render: function Render(props) {
+    const [, updateArg] = useArgs();
+    return <ModalCard {...props} onClose={() => updateArg({ open: false })} />;
+  },
+  decorators: function UIController(Component) {
+    const [, updateArg] = useArgs();
+    return (
+      <>
+        <Button appearance="overlay" onClick={() => updateArg({ open: true })}>
+          Открыть
+        </Button>
+        <Component />
+      </>
+    );
+  },
 };
 
 export default story;
 
 type Story = StoryObj<ModalCardProps>;
 
-const MODAL_CARD_MONEY_SEND = 'money-send';
-const MODAL_CARD_APP_TO_MENU = 'app-to-menu';
-const MODAL_CARD_ABOUT = 'say-about';
-const MODAL_CARD_NOTIFICATIONS = 'notifications';
-const MODAL_CARD_CHAT_INVITE = 'chat-invite';
-
 export const SimpleCard: Story = {
-  render: () => (
-    <ModalWrapper modalId={MODAL_CARD_MONEY_SEND}>
-      <ModalCard
-        id={MODAL_CARD_MONEY_SEND}
-        icon={<Icon56MoneyTransferOutline />}
-        title="Отправляйте деньги друзьям, используя банковскую карту"
-        description="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
-        actions={
-          <Button size="l" mode="primary" stretched>
-            Попробовать
-          </Button>
-        }
-      />
-    </ModalWrapper>
-  ),
+  args: {
+    id: 'modal-card',
+    open: true,
+    icon: 'Icon56MoneyTransferOutline',
+    title: 'Отправляйте деньги друзьям, используя банковскую карту',
+    description: 'Номер карты получателя не нужен — он сам решит, куда зачислить средства.',
+    actions: (
+      <Button size="l" mode="primary" stretched onClick={noop}>
+        Попробовать
+      </Button>
+    ),
+  },
 };
 
 export const CardWithAvatar: Story = {
-  render: () => (
-    <ModalWrapper modalId={MODAL_CARD_APP_TO_MENU}>
-      <ModalCard
-        id={MODAL_CARD_APP_TO_MENU}
-        icon={<Image borderRadius="l" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
-        title="Добавить игру «Загадки детства» в меню?"
-        description="Игра появится под списком разделов на экране меню и будет всегда под рукой."
-        actions={
-          <Button size="l" mode="primary" stretched>
-            Добавить в меню
-          </Button>
-        }
-      />
-    </ModalWrapper>
-  ),
+  args: {
+    id: 'modal-card',
+    open: true,
+    icon: 'Image',
+    title: 'Добавить игру «Загадки детства» в меню?',
+    description: 'Игра появится под списком разделов на экране меню и будет всегда под рукой.',
+    actions: (
+      <Button size="l" mode="primary" stretched onClick={noop}>
+        Добавить в меню
+      </Button>
+    ),
+  },
 };
 
 export const CardWithTextArea: Story = {
-  render: () => (
-    <ModalWrapper modalId={MODAL_CARD_ABOUT}>
-      <ModalCard
-        id={MODAL_CARD_ABOUT}
-        title="Расскажите о себе"
-        actions={
-          <Button size="l" mode="primary" stretched>
-            Сохранить
-          </Button>
-        }
-      >
+  args: {
+    id: 'modal-card',
+    open: true,
+    title: 'Расскажите о себе',
+    description: 'Игра появится под списком разделов на экране меню и будет всегда под рукой.',
+    actions: (
+      <Button size="l" mode="primary" stretched onClick={noop}>
+        Сохранить
+      </Button>
+    ),
+    children: (
+      <>
+        <Spacing size="m" />
         <Textarea defaultValue="В Грузии" />
-      </ModalCard>
-    </ModalWrapper>
-  ),
+      </>
+    ),
+  },
 };
 
 export const CardWithMultipleButtons: Story = {
-  render: () => (
-    <ModalWrapper modalId={MODAL_CARD_NOTIFICATIONS}>
-      <ModalCard
-        id={MODAL_CARD_NOTIFICATIONS}
-        icon={<Icon56NotificationOutline />}
-        title="Приложение запрашивает разрешение на отправку Вам уведомлений"
-        actions={
-          <ButtonGroup stretched>
-            <Button key="deny" size="l" mode="secondary" stretched>
-              Запретить
-            </Button>
-            <Button key="allow" size="l" mode="primary" stretched>
-              Разрешить
-            </Button>
-          </ButtonGroup>
-        }
-      />
-    </ModalWrapper>
-  ),
+  args: {
+    id: 'modal-card',
+    open: true,
+    icon: 'Icon56NotificationOutline',
+    title: 'Приложение запрашивает разрешение на отправку Вам уведомлений',
+    actions: (
+      <ButtonGroup stretched>
+        <Button key="deny" size="l" mode="secondary" stretched onClick={noop}>
+          Запретить
+        </Button>
+        <Button key="allow" size="l" mode="primary" stretched onClick={noop}>
+          Разрешить
+        </Button>
+      </ButtonGroup>
+    ),
+  },
 };
 
 export const CardWithComplexContent: Story = {
-  render: () => (
-    <ModalWrapper modalId={MODAL_CARD_CHAT_INVITE}>
-      <ModalCard
-        id={MODAL_CARD_CHAT_INVITE}
-        icon={<Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />}
-        title="Баскетбол на выходных"
-        titleComponent="h2"
-        description="Приглашение в беседу"
-        descriptionComponent="span"
-        actions={
-          <React.Fragment>
-            <Spacing size={8} />
-            <ButtonGroup gap="s" mode="vertical" stretched>
-              <Button key="join" size="l" mode="primary" stretched>
-                Присоединиться
-              </Button>
-              <Button key="copy" size="l" mode="secondary" stretched>
-                Скопировать приглашение
-              </Button>
-            </ButtonGroup>
-          </React.Fragment>
-        }
-      >
+  args: {
+    id: 'modal-card',
+    open: true,
+    icon: 'Avatar',
+    title: 'Баскетбол на выходных',
+    titleComponent: 'h2',
+    description: 'Приглашение в беседу',
+    descriptionComponent: 'span',
+    actions: (
+      <React.Fragment>
+        <Spacing size={8} />
+        <ButtonGroup gap="s" mode="vertical" stretched>
+          <Button key="join" size="l" mode="primary" stretched onClick={noop}>
+            Присоединиться
+          </Button>
+          <Button key="copy" size="l" mode="secondary" stretched onClick={noop}>
+            Скопировать приглашение
+          </Button>
+        </ButtonGroup>
+      </React.Fragment>
+    ),
+    children: (
+      <>
         <Spacing size={20} />
         <UsersStack
           photos={[
@@ -146,7 +164,7 @@ export const CardWithComplexContent: Story = {
           Алексей, Илья, Михаил
           <br />и ещё 3 человека
         </UsersStack>
-      </ModalCard>
-    </ModalWrapper>
-  ),
+      </>
+    ),
+  },
 };

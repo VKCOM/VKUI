@@ -12,3 +12,7 @@
 .Blockquote:not(:first-child) {
   margin-top: 16px;
 }
+
+li > .Blockquote {
+  margin-left: 6px;
+}
