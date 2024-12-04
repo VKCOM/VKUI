@@ -23,6 +23,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'usePortal'
   | 'onPlacementChange'
   | 'disableFlipMiddleware'
+  | 'strategy'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps' | 'onCloseIconClick'>;

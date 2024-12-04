@@ -216,6 +216,18 @@ describe(Popover, () => {
     expect(result.getByTestId('popover').parentElement).toHaveClass(styles.hidden);
   });
 
+  it('should position popover with provided strategy', async () => {
+    const result = render(
+      <Popover defaultShown content="Some popover" strategy="absolute" data-testid="popover">
+        <div>Target</div>
+      </Popover>,
+    );
+
+    await waitForFloatingPosition();
+
+    expect(result.getByTestId('popover').parentElement).toHaveStyle('position: absolute');
+  });
+
   it('check working with usePopover hook', async () => {
     const onShownChange = jest.fn();
     const Fixture = () => {

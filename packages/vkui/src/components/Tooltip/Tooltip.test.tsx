@@ -28,4 +28,16 @@ describe(Tooltip, () => {
 
     expect(onPlacementChange).toHaveBeenCalledWith('top');
   });
+
+  it('should position tooltip with provided strategy', async () => {
+    const result = render(
+      <Tooltip defaultShown description="test" strategy="absolute" data-testid="tooltip">
+        <div>Target</div>
+      </Tooltip>,
+    );
+
+    await waitForFloatingPosition();
+
+    expect(result.getByTestId('tooltip')).toHaveStyle('position: absolute');
+  });
 });
