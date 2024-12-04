@@ -57,7 +57,13 @@ export interface SliderBaseProps
    * Размер ползунка.
    */
   size?: 's' | 'm' | 'l';
+  /**
+   * e2e test-id для первого ползунка
+   */
   startThumbTestId?: string;
+  /**
+   * e2e test-id для второго ползунка
+   */
   endThumbTestId?: string;
 }
 
