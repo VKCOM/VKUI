@@ -76,6 +76,7 @@ export const useFloatingElement = <
   shown: shownProp,
   onShownChange,
   onShownChanged,
+  strategy,
 
   onPlacementChange,
 
@@ -112,6 +113,7 @@ export const useFloatingElement = <
     onEscapeKeyDown,
   } = useFloatingWithInteractions({
     middlewares,
+    strategy,
     placement: strictPlacement,
     trigger,
     hoverDelay,
