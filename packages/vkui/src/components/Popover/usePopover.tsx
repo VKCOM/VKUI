@@ -39,6 +39,9 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
   onPlacementChange,
   disableFlipMiddleware = false,
   trigger = 'click',
+  strategy,
+  overflowPadding,
+  flipOptions,
   content,
   hoverDelay = 150,
   closeAfterClick,
@@ -89,6 +92,8 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
     hideWhenReferenceHidden,
     disableFlipMiddleware,
     customMiddlewares,
+    overflowPadding,
+    flipOptions,
   });
   const {
     placement: resolvedPlacement,
@@ -105,6 +110,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
     middlewares,
     placement: strictPlacement,
     trigger,
+    strategy,
     hoverDelay,
     closeAfterClick,
     disabled,
