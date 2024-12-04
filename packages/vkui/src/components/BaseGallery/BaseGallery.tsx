@@ -8,8 +8,8 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import { type CustomTouchEvent, Touch } from '../Touch/Touch';
+import { ScrollArrows } from './ScrollArrows';
 import { calcMax, calcMin } from './helpers';
 import type { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
 import styles from './BaseGallery.module.css';
@@ -53,7 +53,8 @@ export const BaseGallery = ({
   align = 'left',
   showArrows,
   getRef,
-  arrowSize = 'm',
+  arrowSize,
+  arrowAreaHeight,
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -358,23 +359,16 @@ export const BaseGallery = ({
           ))}
         </div>
       )}
-
-      {showArrows && hasPointer && canSlideLeft && (
-        <ScrollArrow
-          className={styles.arrow}
-          direction="left"
-          onClick={slideLeft}
-          size={arrowSize}
-        />
-      )}
-      {showArrows && hasPointer && canSlideRight && (
-        <ScrollArrow
-          className={styles.arrow}
-          direction="right"
-          onClick={slideRight}
-          size={arrowSize}
-        />
-      )}
+      <ScrollArrows
+        hasPointer={hasPointer}
+        canSlideLeft={canSlideLeft}
+        canSlideRight={canSlideRight}
+        onSlideRight={slideRight}
+        onSlideLeft={slideLeft}
+        showArrows={showArrows}
+        arrowSize={arrowSize}
+        arrowAreaHeight={arrowAreaHeight}
+      />
     </RootComponent>
   );
 };

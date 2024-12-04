@@ -184,8 +184,16 @@ describe(Slider, () => {
     });
 
     it('moves start (multiple)', async () => {
-      render(<Slider multiple defaultValue={[30, 70]} />);
-      const [startSlider, endSlider] = screen.getAllByRole('slider');
+      render(
+        <Slider
+          multiple
+          defaultValue={[30, 70]}
+          startThumbTestId="startSlider"
+          endThumbTestId="endSlider"
+        />,
+      );
+      const startSlider = screen.getByTestId('startSlider');
+      const endSlider = screen.getByTestId('endSlider');
 
       fireEvent.mouseDown(startSlider);
 
