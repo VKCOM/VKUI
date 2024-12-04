@@ -1,10 +1,12 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { type HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { ImageBaseContext } from '../context';
-import { resolveIndent } from './helpers';
+import { mutableRemoveElement, resolveIndent } from './helpers';
 import styles from './ImageBaseFloatElement.module.css';
 
 export type FloatElementPlacement =
@@ -106,7 +108,7 @@ export const ImageBaseFloatElement = ({
   ...restProps
 }: ImageBaseFloatElementProps) => {
   const [hidden, setHidden] = React.useState(visibility !== 'always');
-  const { ref: imageWrapperRef } = React.useContext(ImageBaseContext);
+  const { onMouseOverHandlers, onMouseOutHandlers } = React.useContext(ImageBaseContext);
 
   useIsomorphicLayoutEffect(
     function resetHidden() {
@@ -115,24 +117,23 @@ export const ImageBaseFloatElement = ({
     [visibility],
   );
 
-  React.useEffect(
-    function updateHiddenSubscribe() {
-      const wrapper = imageWrapperRef.current;
-      if (wrapper && visibility === 'on-hover') {
+  useIsomorphicLayoutEffect(
+    function addMouseHandlers() {
+      if (visibility === 'on-hover') {
         const onMouseOver = () => setHidden(false);
         const onMouseOut = () => setHidden(true);
 
-        wrapper.addEventListener('mouseover', onMouseOver);
-        wrapper.addEventListener('mouseout', onMouseOut);
+        onMouseOverHandlers.push(onMouseOver);
+        onMouseOutHandlers.push(onMouseOut);
 
         return () => {
-          wrapper.removeEventListener('mouseover', onMouseOver);
-          wrapper.removeEventListener('mouseout', onMouseOut);
+          mutableRemoveElement(onMouseOverHandlers, onMouseOver);
+          mutableRemoveElement(onMouseOutHandlers, onMouseOut);
         };
       }
       return;
     },
-    [visibility, imageWrapperRef],
+    [visibility],
   );
 
   const positionStyle = React.useMemo(

@@ -10,5 +10,6 @@ export type ImageBaseExpectedIconProps = {
 
 export interface ImageBaseContextProps {
   size: ImageBaseSize | number;
-  ref: React.RefObject<HTMLElement | null>;
+  onMouseOverHandlers: VoidFunction[];
+  onMouseOutHandlers: VoidFunction[];
 }

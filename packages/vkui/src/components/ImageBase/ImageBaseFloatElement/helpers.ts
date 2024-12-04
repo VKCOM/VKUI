@@ -38,3 +38,7 @@ export const resolveIndent = (
 
   return [undefined, classNames[indent]];
 };
+
+export const mutableRemoveElement = <T>(arr: T[], element: T) => {
+  arr.splice(arr.indexOf(element), 1);
+};

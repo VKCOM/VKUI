@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -174,6 +175,9 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   const [loaded, setLoaded] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
 
+  const mouseOverHandlersRef = useRef<VoidFunction[]>([]);
+  const mouseOutHandlersRef = useRef<VoidFunction[]>([]);
+
   const hasSrc = src || srcSet;
   const needShowFallbackIcon = (failed || !hasSrc) && React.isValidElement(fallbackIconProp);
 
@@ -219,8 +223,25 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     [imgRef, loaded],
   );
 
+  const onMouseOver = () => {
+    mouseOverHandlersRef.current.forEach((fn) => fn());
+  };
+
+  const onMouseOut = () => {
+    mouseOutHandlersRef.current.forEach((fn) => fn());
+  };
+
+  const contextValue = React.useMemo(
+    () => ({
+      size,
+      onMouseOverHandlers: mouseOverHandlersRef.current,
+      onMouseOutHandlers: mouseOutHandlersRef.current,
+    }),
+    [size],
+  );
+
   return (
-    <ImageBaseContext.Provider value={{ size, ref: wrapperRef }}>
+    <ImageBaseContext.Provider value={contextValue}>
       <Clickable
         baseStyle={{ width, height }}
         baseClassName={classNames(
@@ -229,6 +250,8 @@ export const ImageBase: React.FC<ImageBaseProps> & {
           withTransparentBackground && styles.transparentBackground,
         )}
         getRootRef={wrapperRef}
+        onMouseOver={onMouseOver}
+        onMouseOut={onMouseOut}
         {...restProps}
       >
         {hasSrc && (
