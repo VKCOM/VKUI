@@ -9,7 +9,7 @@ import { useChipsInput, type UseChipsInputProps } from './useChipsInput';
 export interface ChipsInputProps<Option extends ChipOption>
   extends ChipsInputBaseProps<Option>,
     UseChipsInputProps<Option>,
-    Pick<FormFieldProps, 'status' | 'mode' | 'before' | 'after'> {
+    Pick<FormFieldProps, 'status' | 'mode' | 'before' | 'after' | 'maxHeight'> {
   /**
    * Если `true`, то справа будет отображаться кнопка для очистки значения
    */

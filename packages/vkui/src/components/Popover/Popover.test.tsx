@@ -1,9 +1,11 @@
 'use no memo';
 
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
+import { Button } from '../Button/Button';
 import { Popover, type PopoverProps } from './Popover';
+import { usePopover } from './usePopover';
 import styles from './Popover.module.css';
 
 describe(Popover, () => {
@@ -224,5 +226,34 @@ describe(Popover, () => {
     await waitForFloatingPosition();
 
     expect(result.getByTestId('popover').parentElement).toHaveStyle('position: absolute');
+  });
+
+  it('check working with usePopover hook', async () => {
+    const onShownChange = jest.fn();
+    const Fixture = () => {
+      const { anchorRef, anchorProps, popover } = usePopover({
+        'trigger': 'click',
+        'onShownChange': onShownChange,
+        'content': 'Some popover',
+        'data-testid': 'popover',
+      });
+      return (
+        <>
+          {popover}
+          <Button {...anchorProps} data-testid="target" getRootRef={anchorRef}>
+            Click me
+          </Button>
+        </>
+      );
+    };
+
+    const result = render(<Fixture />);
+    await waitForFloatingPosition();
+    expect(result.queryByTestId('popover')).toBeFalsy();
+
+    fireEvent.click(screen.getByTestId('target'));
+    await waitForFloatingPosition();
+    expect(result.queryByTestId('popover')).toBeTruthy();
+    expect(onShownChange).toHaveBeenCalledTimes(1);
   });
 });

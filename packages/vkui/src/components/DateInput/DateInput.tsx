@@ -45,6 +45,7 @@ export interface DateInputProps
       | 'onChange'
       | 'value'
       | 'doneButtonText'
+      | 'DoneButton'
       | 'weekStartsOn'
       | 'disablePickers'
       | 'changeHoursLabel'
@@ -134,6 +135,7 @@ export const DateInput = ({
   style,
   className,
   doneButtonText,
+  DoneButton,
   closeOnChange = true,
   disablePickers,
   getRootRef,
@@ -351,6 +353,7 @@ export const DateInput = ({
             onDoneButtonClick={removeFocusFromField}
             getRootRef={calendarRef}
             doneButtonText={doneButtonText}
+            DoneButton={DoneButton}
             disablePickers={disablePickers}
             changeHoursLabel={changeHoursLabel}
             changeMinutesLabel={changeMinutesLabel}

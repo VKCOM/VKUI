@@ -36,18 +36,15 @@ const Example = () => {
   const onClick = () => setPopout(<CustomPopout onClose={() => setPopout(null)} />);
 
   return (
-    <SplitLayout popout={popout}>
-      <SplitCol>
-        <View activePanel="popout">
-          <Panel id="popout">
-            <PanelHeader>ModalDismissButton</PanelHeader>
-            <Group>
-              <CellButton onClick={onClick}>Открыть модальное окно</CellButton>
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+    <View activePanel="popout">
+      <Panel id="popout">
+        <PanelHeader>ModalDismissButton</PanelHeader>
+        <Group>
+          <CellButton onClick={onClick}>Открыть модальное окно</CellButton>
+        </Group>
+        {popout}
+      </Panel>
+    </View>
   );
 };
 
