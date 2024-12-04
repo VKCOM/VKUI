@@ -69,10 +69,11 @@ const Example = () => {
           ]}
         />
       </FormItem>
-      <FormItem>
+      <FormItem top="Результат" htmlFor="date-range">
         <Flex>
           <LocaleProvider value={locale}>
             <DateRangeInput
+              id="date-range"
               value={value}
               onChange={setValue}
               disablePast={disablePast}

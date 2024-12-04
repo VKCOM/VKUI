@@ -82,10 +82,11 @@ const Example = () => {
           ]}
         />
       </FormItem>
-      <FormItem>
+      <FormItem top="Результат" htmlFor="date">
         <Flex>
           <LocaleProvider value={locale}>
             <DateInput
+              id="date"
               value={value}
               onChange={setValue}
               enableTime={enableTime}
