@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/react';
-import { getFakeMouseEvent, getFakeTouchEvent } from '../testing/utils';
+import { mouseEventMock, touchEventMock } from '../testing/utils';
 import {
   contains,
   getActiveElementByAnotherElement,
@@ -229,14 +229,20 @@ describe(contains, () => {
 });
 
 describe(getFirstTouchEventData, () => {
+  const createTouchEvent = (type: string, clientX: number, clientY: number) =>
+    new TouchEvent(type, touchEventMock({ clientX, clientY }));
+
+  const createMouserEvent = (type: string, clientX: number, clientY: number) =>
+    new MouseEvent(type, mouseEventMock({ clientX, clientY }));
+
   it.each([
-    { type: 'touchstart', event: getFakeTouchEvent('touchstart', 10, 10) },
-    { type: 'touchmove', event: getFakeTouchEvent('touchmove', 10, 10) },
-    { type: 'touchend', event: getFakeTouchEvent('touchend', 10, 10) },
-    { type: 'mousedown', event: getFakeMouseEvent('mousedown', 10, 10) },
-    { type: 'mousemove', event: getFakeMouseEvent('mousemove', 10, 10) },
-    { type: 'mouseup', event: getFakeMouseEvent('mouseup', 10, 10) },
-    { type: 'mouseleave', event: getFakeMouseEvent('mouseleave', 10, 10) },
+    { type: 'touchstart', event: createTouchEvent('touchstart', 10, 10) },
+    { type: 'touchmove', event: createTouchEvent('touchmove', 10, 10) },
+    { type: 'touchend', event: createTouchEvent('touchend', 10, 10) },
+    { type: 'mousedown', event: createMouserEvent('mousedown', 10, 10) },
+    { type: 'mousemove', event: createMouserEvent('mousemove', 10, 10) },
+    { type: 'mouseup', event: createMouserEvent('mouseup', 10, 10) },
+    { type: 'mouseleave', event: createMouserEvent('mouseleave', 10, 10) },
   ])('should return touch data for expected event type (#type)', ({ event }) => {
     const { clientX, clientY } = getFirstTouchEventData(event);
     expect(clientX).toBe(10);
