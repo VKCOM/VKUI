@@ -18,8 +18,6 @@ export type {
   Middleware as UseFloatingMiddleware,
   UseFloatingData,
   Strategy as FloatingPositionStrategy,
-  Padding as FloatingPadding,
-  FlipOptions,
 } from '@vkontakte/vkui-floating-ui/react-dom';
 
 export type UseFloatingRefs<RT extends ReferenceType = ReferenceType> =

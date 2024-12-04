@@ -11,8 +11,6 @@ import {
 import { checkIsNotAutoPlacement, getAutoPlacementAlign } from '../functions';
 import {
   type ArrowOptions,
-  type FlipOptions,
-  type FloatingPadding,
   type Placement,
   type PlacementWithAuto,
   type UseFloatingMiddleware,
@@ -61,15 +59,6 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    * Принудительно скрывает компонент если целевой элемент вышел за область видимости.
    */
   hideWhenReferenceHidden?: boolean;
-  /**
-   * Настройки изменения размещение плавающего элемента, чтобы держать его в поле зрения.
-   * Более подробно можно почитать в документации @see https://floating-ui.com/docs/flip
-   */
-  flipOptions?: FlipOptions;
-  /**
-   * Безопасная зона вокруг плавающего элемента, чтобы тот не выходил за края контента.
-   */
-  overflowPadding?: number | FloatingPadding;
 }
 
 export const useFloatingMiddlewaresBootstrap = ({
@@ -84,10 +73,6 @@ export const useFloatingMiddlewaresBootstrap = ({
   customMiddlewares,
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
-  overflowPadding = 0,
-  flipOptions = {
-    fallbackAxisSideDirection: 'start',
-  },
 }: UseFloatingMiddlewaresBootstrapOptions): {
   middlewares: UseFloatingMiddleware[];
   strictPlacement: Placement | undefined;
@@ -105,14 +90,14 @@ export const useFloatingMiddlewaresBootstrap = ({
     if (isAutoPlacement) {
       middlewares.push(autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }));
     } else if (!disableFlipMiddleware) {
-      middlewares.push(flipMiddleware(flipOptions));
+      middlewares.push(
+        flipMiddleware({
+          fallbackAxisSideDirection: 'start',
+        }),
+      );
     }
 
-    middlewares.push(
-      shiftMiddleware({
-        padding: overflowPadding,
-      }),
-    );
+    middlewares.push(shiftMiddleware());
 
     if (sameWidth) {
       middlewares.push(
@@ -152,11 +137,9 @@ export const useFloatingMiddlewaresBootstrap = ({
     arrowHeight,
     offsetByMainAxis,
     disableFlipMiddleware,
-    overflowPadding,
     sameWidth,
     customMiddlewares,
     hideWhenReferenceHidden,
-    flipOptions,
     arrowRef,
     arrowPadding,
   ]);

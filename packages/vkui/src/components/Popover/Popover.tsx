@@ -64,8 +64,6 @@ type AllowedFloatingComponentProps = Pick<
   | 'disableFlipMiddleware'
   | 'customMiddlewares'
   | 'strategy'
-  | 'overflowPadding'
-  | 'flipOptions'
 >;
 
 /**
