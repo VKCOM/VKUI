@@ -32,6 +32,9 @@ export const NOT_SELECTED = {
   CUSTOM: null,
 };
 
+/**
+ * @visibleName NativeSelect
+ */
 export const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSelectValue =>
   value === NOT_SELECTED.CUSTOM ? NOT_SELECTED.NATIVE : value;
 
@@ -78,7 +81,7 @@ export interface NativeSelectProps
 /**
  * @see https://vkcom.github.io/VKUI/#/NativeSelect
  */
-const NativeSelect = ({
+export const NativeSelect = ({
   style,
   align,
   placeholder,
@@ -168,5 +171,3 @@ const NativeSelect = ({
     </FormField>
   );
 };
-
-export { NativeSelect };

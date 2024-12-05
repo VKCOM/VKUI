@@ -67,4 +67,37 @@ describe('Pagination', () => {
     fireEvent.click(screen.getByText('Назад'));
     expect(onChange.mock.calls[2][0]).toBe(3);
   });
+
+  it('checks data-testid setup', () => {
+    const onChange = jest.fn();
+    const Fixture = ({ page }: { page: number }) => {
+      return (
+        <Pagination
+          pageButtonTestId={(day, active) => (active ? `active-day-${day}` : `day-${day}`)}
+          prevButtonTestId="prevButton"
+          nextButtonTestId="nextButton"
+          currentPage={page}
+          navigationButtonsStyle="caption"
+          siblingCount={0}
+          boundaryCount={1}
+          totalPages={100}
+          disabled={false}
+          onChange={onChange}
+        />
+      );
+    };
+
+    const component = render(<Fixture page={0} />);
+    fireEvent.click(screen.getByTestId('day-3'));
+    expect(onChange.mock.calls[0][0]).toBe(3);
+
+    component.rerender(<Fixture page={3} />);
+    expect(screen.queryByTestId('active-day-3')).toBeTruthy();
+    fireEvent.click(screen.getByTestId('nextButton'));
+    expect(onChange.mock.calls[1][0]).toBe(4);
+
+    component.rerender(<Fixture page={4} />);
+    fireEvent.click(screen.getByTestId('prevButton'));
+    expect(onChange.mock.calls[2][0]).toBe(3);
+  });
 });
