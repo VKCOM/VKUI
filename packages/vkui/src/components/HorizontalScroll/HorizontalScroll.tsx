@@ -53,11 +53,11 @@ export interface HorizontalScrollProps
    */
   scrollOnAnyWheel?: boolean;
   /**
-   * e2e test-id для кнопки прокрутки горизонтального скролла в направлении начала
+   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении начала
    */
   startArrowTestId?: string;
   /**
-   * e2e test-id для кнопки прокрутки горизонтального скролла в направлении конца
+   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении конца
    */
   endArrowTestId?: string;
 }
