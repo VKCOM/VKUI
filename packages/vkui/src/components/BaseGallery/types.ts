@@ -67,7 +67,7 @@ export interface BaseGalleryProps
    */
   arrowNextLabel?: string;
   /**
-   * e2e test-id для слайда
+   * Передает атрибут `data-testid` для слайда
    */
   slideTestId?: (index: number) => string;
 }

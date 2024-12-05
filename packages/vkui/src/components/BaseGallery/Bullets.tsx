@@ -5,7 +5,7 @@ import styles from './BaseGallery.module.css';
 
 export interface BulletsTestIds {
   /**
-   * e2e test-id для bullet
+   * Передает атрибут `data-testid` для bullets
    */
   bulletTestId?: (index: number, active: boolean) => string;
 }
