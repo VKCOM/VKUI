@@ -27,18 +27,22 @@ export type FloatingComponentProps<FloatingElement extends HTMLElement = HTMLEle
   setArrowRef: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 };
 
+export type RenderFloatingComponentFn<FloatingElement extends HTMLElement = HTMLElement> = (
+  props: FloatingComponentProps<FloatingElement>,
+) => React.ReactNode | null;
+
+export type RemapAnchorPropsFn<AnchorElement extends HTMLElement = HTMLElement> = (
+  props: ReferenceProps<AnchorElement> & { shown: boolean },
+) => ReferenceProps<AnchorElement>;
+
 export type UseFloatingElementProps<
   FloatingElement extends HTMLElement = HTMLElement,
   AnchorElement extends HTMLElement = HTMLElement,
 > = Omit<UseFloatingMiddlewaresBootstrapOptions, 'arrowRef'> &
   Omit<UseFloatingWithInteractionsProps, 'placement'> & {
     onPlacementChange?: OnPlacementChange;
-    renderFloatingComponent: (
-      props: FloatingComponentProps<FloatingElement>,
-    ) => React.ReactNode | null;
-    remapAnchorProps?: (
-      props: ReferenceProps<AnchorElement> & { shown: boolean },
-    ) => ReferenceProps<AnchorElement>;
+    renderFloatingComponent: RenderFloatingComponentFn<FloatingElement>;
+    remapAnchorProps?: RemapAnchorPropsFn<AnchorElement>;
     externalFloatingElementRef?: React.Ref<FloatingElement>;
   };
 
