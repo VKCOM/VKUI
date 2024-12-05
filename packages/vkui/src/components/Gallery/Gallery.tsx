@@ -4,16 +4,13 @@ import * as React from 'react';
 import { clamp } from '../../helpers/math';
 import { useIsClient } from '../../hooks/useIsClient';
 import { callMultiple } from '../../lib/callMultiple';
-import { BaseGallery } from '../BaseGallery/BaseGallery';
-import { CarouselBase } from '../BaseGallery/CarouselBase/CarouselBase';
-import type { BaseGalleryProps } from '../BaseGallery/types';
+import { CarouselBase } from '../CarouselBase/CarouselBase';
+import type { BaseGalleryProps } from '../CarouselBase/types';
 import { useAutoPlay } from './hooks';
 
 export interface GalleryProps extends BaseGalleryProps {
   initialSlideIndex?: number;
   timeout?: number;
-  // Отвечает за зацикливание слайдов
-  looped?: boolean;
 }
 
 /**
@@ -25,7 +22,6 @@ export const Gallery = ({
   timeout = 0,
   onChange,
   bullets,
-  looped,
   onDragStart,
   onDragEnd,
   ...props
@@ -72,10 +68,8 @@ export const Gallery = ({
     return null;
   }
 
-  const Component = looped ? CarouselBase : BaseGallery;
-
   return (
-    <Component
+    <CarouselBase
       dragDisabled={isControlled && !onChange}
       {...props}
       onDragStart={callMultiple(onDragStart, autoPlayControls.pause)}
@@ -85,6 +79,6 @@ export const Gallery = ({
       onChange={handleChange}
     >
       {slides}
-    </Component>
+    </CarouselBase>
   );
 };
