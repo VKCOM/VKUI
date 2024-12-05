@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { ANIMATION_DURATION } from '../BaseGallery/CarouselBase/constants';
 import { Gallery } from './Gallery';
-import styles from '../BaseGallery/BaseGallery.module.css';
 
 const mockRAF = () => {
   let lastTime = 0;
@@ -48,23 +47,25 @@ const Slide = ({
   children: React.ReactNode;
   width?: number;
   getRef: React.Ref<HTMLDivElement>;
-  ['data-testid']: string;
 }) => (
-  <div style={{ fontSize: '72px', width }} ref={rest.getRef} data-testid={rest['data-testid']}>
+  <div style={{ fontSize: '72px', width }} ref={rest.getRef}>
     {children}
   </div>
 );
 
-const checkActiveSlide = (container: HTMLElement, slideIndex: number) => {
-  const bullets = Array.from(container.getElementsByClassName(styles.bullet));
-  expect(bullets.indexOf(container.getElementsByClassName(styles.bulletActive)[0])).toBe(
-    slideIndex,
-  );
+const checkActiveSlide = (slideIndex: number) => {
+  expect(screen.queryByTestId(`bullet-${slideIndex}-active`)).toBeTruthy();
 };
 
 const checkTransformX = (value: string, expectedX: number) => {
   const match = value.match(/\((-?\d+(px)?)[,)]/);
   expect(match?.[1] && parseInt(match[1])).toEqual(expectedX);
+};
+
+const getArrows = (): HTMLElement[] => {
+  return [screen.queryByTestId('prev-arrow'), screen.queryByTestId('next-arrow')].filter(
+    Boolean,
+  ) as HTMLElement[];
 };
 
 const setup = ({
@@ -163,13 +164,13 @@ const setup = ({
       slideWidth={isCustomSlideWidth ? 'custom' : undefined}
       getRootRef={mockContainerData}
       getRef={mockViewportData}
+      slideTestId={(index) => `slide-${index + 1}`}
+      bulletTestId={(index, active) => (active ? `bullet-${index}-active` : `bullet-${index}`)}
+      prevArrowTestId="prev-arrow"
+      nextArrowTestId="next-arrow"
     >
       {Array.from({ length: numberOfSlides }).map((_v, index) => (
-        <Slide
-          key={index}
-          data-testid={`slide-${index + 1}`}
-          getRef={(e: HTMLDivElement) => mockSlideData(e, index)}
-        >
+        <Slide key={index} getRef={(e: HTMLDivElement) => mockSlideData(e, index)}>
           {index + 1}
         </Slide>
       ))}
@@ -290,21 +291,18 @@ describe('Gallery', () => {
         onNext,
         onChange,
       });
-      const {
-        component: { container },
-        rerender,
-      } = mockedData;
+      const { rerender } = mockedData;
 
-      checkActiveSlide(container, 1);
+      checkActiveSlide(1);
 
-      const [leftArrow, rightArrow] = Array.from(container.getElementsByClassName(styles.arrow));
+      const [leftArrow, rightArrow] = getArrows();
       fireEvent.click(rightArrow);
 
       expect(onNext).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[2]]);
 
       rerender({ slideIndex: 2 });
-      checkActiveSlide(container, 2);
+      checkActiveSlide(2);
       checkTransformX(mockedData.layerTransform, -400);
 
       fireEvent.click(leftArrow);
@@ -313,7 +311,7 @@ describe('Gallery', () => {
       expect(onChange.mock.calls).toEqual([[2], [1]]);
 
       rerender({ slideIndex: 1 });
-      checkActiveSlide(container, 1);
+      checkActiveSlide(1);
       checkTransformX(mockedData.layerTransform, -200);
     });
 
@@ -332,11 +330,8 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const {
-        component: { container },
-      } = mockedData;
 
-      checkActiveSlide(container, 0);
+      checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [2, 0]);
 
@@ -402,12 +397,9 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const {
-        component: { container },
-        rerender,
-      } = mockedData;
+      const { rerender } = mockedData;
 
-      checkActiveSlide(container, 0);
+      checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [150, 0]);
 
@@ -417,7 +409,7 @@ describe('Gallery', () => {
       rerender({ slideIndex: 1 });
 
       checkTransformX(mockedData.layerTransform, -180);
-      checkActiveSlide(container, 1);
+      checkActiveSlide(1);
 
       simulateDrag(mockedData.viewPort, [0, 150]);
 
@@ -427,7 +419,7 @@ describe('Gallery', () => {
       rerender({ slideIndex: 0 });
 
       checkTransformX(mockedData.layerTransform, 0);
-      checkActiveSlide(container, 0);
+      checkActiveSlide(0);
     });
 
     it('check correct navigation by dragging with align right', () => {
@@ -447,11 +439,8 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const {
-        component: { container },
-      } = mockedData;
 
-      checkActiveSlide(container, 0);
+      checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [150, 0]);
 
@@ -475,11 +464,8 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const {
-        component: { container },
-      } = mockedData;
 
-      checkActiveSlide(container, 0);
+      checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [10, 0]);
 
@@ -503,12 +489,9 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const {
-        component: { container },
-        rerender,
-      } = mockedData;
+      const { rerender } = mockedData;
 
-      checkActiveSlide(container, 4);
+      checkActiveSlide(4);
 
       simulateDrag(mockedData.viewPort, [200, 0]);
 
@@ -541,21 +524,18 @@ describe('Gallery', () => {
         onNext,
         onChange,
       });
-      const {
-        component: { container },
-        rerender,
-      } = mockedData;
+      const { rerender } = mockedData;
 
-      checkActiveSlide(container, 0);
+      checkActiveSlide(0);
 
-      const [leftArrow, rightArrow] = Array.from(container.getElementsByClassName(styles.arrow));
+      const [leftArrow, rightArrow] = getArrows();
       fireEvent.click(leftArrow);
 
       expect(onPrev).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[4]]);
 
       rerender({ slideIndex: 4 });
-      checkActiveSlide(container, 4);
+      checkActiveSlide(4);
       checkTransformX(mockedData.layerTransform, -800);
 
       fireEvent.click(rightArrow);
@@ -564,7 +544,7 @@ describe('Gallery', () => {
       expect(onChange.mock.calls).toEqual([[4], [0]]);
 
       rerender({ slideIndex: 0 });
-      checkActiveSlide(container, 0);
+      checkActiveSlide(0);
       checkTransformX(mockedData.layerTransform, 0);
     });
 
@@ -584,12 +564,9 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const {
-        component: { container },
-        rerender,
-      } = mockedData;
+      const { rerender } = mockedData;
 
-      checkActiveSlide(container, 0);
+      checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [0, 150]);
 
@@ -600,7 +577,7 @@ describe('Gallery', () => {
 
       checkTransformX(mockedData.layerTransform, -710);
       checkTransformX(mockedData.getSlideMockData(0).transform, 900);
-      checkActiveSlide(container, 4);
+      checkActiveSlide(4);
 
       simulateDrag(mockedData.viewPort, [150, 0]);
 
@@ -611,7 +588,7 @@ describe('Gallery', () => {
 
       checkTransformX(mockedData.layerTransform, 10);
       checkTransformX(mockedData.getSlideMockData(0).transform, 0);
-      checkActiveSlide(container, 0);
+      checkActiveSlide(0);
     });
 
     it('check dev error when slides width incorrect', () => {
@@ -657,13 +634,10 @@ describe('Gallery', () => {
       onDragEnd,
       onChange,
     });
-    const {
-      component: { container },
-      rerender,
-    } = mockedData;
+    const { rerender } = mockedData;
 
-    checkActiveSlide(container, 1);
-    expect(Array.from(container.getElementsByClassName(styles.arrow))).toHaveLength(1);
+    checkActiveSlide(1);
+    expect(getArrows()).toHaveLength(1);
 
     simulateDrag(mockedData.viewPort, [150, 0]);
 
@@ -680,7 +654,7 @@ describe('Gallery', () => {
 
     rerender({ slideIndex: 2 });
 
-    expect(Array.from(container.getElementsByClassName(styles.arrow))).toHaveLength(1);
+    expect(getArrows()).toHaveLength(1);
 
     simulateDrag(mockedData.viewPort, [150, 0]);
 
@@ -695,7 +669,7 @@ describe('Gallery', () => {
 
     rerender({ slideIndex: 2 });
 
-    expect(Array.from(container.getElementsByClassName(styles.arrow))).toHaveLength(0);
+    expect(getArrows()).toHaveLength(0);
 
     simulateDrag(mockedData.viewPort, [150, 0]);
 
