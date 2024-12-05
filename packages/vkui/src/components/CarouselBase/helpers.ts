@@ -1,6 +1,24 @@
-import type { GallerySlidesState } from '../types';
+import { type AlignType } from '../../types';
 import { SLIDE_THRESHOLD } from './constants';
-import type { LoopPoint, SlidesManagerState } from './types';
+import {
+  type GallerySlidesState,
+  type LayoutState,
+  type LoopPoint,
+  type SlidesManagerState,
+} from './types';
+
+const validateIndent = (slidesManager: SlidesManagerState, value: number) => {
+  const localMax = slidesManager.max ?? 0;
+  const localMin = slidesManager.min ?? 0;
+
+  if (value < localMin) {
+    return localMin;
+  } else if (value > localMax) {
+    return localMax;
+  }
+
+  return value;
+};
 
 /*
  * Считает отступ слоя галереи
@@ -8,7 +26,8 @@ import type { LoopPoint, SlidesManagerState } from './types';
 export function calculateIndent(
   targetIndex: number,
   slidesManager: SlidesManagerState,
-  isCenterWithCustomWidth: boolean,
+  isCenter: boolean,
+  looped = false,
 ): number {
   if (slidesManager.isFullyVisible || !slidesManager.slides.length) {
     return 0;
@@ -19,11 +38,11 @@ export function calculateIndent(
   if (targetSlide) {
     const { coordX, width } = targetSlide;
 
-    if (isCenterWithCustomWidth) {
-      return slidesManager.viewportOffsetWidth / 2 - coordX - width / 2;
+    if (isCenter) {
+      return slidesManager.containerWidth / 2 - coordX - width / 2;
     }
-
-    return -1 * coordX;
+    const indent = -1 * coordX;
+    return looped ? indent : validateIndent(slidesManager, indent);
   }
 
   return 0;
@@ -109,6 +128,7 @@ export function getTargetIndex(
   slideIndex: number,
   currentShiftX: number,
   currentShiftXDelta: number,
+  looped = false,
 ): number {
   const shift = currentShiftX + currentShiftXDelta;
   const direction = currentShiftXDelta < 0 ? 1 : -1;
@@ -130,6 +150,10 @@ export function getTargetIndex(
       }
       return targetIndex;
     }
+    if (!looped) {
+      return direction < 0 ? Math.max(targetIndex, 0) : Math.min(targetIndex, slides.length - 1);
+    }
+
     return direction < 0
       ? (targetSlide + slides.length) % slides.length
       : targetSlide % slides.length;
@@ -137,3 +161,39 @@ export function getTargetIndex(
 
   return targetIndex;
 }
+
+interface CalcMin extends Partial<LayoutState> {
+  align: AlignType;
+}
+
+export const calcMin = ({
+  containerWidth = 0,
+  layerWidth = 0,
+  slides = [],
+  viewportOffsetWidth = 0,
+  align,
+}: CalcMin): number => {
+  switch (align) {
+    case 'left':
+      return containerWidth - layerWidth;
+    case 'right':
+      return viewportOffsetWidth - layerWidth;
+    case 'center':
+      const { coordX, width } = slides[slides.length - 1];
+      return containerWidth / 2 - coordX - width / 2;
+    default:
+      throw new Error(`unknown align ${align}`);
+  }
+};
+
+interface CalcMax extends Partial<LayoutState> {
+  isCenterAlign: boolean;
+}
+
+export const calcMax = ({ slides = [], containerWidth = 0, isCenterAlign }: CalcMax): number => {
+  if (isCenterAlign && slides.length) {
+    const { width, coordX } = slides[0];
+    return containerWidth / 2 - coordX - width / 2;
+  }
+  return 0;
+};

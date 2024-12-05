@@ -2,29 +2,33 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
-import { useExternRef } from '../../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../../hooks/useGlobalEventListener';
-import { useMutationObserver } from '../../../hooks/useMutationObserver';
-import { useDOM } from '../../../lib/dom';
-import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
-import { warnOnce } from '../../../lib/warnOnce';
-import { RootComponent } from '../../RootComponent/RootComponent';
-import { type CustomTouchEvent } from '../../Touch/Touch';
-import { Bullets } from '../Bullets';
-import { GalleryViewPort } from '../GalleryViewPort';
-import { ScrollArrows } from '../ScrollArrows';
-import { type BaseGalleryProps, type GallerySlidesState } from '../types';
+import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useMutationObserver } from '../../hooks/useMutationObserver';
+import { useDOM } from '../../lib/dom';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { warnOnce } from '../../lib/warnOnce';
+import { RootComponent } from '../RootComponent/RootComponent';
+import { type CustomTouchEvent } from '../Touch/Touch';
+import { Bullets } from './Bullets';
+import { CarouselViewPort } from './CarouselViewPort';
+import { ScrollArrows } from './ScrollArrows';
 import {
   ANIMATION_DURATION,
   CONTROL_ELEMENTS_STATE,
   SLIDE_THRESHOLD,
   SLIDES_MANAGER_STATE,
 } from './constants';
-import { calculateIndent, getLoopPoints, getTargetIndex } from './helpers';
+import { calcMax, calcMin, calculateIndent, getLoopPoints, getTargetIndex } from './helpers';
 import { useSlideAnimation } from './hooks';
-import type { ControlElementsState, SlidesManagerState } from './types';
-import styles from '../BaseGallery.module.css';
+import {
+  type BaseGalleryProps,
+  type ControlElementsState,
+  type GallerySlidesState,
+  type SlidesManagerState,
+} from './types';
+import styles from './CarouselBase.module.css';
 
 const warn = warnOnce('Gallery');
 
@@ -49,6 +53,7 @@ export const CarouselBase = ({
   bulletTestId,
   nextArrowTestId,
   prevArrowTestId,
+  looped = false,
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -62,6 +67,7 @@ export const CarouselBase = ({
   const shiftXDeltaRef = React.useRef<number>(0);
   const initialized = React.useRef<boolean>(false);
   const { addToAnimationQueue, getAnimateFunction, startAnimation } = useSlideAnimation();
+  const isDragging = React.useRef(false);
 
   const [controlElementsState, setControlElementsState] =
     React.useState<ControlElementsState>(CONTROL_ELEMENTS_STATE);
@@ -69,20 +75,71 @@ export const CarouselBase = ({
   const { window } = useDOM();
   const hasPointer = useAdaptivityHasPointer();
 
-  const isCenterWithCustomWidth = slideWidth === 'custom' && align === 'center';
+  const isCenterAlign = align === 'center';
+
+  /*
+   * Считает отступ слоя галереи во время драга
+   * Используется только для looped=false галереи
+   * так как только у нее есть пределы по краям
+   */
+  const calculateDragIndent = () => {
+    const localMax = slidesManager.current.max ?? 0;
+    const localMin = slidesManager.current.min ?? 0;
+    const indent = shiftXCurrentRef.current + shiftXDeltaRef.current;
+
+    if (indent > localMax) {
+      return localMax + Number((indent - localMax) / 3);
+    } else if (indent < localMin) {
+      return localMin + Number((indent - localMin) / 3);
+    }
+
+    return indent;
+  };
+
+  const calculateCanSlideLeft = () => {
+    if (looped) {
+      return !slidesManager.current.isFullyVisible;
+    }
+    return !slidesManager.current.isFullyVisible && shiftXCurrentRef.current < 0;
+  };
+
+  const calculateCanSlideRight = () => {
+    if (looped) {
+      return !slidesManager.current.isFullyVisible;
+    }
+    return (
+      !slidesManager.current.isFullyVisible &&
+      // we can't move right when gallery layer fully scrolled right, if gallery aligned by left side
+      ((align === 'left' &&
+        slidesManager.current.containerWidth - shiftXCurrentRef.current <
+          (slidesManager.current.layerWidth ?? 0)) ||
+        // otherwise we need to check current slide index (align = right or align = center)
+        (align !== 'left' && slideIndex < slidesManager.current.slides.length - 1))
+    );
+  };
 
   const transformCssStyles = (shiftX: number, animation = false) => {
     shiftX = Math.round(shiftX);
-    slidesManager.current.loopPoints.forEach((loopPoint) => {
-      const { target, index } = loopPoint;
-      const slide = slidesStore.current[index];
-      if (slide) {
-        slide.style.transform = `translate3d(${target(shiftX)}px, 0, 0)`;
-      }
-    });
+    if (looped) {
+      slidesManager.current.loopPoints.forEach((loopPoint) => {
+        const { target, index } = loopPoint;
+        const slide = slidesStore.current[index];
+        if (slide) {
+          slide.style.transform = `translate3d(${target(shiftX)}px, 0, 0)`;
+        }
+      });
+    } else {
+      Object.values(slidesStore.current).forEach((slide) => {
+        if (slide) {
+          slide.style.transform = '';
+        }
+      });
+    }
 
     if (layerRef.current) {
-      layerRef.current.style.transform = `translate3d(${shiftX}px, 0, 0)`;
+      const indent = isDragging.current && !looped ? calculateDragIndent() : shiftX;
+
+      layerRef.current.style.transform = `translate3d(${indent}px, 0, 0)`;
       layerRef.current.style.transition = animation
         ? `transform ${ANIMATION_DURATION}ms cubic-bezier(.1, 0, .25, 1)`
         : '';
@@ -96,13 +153,13 @@ export const CarouselBase = ({
       cancelAnimationFrame(animationFrameRef.current);
     }
     animationFrameRef.current = requestAnimationFrame(() => {
-      if (shiftX > snaps[0]) {
+      if (looped && shiftX > snaps[0]) {
         shiftXCurrentRef.current = -contentSize + snaps[0];
         shiftX = shiftXCurrentRef.current + shiftXDeltaRef.current;
       }
       const lastPoint = slides[slides.length - 1].width + slides[slides.length - 1].coordX;
 
-      if (shiftX <= -lastPoint) {
+      if (looped && shiftX <= -lastPoint) {
         shiftXCurrentRef.current = Math.abs(shiftXDeltaRef.current) + snaps[0];
       }
       transformCssStyles(shiftX, animation);
@@ -142,25 +199,33 @@ export const CarouselBase = ({
         );
       }
     }
-    if (align === 'center') {
-      const firstSlideShift = (containerWidth - localSlides[0].width) / 2;
-      localSlides = localSlides.map((item) => {
-        return {
-          width: item.width,
-          coordX: item.coordX - firstSlideShift,
-        };
-      });
-    }
 
     slidesManager.current = {
       ...slidesManager.current,
+      layerWidth,
+      containerWidth,
       viewportOffsetWidth,
       slides: localSlides,
       isFullyVisible: layerWidth <= containerWidth,
+      max: looped
+        ? null
+        : calcMax({
+            slides: localSlides,
+            containerWidth,
+            isCenterAlign,
+          }),
+      min: looped
+        ? null
+        : calcMin({
+            containerWidth,
+            layerWidth,
+            slides: localSlides,
+            viewportOffsetWidth,
+            align,
+          }),
     };
-
     const snaps = localSlides.map((_, index) =>
-      calculateIndent(index, slidesManager.current, isCenterWithCustomWidth),
+      calculateIndent(index, slidesManager.current, isCenterAlign, looped),
     );
 
     let contentSize = -snaps[snaps.length - 1] + localSlides[localSlides.length - 1].width;
@@ -170,17 +235,18 @@ export const CarouselBase = ({
 
     slidesManager.current.snaps = snaps;
     slidesManager.current.contentSize = contentSize;
-    slidesManager.current.loopPoints = getLoopPoints(slidesManager.current, containerWidth);
-
-    setControlElementsState({
-      canSlideLeft: !slidesManager.current.isFullyVisible,
-      canSlideRight: !slidesManager.current.isFullyVisible,
-      isDraggable: !(dragDisabled || slidesManager.current.isFullyVisible),
-    });
+    if (looped) {
+      slidesManager.current.loopPoints = getLoopPoints(slidesManager.current, containerWidth);
+    }
 
     shiftXCurrentRef.current = snaps[slideIndex];
     initialized.current = true;
 
+    setControlElementsState({
+      canSlideLeft: calculateCanSlideLeft(),
+      canSlideRight: calculateCanSlideRight(),
+      isDraggable: !(dragDisabled || slidesManager.current.isFullyVisible),
+    });
     requestTransform(shiftXCurrentRef.current);
   };
 
@@ -192,81 +258,118 @@ export const CarouselBase = ({
 
   useGlobalEventListener(window, 'resize', onResize);
 
+  const loopedSlideChangePerform = () => {
+    const { snaps, slides } = slidesManager.current;
+    const indent = snaps[slideIndex];
+    let startPoint = shiftXCurrentRef.current;
+
+    /**
+     * Переключаемся с последнего элемента на первый
+     * Для корректной анимации мы прокручиваем последний слайд на всю длину (shiftX) "вперед"
+     * В конце анимации при отрисовке следующего кадра задаем всем слайдам начальные значения
+     */
+    if (indent === snaps[0] && shiftXCurrentRef.current <= snaps[snaps.length - 1]) {
+      const distance =
+        Math.abs(snaps[snaps.length - 1]) + slides[slides.length - 1].width + startPoint;
+
+      addToAnimationQueue(
+        getAnimateFunction((progress) => {
+          const shiftX = startPoint + progress * distance * -1;
+
+          transformCssStyles(shiftX);
+
+          if (shiftX <= snaps[snaps.length - 1] - slides[slides.length - 1].width) {
+            requestAnimationFrame(() => {
+              shiftXCurrentRef.current = indent;
+              transformCssStyles(snaps[0]);
+            });
+          }
+        }),
+      );
+      /**
+       * Переключаемся с первого слайда на последний
+       * Для корректной анимации сначала задаем первым видимым слайдам смещение
+       * В следующем кадре начинаем анимация прокрутки "назад"
+       */
+    } else if (indent === snaps[snaps.length - 1] && shiftXCurrentRef.current === snaps[0]) {
+      startPoint = indent - slides[slides.length - 1].width;
+
+      addToAnimationQueue(() => {
+        requestAnimationFrame(() => {
+          const shiftX = indent - slides[slides.length - 1].width;
+          transformCssStyles(shiftX);
+
+          getAnimateFunction((progress) => {
+            transformCssStyles(startPoint + progress * slides[slides.length - 1].width);
+          })();
+        });
+      });
+      /**
+       * Если не обработаны `corner`-кейсы выше, то просто проигрываем анимацию смещения
+       */
+    } else {
+      addToAnimationQueue(() => {
+        const distance = Math.abs(indent - startPoint);
+        let direction = startPoint <= indent ? 1 : -1;
+
+        getAnimateFunction((progress) => {
+          const shiftX = startPoint + progress * distance * direction;
+          transformCssStyles(shiftX);
+        })();
+      });
+    }
+  };
+
+  const simpleSlideChangePerform = () => {
+    const { snaps } = slidesManager.current;
+    const startPoint = shiftXCurrentRef.current;
+    const endPoint = snaps[slideIndex];
+    const distance = endPoint - startPoint;
+    addToAnimationQueue(
+      getAnimateFunction((progress) => transformCssStyles(startPoint + distance * progress)),
+    );
+  };
+
   useIsomorphicLayoutEffect(
     function performSlideChange() {
       if (!initialized.current) {
         return;
       }
-      const { snaps, slides } = slidesManager.current;
+      const { snaps } = slidesManager.current;
       const indent = snaps[slideIndex];
-      let startPoint = shiftXCurrentRef.current;
 
-      /**
-       * Переключаемся с последнего элемента на первый
-       * Для корректной анимации мы прокручиваем последний слайд на всю длину (shiftX) "вперед"
-       * В конце анимации при отрисовке следующего кадра задаем всем слайдам начальные значения
-       */
-      if (indent === snaps[0] && shiftXCurrentRef.current <= snaps[snaps.length - 1]) {
-        const distance =
-          Math.abs(snaps[snaps.length - 1]) + slides[slides.length - 1].width + startPoint;
-
-        addToAnimationQueue(
-          getAnimateFunction((progress) => {
-            const shiftX = startPoint + progress * distance * -1;
-
-            transformCssStyles(shiftX);
-
-            if (shiftX <= snaps[snaps.length - 1] - slides[slides.length - 1].width) {
-              requestAnimationFrame(() => {
-                shiftXCurrentRef.current = indent;
-                transformCssStyles(snaps[0]);
-              });
-            }
-          }),
-        );
-        /**
-         * Переключаемся с первого слайда на последний
-         * Для корректной анимации сначала задаем первым видимым слайдам смещение
-         * В следующем кадре начинаем анимация прокрутки "назад"
-         */
-      } else if (indent === snaps[snaps.length - 1] && shiftXCurrentRef.current === snaps[0]) {
-        startPoint = indent - slides[slides.length - 1].width;
-
-        addToAnimationQueue(() => {
-          requestAnimationFrame(() => {
-            const shiftX = indent - slides[slides.length - 1].width;
-            transformCssStyles(shiftX);
-
-            getAnimateFunction((progress) => {
-              transformCssStyles(startPoint + progress * slides[slides.length - 1].width);
-            })();
-          });
-        });
-        /**
-         * Если не обработаны `corner`-кейсы выше, то просто проигрываем анимацию смещения
-         */
+      if (looped) {
+        loopedSlideChangePerform();
       } else {
-        addToAnimationQueue(() => {
-          const distance = Math.abs(indent - startPoint);
-          let direction = startPoint <= indent ? 1 : -1;
-
-          getAnimateFunction((progress) => {
-            const shiftX = startPoint + progress * distance * direction;
-            transformCssStyles(shiftX);
-          })();
-        });
+        simpleSlideChangePerform();
       }
 
       startAnimation();
 
       shiftXCurrentRef.current = indent;
+
+      setControlElementsState((v) => ({
+        ...v,
+        canSlideLeft: calculateCanSlideLeft(),
+        canSlideRight: calculateCanSlideRight(),
+      }));
     },
     [slideIndex],
   );
 
+  useIsomorphicLayoutEffect(
+    function updateIsDraggable() {
+      setControlElementsState((v) => ({
+        ...v,
+        isDraggable: !(dragDisabled || slidesManager.current.isFullyVisible),
+      }));
+    },
+    [dragDisabled],
+  );
+
   useMutationObserver(layerRef, initializeSlides);
 
-  useIsomorphicLayoutEffect(initializeSlides, [align, slideWidth]);
+  useIsomorphicLayoutEffect(initializeSlides, [align, slideWidth, looped]);
 
   const calculateMinDeltaXToSlide = () => {
     return slidesManager.current.slides[slideIndex].width * SLIDE_THRESHOLD;
@@ -304,6 +407,7 @@ export const CarouselBase = ({
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
+        isDragging.current = true;
         if (shiftXDeltaRef.current !== e.shiftX) {
           shiftXDeltaRef.current = e.shiftX;
           requestTransform(shiftXCurrentRef.current + shiftXDeltaRef.current);
@@ -314,6 +418,7 @@ export const CarouselBase = ({
 
   const onEnd = (e: CustomTouchEvent) => {
     if (controlElementsState.isDraggable) {
+      isDragging.current = false;
       let targetIndex = slideIndex;
       if (e.isSlide) {
         targetIndex = getTargetIndex(
@@ -321,6 +426,7 @@ export const CarouselBase = ({
           slideIndex,
           shiftXCurrentRef.current,
           shiftXDeltaRef.current,
+          looped,
         );
       }
       onDragEnd?.(e, targetIndex);
@@ -339,7 +445,7 @@ export const CarouselBase = ({
     slidesStore.current[slideIndex] = slideRef;
   };
 
-  const { canSlideLeft, canSlideRight, isDraggable } = controlElementsState;
+  const { isDraggable, canSlideRight, canSlideLeft } = controlElementsState;
 
   return (
     <RootComponent
@@ -351,7 +457,7 @@ export const CarouselBase = ({
       )}
       getRootRef={rootRef}
     >
-      <GalleryViewPort
+      <CarouselViewPort
         slideWidth={slideWidth}
         slideTestId={slideTestId}
         onStart={onStart}
@@ -362,7 +468,7 @@ export const CarouselBase = ({
         setSlideRef={setSlideRef}
       >
         {children}
-      </GalleryViewPort>
+      </CarouselViewPort>
 
       {bullets && (
         <Bullets

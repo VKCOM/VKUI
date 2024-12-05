@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import { type BaseGalleryProps } from './types';
-import styles from './BaseGallery.module.css';
+import styles from './CarouselBase.module.css';
 
 const stylesArrowAreaHeight = {
   stretch: styles.arrowAreaStretch,

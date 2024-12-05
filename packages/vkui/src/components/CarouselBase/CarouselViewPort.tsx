@@ -4,7 +4,7 @@ import * as React from 'react';
 import { type HasChildren } from '../../types';
 import { type CustomTouchEvent, Touch } from '../Touch/Touch';
 import { type BaseGalleryProps } from './types';
-import styles from './BaseGallery.module.css';
+import styles from './CarouselBase.module.css';
 
 type GalleryViewPortProps = Pick<BaseGalleryProps, 'slideWidth' | 'slideTestId'> &
   HasChildren & {
@@ -14,10 +14,9 @@ type GalleryViewPortProps = Pick<BaseGalleryProps, 'slideWidth' | 'slideTestId'>
     viewportRef: React.Ref<HTMLElement>;
     setSlideRef: (slideRef: HTMLDivElement | null, slideIndex: number) => void;
     layerRef?: React.Ref<HTMLDivElement>;
-    layerStyle?: React.CSSProperties;
   };
 
-export const GalleryViewPort: React.FC<GalleryViewPortProps> = ({
+export const CarouselViewPort: React.FC<GalleryViewPortProps> = ({
   slideTestId,
   slideWidth,
   onStart,
@@ -25,7 +24,6 @@ export const GalleryViewPort: React.FC<GalleryViewPortProps> = ({
   onEnd,
   viewportRef,
   layerRef,
-  layerStyle,
   children,
   setSlideRef,
 }) => {
@@ -39,7 +37,7 @@ export const GalleryViewPort: React.FC<GalleryViewPortProps> = ({
       getRootRef={viewportRef}
       noSlideClick
     >
-      <div className={styles.layer} ref={layerRef} style={layerStyle}>
+      <div className={styles.layer} ref={layerRef}>
         {React.Children.map(children, (item: React.ReactNode, i: number) => (
           <div
             className={styles.slide}
