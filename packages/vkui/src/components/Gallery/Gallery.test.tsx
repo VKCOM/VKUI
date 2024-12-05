@@ -439,7 +439,6 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      const {} = mockedData;
 
       checkActiveSlide(0);
 
@@ -464,8 +463,7 @@ describe('Gallery', () => {
         onDragStart,
         onDragEnd,
         onChange,
-      });
-      const {} = mockedData;
+      })
 
       checkActiveSlide(0);
 
