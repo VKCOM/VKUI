@@ -463,7 +463,7 @@ describe('Gallery', () => {
         onDragStart,
         onDragEnd,
         onChange,
-      })
+      });
 
       checkActiveSlide(0);
 
