@@ -3,6 +3,8 @@ import { SegmentedControlOption } from './SegmentedControlOption';
 
 describe('SegmentedControlOption', () => {
   baselineComponent((props) => (
-    <SegmentedControlOption {...props}>SegmentedControlOption</SegmentedControlOption>
+    <SegmentedControlOption {...props} role="radio">
+      SegmentedControlOption
+    </SegmentedControlOption>
   ));
 });
