@@ -54,9 +54,11 @@
 .contentAlignStart {
   justify-content: flex-start;
 }
+
 .contentAlignCenter {
   justify-content: center;
 }
+
 .contentAlignEnd {
   justify-content: flex-end;
 }
