@@ -7,9 +7,9 @@ describe('RichCell', () => {
   baselineComponent((props) => <RichCell {...props}>RichCell</RichCell>);
 
   it.each<[Exclude<RichCellProps['afterAlign'], undefined>, string, string]>([
-    ['start', styles.content, styles.contentAfterAlignStart],
-    ['center', styles.inWrapper, styles.contentAfterAlignCenter],
-    ['end', styles.inWrapper, styles.contentAfterAlignEnd],
+    ['start', styles.content, styles.alignSelfStart],
+    ['center', styles.inWrapper, styles.alignSelfCenter],
+    ['end', styles.inWrapper, styles.alignSelfEnd],
   ])(
     'should have correct position of after element',
     (afterAlign, expectedContainerStyle, alignClassName) => {
@@ -33,6 +33,49 @@ describe('RichCell', () => {
         },
       );
       expect(afterElement).toBeTruthy();
+    },
+  );
+
+  it.each<[Exclude<RichCellProps['contentAlign'], undefined>, string]>([
+    ['start', styles.contentAlignStart],
+    ['center', styles.contentAlignCenter],
+    ['end', styles.contentAlignEnd],
+  ])(
+    'should have correct content alignment',
+    (contentAlign, expectedClassName) => {
+      const { container } = render(
+        <RichCell
+          contentAlign={contentAlign}
+          overTitle="Subhead"
+          subtitle="Text"
+        >
+          Children
+        </RichCell>,
+      );
+      
+      const contentElement = container.getElementsByClassName(styles.contentBefore)[0];
+      expect(contentElement.classList.contains(expectedClassName)).toBeTruthy();
+    },
+  );
+
+  it.each<[Exclude<RichCellProps['beforeAlign'], undefined>, string]>([
+    ['start', styles.alignSelfStart],
+    ['center', styles.alignSelfCenter],
+    ['end', styles.alignSelfEnd],
+  ])(
+    'should have correct before element alignment',
+    (beforeAlign, expectedClassName) => {
+      const { container } = render(
+        <RichCell
+          beforeAlign={beforeAlign}
+          before={<div data-testid="before" />}
+        >
+          Children
+        </RichCell>,
+      );
+      
+      const beforeElement = container.getElementsByClassName(styles.before)[0];
+      expect(beforeElement.classList.contains(expectedClassName)).toBeTruthy();
     },
   );
 });

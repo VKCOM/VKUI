@@ -46,7 +46,19 @@
 }
 
 .contentBefore {
+  display: flex;
+  flex-direction: column;
   min-inline-size: 0;
+}
+
+.contentAlignStart {
+  justify-content: flex-start;
+}
+.contentAlignCenter {
+  justify-content: center;
+}
+.contentAlignEnd {
+  justify-content: flex-end;
 }
 
 .contentAfter {
@@ -61,15 +73,15 @@
   flex-basis: 100px;
 }
 
-.contentAfterAlignStart {
+.alignSelfStart {
   align-self: flex-start;
 }
 
-.contentAfterAlignCenter {
+.alignSelfCenter {
   align-self: center;
 }
 
-.contentAfterAlignEnd {
+.alignSelfEnd {
   align-self: flex-end;
 }
 
