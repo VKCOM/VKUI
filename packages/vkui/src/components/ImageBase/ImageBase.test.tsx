@@ -220,6 +220,15 @@ describe(ImageBase, () => {
     render(<ImageBaseTest fallbackIcon={<Icon20Add />} size={28} />);
     expect(logStub).toHaveBeenCalledTimes(1);
   });
+
+  it('should apply custom objectPosition style', () => {
+    render(<ImageBaseTest src="#" objectPosition="center bottom" />);
+
+    expect(getImageBaseImgEl()).toHaveClass(styles.withObjectPosition);
+    expect(getImageBaseImgEl()).toHaveStyle({
+      '--vkui_internal--ImageBase_object_position': 'center bottom',
+    });
+  });
 });
 
 describe(getOverlayIconSizeByImageBaseSize, () => {
