@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { animate, type DrawInterface } from '../../../lib/animate';
-import { cubicBezier } from '../../../lib/fx';
+import { animate, type DrawInterface } from '../../lib/animate';
+import { cubicBezier } from '../../lib/fx';
 import { ANIMATION_DURATION } from './constants';
 
 const TIMING_FUNCTION = cubicBezier(0.8, 1);

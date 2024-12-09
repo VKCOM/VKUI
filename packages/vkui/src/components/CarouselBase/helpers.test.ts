@@ -17,6 +17,7 @@ const createSlidesManager = ({
   loopPoints,
   snaps,
   slides,
+  containerWidth,
 }: Partial<SlidesManagerState> & {
   slidesCount?: number;
   slideWidth?: number;
@@ -33,6 +34,10 @@ const createSlidesManager = ({
         coordX: index * (slideWidth || 100),
         width: slideWidth || 100,
       })),
+    min: 0,
+    max: 0,
+    containerWidth: containerWidth || 0,
+    layerWidth: 0,
   };
 };
 
@@ -44,17 +49,18 @@ describe(calculateIndent, () => {
         slideWidth: 200,
       }),
       targetIndex: 4,
-      isCenterWithCustomWidth: false,
+      isCenterAlign: false,
       result: -800,
     },
     {
       slidesManager: createSlidesManager({
         slidesCount: 5,
         slideWidth: 200,
+        containerWidth: 200,
       }),
       targetIndex: 4,
-      isCenterWithCustomWidth: true,
-      result: -750,
+      isCenterAlign: true,
+      result: -800,
     },
     {
       slidesManager: createSlidesManager({
@@ -62,7 +68,7 @@ describe(calculateIndent, () => {
         slideWidth: 200,
       }),
       targetIndex: 3,
-      isCenterWithCustomWidth: false,
+      isCenterAlign: false,
       result: 0,
     },
     {
@@ -70,7 +76,7 @@ describe(calculateIndent, () => {
         isFullyVisible: true,
       }),
       targetIndex: 3,
-      isCenterWithCustomWidth: false,
+      isCenterAlign: false,
       result: 0,
     },
     {
@@ -79,13 +85,13 @@ describe(calculateIndent, () => {
         slides: [],
       }),
       targetIndex: 3,
-      isCenterWithCustomWidth: false,
+      isCenterAlign: false,
       result: 0,
     },
   ])(
     'should return $result when targetIndex $targetIndex and isCenterWithCustomWidth $isCenterWithCustomWidth',
-    ({ slidesManager, result, isCenterWithCustomWidth, targetIndex }) => {
-      expect(calculateIndent(targetIndex, slidesManager, isCenterWithCustomWidth)).toBe(result);
+    ({ slidesManager, result, isCenterAlign, targetIndex }) => {
+      expect(calculateIndent(targetIndex, slidesManager, isCenterAlign, true)).toBe(result);
     },
   );
 });
@@ -188,7 +194,7 @@ describe(getTargetIndex, () => {
   ])(
     'should return $resultIndex with slideIndex $slideIndex, currentShiftX $currentShiftX, currentShiftXDelta $currentShiftXDelta',
     ({ slides, slideIndex, currentShiftX, currentShiftXDelta, resultIndex }) => {
-      expect(getTargetIndex(slides, slideIndex, currentShiftX, currentShiftXDelta)).toBe(
+      expect(getTargetIndex(slides, slideIndex, currentShiftX, currentShiftXDelta, true)).toBe(
         resultIndex,
       );
     },
