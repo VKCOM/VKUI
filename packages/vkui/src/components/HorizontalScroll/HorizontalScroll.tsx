@@ -52,6 +52,14 @@ export interface HorizontalScrollProps
    * По умолчанию прокручивается как любой горизонтальный контент через shift.
    */
   scrollOnAnyWheel?: boolean;
+  /**
+   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении начала
+   */
+  startArrowTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении конца
+   */
+  endArrowTestId?: string;
 }
 
 /**
@@ -167,6 +175,8 @@ export const HorizontalScroll = ({
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
   scrollOnAnyWheel = false,
+  startArrowTestId,
+  endArrowTestId,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
@@ -273,7 +283,7 @@ export const HorizontalScroll = ({
     >
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
         <ScrollArrow
-          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrowLeft' : undefined}
+          data-testid={startArrowTestId}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="left"
@@ -286,7 +296,7 @@ export const HorizontalScroll = ({
       )}
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
         <ScrollArrow
-          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrowRight' : undefined}
+          data-testid={endArrowTestId}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="right"
