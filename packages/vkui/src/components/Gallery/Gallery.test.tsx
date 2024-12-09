@@ -204,6 +204,37 @@ const setup = ({
   };
 };
 
+const mockResizeObserver = () => {
+  const callbacks = new Set<ResizeObserverCallback>();
+
+  class MockResizeObserver implements ResizeObserver {
+    constructor(callback: ResizeObserverCallback) {
+      callbacks.add(callback);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    observe() {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    unobserve() {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    disconnect() {}
+  }
+
+  const originalResizeObserver = window.ResizeObserver;
+  window.ResizeObserver = MockResizeObserver;
+
+  return {
+    triggerResize: () => {
+      callbacks.forEach((callback) => {
+        callback([], {} as unknown as ResizeObserver);
+      });
+    },
+    restore: () => {
+      window.ResizeObserver = originalResizeObserver;
+    },
+  };
+};
+
 describe('Gallery', () => {
   baselineComponent(Gallery);
   describe('handles slide count', () => {
@@ -348,8 +379,9 @@ describe('Gallery', () => {
       }
     });
 
-    it('should resize when window resize', () => {
+    it('should resize when container resizes', () => {
       const onChange = jest.fn();
+      const { triggerResize, restore } = mockResizeObserver();
 
       const mockedData = setup({
         looped,
@@ -368,12 +400,14 @@ describe('Gallery', () => {
 
       mockedData.containerWidth = 250;
 
-      fireEvent.resize(window);
+      triggerResize();
 
       if (looped) {
         expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
         expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
       }
+
+      restore();
     });
   });
 

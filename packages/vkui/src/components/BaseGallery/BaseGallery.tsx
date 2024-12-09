@@ -5,6 +5,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -59,6 +60,7 @@ export const BaseGallery = ({
   prevArrowTestId,
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
+  const { window } = useDOM();
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
   const layoutState = React.useRef<LayoutState>(LAYOUT_DEFAULT_STATE);
   const [shiftState, setShiftState] = React.useState<ShiftingState>(SHIFT_DEFAULT_STATE);
@@ -66,7 +68,6 @@ export const BaseGallery = ({
   const rootRef = useExternRef(getRootRef);
   const viewportRef = useExternRef(getRef);
 
-  const { window } = useDOM();
   const hasPointer = useAdaptivityHasPointer();
 
   const isCenterWithCustomWidth = slideWidth === 'custom' && align === 'center';
@@ -186,8 +187,10 @@ export const BaseGallery = ({
       initializeSlides({ animation: false });
     }
   };
-
-  useGlobalEventListener(window, 'resize', onResize);
+  const canUseResizeObserver =
+    window && 'ResizeObserver' in window && window.ResizeObserver !== undefined;
+  useResizeObserver(canUseResizeObserver ? rootRef : null, onResize);
+  useGlobalEventListener(canUseResizeObserver ? null : window, 'resize', onResize);
 
   useIsomorphicLayoutEffect(() => {
     initializeSlides({ animation: false });
