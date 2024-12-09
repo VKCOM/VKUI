@@ -4,8 +4,10 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useExternRef } from '../../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../../hooks/useGlobalEventListener';
 import { useMutationObserver } from '../../../hooks/useMutationObserver';
 import { useResizeObserver } from '../../../hooks/useResizeObserver';
+import { useDOM } from '../../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../../lib/warnOnce';
 import { RootComponent } from '../../RootComponent/RootComponent';
@@ -50,6 +52,7 @@ export const CarouselBase = ({
   prevArrowTestId,
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
+  const { window } = useDOM();
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
   const slidesManager = React.useRef<SlidesManagerState>(SLIDES_MANAGER_STATE);
 
@@ -187,7 +190,10 @@ export const CarouselBase = ({
       initializeSlides();
     }
   };
-  useResizeObserver(rootRef, onResize);
+  const canUseResizeObserver =
+    window && 'ResizeObserver' in window && window.ResizeObserver !== undefined;
+  useResizeObserver(canUseResizeObserver ? rootRef : null, onResize);
+  useGlobalEventListener(canUseResizeObserver ? null : window, 'resize', onResize);
 
   useIsomorphicLayoutEffect(
     function performSlideChange() {
