@@ -4,8 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { useDOM } from '../../lib/dom';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { type CustomTouchEvent } from '../Touch/Touch';
@@ -66,7 +65,6 @@ export const BaseGallery = ({
   const rootRef = useExternRef(getRootRef);
   const viewportRef = useExternRef(getRef);
 
-  const { window } = useDOM();
   const hasPointer = useAdaptivityHasPointer();
 
   const isCenterWithCustomWidth = slideWidth === 'custom' && align === 'center';
@@ -187,7 +185,7 @@ export const BaseGallery = ({
     }
   };
 
-  useGlobalEventListener(window, 'resize', onResize);
+  useResizeObserver(rootRef, onResize);
 
   useIsomorphicLayoutEffect(() => {
     initializeSlides({ animation: false });

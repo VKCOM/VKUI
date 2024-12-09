@@ -4,9 +4,8 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useExternRef } from '../../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../../hooks/useGlobalEventListener';
 import { useMutationObserver } from '../../../hooks/useMutationObserver';
-import { useDOM } from '../../../lib/dom';
+import { useResizeObserver } from '../../../hooks/useResizeObserver';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../../lib/warnOnce';
 import { RootComponent } from '../../RootComponent/RootComponent';
@@ -66,7 +65,6 @@ export const CarouselBase = ({
   const [controlElementsState, setControlElementsState] =
     React.useState<ControlElementsState>(CONTROL_ELEMENTS_STATE);
 
-  const { window } = useDOM();
   const hasPointer = useAdaptivityHasPointer();
 
   const isCenterWithCustomWidth = slideWidth === 'custom' && align === 'center';
@@ -189,8 +187,7 @@ export const CarouselBase = ({
       initializeSlides();
     }
   };
-
-  useGlobalEventListener(window, 'resize', onResize);
+  useResizeObserver(rootRef, onResize);
 
   useIsomorphicLayoutEffect(
     function performSlideChange() {
