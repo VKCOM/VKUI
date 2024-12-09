@@ -21,7 +21,8 @@ export function useResizeObserver(
         return;
       }
       const element = ref.current;
-      const canUseResizeObserver = 'ResizeObserver' in window;
+      const canUseResizeObserver =
+        'ResizeObserver' in window && window.ResizeObserver !== undefined;
 
       const observeFn = () => stableCallback(element);
 
