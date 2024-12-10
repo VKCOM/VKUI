@@ -2,10 +2,6 @@
   position: absolute;
   z-index: var(--vkui_internal--z_index_image_base_positioned_element);
   transition: opacity 0.3s ease-in-out;
-  inset-inline-start: var(--vkui_internal--FloatElement_inset_inline_start, initial);
-  inset-inline-end: var(--vkui_internal--FloatElement_inset_inline_end, initial);
-  inset-block-start: var(--vkui_internal--FloatElement_inset_block_start, initial);
-  inset-block-end: var(--vkui_internal--FloatElement_inset_block_end, initial);
 
   --vkui_internal--FloatElement_horizontal_indent: 0;
   --vkui_internal--FloatElement_vertical_indent: 0;

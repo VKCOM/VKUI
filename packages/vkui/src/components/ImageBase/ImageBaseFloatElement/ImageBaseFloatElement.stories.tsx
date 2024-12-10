@@ -60,10 +60,9 @@ type Story = StoryObj<ImageBaseFloatElementProps>;
 
 export const Playground: Story = {
   args: {
-    position: {
-      insetInlineEnd: '5%',
-      insetBlockStart: '5%',
-    },
+    placement: 'top-start',
+    blockIndent: '5%',
+    inlineIndent: '5%',
     children: <ContextMenu />,
   },
 };

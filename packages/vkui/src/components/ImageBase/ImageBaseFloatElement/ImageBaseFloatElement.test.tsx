@@ -11,43 +11,6 @@ import styles from './ImageBaseFloatElement.module.css';
 describe(ImageBaseFloatElement, () => {
   baselineComponent(ImageBaseFloatElement);
 
-  it('check component position', () => {
-    render(
-      <ImageBaseFloatElement
-        data-testid="component"
-        position={{
-          insetBlockStart: '10px',
-          insetBlockEnd: '10px',
-          insetInlineEnd: '20px',
-          insetInlineStart: '20px',
-        }}
-      />,
-    );
-
-    expect(screen.getByTestId('component')).not.toHaveClass(styles['FloatElement--hidden']);
-
-    expect(
-      screen
-        .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--FloatElement_inset_block_start'),
-    ).toBe('10px');
-    expect(
-      screen
-        .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--FloatElement_inset_block_end'),
-    ).toBe('10px');
-    expect(
-      screen
-        .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--FloatElement_inset_inline_start'),
-    ).toBe('20px');
-    expect(
-      screen
-        .getByTestId('component')
-        .style.getPropertyValue('--vkui_internal--FloatElement_inset_inline_end'),
-    ).toBe('20px');
-  });
-
   it('check visibility on image hover', async () => {
     render(
       <>
@@ -55,12 +18,7 @@ describe(ImageBaseFloatElement, () => {
           <ImageBaseFloatElement
             data-testid="component"
             visibility="on-hover"
-            position={{
-              insetBlockStart: '10px',
-              insetBlockEnd: '10px',
-              insetInlineEnd: '20px',
-              insetInlineStart: '20px',
-            }}
+            placement="top-start"
           />
         </Image>
       </>,
@@ -105,7 +63,7 @@ describe(ImageBaseFloatElement, () => {
   }));
 
   it.each(placementFixtures)('should have placement className %j', ({ placement, className }) => {
-    render(<ImageBaseFloatElement data-testid="component" position={placement} />);
+    render(<ImageBaseFloatElement data-testid="component" placement={placement} />);
     expect(screen.getByTestId('component')).toHaveClass(className);
   });
 
@@ -128,7 +86,7 @@ describe(ImageBaseFloatElement, () => {
     'should have horizontal indentation className %j',
     ({ indent, className }) => {
       render(
-        <ImageBaseFloatElement data-testid="component" position="top" inlineIndent={indent} />,
+        <ImageBaseFloatElement data-testid="component" placement="top" inlineIndent={indent} />,
       );
       expect(screen.getByTestId('component')).toHaveClass(className);
     },
@@ -152,7 +110,9 @@ describe(ImageBaseFloatElement, () => {
   it.each(verticalIndentationFixtures)(
     'should have vertical indentation className %j',
     ({ indent, className }) => {
-      render(<ImageBaseFloatElement data-testid="component" position="top" blockIndent={indent} />);
+      render(
+        <ImageBaseFloatElement data-testid="component" placement="top" blockIndent={indent} />,
+      );
       expect(screen.getByTestId('component')).toHaveClass(className);
     },
   );
@@ -161,7 +121,7 @@ describe(ImageBaseFloatElement, () => {
     render(
       <ImageBaseFloatElement
         data-testid="component"
-        position="top"
+        placement="top"
         blockIndent={10}
         inlineIndent={15}
       />,
@@ -183,7 +143,7 @@ describe(ImageBaseFloatElement, () => {
     render(
       <ImageBaseFloatElement
         data-testid="component"
-        position="top"
+        placement="top"
         blockIndent="5%"
         inlineIndent="10%"
       />,

@@ -12,7 +12,6 @@ import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/Image
 import {
   type FloatElementIndentation,
   type FloatElementPlacement,
-  type FloatElementPosition,
   ImageBaseFloatElement,
   type ImageBaseFloatElementProps,
 } from './ImageBaseFloatElement/ImageBaseFloatElement';
@@ -30,7 +29,6 @@ export type {
   ImageBaseContextProps,
   ImageBaseFloatElementProps,
   FloatElementPlacement,
-  FloatElementPosition,
   FloatElementIndentation,
 };
 

@@ -20,13 +20,6 @@ export type FloatElementPlacement =
   | 'middle'
   | 'middle-end';
 
-export type FloatElementPosition = {
-  insetInlineStart?: React.CSSProperties['insetInlineStart'];
-  insetInlineEnd?: React.CSSProperties['insetInlineEnd'];
-  insetBlockStart?: React.CSSProperties['insetBlockStart'];
-  insetBlockEnd?: React.CSSProperties['insetBlockEnd'];
-};
-
 export type FloatElementIndentation =
   | '2xs'
   | 'xs'
@@ -80,7 +73,7 @@ export interface ImageBaseFloatElementProps extends HTMLAttributesWithRootRef<HT
   /**
    * Позиция компонента относительно родителя
    */
-  position: FloatElementPlacement | FloatElementPosition;
+  placement: FloatElementPlacement;
   /**
    * Отступ компонента от края контейнера по горизонтали
    */
@@ -99,7 +92,7 @@ export interface ImageBaseFloatElementProps extends HTMLAttributesWithRootRef<HT
 }
 
 export const ImageBaseFloatElement = ({
-  position,
+  placement,
   visibility = 'always',
   style,
   className,
@@ -136,19 +129,6 @@ export const ImageBaseFloatElement = ({
     [visibility],
   );
 
-  const positionStyle = React.useMemo(
-    () =>
-      typeof position === 'object'
-        ? {
-            '--vkui_internal--FloatElement_inset_inline_start': position.insetInlineStart,
-            '--vkui_internal--FloatElement_inset_inline_end': position.insetInlineEnd,
-            '--vkui_internal--FloatElement_inset_block_start': position.insetBlockStart,
-            '--vkui_internal--FloatElement_inset_block_end': position.insetBlockEnd,
-          }
-        : {},
-    [position],
-  );
-
   const [inlineIndentStyle, blockIndentStyle, inlineIndentClassName, blockIndentClassName] =
     React.useMemo(() => {
       const [inlineIndentStyle, inlineIndentClassName] = resolveIndent(
@@ -170,14 +150,13 @@ export const ImageBaseFloatElement = ({
       {...restProps}
       style={{
         ...style,
-        ...positionStyle,
         ...inlineIndentStyle,
         ...blockIndentStyle,
       }}
       className={classNames(
         styles['FloatElement'],
         hidden && styles['FloatElement--hidden'],
-        typeof position === 'string' && positionPlacementClassNames[position],
+        positionPlacementClassNames[placement],
         inlineIndentClassName,
         blockIndentClassName,
         className,

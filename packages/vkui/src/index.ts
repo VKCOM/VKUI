@@ -62,7 +62,6 @@ export type {
   ImageBaseOverlayProps,
   ImageBaseFloatElementProps,
   FloatElementPlacement,
-  FloatElementPosition,
   FloatElementIndentation,
 } from './components/ImageBase/ImageBase';
 

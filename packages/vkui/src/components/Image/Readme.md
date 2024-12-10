@@ -109,7 +109,7 @@ const WithFloatElements = () => {
         <Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн">
           {showContextMenu && (
             <Image.FloatElement
-              position="top-end"
+              placement="top-end"
               inlineIndent="l"
               blockIndent="l"
               visibility={contextMenuOpened ? 'always' : contextMenuVisibility}
