@@ -24,11 +24,11 @@ export interface RemovableProps {
    */
   onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement | null) => void;
   /**
-   * (test) iOS only. testId кнопки, которая активирует кнопку удаления
+   * Передает атрибут `data-testid` для кнопки, которая активирует кнопку удаления(iOS only).
    */
   toggleButtonTestId?: string;
   /**
-   * (test) testId кнопки удаления
+   * Передает атрибут `data-testid` для кнопки удаления.
    */
   removeButtonTestId?: string;
   /**

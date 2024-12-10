@@ -221,7 +221,7 @@ export interface SelectProps<
    */
   allowClearButton?: boolean;
   /**
-   * (e2e) testId кнопки очистки
+   * Передает атрибут `data-testid` для кнопки очистки
    */
   clearButtonTestId?: string;
   /**
@@ -239,9 +239,12 @@ export interface SelectProps<
    */
   noMaxHeight?: boolean;
   /**
-   * (e2e) testId элемента, внутри которого отображается текст выбранной опции `CustomSelect` или плейсхолдер.
+   * Передает атрибут `data-testid` для элемента, внутри которого отображается текст выбранной опции `CustomSelect` или плейсхолдер.
    */
   labelTextTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для нативного элемента `select`.
+   */
   nativeSelectTestId?: string;
 }
 

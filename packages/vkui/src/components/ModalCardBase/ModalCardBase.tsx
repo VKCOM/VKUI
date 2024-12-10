@@ -62,7 +62,7 @@ export interface ModalCardBaseProps
   size?: number;
 
   /**
-   * `data-testid` для кнопки закрытия
+   * Передает атрибут `data-testid` для кнопки закрытия
    */
   modalDismissButtonTestId?: string;
   /**
