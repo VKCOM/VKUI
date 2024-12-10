@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import type * as React from 'react';
-import { isWindow, useDOM } from '../lib/dom';
+import { useDOM } from '../lib/dom';
 import { CustomResizeObserver } from '../lib/floating/customResizeObserver';
 import { isRefObject } from '../lib/isRefObject';
 import { useStableCallback } from './useStableCallback';
@@ -21,21 +21,19 @@ export function useResizeObserver(
   const { window } = useDOM();
 
   useEffect(
-    function addWindowResizeHandler() {
-      if (!ref || isRefObject(ref) || !isWindow(ref)) {
+    function addResizeObserverHandler() {
+      if (!ref || !window) {
         return;
       }
-      const onResize = () => stableCallback(ref);
-      ref.addEventListener('resize', onResize);
-      return () => ref.removeEventListener('resize', onResize);
-    },
-    [ref, stableCallback],
-  );
 
-  useEffect(
-    function addResizeObserverHandler() {
+      if (ref === window) {
+        const onResize = () => stableCallback(ref);
+        ref.addEventListener('resize', onResize);
+        return () => ref.removeEventListener('resize', onResize);
+      }
+
       /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
-      if (!ref || !isRefObject(ref) || !ref.current || !window) {
+      if (!isRefObject(ref) || !ref.current) {
         return;
       }
       const element = ref.current;

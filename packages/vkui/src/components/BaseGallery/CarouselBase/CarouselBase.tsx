@@ -35,6 +35,7 @@ export const CarouselBase = ({
   slideWidth = '100%',
   slideIndex = 0,
   dragDisabled = false,
+  resizeSource = 'window',
   onDragStart,
   onDragEnd,
   onChange,
@@ -189,9 +190,7 @@ export const CarouselBase = ({
     }
   };
   const { window } = useDOM();
-  const canUseResizeObserver =
-    window && 'ResizeObserver' in window && window.ResizeObserver !== undefined;
-  useResizeObserver(canUseResizeObserver ? rootRef : window, onResize);
+  useResizeObserver(resizeSource === 'element' ? rootRef : window, onResize);
 
   useIsomorphicLayoutEffect(
     function performSlideChange() {
