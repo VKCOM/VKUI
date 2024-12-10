@@ -28,10 +28,25 @@ const sizeYClassNames = {
 };
 
 export type DateInputPropsTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для поля ввода дня
+   */
   dayFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода месяца
+   */
   monthFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода года
+   */
   yearFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода часа
+   */
   hourFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода минут
+   */
   minuteFieldTestId?: string;
 };
 
@@ -71,6 +86,9 @@ export interface DateInputProps
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateInputPropsTestsProps {
+  /**
+   * Передает атрибуты `data-testid` для интерактивных элементов в календаре
+   */
   calendarTestsProps?: CalendarTestsProps;
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;

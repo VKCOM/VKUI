@@ -14,6 +14,9 @@ export type CalendarDayElementProps = Omit<
 >;
 
 export type CalendarDayTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для дня в календаре
+   */
   testId?: string | ((day: Date) => string);
 };
 

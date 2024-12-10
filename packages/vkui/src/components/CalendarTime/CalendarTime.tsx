@@ -10,8 +10,17 @@ import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
 import styles from './CalendarTime.module.css';
 
 export type CalendarTimeTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора часа в календаре
+   */
   hoursTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора минут в календаре
+   */
   minutesTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки "Готово" в календаре
+   */
   doneButtonTestId?: string;
 };
 
