@@ -4,8 +4,8 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { callMultiple } from '../../lib/callMultiple';
 import { useDOM } from '../../lib/dom';
 import type { HasAlign, HasRef, HasRootRef } from '../../types';
@@ -61,7 +61,7 @@ export const Textarea = ({
   const elementRef = useExternRef(getRef, refResizeTextarea);
 
   React.useEffect(resize, [resize, sizeY, platform, value]);
-  useGlobalEventListener(window, 'resize', resize);
+  useResizeObserver(window, resize);
 
   return (
     <FormField

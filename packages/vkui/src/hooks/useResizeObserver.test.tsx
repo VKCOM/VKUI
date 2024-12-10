@@ -37,12 +37,14 @@ describe('useResizeObserver', () => {
   const Fixture = ({
     mockedBlocksIds,
     resizeCallback,
+    useWindow = false,
   }: {
     mockedBlocksIds: string[];
     resizeCallback: () => void;
+    useWindow?: boolean;
   }) => {
     const ref = useRef(null);
-    useResizeObserver(ref, resizeCallback);
+    useResizeObserver(useWindow ? window : ref, resizeCallback);
     return (
       <div ref={ref} style={{ position: 'static' }}>
         {mockedBlocksIds.map((id) => (
@@ -77,5 +79,18 @@ describe('useResizeObserver', () => {
 
     expect(callback).toHaveBeenCalledTimes(1);
     restore();
+  });
+
+  it('should handle window resize events', () => {
+    const callback = jest.fn();
+
+    render(<Fixture mockedBlocksIds={[]} resizeCallback={callback} useWindow />);
+
+    act(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(window);
   });
 });
