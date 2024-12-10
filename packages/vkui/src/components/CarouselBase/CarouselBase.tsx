@@ -185,7 +185,7 @@ export const CarouselBase = ({
     const viewportOffsetWidth = viewportRef.current.offsetWidth;
     const layerWidth = localSlides.reduce((val, slide) => slide.width + val, 0);
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' && looped) {
       let remainingWidth = containerWidth;
       let slideIndex = 0;
 
@@ -200,13 +200,20 @@ export const CarouselBase = ({
       }
     }
 
+    const currentSlideOffsetOnCenterAlignment =
+      (containerWidth - (localSlides[slideIndex]?.width ?? 0)) / 2;
+    const isFullyVisible =
+      align === 'center'
+        ? layerWidth + currentSlideOffsetOnCenterAlignment <= containerWidth
+        : layerWidth <= containerWidth;
+
     slidesManager.current = {
       ...slidesManager.current,
       layerWidth,
       containerWidth,
       viewportOffsetWidth,
       slides: localSlides,
-      isFullyVisible: layerWidth <= containerWidth,
+      isFullyVisible,
       max: looped
         ? null
         : calcMax({
