@@ -2,10 +2,17 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
 import { minOr } from '../../lib/comparing';
 import { getFetchPriorityProp } from '../../lib/utils';
-import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from '../../types';
+import type {
+  AnchorHTMLAttributesOnly,
+  CSSCustomProperties,
+  HasRef,
+  HasRootRef,
+  LiteralUnion,
+} from '../../types';
 import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
@@ -85,6 +92,11 @@ export interface ImageBaseProps
    */
   objectFit?: React.CSSProperties['objectFit'];
   /**
+   * Пользовательское значения стиля object-position
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-position)
+   */
+  objectPosition?: React.CSSProperties['objectPosition'];
+  /**
    * Флаг для сохранения пропорций картинки.
    * Для корректной работы необходимо задать размеры хотя бы одной стороны картинки
    */
@@ -149,6 +161,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   onError,
   withTransparentBackground,
   objectFit = 'cover',
+  objectPosition,
   keepAspectRatio = false,
   ...restProps
 }: ImageBaseProps) => {
@@ -205,6 +218,23 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     [imgRef, loaded],
   );
 
+  const imgStyles: CSSCustomProperties<string | number> | undefined = React.useMemo(
+    () =>
+      objectPosition
+        ? {
+            '--vkui_internal--ImageBase_object_position': objectPosition,
+          }
+        : undefined,
+    [objectPosition],
+  );
+
+  const keepAspectRationStyles = keepAspectRatio
+    ? {
+        width: widthImg || width,
+        height: heightImg || height,
+      }
+    : undefined;
+
   return (
     <ImageBaseContext.Provider value={{ size }}>
       <Clickable
@@ -223,20 +253,14 @@ export const ImageBase: React.FC<ImageBaseProps> & {
             className={classNames(
               styles.img,
               getObjectFitClassName(objectFit),
+              objectPosition && styles.withObjectPosition,
               keepAspectRatio && styles.imgKeepRatio,
             )}
             crossOrigin={crossOrigin}
             decoding={decoding}
             loading={loading}
             referrerPolicy={referrerPolicy}
-            style={
-              keepAspectRatio
-                ? {
-                    width: widthImg || width,
-                    height: heightImg || height,
-                  }
-                : undefined
-            }
+            style={mergeStyle(keepAspectRationStyles, imgStyles)}
             sizes={sizes}
             src={src}
             srcSet={srcSet}
