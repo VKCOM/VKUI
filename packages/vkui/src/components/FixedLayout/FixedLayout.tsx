@@ -3,7 +3,6 @@
 import { useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
@@ -92,7 +91,7 @@ export const FixedLayout = ({
   };
   React.useEffect(doResize, [colRef, platform, ref, useParentWidth]);
 
-  useGlobalEventListener(window, 'resize', doResize);
+  useResizeObserver(window, doResize);
   useResizeObserver(useParentWidth ? parentRef : colRef, doResize);
 
   return (

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -43,6 +43,7 @@ export const BaseGallery = ({
   slideWidth = '100%',
   slideIndex = 0,
   dragDisabled = false,
+  resizeSource = 'window',
   onDragStart,
   onDragEnd,
   onChange,
@@ -66,7 +67,6 @@ export const BaseGallery = ({
   const rootRef = useExternRef(getRootRef);
   const viewportRef = useExternRef(getRef);
 
-  const { window } = useDOM();
   const hasPointer = useAdaptivityHasPointer();
 
   const isCenterWithCustomWidth = slideWidth === 'custom' && align === 'center';
@@ -187,7 +187,8 @@ export const BaseGallery = ({
     }
   };
 
-  useGlobalEventListener(window, 'resize', onResize);
+  const { window } = useDOM();
+  useResizeObserver(resizeSource === 'element' ? rootRef : window, onResize);
 
   useIsomorphicLayoutEffect(() => {
     initializeSlides({ animation: false });

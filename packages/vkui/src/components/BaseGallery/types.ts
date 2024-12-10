@@ -70,4 +70,12 @@ export interface BaseGalleryProps
    * Передает атрибут `data-testid` для слайда
    */
   slideTestId?: (index: number) => string;
+  /**
+   * Тип источника для отслеживания размера:
+   * - `window`: пересчет позиции слайдов будет происходить при изменении размеров `window`
+   * - `element`: пересчет позиции слайдов будет происходить при изменении размеров компонента
+   *
+   *   > Важно: `resizeSource="element"` будет корректно работать только в браузерах, где поддерживается [ResizeObserver](https://caniuse.com/?search=ResizeObserver)
+   */
+  resizeSource?: 'window' | 'element';
 }
