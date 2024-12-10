@@ -622,8 +622,8 @@ describe('Gallery', () => {
     // двух слайдов с выравниванием по центру
     // поэтому мы показываем кнопки и позволяем drag
     const mockedData = setup({
-      numberOfSlides: 3,
-      defaultSlideIndex: 2,
+      numberOfSlides: 2,
+      defaultSlideIndex: 1,
       slideWidth: 180,
       containerWidth: 300,
       viewPortWidth: 300,
@@ -635,7 +635,7 @@ describe('Gallery', () => {
     });
     const { rerender } = mockedData;
 
-    checkActiveSlide(2);
+    checkActiveSlide(1);
     expect(getArrows()).toHaveLength(1);
 
     simulateDrag(mockedData.viewPort, [150, 0]);
@@ -651,7 +651,7 @@ describe('Gallery', () => {
     onDragStart.mockClear();
     onDragEnd.mockClear();
 
-    rerender({ slideIndex: 2 });
+    rerender({ slideIndex: 1 });
 
     expect(getArrows()).toHaveLength(1);
 
@@ -667,7 +667,7 @@ describe('Gallery', () => {
     onDragEnd.mockClear();
     fireEvent.resize(window);
 
-    rerender({ slideIndex: 2 });
+    rerender({ slideIndex: 1 });
 
     expect(getArrows()).toHaveLength(0);
 
