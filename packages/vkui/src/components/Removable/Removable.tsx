@@ -28,7 +28,7 @@ export interface RemovableProps {
    */
   toggleButtonTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки удаления.
+   * Передает атрибут `data-testid` для кнопки удаления
    */
   removeButtonTestId?: string;
   /**
