@@ -64,6 +64,13 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
             </RichCell.Icon>,
           ],
         },
+        {
+          before: [<Avatar size={24} key="24" />],
+          children: ['Михаил'],
+          after: ['Very very very very very very very long after'],
+          beforeAlign: ['center', 'end'],
+          contentAlign: ['center', 'end'],
+        },
       ]}
     >
       {(props: RichCellProps) => <RichCell {...props} />}
