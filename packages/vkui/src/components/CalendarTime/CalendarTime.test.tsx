@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { setHours, setMinutes } from 'date-fns';
 import { userEvent } from '../../testing/utils';
 import { Button } from '../Button/Button';
@@ -109,5 +109,132 @@ describe('CalendarTime', () => {
     );
     expect(screen.queryByTestId('done-button')).toBeFalsy();
     expect(screen.queryByTestId('custom-done-button')).toBeTruthy();
+  });
+
+  describe('Keyboard Navigation', () => {
+    const tab = (element: HTMLElement, shiftKey = false) => {
+      fireEvent.keyDown(element, {
+        key: 'Tab',
+        code: 'Tab',
+        shiftKey,
+      });
+    };
+    it('should handle Tab navigation between hours, minutes and done button', async () => {
+      const onChange = jest.fn();
+      render(
+        <CalendarTime
+          onChange={onChange}
+          value={dayDate}
+          hoursTestId="hours-picker"
+          minutesTestId="minutes-picker"
+          doneButtonTestId="done-button"
+        />,
+      );
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      const minutesInput = screen.getByTestId('minutes-picker');
+      const doneButton = screen.getByTestId('done-button');
+
+      // Начинаем с часов
+      hoursInput.focus();
+      expect(document.activeElement).toBe(hoursInput);
+
+      // Tab к минутам
+      tab(hoursInput);
+      expect(document.activeElement).toBe(minutesInput);
+
+      // Tab к кнопке "Готово"
+      tab(minutesInput);
+      expect(document.activeElement).toBe(doneButton);
+    });
+
+    it('should handle Shift+Tab navigation', async () => {
+      render(
+        <CalendarTime
+          value={dayDate}
+          hoursTestId="hours-picker"
+          minutesTestId="minutes-picker"
+          doneButtonTestId="done-button"
+        />,
+      );
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      const minutesInput = screen.getByTestId('minutes-picker');
+      const doneButton = screen.getByTestId('done-button');
+
+      // Начинаем с кнопки "Готово"
+      doneButton.focus();
+      expect(document.activeElement).toBe(doneButton);
+
+      // Shift+Tab к минутам
+      tab(doneButton, true);
+      expect(document.activeElement).toBe(minutesInput);
+
+      // // Shift+Tab к часам
+      tab(minutesInput, true);
+      expect(document.activeElement).toBe(hoursInput);
+    });
+  });
+
+  describe('Time Input', () => {
+    it('should handle direct time input in hours field', async () => {
+      const onChange = jest.fn();
+      render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      await userEvent.type(hoursInput, '15');
+
+      expect(onChange).toHaveBeenCalledWith(setHours(dayDate, 15));
+    });
+
+    it('should handle direct time input in minutes field', async () => {
+      const onChange = jest.fn();
+      render(<CalendarTime onChange={onChange} value={dayDate} minutesTestId="minutes-picker" />);
+
+      const minutesInput = screen.getByTestId('minutes-picker');
+      await userEvent.type(minutesInput, '30');
+
+      expect(onChange).toHaveBeenCalledWith(setMinutes(dayDate, 30));
+    });
+
+    it('should not call onChange for invalid hours input', async () => {
+      const onChange = jest.fn();
+      render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      await userEvent.type(hoursInput, '25'); // Невалидное значение часов
+
+      expect(onChange).toHaveBeenCalledWith(setHours(dayDate, 2));
+      expect(onChange).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not call onChange for invalid minutes input', async () => {
+      const onChange = jest.fn();
+      render(<CalendarTime onChange={onChange} value={dayDate} minutesTestId="minutes-picker" />);
+
+      const minutesInput = screen.getByTestId('minutes-picker');
+      await userEvent.type(minutesInput, '61'); // Невалидное значение минут
+
+      expect(onChange).toHaveBeenCalledWith(setMinutes(dayDate, 6));
+      expect(onChange).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Done Button', () => {
+    it('should call onDoneButtonClick when done button is clicked', async () => {
+      const onDoneButtonClick = jest.fn();
+      render(
+        <CalendarTime
+          value={dayDate}
+          onDoneButtonClick={onDoneButtonClick}
+          doneButtonTestId="done-button"
+        />,
+      );
+
+      const doneButton = screen.getByTestId('done-button');
+      await userEvent.click(doneButton);
+
+      expect(onDoneButtonClick).toHaveBeenCalledTimes(1);
+    });
   });
 });
