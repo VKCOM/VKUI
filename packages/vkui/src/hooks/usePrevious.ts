@@ -4,7 +4,7 @@ import * as React from 'react';
  * @deprecated постарайтесь избавится от этого хука или используйте `useStateWithPrev`
  */
 export function usePrevious<T>(value: T): T | undefined {
-  const ref = React.useRef<T | undefined>();
+  const ref = React.useRef<T | undefined>(undefined);
 
   React.useEffect(() => {
     ref.current = value;

@@ -132,7 +132,7 @@ export const Managing: Story = {
 export const ModalDynamicHeight: Story = {
   render: function Render() {
     const [isLoading, setIsLoading] = React.useState(true);
-    const timer = React.useRef<ReturnType<typeof setTimeout>>();
+    const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
     React.useEffect(() => {
       timer.current = setTimeout(() => {

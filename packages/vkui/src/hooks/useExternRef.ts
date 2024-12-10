@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { setRef } from '../lib/utils';
 
-class ExternalRef<T> implements React.MutableRefObject<T | null> {
+class ExternalRef<T> implements React.RefObject<T | null> {
   #element: T | null = null;
   readonly #externRefs = new Set<React.Ref<T>>();
 
@@ -45,7 +45,7 @@ class ExternalRef<T> implements React.MutableRefObject<T | null> {
 
 export function useExternRef<T>(
   ...externRefs: Array<React.Ref<T> | undefined | false>
-): React.MutableRefObject<T | null> {
+): React.RefObject<T | null> {
   const ref = React.useRef<ExternalRef<T> | null>(null);
   if (ref.current === null) {
     ref.current = new ExternalRef(externRefs);
