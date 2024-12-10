@@ -3,11 +3,11 @@ import { MEDIA_QUERIES, ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
   fireEventPatch,
-  getFakeMouseEvent,
-  getFakeTouchEvent,
   matchMediaMock,
   mockRect,
+  mouseEventMock,
   requestAnimationFrameMock,
+  touchEventMock,
   userEvent,
   waitCSSKeyframesAnimation,
 } from '../../testing/utils';
@@ -270,9 +270,10 @@ function transformDomRectToEventData(
   { x = 0, y = 0 }: DOMRectInit,
 ) {
   const nativeEventType = eventType.toLowerCase();
-  return eventType.startsWith('touch')
-    ? { nativeEvent: getFakeTouchEvent(nativeEventType, x, y) }
-    : { nativeEvent: getFakeMouseEvent(nativeEventType, x, y) };
+  if (eventType.startsWith('touch')) {
+    return new TouchEvent(nativeEventType, touchEventMock({ clientX: x, clientY: y }));
+  }
+  return new MouseEvent(nativeEventType, mouseEventMock({ clientX: x, clientY: y }));
 }
 
 function getMovedContentRectByPlacement(

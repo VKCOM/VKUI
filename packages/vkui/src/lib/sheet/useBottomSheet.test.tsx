@@ -1,7 +1,7 @@
 import { act } from 'react';
 import { fireEvent, render, renderHook } from '@testing-library/react';
 import { clamp } from '../../helpers/math';
-import { requestAnimationFrameMock } from '../../testing/utils';
+import { requestAnimationFrameMock, touchEventMock } from '../../testing/utils';
 import { rubberbandIfOutOfBounds } from '../animation';
 import {
   BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE,
@@ -875,34 +875,3 @@ describe(useBottomSheet, () => {
     });
   });
 });
-
-/**
- * TODO перенести в ../../testing/utils и для замены getFakeTouchEvent
- */
-function touchEventMock(dataRaw: Partial<Touch>) {
-  const data = {
-    identifier: 0,
-    screenX: 0,
-    screenY: 0,
-    pageX: 0,
-    pageY: 0,
-    radiusX: 0,
-    radiusY: 0,
-    force: 0,
-    rotationAngle: 0,
-    target: new EventTarget(),
-    ...dataRaw,
-  };
-  const touch = {
-    clientX: 0,
-    clientY: 0,
-    ...data,
-  };
-  return {
-    ...data,
-    changedTouches: [touch],
-    touches: [touch],
-    bubbles: true,
-    cancelable: true,
-  };
-}
