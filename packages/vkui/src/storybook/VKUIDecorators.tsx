@@ -29,11 +29,12 @@ export const withVKUIWrapper: Decorator = (Component, context) => {
     writingMode,
   } = context.globals;
 
-  const { centered } = context.parameters;
+  const { centered, background } = context.parameters;
 
   const style: React.CSSProperties = {
     writingMode,
     ...(centered ? CenteredStyle : {}),
+    background,
   };
 
   return (

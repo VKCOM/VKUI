@@ -37,23 +37,20 @@ const Example = () => {
   );
 
   return (
-    <SplitLayout modal={modal}>
-      <SplitCol>
-        <View activePanel="group">
-          <Panel id="group">
-            <PanelHeader>Group</PanelHeader>
+    <View activePanel="group">
+      <Panel id="group">
+        <PanelHeader>Group</PanelHeader>
 
-            <SharedContent />
+        <SharedContent />
 
-            <Group header={<Header size="s">Модальное окно с Group</Header>}>
-              <SimpleCell onClick={() => setModalOpened(true)}>
-                Открыть Group в модальном окне
-              </SimpleCell>
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+        <Group header={<Header size="s">Модальное окно с Group</Header>}>
+          <SimpleCell onClick={() => setModalOpened(true)}>
+            Открыть Group в модальном окне
+          </SimpleCell>
+          {modal}
+        </Group>
+      </Panel>
+    </View>
   );
 };
 

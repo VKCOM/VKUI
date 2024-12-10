@@ -6,9 +6,11 @@ import {
   getBoundingClientRect,
   getDocumentBody,
   getFirstTouchEventData,
+  getNearestOverflowAncestor,
   getScrollHeight,
   getScrollRect,
   getTransformedParentCoords,
+  hasSelectionWithRangeType,
   initializeBrowserGesturePreventionEffect,
   TRANSFORM_DEFAULT_VALUES,
   WILL_CHANGE_DEFAULT_VALUES,
@@ -277,5 +279,60 @@ describe(initializeBrowserGesturePreventionEffect, () => {
     fireEvent(window, touchMoveEvent);
     expect(preventDefault).toHaveBeenCalledTimes(1);
     expect(stopPropagation).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe(getNearestOverflowAncestor, () => {
+  it('should return window if it is last traversable Node', () => {
+    const rootNode = document.createElement('div');
+    const innerNode = document.createElement('div');
+    const node = document.createElement('div');
+    innerNode.appendChild(node);
+    rootNode.appendChild(innerNode);
+    document.body.appendChild(rootNode);
+    expect(getNearestOverflowAncestor(node)).toBe(window);
+  });
+
+  it('should return null if parent node is terminal node', () => {
+    const rootNode = document.createElement('div');
+    const innerNode = document.createElement('div');
+    const node = document.createElement('div');
+    innerNode.appendChild(node);
+    rootNode.appendChild(innerNode);
+    document.body.appendChild(rootNode);
+    expect(getNearestOverflowAncestor(node, innerNode)).toBeNull();
+  });
+
+  it('should return parent with overflow', () => {
+    const rootNode = document.createElement('div');
+    rootNode.style.overflowY = 'scroll';
+    const innerNode = document.createElement('div');
+    const node = document.createElement('div');
+    innerNode.appendChild(node);
+    rootNode.appendChild(innerNode);
+    document.body.appendChild(rootNode);
+    expect(getNearestOverflowAncestor(node)).toBe(rootNode);
+  });
+});
+
+describe(hasSelectionWithRangeType, () => {
+  it('should be false by default', () => {
+    expect(hasSelectionWithRangeType(null)).toBeFalsy();
+  });
+
+  it.each([
+    {
+      value: () => ({ type: 'Range' }),
+      result: true,
+    },
+    {
+      value: () => null,
+      result: false,
+    },
+  ])('should be $result', ({ value, result }) => {
+    const getSelection = window.getSelection;
+    Object.defineProperty(window, 'getSelection', { configurable: true, value });
+    expect(hasSelectionWithRangeType(null)).toBe(result);
+    Object.defineProperty(window, 'getSelection', { configurable: true, value: getSelection });
   });
 });

@@ -204,3 +204,46 @@ const Playground = () => {
 
 <Playground />;
 ````
+
+## Использование хука usePopover
+
+Вы можете использовать хук usePopover, который позволяет устанавливать якорных элемент для Popover, не прокидывая его в качестве children
+
+```jsx { "props": { "layout": false, "iframe": true } }
+const Example = () => {
+  const { anchorRef, anchorProps, popover } = usePopover({
+    'trigger': 'click',
+    'role': 'dialog',
+    'id': 'menupopup',
+    'aria-labelledby': 'menubutton',
+    'content': ({ onClose }) => (
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    ),
+  });
+
+  return (
+    <View activePanel="popover">
+      <Panel id="popover">
+        <PanelHeader>usePopover</PanelHeader>
+        <Group>
+          {popover}
+          <FormItem>
+            <Button
+              getRootRef={anchorRef}
+              id="menubutton"
+              aria-controls="menupopup"
+              {...anchorProps}
+            >
+              Нажми на меня
+            </Button>
+          </FormItem>
+        </Group>
+      </Panel>
+    </View>
+  );
+};
+
+<Example />;
+```

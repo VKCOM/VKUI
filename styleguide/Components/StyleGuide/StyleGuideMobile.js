@@ -5,8 +5,6 @@ import {
   PanelHeader,
   PanelHeaderButton,
   PanelHeaderClose,
-  SplitCol,
-  SplitLayout,
   useColorScheme,
   View,
   VisuallyHidden,
@@ -61,38 +59,33 @@ export const StyleGuideMobile = (props) => {
 
   return (
     <div className="StyleGuideMobile">
-      <SplitLayout
-        popout={props.popout}
-        modal={<StyleGuideModal activeModal={props.activeModal} />}
-      >
-        <SplitCol>
-          <View activePanel={activePanel}>
-            <Panel id="content">
-              <StyleGuideMobileHeader
-                switchStyleGuideColorScheme={props.switchStyleGuideColorScheme}
-                before={
-                  <PanelHeaderButton onClick={() => setActivePanel('menu')}>
-                    <VisuallyHidden>Показать меню</VisuallyHidden>
-                    <Icon28MenuOutline />
-                  </PanelHeaderButton>
-                }
-              />
-              <div className="StyleGuideMobile__content">{props.children}</div>
-            </Panel>
-            <Panel id="menu">
-              <StyleGuideMobileHeader
-                switchStyleGuideColorScheme={props.switchStyleGuideColorScheme}
-                before={
-                  <PanelHeaderClose onClick={() => setActivePanel('content')}>
-                    Скрыть меню
-                  </PanelHeaderClose>
-                }
-              />
-              {props.toc}
-            </Panel>
-          </View>
-        </SplitCol>
-      </SplitLayout>
+      <View activePanel={activePanel}>
+        <Panel id="content">
+          <StyleGuideMobileHeader
+            switchStyleGuideColorScheme={props.switchStyleGuideColorScheme}
+            before={
+              <PanelHeaderButton onClick={() => setActivePanel('menu')}>
+                <VisuallyHidden>Показать меню</VisuallyHidden>
+                <Icon28MenuOutline />
+              </PanelHeaderButton>
+            }
+          />
+          <div className="StyleGuideMobile__content">{props.children}</div>
+        </Panel>
+        <Panel id="menu">
+          <StyleGuideMobileHeader
+            switchStyleGuideColorScheme={props.switchStyleGuideColorScheme}
+            before={
+              <PanelHeaderClose onClick={() => setActivePanel('content')}>
+                Скрыть меню
+              </PanelHeaderClose>
+            }
+          />
+          {props.toc}
+        </Panel>
+      </View>
+      {props.popout}
+      <StyleGuideModal activeModal={props.activeModal} />
     </div>
   );
 };
