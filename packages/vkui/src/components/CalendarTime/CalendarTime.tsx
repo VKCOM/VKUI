@@ -4,6 +4,7 @@ import { type ChangeEvent, useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
+import { Keys, pressedKey } from '../../lib/accessibility';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
@@ -124,7 +125,8 @@ export const CalendarTime = ({
   );
 
   const onPickerKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === 'Tab') {
+    const key = pressedKey(e);
+    if (key === Keys.ENTER || key === Keys.TAB) {
       const steps = [hoursInputRef, minutesInputRef, doneButtonRef];
       const currentStepIndex = steps.findIndex((step) => step.current === e.target);
       const diff = e.key === 'Tab' && e.shiftKey ? -1 : 1;
@@ -155,6 +157,8 @@ export const CalendarTime = ({
     );
   };
 
+  const selectFilterFn = React.useCallback(() => true, []);
+
   return (
     <div className={classNames(styles.host, !doneButtonShow && styles.host__withoutDone)}>
       <div className={styles.picker}>
@@ -165,7 +169,7 @@ export const CalendarTime = ({
             onChange={onHoursChange}
             forceDropdownPortal={false}
             searchable
-            filterFn={() => true}
+            filterFn={selectFilterFn}
             onInputChange={onHoursInputChange}
             onInputKeyDown={onPickerKeyDown}
             getSelectInputRef={hoursInputRef}
@@ -183,7 +187,7 @@ export const CalendarTime = ({
             onChange={onMinutesChange}
             forceDropdownPortal={false}
             searchable
-            filterFn={() => true}
+            filterFn={selectFilterFn}
             onInputChange={onMinutesInputChange}
             getSelectInputRef={minutesInputRef}
             onInputKeyDown={onPickerKeyDown}
