@@ -24,7 +24,7 @@ describe(ImageBaseFloatElement, () => {
       </>,
     );
 
-    expect(screen.getByTestId('component')).toHaveClass(styles['FloatElement--hidden']);
+    expect(screen.getByTestId('component')).toHaveClass(styles.hidden);
 
     fireEvent(
       screen.getByTestId('image'),
@@ -34,7 +34,7 @@ describe(ImageBaseFloatElement, () => {
       }),
     );
 
-    expect(screen.getByTestId('component')).not.toHaveClass(styles['FloatElement--hidden']);
+    expect(screen.getByTestId('component')).not.toHaveClass(styles.hidden);
 
     fireEvent(
       screen.getByTestId('image'),
@@ -44,19 +44,19 @@ describe(ImageBaseFloatElement, () => {
       }),
     );
 
-    expect(screen.getByTestId('component')).toHaveClass(styles['FloatElement--hidden']);
+    expect(screen.getByTestId('component')).toHaveClass(styles.hidden);
   });
 
   const placementFixtures = Object.entries({
-    'top-start': styles['FloatElement--position-topStart'],
-    'top': styles['FloatElement--position-top'],
-    'top-end': styles['FloatElement--position-topEnd'],
-    'bottom-start': styles['FloatElement--position-bottomStart'],
-    'bottom': styles['FloatElement--position-bottom'],
-    'bottom-end': styles['FloatElement--position-bottomEnd'],
-    'middle-start': styles['FloatElement--position-middleStart'],
-    'middle': styles['FloatElement--position-middle'],
-    'middle-end': styles['FloatElement--position-middleEnd'],
+    'top-start': styles.placementTopStart,
+    'top': styles.placementTop,
+    'top-end': styles.placementTopEnd,
+    'bottom-start': styles.placementBottomStart,
+    'bottom': styles.placementBottom,
+    'bottom-end': styles.placementBottomEnd,
+    'middle-start': styles.placementMiddleStart,
+    'middle': styles.placementMiddle,
+    'middle-end': styles.placementMiddleEnd,
   }).map(([placement, className]) => ({
     placement: placement as FloatElementPlacement,
     className,
@@ -68,15 +68,15 @@ describe(ImageBaseFloatElement, () => {
   });
 
   const horizontalIndentationFixtures = Object.entries({
-    '2xs': styles['FloatElement--inlineIndent-2xs'],
-    'xs': styles['FloatElement--inlineIndent-xs'],
-    's': styles['FloatElement--inlineIndent-s'],
-    'm': styles['FloatElement--inlineIndent-m'],
-    'l': styles['FloatElement--inlineIndent-l'],
-    'xl': styles['FloatElement--inlineIndent-xl'],
-    '2xl': styles['FloatElement--inlineIndent-2xl'],
-    '3xl': styles['FloatElement--inlineIndent-3xl'],
-    '4xl': styles['FloatElement--inlineIndent-4xl'],
+    '2xs': styles.inlineIndent2xs,
+    'xs': styles.inlineIndentXs,
+    's': styles.inlineIndentS,
+    'm': styles.inlineIndentM,
+    'l': styles.inlineIndentL,
+    'xl': styles.inlineIndentXl,
+    '2xl': styles.inlineIndent2xl,
+    '3xl': styles.inlineIndent3xl,
+    '4xl': styles.inlineIndent4xl,
   }).map(([indent, className]) => ({
     indent: indent as Exclude<FloatElementIndentation, string | number>,
     className,
@@ -93,15 +93,15 @@ describe(ImageBaseFloatElement, () => {
   );
 
   const verticalIndentationFixtures = Object.entries({
-    '2xs': styles['FloatElement--blockIndent-2xs'],
-    'xs': styles['FloatElement--blockIndent-xs'],
-    's': styles['FloatElement--blockIndent-s'],
-    'm': styles['FloatElement--blockIndent-m'],
-    'l': styles['FloatElement--blockIndent-l'],
-    'xl': styles['FloatElement--blockIndent-xl'],
-    '2xl': styles['FloatElement--blockIndent-2xl'],
-    '3xl': styles['FloatElement--blockIndent-3xl'],
-    '4xl': styles['FloatElement--blockIndent-4xl'],
+    '2xs': styles.blockIndent2xs,
+    'xs': styles.blockIndentXs,
+    's': styles.blockIndentS,
+    'm': styles.blockIndentM,
+    'l': styles.blockIndentL,
+    'xl': styles.blockIndentXl,
+    '2xl': styles.blockIndent2xl,
+    '3xl': styles.blockIndent3xl,
+    '4xl': styles.blockIndent4xl,
   }).map(([indent, className]) => ({
     indent: indent as Exclude<FloatElementIndentation, string | number>,
     className,
