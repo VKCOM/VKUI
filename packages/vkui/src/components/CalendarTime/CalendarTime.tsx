@@ -10,6 +10,8 @@ import { Button, type ButtonProps } from '../Button/Button';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
 import styles from './CalendarTime.module.css';
 
+const selectFilterFn = () => true;
+
 export type CalendarTimeTestsProps = {
   hoursTestId?: string;
   minutesTestId?: string;
@@ -156,8 +158,6 @@ export const CalendarTime = ({
       </ButtonComponent>
     );
   };
-
-  const selectFilterFn = React.useCallback(() => true, []);
 
   return (
     <div className={classNames(styles.host, !doneButtonShow && styles.host__withoutDone)}>
