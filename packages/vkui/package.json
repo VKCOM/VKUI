@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "7.0.0-beta.2",
+  "version": "7.0.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "module": "./dist/index.js",
@@ -88,12 +88,12 @@
     "date-fns": "^4.1.0"
   },
   "devDependencies": {
-    "@storybook/react": "8.4.5",
-    "@storybook/react-webpack5": "8.4.5",
+    "@storybook/react": "8.4.7",
+    "@storybook/react-webpack5": "8.4.7",
     "@types/node": "*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "storybook": "8.4.5",
+    "storybook": "8.4.7",
     "ts-node": "*"
   },
   "size-limit": [

@@ -66,6 +66,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs--withGaps) .inWrapper::after,
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs--withGaps) .inWrapper::before {
   display: block;
   inline-size: var(--vkui--size_base_padding_horizontal--regular);

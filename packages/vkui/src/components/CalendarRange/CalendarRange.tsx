@@ -31,7 +31,13 @@ import styles from './CalendarRange.module.css';
 export type DateRangeType = [Date | null, Date | null];
 
 export type CalendarRangeTestsProps = CalendarDaysTestsProps & {
+  /**
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части
+   */
   leftPartHeaderTestsData?: CalendarHeaderTestsProps;
+  /**
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части
+   */
   rightPartHeaderTestsData?: CalendarHeaderTestsProps;
 };
 

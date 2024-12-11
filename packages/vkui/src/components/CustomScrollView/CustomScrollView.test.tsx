@@ -15,8 +15,8 @@ describe(CustomScrollView, () => {
       </CustomScrollView>,
     );
 
-    expect(getBoxElement()).not.toHaveClass(styles.boxOverscrollBehaviorContain);
-    expect(getBoxElement()).not.toHaveClass(styles.boxOverscrollBehaviorNone);
+    expect(getBoxElement()).not.toHaveClass(styles.overscrollBehaviorContain);
+    expect(getBoxElement()).not.toHaveClass(styles.overscrollBehaviorNone);
 
     rerender(
       <CustomScrollView data-testid="scroll-view" overscrollBehavior="contain">
@@ -24,8 +24,8 @@ describe(CustomScrollView, () => {
       </CustomScrollView>,
     );
 
-    expect(getBoxElement()).toHaveClass(styles.boxOverscrollBehaviorContain);
-    expect(getBoxElement()).not.toHaveClass(styles.boxOverscrollBehaviorNone);
+    expect(getBoxElement()).toHaveClass(styles.overscrollBehaviorContain);
+    expect(getBoxElement()).not.toHaveClass(styles.overscrollBehaviorNone);
 
     rerender(
       <CustomScrollView data-testid="scroll-view" overscrollBehavior="none">
@@ -33,7 +33,27 @@ describe(CustomScrollView, () => {
       </CustomScrollView>,
     );
 
-    expect(getBoxElement()).not.toHaveClass(styles.boxOverscrollBehaviorContain);
-    expect(getBoxElement()).toHaveClass(styles.boxOverscrollBehaviorNone);
+    expect(getBoxElement()).not.toHaveClass(styles.overscrollBehaviorContain);
+    expect(getBoxElement()).toHaveClass(styles.overscrollBehaviorNone);
+  });
+
+  it('should have scroll-behavior specific className', () => {
+    const getBoxElement = () => screen.getByTestId('scroll-view');
+
+    const { rerender } = render(
+      <CustomScrollView data-testid="scroll-view" enableHorizontalScroll>
+        <span>content</span>
+      </CustomScrollView>,
+    );
+
+    expect(getBoxElement()).not.toHaveClass(styles.scrollBehaviorSmooth);
+
+    rerender(
+      <CustomScrollView data-testid="scroll-view" scrollBehavior="smooth">
+        <span>content</span>
+      </CustomScrollView>,
+    );
+
+    expect(getBoxElement()).toHaveClass(styles.scrollBehaviorSmooth);
   });
 });

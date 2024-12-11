@@ -95,7 +95,7 @@ export interface ChipsSelectProps<O extends ChipOption>
    */
   forceDropdownPortal?: boolean;
   /**
-   * Передача `data-testid`.
+   * Передает атрибут `data-testid` для дропдауна.
    */
   dropdownTestId?: string;
   /**

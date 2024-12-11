@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
@@ -15,6 +16,12 @@ import type {
 } from '../../types';
 import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
+import {
+  type FloatElementIndentation,
+  type FloatElementPlacement,
+  ImageBaseFloatElement,
+  type ImageBaseFloatElementProps,
+} from './ImageBaseFloatElement/ImageBaseFloatElement';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import { ImageBaseContext } from './context';
 import type { ImageBaseContextProps, ImageBaseExpectedIconProps, ImageBaseSize } from './types';
@@ -27,6 +34,9 @@ export type {
   ImageBaseBadgeProps,
   ImageBaseOverlayProps,
   ImageBaseContextProps,
+  ImageBaseFloatElementProps,
+  FloatElementPlacement,
+  FloatElementIndentation,
 };
 
 export {
@@ -137,6 +147,7 @@ const sizeToNumber = (size: number | string | undefined): number | undefined => 
 export const ImageBase: React.FC<ImageBaseProps> & {
   Badge: typeof ImageBaseBadge;
   Overlay: typeof ImageBaseOverlay;
+  FloatElement: typeof ImageBaseFloatElement;
 } = ({
   alt,
   crossOrigin,
@@ -163,15 +174,20 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   objectFit = 'cover',
   objectPosition,
   keepAspectRatio = false,
+  getRootRef,
   ...restProps
 }: ImageBaseProps) => {
   const size = sizeProp ?? minOr([sizeToNumber(widthSize), sizeToNumber(heightSize)], defaultSize);
+  const wrapperRef = useExternRef(getRootRef);
 
   const width = widthSize ?? (keepAspectRatio ? undefined : size);
   const height = heightSize ?? (keepAspectRatio ? undefined : size);
 
   const [loaded, setLoaded] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
+
+  const mouseOverHandlersRef = useRef<VoidFunction[]>([]);
+  const mouseOutHandlersRef = useRef<VoidFunction[]>([]);
 
   const hasSrc = src || srcSet;
   const needShowFallbackIcon = (failed || !hasSrc) && React.isValidElement(fallbackIconProp);
@@ -218,15 +234,28 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     [imgRef, loaded],
   );
 
-  const imgStyles: CSSCustomProperties<string | number> | undefined = React.useMemo(
-    () =>
-      objectPosition
-        ? {
-            '--vkui_internal--ImageBase_object_position': objectPosition,
-          }
-        : undefined,
-    [objectPosition],
+  const onMouseOver = () => {
+    mouseOverHandlersRef.current.forEach((fn) => fn());
+  };
+
+  const onMouseOut = () => {
+    mouseOutHandlersRef.current.forEach((fn) => fn());
+  };
+
+  const contextValue = React.useMemo(
+    () => ({
+      size,
+      onMouseOverHandlers: mouseOverHandlersRef.current,
+      onMouseOutHandlers: mouseOutHandlersRef.current,
+    }),
+    [size],
   );
+
+  const imgStyles: CSSCustomProperties<string | number> | undefined = objectPosition
+    ? {
+        '--vkui_internal--ImageBase_object_position': objectPosition,
+      }
+    : undefined;
 
   const keepAspectRationStyles = keepAspectRatio
     ? {
@@ -236,7 +265,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     : undefined;
 
   return (
-    <ImageBaseContext.Provider value={{ size }}>
+    <ImageBaseContext.Provider value={contextValue}>
       <Clickable
         baseStyle={{ width, height }}
         baseClassName={classNames(
@@ -244,6 +273,9 @@ export const ImageBase: React.FC<ImageBaseProps> & {
           loaded && styles.loaded,
           withTransparentBackground && styles.transparentBackground,
         )}
+        getRootRef={wrapperRef}
+        onMouseOver={onMouseOver}
+        onMouseOut={onMouseOut}
         {...restProps}
       >
         {hasSrc && (
@@ -287,3 +319,6 @@ ImageBase.Badge.displayName = 'ImageBase.Badge';
 
 ImageBase.Overlay = ImageBaseOverlay;
 ImageBase.Overlay.displayName = 'ImageBase.Overlay';
+
+ImageBase.FloatElement = ImageBaseFloatElement;
+ImageBase.FloatElement.displayName = 'ImageBase.FloatElement';

@@ -174,16 +174,17 @@
  *
  * TODO: Переделать отрицательные отступы https://github.com/VKCOM/VKUI/issues/3508
  */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup--mode-plain):not(:first-of-type) > .host:first-child,
 :global(.vkuiInternalGroup--mode-plain):not(:first-of-type)
   > :global(.vkuiInternalTappable):first-child
   > .host {
   margin-block-start: -16px;
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 @media (--sizeX-compact) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
     > .host:first-child,
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none):not(:first-of-type)
@@ -191,18 +192,20 @@
     > .host {
     margin-block-start: -16px;
   }
+  /* stylelint-enable selector-pseudo-class-disallowed-list */
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalGroup--mode-card) > .host:not(.sizeM):first-child,
 :global(.vkuiInternalGroup--mode-card)
   > :global(.vkuiInternalTappable):first-child
   > .host:not(.sizeM) {
   margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 @media (--sizeX-regular) {
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
     > .host:not(.sizeM):first-child,
   :global(.vkuiInternalGroup--sizeX-none.vkuiInternalGroup--mode-none)
@@ -210,6 +213,7 @@
     > .host:not(.sizeM) {
     margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
   }
+  /* stylelint-enable selector-pseudo-class-disallowed-list */
 }
 
 /**

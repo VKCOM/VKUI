@@ -1,4 +1,4 @@
-Передаётся в качестве значения свойства `popout` компонента [`SplitLayout`](#/SplitLayout).
+Начиная с VKUI v7 этот компонент можно объявить в любом месте приложения в пределах [`AppRoot`](#/AppRoot). Больше нет необходимости явно передавать его в свойство `popout` компоненту [`SplitLayout`](#/SplitLayout).
 
 В Алертах особое внимание нужно уделить кнопкам. Всего есть три типа кнопок:
 `cancel`, `destructive` и `default`.
@@ -85,22 +85,21 @@ const Example = () => {
   }, []);
 
   return (
-    <SplitLayout popout={popout}>
-      <SplitCol>
-        <View activePanel="alert">
-          <Panel id="alert">
-            <PanelHeader>Alert</PanelHeader>
-            <Group>
-              <CellButton onClick={openAction}>Лишить права</CellButton>
-              <CellButton onClick={openDeletion}>Удалить документ</CellButton>
-              {actionsLog.map((value, i) => (
-                <Div key={i}>{value}</Div>
-              ))}
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+    <React.Fragment>
+      <View activePanel="alert">
+        <Panel id="alert">
+          <PanelHeader>Alert</PanelHeader>
+          <Group>
+            <CellButton onClick={openAction}>Лишить права</CellButton>
+            <CellButton onClick={openDeletion}>Удалить документ</CellButton>
+            {actionsLog.map((value, i) => (
+              <Div key={i}>{value}</Div>
+            ))}
+          </Group>
+        </Panel>
+      </View>
+      {popout}
+    </React.Fragment>
   );
 };
 
@@ -149,18 +148,17 @@ const Example = () => {
   }, []);
 
   return (
-    <SplitLayout popout={popout}>
-      <SplitCol>
-        <View activePanel="alert">
-          <Panel id="alert">
-            <PanelHeader>Alert</PanelHeader>
-            <Group>
-              <CellButton onClick={openAction}>Лишить права</CellButton>
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+    <React.Fragment>
+      <View activePanel="alert">
+        <Panel id="alert">
+          <PanelHeader>Alert</PanelHeader>
+          <Group>
+            <CellButton onClick={openAction}>Лишить права</CellButton>
+          </Group>
+        </Panel>
+      </View>
+      {popout}
+    </React.Fragment>
   );
 };
 

@@ -8,8 +8,10 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
-import { type CustomTouchEvent, Touch } from '../Touch/Touch';
+import { type CustomTouchEvent } from '../Touch/Touch';
+import { Bullets } from './Bullets';
+import { GalleryViewPort } from './GalleryViewPort';
+import { ScrollArrows } from './ScrollArrows';
 import { calcMax, calcMin } from './helpers';
 import type { BaseGalleryProps, GallerySlidesState, LayoutState, ShiftingState } from './types';
 import styles from './BaseGallery.module.css';
@@ -34,10 +36,6 @@ const SHIFT_DEFAULT_STATE = {
   indent: 0,
 };
 
-const stylesBullets = {
-  dark: styles.bulletsDark,
-  light: styles.bulletsLight,
-};
 export const BaseGallery = ({
   bullets = false,
   getRootRef,
@@ -53,7 +51,12 @@ export const BaseGallery = ({
   align = 'left',
   showArrows,
   getRef,
-  arrowSize = 'm',
+  arrowSize,
+  arrowAreaHeight,
+  slideTestId,
+  bulletTestId,
+  nextArrowTestId,
+  prevArrowTestId,
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -330,51 +333,39 @@ export const BaseGallery = ({
       )}
       getRootRef={rootRef}
     >
-      <Touch
-        className={styles.viewport}
-        onStartX={onStart}
+      <GalleryViewPort
+        slideWidth={slideWidth}
+        slideTestId={slideTestId}
+        onStart={onStart}
         onMoveX={onMoveX}
         onEnd={onEnd}
-        style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
-        getRootRef={viewportRef}
-        noSlideClick
+        viewportRef={viewportRef}
+        layerStyle={layerStyle}
+        setSlideRef={setSlideRef}
       >
-        <div className={styles.layer} style={layerStyle}>
-          {React.Children.map(children, (item: React.ReactNode, i: number) => (
-            <div className={styles.slide} key={`slide-${i}`} ref={(el) => setSlideRef(el, i)}>
-              {item}
-            </div>
-          ))}
-        </div>
-      </Touch>
+        {children}
+      </GalleryViewPort>
 
       {bullets && (
-        <div aria-hidden className={classNames(styles.bullets, stylesBullets[bullets])}>
-          {React.Children.map(children, (_item: React.ReactNode, index: number) => (
-            <div
-              className={classNames(styles.bullet, index === slideIndex && styles.bulletActive)}
-              key={index}
-            />
-          ))}
-        </div>
-      )}
-
-      {showArrows && hasPointer && canSlideLeft && (
-        <ScrollArrow
-          className={styles.arrow}
-          direction="left"
-          onClick={slideLeft}
-          size={arrowSize}
+        <Bullets
+          bullets={bullets}
+          slideIndex={slideIndex}
+          count={React.Children.count(children)}
+          bulletTestId={bulletTestId}
         />
       )}
-      {showArrows && hasPointer && canSlideRight && (
-        <ScrollArrow
-          className={styles.arrow}
-          direction="right"
-          onClick={slideRight}
-          size={arrowSize}
-        />
-      )}
+      <ScrollArrows
+        hasPointer={hasPointer}
+        canSlideLeft={canSlideLeft}
+        canSlideRight={canSlideRight}
+        onSlideRight={slideRight}
+        onSlideLeft={slideLeft}
+        showArrows={showArrows}
+        arrowSize={arrowSize}
+        arrowAreaHeight={arrowAreaHeight}
+        nextArrowTestId={nextArrowTestId}
+        prevArrowTestId={prevArrowTestId}
+      />
     </RootComponent>
   );
 };

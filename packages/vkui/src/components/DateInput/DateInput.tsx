@@ -10,6 +10,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { callMultiple } from '../../lib/callMultiple';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
@@ -27,10 +28,25 @@ const sizeYClassNames = {
 };
 
 export type DateInputPropsTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для поля ввода дня
+   */
   dayFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода месяца
+   */
   monthFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода года
+   */
   yearFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода часа
+   */
   hourFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода минут
+   */
   minuteFieldTestId?: string;
 };
 
@@ -45,6 +61,7 @@ export interface DateInputProps
       | 'onChange'
       | 'value'
       | 'doneButtonText'
+      | 'DoneButton'
       | 'weekStartsOn'
       | 'disablePickers'
       | 'changeHoursLabel'
@@ -69,6 +86,9 @@ export interface DateInputProps
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateInputPropsTestsProps {
+  /**
+   * Передает атрибуты `data-testid` для интерактивных элементов в календаре
+   */
   calendarTestsProps?: CalendarTestsProps;
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
@@ -76,6 +96,10 @@ export interface DateInputProps
   showCalendarLabel?: string;
   disableCalendar?: boolean;
   onCalendarOpenChanged?: (opened: boolean) => void;
+  /**
+   * Колбэк срабатывающий при нажатии на кнопку "Done". Используется совместно с флагом `enableTime`.
+   */
+  onApply?: (value?: Date) => void;
 }
 
 const elementsConfig = (index: number) => {
@@ -128,12 +152,13 @@ export const DateInput = ({
   disablePast,
   minDateTime,
   maxDateTime,
-  value,
+  value: valueProp,
   onChange,
   calendarPlacement = 'bottom-start',
   style,
   className,
   doneButtonText,
+  DoneButton,
   closeOnChange = true,
   disablePickers,
   getRootRef,
@@ -168,6 +193,7 @@ export const DateInput = ({
   yearFieldTestId,
   hourFieldTestId,
   minuteFieldTestId,
+  onApply,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -175,8 +201,16 @@ export const DateInput = ({
   const yearsRef = React.useRef<HTMLSpanElement>(null);
   const hoursRef = React.useRef<HTMLSpanElement>(null);
   const minutesRef = React.useRef<HTMLSpanElement>(null);
+  const [value, setValue] = React.useState<Date | undefined>(valueProp);
 
   const maxElement = enableTime ? 4 : 2;
+
+  useIsomorphicLayoutEffect(
+    function updateLocalValue() {
+      setValue(valueProp);
+    },
+    [valueProp],
+  );
 
   const onInternalValueChange = React.useCallback(
     (internalValue: string[]) => {
@@ -236,15 +270,34 @@ export const DateInput = ({
 
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
+  useIsomorphicLayoutEffect(
+    function resetValueOnCloseCalendar() {
+      if (!open) {
+        setValue(valueProp);
+      }
+    },
+    [open, valueProp],
+  );
+
   const onCalendarChange = React.useCallback(
     (value?: Date | undefined) => {
+      if (enableTime) {
+        setValue(value);
+        return;
+      }
       onChange?.(value);
-      if (closeOnChange && !enableTime) {
+      if (closeOnChange) {
         removeFocusFromField();
       }
     },
     [onChange, removeFocusFromField, closeOnChange, enableTime],
   );
+
+  const onDoneButtonClick = React.useCallback(() => {
+    onApply?.(value);
+    onChange?.(value);
+    removeFocusFromField();
+  }, [onApply, onChange, removeFocusFromField, value]);
 
   return (
     <FormField
@@ -348,9 +401,10 @@ export const DateInput = ({
             disablePast={disablePast}
             disableFuture={disableFuture}
             shouldDisableDate={shouldDisableDate}
-            onDoneButtonClick={removeFocusFromField}
+            onDoneButtonClick={onDoneButtonClick}
             getRootRef={calendarRef}
             doneButtonText={doneButtonText}
+            DoneButton={DoneButton}
             disablePickers={disablePickers}
             changeHoursLabel={changeHoursLabel}
             changeMinutesLabel={changeMinutesLabel}

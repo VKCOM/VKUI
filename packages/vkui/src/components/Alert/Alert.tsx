@@ -67,7 +67,7 @@ export interface AlertProps
    */
   dismissButtonMode?: 'inside' | 'outside';
   /**
-   * `data-testid` для кнопки закрытия
+   * Передает атрибут `data-testid` для кнопки закрытия
    */
   dismissButtonTestId?: string;
   usePortal?: AppRootPortalProps['usePortal'];

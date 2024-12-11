@@ -91,6 +91,18 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    * > Note: `CustomPaginationNavigationButton` наследует API [Button](https://vkcom.github.io/VKUI/#/Button).
    */
   renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
+  /**
+   * Передает атрибут `data-testid` для кнопок страниц
+   */
+  pageButtonTestId?: (day: PaginationPageType, active: boolean) => string;
+  /**
+   * Передает атрибут `data-testid` для кнопки `prev`
+   */
+  prevButtonTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки `next`
+   */
+  nextButtonTestId?: string;
 }
 
 /**
@@ -112,6 +124,9 @@ export const Pagination = ({
   nextButtonLabel = 'Перейти на следующую страницу',
   onChange,
   renderPageButton,
+  pageButtonTestId,
+  prevButtonTestId,
+  nextButtonTestId,
   renderNavigationButton,
   ...resetProps
 }: PaginationProps): React.ReactNode => {
@@ -156,17 +171,18 @@ export const Pagination = ({
 
   const renderPages = React.useCallback(
     (page: PaginationPageType) => {
+      const isCurrent = page === currentPage;
+      const dataTestId = pageButtonTestId?.(page, isCurrent);
+
       switch (page) {
         case 'start-ellipsis':
         case 'end-ellipsis':
           return (
             <li key={page}>
-              <PaginationPageEllipsis disabled={disabled} />
+              <PaginationPageEllipsis disabled={disabled} data-testid={dataTestId} />
             </li>
           );
         default: {
-          const isCurrent = page === currentPage;
-
           return (
             <li key={page}>
               <PaginationPageButton
@@ -176,6 +192,7 @@ export const Pagination = ({
                 disabled={disabled}
                 sizeY={sizeY}
                 renderPageButton={renderPageButton}
+                data-testid={dataTestId}
               >
                 {page}
               </PaginationPageButton>
@@ -184,7 +201,7 @@ export const Pagination = ({
         }
       }
     },
-    [currentPage, disabled, getPageLabel, handleClick, renderPageButton, sizeY],
+    [currentPage, disabled, getPageLabel, handleClick, renderPageButton, sizeY, pageButtonTestId],
   );
 
   return (
@@ -201,6 +218,7 @@ export const Pagination = ({
             disabled={isFirstPage || disabled}
             onClick={handlePrevClick}
             data-page={prevPage}
+            data-testid={prevButtonTestId}
             renderNavigationButton={renderNavigationButton}
           />
         </li>
@@ -215,6 +233,7 @@ export const Pagination = ({
             disabled={isLastPage || disabled}
             onClick={handleNextClick}
             data-page={nextPage}
+            data-testid={nextButtonTestId}
             renderNavigationButton={renderNavigationButton}
           />
         </li>
