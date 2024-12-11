@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { millisecondsInSecond } from 'date-fns/constants';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { useDOM } from '../../lib/dom';
 import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
@@ -81,7 +81,7 @@ function useSkeletonPosition(rootRef: React.RefObject<HTMLElement | null>) {
   }, [document, prevSkeletonGradientLeft, rootRef, setSkeletonGradientLeft]);
 
   React.useEffect(updatePosition, [updatePosition]);
-  useGlobalEventListener(window, 'resize', updatePosition);
+  useResizeObserver(window, updatePosition);
 
   return skeletonGradientLeft;
 }
