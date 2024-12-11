@@ -58,11 +58,11 @@ export interface SliderBaseProps
    */
   size?: 's' | 'm' | 'l';
   /**
-   * e2e test-id для первого ползунка
+   * Передает атрибут `data-testid` для первого ползунка
    */
   startThumbTestId?: string;
   /**
-   * e2e test-id для второго ползунка когда `multiple=true`
+   * Передает атрибут `data-testid` для второго ползунка когда `multiple=true`
    */
   endThumbTestId?: string;
 }

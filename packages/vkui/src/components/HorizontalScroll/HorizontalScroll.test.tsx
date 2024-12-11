@@ -56,16 +56,20 @@ describe('HorizontalScroll', () => {
 
   it('calculates and shows arrow on hover', async () => {
     render(
-      <HorizontalScroll getRef={mockRef} data-testid="horizontal-scroll">
+      <HorizontalScroll
+        getRef={mockRef}
+        data-testid="horizontal-scroll"
+        endArrowTestId="scroll-arrow-right"
+      >
         <div style={{ width: '800px', height: '50px' }} />
       </HorizontalScroll>,
     );
     // no arrow button on the screen on first render
-    expect(screen.queryByTestId('ScrollArrowRight')).toBeFalsy();
+    expect(screen.queryByTestId('scroll-arrow-right')).toBeFalsy();
 
     fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
 
-    await screen.findByTestId('ScrollArrowRight');
+    await screen.findByTestId('scroll-arrow-right');
   });
 
   it('disables navigation to arrows by keyboard', async () => {
@@ -98,11 +102,15 @@ describe('HorizontalScroll', () => {
   });
 
   it('click on arrow right should change scrollLeft', async () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
-      <HorizontalScroll getRef={ref} data-testid="horizontal-scroll">
+      <HorizontalScroll
+        getRef={ref}
+        data-testid="horizontal-scroll"
+        endArrowTestId="scroll-arrow-right"
+      >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,
     );
@@ -111,22 +119,26 @@ describe('HorizontalScroll', () => {
 
     fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
 
-    const arrowRight = screen.getByTestId('ScrollArrowRight');
+    const arrowRight = screen.getByTestId('scroll-arrow-right');
     fireEvent.click(arrowRight);
     fireEvent.click(arrowRight);
 
     await waitFor(() => {
       expect(mockedData.scrollLeft).toBe(300);
-      expect(screen.queryByTestId('ScrollArrowRight')).toBeNull();
+      expect(screen.queryByTestId('scroll-arrow-right')).toBeNull();
     });
   });
 
   it('click on arrow left should change scrollLeft', async () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
-      <HorizontalScroll getRef={ref} data-testid="horizontal-scroll">
+      <HorizontalScroll
+        getRef={ref}
+        data-testid="horizontal-scroll"
+        startArrowTestId="scroll-arrow-left"
+      >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,
     );
@@ -135,7 +147,7 @@ describe('HorizontalScroll', () => {
 
     fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
 
-    const arrowLeft = screen.getByTestId('ScrollArrowLeft');
+    const arrowLeft = screen.getByTestId('scroll-arrow-left');
     fireEvent.click(arrowLeft);
 
     await waitFor(() => {
@@ -149,7 +161,7 @@ describe('HorizontalScroll', () => {
   });
 
   it('use custom scroll function to left and right', async () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
@@ -158,6 +170,8 @@ describe('HorizontalScroll', () => {
         data-testid="horizontal-scroll"
         getScrollToLeft={(left) => left - 100}
         getScrollToRight={(left) => left + 250}
+        startArrowTestId="scroll-arrow-left"
+        endArrowTestId="scroll-arrow-right"
       >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,
@@ -167,14 +181,14 @@ describe('HorizontalScroll', () => {
 
     fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
 
-    const arrowRight = screen.getByTestId('ScrollArrowRight');
+    const arrowRight = screen.getByTestId('scroll-arrow-right');
     fireEvent.click(arrowRight);
 
     await waitFor(() => {
       expect(mockedData.scrollLeft).toBe(300);
     });
 
-    const arrowLeft = screen.getByTestId('ScrollArrowLeft');
+    const arrowLeft = screen.getByTestId('scroll-arrow-left');
     fireEvent.click(arrowLeft);
 
     await waitFor(() => {
@@ -183,11 +197,16 @@ describe('HorizontalScroll', () => {
   });
 
   it('scroll by arrow', () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
-      <HorizontalScroll getRef={ref} data-testid="horizontal-scroll">
+      <HorizontalScroll
+        getRef={ref}
+        data-testid="horizontal-scroll"
+        startArrowTestId="scroll-arrow-left"
+        endArrowTestId="scroll-arrow-right"
+      >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,
     );
@@ -196,8 +215,8 @@ describe('HorizontalScroll', () => {
 
     fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
 
-    const arrowLeft = screen.getByTestId('ScrollArrowLeft');
-    const arrowRight = screen.getByTestId('ScrollArrowRight');
+    const arrowLeft = screen.getByTestId('scroll-arrow-left');
+    const arrowRight = screen.getByTestId('scroll-arrow-right');
 
     fireEvent.wheel(arrowRight, {
       deltaX: 20,

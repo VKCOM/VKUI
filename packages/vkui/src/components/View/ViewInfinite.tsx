@@ -139,7 +139,7 @@ class ViewInfiniteComponent extends React.Component<
   }
 
   get panels() {
-    return React.Children.toArray(this.props.children) as React.ReactElement[];
+    return React.Children.toArray(this.props.children) as Array<React.ReactElement<NavIdProps>>;
   }
 
   panelNodes: { [id: string]: HTMLDivElement | null } = {};
@@ -624,7 +624,7 @@ class ViewInfiniteComponent extends React.Component<
           }
         >
           <div className={styles.panels}>
-            {panels.map((panel: React.ReactElement) => {
+            {panels.map((panel) => {
               const panelId = getNavId(panel.props, warn);
               const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
               const compensateScroll =
@@ -646,7 +646,9 @@ class ViewInfiniteComponent extends React.Component<
                     swipeBackResult === 'fail' && styles.panelSwipeBackFailed,
                   )}
                   onAnimationEnd={isTransitionTarget ? this.transitionEndHandler : undefined}
-                  ref={(el) => panelId !== undefined && (this.panelNodes[panelId] = el)}
+                  ref={(el) => {
+                    panelId !== undefined && (this.panelNodes[panelId] = el);
+                  }}
                   style={this.calcPanelSwipeStyles(panelId)}
                   key={panelId}
                 >

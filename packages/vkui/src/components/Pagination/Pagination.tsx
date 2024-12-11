@@ -92,15 +92,15 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    */
   renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
   /**
-   * e2e test-id для кнопок страниц
+   * Передает атрибут `data-testid` для кнопок страниц
    */
   pageButtonTestId?: (day: PaginationPageType, active: boolean) => string;
   /**
-   * e2e test-id для кнопки `prev`
+   * Передает атрибут `data-testid` для кнопки `prev`
    */
   prevButtonTestId?: string;
   /**
-   * e2e test-id для кнопки `next`
+   * Передает атрибут `data-testid` для кнопки `next`
    */
   nextButtonTestId?: string;
 }

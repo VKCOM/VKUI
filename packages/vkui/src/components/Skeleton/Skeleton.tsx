@@ -62,7 +62,7 @@ function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
 /**
  * Вычисляет позицию скелетона
  */
-function useSkeletonPosition(rootRef: React.MutableRefObject<HTMLElement | null>) {
+function useSkeletonPosition(rootRef: React.RefObject<HTMLElement | null>) {
   const { document, window } = useDOM();
   const [[skeletonGradientLeft, prevSkeletonGradientLeft], setSkeletonGradientLeft] =
     useStateWithPrev('0');

@@ -223,10 +223,11 @@ describe(ModalRoot, () => {
   });
 
   describe('focus', () => {
-    let modalPageRef: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
-    let modalCardRef: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
-    let modalPageWithInputRef: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
-    let inputInnerModalPageRef: React.RefObject<HTMLInputElement> =
+    let modalPageRef: React.RefObject<HTMLDivElement | null> = React.createRef<HTMLDivElement>();
+    let modalCardRef: React.RefObject<HTMLDivElement | null> = React.createRef<HTMLDivElement>();
+    let modalPageWithInputRef: React.RefObject<HTMLDivElement | null> =
+      React.createRef<HTMLDivElement>();
+    let inputInnerModalPageRef: React.RefObject<HTMLInputElement | null> =
       React.createRef<HTMLInputElement>();
     let modals: React.ReactElement[] = [];
 

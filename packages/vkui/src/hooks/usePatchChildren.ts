@@ -19,14 +19,7 @@ type InjectProps<T> = Omit<React.HTMLAttributes<T>, keyof React.DOMAttributes<T>
 
 type ExpectedReactElement<T> = React.ReactElement<HasRootRef<T> & React.DOMAttributes<T>>;
 
-type ChildrenElement<T> =
-  | ExpectedReactElement<T>
-  | React.ReactText
-  | React.ReactFragment
-  | React.ReactPortal
-  | boolean
-  | null
-  | undefined;
+type ChildrenElement<T> = ExpectedReactElement<T> | React.ReactNode;
 
 /**
  * Хук позволяет пропатчить переданный компонент так, чтобы можно было получить ссылку на его
@@ -55,7 +48,7 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
   children?: ChildrenElement<ElementType>,
   injectProps?: InjectProps<ElementType>,
   externRef?: React.Ref<ElementType>,
-): [React.MutableRefObject<ElementType | null>, ChildrenElement<ElementType> | undefined] => {
+): [React.RefObject<ElementType | null>, ChildrenElement<ElementType> | undefined] => {
   const isValidElementResult = isValidNotReactFragmentElement(children);
   const isDOMTypeElementResult =
     isValidElementResult &&
