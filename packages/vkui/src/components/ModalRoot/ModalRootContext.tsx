@@ -10,7 +10,9 @@ import type { ModalRootContextInterface } from './types';
  *
  * @private
  */
-export const ModalRootOverlayContext = createContext<RefObject<HTMLDivElement>>({ current: null });
+export const ModalRootOverlayContext = createContext<RefObject<HTMLDivElement | null>>({
+  current: null,
+});
 
 export const ModalRootContext = createContext<ModalRootContextInterface>({
   updateModalHeight: noop,

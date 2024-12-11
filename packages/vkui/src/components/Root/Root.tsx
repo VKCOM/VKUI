@@ -51,7 +51,7 @@ export const Root = ({
   const { animate } = React.useContext(SplitColContext);
   const disableAnimation = !transitionMotionEnabled || !animate;
 
-  const views = React.Children.toArray(children) as React.ReactElement[];
+  const views = React.Children.toArray(children) as Array<React.ReactElement<NavIdProps>>;
 
   const [{ prevView, activeView, transition, isBack }, _setState] = React.useState<RootState>({
     activeView: _activeView,
@@ -127,7 +127,9 @@ export const Root = ({
         return (
           <div
             key={viewId}
-            ref={(e) => viewId && (viewNodes[viewId] = e)}
+            ref={(e) => {
+              viewId && (viewNodes[viewId] = e);
+            }}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
             className={classNames(
               styles.view,

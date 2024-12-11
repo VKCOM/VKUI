@@ -8,7 +8,7 @@ import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
  * @private
  */
 export const useGlobalOnClickOutside = <
-  T extends React.RefObject<ElementType> | undefined | null,
+  T extends React.RefObject<ElementType | null> | undefined | null,
   ElementType extends Element = Element,
 >(
   callback: (event: MouseEvent) => void,

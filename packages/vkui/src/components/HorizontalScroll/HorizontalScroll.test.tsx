@@ -102,7 +102,7 @@ describe('HorizontalScroll', () => {
   });
 
   it('click on arrow right should change scrollLeft', async () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
@@ -130,7 +130,7 @@ describe('HorizontalScroll', () => {
   });
 
   it('click on arrow left should change scrollLeft', async () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
@@ -161,7 +161,7 @@ describe('HorizontalScroll', () => {
   });
 
   it('use custom scroll function to left and right', async () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
@@ -197,7 +197,7 @@ describe('HorizontalScroll', () => {
   });
 
   it('scroll by arrow', () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(

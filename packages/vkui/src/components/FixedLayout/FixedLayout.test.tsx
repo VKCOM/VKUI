@@ -1,4 +1,4 @@
-import { act, type MutableRefObject } from 'react';
+import { act, type RefObject } from 'react';
 import { render } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
@@ -23,10 +23,10 @@ describe('FixedLayout', () => {
   baselineComponent(FixedLayout);
 
   it('check update width by parent width', async () => {
-    const parentRef: MutableRefObject<HTMLDivElement | null> = {
+    const parentRef: RefObject<HTMLDivElement | null> = {
       current: null,
     };
-    const layoutRef: MutableRefObject<HTMLDivElement | null> = {
+    const layoutRef: RefObject<HTMLDivElement | null> = {
       current: null,
     };
     let parentWidth = 500;
@@ -59,10 +59,10 @@ describe('FixedLayout', () => {
   });
 
   it('check update width by column width', async () => {
-    const colRef: MutableRefObject<HTMLDivElement | null> = {
+    const colRef: RefObject<HTMLDivElement | null> = {
       current: null,
     };
-    const layoutRef: MutableRefObject<HTMLDivElement | null> = {
+    const layoutRef: RefObject<HTMLDivElement | null> = {
       current: null,
     };
     let colWidth = 280;
@@ -113,7 +113,7 @@ describe('FixedLayout', () => {
         className: styles.verticalBottom,
       },
     ])('should have className $className when use props $props', ({ props, className }) => {
-      const layoutRef: MutableRefObject<HTMLDivElement | null> = {
+      const layoutRef: RefObject<HTMLDivElement | null> = {
         current: null,
       };
       render(

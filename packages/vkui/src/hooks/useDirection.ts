@@ -35,11 +35,11 @@ type WritingMode = 'horizontal-tb' | 'vertical-rl' | 'vertical-lr';
  * ```
  */
 export function useDirection<T extends HTMLElement>(): [
-  React.RefObject<T>,
+  React.RefObject<T | null>,
   Direction | undefined,
   WritingMode | undefined,
 ] {
-  const ref = React.useRef<T>(null);
+  const ref = React.useRef<T | null>(null);
 
   const [direction, setDirection] = React.useState<Direction | undefined>(undefined);
   const [writingMode, setWritingMode] = React.useState<WritingMode | undefined>(undefined);

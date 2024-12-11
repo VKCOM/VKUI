@@ -112,7 +112,7 @@ export type UseFocusTrapProps = {
  * @private
  */
 export const useFocusTrap = (
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   {
     mount = true,
     disabled = false,

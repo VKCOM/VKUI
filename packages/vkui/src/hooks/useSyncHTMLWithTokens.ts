@@ -5,7 +5,7 @@ export function useSyncHTMLWithTokens({
   appRootRef,
   enable,
 }: {
-  appRootRef: React.RefObject<HTMLElement>;
+  appRootRef: React.RefObject<HTMLElement | null>;
   enable: boolean;
 }) {
   const tokenClassName = useTokensClassName();

@@ -6,7 +6,7 @@ import { useGlobalEventListener } from './useGlobalEventListener';
 
 export interface UseDateInputDependencies<T, D> {
   maxElement: number;
-  refs: Array<React.RefObject<T>>;
+  refs: Array<React.RefObject<T | null>>;
   autoFocus?: boolean;
   disabled?: boolean;
   value?: D;
@@ -33,8 +33,8 @@ export function useDateInput<T extends HTMLElement, D>({
   value,
   onCalendarOpenChanged,
 }: UseDateInputDependencies<T, D>): {
-  rootRef: React.RefObject<HTMLDivElement>;
-  calendarRef: React.RefObject<HTMLDivElement>;
+  rootRef: React.RefObject<HTMLDivElement | null>;
+  calendarRef: React.RefObject<HTMLDivElement | null>;
   open: boolean;
   openCalendar: () => void;
   closeCalendar: () => void;
@@ -48,8 +48,8 @@ export function useDateInput<T extends HTMLElement, D>({
 } {
   const { document } = useDOM();
   const { value: open, setTrue: openCalendar, setFalse: closeCalendar } = useBooleanState(false);
-  const rootRef = React.useRef<HTMLDivElement>(null);
-  const calendarRef = React.useRef<HTMLDivElement>(null);
+  const rootRef = React.useRef<HTMLDivElement | null>(null);
+  const calendarRef = React.useRef<HTMLDivElement | null>(null);
   const [internalValue, setInternalValue] = React.useState<string[]>([]);
   const [focusedElement, setFocusedElement] = React.useState<number | null>(null);
   const { window } = useDOM();

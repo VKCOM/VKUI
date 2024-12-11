@@ -116,8 +116,8 @@ export const View = ({
   const prevSwipeBackPrevPanel = usePrevious(swipeBackPrevPanel);
   const prevOnTransition = usePrevious(onTransition);
 
-  const panels = (React.Children.toArray(children) as React.ReactElement[]).filter(
-    (panel: React.ReactElement) => {
+  const panels = (React.Children.toArray(children) as Array<React.ReactElement<NavIdProps>>).filter(
+    (panel) => {
       const panelId = getNavId(panel.props, warn);
 
       return (
@@ -325,7 +325,9 @@ export const View = ({
       !prevSwipingBack &&
       !prevBrowserSwipe
     ) {
-      const firstLayerId = (React.Children.toArray(children) as React.ReactElement[])
+      const firstLayerId = (
+        React.Children.toArray(children) as Array<React.ReactElement<NavIdProps>>
+      )
         .map((panel) => getNavId(panel.props, warn))
         .find((id) => id === prevActivePanel || id === activePanelProp);
 
@@ -459,7 +461,7 @@ export const View = ({
         onEnd={iOSSwipeBackSimulationEnabled ? handleTouchEndForIOSSwipeBackSimulation : undefined}
       >
         <div className={styles.panels}>
-          {panels.map((panel: React.ReactElement) => {
+          {panels.map((panel) => {
             const panelId = getNavId(panel.props, warn);
 
             const isPanelActive = panelId === activePanel;
@@ -496,7 +498,9 @@ export const View = ({
                 )}
                 onTransitionEnd={isSwipeBackTarget ? handleSwipeBackTargetTransitionEnd : undefined}
                 onAnimationEnd={isAnimatedTarget ? handleAnimatedTargetAnimationEnd : undefined}
-                ref={(el) => panelId !== undefined && (panelNodes.current[panelId] = el)}
+                ref={(el) => {
+                  panelId !== undefined && (panelNodes.current[panelId] = el);
+                }}
                 style={calcPanelSwipeStyles(isSwipeBackPrev, isSwipeBackNext)}
                 key={panelId}
               >

@@ -1,3 +1,4 @@
+import type * as React from 'react';
 import { warnOnce } from '../../lib/warnOnce';
 import {
   getBadgeIconSizeByImageBaseSize,
@@ -32,15 +33,15 @@ function parseIconSizeByWidthProp(width: unknown): number | null {
   return size > 0 ? size : null;
 }
 
-function getElementDisplayName(element: JSX.Element): string | null {
+function getElementDisplayName(element: React.JSX.Element): string | null {
   return element.type.displayName ?? null;
 }
 
-function getElementWidthProp(element: JSX.Element): number | string | null {
+function getElementWidthProp(element: React.JSX.Element): number | string | null {
   return element.props.width ?? null;
 }
 
-function getIconSizeByElement(element: JSX.Element): number | null {
+function getIconSizeByElement(element: React.JSX.Element): number | null {
   const sizeByDisplayName = parseIconSizeByDisplayName(getElementDisplayName(element));
   const sizeByWidth = parseIconSizeByWidthProp(getElementWidthProp(element));
   return sizeByWidth ? sizeByWidth : sizeByDisplayName;
@@ -48,7 +49,7 @@ function getIconSizeByElement(element: JSX.Element): number | null {
 
 interface IconProp {
   name: string;
-  value: JSX.Element;
+  value: React.JSX.Element;
 }
 
 interface SelectorFn {

@@ -32,7 +32,7 @@ export type UseCSSTransitionOptions = {
 export type UseCSSTransition<Ref extends Element = Element> = [
   state: UseCSSTransitionState,
   {
-    ref: React.RefObject<Ref>;
+    ref: React.RefObject<Ref | null>;
     onTransitionEnd?: TransitionEventHandler;
   },
 ];

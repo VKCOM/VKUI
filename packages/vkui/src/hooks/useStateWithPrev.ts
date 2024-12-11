@@ -35,9 +35,5 @@ function reducer<T>(
 export function useStateWithPrev<T>(
   initialState: T | (() => T),
 ): [[T, T | undefined], React.Dispatch<React.SetStateAction<T>>] {
-  return React.useReducer<React.Reducer<[T, T | undefined], React.SetStateAction<T>>, undefined>(
-    reducer,
-    undefined,
-    () => initializer(initialState),
-  );
+  return React.useReducer(reducer, undefined, () => initializer(initialState));
 }

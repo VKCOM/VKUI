@@ -50,7 +50,7 @@ export function useCustomEnsuredControl<V = any>({
   const isControlled = value !== undefined;
   const [localValue, setLocalValue] = React.useState(defaultValue);
 
-  const preservedControlledValueRef = React.useRef<V | undefined>();
+  const preservedControlledValueRef = React.useRef<V | undefined>(undefined);
   useIsomorphicLayoutEffect(() => {
     preservedControlledValueRef.current = value;
   });

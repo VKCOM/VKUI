@@ -74,7 +74,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const blockMouseEnterRef = React.useRef(false);
   const blockFocusRef = React.useRef(false);
-  const blurTimeoutRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const blurTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const handleCloseOnReferenceClickOutsideDisabled =
     disabled || disableCloseOnClickOutside || willBeHide || !shownLocalState.shown;

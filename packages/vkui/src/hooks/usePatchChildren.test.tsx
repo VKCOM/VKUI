@@ -19,8 +19,8 @@ const ComponentWithForwardRef = React.forwardRef<
 >((props, ref) => <div ref={ref} {...props}></div>);
 
 type WrapperWithUsePatchChildrenRefProps = {
-  childRef?: React.RefObject<HTMLDivElement>;
-  refHook?: React.RefObject<HTMLDivElement>;
+  childRef?: React.RefObject<HTMLDivElement | null>;
+  refHook?: React.RefObject<HTMLDivElement | null>;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const WrapperWithUsePatchChildrenRef = ({

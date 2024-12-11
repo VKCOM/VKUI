@@ -81,7 +81,7 @@ function useScrollLockController(enableScrollLock: () => void, disableScrollLock
 }
 
 export interface ScrollControllerProps extends HasChildren {
-  elRef: React.RefObject<HTMLElement>;
+  elRef: React.RefObject<HTMLElement | null>;
 }
 
 export const GlobalScrollController = ({ children }: ScrollControllerProps): React.ReactNode => {

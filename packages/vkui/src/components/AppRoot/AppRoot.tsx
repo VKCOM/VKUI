@@ -40,7 +40,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Кастомный root-элемент портала
    */
-  portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
+  portalRoot?: HTMLElement | React.RefObject<HTMLElement | null> | null;
   /**
    * Отключает рендер всплывающих компонентов в отдельном контейнере
    */

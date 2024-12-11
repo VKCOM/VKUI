@@ -97,7 +97,7 @@ export const useChipsSelect = <O extends ChipOption>({
   addOptionFromInput: (inputValue: string) => void;
   removeOption: (newValue: ChipOptionValue | O) => void;
   clearOptions: () => void;
-  inputRef: React.RefObject<HTMLInputElement & SimulateReactInputTargetState>;
+  inputRef: React.RefObject<(HTMLInputElement & SimulateReactInputTargetState) | null>;
   clearInput: () => void;
 } => {
   const { value, inputValue, onInputChange, ...restChipsInputProps } = useChipsInput({

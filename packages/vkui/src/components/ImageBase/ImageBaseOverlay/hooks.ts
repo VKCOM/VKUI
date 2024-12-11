@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useFocusWithin } from '../../../hooks/useFocusWithin';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 
-export function useNonInteractiveOverlayProps(rootRef: React.MutableRefObject<HTMLElement | null>) {
+export function useNonInteractiveOverlayProps(rootRef: React.RefObject<HTMLElement | null>) {
   const focusWithin = useFocusWithin(rootRef);
   const [nonInteractiveFocusShown, setNonInteractiveFocusShown] = React.useState(false);
 

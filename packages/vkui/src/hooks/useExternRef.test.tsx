@@ -18,7 +18,7 @@ describe(useExternRef, () => {
       render(<OuterRef />);
     });
     it('keeps inner ref.current up-to-date', () => {
-      let firstRef: React.MutableRefObject<any> | undefined = undefined;
+      let firstRef: React.RefObject<any> | undefined = undefined;
       let counter = 0;
       const RefForwarder = (props: HasRef<any>) => {
         const ref = useExternRef(props.getRef);
@@ -27,7 +27,19 @@ describe(useExternRef, () => {
         ref.current = counter;
         return null;
       };
-      render(<RefForwarder getRef={() => null} />).rerender(<RefForwarder getRef={() => null} />);
+      render(
+        <RefForwarder
+          getRef={() => {
+            null;
+          }}
+        />,
+      ).rerender(
+        <RefForwarder
+          getRef={() => {
+            null;
+          }}
+        />,
+      );
       expect((firstRef as any)?.current).toBe(counter);
     });
   });

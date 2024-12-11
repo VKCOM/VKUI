@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import ReactFrame, { useFrame } from 'react-frame-component';
 import { PanelSpinner } from '@vkui';
 import { DOMContext } from '@vkui/lib/dom';
@@ -88,11 +87,4 @@ export const Frame = ({ children, style, colorSchemeOptions, themeName }) => {
       </FrameDomProvider>
     </ReactFrame>
   );
-};
-
-Frame.propTypes = {
-  style: PropTypes.shape({
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-  }),
 };

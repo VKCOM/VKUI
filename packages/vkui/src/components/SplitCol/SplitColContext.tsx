@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export interface SplitColContextProps {
-  colRef: React.RefObject<HTMLDivElement> | null;
+  colRef: React.RefObject<HTMLDivElement | null> | null;
   animate: boolean;
 }
 

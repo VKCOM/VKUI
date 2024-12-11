@@ -19,9 +19,4 @@ module.exports = merge(webpackCommonConfig, {
       '@vkui': path.resolve(__dirname, `../${VKUI_PACKAGE.PATHS.SRC_DIR}`),
     },
   },
-  externals: [
-    {
-      'prop-types': 'prop-types',
-    },
-  ],
 });

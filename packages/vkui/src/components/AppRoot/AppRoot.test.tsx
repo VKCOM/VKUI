@@ -170,7 +170,7 @@ describe('AppRoot', () => {
   describe('portalRoot prop', () => {
     it('should accept custom portal root', () => {
       const customPortalRoot = document.createElement('div');
-      let portalRoot: React.MutableRefObject<HTMLElement | null> = React.createRef();
+      let portalRoot: React.RefObject<HTMLElement | null> = React.createRef();
       const contextCallback = jest.fn().mockImplementation((ctx) => {
         portalRoot.current = ctx.portalRoot ?? null;
         return null;

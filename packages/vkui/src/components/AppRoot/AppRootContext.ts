@@ -2,8 +2,8 @@ import * as React from 'react';
 import { type AppRootUserSelectMode, type SafeAreaInsets } from './types';
 
 export interface AppRootContextInterface {
-  appRoot: React.RefObject<HTMLElement>;
-  portalRoot?: HTMLElement | React.RefObject<HTMLElement> | null;
+  appRoot: React.RefObject<HTMLElement | null>;
+  portalRoot?: HTMLElement | React.RefObject<HTMLElement | null> | null;
   safeAreaInsets?: SafeAreaInsets;
   embedded: boolean;
   mode: 'partial' | 'embedded' | 'full';
