@@ -101,7 +101,8 @@
   },
   "resolutions": {
     "markdown-to-jsx@npm:^6.11.4": "^7.5.0",
-    "@types/mdx@npm:^2.0.0": "patch:@types/mdx@npm%3A2.0.13#~/.yarn/patches/@types-mdx-npm-2.0.13-52981f86f6.patch"
+    "@types/mdx@npm:^2.0.0": "patch:@types/mdx@npm%3A2.0.13#~/.yarn/patches/@types-mdx-npm-2.0.13-52981f86f6.patch",
+    "express": "4.21.2"
   },
   "scripts": {
     "docs:styleguide": "yarn workspace @project-docs/styleguide run start",
