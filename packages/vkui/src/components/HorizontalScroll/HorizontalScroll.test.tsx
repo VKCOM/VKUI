@@ -59,7 +59,7 @@ describe('HorizontalScroll', () => {
       <HorizontalScroll
         getRef={mockRef}
         data-testid="horizontal-scroll"
-        endArrowTestId="scroll-arrow-right"
+        nextButtonTestId="scroll-arrow-right"
       >
         <div style={{ width: '800px', height: '50px' }} />
       </HorizontalScroll>,
@@ -109,7 +109,7 @@ describe('HorizontalScroll', () => {
       <HorizontalScroll
         getRef={ref}
         data-testid="horizontal-scroll"
-        endArrowTestId="scroll-arrow-right"
+        nextButtonTestId="scroll-arrow-right"
       >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,
@@ -137,7 +137,7 @@ describe('HorizontalScroll', () => {
       <HorizontalScroll
         getRef={ref}
         data-testid="horizontal-scroll"
-        startArrowTestId="scroll-arrow-left"
+        prevButtonTestId="scroll-arrow-left"
       >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,
@@ -170,8 +170,8 @@ describe('HorizontalScroll', () => {
         data-testid="horizontal-scroll"
         getScrollToLeft={(left) => left - 100}
         getScrollToRight={(left) => left + 250}
-        startArrowTestId="scroll-arrow-left"
-        endArrowTestId="scroll-arrow-right"
+        prevButtonTestId="scroll-arrow-left"
+        nextButtonTestId="scroll-arrow-right"
       >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,
@@ -204,8 +204,8 @@ describe('HorizontalScroll', () => {
       <HorizontalScroll
         getRef={ref}
         data-testid="horizontal-scroll"
-        startArrowTestId="scroll-arrow-left"
-        endArrowTestId="scroll-arrow-right"
+        prevButtonTestId="scroll-arrow-left"
+        nextButtonTestId="scroll-arrow-right"
       >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,

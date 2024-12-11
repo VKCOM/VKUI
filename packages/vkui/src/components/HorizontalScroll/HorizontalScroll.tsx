@@ -53,13 +53,13 @@ export interface HorizontalScrollProps
    */
   scrollOnAnyWheel?: boolean;
   /**
-   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении начала
+   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении предыдущего элемента
    */
-  startArrowTestId?: string;
+  prevButtonTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении конца
+   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении следующего элемента
    */
-  endArrowTestId?: string;
+  nextButtonTestId?: string;
 }
 
 /**
@@ -175,8 +175,8 @@ export const HorizontalScroll = ({
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
   scrollOnAnyWheel = false,
-  startArrowTestId,
-  endArrowTestId,
+  prevButtonTestId,
+  nextButtonTestId,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
@@ -283,7 +283,7 @@ export const HorizontalScroll = ({
     >
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
         <ScrollArrow
-          data-testid={startArrowTestId}
+          data-testid={prevButtonTestId}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="left"
@@ -296,7 +296,7 @@ export const HorizontalScroll = ({
       )}
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
         <ScrollArrow
-          data-testid={endArrowTestId}
+          data-testid={nextButtonTestId}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="right"
