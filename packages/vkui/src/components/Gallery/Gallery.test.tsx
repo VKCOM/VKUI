@@ -3,7 +3,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import type { AlignType } from '../../types';
-import { ANIMATION_DURATION } from '../BaseGallery/CarouselBase/constants';
+import { ANIMATION_DURATION } from '../CarouselBase/constants';
+import { type BaseGalleryProps } from '../CarouselBase/types';
 import { Gallery } from './Gallery';
 
 const mockRAF = () => {
@@ -72,6 +73,7 @@ const setup = ({
   defaultSlideIndex,
   slideWidth,
   looped,
+  resizeSource = 'window',
   containerWidth: defaultContainerWidth,
   isCustomSlideWidth = false,
   viewPortWidth: defaultViewPortWidth,
@@ -90,6 +92,7 @@ const setup = ({
   containerWidth: number;
   viewPortWidth: number;
   numberOfSlides?: number;
+  resizeSource?: BaseGalleryProps['resizeSource'];
   align?: AlignType;
   onChange: VoidFunction;
   onNext?: VoidFunction;
@@ -161,6 +164,7 @@ const setup = ({
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       bullets="light"
+      resizeSource={resizeSource}
       slideWidth={isCustomSlideWidth ? 'custom' : undefined}
       getRootRef={mockContainerData}
       getRef={mockViewportData}
@@ -339,11 +343,10 @@ describe('Gallery', () => {
       expect(onDragEnd).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledTimes(0);
 
+      checkTransformX(mockedData.layerTransform, 0);
       if (looped) {
-        checkTransformX(mockedData.layerTransform, 0);
         expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
       } else {
-        expect(mockedData.layerTransform).toBeFalsy();
         expect(mockedData.getSlideMockData(0).transform).toBeFalsy();
       }
     });
@@ -408,7 +411,7 @@ describe('Gallery', () => {
       expect(onChange).toHaveBeenCalledWith(1);
       rerender({ slideIndex: 1 });
 
-      checkTransformX(mockedData.layerTransform, -180);
+      checkTransformX(mockedData.layerTransform, -170);
       checkActiveSlide(1);
 
       simulateDrag(mockedData.viewPort, [0, 150]);
@@ -418,7 +421,7 @@ describe('Gallery', () => {
       expect(onChange.mock.calls).toEqual([[1], [0]]);
       rerender({ slideIndex: 0 });
 
-      checkTransformX(mockedData.layerTransform, 0);
+      checkTransformX(mockedData.layerTransform, 10);
       checkActiveSlide(0);
     });
 
@@ -614,6 +617,64 @@ describe('Gallery', () => {
     });
   });
 
+  const mockResizeObserver = () => {
+    const callbacks = new Set<ResizeObserverCallback>();
+
+    class MockResizeObserver implements ResizeObserver {
+      constructor(callback: ResizeObserverCallback) {
+        callbacks.add(callback);
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      observe() {}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      unobserve() {}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      disconnect() {}
+    }
+
+    const originalResizeObserver = window.ResizeObserver;
+    window.ResizeObserver = MockResizeObserver;
+
+    return {
+      triggerResize: () => {
+        callbacks.forEach((callback) => {
+          callback([], {} as unknown as ResizeObserver);
+        });
+      },
+      restore: () => {
+        window.ResizeObserver = originalResizeObserver;
+      },
+    };
+  };
+
+  it('check recalculate slides positions when resize element with resizeSource="element"', () => {
+    const { triggerResize, restore } = mockResizeObserver();
+    const onChange = jest.fn();
+
+    const mockedData = setup({
+      looped: true,
+      resizeSource: 'element',
+      defaultSlideIndex: 0,
+      slideWidth: 180,
+      containerWidth: 200,
+      viewPortWidth: 180,
+      align: 'center',
+      onChange,
+    });
+
+    expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
+    expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
+
+    mockedData.containerWidth = 250;
+
+    triggerResize();
+
+    expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
+    expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
+    restore();
+  });
+
   it('checks gallery arrows and navigation in center alignment', () => {
     const onChange = jest.fn();
     const onDragStart = jest.fn();
@@ -624,7 +685,7 @@ describe('Gallery', () => {
     // поэтому мы показываем кнопки и позволяем drag
     const mockedData = setup({
       numberOfSlides: 2,
-      defaultSlideIndex: 2,
+      defaultSlideIndex: 1,
       slideWidth: 180,
       containerWidth: 300,
       viewPortWidth: 300,
@@ -652,7 +713,7 @@ describe('Gallery', () => {
     onDragStart.mockClear();
     onDragEnd.mockClear();
 
-    rerender({ slideIndex: 2 });
+    rerender({ slideIndex: 1 });
 
     expect(getArrows()).toHaveLength(1);
 
@@ -666,8 +727,9 @@ describe('Gallery', () => {
     mockedData.viewPortWidth = 540;
     onDragStart.mockClear();
     onDragEnd.mockClear();
+    fireEvent.resize(window);
 
-    rerender({ slideIndex: 2 });
+    rerender({ slideIndex: 1 });
 
     expect(getArrows()).toHaveLength(0);
 
