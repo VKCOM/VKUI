@@ -9,8 +9,7 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { addMonths, setMonth, setYear, subMonths } from 'date-fns';
-import { useDirection } from '../../hooks/useDirection';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useCalendarDirectionContext } from '../../context/CalendarDirectionContext';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -103,12 +102,10 @@ export const CalendarHeader = ({
   yearDropdownTestId,
   prevMonthButtonTestId,
   nextMonthButtonTestId,
-  getRootRef,
   ...restProps
 }: CalendarHeaderProps): React.ReactNode => {
   const { locale } = useConfigProvider();
-  const [directionRef, textDirection = 'ltr'] = useDirection();
-  const rootRef = useExternRef(directionRef, getRootRef);
+  const { direction } = useCalendarDirectionContext();
 
   const onMonthsChange = React.useCallback(
     (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
@@ -170,7 +167,7 @@ export const CalendarHeader = ({
   }
 
   return (
-    <RootComponent baseClassName={styles.host} getRootRef={rootRef} {...restProps}>
+    <RootComponent baseClassName={styles.host} {...restProps}>
       {!prevMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
@@ -182,7 +179,7 @@ export const CalendarHeader = ({
             <VisuallyHidden>
               {prevMonthLabel}, {formatter.format(subMonths(viewDate, 1))}
             </VisuallyHidden>
-            {textDirection === 'ltr' ? prevMonthIcon : nextMonthIcon}
+            {direction === 'ltr' ? prevMonthIcon : nextMonthIcon}
           </Tappable>
         </AdaptivityProvider>
       )}
@@ -248,7 +245,7 @@ export const CalendarHeader = ({
             <VisuallyHidden>
               {nextMonthLabel}, {formatter.format(addMonths(viewDate, 1))}
             </VisuallyHidden>
-            {textDirection === 'ltr' ? nextMonthIcon : prevMonthIcon}
+            {direction === 'ltr' ? nextMonthIcon : prevMonthIcon}
           </Tappable>
         </AdaptivityProvider>
       )}

@@ -61,7 +61,7 @@
   transform: translateX(-50%);
 }
 
-[dir='rtl'] .today .dayNumber::after {
+.rtl .today .dayNumber::after {
   transform: translateX(50%);
 }
 
