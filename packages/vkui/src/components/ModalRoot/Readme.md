@@ -1,51 +1,29 @@
-`ModalRoot` – контейнер для модальных страниц и карточек.
-Модальные страницы и карточки поддерживают различные жесты: раскрытие на весь экран, закрытие смахиванием вниз.
+Менеджер модальных окон.
 
-> ⚠️ **Safari < 16**
->
-> В мобильной версии [`ModalPage`](#/ModalPage)/[`ModalCard`](#/ModalCard) адаптируется в **Bottom sheets**.
->
-> В **Safari < 16** их сворачивание может вызвать функцию **pull-to-refresh**. Попытка блокировать это
-> поведение приводит к другим проблемам, например, блокирование скролла (cм. https://github.com/VKCOM/VKUI/issues/335).
->
-> В **Safari >= 16** проблема с блокированием **pull-to-refresh** решается в одно свойство [`overscroll-behavior-y: none;`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-y).
-> Это свойство выставляется на `html` при открытии модального окна и удаляется при закрытии.
+В качестве `children` принимает коллекцию [`ModalPage`](#/ModalPage) и/или [`ModalCard`](#/ModalCard). У каждого модального окна
+должен быть уникальный `id`.
 
-## Структура
+Свойство `activeModal` переключает между модальными окнами.
 
-Этот компонент должен быть передан в качестве свойства `modal` компоненту [`SplitLayout`](#/SplitLayout).
-
-> ⚠️ Структура модальных страниц и карточек должна определяться единожды на старте приложения. Структура – это _декларация_ приложения.
-> То есть, один раз определив структуру вида:
-
-```jsx static
-const App = () => {
-  const modal = (
-    <ModalRoot activeModal={this.state.activeModal}>
-      <ModalPage id="select">...</ModalPage>
-      <ModalCard id="faq">...</ModalCard>
-    </ModalRoot>
-  );
-
-  return <SplitLayout modal={modal}>...</SplitLayout>;
-};
-```
-
-она не должна меняться в ходе работы приложения. Нельзя добавлять новые `ModalPage` и `ModalCard`, нельзя менять их `id`.
-Можно только менять содержимое модальных страниц или карточек. Например, отрендерить список элементов в модальной странице фильтра.
-
-## Описание работы
-
-В качестве `children` принимает коллекцию `ModalPage` и `ModalCard`.
-У каждого модального окна должен быть уникальный `id`. Свойство `activeModal` определяет какая страница или карточка активна.
-
-- При смене значения свойства `activeModal` происходит плавный переход от одного модального окна к другому.
-- При установке `activeModal` как `null` текущее модальное окно закрывается.
+- при смене значения свойства `activeModal` происходит плавный переход от одного модального окна к другому;
+- при установке `activeModal` как `null` текущее модальное окно закрывается.
 
 `ModalRoot` принимает свойство `onClose`, которое будет вызвано с идентификатором текущего активного модального окна
-или карточки после свайпа или нажатия на крестик. Приложение должно установить в качестве нового значения `activeModal`
-либо идентификатор предыдущей модалки, либо `null` для скрытия.
-Каждой конкретной `ModalPage` или `ModalCard` можно передать свой обработчик `onClose`, если нужно переопределить поведение.
+или карточки после смахивания вниз или нажатия на крестик или нажатия на оверлей. Приложение должно установить в качестве нового
+значения `activeModal` либо идентификатор предыдущей модалки, либо `null` для скрытия. Каждой конкретной [`ModalPage`](#/ModalPage)
+или [`ModalCard`](#/ModalCard) можно передать свой обработчик `onClose`, если нужно переопределить поведение.
+
+Также при использовании `ModalRoot` создаётся общий `ModalOverlay` для переданных компонентов, чтобы избегать моргания при
+переключении модальных окон.
+
+> ⚠️ **Safari**
+>
+> В браузере **Safari < 16** на **iOS** сворачивание вниз [`ModalPage`](#/ModalPage) и [`ModalCard`](#/ModalCard) может вызвать функцию
+> **pull-to-refresh**. Попытка блокировать это поведение приводит к другим проблемам, например, к блокированию скролла (cм. https://github.com/VKCOM/VKUI/issues/335),
+> поэтому проблема остаётся как данность.
+>
+> При этом в **Safari >= 16** такой проблему нет, т.к. в нём блокирование **pull-to-refresh** решается в одно свойство [`overscroll-behavior-y: none;`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-y).
+> Это свойство автоматически выставляется на `html` при открытии модального окна и удаляется при закрытии.
 
 ```jsx { "props": { "layout": false, "adaptivity": true, "showCustomPanelHeaderAfterProps": true } }
 const MODAL_PAGE_FILTERS = 'filters';
@@ -62,7 +40,7 @@ const MODAL_CARD_ABOUT = 'say-about';
 const MODAL_CARD_NOTIFICATIONS = 'notifications';
 const MODAL_CARD_CHAT_INVITE = 'chat-invite';
 
-const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
+const DynamicModalPage = ({ onClose, ...props }) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivityConditionalRender();
   const [expanded, setExpanded] = React.useState(false);
@@ -103,11 +81,11 @@ const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
 const App = () => {
   const { sizeX } = useAdaptivityConditionalRender();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
-  const [activeModal, setActiveModal] = useState(null);
-  const [modalHistory, setModalHistory] = useState([]);
-  const [dateOfBirth, setDateOfBirth] = useState(new Date(1901, 0, 1));
+  const [activeModal, setActiveModal] = React.useState(null);
+  const [modalHistory, setModalHistory] = React.useState([]);
+  const [dateOfBirth, setDateOfBirth] = React.useState(new Date(1901, 0, 1));
   const [randomUser] = useState(() => getRandomUser());
-  const [users] = useState(() =>
+  const [users] = React.useState(() =>
     'k'
       .repeat(25)
       .split('')
@@ -197,7 +175,7 @@ const App = () => {
         id={MODAL_PAGE_WITH_FIXED_HEIGHT}
         onClose={modalBack}
         settlingHeight={100}
-        height={isDesktop ? 250 : '70%'}
+        height={isDesktop ? '250px' : '70%'}
         hideCloseButton={platform === 'ios'}
         header={
           <ModalPageHeader
@@ -530,227 +508,33 @@ const App = () => {
   );
 
   return (
-    <SplitLayout modal={modal}>
-      <SplitCol>
-        <View activePanel="modals">
-          <Panel id="modals">
-            <PanelHeader>Модальные окна</PanelHeader>
-            <Group>
-              <CellButton onClick={() => changeActiveModal(MODAL_PAGE_FILTERS)}>
-                Открыть модальную страницу
-              </CellButton>
-              <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_FULLSCREEN)}>
-                Открыть полноэкранную модальную страницу
-              </CellButton>
-              <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_WITH_FIXED_HEIGHT)}>
-                Открыть модальную страницу c фиксированной высотой
-              </CellButton>
-              <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_DYNAMIC)}>
-                Открыть модальную страницу с динамической высотой
-              </CellButton>
-              <CellButton onClick={() => changeActiveModal(MODAL_CARD_MONEY_SEND)}>
-                Открыть модальные карточки
-              </CellButton>
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
+    <React.Fragment>
+      {modal}
+      <View activePanel="modals">
+        <Panel id="modals">
+          <PanelHeader>Модальные окна</PanelHeader>
+          <Group>
+            <CellButton onClick={() => changeActiveModal(MODAL_PAGE_FILTERS)}>
+              Открыть модальную страницу
+            </CellButton>
+            <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_FULLSCREEN)}>
+              Открыть полноэкранную модальную страницу
+            </CellButton>
+            <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_WITH_FIXED_HEIGHT)}>
+              Открыть модальную страницу c фиксированной высотой
+            </CellButton>
+            <CellButton multiline onClick={() => changeActiveModal(MODAL_PAGE_DYNAMIC)}>
+              Открыть модальную страницу с динамической высотой
+            </CellButton>
+            <CellButton onClick={() => changeActiveModal(MODAL_CARD_MONEY_SEND)}>
+              Открыть модальные карточки
+            </CellButton>
+          </Group>
+        </Panel>
+      </View>
+    </React.Fragment>
   );
 };
 
 <App />;
-```
-
-## FAQ
-
-### Как поменять максимальную ширину контента?
-
-Используйте параметр `size`.
-
-### Как задать фиксированную высоту контента в ModalPage?
-
-Используйте параметр `height`.
-Высоту можно задать как числом (`height={300}`) так и в проценах (`height={'80%'}`).
-Работает и для мобильной версии и для декстопной.
-В мобильной версии при появлении модального окна на высоту по умолчанию также влияет значение `settlingHeight`.
-Чтобы отключить его влияние достаточно задать `settlingHeight={100}`.
-
-### Я указал `dynamicContentHeight` у `ModalPage`, но высота модальной страницы не меняется
-
-Если содержимое вашей модальной страницы вынесено в отдельный компонент, и при смене контента не обновляется высота, используйте хук `useModalRootContext` и вызывайте `updateModalHeight` после действий, которые могут привести к смене высоты содержимого.
-
-`src/App.js`
-
-```jsx static
-import SelectModal from './SelectModal';
-
-const App = () => {
-  const [activeModal, setActiveModal] = React.useState('select');
-
-  const modal = (
-    <ModalRoot activeModal={activeModal}>
-      <ModalPage id="select" dynamicContentHeight>
-        <SelectModal />
-      </ModalPage>
-    </ModalRoot>
-  );
-
-  return (
-    <SplitLayout modal={modal}>
-      <SplitCol>
-        <View activePanel="main">
-          <Panel id="main">...</Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
-  );
-};
-```
-
-`src/SelectModal.js`
-
-```jsx static
-import { useModalRootContext } from '@vkontakte/vkui';
-
-export const SelectModal = () => {
-  const [items, setItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const { updateModalHeight } = useModalRootContext();
-
-  const fetchItems = () => {
-    fetch('')
-      .then((r) => r.json())
-      .then((items) => {
-        setItems(items);
-        setIsLoading(false);
-      });
-  };
-
-  React.useEffect(fetchItems, []);
-
-  // После установки стейта и перерисовки компонента SelectModal сообщим ModalRoot об изменениях
-  React.useEffect(updateModalHeight, [items.length]);
-
-  return (
-    <div className="SelectModal">
-      {isLoading && <Spinner />}
-      {!isLoading && (
-        <Group>
-          {items.map((item) => (
-            <Cell key={item.id}>{item.title}</Cell>
-          ))}
-        </Group>
-      )}
-    </div>
-  );
-};
-```
-
-### В мобильной версии при параметре `autoFocus` у контрола ломается поведение карточки
-
-К сожалению, из-за особенностей React, `autoFocus` ломает CSS анимацию.
-
-Чтобы исправить проблему, следует отказаться от `autoFocus` и выставлять фокус в ручную при событии `onOpened`.
-Подписываться на `onOpened` можно двумя разными способами.
-
-1️⃣ `<ModalRoot onOpened={(id) => ...} />`
-
-```jsx static
-const App = () => {
-  const inputRef = useRef(null);
-
-  const handleOpen = React.useCallback((id) => {
-    if (id === 'modal-with-auto-focus' && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
-
-  const modal = (
-    <ModalRoot activeModal="modal-with-auto-focus" onOpened={handleOpen}>
-      <ModalPage id="modal-with-auto-focus">
-        <Input getRootRef={inputRef} />
-      </ModalPage>
-    </ModalRoot>
-  );
-  // ...
-};
-```
-
-2️⃣ `<ModalPage onOpened={() => ...} />`
-
-> ⚠️ в этом случае `ModalPage` нельзя заворачивать в другой компонент
-> иначе `ModalRoot` не сможет получить доступ к `onOpened`.
-
-```jsx static
-const App = () => {
-  const inputRef = useRef(null);
-
-  const handleOpen = React.useCallback(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
-
-  const modal = (
-    <ModalRoot activeModal="modal-with-auto-focus">
-      <ModalPage id="modal-with-auto-focus" onOpened={handleOpen}>
-        <Input getRootRef={inputRef} />
-      </ModalPage>
-    </ModalRoot>
-  );
-  // ...
-};
-```
-
-```jsx { "props": { "layout": false, "adaptivity": true } }
-const Example = () => {
-  const firstInputRef = useRef(null);
-  const secondInputRef = useRef(null);
-  const [activeModal, setActiveModal] = React.useState(false);
-
-  const handleOpenOfModalRoot = React.useCallback((id) => {
-    if (id === 'modal-1') {
-      firstInputRef.current.focus();
-    }
-  }, []);
-
-  const handleOpenOfModalPage = React.useCallback(() => {
-    secondInputRef.current.focus();
-  }, []);
-
-  const modal = (
-    <ModalRoot activeModal={activeModal} onOpened={handleOpenOfModalRoot}>
-      <ModalPage id="modal-1" onClose={() => setActiveModal(null)}>
-        <Div>
-          <input type="text" ref={firstInputRef} />
-        </Div>
-      </ModalPage>
-      <ModalPage id="modal-2" onOpened={handleOpenOfModalPage} onClose={() => setActiveModal(null)}>
-        <Div>
-          <input type="text" ref={secondInputRef} />
-        </Div>
-      </ModalPage>
-    </ModalRoot>
-  );
-
-  return (
-    <SplitLayout modal={modal}>
-      <SplitCol>
-        <View activePanel="main">
-          <Panel id="main">
-            <CellButton multiline onClick={() => setActiveModal('modal-1')}>
-              Пример с onOpened() на ModalRoot
-            </CellButton>
-            <CellButton multiline onClick={() => setActiveModal('modal-2')}>
-              Пример с onOpened() на ModalPage
-            </CellButton>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
-  );
-};
-
-Example();
 ```

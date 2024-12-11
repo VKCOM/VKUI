@@ -14,8 +14,6 @@ import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storyb
 import { ActionSheetItem, type ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { Button } from '../Button/Button';
 import { Placeholder } from '../Placeholder/Placeholder';
-import { SplitCol } from '../SplitCol/SplitCol';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
 const story: Meta<ActionSheetProps> = {
@@ -36,30 +34,29 @@ export const Base: Story = {
   render: function Render({ items, ...args }) {
     const baseToggleRef = React.useRef(null);
     const [visible, setVisible] = React.useState(true);
-    const popout = visible ? (
-      <ActionSheet {...args} onClose={() => setVisible(false)} toggleRef={baseToggleRef}>
-        {items.map(({ children, ...rest }, index) => (
-          <ActionSheetItem key={index} {...rest}>
-            {children}
-          </ActionSheetItem>
-        ))}
-      </ActionSheet>
-    ) : null;
 
     return (
-      <SplitLayout center popout={popout}>
-        <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
-          <Placeholder stretched>
-            <Button
-              getRootRef={baseToggleRef}
-              onClick={() => setVisible(true)}
-              aria-expanded={visible}
-            >
-              Открыть
-            </Button>
-          </Placeholder>
-        </SplitCol>
-      </SplitLayout>
+      <React.Fragment>
+        <Placeholder stretched>
+          <Button
+            getRootRef={baseToggleRef}
+            onClick={() => setVisible(true)}
+            aria-expanded={visible}
+          >
+            Открыть
+          </Button>
+        </Placeholder>
+
+        {visible ? (
+          <ActionSheet {...args} onClose={() => setVisible(false)} toggleRef={baseToggleRef}>
+            {items.map(({ children, ...rest }, index) => (
+              <ActionSheetItem key={index} {...rest}>
+                {children}
+              </ActionSheetItem>
+            ))}
+          </ActionSheet>
+        ) : null}
+      </React.Fragment>
     );
   },
   args: {

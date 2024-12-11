@@ -1,8 +1,9 @@
-import type {
-  Placement,
-  UseFloatingData,
-  UseFloatingMiddleware,
-  UseFloatingRefs,
+import {
+  type FloatingPositionStrategy,
+  type Placement,
+  type UseFloatingData,
+  type UseFloatingMiddleware,
+  type UseFloatingRefs,
 } from '../types/common';
 
 export type InteractiveTriggerType = 'click' | 'hover' | 'focus';
@@ -25,6 +26,15 @@ export type OnShownChange = (shown: boolean, reason?: ShownChangeReason) => void
 
 export interface UseFloatingWithInteractionsProps {
   placement?: Placement;
+  /**
+   * Стратегия позиционирования всплывающего элемента.
+   *
+   * - `"fixed"` - позиционируется, используя `position: fixed`. Является значением по умолчанию
+   * - `"absolute"` - позиционируется, используя `position: absolute`, относительно ближайшего элемента с `position: relative`
+   *
+   * > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative`
+   */
+  strategy?: FloatingPositionStrategy;
   middlewares?: UseFloatingMiddleware[];
   /**
    * Механика вызова всплывающего элемента.

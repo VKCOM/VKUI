@@ -9,6 +9,7 @@ import {
   ConfigProviderContext,
   type ConfigProviderContextInterface,
   useConfigProvider,
+  useConfigProviderContextMemo,
 } from './ConfigProviderContext';
 
 export interface ConfigProviderProps extends Partial<ConfigProviderContextInterface> {
@@ -22,50 +23,22 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode =
   const props = excludeKeysWithUndefined(propsRaw);
   const parentConfig = useConfigProvider();
 
-  const {
-    children,
-    hasCustomPanelHeaderAfter,
-    customPanelHeaderAfterMinWidth,
-    isWebView,
-    transitionMotionEnabled,
-    platform,
-    locale,
-    colorScheme: colorSchemeProp,
-    tokensClassNames,
-  } = {
+  const mergeProps = {
     ...parentConfig,
     ...props,
   };
 
-  const colorScheme = useAutoDetectColorScheme(colorSchemeProp);
+  const colorScheme = useAutoDetectColorScheme(mergeProps.colorScheme);
 
-  const configContext = React.useMemo(
-    () => ({
-      hasCustomPanelHeaderAfter,
-      customPanelHeaderAfterMinWidth,
-      isWebView,
-      transitionMotionEnabled,
-      platform,
-      locale,
-      tokensClassNames,
-      colorScheme,
-    }),
-    [
-      colorScheme,
-      customPanelHeaderAfterMinWidth,
-      hasCustomPanelHeaderAfter,
-      isWebView,
-      locale,
-      platform,
-      tokensClassNames,
-      transitionMotionEnabled,
-    ],
-  );
+  const configContext = useConfigProviderContextMemo({
+    ...mergeProps,
+    colorScheme,
+  });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
       <IconAppearanceProvider value={colorScheme}>
-        <TokensClassProvider>{children}</TokensClassProvider>
+        <TokensClassProvider>{mergeProps.children}</TokensClassProvider>
       </IconAppearanceProvider>
     </ConfigProviderContext.Provider>
   );

@@ -5,25 +5,41 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { Button } from '../Button/Button';
+import { Button, type ButtonProps } from '../Button/Button';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
 import styles from './CalendarTime.module.css';
 
 export type CalendarTimeTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора часа в календаре
+   */
   hoursTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора минут в календаре
+   */
   minutesTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки "Готово" в календаре
+   */
   doneButtonTestId?: string;
 };
 
-export interface CalendarTimeProps extends CalendarTimeTestsProps {
-  value: Date;
+export type CalendarDoneButtonProps = {
+  /**
+   * Кастомное отображение кнопки Done.
+   */
+  DoneButton?: React.ComponentType<ButtonProps>;
   doneButtonText?: string;
   doneButtonShow?: boolean;
   doneButtonDisabled?: boolean;
+  onDoneButtonClick?: () => void;
+};
+
+export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneButtonProps {
+  value: Date;
   changeHoursLabel?: string;
   changeMinutesLabel?: string;
   onChange?: (value: Date) => void;
-  onDoneButtonClick?: () => void;
   isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
 }
 
@@ -56,6 +72,7 @@ export const CalendarTime = ({
   minutesTestId,
   hoursTestId,
   doneButtonTestId,
+  DoneButton,
 }: CalendarTimeProps): React.ReactNode => {
   const localHours = isDayDisabled
     ? hours.map((hour) => {
@@ -79,6 +96,21 @@ export const CalendarTime = ({
       onChange?.(setMinutes(value, Number(newValue))),
     [onChange, value],
   );
+
+  const renderDoneButton = () => {
+    const ButtonComponent = DoneButton ?? Button;
+    return (
+      <ButtonComponent
+        mode="secondary"
+        onClick={onDoneButtonClick}
+        size="l"
+        disabled={doneButtonDisabled}
+        data-testid={doneButtonTestId}
+      >
+        {doneButtonText}
+      </ButtonComponent>
+    );
+  };
 
   return (
     <div className={classNames(styles.host, !doneButtonShow && styles.host__withoutDone)}>
@@ -109,17 +141,7 @@ export const CalendarTime = ({
       </div>
       {doneButtonShow && (
         <div className={styles.button}>
-          <AdaptivityProvider sizeY="compact">
-            <Button
-              mode="secondary"
-              onClick={onDoneButtonClick}
-              size="l"
-              disabled={doneButtonDisabled}
-              data-testid={doneButtonTestId}
-            >
-              {doneButtonText}
-            </Button>
-          </AdaptivityProvider>
+          <AdaptivityProvider sizeY="compact">{renderDoneButton()}</AdaptivityProvider>
         </div>
       )}
     </div>

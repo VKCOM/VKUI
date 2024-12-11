@@ -2,6 +2,8 @@ import type * as React from 'react';
 import type { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
 import type { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import type { CustomTouchEvent, CustomTouchEventHandler } from '../Touch/Touch';
+import { type BulletsTestIds } from './Bullets';
+import { type ScrollArrowsTestIds } from './ScrollArrows';
 
 export interface GallerySlidesState {
   coordX: number;
@@ -28,7 +30,9 @@ export interface LayoutState {
 export interface BaseGalleryProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
     HasAlign,
-    HasRef<HTMLElement> {
+    HasRef<HTMLElement>,
+    BulletsTestIds,
+    ScrollArrowsTestIds {
   slideWidth?: string | number;
   slideIndex?: number;
   onDragStart?: CustomTouchEventHandler;
@@ -48,6 +52,10 @@ export interface BaseGalleryProps
    */
   dragDisabled?: boolean;
   showArrows?: boolean;
+  /**
+   * Управление размером кликабельной зоны стрелок. В дизайне свойство называется `arrowArea`
+   */
+  arrowAreaHeight?: 'stretch' | 'fit';
   hasPointer?: boolean;
   arrowSize?: ScrollArrowProps['size'];
   /**
@@ -58,4 +66,8 @@ export interface BaseGalleryProps
    * Текст для кнопки-стрелки вправо (вперед). Делает ее доступной для ассистивных технологий
    */
   arrowNextLabel?: string;
+  /**
+   * Передает атрибут `data-testid` для слайда
+   */
+  slideTestId?: (index: number) => string;
 }

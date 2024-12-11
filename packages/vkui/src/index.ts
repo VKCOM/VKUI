@@ -142,16 +142,22 @@ export type {
 /**
  * Modals
  */
-export { ModalRoot } from './components/ModalRoot/ModalRootAdaptive';
-export type { ModalRootProps } from './components/ModalRoot/types';
+export { ModalRoot } from './components/ModalRoot/ModalRoot';
+export type {
+  ModalRootProps,
+  ModalRootContextInterface,
+  UseModalRootContext,
+} from './components/ModalRoot/types';
 export { withModalRootContext } from './components/ModalRoot/withModalRootContext';
 export { ModalRootContext } from './components/ModalRoot/ModalRootContext';
+export { useModalRootContext } from './components/ModalRoot/useModalRootContext';
+export { ModalPageContent } from './components/ModalPageContent/ModalPageContent';
 export { ModalPage } from './components/ModalPage/ModalPage';
-export type { ModalPageProps } from './components/ModalPage/ModalPage';
+export type { ModalPageProps, ModalPageCloseReason } from './components/ModalPage/types';
 export { ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
 export type { ModalPageHeaderProps } from './components/ModalPageHeader/ModalPageHeader';
 export { ModalCard } from './components/ModalCard/ModalCard';
-export type { ModalCardProps } from './components/ModalCard/ModalCard';
+export type { ModalCardProps, ModalCardCloseReason } from './components/ModalCard/types';
 export { ModalDismissButton } from './components/ModalDismissButton/ModalDismissButton';
 export type { ModalDismissButtonProps } from './components/ModalDismissButton/ModalDismissButton';
 
@@ -409,6 +415,7 @@ export type {
   PopoverArrowProps,
   PopoverContentRenderProp,
 } from './components/Popover/Popover';
+export { usePopover } from './components/Popover/usePopover';
 
 /**
  * HOCs
@@ -438,7 +445,6 @@ export { useNavTransition } from './components/NavTransitionContext/NavTransitio
 export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useNavId } from './components/NavIdContext/useNavId';
 export type { TransitionDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
-export { useModalRootContext } from './components/ModalRoot/useModalRootContext';
 
 /**
  * Utils
@@ -481,5 +487,7 @@ export type { TransitionContextProps } from './components/NavTransitionContext/N
  */
 export { ViewInfinite as unstable_ViewInfinite } from './components/View/ViewInfinite';
 export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from './components/View/ViewInfinite';
+export { ModalPageFooter as unstable_ModalPageFooter } from './components/ModalPageFooter/ModalPageFooter';
+export type { ModalPageFooterProps as unstable_ModalPageFooterProps } from './components/ModalPageFooter/ModalPageFooter';
 
 import './styles/common.css';

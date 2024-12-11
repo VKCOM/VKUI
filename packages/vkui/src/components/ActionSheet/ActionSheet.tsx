@@ -3,8 +3,10 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -21,10 +23,8 @@ export interface ActionSheetOnCloseOptions {
 }
 
 export interface ActionSheetProps
-  extends Pick<
-      SharedDropdownProps,
-      'toggleRef' | 'popupOffsetDistance' | 'placement' | 'autoFocus'
-    >,
+  extends Pick<SharedDropdownProps, 'toggleRef' | 'popupOffsetDistance' | 'placement'>,
+    Omit<UseFocusTrapProps, 'onClose'>,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
   title?: React.ReactNode;
   description?: React.ReactNode;
@@ -137,20 +137,19 @@ export const ActionSheet = ({
     </ActionSheetContext.Provider>
   );
 
-  if (mode === 'menu') {
-    return actionSheet;
-  }
-
   return (
-    <PopoutWrapper
-      closing={Boolean(closingBy)}
-      alignY="bottom"
-      className={className}
-      style={style}
-      onClick={onCloseWithOther}
-      fixed
-    >
-      {actionSheet}
-    </PopoutWrapper>
+    <AppRootPortal>
+      <PopoutWrapper
+        noBackground={mode === 'menu'}
+        closing={Boolean(closingBy)}
+        alignY="bottom"
+        className={className}
+        style={style}
+        onClick={onCloseWithOther}
+        fixed
+      >
+        {actionSheet}
+      </PopoutWrapper>
+    </AppRootPortal>
   );
 };

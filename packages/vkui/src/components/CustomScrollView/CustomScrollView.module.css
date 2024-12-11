@@ -50,12 +50,16 @@
   }
 }
 
-.boxOverscrollBehaviorContain {
+.overscrollBehaviorContain {
   overscroll-behavior: contain;
 }
 
-.boxOverscrollBehaviorNone {
+.overscrollBehaviorNone {
   overscroll-behavior: none;
+}
+
+.scrollBehaviorSmooth {
+  scroll-behavior: smooth;
 }
 
 .horizontalScrollEnabled {

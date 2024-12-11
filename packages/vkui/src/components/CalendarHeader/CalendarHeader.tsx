@@ -23,9 +23,21 @@ import styles from './CalendarHeader.module.css';
 type ArrowMonthProps = Omit<React.AllHTMLAttributes<HTMLElement>, 'onClick' | 'aria-label'>;
 
 export type CalendarHeaderTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора месяца в заголовке календаря
+   */
   monthDropdownTestId?: string | ((monthIndex: number) => string);
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора года в заголовке календаря
+   */
   yearDropdownTestId?: string | ((year: number) => string);
+  /**
+   * Передает атрибут `data-testid` для кнопки перехода к следующему месяцу в заголовке календаря
+   */
   nextMonthButtonTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки перехода к предыдущему месяцу в заголовке календаря
+   */
   prevMonthButtonTestId?: string;
 };
 

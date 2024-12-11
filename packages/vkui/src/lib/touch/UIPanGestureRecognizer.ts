@@ -1,6 +1,8 @@
 import { getFirstTouchEventData } from '../dom';
 
-export type VCoords = { x: number; y: number };
+export type Direction = { axis: 'x' | 'y'; direction: -1 | 1 | null };
+
+export type Coords = { x: number; y: number };
 
 const DEFAULT_INITIAL_TIME = 0;
 const MILLISECONDS = 1000;
@@ -35,10 +37,7 @@ export class UIPanGestureRecognizer {
     this.y2 = clientY;
   }
 
-  delta(): {
-    x: number;
-    y: number;
-  } {
+  delta(): Coords {
     return {
       x: this.x2 - this.x1,
       y: this.y2 - this.y1,
@@ -50,10 +49,7 @@ export class UIPanGestureRecognizer {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
   }
 
-  velocity(): {
-    x: number;
-    y: number;
-  } {
+  velocity(): Coords {
     const deltaTime = (Date.now() - this.initialTime) / MILLISECONDS;
 
     if (deltaTime <= 0) {
@@ -70,6 +66,13 @@ export class UIPanGestureRecognizer {
     const radians = Math.atan2(deltaY, deltaX);
     const degrees = (radians * 180) / Math.PI;
     return degrees < 0 ? 360 + degrees : degrees;
+  }
+
+  direction(): Direction {
+    const { x, y } = this.delta();
+    return Math.abs(x) > Math.abs(y)
+      ? { axis: 'x', direction: x > 0 ? 1 : x < 0 ? -1 : null }
+      : { axis: 'y', direction: y > 0 ? 1 : y < 0 ? -1 : null };
   }
 
   reset(): void {
