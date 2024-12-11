@@ -9,6 +9,7 @@ const Example = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [dragDisabled, setDragDisabled] = useState(false);
   const [showArrows, setShowArrows] = useState(true);
+  const [looped, setLooped] = useState(false);
 
   return (
     <View activePanel="gallery">
@@ -84,6 +85,7 @@ const Example = () => {
             onChange={setSlideIndex}
             dragDisabled={dragDisabled}
             showArrows={showArrows}
+            looped={looped}
           >
             <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
             <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
@@ -97,10 +99,18 @@ const Example = () => {
             <Checkbox checked={showArrows} onChange={(e) => setShowArrows(e.target.checked)}>
               showArrows
             </Checkbox>
+            <Checkbox checked={looped} onChange={(e) => setLooped(e.target.checked)}>
+              looped
+            </Checkbox>
           </FormItem>
           <FormItem>
             <Button size="l" stretched onClick={() => setSlideIndex((slideIndex + 1) % 3)}>
               Next slide
+            </Button>
+          </FormItem>
+          <FormItem>
+            <Button size="l" stretched onClick={() => setSlideIndex((slideIndex + 2) % 3)}>
+              Prev slide
             </Button>
           </FormItem>
         </Group>
