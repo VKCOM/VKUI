@@ -142,7 +142,7 @@ interface UseActiveProps extends Pick<StateProps, 'activated' | 'activeEffectDel
   /**
    * Блокирование активации состояний
    */
-  lockStateRef: React.MutableRefObject<boolean>;
+  lockStateRef: React.RefObject<boolean>;
   setParentStateLock: (v: boolean) => void;
 }
 
@@ -245,7 +245,7 @@ function useLockState(
 
 function useLockRef(
   setParentStateLockBubbling: (v: boolean) => void,
-): readonly [React.MutableRefObject<boolean>, (v: boolean) => void, (...args: any[]) => void] {
+): readonly [React.RefObject<boolean>, (v: boolean) => void, (...args: any[]) => void] {
   const lockStateRef = React.useRef(false);
 
   const setStateLockBubblingImmediate = React.useCallback(

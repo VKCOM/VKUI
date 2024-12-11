@@ -25,7 +25,7 @@ export interface SegmentedControlOptionInterface
    * Рекомендуется использовать только иконки с размером 20
    */
   before?: React.ReactNode;
-  label: React.ReactChild;
+  label: React.ReactNode;
   value: SegmentedControlValue;
 }
 

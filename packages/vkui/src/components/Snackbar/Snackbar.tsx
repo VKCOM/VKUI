@@ -112,7 +112,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const shiftDataRef = React.useRef<ShiftData | null>(null);
 
   const rafRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
-  const closeTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const closeTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const mediaQueries = useMediaQueries();
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     open ? 'enter' : 'exit',

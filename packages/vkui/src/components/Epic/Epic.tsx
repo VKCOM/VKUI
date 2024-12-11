@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getNavId } from '../../lib/getNavId';
+import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -30,8 +30,10 @@ export const Epic = ({
 
   const story =
     (React.Children.toArray(children).find(
-      (story) => React.isValidElement(story) && getNavId(story.props, warn) === activeStory,
-    ) as React.ReactElement | undefined) ?? null;
+      (story) =>
+        React.isValidElement(story) &&
+        getNavId((story as React.ReactElement<NavIdProps>).props, warn) === activeStory,
+    ) as Array<React.ReactElement<NavIdProps>> | undefined) ?? null;
 
   return (
     <RootComponent
