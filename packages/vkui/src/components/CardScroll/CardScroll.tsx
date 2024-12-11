@@ -17,7 +17,7 @@ const stylesSize = {
 export interface CardScrollProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasComponent,
-    Pick<HorizontalScrollProps, 'showArrows' | 'startArrowTestId' | 'endArrowTestId'> {
+    Pick<HorizontalScrollProps, 'showArrows' | 'prevButtonTestId' | 'nextButtonTestId'> {
   /**
    * При `size=false` ширина `Card` будет регулироваться контентом внутри. В остальных случаях — будет явно задана в процентах.
    */
@@ -37,8 +37,8 @@ export const CardScroll = ({
   showArrows = true,
   padding = false,
   Component = 'ul',
-  startArrowTestId,
-  endArrowTestId,
+  prevButtonTestId,
+  nextButtonTestId,
   ...restProps
 }: CardScrollProps): React.ReactNode => {
   const refContainer = React.useRef<HTMLDivElement>(null);
@@ -113,8 +113,8 @@ export const CardScroll = ({
         getScrollToLeft={getScrollToLeft}
         getScrollToRight={getScrollToRight}
         showArrows={showArrows}
-        startArrowTestId={startArrowTestId}
-        endArrowTestId={endArrowTestId}
+        prevButtonTestId={prevButtonTestId}
+        nextButtonTestId={nextButtonTestId}
       >
         <div className={styles.in} ref={refContainer}>
           <span className={styles.gap} ref={gapRef} />
