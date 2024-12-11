@@ -101,7 +101,7 @@ export const SegmentedControl = ({
             }}
           />
         )}
-        {options.map(({ label, ...optionProps }) => {
+        {options.map(({ label, before, ...optionProps }) => {
           const selected = value === optionProps.value;
           const onSelect = () => onChange(optionProps.value);
           const optionRootProps: SegmentedControlOptionProps['rootProps'] =
@@ -129,6 +129,7 @@ export const SegmentedControl = ({
           return (
             <SegmentedControlOption
               key={`${optionProps.value}`}
+              before={before}
               rootProps={optionRootProps}
               inputProps={optionInputProps}
             >
