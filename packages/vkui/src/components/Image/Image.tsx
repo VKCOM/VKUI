@@ -108,6 +108,7 @@ const getBorderRadiusBySizeInPx = (
 export const Image: React.FC<ImageProps> & {
   Badge: typeof ImageBadge;
   Overlay: typeof ImageBase.Overlay;
+  FloatElement: typeof ImageBase.FloatElement;
 } = ({
   size = IMAGE_DEFAULT_SIZE,
   borderRadius = 'm',
@@ -175,3 +176,6 @@ Image.Badge.displayName = 'Image.Badge';
 
 Image.Overlay = ImageBase.Overlay;
 Image.Overlay.displayName = 'Image.Overlay';
+
+Image.FloatElement = ImageBase.FloatElement;
+Image.FloatElement.displayName = 'Image.FloatElement';
