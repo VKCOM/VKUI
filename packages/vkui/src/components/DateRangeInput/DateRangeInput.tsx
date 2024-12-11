@@ -180,6 +180,7 @@ export const DateRangeInput = ({
   calendarTestsProps,
   startDateTestsProps,
   endDateTestsProps,
+  id,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -300,8 +301,9 @@ export const DateRangeInput = ({
       onFocus={callMultiple(handleFieldEnter, onFocus)}
       {...props}
     >
-      <input
-        type="hidden"
+      <VisuallyHidden
+        id={id}
+        Component="input"
         name={name}
         value={
           value
