@@ -2,6 +2,20 @@
   display: flex;
   align-items: center;
   color: var(--vkui--color_text_secondary);
+
+  --vkui_internal--UsersStack_item_size: 16px;
+}
+
+.sizeS {
+  --vkui_internal--UsersStack_item_size: 16px;
+}
+
+.sizeM {
+  --vkui_internal--UsersStack_item_size: 24px;
+}
+
+.sizeL {
+  --vkui_internal--UsersStack_item_size: 32px;
 }
 
 .avatarsPositionInlineEnd {
@@ -21,28 +35,42 @@
   fill: var(--vkui--color_image_placeholder_alpha);
 }
 
-.photoOthers {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--vkui--color_text_contrast_themed);
-  background: var(--vkui--color_icon_secondary);
-  border-radius: 50%;
+.sizeS .item {
+  block-size: var(--vkui_internal--UsersStack_item_size);
+  min-inline-size: var(--vkui_internal--UsersStack_item_size);
+}
+
+.sizeM .item {
+  block-size: var(--vkui_internal--UsersStack_item_size);
+  min-inline-size: var(--vkui_internal--UsersStack_item_size);
+}
+
+.sizeL .item {
+  block-size: var(--vkui_internal--UsersStack_item_size);
+  min-inline-size: var(--vkui_internal--UsersStack_item_size);
 }
 
 .sizeS .photo {
-  inline-size: 16px;
-  block-size: 16px;
+  max-inline-size: var(--vkui_internal--UsersStack_item_size);
 }
 
 .sizeM .photo {
-  inline-size: 24px;
-  block-size: 24px;
+  max-inline-size: var(--vkui_internal--UsersStack_item_size);
 }
 
 .sizeL .photo {
-  inline-size: 32px;
-  block-size: 32px;
+  max-inline-size: var(--vkui_internal--UsersStack_item_size);
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-inline: var(--vkui--spacing_size_xs);
+  color: var(--vkui--color_text_contrast_themed);
+  background: var(--vkui--color_icon_secondary);
+  border-radius: calc(var(--vkui_internal--UsersStack_item_size) / 2);
 }
 
 .photoWrapper {
