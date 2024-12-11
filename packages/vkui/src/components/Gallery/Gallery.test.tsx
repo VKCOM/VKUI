@@ -347,7 +347,7 @@ describe('Gallery', () => {
       }
     });
 
-    it('should resize when window resize', () => {
+    it('should resize when container resizes', () => {
       const onChange = jest.fn();
 
       const mockedData = setup({

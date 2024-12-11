@@ -4,8 +4,8 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useMutationObserver } from '../../hooks/useMutationObserver';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -39,6 +39,7 @@ export const CarouselBase = ({
   slideWidth = '100%',
   slideIndex = 0,
   dragDisabled = false,
+  resizeSource = 'window',
   onDragStart,
   onDragEnd,
   onChange,
@@ -72,7 +73,6 @@ export const CarouselBase = ({
   const [controlElementsState, setControlElementsState] =
     React.useState<ControlElementsState>(CONTROL_ELEMENTS_STATE);
 
-  const { window } = useDOM();
   const hasPointer = useAdaptivityHasPointer();
 
   const isCenterAlign = align === 'center';
@@ -262,8 +262,8 @@ export const CarouselBase = ({
       initializeSlides();
     }
   };
-
-  useGlobalEventListener(window, 'resize', onResize);
+  const { window } = useDOM();
+  useResizeObserver(resizeSource === 'element' ? rootRef : window, onResize);
 
   const loopedSlideChangePerform = () => {
     const { snaps, slides } = slidesManager.current;

@@ -11,7 +11,7 @@ export interface CustomSelectDropdownProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     Pick<CustomScrollViewProps, 'overscrollBehavior'>,
     HasDataAttribute {
-  targetRef: React.RefObject<HTMLElement>;
+  targetRef: React.RefObject<HTMLElement | null>;
   placement?: Placement;
   scrollBoxRef?: React.Ref<HTMLDivElement>;
   fetching?: boolean;

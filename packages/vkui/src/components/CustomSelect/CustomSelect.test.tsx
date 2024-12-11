@@ -1182,7 +1182,7 @@ describe('CustomSelect', () => {
 
   it('check input should close popover and reset selected option', async () => {
     jest.useFakeTimers();
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
 
@@ -1231,7 +1231,7 @@ describe('CustomSelect', () => {
     'should open dropdown when keydown %s',
     async (key) => {
       jest.useFakeTimers();
-      const inputRef: React.RefObject<HTMLInputElement> = {
+      const inputRef: React.RefObject<HTMLInputElement | null> = {
         current: null,
       };
       render(
@@ -1277,7 +1277,7 @@ describe('CustomSelect', () => {
 
   it('should call onInputChange callback when change input', async () => {
     jest.useFakeTimers();
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
     const onInputChange = jest.fn();
@@ -1302,7 +1302,7 @@ describe('CustomSelect', () => {
   });
 
   it('check scroll to bottom to element', async () => {
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
 
@@ -1335,7 +1335,7 @@ describe('CustomSelect', () => {
   });
 
   it('check scroll to up', async () => {
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
 
@@ -1368,7 +1368,7 @@ describe('CustomSelect', () => {
   });
 
   it('should not hover disabled option', async () => {
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
     render(
@@ -1392,7 +1392,7 @@ describe('CustomSelect', () => {
   });
 
   it('should not call select option when not focus to option', async () => {
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
     const onChange = jest.fn();

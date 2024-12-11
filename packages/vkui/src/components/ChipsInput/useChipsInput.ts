@@ -84,7 +84,7 @@ export const useChipsInput = <O extends ChipOption>({
   addOptionFromInput: (inputValue: string) => void;
   removeOption: (newValue: O | ChipOptionValue) => void;
   clearOptions: () => void;
-  inputRef: React.RefObject<HTMLInputElement & SimulateReactInputTargetState>;
+  inputRef: React.RefObject<(HTMLInputElement & SimulateReactInputTargetState) | null>;
   inputValue: string;
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => any;
   clearInput: () => void;
@@ -96,7 +96,7 @@ export const useChipsInput = <O extends ChipOption>({
     onChange,
   });
 
-  const inputRef = React.useRef<HTMLInputElement & SimulateReactInputTargetState>(null);
+  const inputRef = React.useRef<(HTMLInputElement & SimulateReactInputTargetState) | null>(null);
   const [inputValue, setInputChange] = useEnsuredControl({
     disabled,
     value: inputValueProp,

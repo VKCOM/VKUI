@@ -60,6 +60,9 @@ export type {
   ImageBaseExpectedIconProps,
   ImageBaseBadgeProps,
   ImageBaseOverlayProps,
+  ImageBaseFloatElementProps,
+  FloatElementPlacement,
+  FloatElementIndentation,
 } from './components/ImageBase/ImageBase';
 
 /**
@@ -275,6 +278,7 @@ export type { CustomPaginationPageButtonProps } from './components/Pagination/Pa
 export type { CustomPaginationNavigationButton } from './components/Pagination/PaginationNavigationButton/PaginationNavigationButton';
 export { Accordion } from './components/Accordion/Accordion';
 export type { AccordionProps } from './components/Accordion/Accordion';
+export { AccordionContext } from './components/Accordion/AccordionContext';
 export type { AccordionSummaryProps } from './components/Accordion/AccordionSummary';
 export type { AccordionContentProps } from './components/Accordion/AccordionContent';
 
@@ -404,6 +408,7 @@ export { ColorSchemeProvider } from './components/ColorSchemeProvider/ColorSchem
 export type { ColorSchemeProviderProps } from './components/ColorSchemeProvider/ColorSchemeProvider';
 export { ColorScheme } from './lib/colorScheme';
 export type { ColorSchemeType } from './lib/colorScheme';
+export { DOMContext } from './lib/dom';
 export { LocaleProvider } from './components/LocaleProvider/LocaleProvider';
 export type { LocaleProviderProps } from './components/LocaleProvider/LocaleProvider';
 export { PlatformProvider } from './components/PlatformProvider/PlatformProvider';
@@ -445,6 +450,7 @@ export { useNavTransition } from './components/NavTransitionContext/NavTransitio
 export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useNavId } from './components/NavIdContext/useNavId';
 export type { TransitionDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
+export { useCSSKeyframesAnimationController as unstable_useCSSKeyframesAnimationController } from './lib/animation';
 
 /**
  * Utils

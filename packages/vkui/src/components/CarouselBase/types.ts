@@ -122,6 +122,14 @@ export interface BaseGalleryProps
    * Передает атрибут `data-testid` для слайда
    */
   slideTestId?: (index: number) => string;
-
+  /**
+   * Включает зацикленность слайдов
+   */
   looped?: boolean;
+  /**
+   * Тип источника для отслеживания размера:
+   * - `window`: пересчет позиции слайдов будет происходить при изменении размеров `window`
+   * - `element`: пересчет позиции слайдов будет происходить при изменении размеров компонента
+   */
+  resizeSource?: 'window' | 'element';
 }
