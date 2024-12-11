@@ -41,7 +41,7 @@ export interface ControlElementsState {
    */
   canSlideRight: boolean;
   /**
-   * Возможность листаться слайды drag'ом
+   * Возможность листать слайды drag'ом
    */
   isDraggable: boolean;
 }
