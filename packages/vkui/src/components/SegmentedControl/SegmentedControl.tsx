@@ -11,8 +11,7 @@ import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import {
   SegmentedControlOption,
-  type SegmentedControlRadioProps,
-  type SegmentedControlTabProps,
+  type SegmentedControlOptionProps,
 } from './SegmentedControlOption/SegmentedControlOption';
 import styles from './SegmentedControl.module.css';
 
@@ -35,14 +34,13 @@ export interface SegmentedControlOptionInterface
 }
 
 export interface SegmentedControlProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'role'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
   options: SegmentedControlOptionInterface[];
   size?: 'm' | 'l';
   name?: string;
   onChange?: (value: SegmentedControlValue) => void;
   value?: SegmentedControlValue;
   defaultValue?: SegmentedControlValue;
-  role?: 'tablist' | 'radiogroup';
 }
 
 const warn = warnOnce('SegmentedControl');
@@ -92,7 +90,7 @@ export const SegmentedControl = ({
         size === 'l' && styles.sizeL,
       )}
     >
-      <div role={role === 'tablist' ? 'tablist' : 'radiogroup'} ref={tabsRef} className={styles.in}>
+      <div role={role} ref={tabsRef} className={styles.in}>
         {actualIndex > -1 && (
           <div
             aria-hidden
@@ -106,25 +104,33 @@ export const SegmentedControl = ({
         {options.map(({ label, ...optionProps }) => {
           const selected = value === optionProps.value;
           const onSelect = () => onChange(optionProps.value);
-          const roleOptionProps: SegmentedControlTabProps | SegmentedControlRadioProps =
+          const optionRootProps: SegmentedControlOptionProps['rootProps'] =
             role === 'tablist'
               ? {
                   'role': 'tab',
                   'aria-selected': selected,
                   'onClick': onSelect,
+                  'tabIndex': optionProps.tabIndex ?? (selected ? 0 : -1),
+                  ...optionProps,
                 }
-              : {
-                  role: 'radio',
+              : undefined;
+
+          const optionInputProps: SegmentedControlOptionProps['inputProps'] =
+            role !== 'tablist'
+              ? {
+                  role: optionProps.role || (role === 'radiogroup' ? 'radio' : undefined),
                   checked: selected,
                   onChange: onSelect,
                   name: name ?? id,
-                };
+                  ...optionProps,
+                }
+              : undefined;
 
           return (
             <SegmentedControlOption
               key={`${optionProps.value}`}
-              {...optionProps}
-              {...roleOptionProps}
+              rootProps={optionRootProps}
+              inputProps={optionInputProps}
             >
               {label}
             </SegmentedControlOption>
