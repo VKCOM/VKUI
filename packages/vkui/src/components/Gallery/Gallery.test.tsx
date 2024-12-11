@@ -4,6 +4,7 @@ import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { ANIMATION_DURATION } from '../CarouselBase/constants';
+import { type BaseGalleryProps } from '../CarouselBase/types';
 import { Gallery } from './Gallery';
 
 const mockRAF = () => {
@@ -72,6 +73,7 @@ const setup = ({
   defaultSlideIndex,
   slideWidth,
   looped,
+  resizeSource = 'window',
   containerWidth: defaultContainerWidth,
   isCustomSlideWidth = false,
   viewPortWidth: defaultViewPortWidth,
@@ -90,6 +92,7 @@ const setup = ({
   containerWidth: number;
   viewPortWidth: number;
   numberOfSlides?: number;
+  resizeSource?: BaseGalleryProps['resizeSource'];
   align?: AlignType;
   onChange: VoidFunction;
   onNext?: VoidFunction;
@@ -161,6 +164,7 @@ const setup = ({
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       bullets="light"
+      resizeSource={resizeSource}
       slideWidth={isCustomSlideWidth ? 'custom' : undefined}
       getRootRef={mockContainerData}
       getRef={mockViewportData}
@@ -611,6 +615,64 @@ describe('Gallery', () => {
       warn.mockRestore();
       process.env.NODE_ENV = 'test';
     });
+  });
+
+  const mockResizeObserver = () => {
+    const callbacks = new Set<ResizeObserverCallback>();
+
+    class MockResizeObserver implements ResizeObserver {
+      constructor(callback: ResizeObserverCallback) {
+        callbacks.add(callback);
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      observe() {}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      unobserve() {}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      disconnect() {}
+    }
+
+    const originalResizeObserver = window.ResizeObserver;
+    window.ResizeObserver = MockResizeObserver;
+
+    return {
+      triggerResize: () => {
+        callbacks.forEach((callback) => {
+          callback([], {} as unknown as ResizeObserver);
+        });
+      },
+      restore: () => {
+        window.ResizeObserver = originalResizeObserver;
+      },
+    };
+  };
+
+  it('check recalculate slides positions when resize element with resizeSource="element"', () => {
+    const { triggerResize, restore } = mockResizeObserver();
+    const onChange = jest.fn();
+
+    const mockedData = setup({
+      looped: true,
+      resizeSource: 'element',
+      defaultSlideIndex: 0,
+      slideWidth: 180,
+      containerWidth: 200,
+      viewPortWidth: 180,
+      align: 'center',
+      onChange,
+    });
+
+    expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
+    expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
+
+    mockedData.containerWidth = 250;
+
+    triggerResize();
+
+    expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
+    expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
+    restore();
   });
 
   it('checks gallery arrows and navigation in center alignment', () => {

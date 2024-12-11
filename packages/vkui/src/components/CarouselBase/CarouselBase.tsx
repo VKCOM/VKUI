@@ -470,7 +470,7 @@ export const CarouselBase = ({
         onStart={onStart}
         onMoveX={onMoveX}
         onEnd={onEnd}
-        viewportRef={viewportRef}
+        getRootRef={viewportRef}
         layerRef={layerRef}
         setSlideRef={setSlideRef}
       >
