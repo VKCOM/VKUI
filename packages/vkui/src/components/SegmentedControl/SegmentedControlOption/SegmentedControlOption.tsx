@@ -1,15 +1,19 @@
+'use client';
+
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
-import type { HasRef, HasRootRef } from '../../../types';
+import type { HasChildren, HasRef, HasRootRef } from '../../../types';
 import { Clickable } from '../../Clickable/Clickable';
 import { Headline } from '../../Typography/Headline/Headline';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './SegmentedControlOption.module.css';
 
 export interface SegmentedControlOptionProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {
+  extends HasRootRef<HTMLLabelElement>,
+    HasRef<HTMLInputElement>,
+    HasChildren {
+  rootProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   before?: React.ReactNode;
 }
 
@@ -18,23 +22,23 @@ export interface SegmentedControlOptionProps
  */
 export const SegmentedControlOption = ({
   getRef,
-  className,
-  style,
   children,
   getRootRef,
   before,
-  ...restProps
+  rootProps,
+  inputProps,
 }: SegmentedControlOptionProps): React.ReactNode => (
   <Clickable
     Component="label"
     baseClassName={styles.host}
     hoverClassName={styles.hover}
     activeClassName={styles.hover}
-    className={className}
     getRootRef={getRootRef}
-    style={style}
+    {...rootProps}
   >
-    <VisuallyHidden {...restProps} Component="input" getRootRef={getRef} type="radio" />
+    {inputProps && (
+      <VisuallyHidden {...inputProps} Component="input" getRootRef={getRef} type="radio" />
+    )}
     {hasReactNode(before) && <div className={styles.before}>{before}</div>}
     <Headline level="2" weight="2">
       {children}

@@ -1,8 +1,14 @@
 import { baselineComponent } from '../../../testing/utils';
-import { SegmentedControlOption } from './SegmentedControlOption';
+import { SegmentedControlOption, type SegmentedControlOptionProps } from './SegmentedControlOption';
 
 describe('SegmentedControlOption', () => {
-  baselineComponent((props) => (
-    <SegmentedControlOption {...props}>SegmentedControlOption</SegmentedControlOption>
+  baselineComponent<SegmentedControlOptionProps>(({ getRef, getRootRef, ...props }) => (
+    <SegmentedControlOption
+      inputProps={{ ...props, role: 'radio' }}
+      getRef={getRef}
+      getRootRef={getRootRef}
+    >
+      SegmentedControlOption
+    </SegmentedControlOption>
   ));
 });
