@@ -39,6 +39,12 @@ export const UsersStackPlayground = (props: ComponentPlaygroundProps) => {
             [base64Image, base64Image, base64Image, base64Image],
           ],
         },
+        {
+          children: [undefined],
+          size: ['m', 'l'],
+          photos: [[base64Image, base64Image, base64Image]],
+          count: [99],
+        },
       ]}
     >
       {(props: UsersStackProps) => <UsersStack {...props} />}
