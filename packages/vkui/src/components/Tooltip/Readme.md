@@ -8,11 +8,11 @@
 
 ## Использование хука useTooltip
 
-Вы можете использовать хук useTooltip, который позволяет устанавливать якорный элемент для Tooltip, не прокидывая его в качестве children
+Вы можете использовать хук `useTooltip`, который позволяет устанавливать якорный элемент для `Tooltip`, не прокидывая его в качестве `children`
 
 ```jsx { "props": { "layout": false, "iframe": true } }
 const Example = () => {
-  const { anchorRef, anchorProps, tooltip } = useTooltip({
+  const { referenceRef, referenceProps, tooltip } = useTooltip({
     placement: 'right',
     description: 'Привет',
   });
@@ -24,7 +24,7 @@ const Example = () => {
         <Group>
           {tooltip}
           <FormItem>
-            <Button getRootRef={anchorRef} {...anchorProps}>
+            <Button getRootRef={referenceRef} {...referenceProps}>
               Наведи на меня
             </Button>
           </FormItem>

@@ -21,8 +21,8 @@ export type UsePopoverProps = Omit<PopoverProps, 'children'> & {
 };
 
 export type UsePopoverResult<ElementType extends HTMLElement = HTMLElement> = {
-  anchorRef: Ref<ElementType>;
-  anchorProps: ReferenceProps<ElementType>;
+  referenceRef: Ref<ElementType>;
+  referenceProps: ReferenceProps<ElementType>;
   popover: React.ReactNode | null;
 };
 
@@ -156,13 +156,16 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
       ],
     );
 
-  const remapAnchorProps: Exclude<UseFloatingElementProps['remapAnchorProps'], undefined> =
+  const remapReferenceProps: Exclude<UseFloatingElementProps['remapReferenceProps'], undefined> =
     useCallback(
       ({ shown, ...referenceProps }) => injectAriaExpandedPropByRole(referenceProps, shown, role),
       [role],
     );
 
-  const { anchorRef, anchorProps, component } = useFloatingElement<ElementType, HTMLDivElement>({
+  const { referenceRef, referenceProps, component } = useFloatingElement<
+    ElementType,
+    HTMLDivElement
+  >({
     arrow: withArrow,
     arrowHeight,
     arrowPadding,
@@ -189,12 +192,12 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
 
     onPlacementChange,
     renderFloatingComponent,
-    remapAnchorProps,
+    remapReferenceProps,
   });
 
   return {
-    anchorRef,
-    anchorProps,
+    referenceRef,
+    referenceProps,
     popover: component,
   };
 };

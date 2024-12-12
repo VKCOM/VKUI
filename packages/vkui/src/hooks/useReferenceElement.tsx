@@ -1,7 +1,7 @@
 import { isValidNotReactFragmentElement } from '../lib/utils';
 import { usePatchChildren } from './usePatchChildren';
 
-export const useAnchorElement = <ElementType extends HTMLElement = HTMLElement>(
+export const useReferenceElement = <ElementType extends HTMLElement = HTMLElement>(
   ...args: Parameters<typeof usePatchChildren<ElementType>>
 ) => {
   const [children, injectProps, externRef] = args;

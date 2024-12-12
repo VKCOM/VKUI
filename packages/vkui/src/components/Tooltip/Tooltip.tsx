@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useAnchorElement } from '../../hooks/useAnchorElement';
+import { useReferenceElement } from '../../hooks/useReferenceElement';
 import { type FloatingComponentProps, type OnShownChange } from '../../lib/floating';
 import { type FloatingArrowProps as FloatingArrowPropsPrivate } from '../FloatingArrow/FloatingArrow';
 import { type TooltipBaseProps } from '../TooltipBase/TooltipBase';
@@ -79,9 +79,9 @@ export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTool
  * @see https://vkcom.github.io/VKUI/#/Tooltip
  */
 export const Tooltip = ({ children, ...restProps }: TooltipProps): React.ReactNode => {
-  const { anchorRef, anchorProps, tooltip } = useTooltip(restProps);
+  const { referenceRef, referenceProps, tooltip } = useTooltip(restProps);
 
-  const anchor = useAnchorElement(children, anchorProps, anchorRef);
+  const anchor = useReferenceElement(children, referenceProps, referenceRef);
 
   return (
     <React.Fragment>

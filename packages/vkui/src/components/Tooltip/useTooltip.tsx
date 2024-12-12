@@ -20,8 +20,8 @@ export type UseTooltipProps = Omit<TooltipProps, 'children'> & {
 };
 
 export type UseTooltipResult<ElementType extends HTMLElement = HTMLElement> = {
-  anchorRef: Ref<ElementType>;
-  anchorProps: ReferenceProps<ElementType>;
+  referenceRef: Ref<ElementType>;
+  referenceProps: ReferenceProps<ElementType>;
   tooltip: React.ReactNode | null;
 };
 
@@ -123,7 +123,7 @@ export const useTooltip = ({
     ],
   );
 
-  const remapAnchorProps: Exclude<UseFloatingElementProps['remapAnchorProps'], undefined> =
+  const remapReferenceProps: Exclude<UseFloatingElementProps['remapReferenceProps'], undefined> =
     useCallback(
       ({ shown, ...referenceProps }) => ({
         ...referenceProps,
@@ -132,7 +132,7 @@ export const useTooltip = ({
       [tooltipId],
     );
 
-  const { component, anchorRef, anchorProps } = useFloatingElement({
+  const { component, referenceRef, referenceProps } = useFloatingElement({
     placement: placementProp,
     arrow: !disableArrow,
     arrowHeight,
@@ -155,12 +155,12 @@ export const useTooltip = ({
 
     renderFloatingComponent,
     externalFloatingElementRef: getRootRef,
-    remapAnchorProps,
+    remapReferenceProps,
   });
 
   return {
-    anchorRef,
-    anchorProps,
+    referenceRef,
+    referenceProps,
     tooltip: component,
   };
 };

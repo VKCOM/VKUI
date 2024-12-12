@@ -31,29 +31,29 @@ export type RenderFloatingComponentFn<FloatingElement extends HTMLElement = HTML
   props: FloatingComponentProps<FloatingElement>,
 ) => React.ReactNode | null;
 
-export type RemapAnchorPropsFn<AnchorElement extends HTMLElement = HTMLElement> = (
-  props: ReferenceProps<AnchorElement> & { shown: boolean },
-) => ReferenceProps<AnchorElement>;
+export type RemapReferencePropsFn<ReferenceElement extends HTMLElement = HTMLElement> = (
+  props: ReferenceProps<ReferenceElement> & { shown: boolean },
+) => ReferenceProps<ReferenceElement>;
 
 export type UseFloatingElementProps<
   FloatingElement extends HTMLElement = HTMLElement,
-  AnchorElement extends HTMLElement = HTMLElement,
+  ReferenceElement extends HTMLElement = HTMLElement,
 > = Omit<UseFloatingMiddlewaresBootstrapOptions, 'arrowRef'> &
   Omit<UseFloatingWithInteractionsProps, 'placement'> & {
     onPlacementChange?: OnPlacementChange;
     renderFloatingComponent: RenderFloatingComponentFn<FloatingElement>;
-    remapAnchorProps?: RemapAnchorPropsFn<AnchorElement>;
+    remapReferenceProps?: RemapReferencePropsFn<ReferenceElement>;
     externalFloatingElementRef?: React.Ref<FloatingElement>;
   };
 
-export type UseFloatingResult<AnchorElement extends HTMLElement = HTMLElement> = {
-  anchorRef: Ref<AnchorElement>;
-  anchorProps: ReferenceProps<AnchorElement>;
+export type UseFloatingResult<ReferenceElement extends HTMLElement = HTMLElement> = {
+  referenceRef: Ref<ReferenceElement>;
+  referenceProps: ReferenceProps<ReferenceElement>;
   component: React.ReactNode | null;
 };
 
 export const useFloatingElement = <
-  AnchorElement extends HTMLElement = HTMLElement,
+  ReferenceElement extends HTMLElement = HTMLElement,
   FloatingElement extends HTMLElement = HTMLElement,
 >({
   // useFloatingMiddlewaresBootstrap
@@ -86,8 +86,11 @@ export const useFloatingElement = <
 
   renderFloatingComponent,
   externalFloatingElementRef,
-  remapAnchorProps,
-}: UseFloatingElementProps<FloatingElement, AnchorElement>): UseFloatingResult<AnchorElement> => {
+  remapReferenceProps,
+}: UseFloatingElementProps<
+  FloatingElement,
+  ReferenceElement
+>): UseFloatingResult<ReferenceElement> => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
   const { middlewares, strictPlacement } = useFloatingMiddlewaresBootstrap({
@@ -150,14 +153,15 @@ export const useFloatingElement = <
 
   useGlobalEscKeyDown(shown, onEscapeKeyDown);
 
-  const anchorProps = useMemo(
-    () => (remapAnchorProps ? remapAnchorProps({ ...referenceProps, shown }) : referenceProps),
-    [remapAnchorProps, shown, referenceProps],
+  const remappedReferenceProps = useMemo(
+    () =>
+      remapReferenceProps ? remapReferenceProps({ ...referenceProps, shown }) : referenceProps,
+    [remapReferenceProps, shown, referenceProps],
   );
 
   return {
-    anchorRef: refs.setReference,
-    anchorProps,
+    referenceRef: refs.setReference,
+    referenceProps: remappedReferenceProps,
     component,
   };
 };

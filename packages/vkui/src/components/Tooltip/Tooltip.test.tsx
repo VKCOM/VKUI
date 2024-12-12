@@ -46,7 +46,7 @@ describe(Tooltip, () => {
   it('check working with useTooltip hook', async () => {
     const onShownChange = jest.fn();
     const Fixture = () => {
-      const { anchorRef, anchorProps, tooltip } = useTooltip({
+      const { referenceRef, referenceProps, tooltip } = useTooltip({
         'description': 'Some tooltip',
         'data-testid': 'tooltip',
         onShownChange,
@@ -55,7 +55,7 @@ describe(Tooltip, () => {
       return (
         <>
           {tooltip}
-          <Button {...anchorProps} data-testid="target" getRootRef={anchorRef}>
+          <Button {...referenceProps} data-testid="target" getRootRef={referenceRef}>
             Hover me
           </Button>
         </>

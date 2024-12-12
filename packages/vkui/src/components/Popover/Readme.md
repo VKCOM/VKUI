@@ -207,11 +207,11 @@ const Playground = () => {
 
 ## Использование хука usePopover
 
-Вы можете использовать хук usePopover, который позволяет устанавливать якорных элемент для Popover, не прокидывая его в качестве children
+Вы можете использовать хук `usePopover`, который позволяет устанавливать якорных элемент для `Popover`, не прокидывая его в качестве `children`
 
 ```jsx { "props": { "layout": false, "iframe": true } }
 const Example = () => {
-  const { anchorRef, anchorProps, popover } = usePopover({
+  const { referenceRef, referenceProps, popover } = usePopover({
     'trigger': 'click',
     'role': 'dialog',
     'id': 'menupopup',
@@ -231,10 +231,10 @@ const Example = () => {
           {popover}
           <FormItem>
             <Button
-              getRootRef={anchorRef}
+              getRootRef={referenceRef}
               id="menubutton"
               aria-controls="menupopup"
-              {...anchorProps}
+              {...referenceProps}
             >
               Нажми на меня
             </Button>
