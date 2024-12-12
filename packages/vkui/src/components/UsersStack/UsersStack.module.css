@@ -35,30 +35,12 @@
   fill: var(--vkui--color_image_placeholder_alpha);
 }
 
-.sizeS .item {
+.item {
   block-size: var(--vkui_internal--UsersStack_item_size);
   min-inline-size: var(--vkui_internal--UsersStack_item_size);
 }
 
-.sizeM .item {
-  block-size: var(--vkui_internal--UsersStack_item_size);
-  min-inline-size: var(--vkui_internal--UsersStack_item_size);
-}
-
-.sizeL .item {
-  block-size: var(--vkui_internal--UsersStack_item_size);
-  min-inline-size: var(--vkui_internal--UsersStack_item_size);
-}
-
-.sizeS .photo {
-  max-inline-size: var(--vkui_internal--UsersStack_item_size);
-}
-
-.sizeM .photo {
-  max-inline-size: var(--vkui_internal--UsersStack_item_size);
-}
-
-.sizeL .photo {
+.photo {
   max-inline-size: var(--vkui_internal--UsersStack_item_size);
 }
 
