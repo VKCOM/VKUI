@@ -4,11 +4,15 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { SegmentedControlOption } from './SegmentedControlOption/SegmentedControlOption';
+import {
+  SegmentedControlOption,
+  type SegmentedControlOptionProps,
+} from './SegmentedControlOption/SegmentedControlOption';
 import styles from './SegmentedControl.module.css';
 
 const sizeYClassNames = {
@@ -25,7 +29,7 @@ export interface SegmentedControlOptionInterface
    * Рекомендуется использовать только иконки с размером 20
    */
   before?: React.ReactNode;
-  label: React.ReactChild;
+  label: React.ReactNode;
   value: SegmentedControlValue;
 }
 
@@ -52,6 +56,7 @@ export const SegmentedControl = ({
   children,
   onChange: onChangeProp,
   value: valueProp,
+  role = 'radiogroup',
   ...restProps
 }: SegmentedControlProps): React.ReactNode => {
   const id = React.useId();
@@ -63,6 +68,8 @@ export const SegmentedControl = ({
   });
 
   const { sizeY = 'none' } = useAdaptivity();
+
+  const { tabsRef } = useTabsNavigation(role === 'tablist');
 
   const actualIndex = options.findIndex((option) => option.value === value);
 
@@ -83,7 +90,7 @@ export const SegmentedControl = ({
         size === 'l' && styles.sizeL,
       )}
     >
-      <div role="radiogroup" className={styles.in}>
+      <div role={role} ref={tabsRef} className={styles.in}>
         {actualIndex > -1 && (
           <div
             aria-hidden
@@ -94,17 +101,42 @@ export const SegmentedControl = ({
             }}
           />
         )}
-        {options.map(({ label, ...optionProps }) => (
-          <SegmentedControlOption
-            key={`${optionProps.value}`}
-            {...optionProps}
-            name={name ?? id}
-            checked={value === optionProps.value}
-            onChange={() => onChange(optionProps.value)}
-          >
-            {label}
-          </SegmentedControlOption>
-        ))}
+        {options.map(({ label, before, ...optionProps }) => {
+          const selected = value === optionProps.value;
+          const onSelect = () => onChange(optionProps.value);
+          const optionRootProps: SegmentedControlOptionProps['rootProps'] =
+            role === 'tablist'
+              ? {
+                  'role': 'tab',
+                  'aria-selected': selected,
+                  'onClick': onSelect,
+                  'tabIndex': optionProps.tabIndex ?? (selected ? 0 : -1),
+                  ...optionProps,
+                }
+              : undefined;
+
+          const optionInputProps: SegmentedControlOptionProps['inputProps'] =
+            role !== 'tablist'
+              ? {
+                  role: optionProps.role || (role === 'radiogroup' ? 'radio' : undefined),
+                  checked: selected,
+                  onChange: onSelect,
+                  name: name ?? id,
+                  ...optionProps,
+                }
+              : undefined;
+
+          return (
+            <SegmentedControlOption
+              key={`${optionProps.value}`}
+              before={before}
+              rootProps={optionRootProps}
+              inputProps={optionInputProps}
+            >
+              {label}
+            </SegmentedControlOption>
+          );
+        })}
       </div>
     </RootComponent>
   );

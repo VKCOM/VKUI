@@ -10,7 +10,7 @@ export function useSyncHTMLWithBaseVKUIClasses({
   enable,
   layout,
 }: {
-  appRootRef: React.RefObject<HTMLElement>;
+  appRootRef: React.RefObject<HTMLElement | null>;
   mode: AppRootMode;
   layout?: AppRootLayout;
   enable: boolean;

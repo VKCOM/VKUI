@@ -81,7 +81,7 @@ export interface PopperCommonProps
 }
 
 export interface PopperProps extends PopperCommonProps {
-  targetRef: React.RefObject<HTMLElement> | VirtualElement;
+  targetRef: React.RefObject<HTMLElement | null> | VirtualElement;
 }
 
 /**

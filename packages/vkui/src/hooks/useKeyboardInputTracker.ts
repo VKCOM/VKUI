@@ -29,7 +29,7 @@ const EVENT_OPTIONS = {
  *
  * @private
  */
-export function useKeyboardInputTracker(): React.MutableRefObject<boolean> {
+export function useKeyboardInputTracker(): React.RefObject<boolean> {
   const { document } = useDOM();
   const keyboardFocusingStartedRef = React.useRef(false);
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Markdown from '@rsg-components/Markdown';
 import SectionHeading from '@rsg-components/SectionHeading';
-import PropTypes from 'prop-types';
 
 export const SectionRenderer = (allProps) => {
   const {
@@ -36,19 +35,6 @@ export const SectionRenderer = (allProps) => {
       {components}
     </section>
   );
-};
-
-SectionRenderer.propTypes = {
-  name: PropTypes.string,
-  description: PropTypes.string,
-  slug: PropTypes.string.isRequired,
-  content: PropTypes.node,
-  contentTitle: PropTypes.string,
-  components: PropTypes.node,
-  sections: PropTypes.node,
-  isolated: PropTypes.bool,
-  depth: PropTypes.number.isRequired,
-  pagePerSection: PropTypes.bool,
 };
 
 export default SectionRenderer;

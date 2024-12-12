@@ -85,3 +85,73 @@ const [selectedSex, changeSelectedSex] = React.useState();
   </Panel>
 </View>;
 ```
+
+## Использование в качестве навигации по табам
+
+Компонент `SegmentedControl` может использоваться для создания навигации по табам. В этом случае необходимо:
+
+1. Установить `role="tablist"` для контейнера с табами
+2. Для каждой опции указать:
+   - `id`- уникальный идентификатор таба
+   - `aria-controls`- идентификатор панели с контентом, которым управляет таб
+3. Для панелей с контентом указать:
+   - `role="tabpanel"`- роль панели с контентом
+   - `aria-labelledby`- идентификатор таба, который управляет этой панелью
+   - `tabIndex={0}`- чтобы сделать панель фокусируемой
+   - `id`- идентификатор панели, который соответствует `aria-controls` в табе
+
+Это обеспечит правильную семантику и доступность компонента для пользователей скринридеров.
+
+Пример использования:
+
+```jsx
+const Example = () => {
+  const [selected, setSelected] = React.useState('news');
+
+  return (
+    <View activePanel="panel">
+      <Panel id="panel">
+        <PanelHeader>SegmentedControl</PanelHeader>
+
+        <SegmentedControl
+          role="tablist"
+          value={selected}
+          onChange={(value) => setSelected(value)}
+          options={[
+            {
+              'label': 'Новости',
+              'value': 'news',
+              'aria-controls': 'tab-content-news',
+              'id': 'tab-news',
+            },
+            {
+              'label': 'Интересное',
+              'value': 'recommendations',
+              'aria-controls': 'tab-content-recommendations',
+              'id': 'tab-recommendations',
+            },
+          ]}
+        />
+
+        {selected === 'news' && (
+          <Group id="tab-content-news" aria-labelledby="tab-news" role="tabpanel" tabIndex={0}>
+            <Div>Контент новостей</Div>
+          </Group>
+        )}
+        {selected === 'recommendations' && (
+          <Group
+            id="tab-content-recommendations"
+            aria-labelledby="tab-recommendations"
+            role="tabpanel"
+            tabIndex={0}
+          >
+            <Div>Контент рекомендаций</Div>
+          </Group>
+        )}
+      </Panel>
+    </View>
+  );
+};
+
+<Example />;
+```

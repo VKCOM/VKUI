@@ -59,7 +59,7 @@ describe('HorizontalScroll', () => {
       <HorizontalScroll
         getRef={mockRef}
         data-testid="horizontal-scroll"
-        endArrowTestId="scroll-arrow-right"
+        nextButtonTestId="scroll-arrow-right"
       >
         <div style={{ width: '800px', height: '50px' }} />
       </HorizontalScroll>,
@@ -102,14 +102,14 @@ describe('HorizontalScroll', () => {
   });
 
   it('click on arrow right should change scrollLeft', async () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
       <HorizontalScroll
         getRef={ref}
         data-testid="horizontal-scroll"
-        endArrowTestId="scroll-arrow-right"
+        nextButtonTestId="scroll-arrow-right"
       >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,
@@ -130,14 +130,14 @@ describe('HorizontalScroll', () => {
   });
 
   it('click on arrow left should change scrollLeft', async () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
       <HorizontalScroll
         getRef={ref}
         data-testid="horizontal-scroll"
-        startArrowTestId="scroll-arrow-left"
+        prevButtonTestId="scroll-arrow-left"
       >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,
@@ -161,7 +161,7 @@ describe('HorizontalScroll', () => {
   });
 
   it('use custom scroll function to left and right', async () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
@@ -170,8 +170,8 @@ describe('HorizontalScroll', () => {
         data-testid="horizontal-scroll"
         getScrollToLeft={(left) => left - 100}
         getScrollToRight={(left) => left + 250}
-        startArrowTestId="scroll-arrow-left"
-        endArrowTestId="scroll-arrow-right"
+        prevButtonTestId="scroll-arrow-left"
+        nextButtonTestId="scroll-arrow-right"
       >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,
@@ -197,15 +197,15 @@ describe('HorizontalScroll', () => {
   });
 
   it('scroll by arrow', () => {
-    const ref: React.MutableRefObject<HTMLDivElement | null> = {
+    const ref: React.RefObject<HTMLDivElement | null> = {
       current: null,
     };
     render(
       <HorizontalScroll
         getRef={ref}
         data-testid="horizontal-scroll"
-        startArrowTestId="scroll-arrow-left"
-        endArrowTestId="scroll-arrow-right"
+        prevButtonTestId="scroll-arrow-left"
+        nextButtonTestId="scroll-arrow-right"
       >
         <div style={{ width: '1800px', height: '50px' }} />
       </HorizontalScroll>,

@@ -3,7 +3,7 @@ import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { useStableCallback } from './useStableCallback';
 
 export const useMutationObserver = (
-  ref: React.MutableRefObject<HTMLElement | null> | React.RefObject<HTMLElement | null> | null,
+  ref: React.RefObject<HTMLElement | null> | null,
   callback: () => void,
 ): void => {
   const stableCallback = useStableCallback(callback);

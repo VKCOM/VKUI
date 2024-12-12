@@ -71,6 +71,15 @@
   object-fit: scale-down;
 }
 
+.withObjectPosition {
+  --vkui_internal--ImageBase_object_position_default: 50% 50%;
+
+  object-position: var(
+    --vkui_internal--ImageBase_object_position,
+    var(--vkui_internal--ImageBase_object_position_default)
+  );
+}
+
 .loaded .img {
   visibility: visible;
 }
