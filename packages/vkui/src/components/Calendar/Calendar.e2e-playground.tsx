@@ -63,6 +63,10 @@ export const CalendarPlayground = (props: ComponentPlaygroundProps) => {
           minDateTime: [new Date('1970-05-03')],
           maxDateTime: [new Date('1970-05-10')],
         },
+        {
+          value: [new Date('1970-05-05')],
+          dir: ['rtl'],
+        },
       ]}
     >
       {(props: CalendarProps) => <Calendar {...props} />}
