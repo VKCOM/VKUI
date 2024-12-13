@@ -61,6 +61,10 @@
   transform: translateX(-50%);
 }
 
+.rtl .today .dayNumber::after {
+  transform: translateX(50%);
+}
+
 .today .innerActive .dayNumber::after {
   border-block-end-color: var(--vkui--color_stroke_contrast);
 }

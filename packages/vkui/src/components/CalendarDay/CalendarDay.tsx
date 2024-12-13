@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useCalendarDirectionContext } from '../../context/CalendarDirectionContext';
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { Tappable } from '../Tappable/Tappable';
@@ -68,6 +69,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
   }: CalendarDayProps) => {
     const { locale } = useConfigProvider();
     const ref = React.useRef<HTMLElement>(null);
+    const { direction } = useCalendarDirectionContext();
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
     const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
     const handleLeave = React.useCallback(() => onLeave?.(day), [day, onLeave]);
@@ -104,7 +106,11 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
 
     return (
       <Tappable
-        baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}
+        baseClassName={classNames(
+          styles.host,
+          size === 's' && styles.sizeS,
+          direction === 'rtl' && styles.rtl,
+        )}
         hoverMode={styles.hostHovered}
         activeMode={styles.hostActivated}
         hasActive={false}

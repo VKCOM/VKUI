@@ -9,6 +9,7 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { addMonths, setMonth, setYear, subMonths } from 'date-fns';
+import { useCalendarDirectionContext } from '../../context/CalendarDirectionContext';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -104,6 +105,8 @@ export const CalendarHeader = ({
   ...restProps
 }: CalendarHeaderProps): React.ReactNode => {
   const { locale } = useConfigProvider();
+  const { direction } = useCalendarDirectionContext();
+
   const onMonthsChange = React.useCallback(
     (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
       onChange(setMonth(viewDate, Number(newValue))),
@@ -176,7 +179,7 @@ export const CalendarHeader = ({
             <VisuallyHidden>
               {prevMonthLabel}, {formatter.format(subMonths(viewDate, 1))}
             </VisuallyHidden>
-            {prevMonthIcon}
+            {direction === 'ltr' ? prevMonthIcon : nextMonthIcon}
           </Tappable>
         </AdaptivityProvider>
       )}
@@ -242,7 +245,7 @@ export const CalendarHeader = ({
             <VisuallyHidden>
               {nextMonthLabel}, {formatter.format(addMonths(viewDate, 1))}
             </VisuallyHidden>
-            {nextMonthIcon}
+            {direction === 'ltr' ? nextMonthIcon : prevMonthIcon}
           </Tappable>
         </AdaptivityProvider>
       )}
