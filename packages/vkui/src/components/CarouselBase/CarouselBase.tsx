@@ -146,6 +146,23 @@ export const CarouselBase = ({
     }
   };
 
+  const checkShiftOutOfBoundsFromStart = (shiftX: number, snaps: number[]) => shiftX > snaps[0];
+
+  const checkShiftOutOfBoundsFromEnd = (shiftX: number, slides: GallerySlidesState[]) => {
+    /**
+     * Поскольку при `align="center"` слайды сдвинуты, прежде чем рассчитать крайнюю правую точку,
+     * нужно вычесть сдвиг слайдов
+     */
+    const firstSlideShift =
+      align === 'center'
+        ? (slidesManager.current.containerWidth - slidesManager.current.slides[0].width) / 2
+        : 0;
+    const lastPoint =
+      slides[slides.length - 1].width + slides[slides.length - 1].coordX - firstSlideShift;
+
+    return shiftX <= -lastPoint;
+  };
+
   const requestTransform = (shiftX: number, animation = false) => {
     const { snaps, contentSize, slides } = slidesManager.current;
 
@@ -153,13 +170,20 @@ export const CarouselBase = ({
       cancelAnimationFrame(animationFrameRef.current);
     }
     animationFrameRef.current = requestAnimationFrame(() => {
-      if (looped && shiftX > snaps[0]) {
+      /**
+       * Для бесконечной галереи проверяем, что при dnd мы прокрутили левее, чем первый слайд,
+       * чтобы сбросить `shiftXCurrentRef`
+       */
+      if (looped && checkShiftOutOfBoundsFromStart(shiftX, snaps)) {
         shiftXCurrentRef.current = -contentSize + snaps[0];
         shiftX = shiftXCurrentRef.current + shiftXDeltaRef.current;
       }
-      const lastPoint = slides[slides.length - 1].width + slides[slides.length - 1].coordX;
 
-      if (looped && shiftX <= -lastPoint) {
+      /**
+       * Для бесконечной галереи проверяем, что при dnd мы прокрутили правее, чем последний слайд,
+       * чтобы правильно пересчитать `shiftXCurrentRef`
+       */
+      if (looped && checkShiftOutOfBoundsFromEnd(shiftX, slides)) {
         shiftXCurrentRef.current = Math.abs(shiftXDeltaRef.current) + snaps[0];
       }
       transformCssStyles(shiftX, animation);
@@ -200,6 +224,16 @@ export const CarouselBase = ({
       }
     }
 
+    // if (align === 'center') {
+    //   const firstSlideShift = (containerWidth - localSlides[0].width) / 2;
+    //   localSlides = localSlides.map((item) => {
+    //     return {
+    //       width: item.width,
+    //       coordX: item.coordX - firstSlideShift,
+    //     };
+    //   });
+    // }
+
     const currentSlideOffsetOnCenterAlignment =
       (containerWidth - (localSlides[slideIndex]?.width ?? 0)) / 2;
     const isFullyVisible =
@@ -234,6 +268,7 @@ export const CarouselBase = ({
     const snaps = localSlides.map((_, index) =>
       calculateIndent(index, slidesManager.current, isCenterAlign, looped),
     );
+    console.log('snaps', snaps);
 
     let contentSize = -snaps[snaps.length - 1] + localSlides[localSlides.length - 1].width;
     if (align === 'center') {
