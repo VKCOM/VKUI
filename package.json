@@ -63,7 +63,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-environment-node": "^29.7.0",
     "jest-preset-stylelint": "^7.1.0",
-    "lint-staged": "^15.2.10",
+    "lint-staged": "^15.2.11",
     "mini-css-extract-plugin": "^2.9.2",
     "postcss": "^8.4.49",
     "postcss-cli": "^11.0.0",
