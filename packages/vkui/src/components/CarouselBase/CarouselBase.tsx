@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
+import { useDirection } from '../../hooks/useDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMutationObserver } from '../../hooks/useMutationObserver';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
@@ -20,7 +21,14 @@ import {
   SLIDE_THRESHOLD,
   SLIDES_MANAGER_STATE,
 } from './constants';
-import { calcMax, calcMin, calculateIndent, getLoopPoints, getTargetIndex } from './helpers';
+import {
+  calcMax,
+  calcMin,
+  calculateIndent,
+  getLoopPoints,
+  getTargetIndex,
+  revertRtlValue,
+} from './helpers';
 import { useSlideAnimation } from './hooks';
 import {
   type BaseGalleryProps,
@@ -59,8 +67,10 @@ export const CarouselBase = ({
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
   const slidesManager = React.useRef<SlidesManagerState>(SLIDES_MANAGER_STATE);
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const isRtl = textDirection === 'rtl';
 
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, directionRef);
   const viewportRef = useExternRef(getRef);
   const layerRef = React.useRef<HTMLDivElement>(null);
   const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
@@ -87,9 +97,12 @@ export const CarouselBase = ({
     const localMin = slidesManager.current.min ?? 0;
     const indent = shiftXCurrentRef.current + shiftXDeltaRef.current;
 
-    if (indent > localMax) {
+    const moreThanMax = (isRtl && indent < localMax) || (!isRtl && indent > localMax);
+    const lessThanMin = (isRtl && indent > localMin) || (!isRtl && indent < localMin);
+
+    if (moreThanMax) {
       return localMax + Number((indent - localMax) / 3);
-    } else if (indent < localMin) {
+    } else if (lessThanMin) {
       return localMin + Number((indent - localMin) / 3);
     }
 
@@ -100,7 +113,8 @@ export const CarouselBase = ({
     if (looped) {
       return !slidesManager.current.isFullyVisible;
     }
-    return !slidesManager.current.isFullyVisible && shiftXCurrentRef.current < 0;
+    const isStartShiftX = isRtl ? shiftXCurrentRef.current <= 0 : shiftXCurrentRef.current >= 0;
+    return !slidesManager.current.isFullyVisible && !isStartShiftX;
   };
 
   const calculateCanSlideRight = () => {
@@ -111,7 +125,7 @@ export const CarouselBase = ({
       !slidesManager.current.isFullyVisible &&
       // we can't move right when gallery layer fully scrolled right, if gallery aligned by left side
       ((align === 'left' &&
-        slidesManager.current.containerWidth - shiftXCurrentRef.current <
+        slidesManager.current.containerWidth + shiftXCurrentRef.current <
           (slidesManager.current.layerWidth ?? 0)) ||
         // otherwise we need to check current slide index (align = right or align = center)
         (align !== 'left' && slideIndex < slidesManager.current.slides.length - 1))
@@ -146,7 +160,8 @@ export const CarouselBase = ({
     }
   };
 
-  const checkShiftOutOfBoundsFromStart = (shiftX: number, snaps: number[]) => shiftX > snaps[0];
+  const checkShiftOutOfBoundsFromStart = (shiftX: number, snaps: number[]) =>
+    (isRtl && shiftX < snaps[0]) || (!isRtl && shiftX > snaps[0]);
 
   const checkShiftOutOfBoundsFromEnd = (shiftX: number, slides: GallerySlidesState[]) => {
     /**
@@ -157,10 +172,11 @@ export const CarouselBase = ({
       align === 'center'
         ? (slidesManager.current.containerWidth - slidesManager.current.slides[0].width) / 2
         : 0;
-    const lastPoint =
-      slides[slides.length - 1].width + slides[slides.length - 1].coordX - firstSlideShift;
+    const lastPoint = isRtl
+      ? slides[slides.length - 1].coordX - slides[slides.length - 1].width + firstSlideShift
+      : slides[slides.length - 1].width + slides[slides.length - 1].coordX - firstSlideShift;
 
-    return shiftX <= -lastPoint;
+    return (isRtl && shiftX >= -lastPoint) || (!isRtl && shiftX <= -lastPoint);
   };
 
   const requestTransform = (shiftX: number, animation = false) => {
@@ -175,7 +191,8 @@ export const CarouselBase = ({
        * чтобы сбросить `shiftXCurrentRef`
        */
       if (looped && checkShiftOutOfBoundsFromStart(shiftX, snaps)) {
-        shiftXCurrentRef.current = -contentSize + snaps[0];
+        const firstSnap = revertRtlValue(snaps[0], isRtl);
+        shiftXCurrentRef.current = revertRtlValue(-contentSize + firstSnap, isRtl);
         shiftX = shiftXCurrentRef.current + shiftXDeltaRef.current;
       }
 
@@ -224,16 +241,6 @@ export const CarouselBase = ({
       }
     }
 
-    // if (align === 'center') {
-    //   const firstSlideShift = (containerWidth - localSlides[0].width) / 2;
-    //   localSlides = localSlides.map((item) => {
-    //     return {
-    //       width: item.width,
-    //       coordX: item.coordX - firstSlideShift,
-    //     };
-    //   });
-    // }
-
     const currentSlideOffsetOnCenterAlignment =
       (containerWidth - (localSlides[slideIndex]?.width ?? 0)) / 2;
     const isFullyVisible =
@@ -254,6 +261,7 @@ export const CarouselBase = ({
             slides: localSlides,
             containerWidth,
             isCenterAlign,
+            isRtl,
           }),
       min: looped
         ? null
@@ -263,22 +271,27 @@ export const CarouselBase = ({
             slides: localSlides,
             viewportOffsetWidth,
             align,
+            isRtl,
           }),
     };
     const snaps = localSlides.map((_, index) =>
-      calculateIndent(index, slidesManager.current, isCenterAlign, looped),
+      calculateIndent(index, slidesManager.current, isCenterAlign, looped, isRtl),
     );
-    console.log('snaps', snaps);
 
-    let contentSize = -snaps[snaps.length - 1] + localSlides[localSlides.length - 1].width;
+    let contentSize =
+      revertRtlValue(-snaps[snaps.length - 1], isRtl) + localSlides[localSlides.length - 1].width;
     if (align === 'center') {
-      contentSize += snaps[0];
+      contentSize += revertRtlValue(snaps[0], isRtl);
     }
 
     slidesManager.current.snaps = snaps;
     slidesManager.current.contentSize = contentSize;
     if (looped) {
-      slidesManager.current.loopPoints = getLoopPoints(slidesManager.current, containerWidth);
+      slidesManager.current.loopPoints = getLoopPoints(
+        slidesManager.current,
+        containerWidth,
+        isRtl,
+      );
     }
 
     shiftXCurrentRef.current = snaps[slideIndex];
@@ -305,15 +318,20 @@ export const CarouselBase = ({
     const indent = snaps[slideIndex];
     let startPoint = shiftXCurrentRef.current;
 
+    const fromLastToFirst = isRtl
+      ? shiftXCurrentRef.current >= snaps[snaps.length - 1]
+      : shiftXCurrentRef.current <= snaps[snaps.length - 1];
     /**
      * Переключаемся с последнего элемента на первый
      * Для корректной анимации мы прокручиваем последний слайд на всю длину (shiftX) "вперед"
      * В конце анимации при отрисовке следующего кадра задаем всем слайдам начальные значения
      */
-    if (indent === snaps[0] && shiftXCurrentRef.current <= snaps[snaps.length - 1]) {
-      const distance =
-        Math.abs(snaps[snaps.length - 1]) + slides[slides.length - 1].width + startPoint;
-
+    if (indent === snaps[0] && fromLastToFirst) {
+      const endEdge = revertRtlValue(
+        Math.abs(snaps[snaps.length - 1]) + slides[slides.length - 1].width,
+        isRtl,
+      );
+      const distance = endEdge + startPoint;
       addToAnimationQueue(
         getAnimateFunction((progress) => {
           const shiftX = startPoint + progress * distance * -1;
@@ -334,15 +352,16 @@ export const CarouselBase = ({
        * В следующем кадре начинаем анимация прокрутки "назад"
        */
     } else if (indent === snaps[snaps.length - 1] && shiftXCurrentRef.current === snaps[0]) {
-      startPoint = indent - slides[slides.length - 1].width;
+      startPoint = indent - revertRtlValue(slides[slides.length - 1].width, isRtl);
 
       addToAnimationQueue(() => {
         requestAnimationFrame(() => {
-          const shiftX = indent - slides[slides.length - 1].width;
+          const shiftX = indent - revertRtlValue(slides[slides.length - 1].width, isRtl);
           transformCssStyles(shiftX);
 
           getAnimateFunction((progress) => {
-            transformCssStyles(startPoint + progress * slides[slides.length - 1].width);
+            const diff = revertRtlValue(progress * slides[slides.length - 1].width, isRtl);
+            transformCssStyles(startPoint + diff);
           })();
         });
       });
@@ -411,7 +430,7 @@ export const CarouselBase = ({
 
   useMutationObserver(layerRef, initializeSlides);
 
-  useIsomorphicLayoutEffect(initializeSlides, [align, slideWidth, looped]);
+  useIsomorphicLayoutEffect(initializeSlides, [align, slideWidth, looped, isRtl]);
 
   const calculateMinDeltaXToSlide = () => {
     return slidesManager.current.slides[slideIndex].width * SLIDE_THRESHOLD;
@@ -419,7 +438,7 @@ export const CarouselBase = ({
 
   const slideLeft = (event: React.MouseEvent) => {
     if (slideIndex > 0) {
-      shiftXCurrentRef.current += calculateMinDeltaXToSlide();
+      shiftXCurrentRef.current += revertRtlValue(calculateMinDeltaXToSlide(), isRtl);
     }
     onChange?.(
       (slideIndex - 1 + slidesManager.current.slides.length) % slidesManager.current.slides.length,
@@ -429,7 +448,7 @@ export const CarouselBase = ({
 
   const slideRight = (event: React.MouseEvent) => {
     if (slideIndex < slidesManager.current.slides.length - 1) {
-      shiftXCurrentRef.current -= calculateMinDeltaXToSlide();
+      shiftXCurrentRef.current -= revertRtlValue(calculateMinDeltaXToSlide(), isRtl);
     }
     onChange?.((slideIndex + 1) % slidesManager.current.slides.length);
     onNextClick?.(event);
@@ -469,6 +488,7 @@ export const CarouselBase = ({
           shiftXCurrentRef.current,
           shiftXDeltaRef.current,
           looped,
+          isRtl,
         );
       }
       onDragEnd?.(e, targetIndex);

@@ -64,7 +64,8 @@
   inset-block-end: 0;
 }
 
-.directionLeft .defaultIcon {
+.directionLeft:not(.rtl) .defaultIcon,
+.directionRight.rtl .defaultIcon {
   transform: rotate(180deg);
 }
 

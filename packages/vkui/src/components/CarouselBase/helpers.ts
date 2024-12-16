@@ -1,3 +1,4 @@
+import { getValueByCheckedKey } from '../../helpers/getValueByCheckedKey';
 import { type AlignType } from '../../types';
 import { SLIDE_THRESHOLD } from './constants';
 import {
@@ -7,14 +8,26 @@ import {
   type SlidesManagerState,
 } from './types';
 
-const validateIndent = (slidesManager: SlidesManagerState, value: number) => {
+export const revertRtlValue = (n: number, isRtl: boolean) => {
+  return isRtl ? -n : n;
+};
+
+const validateIndent = (slidesManager: SlidesManagerState, value: number, isRtl: boolean) => {
   const localMax = slidesManager.max ?? 0;
   const localMin = slidesManager.min ?? 0;
 
-  if (value < localMin) {
-    return localMin;
-  } else if (value > localMax) {
-    return localMax;
+  if (isRtl) {
+    if (value > localMin) {
+      return localMin;
+    } else if (value < localMax) {
+      return localMax;
+    }
+  } else {
+    if (value < localMin) {
+      return localMin;
+    } else if (value > localMax) {
+      return localMax;
+    }
   }
 
   return value;
@@ -28,6 +41,7 @@ export function calculateIndent(
   slidesManager: SlidesManagerState,
   isCenter: boolean,
   looped = false,
+  isRtl = false,
 ): number {
   if (slidesManager.isFullyVisible || !slidesManager.slides.length) {
     return 0;
@@ -39,10 +53,12 @@ export function calculateIndent(
     const { coordX, width } = targetSlide;
 
     if (isCenter) {
-      return slidesManager.containerWidth / 2 - coordX - width / 2;
+      const adjustedCoordX = isRtl ? -1 * coordX : coordX;
+      const result = slidesManager.containerWidth / 2 - adjustedCoordX - width / 2;
+      return revertRtlValue(result, isRtl);
     }
     const indent = -1 * coordX;
-    return looped ? indent : validateIndent(slidesManager, indent);
+    return looped ? indent : validateIndent(slidesManager, indent, isRtl);
   }
 
   return 0;
@@ -82,23 +98,35 @@ function calculateLoopPoints(
   edge: 'start' | 'end',
   slidesManager: SlidesManagerState,
   containerWidth: number,
+  isRtl: boolean,
 ): LoopPoint[] {
   const { contentSize, slides, snaps } = slidesManager;
   const isStartEdge = edge === 'start';
   const offset = isStartEdge ? -contentSize : contentSize;
 
   return indexes.map((index) => {
-    const initial = isStartEdge ? 0 : -contentSize;
-    const altered = isStartEdge ? contentSize : 0;
-    const loopPoint = isStartEdge
-      ? snaps[index] + containerWidth + offset
-      : snaps[index] - slides[index].width + offset - snaps[0];
+    const initial = revertRtlValue(isStartEdge ? 0 : -contentSize, isRtl);
+    const altered = revertRtlValue(isStartEdge ? contentSize : 0, isRtl);
+
+    const snap = revertRtlValue(snaps[index], isRtl);
+    const firstSnap = revertRtlValue(snaps[0], isRtl);
+    const loopPoint = revertRtlValue(
+      isStartEdge
+        ? snap + containerWidth + offset
+        : snap - slides[index].width + offset - firstSnap,
+      isRtl,
+    );
 
     return {
       index,
-      target: (currentLocation) => {
-        return currentLocation >= loopPoint ? initial : altered;
-      },
+      target: (currentLocation) =>
+        isRtl
+          ? currentLocation <= loopPoint
+            ? initial
+            : altered
+          : currentLocation >= loopPoint
+            ? initial
+            : altered,
     };
   });
 }
@@ -109,14 +137,16 @@ function calculateLoopPoints(
 export function getLoopPoints(
   slidesManager: SlidesManagerState,
   containerWidth: number,
+  isRtl = false,
 ): LoopPoint[] {
   const { slides, snaps } = slidesManager;
-  const startShiftedIndexes = getShiftedIndexes(-1, slides, snaps[0]);
-  const endShiftedIndexes = getShiftedIndexes(1, slides, containerWidth - snaps[0]);
+  const firstSnap = revertRtlValue(snaps[0], isRtl);
+  const startShiftedIndexes = getShiftedIndexes(-1, slides, firstSnap);
+  const endShiftedIndexes = getShiftedIndexes(1, slides, containerWidth - firstSnap);
 
   return [
-    ...calculateLoopPoints(endShiftedIndexes, 'start', slidesManager, containerWidth),
-    ...calculateLoopPoints(startShiftedIndexes, 'end', slidesManager, containerWidth),
+    ...calculateLoopPoints(endShiftedIndexes, 'start', slidesManager, containerWidth, isRtl),
+    ...calculateLoopPoints(startShiftedIndexes, 'end', slidesManager, containerWidth, isRtl),
   ];
 }
 
@@ -129,14 +159,22 @@ export function getTargetIndex(
   currentShiftX: number,
   currentShiftXDelta: number,
   looped = false,
+  isRtl = false,
 ): number {
-  const shift = currentShiftX + currentShiftXDelta;
-  const direction = currentShiftXDelta < 0 ? 1 : -1;
+  // Инвертируем значения смещения для RTL режима
+  const shift = isRtl ? -(currentShiftX + currentShiftXDelta) : currentShiftX + currentShiftXDelta;
+
+  // Инвертируем направление для RTL режима
+  const direction = isRtl ? (currentShiftXDelta > 0 ? 1 : -1) : currentShiftXDelta < 0 ? 1 : -1;
 
   // Находим ближайшую границу слайда к текущему отступу
   let targetIndex = slides.reduce((val: number, item: GallerySlidesState, index: number) => {
-    const previousValue = Math.abs(slides[val].coordX + shift);
-    const currentValue = Math.abs(item.coordX + shift);
+    // Инвертируем координаты для RTL режима
+    const previousCoordX = revertRtlValue(slides[val].coordX, isRtl);
+    const currentCoordX = revertRtlValue(item.coordX, isRtl);
+
+    const previousValue = Math.abs(previousCoordX + shift);
+    const currentValue = Math.abs(currentCoordX + shift);
 
     return previousValue < currentValue ? val : index;
   }, slideIndex);
@@ -163,6 +201,7 @@ export function getTargetIndex(
 }
 
 interface CalcMin extends Partial<LayoutState> {
+  isRtl?: boolean;
   align: AlignType;
 }
 
@@ -172,28 +211,35 @@ export const calcMin = ({
   slides = [],
   viewportOffsetWidth = 0,
   align,
+  isRtl = false,
 }: CalcMin): number => {
-  switch (align) {
-    case 'left':
-      return containerWidth - layerWidth;
-    case 'right':
-      return viewportOffsetWidth - layerWidth;
-    case 'center':
+  const result = getValueByCheckedKey(align, {
+    left: () => containerWidth - layerWidth,
+    right: () => viewportOffsetWidth - layerWidth,
+    center: () => {
       const { coordX, width } = slides[slides.length - 1];
-      return containerWidth / 2 - coordX - width / 2;
-    default:
-      throw new Error(`unknown align ${align}`);
-  }
+      const adjustedCoordX = isRtl ? -coordX : coordX;
+      return containerWidth / 2 - adjustedCoordX - width / 2;
+    },
+  })();
+  return revertRtlValue(result, isRtl);
 };
 
 interface CalcMax extends Partial<LayoutState> {
+  isRtl?: boolean;
   isCenterAlign: boolean;
 }
 
-export const calcMax = ({ slides = [], containerWidth = 0, isCenterAlign }: CalcMax): number => {
+export const calcMax = ({
+  slides = [],
+  containerWidth = 0,
+  isCenterAlign,
+  isRtl = false,
+}: CalcMax): number => {
   if (isCenterAlign && slides.length) {
     const { width, coordX } = slides[0];
-    return containerWidth / 2 - coordX - width / 2;
+    const result = containerWidth / 2 - coordX - width / 2;
+    return revertRtlValue(result, isRtl);
   }
   return 0;
 };

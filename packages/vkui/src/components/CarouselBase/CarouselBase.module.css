@@ -86,11 +86,11 @@
   opacity: 0;
 }
 
-.arrowAreaStretch {
+.arrow.arrowAreaStretch {
   inset-block-start: 0;
 }
 
-.arrowAreaFit {
+.arrow.arrowAreaFit {
   inset-block-start: 50%;
   transform: translateY(-50%);
   block-size: auto;
