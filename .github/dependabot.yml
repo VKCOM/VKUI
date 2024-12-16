@@ -18,7 +18,7 @@ updates:
       # Игнорируем https://www.npmjs.com/package/eslint-plugin-react-compiler/v/0.0.0 (это самый первый релиз),
       # чтобы использовать только экспериментальные версии и версии выше.
       - dependency-name: 'eslint-plugin-react-compiler'
-        versions: ['0.0.0', '0.0.0-experimental-7670337-20240918']
+        versions: ['0.0.0', '0.0.0-experimental-*']
     groups:
       react:
         patterns:
