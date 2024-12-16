@@ -4,8 +4,8 @@ on:
     - cron: '0 5 * * 1' # Runs at 05:00, only on Monday
 
 jobs:
-  corepack-up:
-    name: Corepack up
+  tools-update:
+    name: Tools update
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -18,5 +18,9 @@ jobs:
         uses: ./.github/actions/node-setup
 
       - uses: VKCOM/gh-actions/shared/node/corepack-up-pr@main
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
+      - uses: VKCOM/gh-actions/shared/node/nvmrc-up-pr@main
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
