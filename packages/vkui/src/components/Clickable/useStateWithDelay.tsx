@@ -41,7 +41,7 @@ export function useStateWithDelay<S>(
   onStateChange: (v: S) => void = noop,
 ): [S, DispatchWithDelay<React.SetStateAction<S>>] {
   const [value, setValue] = React.useState(initialState);
-  const timeout = React.useRef<ReturnType<typeof setTimeout>>();
+  const timeout = React.useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const handleSetValue = React.useCallback(
     (nextValue: React.SetStateAction<S>) => {

@@ -10,4 +10,6 @@ export type ImageBaseExpectedIconProps = {
 
 export interface ImageBaseContextProps {
   size: ImageBaseSize | number;
+  onMouseOverHandlers: VoidFunction[];
+  onMouseOutHandlers: VoidFunction[];
 }

@@ -3,7 +3,13 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
+import {
+  CalendarDirectionContext,
+  type CalendarDirectionContextProps,
+} from '../../context/CalendarDirectionContext';
 import { useCalendar } from '../../hooks/useCalendar';
+import { useDirection } from '../../hooks/useDirection';
+import { useExternRef } from '../../hooks/useExternRef';
 import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -19,6 +25,7 @@ import {
   type CalendarHeaderTestsProps,
 } from '../CalendarHeader/CalendarHeader';
 import {
+  type CalendarDoneButtonProps,
   CalendarTime,
   type CalendarTimeProps,
   type CalendarTimeTestsProps,
@@ -32,14 +39,7 @@ export type CalendarTestsProps = CalendarDaysTestsProps &
 
 export interface CalendarProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
-    Pick<
-      CalendarTimeProps,
-      | 'changeHoursLabel'
-      | 'changeMinutesLabel'
-      | 'doneButtonText'
-      | 'doneButtonDisabled'
-      | 'doneButtonShow'
-    >,
+    Pick<CalendarTimeProps, 'changeHoursLabel' | 'changeMinutesLabel'>,
     Pick<
       CalendarHeaderProps,
       | 'prevMonthLabel'
@@ -54,6 +54,7 @@ export interface CalendarProps
       | 'nextMonthProps'
     >,
     Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'>,
+    CalendarDoneButtonProps,
     CalendarTestsProps {
   value?: Date;
   /**
@@ -77,7 +78,6 @@ export interface CalendarProps
    * Позволяет запретить выбор даты.
    */
   shouldDisableDate?: (value: Date) => boolean;
-  onDoneButtonClick?: () => void;
   /**
    * Дата отображаемого месяца.
    * При использовании обновление даты должно происходить вне компонента.
@@ -105,6 +105,7 @@ const warn = warnOnce('Calendar');
  * @see https://vkcom.github.io/VKUI/#/Calendar
  */
 export const Calendar = ({
+  getRootRef,
   value,
   onChange,
   disablePast,
@@ -115,6 +116,7 @@ export const Calendar = ({
   doneButtonText,
   doneButtonDisabled,
   doneButtonShow,
+  DoneButton,
   weekStartsOn = 1,
   disablePickers,
   changeHoursLabel = 'Изменить час',
@@ -172,6 +174,8 @@ export const Calendar = ({
     minDateTime,
     maxDateTime,
   });
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const rootRef = useExternRef(directionRef, getRootRef);
 
   useIsomorphicLayoutEffect(() => {
     if (value) {
@@ -219,69 +223,83 @@ export const Calendar = ({
     [value],
   );
 
+  const directionContextValue = React.useMemo<CalendarDirectionContextProps>(
+    () => ({
+      direction: textDirection,
+    }),
+    [textDirection],
+  );
+
   return (
-    <RootComponent {...props} baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}>
-      <CalendarHeader
-        viewDate={externalViewDate || viewDate}
-        onChange={setViewDate}
-        onNextMonth={setNextMonth}
-        onPrevMonth={setPrevMonth}
-        disablePickers={disablePickers || size === 's'}
-        className={styles.header}
-        prevMonthLabel={prevMonthLabel}
-        nextMonthLabel={nextMonthLabel}
-        changeMonthLabel={changeMonthLabel}
-        changeYearLabel={changeYearLabel}
-        prevMonthIcon={prevMonthIcon}
-        nextMonthIcon={nextMonthIcon}
-        prevMonthProps={prevMonthProps}
-        nextMonthProps={nextMonthProps}
-        isMonthDisabled={isMonthDisabled}
-        isYearDisabled={isYearDisabled}
-        nextMonthButtonTestId={nextMonthButtonTestId}
-        prevMonthButtonTestId={prevMonthButtonTestId}
-        monthDropdownTestId={monthDropdownTestId}
-        yearDropdownTestId={yearDropdownTestId}
-      />
-      <CalendarDays
-        viewDate={externalViewDate || viewDate}
-        value={value}
-        weekStartsOn={weekStartsOn}
-        isDayFocused={isDayFocused}
-        tabIndex={0}
-        aria-label={changeDayLabel}
-        onKeyDown={handleKeyDown}
-        onDayChange={onDayChange}
-        isDayActive={isDayActive}
-        isDaySelectionStart={isFirstDay}
-        isDaySelectionEnd={isLastDay}
-        isDayDisabled={isDayDisabled}
-        onBlur={resetSelectedDay}
-        showNeighboringMonth={showNeighboringMonth}
-        size={size}
-        dayProps={dayProps}
-        listenDayChangesForUpdate={listenDayChangesForUpdate}
-        renderDayContent={renderDayContent}
-        dayTestId={dayTestId}
-      />
-      {enableTime && value && size !== 's' && (
-        <div className={styles.time}>
-          <CalendarTime
-            value={value}
-            onChange={onChange}
-            onDoneButtonClick={onDoneButtonClick}
-            doneButtonText={doneButtonText}
-            doneButtonDisabled={doneButtonDisabled}
-            doneButtonShow={doneButtonShow}
-            changeHoursLabel={changeHoursLabel}
-            changeMinutesLabel={changeMinutesLabel}
-            isDayDisabled={minDateTime || maxDateTime ? isDayDisabled : undefined}
-            minutesTestId={minutesTestId}
-            hoursTestId={hoursTestId}
-            doneButtonTestId={doneButtonTestId}
-          />
-        </div>
-      )}
-    </RootComponent>
+    <CalendarDirectionContext.Provider value={directionContextValue}>
+      <RootComponent
+        {...props}
+        baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}
+        getRootRef={rootRef}
+      >
+        <CalendarHeader
+          viewDate={externalViewDate || viewDate}
+          onChange={setViewDate}
+          onNextMonth={setNextMonth}
+          onPrevMonth={setPrevMonth}
+          disablePickers={disablePickers || size === 's'}
+          className={styles.header}
+          prevMonthLabel={prevMonthLabel}
+          nextMonthLabel={nextMonthLabel}
+          changeMonthLabel={changeMonthLabel}
+          changeYearLabel={changeYearLabel}
+          prevMonthIcon={prevMonthIcon}
+          nextMonthIcon={nextMonthIcon}
+          prevMonthProps={prevMonthProps}
+          nextMonthProps={nextMonthProps}
+          isMonthDisabled={isMonthDisabled}
+          isYearDisabled={isYearDisabled}
+          nextMonthButtonTestId={nextMonthButtonTestId}
+          prevMonthButtonTestId={prevMonthButtonTestId}
+          monthDropdownTestId={monthDropdownTestId}
+          yearDropdownTestId={yearDropdownTestId}
+        />
+        <CalendarDays
+          viewDate={externalViewDate || viewDate}
+          value={value}
+          weekStartsOn={weekStartsOn}
+          isDayFocused={isDayFocused}
+          tabIndex={0}
+          aria-label={changeDayLabel}
+          onKeyDown={handleKeyDown}
+          onDayChange={onDayChange}
+          isDayActive={isDayActive}
+          isDaySelectionStart={isFirstDay}
+          isDaySelectionEnd={isLastDay}
+          isDayDisabled={isDayDisabled}
+          onBlur={resetSelectedDay}
+          showNeighboringMonth={showNeighboringMonth}
+          size={size}
+          dayProps={dayProps}
+          listenDayChangesForUpdate={listenDayChangesForUpdate}
+          renderDayContent={renderDayContent}
+          dayTestId={dayTestId}
+        />
+        {enableTime && value && size !== 's' && (
+          <div className={styles.time}>
+            <CalendarTime
+              value={value}
+              onChange={onChange}
+              onDoneButtonClick={onDoneButtonClick}
+              doneButtonText={doneButtonText}
+              doneButtonDisabled={doneButtonDisabled}
+              doneButtonShow={doneButtonShow}
+              DoneButton={DoneButton}
+              changeHoursLabel={changeHoursLabel}
+              changeMinutesLabel={changeMinutesLabel}
+              isDayDisabled={minDateTime || maxDateTime ? isDayDisabled : undefined}
+              minutesTestId={minutesTestId}
+              hoursTestId={hoursTestId}
+              doneButtonTestId={doneButtonTestId}
+            />
+          </div>
+        )}
+      </RootComponent>
+    </CalendarDirectionContext.Provider>
   );
 };

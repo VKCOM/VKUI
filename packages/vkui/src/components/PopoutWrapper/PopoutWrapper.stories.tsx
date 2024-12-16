@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { SplitCol } from '../SplitCol/SplitCol';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { PopoutWrapper, type PopoutWrapperProps } from './PopoutWrapper';
 
 const story: Meta<PopoutWrapperProps> = {
@@ -18,13 +16,7 @@ export default story;
 type Story = StoryObj<PopoutWrapperProps>;
 
 export const Playground: Story = {
-  render: (args) => (
-    <SplitLayout popout={<PopoutWrapper {...args} />}>
-      <SplitCol>
-        <div />
-      </SplitCol>
-    </SplitLayout>
-  ),
+  render: (args) => <PopoutWrapper {...args} />,
   args: {
     children: 'Some content',
   },

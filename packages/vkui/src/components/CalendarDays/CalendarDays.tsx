@@ -19,6 +19,9 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import styles from './CalendarDays.module.css';
 
 export type CalendarDaysTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для дня в календаре
+   */
   dayTestId?: CalendarDayTestsProps['testId'];
 };
 

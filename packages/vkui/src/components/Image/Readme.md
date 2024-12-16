@@ -77,6 +77,52 @@ const OthersFeatures = () => {
   );
 };
 
+const WithFloatElements = () => {
+  const [showContextMenu, setShowContextMenu] = useState(true);
+  const [contextMenuOpened, setContextMenuOpened] = useState(false);
+  const [contextMenuVisibility, setContextMenuVisibility] = useState('on-hover');
+
+  return (
+    <Group header={<Header mode="secondary">C позиционированными компонентами</Header>}>
+      <FormLayoutGroup mode="horizontal">
+        <FormItem top="Контекстное меню">
+          <Checkbox
+            checked={showContextMenu}
+            onChange={(e) => setShowContextMenu(e.target.checked)}
+          >
+            Показать контекстное меню
+          </Checkbox>
+        </FormItem>
+        <FormItem top="Контекстное меню">
+          <Select
+            options={[
+              { label: 'Всегда', value: 'always' },
+              { label: 'При наведении на картинку', value: 'on-hover' },
+            ]}
+            value={contextMenuVisibility}
+            disabled={!showContextMenu}
+            onChange={(e) => setContextMenuVisibility(e.target.value)}
+          />
+        </FormItem>
+      </FormLayoutGroup>
+      <Flex margin="auto" gap={'m'}>
+        <Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение шторм онлайн">
+          {showContextMenu && (
+            <Image.FloatElement
+              placement="top-end"
+              inlineIndent="l"
+              blockIndent="l"
+              visibility={contextMenuOpened ? 'always' : contextMenuVisibility}
+            >
+              <ContextMenu onShownChange={setContextMenuOpened} />
+            </Image.FloatElement>
+          )}
+        </Image>
+      </Flex>
+    </Group>
+  );
+};
+
 const Example = () => {
   return (
     <View activePanel="avatar">
@@ -85,6 +131,8 @@ const Example = () => {
         <Default />
         <Responsive />
         <OthersFeatures />
+
+        <WithFloatElements />
       </Panel>
     </View>
   );
@@ -200,6 +248,40 @@ const ImagePropsForm = ({ onBorderRadiusChange, onBadgeChange, onOverlayChange }
         </FormItem>
       </FormLayoutGroup>
     </React.Fragment>
+  );
+};
+
+const ContextMenu = ({ onShownChange }) => {
+  return (
+    <Popover
+      noStyling
+      trigger="click"
+      role="dialog"
+      onShownChange={onShownChange}
+      content={({ onClose }) => (
+        <div
+          style={{
+            backgroundColor: 'var(--vkui--color_background_modal_inverse)',
+            borderRadius: 8,
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+          }}
+        >
+          <CellButton role="menuitem" before={<Icon28AddOutline />} onClick={onClose}>
+            Добавить
+          </CellButton>
+          <CellButton
+            role="menuitem"
+            before={<Icon28DeleteOutline />}
+            mode="danger"
+            onClick={onClose}
+          >
+            Удалить
+          </CellButton>
+        </div>
+      )}
+    >
+      <Button mode="primary" after={<Icon16MoreHorizontal />}></Button>
+    </Popover>
   );
 };
 

@@ -14,12 +14,14 @@ const stylesSize = {
   l: 'vkuiInternalCardScroll--size-l',
 };
 
-export interface CardScrollProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
+export interface CardScrollProps
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
+    HasComponent,
+    Pick<HorizontalScrollProps, 'showArrows' | 'prevButtonTestId' | 'nextButtonTestId'> {
   /**
    * При `size=false` ширина `Card` будет регулироваться контентом внутри. В остальных случаях — будет явно задана в процентах.
    */
   size?: 's' | 'm' | 'l' | false;
-  showArrows?: HorizontalScrollProps['showArrows'];
   /**
    * Добавляет отступы по краям слева и справа
    */
@@ -35,6 +37,8 @@ export const CardScroll = ({
   showArrows = true,
   padding = false,
   Component = 'ul',
+  prevButtonTestId,
+  nextButtonTestId,
   ...restProps
 }: CardScrollProps): React.ReactNode => {
   const refContainer = React.useRef<HTMLDivElement>(null);
@@ -109,6 +113,8 @@ export const CardScroll = ({
         getScrollToLeft={getScrollToLeft}
         getScrollToRight={getScrollToRight}
         showArrows={showArrows}
+        prevButtonTestId={prevButtonTestId}
+        nextButtonTestId={nextButtonTestId}
       >
         <div className={styles.in} ref={refContainer}>
           <span className={styles.gap} ref={gapRef} />

@@ -1,14 +1,16 @@
 import { fireEvent } from '@testing-library/react';
-import { getFakeMouseEvent, getFakeTouchEvent } from '../testing/utils';
+import { mouseEventMock, touchEventMock } from '../testing/utils';
 import {
   contains,
   getActiveElementByAnotherElement,
   getBoundingClientRect,
   getDocumentBody,
   getFirstTouchEventData,
+  getNearestOverflowAncestor,
   getScrollHeight,
   getScrollRect,
   getTransformedParentCoords,
+  hasSelectionWithRangeType,
   initializeBrowserGesturePreventionEffect,
   TRANSFORM_DEFAULT_VALUES,
   WILL_CHANGE_DEFAULT_VALUES,
@@ -227,14 +229,20 @@ describe(contains, () => {
 });
 
 describe(getFirstTouchEventData, () => {
+  const createTouchEvent = (type: string, clientX: number, clientY: number) =>
+    new TouchEvent(type, touchEventMock({ clientX, clientY }));
+
+  const createMouserEvent = (type: string, clientX: number, clientY: number) =>
+    new MouseEvent(type, mouseEventMock({ clientX, clientY }));
+
   it.each([
-    { type: 'touchstart', event: getFakeTouchEvent('touchstart', 10, 10) },
-    { type: 'touchmove', event: getFakeTouchEvent('touchmove', 10, 10) },
-    { type: 'touchend', event: getFakeTouchEvent('touchend', 10, 10) },
-    { type: 'mousedown', event: getFakeMouseEvent('mousedown', 10, 10) },
-    { type: 'mousemove', event: getFakeMouseEvent('mousemove', 10, 10) },
-    { type: 'mouseup', event: getFakeMouseEvent('mouseup', 10, 10) },
-    { type: 'mouseleave', event: getFakeMouseEvent('mouseleave', 10, 10) },
+    { type: 'touchstart', event: createTouchEvent('touchstart', 10, 10) },
+    { type: 'touchmove', event: createTouchEvent('touchmove', 10, 10) },
+    { type: 'touchend', event: createTouchEvent('touchend', 10, 10) },
+    { type: 'mousedown', event: createMouserEvent('mousedown', 10, 10) },
+    { type: 'mousemove', event: createMouserEvent('mousemove', 10, 10) },
+    { type: 'mouseup', event: createMouserEvent('mouseup', 10, 10) },
+    { type: 'mouseleave', event: createMouserEvent('mouseleave', 10, 10) },
   ])('should return touch data for expected event type (#type)', ({ event }) => {
     const { clientX, clientY } = getFirstTouchEventData(event);
     expect(clientX).toBe(10);
@@ -277,5 +285,60 @@ describe(initializeBrowserGesturePreventionEffect, () => {
     fireEvent(window, touchMoveEvent);
     expect(preventDefault).toHaveBeenCalledTimes(1);
     expect(stopPropagation).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe(getNearestOverflowAncestor, () => {
+  it('should return window if it is last traversable Node', () => {
+    const rootNode = document.createElement('div');
+    const innerNode = document.createElement('div');
+    const node = document.createElement('div');
+    innerNode.appendChild(node);
+    rootNode.appendChild(innerNode);
+    document.body.appendChild(rootNode);
+    expect(getNearestOverflowAncestor(node)).toBe(window);
+  });
+
+  it('should return null if parent node is terminal node', () => {
+    const rootNode = document.createElement('div');
+    const innerNode = document.createElement('div');
+    const node = document.createElement('div');
+    innerNode.appendChild(node);
+    rootNode.appendChild(innerNode);
+    document.body.appendChild(rootNode);
+    expect(getNearestOverflowAncestor(node, innerNode)).toBeNull();
+  });
+
+  it('should return parent with overflow', () => {
+    const rootNode = document.createElement('div');
+    rootNode.style.overflowY = 'scroll';
+    const innerNode = document.createElement('div');
+    const node = document.createElement('div');
+    innerNode.appendChild(node);
+    rootNode.appendChild(innerNode);
+    document.body.appendChild(rootNode);
+    expect(getNearestOverflowAncestor(node)).toBe(rootNode);
+  });
+});
+
+describe(hasSelectionWithRangeType, () => {
+  it('should be false by default', () => {
+    expect(hasSelectionWithRangeType(null)).toBeFalsy();
+  });
+
+  it.each([
+    {
+      value: () => ({ type: 'Range' }),
+      result: true,
+    },
+    {
+      value: () => null,
+      result: false,
+    },
+  ])('should be $result', ({ value, result }) => {
+    const getSelection = window.getSelection;
+    Object.defineProperty(window, 'getSelection', { configurable: true, value });
+    expect(hasSelectionWithRangeType(null)).toBe(result);
+    Object.defineProperty(window, 'getSelection', { configurable: true, value: getSelection });
   });
 });

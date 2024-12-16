@@ -2,63 +2,86 @@
 
 import * as React from 'react';
 import { useColorScheme } from '../../hooks/useColorScheme';
-import { useIsClient } from '../../hooks/useIsClient';
 import { createPortal } from '../../lib/createPortal';
+import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
 import type { HasChildren } from '../../types';
 import { ColorSchemeProvider } from '../ColorSchemeProvider/ColorSchemeProvider';
 import { AppRootContext, type AppRootContextInterface } from './AppRootContext';
+import { AppRootStyleContainer } from './AppRootStyleContainer/AppRootStyleContainer';
 
 export interface AppRootPortalProps extends HasChildren {
   /**
-   * - При передаче `true` будет использовать `portalRoot` из контекста `AppRoot`.
+   * - При передаче `true` в качестве портала будет использован `portalRoot`
+   * из контекста `AppRoot` если он передан в `AppRoot`, иначе `document.body`.
    * - При передаче элемента будут игнорироваться `portalRoot` и `disablePortal` из контекста `AppRoot`.
+   *
+   * По умолчанию в качестве портала будет использован `document.body`
    */
-  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | null;
+  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement | null> | null;
+  className?: string;
 }
 
-export const AppRootPortal = ({ children, usePortal }: AppRootPortalProps): React.ReactNode => {
-  const { portalRoot, mode, disablePortal } = React.useContext(AppRootContext);
+export const AppRootPortal = ({
+  children,
+  usePortal,
+  className,
+}: AppRootPortalProps): React.ReactNode => {
+  const { mode, disablePortal: disableCreatePortalInGlobalPortalRoot } =
+    React.useContext(AppRootContext);
   const colorScheme = useColorScheme();
 
-  const isClient = useIsClient();
-  if (!isClient) {
-    return null;
-  }
-
-  const portalContainer = resolvePortalContainer(usePortal, portalRoot.current);
-  if (!portalContainer || shouldDisablePortal(usePortal, mode, Boolean(disablePortal))) {
-    return <React.Fragment>{children}</React.Fragment>;
-  }
-
-  return createPortal(
-    <ColorSchemeProvider value={colorScheme}>{children}</ColorSchemeProvider>,
-    portalContainer,
+  const canUsePortal = shouldUsePortal(
+    usePortal,
+    mode,
+    Boolean(disableCreatePortalInGlobalPortalRoot),
   );
+
+  const portalContainer = usePortalContainer(usePortal);
+
+  if (canUsePortal && portalContainer) {
+    return createPortal(
+      <ColorSchemeProvider value={colorScheme}>
+        <AppRootStyleContainer className={className}>{children}</AppRootStyleContainer>
+      </ColorSchemeProvider>,
+      portalContainer,
+    );
+  }
+
+  return children;
 };
 
-function shouldDisablePortal(
+function shouldUsePortal(
   usePortal: AppRootPortalProps['usePortal'],
   mode: AppRootContextInterface['mode'],
-  disablePortal: boolean,
+  disableCreatePortalInGlobalPortalRoot: boolean,
 ) {
-  if (usePortal !== undefined) {
-    if (typeof usePortal !== 'boolean') {
-      return false;
-    }
-    return disablePortal || usePortal !== true;
+  if (usePortal === undefined) {
+    return disableCreatePortalInGlobalPortalRoot === false && mode !== 'full';
   }
-  // fallback
-  return disablePortal || mode === 'full';
+
+  if (typeof usePortal !== 'boolean') {
+    return true;
+  }
+
+  return disableCreatePortalInGlobalPortalRoot === false && usePortal === true;
 }
 
-function resolvePortalContainer<PortalRootFromContext extends HTMLElement | null | undefined>(
-  usePortal: AppRootPortalProps['usePortal'],
-  portalRootFromContext: PortalRootFromContext,
-) {
-  if (usePortal === true || !usePortal) {
-    return portalRootFromContext ? portalRootFromContext : null;
+function usePortalContainer(usePortal: AppRootPortalProps['usePortal']): HTMLElement | null {
+  const { portalRoot: portalRootFromContext } = React.useContext(AppRootContext);
+
+  const { document } = useDOM();
+
+  if (usePortal && typeof usePortal !== 'boolean') {
+    return isRefObject(usePortal) ? usePortal.current : usePortal;
   }
 
-  return isRefObject(usePortal) ? usePortal.current : usePortal;
+  const resolvedPortalFromContext = isRefObject(portalRootFromContext)
+    ? portalRootFromContext.current
+    : portalRootFromContext;
+  // если portalRoot не передали через AppRoot, то мы используем body
+  // мы можем использовать body как портал,
+  // так как все стили передаются вместе с AppRootStyleContainer
+  const portalRoot = resolvedPortalFromContext || document?.body || null;
+  return portalRoot;
 }

@@ -4,10 +4,12 @@ import * as React from 'react';
 import { canUseDOM } from '@vkontakte/vkjs';
 import { rectToClientRect } from '@vkontakte/vkui-floating-ui/core';
 import {
-  getNearestOverflowAncestor as getNearestOverflowAncestorLib,
+  getParentNode,
   getWindow,
   isElement,
   isHTMLElement,
+  isLastTraversableNode,
+  isOverflowElement,
 } from '@vkontakte/vkui-floating-ui/utils/dom';
 
 export {
@@ -15,6 +17,7 @@ export {
   getNodeScroll,
   isHTMLElement,
   isElement,
+  getParentNode,
 } from '@vkontakte/vkui-floating-ui/utils/dom';
 
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
@@ -147,19 +150,32 @@ export const getRelativeBoundingClientRect = (parent: Element, child: Element) =
 };
 
 /**
- * Адаптер над getNearestOverflowAncestor из @floating-ui/utils/dom.
+ * Переписанный `getNearestOverflowAncestor` из @floating-ui/utils/dom.
  *
- * document.body подменяем на window, т.к. на document.body нельзя применить скролл.
+ * [1] добавляем ноду, на которой нужно остановить рекурсию
+ * [2] document.body подменяем на window, т.к. на document.body нельзя применить скролл.
+ *
+ * @link https://github.com/floating-ui/floating-ui/blob/%40floating-ui/dom%401.6.3/packages/utils/src/dom.ts#L143
  */
-export const getNearestOverflowAncestor = (childEl: Node): HTMLElement | Window | null => {
-  const foundAncestor = getNearestOverflowAncestorLib(childEl);
+export function getNearestOverflowAncestor(node: Node): HTMLElement | Window | null;
+export function getNearestOverflowAncestor(node: Node, terminalNode: Node): HTMLElement | null;
+export function getNearestOverflowAncestor(node: Node, terminalNode?: any): any {
+  const parentNode = getParentNode(node);
 
-  return isBody(foundAncestor)
-    ? getWindow(foundAncestor)
-    : isHTMLElement(childEl)
-      ? foundAncestor
-      : null;
-};
+  if (terminalNode === parentNode) {
+    return null; /* [1] */
+  }
+
+  if (isLastTraversableNode(parentNode)) {
+    return getWindow(parentNode); /* [2] */
+  }
+
+  if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
+    return parentNode;
+  }
+
+  return getNearestOverflowAncestor(parentNode, terminalNode);
+}
 
 export const getScrollHeight = (node: Element | Window): number => {
   return isWindow(node) ? node.document.documentElement.scrollHeight : node.scrollHeight;
@@ -311,3 +327,8 @@ export function getVisualViewport(win: Window): VisualViewport {
   result.height = win.innerHeight; // note: вызывает reflow в отличии от visualViewport
   return result;
 }
+
+export const hasSelectionWithRangeType = (node: unknown) => {
+  const selection = getWindow(node).getSelection();
+  return selection ? selection.type === 'Range' : false;
+};

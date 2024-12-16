@@ -312,6 +312,9 @@ export const waitRAF = async () => await new Promise((resolve) => requestAnimati
 
 // Решение отсюда https://stackoverflow.com/a/62282721/2903061
 export const requestAnimationFrameMock = {
+  _originRequestAnimationFrame: window.requestAnimationFrame,
+  _originCancelAnimationFrame: window.cancelAnimationFrame,
+
   handleCounter: 0,
   queue: new Map(),
   requestAnimationFrame(callback: FrameRequestCallback) {
@@ -343,6 +346,12 @@ export const requestAnimationFrameMock = {
     this.handleCounter = 0;
     window.requestAnimationFrame = this.requestAnimationFrame.bind(this);
     window.cancelAnimationFrame = this.cancelAnimationFrame.bind(this);
+  },
+  destroy() {
+    this.queue.clear();
+    this.handleCounter = 0;
+    window.requestAnimationFrame = this._originRequestAnimationFrame;
+    window.cancelAnimationFrame = this._originCancelAnimationFrame;
   },
 };
 
@@ -425,51 +434,49 @@ export const matchMediaMock = (queries?: string | string[]) => {
   });
 };
 
-export function getFakeTouchEvent(
-  type: string,
-  clientX: number,
-  clientY: number,
-  rest?: Partial<Omit<Touch, 'clientX' | 'clientY'>>,
-) {
-  const touch = {
+export function touchEventMock({ target = new EventTarget(), ...dataRaw }: Partial<Touch>) {
+  const touch: Touch = {
     identifier: 0,
-    screenX: 0,
-    screenY: 0,
+    clientX: 0,
+    clientY: 0,
     pageX: 0,
     pageY: 0,
+    screenY: 0,
+    screenX: 0,
     radiusX: 0,
     radiusY: 0,
     force: 0,
     rotationAngle: 0,
-    target: new EventTarget(),
-    ...rest,
-    clientX,
-    clientY,
+    target,
+    ...dataRaw,
   };
-  return new TouchEvent(type, {
+  return {
+    ...touch,
     changedTouches: [touch],
     touches: [touch],
     bubbles: true,
     cancelable: true,
-  });
+
+    // для fireEvent
+    target,
+  };
 }
 
-export function getFakeMouseEvent(
-  type: string,
-  clientX: number,
-  clientY: number,
-  rest?: Partial<Omit<MouseEvent, 'clientX' | 'clientY'>>,
-) {
-  return new MouseEvent(type, {
-    movementX: 0,
-    movementY: 0,
+export function mouseEventMock({
+  target = new EventTarget(),
+  ...dataRaw
+}: Partial<MouseEventInit & { target: any }>): MouseEventInit & { target: any } {
+  return {
     screenX: 0,
     screenY: 0,
-    relatedTarget: new EventTarget(),
-    ...rest,
-    clientX,
-    clientY,
-    bubbles: true,
-    cancelable: true,
-  });
+    movementX: 0,
+    movementY: 0,
+    clientX: 0,
+    clientY: 0,
+    relatedTarget: null,
+    ...dataRaw,
+
+    // для fireEvent
+    target,
+  };
 }

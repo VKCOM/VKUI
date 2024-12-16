@@ -33,6 +33,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   // UseFloating
   placement: placementProp = 'bottom',
+  strategy: strategyProp = 'fixed',
   middlewares,
   hoverDelay = 0,
   closeAfterClick = false,
@@ -73,7 +74,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const blockMouseEnterRef = React.useRef(false);
   const blockFocusRef = React.useRef(false);
-  const blurTimeoutRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const blurTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const handleCloseOnReferenceClickOutsideDisabled =
     disabled || disableCloseOnClickOutside || willBeHide || !shownLocalState.shown;
@@ -84,7 +85,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   // Библиотека `floating-ui`
   const { placement, x, y, strategy, refs, middlewareData } = useFloating<T>({
-    strategy: 'fixed',
+    strategy: strategyProp,
     placement: placementProp,
     middleware: middlewares,
     whileElementsMounted,
@@ -322,6 +323,10 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const referencePropsRef = React.useRef<ReferenceProps>({});
   const floatingPropsRef = React.useRef<FloatingProps>({ style: {} });
+
+  useIsomorphicLayoutEffect(() => {
+    referencePropsRef.current = {};
+  }, [triggerOnHover, triggerOnFocus, triggerOnClick]);
 
   if (shownFinalState) {
     floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties(

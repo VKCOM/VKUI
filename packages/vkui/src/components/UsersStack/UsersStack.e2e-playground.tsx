@@ -30,6 +30,21 @@ export const UsersStackPlayground = (props: ComponentPlaygroundProps) => {
           avatarsPosition: ['inline-start', 'block-start', 'inline-end'],
           photos: [[base64Image, base64Image, base64Image]],
         },
+        {
+          dir: ['rtl'],
+          children: ['Понравилось Анне и ещё XX людям'],
+          size: ['s', 'm', 'l'],
+          photos: [
+            [base64Image, base64Image, base64Image],
+            [base64Image, base64Image, base64Image, base64Image],
+          ],
+        },
+        {
+          children: [undefined],
+          size: ['m', 'l'],
+          photos: [[base64Image, base64Image, base64Image]],
+          count: [99],
+        },
       ]}
     >
       {(props: UsersStackProps) => <UsersStack {...props} />}

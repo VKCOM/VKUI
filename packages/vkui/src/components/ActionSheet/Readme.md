@@ -3,7 +3,7 @@ ActionSheet – имитация [нативного компонента](https
 коллекцию `ActionSheetItem`.
 На больших экранах прокрутка не отключается.
 
-Передаётся в качестве значения свойства `popout` компонента [`SplitLayout`](#/SplitLayout).
+Начиная с VKUI v7 этот компонент можно объявить в любом месте приложения в пределах [`AppRoot`](#/AppRoot). Больше нет необходимости явно передавать его в свойство `popout` компоненту [`SplitLayout`](#/SplitLayout).
 
 > **Важно**
 >
@@ -191,57 +191,54 @@ const openBaseTop = () =>
 
 React.useEffect(openBase, []);
 
-<SplitLayout popout={popout}>
-  <SplitCol>
-    <View activePanel="panel">
-      <Panel id="panel">
-        <PanelHeader>ActionSheet</PanelHeader>
-        <Group>
-          <CellButton
-            getRootRef={baseTargetRef}
-            onClick={openBase}
-            aria-expanded={'base' === openedPopoutName}
-          >
-            Базовый список
-          </CellButton>
-          <CellButton
-            getRootRef={iconsTargetRef}
-            onClick={openIcons}
-            aria-expanded={'icons' === openedPopoutName}
-          >
-            Список с иконками
-          </CellButton>
-          <CellButton
-            getRootRef={subtitleTargetRef}
-            onClick={openSubtitle}
-            aria-expanded={'subtitle' === openedPopoutName}
-          >
-            С подзаголовком
-          </CellButton>
-          <CellButton
-            getRootRef={selectableTargetRef}
-            onClick={openSelectable}
-            aria-expanded={'selectable' === openedPopoutName}
-          >
-            Выделяемые
-          </CellButton>
-          <CellButton
-            getRootRef={titleTargetRef}
-            onClick={openTitle}
-            aria-expanded={'title' === openedPopoutName}
-          >
-            C заголовком
-          </CellButton>
-          <CellButton
-            getRootRef={baseTopTargetRef}
-            onClick={openBaseTop}
-            aria-expanded={'baseTop' === openedPopoutName}
-          >
-            Базовый список, открывается наверх на десктопах
-          </CellButton>
-        </Group>
-      </Panel>
-    </View>
-  </SplitCol>
-</SplitLayout>;
+<View activePanel="panel">
+  <Panel id="panel">
+    {popout}
+    <PanelHeader>ActionSheet</PanelHeader>
+    <Group>
+      <CellButton
+        getRootRef={baseTargetRef}
+        onClick={openBase}
+        aria-expanded={'base' === openedPopoutName}
+      >
+        Базовый список
+      </CellButton>
+      <CellButton
+        getRootRef={iconsTargetRef}
+        onClick={openIcons}
+        aria-expanded={'icons' === openedPopoutName}
+      >
+        Список с иконками
+      </CellButton>
+      <CellButton
+        getRootRef={subtitleTargetRef}
+        onClick={openSubtitle}
+        aria-expanded={'subtitle' === openedPopoutName}
+      >
+        С подзаголовком
+      </CellButton>
+      <CellButton
+        getRootRef={selectableTargetRef}
+        onClick={openSelectable}
+        aria-expanded={'selectable' === openedPopoutName}
+      >
+        Выделяемые
+      </CellButton>
+      <CellButton
+        getRootRef={titleTargetRef}
+        onClick={openTitle}
+        aria-expanded={'title' === openedPopoutName}
+      >
+        C заголовком
+      </CellButton>
+      <CellButton
+        getRootRef={baseTopTargetRef}
+        onClick={openBaseTop}
+        aria-expanded={'baseTop' === openedPopoutName}
+      >
+        Базовый список, открывается наверх на десктопах
+      </CellButton>
+    </Group>
+  </Panel>
+</View>;
 ```

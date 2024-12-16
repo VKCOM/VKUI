@@ -7,7 +7,12 @@ import {
   Icon56NewsfeedOutline,
 } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import {
+  AppDefaultWrapper,
+  type AppDefaultWrapperProps,
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+} from '@vkui-e2e/playground-helpers';
 import { Platform } from '../../lib/platform';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
@@ -59,8 +64,14 @@ const EpicTabbar = () => {
   );
 };
 
+const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
+  <AppDefaultWrapper disableDecorations {...restProps}>
+    {children}
+  </AppDefaultWrapper>
+);
+
 export const EpicPlayground = (props: ComponentPlaygroundProps) => (
-  <ComponentPlayground {...props}>
+  <ComponentPlayground AppWrapper={AppWrapper} {...props}>
     {() => (
       <Epic
         activeStory="feed"

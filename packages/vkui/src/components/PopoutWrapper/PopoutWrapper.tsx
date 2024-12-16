@@ -41,6 +41,10 @@ export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivEle
    * Спрячет компонент через fade-out анимацию.
    */
   closing?: boolean;
+  /**
+   * Позволяет задать z-index через токен или числом
+   */
+  zIndex?: number | string;
 }
 
 /**
@@ -54,6 +58,7 @@ export const PopoutWrapper = ({
   fixed = true,
   children,
   onClick,
+  zIndex = 'var(--vkui--z_index_popout)',
   ...restProps
 }: PopoutWrapperProps): React.ReactNode => {
   return (
@@ -67,6 +72,7 @@ export const PopoutWrapper = ({
         fixed && styles.fixed,
         !noBackground && styles.masked,
       )}
+      baseStyle={{ zIndex }}
     >
       <div className={styles.container}>
         <div className={styles.overlay} onClick={onClick} />

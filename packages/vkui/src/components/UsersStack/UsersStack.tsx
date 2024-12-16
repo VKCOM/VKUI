@@ -1,5 +1,9 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useDirection } from '../../hooks/useDirection';
+import { useExternRef } from '../../hooks/useExternRef';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
@@ -71,6 +75,13 @@ function PathElement({ photoSize, direction, ...props }: PathElementProps) {
 
     case 'right':
       switch (photoSize) {
+        case 16:
+          return (
+            <path
+              d="M14,13.285A8 8 0 0 1 8 16A8 8 0 0 1 8 0A8 8 0 0 1 14 2.715A8 8 0 0 0 14,13.285"
+              {...props}
+            />
+          );
         case 24:
           return (
             <path
@@ -132,15 +143,19 @@ export const UsersStack = ({
   size = 'm',
   children,
   avatarsPosition = 'inline-start',
+  getRootRef,
   ...restProps
 }: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const rootRef = useExternRef(getRootRef, directionRef);
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';
   const CounterTypography = size === 'l' ? Footnote : Caption;
 
   const photoSize = photoSizes[size];
-  const directionClip = canShowOthers ? 'right' : 'left';
+  const directionClip =
+    textDirection === 'ltr' ? (canShowOthers ? 'right' : 'left') : canShowOthers ? 'left' : 'right';
 
   const photosElements = photos.slice(0, visibleCount).map((photo, i) => {
     const direction = i === 0 && !canShowOthers ? 'circle' : directionClip;
@@ -153,7 +168,12 @@ export const UsersStack = ({
     const photoSrc = isPhotoType ? photo.src : photo;
 
     let photoElement = (
-      <svg xmlns="http://www.w3.org/2000/svg" className={styles.photo} aria-hidden display="block">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className={classNames(styles.photo, styles.item)}
+        aria-hidden
+        display="block"
+      >
         <defs>
           <PathElement id={id} direction={direction} photoSize={photoSize} />
         </defs>
@@ -183,7 +203,7 @@ export const UsersStack = ({
 
   const othersElement = canShowOthers ? (
     <div className={styles.photoWrapper}>
-      <CounterTypography caps weight="1" className={classNames(styles.photo, styles.photoOthers)}>
+      <CounterTypography caps weight="1" className={classNames(styles.item, styles.counter)}>
         +{count}
       </CounterTypography>
     </div>
@@ -192,6 +212,7 @@ export const UsersStack = ({
   return (
     <RootComponent
       {...restProps}
+      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         stylesSize[size],

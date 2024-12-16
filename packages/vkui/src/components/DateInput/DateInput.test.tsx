@@ -189,4 +189,76 @@ describe('DateInput', () => {
 
     expect(container.contains(document.activeElement)).toBeFalsy();
   });
+
+  it('should call onApply when clicking Done button', async () => {
+    jest.useFakeTimers();
+    const onApply = jest.fn();
+    const onChange = jest.fn();
+    const onCalendarOpenChanged = jest.fn();
+    render(
+      <DateInput
+        value={date}
+        onChange={onChange}
+        onApply={onApply}
+        enableTime={true}
+        onCalendarOpenChanged={onCalendarOpenChanged}
+        {...testIds}
+        calendarTestsProps={{
+          dayTestId,
+          doneButtonTestId: 'done-button',
+        }}
+      />,
+    );
+
+    const [dates] = getInputsLike();
+    fireEvent.click(dates);
+
+    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
+
+    const doneButton = screen.getByTestId('done-button');
+    fireEvent.click(doneButton);
+
+    expect(onApply).toHaveBeenCalledWith(date);
+    expect(onChange).toHaveBeenCalledWith(date);
+  });
+
+  it('should not call onChange when selecting date in calendar with enableTime', async () => {
+    jest.useFakeTimers();
+    const onChange = jest.fn();
+    render(
+      <DateInput
+        value={date}
+        onChange={onChange}
+        enableTime={true}
+        changeMonthLabel=""
+        changeYearLabel=""
+        changeDayLabel=""
+        changeHoursLabel=""
+        changeMinutesLabel=""
+        {...testIds}
+        calendarTestsProps={{
+          dayTestId,
+        }}
+      />,
+    );
+
+    const [dates] = getInputsLike();
+    await userEvent.click(dates);
+
+    const resultDate = subDays(date, 1);
+    fireEvent.click(screen.getByTestId(dayTestId(resultDate)));
+
+    const inputLikes = getInputsLike();
+    const normalizedDate = convertInputsToNumbers(inputLikes);
+
+    expect(normalizedDate).toEqual([
+      resultDate.getDate(),
+      resultDate.getMonth() + 1,
+      resultDate.getFullYear(),
+      resultDate.getHours(),
+      resultDate.getMinutes(),
+    ]);
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
 });
