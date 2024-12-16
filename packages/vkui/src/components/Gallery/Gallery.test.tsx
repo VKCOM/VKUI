@@ -4,6 +4,7 @@ import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { ANIMATION_DURATION } from '../CarouselBase/constants';
+import { revertRtlValue } from '../CarouselBase/helpers';
 import { type BaseGalleryProps } from '../CarouselBase/types';
 import { Gallery } from './Gallery';
 
@@ -84,6 +85,7 @@ const setup = ({
   onDragStart,
   onDragEnd,
   numberOfSlides = 5,
+  isRtl = false,
 }: {
   defaultSlideIndex: number;
   looped: boolean;
@@ -99,6 +101,7 @@ const setup = ({
   onPrev?: VoidFunction;
   onDragStart?: VoidFunction;
   onDragEnd?: VoidFunction;
+  isRtl?: boolean;
 }) => {
   mockRAF();
   let slideDataByIndexMap: Record<number, any> = {};
@@ -138,7 +141,9 @@ const setup = ({
       return;
     }
     jest.spyOn(element.parentElement!, 'offsetWidth', 'get').mockReturnValue(slideWidth);
-    jest.spyOn(element.parentElement!, 'offsetLeft', 'get').mockReturnValue(slideWidth * index);
+    jest
+      .spyOn(element.parentElement!, 'offsetLeft', 'get')
+      .mockReturnValue(revertRtlValue(slideWidth * index, isRtl));
 
     let transform = '';
     jest
@@ -172,6 +177,7 @@ const setup = ({
       bulletTestId={(index, active) => (active ? `bullet-${index}-active` : `bullet-${index}`)}
       prevArrowTestId="prev-arrow"
       nextArrowTestId="next-arrow"
+      dir={isRtl ? 'rtl' : 'ltr'}
     >
       {Array.from({ length: numberOfSlides }).map((_v, index) => (
         <Slide key={index} getRef={(e: HTMLDivElement) => mockSlideData(e, index)}>
@@ -737,5 +743,143 @@ describe('Gallery', () => {
 
     expect(onDragStart).not.toHaveBeenCalled();
     expect(onDragEnd).not.toHaveBeenCalled();
+  });
+
+  describe('check correct working with rtl direction', () => {
+    const originalGetComputedStyle = window.getComputedStyle;
+
+    let getComputedStyleMock: ReturnType<typeof jest.spyOn> | null = null;
+    beforeEach(() => {
+      /**
+       * Мокаем получение direction
+       */
+      getComputedStyleMock = jest.spyOn(window, 'getComputedStyle').mockImplementation((e) => {
+        return {
+          ...originalGetComputedStyle(e),
+          direction: 'rtl',
+        };
+      });
+    });
+    afterEach(() => {
+      getComputedStyleMock.mockRestore();
+    });
+
+    it('check max and min restrictions', () => {
+      const onChange = jest.fn();
+      const onDragStart = jest.fn();
+      const onDragEnd = jest.fn();
+
+      const mockedData = setup({
+        looped: false,
+        isRtl: true,
+        defaultSlideIndex: 4,
+        slideWidth: 180,
+        containerWidth: 200,
+        viewPortWidth: 180,
+        onDragStart,
+        onDragEnd,
+        onChange,
+      });
+      const { rerender } = mockedData;
+
+      checkActiveSlide(4);
+
+      simulateDrag(mockedData.viewPort, [0, 200]);
+
+      expect(onDragStart).toHaveBeenCalledTimes(1);
+      expect(onDragEnd).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledTimes(0);
+
+      rerender({ slideIndex: 0 });
+
+      simulateDrag(mockedData.viewPort, [200, 0]);
+      expect(onDragStart).toHaveBeenCalledTimes(2);
+      expect(onDragEnd).toHaveBeenCalledTimes(2);
+      expect(onChange).toHaveBeenCalledTimes(0);
+    });
+
+    it('check correct navigation by arrows clicks in RTL', () => {
+      const onNext = jest.fn();
+      const onPrev = jest.fn();
+      const onChange = jest.fn();
+
+      const mockedData = setup({
+        looped: true,
+        isRtl: true,
+        defaultSlideIndex: 1,
+        slideWidth: 200,
+        containerWidth: 200,
+        viewPortWidth: 200,
+        onPrev,
+        onNext,
+        onChange,
+      });
+      const { rerender } = mockedData;
+
+      checkActiveSlide(1);
+
+      const [prevArrow, nextArrow] = getArrows();
+      fireEvent.click(nextArrow);
+
+      expect(onNext).toHaveBeenCalledTimes(1);
+      expect(onChange.mock.calls).toEqual([[2]]);
+
+      rerender({ slideIndex: 2 });
+      checkActiveSlide(2);
+      checkTransformX(mockedData.layerTransform, 400);
+
+      fireEvent.click(prevArrow);
+
+      expect(onPrev).toHaveBeenCalledTimes(1);
+      expect(onChange.mock.calls).toEqual([[2], [1]]);
+
+      rerender({ slideIndex: 1 });
+      checkActiveSlide(1);
+      checkTransformX(mockedData.layerTransform, 200);
+    });
+
+    it('check correct navigation by dragging', () => {
+      const onChange = jest.fn();
+      const onDragStart = jest.fn();
+      const onDragEnd = jest.fn();
+
+      const mockedData = setup({
+        looped: true,
+        isRtl: true,
+        defaultSlideIndex: 0,
+        slideWidth: 180,
+        containerWidth: 200,
+        viewPortWidth: 180,
+        align: 'center',
+        onDragStart,
+        onDragEnd,
+        onChange,
+      });
+      const { rerender } = mockedData;
+
+      checkActiveSlide(0);
+
+      simulateDrag(mockedData.viewPort, [150, 0]);
+
+      expect(onDragStart).toHaveBeenCalledTimes(1);
+      expect(onDragEnd).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledWith(4);
+      rerender({ slideIndex: 4 });
+
+      checkTransformX(mockedData.layerTransform, 710);
+      checkTransformX(mockedData.getSlideMockData(0).transform, -900);
+      checkActiveSlide(4);
+
+      simulateDrag(mockedData.viewPort, [0, 150]);
+
+      expect(onDragStart).toHaveBeenCalledTimes(2);
+      expect(onDragEnd).toHaveBeenCalledTimes(2);
+      expect(onChange.mock.calls).toEqual([[4], [0]]);
+      rerender({ slideIndex: 0 });
+
+      checkTransformX(mockedData.layerTransform, 890);
+      checkTransformX(mockedData.getSlideMockData(0).transform, -900);
+      checkActiveSlide(0);
+    });
   });
 });

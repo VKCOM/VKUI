@@ -16,18 +16,13 @@ const validateIndent = (slidesManager: SlidesManagerState, value: number, isRtl:
   const localMax = slidesManager.max ?? 0;
   const localMin = slidesManager.min ?? 0;
 
-  if (isRtl) {
-    if (value > localMin) {
-      return localMin;
-    } else if (value < localMax) {
-      return localMax;
-    }
-  } else {
-    if (value < localMin) {
-      return localMin;
-    } else if (value > localMax) {
-      return localMax;
-    }
+  const moreThanMax = (isRtl && value < localMax) || (!isRtl && value > localMax);
+  const lessThanMin = (isRtl && value > localMin) || (!isRtl && value < localMin);
+
+  if (moreThanMax) {
+    return localMax;
+  } else if (lessThanMin) {
+    return localMin;
   }
 
   return value;
