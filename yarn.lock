@@ -2091,7 +2091,7 @@ __metadata:
     "@storybook/addon-essentials": "npm:8.4.7"
     "@storybook/addon-interactions": "npm:8.4.7"
     "@storybook/addon-links": "npm:8.4.7"
-    "@storybook/addon-webpack5-compiler-swc": "npm:1.0.5"
+    "@storybook/addon-webpack5-compiler-swc": "patch:@storybook/addon-webpack5-compiler-swc@npm%3A1.0.5#~/.yarn/patches/@storybook-addon-webpack5-compiler-swc-npm-1.0.5-dbab81c473.patch"
     "@storybook/blocks": "npm:8.4.7"
     "@storybook/components": "npm:8.4.7"
     "@storybook/core-events": "npm:^8.4.7"
@@ -2677,6 +2677,16 @@ __metadata:
     "@swc/core": "npm:^1.7.3"
     swc-loader: "npm:^0.2.3"
   checksum: 10/9856a700a5d9a36e1c35b404ec90331ed19617f73f63256752959ee4e2904142c5b0d883b436b5b70e1ec2e04038b461d5cf1d616243fa8cfedd0b5d69b73caf
+  languageName: node
+  linkType: hard
+
+"@storybook/addon-webpack5-compiler-swc@patch:@storybook/addon-webpack5-compiler-swc@npm%3A1.0.5#~/.yarn/patches/@storybook-addon-webpack5-compiler-swc-npm-1.0.5-dbab81c473.patch":
+  version: 1.0.5
+  resolution: "@storybook/addon-webpack5-compiler-swc@patch:@storybook/addon-webpack5-compiler-swc@npm%3A1.0.5#~/.yarn/patches/@storybook-addon-webpack5-compiler-swc-npm-1.0.5-dbab81c473.patch::version=1.0.5&hash=471c87"
+  dependencies:
+    "@swc/core": "npm:^1.7.3"
+    swc-loader: "npm:^0.2.3"
+  checksum: 10/cc06d6e75f6466cf4d6f0c278da2db5ba3990d677f4d9e22ee14e40bff5b53668a263c9a44320150efd84e14de19f6e91c8ad0a4baf9003377059540dbcdef0d
   languageName: node
   linkType: hard
 
