@@ -11,9 +11,12 @@ export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 
    */
   mode?: 'stretch' | 'none';
   /**
-   * Например 16 / 9, 4 / 3, 1920 / 1080
+   * Например:
+   * - в виде числа: 16 / 9, 4 / 3, 1920 / 1080,
+   * - в виде css переменной: `var(--css-aspect-ratio-var)`
+   * - в виде сложного выражения: `calc(<какие-то вычисления>)`
    */
-  ratio: number;
+  ratio: number | string;
 }
 
 /**
@@ -29,7 +32,7 @@ export function AspectRatio({
   ...props
 }: AspectRatioProps): React.JSX.Element {
   const style: React.CSSProperties & CSSCustomProperties = {
-    '--vkui_internal--aspect_ratio': String(ratio),
+    '--vkui_internal--aspect_ratio': typeof ratio === 'number' ? String(ratio) : ratio,
   };
 
   return (
