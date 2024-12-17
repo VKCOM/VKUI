@@ -2,6 +2,9 @@
   position: relative;
   cursor: pointer;
   block-size: var(--vkui_internal--slider_thumb_size);
+
+  --vkui_internal--Slider_start_value: 0;
+  --vkui_internal--Slider_end_value: 0;
 }
 
 .disabled {
@@ -24,8 +27,14 @@
 }
 
 .trackFill {
-  inline-size: auto;
   background: var(--vkui--color_background_accent);
+  inline-size: calc(var(--vkui_internal--Slider_start_value) * 1%);
+}
+
+.multiple .trackFill {
+  inline-size: auto;
+  inset-inline-start: calc(var(--vkui_internal--Slider_start_value) * 1%);
+  inset-inline-end: calc((100 - var(--vkui_internal--Slider_end_value)) * 1%);
 }
 
 .thumbs {
@@ -38,6 +47,18 @@
 .thumb {
   inset-block-start: 50%;
   transform: translate(-50%, -50%);
+}
+
+.rtl .thumb {
+  transform: translate(50%, -50%);
+}
+
+.thumbStart {
+  inset-inline-start: calc(var(--vkui_internal--Slider_start_value) * 1%);
+}
+
+.thumbEnd {
+  inset-inline-start: calc(var(--vkui_internal--Slider_end_value) * 1%);
 }
 
 .sizeL {
