@@ -9,7 +9,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import {
   SegmentedControlOption,
@@ -85,8 +85,10 @@ export const SegmentedControl = ({
     }
   }, [actualIndex]);
 
-  const translateDirection = isRtl ? -1 : 1;
-  const translateX = `translateX(${100 * actualIndex * translateDirection}%)`;
+  const sliderStyle: CSSCustomProperties = {
+    '--vkui_internal--SegmentedControl_actual_index': String(actualIndex),
+    '--vkui_internal--SegmentedControl_options': String(options.length),
+  };
 
   return (
     <RootComponent
@@ -96,19 +98,11 @@ export const SegmentedControl = ({
         styles.host,
         sizeY !== 'compact' && sizeYClassNames[sizeY],
         size === 'l' && styles.sizeL,
+        isRtl && styles.rtl,
       )}
     >
       <div role={role} ref={tabsRef} className={styles.in}>
-        {actualIndex > -1 && (
-          <div
-            aria-hidden
-            className={styles.slider}
-            style={{
-              width: `${100 / options.length}%`,
-              transform: translateX,
-            }}
-          />
-        )}
+        {actualIndex > -1 && <div aria-hidden className={styles.slider} style={sliderStyle} />}
         {options.map(({ label, before, ...optionProps }) => {
           const selected = value === optionProps.value;
           const onSelect = () => onChange(optionProps.value);
