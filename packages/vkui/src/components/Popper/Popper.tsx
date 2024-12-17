@@ -113,6 +113,8 @@ export const Popper = ({
   children,
   usePortal = true,
   onPlacementChange,
+  zIndex,
+  style,
   ...restProps
 }: PopperProps): React.ReactNode => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
@@ -162,6 +164,10 @@ export const Popper = ({
   const dropdown = (
     <RootComponent
       {...restProps}
+      style={{
+        ...style,
+        zIndex,
+      }}
       baseClassName={styles.host}
       getRootRef={handleRootRef}
       baseStyle={convertFloatingDataToReactCSSProperties(
