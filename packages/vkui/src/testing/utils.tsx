@@ -480,3 +480,9 @@ export function mouseEventMock({
     target,
   };
 }
+
+export function setNodeEnv(value: 'development' | 'production' | 'test') {
+  Object.defineProperty(process.env, 'NODE_ENV', {
+    value,
+  });
+}

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { ModalContext } from '../../context/ModalContext';
 import type { SizeTypeValues } from '../../lib/adaptivity';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, setNodeEnv } from '../../testing/utils';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import {
   AppRootContext,
@@ -130,20 +130,22 @@ describe('Group', () => {
     }
   });
 
-  it('check DEV errors', () => {
-    process.env.NODE_ENV = 'development';
-    const error = jest.spyOn(console, 'warn').mockImplementation(noop);
-    render(
-      <Group role="tabpanel">
-        <div />
-      </Group>,
-    );
+  describe('DEV errors', () => {
+    beforeEach(() => setNodeEnv('development'));
+    afterEach(() => setNodeEnv('test'));
 
-    expect(error).toHaveBeenCalledWith(
-      '%c[VKUI/Group] При использовании роли "tabpanel" необходимо задать значение свойств "aria-controls" и "id"',
-      undefined,
-    );
+    it('check DEV errors', () => {
+      const error = jest.spyOn(console, 'warn').mockImplementation(noop);
+      render(
+        <Group role="tabpanel">
+          <div />
+        </Group>,
+      );
 
-    process.env.NODE_ENV = 'test';
+      expect(error).toHaveBeenCalledWith(
+        '%c[VKUI/Group] При использовании роли "tabpanel" необходимо задать значение свойств "aria-controls" и "id"',
+        undefined,
+      );
+    });
   });
 });

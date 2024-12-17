@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { format } from 'date-fns';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, setNodeEnv, userEvent } from '../../testing/utils';
 import { Calendar } from './Calendar';
 
 const targetDate = new Date('2023-09-20T07:40:00.000Z');
@@ -13,9 +13,6 @@ const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
 
 describe('Calendar', () => {
   baselineComponent(Calendar);
-
-  beforeEach(() => (process.env.NODE_ENV = 'development'));
-  afterEach(() => (process.env.NODE_ENV = 'test'));
 
   it('fires onChange', () => {
     const onChange = jest.fn();
@@ -103,30 +100,31 @@ describe('Calendar', () => {
     expect(screen.getByTestId(monthDropdownTestId(8))).toBeInTheDocument();
   });
 
-  it('check calls Calendar DEV errors', () => {
-    const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
+  describe('DEV errors', () => {
+    beforeEach(() => setNodeEnv('development'));
+    afterEach(() => setNodeEnv('test'));
 
-    process.env.NODE_ENV = 'development';
+    it('check calls Calendar', () => {
+      const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
 
-    const { rerender } = render(<Calendar value={lastDayDate} disablePickers={false} size="s" />);
+      const { rerender } = render(<Calendar value={lastDayDate} disablePickers={false} size="s" />);
 
-    expect(consoleErrorMock).toHaveBeenCalledTimes(1);
-    expect(consoleErrorMock).toHaveBeenCalledWith(
-      "%c[VKUI/Calendar] Нельзя включить селекты выбора месяца/года, если размер календаря 's'",
-      undefined,
-    );
-
-    rerender(<Calendar value={lastDayDate} enableTime size="s" />);
-
-    expect(consoleErrorMock).toHaveBeenCalledTimes(2);
-    expect(consoleErrorMock.mock.calls).toEqual([
-      [
+      expect(consoleErrorMock).toHaveBeenCalledTimes(1);
+      expect(consoleErrorMock).toHaveBeenCalledWith(
         "%c[VKUI/Calendar] Нельзя включить селекты выбора месяца/года, если размер календаря 's'",
         undefined,
-      ],
-      ["%c[VKUI/Calendar] Нельзя включить выбор времени, если размер календаря 's'", undefined],
-    ]);
+      );
 
-    process.env.NODE_ENV = 'test';
+      rerender(<Calendar value={lastDayDate} enableTime size="s" />);
+
+      expect(consoleErrorMock).toHaveBeenCalledTimes(2);
+      expect(consoleErrorMock.mock.calls).toEqual([
+        [
+          "%c[VKUI/Calendar] Нельзя включить селекты выбора месяца/года, если размер календаря 's'",
+          undefined,
+        ],
+        ["%c[VKUI/Calendar] Нельзя включить выбор времени, если размер календаря 's'", undefined],
+      ]);
+    });
   });
 });
