@@ -3,7 +3,9 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useDirection } from '../../hooks/useDirection';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useExternRef } from '../../hooks/useExternRef';
 import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -57,9 +59,13 @@ export const SegmentedControl = ({
   onChange: onChangeProp,
   value: valueProp,
   role = 'radiogroup',
+  getRootRef,
   ...restProps
 }: SegmentedControlProps): React.ReactNode => {
   const id = React.useId();
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const rootRef = useExternRef(getRootRef, directionRef);
+  const isRtl = textDirection === 'rtl';
 
   const [value, onChange] = useCustomEnsuredControl({
     onChange: onChangeProp,
@@ -79,11 +85,13 @@ export const SegmentedControl = ({
     }
   }, [actualIndex]);
 
-  const translateX = `translateX(${100 * actualIndex}%)`;
+  const translateDirection = isRtl ? -1 : 1;
+  const translateX = `translateX(${100 * actualIndex * translateDirection}%)`;
 
   return (
     <RootComponent
       {...restProps}
+      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         sizeY !== 'compact' && sizeYClassNames[sizeY],
