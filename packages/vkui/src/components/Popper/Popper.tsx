@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
 import {
   autoUpdateFloatingElement,
@@ -161,13 +162,17 @@ export const Popper = ({
     refs.setReference('current' in targetRef ? targetRef.current : targetRef);
   }, [refs.setReference, targetRef]);
 
+  const dropdownStyle =
+    typeof zIndex !== 'undefined'
+      ? {
+          zIndex,
+        }
+      : undefined;
+
   const dropdown = (
     <RootComponent
       {...restProps}
-      style={{
-        ...style,
-        zIndex,
-      }}
+      style={mergeStyle(dropdownStyle, style)}
       baseClassName={styles.host}
       getRootRef={handleRootRef}
       baseStyle={convertFloatingDataToReactCSSProperties(
