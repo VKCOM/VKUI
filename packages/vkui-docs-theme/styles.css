@@ -1,0 +1,7 @@
+/* vkui-tokens */
+@import '@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css'
+  (prefers-color-scheme: light);
+@import '@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariables.css'
+  (prefers-color-scheme: dark);
+@import '@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css';
+@import '@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css';

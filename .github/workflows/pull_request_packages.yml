@@ -26,6 +26,7 @@ jobs:
       package_vkui: ${{ steps.changes.outputs.package_vkui }}
       docs_styleguide: ${{ steps.changes.outputs.docs_styleguide }}
       docs_storybook: ${{ steps.changes.outputs.docs_storybook }}
+      docs_beta: ${{ steps.changes.outputs.docs_beta }}
       dependencies: ${{ steps.changes.outputs.dependencies }}
     steps:
       - name: Checkout
@@ -195,6 +196,27 @@ jobs:
         with:
           name: storybook-dist
           path: packages/vkui/storybook-static
+
+  docs_beta_upload:
+    if: ${{ needs.changed_files.outputs.docs_beta == 'true' }}
+    needs: changed_files
+    runs-on: ubuntu-latest
+    name: Upload docs dist artifact (beta)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Build
+        run: yarn docs:beta:build
+
+      - name: Upload dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-beta-dist
+          path: website/out
 
   upload_pr_workflow_payload:
     # Дожидаемся выгрузки артефактов, на случай если вокрфлоу будет отменён или перезапушен
