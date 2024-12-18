@@ -4,6 +4,11 @@
   -webkit-tap-highlight-color: transparent;
 
   --vkui_internal--search_height: var(--vkui--size_search_height--regular);
+  --vkui_internal--search_shift_direction: 1;
+}
+
+.rtl {
+  --vkui_internal--search_shift_direction: -1;
 }
 
 .withPadding {
@@ -130,14 +135,21 @@
   color: var(--vkui--color_icon_secondary);
   transition: transform 0.3s var(--vkui--animation_easing_platform);
   /* Используем translate3d, чтобы поправить дергание при наведении в Safari */
-  transform: translate3d(100%, 0, 0);
+  transform: translate3d(calc(var(--vkui_internal--search_shift_direction) * 100%), 0, 0);
 
   --vkui_internal--search_icon_size: calc(var(--vkui_internal--search_height) + 4px);
 }
 
 .hasIcon .controls {
   /* Исключаем параметр icon из расчёта, чтобы он оставался видимым */
-  transform: translate3d(calc(100% - var(--vkui_internal--search_icon_size)), 0, 0);
+  transform: translate3d(
+    calc(
+      var(--vkui_internal--search_shift_direction) *
+        calc(100% - var(--vkui_internal--search_icon_size))
+    ),
+    0,
+    0
+  );
 }
 
 .hasValue .controls {
