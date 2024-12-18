@@ -3,7 +3,10 @@
   --vkui_internal--Switch__track_shape: calc(var(--vkui_internal--Switch__track_width) / 2);
   --vkui_internal--Switch__track_outline_width: 2px;
   --vkui_internal--Switch__handle_shift_x_direction: 1;
-  --vkui_internal--Switch__handle_shift_x: calc(var(--vkui_internal--Switch__handle_shift_x_direction) * var(--vkui_internal--Switch__track_outline_width));
+  --vkui_internal--Switch__handle_shift_x: calc(
+    var(--vkui_internal--Switch__handle_shift_x_direction) *
+      var(--vkui_internal--Switch__track_outline_width)
+  );
   /* prettier-ignore */
   --vkui_internal--Switch__handle_shift_y: calc(var(--vkui_internal--Switch__track_height) - var(--vkui_internal--Switch__handle_height) - var(--vkui_internal--Switch__track_outline_width));
   /* prettier-ignore */
@@ -217,7 +220,7 @@
   border-radius: inherit;
   background-color: var(--vkui_internal--Switch__handleRipple_color);
   opacity: var(--vkui_internal--Switch__handleRipple_opacity);
-  transform: translate(calc(var(--vkui_internal--Switch__handle_shift_x_direction) * -50%), -50%);
+  transform: translate(calc(-50% * var(--vkui_internal--Switch__handle_shift_x_direction)), -50%);
   transition-property: opacity, background-color;
   /* prettier-ignore */
   transition-duration:
