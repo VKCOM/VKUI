@@ -142,7 +142,14 @@
 
 .hasIcon .controls {
   /* Исключаем параметр icon из расчёта, чтобы он оставался видимым */
-  transform: translate3d(calc(var(--vkui_internal--search_shift_direction) * calc(100% - var(--vkui_internal--search_icon_size))), 0, 0);
+  transform: translate3d(
+    calc(
+      var(--vkui_internal--search_shift_direction) *
+        calc(100% - var(--vkui_internal--search_icon_size))
+    ),
+    0,
+    0
+  );
 }
 
 .hasValue .controls {
