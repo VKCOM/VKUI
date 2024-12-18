@@ -1,5 +1,11 @@
 Менеджер модальных окон.
 
+- <a href="{{anchor}}">Спецификация</a>
+- <a href="{{anchor}}">FAQ</a>
+  - <a href="{{anchor}}">Могу ли я создавать обёртки для `ModalPage` / `ModalCard`?</a>
+
+# Спецификация
+
 В качестве `children` принимает коллекцию [`ModalPage`](#/ModalPage) и/или [`ModalCard`](#/ModalCard). У каждого модального окна
 должен быть уникальный `id`.
 
@@ -538,3 +544,54 @@ const App = () => {
 
 <App />;
 ```
+
+# FAQ
+
+## Могу ли я создавать обёртки для `ModalPage` / `ModalCard`?
+
+Да, но нужно учитывать, что бизнес-логика должна либо вызываться внутри `ModalPage` / `ModalCard`, либо включаться в зависимости от
+контекста `useModalRootContext()`, т.к. `ModalRoot` лишь передаёт через контекст свойство `activeModal`, а `ModalPage` / `ModalCard`
+сравнивают его значение со своим `id` / `nav` – если совпадает, монтируются; иначе размонтируются.
+
+```jsx static
+const SomeAsyncEffect = () => {
+  const [data, setData] = useState({});
+  useEffect(function fetchData() {
+    fetch('...')
+      .then((r) => r.json())
+      .then(setData);
+  }, []);
+  return <div>{data}</div>;
+};
+
+const ModalPageWrapper = ({ id, ...restProps }) => {
+  const { activeModal } = useModalRootContext();
+
+  useEffect(function enableSomeEffect() {
+    if (id === activeModal) {
+      /* ... */
+    }
+  }, [id, activeModal];
+
+  return (
+    <ModalPage id={id} {...restProps}>
+      <SomeAsyncEffect />
+    </ModalPage>
+  );
+};
+
+const App = () => {
+  return (
+    <ModalRoot activeModal="example-1">
+      <ModalPageWrapper id="example-1" />
+      {/* или */}
+      <ModalPage id="example-2">
+        <SomeAsyncEffect />
+      </ModalPage>
+    </ModalRoot>
+  );
+};
+```
+
+> ⚠️ У `ModalPage` и `ModalCard` есть параметр `keepMounted`, при передаче этого параметра следует учитывать, что компонент будет
+> рендериться всегда, поэтому бизнес-логика будет срабатывать в любом случае.
