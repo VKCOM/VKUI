@@ -209,8 +209,13 @@ jobs:
       - name: Node setup
         uses: ./.github/actions/node-setup
 
+      - name: Build VKUI
+        run: yarn build:vkui
+
       - name: Build
         run: yarn docs:beta:build
+        env:
+          VKUI_DOCS_BASE_PATH: /pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/docs-beta
 
       - name: Upload dist
         uses: actions/upload-artifact@v4
