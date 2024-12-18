@@ -9,6 +9,7 @@ export const SwitchPlayground = (props: ComponentPlaygroundProps) => {
         {
           checked: [true, false],
           disabled: [true, false],
+          dir: ['ltr', 'rtl'],
         },
         {
           $adaptivity: 'y',
