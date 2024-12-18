@@ -550,7 +550,8 @@ const App = () => {
 ## Могу ли я создавать обёртки для `ModalPage` / `ModalCard`?
 
 Да, но нужно учитывать, что бизнес-логика должна либо вызываться внутри `ModalPage` / `ModalCard`, либо включаться в зависимости от
-контекста `useModalRootContext()`.
+контекста `useModalRootContext()`, т.к. `ModalRoot` лишь передаёт через контекст свойство `activeModal`, а `ModalPage` / `ModalCard`
+сравнивают его значение со своим `id` / `nav` – если совпадает, монтируются; иначе размонтируются.
 
 ```jsx static
 const SomeAsyncEffect = () => {
