@@ -128,7 +128,7 @@
     "lint:style": "cross-env LINT_PRECOMMIT_RUN=1 stylelint '**/*.css' --cache --cache-location .cache/.stylelintcache",
     "lint:prettier": "prettier --check --ignore-unknown --cache --cache-location .cache/.prettiercache .",
     "lint:types": "tsc --incremental --emitDeclarationOnly --declaration --tsBuildInfoFile .cache/.tsbuildinfo",
-    "lint:generated-files": "yarn workspace @vkontakte/vkui run lint:generated-files",
+    "lint:generated-files": "concurrently 'yarn workspace @vkontakte/vkui run lint:generated-files' 'yarn workspace @vkontakte/vkui-docs-theme run lint:generated-files'",
     "prepare": "husky",
     "playwright:install": "playwright install --with-deps",
     "playwright:cmd:merge-reports": "playwright merge-reports",

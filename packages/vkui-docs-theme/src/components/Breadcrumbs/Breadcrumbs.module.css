@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.root > .item:not(:last-child),
+.root > .icon {
+  margin-inline-end: 4px;
+}
+
+.item {
+  color: var(--vkui--color_text_secondary);
+
+  --vkui--color_text_link: var(--vkui--color_text_secondary);
+}
+
+.icon {
+  color: var(--vkui--color_icon_secondary);
+}
+
+.activeItem {
+  color: var(--vkui--color_text_primary);
+}
