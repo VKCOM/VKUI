@@ -16,7 +16,11 @@ export const SwitchPlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: SwitchProps) => <Switch {...props} />}
+      {({ dir, ...props }: SwitchProps) => (
+        <div dir={dir}>
+          <Switch {...props} />
+        </div>
+      )}
     </ComponentPlayground>
   );
 };
