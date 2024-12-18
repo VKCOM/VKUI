@@ -231,7 +231,7 @@ describe(Popover, () => {
   it('check working with usePopover hook', async () => {
     const onShownChange = jest.fn();
     const Fixture = () => {
-      const { anchorRef, anchorProps, popover } = usePopover({
+      const { referenceRef, referenceProps, popover } = usePopover({
         'trigger': 'click',
         'onShownChange': onShownChange,
         'content': 'Some popover',
@@ -240,7 +240,7 @@ describe(Popover, () => {
       return (
         <>
           {popover}
-          <Button {...anchorProps} data-testid="target" getRootRef={anchorRef}>
+          <Button {...referenceProps} data-testid="target" getRootRef={referenceRef}>
             Click me
           </Button>
         </>
