@@ -7,6 +7,7 @@ import {
   baselineComponent,
   fakeTimers,
   mockRect,
+  mockRtlDirection,
   userEvent,
   waitForFloatingPosition,
 } from '../../testing/utils';
@@ -236,6 +237,67 @@ describe(Slider, () => {
       expect(endSlider).toHaveValue('70');
 
       fireEvent.mouseUp(startSlider);
+    });
+  });
+
+  describe('check rtl view', () => {
+    mockRtlDirection();
+
+    it('moves start', async () => {
+      render(<Slider />);
+      const slider = screen.getByRole('slider');
+
+      fireEvent.mouseDown(slider);
+
+      fireEvent.mouseMove(slider, pointerPos(40));
+      expect(slider).toHaveValue('60');
+
+      fireEvent.mouseMove(slider, pointerPos(50));
+      expect(slider).toHaveValue('50');
+
+      fireEvent.mouseUp(slider);
+    });
+
+    it('moves start (multiple)', async () => {
+      render(
+        <Slider
+          multiple
+          defaultValue={[30, 70]}
+          startThumbTestId="startSlider"
+          endThumbTestId="endSlider"
+        />,
+      );
+      const startSlider = screen.getByTestId('startSlider');
+      const endSlider = screen.getByTestId('endSlider');
+
+      fireEvent.mouseDown(startSlider);
+
+      fireEvent.mouseMove(startSlider, pointerPos(40));
+      expect(startSlider).toHaveValue('60');
+      expect(endSlider).toHaveValue('70');
+
+      fireEvent.mouseMove(startSlider, pointerPos(50));
+      expect(startSlider).toHaveValue('50');
+      expect(endSlider).toHaveValue('70');
+
+      fireEvent.mouseUp(startSlider);
+    });
+
+    it('moves end (multiple)', async () => {
+      render(<Slider multiple defaultValue={[30, 70]} />);
+      const [startSlider, endSlider] = screen.getAllByRole('slider');
+
+      fireEvent.mouseDown(endSlider);
+
+      fireEvent.mouseMove(endSlider, pointerPos(40));
+      expect(startSlider).toHaveValue('30');
+      expect(endSlider).toHaveValue('60');
+
+      fireEvent.mouseMove(endSlider, pointerPos(50));
+      expect(startSlider).toHaveValue('30');
+      expect(endSlider).toHaveValue('50');
+
+      fireEvent.mouseUp(endSlider);
     });
   });
 

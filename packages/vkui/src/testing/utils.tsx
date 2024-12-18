@@ -42,6 +42,26 @@ export function fakeTimers() {
   });
 }
 
+export function mockRtlDirection() {
+  const originalGetComputedStyle = window.getComputedStyle;
+
+  let getComputedStyleMock: ReturnType<typeof jest.spyOn> | null = null;
+  beforeEach(() => {
+    /**
+     * Мокаем получение direction
+     */
+    getComputedStyleMock = jest.spyOn(window, 'getComputedStyle').mockImplementation((e) => {
+      return {
+        ...originalGetComputedStyle(e),
+        direction: 'rtl',
+      };
+    });
+  });
+  afterEach(() => {
+    getComputedStyleMock.mockRestore();
+  });
+}
+
 export const imgOnlyAttributes: ImgOnlyAttributes = {
   alt: 'test',
   crossOrigin: 'anonymous',
