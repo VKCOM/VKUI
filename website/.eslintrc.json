@@ -1,0 +1,7 @@
+{
+  "root": false,
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "no-restricted-globals": "off"
+  }
+}
