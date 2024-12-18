@@ -57,7 +57,7 @@ export type TooltipOnShownChange = OnShownChange;
 export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTooltipBaseProps {
   /**
    * Передача `boolean` позволяет контролировать состояния показа и скрытия вручную. Используйте
-   * совместно с `onShawnChange`.
+   * совместно с `onShownChange`.
    *
    * > Если нужно разово инициировать показ тултипа при первом рендере, то используйте `defaultShown`.
    */
