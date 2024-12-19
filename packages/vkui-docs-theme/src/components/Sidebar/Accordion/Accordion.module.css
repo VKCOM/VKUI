@@ -1,5 +1,5 @@
 .icon {
   background-color: var(--vkui--color_background_secondary--hover);
-  padding-inline: 4px;
-  padding-block: 6px;
+  padding-inline: var(--vkui--spacing_size_xs);
+  padding-block: var(--vkui--spacing_size_s);
 }

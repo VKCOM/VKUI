@@ -8,7 +8,6 @@ import { Main } from './Main/Main';
 import { Overview } from './Overview/Overview';
 import { Pre } from './Pre/Pre';
 import { Steps } from './Steps/Steps';
-import { Test } from './Test';
 import styles from './index.module.css';
 
 const DEFAULT_COMPONENTS: MDXComponents = {
@@ -31,7 +30,6 @@ const DEFAULT_COMPONENTS: MDXComponents = {
   wrapper: Main,
   Overview,
   Steps,
-  Test,
   Callout,
 };
 
