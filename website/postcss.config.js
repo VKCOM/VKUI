@@ -8,9 +8,10 @@ module.exports = {
     [
       '@csstools/postcss-global-data',
       {
-        files: ['./packages/vkui/src/styles/customMedias.generated.css'].map((pathSegment) =>
-          path.join(rootDirectory, pathSegment),
-        ),
+        files: [
+          './packages/vkui-docs-theme/styles/customMedias.generated.css',
+          './packages/vkui/src/styles/customMedias.generated.css',
+        ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
       },
     ],
     'autoprefixer',
