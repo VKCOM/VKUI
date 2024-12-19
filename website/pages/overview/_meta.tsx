@@ -5,6 +5,7 @@ import {
   Icon20LogoVkOutline,
   Icon20PlaneOutline,
   Icon20Rectangle2HorizontalOutline,
+  Icon20SparkleOutline,
   Icon20Square4PlusOutline,
 } from '@vkontakte/icons';
 
@@ -17,7 +18,7 @@ export default {
     title: 'Быстрый старт',
     icon: Icon20PlaneOutline,
   },
-  'modes': {
+  'setup-modes': {
     title: 'Режимы подключения',
     icon: Icon20AddSquareOutline,
   },
@@ -36,5 +37,9 @@ export default {
   'integrations': {
     title: 'Интерграции',
     icon: Icon20Square4PlusOutline,
+  },
+  'advanced': {
+    title: 'Advanced',
+    icon: Icon20SparkleOutline,
   },
 };

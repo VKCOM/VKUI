@@ -34,11 +34,7 @@ export const ColorSchemeProvider = ({
       const newColorScheme = typeof value === 'function' ? value(colorScheme) : value;
       setColorScheme(newColorScheme);
 
-      try {
-        localStorage.setItem(storageKey, newColorScheme);
-      } catch (e) {
-        // Unsupported
-      }
+      localStorage.setItem(storageKey, newColorScheme);
     },
     [colorScheme],
   );

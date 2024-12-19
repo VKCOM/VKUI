@@ -26,7 +26,7 @@ const config: DocsThemeConfig = {
     versions: Versions,
   },
   project: {
-    link: 'https://vkcom.github.io/vkui-tokens/',
+    link: 'https://github.com/VKCOM/VKUI/',
   },
 };
 
