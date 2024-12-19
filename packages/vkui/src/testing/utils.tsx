@@ -87,7 +87,7 @@ export type ComponentTestOptions = {
   style?: boolean;
   adaptivity?: AdaptivityProps;
   a11y?: boolean;
-  a11Config?: JestAxeConfigureOptions;
+  a11yConfig?: JestAxeConfigureOptions;
   getRootRef?: boolean;
 };
 
@@ -164,7 +164,7 @@ export function baselineComponent<Props extends object>(
     className = true,
     domAttr = true,
     a11y = true,
-    a11Config,
+    a11yConfig,
     getRootRef = true,
     adaptivity,
   }: ComponentTestOptions = {},
@@ -187,7 +187,7 @@ export function baselineComponent<Props extends object>(
     mountTest(Component);
 
     if (a11y) {
-      a11yTest(Component, a11Config);
+      a11yTest(Component, a11yConfig);
     }
 
     if (forward) {
