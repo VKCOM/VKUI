@@ -1,0 +1,5 @@
+.icon {
+  background-color: var(--vkui--color_background_secondary--hover);
+  padding-inline: 4px;
+  padding-block: 6px;
+}

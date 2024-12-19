@@ -7,6 +7,8 @@ import { HeadingLink } from './HeadingLink/HeadingLink';
 import { Main } from './Main/Main';
 import { Overview } from './Overview/Overview';
 import { Pre } from './Pre/Pre';
+import { Steps } from './Steps/Steps';
+import { Test } from './Test';
 import styles from './index.module.css';
 
 const DEFAULT_COMPONENTS: MDXComponents = {
@@ -17,7 +19,7 @@ const DEFAULT_COMPONENTS: MDXComponents = {
   h5: (props) => <HeadingLink Tag="h5" {...props} />,
   h6: (props) => <HeadingLink Tag="h6" {...props} />,
   ul: (props) => <ul className={styles.ul} {...props} />,
-  ol: (props) => <ol {...props} />,
+  ol: (props) => <ol className={styles.ol} {...props} />,
   li: (props) => <li className={styles.li} {...props} />,
   blockquote: (props) => <blockquote {...props} />,
   hr: (props) => <hr className={styles.hr} {...props} />,
@@ -28,6 +30,8 @@ const DEFAULT_COMPONENTS: MDXComponents = {
   strong: (props) => <strong className={styles.strong} {...props} />,
   wrapper: Main,
   Overview,
+  Steps,
+  Test,
   Callout,
 };
 
