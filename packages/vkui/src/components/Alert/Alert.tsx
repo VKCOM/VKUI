@@ -155,10 +155,11 @@ export const Alert = ({
   if (
     process.env.NODE_ENV === 'development' &&
     !title &&
-    (!restProps['aria-label'] || !restProps['aria-labelledby'])
+    !restProps['aria-label'] &&
+    !restProps['aria-labelledby']
   ) {
     warn(
-      'Если "title" не используется, то необходимо задать либо "aria-label" либо "aria-labelledby" (см. правило axe aria-dialog-name)',
+      'Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
     );
   }
 
