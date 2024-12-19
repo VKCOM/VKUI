@@ -45,7 +45,7 @@ describe(ChipsInputBase, () => {
     ),
     {
       // доступность должна быть реализована в обёртках над ChipsInputBase
-      a11Config: {
+      a11yConfig: {
         rules: {
           'nested-interactive': { enabled: false },
           'label': { enabled: false },

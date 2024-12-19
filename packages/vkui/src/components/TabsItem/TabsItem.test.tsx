@@ -37,7 +37,7 @@ const mockScrollIntoView = () => {
 
 describe('TabsItem', () => {
   baselineComponent(TabsItem, {
-    a11Config: {
+    a11yConfig: {
       rules: {
         // TODO [a11y]: "Certain ARIA roles must be contained by particular parents (aria-required-parent)"
         //              https://dequeuniversity.com/rules/axe/4.5/aria-required-parent?application=axeAPI
