@@ -25,10 +25,7 @@ import typographyStyles from '../Typography/Typography.module.css';
 describe('Alert', () => {
   fakeTimers();
 
-  baselineComponent(Alert, {
-    // TODO [a11y]: "ARIA dialog and alertdialog nodes should have an accessible name (aria-dialog-name)"
-    a11y: false,
-  });
+  baselineComponent((props) => <Alert {...props} title="Alert title" onClose={noop} />, {});
 
   describe('closes', () => {
     it.each(['overlay', 'close'])('with %s click', async (trigger) => {
