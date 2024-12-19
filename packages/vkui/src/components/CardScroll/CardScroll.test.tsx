@@ -1,6 +1,6 @@
 import { type CSSProperties } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, mockRtlDirection } from '../../testing/utils';
 import { CardScroll } from './CardScroll';
 import styles from './CardScroll.module.css';
 import horizontalScrollStyles from '../HorizontalScroll/HorizontalScroll.module.css';
@@ -25,37 +25,47 @@ const setupHorizontalScrollData = (element: HTMLElement, startScrollLeft = 0) =>
   };
 };
 
-const mockCardScrollData = (container: HTMLElement, cardsCount: number, defaultScrollLeft = 50) => {
+const mockCardScrollData = (
+  container: HTMLElement,
+  cardsCount: number,
+  defaultScrollLeft = 50,
+  isRtl = false,
+) => {
   const startOffsetLeft = 12;
+  const containerWidth = 1009;
   new Array(cardsCount).fill(0).forEach((_, index) => {
     const width = 400;
     const gap = 8;
     const card = screen.getByTestId(`card-${index}`);
 
-    jest
-      .spyOn(card, 'offsetLeft', 'get')
-      .mockImplementation(() => startOffsetLeft + index * (width + gap));
+    const offsetLeft = startOffsetLeft + index * (width + gap);
+    const offset = isRtl ? containerWidth - offsetLeft - width : offsetLeft;
+
+    jest.spyOn(card, 'offsetLeft', 'get').mockImplementation(() => offset);
     jest.spyOn(card, 'offsetWidth', 'get').mockImplementation(() => width);
   });
 
   jest.spyOn(window, 'getComputedStyle').mockImplementation(() => {
     const styles: CSSProperties = {
-      marginRight: '8px',
+      marginInlineEnd: '8px',
     };
     return styles as CSSStyleDeclaration;
   });
 
   const cardScrollContainer = container.getElementsByClassName(styles.in)[0] as HTMLDivElement;
-  jest.spyOn(cardScrollContainer, 'offsetWidth', 'get').mockImplementation(() => 1009);
+  jest.spyOn(cardScrollContainer, 'offsetWidth', 'get').mockImplementation(() => containerWidth);
 
   const gap = container.getElementsByClassName(styles.gap)[0] as HTMLDivElement;
-  jest.spyOn(gap, 'offsetWidth', 'get').mockImplementation(() => 12);
+  jest.spyOn(gap, 'offsetWidth', 'get').mockImplementation(() => startOffsetLeft);
 
   const horizontalScroll = container.getElementsByClassName(
     horizontalScrollStyles.in,
   )[0] as HTMLDivElement;
   return {
-    horizontalScrollData: setupHorizontalScrollData(horizontalScroll, defaultScrollLeft),
+    horizontalScrollData: setupHorizontalScrollData(
+      horizontalScroll,
+      defaultScrollLeft * (isRtl ? -1 : 1),
+    ),
     horizontalScroll,
   };
 };
@@ -63,9 +73,10 @@ const mockCardScrollData = (container: HTMLElement, cardsCount: number, defaultS
 type PrepareDataParams = {
   defaultScrollLeft?: number;
   cardsCount?: number;
+  isRtl?: boolean;
 };
 
-const setup = ({ defaultScrollLeft = 50, cardsCount = 6 }: PrepareDataParams) => {
+const setup = ({ defaultScrollLeft = 50, cardsCount = 6, isRtl = false }: PrepareDataParams) => {
   const { container } = render(
     <CardScroll size="s" prevButtonTestId="ScrollArrowLeft" nextButtonTestId="ScrollArrowRight">
       {new Array(cardsCount).fill(0).map((_, index) => (
@@ -78,6 +89,7 @@ const setup = ({ defaultScrollLeft = 50, cardsCount = 6 }: PrepareDataParams) =>
     container,
     cardsCount,
     defaultScrollLeft,
+    isRtl,
   );
 
   fireEvent.mouseEnter(horizontalScroll);
@@ -150,6 +162,57 @@ describe('CardScroll', () => {
     fireEvent.click(arrowLeft);
     await waitFor(() => {
       expect(horizontalScrollData.scrollLeft).toBe(0);
+    });
+  });
+
+  describe('check rtl working', () => {
+    mockRtlDirection();
+
+    it('check scroll by click arrow prev', async () => {
+      const { horizontalScrollData } = setup({
+        defaultScrollLeft: 1470,
+        isRtl: true,
+      });
+
+      const arrowPrev = screen.getByTestId('ScrollArrowLeft');
+
+      fireEvent.click(arrowPrev);
+      await waitFor(() => {
+        expect(horizontalScrollData.scrollLeft).toBe(-639);
+      });
+
+      fireEvent.click(arrowPrev);
+      await waitFor(() => {
+        expect(horizontalScrollData.scrollLeft).toBe(0);
+      });
+
+      fireEvent.click(arrowPrev);
+      await waitFor(() => {
+        expect(horizontalScrollData.scrollLeft).toBe(0);
+      });
+    });
+
+    it('check scroll by click arrow right', async () => {
+      const { horizontalScrollData } = setup({
+        isRtl: true,
+      });
+
+      const arrowRight = screen.getByTestId('ScrollArrowRight');
+
+      fireEvent.click(arrowRight);
+      await waitFor(() => {
+        expect(horizontalScrollData.scrollLeft).toBe(-816);
+      });
+
+      fireEvent.click(arrowRight);
+      await waitFor(() => {
+        expect(horizontalScrollData.scrollLeft).toBe(-1477);
+      });
+
+      fireEvent.click(arrowRight);
+      await waitFor(() => {
+        expect(horizontalScrollData.scrollLeft).toBe(-1477);
+      });
     });
   });
 });

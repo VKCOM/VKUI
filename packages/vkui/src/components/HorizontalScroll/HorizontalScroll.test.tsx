@@ -2,7 +2,7 @@ import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, mockRtlDirection, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { HorizontalScroll } from './HorizontalScroll';
 
@@ -227,6 +227,50 @@ describe('HorizontalScroll', () => {
       deltaX: 20,
     });
     expect(mockedData.scrollLeft).toBe(90);
+  });
+
+  describe('check rtl working', () => {
+    mockRtlDirection();
+
+    it('click on arrows should change scrollLeft', async () => {
+      const ref: React.RefObject<HTMLDivElement | null> = {
+        current: null,
+      };
+      render(
+        <HorizontalScroll
+          getRef={ref}
+          data-testid="horizontal-scroll"
+          nextButtonTestId="next-scroll-arrow"
+          prevButtonTestId="prev-scroll-arrow"
+          dir="rtl"
+        >
+          <div style={{ width: '1800px', height: '50px' }} />
+        </HorizontalScroll>,
+      );
+
+      const mockedData = setup(ref.current!);
+      expect(mockedData.scrollLeft).toBe(0);
+
+      fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
+
+      const arrowNext = screen.getByTestId('next-scroll-arrow');
+      fireEvent.click(arrowNext);
+      fireEvent.click(arrowNext);
+
+      await waitFor(() => {
+        expect(mockedData.scrollLeft).toBe(-300);
+      });
+
+      fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
+
+      const arrowPrev = screen.getByTestId('prev-scroll-arrow');
+      fireEvent.click(arrowPrev);
+      fireEvent.click(arrowPrev);
+
+      await waitFor(() => {
+        expect(mockedData.scrollLeft).toBe(0);
+      });
+    });
   });
 });
 
