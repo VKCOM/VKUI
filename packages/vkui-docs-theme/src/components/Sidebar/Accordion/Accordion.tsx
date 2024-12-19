@@ -20,13 +20,17 @@ export interface AccordionProps extends Omit<TappableProps, 'onChange'> {
   title: string;
 }
 
+interface AccordionSummaryProps
+  extends Pick<AccordionProps, 'title' | 'className' | 'icon'>,
+    Pick<AccordionProps, 'onChange'> {}
+
 function AccordionSummary({
   title,
   className,
   icon: Icon,
   onChange,
   ...restProps
-}: Pick<AccordionProps, 'title' | 'className' | 'icon'> & Pick<AccordionProps, 'onChange'>) {
+}: AccordionSummaryProps) {
   const { expanded, labelId, contentId } = React.useContext(AccordionContext);
 
   return (
