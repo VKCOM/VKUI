@@ -29,14 +29,30 @@ const BLUE_OPTION = { value: 'blue', label: 'Синий' };
 const YELLOW_OPTION = { value: 'yellow', label: 'Жёлтый' };
 
 describe(ChipsInputBase, () => {
-  baselineComponent(ChipsInputBaseTest, {
-    // доступность должна быть реализована в обёртках над ChipsInputBase
-    a11y: false,
-  });
-
   const onAddChipOption = jest.fn();
   const onRemoveChipOption = jest.fn();
   const onClearOptions = jest.fn();
+
+  baselineComponent(
+    (props) => (
+      <ChipsInputBaseTest
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+        value={[RED_OPTION]}
+        {...props}
+      />
+    ),
+    {
+      // доступность должна быть реализована в обёртках над ChipsInputBase
+      a11Config: {
+        rules: {
+          'nested-interactive': { enabled: false },
+          'label': { enabled: false },
+        },
+      },
+    },
+  );
 
   beforeEach(() => {
     onAddChipOption.mockClear();
@@ -408,6 +424,6 @@ describe(ChipsInputBase, () => {
     expect(screen.getByTestId('clear-button')).toBeInTheDocument();
     fireEvent.click(screen.getByTestId('clear-button'));
 
-    expect(onClearOptions).toBeCalledTimes(1);
+    expect(onClearOptions).toHaveBeenCalledTimes(1);
   });
 });
