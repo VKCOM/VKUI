@@ -7,6 +7,12 @@
    */
   overflow-x: hidden;
   isolation: isolate;
+
+  --vkui_internal--HorizontalScroll_shift_direction: 1;
+}
+
+.rtl {
+  --vkui_internal--HorizontalScroll_shift_direction: -1;
 }
 
 .in {
@@ -48,11 +54,11 @@
 }
 
 .arrowLeft:hover ~ .in .inWrapper {
-  transform: translateX(8px);
+  transform: translateX(calc(8px * var(--vkui_internal--HorizontalScroll_shift_direction)));
 }
 
 .arrowRight:hover ~ .in .inWrapper {
-  transform: translateX(-8px);
+  transform: translateX(calc(-8px * var(--vkui_internal--HorizontalScroll_shift_direction)));
 }
 
 /**
