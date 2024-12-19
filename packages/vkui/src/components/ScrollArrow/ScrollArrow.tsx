@@ -1,6 +1,10 @@
+'use client';
+
 import * as React from 'react';
 import { Icon16Chevron, Icon24Chevron } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { useDirection } from '../../hooks/useDirection';
+import { useExternRef } from '../../hooks/useExternRef';
 import type { HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -64,15 +68,24 @@ export const ScrollArrow = ({
   direction,
   label: labelProp,
   children = <ArrowIcon size={size} />,
+  getRootRef,
   ...restProps
 }: ScrollArrowProps): React.ReactNode => {
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const rootRef = useExternRef(getRootRef, directionRef);
   const label = labelProp ?? labelDirection[direction];
 
   return (
     <RootComponent
       Component="button"
       type="button"
-      baseClassName={classNames(styles.host, stylesSize[size], stylesDirection[direction])}
+      baseClassName={classNames(
+        styles.host,
+        stylesSize[size],
+        stylesDirection[direction],
+        textDirection === 'rtl' && styles.rtl,
+      )}
+      getRootRef={rootRef}
       {...restProps}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}
