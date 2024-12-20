@@ -3,7 +3,12 @@
   display: flex;
   align-items: center;
   padding-inline-start: var(--vkui--size_base_padding_horizontal--regular);
-  transform: translateX(calc(-1px * var(--vkui--internal_Removable_remove_offset) * var(--vkui--internal_Removable_remove_offset_direction)));
+  transform: translateX(
+    calc(
+      -1px * var(--vkui--internal_Removable_remove_offset) *
+        var(--vkui--internal_Removable_remove_offset_direction)
+    )
+  );
 
   --vkui--internal_Removable_remove_offset: 0;
   --vkui--internal_Removable_remove_offset_direction: 1;
