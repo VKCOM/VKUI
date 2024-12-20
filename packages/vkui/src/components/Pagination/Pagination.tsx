@@ -3,6 +3,8 @@
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useDirection } from '../../hooks/useDirection';
+import { useExternRef } from '../../hooks/useExternRef';
 import { type PaginationPageType, usePagination } from '../../hooks/usePagination';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -128,8 +130,12 @@ export const Pagination = ({
   prevButtonTestId,
   nextButtonTestId,
   renderNavigationButton,
+  getRootRef,
   ...resetProps
 }: PaginationProps): React.ReactNode => {
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const isRtl = textDirection === 'rtl';
+  const rootRef = useExternRef(getRootRef, directionRef);
   const pages = usePagination({
     currentPage,
     totalPages,
@@ -205,7 +211,7 @@ export const Pagination = ({
   );
 
   return (
-    <RootComponent Component="nav" role="navigation" {...resetProps}>
+    <RootComponent Component="nav" role="navigation" getRootRef={rootRef} {...resetProps}>
       <VisuallyHidden Component={navigationLabelComponent}>{navigationLabel}</VisuallyHidden>
       <ul className={styles.list}>
         <li className={styles.prevButtonContainer}>
@@ -213,7 +219,7 @@ export const Pagination = ({
             type="prev"
             style={navigationButtonsStyle}
             caption={prevButtonCaption}
-            Icon={Icon24ChevronCompactLeft}
+            Icon={isRtl ? Icon24ChevronCompactRight : Icon24ChevronCompactLeft}
             a11yLabel={prevButtonLabel}
             disabled={isFirstPage || disabled}
             onClick={handlePrevClick}
@@ -228,7 +234,7 @@ export const Pagination = ({
             type="next"
             style={navigationButtonsStyle}
             caption={nextButtonCaption}
-            Icon={Icon24ChevronCompactRight}
+            Icon={isRtl ? Icon24ChevronCompactLeft : Icon24ChevronCompactRight}
             a11yLabel={nextButtonLabel}
             disabled={isLastPage || disabled}
             onClick={handleNextClick}
