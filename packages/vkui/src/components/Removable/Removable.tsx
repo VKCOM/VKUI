@@ -3,11 +3,12 @@
 import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { useDirection } from '../../hooks/useDirection';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getTextFromChildren } from '../../lib/children';
 import { useDOM } from '../../lib/dom';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
@@ -54,6 +55,8 @@ const RemovableIos = ({
   removeButtonTestId,
   disabled,
 }: RemovableIosOwnProps) => {
+  const [directionRef, textDirection = 'ltr'] = useDirection<HTMLDivElement>();
+  const isRtl = textDirection === 'rtl';
   const { window } = useDOM();
 
   const removeButtonRef = React.useRef<HTMLElement>(null);
@@ -89,11 +92,16 @@ const RemovableIos = ({
     updateRemoveOffset(offsetWidth);
   };
 
+  const style: CSSCustomProperties = {
+    '--vkui--internal_Removable_remove_offset': String(removeOffset ?? 0),
+  };
+
   return (
     <div
-      className={classNames(styles.content, 'vkuiInternalRemovable__content')}
-      style={{ transform: `translateX(-${removeOffset ?? 0}px)` }}
+      className={classNames(styles.content, isRtl && styles.rtl, 'vkuiInternalRemovable__content')}
+      style={style}
       onTransitionEnd={onRemoveTransitionEnd}
+      ref={directionRef}
     >
       <IconButton
         hasActive={false}
