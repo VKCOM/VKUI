@@ -22,6 +22,10 @@ export function resolveOffsetYCssStyle(
   }
 }
 
+export function revertRtlValue(value: number, isRtl: boolean) {
+  return isRtl ? -1 * value : value;
+}
+
 export function getInitialShiftData(
   width: number,
   height: number,
@@ -42,13 +46,18 @@ export function getMovedShiftData(
   placement: SnackbarPlacement,
   shiftData: ShiftData,
   nextShift: { x: number; y: number },
+  isRtl = false,
 ): ShiftData {
   /* istanbul ignore else: TODO чтобы протестировать кейс в блоке else, нужно мокать useMediaQueries(), чтобы перебивать mediaQueries.smallTabletPlus.matches */
   if (shiftData.isDesktop) {
     if (placement.endsWith('start')) {
-      shiftData.x = rubberbandIfOutOfBounds(nextShift.x, -shiftData.width, 0);
+      shiftData.x = isRtl
+        ? rubberbandIfOutOfBounds(nextShift.x, 0, shiftData.width)
+        : rubberbandIfOutOfBounds(nextShift.x, -shiftData.width, 0);
     } else if (placement.endsWith('end')) {
-      shiftData.x = rubberbandIfOutOfBounds(nextShift.x, 0, shiftData.width);
+      shiftData.x = isRtl
+        ? rubberbandIfOutOfBounds(nextShift.x, -shiftData.width, 0)
+        : rubberbandIfOutOfBounds(nextShift.x, 0, shiftData.width);
     }
 
     if (placement.startsWith('bottom')) {
@@ -78,6 +87,7 @@ export function shouldBeClosedByShiftData(
   shiftData: ShiftData,
   relativeClientRect: DOMRect,
   velocity: { x: number; y: number },
+  isRtl = false,
 ): boolean {
   if (!shiftData.shifted) {
     return false;
@@ -89,13 +99,21 @@ export function shouldBeClosedByShiftData(
   /* istanbul ignore else: TODO чтобы протестировать кейс в блоке else, нужно мокать useMediaQueries(), чтобы перебивать mediaQueries.smallTabletPlus.matches */
   if (shiftData.isDesktop) {
     if (placement.endsWith('start')) {
-      shouldBeClosedThreshold.x = relativeClientRect.x < -relativeClientRect.width / 2;
+      shouldBeClosedThreshold.x =
+        revertRtlValue(relativeClientRect.x, isRtl) < -relativeClientRect.width / 2;
       shouldBeClosedByVelocity.x =
-        relativeClientRect.x < 0 ? velocity.x < -MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE : false;
+        revertRtlValue(relativeClientRect.x, isRtl) < 0
+          ? revertRtlValue(velocity.x, isRtl) <
+            revertRtlValue(-MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE, isRtl)
+          : false;
     } else if (placement.endsWith('end')) {
-      shouldBeClosedThreshold.x = relativeClientRect.x > relativeClientRect.width / 2;
+      shouldBeClosedThreshold.x =
+        revertRtlValue(relativeClientRect.x, isRtl) > relativeClientRect.width / 2;
       shouldBeClosedByVelocity.x =
-        relativeClientRect.x > 0 ? velocity.x > MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE : false;
+        revertRtlValue(relativeClientRect.x, isRtl) > 0
+          ? revertRtlValue(velocity.x, isRtl) >
+            revertRtlValue(MINIMUM_PAN_GESTURE_FOR_TRIGGER_CLOSE, isRtl)
+          : false;
     }
 
     if (placement.startsWith('bottom')) {
