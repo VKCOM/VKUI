@@ -5,3 +5,34 @@
   <Button style={{ margin: 20 }}>Наведи</Button>
 </Tooltip>
 ```
+
+## Использование хука useTooltip
+
+Вы можете использовать хук `useTooltip`, который позволяет устанавливать якорный элемент для `Tooltip`, не прокидывая его в качестве `children`
+
+```jsx { "props": { "layout": false, "iframe": true } }
+const Example = () => {
+  const { referenceRef, referenceProps, tooltip } = useTooltip({
+    placement: 'right',
+    description: 'Привет',
+  });
+
+  return (
+    <View activePanel="tooltip">
+      <Panel id="tooltip">
+        <PanelHeader>useTooltip</PanelHeader>
+        <Group>
+          {tooltip}
+          <FormItem>
+            <Button getRootRef={referenceRef} {...referenceProps}>
+              Наведи на меня
+            </Button>
+          </FormItem>
+        </Group>
+      </Panel>
+    </View>
+  );
+};
+
+<Example />;
+```
