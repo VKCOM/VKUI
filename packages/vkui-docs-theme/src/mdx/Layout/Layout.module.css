@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  margin-inline: auto;
+  color: var(--vkui--color_text_subhead);
+  background-color: var(--vkui--color_background_content);
+}
+
+.maxWidth {
+  max-inline-size: var(--vkui_docs--max-width);
+}
+
+.content {
+  padding-block: 36px 60px;
+  padding-inline: 40px;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: calc(100vh - var(--vkui_docs--navbar-height));
+}
+
+@media (--viewWidth-tablet), (--viewWidth-tabletMinus) {
+  .content {
+    padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+    padding-block-start: 32px;
+  }
+}

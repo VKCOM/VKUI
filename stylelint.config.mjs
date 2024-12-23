@@ -61,6 +61,8 @@ const config = {
             import.meta.dirname,
             'node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css',
           ),
+          path.join(import.meta.dirname, 'packages/vkui-docs-theme/styles/constants.css'),
+          path.join(import.meta.dirname, 'packages/vkui-docs-theme/styles/colors.css'),
         ],
       },
     ],
@@ -82,6 +84,25 @@ const config = {
     'property-disallowed-list': null,
     'csstools/use-logical': 'always',
   },
+  overrides: [
+    {
+      files: [
+        `${path.join(import.meta.dirname, 'website')}/**/*.css`,
+        `${path.join(import.meta.dirname, 'packages/vkui-docs-theme')}/**/*.css`,
+      ],
+      rules: {
+        'csstools/media-use-custom-media': [
+          'known',
+          {
+            importFrom: path.join(
+              import.meta.dirname,
+              'packages/vkui/src/styles/customMedias.generated.css',
+            ),
+          },
+        ],
+      },
+    },
+  ],
 };
 
 export default config;
