@@ -13,11 +13,19 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
-const alignAfterClassNames = {
-  start: styles.contentAfterAlignStart,
-  center: styles.contentAfterAlignCenter,
-  end: styles.contentAfterAlignEnd,
+const alignSelfClassNames = {
+  start: styles.alignSelfStart,
+  center: styles.alignSelfCenter,
+  end: styles.alignSelfEnd,
 };
+
+const alignContentClassNames = {
+  start: styles.contentAlignStart,
+  center: styles.contentAlignCenter,
+  end: styles.contentAlignEnd,
+};
+
+type Align = 'start' | 'center' | 'end';
 
 export interface RichCellProps extends TappableProps {
   /**
@@ -60,9 +68,17 @@ export interface RichCellProps extends TappableProps {
    */
   afterCaption?: React.ReactNode;
   /**
+   * Выравнивание before компонента по вертикали
+   */
+  beforeAlign?: Align;
+  /**
+   * Выравнивание центрального контента по вертикали
+   */
+  contentAlign?: Align;
+  /**
    * Выравнивание after компонента по вертикали
    */
-  afterAlign?: 'start' | 'center' | 'end';
+  afterAlign?: Align;
   /**
    * Убирает анимацию нажатия.
    */
@@ -89,6 +105,8 @@ export const RichCell: React.FC<RichCellProps> & {
   bottom,
   actions,
   multiline,
+  beforeAlign = 'start',
+  contentAlign = 'start',
   afterAlign = 'start',
   ...restProps
 }: RichCellProps) => {
@@ -99,7 +117,7 @@ export const RichCell: React.FC<RichCellProps> & {
       return;
     }
     return (
-      <div className={classNames(styles.contentAfter, alignAfterClassNames[afterAlign])}>
+      <div className={classNames(styles.contentAfter, alignSelfClassNames[afterAlign])}>
         {after && <div className={styles.afterChildren}>{after}</div>}
         {afterCaption && <div className={styles.afterCaption}>{afterCaption}</div>}
       </div>
@@ -115,11 +133,13 @@ export const RichCell: React.FC<RichCellProps> & {
         sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
     >
-      {before && <div className={styles.before}>{before}</div>}
+      {before && (
+        <div className={classNames(styles.before, alignSelfClassNames[beforeAlign])}>{before}</div>
+      )}
       <div className={styles.inWrapper}>
         <div className={styles.in}>
           <div className={styles.content}>
-            <div className={styles.contentBefore}>
+            <div className={classNames(styles.contentBefore, alignContentClassNames[contentAlign])}>
               {overTitle && (
                 <Subhead Component="div" className={styles.overTitle}>
                   {overTitle}

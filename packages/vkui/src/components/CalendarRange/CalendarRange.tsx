@@ -12,7 +12,13 @@ import {
   startOfDay,
   subMonths,
 } from 'date-fns';
+import {
+  CalendarDirectionContext,
+  type CalendarDirectionContextProps,
+} from '../../context/CalendarDirectionContext';
 import { useCalendar } from '../../hooks/useCalendar';
+import { useDirection } from '../../hooks/useDirection';
+import { useExternRef } from '../../hooks/useExternRef';
 import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
@@ -31,7 +37,13 @@ import styles from './CalendarRange.module.css';
 export type DateRangeType = [Date | null, Date | null];
 
 export type CalendarRangeTestsProps = CalendarDaysTestsProps & {
+  /**
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части
+   */
   leftPartHeaderTestsData?: CalendarHeaderTestsProps;
+  /**
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части
+   */
   rightPartHeaderTestsData?: CalendarHeaderTestsProps;
 };
 
@@ -91,6 +103,7 @@ export const CalendarRange = ({
   dayTestId,
   leftPartHeaderTestsData,
   rightPartHeaderTestsData,
+  getRootRef,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
   const {
@@ -106,6 +119,10 @@ export const CalendarRange = ({
     isMonthDisabled,
     isYearDisabled,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
+
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const rootRef = useExternRef(directionRef, getRootRef);
+
   const [hintedDate, setHintedDate] = React.useState<DateRangeType>();
   const secondViewDate = addMonths(viewDate, 1);
 
@@ -207,90 +224,99 @@ export const CalendarRange = ({
     [setViewDate],
   );
 
+  const directionContextValue = React.useMemo<CalendarDirectionContextProps>(
+    () => ({
+      direction: textDirection,
+    }),
+    [textDirection],
+  );
+
   return (
-    <RootComponent {...props} baseClassName={styles.host}>
-      <div className={styles.inner}>
-        <CalendarHeader
-          viewDate={viewDate}
-          onChange={setViewDate}
-          nextMonthHidden
-          onPrevMonth={setPrevMonth}
-          disablePickers={disablePickers}
-          className={styles.header}
-          prevMonthLabel={prevMonthLabel}
-          nextMonthLabel={nextMonthLabel}
-          changeMonthLabel={changeMonthLabel}
-          changeYearLabel={changeYearLabel}
-          prevMonthIcon={prevMonthIcon}
-          isMonthDisabled={isMonthDisabled}
-          isYearDisabled={isYearDisabled}
-          {...leftPartHeaderTestsData}
-        />
-        <CalendarDays
-          viewDate={viewDate}
-          value={value}
-          weekStartsOn={weekStartsOn}
-          onKeyDown={handleKeyDown}
-          isDayFocused={isDayFocused}
-          onDayChange={onDayChange}
-          isDaySelected={isDaySelected}
-          isDayActive={isDayActive}
-          isDaySelectionEnd={isDaySelectionEnd}
-          isDaySelectionStart={isDaySelectionStart}
-          isDayHinted={isDayHinted}
-          onDayEnter={onDayEnter}
-          onDayLeave={onDayLeave}
-          isHintedDaySelectionEnd={isHintedDaySelectionEnd}
-          isHintedDaySelectionStart={isHintedDaySelectionStart}
-          isDayDisabled={isDayDisabled}
-          listenDayChangesForUpdate={listenDayChangesForUpdate}
-          renderDayContent={renderDayContent}
-          aria-label={changeDayLabel}
-          dayTestId={dayTestId}
-        />
-      </div>
-      <div className={styles.inner}>
-        <CalendarHeader
-          viewDate={secondViewDate}
-          onChange={onRightPartViewDateChange}
-          prevMonthHidden
-          onNextMonth={setNextMonth}
-          disablePickers={disablePickers}
-          className={styles.header}
-          prevMonthLabel={prevMonthLabel}
-          nextMonthLabel={nextMonthLabel}
-          changeMonthLabel={changeMonthLabel}
-          changeYearLabel={changeYearLabel}
-          nextMonthIcon={nextMonthIcon}
-          isMonthDisabled={isMonthDisabled}
-          isYearDisabled={isYearDisabled}
-          {...rightPartHeaderTestsData}
-        />
-        <CalendarDays
-          viewDate={secondViewDate}
-          value={value}
-          weekStartsOn={weekStartsOn}
-          aria-label={changeDayLabel}
-          onKeyDown={handleKeyDown}
-          isDayFocused={isDayFocused}
-          onDayChange={onDayChange}
-          isDaySelected={isDaySelected}
-          isDayActive={isDayActive}
-          isDaySelectionEnd={isDaySelectionEnd}
-          isDaySelectionStart={isDaySelectionStart}
-          isDayHinted={isDayHinted}
-          onDayEnter={onDayEnter}
-          onDayLeave={onDayLeave}
-          isHintedDaySelectionEnd={isHintedDaySelectionEnd}
-          isHintedDaySelectionStart={isHintedDaySelectionStart}
-          isDayDisabled={isDayDisabled}
-          listenDayChangesForUpdate={listenDayChangesForUpdate}
-          renderDayContent={renderDayContent}
-          tabIndex={0}
-          onBlur={resetSelectedDay}
-          dayTestId={dayTestId}
-        />
-      </div>
-    </RootComponent>
+    <CalendarDirectionContext.Provider value={directionContextValue}>
+      <RootComponent {...props} baseClassName={styles.host} getRootRef={rootRef}>
+        <div className={styles.inner}>
+          <CalendarHeader
+            viewDate={viewDate}
+            onChange={setViewDate}
+            nextMonthHidden
+            onPrevMonth={setPrevMonth}
+            disablePickers={disablePickers}
+            className={styles.header}
+            prevMonthLabel={prevMonthLabel}
+            nextMonthLabel={nextMonthLabel}
+            changeMonthLabel={changeMonthLabel}
+            changeYearLabel={changeYearLabel}
+            prevMonthIcon={prevMonthIcon}
+            isMonthDisabled={isMonthDisabled}
+            isYearDisabled={isYearDisabled}
+            {...leftPartHeaderTestsData}
+          />
+          <CalendarDays
+            viewDate={viewDate}
+            value={value}
+            weekStartsOn={weekStartsOn}
+            onKeyDown={handleKeyDown}
+            isDayFocused={isDayFocused}
+            onDayChange={onDayChange}
+            isDaySelected={isDaySelected}
+            isDayActive={isDayActive}
+            isDaySelectionEnd={isDaySelectionEnd}
+            isDaySelectionStart={isDaySelectionStart}
+            isDayHinted={isDayHinted}
+            onDayEnter={onDayEnter}
+            onDayLeave={onDayLeave}
+            isHintedDaySelectionEnd={isHintedDaySelectionEnd}
+            isHintedDaySelectionStart={isHintedDaySelectionStart}
+            isDayDisabled={isDayDisabled}
+            listenDayChangesForUpdate={listenDayChangesForUpdate}
+            renderDayContent={renderDayContent}
+            aria-label={changeDayLabel}
+            dayTestId={dayTestId}
+          />
+        </div>
+        <div className={styles.inner}>
+          <CalendarHeader
+            viewDate={secondViewDate}
+            onChange={onRightPartViewDateChange}
+            prevMonthHidden
+            onNextMonth={setNextMonth}
+            disablePickers={disablePickers}
+            className={styles.header}
+            prevMonthLabel={prevMonthLabel}
+            nextMonthLabel={nextMonthLabel}
+            changeMonthLabel={changeMonthLabel}
+            changeYearLabel={changeYearLabel}
+            nextMonthIcon={nextMonthIcon}
+            isMonthDisabled={isMonthDisabled}
+            isYearDisabled={isYearDisabled}
+            {...rightPartHeaderTestsData}
+          />
+          <CalendarDays
+            viewDate={secondViewDate}
+            value={value}
+            weekStartsOn={weekStartsOn}
+            aria-label={changeDayLabel}
+            onKeyDown={handleKeyDown}
+            isDayFocused={isDayFocused}
+            onDayChange={onDayChange}
+            isDaySelected={isDaySelected}
+            isDayActive={isDayActive}
+            isDaySelectionEnd={isDaySelectionEnd}
+            isDaySelectionStart={isDaySelectionStart}
+            isDayHinted={isDayHinted}
+            onDayEnter={onDayEnter}
+            onDayLeave={onDayLeave}
+            isHintedDaySelectionEnd={isHintedDaySelectionEnd}
+            isHintedDaySelectionStart={isHintedDaySelectionStart}
+            isDayDisabled={isDayDisabled}
+            listenDayChangesForUpdate={listenDayChangesForUpdate}
+            renderDayContent={renderDayContent}
+            tabIndex={0}
+            onBlur={resetSelectedDay}
+            dayTestId={dayTestId}
+          />
+        </div>
+      </RootComponent>
+    </CalendarDirectionContext.Provider>
   );
 };

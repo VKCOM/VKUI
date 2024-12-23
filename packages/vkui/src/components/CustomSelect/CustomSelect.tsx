@@ -5,6 +5,7 @@ import { classNames, debounce } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
+import { callMultiple } from '../../lib/callMultiple';
 import { useDOM } from '../../lib/dom';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
@@ -221,7 +222,7 @@ export interface SelectProps<
    */
   allowClearButton?: boolean;
   /**
-   * (e2e) testId кнопки очистки
+   * Передает атрибут `data-testid` для кнопки очистки
    */
   clearButtonTestId?: string;
   /**
@@ -239,10 +240,14 @@ export interface SelectProps<
    */
   noMaxHeight?: boolean;
   /**
-   * (e2e) testId элемента, внутри которого отображается текст выбранной опции `CustomSelect` или плейсхолдер.
+   * Передает атрибут `data-testid` для элемента, внутри которого отображается текст выбранной опции `CustomSelect` или плейсхолдер.
    */
   labelTextTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для нативного элемента `select`.
+   */
   nativeSelectTestId?: string;
+  onInputKeyDown?: (e: React.KeyboardEvent) => void;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -289,6 +294,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     required,
     getSelectInputRef,
     overscrollBehavior,
+    onInputKeyDown,
     ...restProps
   } = props;
 
@@ -555,7 +561,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           : optionsProp;
 
       setOptions(options);
-      setSelectedOptionIndex(findSelectedIndex(options, value));
+      const selectedIndex = findSelectedIndex(options, value);
+      setSelectedOptionIndex(selectedIndex);
+      setFocusedOptionIndex(selectedIndex);
     },
     [filterFn, inputValue, nativeSelectValue, optionsProp, defaultValue, props.value, searchable],
   );
@@ -885,7 +893,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         fetching={fetching}
         value={inputValue}
         onKeyUp={handleKeyUp}
-        onKeyDown={handleKeyDownSelect}
+        onKeyDown={callMultiple(handleKeyDownSelect, onInputKeyDown)}
         onChange={onInputChange}
         onClick={onClick}
         before={before}

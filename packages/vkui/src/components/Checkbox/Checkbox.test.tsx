@@ -2,7 +2,7 @@ import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { getDocumentBody } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, setNodeEnv, userEvent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Checkbox } from './Checkbox';
 
@@ -63,27 +63,31 @@ describe('Checkbox', () => {
     expect(screen.getByRole<HTMLInputElement>('checkbox').indeterminate).toBeTruthy();
   });
 
-  it('check dev errors', () => {
-    process.env.NODE_ENV = 'development';
-    const errorStub = jest.spyOn(console, 'error');
-    render(
-      <>
-        <Checkbox defaultIndeterminate={true} defaultChecked={true} />
-        <Checkbox indeterminate={true} checked={true} />
-        <Checkbox defaultChecked={true} checked={true} />
-      </>,
-    );
-    expect(errorStub.mock.calls[0]).toEqual([
-      '%c[VKUI/Checkbox] defaultIndeterminate и defaultChecked не могут быть true одновременно',
-      undefined,
-    ]);
-    expect(errorStub.mock.calls[1]).toEqual([
-      '%c[VKUI/Checkbox] indeterminate и checked не могут быть true одновременно',
-      undefined,
-    ]);
-    expect(errorStub.mock.calls[2]).toEqual([
-      '%c[VKUI/Checkbox] defaultChecked и checked не могут быть true одновременно',
-      undefined,
-    ]);
+  describe('DEV errors', () => {
+    beforeEach(() => setNodeEnv('development'));
+    afterEach(() => setNodeEnv('test'));
+
+    it('check calls Checkbox', () => {
+      const errorStub = jest.spyOn(console, 'error');
+      render(
+        <>
+          <Checkbox defaultIndeterminate={true} defaultChecked={true} />
+          <Checkbox indeterminate={true} checked={true} />
+          <Checkbox defaultChecked={true} checked={true} />
+        </>,
+      );
+      expect(errorStub.mock.calls[0]).toEqual([
+        '%c[VKUI/Checkbox] defaultIndeterminate и defaultChecked не могут быть true одновременно',
+        undefined,
+      ]);
+      expect(errorStub.mock.calls[1]).toEqual([
+        '%c[VKUI/Checkbox] indeterminate и checked не могут быть true одновременно',
+        undefined,
+      ]);
+      expect(errorStub.mock.calls[2]).toEqual([
+        '%c[VKUI/Checkbox] defaultChecked и checked не могут быть true одновременно',
+        undefined,
+      ]);
+    });
   });
 });

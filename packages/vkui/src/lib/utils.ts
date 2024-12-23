@@ -14,12 +14,12 @@ export function setRef<T>(element: T, ref?: React.Ref<T>): void {
     if (typeof ref === 'function') {
       ref(element);
     } else {
-      (ref as React.MutableRefObject<T>).current = element;
+      (ref as React.RefObject<T>).current = element;
     }
   }
 }
 
-export function multiRef<T>(...refs: Array<React.Ref<T> | undefined>): React.RefObject<T> {
+export function multiRef<T>(...refs: Array<React.Ref<T> | undefined>): React.RefObject<T | null> {
   let current: T | null = null;
   return {
     get current() {

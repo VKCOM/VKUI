@@ -1,9 +1,11 @@
 .body {
   --vkui_internal--snackbar-body_layout_vertical_action_shift: calc(
-    -1 * (
+    -1 *
+      (
         var(--vkui--size_button_small_height--compact) -
           var(--vkui--font_subhead--line_height--compact)
-      ) / 2
+      ) /
+      2
   );
 
   box-sizing: border-box;
@@ -18,20 +20,24 @@
 
 .sizeYRegular {
   --vkui_internal--snackbar-body_layout_vertical_action_shift: calc(
-    -1 * (
+    -1 *
+      (
         var(--vkui--size_button_small_height--regular) -
           var(--vkui--font_subhead--line_height--regular)
-      ) / 2
+      ) /
+      2
   );
 }
 
 @media (--sizeY-regular) {
   .sizeYNone {
     --vkui_internal--snackbar-body_layout_vertical_action_shift: calc(
-      -1 * (
+      -1 *
+        (
           var(--vkui--size_button_small_height--regular) -
             var(--vkui--font_subhead--line_height--regular)
-        ) / 2
+        ) /
+        2
     );
   }
 }

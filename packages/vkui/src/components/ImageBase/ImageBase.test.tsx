@@ -5,7 +5,7 @@ import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
 } from '../../testing/icons';
-import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
+import { baselineComponent, imgOnlyAttributes, setNodeEnv } from '../../testing/utils';
 import {
   getBadgeIconSizeByImageBaseSize,
   getFallbackIconSizeByImageBaseSize,
@@ -38,12 +38,10 @@ const getImageBaseImgEl = (elParent = getImageBaseRootEl()) => within(elParent).
 
 let logStub: jest.SpyInstance | null = null;
 beforeEach(() => {
-  process.env.NODE_ENV = 'development';
   logStub = jest.spyOn(console, 'log').mockImplementation(noop);
 });
 
 afterEach(() => {
-  process.env.NODE_ENV = 'test';
   logStub?.mockRestore();
 });
 
@@ -216,9 +214,23 @@ describe(ImageBase, () => {
     expect(getImageBaseRootEl()).toHaveClass(styles.transparentBackground);
   });
 
-  it('check dev error when use incorrect size of icon', () => {
-    render(<ImageBaseTest fallbackIcon={<Icon20Add />} size={28} />);
-    expect(logStub).toHaveBeenCalledTimes(1);
+  it('should apply custom objectPosition style', () => {
+    render(<ImageBaseTest src="#" objectPosition="center bottom" />);
+
+    expect(getImageBaseImgEl()).toHaveClass(styles.withObjectPosition);
+    expect(getImageBaseImgEl()).toHaveStyle({
+      '--vkui_internal--ImageBase_object_position': 'center bottom',
+    });
+  });
+
+  describe('DEV errros', () => {
+    beforeEach(() => setNodeEnv('development'));
+    afterEach(() => setNodeEnv('test'));
+
+    it('check error when use incorrect size of icon', () => {
+      render(<ImageBaseTest fallbackIcon={<Icon20Add />} size={28} />);
+      expect(logStub).toHaveBeenCalledTimes(1);
+    });
   });
 });
 

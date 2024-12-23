@@ -99,7 +99,7 @@ export const PullToRefresh = ({
     }
   }, [touchDown, resetRefreshingState]);
 
-  const waitFetchingTimeoutId = React.useRef<NodeJS.Timeout>();
+  const waitFetchingTimeoutId = React.useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useIsomorphicLayoutEffect(() => {
     const prevIsFetching = prevIsFetchingRef.current;

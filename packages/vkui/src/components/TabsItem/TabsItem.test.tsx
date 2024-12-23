@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, setNodeEnv } from '../../testing/utils';
 import { Tabs } from '../Tabs/Tabs';
 import { TabsItem } from './TabsItem';
 
@@ -73,27 +73,29 @@ describe('TabsItem', () => {
     expect(scrollIntoViewMock).toHaveBeenCalledTimes(0);
   });
 
-  it('check DEV warnings', () => {
-    process.env.NODE_ENV = 'development';
-    const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
-    const { rerender } = render(
-      <TabsItem data-testid="first" selected={false}>
-        test
-      </TabsItem>,
-    );
-    expect(warn.mock.calls[0][0]).toBe(
-      '%c[VKUI/TabsItem] Передайте в "aria-controls" id контролируемого блока',
-    );
+  describe('DEV errros', () => {
+    beforeEach(() => setNodeEnv('development'));
+    afterEach(() => setNodeEnv('test'));
 
-    rerender(
-      <TabsItem aria-controls="control" data-testid="first" selected={false}>
-        test
-      </TabsItem>,
-    );
-    expect(warn.mock.calls[1][0]).toBe(
-      '%c[VKUI/TabsItem] Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока',
-    );
+    it('check calls TabsItem', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
+      const { rerender } = render(
+        <TabsItem data-testid="first" selected={false}>
+          test
+        </TabsItem>,
+      );
+      expect(warn.mock.calls[0][0]).toBe(
+        '%c[VKUI/TabsItem] Передайте в "aria-controls" id контролируемого блока',
+      );
 
-    process.env.NODE_ENV = 'test';
+      rerender(
+        <TabsItem aria-controls="control" data-testid="first" selected={false}>
+          test
+        </TabsItem>,
+      );
+      expect(warn.mock.calls[1][0]).toBe(
+        '%c[VKUI/TabsItem] Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока',
+      );
+    });
   });
 });

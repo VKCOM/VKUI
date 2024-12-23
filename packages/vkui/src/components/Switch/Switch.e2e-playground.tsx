@@ -9,13 +9,18 @@ export const SwitchPlayground = (props: ComponentPlaygroundProps) => {
         {
           checked: [true, false],
           disabled: [true, false],
+          dir: ['ltr', 'rtl'],
         },
         {
           $adaptivity: 'y',
         },
       ]}
     >
-      {(props: SwitchProps) => <Switch {...props} />}
+      {({ dir, ...props }: SwitchProps) => (
+        <div dir={dir}>
+          <Switch {...props} />
+        </div>
+      )}
     </ComponentPlayground>
   );
 };

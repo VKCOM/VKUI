@@ -21,6 +21,8 @@ storybook-static/
 playwright-report/
 blob-report/
 all-blob-reports/
+.next/
+out/
 
 packages/vkui-floating-ui/**/*.d.ts
 packages/vkui-floating-ui/**/*.d.mts

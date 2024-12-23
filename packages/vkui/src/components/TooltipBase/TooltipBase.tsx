@@ -110,8 +110,14 @@ export const TooltipBase = ({
       )}
       <div className={styles.content} style={maxWidth !== null ? { maxWidth } : undefined}>
         <div>
-          {hasReactNode(title) && <Subhead weight="2">{title}</Subhead>}
-          {hasReactNode(description) && <Subhead>{description}</Subhead>}
+          {hasReactNode(title) && (
+            <Subhead className={styles.title} weight="2">
+              {title}
+            </Subhead>
+          )}
+          {hasReactNode(description) && (
+            <Subhead className={styles.description}>{description}</Subhead>
+          )}
         </div>
         {typeof onCloseIconClick === 'function' && (
           <Tappable

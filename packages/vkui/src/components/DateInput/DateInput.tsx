@@ -19,6 +19,7 @@ import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
 import { Popper } from '../Popper/Popper';
 import { Text } from '../Typography/Text/Text';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 
@@ -28,10 +29,25 @@ const sizeYClassNames = {
 };
 
 export type DateInputPropsTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для поля ввода дня
+   */
   dayFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода месяца
+   */
   monthFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода года
+   */
   yearFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода часа
+   */
   hourFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для поля ввода минут
+   */
   minuteFieldTestId?: string;
 };
 
@@ -71,6 +87,9 @@ export interface DateInputProps
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateInputPropsTestsProps {
+  /**
+   * Передает атрибуты `data-testid` для интерактивных элементов в календаре
+   */
   calendarTestsProps?: CalendarTestsProps;
   calendarPlacement?: PlacementWithAuto;
   closeOnChange?: boolean;
@@ -175,6 +194,7 @@ export const DateInput = ({
   yearFieldTestId,
   hourFieldTestId,
   minuteFieldTestId,
+  id,
   onApply,
   ...props
 }: DateInputProps): React.ReactNode => {
@@ -302,8 +322,9 @@ export const DateInput = ({
       onFocus={callMultiple(handleFieldEnter, onFocus)}
       {...props}
     >
-      <input
-        type="hidden"
+      <VisuallyHidden
+        id={id}
+        Component="input"
         name={name}
         value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
       />

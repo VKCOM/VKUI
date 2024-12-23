@@ -33,6 +33,10 @@ export const CalendarRangePlayground = (props: ComponentPlaygroundProps) => {
             </span>,
           ],
         },
+        {
+          value: [[new Date('1970-05-05'), new Date('1970-06-05')]],
+          dir: ['rtl'],
+        },
       ]}
     >
       {(props: CalendarRangeProps) => <CalendarRange {...props} />}

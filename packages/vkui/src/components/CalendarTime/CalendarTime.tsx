@@ -1,17 +1,29 @@
 'use client';
 
-import { type ChangeEvent } from 'react';
+import { type ChangeEvent, useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
+import { Keys, pressedKey } from '../../lib/accessibility';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
 import styles from './CalendarTime.module.css';
 
+const selectFilterFn = () => true;
+
 export type CalendarTimeTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора часа в календаре
+   */
   hoursTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора минут в календаре
+   */
   minutesTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки "Готово" в календаре
+   */
   doneButtonTestId?: string;
 };
 
@@ -50,6 +62,17 @@ for (let i = 0; i < 60; i += 1) {
   minutes.push({ value: i, label: String(i).padStart(2, '0') });
 }
 
+const validateValue = (
+  value: string,
+  validValues: Array<{
+    value: number;
+    label: string;
+  }>,
+): boolean => {
+  const numValue = Number(value);
+  return !isNaN(numValue) && validValues.some((v) => v.value === numValue);
+};
+
 export const CalendarTime = ({
   value,
   onChange,
@@ -65,6 +88,10 @@ export const CalendarTime = ({
   doneButtonTestId,
   DoneButton,
 }: CalendarTimeProps): React.ReactNode => {
+  const hoursInputRef = useRef<HTMLInputElement | null>(null);
+  const minutesInputRef = useRef<HTMLInputElement | null>(null);
+  const doneButtonRef = useRef<HTMLButtonElement | null>(null);
+
   const localHours = isDayDisabled
     ? hours.map((hour) => {
         return { ...hour, disabled: isDayDisabled(setHours(value, hour.value), true) };
@@ -77,6 +104,26 @@ export const CalendarTime = ({
       })
     : minutes;
 
+  const onPickerValueChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    validate: (numericValue: string) => boolean,
+    setter: (value: Date, numericValue: number) => Date,
+  ) => {
+    const numericValue = e.target.value.replace(/\D/g, '');
+    e.target.value = numericValue;
+    if (validate(numericValue)) {
+      onChange?.(setter(value, Number(numericValue)));
+    }
+  };
+
+  const onHoursInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onPickerValueChange(e, (numValue) => validateValue(numValue, localHours), setHours);
+  };
+
+  const onMinutesInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onPickerValueChange(e, (numValue) => validateValue(numValue, localMinutes), setMinutes);
+  };
+
   const onHoursChange = React.useCallback(
     (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
       onChange?.(setHours(value, Number(newValue))),
@@ -88,6 +135,22 @@ export const CalendarTime = ({
     [onChange, value],
   );
 
+  const onPickerKeyDown = (e: React.KeyboardEvent) => {
+    const key = pressedKey(e);
+    if (key === Keys.ENTER || key === Keys.TAB) {
+      const steps = [hoursInputRef, minutesInputRef, doneButtonRef];
+      const currentStepIndex = steps.findIndex((step) => step.current === e.target);
+      const diff = e.key === 'Tab' && e.shiftKey ? -1 : 1;
+      const nextStepIndex = currentStepIndex + diff;
+      if (nextStepIndex < 0 || nextStepIndex >= steps.length) {
+        return;
+      }
+      e.preventDefault();
+      const nextStep = steps[nextStepIndex];
+      nextStep.current?.focus();
+    }
+  };
+
   const renderDoneButton = () => {
     const ButtonComponent = DoneButton ?? Button;
     return (
@@ -95,6 +158,8 @@ export const CalendarTime = ({
         mode="secondary"
         onClick={onDoneButtonClick}
         size="l"
+        getRootRef={doneButtonRef}
+        onKeyDown={onPickerKeyDown}
         disabled={doneButtonDisabled}
         data-testid={doneButtonTestId}
       >
@@ -112,6 +177,11 @@ export const CalendarTime = ({
             options={localHours}
             onChange={onHoursChange}
             forceDropdownPortal={false}
+            searchable
+            filterFn={selectFilterFn}
+            onInputChange={onHoursInputChange}
+            onInputKeyDown={onPickerKeyDown}
+            getSelectInputRef={hoursInputRef}
             aria-label={changeHoursLabel}
             data-testid={hoursTestId}
           />
@@ -125,6 +195,11 @@ export const CalendarTime = ({
             options={localMinutes}
             onChange={onMinutesChange}
             forceDropdownPortal={false}
+            searchable
+            filterFn={selectFilterFn}
+            onInputChange={onMinutesInputChange}
+            getSelectInputRef={minutesInputRef}
+            onInputKeyDown={onPickerKeyDown}
             aria-label={changeMinutesLabel}
             data-testid={minutesTestId}
           />

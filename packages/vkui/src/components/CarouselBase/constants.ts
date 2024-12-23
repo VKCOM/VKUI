@@ -17,4 +17,8 @@ export const SLIDES_MANAGER_STATE: SlidesManagerState = {
   loopPoints: [],
   contentSize: 0,
   snaps: [],
+  containerWidth: 0,
+  layerWidth: 0,
+  min: 0,
+  max: 0,
 };

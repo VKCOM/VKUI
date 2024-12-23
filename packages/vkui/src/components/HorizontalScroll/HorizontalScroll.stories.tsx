@@ -37,7 +37,7 @@ type Story = StoryObj<HorizontalScrollProps>;
 export const Playground: Story = {
   render: function Render(args) {
     const [commonFriends, setCommonFriends] = React.useState<UserExtendedInterface[]>([]);
-    const timer = React.useRef<ReturnType<typeof setTimeout>>();
+    const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
     React.useEffect(() => {
       // Эмуляция загрузки

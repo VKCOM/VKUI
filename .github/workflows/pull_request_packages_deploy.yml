@@ -122,6 +122,39 @@ jobs:
         id: url
         run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/styleguide/index.html" >> $GITHUB_OUTPUT
 
+  deploy_docs_beta:
+    needs: pr_workflow_payload
+    if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
+    runs-on: ubuntu-latest
+    name: Deploy docs (beta)
+    outputs:
+      url: ${{ steps.url.outputs.value }}
+    steps:
+      - name: Download docs-beta dist artifact
+        id: artifact
+        uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
+        with:
+          name: docs-beta-dist
+          path: docs-beta-dist/
+
+      - name: Upload docs beta S3
+        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
+        id: deploy
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: docs-beta-dist/
+          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/docs-beta
+
+      - name: Create doc url
+        if: ${{ steps.deploy.outcome == 'success' }}
+        id: url
+        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/docs-beta/index.html" >> $GITHUB_OUTPUT
+
   deploy_storybook:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
@@ -159,8 +192,9 @@ jobs:
     needs:
       - deploy_storybook
       - deploy_styleguide
+      - deploy_docs_beta
       - pr_workflow_payload
-    if: ${{ needs.deploy_styleguide.outputs.url != '' || needs.deploy_storybook.outputs.url != '' }}
+    if: ${{ needs.deploy_styleguide.outputs.url != '' || needs.deploy_storybook.outputs.url != '' || needs.deploy_docs_beta.outputs.url != '' }}
     runs-on: ubuntu-latest
     name: Docs comment
     steps:
@@ -183,6 +217,7 @@ jobs:
 
             - ${{ (needs.deploy_styleguide.outputs.url != '' && '✅') || '❌' }} [Styleguide](${{ needs.deploy_styleguide.outputs.url }})
             - ${{ (needs.deploy_storybook.outputs.url != '' && '✅') || '❌' }} [Storybook](${{ needs.deploy_storybook.outputs.url }})
+            - ${{ (needs.deploy_docs_beta.outputs.url != '' && '✅') || '❌' }} [Docs beta](${{ needs.deploy_docs_beta.outputs.url }})
 
             Commit ${{ env.PR_HEAD_SHA }}
           edit-mode: replace

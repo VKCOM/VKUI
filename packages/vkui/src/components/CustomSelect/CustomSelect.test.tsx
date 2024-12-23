@@ -3,7 +3,12 @@ import { useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import type { Placement, useFloating } from '../../lib/floating';
-import { baselineComponent, userEvent, waitForFloatingPosition } from '../../testing/utils';
+import {
+  baselineComponent,
+  setNodeEnv,
+  userEvent,
+  waitForFloatingPosition,
+} from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
@@ -1182,7 +1187,7 @@ describe('CustomSelect', () => {
 
   it('check input should close popover and reset selected option', async () => {
     jest.useFakeTimers();
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
 
@@ -1231,7 +1236,7 @@ describe('CustomSelect', () => {
     'should open dropdown when keydown %s',
     async (key) => {
       jest.useFakeTimers();
-      const inputRef: React.RefObject<HTMLInputElement> = {
+      const inputRef: React.RefObject<HTMLInputElement | null> = {
         current: null,
       };
       render(
@@ -1277,7 +1282,7 @@ describe('CustomSelect', () => {
 
   it('should call onInputChange callback when change input', async () => {
     jest.useFakeTimers();
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
     const onInputChange = jest.fn();
@@ -1302,7 +1307,7 @@ describe('CustomSelect', () => {
   });
 
   it('check scroll to bottom to element', async () => {
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
 
@@ -1335,7 +1340,7 @@ describe('CustomSelect', () => {
   });
 
   it('check scroll to up', async () => {
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
 
@@ -1368,7 +1373,7 @@ describe('CustomSelect', () => {
   });
 
   it('should not hover disabled option', async () => {
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
     render(
@@ -1392,7 +1397,7 @@ describe('CustomSelect', () => {
   });
 
   it('should not call select option when not focus to option', async () => {
-    const inputRef: React.RefObject<HTMLInputElement> = {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
     const onChange = jest.fn();
@@ -1416,25 +1421,27 @@ describe('CustomSelect', () => {
     expect(onChange).toHaveBeenCalledTimes(0);
   });
 
-  it('check dev error when use different type of values', () => {
-    process.env.NODE_ENV = 'development';
-    const errorStub = jest.spyOn(global.console, 'error').mockImplementationOnce(noop);
+  describe('DEV errors', () => {
+    beforeEach(() => setNodeEnv('development'));
+    afterEach(() => setNodeEnv('test'));
 
-    render(
-      <CustomSelect
-        options={[
-          { value: 0, label: 'Mike' },
-          { value: '1', label: 'Josh' },
-        ]}
-      />,
-    );
+    it('check error when use different type of values', () => {
+      const errorStub = jest.spyOn(global.console, 'error').mockImplementationOnce(noop);
 
-    expect(errorStub).toHaveBeenCalledWith(
-      '%c[VKUI/CustomSelect] Некоторые значения ваших опций имеют разные типы. onChange всегда возвращает строковый тип.',
-      undefined,
-    );
+      render(
+        <CustomSelect
+          options={[
+            { value: 0, label: 'Mike' },
+            { value: '1', label: 'Josh' },
+          ]}
+        />,
+      );
 
-    process.env.NODE_ENV = 'test';
+      expect(errorStub).toHaveBeenCalledWith(
+        '%c[VKUI/CustomSelect] Некоторые значения ваших опций имеют разные типы. onChange всегда возвращает строковый тип.',
+        undefined,
+      );
+    });
   });
 
   it('checks CustomSelect placement class for borders when dropdown is opened and closed during  placement change', async () => {
