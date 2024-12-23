@@ -13,7 +13,7 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-@media (--view-mobile) {
+@media (--viewWidth-smallTabletMinus) {
   .root {
     inline-size: 320px;
   }
@@ -55,7 +55,7 @@
     animation-name: animation-sidebar-fade-out;
   }
 }
-@media (--view-desktop), (--view-tablet) {
+@media (--viewWidth-smallTabletPlus) {
   .mobileHidden {
     display: none;
   }
@@ -71,7 +71,7 @@
   scrollbar-gutter: stable;
 }
 
-@media (--view-mobile) {
+@media (--viewWidth-smallTabletMinus) {
   .inner {
     padding-block-start: 4px;
   }

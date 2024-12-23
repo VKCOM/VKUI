@@ -17,13 +17,7 @@
   min-block-size: calc(100vh - var(--vkui_docs--navbar-height));
 }
 
-@media (--view-tablet) {
-  .content {
-    padding-inline: var(--vkui--spacing_size_2xl);
-    padding-block-start: 32px;
-  }
-}
-@media (--view-mobile) {
+@media (--viewWidth-tablet), (--viewWidth-tabletMinus) {
   .content {
     padding-inline: var(--vkui--size_base_padding_horizontal--regular);
     padding-block-start: 32px;

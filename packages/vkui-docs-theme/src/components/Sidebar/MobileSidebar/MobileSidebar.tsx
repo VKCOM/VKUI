@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import {
   AdaptivityProvider,
   ButtonGroup,
   Separator,
   SizeType,
   Spacing,
+  useAdaptivityWithJSMediaQueries,
   unstable_useCSSKeyframesAnimationController as useCSSKeyframesAnimationController,
   useScrollLock,
+  ViewWidth,
 } from '@vkontakte/vkui';
 import { useRouter } from 'next/router';
 import type { Item } from 'nextra/normalize-pages';
-import { MEDIA_QUERIES } from '../../../breakpoints';
 import { useMenu, useThemeConfig } from '../../../contexts';
 import { renderComponent } from '../../../helpers/render';
 import { ProjectButton } from '../../ProjectButton';
@@ -33,6 +34,7 @@ export function MobileSidebar({ flatDirectories, fullDirectories }: MobileSideBa
     true,
   );
   const visible = animationState !== 'exited';
+  const { viewWidth } = useAdaptivityWithJSMediaQueries();
 
   React.useEffect(() => {
     setMenu(false);
@@ -41,21 +43,10 @@ export function MobileSidebar({ flatDirectories, fullDirectories }: MobileSideBa
   useScrollLock(menu);
 
   React.useEffect(() => {
-    const mediaQuery = window ? window.matchMedia(MEDIA_QUERIES['--view-desktop']) : undefined;
-
-    if (!mediaQuery) {
-      return noop;
+    if (viewWidth === ViewWidth.DESKTOP) {
+      setMenu(false);
     }
-
-    const handleMediaQuery = (event: MediaQueryList | MediaQueryListEvent) => {
-      if (event.matches) {
-        setMenu(false);
-      }
-    };
-
-    mediaQuery.addEventListener?.('change', handleMediaQuery);
-    return () => mediaQuery.removeEventListener?.('change', handleMediaQuery);
-  }, []);
+  }, [viewWidth]);
 
   if (!visible) {
     return null;

@@ -96,7 +96,7 @@ const config = {
           {
             importFrom: path.join(
               import.meta.dirname,
-              'packages/vkui-docs-theme/styles/customMedias.generated.css',
+              'packages/vkui/src/styles/customMedias.generated.css',
             ),
           },
         ],

@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 
-@media (--view-desktop) {
+@media (--viewWidth-desktopPlus) {
   .root {
     position: sticky;
     flex-shrink: 0;
@@ -14,7 +14,7 @@
       var(--vkui_docs--color_stroke_separator_secondary);
   }
 }
-@media (--view-tablet), (--view-mobile) {
+@media (--viewWidth-tabletMinus), (--viewWidth-tablet) {
   .root {
     position: fixed;
     inset-block-start: 0;
@@ -40,19 +40,19 @@
   scrollbar-gutter: stable;
 }
 
-@media (--view-tablet), (--view-mobile) {
+@media (--viewWidth-tablet), (--viewWidth-smallTabletMinus) {
   .inner {
     padding-block: var(--vkui--spacing_size_2xl);
     padding-inline: var(--vkui--spacing_size_2xl);
     block-size: calc(100vh - 76px);
   }
 }
-@media (--view-mobile) {
+@media (--viewWidth-smallTabletMinus) {
   .inner {
     block-size: calc(100vh - 76px - 52px);
   }
 }
-@media (--view-tablet), (--view-mobile) {
+@media (--viewWidth-tabletMinus), (--viewWidth-tablet) {
   .lessThenDesktopHidden {
     display: none;
   }

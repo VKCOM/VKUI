@@ -10,7 +10,7 @@
   text-decoration: none;
 }
 
-@media (--view-desktop) {
+@media (--viewWidth-desktopPlus) {
   .menuItem {
     margin-inline: var(--vkui--spacing_size_xl);
   }
@@ -20,7 +20,7 @@
   margin-block-start: var(--vkui--spacing_size_xs);
 }
 
-@media (--view-desktop) {
+@media (--viewWidth-desktopPlus) {
   .listItem:not(:first-of-type) {
     margin-block-start: var(--vkui--spacing_size_m);
   }
