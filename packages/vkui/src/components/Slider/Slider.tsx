@@ -3,9 +3,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useDirection } from '../../hooks/useDirection';
 import { useExternRef } from '../../hooks/useExternRef';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { type CustomTouchEvent, type CustomTouchEventHandler, Touch } from '../Touch/Touch';
 import { SliderThumb } from './SliderThumb/SliderThumb';
 import {
@@ -101,9 +103,12 @@ export const Slider = ({
   onChange,
   withTooltip,
   size = 'l',
+  style: styleProp,
   ...restProps
 }: SliderProps | SliderMultipleProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const isRtl = textDirection === 'rtl';
 
   const isControlled = valueProp !== undefined;
   const [localValue, setValue] = React.useState(defaultValue);
@@ -163,7 +168,10 @@ export const Slider = ({
     // @ts-expect-error: TS2345 в VKUITouchEvent плохо описаны типы. `target` это просто `EventTarget`.
     const foundDraggingType = getDraggingTypeByTargetDataset(event.originalEvent.target);
 
-    const nextStartX = event.startX - nextContainerX;
+    let nextStartX = event.startX - nextContainerX;
+    if (isRtl) {
+      nextStartX = nextContainerWidth - nextStartX;
+    }
     const nextValue = offsetToValue(nextStartX, nextContainerWidth, min, max, step);
     const nextDragging = snapDirection(value, nextValue, foundDraggingType);
 
@@ -205,7 +213,7 @@ export const Slider = ({
     const { startX, containerWidth, dragging } = gesture;
 
     const { shiftX = 0 } = event;
-    const nextStartX = startX + shiftX;
+    const nextStartX = startX + (isRtl ? -shiftX : shiftX);
     const nextValue = offsetToValue(nextStartX, containerWidth, min, max, step);
 
     changeValue(updateInternalStateValue(value, nextValue, min, max, dragging), event);
@@ -231,6 +239,11 @@ export const Slider = ({
     );
   };
 
+  const style: CSSCustomProperties = {
+    '--vkui_internal--Slider_start_value': String(startValueInPercent),
+    '--vkui_internal--Slider_end_value': String(endReversedValueInPercent),
+  };
+
   return (
     <Touch
       data-value={multiple ? `${startValue},${endValue}` : startValue}
@@ -240,27 +253,23 @@ export const Slider = ({
         disabled && styles.disabled,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         sizeClassNames[size],
+        multiple && styles.multiple,
+        isRtl && styles.rtl,
         className,
       )}
+      style={mergeStyle(styleProp, style)}
+      getRootRef={directionRef}
       onStart={disabled ? undefined : handlePointerStart}
       onMove={disabled ? undefined : handlePointerMove}
       onEnd={disabled ? undefined : handlePointerEnd}
     >
       <div className={styles.track} />
-      <div
-        className={styles.trackFill}
-        style={
-          multiple
-            ? { left: `${startValueInPercent}%`, right: `${100 - endReversedValueInPercent}%` }
-            : { width: `${startValueInPercent}%` }
-        }
-      />
+      <div className={styles.trackFill} />
       <div ref={thumbsContainerRef} className={styles.thumbs}>
         <SliderThumb
           data-type="start"
-          className={styles.thumb}
+          className={classNames(styles.thumb, styles.thumbStart)}
           style={{
-            left: `${startValueInPercent}%`,
             // Меняем местами порядок слоёв, иначе, при достижении `start` и `end` 100%, `end` будет перекрывать `start`.
             zIndex: multiple && startValueInPercent >= 50 ? 2 : undefined,
           }}
@@ -284,8 +293,7 @@ export const Slider = ({
         {multiple && (
           <SliderThumb
             data-type="end"
-            className={styles.thumb}
-            style={{ left: `${endReversedValueInPercent}%` }}
+            className={classNames(styles.thumb, styles.thumbEnd)}
             withTooltip={withTooltip}
             inputProps={{
               'data-type': 'end',
