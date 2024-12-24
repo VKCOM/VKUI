@@ -1,4 +1,5 @@
 import type { UIEvent } from 'react';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import type { NavIdProps } from '../../lib/getNavId';
 import type { UseBottomSheetHandlers } from '../../lib/sheet';
 import type { ModalCardBaseProps } from '../ModalCardBase/ModalCardBase';
@@ -11,7 +12,8 @@ export type ModalCardCloseReason =
 
 export interface ModalCardProps
   extends NavIdProps,
-    Omit<ModalCardBaseProps, 'id' | 'onClose' | 'onTransitionEnd' | keyof UseBottomSheetHandlers> {
+    Omit<ModalCardBaseProps, 'id' | 'onClose' | 'onTransitionEnd' | keyof UseBottomSheetHandlers>,
+    Pick<UseFocusTrapProps, 'restoreFocus'> {
   /**
    * Состояние видимости.
    *

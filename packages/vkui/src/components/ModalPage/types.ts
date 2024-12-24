@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode, Ref, UIEvent } from 'react';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import type { NavIdProps } from '../../lib/getNavId';
 import type { HTMLAttributesWithRootRef } from '../../types';
 
@@ -15,6 +16,7 @@ type OmittedStyleAttribute = {
 export interface ModalPageProps
   extends NavIdProps,
     Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'id' | 'style'>,
+    Pick<UseFocusTrapProps, 'restoreFocus'>,
     OmittedStyleAttribute {
   /**
    * Состояние видимости.
