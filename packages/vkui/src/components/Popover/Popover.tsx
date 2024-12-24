@@ -116,9 +116,9 @@ export interface PopoverProps
  * @see https://vkcom.github.io/VKUI/#/Popover
  */
 export const Popover = ({ children, ...restProps }: PopoverProps): React.ReactNode => {
-  const { referenceRef, referenceProps, popover } = usePopover<HTMLDivElement>(restProps);
+  const { anchorRef, anchorProps, popover } = usePopover<HTMLDivElement>(restProps);
 
-  const reference = useReferenceElement(children, referenceProps, referenceRef);
+  const reference = useReferenceElement(children, anchorProps, anchorRef);
 
   return (
     <React.Fragment>

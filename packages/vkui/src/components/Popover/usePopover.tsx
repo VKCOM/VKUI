@@ -21,8 +21,8 @@ export type UsePopoverProps = Omit<PopoverProps, 'children'> & {
 };
 
 export type UsePopoverResult<ElementType extends HTMLElement = HTMLElement> = {
-  referenceRef: Ref<ElementType>;
-  referenceProps: ReferenceProps<ElementType>;
+  anchorRef: Ref<ElementType>;
+  anchorProps: ReferenceProps<ElementType>;
   popover: React.ReactNode | null;
 };
 
@@ -162,10 +162,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
       [role],
     );
 
-  const { referenceRef, referenceProps, component } = useFloatingElement<
-    ElementType,
-    HTMLDivElement
-  >({
+  const { anchorRef, anchorProps, component } = useFloatingElement<ElementType, HTMLDivElement>({
     arrow: withArrow,
     arrowHeight,
     arrowPadding,
@@ -196,8 +193,8 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
   });
 
   return {
-    referenceRef,
-    referenceProps,
+    anchorRef,
+    anchorProps,
     popover: component,
   };
 };

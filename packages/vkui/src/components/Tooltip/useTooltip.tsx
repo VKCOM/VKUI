@@ -20,8 +20,8 @@ export type UseTooltipProps = Omit<TooltipProps, 'children'> & {
 };
 
 export type UseTooltipResult<ElementType extends HTMLElement = HTMLElement> = {
-  referenceRef: Ref<ElementType>;
-  referenceProps: ReferenceProps<ElementType>;
+  anchorRef: Ref<ElementType>;
+  anchorProps: ReferenceProps<ElementType>;
   tooltip: React.ReactNode | null;
 };
 
@@ -132,7 +132,7 @@ export const useTooltip = ({
       [tooltipId],
     );
 
-  const { component, referenceRef, referenceProps } = useFloatingElement({
+  const { component, anchorRef, anchorProps } = useFloatingElement({
     placement: placementProp,
     arrow: !disableArrow,
     arrowHeight,
@@ -159,8 +159,8 @@ export const useTooltip = ({
   });
 
   return {
-    referenceRef,
-    referenceProps,
+    anchorRef,
+    anchorProps,
     tooltip: component,
   };
 };

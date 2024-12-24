@@ -47,8 +47,8 @@ export type UseFloatingElementProps<
   };
 
 export type UseFloatingResult<ReferenceElement extends HTMLElement = HTMLElement> = {
-  referenceRef: Ref<ReferenceElement>;
-  referenceProps: ReferenceProps<ReferenceElement>;
+  anchorRef: Ref<ReferenceElement>;
+  anchorProps: ReferenceProps<ReferenceElement>;
   component: React.ReactNode | null;
 };
 
@@ -160,8 +160,8 @@ export const useFloatingElement = <
   );
 
   return {
-    referenceRef: refs.setReference,
-    referenceProps: remappedReferenceProps,
+    anchorRef: refs.setReference,
+    anchorProps: remappedReferenceProps,
     component,
   };
 };

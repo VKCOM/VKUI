@@ -211,7 +211,7 @@ const Playground = () => {
 
 ```jsx { "props": { "layout": false, "iframe": true } }
 const Example = () => {
-  const { referenceRef, referenceProps, popover } = usePopover({
+  const { anchorRef, anchorProps, popover } = usePopover({
     'trigger': 'click',
     'role': 'dialog',
     'id': 'menupopup',
@@ -231,10 +231,10 @@ const Example = () => {
           {popover}
           <FormItem>
             <Button
-              getRootRef={referenceRef}
+              getRootRef={anchorRef}
               id="menubutton"
               aria-controls="menupopup"
-              {...referenceProps}
+              {...anchorProps}
             >
               Нажми на меня
             </Button>

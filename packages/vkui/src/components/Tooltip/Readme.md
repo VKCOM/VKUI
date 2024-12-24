@@ -12,7 +12,7 @@
 
 ```jsx { "props": { "layout": false, "iframe": true } }
 const Example = () => {
-  const { referenceRef, referenceProps, tooltip } = useTooltip({
+  const { anchorRef, anchorProps, tooltip } = useTooltip({
     placement: 'right',
     description: 'Привет',
   });
@@ -24,7 +24,7 @@ const Example = () => {
         <Group>
           {tooltip}
           <FormItem>
-            <Button getRootRef={referenceRef} {...referenceProps}>
+            <Button getRootRef={anchorRef} {...anchorProps}>
               Наведи на меня
             </Button>
           </FormItem>

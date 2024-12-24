@@ -79,9 +79,9 @@ export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTool
  * @see https://vkcom.github.io/VKUI/#/Tooltip
  */
 export const Tooltip = ({ children, ...restProps }: TooltipProps): React.ReactNode => {
-  const { referenceRef, referenceProps, tooltip } = useTooltip(restProps);
+  const { anchorRef, anchorProps, tooltip } = useTooltip(restProps);
 
-  const anchor = useReferenceElement(children, referenceProps, referenceRef);
+  const anchor = useReferenceElement(children, anchorProps, anchorRef);
 
   return (
     <React.Fragment>
