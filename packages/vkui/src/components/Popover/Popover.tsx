@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { usePatchChildren } from '../../hooks/usePatchChildren';
+import { useReferenceElement } from '../../hooks/useReferenceElement';
 import {
   type FloatingComponentProps,
   type FloatingContentRenderProp,
@@ -116,13 +116,13 @@ export interface PopoverProps
  * @see https://vkcom.github.io/VKUI/#/Popover
  */
 export const Popover = ({ children, ...restProps }: PopoverProps): React.ReactNode => {
-  const { anchorRef, anchorProps: referenceProps, popover } = usePopover<HTMLDivElement>(restProps);
+  const { anchorRef, anchorProps, popover } = usePopover<HTMLDivElement>(restProps);
 
-  const [, child] = usePatchChildren<HTMLDivElement>(children, referenceProps, anchorRef);
+  const reference = useReferenceElement(children, anchorProps, anchorRef);
 
   return (
     <React.Fragment>
-      {child}
+      {reference}
       {popover}
     </React.Fragment>
   );
