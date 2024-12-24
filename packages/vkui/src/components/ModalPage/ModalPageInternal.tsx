@@ -70,6 +70,7 @@ export const ModalPageInternal = ({
   hideCloseButton,
   preventClose,
   disableContentPanningGesture,
+  restoreFocus,
   onOpen,
   onOpened,
   onClose = noop,
@@ -166,6 +167,7 @@ export const ModalPageInternal = ({
       <FocusTrap
         {...restProps}
         autoFocus={!noFocusToDialog}
+        restoreFocus={restoreFocus}
         role="dialog"
         aria-modal="true"
         disabled={!opened || hidden}
