@@ -3,22 +3,18 @@
 
 Одно из ключевых преимуществ VKUI - адаптивность.
 Библиотека предоставляет шаблоны для различных устройств,
-а также позволяет большинству компонентов адаптировать под разные размеры.
+а также позволяет большинству компонентов адаптироваться под разные размеры.
 Отображение кнопок, элементов форм и других компонентов зависит от наличия мыши, высоты и ширины экрана.
 В этой статье мы покажем, как сделать отзывчивый интерфейс.
 
 </Overview>
 
-## Шаг 1
+<Steps>
+## Обертка [`AdaptivityProvider`](#/AdaptivityProvider)
 
-Для начала оберните ваше приложение в [`AdaptivityProvider`](#/AdaptivityProvider).
+Для начала убедитесь, что ваше приложение обернуто в обязательный провайдер [`AdaptivityProvider`](#/AdaptivityProvider):
 
-```jsx static
-import * as React from 'react';
-import { createRoot } from 'react-dom/client';
-import { ConfigProvider, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
-import '@vkontakte/vkui/dist/vkui.css';
-
+```jsx {4,6}
 function App() {
   return (
     <ConfigProvider>
@@ -28,34 +24,40 @@ function App() {
     </ConfigProvider>
   );
 }
-
-const container = document.getElementById('root');
-const root = createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(<App />);
 ```
 
-## Шаг 2
+## Добавление контента
 
 Добавьте [`SplitLayout`](#/SplitLayout) и хотя бы один [`SplitCol`](#/SplitCol).
 
-- **SplitLayout** — компонент-обертка для отрисовки макета с
-  одной или несколькими колонками.
+- **SplitLayout** — компонент-обертка для отрисовки макета с одной или несколькими колонками.
 - **SplitCol** — компонент для отрисовки колонки.
 
-```jsx static
-// ...
-
+```jsx {2-3,9-26}
 function App() {
+  const platform = usePlatform();
+  const isVKCOM = platform === 'vkcom';
+
   return (
     <ConfigProvider>
       <AdaptivityProvider>
         <AppRoot>
           <SplitLayout>
-            <SplitCol width={280}>
-              <SideCol />
+            <SplitCol fixed width={280} maxWidth={280}>
+              <Panel>
+                {!isVKCOM && <PanelHeader />}
+                <Group>
+                  <Placeholder>Дополнительный контент</Placeholder>
+                </Group>
+              </Panel>
             </SplitCol>
-            <SplitCol>
-              <MainScreens />
+            <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
+              <Panel>
+                <PanelHeader>Panel Header</PanelHeader>
+                <Group>
+                  <Placeholder>Главный контент</Placeholder>
+                </Group>
+              </Panel>
             </SplitCol>
           </SplitLayout>
         </AppRoot>
@@ -63,27 +65,15 @@ function App() {
     </ConfigProvider>
   );
 }
-
-const MainScreens = () => {
-  return (
-    <View activePanel="profile">
-      <Panel id="profile">Profile</Panel>
-    </View>
-  );
-};
-
-const SideCol = () => {
-  return <Panel id="nav">Navigation</Panel>;
-};
 ```
 
-## Шаг 3
+## Применение хука для адаптивности
 
-Почти готово. Теперь необходимо уведомить приложение о том, что левая колонка нужна только на больших экранах.
-Для этого мы должны использовать хук useAdaptivityConditionalRender в наших компонентах.
+Теперь необходимо уведомить приложение о том, что левая колонка нужна только на больших экранах.
+Для этого мы должны использовать хук `useAdaptivityConditionalRender` в наших компонентах.
 Ниже будет представлен пример использования этого хука, а затем будет дано объяснение его работы.
 
-```jsx static
+```jsx {4,8-17}
 function App() {
   const platform = usePlatform();
   const isVKCOM = platform === 'vkcom';
@@ -93,28 +83,39 @@ function App() {
 
   <SplitLayout header={!isVKCOM && <PanelHeader delimiter="none" />}>
     {viewWidth.tabletPlus && (
-      <SplitCol width={280} className={viewWidth.tabletPlus.className}>
-        <Panel id="nav">Navigation</Panel>
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+        {// ...}
       </SplitCol>
     )}
-    <SplitCol autoSpaced>
-      <View activePanel="profile">
-        <Panel id="profile">Profile</Panel>
-      </View>
+    <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
+      {// ...}
     </SplitCol>
   </SplitLayout>;
   // ...
 }
 ```
 
-`useAdaptivityConditionalRender` возвращает параметры адаптивности (см. **Технические детали**), каждый из которых имеет
+`useAdaptivityConditionalRender` возвращает параметры адаптивности (см. [Технические детали](#tech)), каждый из которых имеет
 дополнительную мета-информацию. В зависимости от того, что мы передали в `AdaptivityProvider`, значение у каждого отдельного параметра адаптивности
 может быть двух типов:
 
 - `false` – мы строго задали какой-то из параметров адаптивности в `AdaptivityProvider`.
 
+<Callout>
+Например, при `<AdaptivityProvider viewWidth={ViewWidth.MOBILE}>` значение `viewWidth.tabletPlus` будет `false`,
+т.к. мы говорим, что у нас всегда мобильный вид.
+</Callout>
+
 - `{ className: string }` – CSS селектор, который на основе CSS Media Query будет переключать видимость вашего
   элемента. В данном случае в `AdaptivityProvider` не передавали соответствующий параметр адаптивности.
+
+<Callout>
+При значение `{ className: "..." }` видимость элемента управляется через `display: none` – отсюда можно сделать вывод,
+что элемент будет всегда рендерится как в **Virtual DOM**, так и в **DOM**.
+
+</Callout>
+
+</Steps>
 
 ## Требования для адаптивности
 
@@ -161,7 +162,7 @@ const App = () => {
 В нашем примере внутри `<ModalRoot />` и `<ModalPage />` используется `useAdaptivityWithJSMediaQueries()` для
 переключения компонентов на мобильный или десктопный виды.
 
-## Технические детали
+## Технические детали [#tech]
 
 Адаптивность базируется на четырёх свойствах:
 
